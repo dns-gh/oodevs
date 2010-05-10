@@ -17,6 +17,11 @@ namespace xml
     class xistream;
 }
 
+namespace kernel
+{
+    class StaticModel;
+}
+
 namespace dispatcher
 {
     class Config;
@@ -41,7 +46,7 @@ class PluginFactory
 public:
     //! @name Constructors/Destructor
     //@{
-             PluginFactory( const Config& config, Model& model, SimulationPublisher_ABC& simulation, ClientsNetworker& clients, 
+             PluginFactory( const Config& config, Model& model, const kernel::StaticModel& staticModel, SimulationPublisher_ABC& simulation, ClientsNetworker& clients, 
                             CompositePlugin& handler, CompositeRegistrable& registrables, const Services& services, int maxConnections );
     virtual ~PluginFactory();
     //@}
@@ -74,6 +79,7 @@ private:
     //@{
     const Config& config_;
     Model& model_;
+    const kernel::StaticModel& staticModel_;
     SimulationPublisher_ABC& simulation_;
     ClientsNetworker& clients_;
     CompositePlugin& handler_;

@@ -20,8 +20,9 @@ using namespace plugins::bml;
 // Name: OrderProcessor constructor
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-OrderProcessor::OrderProcessor( const dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& publisher )
+OrderProcessor::OrderProcessor( const dispatcher::Model& model, const kernel::StaticModel& staticModel, dispatcher::SimulationPublisher_ABC& publisher )
     : model_( model )
+    , staticModel_( staticModel )
     , publisher_( publisher )
 {
     // NOTHING
@@ -75,7 +76,7 @@ void OrderProcessor::ReadGroundTask( xml::xistream& xis )
     try
     {
         xml::xisubstream sub( xis );
-        Mission mission( sub, model_ );
+        Mission mission( sub, model_, staticModel_ );
         mission.Send( publisher_ );
     }
     catch( std::exception& e)

@@ -32,12 +32,12 @@ namespace
 // Created: SBO 2006-12-20
 // -----------------------------------------------------------------------------
 Weather::Weather()
-: windSpeed_( 0 )
-, windDirection_( 0 )
-, cloudFloor_( 1000 )
-, cloudCeiling_( 10000 )
-, cloudDensity_( 0 )
-, type_( eWeatherTypeNone )
+    : windSpeed_( 0 )
+    , windDirection_( 0 )
+    , cloudFloor_( 1000 )
+    , cloudCeiling_( 10000 )
+    , cloudDensity_( 0 )
+    , type_( eWeatherTypeNone )
 {
     // NOTHING
 }

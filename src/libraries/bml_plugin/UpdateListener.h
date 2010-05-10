@@ -18,6 +18,11 @@ namespace dispatcher
     class SimulationPublisher_ABC;
 }
 
+namespace kernel
+{
+    class StaticModel;
+}
+
 namespace xml
 {
     class xistream;
@@ -43,7 +48,7 @@ class UpdateListener : private ResponseHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             UpdateListener( Publisher_ABC& publisher, const dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& simulation );
+             UpdateListener( Publisher_ABC& publisher, const dispatcher::Model& model, const kernel::StaticModel& staticModel, dispatcher::SimulationPublisher_ABC& simulation );
     virtual ~UpdateListener();
     //@}
 

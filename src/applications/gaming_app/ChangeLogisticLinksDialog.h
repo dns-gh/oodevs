@@ -20,6 +20,7 @@ namespace kernel
     class Controllers;
     class Automat_ABC;
     class Profile_ABC;
+    class Time_ABC;
 }
 
 namespace actions
@@ -28,7 +29,6 @@ namespace actions
 }
 
 class StaticModel;
-class Simulation;
 
 // =============================================================================
 /** @class  ChangeLogisticLinksDialog
@@ -47,7 +47,7 @@ class ChangeLogisticLinksDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ChangeLogisticLinksDialog( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, const kernel::Profile_ABC& profile );
+             ChangeLogisticLinksDialog( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile );
     virtual ~ChangeLogisticLinksDialog();
     //@}
 
@@ -79,7 +79,7 @@ private:
     kernel::Controllers& controllers_;
     actions::ActionsModel& actionsModel_;
     const StaticModel& static_;
-    const Simulation& simulation_;
+    const kernel::Time_ABC& simulation_;
     const kernel::Profile_ABC& profile_;
 
     gui::ValuedComboBox< const kernel::Automat_ABC* >* tc2Combo_;

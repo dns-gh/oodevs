@@ -21,6 +21,7 @@
 #include "NoopPublisher.h"
 #include "AarPlugin.h"
 #include "Services.h"
+#include "StaticModel.h"
 #include "score_plugin/ScorePlugin.h"
 #include <xeumeuleu/xml.h>
 
@@ -28,9 +29,9 @@ using namespace dispatcher;
 
 namespace
 {
-    boost::shared_ptr< Model > CreateModel( CompositePlugin& handler, const Config& config )
+    boost::shared_ptr< Model > CreateModel( CompositePlugin& handler, const Config& config, const kernel::StaticModel& staticModel )
     {
-        boost::shared_ptr< Model > result( new Model( config ) );
+        boost::shared_ptr< Model > result( new Model( config, staticModel ) );
         handler.AddHandler( result );
         return result;
     }
@@ -49,7 +50,8 @@ namespace
 Replayer::Replayer( const Config& config )
     : registrables_    ()
     , services_        ( new Services() )
-    , model_           ( CreateModel( handler_, config ) )
+    , staticModel_     ( new StaticModel( config ) )
+    , model_           ( CreateModel( handler_, config, *staticModel_ ) )
     , clientsNetworker_( new ClientsNetworker( config, handler_, *services_ ) )
     , simulation_      ( CreateSimulation( *clientsNetworker_, *model_, handler_ ) )
     , loader_          ( new Loader( *simulation_, handler_, config ) )

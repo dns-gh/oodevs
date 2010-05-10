@@ -11,6 +11,7 @@
 #include "PopulationKnowledge.h"
 #include "ParameterVisitor_ABC.h"
 #include "clients_kernel/AgentKnowledgeConverter_ABC.h"
+#include "clients_kernel/EntityResolver_ABC.h"
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.h>
 
@@ -48,8 +49,8 @@ PopulationKnowledge::PopulationKnowledge( const OrderParameter& parameter, unsig
 // Name: PopulationKnowledge constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-PopulationKnowledge::PopulationKnowledge( const OrderParameter& parameter, xml::xistream& xis, const tools::Resolver_ABC< Population_ABC >& resolver, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
-    : Entity< PopulationKnowledge_ABC >( parameter, converter.Find( resolver.Get( attribute< unsigned long >( xis, "value" ) ), owner ), controller )
+PopulationKnowledge::PopulationKnowledge( const OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
+    : Entity< PopulationKnowledge_ABC >( parameter, converter.Find( resolver.GetPopulation( attribute< unsigned long >( xis, "value" ) ), owner ), controller )
 {
     if( ! GetValue() )
         throw std::runtime_error( tools::translate( "Parameter", "Population knowledge not found." ).ascii() );

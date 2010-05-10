@@ -12,6 +12,7 @@
 #include "Automat.h"
 #include "ParameterVisitor_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/EntityResolver_ABC.h"
 #include "protocol/Protocol.h"
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.h>
@@ -35,7 +36,7 @@ AutomatList::AutomatList( const kernel::OrderParameter& parameter )
 // Name: AutomatList constructor
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-AutomatList::AutomatList( const OrderParameter& parameter, const Common::MsgAutomatList& message, const tools::Resolver_ABC< Automat_ABC >& resolver, kernel::Controller& controller )
+AutomatList::AutomatList( const OrderParameter& parameter, const Common::MsgAutomatList& message, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
     : Parameter< QString >( parameter )
 {
     for( int i = 0; i < message.elem_size(); ++i )
@@ -46,7 +47,7 @@ AutomatList::AutomatList( const OrderParameter& parameter, const Common::MsgAuto
 // Name: AutomatList constructor
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-AutomatList::AutomatList( const OrderParameter& parameter, xml::xistream& xis, const tools::Resolver_ABC< Automat_ABC >& resolver, kernel::Controller& controller )
+AutomatList::AutomatList( const OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
     : Parameter< QString >( parameter )
 {
     xis >> list( "parameter", *this, &AutomatList::ReadAutomat, resolver, controller );
@@ -65,7 +66,7 @@ AutomatList::~AutomatList()
 // Name: AutomatList::ReadAutomat
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-void AutomatList::ReadAutomat( xml::xistream& xis, const tools::Resolver_ABC< Automat_ABC >& resolver, kernel::Controller& controller )
+void AutomatList::ReadAutomat( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
 {
     AddParameter( *new Automat( xis, resolver, controller ) );
 }

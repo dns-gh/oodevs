@@ -110,7 +110,7 @@ kernel::Formation_ABC* TeamFactory::CreateFormation( const Common::MsgFormationC
 // Name: TeamFactory::CreateKnowledgeGroup
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-KnowledgeGroup_ABC* TeamFactory::CreateKnowledgeGroup( const MsgsSimToClient::MsgKnowledgeGroupCreation& message, Team_ABC& team  )
+KnowledgeGroup_ABC* TeamFactory::CreateKnowledgeGroup( const MsgsSimToClient::MsgKnowledgeGroupCreation& message, Team_ABC& team )
 {
     // LTO begin
     Entity_ABC* superior = message.has_oid_parent() ? 

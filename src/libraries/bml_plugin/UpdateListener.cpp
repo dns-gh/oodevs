@@ -33,9 +33,9 @@ namespace
 // Name: UpdateListener constructor
 // Created: SBO 2008-05-16
 // -----------------------------------------------------------------------------
-UpdateListener::UpdateListener( Publisher_ABC& publisher, const dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& simulation )
+UpdateListener::UpdateListener( Publisher_ABC& publisher, const dispatcher::Model& model, const kernel::StaticModel& staticModel, dispatcher::SimulationPublisher_ABC& simulation )
     : publisher_( publisher )
-    , orderProcessor_( new OrderProcessor( model, simulation ) )
+    , orderProcessor_( new OrderProcessor( model, staticModel, simulation ) )
     , lastUpdateTime_( bpt::to_iso_extended_string( bpt::from_time_t( 0 ) ).c_str() )
     , receivedAnswer_( true )
 {

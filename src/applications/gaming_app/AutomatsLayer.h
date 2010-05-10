@@ -14,8 +14,9 @@
 
 namespace kernel
 {
-    class CoordinateConverter_ABC;
     class AgentType;
+    class CoordinateConverter_ABC;
+    class Time_ABC;
 }
 
 namespace actions
@@ -23,7 +24,6 @@ namespace actions
     class ActionsModel;
 }
 
-class Simulation;
 class StaticModel;
 
 // =============================================================================
@@ -38,7 +38,7 @@ class AutomatsLayer : public gui::AutomatsLayer
 public:
     //! @name Constructors/Destructor
     //@{
-             AutomatsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile, gui::AgentsLayer& agents, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation );
+             AutomatsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile, gui::AgentsLayer& agents, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation );
     virtual ~AutomatsLayer();
     //@}
 
@@ -68,7 +68,7 @@ private:
     const kernel::GlTools_ABC& tools_;
     actions::ActionsModel& actionsModel_;
     const StaticModel& static_;
-    const Simulation& simulation_;
+    const kernel::Time_ABC& simulation_;
     kernel::SafePointer< kernel::Automat_ABC > selected_;
     //@}
 };

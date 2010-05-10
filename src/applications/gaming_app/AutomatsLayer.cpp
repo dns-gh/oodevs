@@ -9,10 +9,10 @@
 
 #include "gaming_app_pch.h"
 #include "AutomatsLayer.h"
-#include "actions/UnitMagicAction.h"
-#include "actions/Point.h"
+#include "actions/ActionTiming.h"
 #include "actions/Identifier.h"
-#include "gaming/ActionTiming.h"
+#include "actions/Point.h"
+#include "actions/UnitMagicAction.h"
 #include "gaming/ConvexHulls.h"
 #include "gaming/MissionParameters.h"
 #include "gaming/StaticModel.h"
@@ -32,7 +32,7 @@ using namespace actions;
 // Name: AutomatsLayer constructor
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
-AutomatsLayer::AutomatsLayer( Controllers& controllers, const GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const Profile_ABC& profile, gui::AgentsLayer& agents, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation )
+AutomatsLayer::AutomatsLayer( Controllers& controllers, const GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const Profile_ABC& profile, gui::AgentsLayer& agents, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation )
     : gui::AutomatsLayer( controllers, tools, strategy, view, profile, agents )
     , tools_( tools )
     , actionsModel_( actionsModel )

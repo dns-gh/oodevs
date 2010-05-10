@@ -15,6 +15,8 @@
 #include "UpdateListener.h"
 #include "ReportFactory.h"
 #include "Simulation.h"
+#include "clients_kernel/AgentTypes.h"
+#include "clients_kernel/StaticModel.h"
 #include "dispatcher/Model.h"
 
 using namespace plugins::bml;
@@ -23,13 +25,13 @@ using namespace plugins::bml;
 // Name: BmlPlugin constructor
 // Created: SBO 2008-02-29
 // -----------------------------------------------------------------------------
-BmlPlugin::BmlPlugin( dispatcher::Model& model, xml::xistream& xis, dispatcher::SimulationPublisher_ABC& simulation )
+BmlPlugin::BmlPlugin( dispatcher::Model& model, const kernel::StaticModel& staticModel, xml::xistream& xis, dispatcher::SimulationPublisher_ABC& simulation )
     : model_( model )
     , publisher_( new PublisherActor( std::auto_ptr< Publisher_ABC >( new Publisher( xis ) ) ) )
     , simulation_( new Simulation() )
-    , reportFactory_( new ReportFactory( model_.GetMissionTypes() ) )
+    , reportFactory_( new ReportFactory( staticModel.types_ ) )
     , extensionFactory_( new ExtensionFactory( *publisher_, *reportFactory_, *simulation_, model_ ) )
-    , listener_( new UpdateListener( *publisher_, model_, simulation ) )
+    , listener_( new UpdateListener( *publisher_, model_, staticModel, simulation ) )
 {
     model_.RegisterFactory( *extensionFactory_ );
 }

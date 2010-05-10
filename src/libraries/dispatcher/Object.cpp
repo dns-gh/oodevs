@@ -25,21 +25,20 @@
 #include "protocol/ClientPublisher_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "clients_kernel/ObjectType.h"
+#include "clients_kernel/ObjectTypes.h"
+#include "clients_kernel/StaticModel.h"
 #include "protocol/clientsenders.h"
-
 #include <boost/bind.hpp>
 
 using namespace dispatcher;
-//using namespace Common;
-//using namespace MsgsSimToClient;
 
 // -----------------------------------------------------------------------------
 // Name: Object constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-Object::Object( Model& model, const MsgsSimToClient::MsgObjectCreation& msg )
+Object::Object( Model& model, const MsgsSimToClient::MsgObjectCreation& msg, const kernel::StaticModel& staticModel )
     : SimpleEntity< kernel::Object_ABC >( msg.oid(), QString( msg.name().c_str() ) )
-    , type_                        ( model.GetObjectTypes().Get( msg.type() ) )
+    , type_                        ( staticModel.objectTypes_.tools::StringResolver< kernel::ObjectType >::Get( msg.type() ) )
     , strName_                     ( msg.name()  )
     , localisation_                ( msg.location() )
     , side_                        ( model.sides_.Get( msg.team() ) )

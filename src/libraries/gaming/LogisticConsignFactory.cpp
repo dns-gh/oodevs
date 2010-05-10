@@ -19,13 +19,11 @@
 #include "clients_kernel/AgentTypes.h"
 #include "StaticModel.h"
 
-using namespace kernel;
-
 // -----------------------------------------------------------------------------
 // Name: LogisticConsignFactory constructor
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-LogisticConsignFactory::LogisticConsignFactory( Controllers& controllers, Model& model, const StaticModel& staticModel )
+LogisticConsignFactory::LogisticConsignFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel )
     : controllers_( controllers )
     , model_( model )
     , static_( staticModel )

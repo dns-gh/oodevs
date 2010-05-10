@@ -7,12 +7,13 @@
 //
 // *****************************************************************************
 
-#ifndef __ActionTiming_h_
-#define __ActionTiming_h_
+#ifndef __actions_ActionTiming_h_
+#define __actions_ActionTiming_h_
 
 #include "clients_kernel/Displayable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
+#include <qdatetime.h>
 
 namespace xml
 {
@@ -23,14 +24,12 @@ namespace xml
 namespace kernel
 {
     class Controller;
+    class Time_ABC;
 }
 
 namespace actions 
 {
     class Action_ABC;
-}
-
-class Simulation;
 
 // =============================================================================
 /** @class  ActionTiming
@@ -46,8 +45,8 @@ class ActionTiming : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionTiming( kernel::Controller& controller, const Simulation& simulation, const actions::Action_ABC& owner );
-             ActionTiming( xml::xistream& xis, kernel::Controller& controller, const Simulation& simulation, const actions::Action_ABC& owner );
+             ActionTiming( kernel::Controller& controller, const kernel::Time_ABC& simulation, const actions::Action_ABC& owner );
+             ActionTiming( xml::xistream& xis, kernel::Controller& controller, const kernel::Time_ABC& simulation, const actions::Action_ABC& owner );
     virtual ~ActionTiming();
     //@}
 
@@ -77,11 +76,13 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const Simulation& simulation_;
+    const kernel::Time_ABC& simulation_;
     const actions::Action_ABC& owner_;
     bool enabled_;
     QDateTime time_;
     //@}
 };
 
-#endif // __ActionTiming_h_
+}
+
+#endif // __actions_ActionTiming_h_

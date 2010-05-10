@@ -14,6 +14,7 @@ namespace kernel
 {
     class Controllers;
     class Profile_ABC;
+    class Time_ABC;
 }
 
 namespace gui
@@ -28,7 +29,6 @@ namespace actions
 }
 
 class AutomatDecisions;
-class Simulation;
 class StaticModel;
 
 // =============================================================================
@@ -43,7 +43,7 @@ class AgentList : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentList( kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons );
+             AgentList( kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons );
     virtual ~AgentList();
     //@}
 

@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "ObjectPanel.h"
 #include "moc_ObjectPanel.cpp"
+#include "actions/ActionTiming.h"
 #include "actions/ObjectMagicAction.h"
 #include "actions/ParameterList.h"
 #include "clients_kernel/AgentTypes.h"
@@ -21,7 +22,6 @@
 #include "clients_gui/SpinBoxDisplayer.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Tools.h"
-#include "gaming/ActionTiming.h"
 #include "gaming/StaticModel.h"
 #include "protocol/simulationsenders.h"
 
@@ -35,7 +35,7 @@ typedef gui::ObjectPanel MyParent;
 // Name: ObjectPanel constructor
 // Created: AGE 2006-09-08
 // -----------------------------------------------------------------------------
-ObjectPanel::ObjectPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation )
+ObjectPanel::ObjectPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation )
     : MyParent( parent, panel, controllers, factory )
     , actionsModel_( actionsModel )
     , static_( staticModel )

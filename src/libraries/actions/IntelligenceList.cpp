@@ -11,6 +11,7 @@
 #include "IntelligenceList.h"
 #include "Intelligence.h"
 #include "ParameterVisitor_ABC.h"
+#include "clients_kernel/EntityResolver_ABC.h"
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.h>
 
@@ -34,7 +35,7 @@ IntelligenceList::IntelligenceList( const kernel::OrderParameter& parameter )
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
 IntelligenceList::IntelligenceList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, xml::xistream& xis
-                                                                , const tools::Resolver_ABC< Formation_ABC >& resolver, const FormationLevels& levels, kernel::Controller& controller )
+                                                                , const kernel::EntityResolver_ABC& resolver, const FormationLevels& levels, kernel::Controller& controller )
     : Parameter< QString >( parameter )
 {
     xis >> list( "parameter", *this, &IntelligenceList::ReadIntelligence, converter, resolver, levels, controller );
@@ -46,7 +47,7 @@ IntelligenceList::IntelligenceList( const OrderParameter& parameter, const Coord
 // -----------------------------------------------------------------------------
 
 IntelligenceList::IntelligenceList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Common::MsgIntelligenceList& message
-                                   , const tools::Resolver_ABC< Formation_ABC >& resolver, const FormationLevels& levels, kernel::Controller& controller )
+                                   , const kernel::EntityResolver_ABC& resolver, const FormationLevels& levels, kernel::Controller& controller )
     : Parameter< QString >( parameter )
 {
     for( int i = 0; i < message.elem_size(); ++i )
@@ -66,7 +67,7 @@ IntelligenceList::~IntelligenceList()
 // Name: IntelligenceList::ReadIntelligence
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
-void IntelligenceList::ReadIntelligence( xml::xistream& xis, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< Formation_ABC >& resolver, const FormationLevels& levels, kernel::Controller& controller )
+void IntelligenceList::ReadIntelligence( xml::xistream& xis, const CoordinateConverter_ABC& converter, const kernel::EntityResolver_ABC& resolver, const FormationLevels& levels, kernel::Controller& controller )
 {
     AddParameter( *new Intelligence( converter, xis, resolver, levels, controller ) );
 }

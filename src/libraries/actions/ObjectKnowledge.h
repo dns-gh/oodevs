@@ -21,6 +21,7 @@ namespace Common
 
 namespace kernel
 {
+    class EntityResolver_ABC;
     class Object_ABC;
     class ObjectKnowledgeConverter_ABC;
 }
@@ -43,8 +44,8 @@ public:
     //@{
              ObjectKnowledge( const kernel::OrderParameter& parameter, kernel::Controller& controller );
              ObjectKnowledge( const kernel::OrderParameter& parameter, unsigned long id, kernel::ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
-             ObjectKnowledge( xml::xistream& xis, const tools::Resolver_ABC< kernel::Object_ABC >& resolver, kernel::ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
-             ObjectKnowledge( const kernel::OrderParameter& parameter, xml::xistream& xis, const tools::Resolver_ABC< kernel::Object_ABC >& resolver, kernel::ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
+             ObjectKnowledge( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
+             ObjectKnowledge( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
     virtual ~ObjectKnowledge();
     //@}
 

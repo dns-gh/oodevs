@@ -18,6 +18,7 @@ namespace kernel
     class Agent_ABC;
     class Controllers;
     class Profile_ABC;
+    class Time_ABC;
 }
 
 namespace actions
@@ -32,7 +33,6 @@ namespace actions
 class StaticModel;
 class Equipment;
 class Dotation;
-class Simulation;
 
 //=============================================================================
 // Created:  SBO 2005-07-27 
@@ -46,7 +46,7 @@ class LogisticSupplyRecompletionDialog : public QDialog
 public:
     //! @name Constructor/Destructor
     //@{
-             LogisticSupplyRecompletionDialog( QWidget* pParent, kernel::Controllers& controllers, const StaticModel& staticModel, actions::ActionsModel& actionsModel, const Simulation& simulation, const kernel::Profile_ABC& profile );
+             LogisticSupplyRecompletionDialog( QWidget* pParent, kernel::Controllers& controllers, const StaticModel& staticModel, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile );
     virtual ~LogisticSupplyRecompletionDialog();
     //@}
 
@@ -116,7 +116,7 @@ private:
     kernel::Controllers& controllers_;
     const StaticModel& static_;
     actions::ActionsModel& actionsModel_;
-    const Simulation& simulation_;
+    const kernel::Time_ABC& simulation_;
     const kernel::Profile_ABC& profile_;
 
     kernel::SafePointer< kernel::Agent_ABC > selected_;

@@ -7,8 +7,10 @@
 //
 // *****************************************************************************
 
-#include "gaming_pch.h"
+#include "actions_pch.h"
 #include "ActionTasker.h"
+
+using namespace actions;
 
 // -----------------------------------------------------------------------------
 // Name: ActionTasker constructor

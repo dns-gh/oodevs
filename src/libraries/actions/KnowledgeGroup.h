@@ -13,6 +13,11 @@
 #include "Entity.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 
+namespace kernel
+{
+    class EntityResolver_ABC;
+}
+
 namespace actions {
     namespace parameters {
 
@@ -28,8 +33,8 @@ class KnowledgeGroup : public Entity< kernel::KnowledgeGroup_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroup( const kernel::OrderParameter& parameter, unsigned int id, const tools::Resolver_ABC< kernel::KnowledgeGroup_ABC >& resolver, kernel::Controller& controller );
-             KnowledgeGroup( const kernel::OrderParameter& parameter, xml::xistream& xis, const tools::Resolver_ABC< kernel::KnowledgeGroup_ABC >& resolver, kernel::Controller& controller );
+             KnowledgeGroup( const kernel::OrderParameter& parameter, unsigned int id, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
+             KnowledgeGroup( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
              KnowledgeGroup( const kernel::OrderParameter& parameter, const kernel::KnowledgeGroup_ABC& group, kernel::Controller& controller );
     virtual ~KnowledgeGroup();
     //@}

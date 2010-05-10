@@ -3,47 +3,41 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2010 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __ActionFactory_h_
-#define __ActionFactory_h_
+#ifndef __actions_ActionFactory_h_
+#define __actions_ActionFactory_h_
 
-#include "actions/ActionFactory_ABC.h"
+#include "ActionFactory_ABC.h"
 #include "tools/Resolver_ABC.h"
-
-namespace actions
-{
-    class ParameterFactory_ABC;
-}
 
 namespace Common
 {
     class MsgMissionParameters;
 }
 
-namespace MsgsClientToSim
-{
-    class MsgFragOrder;
-}
-
 namespace kernel
 {
-    class Controllers;
+    class Controller;
+    class EntityResolver_ABC;
     class OrderType;
     class OrderParameter;
     class MagicActionType;
+    class StaticModel;
+    class Time_ABC;
 }
 
-class Model;
-class Simulation;
+namespace actions
+{
+    class ParameterFactory_ABC;
 
 // =============================================================================
 /** @class  ActionFactory
-    @brief  ActionFactory
+    @brief  Action factory base implementation
 */
-// Created: SBO 2007-03-12
+// Created: SBO 2010-05-07
 // =============================================================================
 class ActionFactory : public actions::ActionFactory_ABC
 {
@@ -51,11 +45,8 @@ class ActionFactory : public actions::ActionFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionFactory( kernel::Controllers& controllers, const actions::ParameterFactory_ABC& factory, const Model& model
-                          , const tools::Resolver_ABC< kernel::MissionType >& missions
-                          , const tools::Resolver_ABC< kernel::FragOrderType >& fragOrders
-                          , const tools::Resolver_ABC< kernel::MagicActionType, std::string >& magicActions
-                          , const Simulation& simulation );
+             ActionFactory( kernel::Controller& controller, const actions::ParameterFactory_ABC& factory, const kernel::EntityResolver_ABC& entities
+                          , const kernel::StaticModel& staticModel, const kernel::Time_ABC& simulation );
     virtual ~ActionFactory();
     //@}
 
@@ -63,13 +54,12 @@ public:
     //@{
     virtual actions::Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::MissionType& mission ) const;
     virtual actions::Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::FragOrderType& fragOrder ) const;
+    virtual actions::Action_ABC* CreateAction( xml::xistream& xis ) const;
 
     virtual actions::Action_ABC* CreateAction( const Common::MsgUnitOrder& message ) const;
     virtual actions::Action_ABC* CreateAction( const Common::MsgAutomatOrder& message ) const;
     virtual actions::Action_ABC* CreateAction( const Common::MsgPopulationOrder& message ) const;
     virtual actions::Action_ABC* CreateAction( const MsgsClientToSim::MsgFragOrder& message ) const;
-
-    virtual actions::Action_ABC* CreateAction( xml::xistream& xis ) const;
     //@}
 
 private:
@@ -96,14 +86,16 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
+    kernel::Controller& controller_;
     const actions::ParameterFactory_ABC& factory_;
-    const Model& model_;
+    const kernel::EntityResolver_ABC& entities_;
     const tools::Resolver_ABC< kernel::MissionType >& missions_;
     const tools::Resolver_ABC< kernel::FragOrderType >& fragOrders_;
     const tools::Resolver_ABC< kernel::MagicActionType, std::string >& magicActions_;
-    const Simulation& simulation_;
+    const kernel::Time_ABC& simulation_;
     //@}
 };
 
-#endif // __ActionFactory_h_
+}
+
+#endif // __actions_ActionFactory_h_

@@ -24,6 +24,7 @@ namespace kernel
     class ObjectType;
     class Automat_ABC;
     class Controller;
+    class EntityResolver_ABC;
 }
 
 namespace actions {
@@ -42,8 +43,8 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit EngineerConstructionList( const kernel::OrderParameter& parameter );
-             EngineerConstructionList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::ObjectType, std::string >& resolver, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, const Common::MsgPlannedWorkList& asn, kernel::Controller& controller );
-             EngineerConstructionList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::ObjectType, std::string >& resolver, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, xml::xistream& xis, kernel::Controller& controller );
+             EngineerConstructionList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::ObjectType, std::string >& resolver, const kernel::EntityResolver_ABC& entities, const Common::MsgPlannedWorkList& asn, kernel::Controller& controller );
+             EngineerConstructionList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::ObjectType, std::string >& resolver, const kernel::EntityResolver_ABC& entities, xml::xistream& xis, kernel::Controller& controller );
     virtual ~EngineerConstructionList();
     //@}
 
@@ -69,7 +70,7 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadEngineerConstruction( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::ObjectType, std::string >& resolver, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, kernel::Controller& controller );
+    void ReadEngineerConstruction( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::ObjectType, std::string >& resolver, const kernel::EntityResolver_ABC& entities, kernel::Controller& controller );
     //@}
 };
 

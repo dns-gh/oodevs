@@ -12,19 +12,18 @@
 #include "gaming_app_pch.h"
 #include "KnowledgeGroupMagicOrdersInterface.h"
 #include "moc_KnowledgeGroupMagicOrdersInterface.cpp"
-
+#include "actions/ActionTiming.h"
 #include "actions/Bool.h"
 #include "actions/Identifier.h"
-#include "actions/String.h"
 #include "actions/KnowledgeGroupMagicAction.h"
 #include "actions/MagicAction.h"
+#include "actions/String.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
-#include "gaming/ActionTiming.h"
 #include "gaming/KnowledgeGroup.h"
 #include "gaming/StaticModel.h"
 #include "protocol/SimulationSenders.h"
@@ -36,7 +35,7 @@ using namespace kernel;
 // Name: KnowledgeGroupMagicOrdersInterface constructor
 // Created: SLG 2009-12-16
 // -----------------------------------------------------------------------------
-KnowledgeGroupMagicOrdersInterface::KnowledgeGroupMagicOrdersInterface( QWidget* parent, Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, const Profile_ABC& profile, const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types )
+KnowledgeGroupMagicOrdersInterface::KnowledgeGroupMagicOrdersInterface( QWidget* parent, Controllers& controllers, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, const Profile_ABC& profile, const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types )
     : QObject( parent )
     , controllers_( controllers )
     , actionsModel_( actionsModel )

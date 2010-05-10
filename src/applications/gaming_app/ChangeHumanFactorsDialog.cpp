@@ -10,11 +10,11 @@
 #include "gaming_app_pch.h"
 #include "ChangeHumanFactorsDialog.h"
 #include "moc_ChangeHumanFactorsDialog.cpp"
-#include "actions/UnitMagicAction.h"
+#include "actions/ActionTiming.h"
 #include "actions/Enumeration.h"
+#include "actions/UnitMagicAction.h"
 #include "gaming/HumanFactors.h"
 #include "gaming/tools.h"
-#include "gaming/ActionTiming.h"
 #include "gaming/StaticModel.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -46,7 +46,7 @@ namespace
 // Name: ChangeHumanFactorsDialog constructor
 // Created: AGE 2005-09-22
 // -----------------------------------------------------------------------------
-ChangeHumanFactorsDialog::ChangeHumanFactorsDialog( QWidget* pParent, Controllers& controllers, const StaticModel& staticModel, actions::ActionsModel& actionsModel, const Simulation& simulation, const Profile_ABC& profile )
+ChangeHumanFactorsDialog::ChangeHumanFactorsDialog( QWidget* pParent, Controllers& controllers, const ::StaticModel& staticModel, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const Profile_ABC& profile )
     : QDialog( pParent, tr( "Human factors" ) )
     , controllers_( controllers )
     , static_( staticModel )

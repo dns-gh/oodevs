@@ -24,6 +24,7 @@ namespace kernel
 {
     class MissionType;
     class OrderParameter;
+    class StaticModel;
 }
 
 namespace dispatcher
@@ -53,7 +54,7 @@ class Mission
 public:
     //! @name Constructors/Destructor
     //@{
-             Mission( xml::xistream& xis, const dispatcher::Model& model );
+             Mission( xml::xistream& xis, const dispatcher::Model& model, const kernel::StaticModel& staticModel );
     virtual ~Mission();
     //@}
 
@@ -98,6 +99,7 @@ private:
     //! @name Member data
     //@{
     const dispatcher::Model& model_;
+    const kernel::StaticModel& staticModel_;
     const kernel::MissionType& type_;
     const dispatcher::Automat* automatTaskee_;
     const dispatcher::Agent* agentTaskee_;

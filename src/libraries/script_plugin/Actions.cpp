@@ -9,12 +9,23 @@
 
 #include "script_plugin_pch.h"
 #include "Actions.h"
-#include "ActionParameterFactory.h"
-#include "ActionFactory.h"
+#include "ModelAdapter.h"
 #include "actions/Action_ABC.h"
+#include "actions/ActionFactory.h"
+#include "actions/ActionParameterFactory.h"
 #include "actions/ActionsModel.h"
+#include "clients_kernel/AgentKnowledgeConverter_ABC.h"
 #include "clients_kernel/CoordinateConverter.h"
+#include "clients_kernel/ObjectKnowledgeConverter_ABC.h"
+#include "clients_kernel/Time_ABC.h"
 #include "directia/Brain.h"
+#include "dispatcher/Agent.h"
+#include "dispatcher/Automat.h"
+#include "dispatcher/AgentKnowledge.h"
+#include "dispatcher/KnowledgeGroup.h"
+#include "dispatcher/Model.h"
+#include "dispatcher/ObjectKnowledge.h"
+#include "dispatcher/PopulationKnowledge.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
 #include "protocol/protocol.h"
@@ -23,6 +34,16 @@
 #include <xeumeuleu/xml.h>
 
 using namespace plugins::script;
+
+namespace
+{
+    struct SimulationTime : public kernel::Time_ABC
+    {
+        virtual QDateTime GetDateTime() const { return QDateTime(); }
+        virtual QDateTime GetInitialDateTime() const { return QDateTime(); }
+        virtual unsigned int GetTickDuration() const { return 0; }
+    };
+}
 
 // -----------------------------------------------------------------------------
 // Name: Actions Publisher
@@ -44,14 +65,129 @@ struct Actions::Publisher : public Publisher_ABC
 };
 
 // -----------------------------------------------------------------------------
+// Name: Actions::AgentConverter
+// Created: AGE 2008-07-16
+// -----------------------------------------------------------------------------
+struct Actions::AgentConverter : public kernel::AgentKnowledgeConverter_ABC
+{
+    //! @name Construction/Destruction
+    //@{
+    explicit AgentConverter( const dispatcher::Model& model )
+        : model_( model )
+    {}
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual const kernel::AgentKnowledge_ABC* Find( const kernel::Agent_ABC& base, const kernel::Entity_ABC& owner )
+    {
+        const kernel::Entity_ABC& group = FindGroup( owner );
+        tools::Iterator< const dispatcher::AgentKnowledge& > it = model_.agentKnowledges_.CreateIterator();
+        while( it.HasMoreElements() )
+        {
+            const dispatcher::AgentKnowledge& k = it.NextElement();
+            if( & k.knowledgeGroup_ == &group && &k.agent_ == &base )
+                return &k;
+        }
+        return 0;
+    }
+
+    virtual const kernel::PopulationKnowledge_ABC* Find( const kernel::Population_ABC& base, const kernel::Entity_ABC& owner )
+    {
+        const kernel::Entity_ABC& group = FindGroup( owner );
+        tools::Iterator< const dispatcher::PopulationKnowledge& > it = model_.populationKnowledges_.CreateIterator();
+        while( it.HasMoreElements() )
+        {
+            const dispatcher::PopulationKnowledge& k = it.NextElement();
+            if( & k.knowledgeGroup_ == &group && &k.population_ == &base )
+                return &k;
+        }
+        return 0;
+    }
+    //@}
+
+    //! @name Useless stuff
+    //@{
+    virtual const kernel::AgentKnowledge_ABC*      FindAgent( unsigned long , const kernel::Entity_ABC& ) { return 0; }
+    virtual const kernel::PopulationKnowledge_ABC* FindPopulation( unsigned long , const kernel::Entity_ABC& ) { return 0; }
+    virtual const kernel::AgentKnowledge_ABC*      Find( const kernel::AgentKnowledge_ABC& , const kernel::Entity_ABC& ) { return 0; };
+    virtual const kernel::PopulationKnowledge_ABC* Find( const kernel::PopulationKnowledge_ABC& , const kernel::Entity_ABC& ) { return 0; };
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    AgentConverter& operator=( const AgentConverter& );
+    const kernel::Entity_ABC& FindGroup( const kernel::Entity_ABC& owner )
+    {
+        if( const dispatcher::Automat* automat = dynamic_cast< const dispatcher::Automat* >( &owner ) )
+            return automat->GetKnowledgeGroup();
+        else if( const dispatcher::Agent* agent = dynamic_cast< const dispatcher::Agent* >( &owner ) )
+            return agent->automat_->GetKnowledgeGroup();
+        throw std::runtime_error( __FUNCTION__ );
+    }
+    //@}
+
+    //! @name Member data
+    //@{
+    const dispatcher::Model& model_;
+    //@}
+};
+
+// -----------------------------------------------------------------------------
+// Name: Actions::ObjectConverter
+// Created: AGE 2008-07-16
+// -----------------------------------------------------------------------------
+struct Actions::ObjectConverter : public kernel::ObjectKnowledgeConverter_ABC
+{
+    explicit ObjectConverter( const dispatcher::Model& model )
+        : model_( model ) {}
+    //! @name Operations
+    //@{
+    virtual const kernel::ObjectKnowledge_ABC* Find( const kernel::Object_ABC& base,  const kernel::Team_ABC& owner ) const
+    {
+        tools::Iterator< const dispatcher::ObjectKnowledge& > it = model_.objectKnowledges_.CreateIterator();
+        while( it.HasMoreElements() )
+        {
+            const dispatcher::ObjectKnowledge& k = it.NextElement();
+            if( & k.team_ == &owner && k.pObject_ == &base )
+                return &k;
+        }
+        return 0;
+    }
+    //@}
+
+    //! @name Useless stuff
+    //@{
+    virtual const kernel::ObjectKnowledge_ABC* Find( unsigned long , const kernel::Team_ABC& ) const { return 0; }
+    virtual const kernel::ObjectKnowledge_ABC* Find( const kernel::ObjectKnowledge_ABC& , const kernel::Team_ABC& ) const { return 0; }
+    //@}
+
+private:
+    //! @name Assignment
+    //@{
+    ObjectConverter& operator=( const ObjectConverter& );
+    //@}
+
+    //! @name Member data
+    //@{
+    const dispatcher::Model& model_;
+    //@}
+};
+
+// -----------------------------------------------------------------------------
 // Name: Actions constructor
 // Created: AGE 2008-07-16
 // -----------------------------------------------------------------------------
-Actions::Actions( kernel::Controller& controller, const tools::ExerciseConfig& config, const dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& sim )
-    : publisher_( new Publisher( sim ) )
+Actions::Actions( kernel::Controller& controller, const tools::ExerciseConfig& config, const dispatcher::Model& model, const kernel::StaticModel& staticModel, dispatcher::SimulationPublisher_ABC& sim )
+    : entities_( new ModelAdapter( model ) )
+    , publisher_( new Publisher( sim ) )
     , converter_( new kernel::CoordinateConverter( config ) )
-    , parameters_( new ActionParameterFactory( *converter_, model, config, controller ) )
-    , factory_( new ActionFactory( controller, model, *parameters_ ) )
+    , time_( new SimulationTime() )
+    , agentsKnowledges_( new AgentConverter( model ) )
+    , objectsKnowledges_( new ObjectConverter( model ) )
+    , parameters_( new actions::ActionParameterFactory( *converter_, *entities_, staticModel, *agentsKnowledges_, *objectsKnowledges_, controller ) )
+    , factory_( new actions::ActionFactory( controller, *parameters_, *entities_, staticModel, *time_ ) )
     , file_   ( config.BuildExerciseChildFile( "scripts/resources/orders.ord" ) )
 {
     // NOTHING

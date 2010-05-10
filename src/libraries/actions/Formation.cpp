@@ -10,6 +10,7 @@
 #include "actions_pch.h"
 #include "Formation.h"
 #include "protocol/Protocol.h"
+#include "clients_kernel/EntityResolver_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include <xeumeuleu/xml.h>
 
@@ -32,8 +33,8 @@ Formation::Formation( const OrderParameter& parameter, const Formation_ABC& form
 // Name: Formation constructor
 // Created: SBO 2007-10-29
 // -----------------------------------------------------------------------------
-Formation::Formation( const OrderParameter& parameter, const int& message, const tools::Resolver_ABC< Formation_ABC >& resolver, kernel::Controller& controller )
-    : Entity< Formation_ABC >( parameter, &resolver.Get( message ), controller )
+Formation::Formation( const OrderParameter& parameter, const int& message, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
+    : Entity< Formation_ABC >( parameter, &resolver.GetFormation( message ), controller )
 {
     // NOTHING
 }
@@ -42,8 +43,8 @@ Formation::Formation( const OrderParameter& parameter, const int& message, const
 // Name: Formation constructor
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
-Formation::Formation( const OrderParameter& parameter, xml::xistream& xis, const tools::Resolver_ABC< Formation_ABC >& resolver, kernel::Controller& controller )
-    : Entity< Formation_ABC >( parameter, &resolver.Get( attribute< unsigned long >( xis, "value" ) ), controller )
+Formation::Formation( const OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
+    : Entity< Formation_ABC >( parameter, &resolver.GetFormation( attribute< unsigned long >( xis, "value" ) ), controller )
 {
     // NOTHING
 }

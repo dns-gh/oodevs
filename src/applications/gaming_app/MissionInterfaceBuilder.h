@@ -14,13 +14,14 @@
 
 namespace kernel
 {
-    class Controllers;
-    class Entity_ABC;
-    class CoordinateConverter_ABC;
-    class OrderType;
-    class OrderParameter;
     class AgentKnowledgeConverter_ABC;
+    class Controllers;
+    class CoordinateConverter_ABC;
+    class Entity_ABC;
     class ObjectKnowledgeConverter_ABC;
+    class OrderParameter;
+    class OrderType;
+    class Time_ABC;
 }
 
 namespace gui
@@ -38,7 +39,6 @@ namespace actions
 }
 
 class StaticModel;
-class Simulation;
 
 // =============================================================================
 /** @class  MissionInterfaceBuilder
@@ -59,7 +59,7 @@ public:
     //@{
              MissionInterfaceBuilder( kernel::Controllers& controllers, gui::ParametersLayer& layer
                                     , kernel::AgentKnowledgeConverter_ABC& knowledgeConverter, kernel::ObjectKnowledgeConverter_ABC& objectKnowledgeConverter
-                                    , const StaticModel& staticModel, const Simulation& simulation );
+                                    , const StaticModel& staticModel, const kernel::Time_ABC& simulation );
     virtual ~MissionInterfaceBuilder();
     //@}
 
@@ -140,7 +140,7 @@ private:
     kernel::AgentKnowledgeConverter_ABC&   knowledgeConverter_;
     kernel::ObjectKnowledgeConverter_ABC&  objectKnowledgeConverter_;
     const StaticModel&                     staticModel_;
-    const Simulation&                      simulation_;
+    const kernel::Time_ABC&                simulation_;
     actions::gui::MissionInterface_ABC*    missionInterface_;
     kernel::Entity_ABC*                    entity_;
     T_BuilderFunctors                      builderFunctors_;

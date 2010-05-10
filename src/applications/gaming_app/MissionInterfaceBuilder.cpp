@@ -65,7 +65,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 MissionInterfaceBuilder::MissionInterfaceBuilder( Controllers& controllers, gui::ParametersLayer& layer
                                                 , AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter
-                                                , const StaticModel& staticModel, const Simulation& simulation )
+                                                , const ::StaticModel& staticModel, const kernel::Time_ABC& simulation )
     : controllers_             ( controllers )
     , layer_                   ( layer )
     , converter_               ( staticModel.coordinateConverter_ )

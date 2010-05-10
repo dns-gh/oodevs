@@ -22,6 +22,9 @@ namespace kernel
 {
     class CoordinateConverter_ABC;
     class Controller;
+    class EntityResolver_ABC;
+    class StaticModel;
+    class Time_ABC;
 }
 
 namespace tools
@@ -52,7 +55,7 @@ class Actions : public dispatcher::Registrable_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Actions( kernel::Controller& controller, const tools::ExerciseConfig& config, const dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& sim );
+             Actions( kernel::Controller& controller, const tools::ExerciseConfig& config, const dispatcher::Model& model, const kernel::StaticModel& staticModel, dispatcher::SimulationPublisher_ABC& sim );
     virtual ~Actions();
     //@}
 
@@ -77,13 +80,19 @@ private:
     //! @name Types
     //@{
     struct Publisher;
+    struct AgentConverter;
+    struct ObjectConverter;
     //@}
 
 private:
     //! @name Member data
     //@{
+    std::auto_ptr< kernel::EntityResolver_ABC > entities_;
     std::auto_ptr< Publisher > publisher_;
     std::auto_ptr< kernel::CoordinateConverter_ABC > converter_;
+    std::auto_ptr< kernel::Time_ABC > time_;
+    std::auto_ptr< AgentConverter > agentsKnowledges_;
+    std::auto_ptr< ObjectConverter > objectsKnowledges_;
     std::auto_ptr< actions::ParameterFactory_ABC > parameters_;
     std::auto_ptr< actions::ActionFactory_ABC > factory_;
     std::string file_;

@@ -23,7 +23,11 @@ namespace gui
     class CheckBoxDisplayer;
 }
 
-class Simulation;
+namespace kernel
+{
+    class Time_ABC;
+}
+
 class StaticModel;
 
 // =============================================================================
@@ -39,7 +43,7 @@ class ObjectPanel : public gui::ObjectPanel
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation );
+             ObjectPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation );
     virtual ~ObjectPanel();
     //@}
 
@@ -62,7 +66,7 @@ private:
     //@{
     actions::ActionsModel& actionsModel_;
     const StaticModel& static_;
-    const Simulation& simulation_;
+    const kernel::Time_ABC& simulation_;
     gui::SpinBoxDisplayer* construction_;
     gui::SpinBoxDisplayer* valorisation_;     
     gui::SpinBoxDisplayer* contournement_;

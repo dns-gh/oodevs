@@ -25,7 +25,7 @@ using namespace gui;
 // Name: InfoPanels constructor
 // Created: SBO 2006-08-08
 // -----------------------------------------------------------------------------
-InfoPanels::InfoPanels( QWidget* parent, Controllers& controllers, ItemFactory_ABC& factory, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation  )
+InfoPanels::InfoPanels( QWidget* parent, Controllers& controllers, ItemFactory_ABC& factory, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation  )
     : Panels( parent )
 {
     AddPanel( new AgentKnowledgePanel     ( this, *this, controllers, factory ) );

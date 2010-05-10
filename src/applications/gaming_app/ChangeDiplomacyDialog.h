@@ -18,7 +18,11 @@ namespace actions
     class ActionsModel;
 }
 
-class Simulation;
+namespace kernel
+{
+    class Time_ABC;
+}
+
 class StaticModel;
 
 // =============================================================================
@@ -33,7 +37,7 @@ class ChangeDiplomacyDialog : public gui::DiplomacyDialog_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             ChangeDiplomacyDialog( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, const kernel::Profile_ABC& profile );
+             ChangeDiplomacyDialog( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile );
     virtual ~ChangeDiplomacyDialog();
     //@}
 
@@ -55,7 +59,7 @@ private:
     //@{
     actions::ActionsModel& actionsModel_;
     const StaticModel& static_;
-    const Simulation& simulation_;
+    const kernel::Time_ABC& simulation_;
     //@}
 };
 

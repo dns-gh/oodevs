@@ -17,6 +17,7 @@ namespace kernel
 {
     class Controllers;
     class GlTools_ABC;
+    class Time_ABC;
     class Viewport_ABC;
 }
 
@@ -40,7 +41,6 @@ class ObjectCreationPanel;
 class Services;
 class DrawingsModel;
 class WeatherCreationPanel;
-class Simulation;
 
 // =============================================================================
 /** @class  CreationPanels
@@ -55,7 +55,7 @@ class CreationPanels : public gui::Panels
 public:
     //! @name Constructors/Destructor
     //@{
-             CreationPanels( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel, gui::ItemFactory_ABC& factory, actions::ActionsModel& actionsModel, const Simulation& simulation, gui::ParametersLayer& paramLayer, kernel::GlTools_ABC& tools, gui::SymbolIcons& icons, gui::ColorStrategy_ABC& colorStrategy, DrawingsModel& drawings );
+             CreationPanels( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel, gui::ItemFactory_ABC& factory, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, gui::ParametersLayer& paramLayer, kernel::GlTools_ABC& tools, gui::SymbolIcons& icons, gui::ColorStrategy_ABC& colorStrategy, DrawingsModel& drawings );
     virtual ~CreationPanels();
     //@}
 

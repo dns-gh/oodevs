@@ -9,9 +9,11 @@
 
 #include "hla_plugin_pch.h"
 #include "EntityType.h"
-#pragma warning (disable : 4100 4127 4511 4512 4702 )
+#pragma warning( push )
+#pragma warning( disable : 4100 4127 4996 4511 4512 4702 )
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
+#pragma warning( pop )
 
 using namespace plugins::hla;
 

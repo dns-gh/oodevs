@@ -14,6 +14,7 @@ namespace kernel
 {
     class Controllers;
     class Profile_ABC;
+    class Time_ABC;
 }
 
 namespace gui
@@ -27,7 +28,6 @@ namespace actions
 }
 
 class StaticModel;
-class Simulation;
 
 // =============================================================================
 /** @class  MagicOrdersInterface
@@ -41,7 +41,7 @@ class MagicOrdersInterface
 public:
     //! @name Constructors/Destructor
     //@{
-             MagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, gui::ParametersLayer& layer, const kernel::Profile_ABC& profile );
+             MagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation, gui::ParametersLayer& layer, const kernel::Profile_ABC& profile );
     virtual ~MagicOrdersInterface();
     //@}
 

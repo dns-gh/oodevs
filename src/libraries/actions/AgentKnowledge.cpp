@@ -11,6 +11,7 @@
 #include "AgentKnowledge.h"
 #include "ParameterVisitor_ABC.h"
 #include "clients_kernel/AgentKnowledgeConverter_ABC.h"
+#include "clients_kernel/EntityResolver_ABC.h"
 #include "protocol/Protocol.h"
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.h>
@@ -56,8 +57,8 @@ AgentKnowledge::AgentKnowledge( const OrderParameter& parameter, unsigned long i
 // Name: AgentKnowledge constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-AgentKnowledge::AgentKnowledge( xml::xistream& xis, const tools::Resolver_ABC< Agent_ABC >& resolver, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
-    : Entity< AgentKnowledge_ABC >( OrderParameter( attribute< std::string >( xis, "name" ), "agentknowledge", false ), converter.Find( resolver.Get( attribute< unsigned long >( xis, "value" ) ), owner ), controller )
+AgentKnowledge::AgentKnowledge( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
+    : Entity< AgentKnowledge_ABC >( OrderParameter( attribute< std::string >( xis, "name" ), "agentknowledge", false ), converter.Find( resolver.GetAgent( attribute< unsigned long >( xis, "value" ) ), owner ), controller )
 {
     if( ! GetValue() )
         throw std::runtime_error( tools::translate( "Parameter", "Agent knowledge not found." ).ascii() );
@@ -67,8 +68,8 @@ AgentKnowledge::AgentKnowledge( xml::xistream& xis, const tools::Resolver_ABC< A
 // Name: AgentKnowledge constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-AgentKnowledge::AgentKnowledge( const OrderParameter& parameter, xml::xistream& xis, const tools::Resolver_ABC< Agent_ABC >& resolver, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
-    : Entity< AgentKnowledge_ABC >( parameter, converter.Find( resolver.Get( attribute< unsigned long >( xis, "value" ) ), owner ), controller )
+AgentKnowledge::AgentKnowledge( const OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
+    : Entity< AgentKnowledge_ABC >( parameter, converter.Find( resolver.GetAgent( attribute< unsigned long >( xis, "value" ) ), owner ), controller )
 {
     if( ! GetValue() )
         throw std::runtime_error( tools::translate( "Parameter", "Agent knowledge not found." ).ascii() );

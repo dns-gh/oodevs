@@ -33,10 +33,7 @@
 #include "TacticalLineFactory.h"
 #include "UserProfilesModel.h"
 #include "UserProfileFactory.h"
-#include "ActionParameterFactory.h"
-#include "ActionFactory.h"
 #include "ActionPublisher.h"
-#include "actions/ActionsModel.h"
 #include "FolkModel.h"
 #include "AfterActionModel.h"
 #include "IntelligenceFactory.h"
@@ -47,21 +44,24 @@
 #include "NotesModel.h" // LTO
 #include "MeteoModel.h" // LTO
 #include "ScoreModel.h"
+#include "Simulation.h"
 #include "UrbanModel.h"
+#include "actions/ActionFactory.h"
+#include "actions/ActionParameterFactory.h"
+#include "actions/ActionsModel.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/FormationLevels.h"
 #include "indicators/GaugeTypes.h"
 
 #pragma warning( disable : 4355 )
 
-using namespace kernel;
-
 // -----------------------------------------------------------------------------
 // Name: Model constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-Model::Model( Controllers& controllers, const StaticModel& staticModel, const Simulation& simulation, Workers& workers, Publisher_ABC& publisher, const RcEntityResolver_ABC& rcResolver )
-    : controllers_( controllers )
+Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, const Simulation& simulation, kernel::Workers& workers, Publisher_ABC& publisher, const RcEntityResolver_ABC& rcResolver )
+    : EntityResolverFacade( *this )
+    , controllers_( controllers )
     , static_( staticModel )
     , agentsKnowledgeFactory_( *new AgentKnowledgeFactory( controllers, *this, staticModel.coordinateConverter_ ) )
     , objectKnowledgeFactory_( *new ObjectKnowledgeFactory( controllers, *this, staticModel ) )
@@ -76,8 +76,8 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
     , tacticalLineFactory_( *new TacticalLineFactory( controllers, staticModel.coordinateConverter_, *this, publisher ) )
     , fireResultsFactory_( *new FireResultFactory( *this, simulation ) )
     , userProfileFactory_( *new UserProfileFactory( *this, controllers, publisher ) )
-    , actionParameterFactory_( *new ActionParameterFactory( staticModel.coordinateConverter_, *this, staticModel, agentKnowledgeConverter_, objectKnowledgeConverter_, controllers_.controller_ ) )
-    , actionFactory_( *new ActionFactory( controllers, actionParameterFactory_, *this, staticModel.types_, staticModel.types_, staticModel.types_, simulation ) )
+    , actionParameterFactory_( *new actions::ActionParameterFactory( staticModel.coordinateConverter_, *this, staticModel, agentKnowledgeConverter_, objectKnowledgeConverter_, controllers_.controller_ ) )
+    , actionFactory_( *new actions::ActionFactory( controllers.controller_, actionParameterFactory_, *this, staticModel, simulation ) )
     , intelligenceFactory_( *new IntelligenceFactory( controllers, staticModel.coordinateConverter_, *this, staticModel.levels_, publisher ) )
     , drawingFactory_( *new DrawingFactory( controllers.controller_, staticModel.drawings_, publisher, staticModel.coordinateConverter_ ) )
     , agents_( *new AgentsModel( agentFactory_ ) )

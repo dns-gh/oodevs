@@ -10,11 +10,10 @@
 #include "gaming_app_pch.h"
 #include "UnitMagicOrdersInterface.h"
 #include "moc_UnitMagicOrdersInterface.cpp"
-
-#include "actions/UnitMagicAction.h"
-#include "actions/Point.h"
+#include "actions/ActionTiming.h"
 #include "actions/Army.h"
-
+#include "actions/Point.h"
+#include "actions/UnitMagicAction.h"
 #include "clients_gui/LocationCreator.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -31,7 +30,6 @@
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Point.h"
 
-#include "gaming/ActionTiming.h"
 #include "gaming/StaticModel.h"
 #include "gaming/MagicOrders.h"
 #include "gaming/AutomatDecisions.h"
@@ -50,7 +48,7 @@ using namespace actions;
 // Name: UnitMagicOrdersInterface constructor
 // Created: SBO 2007-05-04
 // -----------------------------------------------------------------------------
-UnitMagicOrdersInterface::UnitMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, gui::ParametersLayer& layer, const kernel::Profile_ABC& profile )
+UnitMagicOrdersInterface::UnitMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, gui::ParametersLayer& layer, const kernel::Profile_ABC& profile )
     : QObject( parent )
     , controllers_( controllers )
     , actionsModel_( actionsModel )
@@ -169,7 +167,7 @@ namespace
 {
     struct MagicFunctor
     {
-        MagicFunctor( const StaticModel& staticModel, Controllers& controllers, actions::ActionsModel& actionsModel, const Simulation& simulation, int id ) 
+        MagicFunctor( const ::StaticModel& staticModel, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, int id ) 
             : static_( staticModel )
             , controllers_( controllers )
             , actionsModel_( actionsModel)
@@ -211,16 +209,16 @@ namespace
         }
     private:
         MagicFunctor& operator=( const MagicFunctor& );
-        const StaticModel& static_;
-        Controllers& controllers_;
+        const ::StaticModel& static_;
+        kernel::Controllers& controllers_;
         actions::ActionsModel& actionsModel_;
-        const Simulation& simulation_;
+        const kernel::Time_ABC& simulation_;
         int id_;
     };
 
     struct RecursiveMagicFunctor : public MagicFunctor
     {
-        RecursiveMagicFunctor( const StaticModel& staticModel, Controllers& controllers, actions::ActionsModel& actionsModel, const Simulation& simulation, int id )
+        RecursiveMagicFunctor( const ::StaticModel& staticModel, Controllers& controllers, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, int id )
             : MagicFunctor( staticModel, controllers, actionsModel, simulation, id )
         {}
         void operator()( const Entity_ABC& entity ) const

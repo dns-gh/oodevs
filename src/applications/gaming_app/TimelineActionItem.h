@@ -22,6 +22,7 @@ namespace actions
 {
     class Action_ABC;
     class ActionsModel;
+    class ActionTiming;
 }
 
 namespace gui
@@ -30,7 +31,6 @@ namespace gui
     class GradientItem;
 }
 
-class ActionTiming;
 class TimelineRuler;
 
 // =============================================================================
@@ -42,7 +42,7 @@ class TimelineRuler;
 class TimelineActionItem : public QObject
                          , public TimelineItem_ABC
                          , public tools::Observer_ABC
-                         , public tools::ElementObserver_ABC< ActionTiming >
+                         , public tools::ElementObserver_ABC< actions::ActionTiming >
 {
     Q_OBJECT;
 
@@ -83,7 +83,7 @@ private:
     virtual void setEnabled( bool enabled );
     virtual void setSelected( bool selected );
     virtual void draw( QPainter& painter );
-    virtual void NotifyUpdated( const ActionTiming& timing );
+    virtual void NotifyUpdated( const actions::ActionTiming& timing );
     void ComputeTextWidth( QPainter& painter );
     void SetTime( const QDateTime& datetime );
     //@}

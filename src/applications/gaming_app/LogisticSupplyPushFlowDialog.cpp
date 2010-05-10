@@ -10,10 +10,10 @@
 #include "gaming_app_pch.h"
 #include "LogisticSupplyPushFlowDialog.h"
 #include "moc_LogisticSupplyPushFlowDialog.cpp"
-#include "actions/UnitMagicAction.h"
-#include "actions/ParameterList.h"
+#include "actions/ActionTiming.h"
 #include "actions/Automat.h"
-#include "gaming/ActionTiming.h"
+#include "actions/ParameterList.h"
+#include "actions/UnitMagicAction.h"
 #include "gaming/Dotation.h"
 #include "gaming/StaticModel.h"
 #include "gaming/SupplyStates.h"
@@ -37,7 +37,7 @@ using namespace parameters;
 // Name: LogisticSupplyPushFlowDialog constructor
 // Created: SBO 2006-07-03
 // -----------------------------------------------------------------------------
-LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, const tools::Resolver_ABC< Automat_ABC >& automats, const Profile_ABC& profile )
+LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Controllers& controllers, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, const tools::Resolver_ABC< Automat_ABC >& automats, const Profile_ABC& profile )
     : QDialog( parent, tr( "Push supply flow" ) )
     , controllers_( controllers )
     , actionsModel_( actionsModel )

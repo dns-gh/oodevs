@@ -11,7 +11,6 @@
 #define __ActionParameterIntelligence_h_
 
 #include "Entity.h"
-#include "tools/Resolver_ABC.h"
 #include "clients_kernel/Intelligence_ABC.h"
 
 namespace Common
@@ -22,6 +21,7 @@ namespace Common
 namespace kernel
 {
     class CoordinateConverter_ABC;
+    class EntityResolver_ABC;
     class Formation_ABC;
     class FormationLevels;
     class Intelligence_ABC;
@@ -43,13 +43,11 @@ public:
     //! @name Constructors/Destructor
     //@{
              Intelligence( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, kernel::Controller& controller );
-             Intelligence( const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis
-                                        , const tools::Resolver_ABC< kernel::Formation_ABC >& resolver
-                                        , const kernel::FormationLevels& levels, kernel::Controller& controller );
+             Intelligence( const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis, const kernel::EntityResolver_ABC& formations
+                         , const kernel::FormationLevels& levels, kernel::Controller& controller );
              Intelligence( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter
-                                        , const tools::Resolver_ABC< kernel::Formation_ABC >& resolver
-                                        , const kernel::FormationLevels& levels
-                                        , const Common::MsgIntelligence& message, kernel::Controller& controller );
+                         , const kernel::EntityResolver_ABC& formations, const kernel::FormationLevels& levels
+                         , const Common::MsgIntelligence& message, kernel::Controller& controller );
     virtual ~Intelligence();
     //@}
 
@@ -70,7 +68,7 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadParameter( xml::xistream& xis, const tools::Resolver_ABC< kernel::Formation_ABC >& resolver, const kernel::FormationLevels& levels );
+    void ReadParameter( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, const kernel::FormationLevels& levels );
     virtual void Serialize( xml::xostream& xos ) const;
     //@}
 

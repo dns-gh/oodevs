@@ -10,6 +10,7 @@
 #include "LoggerPlugin.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/MissionType.h"
+#include "clients_kernel/StaticModel.h"
 #include "dispatcher/Agent.h"
 #include "dispatcher/Automat.h"
 #include "dispatcher/Model.h"
@@ -29,15 +30,16 @@ using namespace plugins::logger;
 // Name: LoggerPlugin constructor
 // Created: LDC 2010-03-17
 // -----------------------------------------------------------------------------
-LoggerPlugin::LoggerPlugin( const dispatcher::Model& model, const tools::SessionConfig& config, const dispatcher::Services& services )
-: filename_   ( config.BuildSessionChildFile( "Messages.log" ).c_str() )
-, file_       ( 0 )
-, resolver_   ( model )
-, factory_    ( resolver_, objectTypes_, objectTypes_, 0 )
-, model_      ( model )
-, services_   ( services )
-, enabled_    ( true )
-, initialized_( false )
+LoggerPlugin::LoggerPlugin( const dispatcher::Model& model, const kernel::StaticModel& staticModel, const tools::SessionConfig& config, const dispatcher::Services& services )
+    : filename_   ( config.BuildSessionChildFile( "Messages.log" ).c_str() )
+    , file_       ( 0 )
+    , resolver_   ( model )
+    , factory_    ( resolver_, objectTypes_, objectTypes_, 0 )
+    , model_      ( model )
+    , staticModel_( staticModel )
+    , services_   ( services )
+    , enabled_    ( true )
+    , initialized_( false )
 {
     objectTypes_.Load( config );
     factory_.Load( config );
@@ -194,10 +196,8 @@ void LoggerPlugin::Receive( const MsgsSimToClient::MsgSimToClient& message )
 void LoggerPlugin::FormatMission( const char* name, int id, int mission )
 {
     if( mission )
-    {
-        const tools::Resolver_ABC< kernel::MissionType >& resolver = model_.GetMissionTypes();
-        *file_ << date_ << " Mission - " << name << "[" << id << "] : " << resolver.Find( mission )->GetName() << std::endl;
-    }
+        *file_ << date_ << " Mission - " << name << "[" << id << "] : " 
+               << staticModel_.types_.tools::Resolver< kernel::MissionType >::Get( mission ).GetName() << std::endl;
     else
         *file_ << date_ << " Mission - " << name << "[" << id << "] : Mission cancelled." << std::endl;
 }

@@ -13,16 +13,13 @@
 #include "clients_gui/EntitySearchBox.h"
 #include "clients_kernel/Agent_ABC.h"
 
-using namespace kernel;
-using namespace gui;
-
 // -----------------------------------------------------------------------------
 // Name: AgentList constructor
 // Created: AGE 2006-08-29
 // -----------------------------------------------------------------------------
-AgentList::AgentList( Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons )
+AgentList::AgentList( kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons )
 {
-    new EntitySearchBox< Agent_ABC >( this, controllers );
+    new gui::EntitySearchBox< kernel::Agent_ABC >( this, controllers );
     new AgentListView( this, controllers, actionsModel, staticModel, simulation, factory, profile, icons );
 }
 

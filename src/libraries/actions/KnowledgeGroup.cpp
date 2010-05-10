@@ -10,6 +10,7 @@
 #include "actions_pch.h"
 #include "KnowledgeGroup.h"
 #include "ParameterVisitor_ABC.h"
+#include "clients_kernel/EntityResolver_ABC.h"
 #include "protocol/Protocol.h"
 
 using namespace kernel;
@@ -21,8 +22,8 @@ using namespace parameters;
 // Name: KnowledgeGroup constructor
 // Created: JSR 2010-04-19
 // -----------------------------------------------------------------------------
-KnowledgeGroup::KnowledgeGroup( const kernel::OrderParameter& parameter, unsigned int id, const tools::Resolver_ABC< kernel::KnowledgeGroup_ABC >& resolver, kernel::Controller& controller )
-    : Entity< KnowledgeGroup_ABC >( parameter, &resolver.Get( id ), controller )
+KnowledgeGroup::KnowledgeGroup( const kernel::OrderParameter& parameter, unsigned int id, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
+    : Entity< KnowledgeGroup_ABC >( parameter, &resolver.GetKnowledgeGroup( id ), controller )
 {
     // NOTHING
 }
@@ -31,8 +32,8 @@ KnowledgeGroup::KnowledgeGroup( const kernel::OrderParameter& parameter, unsigne
 // Name: KnowledgeGroup constructor
 // Created: JSR 2010-04-19
 // -----------------------------------------------------------------------------
-KnowledgeGroup::KnowledgeGroup( const kernel::OrderParameter& parameter, xml::xistream& xis, const tools::Resolver_ABC< kernel::KnowledgeGroup_ABC >& resolver, kernel::Controller& controller )
-    : Entity< KnowledgeGroup_ABC >( parameter, &resolver.Get( attribute< unsigned long >( xis, "value" ) ), controller )
+KnowledgeGroup::KnowledgeGroup( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
+    : Entity< KnowledgeGroup_ABC >( parameter, &resolver.GetKnowledgeGroup( attribute< unsigned long >( xis, "value" ) ), controller )
 {
     // NOTHING
 }

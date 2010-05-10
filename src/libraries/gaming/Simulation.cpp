@@ -95,7 +95,7 @@ void Simulation::Update( const MsgsSimToClient::MsgControlInformation& message )
 {
     tickCount_    = unsigned( -1 );
     tickDuration_ = message.tick_duration();
-    paused_       = message.status() == Common::EnumSimulationState::paused;
+    paused_       = message.status() == Common::paused;
     timeFactor_   = message.time_factor();
     time_         = message.current_tick() * tickDuration_;
     initialDate_  = std::string( (const char*)message.initial_date_time().data().c_str(), 15 );
@@ -111,7 +111,7 @@ void Simulation::Update( const MsgsReplayToClient::MsgControlReplayInformation& 
 {
     tickDuration_ = message.tick_duration();
     tickCount_    = message.tick_count();
-    paused_       = message.status() == Common::EnumSimulationState::paused;
+    paused_       = message.status() == Common::paused;
     timeFactor_   = message.time_factor();
     time_         = message.current_tick() * tickDuration_;
     initialDate_  = message.initial_date_time().data();
@@ -234,7 +234,7 @@ unsigned Simulation::GetTickCount() const
 // Name: Simulation::GetTickDuration
 // Created: SBO 2008-04-29
 // -----------------------------------------------------------------------------
-unsigned Simulation::GetTickDuration() const
+unsigned int Simulation::GetTickDuration() const
 {
     return tickDuration_;
 }

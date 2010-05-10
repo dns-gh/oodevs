@@ -19,10 +19,11 @@
 
 namespace kernel
 {
-    class Entity_ABC;
     class Controllers;
-    class Profile_ABC;
+    class Entity_ABC;
     class KnowledgeGroup_ABC;
+    class Profile_ABC;
+    class Time_ABC;
 }
 
 namespace actions
@@ -30,25 +31,24 @@ namespace actions
     class ActionsModel;
 }
 
-class Simulation;
 class StaticModel;
 
 // =============================================================================
 /** @class  KnowledgeGroupMagicOrdersInterface
-@brief  KnowledgeGroupMagicOrdersInterface
+    @brief  KnowledgeGroupMagicOrdersInterface
 */
 // Created: SLG 2009-12-17
 // =============================================================================
 class KnowledgeGroupMagicOrdersInterface : public QObject
-    , public tools::Observer_ABC
-    , public kernel::ContextMenuObserver_ABC< kernel::KnowledgeGroup_ABC >
+                                         , public tools::Observer_ABC
+                                         , public kernel::ContextMenuObserver_ABC< kernel::KnowledgeGroup_ABC >
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroupMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, const kernel::Profile_ABC& profile, const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types );
+             KnowledgeGroupMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile, const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types );
     virtual ~KnowledgeGroupMagicOrdersInterface();
     //@}
 
@@ -90,7 +90,7 @@ private:
     kernel::Controllers& controllers_;
     actions::ActionsModel& actionsModel_;
     const StaticModel& static_;
-    const Simulation& simulation_;
+    const kernel::Time_ABC& simulation_;
     const kernel::Profile_ABC& profile_;
     kernel::SafePointer< kernel::KnowledgeGroup_ABC > selectedEntity_;
     T_Items items_;

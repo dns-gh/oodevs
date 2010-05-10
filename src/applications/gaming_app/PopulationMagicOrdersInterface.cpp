@@ -10,11 +10,11 @@
 #include "gaming_app_pch.h"
 #include "PopulationMagicOrdersInterface.h"
 #include "moc_PopulationMagicOrdersInterface.cpp"
-
-#include "actions/UnitMagicAction.h"
+#include "actions/ActionTiming.h"
+#include "actions/Enumeration.h"
 #include "actions/Point.h"
 #include "actions/Quantity.h"
-#include "actions/Enumeration.h"
+#include "actions/UnitMagicAction.h"
 
 #include "clients_gui/LocationCreator.h"
 #include "clients_kernel/Controllers.h"
@@ -26,7 +26,6 @@
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Point.h"
 
-#include "gaming/ActionTiming.h"
 #include "gaming/StaticModel.h"
 #include "gaming/tools.h"
 #include "protocol/simulationsenders.h"
@@ -74,7 +73,7 @@ namespace
 // Name: PopulationMagicOrdersInterface constructor
 // Created: SBO 2007-05-04
 // -----------------------------------------------------------------------------
-PopulationMagicOrdersInterface::PopulationMagicOrdersInterface( QWidget* parent, Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, ParametersLayer& layer, const Profile_ABC& profile )
+PopulationMagicOrdersInterface::PopulationMagicOrdersInterface( QWidget* parent, Controllers& controllers, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, ParametersLayer& layer, const Profile_ABC& profile )
     : QObject( parent )
     , controllers_( controllers )
     , actionsModel_( actionsModel )

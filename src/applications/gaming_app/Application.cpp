@@ -122,7 +122,7 @@ void Application::Initialize( int argc, char** argv )
     workers_     = new Workers();
     network_     = new Network( *services_, *simulation_, *logger_ );
     RcEntityResolver_ABC* rcResolver = new RcEntityResolver( this, *controllers_ );
-    staticModel_ = new StaticModel( *controllers_, *rcResolver, *simulation_ );
+    staticModel_ = new ::StaticModel( *controllers_, *rcResolver, *simulation_ );
     model_       = new Model( *controllers_, *staticModel_, *simulation_, *workers_, network_->GetMessageMgr(), *rcResolver );
     profile_     = new Profile( *controllers_, network_->GetMessageMgr(), config_->GetLogin() );
     network_->GetMessageMgr().SetElements( *model_, *profile_ );

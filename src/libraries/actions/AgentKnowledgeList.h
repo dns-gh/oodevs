@@ -24,6 +24,7 @@ namespace kernel
     class Entity_ABC;
     class AgentKnowledgeConverter_ABC;
     class Controller;
+    class EntityResolver_ABC;
 }
 
 namespace actions {
@@ -43,7 +44,7 @@ public:
     //@{
     explicit AgentKnowledgeList( const kernel::OrderParameter& parameter );
              AgentKnowledgeList( const kernel::OrderParameter& parameter, const Common::MsgUnitKnowledgeList& message, kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
-             AgentKnowledgeList( const kernel::OrderParameter& parameter, xml::xistream& xis, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
+             AgentKnowledgeList( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
     virtual ~AgentKnowledgeList();
     //@}
 
@@ -69,7 +70,7 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadAgentKnowledge( xml::xistream& xis, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
+    void ReadAgentKnowledge( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
     //@}
 };
 

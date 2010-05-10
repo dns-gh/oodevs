@@ -22,7 +22,6 @@
 #include "NBCAttribute.h"
 #include "FireAttribute.h"
 #include "MedicalTreatmentAttribute.h"
-
 #include "Model.h"
 #include "AgentsModel.h"
 #include "ObjectsModel.h"
@@ -33,13 +32,11 @@
 #include "ObjectPerceptions.h"
 #include "StaticModel.h"
 
-using namespace kernel;
-
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledgeFactory constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-ObjectKnowledgeFactory::ObjectKnowledgeFactory( Controllers& controllers, Model& model, const StaticModel& staticModel )
+ObjectKnowledgeFactory::ObjectKnowledgeFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel )
     : controllers_( controllers )
     , model_( model )
     , static_( staticModel )
@@ -60,10 +57,10 @@ ObjectKnowledgeFactory::~ObjectKnowledgeFactory()
 // Name: ObjectKnowledgeFactory::Create
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-ObjectKnowledge_ABC* ObjectKnowledgeFactory::Create( const Entity_ABC& owner, const MsgsSimToClient::MsgObjectKnowledgeCreation& message )
+kernel::ObjectKnowledge_ABC* ObjectKnowledgeFactory::Create( const kernel::Entity_ABC& owner, const MsgsSimToClient::MsgObjectKnowledgeCreation& message )
 {
     ObjectKnowledge* knowledge = new ObjectKnowledge( owner, message, controllers_.controller_, static_.coordinateConverter_, model_.objects_, static_.objectTypes_ );
-    knowledge->Attach< Positions >( *new ObjectKnowledgePositions( static_.coordinateConverter_, *knowledge ) );
+    knowledge->Attach< kernel::Positions >( *new ObjectKnowledgePositions( static_.coordinateConverter_, *knowledge ) );
     knowledge->Attach( *new ObjectPerceptions( controllers_.controller_, model_.agents_ ) );
     Register( *knowledge, message.attributes() );
     knowledge->Polish();
@@ -74,38 +71,38 @@ ObjectKnowledge_ABC* ObjectKnowledgeFactory::Create( const Entity_ABC& owner, co
 // Name: ObjectKnowledgeFactory::Register
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void ObjectKnowledgeFactory::Register( ObjectKnowledge_ABC& knowledge, const Common::MsgObjectAttributes& attributes ) const
+void ObjectKnowledgeFactory::Register( kernel::ObjectKnowledge_ABC& knowledge, const Common::MsgObjectAttributes& attributes ) const
 {
     if ( attributes.has_logistic()  )
-        knowledge.Attach< LogisticAttribute_ABC >( *new LogisticAttribute( controllers_.controller_, model_.agents_ ) );    
+        knowledge.Attach< kernel::LogisticAttribute_ABC >( *new LogisticAttribute( controllers_.controller_, model_.agents_ ) );    
     
     if ( attributes.has_construction()  )
-        knowledge.Attach< ConstructionAttribute_ABC >( *new ConstructionAttribute( controllers_.controller_, static_.objectTypes_ ) );
+        knowledge.Attach< kernel::ConstructionAttribute_ABC >( *new ConstructionAttribute( controllers_.controller_, static_.objectTypes_ ) );
     
     if ( attributes.has_mine()  )
-        knowledge.Attach< MineAttribute_ABC >( *new MineAttribute( controllers_.controller_, static_.objectTypes_ ) );
+        knowledge.Attach< kernel::MineAttribute_ABC >( *new MineAttribute( controllers_.controller_, static_.objectTypes_ ) );
     
     if ( attributes.has_bypass()  )
-        knowledge.Attach< BypassAttribute_ABC >( *new BypassAttribute( controllers_.controller_ ) );
+        knowledge.Attach< kernel::BypassAttribute_ABC >( *new BypassAttribute( controllers_.controller_ ) );
     
     if ( attributes.has_obstacle()  )
-        knowledge.Attach< ObstacleAttribute_ABC >( *new ObstacleAttribute( controllers_.controller_ ) );
+        knowledge.Attach< kernel::ObstacleAttribute_ABC >( *new ObstacleAttribute( controllers_.controller_ ) );
 
     if ( attributes.has_activity_time()  )
-        knowledge.Attach< ActivityTimeAttribute_ABC >( *new ActivityTimeAttribute( controllers_.controller_ ) );
+        knowledge.Attach< kernel::ActivityTimeAttribute_ABC >( *new ActivityTimeAttribute( controllers_.controller_ ) );
     
     if ( attributes.has_crossing_site()  )
-        knowledge.Attach< CrossingSiteAttribute_ABC >( *new CrossingSiteAttribute( controllers_.controller_ ) );
+        knowledge.Attach< kernel::CrossingSiteAttribute_ABC >( *new CrossingSiteAttribute( controllers_.controller_ ) );
     
     if ( attributes.has_supply_route()  )
-        knowledge.Attach< SupplyRouteAttribute_ABC >( *new SupplyRouteAttribute( controllers_.controller_ ) );    
+        knowledge.Attach< kernel::SupplyRouteAttribute_ABC >( *new SupplyRouteAttribute( controllers_.controller_ ) );    
     
     if ( attributes.has_nbc()  )
-        knowledge.Attach< NBCAttribute_ABC >( *new NBCAttribute( controllers_.controller_, static_.objectTypes_ ) );
+        knowledge.Attach< kernel::NBCAttribute_ABC >( *new NBCAttribute( controllers_.controller_, static_.objectTypes_ ) );
 
     if( attributes.has_fire()  )
-        knowledge.Attach< FireAttribute_ABC >( *new FireAttribute( controllers_.controller_, static_.objectTypes_ ) );
+        knowledge.Attach< kernel::FireAttribute_ABC >( *new FireAttribute( controllers_.controller_, static_.objectTypes_ ) );
 
     if( attributes.has_medical_treatment()  )
-        knowledge.Attach< MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( controllers_.controller_, static_.objectTypes_ ) );
+        knowledge.Attach< kernel::MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( controllers_.controller_, static_.objectTypes_ ) );
 }

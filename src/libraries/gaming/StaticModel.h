@@ -10,11 +10,13 @@
 #ifndef __StaticModel_h_
 #define __StaticModel_h_
 
+#include "clients_kernel/StaticModel.h"
 
 namespace urban
 {
     class StaticModel;
 }
+
 namespace kernel
 {
     class AgentTypes;
@@ -55,38 +57,32 @@ class UrbanModel;
 */
 // Created: AGE 2006-08-01
 // =============================================================================
-class StaticModel
+class StaticModel : public kernel::StaticModel
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             StaticModel( kernel::Controllers& controllers, const RcEntityResolver_ABC& rcResolver, const kernel::Time_ABC& simu );
+             StaticModel( kernel::Controllers& controllers, const RcEntityResolver_ABC& rcResolver, const kernel::Time_ABC& simulation );
     virtual ~StaticModel();
     //@}
 
     //! @name Operations
     //@{
-    void Load( const tools::ExerciseConfig& config );
-    void Purge();
+    virtual void Load( const tools::ExerciseConfig& config );
+    virtual void Purge();
     //@}
 
 public:
     //! @name Member data
     //@{
-    kernel::Controllers&             controllers_;
-    kernel::CoordinateSystems&       coordinateSystems_;
-    kernel::CoordinateConverter_ABC& coordinateConverter_;
-    kernel::DetectionMap&            detection_;
-    kernel::AgentTypes&              types_;
-    kernel::ObjectTypes&             objectTypes_;
-    kernel::FormationLevels&         levels_;
-    kernel::AtlasNatures&            atlasNatures_;
-    ReportFactory&                   reportFactory_;
-    gui::DrawingTypes&               drawings_;
-    indicators::Primitives&          indicators_;
-    indicators::GaugeTypes&          gaugeTypes_;
-    urban::StaticModel&              urbanTypes_;
+    kernel::Controllers&    controllers_;
+    kernel::DetectionMap&   detection_;
+    ReportFactory&          reportFactory_;
+    gui::DrawingTypes&      drawings_;
+    indicators::Primitives& indicators_;
+    indicators::GaugeTypes& gaugeTypes_;
+    urban::StaticModel&     urbanTypes_;
     //@}
 
 private:

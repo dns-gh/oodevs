@@ -23,6 +23,7 @@ namespace kernel
 namespace actions
 {
     class Action_ABC;
+    class ActionTiming;
     class Parameter_ABC;
 }
 
@@ -30,8 +31,6 @@ namespace gui
 {
     class ItemFactory_ABC;
 }
-
-class ActionTiming;
 
 // =============================================================================
 /** @class  ActionProperties
@@ -41,8 +40,7 @@ class ActionTiming;
 // =============================================================================
 class ActionProperties : public QVBox
                        , public tools::Observer_ABC
-//                       , public tools::ElementObserver_ABC< actions::Action_ABC >
-                       , public tools::ElementObserver_ABC< ActionTiming >
+                       , public tools::ElementObserver_ABC< actions::ActionTiming >
                        , public tools::SelectionObserver< actions::Action_ABC >
 {
 
@@ -67,7 +65,7 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifySelected( const actions::Action_ABC* action );
-    virtual void NotifyUpdated( const ActionTiming& timing );
+    virtual void NotifyUpdated( const actions::ActionTiming& timing );
     //@}
 
 private:

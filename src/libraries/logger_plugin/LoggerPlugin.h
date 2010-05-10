@@ -27,6 +27,11 @@ namespace dispatcher
     class Services;
 }
 
+namespace kernel
+{
+    class StaticModel;
+}
+
 namespace plugins
 {
 namespace logger
@@ -43,7 +48,7 @@ class LoggerPlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LoggerPlugin( const dispatcher::Model& model, const tools::SessionConfig& config, const dispatcher::Services& services );
+             LoggerPlugin( const dispatcher::Model& model, const kernel::StaticModel& staticModel, const tools::SessionConfig& config, const dispatcher::Services& services );
     virtual ~LoggerPlugin();
     //@}
 
@@ -76,6 +81,7 @@ private:
     RcEntityResolver            resolver_;
     ReportFactory               factory_;
     const dispatcher::Model&    model_;
+    const kernel::StaticModel&  staticModel_;
     const dispatcher::Services& services_;
     std::string                 date_;
     bool                        enabled_;

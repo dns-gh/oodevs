@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "actions_test_pch.h"
+#include "MockEntityResolver.h"
 #include "actions/Agent.h"
 #include "actions/AgentList.h"
 #include "actions/Automat.h"
@@ -231,10 +232,10 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Agent )
 {
     const std::string input( "<parameter name='test' type='agent' value='42'/>" );
     kernel::Controller controller;
-    tools::Resolver< kernel::Agent_ABC > resolver;
     MockAgent agent;
     MOCK_EXPECT( agent, GetId ).returns( 42 );
-    resolver.Register( agent.GetId(), agent );
+    MockEntityResolver resolver;
+    MOCK_EXPECT( resolver, GetAgent ).with( 42 ).returns( boost::ref( agent ) );
     std::auto_ptr< Common::MsgMissionParameter > message( Serialize( "agent", input, 
         bl::bind( bl::new_ptr< actions::parameters::Agent >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( controller ) ) ) );
     CheckSet( *message );
@@ -332,10 +333,10 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Automat )
 {
     const std::string input( "<parameter name='test' type='automate' value='42'/>" );
     kernel::Controller controller;
-    tools::Resolver< kernel::Automat_ABC > resolver;
     MockAutomat automat;
     MOCK_EXPECT( automat, GetId ).returns( 42 );
-    resolver.Register( automat.GetId(), automat );
+    MockEntityResolver resolver;
+    MOCK_EXPECT( resolver, GetAutomat ).with( 42 ).returns( boost::ref( automat ) );
     std::auto_ptr< Common::MsgMissionParameter > message( Serialize( "automate", input, 
         bl::bind( bl::new_ptr< actions::parameters::Automat >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( controller ) ) ) );
     CheckSet( *message );
@@ -546,10 +547,10 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_PopulationKnowledge )
 {
     const std::string input( "<parameter name='test' type='populationknowledge' value='42'/>" );
 
-    tools::Resolver< kernel::Population_ABC > resolver;
     MockPopulation population;
     MOCK_EXPECT( population, GetId ).returns( 42 );
-    resolver.Register( population.GetId(), population );
+    MockEntityResolver resolver;
+    MOCK_EXPECT( resolver, GetPopulation ).with( 42 ).returns( boost::ref( population ) );
     MockAgent owner;
     MockPopulationKnowledge knowledge;
     MOCK_EXPECT( knowledge, GetId ).returns( 15 );
@@ -570,10 +571,10 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_PopulationKnowledge )
 BOOST_AUTO_TEST_CASE( ParametersSerialization_ObjectKnowledge )
 {
     const std::string input( "<parameter name='test' type='objectknowledge' value='42'/>" );
-    tools::Resolver< kernel::Object_ABC > resolver;
     MockObject object;
     MOCK_EXPECT( object, GetId ).returns( 42 );
-    resolver.Register( object.GetId(), object );
+    MockEntityResolver resolver;
+    MOCK_EXPECT( resolver, GetObject ).with( 42 ).returns( boost::ref( object ) );
     MockTeam owner;
     MockCommunicationHierarchies* pHierarchies = new MockCommunicationHierarchies;
     MOCK_EXPECT( *pHierarchies, GetSuperior ).returns( 0 );

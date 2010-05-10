@@ -12,6 +12,7 @@
 #include "Agent.h"
 #include "ParameterVisitor_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/EntityResolver_ABC.h"
 #include "protocol/Protocol.h"
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.h>
@@ -35,7 +36,7 @@ AgentList::AgentList( const kernel::OrderParameter& parameter )
 // Name: AgentList constructor
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-AgentList::AgentList( const OrderParameter& parameter, const Common::MsgUnitList& message, const Resolver_ABC< Agent_ABC >& resolver, kernel::Controller& controller )
+AgentList::AgentList( const OrderParameter& parameter, const Common::MsgUnitList& message, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
     : Parameter< QString >( parameter )
 {
     for( int i = 0; i < message.elem_size(); ++i )
@@ -46,7 +47,7 @@ AgentList::AgentList( const OrderParameter& parameter, const Common::MsgUnitList
 // Name: AgentList constructor
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-AgentList::AgentList( const OrderParameter& parameter, xml::xistream& xis, const tools::Resolver_ABC< Agent_ABC >& resolver, kernel::Controller& controller )
+AgentList::AgentList( const OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
     : Parameter< QString >( parameter )
 {
     xis >> list( "parameter", *this, &AgentList::ReadAgent, resolver, controller );
@@ -65,7 +66,7 @@ AgentList::~AgentList()
 // Name: AgentList::ReadAgent
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-void AgentList::ReadAgent( xml::xistream& xis, const tools::Resolver_ABC< Agent_ABC >& resolver, kernel::Controller& controller )
+void AgentList::ReadAgent( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
 {
     AddParameter( *new Agent( xis, resolver, controller ) );
 }

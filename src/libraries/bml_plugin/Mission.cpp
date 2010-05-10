@@ -18,13 +18,15 @@
 #include "dispatcher/Automat.h"
 #include "dispatcher/Agent.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
+#include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/MissionType.h"
 #include "clients_kernel/OrderParameter.h"
+#include "clients_kernel/StaticModel.h"
+#include "protocol/simulationsenders.h"
 #include <xeumeuleu/xml.h>
 #pragma warning( disable : 4512 )
 #include <boost/algorithm/string.hpp>
 #include <boost/bind.hpp>
-#include "protocol/simulationsenders.h"
 
 using namespace plugins::bml;
 
@@ -32,8 +34,9 @@ using namespace plugins::bml;
 // Name: Mission constructor
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-Mission::Mission( xml::xistream& xis, const dispatcher::Model& model )
+Mission::Mission( xml::xistream& xis, const dispatcher::Model& model, const kernel::StaticModel& staticModel )
     : model_( model )
+    , staticModel_( staticModel )
     , type_( ResolveMission( xis ) )
     , automatTaskee_( 0 )
     , agentTaskee_( 0 )
@@ -72,7 +75,8 @@ const kernel::MissionType& Mission::ResolveMission( xml::xistream& xis )
                 >> xml::end()
             >> xml::end()
         >> xml::end();
-    return model_.GetMissionTypes().Get( GetMissionIdFromCode( model_.GetMissionTypes(), code ) );
+    const tools::Resolver< kernel::MissionType >& missions = staticModel_.types_;
+    return missions.Get( GetMissionIdFromCode( missions, code ) );
 }
 
 namespace

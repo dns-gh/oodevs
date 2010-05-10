@@ -142,7 +142,7 @@ using namespace gui;
 // Name: MainWindow constructor
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------
-MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticModel, Model& model, const Simulation& simulation, Network& network, const kernel::Profile_ABC& p, tools::ExerciseConfig& config, LoggerProxy& logger, const QString& license )
+MainWindow::MainWindow( kernel::Controllers& controllers, ::StaticModel& staticModel, Model& model, const Simulation& simulation, Network& network, const kernel::Profile_ABC& p, tools::ExerciseConfig& config, LoggerProxy& logger, const QString& license )
     : QMainWindow( 0, 0, Qt::WDestructiveClose )
     , controllers_  ( controllers )
     , staticModel_  ( staticModel )

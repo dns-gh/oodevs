@@ -44,8 +44,8 @@ using namespace kernel;
 // Name: MissionPanel constructor
 // Created: APE 2004-03-19
 // -----------------------------------------------------------------------------
-MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const StaticModel& model, Publisher_ABC& publisher, gui::ParametersLayer& layer, const GlTools_ABC& tools, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel
-                          , AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter, const Simulation& simulation )
+MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const ::StaticModel& model, Publisher_ABC& publisher, gui::ParametersLayer& layer, const GlTools_ABC& tools, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel
+                          , AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter, const kernel::Time_ABC& simulation )
     : QDockWindow              ( QDockWindow::OutsideDock, pParent, "mission" )
     , controllers_             ( controllers )
     , static_                  ( model )

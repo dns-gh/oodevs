@@ -7,12 +7,12 @@
 //
 // *****************************************************************************
 
-#include "gaming_pch.h"
+#include "actions_pch.h"
 #include "ActionTiming.h"
-#include "Simulation.h"
-#include "Tools.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
+#include "clients_kernel/Time_ABC.h"
+#include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.h>
 
 using namespace actions;
@@ -21,7 +21,7 @@ using namespace actions;
 // Name: ActionTiming constructor
 // Created: SBO 2007-06-19
 // -----------------------------------------------------------------------------
-ActionTiming::ActionTiming( kernel::Controller& controller, const Simulation& simulation, const Action_ABC& owner )
+ActionTiming::ActionTiming( kernel::Controller& controller, const kernel::Time_ABC& simulation, const Action_ABC& owner )
     : controller_( controller )
     , simulation_( simulation )
     , owner_( owner )
@@ -33,7 +33,7 @@ ActionTiming::ActionTiming( kernel::Controller& controller, const Simulation& si
 
 namespace
 {
-    QDateTime ReadDateTime( xml::xistream& xis, const Simulation& simulation )
+    QDateTime ReadDateTime( xml::xistream& xis, const kernel::Time_ABC& simulation )
     {
         std::string datetime;
         xis >> xml::attribute( "time", datetime );
@@ -49,7 +49,7 @@ namespace
 // Name: ActionTiming constructor
 // Created: SBO 2007-06-28
 // -----------------------------------------------------------------------------
-ActionTiming::ActionTiming( xml::xistream& xis, kernel::Controller& controller, const Simulation& simulation, const Action_ABC& owner )
+ActionTiming::ActionTiming( xml::xistream& xis, kernel::Controller& controller, const kernel::Time_ABC& simulation, const Action_ABC& owner )
     : controller_( controller )
     , simulation_( simulation )
     , owner_( owner )

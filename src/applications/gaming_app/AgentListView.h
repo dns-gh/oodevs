@@ -21,6 +21,7 @@ namespace kernel
     class KnowledgeGroup_ABC;
     class Team_ABC; // LTO
     class Controllers; // LTO
+    class Time_ABC;
 }
 
 namespace actions
@@ -29,7 +30,6 @@ namespace actions
 }
 
 class AutomatDecisions;
-class Simulation;
 class StaticModel;
 
 // =============================================================================
@@ -47,7 +47,7 @@ class AgentListView : public gui::HierarchyListView< kernel::CommunicationHierar
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentListView( QWidget* pParent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons );
+             AgentListView( QWidget* pParent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons );
     virtual ~AgentListView();
     //@}
 
@@ -77,7 +77,7 @@ private:
     //@{
     actions::ActionsModel& actionsModel_;
     const StaticModel& static_;
-    const Simulation& simulation_;
+    const kernel::Time_ABC& simulation_;
     QPixmap lock_, commandPost_, scisors_;
     kernel::Controllers& controllers_; // LTO
     //@}

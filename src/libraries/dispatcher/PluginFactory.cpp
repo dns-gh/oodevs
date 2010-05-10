@@ -30,9 +30,10 @@ using namespace plugins;
 // Name: PluginFactory constructor
 // Created: SBO 2008-02-28
 // -----------------------------------------------------------------------------
-PluginFactory::PluginFactory( const Config& config, Model& model, SimulationPublisher_ABC& simulation, ClientsNetworker& clients, CompositePlugin& handler, CompositeRegistrable& registrables, const Services& services, int maxConnections )
+PluginFactory::PluginFactory( const Config& config, Model& model, const kernel::StaticModel& staticModel, SimulationPublisher_ABC& simulation, ClientsNetworker& clients, CompositePlugin& handler, CompositeRegistrable& registrables, const Services& services, int maxConnections )
     : config_      ( config )
     , model_       ( model )
+    , staticModel_ ( staticModel )
     , simulation_  ( simulation )
     , clients_     ( clients )
     , handler_     ( handler )
@@ -71,9 +72,9 @@ void PluginFactory::Instanciate()
 {
     // $$$$ AGE 2008-08-04: retirer la dépendance...
     handler_.Add( new messenger::MessengerPlugin( clients_, clients_, clients_, config_, registrables_ ) );
-    handler_.Add( new script::ScriptPlugin( model_, config_, simulation_, clients_, clients_, *rights_, registrables_ ) );
+    handler_.Add( new script::ScriptPlugin( model_, staticModel_, config_, simulation_, clients_, clients_, *rights_, registrables_ ) );
     handler_.Add( new score::ScorePlugin( clients_, clients_, clients_, config_, registrables_ ) );
-    handler_.Add( new logger::LoggerPlugin( model_, config_, services_ ) );
+    handler_.Add( new logger::LoggerPlugin( model_, staticModel_, config_, services_ ) );
 
     xml::xifstream xis( config_.GetSessionFile() );
     xis >> xml::start( "session" ) >> xml::start( "config" ) >> xml::start( "dispatcher" ) >> xml::start( "plugins" )
@@ -93,7 +94,7 @@ void PluginFactory::ReadPlugin( const std::string& name, xml::xistream& xis ) co
     }
     for( T_Factories::const_iterator it = factories_.begin(); it != factories_.end(); ++it )
     {
-        std::auto_ptr< Plugin_ABC > plugin( (*it)->Create( name, xis, config_, model_, simulation_, clients_, clients_ , clients_, registrables_ ) );
+        std::auto_ptr< Plugin_ABC > plugin( (*it)->Create( name, xis, config_, model_, staticModel_, simulation_, clients_, clients_ , clients_, registrables_ ) );
         if( plugin.get() )
             handler_.Add( plugin.release() );
     }

@@ -18,10 +18,11 @@
 #include "MedicalTreatmentPrototype.h"
 #include "FirePrototype.h"
 #include "ActivityTimePrototype.h"
-#include "actions/ObjectMagicAction.h"
+#include "actions/ActionTiming.h"
 #include "actions/Army.h"
-#include "actions/ParameterList.h"
 #include "actions/Location.h"
+#include "actions/ObjectMagicAction.h"
+#include "actions/ParameterList.h"
 #include "actions/String.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/MagicActionType.h"
@@ -30,14 +31,12 @@
 #include "clients_kernel/Point.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_gui/ObjectAttributePrototypeFactory.h"
-#include "gaming/ActionTiming.h"
 #include "gaming/StaticModel.h"
 #include "protocol/SimulationSenders.h"
 #include <xeumeuleu/xml.h>
 #include <boost/bind.hpp>
 
 using namespace actions;
-using namespace kernel;
 using namespace gui;
 using namespace parameters;
 
@@ -84,12 +83,12 @@ namespace
     //{
     //}
 
-    void LogisticAttribute( T_AttributeContainer& container, QWidget* parent, Controllers& controllers, ParameterList*& attributesList )
+    void LogisticAttribute( T_AttributeContainer& container, QWidget* parent, kernel::Controllers& controllers, ParameterList*& attributesList )
     {
         container.push_back( new LogisticPrototype( parent, controllers, attributesList ) );
     }
     
-    void PropagationAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, const ObjectTypes& resolver, ParameterList*& attributesList )
+    void PropagationAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, const kernel::ObjectTypes& resolver, ParameterList*& attributesList )
     {
         std::string model( xml::attribute< std::string >( xis, "model" ) );
         if( model == "input" )
@@ -101,13 +100,13 @@ namespace
             container.push_back( new FirePrototype( parent, resolver, attributesList ) );
     }
 
-    void ContaminationAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, const ObjectTypes& resolver, ParameterList*& attributesList )
+    void ContaminationAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, const kernel::ObjectTypes& resolver, ParameterList*& attributesList )
     {
         int toxic = xml::attribute< int >( xis, "max-toxic" );
         container.push_back( new NBCPrototype( parent, resolver, toxic, attributesList ) );
     }
 
-    void MedicalTreatmentAttribute( T_AttributeContainer& container, QWidget* parent, const tools::Resolver_ABC< MedicalTreatmentType >& resolver, ParameterList*& attributesList )
+    void MedicalTreatmentAttribute( T_AttributeContainer& container, QWidget* parent, const tools::Resolver_ABC< kernel::MedicalTreatmentType >& resolver, ParameterList*& attributesList )
     {
         container.push_back( new MedicalTreatmentPrototype( parent, resolver, attributesList ) );
     }
@@ -121,8 +120,7 @@ namespace
         }
     };
     
-    ObjectAttributePrototypeFactory_ABC* FactoryMaker( Controllers& controllers, 
-                                                       const ObjectTypes& resolver, ParameterList*& attributesList )
+    ObjectAttributePrototypeFactory_ABC* FactoryMaker( kernel::Controllers& controllers, const kernel::ObjectTypes& resolver, ParameterList*& attributesList )
     {
         ObjectAttributePrototypeFactory* factory = new ObjectAttributePrototypeFactory();
         factory->Register( "constructor"    , boost::bind( &ConstructorAttribute, _1, _2, _3, boost::ref( attributesList ) ) );
@@ -165,13 +163,13 @@ ObjectPrototype::~ObjectPrototype()
 // Name: ObjectPrototype::Commit
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
-void ObjectPrototype::Commit( actions::ActionsModel& actionsModel, const Simulation& simulation )
+void ObjectPrototype::Commit( actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation )
 {    
     if( CheckValidity() )
     {
-        MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "create_object" );
+        kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "create_object" );
         ObjectMagicAction* action = new ObjectMagicAction( 0, actionType, controllers_.controller_, true );
-        tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+        tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
         
         action->AddParameter( *new String( it.NextElement(), objectTypes_->GetValue()->GetType() ) );
         kernel::Point point;
@@ -184,7 +182,7 @@ void ObjectPrototype::Commit( actions::ActionsModel& actionsModel, const Simulat
 
         ObjectPrototype_ABC::Commit();
 
-        action->Attach( *new ActionTiming( controllers_.controller_, simulation, *action ) );
+        action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation, *action ) );
         action->RegisterAndPublish( actionsModel );
 
         ObjectPrototype_ABC::Clean();

@@ -18,13 +18,11 @@
 #include "AgentsModel.h"
 #include "StaticModel.h"
 
-using namespace kernel;
-
 // -----------------------------------------------------------------------------
 // Name: Logistics constructor
 // Created: AGE 2006-03-01
 // -----------------------------------------------------------------------------
-Logistics::Logistics( Entity_ABC& holder, Controller& controller, Model& model, const StaticModel& staticModel, PropertiesDictionary& dico )
+Logistics::Logistics( kernel::Entity_ABC& holder, kernel::Controller& controller, Model& model, const StaticModel& staticModel, kernel::PropertiesDictionary& dico )
     : holder_    ( holder )
     , controller_( controller )
     , model_     ( model )

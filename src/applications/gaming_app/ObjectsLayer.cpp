@@ -9,11 +9,11 @@
 
 #include "gaming_app_pch.h"
 #include "ObjectsLayer.h"
+#include "actions/ActionTiming.h"
 #include "actions/ObjectMagicAction.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Object_ABC.h"
-#include "gaming/ActionTiming.h"
 #include "gaming/StaticModel.h"
 #include "protocol/simulationsenders.h"
 #include "protocol/clientsenders.h"
@@ -26,7 +26,7 @@ using namespace actions;
 // Name: ObjectsLayer constructor
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-ObjectsLayer::ObjectsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation )
+ObjectsLayer::ObjectsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation )
     : gui::ObjectsLayer( controllers, tools, strategy, view, profile )
     , actionsModel_( actionsModel )
     , static_( staticModel )

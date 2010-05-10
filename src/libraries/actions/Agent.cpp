@@ -10,6 +10,7 @@
 #include "actions_pch.h"
 #include "Agent.h"
 #include "ParameterVisitor_ABC.h"
+#include "clients_kernel/EntityResolver_ABC.h"
 #include "protocol/Protocol.h"
 
 using namespace kernel;
@@ -31,8 +32,8 @@ Agent::Agent( const OrderParameter& parameter, kernel::Controller& controller )
 // Name: Agent constructor
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-Agent::Agent( const OrderParameter& parameter, xml::xistream& xis, const tools::Resolver_ABC< Agent_ABC >& resolver, kernel::Controller& controller )
-    : Entity< Agent_ABC >( parameter, &resolver.Get( attribute< unsigned long >( xis, "value" ) ), controller )
+Agent::Agent( const OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
+    : Entity< Agent_ABC >( parameter, &resolver.GetAgent( attribute< unsigned long >( xis, "value" ) ), controller )
 {
     // NOTHING
 }
@@ -41,8 +42,8 @@ Agent::Agent( const OrderParameter& parameter, xml::xistream& xis, const tools::
 // Name: Agent constructor
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-Agent::Agent( const OrderParameter& parameter, unsigned int id, const tools::Resolver_ABC< Agent_ABC >& resolver, kernel::Controller& controller )
-    : Entity< Agent_ABC >( parameter, &resolver.Get( id ), controller )
+Agent::Agent( const OrderParameter& parameter, unsigned int id, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
+    : Entity< Agent_ABC >( parameter, &resolver.GetAgent( id ), controller )
 {
     // NOTHING
 }
@@ -51,8 +52,8 @@ Agent::Agent( const OrderParameter& parameter, unsigned int id, const tools::Res
 // Name: Agent constructor
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-Agent::Agent( xml::xistream& xis, const tools::Resolver_ABC< Agent_ABC >& resolver, kernel::Controller& controller )
-    : Entity< Agent_ABC >( OrderParameter( attribute< std::string >( xis, "name" ), "agent", false ), &resolver.Get( attribute< unsigned long >( xis, "value" ) ), controller )
+Agent::Agent( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
+    : Entity< Agent_ABC >( OrderParameter( attribute< std::string >( xis, "name" ), "agent", false ), &resolver.GetAgent( attribute< unsigned long >( xis, "value" ) ), controller )
 {
     // NOTHING
 }

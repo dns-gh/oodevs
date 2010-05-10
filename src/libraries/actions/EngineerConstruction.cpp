@@ -14,6 +14,7 @@
 #include "Numeric.h"
 #include "ObstacleType.h"
 #include "ParameterVisitor_ABC.h"
+#include "clients_kernel/EntityResolver_ABC.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/ObjectIcons.h"
 #include "clients_kernel/Tools.h"
@@ -41,25 +42,25 @@ EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, con
 // Name: EngineerConstruction constructor
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
-EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< ObjectType, std::string >& types, const tools::Resolver_ABC< Automat_ABC >& automats, const Common::MsgPlannedWork& message, kernel::Controller& controller )
+EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< ObjectType, std::string >& types, const kernel::EntityResolver_ABC& entities, const Common::MsgPlannedWork& message, kernel::Controller& controller )
     : Parameter< std::string >( parameter )
     , type_( types.Get( message.type() ) )
 {
     AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Location" ).ascii(), "location", false ), converter, message.position() ) );
     SetValue( type_.GetName() );
-    SetParameters( message, automats, controller );
+    SetParameters( message, entities, controller );
 }
 
 // -----------------------------------------------------------------------------
 // Name: EngineerConstruction::SetParameters
 // Created: LDC 2009-04-01
 // -----------------------------------------------------------------------------
-void EngineerConstruction::SetParameters( const Common::MsgPlannedWork& message, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, kernel::Controller& controller )
+void EngineerConstruction::SetParameters( const Common::MsgPlannedWork& message, const kernel::EntityResolver_ABC& entities, kernel::Controller& controller )
 {
     if( message.tc2() != 0 )
     {
         const OrderParameter param( tools::translate( "ActionParameter", "TC2" ).ascii(), "tc2", false );
-        AddParameter( *new Automat( param, message.tc2(), automats, controller ) );
+        AddParameter( *new Automat( param, message.tc2(), entities, controller ) );
     }
     if( message.densite() != 0 )
     {
@@ -72,11 +73,11 @@ void EngineerConstruction::SetParameters( const Common::MsgPlannedWork& message,
 // Name: EngineerConstruction constructor
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< ObjectType, std::string >& types, const tools::Resolver_ABC< Automat_ABC >& automats, xml::xistream& xis, kernel::Controller& controller )
+EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< ObjectType, std::string >& types, const kernel::EntityResolver_ABC& entities, xml::xistream& xis, kernel::Controller& controller )
     : Parameter< std::string >( parameter )
     , type_( types.Get( xml::attribute< std::string >( xis, "value" ) ) )
 {
-    xis >> list( "parameter", *this, &EngineerConstruction::ReadParameter, converter, automats, controller );
+    xis >> list( "parameter", *this, &EngineerConstruction::ReadParameter, converter, entities, controller );
     SetValue( type_.GetName() );
 }
 
@@ -84,11 +85,11 @@ EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, con
 // Name: EngineerConstruction constructor
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-EngineerConstruction::EngineerConstruction( const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< ObjectType, std::string >& types, const tools::Resolver_ABC< Automat_ABC >& automats, xml::xistream& xis, kernel::Controller& controller )
+EngineerConstruction::EngineerConstruction( const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< ObjectType, std::string >& types, const kernel::EntityResolver_ABC& entities, xml::xistream& xis, kernel::Controller& controller )
     : Parameter< std::string >( OrderParameter( xml::attribute< std::string >( xis, "name" ).c_str(), "obstacle", false ) )
     , type_ ( types.Get( xml::attribute< std::string >( xis, "value" ) ) )
 {
-    xis >> list( "parameter", *this, &EngineerConstruction::ReadParameter, converter, automats, controller );
+    xis >> list( "parameter", *this, &EngineerConstruction::ReadParameter, converter, entities, controller );
     SetValue( type_.GetName() );
 }
 
@@ -105,7 +106,7 @@ EngineerConstruction::~EngineerConstruction()
 // Name: EngineerConstruction::ReadParameter
 // Created: SBO 2007-05-25
 // -----------------------------------------------------------------------------
-void EngineerConstruction::ReadParameter( xml::xistream& xis, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< Automat_ABC >& automats, Controller& controller )
+void EngineerConstruction::ReadParameter( xml::xistream& xis, const CoordinateConverter_ABC& converter, const kernel::EntityResolver_ABC& entities, Controller& controller )
 {
     std::string type;
     xis >> attribute( "type", type );
@@ -114,7 +115,7 @@ void EngineerConstruction::ReadParameter( xml::xistream& xis, const CoordinateCo
     else if( type == "location" )
         AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Location" ).ascii(), "location", false ), converter, xis ) );
     else if( type == "tc2" )
-        AddParameter( *new Automat( xis, automats, controller ) );
+        AddParameter( *new Automat( xis, entities, controller ) );
 }
 
 // -----------------------------------------------------------------------------

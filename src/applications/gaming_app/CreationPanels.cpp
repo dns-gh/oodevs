@@ -9,7 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "CreationPanels.h"
-#include "preparation/StaticModel.h"
+#include "gaming/StaticModel.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/UnitsPanel.h"
@@ -30,7 +30,7 @@ using namespace actions;
 // Name: CreationPanels constructor
 // Created: SBO 2007-06-19
 // -----------------------------------------------------------------------------
-CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const StaticModel& staticModel, ItemFactory_ABC& factory, actions::ActionsModel& actionsModel, const Simulation& simulation, ParametersLayer& paramLayer, GlTools_ABC& tools, SymbolIcons& icons, ColorStrategy_ABC& colorStrategy, DrawingsModel& drawings )
+CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const ::StaticModel& staticModel, ItemFactory_ABC& factory, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, ParametersLayer& paramLayer, GlTools_ABC& tools, SymbolIcons& icons, ColorStrategy_ABC& colorStrategy, DrawingsModel& drawings )
     : Panels( parent )
     , controllers_( controllers )
     , shown_( true )

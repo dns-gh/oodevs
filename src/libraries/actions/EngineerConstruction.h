@@ -24,6 +24,7 @@ namespace kernel
     class ObjectType;
     class Automat_ABC;
     class Controller;
+    class EntityResolver_ABC;
 }
 
 namespace actions {
@@ -41,9 +42,9 @@ class EngineerConstruction : public Parameter< std::string >
     //! @name Constructors/Destructor
     //@{
              EngineerConstruction( const kernel::OrderParameter& parameter, const kernel::ObjectType& type );
-             EngineerConstruction( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::ObjectType, std::string >& types, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, const Common::MsgPlannedWork& message, kernel::Controller& controller );
-             EngineerConstruction( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::ObjectType, std::string >& types, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, xml::xistream& xis, kernel::Controller& controller );
-             EngineerConstruction( const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::ObjectType, std::string >& types, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, xml::xistream& xis, kernel::Controller& controller );
+             EngineerConstruction( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::ObjectType, std::string >& types, const kernel::EntityResolver_ABC& entities, const Common::MsgPlannedWork& message, kernel::Controller& controller );
+             EngineerConstruction( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::ObjectType, std::string >& types, const kernel::EntityResolver_ABC& entities, xml::xistream& xis, kernel::Controller& controller );
+             EngineerConstruction( const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::ObjectType, std::string >& types, const kernel::EntityResolver_ABC& entities, xml::xistream& xis, kernel::Controller& controller );
     virtual ~EngineerConstruction();
     //@}
 
@@ -72,9 +73,9 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadParameter( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, kernel::Controller& controller );
+    void ReadParameter( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const kernel::EntityResolver_ABC& entities, kernel::Controller& controller );
     virtual void Serialize( xml::xostream& xos ) const;
-    void SetParameters( const Common::MsgPlannedWork& message, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, kernel::Controller& controller );
+    void SetParameters( const Common::MsgPlannedWork& message, const kernel::EntityResolver_ABC& entities, kernel::Controller& controller );
     //@}
 
 private:

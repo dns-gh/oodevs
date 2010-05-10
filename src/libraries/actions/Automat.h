@@ -12,7 +12,11 @@
 
 #include "Entity.h"
 #include "clients_kernel/Automat_ABC.h"
-#include <boost/function.hpp>
+
+namespace kernel
+{
+    class EntityResolver_ABC;
+}
 
 namespace actions {
     namespace parameters {
@@ -30,9 +34,9 @@ public:
     //@{
              Automat( const kernel::OrderParameter& parameter, kernel::Controller& controller );
              Automat( const kernel::OrderParameter& parameter, const kernel::Automat_ABC& automat, kernel::Controller& controller );
-             Automat( const kernel::OrderParameter& parameter, unsigned int id, const tools::Resolver_ABC< kernel::Automat_ABC >& resolver, kernel::Controller& controller );
-             Automat( const kernel::OrderParameter& parameter, xml::xistream& xis, const tools::Resolver_ABC< kernel::Automat_ABC >& resolver, kernel::Controller& controller );
-             Automat( xml::xistream& xis, const tools::Resolver_ABC< kernel::Automat_ABC >& resolver, kernel::Controller& controller );
+             Automat( const kernel::OrderParameter& parameter, unsigned int id, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
+             Automat( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
+             Automat( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
     virtual ~Automat();
     //@}
 

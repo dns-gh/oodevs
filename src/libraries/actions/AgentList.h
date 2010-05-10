@@ -11,7 +11,6 @@
 #define __ActionParameterAgentList_h_
 
 #include "Parameter.h"
-#include "tools/Resolver_ABC.h"
 
 namespace Common
 {
@@ -22,6 +21,7 @@ namespace kernel
 {
     class Agent_ABC;
     class Controller;
+    class EntityResolver_ABC;
 }
 
 namespace actions {
@@ -40,8 +40,8 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit AgentList( const kernel::OrderParameter& parameter );
-             AgentList( const kernel::OrderParameter& parameter, const Common::MsgUnitList& message, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, kernel::Controller& controller );
-             AgentList( const kernel::OrderParameter& parameter, xml::xistream& xis, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, kernel::Controller& controller );
+             AgentList( const kernel::OrderParameter& parameter, const Common::MsgUnitList& message, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
+             AgentList( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
     virtual ~AgentList();
     //@}
 
@@ -68,7 +68,7 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadAgent( xml::xistream& xis, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, kernel::Controller& controller );
+    void ReadAgent( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
     //@}
 };
 

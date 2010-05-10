@@ -2,6 +2,9 @@ HEADERS =
 
 SOURCES = Action_ABC.cpp \
 ActionsModel.cpp \
+ActionFactory.cpp \
+ActionParameterFactory.cpp \
+ActionTiming.cpp \
 AgentKnowledge.cpp \
 AgentKnowledgeList.cpp \
 AgentList.cpp \

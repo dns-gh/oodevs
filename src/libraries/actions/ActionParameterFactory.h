@@ -7,16 +7,19 @@
 //
 // *****************************************************************************
 
-#ifndef __ActionParameterFactory_h_
-#define __ActionParameterFactory_h_
+#ifndef __actions_ActionParameterFactory_h_
+#define __actions_ActionParameterFactory_h_
 
-#include "actions/ParameterFactory_ABC.h"
+#include "ParameterFactory_ABC.h"
 
 namespace kernel
 {
-    class CoordinateConverter_ABC;
     class AgentKnowledgeConverter_ABC;
+    class Controller;
+    class CoordinateConverter_ABC;
+    class EntityResolver_ABC;
     class ObjectKnowledgeConverter_ABC;
+    class StaticModel;
 }
 
 namespace actions
@@ -25,10 +28,6 @@ namespace actions
     {
         class ParameterList;
     }
-}
-
-class Model;
-class StaticModel;
 
 // =============================================================================
 /** @class  ActionParameterFactory
@@ -42,7 +41,7 @@ class ActionParameterFactory : public actions::ParameterFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionParameterFactory( const kernel::CoordinateConverter_ABC& converter, const Model& model, const StaticModel& staticModel
+             ActionParameterFactory( const kernel::CoordinateConverter_ABC& converter, const kernel::EntityResolver_ABC& entities, const kernel::StaticModel& staticModel
                                    , kernel::AgentKnowledgeConverter_ABC& agentKnowledgeConverter, kernel::ObjectKnowledgeConverter_ABC& objectKnowledgeConverter
                                    , kernel::Controller& controller );
     virtual ~ActionParameterFactory();
@@ -74,12 +73,14 @@ private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
-    const Model& model_;
-    const StaticModel& staticModel_;
+    const kernel::EntityResolver_ABC& entities_;
+    const kernel::StaticModel& staticModel_;
     kernel::AgentKnowledgeConverter_ABC& agentKnowledgeConverter_;
     kernel::ObjectKnowledgeConverter_ABC& objectKnowledgeConverter_;
     kernel::Controller& controller_;
     //@}
 };
 
-#endif // __ActionParameterFactory_h_
+}
+
+#endif // __actions_ActionParameterFactory_h_

@@ -31,13 +31,13 @@ namespace actions
 
 namespace kernel
 {
-    class Entity_ABC;
     class Controllers;
-    class Profile_ABC;
+    class Entity_ABC;
     class Object_ABC;
+    class Profile_ABC;
+    class Time_ABC;
 }
 
-class Simulation;
 class StaticModel;
 
 // =============================================================================
@@ -55,7 +55,7 @@ class ObjectMagicOrdersInterface : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, const kernel::Profile_ABC& profile );
+             ObjectMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile );
     virtual ~ObjectMagicOrdersInterface();
     //@}
 
@@ -94,7 +94,7 @@ private:
     kernel::Controllers& controllers_;
     actions::ActionsModel& actionsModel_;
     const StaticModel& static_;
-    const Simulation& simulation_;
+    const kernel::Time_ABC& simulation_;
     const kernel::Profile_ABC& profile_;
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
     //@}

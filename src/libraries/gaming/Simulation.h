@@ -63,8 +63,8 @@ public:
 
     //! @name Accessors
     //@{
-    QDateTime GetInitialDateTime() const;
-    QDateTime GetDateTime() const;
+    virtual QDateTime GetInitialDateTime() const;
+    virtual QDateTime GetDateTime() const;
     QString GetTimeAsString() const; 
     QString GetDateAsString() const; 
 
@@ -72,7 +72,7 @@ public:
     
     unsigned GetCurrentTick() const;         //!< tick since simulation start
     unsigned GetTickCount() const;           //!< total tick count (replayer)
-    unsigned GetTickDuration() const;
+    virtual unsigned int GetTickDuration() const;
 
     bool IsPaused() const;
     bool IsConnected() const;

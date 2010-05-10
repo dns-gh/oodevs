@@ -15,13 +15,13 @@
 #include "tools/ElementObserver_ABC.h"
 #include "LocationSerializer.h"
 
-
 namespace kernel
 {
     class Controllers;
     class GlTools_ABC;
-    class ModelLoaded;
     class Location_ABC;
+    class ModelLoaded;
+    class Time_ABC;
     class Viewport_ABC;
 }
 
@@ -39,7 +39,6 @@ namespace actions
 
 class StaticModel;
 class WeatherWidget;
-class Simulation;
 
 // =============================================================================
 /** @class  WeatherCreationPanel
@@ -56,7 +55,7 @@ class WeatherCreationPanel : public gui::InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    WeatherCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& model, const Simulation& simulation, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools );
+             WeatherCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& model, const kernel::Time_ABC& simulation, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools );
     virtual ~WeatherCreationPanel();
     //@}
 
@@ -98,7 +97,7 @@ private:
     gui::ParametersLayer& layer_;
     actions::ActionsModel& actionsModel_;
     const StaticModel& model_;
-    const Simulation& simulation_;
+    const kernel::Time_ABC& simulation_;
     const kernel::GlTools_ABC& tools_;
     LocationSerializer serializer_;
     WeatherWidget* weather_;

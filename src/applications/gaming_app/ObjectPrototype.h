@@ -13,6 +13,11 @@
 #include "LocationSerializer.h"
 #include "clients_gui/ObjectPrototype_ABC.h"
 
+namespace kernel
+{
+    class Time_ABC;
+}
+
 namespace actions
 {
     class ActionsModel;
@@ -22,7 +27,6 @@ namespace actions
     }
 }
 
-class Simulation;
 class StaticModel;
 
 // =============================================================================
@@ -43,7 +47,7 @@ public:
 
     //! @name Operations
     //@{
-    void Commit( actions::ActionsModel& actionsModel, const Simulation& simulation );
+    void Commit( actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation );
     //@}
 
 private:

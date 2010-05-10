@@ -10,10 +10,11 @@
 #include "gaming_app_pch.h"
 #include "WeatherCreationPanel.h"
 #include "moc_WeatherCreationPanel.cpp"
-#include "actions/MagicAction.h"
-#include "actions/Numeric.h"
+#include "actions/ActionTiming.h"
 #include "actions/DateTime.h"
 #include "actions/Location.h"
+#include "actions/MagicAction.h"
+#include "actions/Numeric.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Location_ABC.h"
@@ -21,11 +22,9 @@
 #include "clients_kernel/OrderParameter.h"
 #include "clients_gui/ParametersLayer.h"
 #include "gaming/StaticModel.h"
-#include "gaming/ActionTiming.h"
 #include "protocol/SimulationSenders.h"
 #include "WeatherWidget.h"
 
-using namespace kernel;
 using namespace actions;
 using namespace parameters;
 
@@ -33,7 +32,7 @@ using namespace parameters;
 // Name: WeatherCreationPanel constructor
 // Created: SLG 2010-03-24
 // -----------------------------------------------------------------------------
-WeatherCreationPanel::WeatherCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& model, const Simulation& simulation, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools )
+WeatherCreationPanel::WeatherCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& model, const kernel::Time_ABC& simulation, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools )
     : gui::InfoPanel_ABC( parent, panel, tr( "Weathers" ), "WeatherCreationPanel" )
     , controllers_      ( controllers )
     , layer_            ( layer )
@@ -118,9 +117,9 @@ void WeatherCreationPanel::Commit()
 {
     if( CheckValidity() )
     {      
-        MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( model_.types_ ).Get( isGlobal_? "global_meteo" : "local_meteo" );
+        kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( model_.types_ ).Get( isGlobal_? "global_meteo" : "local_meteo" );
         MagicAction* action = new MagicAction( actionType, controllers_.controller_, true );
-        tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+        tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
         weather_->CreateParameters( *action, it );
         if( !isGlobal_ )
         {
@@ -128,7 +127,7 @@ void WeatherCreationPanel::Commit()
             action->AddParameter( *new DateTime( it.NextElement(), endTime_->dateTime() ) );
             action->AddParameter( *new Location( it.NextElement(), model_.coordinateConverter_ , *location_ ) );
         }
-        action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+        action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_, *action ) );
         action->RegisterAndPublish( actionsModel_ );
         Reset();
     }

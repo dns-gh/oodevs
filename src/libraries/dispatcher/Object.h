@@ -31,6 +31,7 @@ namespace kernel
 {
     class ModelVisitor_ABC;
     class ObjectType;
+    class StaticModel;
     class Team_ABC;
 }
 
@@ -51,7 +52,7 @@ class Object : public SimpleEntity< kernel::Object_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Object( Model& model, const MsgsSimToClient::MsgObjectCreation& msg );
+             Object( Model& model, const MsgsSimToClient::MsgObjectCreation& msg, const kernel::StaticModel& staticModel );
     virtual ~Object();
     //@}
 

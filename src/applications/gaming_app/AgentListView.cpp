@@ -9,6 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "AgentListView.h"
+#include "actions/ActionTiming.h"
 #include "actions/Army.h"
 #include "actions/Automat.h"
 #include "actions/KnowledgeGroup.h"
@@ -21,21 +22,19 @@
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/CommandPostAttributes.h"
-#include "gaming/ActionTiming.h"
 #include "gaming/AutomatDecisions.h"
 #include "gaming/KnowledgeGroupHierarchies.h" // LTO
 #include "gaming/StaticModel.h"
 #include "icons.h"
 #include "protocol/SimulationSenders.h"
 
-using namespace kernel;
 using namespace actions;
 
 // -----------------------------------------------------------------------------
 // Name: AgentListView constructor
 // Created: SBO 2006-08-18
 // -----------------------------------------------------------------------------
-AgentListView::AgentListView( QWidget* pParent, Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons )
+AgentListView::AgentListView( QWidget* pParent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons )
     : gui::HierarchyListView< kernel::CommunicationHierarchies >( pParent, controllers, factory, profile, icons )
     , actionsModel_( actionsModel )
     , static_( staticModel )
@@ -81,7 +80,7 @@ void AgentListView::setColumnWidth( int column, int w )
 // Name: AgentListView::Display
 // Created: SBO 2006-08-18
 // -----------------------------------------------------------------------------
-void AgentListView::Display( const Entity_ABC& entity, gui::ValuedListItem* item )
+void AgentListView::Display( const kernel::Entity_ABC& entity, gui::ValuedListItem* item )
 {
     const AutomatDecisions* decisions = entity.Retrieve< AutomatDecisions >();
     if( decisions )
@@ -113,9 +112,9 @@ void AgentListView::NotifyUpdated( const AutomatDecisions& decisions )
 // Created: SBO 2006-08-18
 // LTO
 // -----------------------------------------------------------------------------
-void AgentListView::NotifyUpdated( const KnowledgeGroup_ABC& knowledgeGroup )
+void AgentListView::NotifyUpdated( const kernel::KnowledgeGroup_ABC& knowledgeGroup )
 {
-    const kernel::Entity_ABC* agent = (const Entity_ABC*)&knowledgeGroup;
+    const kernel::Entity_ABC* agent = (const kernel::Entity_ABC*)&knowledgeGroup;
     gui::ValuedListItem* item = gui::FindItem( agent, firstChild() );
     if( item )
         item->setPixmap( 1, !knowledgeGroup.IsActivated() ? scisors_ : QPixmap() );
@@ -127,33 +126,33 @@ void AgentListView::NotifyUpdated( const KnowledgeGroup_ABC& knowledgeGroup )
 // -----------------------------------------------------------------------------
 bool AgentListView::Drop( const kernel::Entity_ABC& item, const kernel::Entity_ABC& target )
 {
-    const Agent_ABC* agent = dynamic_cast< const Agent_ABC* >( &item );
+    const kernel::Agent_ABC* agent = dynamic_cast< const kernel::Agent_ABC* >( &item );
     if( agent )
     {
-        const Automat_ABC* automat = dynamic_cast< const Automat_ABC* >( &target );
+        const kernel::Automat_ABC* automat = dynamic_cast< const kernel::Automat_ABC* >( &target );
         if( automat )
             return Drop( *agent, *automat );
-        const Agent_ABC* targetAgent = dynamic_cast< const Agent_ABC* >( &target );
+        const kernel::Agent_ABC* targetAgent = dynamic_cast< const kernel::Agent_ABC* >( &target );
         if( targetAgent )
             return Drop( *agent, *targetAgent );
         return false;
     }
 
-    const Automat_ABC* automat = dynamic_cast< const Automat_ABC* >( &item );
+    const kernel::Automat_ABC* automat = dynamic_cast< const kernel::Automat_ABC* >( &item );
     if( automat )
     {
-        const KnowledgeGroup_ABC* group = dynamic_cast< const KnowledgeGroup_ABC* >( &target );
+        const kernel::KnowledgeGroup_ABC* group = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &target );
         return group && Drop( *automat, *group );
     }
 
     // LTO begin
-    const KnowledgeGroup_ABC* knowledgeGroup = dynamic_cast< const KnowledgeGroup_ABC* >( &item );
+    const kernel::KnowledgeGroup_ABC* knowledgeGroup = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &item );
     if( knowledgeGroup )
     {
-        const KnowledgeGroup_ABC* groupParent = dynamic_cast< const KnowledgeGroup_ABC* >( &target );
+        const kernel::KnowledgeGroup_ABC* groupParent = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &target );
         if( groupParent )
             return Drop( *knowledgeGroup, *groupParent );
-        const Team_ABC* teamParent = dynamic_cast< const Team_ABC* >( &target );
+        const kernel::Team_ABC* teamParent = dynamic_cast< const kernel::Team_ABC* >( &target );
         if( teamParent )
             return Drop( *knowledgeGroup, *teamParent );
     }
@@ -165,25 +164,25 @@ bool AgentListView::Drop( const kernel::Entity_ABC& item, const kernel::Entity_A
 // Name: AgentListView::Drop
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-bool AgentListView::Drop( const kernel::Agent_ABC& item,  const kernel::Agent_ABC& target )
+bool AgentListView::Drop( const kernel::Agent_ABC& item, const kernel::Agent_ABC& target )
 {
-    return Drop( item, target.Get< CommunicationHierarchies >().GetUp() );
+    return Drop( item, target.Get< kernel::CommunicationHierarchies >().GetUp() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentListView::Drop
 // Created: SBO 2006-08-09
 // -----------------------------------------------------------------------------
-bool AgentListView::Drop( const Agent_ABC& item, const Automat_ABC& target )
+bool AgentListView::Drop( const kernel::Agent_ABC& item, const kernel::Automat_ABC& target )
 {
-    if( & item.Get< CommunicationHierarchies >().GetUp() == &target )
+    if( & item.Get< kernel::CommunicationHierarchies >().GetUp() == &target )
         return false;
 
-    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "unit_change_superior" );
+    kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "unit_change_superior" );
     UnitMagicAction* action = new UnitMagicAction( item, actionType, controllers_.controller_, true );
-    tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Automat( it.NextElement(), target, controllers_.controller_ ) );
-    action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_, *action ) );
     action->RegisterAndPublish( actionsModel_ );
     return true;
 }
@@ -192,15 +191,15 @@ bool AgentListView::Drop( const Agent_ABC& item, const Automat_ABC& target )
 // Name: AgentListView::Drop
 // Created: SBO 2006-08-09
 // -----------------------------------------------------------------------------
-bool AgentListView::Drop( const Automat_ABC& item, const KnowledgeGroup_ABC& target )
+bool AgentListView::Drop( const kernel::Automat_ABC& item, const kernel::KnowledgeGroup_ABC& target )
 {
-    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_knowledge_group" );
+    kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "change_knowledge_group" );
     UnitMagicAction* action = new UnitMagicAction( item, actionType, controllers_.controller_, true );
-    tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::KnowledgeGroup( it.NextElement(), target, controllers_.controller_ ) );
-    if( const Team_ABC *team = dynamic_cast< const Team_ABC* >( &target.Get< CommunicationHierarchies >().GetTop() ) )
+    if( const kernel::Team_ABC *team = dynamic_cast< const kernel::Team_ABC* >( &target.Get< kernel::CommunicationHierarchies >().GetTop() ) )
         action->AddParameter( *new parameters::Army( it.NextElement(), *team, controllers_.controller_ ) );
-    action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_, *action ) );
     action->RegisterAndPublish( actionsModel_ );
     return true;
 }
@@ -210,14 +209,14 @@ bool AgentListView::Drop( const Automat_ABC& item, const KnowledgeGroup_ABC& tar
 // Created: FHD 2010-01-04:
 // LTO
 // -----------------------------------------------------------------------------
-bool AgentListView::Drop( const KnowledgeGroup_ABC& item, const Team_ABC& target )
+bool AgentListView::Drop( const kernel::KnowledgeGroup_ABC& item, const kernel::Team_ABC& target )
 {
-    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "knowledge_group_update_side" );
+    kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "knowledge_group_update_side" );
     KnowledgeGroupMagicAction* action = new KnowledgeGroupMagicAction( item, actionType, controllers_.controller_, true );
-    tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
-    if( const Team_ABC *team = dynamic_cast< const Team_ABC* >( &target.Get< CommunicationHierarchies >().GetTop() ) )
+    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
+    if( const kernel::Team_ABC *team = dynamic_cast< const kernel::Team_ABC* >( &target.Get< kernel::CommunicationHierarchies >().GetTop() ) )
         action->AddParameter( *new parameters::Army( it.NextElement(), *team, controllers_.controller_ ) );
-    action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_, *action ) );
     action->RegisterAndPublish( actionsModel_ );
     return true;
 }
@@ -227,15 +226,15 @@ bool AgentListView::Drop( const KnowledgeGroup_ABC& item, const Team_ABC& target
 // Created: FHD 2010-01-04: 
 // LTO
 // -----------------------------------------------------------------------------
-bool AgentListView::Drop( const KnowledgeGroup_ABC& item, const KnowledgeGroup_ABC& target )
+bool AgentListView::Drop( const kernel::KnowledgeGroup_ABC& item, const kernel::KnowledgeGroup_ABC& target )
 {
-    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "knowledge_group_update_side_parent" );
+    kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "knowledge_group_update_side_parent" );
     KnowledgeGroupMagicAction* action = new KnowledgeGroupMagicAction( item, actionType, controllers_.controller_, true );
-    tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
-    if( const Team_ABC *team = dynamic_cast< const Team_ABC* >( &target.Get< CommunicationHierarchies >().GetTop() ) )
+    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
+    if( const kernel::Team_ABC *team = dynamic_cast< const kernel::Team_ABC* >( &target.Get< kernel::CommunicationHierarchies >().GetTop() ) )
         action->AddParameter( *new parameters::Army( it.NextElement(), *team, controllers_.controller_ ) );
     action->AddParameter( *new parameters::KnowledgeGroup( it.NextElement(), target, controllers_.controller_ ) );
-    action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_, *action ) );
     action->RegisterAndPublish( actionsModel_ );
     return true;
 }

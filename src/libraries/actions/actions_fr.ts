@@ -15,6 +15,29 @@
     </message>
 </context>
 <context>
+    <name>ActionFactory</name>
+    <message>
+        <source>Parameter mismatch in action &apos;%1&apos; (id: %2): missing parameter &apos;%3&apos;.</source>
+        <translation>Paramètre incorrect dans l&apos;action &apos;%1&apos; (id: %2) : paramètre manquant &apos;%3&apos;.</translation>
+    </message>
+    <message>
+        <source>Unable to find executing entity &apos;%1&apos;.</source>
+        <translation>Impossible de trouver l&apos;unité &apos;%1&apos;.</translation>
+    </message>
+    <message>
+        <source>Magic action type &apos;%1&apos; unknown.</source>
+        <translation>L&apos;action magique de type &apos;%1&apos; est inconnue.</translation>
+    </message>
+    <message>
+        <source>too many parameters provided</source>
+        <translation>Trop de paramètres</translation>
+    </message>
+    <message>
+        <source>Parameter mismatch in action &apos;%1&apos; (id: %2): %3.</source>
+        <translation>Paramètre incorrect dans l&apos;action &apos;%1&apos; (id: %2) : %3.</translation>
+    </message>
+</context>
+<context>
     <name>ActionParameter</name>
     <message>
         <source>TC2</source>
@@ -23,6 +46,28 @@
     <message>
         <source>Density</source>
         <translation>Densité</translation>
+    </message>
+</context>
+<context>
+    <name>ActionParameterFactory</name>
+    <message>
+        <source>not set</source>
+        <translation>non défini</translation>
+    </message>
+    <message>
+        <source>Expecting &apos;%1&apos; found &apos;%2&apos;</source>
+        <translation>&apos;%2&apos; trouvé, &apos;%1&apos; attendu</translation>
+    </message>
+</context>
+<context>
+    <name>ActionTiming</name>
+    <message>
+        <source>Time</source>
+        <translation>Heure</translation>
+    </message>
+    <message>
+        <source>Enabled</source>
+        <translation>Activé</translation>
     </message>
 </context>
 <context>

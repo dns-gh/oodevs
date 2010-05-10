@@ -17,7 +17,7 @@
 // Name: TacticalList constructor
 // Created: AGE 2006-10-20
 // -----------------------------------------------------------------------------
-TacticalList::TacticalList( kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons )
+TacticalList::TacticalList( kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons )
 {
     new gui::EntitySearchBox< kernel::Entity_ABC >( this, controllers );
     new TacticalListView( this, controllers, actionsModel, staticModel, simulation, factory, profile, icons );

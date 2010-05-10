@@ -10,8 +10,9 @@
 #include "gaming_app_pch.h"
 #include "LogisticSupplyRecompletionDialog.h"
 #include "moc_LogisticSupplyRecompletionDialog.cpp"
-#include "actions/UnitMagicAction.h"
+#include "actions/ActionTiming.h"
 #include "actions/ParameterList.h"
+#include "actions/UnitMagicAction.h"
 #include "gaming/Dotations.h"
 #include "gaming/Dotation.h"
 #include "gaming/Equipment.h"
@@ -20,7 +21,6 @@
 #include "gaming/SupplyStates.h"
 #include "gaming/Troops.h"
 #include "gaming/tools.h"
-#include "gaming/ActionTiming.h"
 #include "clients_gui/ExclusiveComboTableItem.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AutomatType.h"
@@ -89,7 +89,7 @@ private:
 // Name: LogisticSupplyRecompletionDialog constructor
 // Created: SBO 2005-07-27
 // -----------------------------------------------------------------------------
-LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* parent, Controllers& controllers, const StaticModel& staticModel, actions::ActionsModel& actionsModel, const Simulation& simulation, const kernel::Profile_ABC& profile )
+LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* parent, Controllers& controllers, const ::StaticModel& staticModel, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile )
     : QDialog( parent, tr( "Recompletion" ) )
     , controllers_( controllers )
     , static_( staticModel )

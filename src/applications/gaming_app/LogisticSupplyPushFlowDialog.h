@@ -17,10 +17,11 @@
 
 namespace kernel
 {
-    class Controllers;
     class Automat_ABC;
+    class Controllers;
     class Entity_ABC;
     class Profile_ABC;
+    class Time_ABC;
 }
 
 namespace actions
@@ -30,7 +31,6 @@ namespace actions
 
 class Dotation;
 class StaticModel;
-class Simulation;
 
 // =============================================================================
 /** @class  LogisticSupplyPushFlowDialog
@@ -48,7 +48,7 @@ class LogisticSupplyPushFlowDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticSupplyPushFlowDialog( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, const kernel::Profile_ABC& profile );
+             LogisticSupplyPushFlowDialog( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, const kernel::Profile_ABC& profile );
     virtual ~LogisticSupplyPushFlowDialog();
     //@}
 
@@ -91,7 +91,7 @@ private:
     kernel::Controllers& controllers_;
     actions::ActionsModel& actionsModel_;
     const StaticModel& static_;
-    const Simulation& simulation_;
+    const kernel::Time_ABC& simulation_;
     const tools::Resolver_ABC< kernel::Automat_ABC >& automats_;
     const kernel::Profile_ABC& profile_;
 

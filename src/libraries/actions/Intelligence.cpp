@@ -45,11 +45,11 @@ Intelligence::Intelligence( const OrderParameter& parameter, const CoordinateCon
 // Name: Intelligence constructor
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
-Intelligence::Intelligence( const CoordinateConverter_ABC& converter, xml::xistream& xis, const tools::Resolver_ABC< Formation_ABC >& resolver, const FormationLevels& levels, kernel::Controller& controller )
+Intelligence::Intelligence( const CoordinateConverter_ABC& converter, xml::xistream& xis, const kernel::EntityResolver_ABC& formations, const FormationLevels& levels, kernel::Controller& controller )
     : Entity< Intelligence_ABC >( OrderParameter( attribute< std::string >( xis, "name" ).c_str(), "intelligence", false ), 0, controller )
     , converter_( converter )
 {
-    xis >> list( "parameter", *this, &Intelligence::ReadParameter, resolver, levels );
+    xis >> list( "parameter", *this, &Intelligence::ReadParameter, formations, levels );
 }
 
 namespace
@@ -67,7 +67,7 @@ namespace
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
 
-Intelligence::Intelligence( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< Formation_ABC >& resolver, const FormationLevels& levels, const Common::MsgIntelligence& message, kernel::Controller& controller )
+Intelligence::Intelligence( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const kernel::EntityResolver_ABC& formations, const FormationLevels& levels, const Common::MsgIntelligence& message, kernel::Controller& controller )
     : Entity< Intelligence_ABC >( parameter, 0, controller )
     , converter_( converter )
 {
@@ -76,7 +76,7 @@ Intelligence::Intelligence( const OrderParameter& parameter, const CoordinateCon
     AddParameter( *new Karma    ( OrderParameter( tools::translate( "Parameter", "Karma" ).ascii()    , "karma"    , false ), message.diplomacy() ) );
     AddParameter( *new Level    ( OrderParameter( tools::translate( "Parameter", "Level" ).ascii()    , "level"    , false ), message.level(), levels ) );
     AddParameter( *new Bool     ( OrderParameter( tools::translate( "Parameter", "Mounted" ).ascii()  , "bool"     , false ), message.embarked() != 0 ) );
-    AddParameter( *new Formation( OrderParameter( tools::translate( "Parameter", "Formation" ).ascii(), "formation", false ), message.formation().oid(), resolver, controller_ ) );
+    AddParameter( *new Formation( OrderParameter( tools::translate( "Parameter", "Formation" ).ascii(), "formation", false ), message.formation().oid(), formations, controller_ ) );
     AddParameter( *new Point    ( OrderParameter( tools::translate( "Parameter", "Point" ).ascii()    , "point"    , false ), converter, MakePoint( converter, message.location() ) ) );
 }
 
@@ -93,7 +93,7 @@ Intelligence::~Intelligence()
 // Name: Intelligence::ReadParameter
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
-void Intelligence::ReadParameter( xml::xistream& xis, const tools::Resolver_ABC< Formation_ABC >& resolver, const FormationLevels& levels )
+void Intelligence::ReadParameter( xml::xistream& xis, const kernel::EntityResolver_ABC& formations, const FormationLevels& levels )
 {
     const QString name = attribute< std::string >( xis, "name" ).c_str();
     const std::string type = attribute< std::string >( xis, "type" );
@@ -107,7 +107,7 @@ void Intelligence::ReadParameter( xml::xistream& xis, const tools::Resolver_ABC<
     else if( type == "bool" )
         AddParameter( *new Bool( OrderParameter( name.ascii(), type, false ), xis ) );
     else if( type == "formation" )
-        AddParameter( *new Formation( OrderParameter( name.ascii(), type, false ), xis, resolver, controller_ ) );
+        AddParameter( *new Formation( OrderParameter( name.ascii(), type, false ), xis, formations, controller_ ) );
     else if( type == "point" )
         AddParameter( *new Point( OrderParameter( name.ascii(), type, false ), converter_, xis ) );
 }

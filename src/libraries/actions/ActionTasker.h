@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __ActionTasker_h_
-#define __ActionTasker_h_
+#ifndef __actions_ActionTasker_h_
+#define __actions_ActionTasker_h_
 
 #include "clients_kernel/Extension_ABC.h"
 
@@ -16,6 +16,9 @@ namespace kernel
 {
     class Entity_ABC;
 }
+
+namespace actions
+{
 
 // =============================================================================
 /** @class  ActionTasker
@@ -29,7 +32,7 @@ class ActionTasker : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionTasker( const kernel::Entity_ABC& tasker, bool simulation = true );
+    explicit ActionTasker( const kernel::Entity_ABC& tasker, bool simulation = true );
     virtual ~ActionTasker();
     //@}
 
@@ -58,4 +61,6 @@ private:
     //@}
 };
 
-#endif // __ActionTasker_h_
+}
+
+#endif // __actions_ActionTasker_h_

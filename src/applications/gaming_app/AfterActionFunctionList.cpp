@@ -37,7 +37,7 @@ using namespace gui;
 // Name: AfterActionFunctionList constructor
 // Created: AGE 2007-09-21
 // -----------------------------------------------------------------------------
-AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, Controllers& controllers, ItemFactory_ABC& factory, AfterActionModel& model, ParametersLayer& layer, const StaticModel& staticModel )
+AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, Controllers& controllers, ItemFactory_ABC& factory, AfterActionModel& model, ParametersLayer& layer, const ::StaticModel& staticModel )
     : QVBox( parent, "AfterActionFunctionList" )
     , controllers_( controllers )
     , model_( model )

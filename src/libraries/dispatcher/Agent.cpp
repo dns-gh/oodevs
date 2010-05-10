@@ -22,13 +22,11 @@
 #include "AgentOrder.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "clients_kernel/AgentType.h"
+#include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
-
+#include "clients_kernel/StaticModel.h"
 #include "protocol/clientsenders.h"
-
-////using namespace Common;
-//using namespace MsgsSimToClient;
 
 using namespace dispatcher;
 
@@ -36,10 +34,10 @@ using namespace dispatcher;
 // Name: Agent constructor
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-Agent::Agent( Model& model, const MsgsSimToClient::MsgUnitCreation& msg )
+Agent::Agent( Model& model, const MsgsSimToClient::MsgUnitCreation& msg, const kernel::StaticModel& staticModel )
     : SimpleEntity< kernel::Agent_ABC >( msg.oid(), QString(msg.nom().c_str()) )
     , model_                        ( model )
-    , type_                         ( model.GetAgentTypes().Get( msg.type_pion() ) )
+    , type_                         ( staticModel.types_.tools::Resolver< kernel::AgentType >::Get( msg.type_pion() ) )
     , name_                         ( msg.nom() )
     , automat_                      ( &model.automats_.Get( msg.oid_automate() ) )
     , bPC_                          ( msg.pc() != 0 )

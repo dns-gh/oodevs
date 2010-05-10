@@ -10,6 +10,8 @@
 #ifndef __Model_h_
 #define __Model_h_
 
+#include "EntityResolverFacade.h"
+
 namespace kernel
 {
     class Controllers;
@@ -68,7 +70,7 @@ class MeteoModel;
 */
 // Created: AGE 2006-02-15
 // =============================================================================
-class Model
+class Model : public EntityResolverFacade
 {
 
 public:

@@ -38,6 +38,7 @@ namespace kernel
     class AgentType;
     class CoordinateConverter_ABC;
     class ModelVisitor_ABC;
+    class StaticModel;
     class Team_ABC;
 }
 
@@ -65,7 +66,7 @@ class Agent : public SimpleEntity< kernel::Agent_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Agent( Model& model, const MsgsSimToClient::MsgUnitCreation& msg );
+             Agent( Model& model, const MsgsSimToClient::MsgUnitCreation& msg, const kernel::StaticModel& staticModel );
     virtual ~Agent();
     //@}
 

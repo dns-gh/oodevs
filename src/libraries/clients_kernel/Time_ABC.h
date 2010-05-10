@@ -36,6 +36,8 @@ public:
     //! @name Operations
     //@{
     virtual QDateTime GetDateTime() const = 0;
+    virtual QDateTime GetInitialDateTime() const = 0;
+    virtual unsigned int GetTickDuration() const = 0;
     //@}
 
 private:

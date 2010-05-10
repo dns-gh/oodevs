@@ -11,7 +11,6 @@
 #define __ActionParameterAutomatList_h_
 
 #include "Parameter.h"
-#include "tools/Resolver_ABC.h"
 
 namespace Common
 {
@@ -22,6 +21,7 @@ namespace kernel
 {
     class Automat_ABC;
     class Controller;
+    class EntityResolver_ABC;
 }
 
 namespace actions {
@@ -40,8 +40,8 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit AutomatList( const kernel::OrderParameter& parameter );
-             AutomatList( const kernel::OrderParameter& parameter, const Common::MsgAutomatList& message, const tools::Resolver_ABC< kernel::Automat_ABC >& resolver, kernel::Controller& controller );
-             AutomatList( const kernel::OrderParameter& parameter, xml::xistream& xis, const tools::Resolver_ABC< kernel::Automat_ABC >& resolver, kernel::Controller& controller );
+             AutomatList( const kernel::OrderParameter& parameter, const Common::MsgAutomatList& message, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
+             AutomatList( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
     virtual ~AutomatList();
     //@}
 
@@ -67,7 +67,7 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadAutomat( xml::xistream& xis, const tools::Resolver_ABC< kernel::Automat_ABC >& resolver, kernel::Controller& controller );
+    void ReadAutomat( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
     //@}
 };
     }

@@ -13,6 +13,11 @@
 #include "Entity.h"
 #include "clients_kernel/Team_ABC.h"
 
+namespace kernel
+{
+    class EntityResolver_ABC;
+}
+
 namespace actions {
     namespace parameters {
 
@@ -29,9 +34,9 @@ public:
     //! @name Constructors/Destructor
     //@{
              Army( const kernel::OrderParameter& parameter, kernel::Controller& controller );
-             Army( const kernel::OrderParameter& parameter, xml::xistream& xis, const tools::Resolver_ABC< kernel::Team_ABC >& resolver, kernel::Controller& controller );
-             Army( const kernel::OrderParameter& parameter, unsigned int id, const tools::Resolver_ABC< kernel::Team_ABC >& resolver, kernel::Controller& controller );
-             Army( xml::xistream& xis, const tools::Resolver_ABC< kernel::Team_ABC >& resolver, kernel::Controller& controller );
+             Army( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
+             Army( const kernel::OrderParameter& parameter, unsigned int id, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
+             Army( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
              Army( const kernel::OrderParameter& parameter, const kernel::Team_ABC& team, kernel::Controller& controller );
     virtual ~Army();
     //@}

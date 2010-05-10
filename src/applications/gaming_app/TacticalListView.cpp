@@ -10,10 +10,10 @@
 #include "gaming_app_pch.h"
 #include "icons.h"
 #include "TacticalListView.h"
+#include "actions/ActionTiming.h"
 #include "actions/Automat.h"
 #include "actions/Formation.h"
 #include "actions/UnitMagicAction.h"
-#include "gaming/ActionTiming.h"
 #include "gaming/AutomatDecisions.h"
 #include "gaming/Attributes.h"
 #include "gaming/StaticModel.h"
@@ -26,13 +26,12 @@
 #include "protocol/SimulationSenders.h"
 
 using namespace actions;
-using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: TacticalListView constructor
 // Created: AGE 2006-11-23
 // -----------------------------------------------------------------------------
-TacticalListView::TacticalListView( QWidget* pParent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons )
+TacticalListView::TacticalListView( QWidget* pParent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons )
     : gui::HierarchyListView< kernel::TacticalHierarchies >( pParent, controllers, factory, profile, icons )
     , actionsModel_( actionsModel )
     , static_( staticModel )
@@ -130,11 +129,11 @@ bool TacticalListView::Drop( const kernel::Agent_ABC& item, const kernel::Automa
     if( & item.Get< kernel::TacticalHierarchies >().GetUp() == &target )
         return false;
 
-    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "unit_change_superior" );
+    kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "unit_change_superior" );
     UnitMagicAction* action = new UnitMagicAction( item, actionType, controllers_.controller_, true );
-    tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Automat( it.NextElement(), target, controllers_.controller_ ) );
-    action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_, *action ) );
     action->RegisterAndPublish( actionsModel_ );
     return true;
 }
@@ -148,11 +147,11 @@ bool TacticalListView::Drop( const kernel::Automat_ABC& item, const kernel::Auto
     if( & item.Get< kernel::TacticalHierarchies >().GetUp() == &target || &item == &target )
         return false;
 
-    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_automat_superior" );
+    kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "change_automat_superior" );
     UnitMagicAction* action = new UnitMagicAction( item, actionType, controllers_.controller_, true );
-    tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Automat( it.NextElement(), target, controllers_.controller_ ) );
-    action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_, *action ) );
     action->RegisterAndPublish( actionsModel_ );
     return true;
 }
@@ -166,11 +165,11 @@ bool TacticalListView::Drop( const kernel::Automat_ABC& item, const kernel::Form
     if( & item.Get< kernel::TacticalHierarchies >().GetUp() == &target )
         return false;
 
-    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_formation_superior" );
+    kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "change_formation_superior" );
     UnitMagicAction* action = new UnitMagicAction( item, actionType, controllers_.controller_, true );
-    tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Formation( it.NextElement(), target, controllers_.controller_ ) );
-    action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_, *action ) );
     action->RegisterAndPublish( actionsModel_ );
     return true;
 }

@@ -10,6 +10,7 @@
 #include "actions_pch.h"
 #include "Army.h"
 #include "ParameterVisitor_ABC.h"
+#include "clients_kernel/EntityResolver_ABC.h"
 #include "protocol/Protocol.h"
 
 using namespace kernel;
@@ -31,8 +32,8 @@ Army::Army( const kernel::OrderParameter& parameter, kernel::Controller& control
 // Name: Army::Army
 // Created: JSR 2010-04-14
 // -----------------------------------------------------------------------------
-Army::Army( const kernel::OrderParameter& parameter, xml::xistream& xis, const tools::Resolver_ABC< kernel::Team_ABC >& resolver, kernel::Controller& controller )
-    : Entity< Team_ABC >( parameter, &resolver.Get( attribute< unsigned long >( xis, "value" ) ), controller )
+Army::Army( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
+    : Entity< Team_ABC >( parameter, &resolver.GetTeam( attribute< unsigned long >( xis, "value" ) ), controller )
 {
     // NOTHING
 }
@@ -41,8 +42,8 @@ Army::Army( const kernel::OrderParameter& parameter, xml::xistream& xis, const t
 // Name: Army::Army
 // Created: JSR 2010-04-14
 // -----------------------------------------------------------------------------
-Army::Army( const kernel::OrderParameter& parameter, unsigned int id, const tools::Resolver_ABC< kernel::Team_ABC >& resolver, kernel::Controller& controller )
-    : Entity< Team_ABC >( parameter, &resolver.Get( id ), controller )
+Army::Army( const kernel::OrderParameter& parameter, unsigned int id, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
+    : Entity< Team_ABC >( parameter, &resolver.GetTeam( id ), controller )
 {
     // NOTHING
 }
@@ -51,8 +52,8 @@ Army::Army( const kernel::OrderParameter& parameter, unsigned int id, const tool
 // Name: Army::Army
 // Created: JSR 2010-04-14
 // -----------------------------------------------------------------------------
-Army::Army( xml::xistream& xis, const tools::Resolver_ABC< kernel::Team_ABC >& resolver, kernel::Controller& controller )
-    : Entity< Team_ABC >( OrderParameter( attribute< std::string >( xis, "name" ), "army", false ), &resolver.Get( attribute< unsigned long >( xis, "value" ) ), controller )
+Army::Army( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
+    : Entity< Team_ABC >( OrderParameter( attribute< std::string >( xis, "name" ), "army", false ), &resolver.GetTeam( attribute< unsigned long >( xis, "value" ) ), controller )
 {
     // NOTHING
 }

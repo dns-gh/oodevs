@@ -10,6 +10,7 @@
 #include "actions_pch.h"
 #include "Automat.h"
 #include "ParameterVisitor_ABC.h"
+#include "clients_kernel/EntityResolver_ABC.h"
 #include "protocol/Protocol.h"
 
 using namespace kernel;
@@ -41,8 +42,8 @@ Automat::Automat( const kernel::OrderParameter& parameter, const kernel::Automat
 // Name: Automat constructor
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-Automat::Automat( const kernel::OrderParameter& parameter, unsigned int id, const tools::Resolver_ABC< kernel::Automat_ABC >& resolver, kernel::Controller& controller )
-    : Entity< Automat_ABC >( parameter, &resolver.Get( id ), controller )
+Automat::Automat( const kernel::OrderParameter& parameter, unsigned int id, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
+    : Entity< Automat_ABC >( parameter, &resolver.GetAutomat( id ), controller )
 {
     // NOTHING
 }
@@ -51,8 +52,8 @@ Automat::Automat( const kernel::OrderParameter& parameter, unsigned int id, cons
 // Name: Automat constructor
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-Automat::Automat( const OrderParameter& parameter, xml::xistream& xis, const tools::Resolver_ABC< Automat_ABC >& resolver, kernel::Controller& controller )
-    : Entity< Automat_ABC >( parameter, &resolver.Get( attribute< unsigned long >( xis, "value" ) ), controller )
+Automat::Automat( const OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
+    : Entity< Automat_ABC >( parameter, &resolver.GetAutomat( attribute< unsigned long >( xis, "value" ) ), controller )
 {
     // NOTHING
 }
@@ -61,8 +62,8 @@ Automat::Automat( const OrderParameter& parameter, xml::xistream& xis, const too
 // Name: Automat constructor
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-Automat::Automat( xml::xistream& xis, const tools::Resolver_ABC< kernel::Automat_ABC >& resolver, kernel::Controller& controller )
-    : Entity< Automat_ABC >( OrderParameter( attribute< std::string >( xis, "name" ), attribute< std::string >( xis, "type" ), false ), &resolver.Get( attribute< unsigned long >( xis, "value" ) ), controller )
+Automat::Automat( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
+    : Entity< Automat_ABC >( OrderParameter( attribute< std::string >( xis, "name" ), attribute< std::string >( xis, "type" ), false ), &resolver.GetAutomat( attribute< unsigned long >( xis, "value" ) ), controller )
 {
     // NOTHING
 }

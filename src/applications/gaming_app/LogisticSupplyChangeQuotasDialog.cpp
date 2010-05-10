@@ -10,10 +10,10 @@
 #include "gaming_app_pch.h"
 #include "LogisticSupplyChangeQuotasDialog.h"
 #include "moc_LogisticSupplyChangeQuotasDialog.cpp"
-#include "actions/UnitMagicAction.h"
-#include "actions/ParameterList.h"
+#include "actions/ActionTiming.h"
 #include "actions/Automat.h"
-#include "gaming/ActionTiming.h"
+#include "actions/ParameterList.h"
+#include "actions/UnitMagicAction.h"
 #include "gaming/AgentsModel.h"
 #include "gaming/Dotation.h"
 #include "gaming/LogisticLinks.h"
@@ -41,7 +41,7 @@ using namespace parameters;
 // Name: LogisticSupplyChangeQuotasDialog constructor
 // Created: SBO 2006-07-03
 // -----------------------------------------------------------------------------
-LogisticSupplyChangeQuotasDialog::LogisticSupplyChangeQuotasDialog( QWidget* parent, Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, const Model& model, const Profile_ABC& profile )
+LogisticSupplyChangeQuotasDialog::LogisticSupplyChangeQuotasDialog( QWidget* parent, Controllers& controllers, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, const Model& model, const Profile_ABC& profile )
     : QDialog( parent, tr( "Supply quotas allocation" ) )
     , controllers_( controllers )
     , actionsModel_( actionsModel )

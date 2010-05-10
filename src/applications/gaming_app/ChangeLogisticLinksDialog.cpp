@@ -10,10 +10,10 @@
 #include "gaming_app_pch.h"
 #include "ChangeLogisticLinksDialog.h"
 #include "moc_ChangeLogisticLinksDialog.cpp"
-#include "gaming/LogisticLinks.h"
+#include "actions/ActionTiming.h"
 #include "actions/Identifier.h"
 #include "actions/UnitMagicAction.h"
-#include "gaming/ActionTiming.h"
+#include "gaming/LogisticLinks.h"
 #include "gaming/StaticModel.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -22,7 +22,6 @@
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "protocol/simulationsenders.h"
-
 #include <qgrid.h>
 
 using namespace actions;
@@ -33,7 +32,7 @@ using namespace gui;
 // Name: ChangeLogisticLinksDialog constructor
 // Created: SBO 2006-06-30
 // -----------------------------------------------------------------------------
-ChangeLogisticLinksDialog::ChangeLogisticLinksDialog( QWidget* parent, Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, const kernel::Profile_ABC& profile )
+ChangeLogisticLinksDialog::ChangeLogisticLinksDialog( QWidget* parent, Controllers& controllers, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile )
     : QDialog( parent )
     , controllers_( controllers )
     , actionsModel_( actionsModel )

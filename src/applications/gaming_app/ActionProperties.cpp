@@ -12,9 +12,9 @@
 #include "ActionsListView.h"
 #include "SummariesDisplayer.h"
 #include "actions/Action_ABC.h"
+#include "actions/ActionTiming.h"
 #include "clients_kernel/Displayable_ABC.h"
 #include "clients_kernel/Controllers.h"
-#include "gaming/ActionTiming.h"
 
 // -----------------------------------------------------------------------------
 // Name: ActionProperties constructor
@@ -62,7 +62,7 @@ void ActionProperties::NotifySelected( const actions::Action_ABC* action )
 // Name: ActionProperties::NotifyUpdated
 // Created: SBO 2010-05-04
 // -----------------------------------------------------------------------------
-void ActionProperties::NotifyUpdated( const ActionTiming& timing )
+void ActionProperties::NotifyUpdated( const actions::ActionTiming& timing )
 {
     if( &timing.GetAction() == selected_ )
     {

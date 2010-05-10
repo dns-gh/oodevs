@@ -22,8 +22,9 @@ namespace kernel
 {
     class Controllers;
     class GlTools_ABC;
-    class Viewport_ABC;
     class ModelLoaded;
+    class Time_ABC;
+    class Viewport_ABC;
 }
 
 namespace gui
@@ -33,7 +34,6 @@ namespace gui
 }
 
 class ObjectPrototype;
-class Simulation;
 class StaticModel;
 
 // =============================================================================
@@ -51,7 +51,7 @@ class ObjectCreationPanel : public gui::InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{    
-             ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools );
+             ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools );
     virtual ~ObjectCreationPanel();
     //@}
 
@@ -84,7 +84,7 @@ private:
     kernel::Controllers& controllers_;
     actions::ActionsModel& actionsModel_;
     const StaticModel& static_;
-    const Simulation& simulation_;
+    const kernel::Time_ABC& simulation_;
     const kernel::GlTools_ABC& tools_;
     ObjectPrototype* created_;
     //@}

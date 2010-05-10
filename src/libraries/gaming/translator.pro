@@ -1,8 +1,6 @@
 HEADERS = 
 
-SOURCES = ActionFactory.cpp \
-ActionParameterFactory.cpp \
-ActivityTimeAttribute.cpp \
+SOURCES = ActivityTimeAttribute.cpp \
 Agent.cpp \
 AgentKnowledge.cpp \
 AgentPositions.cpp \

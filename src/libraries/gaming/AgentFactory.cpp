@@ -83,13 +83,11 @@
 #include "UrbanPerceptions.h"
 #include "AgentHierarchiesCommunication.h"
 
-using namespace kernel;
-
 // -----------------------------------------------------------------------------
 // Name: AgentFactory constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-AgentFactory::AgentFactory( Controllers& controllers, Model& model, const StaticModel& staticModel, Publisher_ABC& publisher, Workers& workers, const RcEntityResolver_ABC& rcResolver )
+AgentFactory::AgentFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel, Publisher_ABC& publisher, kernel::Workers& workers, const RcEntityResolver_ABC& rcResolver )
     : controllers_( controllers )
     , model_( model )
     , static_( staticModel )
@@ -113,23 +111,23 @@ AgentFactory::~AgentFactory()
 // Name: AgentFactory::Create
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Automat_ABC* AgentFactory::Create( const MsgsSimToClient::MsgAutomatCreation& message )
+kernel::Automat_ABC* AgentFactory::Create( const MsgsSimToClient::MsgAutomatCreation& message )
 {
     Automat* result = new Automat( message, controllers_.controller_, static_.types_ );
-    PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
+    kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
 
-    result->Attach< CommunicationHierarchies >( *new AutomatHierarchies        ( controllers_.controller_, *result, model_.knowledgeGroups_, dico ) );
-    Entity_ABC* superior = 0;
+    result->Attach< kernel::CommunicationHierarchies >( *new AutomatHierarchies        ( controllers_.controller_, *result, model_.knowledgeGroups_, dico ) );
+    kernel::Entity_ABC* superior = 0;
 
     if( message.oid_parent().has_formation() )
-        superior = & (( tools::Resolver< Formation_ABC >&)( model_.teams_ )) .Get( message.oid_parent().formation().oid() );
+        superior = & (( tools::Resolver< kernel::Formation_ABC >&)( model_.teams_ )) .Get( message.oid_parent().formation().oid() );
     else
-        superior = & (( tools::Resolver< Automat_ABC >&)  ( model_.agents_ )).Get( message.oid_parent().automate().oid() );
-    result->Attach< TacticalHierarchies >     ( *new AutomatTacticalHierarchies( controllers_.controller_, *result, *superior, model_.agents_, model_.teams_ ) );
+        superior = & (( tools::Resolver< kernel::Automat_ABC >&)  ( model_.agents_ )).Get( message.oid_parent().automate().oid() );
+    result->Attach< kernel::TacticalHierarchies >     ( *new AutomatTacticalHierarchies( controllers_.controller_, *result, *superior, model_.agents_, model_.teams_ ) );
     result->Attach( *new AutomatLives( *result ) );
-    result->Attach< LogisticLinks_ABC >( *new LogisticLinks( controllers_.controller_, model_.agents_, result->GetType(), dico ) );
+    result->Attach< kernel::LogisticLinks_ABC >( *new LogisticLinks( controllers_.controller_, model_.agents_, result->GetType(), dico ) );
     result->Attach( *new AutomatDecisions( controllers_.controller_, publisher_, *result ) );
-    result->Attach< Positions >( *new AutomatPositions( *result ) );
+    result->Attach< kernel::Positions >( *new AutomatPositions( *result ) );
     result->Attach( *new Logistics( *result, controllers_.controller_, model_, static_, dico ) );
     result->Attach( *new Quotas( controllers_.controller_, static_.objectTypes_ ) );
     result->Attach( *new LogMaintenanceConsigns( controllers_.controller_ ) );
@@ -154,16 +152,16 @@ Automat_ABC* AgentFactory::Create( const MsgsSimToClient::MsgAutomatCreation& me
 // Name: AgentFactory::Create
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Agent_ABC* AgentFactory::Create( const MsgsSimToClient::MsgUnitCreation& message )
+kernel::Agent_ABC* AgentFactory::Create( const MsgsSimToClient::MsgUnitCreation& message )
 {
     Agent* result = new Agent( message, controllers_.controller_, static_.types_ );
-    PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
+    kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
 
     result->Attach( *new Lives( controllers_.controller_ ) );
-    result->Attach< Attributes_ABC >( *new Attributes( controllers_.controller_, static_.coordinateConverter_, dico, model_.teams_ ) );
-    result->Attach( *new CommandPostAttributes( *result ) );
+    result->Attach< kernel::Attributes_ABC >( *new Attributes( controllers_.controller_, static_.coordinateConverter_, dico, model_.teams_ ) );
+    result->Attach( *new kernel::CommandPostAttributes( *result ) );
     result->Attach( *new Decisions( controllers_.controller_, *result ) );
-    result->Attach< Positions >( *new AgentPositions( *result, static_.coordinateConverter_ ) );
+    result->Attach< kernel::Positions >( *new AgentPositions( *result, static_.coordinateConverter_ ) );
     result->Attach( *new VisionCones( *result, model_.surfaceFactory_, workers_ ) );
     result->Attach( *new AgentDetections( controllers_.controller_, model_.agents_, *result ) );
     result->Attach( *new MagicOrders( *result ) );
@@ -171,12 +169,12 @@ Agent_ABC* AgentFactory::Create( const MsgsSimToClient::MsgUnitCreation& message
     result->Attach( *new LogMaintenanceConsigns( controllers_.controller_ ) );
     result->Attach( *new LogMedicalConsigns( controllers_.controller_ ) );
     result->Attach( *new LogSupplyConsigns( controllers_.controller_ ) );
-    result->Attach< CommunicationHierarchies >( *new AgentHierarchiesCommunication( controllers_.controller_, *result, model_.agents_, model_.knowledgeGroups_ ) );
-    result->Attach< TacticalHierarchies >     ( *new AgentHierarchies< TacticalHierarchies >     ( controllers_.controller_, *result, model_.agents_ ) );
+    result->Attach< kernel::CommunicationHierarchies >( *new AgentHierarchiesCommunication( controllers_.controller_, *result, model_.agents_, model_.knowledgeGroups_ ) );
+    result->Attach< kernel::TacticalHierarchies >     ( *new AgentHierarchies< kernel::TacticalHierarchies >     ( controllers_.controller_, *result, model_.agents_ ) );
     if( message.pc() )
         result->Attach( *new PcAttributes( *result ) );
 
-    result->Attach< HumanFactors_ABC >( *new HumanFactors( controllers_.controller_, dico ) );
+    result->Attach< kernel::HumanFactors_ABC >( *new HumanFactors( controllers_.controller_, dico ) );
     result->Attach( *new Reinforcements( controllers_.controller_, model_.agents_, dico ) );
     result->Attach( *new Dotations( controllers_.controller_, static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new Equipments( controllers_.controller_, static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
@@ -201,12 +199,12 @@ Agent_ABC* AgentFactory::Create( const MsgsSimToClient::MsgUnitCreation& message
 // Name: AgentFactory::Create
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Population_ABC* AgentFactory::Create( const MsgsSimToClient::MsgPopulationCreation& message )
+kernel::Population_ABC* AgentFactory::Create( const MsgsSimToClient::MsgPopulationCreation& message )
 {
     Population* result = new Population( message, controllers_.controller_, static_.coordinateConverter_, static_.types_ );
 
-    result->Attach< Positions >( *new PopulationPositions( *result ) );
-    result->Attach< TacticalHierarchies >( *new PopulationHierarchies( *result, model_.teams_.GetTeam( message.oid_camp() ) ) );
+    result->Attach< kernel::Positions >( *new PopulationPositions( *result ) );
+    result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, model_.teams_.GetTeam( message.oid_camp() ) ) );
     result->Attach( *new PopulationDecisions( controllers_.controller_, *result ) );
     result->Attach( *new DecisionalStates() );
     AttachExtensions( *result );
@@ -218,7 +216,7 @@ Population_ABC* AgentFactory::Create( const MsgsSimToClient::MsgPopulationCreati
 // Name: AgentFactory::AttachExtensions
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void AgentFactory::AttachExtensions( Entity_ABC& agent )
+void AgentFactory::AttachExtensions( kernel::Entity_ABC& agent )
 {
     agent.Attach( *new DebugPoints( static_.coordinateConverter_ ) );
     agent.Attach( *new MissionParameters( controllers_.controller_, model_.actionFactory_ ) );

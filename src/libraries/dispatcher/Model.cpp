@@ -52,12 +52,11 @@ using namespace dispatcher;
 // Name: Model constructor
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
-Model::Model( const tools::ExerciseConfig& config )
-    : simulation_( new SimulationModel() )
+Model::Model( const tools::ExerciseConfig& config, const kernel::StaticModel& staticModel )
+    : staticModel_( staticModel )
+    , simulation_( new SimulationModel() )
     , folk_( new FolkModel() )
     , compositeFactory_( new CompositeFactory() )
-    , agentTypes_( new kernel::AgentTypes( config ) )
-    , objectTypes_( new kernel::ObjectTypes( config ) )
     , levels_( new kernel::FormationLevels())
     , meteoModel_( new MeteoModel( config, *this ) )
 {
@@ -196,7 +195,7 @@ void Model::Update( const MsgsSimToClient::MsgSimToClient& wrapper )
     if( wrapper.message().has_formation_creation() )
         CreateUpdate< Formation >( formations_, wrapper.message().formation_creation().oid(), wrapper.message().formation_creation(), *levels_ ); 
     if( wrapper.message().has_unit_creation() )
-        CreateUpdate< Agent >( agents_, wrapper.message().unit_creation() ); 
+        CreateUpdate< Agent >( agents_, wrapper.message().unit_creation().oid(), wrapper.message().unit_creation(), staticModel_ ); 
     if( wrapper.message().has_unit_environment_type() )
         agents_.Get( wrapper.message().unit_environment_type().oid() ).Update( wrapper.message().unit_environment_type() ); 
     if( wrapper.message().has_unit_destruction() )
@@ -249,7 +248,7 @@ void Model::Update( const MsgsSimToClient::MsgSimToClient& wrapper )
         populations_.Get( wrapper.message().population_order().oid() ).Update( wrapper.message().population_order() ); 
 
     if( wrapper.message().has_object_creation() )
-        CreateUpdate< Object >( objects_, wrapper.message().object_creation().oid(), wrapper.message().object_creation() ); 
+        CreateUpdate< Object >( objects_, wrapper.message().object_creation().oid(), wrapper.message().object_creation(), staticModel_ ); 
     if( wrapper.message().has_object_update() )
         objects_.Get( wrapper.message().object_update().oid() ).Update( wrapper.message().object_update() ); 
     if( wrapper.message().has_object_destruction() )
@@ -396,7 +395,6 @@ void Model::CreateUpdate( tools::Resolver< Base >& resolver, unsigned id, const 
     static_cast< Concrete* >( pElement )->Update( message );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: Model::UpdateAnyAgent
 // Created: ZEBRE 2007-06-21
@@ -488,42 +486,6 @@ void Model::Accept( kernel::ModelVisitor_ABC& visitor ) const
     urbanBlocks_           .Apply( boost::bind( &UrbanObject::Accept, _1, boost::ref( visitor ) ) );
     urbanKnowledges_       .Apply( boost::bind( &UrbanKnowledge::Accept, _1, boost::ref( visitor ) ) );
     meteoModel_->Accept( visitor );
-}
-
-// -----------------------------------------------------------------------------
-// Name: tools::Resolver_ABC< kernel::AgentType >& Model::GetAgentTypes
-// Created: AGE 2008-03-14
-// -----------------------------------------------------------------------------
-const tools::Resolver_ABC< kernel::AgentType >& Model::GetAgentTypes() const
-{
-    return *agentTypes_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: tools::Resolver_ABC< kernel::MissionType >& Model::GetMissionTypes
-// Created: SBO 2008-05-21
-// -----------------------------------------------------------------------------
-const tools::Resolver_ABC< kernel::MissionType >& Model::GetMissionTypes() const
-{
-    return *agentTypes_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: tools::Resolver_ABC< kernel::FragOrderType >& Model::GetFragOrderTypes
-// Created: AGE 2008-07-16
-// -----------------------------------------------------------------------------
-const tools::Resolver_ABC< kernel::FragOrderType >& Model::GetFragOrderTypes() const
-{
-    return *agentTypes_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Model::GetFragOrderTypes
-// Created: AGE 2008-07-16
-// -----------------------------------------------------------------------------
-const tools::Resolver_ABC< kernel::ObjectType, std::string >& Model::GetObjectTypes() const
-{
-    return *objectTypes_;
 }
 
 // -----------------------------------------------------------------------------

@@ -23,15 +23,12 @@ namespace Common
 
 namespace kernel
 {
-    class AgentTypes;
     class AgentType;
     class Entity_ABC;
     class FormationLevels;
-    class FragOrderType;
-    class MissionType;
     class ModelVisitor_ABC;
     class ObjectType;
-    class ObjectTypes;
+    class StaticModel;
 }
 
 namespace tools
@@ -77,7 +74,7 @@ class Model : public MessageHandler_ABC, public Model_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Model( const tools::ExerciseConfig& config );
+             Model( const tools::ExerciseConfig& config, const kernel::StaticModel& staticModel );
     virtual ~Model();
     //@}
 
@@ -119,10 +116,6 @@ public:
     //! @name Accessors
     //@{
     void Accept( kernel::ModelVisitor_ABC& visitor ) const;
-    const tools::Resolver_ABC< kernel::AgentType >& GetAgentTypes() const;
-    const tools::Resolver_ABC< kernel::MissionType >& GetMissionTypes() const;
-    const tools::Resolver_ABC< kernel::FragOrderType >& GetFragOrderTypes() const;
-    const tools::Resolver_ABC< kernel::ObjectType, std::string >& GetObjectTypes() const;
     //@}
 
 private:
@@ -149,13 +142,11 @@ private:
 private:
     //! @name Member data
     //@{
+    const kernel::StaticModel&          staticModel_;
     std::auto_ptr< SimulationModel >    simulation_;
     std::auto_ptr< CompositeFactory >   compositeFactory_;
-
-    std::auto_ptr< FolkModel >           folk_;
-    std::auto_ptr< kernel::AgentTypes >  agentTypes_;
-    std::auto_ptr< kernel::ObjectTypes > objectTypes_;
-    std::auto_ptr< MeteoModel >          meteoModel_;
+    std::auto_ptr< FolkModel >          folk_;
+    std::auto_ptr< MeteoModel >         meteoModel_;
     //@}
 
 public:

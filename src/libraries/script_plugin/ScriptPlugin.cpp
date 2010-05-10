@@ -45,7 +45,7 @@ using namespace MsgsClientToMessenger;
 // Name: ScriptPlugin constructor
 // Created: AGE 2008-06-12
 // -----------------------------------------------------------------------------
-ScriptPlugin::ScriptPlugin( Model& model, const Config& config, SimulationPublisher_ABC& publisher, tools::MessageDispatcher_ABC& dispatcher, ClientPublisher_ABC& clients, LinkResolver_ABC& resolver, CompositeRegistrable& registrables )
+ScriptPlugin::ScriptPlugin( Model& model, const kernel::StaticModel& staticModel, const Config& config, SimulationPublisher_ABC& publisher, tools::MessageDispatcher_ABC& dispatcher, ClientPublisher_ABC& clients, LinkResolver_ABC& resolver, CompositeRegistrable& registrables )
     : model_     ( model )
     , config_    ( config )
     , registrables_( registrables )
@@ -57,7 +57,7 @@ ScriptPlugin::ScriptPlugin( Model& model, const Config& config, SimulationPublis
 {
     model_.RegisterFactory( *factory_ );
     registrables_.Add( new RegistrableProxy( *this ) );
-    registrables_.Add( new Actions( *controller_, config, model, publisher ) );
+    registrables_.Add( new Actions( *controller_, config, model, staticModel, publisher ) );
     registrables_.Add( new ConditionFacade( *controller_, *converter_, model_ ) );
     registrables_.Add( new AgentManipulator::Registrar() );
     registrables_.Add( new AutomatManipulator::Registrar() );

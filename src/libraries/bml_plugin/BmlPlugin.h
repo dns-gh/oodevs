@@ -28,6 +28,11 @@ namespace dispatcher
     class SimulationPublisher_ABC;
 }
 
+namespace kernel
+{
+    class StaticModel;
+}
+
 namespace plugins
 {
 namespace bml
@@ -51,7 +56,7 @@ class BmlPlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             BmlPlugin( dispatcher::Model& model, xml::xistream& xis, dispatcher::SimulationPublisher_ABC& simulation );
+             BmlPlugin( dispatcher::Model& model, const kernel::StaticModel& staticModel, xml::xistream& xis, dispatcher::SimulationPublisher_ABC& simulation );
     virtual ~BmlPlugin();
     //@}
 

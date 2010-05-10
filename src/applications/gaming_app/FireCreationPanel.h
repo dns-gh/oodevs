@@ -10,7 +10,6 @@
 #ifndef __FireCreationPanel_h_
 #define __FireCreationPanel_h_
 
-
 #include "clients_gui/ValuedComboBox.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_gui/InfoPanel_ABC.h"
@@ -22,6 +21,7 @@ namespace kernel
     class AgentKnowledge_ABC;
     class Controllers;
     class ModelLoaded;
+    class Time_ABC;
 }
 
 namespace gui
@@ -35,7 +35,6 @@ namespace actions
 }
 
 class StaticModel;
-class Simulation;
 
 // =============================================================================
 /** @class  FireCreationPanel
@@ -44,10 +43,10 @@ class Simulation;
 // Created: MGD 2010-02-23
 // =============================================================================
 class FireCreationPanel : public gui::InfoPanel_ABC
-                          , public tools::Observer_ABC
-                          , public tools::ElementObserver_ABC< kernel::ModelLoaded >
-                          , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
-                          , public kernel::ContextMenuObserver_ABC< kernel::AgentKnowledge_ABC >
+                        , public tools::Observer_ABC
+                        , public tools::ElementObserver_ABC< kernel::ModelLoaded >
+                        , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
+                        , public kernel::ContextMenuObserver_ABC< kernel::AgentKnowledge_ABC >
 {
     Q_OBJECT;
 
@@ -55,7 +54,7 @@ public:
     //! @name Constructors/Destructor
     //@{    
              FireCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers
-                                , actions::ActionsModel& actionsModel, const Simulation& simulation, const StaticModel& staticModel );
+                              , actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const StaticModel& staticModel );
     virtual ~FireCreationPanel();
     //@}
 
@@ -91,7 +90,7 @@ private:
     const StaticModel& staticModel_;
     kernel::Controllers& controllers_;
     actions::ActionsModel& actionsModel_;
-    const Simulation& simulation_;
+    const kernel::Time_ABC& simulation_;
 
     const kernel::AgentKnowledge_ABC* potentialTarget_;
     const kernel::AgentKnowledge_ABC* selectedTarget_;

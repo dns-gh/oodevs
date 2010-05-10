@@ -25,7 +25,7 @@ using namespace kernel;
 // Name: Dialogs constructor
 // Created: AGE 2006-04-20
 // -----------------------------------------------------------------------------
-Dialogs::Dialogs( QWidget* parent, Controllers& controllers, const Model& model, const StaticModel& staticModel, Publisher_ABC& publisher, actions::ActionsModel& actionsModel, const Simulation& simulation, const kernel::Profile_ABC& profile, CommandHandler& handler, const tools::ExerciseConfig& config )
+Dialogs::Dialogs( QWidget* parent, Controllers& controllers, const Model& model, const StaticModel& staticModel, Publisher_ABC& publisher, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile, CommandHandler& handler, const tools::ExerciseConfig& config )
     : QObject( parent )
 {
     new ChangeDiplomacyDialog( parent, controllers, actionsModel, staticModel, simulation, profile );

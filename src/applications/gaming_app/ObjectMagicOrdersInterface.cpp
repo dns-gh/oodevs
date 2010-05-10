@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "ObjectMagicOrdersInterface.h"
 #include "moc_ObjectMagicOrdersInterface.cpp"
-
+#include "actions/ActionTiming.h"
 #include "actions/ObjectMagicAction.h"
 #include "actions/ParameterList.h"
 #include "clients_kernel/AgentTypes.h"
@@ -18,7 +18,6 @@
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/ObjectType.h"
-#include "gaming/ActionTiming.h"
 #include "gaming/Object.h"
 #include "gaming/StaticModel.h"
 #include "protocol/simulationsenders.h"
@@ -32,7 +31,7 @@ using namespace parameters;
 // Name: ObjectMagicOrdersInterface constructor
 // Created: SBO 2007-05-04
 // -----------------------------------------------------------------------------
-ObjectMagicOrdersInterface::ObjectMagicOrdersInterface( QWidget* parent, Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, const Profile_ABC& profile )
+ObjectMagicOrdersInterface::ObjectMagicOrdersInterface( QWidget* parent, Controllers& controllers, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, const Profile_ABC& profile )
     : QObject( parent )
     , controllers_( controllers )
     , actionsModel_( actionsModel )

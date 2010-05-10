@@ -18,13 +18,14 @@
 
 namespace kernel
 {
-    class Entity_ABC;
     class Agent_ABC;
     class Automat_ABC;
     class Controllers;
+    class Entity_ABC;
+    class Formation_ABC;
     class Profile_ABC;
     class Team_ABC;
-    class Formation_ABC;
+    class Time_ABC;
 }
 
 namespace actions
@@ -39,8 +40,6 @@ namespace gui
 }
 
 class StaticModel;
-
-class Simulation;
 
 // =============================================================================
 /** @class  UnitMagicOrdersInterface
@@ -62,7 +61,7 @@ class UnitMagicOrdersInterface : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, gui::ParametersLayer& layer, const kernel::Profile_ABC& profile );
+             UnitMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation, gui::ParametersLayer& layer, const kernel::Profile_ABC& profile );
     virtual ~UnitMagicOrdersInterface();
     //@}
 
@@ -117,7 +116,7 @@ private:
     kernel::Controllers& controllers_;
     actions::ActionsModel& actionsModel_;
     const StaticModel& static_;
-    const Simulation& simulation_;
+    const kernel::Time_ABC& simulation_;
     const kernel::Profile_ABC& profile_;
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
     bool magicMove_;

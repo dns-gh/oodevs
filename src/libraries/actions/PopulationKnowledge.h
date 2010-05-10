@@ -21,8 +21,9 @@ namespace Common
 
 namespace kernel
 {
-    class Population_ABC;
     class AgentKnowledgeConverter_ABC;
+    class EntityResolver_ABC;
+    class Population_ABC;
 }
 
 namespace actions {
@@ -43,7 +44,7 @@ public:
     //@{
              PopulationKnowledge( const kernel::OrderParameter& parameter, kernel::Controller& controller );
              PopulationKnowledge( const kernel::OrderParameter& parameter, unsigned long id, kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
-             PopulationKnowledge( const kernel::OrderParameter& parameter, xml::xistream& xis, const tools::Resolver_ABC< kernel::Population_ABC >& resolver, kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
+             PopulationKnowledge( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
     virtual ~PopulationKnowledge();
     //@}
 

@@ -23,6 +23,11 @@ namespace dispatcher
     class SimulationPublisher_ABC;
 }
 
+namespace kernel
+{
+    class StaticModel;
+}
+
 namespace plugins
 {
 namespace bml
@@ -40,7 +45,7 @@ class OrderProcessor : public ResponseHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             OrderProcessor( const dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& publisher );
+             OrderProcessor( const dispatcher::Model& model, const kernel::StaticModel& staticModel, dispatcher::SimulationPublisher_ABC& publisher );
     virtual ~OrderProcessor();
     //@}
 
@@ -67,6 +72,7 @@ private:
     //! @name Member data
     //@{
     const dispatcher::Model& model_;
+    const kernel::StaticModel& staticModel_;
     dispatcher::SimulationPublisher_ABC& publisher_;
     //@}
 };

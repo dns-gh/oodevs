@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "FireCreationPanel.h"
 #include "moc_FireCreationPanel.cpp"
-
+#include "actions/ActionTiming.h"
 #include "actions/DotationType.h"
 #include "actions/Identifier.h"
 #include "actions/Numeric.h"
@@ -22,12 +22,10 @@
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/ObjectTypes.h"
-#include "gaming/ActionTiming.h"
 #include "gaming/StaticModel.h"
 #include "protocol/SimulationSenders.h"
 #include "tools/iterator.h"
 
-using namespace kernel;
 using namespace actions;
 
 // -----------------------------------------------------------------------------
@@ -35,8 +33,8 @@ using namespace actions;
 // Created: MGD 2010-02-23
 // -----------------------------------------------------------------------------
 FireCreationPanel::FireCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers
-                                    , actions::ActionsModel& actionsModel, const Simulation& simulation, const StaticModel& staticModel )
-: gui::InfoPanel_ABC( parent, panel, tr( "Fire" ), "FireCreationPanel" )
+                                    , actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const StaticModel& staticModel )
+    : gui::InfoPanel_ABC( parent, panel, tr( "Fire" ), "FireCreationPanel" )
     , staticModel_( staticModel )
     , controllers_( controllers )
     , actionsModel_( actionsModel )
@@ -96,13 +94,13 @@ FireCreationPanel::~FireCreationPanel()
 // -----------------------------------------------------------------------------
 void FireCreationPanel::Commit()
 {
-    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( staticModel_.types_ ).Get( "fire_order" );
+    kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( staticModel_.types_ ).Get( "fire_order" );
     UnitMagicAction* action = new UnitMagicAction( *selectedReporter_, actionType, controllers_.controller_, true );
-    tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Identifier( it.NextElement(), selectedTarget_->GetId() ) );
     action->AddParameter( *new parameters::DotationType( it.NextElement(), ammunitionsBox_->GetValue(), staticModel_.objectTypes_ ) );
     action->AddParameter( *new parameters::Numeric( it.NextElement(), interventionType_->text().toFloat() ) );
-    action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_, *action ) );
     action->RegisterAndPublish( actionsModel_ );
 }
 

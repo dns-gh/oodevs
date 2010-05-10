@@ -12,6 +12,7 @@
 #include "ParameterVisitor_ABC.h"
 #include "clients_kernel/ObjectKnowledgeConverter_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/EntityResolver_ABC.h"
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.h>
 
@@ -64,11 +65,11 @@ ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter, unsigned long
 // Name: ObjectKnowledge constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-ObjectKnowledge::ObjectKnowledge( xml::xistream& xis, const tools::Resolver_ABC< Object_ABC >& resolver, ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
+ObjectKnowledge::ObjectKnowledge( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
     : Entity< ObjectKnowledge_ABC >( OrderParameter( ReadName( xis ), "objectknowledge", false ), controller )
 {
     const Team_ABC& team = static_cast< const Team_ABC& >( owner.Get< CommunicationHierarchies >().GetTop() );
-    SetValue( converter.Find( resolver.Get( ReadId( xis ) ), team ) );
+    SetValue( converter.Find( resolver.GetObject( ReadId( xis ) ), team ) );
     if( ! GetValue() )
         throw std::runtime_error( tools::translate( "Parameter", "Object knowledge not found." ).ascii() );
 }
@@ -77,11 +78,11 @@ ObjectKnowledge::ObjectKnowledge( xml::xistream& xis, const tools::Resolver_ABC<
 // Name: ObjectKnowledge constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter, xml::xistream& xis, const tools::Resolver_ABC< Object_ABC >& resolver, ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
+ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
     : Entity< ObjectKnowledge_ABC >( parameter, controller )
 {
     const Team_ABC& team = static_cast< const Team_ABC& >( owner.Get< CommunicationHierarchies >().GetTop() );
-    SetValue( converter.Find( resolver.Get( ReadId( xis ) ), team ) );
+    SetValue( converter.Find( resolver.GetObject( ReadId( xis ) ), team ) );
     if( ! GetValue() )
         throw std::runtime_error( tools::translate( "Parameter", "Object knowledge not found." ).ascii() );
 }

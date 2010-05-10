@@ -20,13 +20,14 @@ using namespace Common;
 
 namespace kernel
 {
-    class Controllers;
-    class Profile_ABC;
-    class Entity_ABC;
     class Agent_ABC;
     class Automat_ABC;
+    class Controllers;
+    class Entity_ABC;
     class Formation_ABC;
+    class Profile_ABC;
     class Team_ABC;
+    class Time_ABC;
 }
 
 namespace actions
@@ -58,7 +59,7 @@ class ChangeHumanFactorsDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ChangeHumanFactorsDialog( QWidget* pParent, kernel::Controllers& controllers, const StaticModel& staticModel, actions::ActionsModel& actionsModel, const Simulation& simulation, const kernel::Profile_ABC& profile );
+             ChangeHumanFactorsDialog( QWidget* pParent, kernel::Controllers& controllers, const StaticModel& staticModel, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile );
     virtual ~ChangeHumanFactorsDialog();
     //@}
 
@@ -101,7 +102,7 @@ private:
     kernel::Controllers& controllers_;
     const StaticModel& static_;
     actions::ActionsModel& actionsModel_;
-    const Simulation& simulation_;
+    const kernel::Time_ABC& simulation_;
     const kernel::Profile_ABC& profile_;
 
     kernel::SafePointer< kernel::Entity_ABC > selected_;

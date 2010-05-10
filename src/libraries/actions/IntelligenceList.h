@@ -24,6 +24,7 @@ namespace kernel
     class Formation_ABC;
     class FormationLevels;
     class Controller;
+    class EntityResolver_ABC;
 }
 
 namespace actions {
@@ -43,10 +44,10 @@ public:
     //@{
     explicit IntelligenceList( const kernel::OrderParameter& parameter );
              IntelligenceList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis
-                                            , const tools::Resolver_ABC< kernel::Formation_ABC >& resolver
+                                            , const kernel::EntityResolver_ABC& resolver
                                             , const kernel::FormationLevels& levels, kernel::Controller& controller );
              IntelligenceList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const Common::MsgIntelligenceList& asn 
-                                            , const tools::Resolver_ABC< kernel::Formation_ABC >& resolver
+                                            , const kernel::EntityResolver_ABC& resolver
                                             , const kernel::FormationLevels& levels, kernel::Controller& controller );
     virtual ~IntelligenceList();
     //@}
@@ -68,7 +69,7 @@ private:
     //! @name Helpers
     //@{
     void ReadIntelligence( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter
-                         , const tools::Resolver_ABC< kernel::Formation_ABC >& resolver
+                         , const kernel::EntityResolver_ABC& resolver
                          , const kernel::FormationLevels& levels, kernel::Controller& controller );
     //@}
 };

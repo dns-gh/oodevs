@@ -12,7 +12,7 @@
 #include "Simulation.h"
 #include "actions/Action_ABC.h"
 #include "actions/ActionsModel.h"
-#include "ActionTiming.h"
+#include "actions/ActionTiming.h"
 #include "clients_kernel/Controllers.h"
 #include "protocol/simulationsenders.h"
 
@@ -53,7 +53,7 @@ void ActionsScheduler::NotifyUpdated( const Simulation::sStartTick& )
     while( it.HasMoreElements() )
     {
         const actions::Action_ABC& action = it.NextElement();
-        if( const ActionTiming* timing = action.Retrieve< ActionTiming >() )
+        if( const actions::ActionTiming* timing = action.Retrieve< actions::ActionTiming >() )
         {
             const QDateTime dateTime = timing->GetTime();
             if( timing->IsEnabled() && dateTime <= currentTime_ && dateTime.secsTo( currentTime_ ) < int( simulation_.GetTickDuration() ) )
