@@ -5,11 +5,14 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_PerceptionView.h"
 #include "PHY_PerceptionLevel.h"
+#include "PHY_ZURBPerceptionComputer.h"
+#include "PHY_ZOPerceptionComputer.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
@@ -19,6 +22,8 @@
 
 #include "urban/Block.h"
 
+MT_Random PHY_PerceptionView::randomGenerator_;
+
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionView constructor
 // Created: NLD 2004-08-20
@@ -26,6 +31,7 @@
 PHY_PerceptionView::PHY_PerceptionView( PHY_RoleInterface_Perceiver& perceiver )
     : PHY_Perception_ABC( perceiver )
     , bIsEnabled_       ( true )
+    , wasInCity_       ( perceiver.GetPion().GetRole< PHY_RoleInterface_UrbanLocation >().IsInCity() )
 {
     // NOTHING
 }
@@ -94,27 +100,34 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const DEC_Knowledge_Agen
 // Name: PHY_PerceptionView::Compute
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_Agent_ABC& target ) const
+const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_Agent_ABC& target )
 {
+    TransfertPerception();
     if( target.BelongsTo( perceiver_.GetKnowledgeGroup() ) || perceiver_.IsIdentified( target ) )
         return PHY_PerceptionLevel::identified_;
 
     if( !bIsEnabled_ )
         return PHY_PerceptionLevel::notSeen_;
 
-    const PHY_PerceptionLevel* pBestLevel = &PHY_PerceptionLevel::notSeen_;
-    const PHY_RoleInterface_Perceiver::T_SurfaceAgentMap& surfaces = perceiver_.GetSurfacesAgent();
-    for ( PHY_RoleInterface_Perceiver::CIT_SurfaceAgentMap itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
-    {
-        const PHY_PerceptionLevel& currentLevel = itSurface->second.ComputePerception( perceiver_, target );
-        if( currentLevel > *pBestLevel )
-        {
-            pBestLevel = &currentLevel;
-            if( pBestLevel->IsBestLevel() )
-                return *pBestLevel;
-        }       
+    if ( !perceiver_.GetPion().GetRole< PHY_RoleInterface_UrbanLocation >().IsInCity() ) 
+    {              
+        PHY_ZOPerceptionComputer computer( perceiver_.GetPion() );
+        return computer.ComputePerception( target );
     }
-    return *pBestLevel;
+    else
+    {
+        CIT_PerceptionTickMap it = perceptionsUnderway_.find( &target );
+        unsigned int tick = 0;
+        float roll = static_cast< float >( randomGenerator_.rand_ii() );
+        if( it != perceptionsUnderway_.end() )
+        {
+            tick = it->second.first;
+            roll = it->second.second;
+        }
+        perceptionsBuffer_[ &target ] = std::pair< unsigned int, float >( tick + 1, roll );
+        PHY_ZURBPerceptionComputer computer( perceiver_.GetPion(), roll, tick );
+        return computer.ComputePerception( target );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -363,7 +376,53 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const urban::Block& bloc
 // -----------------------------------------------------------------------------
 void PHY_PerceptionView::FinalizePerception()
 {
-    const PHY_RoleInterface_Perceiver::T_SurfaceAgentMap& surfaces = perceiver_.GetSurfacesAgent();
-    for( PHY_RoleInterface_Perceiver::CIT_SurfaceAgentMap itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
-        const_cast< PHY_PerceptionSurfaceAgent& >( itSurface->second ).FinalizePerception();
+    if( !perceiver_.GetPion().GetRole< PHY_RoleInterface_UrbanLocation >().IsInCity() )
+    {
+        const PHY_RoleInterface_Perceiver::T_SurfaceAgentMap& surfaces = perceiver_.GetSurfacesAgent();
+        for( PHY_RoleInterface_Perceiver::CIT_SurfaceAgentMap itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
+            const_cast< PHY_PerceptionSurfaceAgent& >( itSurface->second ).FinalizePerception();
+    }
+    else
+    {
+        perceptionsUnderway_ = perceptionsBuffer_;
+        perceptionsBuffer_.clear();
+    }
+
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionView::TransfertPerception
+// Created: SLG 2010-05-07
+// -----------------------------------------------------------------------------
+void PHY_PerceptionView::TransfertPerception()
+{
+    bool isInCity = perceiver_.GetPion().GetRole< PHY_RoleInterface_UrbanLocation >().IsInCity(); 
+    if( isInCity && !wasInCity_ )
+    {
+        perceptionsBuffer_.clear();
+        perceptionsUnderway_.clear();
+        const PHY_RoleInterface_Perceiver::T_SurfaceAgentMap& surfaces = perceiver_.GetSurfacesAgent();
+        for( PHY_RoleInterface_Perceiver::CIT_SurfaceAgentMap itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
+        {
+            std::map< const void*, unsigned int > perceptionMap = itSurface->second.GetTargetsPerception();
+            for( std::map< const void*, unsigned int >::const_iterator it = perceptionMap.begin(); it != perceptionMap.end(); ++it )
+            {
+                T_PerceptionTickMap::iterator it2 = perceptionsBuffer_.find( it->first );
+                if( it2 != perceptionsBuffer_.end() )  
+                    perceptionsBuffer_[ it2->first ] = std::pair< unsigned int, float >( std::max( it2->second.first, it->second ), static_cast< float >( randomGenerator_.rand_ii() )  );
+                else
+                    perceptionsBuffer_[ it->first ] = std::pair< unsigned int, float >( it->second, static_cast< float >( randomGenerator_.rand_ii() )  );   
+            }
+        }
+    
+        wasInCity_ = isInCity;
+    }
+    else if( !isInCity && wasInCity_ )
+    {
+        const PHY_RoleInterface_Perceiver::T_SurfaceAgentMap& surfaces = perceiver_.GetSurfacesAgent();
+        for( PHY_RoleInterface_Perceiver::IT_SurfaceAgentMap itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
+            itSurface->second.TransfertPerception( perceptionsUnderway_ );
+        wasInCity_ = isInCity;
+    }
+
 }

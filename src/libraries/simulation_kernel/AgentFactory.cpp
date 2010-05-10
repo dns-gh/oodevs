@@ -14,6 +14,7 @@
 #include "Entities/Automates/MIL_Automate.h"
 
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 
 #include "Tools/MIL_IDManager.h"
 #include "Tools/MIL_Tools.h"
@@ -92,6 +93,7 @@ MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate
 void AgentFactory::Initialize( MIL_AgentPion& pion, const MT_Vector2D& vPosition )
 {
     pion.GetRole< PHY_RoleInterface_Location >().Move( vPosition, MT_Vector2D( 0., 1. ), 0. );
+    pion.GetRole< PHY_RoleInterface_UrbanLocation >().MagicMove( vPosition );// // $$$$ _RC_ SLG 2010-05-07: afin de notifier PHY_RolePion_UrbanLocation
 }
 
 // -----------------------------------------------------------------------------

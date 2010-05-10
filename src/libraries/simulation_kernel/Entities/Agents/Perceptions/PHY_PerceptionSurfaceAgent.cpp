@@ -256,6 +256,27 @@ const std::string& PHY_PerceptionSurfaceAgent::GetSensorTypeName() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_PerceptionSurfaceAgent::TransfertPerception
+// Created: SLG 2010-05-07
+// -----------------------------------------------------------------------------
+void PHY_PerceptionSurfaceAgent::TransfertPerception( std::map< const void*, std::pair< unsigned int, float > > urbanPerceptionMap ) const
+{
+    perceptionsBuffer_.clear();
+    
+    for ( std::map< const void*, std::pair< unsigned int, float > >::const_iterator it = urbanPerceptionMap.begin(); it != urbanPerceptionMap.end(); ++it )
+        perceptionsBuffer_[ it->first ] = it->second.first;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionSurfaceAgent::GetTargetsPerception
+// Created: SLG 2010-05-07
+// -----------------------------------------------------------------------------
+std::map< const void*, unsigned int > PHY_PerceptionSurfaceAgent::GetTargetsPerception() const
+{
+    return perceptionsUnderway_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_PerceptionSurfaceAgent::operator=
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------

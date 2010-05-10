@@ -24,6 +24,10 @@
 #include <urban/MaterialCompositionType.h>
 #include <urban/Soil.h>
 #include <urban/StaticModel.h>
+#pragma warning( push )
+#pragma warning( disable : 4127 4100 )
+#include <boost/geometry/geometry.hpp>
+#pragma warning( pop )
 
 MT_Random InsideUrbanBlockPosition::randomGenerator_;
 
@@ -94,7 +98,7 @@ geometry::Point2f InsideUrbanBlockPosition::GetTargetPosition(MIL_Agent_ABC& fir
 geometry::Point2f InsideUrbanBlockPosition::GetNearestUrbanBlockPoint( const geometry::Point2f pionPosition, const std::vector< geometry::Point2f > points ) const 
 {
     geometry::Point2f nearestPosition;
-    float distance = std::numeric_limits< MT_Float >::max();
+    float distance = std::numeric_limits< float >::max();
     for( std::vector< geometry::Point2f >::const_iterator it = points.begin(); it != points.end(); ++it )
     {
         float distanceTemp = (*it).Distance( pionPosition );
@@ -166,6 +170,58 @@ float InsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_AB
         intersectArea += area( *it ); 
     }
     return ( intersectArea / ( urbanObject_->GetFootprint()->ComputeArea() ) ) * result.urbanDeployment_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: InsideUrbanBlockPosition::ComputeRatioPionInside
+// Created: SLG 2010-04-27
+// -----------------------------------------------------------------------------
+float InsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_ABC::Results& result, const geometry::Polygon2f& polygon, float modicator ) const
+{
+    if( modicator > result.urbanDeployment_ ) // SLG : permet d'éviter des incohérence dans la percpetion d'unité quand la cible passe en état posté.
+    {
+        if( polygon.IsInside( result.position_ ) )
+            return 1.0;
+        else
+            return 0.0;
+    }
+    else
+    {
+        bg::polygon< bg::point_xy< float > > blockGeometry;
+        bg::polygon< bg::point_xy< float > > perceptionGeometry;
+        {
+            geometry::Polygon2f::T_Vertices urbanBlockVertices = urbanObject_->GetFootprint()->Vertices();
+            std::vector< bg::point_xy< float > > vectorTemp;
+            for ( geometry::Polygon2f::CIT_Vertices it = urbanBlockVertices.begin(); it != urbanBlockVertices.end(); ++it )
+            {
+                bg::point_xy< float > p( it->X(), it->Y() );
+                vectorTemp.push_back( p );
+
+            }
+            bg::assign( blockGeometry, vectorTemp );
+            bg::correct( blockGeometry );
+        }
+        {
+            geometry::Polygon2f::T_Vertices polygonVertices = polygon.Vertices();
+            std::vector< bg::point_xy< float > > vectorTemp;
+            for ( geometry::Polygon2f::CIT_Vertices it = polygonVertices.begin(); it != polygonVertices.end(); ++it )
+            {
+                bg::point_xy< float > p( it->X(), it->Y() );
+                vectorTemp.push_back( p );
+
+            }
+            bg::assign( perceptionGeometry, vectorTemp );
+            bg::correct( perceptionGeometry );
+        }
+        std::vector< bg::polygon< bg::point_xy< float > > > polygonResult;
+        bg::intersection_inserter<boost::geometry::polygon< bg::point_xy< float > > >(perceptionGeometry, blockGeometry, std::back_inserter( polygonResult ) );
+        double intersectArea = 0;
+        for( std::vector< bg::polygon< bg::point_xy< float > > >::const_iterator it = polygonResult.begin(); it != polygonResult.end(); ++it  )
+        {
+            intersectArea += area( *it ); 
+        }
+        return ( intersectArea / area( blockGeometry ) ) * result.urbanDeployment_; 
+    }
 }
 
 // -----------------------------------------------------------------------------

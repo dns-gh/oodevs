@@ -54,7 +54,6 @@ void UrbanBlockDetectionMap::AddUrbanBlock( urban::TerrainObject_ABC& object )
     }
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: UrbanBlockDetectionMap::GetUrbanBlock
 // Created: SLG 2010-03-12

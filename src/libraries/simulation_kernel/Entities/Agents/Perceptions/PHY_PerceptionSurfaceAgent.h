@@ -59,6 +59,7 @@ public:
     const PHY_PerceptionLevel& ComputePerception        ( const PHY_RoleInterface_Perceiver& perceiver, const urban::TerrainObject_ABC& block ) const;
 
           void                 AddDirection     ( const MT_Vector2D& vDir );
+          void TransfertPerception( std::map< const void*, std::pair< unsigned int, float > > urbanPerceptionMap ) const;
 
     virtual void FinalizePerception();
     //@}
@@ -67,6 +68,7 @@ public:
     //@{
     bool               IsInitialized();
     const std::string& GetSensorTypeName() const; // LTO
+    std::map< const void*, unsigned int > GetTargetsPerception() const;
     //@}
 
     //! @name Operators

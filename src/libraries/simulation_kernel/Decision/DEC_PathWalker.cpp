@@ -265,23 +265,18 @@ void DEC_PathWalker::ComputeObjectsCollision( const MT_Vector2D& vStart, const M
 // Name: DEC_PathWalker::ComputeObjectsCollision
 // Created: NLD 2002-12-17
 //-----------------------------------------------------------------------------
-void DEC_PathWalker::ComputeUrbanBlocksCollision( const MT_Vector2D& vStart, const MT_Vector2D& vEnd, T_MoveStepSet& moveStepSet )
+void DEC_PathWalker::ComputeUrbanBlocksCollision( const MT_Vector2D& vStart, const MT_Vector2D& vEnd, T_MoveStepSet& moveStepSet, const std::vector< const urban::TerrainObject_ABC* > urbanBlocks )
 {   
-    // Récupération de la liste des objets dynamiques contenus dans le rayon vEnd - vStart
     geometry::Point2f start( static_cast< float >( vStart.rX_ ), static_cast< float >( vStart.rY_ ) );
     geometry::Point2f end( static_cast< float >( vEnd.rX_ ), static_cast< float >( vEnd.rY_ ) );
-    std::vector< const urban::TerrainObject_ABC* > urbanBlocks;
-    UrbanModel::GetSingleton().GetModel().GetListWithinCircle( geometry::Point2f( static_cast< float >( vNewPos_.rX_ ), static_cast< float >( vNewPos_.rY_ ) ), start.Distance( end ), urbanBlocks );
     
     geometry::Segment2f lineTmp( start, end );
-
     moveStepSet.insert( T_MoveStep( vStart ) );
     moveStepSet.insert( T_MoveStep( vEnd   ) );
 
-    //TER_DistanceLess colCmp( vStart );
     geometry::Polygon2f::T_Vertices collisions;
 
-    for( std::vector< const urban::TerrainObject_ABC* >::iterator itUrbanBlock = urbanBlocks.begin(); itUrbanBlock != urbanBlocks.end(); ++itUrbanBlock )
+    for( std::vector< const urban::TerrainObject_ABC* >::const_iterator itUrbanBlock = urbanBlocks.begin(); itUrbanBlock != urbanBlocks.end(); ++itUrbanBlock )
     {
         const urban::TerrainObject_ABC& urbanBlock = **itUrbanBlock;
         const geometry::Polygon2f* urbanBlockPolygon = (*itUrbanBlock)->GetFootprint();
@@ -447,7 +442,18 @@ bool DEC_PathWalker::TryToMoveTo( const DEC_PathResult& path, const MT_Vector2D&
    
     moveStepSet.clear();
     ComputeObjectsCollision( vNewPos_, vNewPosTmp, moveStepSet );
-    ComputeUrbanBlocksCollision( vNewPos_, vNewPosTmp, moveStepSet );
+
+    // Récupération de la liste des bloc urbain dynamiques contenus dans le rayon vEnd - vStart
+    geometry::Point2f start( vNewPos_.rX_, vNewPos_.rY_ );
+    geometry::Point2f end( vNewPosTmp.rX_, vNewPosTmp.rY_ );
+    std::vector< const urban::TerrainObject_ABC* > urbanBlocks;
+    UrbanModel::GetSingleton().GetModel().GetListWithinCircle( geometry::Point2f( vNewPos_.rX_, vNewPos_.rY_ ), start.Distance( end ), urbanBlocks );
+    ComputeUrbanBlocksCollision( vNewPos_, vNewPosTmp, moveStepSet, urbanBlocks );
+
+    // Récupération des villes
+    std::vector< const urban::TerrainObject_ABC* > cities = UrbanModel::GetSingleton().GetModel().GetCities();
+    ComputeUrbanBlocksCollision( vNewPos_, vNewPosTmp, moveStepSet, cities );
+
     assert( moveStepSet.size() >= 2 );
 
     CIT_MoveStepSet itCurMoveStep  = moveStepSet.begin();

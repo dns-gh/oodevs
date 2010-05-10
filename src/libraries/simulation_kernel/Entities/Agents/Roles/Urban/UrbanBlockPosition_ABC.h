@@ -36,6 +36,7 @@ public:
     virtual geometry::Point2f   GetFirerPosition( MIL_Agent_ABC& target, urbanLocation::UrbanLocationComputer_ABC::Results& firerResult ) const = 0;
     virtual geometry::Point2f   GetTargetPosition( MIL_Agent_ABC& firer, urbanLocation::UrbanLocationComputer_ABC::Results& targetResult ) const = 0;
     virtual float               ComputeRatioPionInside( urbanLocation::UrbanLocationComputer_ABC::Results& result, const MT_Ellipse& attritionSurface ) const = 0;
+    virtual float               ComputeRatioPionInside( urbanLocation::UrbanLocationComputer_ABC::Results& result, const geometry::Polygon2f& polygon, float /*modificator*/ ) const = 0;
     virtual MT_Float            ComputeUrbanProtection( const PHY_DotationCategory& dotationCategory ) const = 0;
     //@}
 

@@ -43,7 +43,7 @@ struct FixturePion
     std::auto_ptr< StubMIL_AutomateType >  pTypeAutomat_;
     std::auto_ptr< MIL_Automate >          pAutomat_;
     std::auto_ptr< StubMIL_AgentPion >     pPion_;
-    MIL_EffectManager&                      effectManager_;
+    MIL_EffectManager&                     effectManager_;
 };
 
 struct FixtureAutomate

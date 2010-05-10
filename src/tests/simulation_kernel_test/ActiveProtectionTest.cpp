@@ -126,7 +126,7 @@ BOOST_AUTO_TEST_CASE( ActiveProtectionTest )
         MockPHY_RoleInterface_Composantes* composanteRole = new MockPHY_RoleInterface_Composantes();
         pion.RegisterRole( *composanteRole );
         MOCK_EXPECT( composanteRole, Neutralize ).once();              
-        MOCK_EXPECT( urbanRole, ComputeRatioPionInside ).once().returns( 1. );
+        MOCK_EXPECT( urbanRole, ComputeRatioPionInsideEllipse ).once().returns( 1. );
         MOCK_EXPECT( composanteRole, ApplyIndirectFire ).once();
         MOCK_EXPECT( mockArmy, IsAFriend ).once().returns( eTristate_False );
         UrbanModel urbanModel;

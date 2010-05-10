@@ -68,7 +68,7 @@ void PHY_Perception_ABC::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perce
 // Name: PHY_Perception_ABC::Compute
 // Created: NLD 2005-10-11
 // -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_Perception_ABC::Compute( const MIL_Agent_ABC& /*agent*/ ) const
+const PHY_PerceptionLevel& PHY_Perception_ABC::Compute( const MIL_Agent_ABC& /*agent*/ )
 {
     return PHY_PerceptionLevel::notSeen_;
 }

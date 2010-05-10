@@ -1039,7 +1039,7 @@ const PHY_ComposanteTypePion& PHY_ComposantePion::GetType() const
 // Name: PHY_ComposantePion::GetIdentificationMaxRange
 // Created: DDA 2010-03-24
 // -----------------------------------------------------------------------------
-float PHY_ComposantePion::GetIdentificationMaxRange () const
+float PHY_ComposantePion::GetIdentificationMaxRange() const
 {
 	MT_Float distance = numeric_limits< MT_Float >::max();
 	for( CIT_SensorVector itSensor = sensors_.begin(); itSensor != sensors_.end(); ++itSensor )
@@ -1051,7 +1051,7 @@ float PHY_ComposantePion::GetIdentificationMaxRange () const
 // Name: PHY_ComposantePion::GetReconnoissanceMaxRange
 // Created: GGE & PSN 10-04-20
 // -----------------------------------------------------------------------------
-float PHY_ComposantePion::GetReconnoissanceMaxRange () const
+float PHY_ComposantePion::GetReconnoissanceMaxRange() const
 {
 	MT_Float distance = numeric_limits< MT_Float >::max();
 	for( CIT_SensorVector itSensor = sensors_.begin(); itSensor != sensors_.end(); ++itSensor )

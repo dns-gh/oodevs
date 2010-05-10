@@ -63,6 +63,18 @@ float OutsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_A
 }
 
 // -----------------------------------------------------------------------------
+// Name: OutsideUrbanBlockPosition::ComputeRatioPionInside
+// Created: SLG 2010-04-27
+// -----------------------------------------------------------------------------
+float OutsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_ABC::Results& result, const geometry::Polygon2f& polygon, float /*modificator*/ ) const
+{
+    if( polygon.IsInside( result.position_ ) )
+        return 1.0;
+    else
+        return 0.0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: OutsideUrbanBlockPosition::ComputeUrbanProtection
 // Created: SLG 2010-04-27
 // -----------------------------------------------------------------------------

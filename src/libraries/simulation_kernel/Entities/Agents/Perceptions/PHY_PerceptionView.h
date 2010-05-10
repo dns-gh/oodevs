@@ -30,7 +30,7 @@ public:
     virtual const PHY_PerceptionLevel& Compute( const MT_Vector2D& vPoint ) const;
 
     virtual void                       Execute( const TER_Agent_ABC::T_AgentPtrVector& perceivableAgents, const detection::DetectionComputerFactory_ABC& detectionComputerFactory );
-    virtual const PHY_PerceptionLevel& Compute( const MIL_Agent_ABC& agent ) const;
+    virtual const PHY_PerceptionLevel& Compute( const MIL_Agent_ABC& agent );
     virtual const PHY_PerceptionLevel& Compute( const DEC_Knowledge_Agent & knowledge ) const;
 
     virtual void                       Execute( const TER_Object_ABC::T_ObjectVector& perceivableObjects );
@@ -53,10 +53,27 @@ private:
     //! @name Helpers
     //@{
     void FinalizeSurfaceAgents();
+    void TransfertPerception();
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::pair< unsigned int, float > T_PerceptionParameterPair;
+
+    typedef std::map< const void*, T_PerceptionParameterPair > T_PerceptionTickMap;
+    typedef T_PerceptionTickMap::const_iterator               CIT_PerceptionTickMap;
+    typedef T_PerceptionTickMap::iterator                      IT_PerceptionTickMap;
     //@}
 
 private:
     bool bIsEnabled_;
+    T_PerceptionTickMap perceptionsBuffer_;
+    T_PerceptionTickMap perceptionsUnderway_;
+    bool wasInCity_; 
+
+private:
+    static MT_Random randomGenerator_;
+
 };
 
 #endif // __PHY_PerceptionView_h_

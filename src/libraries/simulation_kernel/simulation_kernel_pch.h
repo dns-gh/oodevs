@@ -25,7 +25,6 @@
 #include <boost/serialization/set.hpp>
 #include <boost/serialization/vector.hpp>
 #include <boost/serialization/string.hpp>
-#include <boost/geometry/geometry.hpp>
 
 #include <boost/noncopyable.hpp>
 

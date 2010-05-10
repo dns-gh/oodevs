@@ -53,6 +53,7 @@ public:
           MT_Float        GetMaxDistance            () const;
           MT_Float        GetAngle                  () const;
           MT_Float        GetFactor                 ( const PHY_Volume& volume ) const;
+          MT_Float GetUrbanBlockFactor( const urban::TerrainObject_ABC& target ) const;
           bool            CanScan                   () const;
     const PHY_SensorType& GetType                   () const;
           unsigned int    GetDelay                  () const;
@@ -69,6 +70,9 @@ public:
     const PHY_PerceptionLevel& ComputePerception        ( const MIL_AgentPion& perceiver, const urban::TerrainObject_ABC& target, MT_Float rSensorHeight ) const;
 	const MT_Float			   IdentificationDistance   () const;
     const MT_Float			   ReconnoissanceDistance   () const;
+    const MT_Float             ComputeIdentificationDist( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const;
+    const MT_Float             ComputeRecognitionDist   ( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const;
+    const MT_Float             ComputeDetectionDist     ( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const;
     //@}
 
 public:
@@ -97,11 +101,12 @@ private:
     MT_Float                   ComputeEnvironementFactor( PHY_RawVisionData::envBits nEnv ) const;
     MT_Float                   ComputeExtinction        ( const PHY_RawVisionDataIterator& env, MT_Float rDistanceModificator, MT_Float rInitialCoef, bool bIsAroundBU ) const;
     bool                       ComputeUrbanExtinction   ( const MT_Vector2D& vSource, const MT_Vector2D& vTarget, MT_Float& rVisionNRJ ) const;
+    const MT_Float             ComputeDistanceModificator( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const;
     const PHY_PerceptionLevel& InterpretExtinction     ( MT_Float rExtinction ) const;
     
-	MT_Float GetSourceFactor( const MIL_AgentPion&       source ) const;
-    MT_Float GetTargetFactor( const MIL_Agent_ABC&       target ) const;
-    MT_Float GetTargetFactor( const DEC_Knowledge_Agent& target ) const;
+	MT_Float GetSourceFactor    ( const MIL_Agent_ABC&       source ) const;
+    MT_Float GetTargetFactor    ( const MIL_Agent_ABC&       target ) const;
+    MT_Float GetTargetFactor    ( const DEC_Knowledge_Agent& target ) const;
 
     bool ContainsSensorFromLimitedList( const MIL_Agent_ABC& target ) const; // LTO
 

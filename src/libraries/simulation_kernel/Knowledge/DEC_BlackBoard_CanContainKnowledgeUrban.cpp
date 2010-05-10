@@ -49,7 +49,6 @@ namespace
         DEC_BlackBoard_CanContainKnowledgeUrban::T_KnowledgeUrbanMap& elements_;
         const MIL_Army_ABC& army_;
     };
-
 }
 
 // -----------------------------------------------------------------------------

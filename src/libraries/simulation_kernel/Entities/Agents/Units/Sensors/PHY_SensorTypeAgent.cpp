@@ -347,7 +347,7 @@ MT_Float PHY_SensorTypeAgent::GetPopulationFactor( MT_Float rDensity ) const
 // Name: PHY_SensorTypeAgent::GetSourceFactor
 // Created: NLD 2004-08-30
 // -----------------------------------------------------------------------------
-MT_Float PHY_SensorTypeAgent::GetSourceFactor( const MIL_AgentPion& source ) const
+MT_Float PHY_SensorTypeAgent::GetSourceFactor( const MIL_Agent_ABC& source ) const
 {
     // Posture
     const PHY_RoleInterface_Posture& sourcePosture = source.GetRole< PHY_RoleInterface_Posture >();
@@ -362,7 +362,7 @@ MT_Float PHY_SensorTypeAgent::GetSourceFactor( const MIL_AgentPion& source ) con
                           * ( postureSourceFactors_[ nCurPostureIdx ] - postureSourceFactors_[ nOldPostureIdx ] );
 
 
-    MIL_AgentPion& tempSource = const_cast< MIL_AgentPion& >( source );//@TODO MGD FIND A BETTER WAY
+    MIL_Agent_ABC& tempSource = const_cast< MIL_Agent_ABC& >( source );//@TODO MGD FIND A BETTER WAY
     std::auto_ptr< detection::PerceptionDistanceComputer_ABC > computer( tempSource.GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer() );
     rModificator *= tempSource.Execute( *computer ).GetFactor();
 
@@ -735,6 +735,45 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Age
     return RayTrace( vSourcePos, rSourceAltitude, vTargetPos, rTargetAltitude, rDistanceMaxModificator );
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorTypeAgent::ComputeIdentificationDist
+// Created: SLG 2010-04-30
+// -----------------------------------------------------------------------------
+const MT_Float PHY_SensorTypeAgent::ComputeIdentificationDist( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const
+{
+    return rIdentificationDist_ * ComputeDistanceModificator( perceiver, target );
+}
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorTypeAgent::ComputeRecognitionDist
+// Created: SLG 2010-04-30
+// -----------------------------------------------------------------------------
+const MT_Float PHY_SensorTypeAgent::ComputeRecognitionDist( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const
+{
+    return rRecognitionDist_ * ComputeDistanceModificator( perceiver, target );
+}
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorTypeAgent::ComputeDetectionDist
+// Created: SLG 2010-04-30
+// -----------------------------------------------------------------------------
+const MT_Float PHY_SensorTypeAgent::ComputeDetectionDist( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const
+{
+    return rDetectionDist_ * ComputeDistanceModificator( perceiver, target );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorTypeAgent::ComputeDistanceModificator
+// Created: SLG 2010-04-30
+// -----------------------------------------------------------------------------
+const MT_Float PHY_SensorTypeAgent::ComputeDistanceModificator( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const
+{
+    const PHY_Volume* pSignificantVolume = target.GetRole< PHY_RoleInterface_Composantes >().GetSignificantVolume( *this );
+    MT_Float rDistanceMaxModificator  = GetFactor      ( *pSignificantVolume );
+    rDistanceMaxModificator *= GetTargetFactor( target );
+    rDistanceMaxModificator *= GetSourceFactor( perceiver );
+    return rDistanceMaxModificator;
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_SensorTypeAgent::GetSquareProximityDistance
 // Created: NLD 2004-10-14
@@ -779,6 +818,19 @@ MT_Float PHY_SensorTypeAgent::GetFactor( const PHY_Volume& volume ) const
 {
     assert( volumeFactors_.size() > volume.GetID() );
     return volumeFactors_[ volume.GetID() ];
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorTypeAgent::GetUrbanFactor
+// Created: SLG 2010-04-30
+// -----------------------------------------------------------------------------
+MT_Float PHY_SensorTypeAgent::GetUrbanBlockFactor( const urban::TerrainObject_ABC& block ) const
+{
+    const urban::Architecture* architecture = block.RetrievePhysicalFeature< urban::Architecture >();
+    if( architecture )
+        return urbanBlockFactors_[ UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( architecture->GetMaterial() )->GetId() ];
+    else
+        return 1.f;
 }
 
 // -----------------------------------------------------------------------------

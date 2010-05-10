@@ -51,12 +51,13 @@ public:
 
     //! @name Operations
     //@{
-    void                        MagicMove( MT_Vector2D vPosition );
+    virtual void                MagicMove( MT_Vector2D vPosition );
     virtual MT_Float            ComputeUrbanProtection( const PHY_DotationCategory& dotationCategory ) const;
     virtual geometry::Point2f   GetFirerPosition( MIL_Agent_ABC& target ) const;
     virtual geometry::Point2f   GetTargetPosition( MIL_Agent_ABC& target ) const;
     virtual float               ComputeDistanceInsideSameUrbanBlock( MIL_Agent_ABC& target ) const;
     virtual float               ComputeRatioPionInside( const MT_Ellipse& attritionSurface ) const;
+    virtual float               ComputeRatioPionInside( const geometry::Polygon2f& polygon, float modificator ) const;
     void                        Execute( posture::PostureComputer_ABC& algorithm ) const;
     //@}
 
@@ -69,6 +70,7 @@ public:
     //! @name Accessors
     //@{
     virtual const urban::TerrainObject_ABC* GetCurrentUrbanBlock() const;
+    virtual bool IsInCity() const;
     //@}
 
     //! @name Network
@@ -84,8 +86,8 @@ private:
 
     //! @name Helpers
     //@{
-    //geometry::Point2f GetNearestUrbanBlockPoint( const geometry::Point2f firerPosition, const std::vector< geometry::Point2f > points ) const;
-    //geometry::Point2f GetFurthestUrbanBlockPoint( const geometry::Point2f firerPosition, const std::vector< geometry::Point2f > points ) const;
+    void CityMagicMove( const geometry::Point2f point );
+    void UrbanBlockMagicMove( const geometry::Point2f point );
     //@}
 
 private:
@@ -94,6 +96,7 @@ private:
     MIL_Agent_ABC& pion_;
     const urban::TerrainObject_ABC* urbanObject_;
     std::auto_ptr< UrbanBlockPosition_ABC > delegate_;
+    bool isInCity_; 
     //@}
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_UrbanLocation* role, const unsigned int /*version*/ );
