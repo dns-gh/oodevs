@@ -57,7 +57,9 @@ void ColorButton::drawButton( QPainter* painter )
 // -----------------------------------------------------------------------------
 void ColorButton::OnClick()
 {
-    SetColor( QColorDialog::getColor( current_, this ) );
+    QColor color = QColorDialog::getColor( current_, this );
+    if( color.isValid() )
+        SetColor( color );
 }
 
 // -----------------------------------------------------------------------------
