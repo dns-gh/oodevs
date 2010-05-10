@@ -42,21 +42,21 @@ void load_construct_data( Archive& archive, PHY_RolePionLOG_Supply* role, const 
 {
     MIL_AgentPionLOG_ABC* pion;
     archive >> pion;
-    ::new( role )PHY_RolePionLOG_Supply( *pion );
+    ::new( role )PHY_RolePionLOG_Supply( *pion, true );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Supply constructor
 // Created: NLD 2005-01-21
 // -----------------------------------------------------------------------------
-PHY_RolePionLOG_Supply::PHY_RolePionLOG_Supply( MIL_AgentPionLOG_ABC& pion )
+PHY_RolePionLOG_Supply::PHY_RolePionLOG_Supply( MIL_AgentPionLOG_ABC& pion, bool fromArchive /*= false*/ )
     : pion_             ( pion )
     , bSystemEnabled_    ( false )
     , bHasChanged_       ( true )
     , bExternalMustChangeState_ ( false )
     , pStocks_           ( 0 )
 {
-    pStocks_ = new PHY_DotationStockContainer( *this, MIL_AgentServer::GetWorkspace().GetEntityManager().HasInfiniteDotations() );
+    pStocks_ = new PHY_DotationStockContainer( *this, fromArchive ? false : MIL_AgentServer::GetWorkspace().GetEntityManager().HasInfiniteDotations() );
 }
 
 // -----------------------------------------------------------------------------

@@ -94,21 +94,21 @@ void load_construct_data( Archive& archive, PHY_RolePion_Dotations* role, const 
 {
     MIL_AgentPion* pion;
     archive >> pion;
-    ::new( role )PHY_RolePion_Dotations( *pion );
+    ::new( role )PHY_RolePion_Dotations( *pion, true );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Dotations constructor
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
-PHY_RolePion_Dotations::PHY_RolePion_Dotations( MIL_AgentPion& pion )
+PHY_RolePion_Dotations::PHY_RolePion_Dotations( MIL_AgentPion& pion, bool fromArchive /*= false*/ )
     : pion_                      ( pion )
     , pCurrentConsumptionMode_   ( 0 )
     , pPreviousConsumptionMode_  ( 0 )
     , reservedConsumptions_      ()
     , pDotations_                ( 0 )
 {
-    pDotations_ = new PHY_DotationGroupContainer( *this, MIL_AgentServer::GetWorkspace().GetEntityManager().HasInfiniteDotations() );
+    pDotations_ = new PHY_DotationGroupContainer( *this, fromArchive? false : MIL_AgentServer::GetWorkspace().GetEntityManager().HasInfiniteDotations() );
     pion.GetType().GetUnitType().GetTC1Capacities().RegisterCapacities( *pDotations_ );
 }
 

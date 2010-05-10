@@ -36,7 +36,7 @@ class PHY_RolePionLOG_Supply : public PHY_RoleInterface_Supply
 {
 
 public:
-    explicit PHY_RolePionLOG_Supply( MIL_AgentPionLOG_ABC& pion );
+    explicit PHY_RolePionLOG_Supply( MIL_AgentPionLOG_ABC& pion, bool fromArchive = false );
     virtual ~PHY_RolePionLOG_Supply();
 
     //! @name CheckPoints

@@ -51,7 +51,7 @@ class PHY_RolePion_Dotations : public PHY_RoleInterface_Dotations
 {
 
 public:
-    explicit PHY_RolePion_Dotations( MIL_AgentPion& pion );
+    explicit PHY_RolePion_Dotations( MIL_AgentPion& pion, bool fromArchive = false );
     virtual ~PHY_RolePion_Dotations();
 
     //! @name CheckPoints
