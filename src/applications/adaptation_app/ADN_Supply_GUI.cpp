@@ -68,7 +68,8 @@ void ADN_Supply_GUI::Build()
     QWidget* pHolder = builder.AddFieldHolder( pGroup );
 
     builder.AddField< ADN_SupplyUnitSelector >( pHolder, tr( "Unit type" ), data_.infos_.ptrUnit_ );
-    builder.AddField< ADN_ComboBox_Vector< ADN_Missions_Data::Mission > >( pHolder, tr( "Mission" ), data_.infos_.ptrSupplyMission_ );
+    builder.AddField< ADN_ComboBox_Vector< ADN_Missions_Data::Mission > >( pHolder, tr( "Mission" ), missionConnector_ );
+    ConnectMission( true );
 
     QHGroupBox* pTrucksGroup = new QHGroupBox( tr( "Convoy setup duration" ), pGroup );
     ADN_Supply_TrucksTimeTable* pTrucksTimeTable = new ADN_Supply_TrucksTimeTable( pTrucksGroup );
@@ -94,4 +95,13 @@ void ADN_Supply_GUI::Build()
     QVBoxLayout* pLayout = new QVBoxLayout( pMainWidget_, 10, 10 );
     pLayout->addWidget( pGroup );
     builder.AddStretcher( pLayout, Qt::Vertical );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Supply_GUI::ConnectMission
+// Created: JSR 2010-05-07
+// -----------------------------------------------------------------------------
+void ADN_Supply_GUI::ConnectMission( bool connect)
+{
+    missionConnector_->Connect( &data_.infos_.ptrSupplyMission_, connect );
 }

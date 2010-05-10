@@ -11,6 +11,7 @@
 #include "ADN_Supply_Data.h"
 
 #include "ADN_Workspace.h"
+#include "ADN_Supply_Gui.h"
 #include "ADN_Project_Data.h"
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
@@ -110,6 +111,9 @@ void ADN_Supply_Data::SupplyDataInfos::Reset()
     vConvoyUnloadingInfos_.Reset();
     vConvoySpeedModificatorInfos_.Reset();
     vVectorWarnings_      .Reset();
+    ADN_Workspace::GetWorkspace().GetSupply().GetGui().ConnectMission( false );
+    ptrSupplyMission_.SetData( 0, false );
+    ptrUnit_.SetData( 0, false );
 }
 
 // -----------------------------------------------------------------------------
@@ -151,6 +155,7 @@ void ADN_Supply_Data::SupplyDataInfos::ReadArchive( xml::xistream& input )
     if( mission == 0 )
         throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Logistic supply system - Invalid mission '%1'" ).arg( supplyMission.c_str() ).ascii() );
     ptrSupplyMission_ = mission;
+    ADN_Workspace::GetWorkspace().GetSupply().GetGui().ConnectMission( true );
 
     input >> xml::start( "resource-availability-alerts" )
             >> xml::list( "resource-availability-alert", *this, &ADN_Supply_Data::SupplyDataInfos::ReadResourceAvailability )

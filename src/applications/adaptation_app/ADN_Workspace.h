@@ -62,6 +62,8 @@ class ADN_HumanFactors_Data;
 class ADN_HumanFactors_GUI;
 class ADN_Health_Data;
 class ADN_Health_GUI;
+class ADN_Supply_Data;
+class ADN_Supply_GUI;
 
 // =============================================================================
 /** @class  ADN_Workspace
@@ -110,6 +112,7 @@ public:
     ADN_WorkspaceElement< ADN_Reports_Data, ADN_Reports_GUI >& GetReports();
     ADN_WorkspaceElement< ADN_HumanFactors_Data, ADN_HumanFactors_GUI >& GetHumanFactors();
     ADN_WorkspaceElement< ADN_Health_Data, ADN_Health_GUI >& GetHealth();
+    ADN_WorkspaceElement< ADN_Supply_Data, ADN_Supply_GUI>& GetSupply();
 
     void SetProgressIndicator( ADN_ProgressIndicator_ABC* pProgressIndicator );
     void ResetProgressIndicator();
@@ -391,6 +394,16 @@ ADN_WorkspaceElement< ADN_Health_Data, ADN_Health_GUI >& ADN_Workspace::GetHealt
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_WorkspaceElement< ADN_Supply_Data, ADN_Supply_GUI>& ADN_Workspace::GetSupply
+// Created: JSR 2010-05-07
+// -----------------------------------------------------------------------------
+inline
+ADN_WorkspaceElement< ADN_Supply_Data, ADN_Supply_GUI>& ADN_Workspace::GetSupply()
+{
+    return ( ADN_WorkspaceElement< ADN_Supply_Data, ADN_Supply_GUI >& )( *elements_[ eSupply ] );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Workspace::SetProgressIndicator
 // Created: APE 2005-03-18
 // -----------------------------------------------------------------------------
@@ -421,7 +434,5 @@ void ADN_Workspace::SetOpenMode( E_OpenMode nNewMode )
 {
     nOpenMode_ = nNewMode;
 }
-
-
 
 #endif // __ADN_Workspace_h_
