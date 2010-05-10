@@ -47,6 +47,9 @@
         <mission name="Support"/>
         <mission name="TakeCover"/>
         <mission name="Interdict"/>
+        <mission name="SuivreAgent"/>
+        <mission name="Stationner"/>
+        <mission name="SeRecompleter"/>
       </missions>
     </unit>
     <unit dia-type="BMPion" file="BMPion.bms" name="net.masagroup.sword.military.roles.Artillery">
@@ -55,6 +58,9 @@
           <fragorder name="ApplyFire"/>
           <fragorder name="ApplyGuidedFire"/>
         </mission>
+        <mission name="SuivreAgent"/>
+        <mission name="Stationner"/>
+        <mission name="SeRecompleter"/>
       </missions>
     </unit>
     <unit dia-type="BMPion" file="BMPion.bms" name="net.masagroup.sword.military.roles.Genie">
@@ -66,6 +72,9 @@
         <mission name="Bypass"/>
         <mission name="RemoveObstacle"/>
         <mission name="OpenPath"/>
+        <mission name="SuivreAgent"/>
+        <mission name="Stationner"/>
+        <mission name="SeRecompleter"/>
       </missions>
     </unit>
     <unit dia-type="PatrouilleAIR" file="Air\Pions\Patrouille Assaut\model.bms" name="Patrouille AIR Assaut">
