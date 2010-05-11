@@ -48,7 +48,7 @@
         <mission name="TakeCover"/>
         <mission name="Interdict"/>
         <mission name="SuivreAgent"/>
-        <mission name="Stationner"/>
+        <mission name="StationnerBM"/>
         <mission name="SeRecompleter"/>
       </missions>
     </unit>
@@ -59,7 +59,7 @@
           <fragorder name="ApplyGuidedFire"/>
         </mission>
         <mission name="SuivreAgent"/>
-        <mission name="Stationner"/>
+        <mission name="StationnerBM"/>
         <mission name="SeRecompleter"/>
       </missions>
     </unit>
@@ -73,7 +73,7 @@
         <mission name="RemoveObstacle"/>
         <mission name="OpenPath"/>
         <mission name="SuivreAgent"/>
-        <mission name="Stationner"/>
+        <mission name="StationnerBM"/>
         <mission name="SeRecompleter"/>
       </missions>
     </unit>
