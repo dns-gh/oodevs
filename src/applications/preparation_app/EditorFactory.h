@@ -100,6 +100,7 @@ private:
     Model& model_;
     const StaticModel& staticModel_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
+    QDialog* modalDialog_;
     //@}
 };
 

@@ -39,6 +39,7 @@ EditorFactory::EditorFactory( kernel::Controllers& controllers, Model& model, co
     , model_( model )
     , staticModel_( staticModel )
     , selected_( controllers )
+    , modalDialog_( 0 )
 {
     controllers_.Register( *this );
 }
@@ -49,6 +50,7 @@ EditorFactory::EditorFactory( kernel::Controllers& controllers, Model& model, co
 // -----------------------------------------------------------------------------
 EditorFactory::~EditorFactory()
 {
+    delete modalDialog_;
     controllers_.Unregister( *this );
 }
 
@@ -299,9 +301,13 @@ void EditorFactory::Call( Enum_DemolitionTargetType* const& value )
 // -----------------------------------------------------------------------------
 void EditorFactory::Call( DotationsItem** const& value )
 {
-    DotationsEditor* dotationsEditor = new DotationsEditor( parent_, staticModel_.objectTypes_, *value );
-    dotationsEditor->SetCurrentItem( *value );
-    result_ = 0;
+    if( !modalDialog_ || !modalDialog_->isActiveWindow() )
+    {
+        delete modalDialog_;
+        DotationsEditor* dotationsEditor = new DotationsEditor( modalDialog_, parent_, staticModel_.objectTypes_, *value );
+        dotationsEditor->SetCurrentItem( *value );
+        result_ = 0;
+    }
 }
 // -----------------------------------------------------------------------------
 // Name: EditorFactory::Call
@@ -309,7 +315,11 @@ void EditorFactory::Call( DotationsItem** const& value )
 // -----------------------------------------------------------------------------
 void EditorFactory::Call( kernel::Moveable_ABC** const& value )
 {
-    PositionEditor* positionEditor = new PositionEditor( parent_, controllers_, staticModel_.coordinateConverter_ );
-    positionEditor->SetValue( *value );
-    result_ = 0;
+    if( !modalDialog_ || !modalDialog_->isActiveWindow() )
+    {
+        delete modalDialog_;
+        PositionEditor* positionEditor = new PositionEditor( modalDialog_, parent_, controllers_, staticModel_.coordinateConverter_ );
+        positionEditor->SetValue( *value );
+        result_ = 0;
+    }
 }

@@ -18,10 +18,11 @@
 // Name: PositionEditor constructor
 // Created: AME 2010-03-08
 // -----------------------------------------------------------------------------
-PositionEditor::PositionEditor( QWidget* parent, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter )
-	: QDialog( parent )
+PositionEditor::PositionEditor( QDialog*& self, QWidget* parent, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter )
+	: QDialog( parent, 0, true )
 	, converter_( converter )
     , value_( 0 )
+    , self_( self )
 {
     setCaption( tr( "Position Editor" ) );
     QVBoxLayout* pMainLayout = new QVBoxLayout( this );
@@ -51,7 +52,7 @@ PositionEditor::PositionEditor( QWidget* parent, kernel::Controllers& controller
 // -----------------------------------------------------------------------------
 PositionEditor::~PositionEditor()
 {
-	// NOTHING
+    self_ = 0;
 }
 
 // -----------------------------------------------------------------------------

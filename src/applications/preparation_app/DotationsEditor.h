@@ -35,7 +35,7 @@ class DotationsEditor : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             DotationsEditor( QWidget* parent, const tools::Resolver_ABC< kernel::DotationType, std::string >& dotationTypes, DotationsItem*& value );
+             DotationsEditor( QDialog*& self, QWidget* parent, const tools::Resolver_ABC< kernel::DotationType, std::string >& dotationTypes, DotationsItem*& value );
     virtual ~DotationsEditor();
     //@}
 
@@ -73,6 +73,7 @@ private:
     DotationsItem** value_;
     QTable* table_;
     QStringList types_;
+    QDialog*& self_;
     //@}
 };
 

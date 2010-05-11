@@ -38,7 +38,7 @@ class PositionEditor : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             PositionEditor( QWidget* parent, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter );
+             PositionEditor( QDialog*& self, QWidget* parent, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter );
     virtual ~PositionEditor();
     //@}
 
@@ -74,6 +74,7 @@ private:
     geometry::Point2f lastValid_;
     kernel::Moveable_ABC** value_;
     gui::LocationEditorBox* locBox_;
+    QDialog*& self_;
     //@}
 };
 

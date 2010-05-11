@@ -23,10 +23,11 @@ using namespace gui;
 // Name: DotationsEditor constructor
 // Created: SBO 2006-11-10
 // -----------------------------------------------------------------------------
-DotationsEditor::DotationsEditor( QWidget* parent, const tools::Resolver_ABC< DotationType, std::string >& dotationTypes, DotationsItem*& value )
+DotationsEditor::DotationsEditor( QDialog*& self, QWidget* parent, const tools::Resolver_ABC< DotationType, std::string >& dotationTypes, DotationsItem*& value )
     : QDialog( parent, "DotationsEditor", true )
     , dotationTypes_( dotationTypes )
     , value_ ( 0 )
+    , self_( self )
 {
     setCaption( tr( "Dotations editor" ) );
     QVBoxLayout* pMainLayout = new QVBoxLayout( this );
@@ -60,6 +61,7 @@ DotationsEditor::DotationsEditor( QWidget* parent, const tools::Resolver_ABC< Do
 // -----------------------------------------------------------------------------
 DotationsEditor::~DotationsEditor()
 {
+    self_ = 0;
     // NOTHING
 }
 
