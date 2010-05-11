@@ -26,6 +26,7 @@
 #include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
 #include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
+#include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
@@ -557,6 +558,15 @@ int DEC_AgentFunctions::GetPosture( const MIL_Agent_ABC& callerAgent )
     const PHY_RoleInterface_Posture& rolePosture = callerAgent.GetRole< PHY_RoleInterface_Posture >();
 
     return (int)( rolePosture.GetPostureCompletionPercentage() >= 1. ? rolePosture.GetCurrentPosture().GetID() : rolePosture.GetLastPosture().GetID() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::IsInCity
+// Created: MGD 2010-05-11
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::IsInCity( const MIL_Agent_ABC& callerAgent )
+{
+    return callerAgent.GetRole< PHY_RoleInterface_UrbanLocation >().IsInCity();
 }
 
 // -----------------------------------------------------------------------------

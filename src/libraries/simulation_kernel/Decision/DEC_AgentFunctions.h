@@ -44,6 +44,7 @@ public:
     static void ActivateBlackout            ( MIL_Agent_ABC& callerAgent );
     static void DeactivateBlackout          ( MIL_Agent_ABC& callerAgent );
     static int  GetPosture                  ( const MIL_Agent_ABC& callerAgent );
+    static bool IsInCity                    ( const MIL_Agent_ABC& callerAgent );
 
     static bool CanConstructObject          ( const MIL_Agent_ABC& callerAgent, const std::string& type );
     static bool CanBypassObject             ( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );

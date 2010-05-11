@@ -435,6 +435,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
         boost::function< void ( MT_Float ) >( boost::bind( &DEC_AgentFunctions::SetFlyingHeight, boost::ref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Agent_EstEnMouvement", &DEC_Decision_ABC::IsMoving );
 
+    brain.RegisterFunction( "DEC_Agent_EnVille"       , boost::bind( &DEC_AgentFunctions::IsInCity, boost::cref( GetPion() ) ) );
     brain.RegisterFunction( "DEC_Agent_EtatOps", boost::bind( &DEC_AgentFunctions::GetOperationalState, boost::cref( GetPion() ) ) );
     brain.RegisterFunction( "DEC_Agent_EtatOpsMajeur", boost::bind( &DEC_AgentFunctions::GetMajorOperationalState, boost::ref( GetPion() ) ) );
     brain.RegisterFunction( "DEC_Agent_EtatOpsMajeur", &DEC_Decision_ABC::GetMajorOperationalState );
