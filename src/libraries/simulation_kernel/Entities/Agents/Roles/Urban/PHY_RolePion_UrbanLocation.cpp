@@ -23,6 +23,7 @@
 #include <urban/Model.h>
 #include <urban/TerrainObjectVisitor_ABC.h>
 #include <urban/TerrainObject_ABC.h>
+#include <boost/bind.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_UrbanLocation )
 
@@ -99,7 +100,7 @@ void PHY_RolePion_UrbanLocation::MagicMove( MT_Vector2D vPosition )
 // Name: PHY_RolePion_UrbanLocation::UrbanBlockMagicMove
 // Created: SLG 2010-04-28
 // -----------------------------------------------------------------------------
-void PHY_RolePion_UrbanLocation::UrbanBlockMagicMove( const geometry::Point2f point )
+void PHY_RolePion_UrbanLocation::UrbanBlockMagicMove( const geometry::Point2f& point )
 {
     std::vector< const urban::TerrainObject_ABC* > urbanBlocks;
     UrbanModel::GetSingleton().GetModel().GetListWithinCircle( point, 500, urbanBlocks );
@@ -113,27 +114,28 @@ void PHY_RolePion_UrbanLocation::UrbanBlockMagicMove( const geometry::Point2f po
         }
     }
     urbanObject_ = 0;
+    delegate_.reset( new OutsideUrbanBlockPosition() ); 
 
+}
+
+namespace
+{
+    bool IsInside( const urban::TerrainObject_ABC* object, const geometry::Point2f& point )
+    {
+        return object->GetFootprint()->IsInside( point );
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_UrbanLocation::CityMagicMove
 // Created: SLG 2010-04-28
 // -----------------------------------------------------------------------------
-void PHY_RolePion_UrbanLocation::CityMagicMove( const geometry::Point2f point )
+void PHY_RolePion_UrbanLocation::CityMagicMove( const geometry::Point2f& point )
 {
-    std::vector< const urban::TerrainObject_ABC* > cities = UrbanModel::GetSingleton().GetModel().GetCities();
-    for (std::vector< const urban::TerrainObject_ABC* >::const_iterator it = cities.begin(); it != cities.end(); ++it )
-    {
-        if( (**it).GetFootprint()->IsInside( point ) )
-        {
-            isInCity_ = true;
-            return;
-        }
-    }
-    isInCity_ = false;
+    T_Cities cities = UrbanModel::GetSingleton().GetModel().GetCities();
+    CIT_Cities it = std::find_if( cities.begin(), cities.end(), boost::bind( &IsInside, _1, boost::cref( point ) ) );
+    isInCity_ = it != cities.end();
 }
-
 
 namespace
 {
@@ -146,11 +148,8 @@ namespace
         {}
         virtual void VisitBlock( const urban::TerrainObject_ABC& urbanObject )
         {
-            if( !currentUrbanObject_ )
-            {
-                currentUrbanObject_ = &urbanObject;
-                delegate_.reset( new InsideUrbanBlockPosition( &urbanObject ) ); 
-            }
+            currentUrbanObject_ = &urbanObject;
+            delegate_.reset( new InsideUrbanBlockPosition( &urbanObject ) ); 
         }
         virtual void VisitCity( const urban::TerrainObject_ABC& /*urbanObject*/ )
         {

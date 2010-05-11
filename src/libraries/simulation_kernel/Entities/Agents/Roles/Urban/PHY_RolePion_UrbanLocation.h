@@ -86,8 +86,14 @@ private:
 
     //! @name Helpers
     //@{
-    void CityMagicMove( const geometry::Point2f point );
-    void UrbanBlockMagicMove( const geometry::Point2f point );
+    void CityMagicMove( const geometry::Point2f& point );
+    void UrbanBlockMagicMove( const geometry::Point2f& point );
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::vector< const urban::TerrainObject_ABC* > T_Cities;
+    typedef T_Cities::const_iterator                     CIT_Cities;
     //@}
 
 private:
