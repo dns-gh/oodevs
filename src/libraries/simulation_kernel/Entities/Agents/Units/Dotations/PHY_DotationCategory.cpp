@@ -39,7 +39,7 @@ PHY_DotationCategory::PHY_DotationCategory( const PHY_DotationType& type, const 
     , nMosID_               ( 0 )
     , pIndirectFireData_    ( 0 )
     , attritions_           ()
-    , urbanAttritionFactors_( UrbanType::GetUrbanType().GetStaticModel().Resolver< urban::MaterialCompositionType, std::string >::Count(), 1. )
+    , urbanAttritionFactors_( UrbanType::GetUrbanType().GetStaticModel().Resolver< urban::MaterialCompositionType, std::string >::Count(), 0.9 )
     , rWeight_              ( 0. )
     , rVolume_              ( 0. ) 
     , bIlluminating_        ( false )
@@ -181,16 +181,16 @@ void PHY_DotationCategory::ReadUrbanAttritionModifier( xml::xistream& xis )
     xis >> xml::attribute( "material-type", materialType )
         >> xml::attribute( "value", rFactor );
     urban::MaterialCompositionType* material = UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( materialType );
-    if( rFactor < 0 || rFactor > 1 )
-        xis.error( "urbanBlock-modifier: value not in [0..1]" );
+    if( rFactor <= 0 || rFactor >= 1 )
+        xis.error( "urbanBlock-modifier: value not in ]0..1[" );
     if( urbanAttritionFactors_.size() <  material->GetId() )
         throw std::runtime_error( "error in loading material type" );
     urbanAttritionFactors_[ material->GetId() ] = rFactor;
 
     CIT_UrbanMaterialAttritionMap it = urbanBestValue_.find( material->GetId() );
     if( it == urbanBestValue_.end() )
-        urbanBestValue_[material->GetId()] = 1;
-    urbanBestValue_[material->GetId()] = std::min( urbanBestValue_[material->GetId()] , rFactor );
+        urbanBestValue_[material->GetId()] = 0.;
+    urbanBestValue_[material->GetId()] = std::max( urbanBestValue_[material->GetId()] , rFactor );
 }
 
 // -----------------------------------------------------------------------------
@@ -473,12 +473,12 @@ bool PHY_DotationCategory::IsIlluminating( float range, bool permanent ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_DotationCategory::GetProtectionRange
+// Name: PHY_DotationCategory::GetAttrition
 // Created: DDA 2010-04-22
 // -----------------------------------------------------------------------------
-double PHY_DotationCategory::GetProtectionRange( unsigned materialId ) const
+double PHY_DotationCategory::GetAttrition( unsigned materialId ) const
 {
-    if (materialId > 0)
+    if (materialId >= 0)
         return urbanAttritionFactors_[ materialId ];
     else 
         return -1.0;
@@ -490,7 +490,7 @@ double PHY_DotationCategory::GetProtectionRange( unsigned materialId ) const
 // -----------------------------------------------------------------------------
 double PHY_DotationCategory::FindUrbanProtection( unsigned materialId )
 {
-    if( materialId > 0 )
+    if( materialId >= 0 )
     {
         CIT_UrbanMaterialAttritionMap it = urbanBestValue_.find( materialId );
         if( it == urbanBestValue_.end() )

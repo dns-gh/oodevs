@@ -25,6 +25,11 @@ namespace MsgsSimToClient
     class MsgUnitKnowledgeUpdate;
 }
 
+namespace urban
+{
+    class TerrainObject_ABC;
+}
+
 class MIL_Agent_ABC;
 class MIL_KnowledgeGroup;
 class MIL_Automate;
@@ -117,6 +122,7 @@ public:
           bool                           IsHuman                  () const; // $$$$ NLD 2007-04-19: A CHIER
     E_Tristate                           IsAnEnemy                ( const MIL_Army_ABC& army ) const;
     E_Tristate                           IsAFriend                ( const MIL_Army_ABC& army ) const;
+          bool                           IsInUrbanBlock           ( const urban::TerrainObject_ABC& urban ) const;
     //@}
 
     //! @name Perception
@@ -133,7 +139,7 @@ public:
     MT_Float    GetDangerosity     ( const DEC_Knowledge_Agent& target ) const;
     MT_Float    GetDangerosity     ( const MIL_Agent_ABC& target ) const;
     MT_Float    GetMaxRangeToFireOn( const MIL_Agent_ABC& target, MT_Float rWantedPH ) const;
-    double      GetMaterialComposantesProtectionLevel( boost::shared_ptr< DEC_Knowledge_Urban > urbanKnowledge ) const;
+    double      GetMaterialComposantesAttritionLevel( boost::shared_ptr< DEC_Knowledge_Urban > urbanKnowledge ) const;
     void    Lock               ();
     void    Unlock             ();
     void    KillOfficers       ();

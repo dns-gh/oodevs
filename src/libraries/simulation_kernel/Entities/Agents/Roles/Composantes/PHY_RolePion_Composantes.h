@@ -192,7 +192,7 @@ public:
     virtual       void                 BuildKnowledgeComposantes( T_KnowledgeComposanteVector& knowledge ) const;
     virtual const PHY_ComposantePion*  GetMajorComposante       () const;
     virtual       MT_Float             GetMajorComponentWeight  () const;
-    virtual       double               GetProtectionIndexComposante ( int idMaterial ) const;
+    virtual       double               GetAttritionIndexComposante ( int idMaterial ) const;
     //@}
 
     //! @name Load / unload / transport

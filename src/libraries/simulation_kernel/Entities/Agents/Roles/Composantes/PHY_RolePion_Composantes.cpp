@@ -1804,17 +1804,17 @@ bool PHY_RolePion_Composantes::DestroyIndirectFire( const PHY_DotationCategory& 
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::GetProtectionIndexComposante
+// Name: PHY_RolePion_Composantes::GetAttritionIndexComposante
 // Created: DDA 2010-04-22
 // -----------------------------------------------------------------------------
 
-double  PHY_RolePion_Composantes::GetProtectionIndexComposante ( int idMaterial ) const
+double  PHY_RolePion_Composantes::GetAttritionIndexComposante ( int idMaterial ) const
 {
-    double result = 1.;
+    double result = 0.;
     for( PHY_ComposantePion::CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
     {
         const PHY_ComposanteTypePion& compType = ( *itComposante )->GetType();
-        result = std::min( result, compType.GetProtectionIndexComposante( idMaterial ) );
+        result = std::max( result, compType.GetAttritionIndexComposante( idMaterial ) );
     }
     return result;
 }

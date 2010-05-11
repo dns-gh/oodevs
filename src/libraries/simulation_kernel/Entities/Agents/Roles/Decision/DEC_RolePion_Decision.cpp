@@ -621,7 +621,10 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_ConnaissanceBlocUrbain_Traficabilite"    , 
         boost::function< float( boost::shared_ptr< DEC_Knowledge_Urban > ) >( boost::bind( &DEC_KnowledgeUrbanFunctions::GetPathfindCost, boost::cref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_NiveauDeProtectionMaterielComposantes" , &DEC_KnowledgeAgentFunctions::GetMaterialComposantesProtectionLevel );
-  
+    brain.RegisterFunction( "DEC_ConnaissanceBlocUrbain_RapForLocal"    , 
+        boost::function< float( boost::shared_ptr< DEC_Knowledge_Urban > ) >( boost::bind( &DEC_KnowledgeUrbanFunctions::GetRapForLocal, boost::cref( GetPion() ), _1 ) ) );
+
+
     // Global knowledge
     brain.RegisterFunction( "DEC_RapportDeForceLocal", boost::bind( &DEC_KnowledgeFunctions::GetRapForLocal, boost::ref( GetPion() ) ) );
     brain.RegisterFunction( "DEC_Connaissances_UnitesDetecteesDansFuseau", boost::bind( &DEC_KnowledgeFunctions::GetDetectedAgentsInFuseau, boost::ref( GetPion() ) ) );

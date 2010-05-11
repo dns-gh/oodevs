@@ -51,7 +51,7 @@ public:
           bool                      IsGuided            () const;
           float                     GetGuidanceRange    () const;
           bool                      IsIlluminating      ( float range, bool permanent ) const;
-          double                    GetProtectionRange  ( unsigned materialId ) const;
+          double                    GetAttrition        ( unsigned materialId ) const;
     //@}
 
     //! @name Fire

@@ -132,8 +132,8 @@ public:
     virtual MT_Float GetMinRangeToFireOnWithPosture( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const;
             MT_Float GetMaxRangeToIndirectFire     ( const MIL_Agent_ABC& firer, const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
             MT_Float GetMinRangeToIndirectFire     ( const MIL_Agent_ABC& firer, const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
+    virtual double   GetAttritionIndexComposante   ( int idMaterial ) const;
     virtual double   GetMaxRangeToFire             ( const MIL_Agent_ABC&  pion, double rWantedPH ) const;
-    virtual double   GetProtectionIndexComposante  ( int idMaterial ) const;
     //@}
 
     //! @name Sensors / radars

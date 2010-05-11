@@ -784,10 +784,10 @@ const DEC_Knowledge_AgentComposante* DEC_Knowledge_Agent::GetMajorComposante() c
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_Agent::GetMaterialComposantesProtectionLevel
+// Name: DEC_Knowledge_Agent::GetMaterialComposantesAttritionLevel
 // Created: DDA 2010-04-23
 // -----------------------------------------------------------------------------
-double DEC_Knowledge_Agent::GetMaterialComposantesProtectionLevel( boost::shared_ptr< DEC_Knowledge_Urban > urbanKnowledge ) const
+double DEC_Knowledge_Agent::GetMaterialComposantesAttritionLevel( boost::shared_ptr< DEC_Knowledge_Urban > urbanKnowledge ) const
 {
     const urban::Architecture* architecture = urbanKnowledge->GetTerrainObjectKnown().RetrievePhysicalFeature< urban::Architecture >();
     
@@ -797,7 +797,7 @@ double DEC_Knowledge_Agent::GetMaterialComposantesProtectionLevel( boost::shared
         unsigned materialID = UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( architecture->GetMaterial() )->GetId();
 
         if (GetMaxPerceptionLevel() == PHY_PerceptionLevel::identified_)
-            return role.GetProtectionIndexComposante(materialID);
+            return role.GetAttritionIndexComposante(materialID);
         else if ((GetMaxPerceptionLevel() == PHY_PerceptionLevel::recognized_) || (GetMaxPerceptionLevel() == PHY_PerceptionLevel::detected_) )
             return PHY_DotationCategory::FindUrbanProtection( materialID );
         else 
@@ -945,6 +945,16 @@ MIL_Agent_ABC& DEC_Knowledge_Agent::GetAgentKnown() const
 const MT_Vector2D& DEC_Knowledge_Agent::GetPosition() const
 {
     return dataDetection_.GetPosition();    
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::GetPosition
+// Created: MGD 2010-05-05
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_Agent::IsInUrbanBlock( const urban::TerrainObject_ABC& urban ) const
+{
+    const MT_Vector2D& pos = GetPosition();
+    return urban.GetFootprint()->IsInside( geometry::Point2f( pos.rX_, pos.rY_ ) );
 }
 
 // -----------------------------------------------------------------------------
