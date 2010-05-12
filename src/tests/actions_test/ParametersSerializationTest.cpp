@@ -179,8 +179,10 @@ namespace
     MOCK_BASE_CLASS( MockObjectKnowledgeConverter, kernel::ObjectKnowledgeConverter_ABC )
     {
         MOCK_METHOD_EXT( Find, 2, const kernel::ObjectKnowledge_ABC*( unsigned long, const kernel::Team_ABC& ), FindObjectKnowledgeFromId );
+        MOCK_METHOD_EXT( Find, 2, const kernel::ObjectKnowledge_ABC*( unsigned long, const kernel::Entity_ABC& ), FindObjectKnowledgeFromIdWithEntity );
         MOCK_METHOD_EXT( Find, 2, const kernel::ObjectKnowledge_ABC*( const kernel::ObjectKnowledge_ABC&, const kernel::Team_ABC& ), FindObjectKnowledgeFromKnowledge );
         MOCK_METHOD_EXT( Find, 2, const kernel::ObjectKnowledge_ABC*( const kernel::Object_ABC&, const kernel::Team_ABC& ), FindObjectKnowledgeFromObject );
+        MOCK_METHOD_EXT( Find, 2, const kernel::ObjectKnowledge_ABC*( const kernel::Object_ABC&, const kernel::Entity_ABC& ), FindObjectKnowledgeFromObjectWithEntity );
     };
 
     MOCK_BASE_CLASS( MockCommunicationHierarchies, kernel::CommunicationHierarchies )
@@ -583,7 +585,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_ObjectKnowledge )
     MockObjectKnowledge knowledge;
     MOCK_EXPECT( knowledge, GetId ).returns( 15 );
     MockObjectKnowledgeConverter converter;
-    MOCK_EXPECT( converter, FindObjectKnowledgeFromObject ).with( mock::same( object ), mock::same( owner ) ).returns( &knowledge );
+    MOCK_EXPECT( converter, FindObjectKnowledgeFromObjectWithEntity ).with( mock::same( object ), mock::same( owner ) ).returns( &knowledge );
     
     kernel::Controller controller;
     std::auto_ptr< Common::MsgMissionParameter > message( Serialize( "objectknowledge", input,
