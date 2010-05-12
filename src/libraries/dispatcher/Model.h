@@ -171,7 +171,6 @@ public:
     virtual const tools::Resolver_ABC< Report >&                Reports() const { return reports_; }
     virtual const tools::Resolver_ABC< UrbanObject >&           UrbanBlocks() const { return urbanBlocks_; }
     //@}
-        
 
     //! @name Dynamic model
     //@{

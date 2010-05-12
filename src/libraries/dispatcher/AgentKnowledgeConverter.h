@@ -36,6 +36,10 @@ public:
     //@{
     virtual const kernel::AgentKnowledge_ABC* Find( const kernel::Agent_ABC& base, const kernel::Entity_ABC& owner );
     virtual const kernel::PopulationKnowledge_ABC* Find( const kernel::Population_ABC& base, const kernel::Entity_ABC& owner );
+    virtual const kernel::AgentKnowledge_ABC*      FindAgent( unsigned long id, const kernel::Entity_ABC& owner );
+    virtual const kernel::PopulationKnowledge_ABC* FindPopulation( unsigned long id, const kernel::Entity_ABC& owner );
+    virtual const kernel::AgentKnowledge_ABC*      Find( const kernel::AgentKnowledge_ABC& base, const kernel::Entity_ABC& owner );
+    virtual const kernel::PopulationKnowledge_ABC* Find( const kernel::PopulationKnowledge_ABC& base, const kernel::Entity_ABC& owner );
     //@}
 
 private:
@@ -43,14 +47,6 @@ private:
     //@{
     AgentKnowledgeConverter( const AgentKnowledgeConverter& );            //!< Copy constructor
     AgentKnowledgeConverter& operator=( const AgentKnowledgeConverter& ); //!< Assignment operator
-    //@}
-
-    //! @name Not implemented
-    //@{
-    virtual const kernel::AgentKnowledge_ABC*      FindAgent( unsigned long , const kernel::Entity_ABC& );
-    virtual const kernel::PopulationKnowledge_ABC* FindPopulation( unsigned long , const kernel::Entity_ABC& );
-    virtual const kernel::AgentKnowledge_ABC*      Find( const kernel::AgentKnowledge_ABC& , const kernel::Entity_ABC& );
-    virtual const kernel::PopulationKnowledge_ABC* Find( const kernel::PopulationKnowledge_ABC& , const kernel::Entity_ABC& );
     //@}
 
     //! @name Helpers

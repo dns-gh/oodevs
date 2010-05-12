@@ -39,9 +39,10 @@
 #include "UrbanObject.h"
 #include "Visitors.h"
 #include "clients_kernel/AgentTypes.h"
+#include "clients_kernel/CoordinateConverter.h"
 #include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/ObjectTypes.h"
-#include "clients_kernel/CoordinateConverter.h"
+#include "clients_kernel/StaticModel.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
 #include "protocol/clientsenders.h"
 #include <boost/bind.hpp>
@@ -55,9 +56,8 @@ using namespace dispatcher;
 Model::Model( const tools::ExerciseConfig& config, const kernel::StaticModel& staticModel )
     : staticModel_( staticModel )
     , simulation_( new SimulationModel() )
-    , folk_( new FolkModel() )
     , compositeFactory_( new CompositeFactory() )
-    , levels_( new kernel::FormationLevels())
+    , folk_( new FolkModel() )
     , meteoModel_( new MeteoModel( config, *this ) )
 {
     // NOTHING
@@ -193,7 +193,7 @@ void Model::Update( const MsgsSimToClient::MsgSimToClient& wrapper )
     if( wrapper.message().has_knowledge_group_update() )
         knowledgeGroups_.Get( wrapper.message().knowledge_group_update().oid() ).Update( wrapper.message().knowledge_group_update() );
     if( wrapper.message().has_formation_creation() )
-        CreateUpdate< Formation >( formations_, wrapper.message().formation_creation().oid(), wrapper.message().formation_creation(), *levels_ ); 
+        CreateUpdate< Formation >( formations_, wrapper.message().formation_creation().oid(), wrapper.message().formation_creation(), staticModel_.levels_ ); 
     if( wrapper.message().has_unit_creation() )
         CreateUpdate< Agent >( agents_, wrapper.message().unit_creation().oid(), wrapper.message().unit_creation(), staticModel_ ); 
     if( wrapper.message().has_unit_environment_type() )

@@ -76,38 +76,37 @@ const kernel::PopulationKnowledge_ABC* AgentKnowledgeConverter::Find( const kern
 // Name: AgentKnowledgeConverter::FindAgent
 // Created: SBO 2010-05-11
 // -----------------------------------------------------------------------------
-const kernel::AgentKnowledge_ABC* AgentKnowledgeConverter::FindAgent( unsigned long , const kernel::Entity_ABC& )
+const kernel::AgentKnowledge_ABC* AgentKnowledgeConverter::FindAgent( unsigned long id, const kernel::Entity_ABC& /*owner*/ )
 {
-    return 0;
+    return model_.AgentKnowledges().Find( id );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledgeConverter::FindPopulation
 // Created: SBO 2010-05-11
 // -----------------------------------------------------------------------------
-const kernel::PopulationKnowledge_ABC* AgentKnowledgeConverter::FindPopulation( unsigned long , const kernel::Entity_ABC& )
+const kernel::PopulationKnowledge_ABC* AgentKnowledgeConverter::FindPopulation( unsigned long id, const kernel::Entity_ABC& /*owner*/ )
 {
-    return 0;
+    return model_.PopulationKnowledges().Find( id );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledgeConverter::Find
 // Created: SBO 2010-05-11
 // -----------------------------------------------------------------------------
-const kernel::AgentKnowledge_ABC* AgentKnowledgeConverter::Find( const kernel::AgentKnowledge_ABC& , const kernel::Entity_ABC& )
+const kernel::AgentKnowledge_ABC* AgentKnowledgeConverter::Find( const kernel::AgentKnowledge_ABC& base, const kernel::Entity_ABC& owner )
 {
-    return 0;
+    throw std::runtime_error( __FUNCTION__ " not implemented" );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledgeConverter::Find
 // Created: SBO 2010-05-11
 // -----------------------------------------------------------------------------
-const kernel::PopulationKnowledge_ABC* AgentKnowledgeConverter::Find( const kernel::PopulationKnowledge_ABC& , const kernel::Entity_ABC& )
+const kernel::PopulationKnowledge_ABC* AgentKnowledgeConverter::Find( const kernel::PopulationKnowledge_ABC& base, const kernel::Entity_ABC& owner )
 {
-    return 0;
+    throw std::runtime_error( __FUNCTION__ " not implemented" );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledgeConverter::FindGroup

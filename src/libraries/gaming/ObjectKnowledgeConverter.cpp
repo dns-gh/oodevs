@@ -10,6 +10,8 @@
 #include "gaming_pch.h"
 #include "ObjectKnowledgeConverter.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/ObjectKnowledge_ABC.h"
 
 using namespace kernel;
@@ -52,6 +54,15 @@ const ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( unsigned long id, con
 
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledgeConverter::Find
+// Created: SBO 2007-05-24
+// -----------------------------------------------------------------------------
+const ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( unsigned long id, const kernel::Entity_ABC& owner ) const
+{
+    return Find( id, static_cast< const kernel::Team_ABC& >( owner.Get< kernel::CommunicationHierarchies >().GetTop() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledgeConverter::Find
 // Created: AGE 2006-09-15
 // -----------------------------------------------------------------------------
 const ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( const ObjectKnowledge_ABC& base, const Team_ABC& owner ) const
@@ -73,6 +84,15 @@ const ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( const Object_ABC& bas
     if( kit == it->second.end() )
         return 0;
     return kit->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledgeConverter::Find
+// Created: AGE 2006-09-15
+// -----------------------------------------------------------------------------
+const ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( const kernel::Object_ABC& base, const kernel::Entity_ABC& owner ) const
+{
+    return Find( base, static_cast< const kernel::Team_ABC& >( owner.Get< kernel::CommunicationHierarchies >().GetTop() ) );
 }
 
 // -----------------------------------------------------------------------------

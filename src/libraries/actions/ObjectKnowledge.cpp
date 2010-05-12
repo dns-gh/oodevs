@@ -55,8 +55,7 @@ ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter, kernel::Contr
 ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter, unsigned long id, kernel::ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
     : Entity< ObjectKnowledge_ABC >( parameter, controller )
 {
-    const Team_ABC& team = static_cast< const Team_ABC& >( owner.Get< CommunicationHierarchies >().GetTop() );
-    SetValue( converter.Find( id, team ) );
+    SetValue( converter.Find( id, owner ) );
     if( ! GetValue() )
         throw std::runtime_error( tools::translate( "Parameter", "Object knowledge not found." ).ascii() );
 }
@@ -68,8 +67,7 @@ ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter, unsigned long
 ObjectKnowledge::ObjectKnowledge( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
     : Entity< ObjectKnowledge_ABC >( OrderParameter( ReadName( xis ), "objectknowledge", false ), controller )
 {
-    const Team_ABC& team = static_cast< const Team_ABC& >( owner.Get< CommunicationHierarchies >().GetTop() );
-    SetValue( converter.Find( resolver.GetObject( ReadId( xis ) ), team ) );
+    SetValue( converter.Find( resolver.GetObject( ReadId( xis ) ), owner ) );
     if( ! GetValue() )
         throw std::runtime_error( tools::translate( "Parameter", "Object knowledge not found." ).ascii() );
 }
@@ -81,8 +79,7 @@ ObjectKnowledge::ObjectKnowledge( xml::xistream& xis, const kernel::EntityResolv
 ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
     : Entity< ObjectKnowledge_ABC >( parameter, controller )
 {
-    const Team_ABC& team = static_cast< const Team_ABC& >( owner.Get< CommunicationHierarchies >().GetTop() );
-    SetValue( converter.Find( resolver.GetObject( ReadId( xis ) ), team ) );
+    SetValue( converter.Find( resolver.GetObject( ReadId( xis ) ), owner ) );
     if( ! GetValue() )
         throw std::runtime_error( tools::translate( "Parameter", "Object knowledge not found." ).ascii() );
 }

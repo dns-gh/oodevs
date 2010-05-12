@@ -34,7 +34,11 @@ public:
 
     //! @name Operations
     //@{
-    virtual const kernel::ObjectKnowledge_ABC* Find( const kernel::Object_ABC& base,  const kernel::Team_ABC& owner ) const;
+    virtual const kernel::ObjectKnowledge_ABC* Find( unsigned long id, const kernel::Team_ABC& owner ) const;
+    virtual const kernel::ObjectKnowledge_ABC* Find( unsigned long id, const kernel::Entity_ABC& owner ) const;
+    virtual const kernel::ObjectKnowledge_ABC* Find( const kernel::Object_ABC& base, const kernel::Team_ABC& owner ) const;
+    virtual const kernel::ObjectKnowledge_ABC* Find( const kernel::Object_ABC& base, const kernel::Entity_ABC& owner ) const;
+    virtual const kernel::ObjectKnowledge_ABC* Find( const kernel::ObjectKnowledge_ABC& base, const kernel::Team_ABC& owner ) const;
     //@}
 
 private:
@@ -42,12 +46,6 @@ private:
     //@{
     ObjectKnowledgeConverter( const ObjectKnowledgeConverter& );            //!< Copy constructor
     ObjectKnowledgeConverter& operator=( const ObjectKnowledgeConverter& ); //!< Assignment operator
-    //@}
-
-    //! @name Not implemented
-    //@{
-    virtual const kernel::ObjectKnowledge_ABC* Find( unsigned long id, const kernel::Team_ABC& owner ) const;
-    virtual const kernel::ObjectKnowledge_ABC* Find( const kernel::ObjectKnowledge_ABC& base, const kernel::Team_ABC& owner ) const;
     //@}
 
 private:

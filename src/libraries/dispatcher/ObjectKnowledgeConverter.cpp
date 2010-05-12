@@ -38,9 +38,9 @@ ObjectKnowledgeConverter::~ObjectKnowledgeConverter()
 // Name: ObjectKnowledgeConverter::Find
 // Created: SBO 2010-05-11
 // -----------------------------------------------------------------------------
-const kernel::ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( const kernel::Object_ABC& base,  const kernel::Team_ABC& owner ) const
+const kernel::ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( const kernel::Object_ABC& base, const kernel::Team_ABC& owner ) const
 {
-    tools::Iterator< const dispatcher::ObjectKnowledge& > it = model_.objectKnowledges_.CreateIterator();
+    tools::Iterator< const dispatcher::ObjectKnowledge& > it = model_.ObjectKnowledges().CreateIterator();
     while( it.HasMoreElements() )
     {
         const dispatcher::ObjectKnowledge& k = it.NextElement();
@@ -54,9 +54,27 @@ const kernel::ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( const kernel:
 // Name: ObjectKnowledgeConverter::Find
 // Created: SBO 2010-05-11
 // -----------------------------------------------------------------------------
-const kernel::ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( unsigned long /*id*/, const kernel::Team_ABC& /*owner*/ ) const
+const kernel::ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( const kernel::Object_ABC& /*base*/, const kernel::Entity_ABC& /*owner*/ ) const
 {
-    return 0;
+    throw std::runtime_error( __FUNCTION__ " not implemented" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledgeConverter::Find
+// Created: SBO 2010-05-11
+// -----------------------------------------------------------------------------
+const kernel::ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( unsigned long id, const kernel::Team_ABC& /*owner*/ ) const
+{
+    return model_.ObjectKnowledges().Find( id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledgeConverter::Find
+// Created: SBO 2010-05-11
+// -----------------------------------------------------------------------------
+const kernel::ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( unsigned long id, const kernel::Entity_ABC& /*owner*/ ) const
+{
+    return model_.ObjectKnowledges().Find( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -65,5 +83,5 @@ const kernel::ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( unsigned long
 // -----------------------------------------------------------------------------
 const kernel::ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( const kernel::ObjectKnowledge_ABC& /*base*/, const kernel::Team_ABC& /*owner*/ ) const
 {
-    return 0;
+    throw std::runtime_error( __FUNCTION__ " not implemented" );
 }
