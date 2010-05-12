@@ -49,6 +49,23 @@ void TER_PopulationConcentrationManager::GetListWithinCircle( const MT_Vector2D&
 }
 
 // -----------------------------------------------------------------------------
+// Name: TER_PopulationConcentrationManager::GetListWithinLocalisation
+// Created: MGD 2010-05-12
+// -----------------------------------------------------------------------------
+void TER_PopulationConcentrationManager::GetListWithinLocalisation( const TER_Localisation& localisation, T_PopulationConcentrationVector& concentrations ) const
+{
+    const MT_Rect& boundingBox = localisation.GetBoundingBox();
+    pathfind::SegmentIntersecter< MT_Float > intersecter( geometry::Point2<MT_Float>( boundingBox.GetLeft(), boundingBox.GetBottom() )
+        , geometry::Point2<MT_Float>( boundingBox.GetRight(), boundingBox.GetTop() ) );
+    T_PopulationConcentrations::View view = concentrations_.CreateView( intersecter );
+    while( view.HasMoreElements() )
+    {
+        concentrations.push_back( view.NextElement() );
+    }
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: TER_PopulationConcentrationManager::GetListIntersectingLine
 // Created: SBO 2006-01-23
 // -----------------------------------------------------------------------------

@@ -83,3 +83,19 @@ void TER_PopulationFlowManager::GetListIntersectingLine( const MT_Vector2D& vSta
             flows.push_back( pFlow );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: TER_PopulationFlowManager::GetListWithinLocalisation
+// Created: MGD 2010-05-12
+// -----------------------------------------------------------------------------
+void TER_PopulationFlowManager::GetListWithinLocalisation( const TER_Localisation& localisation, T_PopulationFlowVector& flows ) const
+{
+    const MT_Rect& boundingBox = localisation.GetBoundingBox();
+    pathfind::SegmentIntersecter< MT_Float > intersecter( geometry::Point2<MT_Float>( boundingBox.GetLeft(), boundingBox.GetBottom() )
+        , geometry::Point2<MT_Float>( boundingBox.GetRight(), boundingBox.GetTop() ) );
+    T_PopulationFlows::View view = flows_.CreateView( intersecter );
+    while( view.HasMoreElements() )
+    {
+        flows.push_back( view.NextElement() );
+    }
+}
