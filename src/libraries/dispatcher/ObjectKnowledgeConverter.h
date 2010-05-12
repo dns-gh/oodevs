@@ -1,0 +1,62 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
+
+#ifndef __ObjectKnowledgeConverter_h_
+#define __ObjectKnowledgeConverter_h_
+
+#include "clients_kernel/ObjectKnowledgeConverter_ABC.h"
+
+namespace dispatcher
+{
+    class Model;
+
+// =============================================================================
+/** @class  ObjectKnowledgeConverter
+    @brief  ObjectKnowledgeConverter
+*/
+// Created: SBO 2010-05-11
+// =============================================================================
+class ObjectKnowledgeConverter : public kernel::ObjectKnowledgeConverter_ABC
+{
+
+public:
+    //! @name Constructors/Destructor
+    //@{
+    explicit ObjectKnowledgeConverter( const dispatcher::Model& model );
+    virtual ~ObjectKnowledgeConverter();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual const kernel::ObjectKnowledge_ABC* Find( const kernel::Object_ABC& base,  const kernel::Team_ABC& owner ) const;
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    ObjectKnowledgeConverter( const ObjectKnowledgeConverter& );            //!< Copy constructor
+    ObjectKnowledgeConverter& operator=( const ObjectKnowledgeConverter& ); //!< Assignment operator
+    //@}
+
+    //! @name Not implemented
+    //@{
+    virtual const kernel::ObjectKnowledge_ABC* Find( unsigned long id, const kernel::Team_ABC& owner ) const;
+    virtual const kernel::ObjectKnowledge_ABC* Find( const kernel::ObjectKnowledge_ABC& base, const kernel::Team_ABC& owner ) const;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    const dispatcher::Model& model_;
+    //@}
+};
+
+}
+
+#endif // __ObjectKnowledgeConverter_h_

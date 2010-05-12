@@ -36,6 +36,9 @@ namespace plugins
 {
 namespace logger
 {
+    class ActionsLogger;
+    class Simulation;
+
 // =============================================================================
 /** @class  LoggerPlugin
     @brief  LoggerPlugin
@@ -86,6 +89,8 @@ private:
     std::string                 date_;
     bool                        enabled_;
     bool                        initialized_;
+    std::auto_ptr< Simulation > simulation_;
+    std::auto_ptr< ActionsLogger > actions_;
     //@}
 };
 }

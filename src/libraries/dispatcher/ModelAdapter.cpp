@@ -7,25 +7,24 @@
 //
 // *****************************************************************************
 
-#include "script_plugin_pch.h"
+#include "dispatcher_pch.h"
 #include "ModelAdapter.h"
-#include "dispatcher/Model.h"
-#include "dispatcher/Agent.h"
-#include "dispatcher/Automat.h"
-#include "dispatcher/Formation.h"
-#include "dispatcher/KnowledgeGroup.h"
-#include "dispatcher/Object.h"
-#include "dispatcher/Population.h"
-#include "dispatcher/Side.h"
+#include "Model.h"
+#include "Agent.h"
+#include "Automat.h"
+#include "Formation.h"
+#include "KnowledgeGroup.h"
+#include "Object.h"
+#include "Population.h"
+#include "Side.h"
 
-using namespace plugins;
-using namespace script;
+using namespace dispatcher;
 
 // -----------------------------------------------------------------------------
 // Name: ModelAdapter constructor
 // Created: SBO 2010-05-10
 // -----------------------------------------------------------------------------
-ModelAdapter::ModelAdapter( const dispatcher::Model& model )
+ModelAdapter::ModelAdapter( const Model& model )
     : model_( model )
 {
     // NOTHING

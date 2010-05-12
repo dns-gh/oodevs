@@ -7,20 +7,14 @@
 //
 // *****************************************************************************
 
-#ifndef __ModelAdapter_h_
-#define __ModelAdapter_h_
+#ifndef __dispatcher_ModelAdapter_h_
+#define __dispatcher_ModelAdapter_h_
 
 #include "clients_kernel/EntityResolver_ABC.h"
 
 namespace dispatcher
 {
     class Model;
-}
-
-namespace plugins
-{
-namespace script
-{
 
 // =============================================================================
 /** @class  ModelAdapter
@@ -34,7 +28,7 @@ class ModelAdapter : public kernel::EntityResolver_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ModelAdapter( const dispatcher::Model& model );
+    explicit ModelAdapter( const Model& model );
     virtual ~ModelAdapter();
     //@}
 
@@ -66,11 +60,10 @@ private:
 private:
     //! @name Member data
     //@{
-    const dispatcher::Model& model_;
+    const Model& model_;
     //@}
 };
 
 }
-}
 
-#endif // __ModelAdapter_h_
+#endif // __dispatcher_ModelAdapter_h_

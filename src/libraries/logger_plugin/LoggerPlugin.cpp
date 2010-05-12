@@ -8,6 +8,8 @@
 // *****************************************************************************
 
 #include "LoggerPlugin.h"
+#include "ActionsLogger.h"
+#include "Simulation.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/MissionType.h"
 #include "clients_kernel/StaticModel.h"
@@ -40,6 +42,8 @@ LoggerPlugin::LoggerPlugin( const dispatcher::Model& model, const kernel::Static
     , services_   ( services )
     , enabled_    ( true )
     , initialized_( false )
+    , simulation_ ( new Simulation() )
+    , actions_    ( new ActionsLogger( config, model, staticModel, *simulation_ ) )
 {
     objectTypes_.Load( config );
     factory_.Load( config );
@@ -142,26 +146,39 @@ void LoggerPlugin::Receive( const MsgsSimToClient::MsgSimToClient& message )
                << message.message().trace().message() << std::endl;
     }
     else if( message.message().has_control_information() )
+    {
         date_ = Format( message.message().control_information().date_time().data().c_str() );
+        simulation_->Update( message.message().control_information() );
+    }
     else if( message.message().has_control_begin_tick() )
+    {
         date_ = Format( message.message().control_begin_tick().date_time().data().c_str() );
+        simulation_->Update( message.message().control_begin_tick() );
+    }
+    else if( message.message().has_control_end_tick() )
+    {
+        simulation_->Update( message.message().control_end_tick() );
+    }
     else if( message.message().has_unit_order() )
     {
         kernel::Entity_ABC* agent = model_.Agents().Find( message.message().unit_order().oid() );
         if( agent )
             FormatMission( agent->GetName().ascii(), message.message().unit_order().oid(), message.message().unit_order().mission() );
+        actions_->Log( message.message().unit_order() );
     }
     else if( message.message().has_automat_order() )
     {
         kernel::Entity_ABC* automat = model_.Automats().Find( message.message().automat_order().oid() );
         if( automat )
             FormatMission( automat->GetName().ascii(), message.message().automat_order().oid(), message.message().automat_order().mission() );
+        actions_->Log( message.message().automat_order() );
     }
     else if( message.message().has_population_order() )
     {
         kernel::Entity_ABC* population = model_.Populations().Find( message.message().population_order().oid() );
         if( population )
             FormatMission( population->GetName().ascii(), message.message().population_order().oid(), message.message().population_order().mission() );
+        actions_->Log( message.message().population_order() );
     }
     else if( message.message().has_start_unit_fire() )
     {
