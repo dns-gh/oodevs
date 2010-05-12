@@ -447,7 +447,7 @@ bool DEC_PathWalker::TryToMoveTo( const DEC_PathResult& path, const MT_Vector2D&
     geometry::Point2f start( vNewPos_.rX_, vNewPos_.rY_ );
     geometry::Point2f end( vNewPosTmp.rX_, vNewPosTmp.rY_ );
     std::vector< const urban::TerrainObject_ABC* > urbanBlocks;
-    UrbanModel::GetSingleton().GetModel().GetListWithinCircle( geometry::Point2f( vNewPos_.rX_, vNewPos_.rY_ ), start.Distance( end ), urbanBlocks );
+    UrbanModel::GetSingleton().GetModel().GetListWithinCircle( geometry::Point2f( vNewPos_.rX_, vNewPos_.rY_ ), 500/*start.Distance( end )*/, urbanBlocks ); // $$$$ _RC_ SLG 2010-05-12: 500 devrait être remplacé par la taille du plus grand bloc urbain 
     ComputeUrbanBlocksCollision( vNewPos_, vNewPosTmp, moveStepSet, urbanBlocks );
 
     // Récupération des villes
