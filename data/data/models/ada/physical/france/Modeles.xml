@@ -50,6 +50,10 @@
         <mission name="SuivreAgent"/>
         <mission name="StationnerBM"/>
         <mission name="SeRecompleter"/>
+        <mission name="Se Faire Decontaminer BM"/>
+        <mission name="Orienter Guider Refugies BM"/>
+        <mission name="Se Faire Transporter BM"/>
+        <mission name="Decrocher BM"/>
       </missions>
     </unit>
     <unit dia-type="BMPion" file="BMPion.bms" name="net.masagroup.sword.military.roles.Artillery">
