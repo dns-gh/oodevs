@@ -162,7 +162,7 @@ SectionGroupEnd
 SectionGroup "Models" s_mod
 
     !insertmacro OT.AddDecisionalModels "ada"
-    !insertmacro OT.AddPhysicalModels "ada" "france"	;"scipio-1.9.2"
+    !insertmacro OT.AddPhysicalModels "ada" "france" "s_phymod1" ;"scipio-1.9.2"
 
 SectionGroupEnd
 

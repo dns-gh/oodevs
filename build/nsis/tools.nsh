@@ -92,9 +92,9 @@
 ;------------------------------------------------------------------------------
 ; Adds Physical Models Section
 ;------------------------------------------------------------------------------
-!macro OT.AddPhysicalModels DataSet Localization
+!macro OT.AddPhysicalModels DataSet Localization SectionId
 
-    Section "Physical" s_phymod
+    Section "Physical - ${Localization}" ${SectionId}
         SectionIn RO
         SetOutPath "${INSTDATADIR}\data\models\${DataSet}\physical\${Localization}"
         !insertmacro UNINSTALL.LOG_OPEN_INSTALL

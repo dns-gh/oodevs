@@ -177,7 +177,7 @@ SectionGroupEnd
 SectionGroup "Models" s_mod
 
     !insertmacro OT.AddDecisionalModels "ada"
-    !insertmacro OT.AddPhysicalModels "ada" "${APP_MODEL}"
+    !insertmacro OT.AddPhysicalModels "ada" "${APP_MODEL}" "s_phymod1"
 
 SectionGroupEnd
 
