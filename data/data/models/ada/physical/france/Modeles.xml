@@ -50,6 +50,7 @@
         <mission name="SuivreAgent"/>
         <mission name="StationnerBM"/>
         <mission name="SeRecompleter"/>
+        <mission name="SoutenirSurPositionEnMesureDeBM"/>
         <mission name="Se Faire Decontaminer BM"/>
         <mission name="Orienter Guider Refugies BM"/>
         <mission name="Se Faire Transporter BM"/>
@@ -65,6 +66,7 @@
         <mission name="SuivreAgent"/>
         <mission name="StationnerBM"/>
         <mission name="SeRecompleter"/>
+        <mission name="SoutenirSurPositionEnMesureDeBM"/>
       </missions>
     </unit>
     <unit dia-type="BMPion" file="BMPion.bms" name="net.masagroup.sword.military.roles.Genie">
@@ -79,6 +81,7 @@
         <mission name="SuivreAgent"/>
         <mission name="StationnerBM"/>
         <mission name="SeRecompleter"/>
+        <mission name="SoutenirSurPositionEnMesureDeBM"/>
       </missions>
     </unit>
     <unit dia-type="PatrouilleAIR" file="Air\Pions\Patrouille Assaut\model.bms" name="Patrouille AIR Assaut">
@@ -2924,8 +2927,11 @@
   <automats>
     <automat dia-type="BMAutomat" file="BMAutomat.bms" name="net.masagroup.sword.military.roles.Company">
       <missions>
-        <mission name="GiveOrderMoveToUrbanBlock"/>
-        <mission name="GiveOrderMoveToPoint"/>
+        <mission name="FaireMouvementVersPosition"/>
+        <mission name="FaireMouvementVersBU"/>
+        <mission name="StationnerBM"/>
+        <mission name="SuivreBM"/>
+        <mission name="SoutenirSurPositionEnMesureDeBM"/>
       </missions>
     </automat>
     <automat dia-type="StrategicBomberSquadron" file="Air\Automates\Escadrille Assaut\Model.bms" name="Groupe Assaut AIR">

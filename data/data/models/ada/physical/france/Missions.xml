@@ -916,10 +916,10 @@
       <parameter dia-name="objective" name="unite a suivre" optional="false" type="AgentBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword_france.military.tasks.commun.Stationner" dia-type="T_Mission_Pion_StationnerBM" id="2054" name="StationnerBM">
-       <parameter dia-name="position" name="position de stationnement" optional="false" type="PointBM"/>
+      <parameter dia-name="position" name="position de stationnement" optional="false" type="PointBM"/>
     </mission>
-     <mission dia-behavior="net.masagroup.sword_france.military.tasks.commun.SeRecompleter" dia-type="T_Mission_Pion_SeRecompleter" id="2055" name="SeRecompleter">
-       <parameter dia-name="objectives" name="zone" optional="false" type="AreaBM"/>
+    <mission dia-behavior="net.masagroup.sword_france.military.tasks.commun.SeRecompleter" dia-type="T_Mission_Pion_SeRecompleter" id="2055" name="SeRecompleter">
+      <parameter dia-name="objectives" name="zone" optional="false" type="AreaBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword_france.military.tasks.commun.SeFaireDecontaminer" dia-type="T_Mission_Pion_SeFaireDecontaminerBM" id="2056" name="Se Faire Decontaminer BM">
       <parameter dia-name="objectives" name="Sites de decontamination" optional="false" type="ObjectKnowledgeListBM"/>
@@ -934,6 +934,9 @@
     </mission>
     <mission dia-behavior="net.masagroup.sword_france.military.tasks.commun.Decrocher" dia-type="T_Mission_Pion_DecrocherBM" id="2059" name="Decrocher BM">
       <parameter dia-name="destinations" name="destination" optional="false" type="PointBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword_france.military.tasks.commun.SoutenirSurPositionEnMesureDeBM" dia-type="T_Mission_Pion_SoutenirSurPositionEnMesureDeBM" id="2060" name="SoutenirSurPositionEnMesureDeBM">
+      <parameter dia-name="position" name="position " optional="false" type="PointBM"/>
     </mission>
   </units>
   <automats>
@@ -1547,6 +1550,21 @@
     </mission>
     <mission cdt-dia-behavior="net.masagroup.testSword.military.tasks.GiveOrderMoveTo" dia-type="T_Mission_Automate_GiveOrderMoveToPoint" id="1002" mrt-dia-behavior="net.masagroup.testSword.military.tasks.GiveOrderMoveTo" name="GiveOrderMoveToPoint">
       <parameter dia-name="objective" name="destination" optional="false" type="PointBM"/>
+    </mission>
+    <mission cdt-dia-behavior="net.masagroup.sword_france.military.tasks.commun.automat.FaireMouvementVersPosition" dia-type="T_Mission_Automate_FaireMouvementVersPosition" id="1003" mrt-dia-behavior="net.masagroup.sword_france.military.tasks.commun.automat.FaireMouvementVersPosition" name="FaireMouvementVersPosition">
+      <parameter dia-name="position" name="destination" optional="false" type="PointBM"/>
+    </mission>
+    <mission cdt-dia-behavior="net.masagroup.sword_france.military.tasks.commun.automat.FaireMouvementVersBU" dia-type="T_Mission_Automate_FaireMouvementVersBU" id="1004" mrt-dia-behavior="net.masagroup.sword_france.military.tasks.commun.automat.FaireMouvementVersBU" name="FaireMouvementVersBU">
+      <parameter dia-name="position" name="destination" optional="false" type="UrbanBlockBM"/>
+    </mission>
+    <mission cdt-dia-behavior="net.masagroup.sword_france.military.tasks.commun.automat.StationnerBM" dia-type="T_Mission_Automate_StationnerBM" id="1005" mrt-dia-behavior="net.masagroup.sword_france.military.tasks.commun.automat.StationnerBM" name="StationnerBM">
+      <parameter dia-name="position" name="position de stationnement" optional="false" type="PointBM"/>
+    </mission>
+    <mission cdt-dia-behavior="net.masagroup.sword_france.military.tasks.commun.automat.SuivreBM" dia-type="T_Mission_Automate_SuivreBM" id="1006" mrt-dia-behavior="net.masagroup.sword_france.military.tasks.commun.automat.SuivreBM" name="SuivreBM">
+      <parameter dia-name="objective" name="unite a suivre" optional="false" type="AgentBM"/>
+    </mission>
+    <mission cdt-dia-behavior="net.masagroup.sword_france.military.tasks.commun.automat.SoutenirSurPositionEnMesureDeBM" dia-type="T_Mission_Automate_SoutenirSurPositionEnMesureDeBM" id="1007" mrt-dia-behavior="net.masagroup.sword_france.military.tasks.commun.automat.SoutenirSurPositionEnMesureDeBM" name="SoutenirSurPositionEnMesureDeBM">
+      <parameter dia-name="position" name="position " optional="false" type="PointBM"/>
     </mission>
   </automats>
   <populations>
