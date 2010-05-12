@@ -19,7 +19,7 @@ namespace xml
 
 class MIL_Object_ABC;
 class DEC_Knowledge_Object;
-class MIL_AgentPion;
+class MIL_Agent_ABC;
 class PHY_PerceptionLevel;
 class PHY_SensorTypeObjectData;
 class PHY_SensorType;
@@ -43,8 +43,8 @@ public:
 
     //! @name Operations
     //@{
-    const PHY_PerceptionLevel& ComputePerception( const MIL_AgentPion& perceiver, const MIL_Object_ABC&   target, MT_Float rSensorHeight ) const;
-    const PHY_PerceptionLevel& ComputePerception( const MIL_AgentPion& perceiver, const DEC_Knowledge_Object& target, MT_Float rSensorHeight ) const;
+    const PHY_PerceptionLevel& ComputePerception( const MIL_Agent_ABC& perceiver, const MIL_Object_ABC&   target, MT_Float rSensorHeight ) const;
+    const PHY_PerceptionLevel& ComputePerception( const MIL_Agent_ABC& perceiver, const DEC_Knowledge_Object& target, MT_Float rSensorHeight ) const;
     //@}
 
     //! @name Helpers

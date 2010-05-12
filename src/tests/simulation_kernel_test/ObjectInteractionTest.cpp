@@ -56,6 +56,7 @@
 #include "MockRoleNBC.h"
 #include "MockRoleInterface_Posture.h"
 #include "MockRolePerceiver.h"
+#include "MockRoleUrbanLocation.h"
 #include <xeumeuleu/xml.h>
 
 #include "protocol/protocol.h"
@@ -392,7 +393,9 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Detection )
     BOOST_CHECK_NO_THROW( static_cast< Object& >( *object ).GetAttribute< AnimatorAttribute >() );
 
     MockAgent animator;
-    animator.RegisterRole( *new MockRolePerceiver() );
+    animator.RegisterRole( *new MockRoleUrbanLocation( animator ) );
+    MOCK_EXPECT( animator.GetRole< MockRoleUrbanLocation >(), IsInCity ).once().returns( false );
+    animator.RegisterRole( *new MockRolePerceiver( animator ) );
     static_cast< Object& >( *object ).GetAttribute< AnimatorAttribute >().AddAnimator( animator );
 
     MockAgent intruder;
@@ -445,7 +448,9 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Detection2 )
     BOOST_CHECK_NO_THROW( static_cast< Object& >( *object ).GetAttribute< DetectorAttribute >() );
     MockAgent detector;
     MOCK_EXPECT( detector, IsDead ).once().returns( false );
-    detector.RegisterRole( *new MockRolePerceiver() );
+    detector.RegisterRole( *new MockRoleUrbanLocation( detector ) );
+    MOCK_EXPECT( detector.GetRole< MockRoleUrbanLocation >(), IsInCity ).once().returns( false );
+    detector.RegisterRole( *new MockRolePerceiver( detector ) );
     static_cast< Object& >( *object ).GetAttribute< DetectorAttribute >().AddDetector( detector );
 
     MOCK_EXPECT( time, GetCurrentTick ).once().returns( 3u );

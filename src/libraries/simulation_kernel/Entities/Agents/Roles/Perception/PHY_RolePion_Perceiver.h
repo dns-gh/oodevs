@@ -71,7 +71,7 @@ public:
     //@}
 
 public:
-             PHY_RolePion_Perceiver( MIL_AgentPion& pion, const MT_Vector2D* perceiverPosition, const MT_Vector2D* perceiverDirection );
+             PHY_RolePion_Perceiver( MIL_Agent_ABC& pion, const MT_Vector2D* perceiverPosition, const MT_Vector2D* perceiverDirection );
     virtual ~PHY_RolePion_Perceiver();
 
     //! @name CheckPoints
@@ -167,7 +167,7 @@ public:
     //! @name Tools
     //@{
     const MIL_KnowledgeGroup& GetKnowledgeGroup            () const;
-          MIL_AgentPion&      GetPion                      () const;
+          MIL_Agent_ABC&      GetPion                      () const;
           MT_Float            GetMaxAgentPerceptionDistance() const;
           void                GetMainPerceptionDirection   ( MT_Vector2D& vDirection ) const;
 
@@ -219,7 +219,7 @@ private:
     //@}
 
 private:
-    MIL_AgentPion& pion_;
+    MIL_Agent_ABC& pion_;
     const MT_Vector2D* perceiverPosition_;
     const MT_Vector2D* perceiverDirection_;
     

@@ -61,13 +61,13 @@ public:
 
     //! @name Operations
     //@{
-    const PHY_PerceptionLevel& ComputePerception        ( const MIL_AgentPion& perceiver, const MT_Vector2D&                 target, MT_Float rSensorHeight ) const;
-    const PHY_PerceptionLevel& ComputePerception        ( const MIL_AgentPion& perceiver, const MIL_Agent_ABC&               target, MT_Float rSensorHeight ) const;
-    const PHY_PerceptionLevel& ComputePerception        ( const MIL_AgentPion& perceiver, const DEC_Knowledge_Agent&         target, MT_Float rSensorHeight ) const;
-    const PHY_PerceptionLevel& ComputePerception        ( const MIL_AgentPion& perceiver, const MIL_PopulationConcentration& target, MT_Float rSensorHeight ) const;    
-    const PHY_PerceptionLevel& ComputePerception        ( const MIL_AgentPion& perceiver, const MIL_PopulationFlow&          target, MT_Float rSensorHeight, T_PointVector& shape ) const;
-          MT_Float             ComputePerceptionAccuracy( const MIL_AgentPion& perceiver, const MIL_PopulationFlow&          target, MT_Float rSensorHeight ) const;
-    const PHY_PerceptionLevel& ComputePerception        ( const MIL_AgentPion& perceiver, const urban::TerrainObject_ABC& target, MT_Float rSensorHeight ) const;
+    const PHY_PerceptionLevel& ComputePerception        ( const MIL_Agent_ABC& perceiver, const MT_Vector2D&                 target, MT_Float rSensorHeight ) const;
+    const PHY_PerceptionLevel& ComputePerception        ( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC&               target, MT_Float rSensorHeight ) const;
+    const PHY_PerceptionLevel& ComputePerception        ( const MIL_Agent_ABC& perceiver, const DEC_Knowledge_Agent&         target, MT_Float rSensorHeight ) const;
+    const PHY_PerceptionLevel& ComputePerception        ( const MIL_Agent_ABC& perceiver, const MIL_PopulationConcentration& target, MT_Float rSensorHeight ) const;    
+    const PHY_PerceptionLevel& ComputePerception        ( const MIL_Agent_ABC& perceiver, const MIL_PopulationFlow&          target, MT_Float rSensorHeight, T_PointVector& shape ) const;
+          MT_Float             ComputePerceptionAccuracy( const MIL_Agent_ABC& perceiver, const MIL_PopulationFlow&          target, MT_Float rSensorHeight ) const;
+    const PHY_PerceptionLevel& ComputePerception        ( const MIL_Agent_ABC& perceiver, const urban::TerrainObject_ABC& target, MT_Float rSensorHeight ) const;
 	const MT_Float			   IdentificationDistance   () const;
     const MT_Float			   ReconnoissanceDistance   () const;
     const MT_Float             ComputeIdentificationDist( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const;

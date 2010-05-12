@@ -133,7 +133,7 @@ MT_Float PHY_SensorTypeObjectData::GetPopulationFactor( MT_Float rDensity ) cons
 // Name: PHY_SensorTypeObjectData::GetSourceFactor
 // Created: NLD 2004-08-30
 // -----------------------------------------------------------------------------
-MT_Float PHY_SensorTypeObjectData::GetSourceFactor( const MIL_AgentPion& source ) const
+MT_Float PHY_SensorTypeObjectData::GetSourceFactor( const MIL_Agent_ABC& source ) const
 {
     // Posture
     const PHY_RoleInterface_Posture& sourcePosture = source.GetRole< PHY_RoleInterface_Posture >();
@@ -146,7 +146,7 @@ MT_Float PHY_SensorTypeObjectData::GetSourceFactor( const MIL_AgentPion& source 
     MT_Float rModificator =     postureSourceFactors_[ nOldPostureIdx ] + sourcePosture.GetPostureCompletionPercentage() 
                             * ( postureSourceFactors_[ nCurPostureIdx ] - postureSourceFactors_[ nOldPostureIdx ] );
 
-    MIL_AgentPion& tempSource = const_cast< MIL_AgentPion& >( source );//@TODO MGD FIND A BETTER WAY
+    MIL_Agent_ABC& tempSource = const_cast< MIL_Agent_ABC& >( source );//@TODO MGD FIND A BETTER WAY
     std::auto_ptr< detection::PerceptionDistanceComputer_ABC > computer( tempSource.GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer() );
     rModificator *= tempSource.Execute( *computer ).GetFactor();
 
@@ -161,7 +161,7 @@ MT_Float PHY_SensorTypeObjectData::GetSourceFactor( const MIL_AgentPion& source 
 // Name: PHY_SensorTypeObject::ComputePerception
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_SensorTypeObjectData::ComputePerception( const MIL_AgentPion& source, const MIL_Object_ABC& target, MT_Float /*rSensorHeight*/ ) const
+const PHY_PerceptionLevel& PHY_SensorTypeObjectData::ComputePerception( const MIL_Agent_ABC& source, const MIL_Object_ABC& target, MT_Float /*rSensorHeight*/ ) const
 {   
     const MT_Float     rDistanceMaxModificator = GetSourceFactor( source );
     const MT_Vector2D& vSourcePos              = source.GetRole< PHY_RoleInterface_Location >().GetPosition();
@@ -175,7 +175,7 @@ const PHY_PerceptionLevel& PHY_SensorTypeObjectData::ComputePerception( const MI
 // Name: PHY_SensorTypeObject::ComputePerception
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_SensorTypeObjectData::ComputePerception( const MIL_AgentPion& source, const DEC_Knowledge_Object& target, MT_Float /*rSensorHeight*/ ) const
+const PHY_PerceptionLevel& PHY_SensorTypeObjectData::ComputePerception( const MIL_Agent_ABC& source, const DEC_Knowledge_Object& target, MT_Float /*rSensorHeight*/ ) const
 {
     const MT_Float     rDistanceMaxModificator = GetSourceFactor( source );
     const MT_Vector2D& vSourcePos              = source.GetRole< PHY_RoleInterface_Location >().GetPosition();

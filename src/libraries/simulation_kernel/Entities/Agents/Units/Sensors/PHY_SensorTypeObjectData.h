@@ -21,7 +21,7 @@ namespace xml
 
 class MIL_Object_ABC;
 class DEC_Knowledge_Object;
-class MIL_AgentPion;
+class MIL_Agent_ABC;
 class PHY_PerceptionLevel;
 
 // =============================================================================
@@ -42,8 +42,8 @@ public:
 
     //! @name Operations
     //@{
-    const PHY_PerceptionLevel& ComputePerception( const MIL_AgentPion& perceiver, const MIL_Object_ABC&   target, MT_Float rSensorHeight ) const;
-    const PHY_PerceptionLevel& ComputePerception( const MIL_AgentPion& perceiver, const DEC_Knowledge_Object& target, MT_Float rSensorHeight ) const;
+    const PHY_PerceptionLevel& ComputePerception( const MIL_Agent_ABC& perceiver, const MIL_Object_ABC&   target, MT_Float rSensorHeight ) const;
+    const PHY_PerceptionLevel& ComputePerception( const MIL_Agent_ABC& perceiver, const DEC_Knowledge_Object& target, MT_Float rSensorHeight ) const;
     //@}
 
 private:
@@ -57,7 +57,7 @@ private:
     //@{
     template< typename C > static void InitializeFactors( const C& container, const std::string& strTagName, T_FactorVector& factors, xml::xistream& xis );
     MT_Float GetPopulationFactor        ( MT_Float rDensity ) const;
-    MT_Float GetSourceFactor            ( const MIL_AgentPion& source ) const;
+    MT_Float GetSourceFactor            ( const MIL_Agent_ABC& source ) const;
     void     InitializePopulationFactors( xml::xistream& xis );
     //@}
     //! @name Hepers

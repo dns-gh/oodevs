@@ -72,14 +72,14 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_Perceiver )
 template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RolePion_Perceiver* role, const unsigned int /*version*/ )
 {
-    MIL_AgentPion* const pion = &role->pion_;
+    MIL_Agent_ABC* const pion = &role->pion_;
     archive << pion;
 }
 
 template< typename Archive >
 void load_construct_data( Archive& archive, PHY_RolePion_Perceiver* role, const unsigned int /*version*/ )
 {
-    MIL_AgentPion* pion;
+    MIL_Agent_ABC* pion;
     archive >> pion;
     ::new( role )PHY_RolePion_Perceiver( *pion, 0, 0 );
 }
@@ -88,7 +88,7 @@ void load_construct_data( Archive& archive, PHY_RolePion_Perceiver* role, const 
 // Name: PHY_RolePion_Perceiver constructor
 // Created: NLD 2004-08-19
 // -----------------------------------------------------------------------------
-PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MIL_AgentPion& pion, const MT_Vector2D* perceiverPosition, const MT_Vector2D* perceiverDirection )
+PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MIL_Agent_ABC& pion, const MT_Vector2D* perceiverPosition, const MT_Vector2D* perceiverDirection )
     : pion_                        ( pion )
     , perceiverPosition_           ( perceiverPosition )
     , perceiverDirection_          ( perceiverDirection )
@@ -117,7 +117,7 @@ PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MIL_AgentPion& pion, const MT_Ve
     static unsigned int nNbr = 0;
     nNextPeriphericalVisionStep_ = ++nNbr % nNbrStepsBetweenPeriphericalVision_;
 
-    pPerceptionView_ = new PHY_PerceptionView( *this );
+    pPerceptionView_ = new PHY_PerceptionView( *this, pion );
     activePerceptions_.push_back( pPerceptionView_ );
 }
 
@@ -1333,7 +1333,7 @@ bool PHY_RolePion_Perceiver::IsPeriphericalVisionEnabled() const
 // Name: PHY_RolePion_Perceiver::GetPion
 // Created: NLD 2004-08-30
 // -----------------------------------------------------------------------------
-MIL_AgentPion& PHY_RolePion_Perceiver::GetPion() const
+MIL_Agent_ABC& PHY_RolePion_Perceiver::GetPion() const
 {
     return pion_;
 }

@@ -37,7 +37,6 @@ class PHY_RadarType;
 class MIL_Effect_IndirectFire;
 class MIL_Agent_ABC;
 class MIL_KnowledgeGroup;
-class MIL_AgentPion;
 
 namespace urban
 {
@@ -162,7 +161,7 @@ public:
     //! @name Tools
     //@{
     virtual const MIL_KnowledgeGroup& GetKnowledgeGroup            () const = 0;
-    virtual MIL_AgentPion&      GetPion                      () const = 0;
+    virtual MIL_Agent_ABC&      GetPion                      () const = 0;
     virtual MT_Float            GetMaxAgentPerceptionDistance() const = 0;
     virtual void                GetMainPerceptionDirection   ( MT_Vector2D& vDirection ) const = 0;
 

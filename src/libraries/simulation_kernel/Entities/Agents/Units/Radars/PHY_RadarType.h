@@ -41,7 +41,7 @@ public:
 
     //! @name Operations
     //@{
-          bool                  CanAcquire             ( const MIL_AgentPion& perceiver, const MIL_Agent_ABC& target ) const;
+          bool                  CanAcquire             ( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const;
     const PHY_PerceptionLevel&  ComputeAcquisitionLevel( const MIL_Agent_ABC& target   , unsigned int nFirstAcquisitionTimeStep ) const;
     //@}
 

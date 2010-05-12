@@ -7,15 +7,15 @@
 //
 // *****************************************************************************
 
-#ifndef __MockRolePerceiver_h_
-#define __MockRolePerceiver_h_
+#ifndef __MockRoleUrbanLocation_h_
+#define __MockRoleUrbanLocation_h_
 
-#include "simulation_kernel/Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
+#include "simulation_kernel/Entities/Agents/Roles/Urban/PHY_RolePion_UrbanLocation.h"
 
-MOCK_BASE_CLASS( MockRolePerceiver, PHY_RolePion_Perceiver )
+MOCK_BASE_CLASS( MockRoleUrbanLocation, PHY_RolePion_UrbanLocation )
 {
-    MockRolePerceiver( MIL_Agent_ABC& pion ) : PHY_RolePion_Perceiver( pion, 0, 0 ) {}
-    MOCK_METHOD( NotifyExternalPerception, 2 );
+    MockRoleUrbanLocation( MIL_Agent_ABC& pion ) : PHY_RolePion_UrbanLocation( pion ) {}
+    MOCK_METHOD( IsInCity, 0 );
 };
 
 #endif // __MockRolePerceiver_h_
