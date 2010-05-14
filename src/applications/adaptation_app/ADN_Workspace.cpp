@@ -173,21 +173,21 @@ void ADN_Workspace::Build( ADN_MainWindow& mainWindow )
     }
 
     // Force an order for the tabs. Combine some other tabs. Exclude others... All in all, has to be done by hand.
-    mainWindow.AddPage( elements_[eCategories]->GetName(), * elements_[eCategories]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eUrban]->GetName(), * elements_[eUrban]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eLaunchers]->GetName(), * elements_[eLaunchers]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eEquipement]->GetName(), * elements_[eEquipement]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eWeapons]->GetName(), * elements_[eWeapons]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eActiveProtections]->GetName(), * elements_[eActiveProtections]->GetGuiABC().GetMainWidget() ); // LTO
-    mainWindow.AddPage( elements_[eSensors]->GetName(), * elements_[eSensors]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eBreakdowns]->GetName(), * elements_[eBreakdowns]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eComposantes]->GetName(), * elements_[eComposantes]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eUnits]->GetName(), * elements_[eUnits]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eAutomata]->GetName(), * elements_[eAutomata]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[ePopulation]->GetName(), * elements_[ePopulation]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eModels]->GetName(), * elements_[eModels]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eObjects]->GetName(), * elements_[eObjects]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eNBC]->GetName(), * elements_[eNBC]->GetGuiABC().GetMainWidget() );
+    mainWindow.AddPage( eCategories, elements_[eCategories]->GetName(), * elements_[eCategories]->GetGuiABC().GetMainWidget() );
+    mainWindow.AddPage( eUrban, elements_[eUrban]->GetName(), * elements_[eUrban]->GetGuiABC().GetMainWidget() );
+    mainWindow.AddPage( eLaunchers, elements_[eLaunchers]->GetName(), * elements_[eLaunchers]->GetGuiABC().GetMainWidget() );
+    mainWindow.AddPage( eEquipement, elements_[eEquipement]->GetName(), * elements_[eEquipement]->GetGuiABC().GetMainWidget() );
+    mainWindow.AddPage( eWeapons, elements_[eWeapons]->GetName(), * elements_[eWeapons]->GetGuiABC().GetMainWidget() );
+    mainWindow.AddPage( eActiveProtections, elements_[eActiveProtections]->GetName(), * elements_[eActiveProtections]->GetGuiABC().GetMainWidget() ); // LTO
+    mainWindow.AddPage( eSensors, elements_[eSensors]->GetName(), * elements_[eSensors]->GetGuiABC().GetMainWidget() );
+    mainWindow.AddPage( eBreakdowns, elements_[eBreakdowns]->GetName(), * elements_[eBreakdowns]->GetGuiABC().GetMainWidget() );
+    mainWindow.AddPage( eComposantes, elements_[eComposantes]->GetName(), * elements_[eComposantes]->GetGuiABC().GetMainWidget() );
+    mainWindow.AddPage( eUnits, elements_[eUnits]->GetName(), * elements_[eUnits]->GetGuiABC().GetMainWidget() );
+    mainWindow.AddPage( eAutomata, elements_[eAutomata]->GetName(), * elements_[eAutomata]->GetGuiABC().GetMainWidget() );
+    mainWindow.AddPage( ePopulation, elements_[ePopulation]->GetName(), * elements_[ePopulation]->GetGuiABC().GetMainWidget() );
+    mainWindow.AddPage( eModels, elements_[eModels]->GetName(), * elements_[eModels]->GetGuiABC().GetMainWidget() );
+    mainWindow.AddPage( eObjects, elements_[eObjects]->GetName(), * elements_[eObjects]->GetGuiABC().GetMainWidget() );
+    mainWindow.AddPage( eNBC, elements_[eNBC]->GetName(), * elements_[eNBC]->GetGuiABC().GetMainWidget() );
 
     QWidget* pLogPage = new QWidget();
     QVBoxLayout* pLayout = new QVBoxLayout( pLogPage );
@@ -200,14 +200,14 @@ void ADN_Workspace::Build( ADN_MainWindow& mainWindow )
     pLayout->addWidget( elements_[eHealth]->GetGuiABC().GetMainWidget() );
     ADN_GuiBuilder builder;
     builder.AddStretcher( pLayout, Qt::Vertical );
-    mainWindow.AddPage( tr( "Log" ), *pLogPage );
+    mainWindow.AddPage( eMaintenance, tr( "Log" ), *pLogPage );
 
-    mainWindow.AddPage( elements_[eHumanFactors]->GetName(), * elements_[eHumanFactors]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eCommunications]->GetName(), * elements_[eCommunications]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eKnowledgeGroups]->GetName(), * elements_[eKnowledgeGroups]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eMissions]->GetName(), * elements_[eMissions]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eReports]->GetName(), * elements_[eReports]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eAiEngine]->GetName(), * elements_[eAiEngine]->GetGuiABC().GetMainWidget() );
+    mainWindow.AddPage( eHumanFactors, elements_[eHumanFactors]->GetName(), * elements_[eHumanFactors]->GetGuiABC().GetMainWidget() );
+    mainWindow.AddPage( eCommunications, elements_[eCommunications]->GetName(), * elements_[eCommunications]->GetGuiABC().GetMainWidget() );
+    mainWindow.AddPage( eKnowledgeGroups, elements_[eKnowledgeGroups]->GetName(), * elements_[eKnowledgeGroups]->GetGuiABC().GetMainWidget() );
+    mainWindow.AddPage( eMissions, elements_[eMissions]->GetName(), * elements_[eMissions]->GetGuiABC().GetMainWidget() );
+    mainWindow.AddPage( eReports, elements_[eReports]->GetName(), * elements_[eReports]->GetGuiABC().GetMainWidget() );
+    mainWindow.AddPage( eAiEngine, elements_[eAiEngine]->GetName(), * elements_[eAiEngine]->GetGuiABC().GetMainWidget() );
 
     pProgressIndicator_->Reset( tr( "GUI loaded" ) );
 }
@@ -244,7 +244,7 @@ void ADN_Workspace::Reset(const std::string& filename, bool bVisible )
 // Name: ADN_Workspace::Load
 // Created: JDY 03-07-04
 //-----------------------------------------------------------------------------
-void ADN_Workspace::Load(const std::string& filename)
+void ADN_Workspace::Load( const std::string& filename, ADN_MainWindow& mainWindow )
 {
     Reset( filename, false );
 
@@ -264,6 +264,10 @@ void ADN_Workspace::Load(const std::string& filename)
         elements_[n]->GetDataABC().Load();
     }
     pProgressIndicator_->Reset();
+
+    mainWindow.EnableTab( eModels, nOpenMode_ == eOpenMode_Admin );
+    mainWindow.EnableTab( eObjects, nOpenMode_ == eOpenMode_Admin );
+    mainWindow.EnableTab( eMissions, nOpenMode_ == eOpenMode_Admin );
 }
 
 inline bool isWritable(const std::string& filename)
