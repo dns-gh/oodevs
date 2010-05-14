@@ -24,7 +24,7 @@ namespace kernel
 
 namespace tools
 {
-    class ExerciseConfig;
+    class SessionConfig;
 }
 
 namespace gui
@@ -76,7 +76,7 @@ public:
     //! @name Constructors/Destructor/Accessor
     //@{
              MainWindow( kernel::Controllers& controllers, StaticModel& staticModel, Model& model, const Simulation& simulation,
-                         Network& network, const kernel::Profile_ABC& profile, tools::ExerciseConfig& config, LoggerProxy& logger,
+                         Network& network, const kernel::Profile_ABC& profile, tools::SessionConfig& config, LoggerProxy& logger,
                          const QString& license );
     virtual ~MainWindow();
     //@}
@@ -128,7 +128,7 @@ private:
     Model& model_;
     Network& network_;
     QString profile_;
-    tools::ExerciseConfig& config_;
+    tools::SessionConfig& config_;
 
     std::auto_ptr< gui::CircularEventStrategy >  forward_;
     std::auto_ptr< gui::ExclusiveEventStrategy > eventStrategy_;

@@ -22,6 +22,7 @@
 #include "dispatcher/AgentKnowledgeConverter.h"
 #include "dispatcher/ModelAdapter.h"
 #include "dispatcher/ObjectKnowledgeConverter.h"
+#include "protocol/protocol.h"
 #include "protocol/Publisher_ABC.h"
 #include "tools/SessionConfig.h"
 
@@ -95,7 +96,8 @@ void ActionsLogger::Commit() const
 // -----------------------------------------------------------------------------
 void ActionsLogger::Log( const Common::MsgUnitOrder& message )
 {
-    LogAction( message );
+    if( message.has_mission() && message.mission() != 0 )
+        LogAction( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -104,7 +106,8 @@ void ActionsLogger::Log( const Common::MsgUnitOrder& message )
 // -----------------------------------------------------------------------------
 void ActionsLogger::Log( const Common::MsgAutomatOrder& message )
 {
-    LogAction( message );
+    if( message.has_mission() && message.mission() != 0 )
+        LogAction( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -113,7 +116,8 @@ void ActionsLogger::Log( const Common::MsgAutomatOrder& message )
 // -----------------------------------------------------------------------------
 void ActionsLogger::Log( const Common::MsgPopulationOrder& message )
 {
-    LogAction( message );
+    if( message.has_mission() && message.mission() != 0 )
+        LogAction( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -122,5 +126,6 @@ void ActionsLogger::Log( const Common::MsgPopulationOrder& message )
 // -----------------------------------------------------------------------------
 void ActionsLogger::Log( const MsgsClientToSim::MsgFragOrder& message )
 {
-    LogAction( message );
+    if( message.has_frag_order() && message.frag_order() != 0 )
+        LogAction( message );
 }

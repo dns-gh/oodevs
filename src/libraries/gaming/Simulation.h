@@ -48,6 +48,8 @@ public:
     void Update( const MsgsSimToClient::MsgControlProfilingInformation& message );
     void Update( const MsgsSimToClient::MsgControlBeginTick& message );
     void Update( const MsgsSimToClient::MsgControlEndTick& message );
+    void Update( const MsgsSimToClient::MsgControlSendCurrentStateEnd& message );
+
     //@}
 
     //! @name Operations
@@ -76,6 +78,7 @@ public:
 
     bool IsPaused() const;
     bool IsConnected() const;
+    bool IsInitialized() const;
     const std::string& GetSimulationHost() const;
 
     int  GetSpeed() const;
@@ -107,6 +110,7 @@ private:
     std::string date_;
     bool paused_;
     bool connected_;
+    bool initialized_;
     sStartTick startTick_;
     sEndTick endTick_;
     sCheckPoint checkPoint_;

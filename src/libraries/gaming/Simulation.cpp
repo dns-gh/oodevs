@@ -27,6 +27,7 @@ Simulation::Simulation( Controller& controller )
     , time_( 0 )
     , paused_( false )
     , connected_( false )
+    , initialized_( false )
 {
     // NOTHING
 }
@@ -63,6 +64,7 @@ void Simulation::Disconnect()
     time_ = 0;
     profiling_.Clear();
     connected_ = false;
+    initialized_ = false;
     controller_.Update( *this );
 }
  
@@ -155,6 +157,16 @@ void Simulation::Update( const MsgsSimToClient::MsgControlEndTick& message )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Simulation::Update
+// Created: JSR 2010-05-12
+// -----------------------------------------------------------------------------
+void Simulation::Update( const MsgsSimToClient::MsgControlSendCurrentStateEnd& /*message*/ )
+{
+    initialized_ = true;
+    controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Simulation::BeginCheckPoint
 // Created: SBO 2007-03-09
 // -----------------------------------------------------------------------------
@@ -201,6 +213,15 @@ bool Simulation::IsPaused() const
 bool Simulation::IsConnected() const
 {
     return connected_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Simulation::IsInitialized
+// Created: JSR 2010-05-12
+// -----------------------------------------------------------------------------
+bool Simulation::IsInitialized() const
+{
+    return initialized_;
 }
 
 // -----------------------------------------------------------------------------

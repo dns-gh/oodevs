@@ -30,7 +30,7 @@ namespace gui
 
 namespace tools
 {
-    class ExerciseConfig;
+    class SessionConfig;
 }
 
 class ActionsScheduler;
@@ -50,7 +50,7 @@ class TimelinePanel : public QDockWindow
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelinePanel( QMainWindow* parent, kernel::Controllers& controllers, actions::ActionsModel& model, ActionsScheduler& scheduler, const tools::ExerciseConfig& config, gui::ItemFactory_ABC& factory );
+             TimelinePanel( QMainWindow* parent, kernel::Controllers& controllers, actions::ActionsModel& model, ActionsScheduler& scheduler, const tools::SessionConfig& config, gui::ItemFactory_ABC& factory );
     virtual ~TimelinePanel();
     //@}
 

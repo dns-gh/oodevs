@@ -10,6 +10,8 @@
 #ifndef __ActionsToolbar_h_
 #define __ActionsToolbar_h_
 
+#include "tools/ElementObserver_ABC.h"
+
 namespace kernel
 {
     class Controllers;
@@ -17,7 +19,7 @@ namespace kernel
 
 namespace tools
 {
-    class ExerciseConfig;
+    class SessionConfig;
 }
 
 namespace actions
@@ -26,6 +28,9 @@ namespace actions
     class ActionsModel;
 }
 
+class Services;
+class Simulation;
+
 // =============================================================================
 /** @class  ActionsToolbar
     @brief  ActionsToolbar
@@ -33,13 +38,16 @@ namespace actions
 // Created: SBO 2007-03-12
 // =============================================================================
 class ActionsToolbar : public QHBox
+                     , public tools::Observer_ABC
+                     , public tools::ElementObserver_ABC< Simulation >
+                     , public tools::ElementObserver_ABC< Services >
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionsToolbar( QWidget* parent, actions::ActionsModel& actions, const tools::ExerciseConfig& config, kernel::Controllers& controllers );
+             ActionsToolbar( QWidget* parent, actions::ActionsModel& actions, const tools::SessionConfig& config, kernel::Controllers& controllers );
     virtual ~ActionsToolbar();
     //@}
 
@@ -58,6 +66,8 @@ private:
     //! @name Helpers
     //@{
     void PurgeConfirmed( int result );
+    virtual void NotifyUpdated( const Simulation& simulation );
+    virtual void NotifyUpdated( const Services& services );
     //@}
 
 private slots:
@@ -73,12 +83,14 @@ private:
     //@{
     kernel::Controllers& controllers_;
     actions::ActionsModel& actions_;
-    const tools::ExerciseConfig& config_;
+    const tools::SessionConfig& config_;
     const actions::ActionsFilter_ABC* filter_;
     QToolButton*  loadBtn_;
     QToolButton*  saveBtn_;
     QToolButton*  purgeBtn_;
     QMessageBox*  confirmation_;
+    bool          initialized_;
+    bool          hasReplay_;
     //@}
 };
 

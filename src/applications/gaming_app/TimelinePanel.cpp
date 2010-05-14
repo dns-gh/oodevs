@@ -53,7 +53,7 @@ namespace
 // Name: TimelinePanel constructor
 // Created: SBO 2007-07-04
 // -----------------------------------------------------------------------------
-TimelinePanel::TimelinePanel( QMainWindow* parent, kernel::Controllers& controllers, ActionsModel& model, ActionsScheduler& scheduler, const tools::ExerciseConfig& config, gui::ItemFactory_ABC& factory )
+TimelinePanel::TimelinePanel( QMainWindow* parent, kernel::Controllers& controllers, ActionsModel& model, ActionsScheduler& scheduler, const tools::SessionConfig& config, gui::ItemFactory_ABC& factory )
     : QDockWindow( parent, "timeline" )
 {
     setResizeEnabled( true );

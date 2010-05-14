@@ -16,10 +16,16 @@
 #include "actions/ActionTasker.h"
 #include "clients_gui/BooleanOptionButton.h"
 #include "clients_kernel/Controllers.h"
-#include "tools/ExerciseConfig.h"
+#include "gaming/Simulation.h"
+#include "gaming/Services.h"
+#include "tools/SessionConfig.h"
 #include "icons.h"
-#include <boost/function.hpp>
 #include <boost/bind.hpp>
+#include <boost/function.hpp>
+#include <boost/filesystem/convenience.hpp>
+#include <boost/filesystem/operations.hpp>
+ 
+namespace bfs = boost::filesystem;
 
 namespace
 {
@@ -57,12 +63,14 @@ using namespace actions;
 // Name: ActionsToolbar constructor
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-ActionsToolbar::ActionsToolbar( QWidget* parent, ActionsModel& actions, const tools::ExerciseConfig& config, kernel::Controllers& controllers )
+ActionsToolbar::ActionsToolbar( QWidget* parent, ActionsModel& actions, const tools::SessionConfig& config, kernel::Controllers& controllers )
     : QHBox       ( parent, "ActionsToolbar" )
     , controllers_( controllers )
     , actions_    ( actions )
     , config_     ( config )
     , filter_     ( 0 )
+    , initialized_( false )
+    , hasReplay_  ( false )
 {
     setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Maximum );
     setBackgroundMode( Qt::PaletteButton );
@@ -89,6 +97,8 @@ ActionsToolbar::ActionsToolbar( QWidget* parent, ActionsModel& actions, const to
     purgeBtn_->setTextLabel( tr( "Delete recorded actions" ) );
     
     confirmation_ = new ConfirmationBox( tr( "Actions recorder" ), boost::bind( &ActionsToolbar::PurgeConfirmed, this, _1 ) );
+
+    controllers_.Register( *this );
 
     connect( loadBtn_ , SIGNAL( clicked() ), SLOT( Load()  ) );
     connect( saveBtn_ , SIGNAL( clicked() ), SLOT( Save()  ) );
@@ -182,4 +192,68 @@ void ActionsToolbar::PurgeConfirmed( int result )
         PurgeFilter filter;
         actions_.Purge( &filter );
     }
+}
+
+namespace
+{
+    void GetOrdFilesList( bfs::path& path, std::vector< std::string >& list )
+    {
+        if( bfs::exists( path ) )
+        {
+            bfs::directory_iterator end;
+            for( bfs::directory_iterator it( path ); it != end; ++it )
+            {
+                const bfs::path child = *it;            
+                if( bfs::is_regular_file( child ) && bfs::extension( child ).compare( ".ord" ) == 0 )
+                    list.push_back( child.string().c_str() );
+            }
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsToolbar::NotifyUpdated
+// Created: JSR 2010-05-12
+// -----------------------------------------------------------------------------
+void ActionsToolbar::NotifyUpdated( const Simulation& simulation )
+{
+    if( !hasReplay_ )
+        return;
+
+    if( simulation.IsInitialized() != initialized_ )
+    {
+        initialized_ = simulation.IsInitialized();
+        if( initialized_ )
+        {
+            // todo charger
+            std::vector< std::string > files;
+            bfs::path path = bfs::path( config_.GetSessionDir(), bfs::native );
+            GetOrdFilesList( path, files );
+            for( std::vector< std::string >::const_iterator it = files.begin(); it != files.end(); ++it )
+            {
+                try
+                {
+                    actions_.Load( *it );
+                }
+                catch( std::exception& e )
+                {
+                    QMessageBox::critical( this, tr( "Error loading actions file" ), e.what() );
+                }
+            }
+        }
+        else
+        {
+            actions_.Purge(); // filter?
+            initialized_ = false;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsToolbar::NotifyUpdated
+// Created: JSR 2010-05-12
+// -----------------------------------------------------------------------------
+void ActionsToolbar::NotifyUpdated( const Services& services )
+{
+    hasReplay_ = services.HasService< replay::Service >();
 }

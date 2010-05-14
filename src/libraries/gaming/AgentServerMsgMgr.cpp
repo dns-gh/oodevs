@@ -1729,7 +1729,7 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& , const Msgs
     else if( wrapper.message().has_control_send_current_state_begin() )
         return;
     else if( wrapper.message().has_control_send_current_state_end() )
-        return;
+        OnReceiveMsgSendCurrentStateEnd( wrapper.message().control_send_current_state_end() );
     else if( wrapper.message().has_knowledge_group_creation() ) 
         OnReveiveMsgKnowledgeGroupCreation( wrapper.message().knowledge_group_creation() ); 
     else if( wrapper.message().has_knowledge_group_destruction() ) 
@@ -2119,7 +2119,7 @@ Profile& AgentServerMsgMgr::GetProfile() const
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgControlMeteoGlobal( const MsgsSimToClient::MsgControlGlobalMeteo& message )
 {
-        GetModel().meteo_.OnReceiveMsgGlobalMeteo( message );
+    GetModel().meteo_.OnReceiveMsgGlobalMeteo( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -2128,7 +2128,7 @@ void AgentServerMsgMgr::OnReceiveMsgControlMeteoGlobal( const MsgsSimToClient::M
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgControlMeteoLocalCreation( const MsgsSimToClient::MsgControlLocalMeteoCreation& message )
 {
-      GetModel().meteo_.OnReceiveMsgLocalMeteoCreation( message );
+    GetModel().meteo_.OnReceiveMsgLocalMeteoCreation( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -2137,6 +2137,15 @@ void AgentServerMsgMgr::OnReceiveMsgControlMeteoLocalCreation( const MsgsSimToCl
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgControlMeteoLocalDestruction( const MsgsSimToClient::MsgControlLocalMeteoDestruction& message )
 {
-      GetModel().meteo_.OnReceiveMsgLocalMeteoDestruction( message );
+    GetModel().meteo_.OnReceiveMsgLocalMeteoDestruction( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgSendCurrentStateEnd
+// Created: JSR 2010-05-12
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgSendCurrentStateEnd( const MsgsSimToClient::MsgControlSendCurrentStateEnd& message )
+{
+    simulation_.Update( message );
 }
 

@@ -33,6 +33,7 @@ namespace MsgsSimToClient
     class MsgControlProfilingInformation;
     class MsgControlBeginTick;
     class MsgControlEndTick;
+    class MsgControlSendCurrentStateEnd;
     class MsgAutomatCreation;
     class MsgUnitCreation;
     class MsgUnitDestruction;
@@ -119,6 +120,9 @@ namespace MsgsSimToClient
     class MsgKnowledgeGroupDestruction;
     class MsgUrbanCreation;
     class MsgUrbanDetection;
+    class MsgControlGlobalMeteo;
+    class MsgControlLocalMeteoCreation;
+    class MsgControlLocalMeteoDestruction;
     class MsgControlPauseAck;
     class MsgControlResumeAck;
     class MsgControlChangeTimeFactorAck;
@@ -217,13 +221,6 @@ namespace kernel
     class Logger_ABC;
 }
 
-namespace MsgsSimToClient
-{
-  class MsgControlGlobalMeteo;
-  class MsgControlLocalMeteoCreation;
-  class MsgControlLocalMeteoDestruction;
-}
-
 class Model;
 class Services;
 class Simulation;
@@ -301,6 +298,7 @@ private:
     void OnReceiveMsgControlMeteoGlobal          ( const MsgsSimToClient::MsgControlGlobalMeteo&                message );
     void OnReceiveMsgControlMeteoLocalCreation   ( const MsgsSimToClient::MsgControlLocalMeteoCreation&         message );
     void OnReceiveMsgControlMeteoLocalDestruction( const MsgsSimToClient::MsgControlLocalMeteoDestruction&      message );
+    void OnReceiveMsgSendCurrentStateEnd         ( const MsgsSimToClient::MsgControlSendCurrentStateEnd&        message );
 
     // Profiles
     void OnReceiveMsgProfileCreation             ( const MsgsAuthenticationToClient::MsgProfileCreation&                message );

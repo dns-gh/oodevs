@@ -123,7 +123,7 @@
 #include "clients_gui/TerrainPicker.h"
 #include "clients_gui/TerrainProfilerLayer.h"
 
-#include "tools/ExerciseConfig.h"
+#include "tools/SessionConfig.h"
 
 #include "xeumeuleu/xml.h"
 
@@ -142,7 +142,7 @@ using namespace gui;
 // Name: MainWindow constructor
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------
-MainWindow::MainWindow( kernel::Controllers& controllers, ::StaticModel& staticModel, Model& model, const Simulation& simulation, Network& network, const kernel::Profile_ABC& p, tools::ExerciseConfig& config, LoggerProxy& logger, const QString& license )
+MainWindow::MainWindow( kernel::Controllers& controllers, ::StaticModel& staticModel, Model& model, const Simulation& simulation, Network& network, const kernel::Profile_ABC& p, tools::SessionConfig& config, LoggerProxy& logger, const QString& license )
     : QMainWindow( 0, 0, Qt::WDestructiveClose )
     , controllers_  ( controllers )
     , staticModel_  ( staticModel )
@@ -634,21 +634,22 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
     const QString appName = tools::translate( "Application", "SWORD" );
     if( simulation.IsConnected() )
     {
-        if ( !connected_ )
+        if( !connected_ )
         {
             setCaption( appName + QString( " - [%1@%2][%3]" )
                 .arg( profile_ )
                 .arg( simulation.GetSimulationHost().c_str() )
                 .arg( ExtractExerciceName( config_.GetExerciseFile() ) ) ); // $$$$ SBO 2009-12-18: Use exercise META data
-            connected_ = true;
+            if( simulation.IsInitialized() )
+                connected_ = true; // we update the caption until Model is totally loaded
         }
     }
-    else 
-      if ( connected_ )
+    else
     {
         setCaption( appName + tr( " - Not connected" ) );
         controllers_.actions_.Select( SelectionStub() );
         connected_ = false;
+        profile_ = "";
         Close();
     }
 }
