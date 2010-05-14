@@ -18,7 +18,7 @@ end,
     actions:IssueOrder( "Faire Mouvement" )
 end,
 
-[20] = function()
+[25] = function()
     sim:Engage( 12, false )
 end,
 
@@ -41,8 +41,6 @@ function Start()
             function( client, profile )
                 if profile ~= "embrayer_debrayer" then return end
                 tick = 0
-                Zoom( { width = 10000 } )
-                Center( { coordinates = coord:UtmPosition( "31UEQ0943923538" ) } )
                 ChangeState( "Missions_Init" )
             end
         },
