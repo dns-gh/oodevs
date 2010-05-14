@@ -9,7 +9,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="test" password="test" supervision="true">
+  <profile name="test" password="" supervision="true">
     <rights>
       <readonly/>
       <readwrite>
