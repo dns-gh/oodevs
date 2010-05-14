@@ -324,6 +324,13 @@ Merci de sélectionner un autre fichier à importer.</translation>
     </message>
 </context>
 <context>
+    <name>LogisticSuperiorEditor</name>
+    <message>
+        <source>None</source>
+        <translation>Aucun</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <source>Tactical</source>
@@ -604,13 +611,6 @@ Voulez-vous sauvegarder malgré tout?</translation>
     <message>
         <source>Delete unit &apos;%1&apos; and all its subordinates?</source>
         <translation>Supprimer l&apos;unité &quot;%1&quot; et ses subordonnés ?</translation>
-    </message>
-</context>
-<context>
-    <name>None</name>
-    <message>
-        <source>LogisticSuperiorEditor</source>
-        <translation>Supérieur logistique</translation>
     </message>
 </context>
 <context>
