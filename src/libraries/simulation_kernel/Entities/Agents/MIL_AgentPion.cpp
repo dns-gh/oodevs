@@ -186,6 +186,7 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const unsigned int )
     LoadRole< PHY_RolePion_Reinforcement >( file, *this );
     LoadRole< PHY_RolePion_Posture >( file, *this );
     LoadRole< PHY_RolePion_Location >( file, *this );
+    LoadRole< PHY_RolePion_UrbanLocation >( file, *this );
     LoadRole< dotation::PHY_RolePion_Dotations >( file, *this );
     LoadRole< human::PHY_RolePion_Humans >( file, *this );
     LoadRole< PHY_RolePion_Composantes >( file, *this );
@@ -232,6 +233,7 @@ void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const unsigned int ) c
     SaveRole< PHY_RolePion_Reinforcement     >( *this, file );
     SaveRole< PHY_RolePion_Posture           >( *this, file );
     SaveRole< PHY_RolePion_Location          >( *this, file );
+    SaveRole< PHY_RolePion_UrbanLocation     >( *this, file );
     SaveRole< dotation::PHY_RolePion_Dotations >( *this, file );
     SaveRole< human::PHY_RolePion_Humans     >( *this, file );
     SaveRole< PHY_RolePion_Composantes       >( *this, file );
