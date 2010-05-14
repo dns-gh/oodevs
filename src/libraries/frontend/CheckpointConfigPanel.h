@@ -84,6 +84,7 @@ private:
     const tools::GeneralConfig& config_;
     QTimeEdit* frequency_;
     QSpinBox* keep_;
+    QGroupBox* checkpointsGroup_;
     QGroupBox* loadGroup_;
     QListBox* sessions_;
     CheckpointList* checkpoints_;

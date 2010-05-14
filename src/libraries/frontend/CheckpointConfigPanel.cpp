@@ -32,15 +32,17 @@ CheckpointConfigPanel::CheckpointConfigPanel( QWidget* parent, const tools::Gene
 {
     QVBox* vbox = new QVBox( this );
     {
-        QGroupBox* checkpoints = new QGroupBox( 2, Qt::Vertical, tr( "Checkpoint configuration: " ), vbox );
+        checkpointsGroup_ = new QGroupBox( 2, Qt::Vertical, tr( "Checkpoint configuration: " ), vbox );
+        checkpointsGroup_->setCheckable( true );
+        checkpointsGroup_->setChecked( false );
         {
-            QHBox* frequencyBox = new QHBox( checkpoints );
+            QHBox* frequencyBox = new QHBox( checkpointsGroup_ );
             new QLabel( tr( "Frequency:" ), frequencyBox );
             frequency_ = new QTimeEdit( frequencyBox );
             frequency_->setTime( QTime().addSecs( 3600 ) );
         }
         {
-            QHBox* keepBox = new QHBox( checkpoints );
+            QHBox* keepBox = new QHBox( checkpointsGroup_ );
             new QLabel( tr( "Keep:" ), keepBox );
             keep_ = new QSpinBox( 1, 100, 1, keepBox );
         }
@@ -115,8 +117,11 @@ void CheckpointConfigPanel::OnCheckpointSelected( const QString& checkpoint )
 // -----------------------------------------------------------------------------
 void CheckpointConfigPanel::Commit( const std::string& exercise, const std::string& session )
 {
-    frontend::CreateSession action( config_, exercise, session );
-    action.SetOption( "session/config/simulation/checkpoint/@frequency", QString( "%1s" ).arg( QTime().secsTo( frequency_->time() ) ).ascii() );
-    action.SetOption( "session/config/simulation/checkpoint/@keep", keep_->value() );
-    action.SetOption( "session/config/simulation/checkpoint/@usecrc", true );
+    if( checkpointsGroup_->isChecked() )
+    {
+        frontend::CreateSession action( config_, exercise, session );
+        action.SetOption( "session/config/simulation/checkpoint/@frequency", QString( "%1s" ).arg( QTime().secsTo( frequency_->time() ) ).ascii() );
+        action.SetOption( "session/config/simulation/checkpoint/@keep", keep_->value() );
+        action.SetOption( "session/config/simulation/checkpoint/@usecrc", true );
+    }
 }
