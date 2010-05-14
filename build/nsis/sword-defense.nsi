@@ -166,6 +166,7 @@ SectionGroup "Models" s_mod
     !if "${APP_MODEL}" == "LTO"
         !insertmacro OT.AddPhysicalModels "ada" "france" "s_phymod1"
         !insertmacro OT.AddPhysicalModels "ada" "scipio-1.9.2" "s_phymod2"
+        !insertmacro OT.AddPhysicalModels "ada" "worldwide" "s_phymod3"
     !else
         !insertmacro OT.AddPhysicalModels "ada" "${APP_MODEL}" "s_phymod1"
     !endif
@@ -242,6 +243,7 @@ SectionGroup "Exercises" s_exo
         !insertmacro OT.AddExercise "tests\ValidationTests LOG" "Angers_x9" "s_exo24"
         !insertmacro OT.AddExercise "tests\ValidationTests LOG 1_9_2" "Angers_x9" "s_exo25"
         !insertmacro OT.AddExercise "tests\Water" "Cabourg" "s_exo26"
+        !insertmacro OT.AddExercise "tests\missions" "Paris_Est" "s_exo27"
     !endif
 
 SectionGroupEnd
@@ -405,6 +407,7 @@ Function .onSelChange
         !insertmacro OT.CheckDependency "s_exo24" "s_ter8"
         !insertmacro OT.CheckDependency "s_exo25" "s_ter8"
         !insertmacro OT.CheckDependency "s_exo26" "s_ter4"
+        !insertmacro OT.CheckDependency "s_exo27" "s_ter2"
     !endif
      
 FunctionEnd

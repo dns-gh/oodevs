@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
 <orbat>
+  <dotations infinite="false"/>
   <sides>
     <side id="1" name="red" type="enemy">
       <objects/>
@@ -16,8 +17,8 @@
       <objects/>
       <tactical>
         <formation id="5" level="x" name="Formation [5]">
-          <automat engaged="false" id="7" knowledge-group="6" name="MBT squadron [7]" type="MBT squadron">
-            <unit command-post="true" id="8" name="Armored squadron CP" position="30TYT1197228229" type="Armored squadron CP"/>
+          <automat engaged="false" id="7" knowledge-group="6" name="Escadron de Chars LECLERC [7]" type="Escadron de Chars LECLERC">
+            <unit command-post="true" id="8" name="Peloton LECLERC CDT ESC" position="31UEQ0689955485" type="Peloton LECLERC CDT ESC"/>
           </automat>
         </formation>
       </tactical>

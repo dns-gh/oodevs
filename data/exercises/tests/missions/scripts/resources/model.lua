@@ -20,13 +20,13 @@ model =
 		-- Unit types
 		units =
 		{
-			[ "MBT platoon" ] = 68,
+			[ "MBT platoon" ] = 34,
 		},
 
 		-- Mission types
 		missions =
 		{
-			[ "move" ] = 133,
+			[ "move" ] = 131,
 		}
 	}
 }
