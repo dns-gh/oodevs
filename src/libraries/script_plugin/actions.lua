@@ -148,7 +148,7 @@ function Order:ToXml()
 	return xml.Serialize(
 		{
 			tag = "action",
-			attributes = { id = self.id, name = "", target = self.target, type = self.type },
+			attributes = { id = self.id, name = "", target = self.target, type = self.type, time = 0 },
 			children = Order._MakeXmlParameters( self.parameters )
 		}
 	)
