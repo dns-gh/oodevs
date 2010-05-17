@@ -49,3 +49,12 @@ bool ActionTasker::IsSimulation() const
 {
     return simulation_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ActionTasker::SerializeAttributes
+// Created: SBO 2010-05-17
+// -----------------------------------------------------------------------------
+void ActionTasker::SerializeAttributes( xml::xostream& xos ) const
+{
+    xos << xml::attribute( "target", target_.GetId() );
+}

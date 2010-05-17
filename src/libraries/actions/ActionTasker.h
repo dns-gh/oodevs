@@ -12,6 +12,11 @@
 
 #include "clients_kernel/Extension_ABC.h"
 
+namespace xml
+{
+    class xostream;
+}
+
 namespace kernel
 {
     class Entity_ABC;
@@ -27,6 +32,7 @@ namespace actions
 // Created: SBO 2010-05-03
 // =============================================================================
 class ActionTasker : public kernel::Extension_ABC
+                   , public kernel::Serializable_ABC
 {
 
 public:
@@ -40,6 +46,7 @@ public:
     //@{
     const kernel::Entity_ABC& GetTasker() const;
     bool IsSimulation() const;
+    virtual void SerializeAttributes( xml::xostream& xos ) const;
     //@}
 
 private:

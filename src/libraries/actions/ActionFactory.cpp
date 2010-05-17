@@ -396,9 +396,8 @@ void ActionFactory::AddParameters( actions::Action_ABC& action, const kernel::Or
     {
         if( i >= message.elem_size() )
             throw std::runtime_error( __FUNCTION__ " Mission parameter count does not match mission definition" );
-
-        if( actions::ActionWithTarget_ABC* actionWithTarget = dynamic_cast< actions::ActionWithTarget_ABC* >( &action ) )
-            if( actions::Parameter_ABC* newParam = factory_.CreateParameter( it.NextElement(), message.elem( i++ ), actionWithTarget->GetEntity() ) )
+        if( const ActionTasker* tasker = action->Retrieve< ActionTasker >() )
+            if( actions::Parameter_ABC* newParam = factory_.CreateParameter( it.NextElement(), message.elem( i++ ), tasker->GetTasker() ) )
                 actionWithTarget->AddParameter( *newParam );
     }
 }
