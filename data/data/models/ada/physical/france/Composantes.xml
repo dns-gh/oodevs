@@ -2906,6 +2906,8 @@
       <object bypass-gain-factor="0.6" destruction-time-factor="288s" devalorization-time="1800s" type="mines"/>
       <object bypass-gain-factor="0.6" destruction-time-factor="720s" devalorization-time="1800s" type="mined area (linear)"/>
       <object bypass-gain-factor="0.6" destruction-time-factor="720s" devalorization-time="1800s" type="mined area (scattered)"/>
+      <object construction-time-factor="1s" destruction-time-factor="1s" devalorization-time="1s" initial-construction-time="1s" initial-destruction-time="0s" type="sensors"/>
+      <object construction-time-factor="1s" destruction-time-factor="1s" devalorization-time="1s" initial-construction-time="1s" initial-destruction-time="0s" type="sensorsDetectionZone"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="11" type="Panne MOB 1"/>
