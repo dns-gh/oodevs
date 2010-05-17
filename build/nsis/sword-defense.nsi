@@ -244,6 +244,10 @@ SectionGroup "Exercises" s_exo
         !insertmacro OT.AddExercise "tests\ValidationTests LOG 1_9_2" "Angers_x9" "s_exo25"
         !insertmacro OT.AddExercise "tests\Water" "Cabourg" "s_exo26"
         !insertmacro OT.AddExercise "tests\missions" "Paris_Est" "s_exo27"
+        !insertmacro OT.AddExercise "tests\embrayer" "Paris_Est" "s_exo28"
+        !insertmacro OT.AddExercise "tests\jamming-shoot" "Paris_Est" "s_exo29"
+        !insertmacro OT.AddExercise "tests\attrition" "Paris_Est" "s_exo30"
+        !insertmacro OT.AddExercise "tests\coi" "Angers_x9" "s_exo31"
     !endif
 
 SectionGroupEnd
@@ -409,6 +413,10 @@ Function .onSelChange
         !insertmacro OT.CheckDependency "s_exo25" "s_ter8"
         !insertmacro OT.CheckDependency "s_exo26" "s_ter4"
         !insertmacro OT.CheckDependency "s_exo27" "s_ter2"
+        !insertmacro OT.CheckDependency "s_exo28" "s_ter2"
+        !insertmacro OT.CheckDependency "s_exo29" "s_ter2"
+        !insertmacro OT.CheckDependency "s_exo30" "s_ter2"
+        !insertmacro OT.CheckDependency "s_exo31" "s_ter8"
     !endif
      
 FunctionEnd
