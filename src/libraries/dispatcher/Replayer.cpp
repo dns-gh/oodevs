@@ -23,6 +23,7 @@
 #include "Services.h"
 #include "StaticModel.h"
 #include "score_plugin/ScorePlugin.h"
+#include "messenger_plugin/MessengerPlugin.h"
 #include <xeumeuleu/xml.h>
 
 using namespace dispatcher;
@@ -65,6 +66,7 @@ Replayer::Replayer( const Config& config )
     handler_.Add( plugin_ );
     handler_.Add( new AarPlugin( *clientsNetworker_, *rights, config ) );
     handler_.Add( new plugins::score::ScorePlugin( *clientsNetworker_, *clientsNetworker_, *clientsNetworker_, config, registrables_ ) );
+    handler_.Add( new plugins::messenger::MessengerPlugin( *clientsNetworker_, *clientsNetworker_, *clientsNetworker_, config, registrables_ ) );
     handler_.Register( *services_ );
     loader_->Start();
 }
