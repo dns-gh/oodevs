@@ -21,12 +21,13 @@ typedef ADN_Missions_Data::Mission Mission;
 ADN_Mission_Wizard::ADN_Mission_Wizard( ADN_Missions_Data::T_Mission_Vector& missions, QWidget* pParent /*= 0*/, const char* szName /*= 0*/ )
     : ADN_Wizard_ABC< Mission >( pParent, szName )
 {
-    setCaption( tr( "New mission creation" ) );
+    setCaption( qApp->translate( "ADN_Mission_Wizard", "New mission creation" ) );
 
     ADN_Wizard_FirstPage_Default< Mission >* pFirstPage = new ADN_Wizard_FirstPage_Default< Mission >( missions, this );
-    pFirstPage->SetCaptions( tr( "New mission creation" ), tr( "Missions" ) );
+    pFirstPage->SetCaptions( qApp->translate( "ADN_Mission_Wizard","New mission creation" ), qApp->translate( "ADN_Mission_Wizard", "Missions" ) );
     pFirstPage_ = pFirstPage;
-    new ADN_Wizard_LastPage( this, tr( "Creation completed" ), tr( "Click \"Done\" to create the new mission." ) );
+    new ADN_Wizard_LastPage( this, qApp->translate( "ADN_Mission_Wizard","Creation completed" ), 
+        qApp->translate( "ADN_Mission_Wizard","Click \"Done\" to create the new mission." ) );
 }
     
 // -----------------------------------------------------------------------------

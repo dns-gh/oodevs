@@ -22,7 +22,7 @@
 #include "ADN_Wizard_ABC.h"
 #include "ADN_Weapons_Data.h"
 
-
+typedef ADN_Wizard_ABC<ADN_Weapons_Data::WeaponInfos> ADN_Wizard_ABC_ADN_Weapons_Data_WeaponInfos_;
 // =============================================================================
 /** @class  ADN_Weapon_Wizard
     @brief  ADN_Weapon_Wizard
@@ -34,7 +34,7 @@
 // Created: APE 2005-01-10
 // =============================================================================
 class ADN_Weapon_Wizard
-: public ADN_Wizard_ABC<ADN_Weapons_Data::WeaponInfos>
+: public ADN_Wizard_ABC_ADN_Weapons_Data_WeaponInfos_
 {
     MT_COPYNOTALLOWED( ADN_Weapon_Wizard )
 

@@ -22,7 +22,7 @@
 #include "ADN_Breakdowns_Data.h"
 #include "ADN_Wizard_ABC.h"
 
-
+typedef ADN_Wizard_ABC<ADN_Breakdowns_Data::BreakdownInfo> ADN_Wizard_ABC_ADN_Breakdowns_Data_BreakdownInfo_;
 // =============================================================================
 /** @class  ADN_Breakdown_Wizard
     @brief  ADN_Breakdown_Wizard
@@ -30,7 +30,7 @@
 // Created: APE 2005-02-14
 // =============================================================================
 class ADN_Breakdown_Wizard
-    : public ADN_Wizard_ABC<ADN_Breakdowns_Data::BreakdownInfo>
+    : public ADN_Wizard_ABC_ADN_Breakdowns_Data_BreakdownInfo_
 {
     MT_COPYNOTALLOWED( ADN_Breakdown_Wizard )
 

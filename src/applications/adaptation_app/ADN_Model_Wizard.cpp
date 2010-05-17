@@ -32,7 +32,7 @@ typedef ADN_Models_Data::ModelInfos ModelInfos;
 ADN_Model_Wizard::ADN_Model_Wizard( ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType, QWidget* pParent, const char* szName )
 : ADN_Wizard_ABC<ModelInfos>( pParent, szName )
 {
-    setCaption( tr( "New model creation" ) );
+    setCaption( qApp->translate( "ADN_Model_Wizard", "New model creation" ) );
 
     ADN_Models_Data::T_ModelInfos_Vector* pUnitsList;
     if( eEntityType == ADN_Models_Data::ModelInfos::eAutomat )
@@ -43,10 +43,12 @@ ADN_Model_Wizard::ADN_Model_Wizard( ADN_Models_Data::ModelInfos::E_ModelEntityTy
         pUnitsList = & ADN_Workspace::GetWorkspace().GetModels().GetData().GetPopulationModelsInfos();
 
     ADN_Wizard_FirstPage_Default<ModelInfos>* pFirstPage = new ADN_Wizard_FirstPage_Default<ModelInfos>( *pUnitsList, this );
-    pFirstPage->SetCaptions( tr( "New model creation" ), tr( "Models" ) );
+    pFirstPage->SetCaptions( qApp->translate( "ADN_Model_Wizard", "New model creation" ), qApp->translate( "ADN_Model_Wizard", 
+        "Models" ) );
     pFirstPage_ = pFirstPage;
 
-    new ADN_Wizard_LastPage( this, tr( "Creation completed" ), tr( "Click \"Done\" to create the new model." ) );
+    new ADN_Wizard_LastPage( this, qApp->translate( "ADN_Model_Wizard", "Creation completed" ), 
+        qApp->translate( "ADN_Mission_Wizard", "Click \"Done\" to create the new model." ) );
 }
 
 

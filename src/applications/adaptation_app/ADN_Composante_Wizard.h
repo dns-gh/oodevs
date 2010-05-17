@@ -22,6 +22,7 @@
 #include "ADN_Composantes_Data.h"
 #include "ADN_Wizard_ABC.h"
 
+typedef ADN_Wizard_ABC<ADN_Composantes_Data::ComposanteInfos> ADN_Wizard_ABC_ADN_Composantes_Data_ComposanteInfos_;
 
 // =============================================================================
 /** @class  ADN_Composante_Wizard
@@ -34,7 +35,7 @@
 // Created: AGN 2003-11-03
 // =============================================================================
 class ADN_Composante_Wizard
-: public ADN_Wizard_ABC<ADN_Composantes_Data::ComposanteInfos>
+: public ADN_Wizard_ABC_ADN_Composantes_Data_ComposanteInfos_
 {
     MT_COPYNOTALLOWED( ADN_Composante_Wizard )
 

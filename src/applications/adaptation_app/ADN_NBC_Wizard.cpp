@@ -35,14 +35,15 @@ typedef ADN_NBC_Datas::NbcAgentInfos NbcAgentInfos;
 ADN_NBC_Wizard::ADN_NBC_Wizard( QWidget* pParent, const char* szName )
 : ADN_Wizard_ABC<NbcAgentInfos>( pParent, szName )
 {
-    setCaption( tr( "New NBC creation" ) );
+    setCaption( qApp->translate( "ADN_NBC_Wizard",  "New NBC creation" ) );
 
     ADN_NBC_Datas::T_NbcAgentInfos_Vector& nbcs = ADN_Workspace::GetWorkspace().GetNbc().GetData().GetNbcAgentVector();
     ADN_Wizard_FirstPage_Default<NbcAgentInfos>* pFirstPage = new ADN_Wizard_FirstPage_Default<NbcAgentInfos>( nbcs, this );
-    pFirstPage->SetCaptions( tr( "New NBC creation" ), tr( "NBCs" ) );
+    pFirstPage->SetCaptions( qApp->translate( "ADN_NBC_Wizard", "New NBC creation" ), qApp->translate( "ADN_NBC_Wizard",  "NBCs" ) );
     pFirstPage_ = pFirstPage;
 
-    new ADN_Wizard_LastPage( this, tr( "Creation finished" ), tr( "Click \"Done\" to create the new NBC." ) );
+    new ADN_Wizard_LastPage( this, qApp->translate( "ADN_NBC_Wizard", "Creation finished" ),
+        qApp->translate( "ADN_NBC_Wizard",  "Click \"Done\" to create the new NBC." ) );
 }
 
 

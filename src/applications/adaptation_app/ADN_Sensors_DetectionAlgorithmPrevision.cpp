@@ -319,7 +319,9 @@ void ADN_Sensors_DetectionAlgorithmPrevision::UrbanBlockChanged( std::string mat
 // -----------------------------------------------------------------------------
 void ADN_Sensors_DetectionAlgorithmPrevision::OnDetectionChanged( const QString& value )
 {
-    detection_ = boost::lexical_cast< double >( value.ascii() );
+    if ( !value.isEmpty() )
+        detection_ = boost::lexical_cast< double >( value.ascii() );
+    Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -328,7 +330,9 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnDetectionChanged( const QString&
 // -----------------------------------------------------------------------------
 void ADN_Sensors_DetectionAlgorithmPrevision::OnRecognitionChanged( const QString& value )
 {
-    recognition_ = boost::lexical_cast< double >( value.ascii() );
+    if ( !value.isEmpty() )
+        recognition_ = boost::lexical_cast< double >( value.ascii() );
+    Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -337,7 +341,9 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnRecognitionChanged( const QStrin
 // -----------------------------------------------------------------------------
 void ADN_Sensors_DetectionAlgorithmPrevision::OnIdentificationChanged( const QString& value )
 {
-    identification_ = boost::lexical_cast< double >( value.ascii() );
+    if ( !value.isEmpty() )
+         identification_ = boost::lexical_cast< double >( value.ascii() );
+    Update();
 }
 
 // -----------------------------------------------------------------------------

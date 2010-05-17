@@ -21,12 +21,13 @@ typedef ADN_Missions_Data::FragOrder FragOrder;
 ADN_FragOrder_Wizard::ADN_FragOrder_Wizard( ADN_Missions_Data::T_FragOrder_Vector& fragOrders, QWidget* pParent /*= 0*/, const char* szName /*= 0*/ )
     : ADN_Wizard_ABC< FragOrder >( pParent, szName )
 {
-    setCaption( tr( "New fragmentary order creation" ) );
+    setCaption( qApp->translate( "ADN_FragOrder_Wizard", "New fragmentary order creation" ) );
 
     ADN_Wizard_FirstPage_Default< FragOrder >* pFirstPage = new ADN_Wizard_FirstPage_Default< FragOrder >( fragOrders, this );
-    pFirstPage->SetCaptions( tr( "New fragmentary order creation" ), tr( "Fragmentary orders" ) );
+    pFirstPage->SetCaptions( qApp->translate( "ADN_FragOrder_Wizard", "New fragmentary order creation" ), qApp->translate( "ADN_FragOrder_Wizard","Fragmentary orders" ) );
     pFirstPage_ = pFirstPage;
-    new ADN_Wizard_LastPage( this, tr( "Creation completed" ), tr( "Click \"Done\" to create the new fragmentary order." ) );
+    new ADN_Wizard_LastPage( this, qApp->translate( "ADN_FragOrder_Wizard", "Creation completed" ),
+        qApp->translate( "ADN_FragOrder_Wizard", "Click \"Done\" to create the new fragmentary order." ) );
 }
     
 // -----------------------------------------------------------------------------

@@ -22,7 +22,7 @@
 #include "ADN_Sensors_Data.h"
 #include "ADN_Wizard_ABC.h"
 
-
+typedef ADN_Wizard_ABC<ADN_Sensors_Data::SensorInfos> ADN_Wizard_ABC_ADN_Sensors_Data_SensorInfos_;
 // =============================================================================
 /** @class  ADN_Sensor_Wizard
     @brief  ADN_Sensor_Wizard
@@ -34,7 +34,7 @@
 // Created: AGN 2003-11-03
 // =============================================================================
 class ADN_Sensor_Wizard
-: public ADN_Wizard_ABC<ADN_Sensors_Data::SensorInfos>
+: public ADN_Wizard_ABC_ADN_Sensors_Data_SensorInfos_
 {
 	MT_COPYNOTALLOWED( ADN_Sensor_Wizard )
 

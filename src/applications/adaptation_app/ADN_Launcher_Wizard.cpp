@@ -29,7 +29,6 @@
 
 typedef ADN_Launchers_Data::LauncherInfos LauncherInfos;
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Launcher_Wizard constructor
 // Created: AGN 2003-11-03
@@ -37,14 +36,16 @@ typedef ADN_Launchers_Data::LauncherInfos LauncherInfos;
 ADN_Launcher_Wizard::ADN_Launcher_Wizard( QWidget* pParent, const char* szName )
 : ADN_Wizard_ABC<ADN_Launchers_Data::LauncherInfos>( pParent, szName )
 {
-    setCaption( tr( "New launcher creation" ) );
+    setCaption( qApp->translate( "ADN_Launcher_Wizard", "New launcher creation" ) );
 
     ADN_Launchers_Data::T_LauncherInfos_Vector& launchers = ADN_Workspace::GetWorkspace().GetLaunchers().GetData().GetLaunchersInfos();
     ADN_Wizard_FirstPage_Default<LauncherInfos>* pFirstPage = new ADN_Wizard_FirstPage_Default<LauncherInfos>( launchers, this );
-    pFirstPage->SetCaptions( tr( "New launcher creation" ), tr( "Launchers" ) );
+    pFirstPage->SetCaptions( qApp->translate( "ADN_Launcher_Wizard", "New launcher creation" ), 
+        qApp->translate( "ADN_Launcher_Wizard","Launchers" ) );
     pFirstPage_ = pFirstPage;
 
-    new ADN_Wizard_LastPage( this, tr( "Creation finished" ), tr( "Click \"Done\" to create the new launcher." ) );
+    new ADN_Wizard_LastPage( this, qApp->translate( "ADN_Launcher_Wizard", "Creation finished" ), 
+        qApp->translate( "ADN_Launcher_Wizard", "Click \"Done\" to create the new launcher." ) );
 }
 
 

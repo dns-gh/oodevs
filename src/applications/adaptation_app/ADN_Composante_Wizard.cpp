@@ -34,17 +34,18 @@ typedef ADN_Composantes_Data::ComposanteInfos ComposanteInfos;
 ADN_Composante_Wizard::ADN_Composante_Wizard( QWidget* pParent, const char* szName )
 : ADN_Wizard_ABC<ADN_Composantes_Data::ComposanteInfos>( pParent, szName )
 {
-    setCaption( tr( "New equipment creation" ) );
+    setCaption( qApp->translate( "ADN_Composante_Wizard", "New equipment creation" ) );
 
     ADN_Composantes_Data::T_ComposanteInfos_Vector& composantes = ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantes();
     ADN_Wizard_FirstPage_Default<ComposanteInfos>* pFirstPage = new ADN_Wizard_FirstPage_Default<ComposanteInfos>( composantes, this );
-    pFirstPage->SetCaptions( tr( "New equipment creation" ), tr( "Equipments" ) );
+    pFirstPage->SetCaptions( qApp->translate( "ADN_Composante_Wizard","New equipment creation" ), qApp->translate( "ADN_Composante_Wizard", "Equipments" ) );
     pFirstPage_ = pFirstPage;
 
-    new ADN_Wizard_LastPage( this, tr( "Creation completed" ), tr( "Click \"Done\" to create the new equipment." ) );
+    new ADN_Wizard_LastPage( this, qApp->translate( "ADN_Composante_Wizard", "Creation completed" ), qApp->translate( "ADN_Composante_Wizard", 
+        "Click \"Done\" to create the new equipment." ) );
 }
 
-    
+     
 // -----------------------------------------------------------------------------
 // Name: ADN_Composante_Wizard destructor
 // Created: AGN 2003-11-03

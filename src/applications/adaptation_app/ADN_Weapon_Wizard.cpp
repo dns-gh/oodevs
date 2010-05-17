@@ -30,12 +30,12 @@
 ADN_Weapon_Wizard::ADN_Weapon_Wizard( QWidget* pParent, const char* szName )
 : ADN_Wizard_ABC<ADN_Weapons_Data::WeaponInfos>( pParent, szName )
 {
-    setCaption( tr( "New weapon creation" ) );
+    setCaption( qApp->translate( "ADN_Weapon_Wizard", "New weapon creation" ) );
 
     pFirstPage_ = new ADN_Weapon_Wizard_Page0( this );
-    new ADN_Wizard_LastPage( this, tr( "Creation completed" ), tr( "Click \"Done\" to create the new weapon." ) );
+    new ADN_Wizard_LastPage( this, qApp->translate( "ADN_Weapon_Wizard", "Creation completed" ), 
+        qApp->translate( "ADN_Weapon_Wizard", "Click \"Done\" to create the new weapon." ) );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapon_Wizard destructor

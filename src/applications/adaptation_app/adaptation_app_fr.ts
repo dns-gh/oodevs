@@ -1090,6 +1090,25 @@ Arrêt moteur allumé</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Composante_Wizard</name>
+    <message>
+        <source>New equipment creation</source>
+        <translation type="unfinished">Création d&apos;une nouvelle composante</translation>
+    </message>
+    <message>
+        <source>Equipments</source>
+        <translation type="unfinished">Composantes</translation>
+    </message>
+    <message>
+        <source>Creation completed</source>
+        <translation type="unfinished">Création terminée</translation>
+    </message>
+    <message>
+        <source>Click &quot;Done&quot; to create the new equipment.</source>
+        <translation type="unfinished">Cliquez sur &quot;Terminer&quot; pour créer la nouvelle composante.</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Composantes_BreakdownsTable</name>
     <message>
         <source>Odds (%)</source>
@@ -1139,7 +1158,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Creation completed</source>
-        <translation>Création terminée</translation>
+        <translation type="obsolete">Création terminée</translation>
     </message>
     <message>
         <source>Click &quot;Done&quot; to create the new composante.</source>
@@ -1147,15 +1166,15 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>New equipment creation</source>
-        <translation>Création d&apos;une nouvelle composante</translation>
+        <translation type="obsolete">Création d&apos;une nouvelle composante</translation>
     </message>
     <message>
         <source>Equipments</source>
-        <translation>Composantes</translation>
+        <translation type="obsolete">Composantes</translation>
     </message>
     <message>
         <source>Click &quot;Done&quot; to create the new equipment.</source>
-        <translation>Cliquez sur &quot;Terminer&quot; pour créer la nouvelle composante.</translation>
+        <translation type="obsolete">Cliquez sur &quot;Terminer&quot; pour créer la nouvelle composante.</translation>
     </message>
 </context>
 <context>
@@ -3901,7 +3920,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Effect ammo parameters</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Paramètres d&apos;effets de munitions</translation>
     </message>
     <message>
         <source>Simulation</source>
@@ -3946,11 +3965,11 @@ Arrêt moteur allumé</translation>
         <translation type="obsolete">Cliquez sur &quot;Terminer&quot; pour créer la nouvelle dotation.</translation>
     </message>
     <message>
-        <source>New equipement creation</source>
+        <source>New equipment creation</source>
         <translation type="obsolete">Création d&apos;une nouvelle dotation</translation>
     </message>
     <message>
-        <source>Equipements</source>
+        <source>Equipments</source>
         <translation type="obsolete">Dotations</translation>
     </message>
     <message>
@@ -4288,22 +4307,41 @@ Arrêt moteur allumé</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Launchers_Data</name>
+    <name>ADN_Launcher_Wizard</name>
     <message>
         <source>New launcher creation</source>
-        <translation>Création d&apos;un nouveau lanceur</translation>
+        <translation type="unfinished">Création d&apos;un nouveau lanceur</translation>
     </message>
     <message>
         <source>Launchers</source>
-        <translation>Lanceurs</translation>
+        <translation type="unfinished">Lanceurs</translation>
     </message>
     <message>
         <source>Creation finished</source>
-        <translation>Création terminée</translation>
+        <translation type="unfinished">Création terminée</translation>
     </message>
     <message>
         <source>Click &quot;Done&quot; to create the new launcher.</source>
-        <translation>Cliquez sur &quot;Terminer&quot; pour créer le nouveau lanceur.</translation>
+        <translation type="unfinished">Cliquez sur &quot;Terminer&quot; pour créer le nouveau lanceur.</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Launchers_Data</name>
+    <message>
+        <source>New launcher creation</source>
+        <translation type="obsolete">Création d&apos;un nouveau lanceur</translation>
+    </message>
+    <message>
+        <source>Launchers</source>
+        <translation type="obsolete">Lanceurs</translation>
+    </message>
+    <message>
+        <source>Creation finished</source>
+        <translation type="obsolete">Création terminée</translation>
+    </message>
+    <message>
+        <source>Click &quot;Done&quot; to create the new launcher.</source>
+        <translation type="obsolete">Cliquez sur &quot;Terminer&quot; pour créer le nouveau lanceur.</translation>
     </message>
 </context>
 <context>
@@ -4906,6 +4944,18 @@ du tireur</translation>
         <source>Click &quot;Done&quot; to create the new mission.</source>
         <translation>Cliquez sur &quot;Terminer&quot; pour créer la nouvelle mission.</translation>
     </message>
+    <message>
+        <source>New model creation</source>
+        <translation type="obsolete">Création d&apos;un nouveau modèle</translation>
+    </message>
+    <message>
+        <source>Models</source>
+        <translation type="obsolete">Modèles</translation>
+    </message>
+    <message>
+        <source>Click &quot;Done&quot; to create the new model.</source>
+        <translation type="unfinished">Cliquez sur &quot;Terminer&quot; pour créer le nouveau modèle.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Missions_Data</name>
@@ -4993,15 +5043,15 @@ du tireur</translation>
     </message>
     <message>
         <source>Models</source>
-        <translation>Modèles</translation>
+        <translation type="unfinished">Modèles</translation>
     </message>
     <message>
         <source>Creation completed</source>
-        <translation>Création terminée</translation>
+        <translation type="unfinished">Création terminée</translation>
     </message>
     <message>
         <source>Click &quot;Done&quot; to create the new model.</source>
-        <translation>Cliquez sur &quot;Terminer&quot; pour créer le nouveau modèle.</translation>
+        <translation type="obsolete">Cliquez sur &quot;Terminer&quot; pour créer le nouveau modèle.</translation>
     </message>
 </context>
 <context>
@@ -6247,22 +6297,41 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Sensors_Data</name>
+    <name>ADN_Sensor_Wizard</name>
     <message>
         <source>New sensor creation</source>
-        <translation>Création d&apos;un nouveau capteur</translation>
+        <translation type="unfinished">Création d&apos;un nouveau capteur</translation>
     </message>
     <message>
         <source>Sensors</source>
-        <translation>Capteurs</translation>
+        <translation type="unfinished">Capteurs</translation>
     </message>
     <message>
         <source>Creation completed</source>
-        <translation>Création terminée</translation>
+        <translation type="unfinished">Création terminée</translation>
     </message>
     <message>
         <source>Click &quot;Done&quot; to create the new sensor.</source>
-        <translation>Cliquez sur &quot;Terminer&quot; pour créer le nouveau capteur.</translation>
+        <translation type="unfinished">Cliquez sur &quot;Terminer&quot; pour créer le nouveau capteur.</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Sensors_Data</name>
+    <message>
+        <source>New sensor creation</source>
+        <translation type="obsolete">Création d&apos;un nouveau capteur</translation>
+    </message>
+    <message>
+        <source>Sensors</source>
+        <translation type="obsolete">Capteurs</translation>
+    </message>
+    <message>
+        <source>Creation completed</source>
+        <translation type="obsolete">Création terminée</translation>
+    </message>
+    <message>
+        <source>Click &quot;Done&quot; to create the new sensor.</source>
+        <translation type="obsolete">Cliquez sur &quot;Terminer&quot; pour créer le nouveau capteur.</translation>
     </message>
 </context>
 <context>
@@ -8848,6 +8917,25 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
 </context>
 <context>
+    <name>ADN_Unit_Wizard</name>
+    <message>
+        <source>New unit creation</source>
+        <translation type="unfinished">Création d&apos;une nouvelle unité</translation>
+    </message>
+    <message>
+        <source>Units</source>
+        <translation type="unfinished">Pions</translation>
+    </message>
+    <message>
+        <source>Creation completed</source>
+        <translation type="unfinished">Création terminée</translation>
+    </message>
+    <message>
+        <source>Click &quot;Done&quot; to create the new unit.</source>
+        <translation type="unfinished">Cliquez sur &quot;Terminer&quot; pour créer la nouvelle unité.</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Units_Composantes_GUI</name>
     <message>
         <source>Composantes</source>
@@ -8906,19 +8994,19 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     <name>ADN_Units_Data</name>
     <message>
         <source>New unit creation</source>
-        <translation>Création d&apos;une nouvelle unité</translation>
+        <translation type="obsolete">Création d&apos;une nouvelle unité</translation>
     </message>
     <message>
         <source>Units</source>
-        <translation>Unités</translation>
+        <translation type="obsolete">Unités</translation>
     </message>
     <message>
         <source>Creation completed</source>
-        <translation>Création terminée</translation>
+        <translation type="obsolete">Création terminée</translation>
     </message>
     <message>
         <source>Click &quot;Done&quot; to create the new unit.</source>
-        <translation>Cliquez sur &quot;Terminer&quot; pour créer la nouvelle unité.</translation>
+        <translation type="obsolete">Cliquez sur &quot;Terminer&quot; pour créer la nouvelle unité.</translation>
     </message>
 </context>
 <context>
@@ -9242,6 +9330,21 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
 </context>
 <context>
+    <name>ADN_Weapon_Wizard</name>
+    <message>
+        <source>New weapon creation</source>
+        <translation type="unfinished">Création d&apos;un nouvel armement</translation>
+    </message>
+    <message>
+        <source>Creation completed</source>
+        <translation type="unfinished">Création terminée</translation>
+    </message>
+    <message>
+        <source>Click &quot;Done&quot; to create the new weapon.</source>
+        <translation type="unfinished">Cliquez sur &quot;Terminer&quot; pour créer le nouvel armement.</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Weapon_Wizard_Page0</name>
     <message>
         <source>Warning</source>
@@ -9260,11 +9363,11 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>Creation completed</source>
-        <translation>Création terminée</translation>
+        <translation type="obsolete">Création terminée</translation>
     </message>
     <message>
         <source>Click &quot;Done&quot; to create the new weapon.</source>
-        <translation>Cliquez sur &quot;Terminer&quot; pour créer le nouvel armement.</translation>
+        <translation type="obsolete">Cliquez sur &quot;Terminer&quot; pour créer le nouvel armement.</translation>
     </message>
     <message>
         <source>Weapons</source>
@@ -9508,6 +9611,25 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     <message>
         <source>Percentage (PH)</source>
         <translation>Pourcentage (PH)</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Wizard_ABC</name>
+    <message>
+        <source>Next</source>
+        <translation type="unfinished">Suivant</translation>
+    </message>
+    <message>
+        <source>Previous</source>
+        <translation type="unfinished">Précédent</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuler</translation>
+    </message>
+    <message>
+        <source>Done</source>
+        <translation type="unfinished">Terminé</translation>
     </message>
 </context>
 <context>
@@ -9789,19 +9911,19 @@ Erreur: %3</translation>
     <name>T</name>
     <message>
         <source>Next</source>
-        <translation>Suivant</translation>
+        <translation type="obsolete">Suivant</translation>
     </message>
     <message>
         <source>Previous</source>
-        <translation>Précédent</translation>
+        <translation type="obsolete">Précédent</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuler</translation>
+        <translation type="obsolete">Annuler</translation>
     </message>
     <message>
         <source>Done</source>
-        <translation>Terminé</translation>
+        <translation type="obsolete">Terminé</translation>
     </message>
     <message>
         <source>Name</source>

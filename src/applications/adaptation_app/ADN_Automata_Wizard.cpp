@@ -35,14 +35,15 @@ typedef ADN_Automata_Data::AutomatonInfos AutomatonInfos;
 ADN_Automata_Wizard::ADN_Automata_Wizard( QWidget* pParent, const char* szName )
 : ADN_Wizard_ABC<AutomatonInfos>( pParent, szName )
 {
-    setCaption( tr( "New automaton creation" ) );
+    setCaption( qApp->translate( "ADN_Automata_Wizard", "New automaton creation" ) );
 
     ADN_Automata_Data::T_AutomatonInfosVector& automata = ADN_Workspace::GetWorkspace().GetAutomata().GetData().GetAutomata();
     ADN_Wizard_FirstPage_Default<AutomatonInfos>* pFirstPage = new ADN_Wizard_FirstPage_Default<AutomatonInfos>( automata, this );
-    pFirstPage->SetCaptions( tr( "New automaton creation" ), tr( "Automata" ) );
+    pFirstPage->SetCaptions( qApp->translate( "ADN_Automata_Wizard", "New automaton creation" ),qApp->translate( "ADN_Automata_Wizard", "Automata" ) );
     pFirstPage_ = pFirstPage;
 
-    new ADN_Wizard_LastPage( this, tr( "Creation finished" ), tr( "Click \"Done\" to create the new automaton." ) );
+    new ADN_Wizard_LastPage( this,qApp->translate( "ADN_Automata_Wizard", "Creation finished" ),
+        qApp->translate( "ADN_Automata_Wizard", "Click \"Done\" to create the new automaton." ) );
 }
 
 

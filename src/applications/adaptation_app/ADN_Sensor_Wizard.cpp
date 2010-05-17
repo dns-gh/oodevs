@@ -34,14 +34,15 @@ typedef ADN_Sensors_Data::SensorInfos SensorInfos;
 ADN_Sensor_Wizard::ADN_Sensor_Wizard( QWidget* pParent, const char* szName )
 : ADN_Wizard_ABC<ADN_Sensors_Data::SensorInfos>( pParent, szName )
 {
-    setCaption( tr( "New sensor creation" ) );
+    setCaption( qApp->translate( "ADN_Sensor_Wizard", "New sensor creation" ) );
 
     ADN_Sensors_Data::T_SensorsInfos_Vector& sensors = ADN_Workspace::GetWorkspace().GetSensors().GetData().GetSensorsInfos();
     ADN_Wizard_FirstPage_Default<SensorInfos>* pFirstPage = new ADN_Wizard_FirstPage_Default<SensorInfos>( sensors, this );
-    pFirstPage->SetCaptions( tr( "New sensor creation" ), tr( "Sensors" ) );
+    pFirstPage->SetCaptions( qApp->translate( "ADN_Sensor_Wizard",  "New sensor creation" ), qApp->translate( "ADN_Sensor_Wizard", "Sensors" ) );
     pFirstPage_ = pFirstPage;
 
-    new ADN_Wizard_LastPage( this, tr( "Creation completed" ), tr( "Click \"Done\" to create the new sensor." ) );
+    new ADN_Wizard_LastPage( this, qApp->translate( "ADN_Sensor_Wizard","Creation completed" ), 
+        qApp->translate( "ADN_Sensor_Wizard","Click \"Done\" to create the new sensor." ) );
 }
 
 

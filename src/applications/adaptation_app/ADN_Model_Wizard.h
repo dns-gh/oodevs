@@ -22,7 +22,7 @@
 #include "ADN_Models_Data.h"
 #include "ADN_Wizard_ABC.h"
 
-
+typedef ADN_Wizard_ABC<ADN_Models_Data::ModelInfos>  ADN_Wizard_ABC_ADN_Models_Data_ModelInfos_;
 // =============================================================================
 /** @class  ADN_Model_Wizard
     @brief  ADN_Model_Wizard
@@ -34,7 +34,7 @@
 // Created: AGN 2003-12-03
 // =============================================================================
 class ADN_Model_Wizard
-: public ADN_Wizard_ABC<ADN_Models_Data::ModelInfos>
+: public ADN_Wizard_ABC_ADN_Models_Data_ModelInfos_
 {
     MT_COPYNOTALLOWED( ADN_Model_Wizard )
 

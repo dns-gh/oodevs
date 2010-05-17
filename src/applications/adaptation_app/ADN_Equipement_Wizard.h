@@ -22,7 +22,7 @@
 #include "ADN_Wizard_ABC.h"
 #include "ADN_Equipement_Data.h"
 
-
+typedef ADN_Wizard_ABC<ADN_Equipement_Data::CategoryInfo>  ADN_Wizard_ABC_ADN_Equipement_Data_CategoryInfo_;
 // =============================================================================
 /** @class  ADN_Equipement_Wizard
     @brief  ADN_Equipement_Wizard
@@ -34,7 +34,7 @@
 // Created: APE 2005-01-19
 // =============================================================================
 class ADN_Equipement_Wizard
-: public ADN_Wizard_ABC<ADN_Equipement_Data::CategoryInfo>
+: public ADN_Wizard_ABC_ADN_Equipement_Data_CategoryInfo_
 {
     MT_COPYNOTALLOWED( ADN_Equipement_Wizard )
 

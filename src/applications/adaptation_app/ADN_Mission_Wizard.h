@@ -13,13 +13,14 @@
 #include "ADN_Missions_Data.h"
 #include "ADN_Wizard_ABC.h"
 
+typedef ADN_Wizard_ABC< ADN_Missions_Data::Mission >  ADN_Wizard_ABC_ADN_Missions_Data_Mission_;
 // =============================================================================
 /** @class  ADN_Mission_Wizard
     @brief  ADN_Mission_Wizard
 */
 // Created: SBO 2006-12-04
 // =============================================================================
-class ADN_Mission_Wizard : public ADN_Wizard_ABC< ADN_Missions_Data::Mission >
+class ADN_Mission_Wizard : public ADN_Wizard_ABC_ADN_Missions_Data_Mission_
 {
 
 public:

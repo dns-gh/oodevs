@@ -124,7 +124,7 @@ void ADN_ListView_Categories_Armor::OnContextMenu( const QPoint& pt)
 // Name: ADN_ListView_Categories_Armor::CreateDefaultAttritionHumanEffect
 // Created: HBD 2010-05-06
 // -----------------------------------------------------------------------------
-void ADN_ListView_Categories_Armor::CreateDefaultAttritionHumanEffect()
+void ADN_ListView_Categories_Armor::CreateDefaultAttritionHumanEffect   ()
 {
     if ( pCurData_ )
     {
