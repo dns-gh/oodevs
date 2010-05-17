@@ -401,6 +401,11 @@
     <reloading duration="5s" munition="1"/>
     <indirect-fire average-speed="1300" max-range="23300" min-range="4200"/>
   </weapon-system>
+  <weapon-system launcher="Canon 155" munition="LTO Obus 155 OE CCR F1 GUIDED">
+    <burst duration="2s" munition="1"/>
+    <reloading duration="5s" munition="1"/>
+    <indirect-fire average-speed="1300" max-range="23300" min-range="4200"/>
+  </weapon-system>
   <weapon-system launcher="Canon 155" munition="Obus 155 OGRE F1">
     <burst duration="2s" munition="1"/>
     <reloading duration="5s" munition="1"/>

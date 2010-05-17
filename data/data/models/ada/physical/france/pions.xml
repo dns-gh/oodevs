@@ -10443,6 +10443,7 @@
       <category name="munition">
         <dotation capacity="4" logistic-threshold="25" name="Obus 155 OACED" normalized-consumption="0"/>
         <dotation capacity="160" logistic-threshold="30" name="Obus 155 OE CCR F1" normalized-consumption="0"/>
+        <dotation capacity="160" logistic-threshold="30" name="LTO Obus 155 OE CCR F1 GUIDED" normalized-consumption="0"/>
         <dotation capacity="60" logistic-threshold="30" name="Obus 155 OE JUPE F2 RTC" normalized-consumption="0"/>
         <dotation capacity="20" logistic-threshold="30" name="Obus 155 OFUM PH" normalized-consumption="0"/>
         <dotation capacity="36" logistic-threshold="30" name="Obus 155 OGRE F1" normalized-consumption="0"/>

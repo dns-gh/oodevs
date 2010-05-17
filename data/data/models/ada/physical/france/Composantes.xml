@@ -3827,6 +3827,7 @@
       <category name="munition">
         <dotation capacity="3000" logistic-threshold="10" name="Bd 7.62mm 4 Ord-1 T" normalized-consumption="300"/>
         <dotation capacity="720" logistic-threshold="10" name="Charg 5,56 2 O-1T-4 O" normalized-consumption="90"/>
+        <dotation capacity="720" logistic-threshold="10" name="LTO Charg 5,56 Illuminating" normalized-consumption="90"/>
       </category>
       <category name="carburant">
         <dotation capacity="102" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="17"/>
@@ -6472,6 +6473,7 @@
         <dotation capacity="800" logistic-threshold="30" name="Bd 12,7 PANA 4 ORD+1T" normalized-consumption="110"/>
         <dotation capacity="9" logistic-threshold="30" name="Obus 155 OE JUPE F2 RTC" normalized-consumption="24"/>
         <dotation capacity="22" logistic-threshold="30" name="Obus 155 OE CCR F1" normalized-consumption="62"/>
+        <dotation capacity="22" logistic-threshold="30" name="LTO Obus 155 OE CCR F1 GUIDED" normalized-consumption="62"/>
         <dotation capacity="5" logistic-threshold="30" name="Obus 155 OGRE F1" normalized-consumption="14"/>
         <dotation capacity="1" logistic-threshold="30" name="Obus 155 OACED" normalized-consumption="2"/>
         <dotation capacity="2" logistic-threshold="30" name="Obus 155 OECL F1" normalized-consumption="7"/>
@@ -6506,6 +6508,7 @@
     </consumptions>
     <weapon-systems>
       <weapon-system launcher="Canon 155" munition="Obus 155 OE CCR F1"/>
+      <weapon-system launcher="Canon 155" munition="LTO Obus 155 OE CCR F1 GUIDED"/>
       <weapon-system launcher="Canon 155" munition="Obus 155 OGRE F1"/>
       <weapon-system launcher="Canon 155" munition="Obus 155 OACED"/>
       <weapon-system launcher="Canon 155" munition="Obus 155 OECL F1"/>
