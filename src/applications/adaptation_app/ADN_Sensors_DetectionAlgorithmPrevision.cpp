@@ -199,6 +199,9 @@ void ADN_Sensors_DetectionAlgorithmPrevision::Update()
     pBaseGraphData_->ChangePoint( 5, std::make_pair( detection_, 1. ) );
     pBaseGraphData_->ChangePoint( 6, std::make_pair( detection_, 0. ) );
 
+    pBaseGraphData_->TouchRange();
+    pBaseGraphData_->TouchData();
+
     double detection = detection_ * value;
     double recognition = recognition_ * value;
     double identification = identification_ * value;
