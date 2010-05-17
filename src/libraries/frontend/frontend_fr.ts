@@ -131,18 +131,18 @@ Connexion SDE: sde://user:password@host:port/db_name.sword</translation>
     </message>
     <message>
         <source>User interface started</source>
-        <translation>Interface utilisateur lanc�</translation>
+        <translation>Interface utilisateur lancée</translation>
     </message>
 </context>
 <context>
     <name>SpawnCommand</name>
     <message>
         <source>Starting...</source>
-        <translation>D�arrage...</translation>
+        <translation>Démarrage...</translation>
     </message>
     <message>
         <source>Started</source>
-        <translation type="unfinished"></translation>
+        <translation>Démarré</translation>
     </message>
     <message>
         <source>Could not start process: %1</source>
@@ -153,11 +153,11 @@ Connexion SDE: sde://user:password@host:port/db_name.sword</translation>
     <name>StartExercise</name>
     <message>
         <source>Starting simulation...</source>
-        <translation type="unfinished"></translation>
+        <translation>Démarrage de la simulation...</translation>
     </message>
     <message>
         <source>Simulation started</source>
-        <translation type="unfinished"></translation>
+        <translation>Simulation démarrée</translation>
     </message>
 </context>
 </TS>
