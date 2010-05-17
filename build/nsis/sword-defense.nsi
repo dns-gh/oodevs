@@ -167,6 +167,11 @@ SectionGroup "Models" s_mod
         !insertmacro OT.AddPhysicalModels "ada" "france" "s_phymod1"
         !insertmacro OT.AddPhysicalModels "ada" "scipio-1.9.2" "s_phymod2"
         !insertmacro OT.AddPhysicalModels "ada" "worldwide" "s_phymod3"
+        Section "Propagations"
+            SectionIn RO
+            SetOutPath "${INSTDATADIR}\data\propagations"
+            File /r /x ".svn" "${DATADIR}\data\propagations\test"
+        SectionEnd
     !else
         !insertmacro OT.AddPhysicalModels "ada" "${APP_MODEL}" "s_phymod1"
     !endif
