@@ -9,6 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "AutomatsLayer.h"
+#include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
 #include "actions/Identifier.h"
 #include "actions/Point.h"
@@ -115,11 +116,13 @@ void AutomatsLayer::RequestCreation( const geometry::Point2f& point, const kerne
     kernel::Point location;
     location.AddPoint( point );
 
+    // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "unit_creation" );
     UnitMagicAction* action = new UnitMagicAction( *selected_, actionType, controllers_.controller_, true );
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Identifier( it.NextElement(), type.GetId() ) );
     action->AddParameter( *new parameters::Point( it.NextElement(), static_.coordinateConverter_, location ) );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->Attach( *new ActionTasker( *selected_, false ) );
     action->RegisterAndPublish( actionsModel_ );
 }

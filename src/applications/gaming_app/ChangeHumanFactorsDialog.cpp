@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "ChangeHumanFactorsDialog.h"
 #include "moc_ChangeHumanFactorsDialog.cpp"
+#include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
 #include "actions/Enumeration.h"
 #include "actions/UnitMagicAction.h"
@@ -177,6 +178,7 @@ void ChangeHumanFactorsDialog::SendMessage( const kernel::Entity_ABC& entity, En
 // -----------------------------------------------------------------------------
 void ChangeHumanFactorsDialog::SendAction( const kernel::Entity_ABC& entity, EnumUnitTiredness tiredness, EnumUnitMorale moral, EnumUnitExperience experience )
 {
+    // $$$$ _RC_ SBO 2010-05-17: user ActionFactory
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_human_factors" );
     UnitMagicAction* action = new UnitMagicAction( entity, actionType, controllers_.controller_, true );
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
@@ -184,6 +186,7 @@ void ChangeHumanFactorsDialog::SendAction( const kernel::Entity_ABC& entity, Enu
     action->AddParameter( *new parameters::Enumeration( it.NextElement(), ( unsigned int ) moral ) );
     action->AddParameter( *new parameters::Enumeration( it.NextElement(), ( unsigned int ) experience ) );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->Attach( *new ActionTasker( entity, false ) );
     action->RegisterAndPublish( actionsModel_ );
 }
 

@@ -11,6 +11,7 @@
 #define __actions_ActionTasker_h_
 
 #include "clients_kernel/Extension_ABC.h"
+#include "clients_kernel/Serializable_ABC.h"
 
 namespace xml
 {

@@ -77,7 +77,7 @@ namespace
     {
         return std::exception( tools::translate( "ActionFactory", "Unable to find executing entity '%1'." ).arg( id ) );
     }
-    std::exception wMagicIdNotFound( const std::string& id )
+    std::exception MagicIdNotFound( const std::string& id )
     {
         return std::exception( tools::translate( "ActionFactory", "Magic action type '%1' unknown." ).arg( id.c_str() ) );
     }
@@ -344,7 +344,6 @@ actions::Action_ABC* ActionFactory::CreateObjectMagicAction( xml::xistream& xis 
     }
 
     action.reset( new actions::ObjectMagicAction( xis, controller_, magicActions_.Get( id ), target ) );
-
     action->Attach( *new ActionTiming( xis, controller_, simulation_, *action ) );
     action->Polish();
 
@@ -373,8 +372,8 @@ actions::Action_ABC* ActionFactory::CreateKnowledgeGroupMagicAction( xml::xistre
         throw TargetNotFound( targetid );
 
     action.reset( new actions::KnowledgeGroupMagicAction( xis, controller_, magicActions_.Get( id ), *target ) );
-
     action->Attach( *new ActionTiming( xis, controller_, simulation_, *action ) );
+    action->Attach( *new ActionTasker( *target, false ) );
     action->Polish();
 
     tools::Iterator< const kernel::OrderParameter& > it = action->GetType().CreateIterator();
@@ -396,9 +395,9 @@ void ActionFactory::AddParameters( actions::Action_ABC& action, const kernel::Or
     {
         if( i >= message.elem_size() )
             throw std::runtime_error( __FUNCTION__ " Mission parameter count does not match mission definition" );
-        if( const ActionTasker* tasker = action->Retrieve< ActionTasker >() )
+        if( const ActionTasker* tasker = action.Retrieve< ActionTasker >() )
             if( actions::Parameter_ABC* newParam = factory_.CreateParameter( it.NextElement(), message.elem( i++ ), tasker->GetTasker() ) )
-                actionWithTarget->AddParameter( *newParam );
+                action.AddParameter( *newParam );
     }
 }
 

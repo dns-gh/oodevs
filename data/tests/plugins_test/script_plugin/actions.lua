@@ -31,7 +31,7 @@ end
 
 function TestActions:test_Mission_HasDefaultParameters()
 	local expectation =
-		"<action id=\"51\" name=\"\" target=\"42\" type=\"mission\">\n" ..
+		"<action id=\"51\" name=\"\" target=\"42\" time=\"0\" type=\"mission\">\n" ..
 			"<parameter name=\"Danger direction\" type=\"Direction\" value=\"360\"/>\n" ..
 			"<parameter name=\"Phase lines\" type=\"PhaseLineList\"/>\n" ..
 			"<parameter name=\"Boundary limit 1\" type=\"Limit\"/>\n" ..
@@ -43,7 +43,7 @@ end
 
 function TestActions:test_Mission_WithAddsParameters()
 	local expectation =
-		"<action id=\"51\" name=\"\" target=\"42\" type=\"mission\">\n" ..
+		"<action id=\"51\" name=\"\" target=\"42\" time=\"0\" type=\"mission\">\n" ..
 			"<parameter name=\"Danger direction\" type=\"Direction\" value=\"69\"/>\n" ..
 			"<parameter name=\"Phase lines\" type=\"PhaseLineList\"/>\n" ..
 			"<parameter name=\"Boundary limit 1\" type=\"Limit\"/>\n" ..
@@ -64,13 +64,13 @@ function TestActions:test_Mission_WithAddsParameters()
 end
 
 function TestActions:test_FragOrder_HasNoDefaultParameter()
-	local expectation = "<action id=\"51\" name=\"\" target=\"42\" type=\"fragorder\"/>\n"
+	local expectation = "<action id=\"51\" name=\"\" target=\"42\" time=\"0\" type=\"fragorder\"/>\n"
 	assertEquals( FragOrder.create( 42, 51 ):ToXml(), expectation )
 end
 
 function TestActions:test_FragOrder_WithAddsParameters()
 	local expectation =
-		"<action id=\"51\" name=\"\" target=\"42\" type=\"fragorder\">\n" ..
+		"<action id=\"51\" name=\"\" target=\"42\" time=\"0\" type=\"fragorder\">\n" ..
 			"<parameter name=\"Route\" type=\"Path\">\n" ..
 				"<parameter name=\"Destination\" type=\"pathpoint\">\n" ..
 					"<location type=\"point\">\n" ..

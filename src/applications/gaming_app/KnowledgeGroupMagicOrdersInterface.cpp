@@ -12,6 +12,7 @@
 #include "gaming_app_pch.h"
 #include "KnowledgeGroupMagicOrdersInterface.h"
 #include "moc_KnowledgeGroupMagicOrdersInterface.cpp"
+#include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
 #include "actions/Bool.h"
 #include "actions/Identifier.h"
@@ -94,12 +95,14 @@ void KnowledgeGroupMagicOrdersInterface::OnToggleKnowledgeGroupActivation()
 {
     if( selectedEntity_ )
     {
-    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "knowledge_group_enable" );
-    KnowledgeGroupMagicAction* action = new KnowledgeGroupMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
-    tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
-    action->AddParameter( *new parameters::Bool( it.NextElement(), ! selectedEntity_->IsActivated() ) );
-    action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
-    action->RegisterAndPublish( actionsModel_ );
+        // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
+        MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "knowledge_group_enable" );
+        KnowledgeGroupMagicAction* action = new KnowledgeGroupMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
+        tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+        action->AddParameter( *new parameters::Bool( it.NextElement(), ! selectedEntity_->IsActivated() ) );
+        action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+        action->Attach( *new ActionTasker( *selectedEntity_, false ) );
+        action->RegisterAndPublish( actionsModel_ );
     }
 }
 
@@ -114,11 +117,13 @@ void KnowledgeGroupMagicOrdersInterface::OnSetType( int id )
         T_Items::const_iterator it = items_.find( id );
         if( it != items_.end() )
         {
+            // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
             MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "knowledge_group_update_type" );
             KnowledgeGroupMagicAction* action = new KnowledgeGroupMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
             tools::Iterator< const OrderParameter& > paramIt = actionType.CreateIterator();
             action->AddParameter( *new parameters::String( paramIt.NextElement(), it->second->GetName() ) );
             action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+            action->Attach( *new ActionTasker( *selectedEntity_, false ) );
             action->RegisterAndPublish( actionsModel_ );
         }
     }
@@ -133,6 +138,7 @@ void KnowledgeGroupMagicOrdersInterface::OnCreateSubKnowledgeGroup()
     if( selectedEntity_ )
         if( const kernel::CommunicationHierarchies* hierarchies = selectedEntity_->Retrieve< kernel::CommunicationHierarchies >() )
         {
+            // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
             MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "create_knowledge_group" );
             MagicAction* action = new MagicAction( actionType, controllers_.controller_, true );
             tools::Iterator< const OrderParameter& > paramIt = actionType.CreateIterator();
@@ -140,6 +146,7 @@ void KnowledgeGroupMagicOrdersInterface::OnCreateSubKnowledgeGroup()
             action->AddParameter( *new parameters::Identifier( paramIt.NextElement(), selectedEntity_->GetId() ) );
             action->AddParameter( *new parameters::String( paramIt.NextElement(), "Standard" ) ); // $$$$ _RC_ SBO 2010-03-04: used kernel::KnowledgeGroupTypes::GetDefault() or something
             action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+            action->Attach( *new ActionTasker( *selectedEntity_, false ) );
             action->RegisterAndPublish( actionsModel_ );
         }
 }

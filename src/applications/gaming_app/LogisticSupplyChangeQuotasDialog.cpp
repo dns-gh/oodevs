@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "LogisticSupplyChangeQuotasDialog.h"
 #include "moc_LogisticSupplyChangeQuotasDialog.cpp"
+#include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
 #include "actions/Automat.h"
 #include "actions/ParameterList.h"
@@ -154,6 +155,7 @@ void LogisticSupplyChangeQuotasDialog::Validate()
     if( !selected_ || !target )
         return;
 
+    // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "log_supply_change_quotas" );
     UnitMagicAction* action = new UnitMagicAction( *target, actionType, controllers_.controller_, true );
     
@@ -185,6 +187,7 @@ void LogisticSupplyChangeQuotasDialog::Validate()
     }
 
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->Attach( *new ActionTasker( *target, false ) );
     action->RegisterAndPublish( actionsModel_ );
 
     hide();

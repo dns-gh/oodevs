@@ -51,13 +51,3 @@ const kernel::Entity_ABC& ActionWithTarget_ABC::GetEntity() const
 {
     return target_;
 }
-
-// -----------------------------------------------------------------------------
-// Name: ActionWithTarget_ABC::Serialize
-// Created: JSR 2010-04-02
-// -----------------------------------------------------------------------------
-void ActionWithTarget_ABC::Serialize( xml::xostream& xos ) const
-{
-    xos << xml::attribute( "target", target_.GetId() );
-    Action_ABC::Serialize( xos );
-}

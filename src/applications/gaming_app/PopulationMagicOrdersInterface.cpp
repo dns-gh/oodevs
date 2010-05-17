@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "PopulationMagicOrdersInterface.h"
 #include "moc_PopulationMagicOrdersInterface.cpp"
+#include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
 #include "actions/Enumeration.h"
 #include "actions/Point.h"
@@ -129,11 +130,13 @@ void PopulationMagicOrdersInterface::Handle( Location_ABC& location )
     {
         if( selectedEntity_ )
         {
+            // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
             MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "teleport" );
             UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
             tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
             action->AddParameter( *new parameters::Point( it.NextElement(), static_.coordinateConverter_, location ) );
             action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+            action->Attach( *new ActionTasker( *selectedEntity_, false ) );
             action->RegisterAndPublish( actionsModel_ );
         }
     }
@@ -162,9 +165,11 @@ void PopulationMagicOrdersInterface::KillAllPopulation()
 {
     if( selectedEntity_ )
     {
+        // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
         MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "population_total_destruction" );
         UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+        action->Attach( *new ActionTasker( *selectedEntity_, false ) );
         action->RegisterAndPublish( actionsModel_ );
     }
 }
@@ -178,11 +183,13 @@ void PopulationMagicOrdersInterface::KillSomePopulation()
     if( selectedEntity_ )
         if( const QLineEdit* editor = dynamic_cast< const QLineEdit* >( sender() ) )
         {
+            // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
             MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "population_kill" );
             UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
             tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
             action->AddParameter( *new parameters::Quantity( it.NextElement(), editor->text().toInt() ) );
             action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+            action->Attach( *new ActionTasker( *selectedEntity_, false ) );
             action->RegisterAndPublish( actionsModel_ );
         }
 }
@@ -196,11 +203,13 @@ void PopulationMagicOrdersInterface::ResurectSomePopulation()
     if( selectedEntity_ )
         if( const QLineEdit* editor = dynamic_cast< const QLineEdit* >( sender() ) )
         {
+            // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
             MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "population_resurrect" );
             UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
             tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
             action->AddParameter( *new parameters::Quantity( it.NextElement(), editor->text().toInt() ) );
             action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+            action->Attach( *new ActionTasker( *selectedEntity_, false ) );
             action->RegisterAndPublish( actionsModel_ );
         }
 }
@@ -213,6 +222,7 @@ void PopulationMagicOrdersInterface::ChangePopulationAttitude( int index )
 {
     if( selectedEntity_ )
     {
+        // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
         MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "population_change_attitude" );
         UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
         tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
@@ -222,6 +232,7 @@ void PopulationMagicOrdersInterface::ChangePopulationAttitude( int index )
         // optional int32 concentration
         // optional bool global
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+        action->Attach( *new ActionTasker( *selectedEntity_, false ) );
         action->RegisterAndPublish( actionsModel_ );
     }
 }

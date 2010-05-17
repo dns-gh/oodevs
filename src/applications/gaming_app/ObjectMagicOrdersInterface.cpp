@@ -88,6 +88,7 @@ void ObjectMagicOrdersInterface::SendObjectMagic( ParameterList& attribute )
 {
     if( selectedEntity_ )
     {
+        // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
         MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "update_object" );
         ObjectMagicAction* action = new ObjectMagicAction( selectedEntity_, actionType, controllers_.controller_, true );
         tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();

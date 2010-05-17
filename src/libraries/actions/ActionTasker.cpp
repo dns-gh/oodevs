@@ -9,6 +9,8 @@
 
 #include "actions_pch.h"
 #include "ActionTasker.h"
+#include "clients_kernel/Entity_ABC.h"
+#include <xeumeuleu/xml.hpp>
 
 using namespace actions;
 
@@ -56,5 +58,5 @@ bool ActionTasker::IsSimulation() const
 // -----------------------------------------------------------------------------
 void ActionTasker::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << xml::attribute( "target", target_.GetId() );
+    xos << xml::attribute( "target", tasker_.GetId() );
 }

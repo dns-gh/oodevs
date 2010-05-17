@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "UnitMagicOrdersInterface.h"
 #include "moc_UnitMagicOrdersInterface.cpp"
+#include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
 #include "actions/Army.h"
 #include "actions/Point.h"
@@ -151,11 +152,13 @@ void UnitMagicOrdersInterface::Handle( kernel::Location_ABC& location )
     {
         if( selectedEntity_ )
         {
+            // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
             MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "teleport" );
             UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
             tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
             action->AddParameter( *new parameters::Point( it.NextElement(), static_.coordinateConverter_, location ) );
             action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+            action->Attach( *new ActionTasker( *selectedEntity_, false ) );
             action->RegisterAndPublish( actionsModel_ );
         }
     }
@@ -202,9 +205,11 @@ namespace
                 return;
             }
 
+            // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
             MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( strType );
             UnitMagicAction* action = new UnitMagicAction( agent, actionType, controllers_.controller_, true );
             action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+            action->Attach( *new ActionTasker( agent, false ) );
             action->RegisterAndPublish( actionsModel_ );
         }
     private:
@@ -297,11 +302,13 @@ void UnitMagicOrdersInterface::SurrenderTo( int teamPtr )
 {
     if( selectedEntity_ )
     {
+        // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
         MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "surrender" );
         UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
         tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
         action->AddParameter( *new parameters::Army( it.NextElement(), *( Team_ABC* ) teamPtr, controllers_.controller_ ) );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+        action->Attach( *new ActionTasker( *selectedEntity_, false ) );
         action->RegisterAndPublish( actionsModel_ );
     }
 }
@@ -354,9 +361,11 @@ void UnitMagicOrdersInterface::FillCommonOrders( QPopupMenu* magicMenu )
 // -----------------------------------------------------------------------------
 void UnitMagicOrdersInterface::CreateAndPublish( const std::string& actionStr )
 {
+    // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( actionStr );
     UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->Attach( *new ActionTasker( *selectedEntity_, false ) );
     action->RegisterAndPublish( actionsModel_ );
 }
 
