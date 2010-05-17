@@ -1,24 +1,34 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
 <orbat>
+  <dotations infinite="false"/>
   <sides>
     <side id="99" name="Capteur" type="friend">
       <objects/>
       <tactical>
         <formation id="155" level="i" name="Formation [155]">
-          <automat engaged="true" id="159" knowledge-group="158" name="Test Capteurs [159]" type="LTO Test Capteurs">
+          <automat engaged="true" id="159" knowledge-group="173" name="Test Capteurs [159]" type="LTO Test Capteurs">
             <unit command-post="true" id="160" name="PC Batterie Test Capteur" position="30TYT0952055085" type="LTO PC Batterie Test Capteur"/>
             <unit command-post="false" id="161" name="Section Test Capteur" position="30TYT1003954604" type="LTO Section Test Capteur"/>
-            <unit command-post="false" id="171" name="Peloton aveugle" position="30TYT1003954944" type="LTO Peloton char aveugle"/>
+          </automat>
+          <automat engaged="true" id="175" knowledge-group="172" name="Escadron de Chars LECLERC [175]" type="Escadron de Chars LECLERC">
+            <unit command-post="true" id="176" name="Peloton LECLERC CDT ESC" position="30TYT1315056184" type="Peloton LECLERC CDT ESC"/>
+            <unit command-post="false" id="177" name="Peloton LECLERC CDP OFF" position="30TYT1366955703" type="Peloton LECLERC CDP OFF"/>
+            <unit command-post="false" id="178" name="Peloton LECLERC CDP OFF" position="30TYT1318655185" type="Peloton LECLERC CDP OFF"/>
+            <unit command-post="false" id="179" name="Peloton LECLERC CDP SOFF" position="30TYT1266755667" type="Peloton LECLERC CDP SOFF"/>
+            <unit command-post="false" id="180" name="Peloton d appui direct" position="30TYT1365156202" type="Peloton d appui direct"/>
           </automat>
         </formation>
       </tactical>
       <communication>
-        <knowledge-group id="158" name="Knowledge group [158]" type="Standard"/>
+        <knowledge-group id="158" name="Knowledge group [158]" type="LTO Long delai">
+          <knowledge-group id="172" name="Groupe de connaissance [172]" type="LTO Long delai"/>
+          <knowledge-group id="173" name="Groupe de connaissance [173]" type="LTO Long delai"/>
+        </knowledge-group>
       </communication>
       <populations/>
       <logistic/>
     </side>
-    <side id="162" name="Capté" type="friend">
+    <side id="162" name="Neutres" type="friend">
       <objects/>
       <tactical>
         <formation id="163" level="i" name="Formation [163]">

@@ -91,7 +91,7 @@ namespace
     std::string Format( const char* date )
     {
         std::stringstream stream;
-        stream << date[9] << date[10] << ":" << date[11] << date[12];
+        stream << date[9] << date[10] << ":" << date[11] << date[12] << ":" << date[13] << date[14];
         return stream.str();
     }
 }
@@ -133,7 +133,7 @@ void LoggerPlugin::Receive( const MsgsSimToClient::MsgSimToClient& message )
         int id = message.message().report().oid();
         kernel::Entity_ABC* entity = Find( model_, id );
         std::string messageText = factory_.FormatReport( message.message().report() );
-        *file_ << factory_.GetTime( message.message().report().time() ).toString( "hh:mm" ).ascii()
+        *file_ << factory_.GetTime( message.message().report().time() ).toString( "hh:mm:ss" ).ascii()
                << " Report - " << ( entity ? entity->GetName() : "Unknown entity" ) << "[" << id << "] : "
                << messageText << std::endl;
     }
@@ -193,9 +193,11 @@ void LoggerPlugin::Receive( const MsgsSimToClient::MsgSimToClient& message )
             *file_ << date_ << " Fire - " << agent->GetName() << "[" << message.message().start_unit_fire().firer_oid()
                    << "] : Fire on ";
             if( target )
-                *file_ << target->GetName() << "[" << target->GetId() << "]" << std::endl;
+                *file_ << target->GetName() << "[" << target->GetId() << "]";
             else
-                *file_ << "position" << std::endl;
+                *file_ << "position";
+            //*file_ << ", ammo = " << message.message().start_unit_fire().ammunition();
+            *file_ << std::endl;
         }
     }
     else if( message.message().has_start_population_fire() )

@@ -10600,4 +10600,29 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
   </unit>
+  <unit decisional-model="Peloton XL" id="435" name="LTO Peloton char aveugle" type="Pion ABC">
+    <nature atlas-nature="Blinde" level="ooo" nature="combat/armor/track/heavy"/>
+    <equipments>
+      <equipment count="4" crew="4" major="true" type="LTO char aveugle"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="4" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="3000s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="200"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+      <distance-before-point type="lima" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="350"/>
+  </unit>
 </units>

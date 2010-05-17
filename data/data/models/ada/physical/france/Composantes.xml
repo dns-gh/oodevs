@@ -32790,4 +32790,145 @@
       <object initial-destruction-time="1800s" type="cobra deployment area"/>
     </objects>
   </element>
+  <element codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="338" max-slope="0.6" name="LTO char aveugle" protection="CharLourd" size="Gros" weight="54">
+    <speeds max="70">
+      <speed terrain="inconnu" value="50"/>
+      <speed terrain="foret" value="5"/>
+      <speed terrain="plantation" value="5"/>
+      <speed terrain="marais" value="5"/>
+      <speed terrain="dune" value="30"/>
+      <speed terrain="urbain" value="60"/>
+      <speed terrain="etendue eau" value="0"/>
+      <speed terrain="glace" value="5"/>
+      <speed terrain="lisiere" value="20"/>
+      <speed terrain="banlieue" value="45"/>
+      <speed terrain="cote" value="10"/>
+      <speed terrain="bord de plantation" value="40"/>
+      <speed terrain="bord de marais" value="40"/>
+      <speed terrain="bord de dune" value="40"/>
+      <speed terrain="bord de glace" value="40"/>
+      <speed terrain="chemin" value="60"/>
+      <speed terrain="autoroute" value="70"/>
+      <speed terrain="nationale" value="70"/>
+      <speed terrain="departementale" value="70"/>
+      <speed terrain="ruisseau" value="20"/>
+      <speed terrain="riviere" value="10"/>
+      <speed terrain="riviere importante" value="0"/>
+      <speed terrain="pont" value="70"/>
+      <speed terrain="falaise" value="0"/>
+      <speed terrain="voie ferree" value="25"/>
+      <speed terrain="carrefour" value="70"/>
+      <speed terrain="montagne" value="0"/>
+      <speed terrain="bord de montagne" value="0"/>
+    </speeds>
+    <composition>
+      <category name="munition">
+        <dotation capacity="800" logistic-threshold="10" name="Bd 12,7 PANA 4 ORD+1T" normalized-consumption="110"/>
+        <dotation capacity="2000" logistic-threshold="10" name="Bd 7.62mm 4 Ord-1 T" normalized-consumption="300"/>
+        <dotation capacity="13" logistic-threshold="10" name="CART 120 OECC" normalized-consumption="5"/>
+        <dotation capacity="27" logistic-threshold="10" name="CART 120 OFLW" normalized-consumption="1"/>
+        <dotation capacity="16" logistic-threshold="10" name="ART FUM DREB" normalized-consumption="8"/>
+        <dotation capacity="720" logistic-threshold="10" name="Charg 5,56 2 O-1T-4 O" normalized-consumption="90"/>
+        <dotation capacity="10" logistic-threshold="10" name="CART 120 OFLUZ" normalized-consumption="3"/>
+      </category>
+      <category name="carburant">
+        <dotation capacity="1700" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="320"/>
+      </category>
+      <category name="ration">
+        <dotation capacity="9" logistic-threshold="30" name="Vivre" normalized-consumption="3"/>
+        <dotation capacity="54" logistic-threshold="30" name="Eau" normalized-consumption="18"/>
+      </category>
+    </composition>
+    <sensors/>
+    <radars/>
+    <transports/>
+    <consumptions>
+      <consumption status="ArretMoteurEteint">
+        <dotation category="ration" name="Eau" value="0.75"/>
+        <dotation category="ration" name="Vivre" value="0.12"/>
+      </consumption>
+      <consumption status="ArretMoteurAllume">
+        <dotation category="carburant" name="F63 Gasoil" value="15"/>
+      </consumption>
+      <consumption status="Deplacement">
+        <dotation category="carburant" name="F63 Gasoil" value="60"/>
+      </consumption>
+    </consumptions>
+    <weapon-systems>
+      <weapon-system launcher="Canon Stabilise" munition="CART 120 OECC"/>
+      <weapon-system launcher="Canon Stabilise" munition="CART 120 OFLW"/>
+      <weapon-system launcher="Mitrailleuse Coaxiale" munition="Bd 12,7 PANA 4 ORD+1T"/>
+      <weapon-system launcher="Mitrailleuse Tourelleau" munition="Bd 7.62mm 4 Ord-1 T"/>
+      <weapon-system launcher="Fusil Assaut FAMAS" munition="Charg 5,56 2 O-1T-4 O"/>
+      <weapon-system launcher="Lanceur DREB" munition="ART FUM DREB"/>
+      <weapon-system launcher="Canon Stabilise" munition="CART 120 OFLUZ"/>
+    </weapon-systems>
+    <human-protections/>
+    <objects/>
+    <breakdowns>
+      <breakdown origin="random" percentage="6" type="Panne MOB 1 EB"/>
+      <breakdown origin="random" percentage="6" type="Panne MOB 2 EB"/>
+      <breakdown origin="random" percentage="1" type="Panne MOB 2 EB Evac"/>
+      <breakdown origin="random" percentage="7" type="Panne MOB 3 EB"/>
+      <breakdown origin="random" percentage="3" type="Panne MOB 3 EB Evac"/>
+      <breakdown origin="random" percentage="5" type="Panne MOB 4 EB"/>
+      <breakdown origin="random" percentage="4" type="Panne MOB 4 EB Evac"/>
+      <breakdown origin="random" percentage="3" type="Panne MOB 5 EB"/>
+      <breakdown origin="random" percentage="3" type="Panne MOB 5 EB Evac"/>
+      <breakdown origin="random" percentage="1" type="Panne MOB 6 EB"/>
+      <breakdown origin="random" percentage="3" type="Panne MOB 6 EB Evac"/>
+      <breakdown origin="random" percentage="4" type="Panne MOB 7 EB Evac"/>
+      <breakdown origin="random" percentage="3" type="Panne MOB 8 EB Evac"/>
+      <breakdown origin="random" percentage="2" type="Panne MOB 10 EB Evac"/>
+      <breakdown origin="random" percentage="1" type="Panne MOB 12 EB Evac"/>
+      <breakdown origin="random" percentage="1" type="Panne MOB 16 EB Evac"/>
+      <breakdown origin="random" percentage="3" type="Panne MOB NTI3 EB Evac"/>
+      <breakdown origin="random" percentage="1" type="Panne TCT 1"/>
+      <breakdown origin="random" percentage="1" type="Panne TCT 2"/>
+      <breakdown origin="random" percentage="2" type="Panne TCT 3"/>
+      <breakdown origin="random" percentage="1" type="Panne TCT 4"/>
+      <breakdown origin="random" percentage="1" type="Panne TCT 5"/>
+      <breakdown origin="random" percentage="1" type="Panne TCT 6"/>
+      <breakdown origin="random" percentage="1" type="Panne TCT 7"/>
+      <breakdown origin="random" percentage="1" type="Panne TCT 8"/>
+      <breakdown origin="random" percentage="1" type="Panne TCT NTI3"/>
+      <breakdown origin="random" percentage="4" type="Panne COTAC 1"/>
+      <breakdown origin="random" percentage="4" type="Panne COTAC 2"/>
+      <breakdown origin="random" percentage="6" type="Panne COTAC 3"/>
+      <breakdown origin="random" percentage="5" type="Panne COTAC 4"/>
+      <breakdown origin="random" percentage="3" type="Panne COTAC 5"/>
+      <breakdown origin="random" percentage="3" type="Panne COTAC 6"/>
+      <breakdown origin="random" percentage="2" type="Panne COTAC 7"/>
+      <breakdown origin="random" percentage="2" type="Panne COTAC 8"/>
+      <breakdown origin="random" percentage="1" type="Panne COTAC 10"/>
+      <breakdown origin="random" percentage="1" type="Panne COTAC 12"/>
+      <breakdown origin="random" percentage="1" type="Panne COTAC 16"/>
+      <breakdown origin="random" percentage="2" type="Panne COTAC NTI3"/>
+      <breakdown origin="attrition" percentage="3" type="Panne MOB 1 EB"/>
+      <breakdown origin="attrition" percentage="3" type="Panne MOB 2 EB"/>
+      <breakdown origin="attrition" percentage="4" type="Panne MOB 3 EB"/>
+      <breakdown origin="attrition" percentage="1" type="Panne MOB 3 EB Evac"/>
+      <breakdown origin="attrition" percentage="3" type="Panne MOB 4 EB"/>
+      <breakdown origin="attrition" percentage="3" type="Panne MOB 4 EB Evac"/>
+      <breakdown origin="attrition" percentage="3" type="Panne MOB 5 EB"/>
+      <breakdown origin="attrition" percentage="3" type="Panne MOB 5 EB Evac"/>
+      <breakdown origin="attrition" percentage="1" type="Panne MOB 6 EB"/>
+      <breakdown origin="attrition" percentage="3" type="Panne MOB 6 EB Evac"/>
+      <breakdown origin="attrition" percentage="4" type="Panne MOB 7 EB Evac"/>
+      <breakdown origin="attrition" percentage="3" type="Panne MOB 8 EB Evac"/>
+      <breakdown origin="attrition" percentage="3" type="Panne MOB 10 EB Evac"/>
+      <breakdown origin="attrition" percentage="3" type="Panne MOB 12 EB Evac"/>
+      <breakdown origin="attrition" percentage="3" type="Panne MOB 16 EB Evac"/>
+      <breakdown origin="attrition" percentage="42" type="Panne MOB NTI3 EB Evac"/>
+      <breakdown origin="attrition" percentage="1" type="Panne TCT 2"/>
+      <breakdown origin="attrition" percentage="1" type="Panne TCT 3"/>
+      <breakdown origin="attrition" percentage="1" type="Panne TCT 4"/>
+      <breakdown origin="attrition" percentage="1" type="Panne TCT 5"/>
+      <breakdown origin="attrition" percentage="1" type="Panne TCT 6"/>
+      <breakdown origin="attrition" percentage="1" type="Panne TCT 7"/>
+      <breakdown origin="attrition" percentage="1" type="Panne TCT 8"/>
+      <breakdown origin="attrition" percentage="1" type="Panne TCT 10"/>
+      <breakdown origin="attrition" percentage="7" type="Panne TCT NTI3"/>
+    </breakdowns>
+  </element>
 </elements>

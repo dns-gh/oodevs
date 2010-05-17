@@ -63,9 +63,6 @@
           <fragorder name="ApplyFire"/>
           <fragorder name="ApplyGuidedFire"/>
         </mission>
-        <mission name="SuivreAgent"/>
-        <mission name="StationnerBM"/>
-        <mission name="SeRecompleter"/>
         <mission name="SoutenirSurPositionEnMesureDeBM"/>
       </missions>
     </unit>
@@ -78,9 +75,6 @@
         <mission name="Bypass"/>
         <mission name="RemoveObstacle"/>
         <mission name="OpenPath"/>
-        <mission name="SuivreAgent"/>
-        <mission name="StationnerBM"/>
-        <mission name="SeRecompleter"/>
         <mission name="SoutenirSurPositionEnMesureDeBM"/>
       </missions>
     </unit>
