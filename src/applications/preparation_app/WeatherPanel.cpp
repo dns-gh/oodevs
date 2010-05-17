@@ -27,11 +27,11 @@
 // Created: SBO 2006-12-19
 // -----------------------------------------------------------------------------
 WeatherPanel::WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, WeatherLayer& layer )
-: InfoPanel_ABC( parent, panel, tr( "Weather" ), "WeatherPanel" )
-, controllers_( controllers )
-, layer_( layer )
-, currentModel_( 0 )
-, selectedLocal_( 0 )
+    : InfoPanel_ABC( parent, panel, tr( "Weather" ), "WeatherPanel" )
+    , controllers_( controllers )
+    , layer_( layer )
+    , currentModel_( 0 )
+    , selectedLocal_( 0 )
 {
     QHBox* timeBox = new QHBox( this );
     new QLabel( tr( "Exercise date:" ), timeBox );
@@ -118,6 +118,7 @@ void WeatherPanel::Commit()
 {
     if( !currentModel_ )
         return;
+    CommitLocalWeather();
     currentModel_->time_     = time_->dateTime();
     currentModel_->sunrise_  = sunrise_->time();
     currentModel_->sunset_   = sunset_ ->time();
@@ -125,6 +126,19 @@ void WeatherPanel::Commit()
     globalWeather_->CommitTo( *currentModel_->globalWeather_ );
     localWeathers_->CommitTo( *currentModel_ );
     controllers_.controller_.Create( this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeatherPanel::CommitLocalWeather
+// Created: SBO 2010-05-17
+// -----------------------------------------------------------------------------
+void WeatherPanel::CommitLocalWeather()
+{
+    if( selectedLocal_ )
+    {
+        localWeather_->CommitTo( *selectedLocal_ );
+        selectedLocal_->SetPeriod( startTime_->dateTime(), endTime_->dateTime() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -146,24 +160,14 @@ void WeatherPanel::LocalSelectionChanged()
     LocalWeather* selected = localWeathers_->SelectedItem();
     if( selected )
     {
-        if( selectedLocal_ )
-        {
-            localWeather_->CommitTo( *selectedLocal_ );
-            selectedLocal_->startTime_ = startTime_->dateTime();
-            selectedLocal_->endTime_ = endTime_->dateTime();
-        }
-
+        CommitLocalWeather();
         localWeather_->Update( *selected );
-        startTime_->setDateTime( selected->startTime_ );
-        endTime_->setDateTime( selected->endTime_ );
+        startTime_->setDateTime( selected->GetStartTime() );
+        endTime_->setDateTime( selected->GetEndTime() );
         layer_.SetPosition( *selected );
-        localWeatherBox_->show();
         selectedLocal_ = selected;
     }
-    else
-    {
-        localWeatherBox_->hide();
-    }
+    localWeatherBox_->setShown( selected != 0 );
 }
 
 // -----------------------------------------------------------------------------

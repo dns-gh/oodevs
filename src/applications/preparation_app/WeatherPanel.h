@@ -34,31 +34,31 @@ class WeatherLayer;
 
 // =============================================================================
 /** @class  WeatherPanel
-@brief  WeatherPanel
+    @brief  WeatherPanel
 */
 // Created: SBO 2006-12-19
 // =============================================================================
 class WeatherPanel : public gui::InfoPanel_ABC
-    , public tools::Observer_ABC
-    , public tools::ElementObserver_ABC< WeatherModel >
+                   , public tools::Observer_ABC
+                   , public tools::ElementObserver_ABC< WeatherModel >
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-    WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, WeatherLayer& layer );
+             WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, WeatherLayer& layer );
     virtual ~WeatherPanel();
     //@}
 
-    private slots:
-        //! @name Slots
-        //@{
-        void Commit();
-        void Reset ();
-        void LocalSelectionChanged();
-        void SetPatchPosition();
-        //@}
+private slots:
+    //! @name Slots
+    //@{
+    void Commit();
+    void Reset ();
+    void LocalSelectionChanged();
+    void SetPatchPosition();
+    //@}
 
 private:
     //! @name Copy/Assignement
@@ -71,6 +71,7 @@ private:
     //@{
     virtual void NotifyUpdated( const WeatherModel& model );
     virtual void NotifyDeleted( const WeatherModel& model );
+    void CommitLocalWeather();
     //@}
 
 private:

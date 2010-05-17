@@ -36,7 +36,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit LocalWeather( const kernel::CoordinateConverter_ABC& converter );
-    explicit LocalWeather( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter );
+             LocalWeather( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter );
     virtual ~LocalWeather();
     //@}
 
@@ -46,15 +46,11 @@ public:
     virtual QString GetName() const;
     void Serialize( xml::xostream& xos ) const;
     void SetPosition( const geometry::Point2f& topLeft, const geometry::Point2f& bottomRight );
+    void SetPeriod( const QDateTime& start, const QDateTime& end );
     geometry::Point2f GetTopLeft() const;
     geometry::Point2f GetBottomRight() const;
-
-    //@}
-
-    //! @name Member data
-    //@
-    QDateTime startTime_;
-    QDateTime endTime_;
+    QDateTime GetStartTime() const;
+    QDateTime GetEndTime() const;
     //@}
 
 private:
@@ -71,6 +67,8 @@ private:
     QString name_;
     geometry::Point2f topLeft_;
     geometry::Point2f bottomRight_;
+    QDateTime startTime_;
+    QDateTime endTime_;
     //@}
 };
 

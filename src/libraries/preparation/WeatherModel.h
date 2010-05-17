@@ -40,7 +40,7 @@ class WeatherModel : public tools::Resolver< LocalWeather >
 public:
     //! @name Constructors/Destructor
     //@{
-    WeatherModel( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter );
+             WeatherModel( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter );
     virtual ~WeatherModel();
     //@}
 

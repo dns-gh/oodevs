@@ -11,9 +11,7 @@
 #include "LocalWeather.h"
 #include "Tools.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
-#include <xeumeuleu/xml.h>
-
-using namespace xml;
+#include <xeumeuleu/xml.hpp>
 
 namespace
 {
@@ -33,9 +31,9 @@ namespace
 // Created: SBO 2006-12-20
 // -----------------------------------------------------------------------------
 LocalWeather::LocalWeather( const kernel::CoordinateConverter_ABC& converter )
-: converter_( converter )
-, id_( localCounter_++ )
-, name_( tools::translate( "LocalWeather", "Local weather %1" ).arg( id_ ) )
+    : converter_( converter )
+    , id_( localCounter_++ )
+    , name_( tools::translate( "LocalWeather", "Local weather %1" ).arg( id_ ) )
 {
     // NOTHING
 }
@@ -45,17 +43,17 @@ LocalWeather::LocalWeather( const kernel::CoordinateConverter_ABC& converter )
 // Created: SBO 2006-12-20
 // -----------------------------------------------------------------------------
 LocalWeather::LocalWeather( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter )
-: Weather( xis )
-, converter_( converter )
-, id_( localCounter_++ )
-, name_( tools::translate( "LocalWeather", "Local weather %1" ).arg( id_ ) )
+    : Weather( xis )
+    , converter_( converter )
+    , id_( localCounter_++ )
+    , name_( tools::translate( "LocalWeather", "Local weather %1" ).arg( id_ ) )
 {
     
     std::string topLeft, bottomRight, startTime, endTime ;
-    xis >> attribute( "start-time", startTime )
-        >> attribute( "end-time", endTime );
-    xis >> attribute( "top-left", topLeft )
-        >> attribute( "bottom-right", bottomRight );
+    xis >> xml::attribute( "start-time", startTime )
+        >> xml::attribute( "end-time", endTime );
+    xis >> xml::attribute( "top-left", topLeft )
+        >> xml::attribute( "bottom-right", bottomRight );
     topLeft_ = converter_.ConvertToXY( topLeft );
     bottomRight_ = converter_.ConvertToXY( bottomRight );
     {
@@ -106,11 +104,12 @@ QString LocalWeather::GetName() const
 // -----------------------------------------------------------------------------
 void LocalWeather::Serialize( xml::xostream& xos ) const
 {
-    xos << attribute( "start-time", startTime_.toString( "yyyyMMddThhmmss" ).ascii() )
-        << attribute( "end-time", endTime_.toString( "yyyyMMddThhmmss" ).ascii() );
-
-    xos << attribute( "top-left", converter_.ConvertToMgrs( topLeft_ ) )
-        << attribute( "bottom-right"  , converter_.ConvertToMgrs( bottomRight_ ) );
+    const QString start = ( startTime_.isValid() ? startTime_ : QDateTime() ).toString( "yyyyMMddThhmmss" );
+    const QString end   = ( endTime_.isValid() ? endTime_ : QDateTime() ).toString( "yyyyMMddThhmmss" );
+    xos << xml::attribute( "start-time", start.isNull() ? "19700101Thhmmss" : start.ascii() )
+        << xml::attribute( "end-time", end.isNull() ? "19700101Thhmmss" : end.ascii() )
+        << xml::attribute( "top-left", converter_.ConvertToMgrs( topLeft_ ) )
+        << xml::attribute( "bottom-right"  , converter_.ConvertToMgrs( bottomRight_ ) );
     Weather::Serialize( xos );
 }
 
@@ -122,6 +121,16 @@ void LocalWeather::SetPosition( const geometry::Point2f& topLeft, const geometry
 {
     topLeft_ = topLeft;
     bottomRight_ = bottomRight;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocalWeather::SetPeriod
+// Created: SBO 2010-05-17
+// -----------------------------------------------------------------------------
+void LocalWeather::SetPeriod( const QDateTime& start, const QDateTime& end )
+{
+    startTime_ = start;
+    endTime_ = end;
 }
 
 // -----------------------------------------------------------------------------
@@ -140,4 +149,22 @@ geometry::Point2f LocalWeather::GetTopLeft() const
 geometry::Point2f LocalWeather::GetBottomRight() const
 {
     return bottomRight_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocalWeather::GetStartTime
+// Created: SBO 2010-05-17
+// -----------------------------------------------------------------------------
+QDateTime LocalWeather::GetStartTime() const
+{
+    return startTime_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocalWeather::GetEndTime
+// Created: SBO 2010-05-17
+// -----------------------------------------------------------------------------
+QDateTime LocalWeather::GetEndTime() const
+{
+    return endTime_;
 }
