@@ -142,7 +142,7 @@ namespace
     class UrbanMovingInsideVisitor : public urban::TerrainObjectVisitor_ABC
     {
     public:
-        UrbanMovingInsideVisitor( bool &isInCity, const urban::TerrainObject_ABC* urbanObject, std::auto_ptr< UrbanBlockPosition_ABC > delegator ) : isInCity_( isInCity ), currentUrbanObject_( urbanObject ), delegate_( delegator )
+        UrbanMovingInsideVisitor( bool &isInCity, const urban::TerrainObject_ABC*& urbanObject, std::auto_ptr< UrbanBlockPosition_ABC > delegator ) : isInCity_( isInCity ), currentUrbanObject_( urbanObject ), delegate_( delegator )
         {}
         ~UrbanMovingInsideVisitor()
         {}
@@ -162,7 +162,7 @@ namespace
         std::auto_ptr< UrbanBlockPosition_ABC > GetDelegator(){ return delegate_; }
     private:
         bool& isInCity_;
-        const urban::TerrainObject_ABC* currentUrbanObject_;
+        const urban::TerrainObject_ABC*& currentUrbanObject_;
         std::auto_ptr< UrbanBlockPosition_ABC > delegate_;
     };
 }
@@ -183,7 +183,7 @@ namespace
     class UrbanMovingOutsideVisitor : public urban::TerrainObjectVisitor_ABC
     {
     public:
-        UrbanMovingOutsideVisitor( bool& isInCity, const urban::TerrainObject_ABC* urbanObject, std::auto_ptr< UrbanBlockPosition_ABC > delegator ) : isInCity_( isInCity ), currentUrbanObject_( urbanObject ), delegate_( delegator )
+        UrbanMovingOutsideVisitor( bool& isInCity, const urban::TerrainObject_ABC*& urbanObject, std::auto_ptr< UrbanBlockPosition_ABC > delegator ) : isInCity_( isInCity ), currentUrbanObject_( urbanObject ), delegate_( delegator )
         {}
         ~UrbanMovingOutsideVisitor()
         {}
@@ -205,7 +205,7 @@ namespace
         std::auto_ptr< UrbanBlockPosition_ABC > GetDelegator(){ return delegate_; }
     private:
         bool isInCity_;
-        const urban::TerrainObject_ABC* currentUrbanObject_;
+        const urban::TerrainObject_ABC*& currentUrbanObject_;
         std::auto_ptr< UrbanBlockPosition_ABC > delegate_;
     };
 }
