@@ -43,7 +43,6 @@ GisToolbar::GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, c
     {
         QHBox* box = new QHBox( this );
         enabled_ = new QCheckBox( tr( "Watershed" ), box );
-        enabled_->setChecked( false );
         QToolTip::add( enabled_, tr( "Enable/disable watershed display" ) );
         mode_ = new QComboBox( box );
         mode_->insertItem( tr( "<" ) );
@@ -52,6 +51,7 @@ GisToolbar::GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, c
         QToolTip::add( mode_, tr( "Display water below or above specified height" ) );
         height_ = new QSpinBox( 0, 10000, 1, box );
         height_->setSuffix( kernel::Units::meters.AsString() );
+        height_->setEnabled( false );
         QToolTip::add( height_, tr( "Set water height limit" ) );
         color_ = new ColorButton( this );
         color_->SetColor( QColor( 20, 164, 218 ) ); // $$$$ SBO 2010-03-23: default from layer
@@ -70,6 +70,7 @@ GisToolbar::GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, c
         connect( button, SIGNAL( toggled( bool ) ), SLOT( OnToggleCut( bool ) ) );
         connect( terrainProfiler_, SIGNAL( visibilityChanged( bool ) ), button, SLOT( setOn( bool ) ) );
     }
+    OnToggleEnabled( false );
     controllers_.Register( *this );
 }
 
