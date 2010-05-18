@@ -111,7 +111,7 @@ Section "!${PRODUCT_NAME}"
     File "${RUNDIR}\plugin_terrain_analysis-${PLATFORM}-mt.dll"
     File "${RUNDIR}\terrain_analysis-${PLATFORM}-mt.dll"
     File "${RUNDIR}\terrain_interface-${PLATFORM}-mt.dll"
-	File /x "*-gd-*" /x "*-gd.*" /x "*unittest*.*" /x "*debugger*.*" "${RUNDIR}\*.plugin"
+	File /x "*-gd-*" /x "*-gd.*" /x "*finitestate*.*" /x "*unittest*.*" /x "*debugger*.*" "${RUNDIR}\*.plugin"
 
     File /r /x ".svn" /x "*.qm" "${RUNDIR}\resources"
     File "resources\*.ico"
