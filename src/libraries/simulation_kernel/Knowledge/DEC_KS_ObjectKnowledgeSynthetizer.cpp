@@ -25,6 +25,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Communications/PHY_RoleInterface_Communications.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
+#include <boost/bind.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KS_ObjectKnowledgeSynthetizer )
 
@@ -224,8 +225,7 @@ void DEC_KS_ObjectKnowledgeSynthetizer::Talk( int /*currentTimeStep*/ )
     ProcessKnowledgesObjectToForget();
 
     // Relevance
-    class_mem_fun_void_t< DEC_KS_ObjectKnowledgeSynthetizer, boost::shared_ptr< DEC_Knowledge_Object > > methodRelevance( & DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgeRelevance, *this );
-    pBlackBoard_->GetKnowledgeObjectContainer().ApplyOnKnowledgesObject( methodRelevance );
+    pBlackBoard_->GetKnowledgeObjectContainer().ApplyOnKnowledgesObject( boost::bind( &DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgeRelevance, this, _1 ) );
 }
 
 // -----------------------------------------------------------------------------

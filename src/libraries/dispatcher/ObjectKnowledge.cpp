@@ -180,14 +180,9 @@ void ObjectKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         for( std::vector< const kernel::Automat_ABC* >::const_iterator it = automatPerceptions_.begin(); it != automatPerceptions_.end(); ++it, ++i )
             asn().mutable_automat_perception()->set_elem( i, (*it)->GetId() );
     }
-
     std::for_each( attributes_.begin(), attributes_.end(),
                    boost::bind( &ObjectAttribute_ABC::Send, _1, boost::ref( *asn().mutable_attributes() ) ) );
-
     asn.Send( publisher );
-
-    if( asn().has_automat_perception() && asn().automat_perception().elem_size() > 0 )
-        asn().mutable_automat_perception()->Clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -196,7 +191,6 @@ void ObjectKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void ObjectKnowledge::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
-    //MsgObjectKnowledgeDestruction asn;
     client::ObjectKnowledgeDestruction asn;
     asn().set_oid  ( GetId() );
     asn().set_team ( team_.GetId());

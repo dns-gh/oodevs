@@ -152,7 +152,6 @@ void PopulationKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     client::PopulationKnowledgeUpdate asn;
 
-//    asn().set_etat_dominationPresent( 1 );
     asn().set_oid_connaissance( GetId() );
     asn().set_oid_groupe_possesseur( knowledgeGroup_.GetId() );
     asn().set_etat_domination( nDominationState_ );

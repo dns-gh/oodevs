@@ -140,7 +140,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const DEC_Knowledge_Object& copy, co
     , pObjectKnown_                     ( copy.pObjectKnown_ )
     , pObjectType_                      ( copy.pObjectType_ )
     , nID_                              ( copy.idManager_.GetFreeId() )
-    , nAttributesUpdated_               ( copy.eAttr_AllAttributes )
+    , nAttributesUpdated_               ( copy.nAttributesUpdated_ )
     , pOwnerArmy_                       ( copy.pOwnerArmy_ )    
     , localisation_                     ( copy.localisation_ )
     , avoidanceLocalisation_            ( copy.avoidanceLocalisation_ )            
@@ -565,7 +565,6 @@ void DEC_Knowledge_Object::BuildMsgAttributes( MsgsSimToClient::MsgObjectKnowled
 // Name: DEC_Knowledge_Object::BuildMsgRealObject
 // Created: NLD 2004-03-26
 // -----------------------------------------------------------------------------
-inline
 void DEC_Knowledge_Object::BuildMsgRealObject( MsgsSimToClient::MsgObjectKnowledgeUpdate& asn ) const
 {
     if( IsAttributeUpdated( eAttr_RealObject ) )
@@ -603,9 +602,6 @@ void DEC_Knowledge_Object::UpdateOnNetwork()
     BuildMsgAttributes            ( asn() );
     
     asn.Send( NET_Publisher_ABC::Publisher() );
-
-    asn().Clear();
-    asn().Clear();
 }
 
 // -----------------------------------------------------------------------------

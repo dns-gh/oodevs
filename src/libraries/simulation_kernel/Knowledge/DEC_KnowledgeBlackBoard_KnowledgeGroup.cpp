@@ -29,6 +29,7 @@
 #include "Decision/DEC_Tools.h"
 #include "Entities/MIL_Army.h"
 #include "protocol/protocol.h"
+#include <boost/bind.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KnowledgeBlackBoard_KnowledgeGroup )
 
@@ -99,31 +100,16 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::serialize( Archive& archive, const 
             & pKsSharing_;
 }
 
-namespace
-{
-class ObjectStateToNewClientSender
-    {
-    public:
-        void operator() ( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
-        {
-            knowledge->SendStateToNewClient();
-        }
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::SendFullState
 // Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeBlackBoard_KnowledgeGroup::SendFullState() const
 {
-    pKnowledgeAgentContainer_     ->ApplyOnKnowledgesAgent     ( std::mem_fun_ref( & DEC_Knowledge_Agent     ::SendStateToNewClient ) );
-    pKnowledgePopulationContainer_->ApplyOnKnowledgesPopulation( std::mem_fun_ref( & DEC_Knowledge_Population::SendStateToNewClient ) );
+    pKnowledgeAgentContainer_     ->ApplyOnKnowledgesAgent     ( boost::bind( &DEC_Knowledge_Agent::SendStateToNewClient, _1 ) );
+    pKnowledgePopulationContainer_->ApplyOnKnowledgesPopulation( boost::bind( &DEC_Knowledge_Population::SendStateToNewClient, _1 ) );
     if( pKnowledgeObjectContainer_ )
-    {
-        ObjectStateToNewClientSender functor;
-        pKnowledgeObjectContainer_->ApplyOnKnowledgesObject    ( functor );
-    }
+        pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( boost::bind( &DEC_Knowledge_Object::SendStateToNewClient, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -132,13 +118,10 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::SendFullState() const
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeBlackBoard_KnowledgeGroup::SendChangedState() const
 {
-    pKnowledgeAgentContainer_     ->ApplyOnKnowledgesAgent     ( std::mem_fun_ref( & DEC_Knowledge_Agent     ::UpdateOnNetwork ) );
-    pKnowledgePopulationContainer_->ApplyOnKnowledgesPopulation( std::mem_fun_ref( & DEC_Knowledge_Population::UpdateOnNetwork ) );
+    pKnowledgeAgentContainer_     ->ApplyOnKnowledgesAgent     ( boost::bind( &DEC_Knowledge_Agent::UpdateOnNetwork, _1 ) );
+    pKnowledgePopulationContainer_->ApplyOnKnowledgesPopulation( boost::bind( &DEC_Knowledge_Population::UpdateOnNetwork, _1 ) );
     if( pKnowledgeObjectContainer_ )
-    {
-        ObjectStateToNewClientSender functor;
-        pKnowledgeObjectContainer_->ApplyOnKnowledgesObject    ( functor );
-    }
+        pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( boost::bind( &DEC_Knowledge_Object::UpdateOnNetwork, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
