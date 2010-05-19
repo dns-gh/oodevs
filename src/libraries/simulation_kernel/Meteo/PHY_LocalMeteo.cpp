@@ -63,7 +63,6 @@ PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, const Common::MsgMissionParamet
     const Common::MsgMissionParameter& endTime = msg.elem( 8 );
     if( !endTime.has_value() || !endTime.value().has_datetime() )
         throw std::exception( "Meteo : bad attribute for EndTime" );
-    std::string test = endTime.value().datetime().data();
     endTime_ = ( bpt::from_iso_string( endTime.value().datetime().data() ) - bpt::from_time_t( 0 ) ).total_seconds();
 
     const Common::MsgMissionParameter& location = msg.elem( 9 );
