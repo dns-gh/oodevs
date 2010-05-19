@@ -88,6 +88,15 @@ void ObjectPrototype_ABC::NotifyUpdated( const ModelLoaded& )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ObjectPrototype_ABC::NotifyUpdated
+// Created: SBO 2010-05-19
+// -----------------------------------------------------------------------------
+void ObjectPrototype_ABC::NotifyUpdated( const kernel::ModelUnLoaded& )
+{
+    objectTypes_->Clear();
+}
+
+// -----------------------------------------------------------------------------
 // Name: ObjectPrototype_ABC::showEvent
 // Created: AGE 2006-04-21
 // -----------------------------------------------------------------------------

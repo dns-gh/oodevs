@@ -230,9 +230,7 @@ void PHY_RolePion_Communications::Update( bool /*bIsDead*/ )
     if( pJammingKnowledgeGroup_ )
         pJammingKnowledgeGroup_->UpdateKnowledges( MIL_Singletons::GetTime().GetCurrentTick() );
     if( HasChanged() )
-    {
         entity_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
-    }
 }
 
 // -----------------------------------------------------------------------------

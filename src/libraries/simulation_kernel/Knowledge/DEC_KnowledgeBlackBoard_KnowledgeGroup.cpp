@@ -597,3 +597,13 @@ DEC_Knowledge_Population& DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledg
 {
     return GetKnowledgePopulationContainer().CreateKnowledgePopulation( knowledgeGroup, perceived );    
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::UpdateKnowledgeObjectContainer
+// Created: SBO 2010-05-19
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeBlackBoard_KnowledgeGroup::UpdateKnowledgeObjectContainer()
+{
+    if( pKnowledgeObjectContainer_ )
+        pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( boost::bind( &DEC_Knowledge_Object::UpdateRelevance, _1 ) );
+}

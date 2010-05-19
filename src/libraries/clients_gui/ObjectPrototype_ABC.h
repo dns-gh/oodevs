@@ -24,6 +24,7 @@ namespace kernel
     class Team_ABC;
     class ObjectType;
     class ModelLoaded;
+    class ModelUnLoaded;
     class GlTools_ABC;
 }
 
@@ -48,6 +49,7 @@ class ObjectPrototype_ABC : public QGroupBox
                           , public tools::Observer_ABC
                           , public tools::ElementObserver_ABC< kernel::Team_ABC >
                           , public tools::ElementObserver_ABC< kernel::ModelLoaded >
+                          , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
                           , public ShapeHandler_ABC
 {
     Q_OBJECT;
@@ -94,6 +96,7 @@ private:
     virtual void NotifyUpdated( const kernel::Team_ABC& team );
     virtual void NotifyDeleted( const kernel::Team_ABC& team );
     virtual void NotifyUpdated( const kernel::ModelLoaded& );
+    virtual void NotifyUpdated( const kernel::ModelUnLoaded& );
     virtual void showEvent( QShowEvent* );
     virtual void hideEvent( QHideEvent* );
     void FillObjectTypes();
