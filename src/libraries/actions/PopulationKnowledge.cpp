@@ -42,7 +42,7 @@ PopulationKnowledge::PopulationKnowledge( const OrderParameter& parameter, unsig
     : Entity< PopulationKnowledge_ABC >( parameter, converter.FindPopulation( id, owner ), controller )
 {
     if( ! GetValue() )
-        throw std::runtime_error( tools::translate( "Parameter", "Population knowledge not found." ).ascii() );
+        throw std::exception( tools::translate( "Parameter", "Population knowledge not found." ).ascii() );
 }
 
 // -----------------------------------------------------------------------------
@@ -53,7 +53,7 @@ PopulationKnowledge::PopulationKnowledge( const OrderParameter& parameter, xml::
     : Entity< PopulationKnowledge_ABC >( parameter, converter.Find( resolver.GetPopulation( attribute< unsigned long >( xis, "value" ) ), owner ), controller )
 {
     if( ! GetValue() )
-        throw std::runtime_error( tools::translate( "Parameter", "Population knowledge not found." ).ascii() );
+        throw std::exception( tools::translate( "Parameter", "Population knowledge not found." ).ascii() );
 }
 
 // -----------------------------------------------------------------------------

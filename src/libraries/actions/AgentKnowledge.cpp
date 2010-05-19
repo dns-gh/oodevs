@@ -50,7 +50,7 @@ AgentKnowledge::AgentKnowledge( const OrderParameter& parameter, unsigned long i
     : Entity< AgentKnowledge_ABC >( parameter, converter.FindAgent( id, owner ), controller )
 {
     if( ! GetValue() )
-        throw std::runtime_error( tools::translate( "Parameter", "Agent knowledge not found." ).ascii() );
+        throw std::exception( tools::translate( "Parameter", "Agent knowledge not found." ).ascii() );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,7 +61,7 @@ AgentKnowledge::AgentKnowledge( xml::xistream& xis, const kernel::EntityResolver
     : Entity< AgentKnowledge_ABC >( OrderParameter( attribute< std::string >( xis, "name" ), "agentknowledge", false ), converter.Find( resolver.GetAgent( attribute< unsigned long >( xis, "value" ) ), owner ), controller )
 {
     if( ! GetValue() )
-        throw std::runtime_error( tools::translate( "Parameter", "Agent knowledge not found." ).ascii() );
+        throw std::exception( tools::translate( "Parameter", "Agent knowledge not found." ).ascii() );
 }
 
 // -----------------------------------------------------------------------------
@@ -72,7 +72,7 @@ AgentKnowledge::AgentKnowledge( const OrderParameter& parameter, xml::xistream& 
     : Entity< AgentKnowledge_ABC >( parameter, converter.Find( resolver.GetAgent( attribute< unsigned long >( xis, "value" ) ), owner ), controller )
 {
     if( ! GetValue() )
-        throw std::runtime_error( tools::translate( "Parameter", "Agent knowledge not found." ).ascii() );
+        throw std::exception( tools::translate( "Parameter", "Agent knowledge not found." ).ascii() );
 }
 
 // -----------------------------------------------------------------------------

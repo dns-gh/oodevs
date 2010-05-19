@@ -57,7 +57,7 @@ ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter, unsigned long
 {
     SetValue( converter.Find( id, owner ) );
     if( ! GetValue() )
-        throw std::runtime_error( tools::translate( "Parameter", "Object knowledge not found." ).ascii() );
+        throw std::exception( tools::translate( "Parameter", "Object knowledge not found." ).ascii() );
 }
 
 // -----------------------------------------------------------------------------
@@ -69,7 +69,7 @@ ObjectKnowledge::ObjectKnowledge( xml::xistream& xis, const kernel::EntityResolv
 {
     SetValue( converter.Find( resolver.GetObject( ReadId( xis ) ), owner ) );
     if( ! GetValue() )
-        throw std::runtime_error( tools::translate( "Parameter", "Object knowledge not found." ).ascii() );
+        throw std::exception( tools::translate( "Parameter", "Object knowledge not found." ).ascii() );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,7 +81,7 @@ ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter, xml::xistream
 {
     SetValue( converter.Find( resolver.GetObject( ReadId( xis ) ), owner ) );
     if( ! GetValue() )
-        throw std::runtime_error( tools::translate( "Parameter", "Object knowledge not found." ).ascii() );
+        throw std::exception( tools::translate( "Parameter", "Object knowledge not found." ).ascii() );
 }
 
 // -----------------------------------------------------------------------------

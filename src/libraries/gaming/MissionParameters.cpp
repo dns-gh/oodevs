@@ -48,9 +48,16 @@ void MissionParameters::UpdateMessage( const T& message )
     if( message.mission() == 0 )
         return;
 
-    Action_ABC* action = factory_.CreateAction( message );
-    Register( action->GetId(), *action );
-    controller_.Update( *this );
+    try
+    {
+        Action_ABC* action = factory_.CreateAction( message );
+        Register( action->GetId(), *action );
+        controller_.Update( *this );
+    }
+    catch( ... )
+    {
+        // $$$$ SBO 2010-05-14: Warning/invalid mission
+    }
 }
 
 // -----------------------------------------------------------------------------
