@@ -890,7 +890,7 @@ E_Tristate DEC_Knowledge_Object::IsAnEnemy( const MIL_Army_ABC& army ) const
 // -----------------------------------------------------------------------------
 E_Tristate DEC_Knowledge_Object::IsAFriend( const MIL_Army_ABC& army ) const
 {
-    return army.IsAnEnemy( GetArmy() );
+    return army.IsAFriend( GetArmy() );
 }
 
 
