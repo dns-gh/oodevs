@@ -187,6 +187,7 @@ void ParamObstacle::OnTypeChanged()
         density_->Show();
     if( type->HasLogistic() )
         tc2_->Show();
+    location_->SetShapeFilter( type->CanBePoint(), type->CanBeLine(), type->CanBePolygon(), type->CanBeCircle(), type->CanBeRectangle() );
     emit ToggleReservable( type->CanBeReservedObstacle() );
 }
 
