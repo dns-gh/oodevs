@@ -80,7 +80,10 @@ OrbatToolbar::~OrbatToolbar()
 void OrbatToolbar::OnSetFilter()
 {
     if( entity_ )
+    {
         filter_.SetFilter( *entity_ );
+        entity_->Select( controllers_.actions_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
