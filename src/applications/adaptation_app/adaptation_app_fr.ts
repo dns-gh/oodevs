@@ -1358,7 +1358,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Data</source>
-        <translation>Donnés</translation>
+        <translation>Données</translation>
     </message>
     <message>
         <source>Name</source>
