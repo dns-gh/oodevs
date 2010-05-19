@@ -254,10 +254,17 @@
             <unit command-post="false" id="456" name="Peloton AMX30B2 BRENNUS CDP SOFF[456]" position="31UBP9442531801" type="Peloton AMX30B2 BRENNUS CDP SOFF"/>
           </automat>
           <automat engaged="false" id="484" knowledge-group="2" name="Refugies x100 [484]" type="Refugies x100">
-            <unit command-post="true" id="485" name="Refugies 100 Pers[485]" position="31UCP2011732766" type="Refugies 100 Pers"/>
+            <unit command-post="true" id="485" name="Refugies 100 Pers[485]" position="31UCP2677927439" type="Refugies 100 Pers"/>
           </automat>
           <automat engaged="false" id="498" knowledge-group="2" name="Terroristes [498]" type="Terroristes">
             <unit command-post="true" id="499" name="Terroriste" position="31UCP1205536529" type="Terroriste"/>
+          </automat>
+          <automat engaged="true" id="789" knowledge-group="2" name="Compagnie INF AMX 10 P [789]" type="Compagnie INF AMX 10 P">
+            <unit command-post="true" id="790" name="Section CDT CIE INF AMX10P" position="31UCP2102733824" type="Section CDT CIE INF AMX10P"/>
+            <unit command-post="false" id="791" name="Section CBT INF AMX10P CDS OFF" position="31UCP2470329542" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="792" name="Section CBT INF AMX10P CDS OFF" position="31UCP2418129064" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="793" name="Section CBT INF AMX10P CDS OFF" position="31UCP2370229584" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="794" name="Section CBT INF AMX10P CDS SOFF" position="31UCP2472330041" type="Section CBT INF AMX10P CDS SOFF"/>
           </automat>
         </formation>
       </tactical>
@@ -652,7 +659,7 @@
         <knowledge-group id="778" name="RENS" type="Standard"/>
       </communication>
       <populations>
-        <population attitude="calme" humans="1000" id="458" name="Population standard [458]" position="31UCP2278735626" type="Population standard"/>
+        <population attitude="calme" humans="1000" id="458" name="Population standard [458]" position="31UCP2427337060" type="Population standard"/>
       </populations>
       <logistic>
         <automat id="459"/>
