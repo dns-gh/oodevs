@@ -104,6 +104,7 @@ namespace
             , output_( 0 ) 
             , buffer_( buffer ) 
             , firstFrame_( firstFrame ) {}
+        virtual ~ModelMessage() {}
         virtual void Serialize( tools::OutputBinaryWrapper& output ) const
         {
             ModelMessage* that = const_cast< ModelMessage* >( this );

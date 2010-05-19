@@ -50,5 +50,6 @@ CreationVisitor::CreationVisitor( ClientPublisher_ABC& publisher )
 // -----------------------------------------------------------------------------
 void CreationVisitor::Visit( const kernel::Entity_ABC& entity )
 {
-    const_cast< kernel::Entity_ABC& >( entity ).Apply( &EntityPublisher_ABC::SendCreation, *publisher_ );
+    if( entities_.insert( &entity ).second )
+        const_cast< kernel::Entity_ABC& >( entity ).Apply( &EntityPublisher_ABC::SendCreation, *publisher_ );
 }

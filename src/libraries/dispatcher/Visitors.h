@@ -35,6 +35,7 @@ namespace dispatcher
         virtual void Visit( const kernel::Entity_ABC& entity );
     private:
         ClientPublisher_ABC* publisher_;
+        std::set< const kernel::Entity_ABC* > entities_;
     };
 }
 
