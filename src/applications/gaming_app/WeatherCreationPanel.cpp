@@ -50,9 +50,9 @@ WeatherCreationPanel::WeatherCreationPanel( QWidget* parent, gui::PanelStack_ABC
     weather_ = new WeatherWidget( localWeatherBox, tr( "Weather parameters" ) );
 
     QGroupBox* parametersGroup = new QGroupBox( 2, Qt::Horizontal, tr( "Time and Position Parameters" ), localWeatherBox );
-    new QLabel( tr( "Start time:" ), parametersGroup );
+    startTimeLabel_ = new QLabel( tr( "Start time:" ), parametersGroup );
     startTime_ = new QDateTimeEdit( parametersGroup );
-    new QLabel( tr( "End time:" ), parametersGroup );
+    endTimeLabel_ = new QLabel( tr( "End time:" ), parametersGroup );
     endTime_ = new QDateTimeEdit( parametersGroup );
 
     QCheckBox* weatherType = new QCheckBox( tr( "Set as global weather" ), parametersGroup );
@@ -106,7 +106,42 @@ void WeatherCreationPanel::StartEditingLocation()
 // -----------------------------------------------------------------------------
 bool WeatherCreationPanel::CheckValidity()
 {
-    return ( isGlobal_ || ( ( startTime_->dateTime() < endTime_->dateTime() ) && location_ ) );
+    if( isGlobal_ ) 
+        return true;
+    else if ( ( startTime_->dateTime() > endTime_->dateTime() ) || !startTime_->dateTime().isValid()  || !endTime_->dateTime().isValid() )
+    {
+        startTimeLabel_->setPaletteForegroundColor( Qt::red );
+        endTimeLabel_->setPaletteForegroundColor( Qt::red );
+        QTimer::singleShot( 1000, this, SLOT( OnTimeWarnStop() ) );
+        return false;
+    }
+    else if( !location_ )
+    {
+        positionBtn_->setPaletteForegroundColor( Qt::red );
+        QTimer::singleShot( 1000, this, SLOT( OnPosWarnStop() ) );
+        return false;
+    }
+    else
+        return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeatherCreationPanel::OnTimeWarnStop
+// Created: SLG 2010-05-19
+// -----------------------------------------------------------------------------
+void WeatherCreationPanel::OnTimeWarnStop()
+{
+    startTimeLabel_->setPaletteForegroundColor( Qt::black );
+    endTimeLabel_->setPaletteForegroundColor( Qt::black );
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeatherCreationPanel::OnPosWarnStop
+// Created: SLG 2010-05-19
+// -----------------------------------------------------------------------------
+void WeatherCreationPanel::OnPosWarnStop()
+{
+    positionBtn_->setPaletteForegroundColor( Qt::black );
 }
 
 // -----------------------------------------------------------------------------

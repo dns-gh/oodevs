@@ -58,10 +58,8 @@ DateTime::DateTime( const kernel::OrderParameter& parameter, const QDateTime& da
     std::string timeStr  = date.time().toString( Qt::LocalDate  ).ascii();
     bpt::ptime time( bpt::time_from_string( dateStr + " " + timeStr )  );
 
-    //bpt::ptime time( bpt::time_from_string( date.toString( Qt::ISODate ).ascii() ) );
     time_ = bpt::to_iso_string( time );
     SetValue( bpt::to_simple_string( time ).c_str() );
-    //SetValue( time_.c_str() );
 }
 
 // -----------------------------------------------------------------------------

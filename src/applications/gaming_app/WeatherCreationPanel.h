@@ -88,6 +88,8 @@ private slots:
     void Reset();
     void StartEditingLocation();
     void OnToogleWeatherType( bool );
+    void OnTimeWarnStop();
+    void OnPosWarnStop();
     //@}
 
 private:
@@ -101,6 +103,8 @@ private:
     const kernel::GlTools_ABC& tools_;
     LocationSerializer serializer_;
     WeatherWidget* weather_;
+    QLabel* startTimeLabel_;
+    QLabel* endTimeLabel_;
     QDateTimeEdit* startTime_;
     QDateTimeEdit* endTime_;
     QButton* positionBtn_;
