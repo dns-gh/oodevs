@@ -847,7 +847,7 @@
     package
     ============================================================================
     -->
-    <target name="package" description="package the installers" depends="package.defense,package.security,package.lto,package.scipio-v1-stab"/>
+    <target name="package" description="package the installers" depends="package.defense,package.security,package.lto"/>
 
     <!-- standard packages -->
     <target name="package.defense" description="package the standard installer: worldwide, no license">
@@ -906,7 +906,7 @@
     </target>
 
     <target name="package.scipio-v1-stab" description="package the Scipio V1.Stab installer">
-        <nsis todir="${dist.dir}/current/${platform}/lto" name="lto" script="sword-defense.nsi" nsh="config.nsh">
+        <nsis todir="${dist.dir}/current/${platform}/scipio-v1-stab" name="sword-defense" script="sword-defense.nsi" nsh="config.nsh">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
             <arg value="/DEVALUATION=1"/>
