@@ -225,12 +225,8 @@ void PHY_RolePion_NBC::Execute( firing::WeaponReloadingComputer_ABC& algorithm )
 void PHY_RolePion_NBC::SendFullState( client::UnitAttributes& msg ) const
 {
     if( !nbcAgentTypesContaminating_.empty() )
-    {
-        unsigned int i = 0;
         for( CIT_NbcAgentTypeSet itNbcAgent = nbcAgentTypesContaminating_.begin(); itNbcAgent != nbcAgentTypesContaminating_.end(); ++itNbcAgent )
-            msg().mutable_contamine_par_agents_nbc()->set_elem( i++ , (**itNbcAgent).GetID() );
-    }
-
+            msg().mutable_contamine_par_agents_nbc()->add_elem( (**itNbcAgent).GetID() );
 
     msg().set_en_tenue_de_protection_nbc( bNbcProtectionSuitWorn_ );
     msg().mutable_etat_contamination()->set_percentage( (unsigned int)( rContaminationState_ * 100. ) );

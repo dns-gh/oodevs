@@ -410,9 +410,8 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         asn().set_en_tenue_de_protection_nbc ( bNbcProtectionSuitEnabled_ );
 
         {
-            unsigned int i = 0;
             for( std::vector< unsigned int >::const_iterator it = nbcAgentTypesContaminating_.begin(); it != nbcAgentTypesContaminating_.end(); ++it )
-                asn().mutable_contamine_par_agents_nbc()->set_elem( i++, *it );
+                asn().mutable_contamine_par_agents_nbc()->add_elem( *it );
         }
 
         *asn().mutable_etat_contamination() = contamination_;
