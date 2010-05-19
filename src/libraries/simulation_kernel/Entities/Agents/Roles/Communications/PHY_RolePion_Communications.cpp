@@ -14,6 +14,8 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
+#include "MIL_Singletons.h"
+#include "MIL_Time_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "simulation_kernel/Knowledge/DEC_BlackBoard_CanContainKnowledgeObjectPerception.h"
 #include "simulation_kernel/Knowledge/DEC_BlackBoard_CanContainKnowledgeObjectCollision.h"
@@ -225,10 +227,12 @@ void PHY_RolePion_Communications::SendChangedState( client::UnitAttributes& msg 
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Communications::Update( bool /*bIsDead*/ )
 {
+    if( pJammingKnowledgeGroup_ )
+        pJammingKnowledgeGroup_->UpdateKnowledges( MIL_Singletons::GetTime().GetCurrentTick() );
     if( HasChanged() )
     {
         entity_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
-    } 
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -172,9 +172,14 @@ BOOST_AUTO_TEST_CASE( TestPropagationInKnowledgeGroups )
         DEC_KnowledgeBlackBoard_AgentPion pionBlackboard( jammedAgent );
         MOCK_EXPECT( jammedAgent, GetKnowledge ).returns( boost::ref( pionBlackboard ) );
         MOCK_EXPECT( jammedAgent.GetRole< MockPHY_RoleInterface_Perceiver >(), ExecutePerceptions );
+        MockRoleLocation* mockJammedRoleLocation = new MockRoleLocation();
+        MOCK_EXPECT( mockJammedRoleLocation, HasDoneMagicMove ).at_least( 1 ).returns( false );
+        MOCK_EXPECT( mockJammedRoleLocation, GetPosition ).at_least( 1 ).returns( position );
+        mockAgentJammed1.RegisterRole( *mockJammedRoleLocation );
         groupJammed1.UpdateKnowledges( 1 );
         group2->UpdateKnowledges( 1 );
         jammedAgent.verify();
+        mockJammedRoleLocation->verify();
     //}
     //{
         // TestKnowledgeIsNotPropagatedWhenSourceIsJammed

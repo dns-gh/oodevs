@@ -70,15 +70,12 @@ void DEC_KS_KnowledgeSynthetizer::Talk( int currentTimeStep )
 
     pBlackBoard_->ApplyOnKnowledgesPerception( currentTimeStep ); 
 
-    if( ! pBlackBoard_->GetKnowledgeGroup().IsJammed() )
-    {
-        // Extrapolation
-        pBlackBoard_->GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( boost::bind( & DEC_Knowledge_Agent::Extrapolate, _1 ) );
-        // Relevance
-        pBlackBoard_->GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( boost::bind( &DEC_Knowledge_Agent::UpdateRelevance, _1, currentTimeStep ) );
+    // Extrapolation
+    pBlackBoard_->GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( boost::bind( & DEC_Knowledge_Agent::Extrapolate, _1 ) );
+    // Relevance
+    pBlackBoard_->GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( boost::bind( &DEC_Knowledge_Agent::UpdateRelevance, _1, currentTimeStep ) );
 
-        pBlackBoard_->GetKnowledgePopulationContainer().ApplyOnKnowledgesPopulation( boost::bind( &DEC_Knowledge_Population::UpdateRelevance, _1 ) );
-    }
+    pBlackBoard_->GetKnowledgePopulationContainer().ApplyOnKnowledgesPopulation( boost::bind( &DEC_Knowledge_Population::UpdateRelevance, _1 ) );
 }
 
 // =============================================================================
