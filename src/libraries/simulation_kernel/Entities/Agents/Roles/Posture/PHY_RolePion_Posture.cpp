@@ -163,7 +163,10 @@ void PHY_RolePion_Posture::ChangePosture( const PHY_Posture& newPosture )
     pLastPosture_    = pCurrentPosture_;
     pCurrentPosture_ = &newPosture;
 
-    ChangePostureCompletionPercentage( 0. );
+    if( newPosture.GetID() <= PHY_Posture::mouvementDiscret_.GetID() )
+        ChangePostureCompletionPercentage( 1. );
+    else
+        ChangePostureCompletionPercentage( 0. );
 
     bPostureHasChanged_    = true;
     bPercentageHasChanged_ = true;
