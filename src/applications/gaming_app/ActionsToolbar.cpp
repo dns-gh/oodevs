@@ -243,7 +243,7 @@ void ActionsToolbar::NotifyUpdated( const Simulation& simulation )
         }
         else
         {
-            actions_.Purge(); // filter?
+            actions_.Purge();
             initialized_ = false;
         }
     }

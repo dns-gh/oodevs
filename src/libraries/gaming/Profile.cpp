@@ -35,7 +35,7 @@ using namespace kernel;
 // Name: Profile constructor
 // Created: AGE 2006-10-11
 // -----------------------------------------------------------------------------
-Profile::Profile( Controllers& controllers, Publisher_ABC& publisher, const std::string& profile )
+Profile::Profile( Controllers& controllers, Publisher_ABC& publisher, const std::string& profile, bool isLoginSet )
     : controller_ ( controllers.controller_ )
     , publisher_  ( publisher )
     , login_      ( profile )
@@ -44,7 +44,8 @@ Profile::Profile( Controllers& controllers, Publisher_ABC& publisher, const std:
     , simulation_ ( true )
 {
     controller_.Register( *this );
-    password_ += ( char ) 0x7f; // set as invalid password (fix for mantis 0003178)
+    if( !isLoginSet )
+        password_ += ( char ) 0x7f; // set as invalid password (fix for mantis 0003178)
 }
 
 // -----------------------------------------------------------------------------
@@ -143,6 +144,8 @@ void Profile::Update( const MsgsAuthenticationToClient::MsgProfile& profile )
     login_ = profile.login();
     if( profile.has_password()  )
         password_ = profile.password();
+    else
+        password_ = "";
     supervision_ = profile.superviseur() != 0;
 
     if( profile.has_read_only_camps()  )

@@ -636,12 +636,16 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
     {
         if( !connected_ )
         {
+            if( simulation.IsInitialized() )
+            {
+                connected_ = true; // we update the caption until Model is totally loaded
+                if( profile_.isEmpty() )
+                    profile_ = tools::translate( "LoginDialog", "Anonymous" );
+            }
             setCaption( appName + QString( " - [%1@%2][%3]" )
                 .arg( profile_ )
                 .arg( simulation.GetSimulationHost().c_str() )
                 .arg( ExtractExerciceName( config_.GetExerciseFile() ) ) ); // $$$$ SBO 2009-12-18: Use exercise META data
-            if( simulation.IsInitialized() )
-                connected_ = true; // we update the caption until Model is totally loaded
         }
     }
     else

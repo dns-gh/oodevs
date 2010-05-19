@@ -25,8 +25,11 @@ JoinAnalysis::JoinAnalysis( const tools::GeneralConfig& config, const QString& e
 {
     AddRootDirArgument();
     AddExerciseArgument( exercise );
-    if( !profile.isEmpty() )
+    if( profile.isEmpty() )
+        addArgument( "--login=\"anonymous\"" );
+    else
         addArgument( "--login=\"" + profile +"\"" );
+
     const std::string host = "--host=localhost:"  // $$$$ AGE 2008-01-07: 
                            + boost::lexical_cast< std::string >( port );
     addArgument( host.c_str() );

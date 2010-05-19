@@ -39,7 +39,9 @@ JoinExercise::JoinExercise( const tools::GeneralConfig& config, const QString& e
     AddRootDirArgument();
     AddExerciseArgument( exercise );
     AddSessionArgument ( session );
-    if( !profile.isEmpty() )
+    if( profile.isEmpty() )
+        addArgument( "--login=\"anonymous\"" );
+    else
         addArgument( "--login=\"" + profile +"\"" );
 }
 

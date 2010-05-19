@@ -57,7 +57,7 @@ class Profile : public kernel::Profile_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Profile( kernel::Controllers& controllers, Publisher_ABC& publisher, const std::string& profile = "" );
+             Profile( kernel::Controllers& controllers, Publisher_ABC& publisher, const std::string& profile = "", bool isLoginSet = false );
     virtual ~Profile();
     //@}
 

@@ -34,6 +34,9 @@ Config::Config( int argc, char** argv )
     try
     {
         Parse( argc, argv );
+        isLoginInCommandLine_ = IsSet( "login" );
+        if( isLoginInCommandLine_ && login_ == "anonymous" )
+            login_ = "";
     }
     catch( ... )
     {
@@ -96,4 +99,13 @@ void Config::LoadSession( Network& network ) const
 std::string Config::GetLogin() const
 {
     return login_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Config::IsLoginInCommandLine
+// Created: JSR 2010-05-18
+// -----------------------------------------------------------------------------
+bool Config::IsLoginInCommandLine() const
+{
+    return isLoginInCommandLine_;
 }
