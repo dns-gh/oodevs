@@ -144,7 +144,6 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
         ack().set_error_code( MsgsAuthenticationToClient::MsgAuthenticationResponse_ErrorCode_success );
         profile->Send( *ack().mutable_profile() );
         ack.Send( client );
-        Profile::Delete( *ack().mutable_profile() );
         authenticated_[ link ] = profile;
         container_.NotifyClientAuthenticated( client, *profile );
         ++currentConnections_;

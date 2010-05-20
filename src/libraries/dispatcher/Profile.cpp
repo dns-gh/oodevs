@@ -8,22 +8,18 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "Profile.h"
-
-#include "Model.h"
-#include "protocol/ClientPublisher_ABC.h"
 #include "Automat.h"
-#include "Side.h"
 #include "Formation.h"
+#include "Model.h"
 #include "Population.h"
-#include "protocol/ClientPublisher_ABC.h"
-#include <xeumeuleu/xml.h>
+#include "Side.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
-
 #include "protocol/authenticationsenders.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "protocol/clientsenders.h"
 #include "protocol/simulationsenders.h"
+#include <xeumeuleu/xml.h>
 
 using namespace dispatcher;
 
@@ -67,7 +63,6 @@ Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const MsgsCl
     , bSupervision_( message.profile().superviseur() != 0 )
 {
     ReadRights( message.profile() );
-
     SendCreation( clients_ );
 }
 
@@ -82,24 +77,17 @@ Profile::~Profile()
     asn.Send( clients_ );
 }
 
-// =============================================================================
-// INITIALIZATION
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: Profile::ReadAutomatRights
 // Created: NLD 2006-10-06
 // -----------------------------------------------------------------------------
 void Profile::ReadAutomatRights( xml::xistream& xis, T_AutomatSet& container )
 {
-    int nID;
-    xis >> xml::attribute( "id", nID );
-
-    const kernel::Automat_ABC* pAutomat = model_.automats_.Find( nID );
-    if( pAutomat )
+    const int id = xml::attribute< int >( xis, "id" );
+    if( const kernel::Automat_ABC* pAutomat = model_.automats_.Find( id ) )
         container.insert( pAutomat );
     else
-        MT_LOG_ERROR_MSG( "Invalid automat id ('" << nID << "') while reading profiles" );
+        MT_LOG_ERROR_MSG( "Invalid automat id ('" << id << "') while reading profiles" );
 }
 
 // -----------------------------------------------------------------------------
@@ -108,14 +96,11 @@ void Profile::ReadAutomatRights( xml::xistream& xis, T_AutomatSet& container )
 // -----------------------------------------------------------------------------
 void Profile::ReadSideRights( xml::xistream& xis, T_SideSet& container )
 {
-    int nID;
-    xis >> xml::attribute( "id", nID );
-
-    const kernel::Team_ABC* pSide = model_.sides_.Find( nID );
-    if( pSide )
+    const int id = xml::attribute< int >( xis, "id" );
+    if( const kernel::Team_ABC* pSide = model_.sides_.Find( id ) )
         container.insert( pSide );
     else
-        MT_LOG_ERROR_MSG( "Invalid side id ('" << nID << "') while reading profiles" );
+        MT_LOG_ERROR_MSG( "Invalid side id ('" << id << "') while reading profiles" );
 }
 
 // -----------------------------------------------------------------------------
@@ -124,14 +109,11 @@ void Profile::ReadSideRights( xml::xistream& xis, T_SideSet& container )
 // -----------------------------------------------------------------------------
 void Profile::ReadFormationRights( xml::xistream& xis, T_FormationSet&  container )
 {
-    int nID;
-    xis >> xml::attribute( "id", nID );
-
-    const kernel::Formation_ABC* pFormation = model_.formations_.Find( nID );
-    if( pFormation )
+    const int id = xml::attribute< int >( xis, "id" );
+    if( const kernel::Formation_ABC* pFormation = model_.formations_.Find( id ) )
         container.insert( pFormation );
     else
-        MT_LOG_ERROR_MSG( "Invalid formation id ('" << nID << "') while reading profiles" );
+        MT_LOG_ERROR_MSG( "Invalid formation id ('" << id << "') while reading profiles" );
 }
 
 // -----------------------------------------------------------------------------
@@ -140,14 +122,11 @@ void Profile::ReadFormationRights( xml::xistream& xis, T_FormationSet&  containe
 // -----------------------------------------------------------------------------
 void Profile::ReadPopulationRights( xml::xistream& xis, T_PopulationSet& container )
 {
-    int nID;
-    xis >> xml::attribute( "id", nID );
-
-    const kernel::Population_ABC* pPopulation = model_.populations_.Find( nID );
-    if( pPopulation )
+    const int id = xml::attribute< int >( xis, "id" );
+    if( const kernel::Population_ABC* pPopulation = model_.populations_.Find( id ) )
         container.insert( pPopulation );
     else
-        MT_LOG_ERROR_MSG( "Invalid population id ('" << nID << "') while reading profiles" );
+        MT_LOG_ERROR_MSG( "Invalid population id ('" << id << "') while reading profiles" );
 
 }
 
@@ -333,44 +312,15 @@ void Profile::Send( MsgsAuthenticationToClient::MsgProfileDescription& asn ) con
 }
 
 // -----------------------------------------------------------------------------
-// Name: Profile::Delete
-// Created: NLD 2006-10-10
-// -----------------------------------------------------------------------------
-void Profile::Delete( MsgsAuthenticationToClient::MsgProfile& asn )
-{
-    if( asn.has_read_only_automates() && asn.read_only_automates().elem_size() > 0 )
-        asn.mutable_read_only_automates()->Clear();
-    if( asn.has_read_write_automates() && asn.read_write_automates().elem_size() > 0 )
-        asn.mutable_read_write_automates()->Clear();
-
-    if( asn.has_read_only_camps() && asn.read_only_camps().elem_size() > 0 )
-        asn.mutable_read_only_camps()->Clear();
-    if( asn.has_read_write_camps() && asn.read_write_camps().elem_size() > 0 )
-        asn.mutable_read_write_camps()->Clear();
-
-    if( asn.has_read_only_formations() && asn.read_only_formations().elem_size() > 0 )
-        asn.mutable_read_only_formations()->Clear();
-    if( asn.has_read_write_formations() && asn.read_write_formations().elem_size() > 0 )
-        asn.mutable_read_write_formations()->Clear();
-
-    if( asn.has_read_only_populations() && asn.read_only_populations().elem_size() > 0 )
-        asn.mutable_read_only_populations()->Clear();
-    if( asn.has_read_write_populations() && asn.read_write_populations().elem_size() > 0 )
-        asn.mutable_read_write_populations()->Clear();
-}
-
-// -----------------------------------------------------------------------------
 // Name: Profile::SendCreation
 // Created: SBO 2007-01-22
 // -----------------------------------------------------------------------------
 void Profile::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     authentication::ProfileCreation asn;
-    //Send( *asn().mutable_profile() );
     Send( *asn().mutable_profile() );
     asn().mutable_profile()->set_password( strPassword_.c_str() );
     asn.Send( publisher );
-    Profile::Delete( *asn().mutable_profile() );
 }
 
 // -----------------------------------------------------------------------------
@@ -391,7 +341,6 @@ void Profile::Update( const MsgsClientToAuthentication::MsgProfileUpdateRequest&
         asn().mutable_profile()->set_password( strPassword_.c_str() );
     Send( *asn().mutable_profile() );
     asn.Send( clients_ );
-    Profile::Delete( *asn().mutable_profile() );
 }
 
 // -----------------------------------------------------------------------------
@@ -422,5 +371,4 @@ void Profile::SetRight( const kernel::Automat_ABC& entity, bool readonly, bool r
     asn().set_login( strLogin_.c_str() );
     Send( *asn().mutable_profile() );
     asn.Send( clients_ );
-    Profile::Delete( *asn().mutable_profile() );
 }

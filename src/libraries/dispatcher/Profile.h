@@ -21,6 +21,7 @@ namespace MsgsClientToSim
 {
     class MsgClientToSim;
 }
+
 namespace MsgsClientToAuthentication
 {
     class MsgProfileUpdateRequest;
@@ -32,8 +33,6 @@ namespace MsgsClientToReplay
 {
     class MsgClientToReplay;
 }
-
-
 
 namespace xml{ class xistream; }
 
@@ -86,7 +85,6 @@ public:
     void Send        ( MsgsAuthenticationToClient::MsgProfile& asn ) const;
     void Send        ( MsgsAuthenticationToClient::MsgProfileDescription& asn ) const;
     void SendCreation( ClientPublisher_ABC& publisher ) const;
-    static void Delete   ( MsgsAuthenticationToClient::MsgProfile& asn );
     //@}
 
     //! @name Operations
