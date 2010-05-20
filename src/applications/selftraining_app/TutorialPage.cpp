@@ -165,7 +165,7 @@ void TutorialPage::OnStart()
     {
         const unsigned int port = frontend::DispatcherPort( 1 ); // $$$$ SBO 2008-10-16: hard coded port
         boost::shared_ptr< frontend::SpawnCommand > command1( new frontend::StartReplay( config_, exercise_, "default", port, true ) );
-        boost::shared_ptr< frontend::SpawnCommand > command2( new frontend::JoinAnalysis( config_, exercise_, "default", port, true ) );
+        boost::shared_ptr< frontend::SpawnCommand > command2( new frontend::JoinAnalysis( config_, exercise_, "", "default", port, true ) );
         boost::shared_ptr< frontend::Process_ABC >  process( new CompositeProcessWrapper( controllers_.controller_, command1, command2 ) );
         progressPage_->Attach( process );
         progressPage_->show();

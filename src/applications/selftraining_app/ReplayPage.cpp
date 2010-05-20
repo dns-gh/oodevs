@@ -83,7 +83,7 @@ void ReplayPage::StartExercise( const QString& exercise )
     const unsigned int port = lister_->GetPort( exercise );
     ConfigureSession( exercise, session_ );
     boost::shared_ptr< frontend::SpawnCommand > replay( new frontend::StartReplay( config_, exercise, session_, port, true ) );
-    boost::shared_ptr< frontend::SpawnCommand > client( new frontend::JoinAnalysis( config_, exercise, profile_.GetLogin(), port, true ) );
+    boost::shared_ptr< frontend::SpawnCommand > client( new frontend::JoinAnalysis( config_, exercise, session_, profile_.GetLogin(), port, true ) );
     boost::shared_ptr< frontend::Process_ABC >  process( new CompositeProcessWrapper( controllers_.controller_, replay, client ) );
     progressPage_->Attach( process );
     progressPage_->show();

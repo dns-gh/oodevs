@@ -20,11 +20,13 @@ using namespace frontend;
 // Name: JoinAnalysis constructor
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-JoinAnalysis::JoinAnalysis( const tools::GeneralConfig& config, const QString& exercise, const QString& profile, unsigned port, bool attach )
+JoinAnalysis::JoinAnalysis( const tools::GeneralConfig& config, const QString& exercise, const QString& session, const QString& profile, unsigned port, bool attach )
     : SpawnCommand( config, "gaming_app.exe", attach )
 {
     AddRootDirArgument();
     AddExerciseArgument( exercise );
+    if( !session.isEmpty() )
+        AddSessionArgument( session );
     if( profile.isEmpty() )
         addArgument( "--login=\"anonymous\"" );
     else

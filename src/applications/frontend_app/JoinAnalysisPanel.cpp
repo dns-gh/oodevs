@@ -73,7 +73,7 @@ void JoinAnalysisPanel::StartExercise()
 {
     if( list_->selectedItem() )
     {
-        Start( new frontend::JoinAnalysis( config_, list_->selectedItem()->text(), "", frontend::DispatcherPort( exerciseNumber_->value() ) ) );
+        Start( new frontend::JoinAnalysis( config_, list_->selectedItem()->text(), "", "", frontend::DispatcherPort( exerciseNumber_->value() ) ) );
         context_.Save( "exercise", list_ );
     }
     Update();
