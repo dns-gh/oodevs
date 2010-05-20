@@ -23,7 +23,7 @@
 // Created: SBO 2008-06-04
 // -----------------------------------------------------------------------------
 Drawing::Drawing( kernel::Controller& controller, const MsgsMessengerToClient::MsgShapeCreation& message, const gui::DrawingTypes& types, kernel::LocationProxy& proxy, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter )
-    : gui::DrawerShape( controller, message.oid(), types.Get( QString( message.shape().category().c_str() ) ).Get( QString( message.shape().template_().c_str() ) ), QColor( QString( message.shape().color().c_str() ) ), proxy )
+    : gui::DrawerShape( controller, message.oid(), types.Get( message.shape().category().c_str() ).GetTemplate( message.shape().template_() ), QColor( QString( message.shape().color().c_str() ) ), proxy )
     , publisher_( publisher )
     , converter_( converter )
     , publishUpdate_( true )

@@ -45,7 +45,7 @@ namespace
         std::string category, style;
         xis >> xml::attribute( "category", category )
             >> xml::attribute( "template", style );
-        return types.Get( category.c_str() ).Get( style.c_str() );
+        return types.Get( category.c_str() ).GetTemplate( style );
     }
 
     QColor ReadColor( xml::xistream& xis )

@@ -65,5 +65,17 @@ QString DrawingCategory::GetDescription() const
 void DrawingCategory::ReadTemplate( xml::xistream& xis, svg::TextRenderer& renderer )
 {
     DrawingTemplate* style = new DrawingTemplate( xis, *this, renderer );
-    Register( style->GetCode(), *style );
+    Register( style->GetName(), style->GetCode().ascii(), *style );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawingCategory::GetTemplate
+// Created: SBO 2010-05-20
+// -----------------------------------------------------------------------------
+const DrawingTemplate& DrawingCategory::GetTemplate( const std::string& templateName ) const
+{
+    const QString name = templateName.c_str();
+    if( const DrawingTemplate* result = Find( name ) )
+        return *result;
+    return Get( templateName );
 }

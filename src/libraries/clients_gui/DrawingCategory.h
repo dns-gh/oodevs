@@ -10,7 +10,7 @@
 #ifndef __DrawingCategory_h_
 #define __DrawingCategory_h_
 
-#include "tools/Resolver.h"
+#include "clients_kernel/Resolver2.h"
 
 namespace kernel
 {
@@ -37,7 +37,7 @@ namespace gui
 */
 // Created: SBO 2008-06-04
 // =============================================================================
-class DrawingCategory : public tools::Resolver< DrawingTemplate, QString >
+class DrawingCategory : public kernel::Resolver2< DrawingTemplate, QString, std::string >
 {
 
 public:
@@ -51,6 +51,7 @@ public:
     //@{
     QString GetName() const;
     QString GetDescription() const;
+    const DrawingTemplate& GetTemplate( const std::string& templateName ) const;
     //@}
 
 private:
