@@ -10,8 +10,10 @@
 #include "protocol_test_pch.h"
 #include "protocol_includes.h"
 #include "MessageHelpers.h"
+#include "tools/asio.h"
 #include "tools/MessageDecoder.h"
 #include "tools/MessageEncoder.h"
+#include "tools/MessageIdentifierFactory.h"
 #include <boost/date_time/posix_time/posix_time.hpp>
 
 using namespace mockpp;
@@ -50,13 +52,14 @@ namespace
         return true;
     }
 
+    static unsigned long headerSize_ = 2 * sizeof( unsigned long );
+
     struct EncodingFixture
     {
         template< typename M >
         void Verify( M& message, unsigned int count = 1 )
         {
-            const unsigned int original = sizeof( message );
-            unsigned int encoded = 0;
+            const unsigned long tag = tools::MessageIdentifierFactory::GetIdentifier< M >();
 
             BOOST_REQUIRE( message.IsInitialized() );
             const boost::posix_time::ptime start = boost::posix_time::microsec_clock::universal_time();
@@ -65,14 +68,15 @@ namespace
                 std::auto_ptr< tools::MessageEncoder< M > > encoder;
                 BOOST_REQUIRE_NO_THROW( encoder.reset( new tools::MessageEncoder< M >( message ) ) );
                 const tools::Message& encodedMessage = *encoder;
+                CheckOutputBuffer( encodedMessage, tag );
                 tools::Message encodedCopy = encodedMessage;
                 std::auto_ptr< tools::MessageDecoder< M > > decoder;
                 BOOST_REQUIRE_NO_THROW( decoder.reset( new tools::MessageDecoder< M >( StripHeader( encodedCopy ) ) ) );
                 const M& decodedMessage = *decoder;
                 BOOST_CHECK( message == decodedMessage );
-                encoded = encodedMessage.Size() - 2 * sizeof( unsigned long );
+                BOOST_CHECK_EQUAL( message.ByteSize(), encodedMessage.Size() - headerSize_ );
             }
-            BOOST_TEST_MESSAGE( "Encoded " << count << " '" << typeid( message ).name() << "' message(s) in " << boost::posix_time::microsec_clock::universal_time() - start << " - Original/Encoded size: " << original << "/" << encoded );
+            BOOST_TEST_MESSAGE( "Encoded " << count << " '" << typeid( message ).name() << "' message(s) in " << boost::posix_time::microsec_clock::universal_time() - start );
         }
 
         tools::Message& StripHeader( tools::Message& message )
@@ -80,6 +84,17 @@ namespace
             unsigned long size, tag;
             message >> size >> tag;
             return message;
+        }
+
+        void CheckOutputBuffer( const tools::Message& message, unsigned long tag )
+        {
+            std::vector< unsigned long > expected;
+            expected.push_back( message.Size() - sizeof( unsigned long ) );
+            expected.push_back( tag );
+            boost::asio::const_buffers_1 buffer = message.MakeOutputBuffer( tag );
+            std::vector< unsigned long >::const_iterator expectedIt = expected.begin();
+            for( boost::asio::const_buffers_1::const_iterator it = buffer.begin(); expectedIt != expected.end() && it != buffer.end(); ++it, ++expectedIt )
+                BOOST_CHECK_EQUAL( *expectedIt, ntohl( *boost::asio::buffer_cast< const unsigned long* >( *it ) ) );
         }
     };
 }
