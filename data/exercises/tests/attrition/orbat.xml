@@ -21,6 +21,18 @@
             <unit command-post="false" id="33" name="Section de Tir AUF1 CDS OFF" position="31UEQ1193722093" type="Section de Tir AUF1 CDS OFF"/>
             <unit command-post="false" id="34" name="Section de Tir AUF1 CDS SOFF" position="31UEQ1143621594" type="Section de Tir AUF1 CDS SOFF"/>
           </automat>
+          <automat engaged="true" id="37" knowledge-group="2" name="Compagnie CBT GENIE type BB BM [37]" type="Compagnie CBT GENIE type BB BM">
+            <unit command-post="true" id="38" name="PC CIE CBT GENIEType BB/BM" position="31UEQ1299126523" type="PC CIE CBT GENIEType BB/BM"/>
+            <unit command-post="false" id="39" name="Section CBT GEN" position="31UEQ1349126023" type="Section CBT GEN"/>
+            <unit command-post="false" id="40" name="Section CBT GEN" position="31UEQ1298925525" type="Section CBT GEN"/>
+            <unit command-post="false" id="41" name="Section CBT GEN" position="31UEQ1248926025" type="Section CBT GEN"/>
+            <unit command-post="false" id="42" name="Groupe EBG" position="31UEQ1349126522" type="Groupe EBG"/>
+            <unit command-post="false" id="43" name="Groupe EBG" position="31UEQ1369826023" type="Groupe EBG"/>
+            <unit command-post="false" id="44" name="Groupe EBG" position="31UEQ1349025524" type="Groupe EBG"/>
+            <unit command-post="false" id="45" name="Groupe EBG" position="31UEQ1298925318" type="Groupe EBG"/>
+            <unit command-post="false" id="46" name="Groupe MPG" position="31UEQ1248925525" type="Groupe MPG"/>
+            <unit command-post="false" id="47" name="Groupe MPG" position="31UEQ1228226025" type="Groupe MPG"/>
+          </automat>
           <limit name="Limite 7">
             <point>31UEQ0687827739</point>
             <point>31UEQ0640623008</point>
