@@ -91,6 +91,18 @@ void WeatherCreationPanel::NotifyUpdated( const kernel::ModelLoaded& )
 }
 
 // -----------------------------------------------------------------------------
+// Name: WeatherCreationPanel::NotifyUpdated
+// Created: SLG 2010-05-20
+// -----------------------------------------------------------------------------
+void WeatherCreationPanel::NotifyUpdated( const Simulation& simulation )
+{
+    if( !startTime_->dateTime().isValid() )
+        startTime_->setDateTime( simulation.GetInitialDateTime() );
+    if( !endTime_->dateTime().isValid() )
+        endTime_->setDateTime( simulation.GetInitialDateTime() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: WeatherCreationPanel::StartEditingLocation
 // Created: SLG 2010-03-24
 // -----------------------------------------------------------------------------

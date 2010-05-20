@@ -101,7 +101,10 @@ void LocalWeathersList::CommitTo( WeatherModel& model )
     for( IT_LocalWeathers it = weathers_.begin(); it != weathers_.end(); ++it )
     {
         LocalWeather* weather = new LocalWeather( **it );
-        model.Resolver< LocalWeather >::Register( weather->GetId(), *weather );
+        if( weather->CheckValidity() )
+            model.Resolver< LocalWeather >::Register( weather->GetId(), *weather );
+        else
+            QMessageBox::warning( this, tr( weather->GetName() ) , tr( "Time parameters or location are incorrect" ) );
     }
 }
 

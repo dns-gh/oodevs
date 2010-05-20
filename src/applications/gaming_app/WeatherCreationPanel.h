@@ -14,6 +14,7 @@
 #include "clients_gui/ShapeHandler_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 #include "LocationSerializer.h"
+#include "gaming/Simulation.h"
 
 namespace kernel
 {
@@ -49,6 +50,7 @@ class WeatherWidget;
 class WeatherCreationPanel : public gui::InfoPanel_ABC
                            , public tools::Observer_ABC
                            , public tools::ElementObserver_ABC< kernel::ModelLoaded >
+                           , public tools::ElementObserver_ABC< Simulation >
                            , public gui::ShapeHandler_ABC
 {
         Q_OBJECT;
@@ -62,6 +64,7 @@ public:
     //! @name Operations
     //@{
     virtual void NotifyUpdated( const kernel::ModelLoaded& );
+    virtual void NotifyUpdated( const Simulation& simulation );
     void Draw( const kernel::Viewport_ABC& viewport );
     virtual void Handle ( kernel::Location_ABC& location );
     //@}

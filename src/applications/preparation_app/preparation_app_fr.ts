@@ -322,6 +322,10 @@ Merci de sélectionner un autre fichier à importer.</translation>
         <source>Delete</source>
         <translation>Supprimer</translation>
     </message>
+    <message>
+        <source>Time parameters or location are incorrect</source>
+        <translation type="unfinished">Paramètres de temps ou de localisation sont incorrects</translation>
+    </message>
 </context>
 <context>
     <name>LogisticSuperiorEditor</name>

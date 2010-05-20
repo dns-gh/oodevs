@@ -51,6 +51,7 @@ public:
     geometry::Point2f GetBottomRight() const;
     QDateTime GetStartTime() const;
     QDateTime GetEndTime() const;
+    bool CheckValidity() const;
     //@}
 
 private:

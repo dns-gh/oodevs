@@ -168,3 +168,14 @@ QDateTime LocalWeather::GetEndTime() const
 {
     return endTime_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: LocalWeather::CheckValidity
+// Created: SLG 2010-05-20
+// -----------------------------------------------------------------------------
+bool LocalWeather::CheckValidity() const
+{
+    if ( ( startTime_ > endTime_ ) || !startTime_.isValid()  || !endTime_.isValid() ||  ( topLeft_ == geometry::Point2f( 0, 0 )  && bottomRight_ == geometry::Point2f( 0, 0 ) ) )
+        return false;
+    return true;
+}

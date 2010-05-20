@@ -57,8 +57,10 @@ WeatherPanel::WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel:
     QGroupBox* localParametersGroup = new QGroupBox( 2, Qt::Horizontal, tr( "Time and Position Parameters" ), localWeatherBox_ );
     startTimeLabel_ = new QLabel( tr( "Start time:" ), localParametersGroup );
     startTime_ = new QDateTimeEdit( localParametersGroup );
+    startTime_->setDateTime( QDateTime::currentDateTime() );
     endTimeLabel_ = new QLabel( tr( "End time:" ), localParametersGroup );
     endTime_ = new QDateTimeEdit( localParametersGroup );
+    endTime_->setDateTime( QDateTime::currentDateTime() );
 
     QButton* btn = new QPushButton( tr( "Set location" ), localParametersGroup );
     connect( btn, SIGNAL( clicked() ), this, SLOT( SetPatchPosition() ) );
