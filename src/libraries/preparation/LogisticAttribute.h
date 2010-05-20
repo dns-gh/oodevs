@@ -13,12 +13,14 @@
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/StrongType.h"
 #include "clients_kernel/Serializable_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "tools/Resolver_ABC.h"
 #include "Types.h"
 
 namespace kernel
 {
     class Automat_ABC;
+    class Controllers;
     class Displayer_ABC;
     class PropertiesDictionary;
 }
@@ -36,13 +38,15 @@ namespace xml
 // =============================================================================
 class LogisticAttribute : public kernel::LogisticAttribute_ABC
                         , public kernel::Serializable_ABC
+                        , public tools::Observer_ABC
+                        , public tools::ElementObserver_ABC< kernel::Automat_ABC >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit LogisticAttribute( kernel::PropertiesDictionary& dico );
-             LogisticAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, kernel::PropertiesDictionary& dico );
+             LogisticAttribute( kernel::PropertiesDictionary& dico, kernel::Controllers& controllers );
+             LogisticAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, kernel::PropertiesDictionary& dico, kernel::Controllers& controllers );
     virtual ~LogisticAttribute();
     //@}
 
@@ -66,12 +70,14 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void NotifyDeleted( const kernel::Automat_ABC& entity );
     void CreateDictionary( kernel::PropertiesDictionary& dico );
     //@}
 
 private:
     //! @name Member data
     //@{
+    kernel::Controllers& controllers_;
     TC2 tc2_;
     //@}
 };

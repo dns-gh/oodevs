@@ -104,9 +104,15 @@ namespace
         }
         
         template< typename T, typename Helper >
-        static void Attach2( tools::SortedInterfaceContainer< Extension_ABC >& result, PropertiesDictionary& dico, const Helper& helper, xml::xistream& xis )
+        static void Attach( tools::SortedInterfaceContainer< Extension_ABC >& result, PropertiesDictionary& dico, const Helper& helper, xml::xistream& xis )
         {
             result.Register( *new T( xis, helper, dico ) );
+        }
+
+        template< typename T, typename Helper >
+        static void Attach( tools::SortedInterfaceContainer< Extension_ABC >& result, PropertiesDictionary& dico, const Helper& helper, xml::xistream& xis, kernel::Controllers& controllers )
+        {
+            result.Register( *new T( xis, helper, dico, controllers ) );
         }
     };
 }
@@ -114,11 +120,11 @@ namespace
 #define BIND_ATTACH_ATTRIBUTE( CLASS, P1, P2, P3 ) \
     boost::bind( &AttributeBuilder< ##CLASS##_ABC >::Attach< CLASS >, P1, P2, P3 )
 
-#define BIND_ATTACH_ATTRIBUTE_HELPER( CLASS, HELPER, P1, P2, P3, P4 ) \
-    boost::bind( &AttributeBuilder< ##CLASS##_ABC >::Attach2< CLASS, tools::Resolver_ABC< HELPER > >, P1, P2, P3, P4 )
+#define BIND_ATTACH_ATTRIBUTE_HELPER( CLASS, HELPER, P1, P2, P3, P4, P5 ) \
+    boost::bind( &AttributeBuilder< ##CLASS##_ABC >::Attach< CLASS, tools::Resolver_ABC< HELPER > >, P1, P2, P3, P4, P5 )
 
 #define BIND_ATTACH_ATTRIBUTE_STRING_HELPER( CLASS, HELPER, P1, P2, P3, P4 ) \
-    boost::bind( &AttributeBuilder< ##CLASS##_ABC >::Attach2< CLASS, tools::Resolver_ABC< HELPER, std::string > >, P1, P2, P3, P4 )
+    boost::bind( &AttributeBuilder< ##CLASS##_ABC >::Attach< CLASS, tools::Resolver_ABC< HELPER, std::string > >, P1, P2, P3, P4 )
 
 // -----------------------------------------------------------------------------
 // Name: TeamFactory constructor
@@ -163,7 +169,7 @@ void TeamFactory::Initialize()
     factory->Register( "nbc-agents"         , BIND_ATTACH_ATTRIBUTE_STRING_HELPER( NBCAttribute, kernel::NBCAgent, _1, _2, boost::cref( staticModel_.objectTypes_ ), _3 ) );    
     factory->Register( "obstacle"           , BIND_ATTACH_ATTRIBUTE( ObstacleAttribute, _1, _2, _3 ) );
     factory->Register( "supply-route"       , BIND_ATTACH_ATTRIBUTE( SupplyRouteAttribute, _1, _2, _3 ) );
-    factory->Register( "tc2"                , BIND_ATTACH_ATTRIBUTE_HELPER( LogisticAttribute, kernel::Automat_ABC, _1, _2, boost::cref( model_.agents_ ), _3 ) );
+    factory->Register( "tc2"                , BIND_ATTACH_ATTRIBUTE_HELPER( LogisticAttribute, kernel::Automat_ABC, _1, _2, boost::cref( model_.agents_ ), _3, boost::ref( controllers_ ) ) );
     factory->Register( "max-size"           , BIND_ATTACH_ATTRIBUTE( OccupantAttribute, _1, _2, _3 ) );
 
     factory_.reset( factory );

@@ -44,11 +44,11 @@ LogisticPrototype::~LogisticPrototype()
 // -----------------------------------------------------------------------------
 void LogisticPrototype::Commit()
 {
-    if( creation_ )
+    if( creation_ && selected_ != 0 )
     {
         PropertiesDictionary& dico = creation_->Get< PropertiesDictionary >();
-        LogisticAttribute* attribute = new LogisticAttribute( dico );
-                           attribute->SetTC2( *selected_ );           
+        LogisticAttribute* attribute = new LogisticAttribute( dico, controllers_ );
+        attribute->SetTC2( *selected_ );
         creation_->Get< ObjectAttributesContainer >().Register( *attribute );
     }
 }
