@@ -921,7 +921,7 @@ void MIL_KnowledgeGroup::UpdateAgentKnowledgeFromAgentPerception( const DEC_Know
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::UpdateAgentKnowledgeFromParentKnowledgeGroup( const DEC_Knowledge_Agent& agentKnowledge, int currentTimeStep )
 {
-    if( agentKnowledge.IsValid() )
+    if( agentKnowledge.IsValid() && ( !parent_ || agentKnowledge.DetectionTick() + parent_->GetType().GetKnowledgeCommunicationDelay() <= currentTimeStep ) )
         GetAgentKnowledgeToUpdate( agentKnowledge.GetAgentKnown() ).Update( agentKnowledge, currentTimeStep );
 }
 

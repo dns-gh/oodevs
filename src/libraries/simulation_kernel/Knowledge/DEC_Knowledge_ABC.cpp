@@ -23,6 +23,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ABC )
 // Created: NLD 2004-03-12
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ABC::DEC_Knowledge_ABC()
+: detectionTick_( MIL_Singletons::GetTime().GetCurrentTick() )
 {
     // NOTHING
 }
@@ -43,4 +44,13 @@ DEC_Knowledge_ABC::~DEC_Knowledge_ABC()
 unsigned int DEC_Knowledge_ABC::GetCurrentTimeStep() const
 {
     return MIL_Singletons::GetTime().GetCurrentTick();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_ABC::DetectionTick
+// Created: LDC 2010-05-20
+// -----------------------------------------------------------------------------
+unsigned int DEC_Knowledge_ABC::DetectionTick() const
+{
+    return detectionTick_;
 }

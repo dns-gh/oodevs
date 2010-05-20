@@ -103,9 +103,9 @@ BOOST_AUTO_TEST_CASE( VerifyObjectKnowledge_Serialization )
     MockNET_Publisher_ABC publisher;
     MOCK_EXPECT( publisher, Send ).once(); // object knowledge creation
     MOCK_EXPECT( army, GetID ).returns( 42u );
-    DEC_Knowledge_Object knowledge( army, *pObject );
     MockMIL_Time_ABC time;
     MOCK_EXPECT( time, GetCurrentTick ).returns( 1u );
+    DEC_Knowledge_Object knowledge( army, *pObject );
     knowledge.Update( PHY_PerceptionLevel::identified_ );
     std::stringstream stringstream;
     {

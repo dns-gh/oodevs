@@ -11,6 +11,7 @@
 #include "simulation_kernel_test_pch.h"
 #include "MockAgent.h"
 #include "MockArmy.h"
+#include "MockMIL_Time_ABC.h"
 #include "MockRoleLocation.h"
 #include "MockPHY_RoleInterface_Perceiver.h"
 #include "MockKnowledgeGroupFactory.h"
@@ -103,6 +104,8 @@ BOOST_AUTO_TEST_CASE( TestPropagationInKnowledgeGroups )
 {
     MockArmy army;
     MOCK_EXPECT( army, GetID ).returns( 42u );
+    MockMIL_Time_ABC time;
+    MOCK_EXPECT( time, GetCurrentTick ).returns( 1u );
 
     std::auto_ptr< MIL_KnowledgeGroup > armyGroup( CreateKnowledgeGroup( army, 1, "GTIA" ) );
     std::auto_ptr< MIL_KnowledgeGroup > group1   ( CreateKnowledgeGroup( army, *armyGroup, 2, "GTIA" ) );
@@ -238,6 +241,8 @@ BOOST_AUTO_TEST_CASE( TestExtrapolationTimeInKnowledgeGroup )
 BOOST_AUTO_TEST_CASE( TestLatentRelevance )
 {
     MockArmy army;
+    MockMIL_Time_ABC time;
+    MOCK_EXPECT( time, GetCurrentTick ).returns( 1u );
     std::auto_ptr< MIL_KnowledgeGroup > armyGroup( CreateKnowledgeGroup( army, 1, "GTIA" ) );
     std::auto_ptr< MIL_KnowledgeGroup > knowledgeGroup   ( CreateKnowledgeGroup( army, *armyGroup, 2, "GTIA" ) );
     

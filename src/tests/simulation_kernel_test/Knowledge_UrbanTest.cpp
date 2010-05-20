@@ -15,6 +15,7 @@
 #include "simulation_kernel/Knowledge/DEC_Knowledge_Urban.h"
 #include "simulation_kernel/Knowledge/DEC_Knowledge_UrbanPerception.h"
 #include "Fixture.h"
+#include "MockMIL_Time_ABC.h"
 #include "urban/BlockModel.h"
 #include "urban/Block.h"
 #include "urban/model.h"
@@ -75,6 +76,8 @@ BOOST_AUTO_TEST_CASE( Knowledge_UrbanTest_Update )
     const urban::Block& object = model->blocks_.Get( 9 );
 
     {
+        MockMIL_Time_ABC time;
+        MOCK_EXPECT( time, GetCurrentTick ).returns( 1u );
         DEC_Knowledge_Urban kn( army, object );
         DEC_Knowledge_UrbanPerception perception( *pion.pPion_, object );
 

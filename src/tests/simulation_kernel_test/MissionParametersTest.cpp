@@ -6,7 +6,7 @@
 #include "MockDEC_KnowledgeResolver_ABC.h"
 #include "MockMIL_EntityManager_ABC.h"
 #include "MockMIL_ObjectType_ABC.h"
-#include "StubMIL_Time_ABC.h"
+#include "MockMIL_Time_ABC.h"
 
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
@@ -53,6 +53,7 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
 
+
 #include "Network/NET_ASN_Tools.h"
 
 #include "simulation_terrain/TER_World.h"
@@ -69,6 +70,8 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentKnowledgeListParameter_ToASN )
     MsgUnitKnowledgeList asnIn;
     asnIn.add_elem()->set_oid( 0 );
     MockDEC_KnowledgeResolver_ABC resolver;
+    MockMIL_Time_ABC time;
+    MOCK_EXPECT( time, GetCurrentTick ).returns( 1u );
     boost::shared_ptr< DEC_Knowledge_Agent > knowledge( new DEC_Knowledge_Agent() ); // $$$$ LDC: id == 0... :(
     MOCK_EXPECT( resolver, ResolveKnowledgeAgentFromMessage ).once().returns( knowledge );
     MIL_AgentKnowledgeListParameter param( asnIn, resolver );
@@ -89,6 +92,8 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentKnowledgeParameter_ToASN )
     MsgUnitKnowledge asnIn;
     asnIn.set_oid( 0 );
     MockDEC_KnowledgeResolver_ABC resolver;
+    MockMIL_Time_ABC time;
+    MOCK_EXPECT( time, GetCurrentTick ).returns( 1u );
     boost::shared_ptr< DEC_Knowledge_Agent > knowledge( new DEC_Knowledge_Agent() ); // $$$$ LDC: id == 0... :(
     MOCK_EXPECT( resolver, ResolveKnowledgeAgentFromMessage ).once().returns( knowledge );
     MIL_AgentKnowledgeParameter param( asnIn, resolver );
@@ -295,7 +300,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_EnumerationParameter_ToASN )
 //    xml::xifstream xisProt( "../../data/data/models/bmstest/physical/Protections.xml" );
 //    PHY_Protection::Initialize ( xisProt );
 //    xml::xifstream xis( "../../data/data/models/bmstest/physical/Composantes.xml" );
-//    StubMIL_Time_ABC time;
+//    MockMIL_Time_ABC time;
 //    PHY_ComposanteTypePion::Initialize( time, xis );
 //    EquipmentType asnIn = 22;
 //    MIL_EquipmentTypeParameter param( asnIn );
@@ -456,6 +461,8 @@ BOOST_AUTO_TEST_CASE( TestMIL_ObjectKnowledgeParameter_ToASN )
     MsgObjectKnowledge asnIn;
     asnIn.set_oid( 0 );
     MockDEC_KnowledgeResolver_ABC resolver;
+    MockMIL_Time_ABC time;
+    MOCK_EXPECT( time, GetCurrentTick ).returns( 1u );
     boost::shared_ptr< DEC_Knowledge_Object > knowledge( new DEC_Knowledge_Object() ); // $$$$ LDC: id == 0... :(
     MOCK_EXPECT( resolver, ResolveKnowledgeObjectFromMessage ).once().returns( knowledge );
 
@@ -474,6 +481,8 @@ BOOST_AUTO_TEST_CASE( TestMIL_ObjectKnowledgeListParameter_ToASN )
     MsgObjectKnowledgeList asnIn;
     asnIn.add_elem()->set_oid( 0 );
     MockDEC_KnowledgeResolver_ABC resolver;
+    MockMIL_Time_ABC time;
+    MOCK_EXPECT( time, GetCurrentTick ).returns( 1u );
     boost::shared_ptr< DEC_Knowledge_Object > knowledge( new DEC_Knowledge_Object() ); // $$$$ LDC: id == 0... :(
     MOCK_EXPECT( resolver, ResolveKnowledgeObjectFromMessage ).once().returns( knowledge );
     
@@ -727,6 +736,8 @@ BOOST_AUTO_TEST_CASE( TestMIL_PopulationKnowledgeParameter_ToASN )
     MsgPopulationKnowledge asnIn;
     asnIn.set_oid( 0 );
     MockDEC_KnowledgeResolver_ABC resolver;
+    MockMIL_Time_ABC time;
+    MOCK_EXPECT( time, GetCurrentTick ).returns( 1u );
     DEC_Knowledge_Population knowledge; // $$$$ LDC: id == 0... :(
     MOCK_EXPECT( resolver, ResolveKnowledgePopulationFromMessage ).once().returns( &knowledge );
 

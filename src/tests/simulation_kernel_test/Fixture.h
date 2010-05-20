@@ -10,6 +10,7 @@
 #ifndef __Fixture_h_
 #define __Fixture_h_
 
+#include "MockMIL_Time_ABC.h"
 #include "StubMIL_AgentPion.h"
 #include "StubMIL_AgentTypePion.h"
 #include "StubMIL_Automate.h"
@@ -31,6 +32,8 @@ struct FixturePion
         std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
 
         pModel_.reset( new DEC_Model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes ) );
+        MockMIL_Time_ABC time;
+        MOCK_EXPECT( time, GetCurrentTick ).returns( 1u );
         pType_.reset( new StubMIL_AgentTypePion( *pModel_ ) );
         pTypeAutomat_.reset( new StubMIL_AutomateType( *pModel_ ) );
         pAutomat_.reset( new StubMIL_Automate( *pTypeAutomat_ ) );

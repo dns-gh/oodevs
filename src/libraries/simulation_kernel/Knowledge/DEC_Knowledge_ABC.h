@@ -32,14 +32,25 @@ public:
     
     //! @name CheckPoints
     //@{
-    template < typename Archive > void serialize( Archive&, const unsigned int ) {}
-//@}
+    template < typename Archive > void serialize( Archive& file, const unsigned int )
+    {
+        file & detectionTick_;
+    }
+    //@}
+
+    //! @name Methods
+    //@{    
+    unsigned int DetectionTick() const;
+    //@}
     
 protected:
     //! @name Tools
     //@{
     unsigned int GetCurrentTimeStep() const; 
     //@}
+
+private:
+    unsigned int detectionTick_;
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ABC )

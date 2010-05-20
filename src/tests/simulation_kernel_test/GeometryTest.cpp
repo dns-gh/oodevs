@@ -47,8 +47,8 @@ BOOST_AUTO_TEST_CASE( TestComputePolygonHull )
 }
 
 // -----------------------------------------------------------------------------
-// Name: TestKnowledgeGroupType
-// Created: LDC 2009-12-10
+// Name: TestComputePolygonScale
+// Created: ???
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestComputePolygonScale )
 {
