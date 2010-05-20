@@ -132,7 +132,11 @@ void ParamLocation::SetShapeFilter( bool point, bool line, bool polygon, bool ci
 {
     filter_ = ShapeFilter( point, line, polygon, circle, rectangle );
     if( creator_ )
+    {
         creator_->Allow( point, line, polygon, circle, rectangle );
+        if( location_.get() && location_->IsValid() && !creator_->Allows( *location_ ) )
+            location_.reset();
+    }
 }
 
 // -----------------------------------------------------------------------------
