@@ -24,8 +24,6 @@ ADN_KnowledgeGroups_Data::AgentGroupInfo::AgentGroupInfo()
 , rMaxDistance_       ( -1 )
 , bInterpolationTime_ ( false )
 , interpolationTime_  ( "0s" )
-, bCommunicationDelay_( false )
-, communicationDelay_( "0s" )
 {
     // NOTHING
 }
@@ -36,13 +34,11 @@ ADN_KnowledgeGroups_Data::AgentGroupInfo::AgentGroupInfo()
 // -----------------------------------------------------------------------------
 void ADN_KnowledgeGroups_Data::AgentGroupInfo::ReadArchive( xml::xistream& input )
 {
-    input >> xml::optional() >> xml::attribute( "communication-delay", communicationDelay_);
     input >> xml::start( "unit-knowledge" )
             >> xml::attribute( "max-lifetime", maxLifetime_ )
             >> xml::optional() >> xml::attribute( "max-unit-to-knowledge-distance", rMaxDistance_ )
             >> xml::optional() >> xml::attribute( "interpolation-time", interpolationTime_ )
           >> xml::end();
-    bCommunicationDelay_ = communicationDelay_ != "0s";
     bInterpolationTime_ = interpolationTime_ != "0s";
 }
 
@@ -52,8 +48,6 @@ void ADN_KnowledgeGroups_Data::AgentGroupInfo::ReadArchive( xml::xistream& input
 // -----------------------------------------------------------------------------
 void ADN_KnowledgeGroups_Data::AgentGroupInfo::WriteArchive( xml::xostream& output )
 {
-    if( bCommunicationDelay_.GetData() )
-        output << xml::attribute( "communication-delay", communicationDelay_ );
     output << xml::start( "unit-knowledge" )
             << xml::attribute( "max-lifetime", maxLifetime_ );
     if( rMaxDistance_.GetData() > 0 )
@@ -104,7 +98,8 @@ ADN_KnowledgeGroups_Data::GroupInfo::GroupInfo()
 : ADN_Ref_ABC         ()
 , ADN_DataTreeNode_ABC()
 , agentInfos_         ()
-, populationInfos_    ()
+, populationInfos_    ()    
+, communicationDelay_( "0s" ) // LTO
 {
     // NOTHING
 }
@@ -148,7 +143,7 @@ void ADN_KnowledgeGroups_Data::GroupInfo::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "knowledge-group" )
            << xml::attribute( "name", strName_ );
-    if ( communicationDelay_.GetData() != "" ) // LTO
+    if( communicationDelay_ != "0s" ) // LTO
         output << xml::attribute( "communication-delay", communicationDelay_ ); // LTO
     agentInfos_     .WriteArchive( output );
     populationInfos_.WriteArchive( output );

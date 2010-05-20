@@ -55,8 +55,6 @@ public:
         ADN_Type_Double rMaxDistance_;
         ADN_Type_Bool   bInterpolationTime_;
         ADN_Type_Time   interpolationTime_;
-        ADN_Type_Bool   bCommunicationDelay_;
-        ADN_Type_Time   communicationDelay_;
     };
 
 // *****************************************************************************

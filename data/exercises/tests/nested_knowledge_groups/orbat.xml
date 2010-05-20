@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
 <orbat>
+  <dotations infinite="false"/>
   <sides>
     <side id="1" name="Camp Bleu" type="friend">
       <objects/>
@@ -50,8 +51,32 @@
       <populations/>
       <logistic/>
     </side>
+    <side id="57" name="Camp Rouge" type="enemy">
+      <objects/>
+      <tactical>
+        <formation id="58" level="x" name="Formation [58]">
+          <automat engaged="true" id="59" knowledge-group="60" name="Compagnie INF AMX 10 P [59]" type="Compagnie INF AMX 10 P">
+            <unit command-post="true" id="61" name="Section CDT CIE INF AMX10P" position="31UEQ1174131192" type="Section CDT CIE INF AMX10P"/>
+            <unit command-post="false" id="62" name="Section CBT INF AMX10P CDS OFF" position="31UEQ1224130692" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="63" name="Section CBT INF AMX10P CDS OFF" position="31UEQ1173930194" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="64" name="Section CBT INF AMX10P CDS OFF" position="31UEQ1123930694" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="65" name="Section CBT INF AMX10P CDS SOFF" position="31UEQ1224131191" type="Section CBT INF AMX10P CDS SOFF"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="60" name="Groupe de connaissance [60]" type="Standard"/>
+      </communication>
+      <populations/>
+      <logistic/>
+    </side>
   </sides>
   <diplomacies>
-    <side id="1"/>
+    <side id="1">
+      <relationship diplomacy="enemy" side="57"/>
+    </side>
+    <side id="57">
+      <relationship diplomacy="enemy" side="1"/>
+    </side>
   </diplomacies>
 </orbat>
