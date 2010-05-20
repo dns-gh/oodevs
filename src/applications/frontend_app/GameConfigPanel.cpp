@@ -89,15 +89,17 @@ QWidget* GameConfigPanel::CreateSimulationPanel( QWidget* parent )
         }
     }
     {
-        QGroupBox* checkpoints = new QGroupBox( 2, Vertical, tools::translate( "GameConfigPanel", "Checkpoints" ), box );
+        checkpoints_ = new QGroupBox( 2, Vertical, tools::translate( "GameConfigPanel", "Checkpoints" ), box );
+        checkpoints_->setCheckable( true );
+        checkpoints_->setChecked( false );
         {
-            QHBox* frequencyBox = new QHBox( checkpoints );
+            QHBox* frequencyBox = new QHBox( checkpoints_ );
             new QLabel( tools::translate( "GameConfigPanel", "Frequency:" ), frequencyBox );
             checkFrequency_ = new QTimeEdit( frequencyBox );
             checkFrequency_->setTime( QTime().addSecs( 3600 ) );
         }
         {
-            QHBox* keepBox = new QHBox( checkpoints );
+            QHBox* keepBox = new QHBox( checkpoints_ );
             new QLabel( tools::translate( "GameConfigPanel", "Rotations:" ), keepBox );
             keepSpin_ = new QSpinBox( 1, 100, 1, keepBox );
         }
@@ -175,9 +177,12 @@ void GameConfigPanel::Commit( const std::string& exercise, const std::string& se
         action.SetOption( "session/meta/comment", comment );
     }
     {
-        action.SetOption( "session/config/simulation/checkpoint/@frequency", QString( "%1s" ).arg( QTime().secsTo( checkFrequency_->time() ) ).ascii() );
-        action.SetOption( "session/config/simulation/checkpoint/@keep", keepSpin_->value() );
-        action.SetOption( "session/config/simulation/checkpoint/@usecrc", true );
+        if( checkpoints_->isChecked() )
+        {
+            action.SetOption( "session/config/simulation/checkpoint/@frequency", QString( "%1s" ).arg( QTime().secsTo( checkFrequency_->time() ) ).ascii() );
+            action.SetOption( "session/config/simulation/checkpoint/@keep", keepSpin_->value() );
+            action.SetOption( "session/config/simulation/checkpoint/@usecrc", true );
+        }
         action.SetOption( "session/config/simulation/debug/@decisional", decisionalLogs_->isChecked() );
         action.SetOption( "session/config/simulation/debug/@pathfind", pathfindLogs_->isChecked() );
         action.SetOption( "session/config/simulation/debug/@diadebugger", diaDebugBox_->isChecked() );

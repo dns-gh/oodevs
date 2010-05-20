@@ -64,6 +64,7 @@ private:
     const tools::GeneralConfig& config_;
     QSpinBox* stepSpin_;
     QSpinBox* factorSpin_;
+    QGroupBox* checkpoints_;
     QTimeEdit* checkFrequency_;
     QSpinBox* keepSpin_;
     QCheckBox* decisionalLogs_;
