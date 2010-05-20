@@ -586,6 +586,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_ObjectKnowledge )
     MOCK_EXPECT( knowledge, GetId ).returns( 15 );
     MockObjectKnowledgeConverter converter;
     MOCK_EXPECT( converter, FindObjectKnowledgeFromObjectWithEntity ).with( mock::same( object ), mock::same( owner ) ).returns( &knowledge );
+    MOCK_EXPECT( knowledge, GetObjectEntity ).returns( &object );
     
     kernel::Controller controller;
     std::auto_ptr< Common::MsgMissionParameter > message( Serialize( "objectknowledge", input,

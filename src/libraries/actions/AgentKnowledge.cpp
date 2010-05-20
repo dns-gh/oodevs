@@ -9,15 +9,12 @@
 
 #include "actions_pch.h"
 #include "AgentKnowledge.h"
-#include "ParameterVisitor_ABC.h"
 #include "clients_kernel/AgentKnowledgeConverter_ABC.h"
 #include "clients_kernel/EntityResolver_ABC.h"
 #include "protocol/Protocol.h"
 #include <boost/bind.hpp>
-#include <xeumeuleu/xml.h>
 
 using namespace kernel;
-using namespace xml;
 using namespace actions;
 using namespace parameters;
 
@@ -26,7 +23,7 @@ using namespace parameters;
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
 AgentKnowledge::AgentKnowledge( const OrderParameter& parameter, kernel::Controller& controller )
-    : Entity< AgentKnowledge_ABC >( parameter, controller )
+    : Knowledge_ABC< AgentKnowledge_ABC >( parameter, controller )
 {
     // NOTHING
 }
@@ -36,10 +33,9 @@ AgentKnowledge::AgentKnowledge( const OrderParameter& parameter, kernel::Control
 // Created: JSR 2010-04-16
 // -----------------------------------------------------------------------------
 AgentKnowledge::AgentKnowledge( const kernel::OrderParameter& parameter, const kernel::AgentKnowledge_ABC& entity, kernel::Controller& controller )
-    : Entity< AgentKnowledge_ABC >( parameter, &entity, controller )
+    : Knowledge_ABC< AgentKnowledge_ABC >( parameter, &entity, controller )
 {
-    if( ! GetValue() )
-        throw std::runtime_error( tools::translate( "Parameter", "Agent knowledge not found." ).ascii() );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -47,10 +43,9 @@ AgentKnowledge::AgentKnowledge( const kernel::OrderParameter& parameter, const k
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
 AgentKnowledge::AgentKnowledge( const OrderParameter& parameter, unsigned long id, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
-    : Entity< AgentKnowledge_ABC >( parameter, converter.FindAgent( id, owner ), controller )
+    : Knowledge_ABC< AgentKnowledge_ABC >( parameter, converter.FindAgent( id, owner ), controller )
 {
-    if( ! GetValue() )
-        throw std::exception( tools::translate( "Parameter", "Agent knowledge not found." ).ascii() );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -58,10 +53,9 @@ AgentKnowledge::AgentKnowledge( const OrderParameter& parameter, unsigned long i
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
 AgentKnowledge::AgentKnowledge( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
-    : Entity< AgentKnowledge_ABC >( OrderParameter( attribute< std::string >( xis, "name" ), "agentknowledge", false ), converter.Find( resolver.GetAgent( attribute< unsigned long >( xis, "value" ) ), owner ), controller )
+    : Knowledge_ABC< AgentKnowledge_ABC >( OrderParameter( xml::attribute< std::string >( xis, "name" ), "agentknowledge", false ), converter.Find( resolver.GetAgent( xml::attribute< unsigned long >( xis, "value" ) ), owner ), controller )
 {
-    if( ! GetValue() )
-        throw std::exception( tools::translate( "Parameter", "Agent knowledge not found." ).ascii() );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -69,10 +63,9 @@ AgentKnowledge::AgentKnowledge( xml::xistream& xis, const kernel::EntityResolver
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
 AgentKnowledge::AgentKnowledge( const OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
-    : Entity< AgentKnowledge_ABC >( parameter, converter.Find( resolver.GetAgent( attribute< unsigned long >( xis, "value" ) ), owner ), controller )
+    : Knowledge_ABC< AgentKnowledge_ABC >( parameter, converter.Find( resolver.GetAgent( xml::attribute< unsigned long >( xis, "value" ) ), owner ), controller )
 {
-    if( ! GetValue() )
-        throw std::exception( tools::translate( "Parameter", "Agent knowledge not found." ).ascii() );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -82,6 +75,15 @@ AgentKnowledge::AgentKnowledge( const OrderParameter& parameter, xml::xistream& 
 AgentKnowledge::~AgentKnowledge()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledge::Accept
+// Created: JSR 2010-05-20
+// -----------------------------------------------------------------------------
+void AgentKnowledge::Accept( ParameterVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -97,15 +99,6 @@ void AgentKnowledge::CommitTo( Common::MsgMissionParameter& message ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentKnowledge::Accept
-// Created: SBO 2007-05-24
-// -----------------------------------------------------------------------------
-void AgentKnowledge::Accept( ParameterVisitor_ABC& visitor ) const
-{
-    visitor.Visit( *this );
-}
-
-// -----------------------------------------------------------------------------
 // Name: AgentKnowledge::CommitTo
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
@@ -115,13 +108,10 @@ void AgentKnowledge::CommitTo( Common::MsgUnitKnowledge& message ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentKnowledge::Serialize
-// Created: SBO 2007-05-24
+// Name: AgentKnowledge::ThrowInvalidKnowledge
+// Created: JSR 2010-05-20
 // -----------------------------------------------------------------------------
-void AgentKnowledge::Serialize( xml::xostream& xos ) const
+void AgentKnowledge::ThrowInvalidKnowledge() const
 {
-    if( ! GetValue() )
-        throw std::runtime_error( tools::translate( "Parameter", "Invalid agent knowledge." ).ascii() );
-    Parameter< const AgentKnowledge_ABC* >::Serialize( xos );
-    xos << xml::attribute( "value", GetValue()->GetEntity()->GetId() ); // $$$$ SBO 2007-05-24: 
+    throw std::exception( tools::translate( "Parameter", "Invalid agent knowledge." ).ascii() );
 }

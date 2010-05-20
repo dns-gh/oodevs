@@ -10,7 +10,7 @@
 #ifndef __ActionParameterAgentKnowledge_h_
 #define __ActionParameterAgentKnowledge_h_
 
-#include "Entity.h"
+#include "Knowledge_ABC.h"
 #include "clients_kernel/AgentKnowledge_ABC.h"
 #include "tools/Resolver_ABC.h"
 
@@ -36,7 +36,7 @@ namespace actions {
 */
 // Created: SBO 2007-05-24
 // =============================================================================
-class AgentKnowledge : public Entity< kernel::AgentKnowledge_ABC >
+class AgentKnowledge : public Knowledge_ABC< kernel::AgentKnowledge_ABC >
 {
 
 public:
@@ -52,22 +52,15 @@ public:
 
     //! @name Operations
     //@{
-    using Entity< kernel::AgentKnowledge_ABC >::CommitTo;
-    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
+    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
     void CommitTo( Common::MsgUnitKnowledge& message ) const;
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    AgentKnowledge( const AgentKnowledge& );            //!< Copy constructor
-    AgentKnowledge& operator=( const AgentKnowledge& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
-    virtual void Serialize( xml::xostream& xos ) const;
+    virtual void ThrowInvalidKnowledge() const;
     //@}
 };
     }

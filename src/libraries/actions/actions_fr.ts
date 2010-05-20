@@ -105,7 +105,7 @@
     </message>
     <message>
         <source>Agent knowledge not found.</source>
-        <translation>La connaissance d&apos;unité n&apos;existe pas.</translation>
+        <translation type="obsolete">La connaissance d&apos;unité n&apos;existe pas.</translation>
     </message>
     <message>
         <source>Invalid agent knowledge.</source>
@@ -173,7 +173,7 @@
     </message>
     <message>
         <source>Object knowledge not found.</source>
-        <translation>La connaissance d&apos;objet n&apos;existe pas.</translation>
+        <translation type="obsolete">La connaissance d&apos;objet n&apos;existe pas.</translation>
     </message>
     <message>
         <source>Invalid object knowledge.</source>
@@ -217,11 +217,15 @@
     </message>
     <message>
         <source>Population knowledge not found.</source>
-        <translation>La connaissance de population n&apos;existe pas.</translation>
+        <translation type="obsolete">La connaissance de population n&apos;existe pas.</translation>
     </message>
     <message>
         <source>Parameter</source>
         <translation>Paramètre</translation>
+    </message>
+    <message>
+        <source>Invalid population knowledge.</source>
+        <translation>Connaissance de population invalide.</translation>
     </message>
 </context>
 <context>

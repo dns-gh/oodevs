@@ -9,15 +9,11 @@
 
 #include "actions_pch.h"
 #include "ObjectKnowledge.h"
-#include "ParameterVisitor_ABC.h"
 #include "clients_kernel/ObjectKnowledgeConverter_ABC.h"
-#include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/EntityResolver_ABC.h"
 #include "protocol/Protocol.h"
-#include <xeumeuleu/xml.h>
 
 using namespace kernel;
-using namespace xml;
 using namespace actions;
 using namespace parameters;
 
@@ -42,8 +38,8 @@ namespace
 // Name: ObjectKnowledge constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter, kernel::Controller& controller )
-    : Entity< ObjectKnowledge_ABC >( parameter, controller )
+ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter, Controller& controller )
+    : Knowledge_ABC< ObjectKnowledge_ABC >( parameter, controller )
 {
     // NOTHING
 }
@@ -52,36 +48,30 @@ ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter, kernel::Contr
 // Name: ObjectKnowledge constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter, unsigned long id, kernel::ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
-    : Entity< ObjectKnowledge_ABC >( parameter, controller )
+ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter, unsigned long id, ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner, Controller& controller )
+    : Knowledge_ABC< ObjectKnowledge_ABC >( parameter, converter.Find( id, owner ), controller )
 {
-    SetValue( converter.Find( id, owner ) );
-    if( ! GetValue() )
-        throw std::exception( tools::translate( "Parameter", "Object knowledge not found." ).ascii() );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledge constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-ObjectKnowledge::ObjectKnowledge( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
-    : Entity< ObjectKnowledge_ABC >( OrderParameter( ReadName( xis ), "objectknowledge", false ), controller )
+ObjectKnowledge::ObjectKnowledge( xml::xistream& xis, const EntityResolver_ABC& resolver, ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner, Controller& controller )
+    : Knowledge_ABC< ObjectKnowledge_ABC >( OrderParameter( ReadName( xis ), "objectknowledge", false ), converter.Find( resolver.GetObject( ReadId( xis ) ), owner ), controller )
 {
-    SetValue( converter.Find( resolver.GetObject( ReadId( xis ) ), owner ) );
-    if( ! GetValue() )
-        throw std::exception( tools::translate( "Parameter", "Object knowledge not found." ).ascii() );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledge constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
-    : Entity< ObjectKnowledge_ABC >( parameter, controller )
+ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter, xml::xistream& xis, const EntityResolver_ABC& resolver, ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner, Controller& controller )
+    : Knowledge_ABC< ObjectKnowledge_ABC >( parameter, converter.Find( resolver.GetObject( ReadId( xis ) ), owner ), controller )
 {
-    SetValue( converter.Find( resolver.GetObject( ReadId( xis ) ), owner ) );
-    if( ! GetValue() )
-        throw std::exception( tools::translate( "Parameter", "Object knowledge not found." ).ascii() );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -91,6 +81,15 @@ ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter, xml::xistream
 ObjectKnowledge::~ObjectKnowledge()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledge::Accept
+// Created: JSR 2010-05-20
+// -----------------------------------------------------------------------------
+void ObjectKnowledge::Accept( ParameterVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -106,15 +105,6 @@ void ObjectKnowledge::CommitTo( Common::MsgMissionParameter& message ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectKnowledge::Accept
-// Created: SBO 2007-05-24
-// -----------------------------------------------------------------------------
-void ObjectKnowledge::Accept( ParameterVisitor_ABC& visitor ) const
-{
-    visitor.Visit( *this );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ObjectKnowledge::CommitTo
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
@@ -124,13 +114,10 @@ void ObjectKnowledge::CommitTo( Common::MsgObjectKnowledge& message ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectKnowledge::Serialize
-// Created: SBO 2007-05-24
+// Name: ObjectKnowledge::ThrowInvalidKnowledge
+// Created: JSR 2010-05-20
 // -----------------------------------------------------------------------------
-void ObjectKnowledge::Serialize( xml::xostream& xos ) const
+void ObjectKnowledge::ThrowInvalidKnowledge() const
 {
-    if( ! GetValue() )
-        throw std::runtime_error( tools::translate( "Parameter", "Invalid object knowledge." ).ascii() );
-    Parameter< const ObjectKnowledge_ABC* >::Serialize( xos );
-    xos << xml::attribute( "value", GetValue()->GetEntity()->GetId() ); // $$$$ SBO 2007-05-24: 
+    throw std::exception( tools::translate( "Parameter", "Invalid object knowledge." ).ascii() );
 }

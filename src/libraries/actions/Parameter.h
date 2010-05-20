@@ -42,7 +42,7 @@ public:
     virtual std::string GetType() const;
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void Serialize( xml::xostream& xos ) const;
-    void SetValue( const T& value );
+    virtual void SetValue( const T& value );
     const T& GetValue() const;
     //@}
 

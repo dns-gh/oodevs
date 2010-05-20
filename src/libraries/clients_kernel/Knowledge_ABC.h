@@ -11,6 +11,8 @@
 #define __Knowledge_ABC_h_
 
 #include "Entity_ABC.h"
+#include "KnowledgeListener_ABC.h"
+#include <set>
 
 namespace kernel
 {
@@ -28,7 +30,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Knowledge_ABC() {}
-    virtual ~Knowledge_ABC() {}
+    virtual ~Knowledge_ABC();
     //@}
 
     //! @name Operations
@@ -36,6 +38,9 @@ public:
     virtual const Entity_ABC* GetEntity() const = 0;
     virtual const Entity_ABC* GetRecognizedEntity() const = 0;
     virtual const Entity_ABC& GetOwner() const = 0;
+
+    void AddListener( KnowledgeListener_ABC& listener ) { listeners_.insert( &listener ); }
+    void RemoveListener( KnowledgeListener_ABC& listener ) { listeners_.erase( &listener ); }
 
     virtual std::string GetSymbol() const { return ""; } // $$$$ SBO 2007-02-26: 
     //@}
@@ -46,7 +51,24 @@ private:
     Knowledge_ABC( const Knowledge_ABC& );
     Knowledge_ABC& operator=( const Knowledge_ABC& );
     //@}
+
+private:
+    //! @name Members
+    //@{
+    std::set< KnowledgeListener_ABC* > listeners_;
+    //@}
 };
+
+// -----------------------------------------------------------------------------
+// Name: Knowledge_ABC destructor
+// Created: JSR 2010-05-19
+// -----------------------------------------------------------------------------
+inline
+Knowledge_ABC::~Knowledge_ABC()
+{
+    for( std::set< KnowledgeListener_ABC* >::const_iterator it = listeners_.begin(); it != listeners_.end(); ++it )
+        ( *it )->NotifyDestruction();
+}
 
 }
 

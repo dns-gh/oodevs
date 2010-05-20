@@ -10,7 +10,7 @@
 #ifndef __ActionParameterPopulationKnowledge_h_
 #define __ActionParameterPopulationKnowledge_h_
 
-#include "Entity.h"
+#include "Knowledge_ABC.h"
 #include "clients_kernel/PopulationKnowledge_ABC.h"
 #include "tools/Resolver_ABC.h"
 
@@ -36,7 +36,7 @@ namespace actions {
 */
 // Created: SBO 2007-05-24
 // =============================================================================
-class PopulationKnowledge : public Entity< kernel::PopulationKnowledge_ABC >
+class PopulationKnowledge : public Knowledge_ABC< kernel::PopulationKnowledge_ABC >
 {
 
 public:
@@ -50,21 +50,15 @@ public:
 
     //! @name Operations
     //@{
-    virtual void CommitTo( Common::MsgMissionParameter& asn ) const;
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
+    virtual void CommitTo( Common::MsgMissionParameter& asn ) const;
     void CommitTo( Common::MsgPopulationKnowledge& asn ) const;
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    PopulationKnowledge( const PopulationKnowledge& );            //!< Copy constructor
-    PopulationKnowledge& operator=( const PopulationKnowledge& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
-    virtual void Serialize( xml::xostream& xos ) const;
+    virtual void ThrowInvalidKnowledge() const;
     //@}
 };
 
