@@ -112,7 +112,7 @@ do
                         end
                     end
 
-                    Activate( self.activations.BEH_Mission_Pion_INF_Harceler, GetMotivation( "MOT_Mission" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.ePhaseMission = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Mission_Pion_INF_Harceler, GetMotivation( "MOT_Mission" ), setmetatable( { self._namedParams.mission, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.ePhaseMission = v else rawset( t, k, v ) end end } ) )
                     _continue = false
                 --[[// Rejoins la position de replis
 ]]                cases_switch_1[1] = true

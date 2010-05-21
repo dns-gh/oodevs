@@ -49,7 +49,7 @@ node "MIS_Pion_MILICE_PrendreEtTenir"
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eReconnaitre then
-                    Activate( self.activations.BEH_Mission_Pion_Milice_PrendreEtTenir, GetMotivation( "MOT_Mission" ), {} )
+                    Activate( self.activations.BEH_Mission_Pion_Milice_PrendreEtTenir, GetMotivation( "MOT_Mission" ), { self._namedParams.mission, } )
                     _continue = false--[[//-----------------------------------------------------------------------------
 ]]
                 --[[// Fin de mission
