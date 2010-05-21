@@ -767,8 +767,9 @@ const MT_Float PHY_SensorTypeAgent::ComputeDetectionDist( const MIL_Agent_ABC& p
 // -----------------------------------------------------------------------------
 const MT_Float PHY_SensorTypeAgent::ComputeDistanceModificator( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const
 {
-    const PHY_Volume* pSignificantVolume = target.GetRole< PHY_RoleInterface_Composantes >().GetSignificantVolume( *this );
-    MT_Float rDistanceMaxModificator  = GetFactor      ( *pSignificantVolume );
+    MT_Float rDistanceMaxModificator = 1.;
+    if( const PHY_Volume* pSignificantVolume = target.GetRole< PHY_RoleInterface_Composantes >().GetSignificantVolume( *this ) )
+        rDistanceMaxModificator  = GetFactor( *pSignificantVolume );
     rDistanceMaxModificator *= GetTargetFactor( target );
     rDistanceMaxModificator *= GetSourceFactor( perceiver );
     return rDistanceMaxModificator;
