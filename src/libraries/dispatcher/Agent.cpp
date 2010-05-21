@@ -172,6 +172,10 @@ void Agent::Update( const MsgsSimToClient::MsgUnitAttributes& asnMsg )
     UPDATE_ASN_ATTRIBUTE( etat_installation, nInstallationState_ );
     UPDATE_ASN_ATTRIBUTE( en_tenue_de_protection_nbc, bNbcProtectionSuitEnabled_ );
 
+    UPDATE_ASN_ATTRIBUTE( etat_contamination, contamination_ );
+
+    if( contamination_.percentage() == 0. )
+        nbcAgentTypesContaminating_.clear();
     if( asnMsg.has_contamine_par_agents_nbc() )
     {
         nbcAgentTypesContaminating_.clear();
@@ -179,7 +183,7 @@ void Agent::Update( const MsgsSimToClient::MsgUnitAttributes& asnMsg )
             nbcAgentTypesContaminating_.push_back( asnMsg.contamine_par_agents_nbc().elem( i ) );
     }
             
-    UPDATE_ASN_ATTRIBUTE( etat_contamination, contamination_ );
+
 
     if( asnMsg.has_communications() )
     {

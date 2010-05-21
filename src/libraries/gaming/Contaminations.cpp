@@ -63,6 +63,8 @@ void Contaminations::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message
     if( message.has_etat_contamination()  )
     {
         nContamination_ = message.etat_contamination().percentage();
+        if( nContamination_ == 0 )
+            contaminatingNbcAgents_.clear();
         quantity_ = message.etat_contamination().quantity();
     }
 
