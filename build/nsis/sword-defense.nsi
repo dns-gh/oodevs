@@ -243,7 +243,7 @@ SectionGroup "Exercises" s_exo
         ; Exercises
         !insertmacro OT.AddExercise "Cabourg" "Cabourg" "s_exo1"
         !insertmacro OT.AddExercise "BMDrosoville" "Drosoville" "s_exo2"
-        !insertmacro OT.AddExercise "Malaisie" "TerrainDifficile" "s_exo3"
+        !insertmacro OT.AddExercise "TerrainDifficile" "Malaisie" "s_exo3"
 
         ; Tutorials
         !insertmacro OT.AddExercise "tutorials\01 - Generalites" "Paris_Est" "s_exo4"
