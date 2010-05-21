@@ -86,7 +86,7 @@ private:
     //@{
     MIL_Agent_ABC& entity_;
     MIL_Effect_Fly effectFly_;
-    PHY_ActionFly* pActionFly_;
+    boost::shared_ptr< PHY_ActionFly > pActionFly_;
     double         rHeight_;
     //@}
 };

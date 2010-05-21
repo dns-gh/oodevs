@@ -43,10 +43,10 @@ bool DEC_ObjectFunctions::GetGenObjectReservedObstacle( const DEC_Gen_Object* ob
 // Name: DEC_ObjectFunctions::GetGenObjectTC2
 // Created: NLD 2006-10-26
 // -----------------------------------------------------------------------------
-boost::shared_ptr<DEC_Decision_ABC> DEC_ObjectFunctions::GetGenObjectTC2( const DEC_Gen_Object* object )
+DEC_Decision_ABC* DEC_ObjectFunctions::GetGenObjectTC2( const DEC_Gen_Object* object )
 {
     DEC_AutomateDecision* dec = object->GetTC2() ? const_cast< DEC_AutomateDecision* >( &object->GetTC2()->GetDecision() ) : (DEC_AutomateDecision*)0;
-    return boost::shared_ptr<DEC_Decision_ABC>(dec);
+    return dec;
 }
 
 namespace

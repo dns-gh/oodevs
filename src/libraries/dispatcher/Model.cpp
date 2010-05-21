@@ -275,8 +275,8 @@ void Model::Update( const MsgsSimToClient::MsgSimToClient& wrapper )
         Destroy( logConsignsSupply_, wrapper.message().log_supply_handling_destruction().oid_consigne() ); 
     if( wrapper.message().has_log_supply_handling_update() )
         logConsignsSupply_.Get( wrapper.message().log_supply_handling_update().oid_consigne() ).Update( wrapper.message().log_supply_handling_update() ); 
-    if( wrapper.message().has_log_medical_state() )
-        agents_.Get( wrapper.message().log_medical_state().oid_pion() ).Update( wrapper.message().log_medical_state()); 
+    if( wrapper.message().has_log_supply_state() )
+        agents_.Get( wrapper.message().log_supply_state().oid_pion() ).Update( wrapper.message().log_supply_state() ); 
     if( wrapper.message().has_log_supply_quotas() )
         automats_.Get( wrapper.message().log_supply_quotas().oid_automate() ).Update( wrapper.message().log_supply_quotas() ); 
 

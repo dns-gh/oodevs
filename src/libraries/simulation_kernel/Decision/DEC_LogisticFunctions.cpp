@@ -459,45 +459,45 @@ bool DEC_LogisticFunctions::ConvoyIsUnloadingDone( const MIL_Agent_ABC& callerAg
 // Name: DEC_LogisticFunctions::ConvoyGetSupplyingAutomate
 // Created: NLD 2006-07-31
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Decision_ABC > DEC_LogisticFunctions::ConvoyGetSupplyingAutomate( const MIL_Agent_ABC& callerAgent )
+DEC_Decision_ABC* DEC_LogisticFunctions::ConvoyGetSupplyingAutomate( const MIL_Agent_ABC& callerAgent )
 {
     const PHY_RoleInterface_Supply* role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >();
     if( role )
     {
         if( const MIL_Automate* pAutomate = role->ConvoyGetSupplyingAutomate() )
-            return boost::shared_ptr< DEC_Decision_ABC >( const_cast< DEC_AutomateDecision* >( &pAutomate->GetDecision() ) );
+            return ( const_cast< DEC_AutomateDecision* >( &pAutomate->GetDecision() ) );
     }
-    return boost::shared_ptr< DEC_Decision_ABC >();
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::ConvoyGetConvoyingAutomate
 // Created: NLD 2006-07-31
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Decision_ABC > DEC_LogisticFunctions::ConvoyGetConvoyingAutomate( const MIL_Agent_ABC& callerAgent )
+DEC_Decision_ABC* DEC_LogisticFunctions::ConvoyGetConvoyingAutomate( const MIL_Agent_ABC& callerAgent )
 {
     const PHY_RoleInterface_Supply* role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >();
     if( role )
     {
         if( const MIL_Automate* pAutomate = role->ConvoyGetConvoyingAutomate() )
-            return boost::shared_ptr< DEC_Decision_ABC >( const_cast< DEC_AutomateDecision* >( &pAutomate->GetDecision() ) );
+            return ( const_cast< DEC_AutomateDecision* >( &pAutomate->GetDecision() ) );
     }
-    return boost::shared_ptr< DEC_Decision_ABC >();
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::ConvoyGetSuppliedAutomate
 // Created: NLD 2006-07-31
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Decision_ABC > DEC_LogisticFunctions::ConvoyGetSuppliedAutomate( const MIL_Agent_ABC& callerAgent )
+DEC_Decision_ABC* DEC_LogisticFunctions::ConvoyGetSuppliedAutomate( const MIL_Agent_ABC& callerAgent )
 {
     const PHY_RoleInterface_Supply* role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >();
     if( role )
     {
         if( const MIL_Automate* pAutomate = role->ConvoyGetSuppliedAutomate() )
-            return boost::shared_ptr< DEC_Decision_ABC >( const_cast< DEC_AutomateDecision* >( &pAutomate->GetDecision() ) );
+            return ( const_cast< DEC_AutomateDecision* >( &pAutomate->GetDecision() ) );
     }
-    return boost::shared_ptr< DEC_Decision_ABC >();
+    return 0;
 }
 
 // -----------------------------------------------------------------------------

@@ -48,7 +48,6 @@ void load_construct_data( Archive& archive, PHY_RoleAction_Flying* role, const u
 PHY_RoleAction_Flying::PHY_RoleAction_Flying( MIL_Agent_ABC& entity )
     : entity_                        ( entity )
     , effectFly_                    ( *this )
-    , pActionFly_                   ( 0 )
     , rHeight_                      ( 0. )
 {
     // NOTHING
@@ -83,7 +82,8 @@ bool PHY_RoleAction_Flying::TakeOff()
     if( pActionFly_ )
         return false;
 
-    pActionFly_ = new PHY_ActionFly( entity_ );
+    pActionFly_.reset( new PHY_ActionFly( entity_ ) );
+    entity_.RegisterAction( pActionFly_ );
     return true;
 }
 
@@ -97,8 +97,7 @@ bool PHY_RoleAction_Flying::Land()
         return false;
 
     rHeight_ = 0.;
-    delete pActionFly_;
-    pActionFly_ = 0;
+    pActionFly_.reset();
     return true;
 }
 

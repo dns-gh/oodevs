@@ -54,7 +54,7 @@ public:
     //@}
 
 private:
-    PHY_ActionLogistic< MIL_AgentPionLOG_ABC >* pLogisticAction_;
+    boost::shared_ptr< PHY_ActionLogistic< MIL_AgentPionLOG_ABC > > pLogisticAction_;
 };
 
 // BOOST_SERIALIZATION_ASSUME_ABSTRACT should be used for this

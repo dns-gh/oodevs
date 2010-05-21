@@ -14,7 +14,7 @@
 
 #include "Entities/Actions/PHY_DecisionCallbackAction_ABC.h"
 
-class MIL_AgentPion;
+class MIL_Agent_ABC;
 class PHY_RoleInterface_Supply;
 
 // =============================================================================
@@ -25,10 +25,10 @@ class PHY_ActionConvoyUnload : public PHY_DecisionCallbackAction_ABC
 {
 
 public:
-    typedef MIL_AgentPion ActorType;        
+    typedef MIL_Agent_ABC ActorType;        
 
 public:
-    explicit PHY_ActionConvoyUnload( MIL_AgentPion& pion );
+    explicit PHY_ActionConvoyUnload( MIL_Agent_ABC& pion );
     virtual ~PHY_ActionConvoyUnload();
 
     //! @name Operations

@@ -11,14 +11,14 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_ActionConvoyLoad.h"
-#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionConvoyLoad constructor
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_ActionConvoyLoad::PHY_ActionConvoyLoad( MIL_AgentPion& pion )
+PHY_ActionConvoyLoad::PHY_ActionConvoyLoad( MIL_Agent_ABC& pion )
     : PHY_DecisionCallbackAction_ABC( pion )
     , role_         ( pion.GetRole< PHY_RoleInterface_Supply >() )
 {    

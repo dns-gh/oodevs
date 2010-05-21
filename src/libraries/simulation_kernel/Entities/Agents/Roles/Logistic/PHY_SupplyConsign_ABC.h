@@ -72,7 +72,7 @@ protected:
     //@{
     enum E_State
     {
-        eConvoyWaitingForTransporters,
+        eConvoyWaitingForTransporters = 1,
         eConvoyForming,
         eConvoyGoingToLoadingPoint,
         eConvoyLoading,

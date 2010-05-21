@@ -91,7 +91,9 @@ void MIL_AgentTypePionLOG_ABC::RegisterFunctions( directia::Brain& brain, MIL_Ag
         boost::bind( &DEC_LogisticFunctions::ConvoyGetSuppliedAutomate, boost::cref( agent ) ) );
     brain.RegisterFunction( "DEC_Ravitaillement_Convoi_FinMission",
         boost::bind( &DEC_LogisticFunctions::ConvoyEndMission, boost::ref( agent ) ) );
-    brain.RegisterFunction( "DEC_Ravitaillement_Convoi_StartCharger",         &DEC_ActionFunctions  ::StartAction< PHY_ActionConvoyLoad   > );
-    brain.RegisterFunction( "DEC_Ravitaillement_Convoi_StartDecharger",       &DEC_ActionFunctions  ::StartAction< PHY_ActionConvoyUnload > );
+    brain.RegisterFunction( "DEC_Ravitaillement_Convoi_StartCharger",
+        boost::function< unsigned int() >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionConvoyLoad >, boost::ref( agent ) ) ) );
+    brain.RegisterFunction( "DEC_Ravitaillement_Convoi_StartDecharger",
+        boost::function< unsigned int() >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionConvoyUnload >, boost::ref( agent ) ) ) );
 }
 

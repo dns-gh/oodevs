@@ -85,9 +85,9 @@ public:
     
     static bool ConvoyIsLoadingDone        ( const MIL_Agent_ABC& callerAgent );
     static bool ConvoyIsUnloadingDone      ( const MIL_Agent_ABC& callerAgent );
-    static boost::shared_ptr< DEC_Decision_ABC > ConvoyGetSupplyingAutomate( const MIL_Agent_ABC& callerAgent );
-    static boost::shared_ptr< DEC_Decision_ABC > ConvoyGetConvoyingAutomate( const MIL_Agent_ABC& callerAgent );  
-    static boost::shared_ptr< DEC_Decision_ABC > ConvoyGetSuppliedAutomate ( const MIL_Agent_ABC& callerAgent );
+    static DEC_Decision_ABC* ConvoyGetSupplyingAutomate( const MIL_Agent_ABC& callerAgent );
+    static DEC_Decision_ABC* ConvoyGetConvoyingAutomate( const MIL_Agent_ABC& callerAgent );  
+    static DEC_Decision_ABC* ConvoyGetSuppliedAutomate ( const MIL_Agent_ABC& callerAgent );
     static void ConvoyEndMission           ( MIL_Agent_ABC& callerAgent );
 
     static void AutomateRequestSupply      ( MIL_Automate&  callerAutomate );

@@ -28,6 +28,7 @@ MIL_AgentPionLOG_ABC::MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, MIL_A
     : MIL_AgentPion   ( type, automate, algorithmFactories, xis )
     , pLogisticAction_( new PHY_ActionLogistic< MIL_AgentPionLOG_ABC >( *this ) )
 {
+    this->RegisterAction( pLogisticAction_ );
     if( !GetAutomate().GetType().IsLogistic() )
         xis.error( "The automata of this pion is not a logistic one." );
 }
@@ -40,6 +41,7 @@ MIL_AgentPionLOG_ABC::MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, MIL_A
     : MIL_AgentPion   ( type, automate, algorithmFactories )
     , pLogisticAction_( new PHY_ActionLogistic< MIL_AgentPionLOG_ABC >( *this ) )
 {
+    this->RegisterAction( pLogisticAction_ );
     assert( automate.GetType().IsLogistic() );
 }
 
@@ -51,7 +53,7 @@ MIL_AgentPionLOG_ABC::MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, const
     : MIL_AgentPion   ( type, algorithmFactories )
     , pLogisticAction_( new PHY_ActionLogistic< MIL_AgentPionLOG_ABC >( *this ) )
 {
-    // NOTHING
+    this->RegisterAction( pLogisticAction_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,7 +62,7 @@ MIL_AgentPionLOG_ABC::MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, const
 // -----------------------------------------------------------------------------
 MIL_AgentPionLOG_ABC::~MIL_AgentPionLOG_ABC()
 {
-    delete pLogisticAction_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

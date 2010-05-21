@@ -75,7 +75,7 @@ MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, unsigned int 
     , nTickRcStockSupplyQuerySent_( 0 )
     , pLogisticAction_            ( new PHY_ActionLogistic< MIL_AutomateLOG >( *this ) )
 {
-    // NOTHING
+    this->RegisterAction( pLogisticAction_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,7 +96,7 @@ MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, unsigned int 
     , nTickRcStockSupplyQuerySent_( 0 )
     , pLogisticAction_            ( new PHY_ActionLogistic< MIL_AutomateLOG >( *this ) )
 {
-    // NOTHING
+    this->RegisterAction( pLogisticAction_ );
 }
 
 MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, unsigned int nID)
@@ -113,7 +113,7 @@ MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, unsigned int 
     , nTickRcStockSupplyQuerySent_( 0 )
     , pLogisticAction_            ( new PHY_ActionLogistic< MIL_AutomateLOG >( *this ) )
 {
-    // NOTHING
+    this->RegisterAction( pLogisticAction_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -122,7 +122,7 @@ MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, unsigned int 
 // -----------------------------------------------------------------------------
 MIL_AutomateLOG::~MIL_AutomateLOG()
 {
-    delete pLogisticAction_;
+    // NOTHING
 }
 
 // =============================================================================

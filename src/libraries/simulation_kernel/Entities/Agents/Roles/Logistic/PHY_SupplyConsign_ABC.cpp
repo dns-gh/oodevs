@@ -60,12 +60,7 @@ void PHY_SupplyConsign_ABC::SendFullState( client::LogSupplyHandlingUpdate& asn 
     assert( pConvoyingAutomate_ );
     assert( pSuppliedAutomate_ );
 
-//    asn().set_etatPresent( 1 );
-//    asn().set_oid_automate_log_traitantPresent( 1 );    
-//    asn().set_oid_automate_log_fournissant_moyens_convoiPresent( 1 );
-//    asn().set_oid_pion_convoyantPresent( 1 );
-    
-    asn().set_etat( MsgsSimToClient::EnumLogSupplyHandlingStatus( nState_ ) );
+    asn().set_etat( (MsgsSimToClient::EnumLogSupplyHandlingStatus ) nState_  );
     asn().set_oid_automate_log_traitant( pSupplyingAutomate_->GetID() );
     asn().set_oid_automate_log_fournissant_moyens_convoi( pConvoyingAutomate_->GetID() );
     asn().set_oid_pion_convoyant( 0 );
