@@ -80,8 +80,8 @@ public:
     const DEC_PopulationKnowledge&    GetKnowledge         () const;
           bool                        IsDead               () const;
           bool                        HasDoneMagicMove     () const;
-          MT_Float                    GetNbrAliveHumans    () const;
-          MT_Float                    GetNbrDeadHumans     () const;
+          unsigned int                GetNbrAliveHumans    () const;
+          unsigned int                GetNbrDeadHumans     () const;
     //@}
 
     //! @name Geometry
@@ -171,10 +171,10 @@ public:
     //@{
     struct sPeopleCounter
     {
-        sPeopleCounter( MT_Float rInit );   
-        uint GetBoundedPeople( MT_Float rPeople );
+        sPeopleCounter( unsigned int rInit );   
+        unsigned GetBoundedPeople( unsigned int nPeople );
 
-        int nPeople_;
+        unsigned int nPeople_;
     };
     
 
@@ -223,7 +223,7 @@ private:
     const unsigned int               nID_;
           MIL_Army*                  pArmy_;
     const MIL_PopulationAttitude*    pDefaultAttitude_;
-          MT_Float                   rPeopleCount_;
+          unsigned int               nPeopleCount_;
 
           T_ConcentrationVector      concentrations_;
           T_FlowVector               flows_;

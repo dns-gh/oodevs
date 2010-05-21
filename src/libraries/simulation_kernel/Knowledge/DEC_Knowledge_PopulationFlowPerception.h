@@ -56,8 +56,8 @@ public:
     const PHY_PerceptionLevel&                GetCurrentPerceptionLevel() const;
     const MIL_PopulationFlow&                 GetFlowPerceived         () const;
     const DEC_Knowledge_PopulationPerception& GetKnowledge             () const;
-          MT_Float                            GetNbrAliveHumans        () const;
-          MT_Float                            GetNbrDeadHumans         () const;
+          unsigned int                        GetNbrAliveHumans        () const;
+          unsigned int                        GetNbrDeadHumans         () const;
     const MIL_PopulationAttitude&             GetAttitude              () const;
     const T_PointVector&                      GetShape                 () const;
     const MT_Vector2D&                        GetDirection             () const;

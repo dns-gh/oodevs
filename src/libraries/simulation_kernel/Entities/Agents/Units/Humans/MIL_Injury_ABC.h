@@ -45,7 +45,7 @@ public:
     //@{
     virtual float SetLifeExpectancy() const = 0;
     virtual bool  IsInjured( const PHY_ComposantePion& pComposante ) = 0; //This is used by the "ComposantePion"
-    virtual void  SetInjury( MT_Float rNbrAliveHumans, MT_Float rDensity ) = 0; //This is used by the population
+    virtual void  SetInjury( unsigned int nNbrAliveHumans, MT_Float rDensity ) = 0; //This is used by the population
     virtual void  Injure( PHY_InjuredHuman& injuredHuman ) = 0; //This is used by someone already injured
     virtual void  SetInjuryCategory( MIL_MedicalTreatmentType::E_InjuryCategories injuryCategory ) = 0;
     virtual bool  CanInjuryBeDeadly() = 0;

@@ -201,7 +201,7 @@ kernel::Agent_ABC* AgentFactory::Create( const MsgsSimToClient::MsgUnitCreation&
 // -----------------------------------------------------------------------------
 kernel::Population_ABC* AgentFactory::Create( const MsgsSimToClient::MsgPopulationCreation& message )
 {
-    Population* result = new Population( message, controllers_.controller_, static_.coordinateConverter_, static_.types_ );
+    Population* result = new Population( message, controllers_, static_.coordinateConverter_, static_.types_ );
 
     result->Attach< kernel::Positions >( *new PopulationPositions( *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, model_.teams_.GetTeam( message.oid_camp() ) ) );

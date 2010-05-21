@@ -233,7 +233,7 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Injury_Poison::SetInjury
+// Name: MIL_Injury_Poison::IsInjured
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
 bool MIL_Injury_Poison::IsInjured( const PHY_ComposantePion& pComposante )
@@ -269,13 +269,13 @@ bool MIL_Injury_Poison::IsInjured( const PHY_ComposantePion& pComposante )
 // Name: MIL_Injury_Poison::SetInjury
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
-void MIL_Injury_Poison::SetInjury( MT_Float rNbrAliveHumans , MT_Float rDensity )
+void MIL_Injury_Poison::SetInjury( unsigned int nNbrAliveHumans , MT_Float rDensity )
 {
     //Population doesn't have any protection
     //Ne pas oublier de prendre en compte le temps d'exposition
 
     //First we compute the number of persons caught
-    const unsigned int nNbrOfPossibleCasualties = ( unsigned int )std::min( rNbrAliveHumans, std::max( 1., rDensity * MIL_NBCType::GetLength() * MIL_NBCType::GetWidth() ) );
+    const unsigned int nNbrOfPossibleCasualties = std::min( nNbrAliveHumans, unsigned int( std::max( 1., rDensity * MIL_NBCType::GetLength() * MIL_NBCType::GetWidth() ) ) );
     
     //For, each of them, we will compute if they're going to be injured, and how
     for( unsigned int i = 0; i < nNbrOfPossibleCasualties; ++i )

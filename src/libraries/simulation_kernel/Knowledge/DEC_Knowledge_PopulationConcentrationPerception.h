@@ -55,8 +55,8 @@ public:
     //@{
     const PHY_PerceptionLevel&         GetCurrentPerceptionLevel() const;
     const MIL_PopulationConcentration& GetConcentrationPerceived() const;
-          MT_Float                     GetNbrAliveHumans        () const;
-          MT_Float                     GetNbrDeadHumans         () const;
+          unsigned int                 GetNbrAliveHumans        () const;
+          unsigned int                 GetNbrDeadHumans         () const;
     const MIL_PopulationAttitude&      GetAttitude              () const;
 
     //@}

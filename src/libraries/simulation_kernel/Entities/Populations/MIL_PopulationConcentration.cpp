@@ -66,12 +66,12 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     std::string strPosition;
     xis >> xml::attribute( "position", strPosition );
     MIL_Tools::ConvertCoordMosToSim( strPosition, position_ );
-    MT_Float rNbrHumans;
-    xis >> xml::attribute( "humans", rNbrHumans );
-    if( rNbrHumans <= 0. )
-        xis.error( "rNbrHumans is not greater than 0." );
+    unsigned int nNbrHumans;
+    xis >> xml::attribute( "humans", nNbrHumans );
+    if( nNbrHumans <= 0 )
+        xis.error( "nNbrHumans is not greater than 0." );
 
-    PushHumans( T_Humans( rNbrHumans, 0. ) );
+    PushHumans( T_Humans( nNbrHumans, 0. ) );
         
     UpdateLocation();
     UpdateDensity ();
@@ -148,7 +148,7 @@ bool MIL_PopulationConcentration::Update()
 void MIL_PopulationConcentration::UpdateLocation()
 {
     assert( GetPopulation().GetType().GetConcentrationDensity() );
-    MT_Float rSurface = GetNbrAliveHumans() / GetPopulation().GetType().GetConcentrationDensity();
+    MT_Float rSurface = MT_Float( GetNbrAliveHumans() ) / GetPopulation().GetType().GetConcentrationDensity();
     location_.Reset( TER_Localisation( position_, std::sqrt( rSurface / MT_PI ) ) );
     UpdatePatch();
 }

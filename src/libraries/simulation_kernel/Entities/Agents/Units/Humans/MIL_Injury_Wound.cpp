@@ -184,7 +184,7 @@ void MIL_Injury_Wound::UpdateInjuryCategory()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Injury_Wound::SetInjury
+// Name: MIL_Injury_Wound::IsInjured
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
 bool MIL_Injury_Wound::IsInjured( const PHY_ComposantePion& /*pComposante*/ )
@@ -196,7 +196,7 @@ bool MIL_Injury_Wound::IsInjured( const PHY_ComposantePion& /*pComposante*/ )
 // Name: MIL_Injury_Wound::SetInjury
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
-void MIL_Injury_Wound::SetInjury( MT_Float /*rNbrAliveHumans*/ , MT_Float /*rDensity*/ )
+void MIL_Injury_Wound::SetInjury( unsigned int /*nNbrAliveHumans*/ , MT_Float /*rDensity*/ )
 {
     //NOTHING YET!!
 }

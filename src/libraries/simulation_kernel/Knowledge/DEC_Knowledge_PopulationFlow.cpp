@@ -44,8 +44,8 @@ DEC_Knowledge_PopulationFlow::DEC_Knowledge_PopulationFlow( DEC_Knowledge_Popula
     , direction_               ( 1., 0. )
     , rSpeed_                  ( 0. )
     , flowParts_               ()
-    , rNbrAliveHumans_         ( 0. )
-    , rNbrDeadHumans_          ( 0. )
+    , nNbrAliveHumans_         ( 0 )
+    , nNbrDeadHumans_          ( 0 )
     , pAttitude_               ( 0 ) // $$$
     , bHumansUpdated_          ( true )
     , bAttitudeUpdated_        ( true )
@@ -71,8 +71,8 @@ DEC_Knowledge_PopulationFlow::DEC_Knowledge_PopulationFlow( DEC_Knowledge_Popula
     , direction_               ( knowledge.direction_ )
     , rSpeed_                  ( knowledge.rSpeed_ )
     , flowParts_               ()
-    , rNbrAliveHumans_         ( knowledge.rNbrAliveHumans_ )
-    , rNbrDeadHumans_          ( knowledge.rNbrDeadHumans_ )
+    , nNbrAliveHumans_         ( knowledge.nNbrAliveHumans_ )
+    , nNbrDeadHumans_          ( knowledge.nNbrDeadHumans_ )
     , pAttitude_               ( knowledge.pAttitude_ )
     , bHumansUpdated_          ( knowledge.bHumansUpdated_ )
     , bAttitudeUpdated_        ( knowledge.bAttitudeUpdated_ )
@@ -102,8 +102,8 @@ DEC_Knowledge_PopulationFlow::DEC_Knowledge_PopulationFlow()
     , direction_               ( 1., 0. )
     , rSpeed_                  ( 0. )
     , flowParts_               ()
-    , rNbrAliveHumans_         ( 0. )
-    , rNbrDeadHumans_          ( 0. )
+    , nNbrAliveHumans_         ( 0 )
+    , nNbrDeadHumans_          ( 0 )
     , pAttitude_               ( 0 ) // $$$
     , bHumansUpdated_          ( true )
     , bAttitudeUpdated_        ( true )
@@ -181,8 +181,8 @@ void DEC_Knowledge_PopulationFlow::load( MIL_CheckPointInArchive& file, const un
          >> direction_
          >> rSpeed_
          >> flowParts_
-         >> rNbrAliveHumans_
-         >> rNbrDeadHumans_
+         >> nNbrAliveHumans_
+         >> nNbrDeadHumans_
          >> bReconAttributesValid_;
 
     idManager_.Lock( nID_ );
@@ -216,8 +216,8 @@ void DEC_Knowledge_PopulationFlow::save( MIL_CheckPointOutArchive& file, const u
          << direction_
          << rSpeed_
          << flowParts_
-         << rNbrAliveHumans_
-         << rNbrDeadHumans_
+         << nNbrAliveHumans_
+         << nNbrDeadHumans_
          << bReconAttributesValid_
          << attitudeId
          << previousId
@@ -273,14 +273,14 @@ void DEC_Knowledge_PopulationFlow::Update( const DEC_Knowledge_PopulationFlowPer
     if( pPopulationKnowledge_->IsRecon() )
     {
         bReconAttributesValid_ = true;
-        if( rNbrAliveHumans_ != perception.GetNbrAliveHumans() )
+        if( nNbrAliveHumans_ != perception.GetNbrAliveHumans() )
         {
-            rNbrAliveHumans_ = perception.GetNbrAliveHumans();
+            nNbrAliveHumans_ = perception.GetNbrAliveHumans();
             bHumansUpdated_  = true;
         }
-        if( rNbrDeadHumans_ != perception.GetNbrDeadHumans() )
+        if( nNbrDeadHumans_ != perception.GetNbrDeadHumans() )
         {
-            rNbrDeadHumans_  = perception.GetNbrDeadHumans();
+            nNbrDeadHumans_  = perception.GetNbrDeadHumans();
             bHumansUpdated_  = true;
         }
 
@@ -392,8 +392,8 @@ void DEC_Knowledge_PopulationFlow::SendFullState() const
     if( bReconAttributesValid_ )
     {
         assert( pAttitude_ );
-        asnMsg().set_nb_humains_morts  ( unsigned int( floor( rNbrDeadHumans_  + 0.5f ) ) );
-        asnMsg().set_nb_humains_vivants( unsigned int( floor( rNbrAliveHumans_ + 0.5f ) ) );
+        asnMsg().set_nb_humains_morts  ( nNbrDeadHumans_ );
+        asnMsg().set_nb_humains_vivants( nNbrAliveHumans_ );
         asnMsg().set_attitude          ( pAttitude_->GetAsnID() );
     }
 
@@ -458,8 +458,8 @@ void DEC_Knowledge_PopulationFlow::UpdateOnNetwork() const
         assert( pAttitude_ );
         if( bHumansUpdated_ )
         {
-            asnMsg().set_nb_humains_morts  ( unsigned int( floor( rNbrDeadHumans_  + 0.5f ) ) );
-            asnMsg().set_nb_humains_vivants( unsigned int( floor( rNbrAliveHumans_ + 0.5f ) ) );
+            asnMsg().set_nb_humains_morts  ( nNbrDeadHumans_  );
+            asnMsg().set_nb_humains_vivants( nNbrAliveHumans_ );
         }
 
         if( bAttitudeUpdated_ )

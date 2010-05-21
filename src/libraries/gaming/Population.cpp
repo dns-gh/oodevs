@@ -31,16 +31,17 @@ unsigned long Population::nMaxId_ = 200;
 // Name: Population constructor
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-Population::Population( const MsgsSimToClient::MsgPopulationCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< PopulationType >& typeResolver )
-    : EntityImplementation< Population_ABC >( controller, message.oid(), QString( message.nom().c_str() ) )
-    , controller_   ( controller )
+Population::Population( const MsgsSimToClient::MsgPopulationCreation& message, Controllers& controllers, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< PopulationType >& typeResolver )
+    : EntityImplementation< Population_ABC >( controllers.controller_, message.oid(), QString( message.nom().c_str() ) )
+    , controllers_  ( controllers )
     , converter_    ( converter )
     , type_         ( typeResolver.Get( message.type_population() ) )
 {
     if( name_.isEmpty() )
         name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.oid() );
     RegisterSelf( *this );
-    Attach( *new PropertiesDictionary( controller ) );
+    Attach( *new PropertiesDictionary( controllers.controller_ ) );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -49,6 +50,7 @@ Population::Population( const MsgsSimToClient::MsgPopulationCreation& message, C
 // -----------------------------------------------------------------------------
 Population::~Population()
 {
+    controllers_.Unregister( *this );
     tools::Resolver< PopulationFlow_ABC >::DeleteAll();
     tools::Resolver< PopulationConcentration_ABC >::DeleteAll();
     Destroy();
@@ -349,9 +351,7 @@ void Population::DisplayInTooltip( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void Population::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
 {
-    displayer.Display( tools::translate( "Population", "Alive:" ), GetLivingHumans() )
-             .Display( tools::translate( "Population", "Dead:" ), GetDeadHumans() )
-             .Display( tools::translate( "Population", "Domination:" ), nDomination_ );
+    const_cast< Population* >( this )->displayers_.insert( &displayer );
 }
 
 // -----------------------------------------------------------------------------
@@ -361,4 +361,20 @@ void Population::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
 void Population::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Population::NotifyUpdated
+// Created: JSR 2010-05-20
+// -----------------------------------------------------------------------------
+void Population::NotifyUpdated( const Simulation::sEndTick& /*tick*/ )
+{
+    if( !displayers_.empty() )
+    {
+        for( std::set< kernel::Displayer_ABC* >::iterator it = displayers_.begin(); it != displayers_.end(); ++it )
+            (*it)->Display( tools::translate( "Population", "Alive:" ), GetLivingHumans() )
+                  .Display( tools::translate( "Population", "Dead:" ), GetDeadHumans() )
+                  .Display( tools::translate( "Population", "Domination:" ), nDomination_ );
+        displayers_.clear();
+    }
 }

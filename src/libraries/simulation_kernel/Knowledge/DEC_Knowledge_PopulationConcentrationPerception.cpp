@@ -145,7 +145,7 @@ bool DEC_Knowledge_PopulationConcentrationPerception::IsPerceived() const
 // Name: DEC_Knowledge_PopulationConcentrationPerception::GetNbrAliveHumans
 // Created: NLD 2005-10-13
 // -----------------------------------------------------------------------------
-MT_Float DEC_Knowledge_PopulationConcentrationPerception::GetNbrAliveHumans() const
+unsigned int DEC_Knowledge_PopulationConcentrationPerception::GetNbrAliveHumans() const
 {
     assert( pPopulationConcentrationPerceived_ );
     return pPopulationConcentrationPerceived_->GetNbrAliveHumans();
@@ -155,7 +155,7 @@ MT_Float DEC_Knowledge_PopulationConcentrationPerception::GetNbrAliveHumans() co
 // Name: DEC_Knowledge_PopulationConcentrationPerception::GetNbrDeadHumans
 // Created: NLD 2005-10-13
 // -----------------------------------------------------------------------------
-MT_Float DEC_Knowledge_PopulationConcentrationPerception::GetNbrDeadHumans() const
+unsigned int DEC_Knowledge_PopulationConcentrationPerception::GetNbrDeadHumans() const
 {
     assert( pPopulationConcentrationPerceived_ );
     return pPopulationConcentrationPerceived_->GetNbrDeadHumans();

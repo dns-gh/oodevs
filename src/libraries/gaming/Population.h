@@ -20,8 +20,8 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/OptionalValue.h"
 #include "clients_kernel/Displayable_ABC.h"
+#include "Simulation.h"
 #include "protocol/Protocol.h"
-
 
 namespace kernel
 {
@@ -35,6 +35,7 @@ namespace kernel
 class PopulationPart_ABC;
 class PopulationConcentration;
 class PopulationFlow;
+class Simulation;
 
 // =============================================================================
 // Created: HME 2005-09-29
@@ -50,6 +51,8 @@ class Population : public kernel::EntityImplementation< kernel::Population_ABC >
                  , public kernel::Drawable_ABC
                  , public kernel::Displayable_ABC
                  , public kernel::Positions
+                 , public tools::Observer_ABC
+                 , public tools::ElementObserver_ABC< Simulation::sEndTick >
 {
 public:
     //! @name Static
@@ -60,7 +63,7 @@ public:
 public:
     //! @name Constructor/Destructor
     //@{
-             Population( const MsgsSimToClient::MsgPopulationCreation& message, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
+             Population( const MsgsSimToClient::MsgPopulationCreation& message, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter,
                          const tools::Resolver_ABC< kernel::PopulationType >& typeResolver );
     virtual ~Population();
     //@}
@@ -108,12 +111,14 @@ private:
     void DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationDestruction& message );
 
     void ComputeCenter();
+
+    virtual void NotifyUpdated( const Simulation::sEndTick& tick );
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Controller&                    controller_;
+    kernel::Controllers&                   controllers_;
     const kernel::CoordinateConverter_ABC& converter_;
     const kernel::PopulationType&          type_;
 
@@ -124,6 +129,7 @@ private:
 
 private:
     static unsigned long nMaxId_;
+    std::set< kernel::Displayer_ABC* > displayers_;
 };
 
 #endif // __Population_h_

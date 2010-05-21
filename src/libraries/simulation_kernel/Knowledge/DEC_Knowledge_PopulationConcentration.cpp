@@ -38,8 +38,8 @@ DEC_Knowledge_PopulationConcentration::DEC_Knowledge_PopulationConcentration( DE
     , nID_                      ( idManager_.GetFreeId() )
     , nTimeLastUpdate_          ( 0 )
     , position_                 ( concentrationKnown.GetPosition() )
-    , rNbrAliveHumans_          ( 0. )
-    , rNbrDeadHumans_           ( 0. )
+    , nNbrAliveHumans_          ( 0 )
+    , nNbrDeadHumans_           ( 0 )
     , pAttitude_                ( 0 ) 
     , bHumansUpdated_           ( true )
     , bAttitudeUpdated_         ( true )
@@ -63,8 +63,8 @@ DEC_Knowledge_PopulationConcentration::DEC_Knowledge_PopulationConcentration()
     , nID_                      ( 0 )
     , nTimeLastUpdate_          ( 0 )
     , position_                 ( 0., 0. )
-    , rNbrAliveHumans_          ( 0. )
-    , rNbrDeadHumans_           ( 0. )
+    , nNbrAliveHumans_          ( 0 )
+    , nNbrDeadHumans_           ( 0 )
     , pAttitude_                ( 0 ) //$$
     , bHumansUpdated_           ( true )
     , bAttitudeUpdated_         ( true )
@@ -88,8 +88,8 @@ DEC_Knowledge_PopulationConcentration::DEC_Knowledge_PopulationConcentration( DE
     , nID_                      ( idManager_.GetFreeId() )
     , nTimeLastUpdate_          ( concentration.nTimeLastUpdate_ )
     , position_                 ( concentration.position_ )
-    , rNbrAliveHumans_          ( concentration.rNbrAliveHumans_ )
-    , rNbrDeadHumans_           ( concentration.rNbrDeadHumans_ )
+    , nNbrAliveHumans_          ( concentration.nNbrAliveHumans_ )
+    , nNbrDeadHumans_           ( concentration.nNbrDeadHumans_ )
     , pAttitude_                ( concentration.pAttitude_ ) 
     , bHumansUpdated_           ( concentration.bHumansUpdated_ )
     , bAttitudeUpdated_         ( concentration.bAttitudeUpdated_ )
@@ -127,8 +127,8 @@ void DEC_Knowledge_PopulationConcentration::load( MIL_CheckPointInArchive& file,
          >> const_cast< unsigned int&                         >( nID_                  )
          >> nTimeLastUpdate_
          >> position_
-         >> rNbrAliveHumans_
-         >> rNbrDeadHumans_
+         >> nNbrAliveHumans_
+         >> nNbrDeadHumans_
          >> bReconAttributesValid_;
 
     idManager_.Lock( nID_ );
@@ -166,8 +166,8 @@ void DEC_Knowledge_PopulationConcentration::save( MIL_CheckPointOutArchive& file
          << nID_
          << nTimeLastUpdate_
          << position_
-         << rNbrAliveHumans_
-         << rNbrDeadHumans_
+         << nNbrAliveHumans_
+         << nNbrDeadHumans_
          << bReconAttributesValid_
          << attitude;
 
@@ -212,14 +212,14 @@ void DEC_Knowledge_PopulationConcentration::Update( const DEC_Knowledge_Populati
     if( pPopulationKnowledge_->IsRecon() )
     {
         bReconAttributesValid_ = true;
-        if( rNbrAliveHumans_ != perception.GetNbrAliveHumans() )
+        if( nNbrAliveHumans_ != perception.GetNbrAliveHumans() )
         {
-            rNbrAliveHumans_ = perception.GetNbrAliveHumans();
+            nNbrAliveHumans_ = perception.GetNbrAliveHumans();
             bHumansUpdated_  = true;
         }
-        if( rNbrDeadHumans_ != perception.GetNbrDeadHumans() )
+        if( nNbrDeadHumans_ != perception.GetNbrDeadHumans() )
         {
-            rNbrDeadHumans_  = perception.GetNbrDeadHumans();
+            nNbrDeadHumans_  = perception.GetNbrDeadHumans();
             bHumansUpdated_  = true;
         }
 
@@ -338,8 +338,8 @@ void DEC_Knowledge_PopulationConcentration::SendFullState()
     {
         assert( pAttitude_ );
     
-        asnMsg().set_nb_humains_morts  ( unsigned int( floor( rNbrDeadHumans_  + 0.5f ) ) );
-        asnMsg().set_nb_humains_vivants( unsigned int( floor( rNbrAliveHumans_ + 0.5f ) ) );
+        asnMsg().set_nb_humains_morts  ( nNbrDeadHumans_ );
+        asnMsg().set_nb_humains_vivants( nNbrAliveHumans_ );
         asnMsg().set_attitude          ( pAttitude_->GetAsnID() );
     }
 
@@ -385,8 +385,8 @@ void DEC_Knowledge_PopulationConcentration::UpdateOnNetwork()
         assert( pAttitude_ );
         if( bHumansUpdated_ )
         {
-            asnMsg().set_nb_humains_morts  ( unsigned int( floor( rNbrDeadHumans_  + 0.5f ) ) );
-            asnMsg().set_nb_humains_vivants( unsigned int( floor( rNbrAliveHumans_ + 0.5f ) ) );
+            asnMsg().set_nb_humains_morts  ( nNbrDeadHumans_ );
+            asnMsg().set_nb_humains_vivants( nNbrAliveHumans_ );
         }
 
         if( bAttitudeUpdated_ )

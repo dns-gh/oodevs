@@ -34,7 +34,7 @@ class MIL_PopulationElement_ABC
 public:
     //! @name Types
     //@{
-    typedef std::pair< MT_Float /*alive humans*/, MT_Float /*dead humans*/ > T_Humans;
+    typedef std::pair< unsigned int /*alive humans*/,unsigned int /*dead humans*/ > T_Humans;
     //@}
 
 public:
@@ -57,7 +57,7 @@ public:
     //! @name Humans management
     //@{
     void     PushHumans   ( const T_Humans& humans );
-    T_Humans PullHumans   ( MT_Float rNbr );
+    T_Humans PullHumans   ( unsigned int nNbr );
     void     KillAllHumans();
     MT_Float Exterminate  ( MT_Float rSurface );
     unsigned int     Kill         ( unsigned int count );
@@ -80,9 +80,9 @@ public:
           MIL_Population&         GetPopulation    () const;
     const MIL_PopulationAttitude& GetAttitude      () const;
           unsigned int                    GetID            () const;
-          MT_Float                GetNbrAliveHumans() const;
-          MT_Float                GetNbrDeadHumans () const;
-          MT_Float                GetNbrHumans     () const;
+          unsigned int            GetNbrAliveHumans() const;
+          unsigned int            GetNbrDeadHumans () const;
+          unsigned int            GetNbrHumans     () const;
           MT_Float                GetDensity       () const;
           bool                    IsDead           () const;
           bool                    IsInZone         ( const TER_Localisation& loc ) const;
@@ -141,8 +141,8 @@ private:
 private:
     const unsigned int                    nID_;
           MIL_Population*         pPopulation_;
-          MT_Float                rNbrAliveHumans_;
-          MT_Float                rNbrDeadHumans_;
+          unsigned int            nNbrAliveHumans_;
+          unsigned int            nNbrDeadHumans_;
           MT_Float                rDensity_; // Alive humans density
     const MIL_PopulationAttitude* pAttitude_;
 

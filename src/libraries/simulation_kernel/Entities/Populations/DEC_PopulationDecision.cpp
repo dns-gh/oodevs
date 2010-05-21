@@ -204,7 +204,7 @@ void DEC_PopulationDecision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_Population_ChangeEtatDomination", 
         boost::function<void (MT_Float)>(boost::bind(&DEC_PopulationFunctions::NotifyDominationStateChanged, boost::ref( GetPopulation() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Population_Morts",                
-        boost::function<float()>( boost::bind(&MIL_Population::GetNbrDeadHumans, boost::ref(GetPopulation()) ) ) );
+        boost::function<unsigned int()>( boost::bind(&MIL_Population::GetNbrDeadHumans, boost::ref(GetPopulation()) ) ) );
 
     // Representations
     brain.RegisterFunction( "DEC_GetOrdersCategory",

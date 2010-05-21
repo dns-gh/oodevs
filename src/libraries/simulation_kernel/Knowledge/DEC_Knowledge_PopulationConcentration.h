@@ -84,8 +84,8 @@ private:
 
           bool                          bReconAttributesValid_;
     const MIL_PopulationAttitude*       pAttitude_;
-          MT_Float                      rNbrAliveHumans_;
-          MT_Float                      rNbrDeadHumans_;
+          unsigned int                  nNbrAliveHumans_;
+          unsigned int                  nNbrDeadHumans_;
 
     const PHY_PerceptionLevel*          pCurrentPerceptionLevel_;
     const PHY_PerceptionLevel*          pPreviousPerceptionLevel_;

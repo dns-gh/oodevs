@@ -177,7 +177,7 @@ void MIL_Injury_MentalDisease::UpdateInjuryCategory()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Injury_MentalDisease::SetInjury
+// Name: MIL_Injury_MentalDisease::IsInjured
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
 bool MIL_Injury_MentalDisease::IsInjured( const PHY_ComposantePion& /*pComposante*/ )
@@ -189,7 +189,7 @@ bool MIL_Injury_MentalDisease::IsInjured( const PHY_ComposantePion& /*pComposant
 // Name: MIL_Injury_MentalDisease::SetInjury
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
-void MIL_Injury_MentalDisease::SetInjury( MT_Float /*rNbrAliveHumans*/ , MT_Float /*rDensity*/ )
+void MIL_Injury_MentalDisease::SetInjury( unsigned int /*nNbrAliveHumans*/ , MT_Float /*rDensity*/ )
 {
     
 }
