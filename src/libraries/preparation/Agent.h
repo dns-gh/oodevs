@@ -79,7 +79,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::AgentType* type_;
+    const kernel::AgentType& type_;
     mutable std::string symbol_;
     bool commandPost_;
     //@}

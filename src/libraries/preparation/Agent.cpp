@@ -32,7 +32,8 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 Agent::Agent( const AgentType& type, Controller& controller, IdManager& idManager, bool commandPost )
     : EntityImplementation< Agent_ABC >( controller, idManager.GetNextId(), type.GetName().c_str() )
-    , type_( &type )
+    , type_( type )
+    , symbol_( type_.GetSymbol() )
     , commandPost_( commandPost )
 {
     RegisterSelf( *this );
@@ -55,14 +56,11 @@ namespace
 // -----------------------------------------------------------------------------
 Agent::Agent( xml::xistream& xis, Controller& controller, IdManager& idManager, const AgentTypes& agentTypes )
     : EntityImplementation< Agent_ABC >( controller, xml::attribute< unsigned long >( xis, "id" ), ReadName( xis ) )
-    , commandPost_( false )
+    , type_( agentTypes.Resolver< AgentType, std::string >::Get( xml::attribute< std::string >( xis, "type" ) ) )
+    , symbol_( type_.GetSymbol() )
+    , commandPost_( xml::attribute< bool >( xis, "command-post", false ) )
 {
-    std::string type;
-    xis >> xml::attribute( "type", type )
-        >> xml::optional() >> xml::attribute( "command-post", commandPost_ );
-    type_ = &agentTypes.Resolver< AgentType, std::string >::Get( type );
     idManager.Lock( id_ );
-    
     RegisterSelf( *this );
     CreateDictionary( controller );
 }
@@ -87,9 +85,9 @@ void Agent::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& vi
 //        if( symbol_.empty() ) // $$$$ SBO 2007-03-08: allow symbol update on team karma change... to avoid observation of team update
             InitializeSymbol();
         tools.DrawApp6Symbol( symbol_, where );
-        tools.DrawApp6Symbol( type_->GetLevelSymbol(), where );
+        tools.DrawApp6Symbol( type_.GetLevelSymbol(), where );
         if( commandPost_ )
-            tools.DrawApp6Symbol( type_->GetHQSymbol(), where );
+            tools.DrawApp6Symbol( type_.GetHQSymbol(), where );
     }
 }
 
@@ -99,7 +97,6 @@ void Agent::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& vi
 // -----------------------------------------------------------------------------
 void Agent::InitializeSymbol() const
 {
-    symbol_ = type_->GetSymbol();
     kernel::App6Symbol::SetKarma( symbol_, Get< CommunicationHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma() );
 }
 
@@ -109,7 +106,7 @@ void Agent::InitializeSymbol() const
 // -----------------------------------------------------------------------------
 const AgentType& Agent::GetType() const
 {
-    return *type_;
+    return type_;
 }
 
 // -----------------------------------------------------------------------------
@@ -151,7 +148,7 @@ void Agent::CreateDictionary( kernel::Controller& controller )
 void Agent::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << xml::attribute( "id", long( id_ ) )
-        << xml::attribute( "type", type_->GetName() )
+        << xml::attribute( "type", type_.GetName() )
         << xml::attribute( "name", name_.ascii() )
         << xml::attribute( "command-post", commandPost_ );
 }
