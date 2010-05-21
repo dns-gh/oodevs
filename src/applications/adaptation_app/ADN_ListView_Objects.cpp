@@ -232,9 +232,12 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
 // -----------------------------------------------------------------------------
 void ADN_ListView_Objects::OnContextMenu( const QPoint& pt )
 {
-    QPopupMenu          popupMenu( this );
-    ADN_DefaultObjectCreator< ADN_Objects_Data::ObjectInfos >   wizard;
+    if( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin )
+    {
+        QPopupMenu          popupMenu( this );
+        ADN_DefaultObjectCreator< ADN_Objects_Data::ObjectInfos >   wizard;
 
-    FillContextMenuWithDefault( popupMenu, wizard );
-    popupMenu.exec( pt );
+        FillContextMenuWithDefault( popupMenu, wizard );
+        popupMenu.exec( pt );
+    }
 }

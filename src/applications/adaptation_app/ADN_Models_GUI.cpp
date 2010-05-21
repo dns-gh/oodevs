@@ -67,9 +67,9 @@ void ADN_Models_GUI::Build()
     pMainWidget_ = new QWidget( 0 );
     QTabWidget* pTabWidget = new QTabWidget( pMainWidget_ );
 
-    pTabWidget->addTab( BuildPage( pTabWidget, ADN_Models_Data::ModelInfos::ePawn       ), tr( "Unit models"       ) );
-    pTabWidget->addTab( BuildPage( pTabWidget, ADN_Models_Data::ModelInfos::eAutomat    ), tr( "Automata models"   ) );
-    pTabWidget->addTab( BuildPage( pTabWidget, ADN_Models_Data::ModelInfos::ePopulation ), tr( "Population models" ) );
+    pTabWidget->addTab( BuildPage( pGroupPawn_, pTabWidget, ADN_Models_Data::ModelInfos::ePawn       ), tr( "Unit models"       ) );
+    pTabWidget->addTab( BuildPage( pGroupAutomat_, pTabWidget, ADN_Models_Data::ModelInfos::eAutomat    ), tr( "Automata models"   ) );
+    pTabWidget->addTab( BuildPage( pGroupPopulation_, pTabWidget, ADN_Models_Data::ModelInfos::ePopulation ), tr( "Population models" ) );
 
     QGridLayout* pMainLayout = new QGridLayout( pMainWidget_, 1, 1, 10, 10 );
     pMainLayout->addWidget( pTabWidget, 0, 0 );
@@ -80,7 +80,7 @@ void ADN_Models_GUI::Build()
 // Name: ADN_Models_GUI::BuildPage
 // Created: APE 2005-02-09
 // -----------------------------------------------------------------------------
-QWidget* ADN_Models_GUI::BuildPage( QWidget* pParent, ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType )
+QWidget* ADN_Models_GUI::BuildPage( QVGroupBox*& pGroup, QWidget* pParent, ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType )
 {
     ADN_GuiBuilder builder;
 
@@ -98,7 +98,7 @@ QWidget* ADN_Models_GUI::BuildPage( QWidget* pParent, ADN_Models_Data::ModelInfo
         pListModels->GetConnector().Connect( &data_.GetPopulationModelsInfos() );
 
     // Model data
-    QGroupBox* pGroup = new QVGroupBox( tr( "Model"), pMainWidget );
+    pGroup = new QVGroupBox( tr( "Model"), pMainWidget );
 
     QWidget* pParamHolder = builder.AddFieldHolder( pGroup );
     builder.AddField<ADN_EditLine_String>( pParamHolder, tr( "Name" ), vInfosConnectors[eName] );
@@ -127,3 +127,15 @@ QWidget* ADN_Models_GUI::BuildPage( QWidget* pParent, ADN_Models_Data::ModelInfo
 
     return pMainWidget;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Models_GUI::Enable
+// Created: JSR 2010-05-21
+// -----------------------------------------------------------------------------
+void ADN_Models_GUI::Enable( bool enable )
+{
+    pGroupPawn_->setEnabled( enable );
+    pGroupAutomat_->setEnabled( enable );
+    pGroupPopulation_->setEnabled( enable );
+}
+

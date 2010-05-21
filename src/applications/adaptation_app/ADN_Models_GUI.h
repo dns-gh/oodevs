@@ -54,18 +54,22 @@ public:
     //! @name Operations
     //@{
     void Build();
+    void Enable( bool enable ); 
     //@}
 
 private:
     //! @name Helpers
     //@{
-    QWidget* BuildPage( QWidget* pParent, ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType );
+    QWidget* BuildPage( QVGroupBox*& pGroup, QWidget* pParent, ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType );
     //@}
 
 private:
     //! @name Member data
     //@{
     ADN_Models_Data& data_;
+    QVGroupBox* pGroupPawn_;
+    QVGroupBox* pGroupAutomat_;
+    QVGroupBox* pGroupPopulation_;
     //@}
 };
 

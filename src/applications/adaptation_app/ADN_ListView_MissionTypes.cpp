@@ -65,8 +65,11 @@ void ADN_ListView_MissionTypes::ConnectItem( bool bConnect )
 // -----------------------------------------------------------------------------
 void ADN_ListView_MissionTypes::OnContextMenu( const QPoint& pt )
 {
-    QPopupMenu popupMenu( this );
-    ADN_Mission_Wizard wizard( missions_, this );
-    FillContextMenuWithDefault( popupMenu, wizard );
-    popupMenu.exec( pt );
+    if( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin )
+    {
+        QPopupMenu popupMenu( this );
+        ADN_Mission_Wizard wizard( missions_, this );
+        FillContextMenuWithDefault( popupMenu, wizard );
+        popupMenu.exec( pt );
+    }
 }

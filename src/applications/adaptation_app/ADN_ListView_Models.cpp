@@ -81,10 +81,13 @@ void ADN_ListView_Models::ConnectItem( bool bConnect )
 //-----------------------------------------------------------------------------
 void ADN_ListView_Models::OnContextMenu( const QPoint& pt )
 {
-    QPopupMenu popupMenu( this );
-    ADN_Model_Wizard wizard( eEntityType_, this );
-    FillContextMenuWithDefault( popupMenu, wizard );
-    popupMenu.exec( pt );
+    if( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin )
+    {
+        QPopupMenu popupMenu( this );
+        ADN_Model_Wizard wizard( eEntityType_, this );
+        FillContextMenuWithDefault( popupMenu, wizard );
+        popupMenu.exec( pt );
+    }
 }
 
 

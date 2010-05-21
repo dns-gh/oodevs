@@ -48,14 +48,12 @@ public:
     virtual ~ADN_MainWindow();
     
     void Build();
-    void AddPage    ( int pageId, const QString& strPageName, QWidget& page );
+    void AddPage    ( const QString& strPageName, QWidget& page );
     void AddTable   ( const QString& strTableName, ADN_Callback_ABC<ADN_Table*>*    pCallback );
     void AddListView( const QString& strTableName, ADN_Callback_ABC<ADN_ListView*>* pCallback );
 
     void OpenProject( const std::string& filename, const bool isNormalMode = false );
     void SaveProjectAs( const std::string& filename );
-
-    void EnableTab( int pageId, bool enable );
 
 protected:
     void closeEvent( QCloseEvent* e );
@@ -105,7 +103,6 @@ private:
     ADN_Config&             config_;
     
     QTabWidget*                 pTab_;
-    std::vector< QScrollView* > pTabsList_;
 
     QPopupMenu*             pProjectMenu_;
     QPopupMenu*             pCoheranceTablesMenu_;

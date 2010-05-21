@@ -67,8 +67,11 @@ void ADN_ListView_FragOrderTypes::ConnectItem( bool bConnect )
 // -----------------------------------------------------------------------------
 void ADN_ListView_FragOrderTypes::OnContextMenu( const QPoint& pt )
 {
-    QPopupMenu popupMenu( this );
-    ADN_FragOrder_Wizard wizard( orders_, this );
-    FillContextMenuWithDefault( popupMenu, wizard );
-    popupMenu.exec( pt );
+    if( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin )
+    {
+        QPopupMenu popupMenu( this );
+        ADN_FragOrder_Wizard wizard( orders_, this );
+        FillContextMenuWithDefault( popupMenu, wizard );
+        popupMenu.exec( pt );
+    }
 }

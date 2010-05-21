@@ -111,8 +111,8 @@ void ADN_Objects_GUI::Build()
     T_ConnectorVector vInfosConnectors ( eNbrGuiElements, (ADN_Connector_ABC*)0 );
     
     // Create the object panel.
-    QGroupBox* pGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Object" ), pMainWidget_ );
-    QWidget* pHolder = builder.AddFieldHolder( pGroup );
+    pGroup_ = new QGroupBox( 1, Qt::Horizontal, tr( "Object" ), pMainWidget_ );
+    QWidget* pHolder = builder.AddFieldHolder( pGroup_ );
 
     builder.AddField< ADN_EditLine_String >( pHolder, tr( "Name"),  vInfosConnectors[ eName ] );
     builder.AddField< ADN_EditLine_String >( pHolder, tr( "Geometry"), vInfosConnectors[ eGeometry ] );
@@ -120,7 +120,7 @@ void ADN_Objects_GUI::Build()
     builder.AddField< ADN_EditLine_String >( pHolder, tr( "Symbol"), vInfosConnectors[ eSymbol ] );
     builder.SetEnabled( false );
 
-    QGroupBox* hBox = new QGroupBox( 2, Qt::Horizontal, tr( "Capacities" ), pGroup );
+    QGroupBox* hBox = new QGroupBox( 2, Qt::Horizontal, tr( "Capacities" ), pGroup_ );
 
 	ADN_GroupBox* constructor = new ADN_GroupBox( 3, Qt::Horizontal, tr( ADN_Objects_Data::ADN_CapacityInfos_Constructor::DISPLAY_NAME.c_str() ), hBox );
     {
@@ -327,7 +327,7 @@ void ADN_Objects_GUI::Build()
     // Main horizontal layout
     QBoxLayout* pListAndDataLayout = new QHBoxLayout( 0, 10, 10 );
     pListAndDataLayout->addWidget( pList, 1 );
-    pListAndDataLayout->addWidget( pGroup, 2 );
+    pListAndDataLayout->addWidget( pGroup_, 2 );
     
     pMainLayout->addLayout( pListAndDataLayout, 2 );
 }
@@ -343,4 +343,13 @@ void ADN_Objects_GUI::OnSpeedImpactComboChanged()
         pMaxAgentSpeed_->setEnabled( true );
     else
         pMaxAgentSpeed_->setEnabled( false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_GUI::Enable
+// Created: JSR 2010-05-21
+// -----------------------------------------------------------------------------
+void ADN_Objects_GUI::Enable( bool enable )
+{
+    pGroup_->setEnabled( enable );
 }

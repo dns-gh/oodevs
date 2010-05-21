@@ -68,7 +68,7 @@ void ADN_Missions_GUI::Build()
 // Name: ADN_Missions_GUI::BuildMissions
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-QWidget* ADN_Missions_GUI::BuildMissions( QWidget* parent, ADN_Missions_Data::T_Mission_Vector& missions )
+QWidget* ADN_Missions_GUI::BuildMissions( QGroupBox*& pGroup, QWidget* parent, ADN_Missions_Data::T_Mission_Vector& missions )
 {
     ADN_GuiBuilder builder;
 
@@ -81,7 +81,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( QWidget* parent, ADN_Missions_Data::T_
     listMissions->GetConnector().Connect( &missions );
 
     // Mission data
-    QGroupBox* pGroup = new QVGroupBox( tr( "Mission" ), mainWidget );
+    pGroup = new QVGroupBox( tr( "Mission" ), mainWidget );
     QWidget* pParamHolder = builder.AddFieldHolder( pGroup );
     builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Name" ), vInfosConnectors[eName] );
     builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Doctrine description" ), vInfosConnectors[eDoctrineDescription] );
@@ -102,6 +102,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( QWidget* parent, ADN_Missions_Data::T_
     QBoxLayout* pLayout = new QHBoxLayout( mainWidget, 5, 5 );
     pLayout->addWidget( listMissions, 1 );
     pLayout->addWidget( pGroup, 5 );
+
     return mainWidget;
 }
 
@@ -111,7 +112,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( QWidget* parent, ADN_Missions_Data::T_
 // -----------------------------------------------------------------------------
 QWidget* ADN_Missions_GUI::BuildUnitMissions( QWidget* parent )
 {
-    return BuildMissions( parent, data_.unitMissions_ );
+    return BuildMissions( pUnitMissionsGroup_, parent, data_.unitMissions_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -120,7 +121,7 @@ QWidget* ADN_Missions_GUI::BuildUnitMissions( QWidget* parent )
 // -----------------------------------------------------------------------------
 QWidget* ADN_Missions_GUI::BuildAutomatMissions( QWidget* parent )
 {
-    return BuildMissions( parent, data_.automatMissions_ );
+    return BuildMissions( pAutomatMissionsGroup_, parent, data_.automatMissions_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -129,7 +130,7 @@ QWidget* ADN_Missions_GUI::BuildAutomatMissions( QWidget* parent )
 // -----------------------------------------------------------------------------
 QWidget* ADN_Missions_GUI::BuildPopulationMissions( QWidget* parent )
 {
-    return BuildMissions( parent, data_.populationMissions_ );    
+    return BuildMissions( pPopulationMissionsGroup_, parent, data_.populationMissions_ );    
 }
 
 // -----------------------------------------------------------------------------
@@ -149,15 +150,15 @@ QWidget* ADN_Missions_GUI::BuildFragOrders( QWidget* parent )
     listFragOrders->GetConnector().Connect( &data_.fragOrders_ );
 
     // Mission data
-    QGroupBox* pGroup = new QVGroupBox( tr( "Fragmentary orders" ), mainWidget );
-    QWidget* pParamHolder = builder.AddFieldHolder( pGroup );
+    pFragOrderGroup_ = new QVGroupBox( tr( "Fragmentary orders" ), mainWidget );
+    QWidget* pParamHolder = builder.AddFieldHolder( pFragOrderGroup_ );
     builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Name" ), vInfosConnectors[eName] );
     builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Doctrine description" ), vInfosConnectors[eDoctrineDescription] );
     builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Usage description" ), vInfosConnectors[eUsageDescription] );
     builder.AddField< ADN_CheckBox >( pParamHolder, tr( "Available for all missions" ), vInfosConnectors[eFragOrderAvailableForAllMissions] );
     builder.AddField< ADN_CheckBox >( pParamHolder, tr( "Available without mission" ) , vInfosConnectors[eFragOrderAvailableWithoutMission] );
 
-    QGroupBox* pParameters = new QGroupBox( 2, Qt::Horizontal, tr( "Parameters" ), pGroup );
+    QGroupBox* pParameters = new QGroupBox( 2, Qt::Horizontal, tr( "Parameters" ), pFragOrderGroup_ );
     ADN_MissionParameters_Table* paramList = new ADN_MissionParameters_Table( pParameters );
     vInfosConnectors[eParameters] = &paramList->GetConnector();
     QGroupBox* pEnum = new QGroupBox( 1, Qt::Horizontal, tr( "Enumeration values" ), pParameters );
@@ -171,6 +172,19 @@ QWidget* ADN_Missions_GUI::BuildFragOrders( QWidget* parent )
     // Layout
     QBoxLayout* pLayout = new QHBoxLayout( mainWidget, 5, 5 );
     pLayout->addWidget( listFragOrders, 1 );
-    pLayout->addWidget( pGroup, 5 );
+    pLayout->addWidget( pFragOrderGroup_, 5 );
+
     return mainWidget;   
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_GUI::Enable
+// Created: JSR 2010-05-21
+// -----------------------------------------------------------------------------
+void ADN_Missions_GUI::Enable( bool enable )
+{
+    pUnitMissionsGroup_->setEnabled( enable );
+    pAutomatMissionsGroup_->setEnabled( enable );
+    pPopulationMissionsGroup_->setEnabled( enable );
+    pFragOrderGroup_->setEnabled( enable );
 }

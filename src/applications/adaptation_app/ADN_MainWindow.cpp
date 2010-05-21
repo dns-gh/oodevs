@@ -211,16 +211,13 @@ void ADN_MainWindow::Build()
 // Name: ADN_MainWindow::AddPage
 // Created: APE 2005-03-17
 // -----------------------------------------------------------------------------
-void ADN_MainWindow::AddPage( int pageId, const QString& strPageName, QWidget& page )
+void ADN_MainWindow::AddPage( const QString& strPageName, QWidget& page )
 {
     QScrollView* sv = new QScrollView( pTab_ );
     sv->addChild( &page );
     sv->setResizePolicy( QScrollView::AutoOneFit );
     page.reparent( sv->viewport(), QPoint( 0, 0 ) );
     pTab_->addTab( sv, strPageName );
-    if( pageId >= pTabsList_.size() )
-        pTabsList_.resize( pageId + 1 );
-    pTabsList_[ pageId ] = sv;
 }
 
 
@@ -262,15 +259,6 @@ void ADN_MainWindow::SetMenuEnabled( bool bEnabled )
 void ADN_MainWindow::SaveProjectAs( const std::string& filename )
 {
     workspace_.SaveAs( ADN_Tools::Replace( filename, '\\', '/' ) ); 
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_MainWindow::EnableTab
-// Created: JSR 2010-05-14
-// -----------------------------------------------------------------------------
-void ADN_MainWindow::EnableTab( int pageId, bool enable )
-{
-    pTab_->setTabEnabled( pTabsList_[ pageId ], enable );
 }
 
 //-----------------------------------------------------------------------------
@@ -411,9 +399,9 @@ void ADN_MainWindow::OpenProject( const std::string& szFilename, const bool isNo
     {
         //workspace_.Load(ADN_Tools::Replace(szFilename,'\\','/'));  // $$$$ SBO 2005-11-18: Does not work on network
         if( QString( szFilename.c_str() ).startsWith( "//" ) )
-            workspace_.Load( ADN_Tools::Replace( szFilename, '/', '\\' ), *this );
+            workspace_.Load( ADN_Tools::Replace( szFilename, '/', '\\' ) );
         else
-            workspace_.Load( szFilename, *this );
+            workspace_.Load( szFilename );
     }
     catch( ADN_Exception_ABC& exception )
     {

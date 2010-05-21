@@ -109,6 +109,9 @@ void ADN_ListView_Missions::ConnectItem( bool bConnect )
 // -----------------------------------------------------------------------------
 void ADN_ListView_Missions::OnContextMenu( const QPoint& pt )
 {
+    if( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Normal )
+        return;
+
     QPopupMenu menu;
     menu.insertItem( tr( "Configure missions" ), 1 );
 

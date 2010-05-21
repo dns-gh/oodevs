@@ -135,6 +135,7 @@ public:
     //! @name Operations
     //@{
     void Build();
+    void Enable( bool enable );
     //@}
 
 private slots:
@@ -147,6 +148,7 @@ private:
 
     QComboBox* pSpeedImpactCombo_;
     QWidget* pMaxAgentSpeed_;
+    QGroupBox* pGroup_;
     //@}
 };
 

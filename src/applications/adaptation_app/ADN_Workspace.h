@@ -48,6 +48,7 @@ class ADN_Units_Data;
 class ADN_Models_GUI;
 class ADN_Models_Data;
 class ADN_Missions_Data;
+class ADN_Missions_GUI;
 class ADN_Automata_GUI;
 class ADN_Automata_Data;
 class ADN_AiEngine_GUI;
@@ -83,7 +84,7 @@ public:
 public:
     void Build( ADN_MainWindow& mainWindow );
     void Reset( const std::string& filename, bool bVisible = true );
-    void Load( const std::string& filename, ADN_MainWindow& mainWindow );
+    void Load( const std::string& filename );
     bool Save();
     bool SaveAs( const std::string& filename );
     
@@ -103,8 +104,8 @@ public:
     ADN_WorkspaceElement< ADN_Sensors_Data, ADN_Sensors_GUI>& GetSensors();
     ADN_WorkspaceElement< ADN_Composantes_Data, ADN_Composantes_GUI >& GetComposantes();
     ADN_WorkspaceElement< ADN_Units_Data, ADN_Units_GUI >& GetUnits();
-    ADN_WorkspaceElement< ADN_Models_Data, ADN_GUI_ABC >& GetModels();
-    ADN_WorkspaceElement< ADN_Missions_Data, ADN_GUI_ABC >& GetMissions();
+    ADN_WorkspaceElement< ADN_Models_Data, ADN_Models_GUI >& GetModels();
+    ADN_WorkspaceElement< ADN_Missions_Data, ADN_Missions_GUI >& GetMissions();
     ADN_WorkspaceElement< ADN_Automata_Data, ADN_Automata_GUI >& GetAutomata();
     ADN_WorkspaceElement< ADN_AiEngine_Data, ADN_AiEngine_GUI>& GetAiEngine();
     ADN_WorkspaceElement< ADN_Breakdowns_Data, ADN_Breakdowns_GUI>& GetBreakdowns();
@@ -305,9 +306,9 @@ ADN_WorkspaceElement< ADN_Units_Data, ADN_Units_GUI >& ADN_Workspace::GetUnits()
 // Created: APE 2004-12-07
 // -----------------------------------------------------------------------------
 inline
-ADN_WorkspaceElement< ADN_Models_Data, ADN_GUI_ABC >& ADN_Workspace::GetModels()
+ADN_WorkspaceElement< ADN_Models_Data, ADN_Models_GUI >& ADN_Workspace::GetModels()
 {
-    return (ADN_WorkspaceElement< ADN_Models_Data, ADN_GUI_ABC >&)(*elements_[eModels]);
+    return (ADN_WorkspaceElement< ADN_Models_Data, ADN_Models_GUI >&)(*elements_[eModels]);
 }
 
 // -----------------------------------------------------------------------------
@@ -315,9 +316,9 @@ ADN_WorkspaceElement< ADN_Models_Data, ADN_GUI_ABC >& ADN_Workspace::GetModels()
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
 inline
-ADN_WorkspaceElement< ADN_Missions_Data, ADN_GUI_ABC >& ADN_Workspace::GetMissions()
+ADN_WorkspaceElement< ADN_Missions_Data, ADN_Missions_GUI >& ADN_Workspace::GetMissions()
 {
-    return (ADN_WorkspaceElement< ADN_Missions_Data, ADN_GUI_ABC >&)(*elements_[eMissions]);
+    return (ADN_WorkspaceElement< ADN_Missions_Data, ADN_Missions_GUI >&)(*elements_[eMissions]);
 }
 
 

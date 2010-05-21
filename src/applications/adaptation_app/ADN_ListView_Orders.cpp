@@ -94,6 +94,9 @@ ADN_ListView_Orders::~ADN_ListView_Orders()
 // -----------------------------------------------------------------------------
 void ADN_ListView_Orders::OnContextMenu( const QPoint& pt )
 {
+    if( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Normal )
+        return;
+
     std::auto_ptr< QPopupMenu > pTargetMenu( new QPopupMenu(this) );
 
     bool bDisplayAdd = false;
