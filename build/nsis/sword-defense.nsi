@@ -305,7 +305,7 @@ SectionGroup "Terrains" s_ter
     !else if "${APP_MODEL}" == "LTO"
         !insertmacro OT.AddTerrain "Nord egypt" "s_ter1"
         !insertmacro OT.AddTerrain "Paris_Est" "s_ter2"
-        !insertmacro OT.AddTerrain "Paris_Est" "s_ter3"
+        !insertmacro OT.AddTerrain "Malaisie" "s_ter3"
         !insertmacro OT.AddTerrain "Cabourg" "s_ter4"
         !insertmacro OT.AddTerrain "Drosoville" "s_ter7"
         !insertmacro OT.AddTerrain "Angers_x9" "s_ter8"
