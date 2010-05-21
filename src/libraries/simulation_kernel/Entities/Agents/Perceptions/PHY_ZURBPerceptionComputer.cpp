@@ -163,57 +163,61 @@ namespace
 
         void operator() ( const PHY_Sensor& sensor )
         {
-            MT_Vector2D targetPosition = target_.GetRole< PHY_RoleInterface_Location >().GetPosition();
-            MT_Vector2D perceiverPosition = perceiver_.GetRole< PHY_RoleInterface_Location >().GetPosition();
-
-            geometry::Point2f vSourcePoint( static_cast< float >( perceiverPosition.rX_ ), static_cast< float >( perceiverPosition.rY_ ) );
-            geometry::Point2f vTargetPoint( static_cast< float >( targetPosition.rX_ ), static_cast< float >( targetPosition.rY_ ) );
-
-            geometry::Point2f center( ( vSourcePoint.X() + vTargetPoint.X() ) * 0.5f, ( vSourcePoint.Y() + vTargetPoint.Y() ) * 0.5f );
-            float radius = vSourcePoint.Distance( vTargetPoint ) * 0.5f;
-            std::vector< const urban::TerrainObject_ABC* > list;
-            UrbanModel::GetSingleton().GetModel().GetListWithinCircle( center, radius, list );
-            double worstFactor = 1.f;
-            const urban::TerrainObject_ABC* perceiverUrbanBlock = perceiver_.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
-            const PHY_Posture& currentPerceiverPosture = perceiver_.GetRole< PHY_RoleInterface_Posture >().GetCurrentPosture();
-            if( !list.empty() )
+            const PHY_SensorTypeAgent* sensorTypeAgent = sensor.GetType().GetTypeAgent();
+            if( sensorTypeAgent )
             {
-                for( std::vector< const urban::TerrainObject_ABC* >::const_iterator it = list.begin(); it != list.end(); it++ )
-                {
-                    if( !( perceiverUrbanBlock == *it && ( &currentPerceiverPosture == &PHY_Posture::poste_ || &currentPerceiverPosture == &PHY_Posture::posteAmenage_ ) ) )
-                    {
-                        const urban::TerrainObject_ABC& object = **it;
-                        const geometry::Polygon2f* footPrint = object.GetFootprint();
-                        std::vector< geometry::Point2f > intersectPoints = footPrint->Intersect( geometry::Segment2f( vSourcePoint, vTargetPoint ) );
-                        if ( !intersectPoints.empty() || footPrint->IsInside( vSourcePoint ) || footPrint->IsInside( vTargetPoint ) )
-                        {
-                            float perceiverUrbanBlockHeight = 2; //2 = SensorHeight
-                            float objectHeight = 2; //2 = SensorHeight
-                            double urbanFactor = sensor.GetType().GetTypeAgent()->GetUrbanBlockFactor( object );
-                            const urban::Soil* soil = object.RetrievePhysicalFeature< urban::Soil >();
-                            if( soil )
-                                urbanFactor *=  1. - soil->GetOccupation();
-                            if ( perceiverUrbanBlock )
-                            {
-                                const urban::Architecture* perceiverUrbanBlockArchitecture = perceiverUrbanBlock->RetrievePhysicalFeature< urban::Architecture >();
-                                if( perceiverUrbanBlockArchitecture )
-                                    perceiverUrbanBlockHeight += perceiverUrbanBlockArchitecture->GetHeight();
-                            }
-                            const urban::Architecture* objectArchitecture = object.RetrievePhysicalFeature< urban::Architecture >();
-                            if( objectArchitecture )
-                                objectHeight += objectArchitecture->GetHeight(); 
-                            urbanFactor *= static_cast< double >( perceiverUrbanBlockHeight / objectHeight );
+                MT_Vector2D targetPosition = target_.GetRole< PHY_RoleInterface_Location >().GetPosition();
+                MT_Vector2D perceiverPosition = perceiver_.GetRole< PHY_RoleInterface_Location >().GetPosition();
 
-                            worstFactor = std::min( worstFactor, urbanFactor );
+                geometry::Point2f vSourcePoint( static_cast< float >( perceiverPosition.rX_ ), static_cast< float >( perceiverPosition.rY_ ) );
+                geometry::Point2f vTargetPoint( static_cast< float >( targetPosition.rX_ ), static_cast< float >( targetPosition.rY_ ) );
+
+                geometry::Point2f center( ( vSourcePoint.X() + vTargetPoint.X() ) * 0.5f, ( vSourcePoint.Y() + vTargetPoint.Y() ) * 0.5f );
+                float radius = vSourcePoint.Distance( vTargetPoint ) * 0.5f;
+                std::vector< const urban::TerrainObject_ABC* > list;
+                UrbanModel::GetSingleton().GetModel().GetListWithinCircle( center, radius, list );
+                double worstFactor = 1.f;
+                const urban::TerrainObject_ABC* perceiverUrbanBlock = perceiver_.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
+                const PHY_Posture& currentPerceiverPosture = perceiver_.GetRole< PHY_RoleInterface_Posture >().GetCurrentPosture();
+                if( !list.empty() )
+                {
+                    for( std::vector< const urban::TerrainObject_ABC* >::const_iterator it = list.begin(); it != list.end(); it++ )
+                    {
+                        if( !( perceiverUrbanBlock == *it && ( &currentPerceiverPosture == &PHY_Posture::poste_ || &currentPerceiverPosture == &PHY_Posture::posteAmenage_ ) ) )
+                        {
+                            const urban::TerrainObject_ABC& object = **it;
+                            const geometry::Polygon2f* footPrint = object.GetFootprint();
+                            std::vector< geometry::Point2f > intersectPoints = footPrint->Intersect( geometry::Segment2f( vSourcePoint, vTargetPoint ) );
+                            if ( !intersectPoints.empty() || footPrint->IsInside( vSourcePoint ) || footPrint->IsInside( vTargetPoint ) )
+                            {
+                                float perceiverUrbanBlockHeight = 2; //2 = SensorHeight
+                                float objectHeight = 2; //2 = SensorHeight
+                                double urbanFactor = sensorTypeAgent->GetUrbanBlockFactor( object );
+                                const urban::Soil* soil = object.RetrievePhysicalFeature< urban::Soil >();
+                                if( soil )
+                                    urbanFactor *=  1. - soil->GetOccupation();
+                                if ( perceiverUrbanBlock )
+                                {
+                                    const urban::Architecture* perceiverUrbanBlockArchitecture = perceiverUrbanBlock->RetrievePhysicalFeature< urban::Architecture >();
+                                    if( perceiverUrbanBlockArchitecture )
+                                        perceiverUrbanBlockHeight += perceiverUrbanBlockArchitecture->GetHeight();
+                                }
+                                const urban::Architecture* objectArchitecture = object.RetrievePhysicalFeature< urban::Architecture >();
+                                if( objectArchitecture )
+                                    objectHeight += objectArchitecture->GetHeight(); 
+                                urbanFactor *= static_cast< double >( perceiverUrbanBlockHeight / objectHeight );
+
+                                worstFactor = std::min( worstFactor, urbanFactor );
+                            }
                         }
                     }
                 }
-            }
 
-            distanceId_     = std::max( distanceId_, worstFactor * sensor.GetType().GetTypeAgent()->ComputeIdentificationDist( perceiver_, target_ ) );
-            distanceRec_    = std::max( distanceRec_, worstFactor * sensor.GetType().GetTypeAgent()->ComputeRecognitionDist( perceiver_, target_ ) );
-            distanceDet_    = std::max( distanceDet_, worstFactor * sensor.GetType().GetTypeAgent()->ComputeDetectionDist( perceiver_, target_ ) );
-            delay_          = std::min( delay_, sensor.GetType().GetTypeAgent()->GetDelay() );
+                distanceId_     = std::max( distanceId_, worstFactor * sensorTypeAgent->ComputeIdentificationDist( perceiver_, target_ ) );
+                distanceRec_    = std::max( distanceRec_, worstFactor * sensorTypeAgent->ComputeRecognitionDist( perceiver_, target_ ) );
+                distanceDet_    = std::max( distanceDet_, worstFactor * sensorTypeAgent->ComputeDetectionDist( perceiver_, target_ ) );
+                delay_          = std::min( delay_, sensorTypeAgent->GetDelay() );
+            }
         }
     private:
         const MIL_Agent_ABC& perceiver_;
