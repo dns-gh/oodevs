@@ -243,6 +243,7 @@ SectionGroup "Exercises" s_exo
         ; Exercises
         !insertmacro OT.AddExercise "Cabourg" "Cabourg" "s_exo1"
         !insertmacro OT.AddExercise "BMDrosoville" "Drosoville" "s_exo2"
+        !insertmacro OT.AddExercise "Malaisie" "TerrainDifficile" "s_exo3"
 
         ; Tutorials
         !insertmacro OT.AddExercise "tutorials\01 - Generalites" "Paris_Est" "s_exo4"
@@ -304,6 +305,7 @@ SectionGroup "Terrains" s_ter
     !else if "${APP_MODEL}" == "LTO"
         !insertmacro OT.AddTerrain "Nord egypt" "s_ter1"
         !insertmacro OT.AddTerrain "Paris_Est" "s_ter2"
+        !insertmacro OT.AddTerrain "Paris_Est" "s_ter3"
         !insertmacro OT.AddTerrain "Cabourg" "s_ter4"
         !insertmacro OT.AddTerrain "Drosoville" "s_ter7"
         !insertmacro OT.AddTerrain "Angers_x9" "s_ter8"
@@ -427,6 +429,7 @@ Function .onSelChange
     !else if "${APP_MODEL}" == "LTO"
         !insertmacro OT.CheckDependency "s_exo1" "s_ter4"
         !insertmacro OT.CheckDependency "s_exo2" "s_ter7"
+        !insertmacro OT.CheckDependency "s_exo3" "s_ter3"
         ; tutorials
         !insertmacro OT.CheckDependency "s_exo4" "s_ter2"
         !insertmacro OT.CheckDependency "s_exo5" "s_ter2"
