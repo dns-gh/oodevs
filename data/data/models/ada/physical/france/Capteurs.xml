@@ -170,7 +170,7 @@
   </radars>
   <sensors>
     <sensor detection-delay="0h" name="Oreille">
-      <unit-detection angle="360" scanning="true">
+      <unit-detection angle="360" firer-detection-distance="0" scanning="true">
         <base-distances close-range="0">
           <base-distance distance="0" level="identification"/>
           <base-distance distance="0" level="recognition"/>
@@ -244,7 +244,7 @@
       <object-detection/>
     </sensor>
     <sensor detection-delay="0h" name="Oeil">
-      <unit-detection angle="120" scanning="true">
+      <unit-detection angle="120" firer-detection-distance="0" scanning="true">
         <base-distances close-range="100">
           <base-distance distance="300" level="identification"/>
           <base-distance distance="1500" level="recognition"/>
@@ -595,7 +595,7 @@
       </object-detection>
     </sensor>
     <sensor detection-delay="0h" name="Oeil ALAT Vers Sol">
-      <unit-detection angle="120" scanning="false">
+      <unit-detection angle="120" firer-detection-distance="0" scanning="false">
         <base-distances close-range="300">
           <base-distance distance="300" level="identification"/>
           <base-distance distance="1500" level="recognition"/>
@@ -898,7 +898,7 @@
       </object-detection>
     </sensor>
     <sensor detection-delay="0h" name="Oeil ALAT Vers Ciel">
-      <unit-detection angle="120" scanning="false">
+      <unit-detection angle="120" firer-detection-distance="0" scanning="false">
         <base-distances close-range="50">
           <base-distance distance="6000" level="identification"/>
           <base-distance distance="7000" level="recognition"/>
@@ -972,7 +972,7 @@
       <object-detection/>
     </sensor>
     <sensor detection-delay="0s" name="Viseur VIVIANE">
-      <unit-detection angle="120" scanning="true">
+      <unit-detection angle="120" firer-detection-distance="0" scanning="true">
         <base-distances close-range="50">
           <base-distance distance="3800" level="identification"/>
           <base-distance distance="3800" level="recognition"/>
@@ -1046,7 +1046,7 @@
       <object-detection/>
     </sensor>
     <sensor detection-delay="0h" name="Camera Infrarouge Tigre">
-      <unit-detection angle="120" scanning="true">
+      <unit-detection angle="120" firer-detection-distance="0" scanning="true">
         <base-distances close-range="50">
           <base-distance distance="3800" level="identification"/>
           <base-distance distance="3800" level="recognition"/>
@@ -1119,7 +1119,7 @@
       </unit-detection>
     </sensor>
     <sensor detection-delay="0h" name="Lunette Thermique ACMP">
-      <unit-detection angle="80" scanning="true">
+      <unit-detection angle="80" firer-detection-distance="0" scanning="true">
         <base-distances close-range="900">
           <base-distance distance="1500" level="identification"/>
           <base-distance distance="2500" level="recognition"/>
@@ -1193,7 +1193,7 @@
       <object-detection/>
     </sensor>
     <sensor detection-delay="0h" name="I.L Vehicule">
-      <unit-detection angle="20" scanning="true">
+      <unit-detection angle="20" firer-detection-distance="0" scanning="true">
         <base-distances close-range="10">
           <base-distance distance="110" level="identification"/>
           <base-distance distance="165" level="recognition"/>
@@ -1532,7 +1532,7 @@
       </object-detection>
     </sensor>
     <sensor detection-delay="0h" name="Lunette Tir Char">
-      <unit-detection angle="60" scanning="true">
+      <unit-detection angle="60" firer-detection-distance="0" scanning="true">
         <base-distances close-range="800">
           <base-distance distance="2000" level="identification"/>
           <base-distance distance="3200" level="recognition"/>
@@ -1883,7 +1883,7 @@
       </object-detection>
     </sensor>
     <sensor detection-delay="0h" name="Lunette Thermique CHAR divers">
-      <unit-detection angle="80" scanning="true">
+      <unit-detection angle="80" firer-detection-distance="0" scanning="true">
         <base-distances close-range="900">
           <base-distance distance="1500" level="identification"/>
           <base-distance distance="3000" level="recognition"/>
@@ -1956,7 +1956,7 @@
       </unit-detection>
     </sensor>
     <sensor detection-delay="0h" name="Lunette Thermique DIVT 19X 10 RC">
-      <unit-detection angle="80" scanning="true">
+      <unit-detection angle="80" firer-detection-distance="0" scanning="true">
         <base-distances close-range="900">
           <base-distance distance="2200" level="identification"/>
           <base-distance distance="2800" level="recognition"/>
@@ -2029,7 +2029,7 @@
       </unit-detection>
     </sensor>
     <sensor detection-delay="0h" name="Lunette APX M590">
-      <unit-detection angle="6" scanning="true">
+      <unit-detection angle="6" firer-detection-distance="0" scanning="true">
         <base-distances close-range="100">
           <base-distance distance="3000" level="identification"/>
           <base-distance distance="7000" level="recognition"/>
@@ -2102,7 +2102,7 @@
       </unit-detection>
     </sensor>
     <sensor detection-delay="0h" name="Lunette Optique Gx6">
-      <unit-detection angle="30" scanning="true">
+      <unit-detection angle="30" firer-detection-distance="0" scanning="true">
         <base-distances close-range="800">
           <base-distance distance="1000" level="identification"/>
           <base-distance distance="2500" level="recognition"/>
@@ -2477,7 +2477,7 @@
       </object-detection>
     </sensor>
     <sensor detection-delay="0h" name="Jumelle Optique Gx8">
-      <unit-detection angle="30" scanning="true">
+      <unit-detection angle="30" firer-detection-distance="0" scanning="true">
         <base-distances close-range="800">
           <base-distance distance="2000" level="identification"/>
           <base-distance distance="3000" level="recognition"/>
@@ -2852,7 +2852,7 @@
       </object-detection>
     </sensor>
     <sensor detection-delay="0h" name="Radar NC1">
-      <unit-detection angle="60" scanning="true">
+      <unit-detection angle="60" firer-detection-distance="0" scanning="true">
         <base-distances close-range="50">
           <base-distance distance="0" level="identification"/>
           <base-distance distance="1" level="recognition"/>
@@ -2942,7 +2942,7 @@
       </object-detection>
     </sensor>
     <sensor detection-delay="0h" name="Lunette M559">
-      <unit-detection angle="10" scanning="true">
+      <unit-detection angle="10" firer-detection-distance="0" scanning="true">
         <base-distances close-range="800">
           <base-distance distance="3000" level="identification"/>
           <base-distance distance="4500" level="recognition"/>
@@ -3257,7 +3257,7 @@
       </object-detection>
     </sensor>
     <sensor detection-delay="0h" name="Camera SDTI">
-      <unit-detection angle="15" scanning="false">
+      <unit-detection angle="15" firer-detection-distance="0" scanning="false">
         <base-distances close-range="0">
           <base-distance distance="1000" level="identification"/>
           <base-distance distance="1000" level="recognition"/>
@@ -3572,7 +3572,7 @@
       </object-detection>
     </sensor>
     <sensor detection-delay="0h" name="Camera Viviane">
-      <unit-detection angle="180" scanning="true">
+      <unit-detection angle="180" firer-detection-distance="0" scanning="true">
         <base-distances close-range="100">
           <base-distance distance="2000" level="identification"/>
           <base-distance distance="2000" level="recognition"/>
@@ -3803,7 +3803,7 @@
       </object-detection>
     </sensor>
     <sensor detection-delay="0h" name="Lunette Thermique ACCP">
-      <unit-detection angle="80" scanning="true">
+      <unit-detection angle="80" firer-detection-distance="0" scanning="true">
         <base-distances close-range="900">
           <base-distance distance="1000" level="identification"/>
           <base-distance distance="2000" level="recognition"/>
@@ -3876,7 +3876,7 @@
       </unit-detection>
     </sensor>
     <sensor detection-delay="0h" name="Camera Thermique 1er Generation">
-      <unit-detection angle="60" scanning="true">
+      <unit-detection angle="60" firer-detection-distance="0" scanning="true">
         <base-distances close-range="60">
           <base-distance distance="2000" level="identification"/>
           <base-distance distance="3000" level="recognition"/>
@@ -3949,7 +3949,7 @@
       </unit-detection>
     </sensor>
     <sensor detection-delay="0h" name="I.L Fantassin">
-      <unit-detection angle="60" scanning="true">
+      <unit-detection angle="60" firer-detection-distance="0" scanning="true">
         <base-distances close-range="50">
           <base-distance distance="75" level="identification"/>
           <base-distance distance="150" level="recognition"/>
@@ -4288,7 +4288,7 @@
       </object-detection>
     </sensor>
     <sensor detection-delay="0h" name="Lunette Observation VOA">
-      <unit-detection angle="120" scanning="true">
+      <unit-detection angle="120" firer-detection-distance="0" scanning="true">
         <base-distances close-range="800">
           <base-distance distance="5000" level="identification"/>
           <base-distance distance="6000" level="recognition"/>
@@ -4663,7 +4663,7 @@
       </object-detection>
     </sensor>
     <sensor detection-delay="0h" name="Lunette Observation">
-      <unit-detection angle="80" scanning="true">
+      <unit-detection angle="80" firer-detection-distance="0" scanning="true">
         <base-distances close-range="800">
           <base-distance distance="3500" level="identification"/>
           <base-distance distance="4500" level="recognition"/>
@@ -5014,7 +5014,7 @@
       </object-detection>
     </sensor>
     <sensor detection-delay="0h" name="Camera CL 289">
-      <unit-detection angle="18" scanning="false">
+      <unit-detection angle="18" firer-detection-distance="0" scanning="false">
         <base-distances close-range="0">
           <base-distance distance="2500" level="identification"/>
           <base-distance distance="2500" level="recognition"/>
@@ -5329,7 +5329,7 @@
       </object-detection>
     </sensor>
     <sensor detection-delay="0h" name="Oeil Avion">
-      <unit-detection angle="120" scanning="false">
+      <unit-detection angle="120" firer-detection-distance="0" scanning="false">
         <base-distances close-range="300">
           <base-distance distance="300" level="identification"/>
           <base-distance distance="3000" level="recognition"/>
@@ -5576,7 +5576,7 @@
       </object-detection>
     </sensor>
     <sensor detection-delay="0h" name="Radar RASIT">
-      <unit-detection angle="120" scanning="false">
+      <unit-detection angle="120" firer-detection-distance="0" scanning="false">
         <base-distances close-range="1">
           <base-distance distance="0" level="identification"/>
           <base-distance distance="0" level="recognition"/>
@@ -5649,7 +5649,7 @@
       </unit-detection>
     </sensor>
     <sensor detection-delay="0h" name="Lunette Tir XL">
-      <unit-detection angle="60" scanning="true">
+      <unit-detection angle="60" firer-detection-distance="0" scanning="true">
         <base-distances close-range="800">
           <base-distance distance="2500" level="identification"/>
           <base-distance distance="4000" level="recognition"/>
@@ -6000,7 +6000,7 @@
       </object-detection>
     </sensor>
     <sensor detection-delay="0h" name="Lunette Thermique XL">
-      <unit-detection angle="80" scanning="true">
+      <unit-detection angle="80" firer-detection-distance="0" scanning="true">
         <base-distances close-range="900">
           <base-distance distance="2000" level="identification"/>
           <base-distance distance="3000" level="recognition"/>
@@ -6073,7 +6073,7 @@
       </unit-detection>
     </sensor>
     <sensor detection-delay="0h" name="Detecteur d'optique">
-      <unit-detection angle="360" scanning="true">
+      <unit-detection angle="360" firer-detection-distance="0" scanning="true">
         <limited-to-sensors>
           <sensor name="I.L Vehicule"/>
         </limited-to-sensors>
@@ -6426,8 +6426,81 @@
         </object>
       </object-detection>
     </sensor>
+    <sensor detection-delay="0h" name="Detecteur de tireur">
+      <unit-detection angle="360" firer-detection-distance="3000" scanning="true">
+        <base-distances close-range="0">
+          <base-distance distance="0" level="identification"/>
+          <base-distance distance="0" level="recognition"/>
+          <base-distance distance="0" level="detection"/>
+        </base-distances>
+        <distance-modifiers>
+          <population-modifier density="0.5" modifier="0.25"/>
+          <size-modifiers>
+            <distance-modifier type="Gros" value="1"/>
+            <distance-modifier type="Moyen" value="1"/>
+            <distance-modifier type="Petit" value="1"/>
+            <distance-modifier type="Personnel" value="1"/>
+          </size-modifiers>
+          <precipitation-modifiers>
+            <distance-modifier type="PasDePrecipitation" value="1"/>
+            <distance-modifier type="TempeteDeSable" value="1"/>
+            <distance-modifier type="Brouillard" value="1"/>
+            <distance-modifier type="Crachin" value="1"/>
+            <distance-modifier type="Pluie" value="1"/>
+            <distance-modifier type="Neige" value="1"/>
+            <distance-modifier type="Fumigene" value="1"/>
+          </precipitation-modifiers>
+          <visibility-modifiers>
+            <distance-modifier type="JourSansNuage" value="1"/>
+            <distance-modifier type="JourPeuNuageux" value="1"/>
+            <distance-modifier type="JourMoyennementNuageux" value="1"/>
+            <distance-modifier type="JourAssezNuageux" value="1"/>
+            <distance-modifier type="JourTresNuageux" value="1"/>
+            <distance-modifier type="NuitPleineLune" value="1"/>
+            <distance-modifier type="NuitTroisQuartDeLune" value="1"/>
+            <distance-modifier type="NuitDemiLune" value="1"/>
+            <distance-modifier type="NuitQuartDeLune" value="1"/>
+            <distance-modifier type="NuitNouvelleLune" value="1"/>
+            <distance-modifier type="Eclairant" value="1"/>
+          </visibility-modifiers>
+          <source-posture-modifiers>
+            <distance-modifier type="Mouvement" value="1"/>
+            <distance-modifier type="MouvementDiscret" value="1"/>
+            <distance-modifier type="Arret" value="1"/>
+            <distance-modifier type="PosteReflexe" value="1"/>
+            <distance-modifier type="Poste" value="1"/>
+            <distance-modifier type="PosteAmenage" value="1"/>
+            <distance-modifier type="PostePrepareGenie" value="1"/>
+          </source-posture-modifiers>
+          <target-posture-modifiers>
+            <distance-modifier type="Mouvement" value="1"/>
+            <distance-modifier type="MouvementDiscret" value="1"/>
+            <distance-modifier type="Arret" value="1"/>
+            <distance-modifier type="PosteReflexe" value="1"/>
+            <distance-modifier type="Poste" value="1"/>
+            <distance-modifier type="PosteAmenage" value="1"/>
+            <distance-modifier type="PostePrepareGenie" value="1"/>
+          </target-posture-modifiers>
+          <terrain-modifiers>
+            <distance-modifier type="Sol" value="1"/>
+            <distance-modifier type="Vide" value="1"/>
+            <distance-modifier type="Foret" value="1"/>
+            <distance-modifier type="Urbain" value="1"/>
+          </terrain-modifiers>
+          <urbanBlock-material-modifiers>
+            <distance-modifier type="Bois" value="1"/>
+            <distance-modifier type="Beton" value="1"/>
+            <distance-modifier type="Brique" value="1"/>
+            <distance-modifier type="Metal" value="1"/>
+            <distance-modifier type="Torchis" value="1"/>
+            <distance-modifier type="Prefabrique" value="1"/>
+            <distance-modifier type="Vegetation" value="1"/>
+          </urbanBlock-material-modifiers>
+        </distance-modifiers>
+      </unit-detection>
+    </sensor>
     <sensor detection-delay="5m" name="LTO Capteur avec Delai">
-      <unit-detection angle="180" scanning="false">
+      <unit-detection angle="180" firer-detection-distance="0" scanning="false">
         <base-distances close-range="800">
           <base-distance distance="8000" level="identification"/>
           <base-distance distance="9000" level="recognition"/>

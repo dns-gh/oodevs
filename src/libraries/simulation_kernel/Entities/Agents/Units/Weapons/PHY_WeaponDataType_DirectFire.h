@@ -78,6 +78,8 @@ private:
     //! @name Helpers
     //@{
     void ReadHitProbability( xml::xistream& xis, MT_InterpolatedFunction< MT_Float >& phFunction );
+    void NotifyFirerPerception( MIL_Agent_ABC& firer, MIL_Agent_ABC& target ) const;
+    bool IsFirerInsideRecognitionDistance( MIL_Agent_ABC& firer, MIL_Agent_ABC& target ) const;
     //@}
 private:
     //! @name Member data

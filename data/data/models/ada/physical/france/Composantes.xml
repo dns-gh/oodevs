@@ -32844,7 +32844,9 @@
         <dotation capacity="54" logistic-threshold="30" name="Eau" normalized-consumption="18"/>
       </category>
     </composition>
-    <sensors/>
+    <sensors>
+      <sensor height="2" type="Detecteur de tireur"/>
+    </sensors>
     <radars/>
     <transports/>
     <consumptions>

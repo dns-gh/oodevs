@@ -410,6 +410,7 @@ public:
 
         ADN_Type_Bool                           bCanDetectAgents_;
         ADN_Type_Bool                           bCanScan_;
+        ADN_Type_Double                         rFirerDetectionRange_;
         ADN_Type_Double                         rAngle_;
         ADN_Type_Bool                           bLimitedToSensors_; // LTO
         ADN_Type_Double                         rDistProximity_;

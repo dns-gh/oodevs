@@ -6701,6 +6701,10 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
         <source>Volume</source>
         <translation type="obsolete">Volume</translation>
     </message>
+    <message>
+        <source>Firer Detection range</source>
+        <translation type="unfinished">Distance de détection du tireur</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Sensors_Illumination_GUI</name>

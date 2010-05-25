@@ -124,6 +124,8 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     QWidget* pParamHolder = builder.AddFieldHolder( pAgentParamGroupBox );
     builder.AddField<ADN_EditLine_Double>( pParamHolder, tr( "Angle" ), vConnectors[eAngle], tr( "°" ), eDegrees );
     builder.AddField<ADN_CheckBox>( pParamHolder, tr( "Can perform scanning" ), vConnectors[eCanScan] );
+    builder.AddField<ADN_EditLine_Double>( pParamHolder, tr( "Firer Detection range" ), vConnectors[eDistFirerReco], tr( "m" ), eGreaterEqualZero );
+
 
     // Detection distances
     QGroupBox* pDistancesGroupBox = new QGroupBox( 3, Qt::Horizontal, tr( "Ranges" ), pAgentParamGroupBox );

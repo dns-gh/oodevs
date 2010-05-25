@@ -177,7 +177,8 @@ PHY_SensorTypeAgent::~PHY_SensorTypeAgent()
 void PHY_SensorTypeAgent::InitializeAngle( xml::xistream& xis )
 {
     xis >> xml::attribute( "angle", rAngle_ )
-        >> xml::attribute( "scanning", bScanningAllowed_ );
+        >> xml::attribute( "scanning", bScanningAllowed_ )
+        >> xml::attribute( "firer-detection-distance", rRecognitionFirerDist_ );
 
     rAngle_ *= ( MT_PI / 180. );
 }
@@ -841,6 +842,15 @@ MT_Float PHY_SensorTypeAgent::GetUrbanBlockFactor( const urban::TerrainObject_AB
 bool PHY_SensorTypeAgent::CanScan() const
 {
     return bScanningAllowed_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorTypeAgent::CanDetectFirer
+// Created: SLG 2010-05-20
+// -----------------------------------------------------------------------------
+bool PHY_SensorTypeAgent::CanDetectFirer( MT_Float distance ) const
+{
+    return distance < rRecognitionFirerDist_;
 }
 
 //-----------------------------------------------------------------------------

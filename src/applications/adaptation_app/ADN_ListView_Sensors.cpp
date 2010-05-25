@@ -69,6 +69,7 @@ void ADN_ListView_Sensors::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Sensors_GUI::eName]->Connect( &pInfos->strName_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::eAngle]->Connect( &pInfos->rAngle_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::eCanScan]->Connect( &pInfos->bCanScan_, bConnect );
+    vItemConnectors_[ADN_Sensors_GUI::eDistFirerReco]->Connect( &pInfos->rFirerDetectionRange_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::eDistProximity]->Connect( &pInfos->rDistProximity_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::eDistDetection]->Connect( &pInfos->rDistDetection_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::eDistReco]->Connect( &pInfos->rDistReco_, bConnect );

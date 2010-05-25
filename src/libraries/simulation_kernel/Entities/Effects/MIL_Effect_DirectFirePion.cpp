@@ -15,6 +15,7 @@
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Actions/PHY_FireResults_ABC.h"
 
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Effect_DirectFirePion constructor
 // Created: NLD 2004-10-06

@@ -24,6 +24,7 @@
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Roles/Protection/PHY_RoleInterface_ActiveProtection.h"
 #include "Entities/Effects/MIL_Effect_DirectFirePion.h"
@@ -33,11 +34,20 @@
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Populations/MIL_PopulationType.h"
+#include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
+#include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
+#include "Entities/Agents/Units/Sensors/PHY_Sensor.h"
+#include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
+#include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
 #include "simulation_terrain/TER_PopulationConcentration_ABC.h"
 #include "simulation_terrain/TER_PopulationFlow_ABC.h"
 #include "simulation_terrain/TER_PopulationManager.h"
 #include "simulation_terrain/TER_World.h"
 #include "simulation_kernel/UrbanModel.h"
+#include "AlgorithmsFactories.h"
+#include "OnComponentComputer_ABC.h"
+#include "OnComponentFunctorComputerFactory_ABC.h"
+#include "OnComponentFunctor_ABC.h"
 #include "Tools/MIL_Tools.h"
 #include <xeumeuleu/xml.h>
 
@@ -297,6 +307,7 @@ void PHY_WeaponDataType_DirectFire::Fire( MIL_Agent_ABC& firer, MIL_Agent_ABC& t
 {
     const PHY_RoleInterface_Location& firerLocation = firer.GetRole< PHY_RoleInterface_Location >();
     const PHY_RoleInterface_Location& targetLocation = target.GetRole< PHY_RoleInterface_Location >();
+    NotifyFirerPerception(firer, target );
 
     if( bUsePH )
     {
@@ -357,4 +368,85 @@ void PHY_WeaponDataType_DirectFire::Fire( MIL_Agent_ABC& firer, MIL_PopulationEl
 
     MIL_Effect_DirectFirePopulation* pEffect = new MIL_Effect_DirectFirePopulation( target, nHit, fireResult );
     MIL_EffectManager::GetEffectManager().Register( *pEffect );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_WeaponDataType_DirectFire::NotifyFirerPerception
+// Created: SLG 2010-05-20
+// -----------------------------------------------------------------------------
+void PHY_WeaponDataType_DirectFire::NotifyFirerPerception( MIL_Agent_ABC& firer, MIL_Agent_ABC& target ) const
+{
+    if( IsFirerInsideRecognitionDistance( firer, target ) )
+    {
+        PHY_RoleInterface_Perceiver& role = target.GetRole< PHY_RoleInterface_Perceiver >();
+        role.NotifyExternalPerception( firer, PHY_PerceptionLevel::recognized_ );
+    }
+}
+
+namespace
+{
+    class SensorFunctor
+    {
+    public:
+        SensorFunctor(const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target )
+            : perceiver_( perceiver ), target_( target ), isInside_( false )
+        {}
+        ~SensorFunctor()
+        {}
+
+        void operator() ( const PHY_Sensor& sensor )
+        {
+            const PHY_SensorTypeAgent* sensorTypeAgent = sensor.GetType().GetTypeAgent();
+            if( sensorTypeAgent )
+            {
+                MT_Vector2D targetPosition = target_.GetRole< PHY_RoleInterface_Location >().GetPosition();
+                MT_Vector2D perceiverPosition = perceiver_.GetRole< PHY_RoleInterface_Location >().GetPosition();
+                isInside_ = sensorTypeAgent->CanDetectFirer( targetPosition.Distance( perceiverPosition ) );
+            }
+        }
+        bool IsInside(){ return isInside_; }
+    private:
+        const MIL_Agent_ABC& perceiver_;
+        const MIL_Agent_ABC& target_;
+        bool                 isInside_;
+    };
+
+    class Functor : public OnComponentFunctor_ABC
+    {
+    public:
+        Functor( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target )
+            : perceiver_( perceiver ), target_( target ), isInside_( false )
+        {}
+        ~Functor()
+        {}
+
+        void operator() ( PHY_ComposantePion& composante )
+        {
+            if( !composante.CanPerceive() )
+                return;
+            SensorFunctor dataFunctor( perceiver_, target_ );
+            composante.ApplyOnSensors( dataFunctor );
+            if( !isInside_)
+                isInside_ = dataFunctor.IsInside();
+
+        }
+        bool IsInside(){ return isInside_; }
+
+    private:
+        const MIL_Agent_ABC& perceiver_;
+        const MIL_Agent_ABC& target_;
+        bool isInside_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_WeaponDataType_DirectFire::IsFirerInsideRecognitionDistance
+// Created: SLG 2010-05-20
+// -----------------------------------------------------------------------------
+bool PHY_WeaponDataType_DirectFire::IsFirerInsideRecognitionDistance( MIL_Agent_ABC& firer, MIL_Agent_ABC& target ) const
+{
+    Functor dataFunctor( target, firer );
+    std::auto_ptr< OnComponentComputer_ABC > dataComputer( target.GetAlgorithms().onComponentFunctorComputerFactory_->Create( dataFunctor ) );
+    target.Execute( *dataComputer );
+    return dataFunctor.IsInside();
 }

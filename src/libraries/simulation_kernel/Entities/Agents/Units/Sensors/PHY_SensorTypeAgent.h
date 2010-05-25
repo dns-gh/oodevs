@@ -55,6 +55,7 @@ public:
           MT_Float        GetFactor                 ( const PHY_Volume& volume ) const;
           MT_Float GetUrbanBlockFactor( const urban::TerrainObject_ABC& target ) const;
           bool            CanScan                   () const;
+          bool            CanDetectFirer            ( MT_Float distance ) const;
     const PHY_SensorType& GetType                   () const;
           unsigned int    GetDelay                  () const;
     //@}
@@ -126,6 +127,7 @@ private:
     
     MT_Float rAngle_;
     bool     bScanningAllowed_;
+    MT_Float rRecognitionFirerDist_;
 
     // Distances
     MT_Float rSquareProximityDist_;

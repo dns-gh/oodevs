@@ -40,6 +40,7 @@ public:
         eName,
         eAngle,
         eCanScan,
+        eDistFirerReco,
         eDistProximity,
         eDistDetection,
         eDistReco,

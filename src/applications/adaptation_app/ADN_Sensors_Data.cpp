@@ -664,6 +664,7 @@ ADN_Sensors_Data::SensorInfos::SensorInfos()
 , bCanDetectAgents_(false)
 , bCanDetectObjects_(false)
 , bCanScan_( false )
+, rFirerDetectionRange_( 0 )
 , rAngle_(0)
 , bLimitedToSensors_(false) // LTO
 , rDistProximity_(0)
@@ -696,6 +697,9 @@ ADN_Sensors_Data::SensorInfos::SensorInfos()
 
     bCanScan_.SetDataName( "la capacité d'effectuer un balayage à 360 degrés" );
     bCanScan_.SetParentNode( *this );
+
+    rFirerDetectionRange_.SetDataName( "la capacité de détecter le tireur" );
+    rFirerDetectionRange_.SetParentNode( *this );
 
     bCanDetectAgents_.SetDataName( "la capacité de détecter des unités" );
     bCanDetectAgents_.SetParentNode( *this );
@@ -794,15 +798,16 @@ std::string ADN_Sensors_Data::SensorInfos::GetItemName()
 ADN_Sensors_Data::SensorInfos* ADN_Sensors_Data::SensorInfos::CreateCopy()
 {
     ADN_Sensors_Data::SensorInfos* pCopy = new ADN_Sensors_Data::SensorInfos();
-    pCopy->rDistProximity_    = rDistProximity_.GetData();
-    pCopy->rDistDetection_    = rDistDetection_.GetData();
-    pCopy->rDistReco_         = rDistReco_.GetData();
-    pCopy->rDistIdent_        = rDistIdent_.GetData();
-    pCopy->rAngle_            = rAngle_.GetData();
-    pCopy->bCanScan_          = bCanScan_.GetData();
-    pCopy->bCanDetectAgents_  = bCanDetectAgents_.GetData();
-    pCopy->bLimitedToSensors_ = bLimitedToSensors_.GetData(); // LTO
-    pCopy->bCanDetectObjects_ = bCanDetectObjects_.GetData();
+    pCopy->rDistProximity_      = rDistProximity_.GetData();
+    pCopy->rDistDetection_      = rDistDetection_.GetData();
+    pCopy->rDistReco_           = rDistReco_.GetData();
+    pCopy->rDistIdent_          = rDistIdent_.GetData();
+    pCopy->rAngle_              = rAngle_.GetData();
+    pCopy->bCanScan_            = bCanScan_.GetData();
+    pCopy->rFirerDetectionRange_= rFirerDetectionRange_.GetData();
+    pCopy->bCanDetectAgents_    = bCanDetectAgents_.GetData();
+    pCopy->bLimitedToSensors_   = bLimitedToSensors_.GetData(); // LTO
+    pCopy->bCanDetectObjects_   = bCanDetectObjects_.GetData();
     pCopy->populationInfos_.CopyFrom( populationInfos_ );
 
     for( T_TargetsInfos_Vector::iterator itTarget = vTargets_.begin(); itTarget != vTargets_.end(); ++itTarget )
@@ -984,8 +989,11 @@ void ADN_Sensors_Data::SensorInfos::ReadUnitDetection( xml::xistream& input )
 {
     bCanDetectAgents_ = true;
 
-    input >> xml::attribute( "scanning", bCanScan_ )
-          >> xml::attribute( "angle", rAngle_ )
+    input >> xml::attribute( "scanning", bCanScan_ );
+
+    input >> xml::attribute( "firer-detection-distance", rFirerDetectionRange_ );
+
+    input >> xml::attribute( "angle", rAngle_ )
           >> xml::optional() >> xml::start( "limited-to-sensors" ) // LTO
             >> xml::list( "sensor", *this, &ADN_Sensors_Data::SensorInfos::ReadLimitedToSensorsList ) // LTO
           >> xml::end() // LTO
@@ -1078,6 +1086,7 @@ void ADN_Sensors_Data::SensorInfos::WriteArchive( xml::xostream& output )
     {
         output << xml::start( "unit-detection" )
                 << xml::attribute( "scanning", bCanScan_ )
+                << xml::attribute( "firer-detection-distance", rFirerDetectionRange_ )
                 << xml::attribute( "angle", rAngle_ );
 
         // LTO begin
