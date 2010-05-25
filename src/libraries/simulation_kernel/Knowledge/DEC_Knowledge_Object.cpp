@@ -472,13 +472,15 @@ void DEC_Knowledge_Object::UpdateRelevance()
 
     if( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ )
     {
-        assert( pObjectKnown_ && !pObjectKnown_->IsMarkedForDestruction() );
-        if( rRelevance_ != 1. )
+        if( pObjectKnown_ && !pObjectKnown_->IsMarkedForDestruction() )
         {
-            rRelevance_ = 1.;
-            NotifyAttributeUpdated( eAttr_Relevance );
+            if( rRelevance_ != 1. )
+            {
+                rRelevance_ = 1.;
+                NotifyAttributeUpdated( eAttr_Relevance );
+            }
+            return;
         }
-        return;
     }
 
     // L'objet réel va être détruit
