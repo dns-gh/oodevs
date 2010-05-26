@@ -61,8 +61,8 @@ RestartExercisePanel::~RestartExercisePanel()
 // -----------------------------------------------------------------------------
 void RestartExercisePanel::StartExercise()
 {
-//    if( list_->selectedItem() )
-//        new ::StartExercise( this, config_, list_->selectedItem()->text(),  ); // $$$$ AGE 2008-01-04: 
+    if( list_->selectedItem() && sessionList_->selectedItem() && checkpointList_->selectedItem() )
+        Start( new ::StartExercise( config_, list_->selectedItem()->text(), sessionList_->selectedItem()->text(), checkpointList_->selectedItem()->text(), false ) ) ;
     context_.Save( "exercise", list_ );
     context_.Save( "session", sessionList_ );
     Update();
