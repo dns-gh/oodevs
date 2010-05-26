@@ -221,7 +221,9 @@ void PHY_RolePion_Location::Move( const MT_Vector2D& vNewPosition, const MT_Vect
 void PHY_RolePion_Location::Follow( const MIL_Agent_ABC& agent )
 {
     const PHY_RoleInterface_Location& roleLocation = agent.GetRole< PHY_RoleInterface_Location >();
-    Move     ( roleLocation.GetPosition(), roleLocation.GetDirection(), roleLocation.GetCurrentSpeed() );    
+    Move     ( roleLocation.GetPosition(), roleLocation.GetDirection(), roleLocation.GetCurrentSpeed() );
+    pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+
     SetHeight( roleLocation.GetHeight() );
 }
 

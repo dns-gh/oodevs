@@ -152,14 +152,20 @@ void UnitMagicOrdersInterface::Handle( kernel::Location_ABC& location )
     {
         if( selectedEntity_ )
         {
-            // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
-            MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "teleport" );
-            UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
-            tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
-            action->AddParameter( *new parameters::Point( it.NextElement(), static_.coordinateConverter_, location ) );
-            action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
-            action->Attach( *new ActionTasker( *selectedEntity_, false ) );
-            action->RegisterAndPublish( actionsModel_ );
+            try
+            {
+                // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
+                MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "teleport" );
+                UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
+                tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+                action->AddParameter( *new parameters::Point( it.NextElement(), static_.coordinateConverter_, location ) );
+                action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+                action->Attach( *new ActionTasker( *selectedEntity_, false ) );
+                action->RegisterAndPublish( actionsModel_ );
+            }
+            catch( ... )
+            {
+            }
         }
     }
     controllers_.Unregister( *magicMoveLocation_ );
