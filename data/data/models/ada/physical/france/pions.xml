@@ -10626,4 +10626,27 @@
     </distance-before-points>
     <drill-blow length="500" width="350"/>
   </unit>
+  <unit decisional-model="Terroriste" id="436" is-autonomous="true" name="LTO Terroriste robot" type="Pion ASY">
+    <nature atlas-nature="Indefini" level="none" nature="combat"/>
+    <equipments>
+      <equipment count="1" crew="0" major="true" type="Terroriste"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+  </unit>
 </units>

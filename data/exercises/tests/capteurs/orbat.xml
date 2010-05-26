@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
 <orbat>
+  <dotations infinite="false"/>
   <sides>
     <side id="99" name="Capteur" type="friend">
       <objects/>
@@ -9,6 +10,12 @@
             <unit command-post="true" id="160" name="PC Batterie Test Capteur" position="30TYT0952055085" type="LTO PC Batterie Test Capteur"/>
             <unit command-post="false" id="161" name="Section Test Capteur" position="30TYT1003954604" type="LTO Section Test Capteur"/>
             <unit command-post="false" id="171" name="Peloton aveugle" position="30TYT1003954944" type="LTO Peloton char aveugle"/>
+          </automat>
+        </formation>
+        <formation id="173" level="i" name="Test Robot 173">
+          <automat engaged="true" id="174" knowledge-group="158" name="Terroristes [174]" type="Terroristes">
+            <unit command-post="true" id="175" name="Terroriste" position="30TYT0491456310" type="Terroriste"/>
+            <unit command-post="false" id="178" name="LTO Terroriste robot" position="30TYT0506455928" type="LTO Terroriste robot"/>
           </automat>
         </formation>
       </tactical>
