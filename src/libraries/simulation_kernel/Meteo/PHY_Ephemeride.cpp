@@ -83,7 +83,7 @@ bool PHY_Ephemeride::UpdateNight( unsigned int date )
     std::pair<int,int> currentTime( time.hours(), time.minutes() );
 
     bool wasNight = bIsNight_;
-    bIsNight_ = currentTime < sunriseTime_ && !( currentTime < sunsetTime_ );
+    bIsNight_ = currentTime < sunriseTime_ || !( currentTime < sunsetTime_ );
     return bIsNight_ != wasNight;
 }
 
