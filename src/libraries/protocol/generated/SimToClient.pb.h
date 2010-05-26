@@ -199,7 +199,7 @@ class MsgUrbanDestruction;
 class MsgKnowledgeGroupCreation;
 class MsgKnowledgeGroupUpdate;
 class KnowledgeGroupAck;
-class MsgKnowledgeGroupAck;
+class MsgKnowledgeGroupMagicActionAck;
 class MsgKnowledgeGroupCreationAck;
 class MsgKnowledgeGroupUpdateAck;
 class MsgKnowledgeGroupDestruction;
@@ -364,15 +364,15 @@ enum HierarchyModificationAck_ErrorCode {
   HierarchyModificationAck_ErrorCode_error_invalid_automate_tc2 = 4,
   HierarchyModificationAck_ErrorCode_error_invalid_automate_maintenance = 5,
   HierarchyModificationAck_ErrorCode_error_invalid_automate_sante = 6,
-  HierarchyModificationAck_ErrorCode_error_invalid_automate_ravitaillement = 7,
+  HierarchyModificationAck_ErrorCode_error_invalid_automate_supply = 7,
   HierarchyModificationAck_ErrorCode_error_unit_surrendered_hierarchy = 8,
-  HierarchyModificationAck_ErrorCode_error_invalid_camp_hierarchy = 9,
-  HierarchyModificationAck_ErrorCode_error_invalid_groupe_connaissance = 10,
-  HierarchyModificationAck_ErrorCode_error_camps_incompatibles = 11
+  HierarchyModificationAck_ErrorCode_error_invalid_team_hierarchy = 9,
+  HierarchyModificationAck_ErrorCode_error_invalid_knowledge_group = 10,
+  HierarchyModificationAck_ErrorCode_error_teams_mismatched = 11
 };
 bool HierarchyModificationAck_ErrorCode_IsValid(int value);
 const HierarchyModificationAck_ErrorCode HierarchyModificationAck_ErrorCode_ErrorCode_MIN = HierarchyModificationAck_ErrorCode_no_error_hierarchy;
-const HierarchyModificationAck_ErrorCode HierarchyModificationAck_ErrorCode_ErrorCode_MAX = HierarchyModificationAck_ErrorCode_error_camps_incompatibles;
+const HierarchyModificationAck_ErrorCode HierarchyModificationAck_ErrorCode_ErrorCode_MAX = HierarchyModificationAck_ErrorCode_error_teams_mismatched;
 
 const ::google::protobuf::EnumDescriptor* HierarchyModificationAck_ErrorCode_descriptor();
 inline const ::std::string& HierarchyModificationAck_ErrorCode_Name(HierarchyModificationAck_ErrorCode value) {
@@ -659,13 +659,13 @@ inline bool EnumUnitIdentificationLevel_Parse(
     EnumUnitIdentificationLevel_descriptor(), name, value);
 }
 enum EnumReportType {
-  message = 0,
-  operationel = 1,
-  evenement_exceptionnel = 2,
+  information = 0,
+  operational = 1,
+  exceptional_event = 2,
   warning = 3
 };
 bool EnumReportType_IsValid(int value);
-const EnumReportType EnumReportType_MIN = message;
+const EnumReportType EnumReportType_MIN = information;
 const EnumReportType EnumReportType_MAX = warning;
 
 const ::google::protobuf::EnumDescriptor* EnumReportType_descriptor();
@@ -2109,11 +2109,11 @@ class HierarchyModificationAck : public ::google::protobuf::Message {
   static const ErrorCode error_invalid_automate_tc2 = HierarchyModificationAck_ErrorCode_error_invalid_automate_tc2;
   static const ErrorCode error_invalid_automate_maintenance = HierarchyModificationAck_ErrorCode_error_invalid_automate_maintenance;
   static const ErrorCode error_invalid_automate_sante = HierarchyModificationAck_ErrorCode_error_invalid_automate_sante;
-  static const ErrorCode error_invalid_automate_ravitaillement = HierarchyModificationAck_ErrorCode_error_invalid_automate_ravitaillement;
+  static const ErrorCode error_invalid_automate_supply = HierarchyModificationAck_ErrorCode_error_invalid_automate_supply;
   static const ErrorCode error_unit_surrendered_hierarchy = HierarchyModificationAck_ErrorCode_error_unit_surrendered_hierarchy;
-  static const ErrorCode error_invalid_camp_hierarchy = HierarchyModificationAck_ErrorCode_error_invalid_camp_hierarchy;
-  static const ErrorCode error_invalid_groupe_connaissance = HierarchyModificationAck_ErrorCode_error_invalid_groupe_connaissance;
-  static const ErrorCode error_camps_incompatibles = HierarchyModificationAck_ErrorCode_error_camps_incompatibles;
+  static const ErrorCode error_invalid_team_hierarchy = HierarchyModificationAck_ErrorCode_error_invalid_team_hierarchy;
+  static const ErrorCode error_invalid_knowledge_group = HierarchyModificationAck_ErrorCode_error_invalid_knowledge_group;
+  static const ErrorCode error_teams_mismatched = HierarchyModificationAck_ErrorCode_error_teams_mismatched;
   static inline bool ErrorCode_IsValid(int value) {
     return HierarchyModificationAck_ErrorCode_IsValid(value);
   }
@@ -18847,14 +18847,14 @@ class KnowledgeGroupAck : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class MsgKnowledgeGroupAck : public ::google::protobuf::Message {
+class MsgKnowledgeGroupMagicActionAck : public ::google::protobuf::Message {
  public:
-  MsgKnowledgeGroupAck();
-  virtual ~MsgKnowledgeGroupAck();
+  MsgKnowledgeGroupMagicActionAck();
+  virtual ~MsgKnowledgeGroupMagicActionAck();
   
-  MsgKnowledgeGroupAck(const MsgKnowledgeGroupAck& from);
+  MsgKnowledgeGroupMagicActionAck(const MsgKnowledgeGroupMagicActionAck& from);
   
-  inline MsgKnowledgeGroupAck& operator=(const MsgKnowledgeGroupAck& from) {
+  inline MsgKnowledgeGroupMagicActionAck& operator=(const MsgKnowledgeGroupMagicActionAck& from) {
     CopyFrom(from);
     return *this;
   }
@@ -18868,16 +18868,16 @@ class MsgKnowledgeGroupAck : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgKnowledgeGroupAck& default_instance();
-  void Swap(MsgKnowledgeGroupAck* other);
+  static const MsgKnowledgeGroupMagicActionAck& default_instance();
+  void Swap(MsgKnowledgeGroupMagicActionAck* other);
   
   // implements Message ----------------------------------------------
   
-  MsgKnowledgeGroupAck* New() const;
+  MsgKnowledgeGroupMagicActionAck* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgKnowledgeGroupAck& from);
-  void MergeFrom(const MsgKnowledgeGroupAck& from);
+  void CopyFrom(const MsgKnowledgeGroupMagicActionAck& from);
+  void MergeFrom(const MsgKnowledgeGroupMagicActionAck& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -18938,7 +18938,7 @@ class MsgKnowledgeGroupAck : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgKnowledgeGroupAck* default_instance_;
+  static MsgKnowledgeGroupMagicActionAck* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -20378,12 +20378,12 @@ class MsgSimToClient_Content : public ::google::protobuf::Message {
   inline const ::MsgsSimToClient::MsgUrbanDetection& urban_detection() const;
   inline ::MsgsSimToClient::MsgUrbanDetection* mutable_urban_detection();
   
-  // optional .MsgsSimToClient.MsgKnowledgeGroupAck knowledge_group_ack = 116;
-  inline bool has_knowledge_group_ack() const;
-  inline void clear_knowledge_group_ack();
-  static const int kKnowledgeGroupAckFieldNumber = 116;
-  inline const ::MsgsSimToClient::MsgKnowledgeGroupAck& knowledge_group_ack() const;
-  inline ::MsgsSimToClient::MsgKnowledgeGroupAck* mutable_knowledge_group_ack();
+  // optional .MsgsSimToClient.MsgKnowledgeGroupMagicActionAck knowledge_group_magic_action_ack = 116;
+  inline bool has_knowledge_group_magic_action_ack() const;
+  inline void clear_knowledge_group_magic_action_ack();
+  static const int kKnowledgeGroupMagicActionAckFieldNumber = 116;
+  inline const ::MsgsSimToClient::MsgKnowledgeGroupMagicActionAck& knowledge_group_magic_action_ack() const;
+  inline ::MsgsSimToClient::MsgKnowledgeGroupMagicActionAck* mutable_knowledge_group_magic_action_ack();
   
   // optional .MsgsSimToClient.MsgKnowledgeGroupCreation knowledge_group_creation = 117;
   inline bool has_knowledge_group_creation() const;
@@ -20567,7 +20567,7 @@ class MsgSimToClient_Content : public ::google::protobuf::Message {
   ::MsgsSimToClient::MsgUrbanKnowledgeDestruction* urban_knowledge_destruction_;
   ::Common::StockResource* stock_resource_;
   ::MsgsSimToClient::MsgUrbanDetection* urban_detection_;
-  ::MsgsSimToClient::MsgKnowledgeGroupAck* knowledge_group_ack_;
+  ::MsgsSimToClient::MsgKnowledgeGroupMagicActionAck* knowledge_group_magic_action_ack_;
   ::MsgsSimToClient::MsgKnowledgeGroupCreation* knowledge_group_creation_;
   ::MsgsSimToClient::MsgKnowledgeGroupUpdate* knowledge_group_update_;
   ::MsgsSimToClient::MsgKnowledgeGroupCreationAck* knowledge_group_creation_ack_;
@@ -30769,36 +30769,36 @@ inline ::std::string* MsgKnowledgeGroupUpdate::mutable_type() {
 
 // -------------------------------------------------------------------
 
-// MsgKnowledgeGroupAck
+// MsgKnowledgeGroupMagicActionAck
 
 // required uint32 oid = 1;
-inline bool MsgKnowledgeGroupAck::has_oid() const {
+inline bool MsgKnowledgeGroupMagicActionAck::has_oid() const {
   return _has_bit(0);
 }
-inline void MsgKnowledgeGroupAck::clear_oid() {
+inline void MsgKnowledgeGroupMagicActionAck::clear_oid() {
   oid_ = 0u;
   _clear_bit(0);
 }
-inline ::google::protobuf::uint32 MsgKnowledgeGroupAck::oid() const {
+inline ::google::protobuf::uint32 MsgKnowledgeGroupMagicActionAck::oid() const {
   return oid_;
 }
-inline void MsgKnowledgeGroupAck::set_oid(::google::protobuf::uint32 value) {
+inline void MsgKnowledgeGroupMagicActionAck::set_oid(::google::protobuf::uint32 value) {
   _set_bit(0);
   oid_ = value;
 }
 
 // required .MsgsSimToClient.KnowledgeGroupAck.ErrorCode error_code = 2;
-inline bool MsgKnowledgeGroupAck::has_error_code() const {
+inline bool MsgKnowledgeGroupMagicActionAck::has_error_code() const {
   return _has_bit(1);
 }
-inline void MsgKnowledgeGroupAck::clear_error_code() {
+inline void MsgKnowledgeGroupMagicActionAck::clear_error_code() {
   error_code_ = 0;
   _clear_bit(1);
 }
-inline ::MsgsSimToClient::KnowledgeGroupAck_ErrorCode MsgKnowledgeGroupAck::error_code() const {
+inline ::MsgsSimToClient::KnowledgeGroupAck_ErrorCode MsgKnowledgeGroupMagicActionAck::error_code() const {
   return static_cast< ::MsgsSimToClient::KnowledgeGroupAck_ErrorCode >(error_code_);
 }
-inline void MsgKnowledgeGroupAck::set_error_code(::MsgsSimToClient::KnowledgeGroupAck_ErrorCode value) {
+inline void MsgKnowledgeGroupMagicActionAck::set_error_code(::MsgsSimToClient::KnowledgeGroupAck_ErrorCode value) {
   GOOGLE_DCHECK(::MsgsSimToClient::KnowledgeGroupAck_ErrorCode_IsValid(value));
   _set_bit(1);
   error_code_ = value;
@@ -33001,21 +33001,21 @@ inline ::MsgsSimToClient::MsgUrbanDetection* MsgSimToClient_Content::mutable_urb
   return urban_detection_;
 }
 
-// optional .MsgsSimToClient.MsgKnowledgeGroupAck knowledge_group_ack = 116;
-inline bool MsgSimToClient_Content::has_knowledge_group_ack() const {
+// optional .MsgsSimToClient.MsgKnowledgeGroupMagicActionAck knowledge_group_magic_action_ack = 116;
+inline bool MsgSimToClient_Content::has_knowledge_group_magic_action_ack() const {
   return _has_bit(115);
 }
-inline void MsgSimToClient_Content::clear_knowledge_group_ack() {
-  if (knowledge_group_ack_ != NULL) knowledge_group_ack_->::MsgsSimToClient::MsgKnowledgeGroupAck::Clear();
+inline void MsgSimToClient_Content::clear_knowledge_group_magic_action_ack() {
+  if (knowledge_group_magic_action_ack_ != NULL) knowledge_group_magic_action_ack_->::MsgsSimToClient::MsgKnowledgeGroupMagicActionAck::Clear();
   _clear_bit(115);
 }
-inline const ::MsgsSimToClient::MsgKnowledgeGroupAck& MsgSimToClient_Content::knowledge_group_ack() const {
-  return knowledge_group_ack_ != NULL ? *knowledge_group_ack_ : *default_instance_->knowledge_group_ack_;
+inline const ::MsgsSimToClient::MsgKnowledgeGroupMagicActionAck& MsgSimToClient_Content::knowledge_group_magic_action_ack() const {
+  return knowledge_group_magic_action_ack_ != NULL ? *knowledge_group_magic_action_ack_ : *default_instance_->knowledge_group_magic_action_ack_;
 }
-inline ::MsgsSimToClient::MsgKnowledgeGroupAck* MsgSimToClient_Content::mutable_knowledge_group_ack() {
+inline ::MsgsSimToClient::MsgKnowledgeGroupMagicActionAck* MsgSimToClient_Content::mutable_knowledge_group_magic_action_ack() {
   _set_bit(115);
-  if (knowledge_group_ack_ == NULL) knowledge_group_ack_ = new ::MsgsSimToClient::MsgKnowledgeGroupAck;
-  return knowledge_group_ack_;
+  if (knowledge_group_magic_action_ack_ == NULL) knowledge_group_magic_action_ack_ = new ::MsgsSimToClient::MsgKnowledgeGroupMagicActionAck;
+  return knowledge_group_magic_action_ack_;
 }
 
 // optional .MsgsSimToClient.MsgKnowledgeGroupCreation knowledge_group_creation = 117;

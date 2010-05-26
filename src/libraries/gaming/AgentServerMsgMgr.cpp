@@ -1556,12 +1556,12 @@ void AgentServerMsgMgr::OnReceiveMsgUrbanDetection( const MsgsSimToClient::MsgUr
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupAck
+// Name: AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupMagicActionAck
 // Created: JSR 2010-04-21
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupAck( const MsgsSimToClient::MsgKnowledgeGroupAck& message, unsigned long /*nCtx*/ )
+void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupMagicActionAck( const MsgsSimToClient::MsgKnowledgeGroupMagicActionAck& message, unsigned long /*nCtx*/ )
 {
-    CheckAcknowledge( logger_, message, "KnowledgeGroupAck" );
+    CheckAcknowledge( logger_, message, "KnowledgeGroupMagicActionAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -1893,8 +1893,8 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& , const Msgs
         OnReceiveMsgUrbanKnowledgeUpdate( wrapper.message().urban_knowledge_update() );
     else if( wrapper.message().has_urban_knowledge_destruction() )
         OnReceiveMsgUrbanKnowledgeDestruction( wrapper.message().urban_knowledge_destruction() );
-    else if( wrapper.message().has_knowledge_group_ack() )
-        OnReceiveMsgKnowledgeGroupAck(  wrapper.message().knowledge_group_ack() , wrapper.context() ); 
+    else if( wrapper.message().has_knowledge_group_magic_action_ack() )
+        OnReceiveMsgKnowledgeGroupMagicActionAck(  wrapper.message().knowledge_group_magic_action_ack() , wrapper.context() ); 
     else if( wrapper.message().has_knowledge_group_update() )
         OnReceiveMsgKnowledgeGroupUpdate( wrapper.message().knowledge_group_update() );
     else if( wrapper.message().has_knowledge_group_update_ack() )

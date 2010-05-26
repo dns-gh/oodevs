@@ -144,28 +144,19 @@ public:
     //@}
 
     //! @name Network
-    //@{
-    void OnReceiveMsgUnitMagicAction             ( const MsgsClientToSim::MsgUnitMagicAction&               message, unsigned int nCtx );
-    void OnReceiveMsgPopulationOrder             ( const Common::MsgPopulationOrder&                        message, unsigned int nCtx );     
+    //@{  
+    void OnReceiveMsgUnitMagicAction             ( const MsgsClientToSim::MsgUnitMagicAction&               message, unsigned int nCtx ); 
+    void OnReceiveMsgObjectMagicAction           ( const MsgsClientToSim::MsgObjectMagicAction&             message, unsigned int nCtx );
     void OnReceiveMsgUnitOrder                   ( const Common::MsgUnitOrder&                              message, unsigned int nCtx ); 
     void OnReceiveMsgAutomatOrder                ( const Common::MsgAutomatOrder&                           message, unsigned int nCtx );
+    void OnReceiveMsgPopulationOrder             ( const Common::MsgPopulationOrder&                        message, unsigned int nCtx );  
+    void OnReceiveMsgFragOrder                   ( const MsgsClientToSim::MsgFragOrder&                     message, unsigned int nCtx );
     void OnReceiveMsgSetAutomateMode             ( const MsgsClientToSim::MsgSetAutomatMode&                message, unsigned int nCtx );
     void OnReceiveMsgUnitCreationRequest         ( const MsgsClientToSim::MsgUnitCreationRequest&           message, unsigned int nCtx );
-    void OnReceiveMsgFragOrder                   ( const MsgsClientToSim::MsgFragOrder&                     message, unsigned int nCtx );
     void OnReceiveMsgKnowledgeMagicAction        ( const MsgsClientToSim::MsgKnowledgeMagicAction&          message, unsigned int nCtx );
-    void OnReceiveMsgObjectMagicAction           ( const MsgsClientToSim::MsgObjectMagicAction&             message, unsigned int nCtx );
     void OnReceiveMsgChangeDiplomacy             ( const MsgsClientToSim::MsgMagicAction&                   message, unsigned int nCtx );
-    void OnReceiveMsgAutomateChangeKnowledgeGroup( const MsgsClientToSim::MsgUnitMagicAction&               message, unsigned int nCtx );
-    void OnReceiveMsgAutomateChangeLogisticLinks ( const MsgsClientToSim::MsgUnitMagicAction&               message, unsigned int nCtx );
-    void OnReceiveMsgAutomateChangeSuperior      ( const MsgsClientToSim::MsgUnitMagicAction&               message, unsigned int nCtx );
-    void OnReceiveMsgUnitChangeSuperior          ( const MsgsClientToSim::MsgUnitMagicAction&               message, unsigned int nCtx );
-    void OnReceiveMsgLogSupplyChangeQuotas       ( const MsgsClientToSim::MsgUnitMagicAction&               message, unsigned int nCtx );
-    void OnReceiveMsgLogSupplyPushFlow           ( const MsgsClientToSim::MsgUnitMagicAction&               message, unsigned int nCtx );
-    void OnReceiveMsgMagicActionMoveTo           ( const MsgsClientToSim::MsgUnitMagicAction&               message, unsigned int nCtx );
     // LTO begin
     void OnReceiveMsgKnowledgeGroupCreation      ( const MsgsClientToSim::MsgMagicAction&                   message, unsigned int nCtx );
-    void OnReceiveMsgKnowledgeGroupUpdate        ( const MsgsClientToSim::MsgKnowledgeMagicAction&          message, unsigned int nCtx );
-    void OnReceiveMsgMagicActionCreateFireOrder  ( const MsgsClientToSim::MsgUnitMagicAction&               message, unsigned int nCtx );
     // LTO end
     //@}
 
@@ -187,6 +178,21 @@ public:
     //@}
     
 private:
+    //! @name Helpers
+    //@{
+    void ProcessMsgAutomateChangeKnowledgeGroup( const MsgsClientToSim::MsgUnitMagicAction&               message, unsigned int nCtx );
+    void ProcessMsgAutomateChangeLogisticLinks ( const MsgsClientToSim::MsgUnitMagicAction&               message, unsigned int nCtx );
+    void ProcessMsgAutomateChangeSuperior      ( const MsgsClientToSim::MsgUnitMagicAction&               message, unsigned int nCtx );
+    void ProcessMsgUnitChangeSuperior          ( const MsgsClientToSim::MsgUnitMagicAction&               message, unsigned int nCtx );
+    void ProcessMsgLogSupplyChangeQuotas       ( const MsgsClientToSim::MsgUnitMagicAction&               message, unsigned int nCtx );
+    void ProcessMsgLogSupplyPushFlow           ( const MsgsClientToSim::MsgUnitMagicAction&               message, unsigned int nCtx );
+    void ProcessMsgMagicActionMoveTo           ( const MsgsClientToSim::MsgUnitMagicAction&               message, unsigned int nCtx );
+    // LTO begin
+    void ProcessMsgKnowledgeGroupUpdate        ( const MsgsClientToSim::MsgKnowledgeMagicAction&          message, unsigned int nCtx );
+    void ProcessMsgMagicActionCreateFireOrder  ( const MsgsClientToSim::MsgUnitMagicAction&               message, unsigned int nCtx );
+    // LTO end
+    //@}
+
     //! @name types
     //@{
     typedef std::map< unsigned int, MIL_Intelligence* > T_IntelligenceMap;

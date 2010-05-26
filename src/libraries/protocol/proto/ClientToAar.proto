@@ -12,4 +12,3 @@ message MsgClientToAar {
     optional int32   context = 1 [default = 0];
     required Content message = 2;
 }
-

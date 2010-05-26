@@ -1099,11 +1099,11 @@ void MIL_Automate::OnReceiveMsgChangeKnowledgeGroup( const MsgsClientToSim::MsgU
 
     MIL_Army_ABC* pNewArmy = armies.Find( msg.parametres().elem( 1 ).value().army().oid() );
     if( !pNewArmy || *pNewArmy != GetArmy() )
-        throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_camp_hierarchy );
+        throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_team_hierarchy );
 
     MIL_KnowledgeGroup* pNewKnowledgeGroup = pNewArmy->FindKnowledgeGroup( msg.parametres().elem( 0 ).value().knowledgegroup().oid() );
     if( !pNewKnowledgeGroup )
-        throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_groupe_connaissance );
+        throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_knowledge_group );
 
     if( *pKnowledgeGroup_ != *pNewKnowledgeGroup )
     {
@@ -1149,7 +1149,7 @@ void MIL_Automate::OnReceiveMsgChangeSuperior( const MsgsClientToSim::MsgUnitMag
         if( !pNewFormation )
             throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_formation );
         if( pNewFormation->GetArmy() != GetArmy() )
-            throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_camps_incompatibles );
+            throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_teams_mismatched );
         if( pParentAutomate_ )
             pParentAutomate_->UnregisterAutomate( *this );
         if( pParentFormation_ )
@@ -1164,7 +1164,7 @@ void MIL_Automate::OnReceiveMsgChangeSuperior( const MsgsClientToSim::MsgUnitMag
         if( !pNewAutomate )
             throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_automate );
         if( pNewAutomate->GetArmy() != GetArmy() )
-            throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_camps_incompatibles );
+            throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_teams_mismatched );
         if( pNewAutomate == this ) 
             throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_automate );
         if( pParentAutomate_ )

@@ -1,20 +1,24 @@
 package MsgsAuthenticationToClient;
 
-import "Common.proto";
+import "Common.proto"; 
+import "Version.proto";
 
 message MsgAuthenticationResponse {
     enum ErrorCode {
-        success       = 0;
-        invalid_login = 1;
-        too_many_connections = 2;
+        success                         = 0;
+        invalid_login                   = 1;
+        too_many_connections            = 2;
+        mismatched_protocol_version     = 4;
     }
-    required ErrorCode  error_code              = 1;
-    optional MsgProfile profile                 = 2;
+    required ErrorCode  error_code = 1;
+    optional MsgProfile profile    = 2; 
     optional MsgProfileDescriptionList profiles = 3;
+    required Version.ProtocolVersion server_version  	= 4;
+	optional Common.MsgDateTime restart_date_time       = 5;
 }
 
 message MsgProfileCreation {
-    optional MsgProfile profile = 1;
+    required MsgProfile profile = 1;
 }
 
 message MsgProfileCreationRequestAck {
@@ -71,6 +75,16 @@ message PopulationList {
     repeated Common.MsgPopulation elem = 1;
 }
 
+// Scipio roles :
+enum Role {
+    superviseur	= 0; 
+    anibas		= 1;
+    eniex		= 2;
+    direx		= 3; 
+    environnement	= 4; 
+    analyse			= 5;
+}
+
 message MsgProfile {
     required string                login                   = 1;
     optional string                password                = 2;
@@ -83,6 +97,7 @@ message MsgProfile {
     optional PopulationList        read_only_populations   = 9;
     optional PopulationList        read_write_populations  = 10;
     required bool                  superviseur             = 11;
+    optional Role                  role                    = 12;
 }
 
 message MsgProfileDescriptionList {

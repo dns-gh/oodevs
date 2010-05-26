@@ -973,7 +973,7 @@ void MIL_AgentPion::OnReceiveMsgChangeSuperior( const MIL_EntityManager& manager
         throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_automate );
 
     if( pNewAutomate->GetArmy() != GetArmy() )
-        throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_camps_incompatibles );
+        throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_teams_mismatched );
 
     pAutomate_->UnregisterPion( *this );
     pAutomate_ = pNewAutomate;

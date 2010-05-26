@@ -131,11 +131,11 @@ message HierarchyModificationAck {
         error_invalid_automate_tc2            = 4;
         error_invalid_automate_maintenance    = 5;
         error_invalid_automate_sante          = 6;
-        error_invalid_automate_ravitaillement = 7;
+        error_invalid_automate_supply         = 7;
         error_unit_surrendered_hierarchy      = 8;
-        error_invalid_camp_hierarchy          = 9;
-        error_invalid_groupe_connaissance     = 10;
-        error_camps_incompatibles             = 11;
+        error_invalid_team_hierarchy          = 9;
+        error_invalid_knowledge_group        = 10;
+        error_teams_mismatched               = 11;
     }
 }
 
@@ -582,9 +582,9 @@ message MsgStopFireEffect  {
 }
 
 enum EnumReportType {
-  message                = 0;
-  operationel            = 1;
-  evenement_exceptionnel = 2;
+  information            = 0;
+  operational            = 1;
+  exceptional_event      = 2;
   warning                = 3;
 }
 
@@ -1169,7 +1169,7 @@ message KnowledgeGroupAck {
     }
 }
 
-message MsgKnowledgeGroupAck {
+message MsgKnowledgeGroupMagicActionAck {
     required uint32                      oid        = 1;
     required KnowledgeGroupAck.ErrorCode error_code = 2;
 }
@@ -1325,7 +1325,7 @@ message MsgSimToClient {
         optional MsgUrbanKnowledgeDestruction                   urban_knowledge_destruction                    = 113;
         optional Common.StockResource                           stock_resource                                 = 114;
         optional MsgUrbanDetection                              urban_detection                                = 115;
-        optional MsgKnowledgeGroupAck                           knowledge_group_ack                            = 116;
+        optional MsgKnowledgeGroupMagicActionAck                knowledge_group_magic_action_ack               = 116;
         optional MsgKnowledgeGroupCreation                      knowledge_group_creation                       = 117;
         optional MsgKnowledgeGroupUpdate                        knowledge_group_update                         = 118;
         optional MsgKnowledgeGroupCreationAck                   knowledge_group_creation_ack                   = 119;

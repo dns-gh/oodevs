@@ -181,6 +181,16 @@ message MsgControlStop   {}
 message MsgControlPause  {}
 message MsgControlResume {}
 
+message MsgExercise  {
+   required string	name		= 1; 
+   optional bool	running  	= 2 [default = false]; 
+}
+
+message MsgNetworkAddress  {
+   required string	IP		= 1; 
+   required int32	port  		= 2 [default = 8080]; 
+}
+
 enum EnumAutomatMode {
    embraye                                          = 0;
    debraye                                          = 1;

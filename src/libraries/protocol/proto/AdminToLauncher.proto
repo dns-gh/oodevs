@@ -1,0 +1,34 @@
+package MsgsAdminToLauncher;
+
+import "Common.proto";
+import "Version.proto";
+
+message MsgConnectionRequest {
+   required Version.ProtocolVersion client_version = 1;
+}
+
+message MsgExercicesListRequest {
+    optional int32   context = 1 [default = 0];
+}
+
+message MsgControlStart {
+   required Common.MsgExercise exercise     = 1; 
+   optional bool	  with_3A  	= 2 [default = true];
+   optional bool	  with_SIC 	= 3 [default = false];
+}
+
+message MsgControlStop {
+	required Common.MsgExercise exercise = 1;
+}
+
+message MsgAdminToLauncher {
+    message Content {
+        optional MsgConnectionRequest    connection_request = 1;
+        optional MsgExercicesListRequest exercise_list_request = 2;
+        optional MsgControlStart         control_start = 3;
+        optional MsgControlStop          control_stop = 4;
+    }
+    optional int32   context = 1 [default = 0];
+    required Content message = 2;
+}
+

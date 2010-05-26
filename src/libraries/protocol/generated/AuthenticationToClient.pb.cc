@@ -62,6 +62,7 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* MsgAuthenticationToClient_Content_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgAuthenticationToClient_Content_reflection_ = NULL;
+const ::google::protobuf::EnumDescriptor* Role_descriptor_ = NULL;
 
 }  // namespace
 
@@ -73,10 +74,12 @@ void protobuf_AssignDesc_AuthenticationToClient_2eproto() {
       "AuthenticationToClient.proto");
   GOOGLE_CHECK(file != NULL);
   MsgAuthenticationResponse_descriptor_ = file->message_type(0);
-  static const int MsgAuthenticationResponse_offsets_[3] = {
+  static const int MsgAuthenticationResponse_offsets_[5] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgAuthenticationResponse, error_code_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgAuthenticationResponse, profile_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgAuthenticationResponse, profiles_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgAuthenticationResponse, server_version_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgAuthenticationResponse, restart_date_time_),
   };
   MsgAuthenticationResponse_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -233,7 +236,7 @@ void protobuf_AssignDesc_AuthenticationToClient_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(PopulationList));
   MsgProfile_descriptor_ = file->message_type(10);
-  static const int MsgProfile_offsets_[11] = {
+  static const int MsgProfile_offsets_[12] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgProfile, login_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgProfile, password_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgProfile, read_only_formations_),
@@ -245,6 +248,7 @@ void protobuf_AssignDesc_AuthenticationToClient_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgProfile, read_only_populations_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgProfile, read_write_populations_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgProfile, superviseur_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgProfile, role_),
   };
   MsgProfile_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -326,6 +330,7 @@ void protobuf_AssignDesc_AuthenticationToClient_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgAuthenticationToClient_Content));
+  Role_descriptor_ = file->enum_type(0);
 }
 
 namespace {
@@ -412,81 +417,89 @@ void protobuf_AddDesc_AuthenticationToClient_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::Common::protobuf_AddDesc_Common_2eproto();
+  ::Version::protobuf_AddDesc_Version_2eproto();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\034AuthenticationToClient.proto\022\032MsgsAuth"
-    "enticationToClient\032\014Common.proto\"\271\002\n\031Msg"
-    "AuthenticationResponse\022S\n\nerror_code\030\001 \002"
-    "(\0162?.MsgsAuthenticationToClient.MsgAuthe"
-    "nticationResponse.ErrorCode\0227\n\007profile\030\002"
-    " \001(\0132&.MsgsAuthenticationToClient.MsgPro"
-    "file\022G\n\010profiles\030\003 \001(\01325.MsgsAuthenticat"
-    "ionToClient.MsgProfileDescriptionList\"E\n"
-    "\tErrorCode\022\013\n\007success\020\000\022\021\n\rinvalid_login"
-    "\020\001\022\030\n\024too_many_connections\020\002\"M\n\022MsgProfi"
-    "leCreation\0227\n\007profile\030\001 \001(\0132&.MsgsAuthen"
-    "ticationToClient.MsgProfile\"\335\001\n\034MsgProfi"
-    "leCreationRequestAck\022\r\n\005login\030\001 \002(\t\022V\n\ne"
-    "rror_code\030\002 \002(\0162B.MsgsAuthenticationToCl"
-    "ient.MsgProfileCreationRequestAck.ErrorC"
-    "ode\"V\n\tErrorCode\022\013\n\007success\020\000\022\021\n\rinvalid"
-    "_login\020\001\022\024\n\020invalid_password\020\002\022\023\n\017duplic"
-    "ate_login\020\003\"\356\001\n\032MsgProfileUpdateRequestA"
-    "ck\022\r\n\005login\030\001 \002(\t\022T\n\nerror_code\030\002 \002(\0162@."
-    "MsgsAuthenticationToClient.MsgProfileUpd"
-    "ateRequestAck.ErrorCode\"k\n\tErrorCode\022\013\n\007"
-    "success\020\000\022\023\n\017invalid_profile\020\001\022\021\n\rinvali"
-    "d_login\020\002\022\024\n\020invalid_password\020\003\022\023\n\017dupli"
-    "cate_login\020\004\"Z\n\020MsgProfileUpdate\022\r\n\005logi"
-    "n\030\001 \002(\t\0227\n\007profile\030\002 \002(\0132&.MsgsAuthentic"
-    "ationToClient.MsgProfile\"&\n\025MsgProfileDe"
-    "struction\022\r\n\005login\030\001 \001(\t\"\307\001\n\037MsgProfileD"
-    "estructionRequestAck\022Y\n\nerror_code\030\001 \002(\016"
-    "2E.MsgsAuthenticationToClient.MsgProfile"
-    "DestructionRequestAck.ErrorCode\022\r\n\005login"
-    "\030\002 \002(\t\":\n\tErrorCode\022\013\n\007success\020\000\022\023\n\017inva"
-    "lid_profile\020\001\022\013\n\007failure\020\002\"3\n\rFormationL"
-    "ist\022\"\n\004elem\030\001 \003(\0132\024.Common.MsgFormation\""
-    ")\n\010TeamList\022\035\n\004elem\030\001 \003(\0132\017.Common.MsgTe"
-    "am\"5\n\016PopulationList\022#\n\004elem\030\001 \003(\0132\025.Com"
-    "mon.MsgPopulation\"\326\004\n\nMsgProfile\022\r\n\005logi"
-    "n\030\001 \002(\t\022\020\n\010password\030\002 \001(\t\022G\n\024read_only_f"
-    "ormations\030\003 \001(\0132).MsgsAuthenticationToCl"
-    "ient.FormationList\022H\n\025read_write_formati"
-    "ons\030\004 \001(\0132).MsgsAuthenticationToClient.F"
-    "ormationList\0223\n\023read_only_automates\030\005 \001("
-    "\0132\026.Common.MsgAutomatList\0224\n\024read_write_"
-    "automates\030\006 \001(\0132\026.Common.MsgAutomatList\022"
-    "=\n\017read_only_camps\030\007 \001(\0132$.MsgsAuthentic"
-    "ationToClient.TeamList\022>\n\020read_write_cam"
-    "ps\030\010 \001(\0132$.MsgsAuthenticationToClient.Te"
-    "amList\022I\n\025read_only_populations\030\t \001(\0132*."
-    "MsgsAuthenticationToClient.PopulationLis"
-    "t\022J\n\026read_write_populations\030\n \001(\0132*.Msgs"
-    "AuthenticationToClient.PopulationList\022\023\n"
-    "\013superviseur\030\013 \002(\010\"\\\n\031MsgProfileDescript"
-    "ionList\022?\n\004elem\030\001 \003(\01321.MsgsAuthenticati"
-    "onToClient.MsgProfileDescription\"L\n\025MsgP"
-    "rofileDescription\022\r\n\005login\030\001 \002(\t\022\020\n\010pass"
-    "word\030\002 \002(\010\022\022\n\nsupervisor\030\003 \002(\010\"\345\005\n\031MsgAu"
-    "thenticationToClient\022\022\n\007context\030\001 \001(\005:\0010"
-    "\022N\n\007message\030\002 \002(\0132=.MsgsAuthenticationTo"
-    "Client.MsgAuthenticationToClient.Content"
-    "\032\343\004\n\007Content\022V\n\027authentication_response\030"
-    "\001 \001(\01325.MsgsAuthenticationToClient.MsgAu"
-    "thenticationResponse\022H\n\020profile_creation"
-    "\030\002 \001(\0132..MsgsAuthenticationToClient.MsgP"
-    "rofileCreation\022^\n\034profile_creation_reque"
-    "st_ack\030\003 \001(\01328.MsgsAuthenticationToClien"
-    "t.MsgProfileCreationRequestAck\022D\n\016profil"
-    "e_update\030\004 \001(\0132,.MsgsAuthenticationToCli"
-    "ent.MsgProfileUpdate\022Z\n\032profile_update_r"
-    "equest_ack\030\005 \001(\01326.MsgsAuthenticationToC"
-    "lient.MsgProfileUpdateRequestAck\022N\n\023prof"
-    "ile_destruction\030\006 \001(\01321.MsgsAuthenticati"
-    "onToClient.MsgProfileDestruction\022d\n\037prof"
-    "ile_destruction_request_ack\030\007 \001(\0132;.Msgs"
-    "AuthenticationToClient.MsgProfileDestruc"
-    "tionRequestAck", 2934);
+    "enticationToClient\032\014Common.proto\032\rVersio"
+    "n.proto\"\274\003\n\031MsgAuthenticationResponse\022S\n"
+    "\nerror_code\030\001 \002(\0162?.MsgsAuthenticationTo"
+    "Client.MsgAuthenticationResponse.ErrorCo"
+    "de\0227\n\007profile\030\002 \001(\0132&.MsgsAuthentication"
+    "ToClient.MsgProfile\022G\n\010profiles\030\003 \001(\01325."
+    "MsgsAuthenticationToClient.MsgProfileDes"
+    "criptionList\0220\n\016server_version\030\004 \002(\0132\030.V"
+    "ersion.ProtocolVersion\022.\n\021restart_date_t"
+    "ime\030\005 \001(\0132\023.Common.MsgDateTime\"f\n\tErrorC"
+    "ode\022\013\n\007success\020\000\022\021\n\rinvalid_login\020\001\022\030\n\024t"
+    "oo_many_connections\020\002\022\037\n\033mismatched_prot"
+    "ocol_version\020\004\"M\n\022MsgProfileCreation\0227\n\007"
+    "profile\030\001 \002(\0132&.MsgsAuthenticationToClie"
+    "nt.MsgProfile\"\335\001\n\034MsgProfileCreationRequ"
+    "estAck\022\r\n\005login\030\001 \002(\t\022V\n\nerror_code\030\002 \002("
+    "\0162B.MsgsAuthenticationToClient.MsgProfil"
+    "eCreationRequestAck.ErrorCode\"V\n\tErrorCo"
+    "de\022\013\n\007success\020\000\022\021\n\rinvalid_login\020\001\022\024\n\020in"
+    "valid_password\020\002\022\023\n\017duplicate_login\020\003\"\356\001"
+    "\n\032MsgProfileUpdateRequestAck\022\r\n\005login\030\001 "
+    "\002(\t\022T\n\nerror_code\030\002 \002(\0162@.MsgsAuthentica"
+    "tionToClient.MsgProfileUpdateRequestAck."
+    "ErrorCode\"k\n\tErrorCode\022\013\n\007success\020\000\022\023\n\017i"
+    "nvalid_profile\020\001\022\021\n\rinvalid_login\020\002\022\024\n\020i"
+    "nvalid_password\020\003\022\023\n\017duplicate_login\020\004\"Z"
+    "\n\020MsgProfileUpdate\022\r\n\005login\030\001 \002(\t\0227\n\007pro"
+    "file\030\002 \002(\0132&.MsgsAuthenticationToClient."
+    "MsgProfile\"&\n\025MsgProfileDestruction\022\r\n\005l"
+    "ogin\030\001 \001(\t\"\307\001\n\037MsgProfileDestructionRequ"
+    "estAck\022Y\n\nerror_code\030\001 \002(\0162E.MsgsAuthent"
+    "icationToClient.MsgProfileDestructionReq"
+    "uestAck.ErrorCode\022\r\n\005login\030\002 \002(\t\":\n\tErro"
+    "rCode\022\013\n\007success\020\000\022\023\n\017invalid_profile\020\001\022"
+    "\013\n\007failure\020\002\"3\n\rFormationList\022\"\n\004elem\030\001 "
+    "\003(\0132\024.Common.MsgFormation\")\n\010TeamList\022\035\n"
+    "\004elem\030\001 \003(\0132\017.Common.MsgTeam\"5\n\016Populati"
+    "onList\022#\n\004elem\030\001 \003(\0132\025.Common.MsgPopulat"
+    "ion\"\206\005\n\nMsgProfile\022\r\n\005login\030\001 \002(\t\022\020\n\010pas"
+    "sword\030\002 \001(\t\022G\n\024read_only_formations\030\003 \001("
+    "\0132).MsgsAuthenticationToClient.Formation"
+    "List\022H\n\025read_write_formations\030\004 \001(\0132).Ms"
+    "gsAuthenticationToClient.FormationList\0223"
+    "\n\023read_only_automates\030\005 \001(\0132\026.Common.Msg"
+    "AutomatList\0224\n\024read_write_automates\030\006 \001("
+    "\0132\026.Common.MsgAutomatList\022=\n\017read_only_c"
+    "amps\030\007 \001(\0132$.MsgsAuthenticationToClient."
+    "TeamList\022>\n\020read_write_camps\030\010 \001(\0132$.Msg"
+    "sAuthenticationToClient.TeamList\022I\n\025read"
+    "_only_populations\030\t \001(\0132*.MsgsAuthentica"
+    "tionToClient.PopulationList\022J\n\026read_writ"
+    "e_populations\030\n \001(\0132*.MsgsAuthentication"
+    "ToClient.PopulationList\022\023\n\013superviseur\030\013"
+    " \002(\010\022.\n\004role\030\014 \001(\0162 .MsgsAuthenticationT"
+    "oClient.Role\"\\\n\031MsgProfileDescriptionLis"
+    "t\022?\n\004elem\030\001 \003(\01321.MsgsAuthenticationToCl"
+    "ient.MsgProfileDescription\"L\n\025MsgProfile"
+    "Description\022\r\n\005login\030\001 \002(\t\022\020\n\010password\030\002"
+    " \002(\010\022\022\n\nsupervisor\030\003 \002(\010\"\345\005\n\031MsgAuthenti"
+    "cationToClient\022\022\n\007context\030\001 \001(\005:\0010\022N\n\007me"
+    "ssage\030\002 \002(\0132=.MsgsAuthenticationToClient"
+    ".MsgAuthenticationToClient.Content\032\343\004\n\007C"
+    "ontent\022V\n\027authentication_response\030\001 \001(\0132"
+    "5.MsgsAuthenticationToClient.MsgAuthenti"
+    "cationResponse\022H\n\020profile_creation\030\002 \001(\013"
+    "2..MsgsAuthenticationToClient.MsgProfile"
+    "Creation\022^\n\034profile_creation_request_ack"
+    "\030\003 \001(\01328.MsgsAuthenticationToClient.MsgP"
+    "rofileCreationRequestAck\022D\n\016profile_upda"
+    "te\030\004 \001(\0132,.MsgsAuthenticationToClient.Ms"
+    "gProfileUpdate\022Z\n\032profile_update_request"
+    "_ack\030\005 \001(\01326.MsgsAuthenticationToClient."
+    "MsgProfileUpdateRequestAck\022N\n\023profile_de"
+    "struction\030\006 \001(\01321.MsgsAuthenticationToCl"
+    "ient.MsgProfileDestruction\022d\n\037profile_de"
+    "struction_request_ack\030\007 \001(\0132;.MsgsAuthen"
+    "ticationToClient.MsgProfileDestructionRe"
+    "questAck*Y\n\004Role\022\017\n\013superviseur\020\000\022\n\n\006ani"
+    "bas\020\001\022\t\n\005eniex\020\002\022\t\n\005direx\020\003\022\021\n\renvironne"
+    "ment\020\004\022\013\n\007analyse\020\005", 3219);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "AuthenticationToClient.proto", &protobuf_RegisterTypes);
   MsgAuthenticationResponse::default_instance_ = new MsgAuthenticationResponse();
@@ -529,6 +542,24 @@ struct StaticDescriptorInitializer_AuthenticationToClient_2eproto {
   }
 } static_descriptor_initializer_AuthenticationToClient_2eproto_;
 
+const ::google::protobuf::EnumDescriptor* Role_descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return Role_descriptor_;
+}
+bool Role_IsValid(int value) {
+  switch(value) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+      return true;
+    default:
+      return false;
+  }
+}
+
 
 // ===================================================================
 
@@ -541,6 +572,7 @@ bool MsgAuthenticationResponse_ErrorCode_IsValid(int value) {
     case 0:
     case 1:
     case 2:
+    case 4:
       return true;
     default:
       return false;
@@ -551,6 +583,7 @@ bool MsgAuthenticationResponse_ErrorCode_IsValid(int value) {
 const MsgAuthenticationResponse_ErrorCode MsgAuthenticationResponse::success;
 const MsgAuthenticationResponse_ErrorCode MsgAuthenticationResponse::invalid_login;
 const MsgAuthenticationResponse_ErrorCode MsgAuthenticationResponse::too_many_connections;
+const MsgAuthenticationResponse_ErrorCode MsgAuthenticationResponse::mismatched_protocol_version;
 const MsgAuthenticationResponse_ErrorCode MsgAuthenticationResponse::ErrorCode_MIN;
 const MsgAuthenticationResponse_ErrorCode MsgAuthenticationResponse::ErrorCode_MAX;
 #endif  // _MSC_VER
@@ -558,6 +591,8 @@ const MsgAuthenticationResponse_ErrorCode MsgAuthenticationResponse::ErrorCode_M
 const int MsgAuthenticationResponse::kErrorCodeFieldNumber;
 const int MsgAuthenticationResponse::kProfileFieldNumber;
 const int MsgAuthenticationResponse::kProfilesFieldNumber;
+const int MsgAuthenticationResponse::kServerVersionFieldNumber;
+const int MsgAuthenticationResponse::kRestartDateTimeFieldNumber;
 #endif  // !_MSC_VER
 
 MsgAuthenticationResponse::MsgAuthenticationResponse() {
@@ -567,6 +602,8 @@ MsgAuthenticationResponse::MsgAuthenticationResponse() {
 void MsgAuthenticationResponse::InitAsDefaultInstance() {
   profile_ = const_cast< ::MsgsAuthenticationToClient::MsgProfile*>(&::MsgsAuthenticationToClient::MsgProfile::default_instance());
   profiles_ = const_cast< ::MsgsAuthenticationToClient::MsgProfileDescriptionList*>(&::MsgsAuthenticationToClient::MsgProfileDescriptionList::default_instance());
+  server_version_ = const_cast< ::Version::ProtocolVersion*>(&::Version::ProtocolVersion::default_instance());
+  restart_date_time_ = const_cast< ::Common::MsgDateTime*>(&::Common::MsgDateTime::default_instance());
 }
 
 MsgAuthenticationResponse::MsgAuthenticationResponse(const MsgAuthenticationResponse& from) {
@@ -579,6 +616,8 @@ void MsgAuthenticationResponse::SharedCtor() {
   error_code_ = 0;
   profile_ = NULL;
   profiles_ = NULL;
+  server_version_ = NULL;
+  restart_date_time_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -590,6 +629,8 @@ void MsgAuthenticationResponse::SharedDtor() {
   if (this != default_instance_) {
     delete profile_;
     delete profiles_;
+    delete server_version_;
+    delete restart_date_time_;
   }
 }
 
@@ -616,6 +657,12 @@ void MsgAuthenticationResponse::Clear() {
     }
     if (_has_bit(2)) {
       if (profiles_ != NULL) profiles_->::MsgsAuthenticationToClient::MsgProfileDescriptionList::Clear();
+    }
+    if (_has_bit(3)) {
+      if (server_version_ != NULL) server_version_->::Version::ProtocolVersion::Clear();
+    }
+    if (_has_bit(4)) {
+      if (restart_date_time_ != NULL) restart_date_time_->::Common::MsgDateTime::Clear();
     }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -667,6 +714,32 @@ bool MsgAuthenticationResponse::MergePartialFromCodedStream(
        parse_profiles:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_profiles()));
+        if (input->ExpectTag(34)) goto parse_server_version;
+        break;
+      }
+      
+      // required .Version.ProtocolVersion server_version = 4;
+      case 4: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_server_version:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_server_version()));
+        if (input->ExpectTag(42)) goto parse_restart_date_time;
+        break;
+      }
+      
+      // optional .Common.MsgDateTime restart_date_time = 5;
+      case 5: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_restart_date_time:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_restart_date_time()));
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -713,6 +786,18 @@ void MsgAuthenticationResponse::SerializeWithCachedSizes(
       3, this->profiles(), output);
   }
   
+  // required .Version.ProtocolVersion server_version = 4;
+  if (_has_bit(3)) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      4, this->server_version(), output);
+  }
+  
+  // optional .Common.MsgDateTime restart_date_time = 5;
+  if (_has_bit(4)) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      5, this->restart_date_time(), output);
+  }
+  
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -739,6 +824,20 @@ void MsgAuthenticationResponse::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         3, this->profiles(), target);
+  }
+  
+  // required .Version.ProtocolVersion server_version = 4;
+  if (_has_bit(3)) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        4, this->server_version(), target);
+  }
+  
+  // optional .Common.MsgDateTime restart_date_time = 5;
+  if (_has_bit(4)) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        5, this->restart_date_time(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -770,6 +869,20 @@ int MsgAuthenticationResponse::ByteSize() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->profiles());
+    }
+    
+    // required .Version.ProtocolVersion server_version = 4;
+    if (has_server_version()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->server_version());
+    }
+    
+    // optional .Common.MsgDateTime restart_date_time = 5;
+    if (has_restart_date_time()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->restart_date_time());
     }
     
   }
@@ -806,6 +919,12 @@ void MsgAuthenticationResponse::MergeFrom(const MsgAuthenticationResponse& from)
     if (from._has_bit(2)) {
       mutable_profiles()->::MsgsAuthenticationToClient::MsgProfileDescriptionList::MergeFrom(from.profiles());
     }
+    if (from._has_bit(3)) {
+      mutable_server_version()->::Version::ProtocolVersion::MergeFrom(from.server_version());
+    }
+    if (from._has_bit(4)) {
+      mutable_restart_date_time()->::Common::MsgDateTime::MergeFrom(from.restart_date_time());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -823,13 +942,19 @@ void MsgAuthenticationResponse::CopyFrom(const MsgAuthenticationResponse& from) 
 }
 
 bool MsgAuthenticationResponse::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+  if ((_has_bits_[0] & 0x00000009) != 0x00000009) return false;
   
   if (has_profile()) {
     if (!this->profile().IsInitialized()) return false;
   }
   if (has_profiles()) {
     if (!this->profiles().IsInitialized()) return false;
+  }
+  if (has_server_version()) {
+    if (!this->server_version().IsInitialized()) return false;
+  }
+  if (has_restart_date_time()) {
+    if (!this->restart_date_time().IsInitialized()) return false;
   }
   return true;
 }
@@ -839,6 +964,8 @@ void MsgAuthenticationResponse::Swap(MsgAuthenticationResponse* other) {
     std::swap(error_code_, other->error_code_);
     std::swap(profile_, other->profile_);
     std::swap(profiles_, other->profiles_);
+    std::swap(server_version_, other->server_version_);
+    std::swap(restart_date_time_, other->restart_date_time_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -920,7 +1047,7 @@ bool MsgProfileCreation::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional .MsgsAuthenticationToClient.MsgProfile profile = 1;
+      // required .MsgsAuthenticationToClient.MsgProfile profile = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
@@ -956,7 +1083,7 @@ void MsgProfileCreation::SerializeWithCachedSizes(
     return;
   }
   
-  // optional .MsgsAuthenticationToClient.MsgProfile profile = 1;
+  // required .MsgsAuthenticationToClient.MsgProfile profile = 1;
   if (_has_bit(0)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
       1, this->profile(), output);
@@ -970,7 +1097,7 @@ void MsgProfileCreation::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* MsgProfileCreation::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // optional .MsgsAuthenticationToClient.MsgProfile profile = 1;
+  // required .MsgsAuthenticationToClient.MsgProfile profile = 1;
   if (_has_bit(0)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
@@ -988,7 +1115,7 @@ int MsgProfileCreation::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional .MsgsAuthenticationToClient.MsgProfile profile = 1;
+    // required .MsgsAuthenticationToClient.MsgProfile profile = 1;
     if (has_profile()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -1040,6 +1167,7 @@ void MsgProfileCreation::CopyFrom(const MsgProfileCreation& from) {
 }
 
 bool MsgProfileCreation::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
   
   if (has_profile()) {
     if (!this->profile().IsInitialized()) return false;
@@ -3041,6 +3169,7 @@ const int MsgProfile::kReadWriteCampsFieldNumber;
 const int MsgProfile::kReadOnlyPopulationsFieldNumber;
 const int MsgProfile::kReadWritePopulationsFieldNumber;
 const int MsgProfile::kSuperviseurFieldNumber;
+const int MsgProfile::kRoleFieldNumber;
 #endif  // !_MSC_VER
 
 MsgProfile::MsgProfile() {
@@ -3076,6 +3205,7 @@ void MsgProfile::SharedCtor() {
   read_only_populations_ = NULL;
   read_write_populations_ = NULL;
   superviseur_ = false;
+  role_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -3156,6 +3286,7 @@ void MsgProfile::Clear() {
       if (read_write_populations_ != NULL) read_write_populations_->::MsgsAuthenticationToClient::PopulationList::Clear();
     }
     superviseur_ = false;
+    role_ = 0;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -3312,6 +3443,24 @@ bool MsgProfile::MergePartialFromCodedStream(
         DO_(::google::protobuf::internal::WireFormatLite::ReadBool(
               input, &superviseur_));
         _set_bit(10);
+        if (input->ExpectTag(96)) goto parse_role;
+        break;
+      }
+      
+      // optional .MsgsAuthenticationToClient.Role role = 12;
+      case 12: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          goto handle_uninterpreted;
+        }
+       parse_role:
+        int value;
+        DO_(::google::protobuf::internal::WireFormatLite::ReadEnum(input, &value));
+        if (MsgsAuthenticationToClient::Role_IsValid(value)) {
+          set_role(static_cast< MsgsAuthenticationToClient::Role >(value));
+        } else {
+          mutable_unknown_fields()->AddVarint(12, value);
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -3411,6 +3560,12 @@ void MsgProfile::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteBool(11, this->superviseur(), output);
   }
   
+  // optional .MsgsAuthenticationToClient.Role role = 12;
+  if (_has_bit(11)) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      12, this->role(), output);
+  }
+  
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -3498,6 +3653,12 @@ void MsgProfile::SerializeWithCachedSizes(
   // required bool superviseur = 11;
   if (_has_bit(10)) {
     target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(11, this->superviseur(), target);
+  }
+  
+  // optional .MsgsAuthenticationToClient.Role role = 12;
+  if (_has_bit(11)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
+      12, this->role(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -3588,6 +3749,12 @@ int MsgProfile::ByteSize() const {
       total_size += 1 + 1;
     }
     
+    // optional .MsgsAuthenticationToClient.Role role = 12;
+    if (has_role()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->role());
+    }
+    
   }
   if (!unknown_fields().empty()) {
     total_size +=
@@ -3648,6 +3815,9 @@ void MsgProfile::MergeFrom(const MsgProfile& from) {
     if (from._has_bit(10)) {
       set_superviseur(from.superviseur());
     }
+    if (from._has_bit(11)) {
+      set_role(from.role());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -3707,6 +3877,7 @@ void MsgProfile::Swap(MsgProfile* other) {
     std::swap(read_only_populations_, other->read_only_populations_);
     std::swap(read_write_populations_, other->read_write_populations_);
     std::swap(superviseur_, other->superviseur_);
+    std::swap(role_, other->role_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

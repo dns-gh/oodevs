@@ -10,6 +10,7 @@
 #pragma warning( push )
 #pragma warning( disable : 4244 4125 4127 4512 )
 
+#include "generated/Version.pb.cc"
 #include "generated/AarToClient.pb.cc"
 #include "generated/AuthenticationToClient.pb.cc"
 #include "generated/ClientToAar.pb.cc"
@@ -24,5 +25,7 @@
 #include "generated/PluginToClient.pb.cc"
 #include "generated/ReplayToClient.pb.cc"
 #include "generated/SimToClient.pb.cc"
+#include "generated/LauncherToAdmin.pb.cc"
+#include "generated/AdminToLauncher.pb.cc"
 
 #pragma warning( pop )

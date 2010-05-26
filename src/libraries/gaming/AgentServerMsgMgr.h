@@ -112,7 +112,7 @@ namespace MsgsSimToClient
     class MsgUrbanKnowledgeCreation;
     class MsgUrbanKnowledgeUpdate;
     class MsgUrbanKnowledgeDestruction;
-    class MsgKnowledgeGroupAck;
+    class MsgKnowledgeGroupMagicActionAck;
     class MsgKnowledgeGroupCreation;
     class MsgKnowledgeGroupCreationAck;
     class MsgKnowledgeGroupUpdate;
@@ -476,7 +476,7 @@ private:
 
     // LTO begin
     //knowledgegroup
-    void OnReceiveMsgKnowledgeGroupAck               ( const MsgsSimToClient::MsgKnowledgeGroupAck&              message, unsigned long nCtx );
+    void OnReceiveMsgKnowledgeGroupMagicActionAck    ( const MsgsSimToClient::MsgKnowledgeGroupMagicActionAck&   message, unsigned long nCtx );
     void OnReceiveMsgKnowledgeGroupUpdate            ( const MsgsSimToClient::MsgKnowledgeGroupUpdate&           message );
     void OnReceiveMsgKnowledgeGroupUpdateAck         ( const MsgsSimToClient::MsgKnowledgeGroupUpdateAck&        message, unsigned long nCtx );
     void OnReceiveMsgKnowledgeGroupCreation          ( const MsgsSimToClient::MsgKnowledgeGroupCreation&         message );

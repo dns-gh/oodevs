@@ -937,7 +937,7 @@ void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( const MsgsClientToSim::Ms
         {
             pNewSupplySuperior = GetLogisticAutomate( supplyId );
             if( !pNewSupplySuperior )
-                throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_automate_ravitaillement );
+                throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_automate_supply );
         }
     }
 

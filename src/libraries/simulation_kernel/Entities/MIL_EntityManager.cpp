@@ -696,7 +696,7 @@ void MIL_EntityManager::OnReceiveMsgUnitMagicAction( const MsgsClientToSim::MsgU
         switch( message.type() )
         {
         case MsgsClientToSim::MsgUnitMagicAction_Type_move_to :
-            OnReceiveMsgMagicActionMoveTo( message, nCtx );
+            ProcessMsgMagicActionMoveTo( message, nCtx );
             break;
         case MsgsClientToSim::MsgUnitMagicAction_Type_unit_creation :
             if( MIL_Automate*  pAutomate = FindAutomate ( message.oid() ) )
@@ -714,26 +714,26 @@ void MIL_EntityManager::OnReceiveMsgUnitMagicAction( const MsgsClientToSim::MsgU
                 throw NET_AsnException< MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode >( MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode_error_invalid_unit );
             break;
         case MsgsClientToSim::MsgUnitMagicAction_Type_create_fire_order:
-            OnReceiveMsgMagicActionCreateFireOrder( message, nCtx );
+            ProcessMsgMagicActionCreateFireOrder( message, nCtx );
             break;
         case MsgsClientToSim::MsgUnitMagicAction_Type_change_knowledge_group:
-            OnReceiveMsgAutomateChangeKnowledgeGroup( message, nCtx );
+            ProcessMsgAutomateChangeKnowledgeGroup( message, nCtx );
             break;
         case MsgsClientToSim::MsgUnitMagicAction_Type_change_logistic_links:
-            OnReceiveMsgAutomateChangeLogisticLinks( message, nCtx ); 
+            ProcessMsgAutomateChangeLogisticLinks( message, nCtx ); 
             break;
         case MsgsClientToSim::MsgUnitMagicAction_Type_unit_change_superior:
-            OnReceiveMsgUnitChangeSuperior( message, nCtx );
+            ProcessMsgUnitChangeSuperior( message, nCtx );
             break;
         case MsgsClientToSim::MsgUnitMagicAction_Type_change_automat_superior:
         case MsgsClientToSim::MsgUnitMagicAction_Type_change_formation_superior:
-            OnReceiveMsgAutomateChangeSuperior( message, nCtx ); 
+            ProcessMsgAutomateChangeSuperior( message, nCtx ); 
             break;
         case MsgsClientToSim::MsgUnitMagicAction_Type_log_supply_push_flow:
-            OnReceiveMsgLogSupplyPushFlow( message, nCtx );
+            ProcessMsgLogSupplyPushFlow( message, nCtx );
             break;
         case MsgsClientToSim::MsgUnitMagicAction_Type_log_supply_change_quotas:
-            OnReceiveMsgLogSupplyChangeQuotas( message, nCtx );
+            ProcessMsgLogSupplyChangeQuotas( message, nCtx );
             break;
         default:
             if( MIL_Automate*  pAutomate = FindAutomate ( message.oid() ) )
@@ -758,7 +758,7 @@ void MIL_EntityManager::OnReceiveMsgUnitMagicAction( const MsgsClientToSim::MsgU
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveMsgKnowledgeMagicAction( const MsgsClientToSim::MsgKnowledgeMagicAction& message, unsigned int nCtx )
 {
-    client::KnowledgeGroupAck ack;
+    client::KnowledgeGroupMagicActionAck ack;
     ack().set_oid( message.oid() );
     ack().set_error_code( MsgsSimToClient::KnowledgeGroupAck_ErrorCode_no_error );
     try
@@ -769,7 +769,7 @@ void MIL_EntityManager::OnReceiveMsgKnowledgeMagicAction( const MsgsClientToSim:
         case MsgsClientToSim::MsgKnowledgeMagicAction_Type_update_side :
         case MsgsClientToSim::MsgKnowledgeMagicAction_Type_update_side_parent :
         case MsgsClientToSim::MsgKnowledgeMagicAction_Type_update_type :
-            OnReceiveMsgKnowledgeGroupUpdate( message, nCtx );
+            ProcessMsgKnowledgeGroupUpdate( message, nCtx );
             break;
         default:
             throw NET_AsnException< MsgsSimToClient::KnowledgeGroupAck_ErrorCode >( MsgsSimToClient::KnowledgeGroupAck_ErrorCode_error_invalid_type );
@@ -915,10 +915,10 @@ void MIL_EntityManager::OnReceiveMsgChangeDiplomacy( const MsgMagicAction& messa
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::OnReceiveMsgAutomateChangeKnowledgeGroup
+// Name: MIL_EntityManager::ProcessMsgAutomateChangeKnowledgeGroup
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgAutomateChangeKnowledgeGroup( const MsgsClientToSim::MsgUnitMagicAction& message, unsigned int nCtx )
+void MIL_EntityManager::ProcessMsgAutomateChangeKnowledgeGroup( const MsgsClientToSim::MsgUnitMagicAction& message, unsigned int nCtx )
 {
     client::AutomatChangeKnowledgeGroupAck ack;
     ack().set_error_code( MsgsSimToClient::HierarchyModificationAck_ErrorCode_no_error_hierarchy );  
@@ -952,10 +952,10 @@ void MIL_EntityManager::OnReceiveMsgAutomateChangeKnowledgeGroup( const MsgsClie
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::OnReceiveMsgAutomateChangeLogisticLinks
+// Name: MIL_EntityManager::ProcessMsgAutomateChangeLogisticLinks
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgAutomateChangeLogisticLinks( const MsgsClientToSim::MsgUnitMagicAction& message, unsigned int nCtx )
+void MIL_EntityManager::ProcessMsgAutomateChangeLogisticLinks( const MsgsClientToSim::MsgUnitMagicAction& message, unsigned int nCtx )
 {
     client::AutomatChangeLogisticLinksAck ack;
     ack().set_error_code( MsgsSimToClient::HierarchyModificationAck_ErrorCode_no_error_hierarchy );
@@ -998,10 +998,10 @@ void MIL_EntityManager::OnReceiveMsgAutomateChangeLogisticLinks( const MsgsClien
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::OnReceiveMsgAutomateChangeSuperior
+// Name: MIL_EntityManager::ProcessMsgAutomateChangeSuperior
 // Created: NLD 2007-04-11
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgAutomateChangeSuperior( const MsgsClientToSim::MsgUnitMagicAction& message, unsigned int nCtx )
+void MIL_EntityManager::ProcessMsgAutomateChangeSuperior( const MsgsClientToSim::MsgUnitMagicAction& message, unsigned int nCtx )
 {
     client::AutomatChangeSuperiorAck ack;
     ack().set_error_code( MsgsSimToClient::HierarchyModificationAck_ErrorCode_no_error_hierarchy );
@@ -1031,10 +1031,10 @@ void MIL_EntityManager::OnReceiveMsgAutomateChangeSuperior( const MsgsClientToSi
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::OnReceiveMsgUnitChangeSuperior
+// Name: MIL_EntityManager::ProcessMsgUnitChangeSuperior
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgUnitChangeSuperior( const MsgsClientToSim::MsgUnitMagicAction& message, unsigned int nCtx )
+void MIL_EntityManager::ProcessMsgUnitChangeSuperior( const MsgsClientToSim::MsgUnitMagicAction& message, unsigned int nCtx )
 {
     client::UnitChangeSuperiorAck ack;
     ack().set_error_code( MsgsSimToClient::HierarchyModificationAck_ErrorCode_no_error_hierarchy );
@@ -1060,10 +1060,10 @@ void MIL_EntityManager::OnReceiveMsgUnitChangeSuperior( const MsgsClientToSim::M
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::OnReceiveMsgLogSupplyChangeQuotas
+// Name: MIL_EntityManager::ProcessMsgLogSupplyChangeQuotas
 // Created: NLD 2005-02-03
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgLogSupplyChangeQuotas( const MsgsClientToSim::MsgUnitMagicAction& message, unsigned int nCtx )
+void MIL_EntityManager::ProcessMsgLogSupplyChangeQuotas( const MsgsClientToSim::MsgUnitMagicAction& message, unsigned int nCtx )
 {
     client::LogSupplyChangeQuotasAck ack;
     ack().set_ack( MsgsSimToClient::MsgLogSupplyChangeQuotasAck_LogSupplyChangeQuotas_no_error_quotas );
@@ -1082,10 +1082,10 @@ void MIL_EntityManager::OnReceiveMsgLogSupplyChangeQuotas( const MsgsClientToSim
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::OnReceiveMsgLogSupplyPushFlow
+// Name: MIL_EntityManager::ProcessMsgLogSupplyPushFlow
 // Created: NLD 2005-02-03
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgLogSupplyPushFlow( const MsgsClientToSim::MsgUnitMagicAction& message, unsigned int nCtx )
+void MIL_EntityManager::ProcessMsgLogSupplyPushFlow( const MsgsClientToSim::MsgUnitMagicAction& message, unsigned int nCtx )
 {
     client::LogSupplyPushFlowAck ack;
     ack().set_ack( MsgsSimToClient::MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow_no_error_pushflow );
@@ -1104,10 +1104,10 @@ void MIL_EntityManager::OnReceiveMsgLogSupplyPushFlow( const MsgsClientToSim::Ms
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::OnReceiveMsgMagicActionMoveTo
+// Name: MIL_EntityManager::ProcessMsgMagicActionMoveTo
 // Created: JSR 2010-04-07
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgMagicActionMoveTo( const MsgsClientToSim::MsgUnitMagicAction& message, unsigned int )
+void MIL_EntityManager::ProcessMsgMagicActionMoveTo( const MsgsClientToSim::MsgUnitMagicAction& message, unsigned int )
 {
     if( MIL_Automate*  pAutomate = FindAutomate ( message.oid() ) )
         pAutomate->OnReceiveMsgMagicActionMoveTo( message );
@@ -1159,11 +1159,11 @@ void MIL_EntityManager::OnReceiveMsgKnowledgeGroupCreation( const MsgsClientToSi
 
 
 // -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::OnReceiveMsgKnowledgeGroupUpdate
+// Name: MIL_EntityManager::ProcessMsgKnowledgeGroupUpdate
 // Created: FDS 2010-01-13
 // LTO
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgKnowledgeGroupUpdate( const MsgsClientToSim::MsgKnowledgeMagicAction& message, unsigned int nCtx )
+void MIL_EntityManager::ProcessMsgKnowledgeGroupUpdate( const MsgsClientToSim::MsgKnowledgeMagicAction& message, unsigned int nCtx )
 {
     client::KnowledgeGroupUpdateAck ack;
     ack().set_oid( message.oid() );
@@ -1185,11 +1185,11 @@ void MIL_EntityManager::OnReceiveMsgKnowledgeGroupUpdate( const MsgsClientToSim:
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::OnReceiveMsgMagicActionCreateFireOrder
+// Name: MIL_EntityManager::ProcessMsgMagicActionCreateFireOrder
 // Created: MGD 2010-02-24
 // LTO
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgMagicActionCreateFireOrder( const MsgsClientToSim::MsgUnitMagicAction& msg, unsigned int nCtx )
+void MIL_EntityManager::ProcessMsgMagicActionCreateFireOrder( const MsgsClientToSim::MsgUnitMagicAction& msg, unsigned int nCtx )
 {
     client::ActionCreateFireOrderAck  ack;
     ack().set_error_code( MsgsSimToClient::MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_no_error );

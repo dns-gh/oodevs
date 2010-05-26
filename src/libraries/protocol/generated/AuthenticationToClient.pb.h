@@ -23,6 +23,7 @@
 #include <google/protobuf/extension_set.h>
 #include <google/protobuf/generated_message_reflection.h>
 #include "Common.pb.h"
+#include "Version.pb.h"
 
 namespace MsgsAuthenticationToClient {
 
@@ -50,11 +51,12 @@ class MsgAuthenticationToClient_Content;
 enum MsgAuthenticationResponse_ErrorCode {
   MsgAuthenticationResponse_ErrorCode_success = 0,
   MsgAuthenticationResponse_ErrorCode_invalid_login = 1,
-  MsgAuthenticationResponse_ErrorCode_too_many_connections = 2
+  MsgAuthenticationResponse_ErrorCode_too_many_connections = 2,
+  MsgAuthenticationResponse_ErrorCode_mismatched_protocol_version = 4
 };
 bool MsgAuthenticationResponse_ErrorCode_IsValid(int value);
 const MsgAuthenticationResponse_ErrorCode MsgAuthenticationResponse_ErrorCode_ErrorCode_MIN = MsgAuthenticationResponse_ErrorCode_success;
-const MsgAuthenticationResponse_ErrorCode MsgAuthenticationResponse_ErrorCode_ErrorCode_MAX = MsgAuthenticationResponse_ErrorCode_too_many_connections;
+const MsgAuthenticationResponse_ErrorCode MsgAuthenticationResponse_ErrorCode_ErrorCode_MAX = MsgAuthenticationResponse_ErrorCode_mismatched_protocol_version;
 
 const ::google::protobuf::EnumDescriptor* MsgAuthenticationResponse_ErrorCode_descriptor();
 inline const ::std::string& MsgAuthenticationResponse_ErrorCode_Name(MsgAuthenticationResponse_ErrorCode value) {
@@ -126,6 +128,28 @@ inline bool MsgProfileDestructionRequestAck_ErrorCode_Parse(
   return ::google::protobuf::internal::ParseNamedEnum<MsgProfileDestructionRequestAck_ErrorCode>(
     MsgProfileDestructionRequestAck_ErrorCode_descriptor(), name, value);
 }
+enum Role {
+  superviseur = 0,
+  anibas = 1,
+  eniex = 2,
+  direx = 3,
+  environnement = 4,
+  analyse = 5
+};
+bool Role_IsValid(int value);
+const Role Role_MIN = superviseur;
+const Role Role_MAX = analyse;
+
+const ::google::protobuf::EnumDescriptor* Role_descriptor();
+inline const ::std::string& Role_Name(Role value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    Role_descriptor(), value);
+}
+inline bool Role_Parse(
+    const ::std::string& name, Role* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<Role>(
+    Role_descriptor(), name, value);
+}
 // ===================================================================
 
 class MsgAuthenticationResponse : public ::google::protobuf::Message {
@@ -183,6 +207,7 @@ class MsgAuthenticationResponse : public ::google::protobuf::Message {
   static const ErrorCode success = MsgAuthenticationResponse_ErrorCode_success;
   static const ErrorCode invalid_login = MsgAuthenticationResponse_ErrorCode_invalid_login;
   static const ErrorCode too_many_connections = MsgAuthenticationResponse_ErrorCode_too_many_connections;
+  static const ErrorCode mismatched_protocol_version = MsgAuthenticationResponse_ErrorCode_mismatched_protocol_version;
   static inline bool ErrorCode_IsValid(int value) {
     return MsgAuthenticationResponse_ErrorCode_IsValid(value);
   }
@@ -225,6 +250,20 @@ class MsgAuthenticationResponse : public ::google::protobuf::Message {
   inline const ::MsgsAuthenticationToClient::MsgProfileDescriptionList& profiles() const;
   inline ::MsgsAuthenticationToClient::MsgProfileDescriptionList* mutable_profiles();
   
+  // required .Version.ProtocolVersion server_version = 4;
+  inline bool has_server_version() const;
+  inline void clear_server_version();
+  static const int kServerVersionFieldNumber = 4;
+  inline const ::Version::ProtocolVersion& server_version() const;
+  inline ::Version::ProtocolVersion* mutable_server_version();
+  
+  // optional .Common.MsgDateTime restart_date_time = 5;
+  inline bool has_restart_date_time() const;
+  inline void clear_restart_date_time();
+  static const int kRestartDateTimeFieldNumber = 5;
+  inline const ::Common::MsgDateTime& restart_date_time() const;
+  inline ::Common::MsgDateTime* mutable_restart_date_time();
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -232,11 +271,13 @@ class MsgAuthenticationResponse : public ::google::protobuf::Message {
   int error_code_;
   ::MsgsAuthenticationToClient::MsgProfile* profile_;
   ::MsgsAuthenticationToClient::MsgProfileDescriptionList* profiles_;
+  ::Version::ProtocolVersion* server_version_;
+  ::Common::MsgDateTime* restart_date_time_;
   friend void  protobuf_AddDesc_AuthenticationToClient_2eproto();
   friend void protobuf_AssignDesc_AuthenticationToClient_2eproto();
   friend void protobuf_ShutdownFile_AuthenticationToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -307,7 +348,7 @@ class MsgProfileCreation : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // optional .MsgsAuthenticationToClient.MsgProfile profile = 1;
+  // required .MsgsAuthenticationToClient.MsgProfile profile = 1;
   inline bool has_profile() const;
   inline void clear_profile();
   static const int kProfileFieldNumber = 1;
@@ -1306,6 +1347,13 @@ class MsgProfile : public ::google::protobuf::Message {
   inline bool superviseur() const;
   inline void set_superviseur(bool value);
   
+  // optional .MsgsAuthenticationToClient.Role role = 12;
+  inline bool has_role() const;
+  inline void clear_role();
+  static const int kRoleFieldNumber = 12;
+  inline MsgsAuthenticationToClient::Role role() const;
+  inline void set_role(MsgsAuthenticationToClient::Role value);
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -1323,11 +1371,12 @@ class MsgProfile : public ::google::protobuf::Message {
   ::MsgsAuthenticationToClient::PopulationList* read_only_populations_;
   ::MsgsAuthenticationToClient::PopulationList* read_write_populations_;
   bool superviseur_;
+  int role_;
   friend void  protobuf_AddDesc_AuthenticationToClient_2eproto();
   friend void protobuf_AssignDesc_AuthenticationToClient_2eproto();
   friend void protobuf_ShutdownFile_AuthenticationToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(11 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(12 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -1833,11 +1882,45 @@ inline ::MsgsAuthenticationToClient::MsgProfileDescriptionList* MsgAuthenticatio
   return profiles_;
 }
 
+// required .Version.ProtocolVersion server_version = 4;
+inline bool MsgAuthenticationResponse::has_server_version() const {
+  return _has_bit(3);
+}
+inline void MsgAuthenticationResponse::clear_server_version() {
+  if (server_version_ != NULL) server_version_->::Version::ProtocolVersion::Clear();
+  _clear_bit(3);
+}
+inline const ::Version::ProtocolVersion& MsgAuthenticationResponse::server_version() const {
+  return server_version_ != NULL ? *server_version_ : *default_instance_->server_version_;
+}
+inline ::Version::ProtocolVersion* MsgAuthenticationResponse::mutable_server_version() {
+  _set_bit(3);
+  if (server_version_ == NULL) server_version_ = new ::Version::ProtocolVersion;
+  return server_version_;
+}
+
+// optional .Common.MsgDateTime restart_date_time = 5;
+inline bool MsgAuthenticationResponse::has_restart_date_time() const {
+  return _has_bit(4);
+}
+inline void MsgAuthenticationResponse::clear_restart_date_time() {
+  if (restart_date_time_ != NULL) restart_date_time_->::Common::MsgDateTime::Clear();
+  _clear_bit(4);
+}
+inline const ::Common::MsgDateTime& MsgAuthenticationResponse::restart_date_time() const {
+  return restart_date_time_ != NULL ? *restart_date_time_ : *default_instance_->restart_date_time_;
+}
+inline ::Common::MsgDateTime* MsgAuthenticationResponse::mutable_restart_date_time() {
+  _set_bit(4);
+  if (restart_date_time_ == NULL) restart_date_time_ = new ::Common::MsgDateTime;
+  return restart_date_time_;
+}
+
 // -------------------------------------------------------------------
 
 // MsgProfileCreation
 
-// optional .MsgsAuthenticationToClient.MsgProfile profile = 1;
+// required .MsgsAuthenticationToClient.MsgProfile profile = 1;
 inline bool MsgProfileCreation::has_profile() const {
   return _has_bit(0);
 }
@@ -2479,6 +2562,23 @@ inline void MsgProfile::set_superviseur(bool value) {
   superviseur_ = value;
 }
 
+// optional .MsgsAuthenticationToClient.Role role = 12;
+inline bool MsgProfile::has_role() const {
+  return _has_bit(11);
+}
+inline void MsgProfile::clear_role() {
+  role_ = 0;
+  _clear_bit(11);
+}
+inline MsgsAuthenticationToClient::Role MsgProfile::role() const {
+  return static_cast< MsgsAuthenticationToClient::Role >(role_);
+}
+inline void MsgProfile::set_role(MsgsAuthenticationToClient::Role value) {
+  GOOGLE_DCHECK(MsgsAuthenticationToClient::Role_IsValid(value));
+  _set_bit(11);
+  role_ = value;
+}
+
 // -------------------------------------------------------------------
 
 // MsgProfileDescriptionList
@@ -2768,6 +2868,10 @@ inline const EnumDescriptor* GetEnumDescriptor< ::MsgsAuthenticationToClient::Ms
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::MsgsAuthenticationToClient::MsgProfileDestructionRequestAck_ErrorCode>() {
   return ::MsgsAuthenticationToClient::MsgProfileDestructionRequestAck_ErrorCode_descriptor();
+}
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< MsgsAuthenticationToClient::Role>() {
+  return MsgsAuthenticationToClient::Role_descriptor();
 }
 
 }  // namespace google

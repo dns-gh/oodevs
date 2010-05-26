@@ -111,9 +111,9 @@ Report* ReportFactory::CreateReport( const kernel::Entity_ABC& agent, const Msgs
     if( !report )
         return 0;
     Report::E_Type type = Report::eRC;
-    if( message.type() == MsgsSimToClient::message )
+    if( message.type() == MsgsSimToClient::information )
         type = Report::eMessage;
-    else if( message.type() == MsgsSimToClient::evenement_exceptionnel )
+    else if( message.type() == MsgsSimToClient::exceptional_event )
         type = Report::eEvent;
     else if( message.type() == MsgsSimToClient::warning )
         type = Report::eWarning;

@@ -23,6 +23,7 @@
 #include <google/protobuf/extension_set.h>
 #include <google/protobuf/generated_message_reflection.h>
 #include "AuthenticationToClient.pb.h"
+#include "Version.pb.h"
 
 namespace MsgsClientToAuthentication {
 
@@ -113,6 +114,13 @@ class MsgAuthenticationRequest : public ::google::protobuf::Message {
   inline void set_password(const char* value, size_t size);
   inline ::std::string* mutable_password();
   
+  // required .Version.ProtocolVersion version = 3;
+  inline bool has_version() const;
+  inline void clear_version();
+  static const int kVersionFieldNumber = 3;
+  inline const ::Version::ProtocolVersion& version() const;
+  inline ::Version::ProtocolVersion* mutable_version();
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -121,11 +129,12 @@ class MsgAuthenticationRequest : public ::google::protobuf::Message {
   static const ::std::string _default_login_;
   ::std::string* password_;
   static const ::std::string _default_password_;
+  ::Version::ProtocolVersion* version_;
   friend void  protobuf_AddDesc_ClientToAuthentication_2eproto();
   friend void protobuf_AssignDesc_ClientToAuthentication_2eproto();
   friend void protobuf_ShutdownFile_ClientToAuthentication_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -718,6 +727,23 @@ inline ::std::string* MsgAuthenticationRequest::mutable_password() {
     password_ = new ::std::string;
   }
   return password_;
+}
+
+// required .Version.ProtocolVersion version = 3;
+inline bool MsgAuthenticationRequest::has_version() const {
+  return _has_bit(2);
+}
+inline void MsgAuthenticationRequest::clear_version() {
+  if (version_ != NULL) version_->::Version::ProtocolVersion::Clear();
+  _clear_bit(2);
+}
+inline const ::Version::ProtocolVersion& MsgAuthenticationRequest::version() const {
+  return version_ != NULL ? *version_ : *default_instance_->version_;
+}
+inline ::Version::ProtocolVersion* MsgAuthenticationRequest::mutable_version() {
+  _set_bit(2);
+  if (version_ == NULL) version_ = new ::Version::ProtocolVersion;
+  return version_;
 }
 
 // -------------------------------------------------------------------

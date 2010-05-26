@@ -14,6 +14,7 @@
 #pragma warning( disable : 4244 )
 
 #include "Definitions.h"
+#include "generated/Version.pb.h"
 #include "generated/AarToClient.pb.h"
 #include "generated/AuthenticationToClient.pb.h"
 #include "generated/ClientToAar.pb.h"
@@ -28,6 +29,8 @@
 #include "generated/PluginToClient.pb.h"
 #include "generated/ReplayToClient.pb.h"
 #include "generated/SimToClient.pb.h"
+#include "generated/LauncherToAdmin.pb.h"
+#include "generated/AdminToLauncher.pb.h"
 
 #pragma warning( pop )
 

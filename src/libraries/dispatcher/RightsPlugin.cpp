@@ -13,6 +13,7 @@
 #include "LinkResolver_ABC.h"
 #include "Profile_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
+#include "protocol/ProtocolVersionChecker.h"
 #include "ProfileManager.h"
 #include "Profile.h"
 #include "DefaultProfile.h"
@@ -122,9 +123,18 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
 {
     ClientPublisher_ABC& client = base_.GetPublisher( link );
 
+    ProtocolVersionChecker checker ( message.version() );
+    authentication::AuthenticationResponse ack;
+    ack().mutable_server_version()->set_value( ProtocolVersionChecker::GetCurrentProtocolVersion() );
+    if ( !checker.CheckCompatibility() )
+    {
+        ack().set_error_code( MsgsAuthenticationToClient::MsgAuthenticationResponse_ErrorCode_mismatched_protocol_version );
+        profiles_->Send( ack() );
+        ack.Send( client );
+        return;
+    }
     if( maxConnections_ && maxConnections_ <= currentConnections_ )
     {
-        authentication::AuthenticationResponse ack;
         ack().set_error_code( MsgsAuthenticationToClient::MsgAuthenticationResponse_ErrorCode_too_many_connections );
         profiles_->Send( ack() );
         ack.Send( client );
@@ -133,14 +143,12 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
     Profile* profile = profiles_->Authenticate( message.login(), message.password() );
     if( !profile )
     {
-        authentication::AuthenticationResponse ack;
         ack().set_error_code( MsgsAuthenticationToClient::MsgAuthenticationResponse_ErrorCode_invalid_login );
         profiles_->Send( ack() );
         ack.Send( client );
     }
     else
     {
-        authentication::AuthenticationResponse ack;
         ack().set_error_code( MsgsAuthenticationToClient::MsgAuthenticationResponse_ErrorCode_success );
         profile->Send( *ack().mutable_profile() );
         ack.Send( client );

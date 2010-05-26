@@ -24,6 +24,7 @@
 #include "gaming/Model.h"
 #include "gaming/TeamsModel.h"
 #include "gaming/AgentsModel.h"
+#include "protocol/ProtocolVersionChecker.h"
 #include "Simulation.h"
 #include "Services.h"
 #include <boost/bind.hpp>
@@ -64,6 +65,7 @@ Profile::~Profile()
 void Profile::Login() const
 {
     authentication::AuthenticationRequest message;
+    message().mutable_version()->set_value( ProtocolVersionChecker::GetCurrentProtocolVersion() );
     message().set_login( login_.c_str() );
     message().set_password( password_.c_str() );
     message.Send( publisher_ );

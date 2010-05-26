@@ -47,6 +47,8 @@ class SeqOfDotationQuota;
 class MsgControlStop;
 class MsgControlPause;
 class MsgControlResume;
+class MsgExercise;
+class MsgNetworkAddress;
 class MsgLine;
 class MsgControlChangeTimeFactor;
 class MsgAutomatChangeKnowledgeGroup;
@@ -2181,6 +2183,204 @@ class MsgControlResume : public ::google::protobuf::Message {
   
   void InitAsDefaultInstance();
   static MsgControlResume* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgExercise : public ::google::protobuf::Message {
+ public:
+  MsgExercise();
+  virtual ~MsgExercise();
+  
+  MsgExercise(const MsgExercise& from);
+  
+  inline MsgExercise& operator=(const MsgExercise& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgExercise& default_instance();
+  void Swap(MsgExercise* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgExercise* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgExercise& from);
+  void MergeFrom(const MsgExercise& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required string name = 1;
+  inline bool has_name() const;
+  inline void clear_name();
+  static const int kNameFieldNumber = 1;
+  inline const ::std::string& name() const;
+  inline void set_name(const ::std::string& value);
+  inline void set_name(const char* value);
+  inline void set_name(const char* value, size_t size);
+  inline ::std::string* mutable_name();
+  
+  // optional bool running = 2 [default = false];
+  inline bool has_running() const;
+  inline void clear_running();
+  static const int kRunningFieldNumber = 2;
+  inline bool running() const;
+  inline void set_running(bool value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::std::string* name_;
+  static const ::std::string _default_name_;
+  bool running_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgExercise* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgNetworkAddress : public ::google::protobuf::Message {
+ public:
+  MsgNetworkAddress();
+  virtual ~MsgNetworkAddress();
+  
+  MsgNetworkAddress(const MsgNetworkAddress& from);
+  
+  inline MsgNetworkAddress& operator=(const MsgNetworkAddress& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgNetworkAddress& default_instance();
+  void Swap(MsgNetworkAddress* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgNetworkAddress* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgNetworkAddress& from);
+  void MergeFrom(const MsgNetworkAddress& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required string IP = 1;
+  inline bool has_ip() const;
+  inline void clear_ip();
+  static const int kIPFieldNumber = 1;
+  inline const ::std::string& ip() const;
+  inline void set_ip(const ::std::string& value);
+  inline void set_ip(const char* value);
+  inline void set_ip(const char* value, size_t size);
+  inline ::std::string* mutable_ip();
+  
+  // required int32 port = 2 [default = 8080];
+  inline bool has_port() const;
+  inline void clear_port();
+  static const int kPortFieldNumber = 2;
+  inline ::google::protobuf::int32 port() const;
+  inline void set_port(::google::protobuf::int32 value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::std::string* ip_;
+  static const ::std::string _default_ip_;
+  ::google::protobuf::int32 port_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgNetworkAddress* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -10490,6 +10690,130 @@ inline ::Common::MsgDotationQuota* SeqOfDotationQuota::add_elem() {
 // -------------------------------------------------------------------
 
 // MsgControlResume
+
+// -------------------------------------------------------------------
+
+// MsgExercise
+
+// required string name = 1;
+inline bool MsgExercise::has_name() const {
+  return _has_bit(0);
+}
+inline void MsgExercise::clear_name() {
+  if (name_ != &_default_name_) {
+    name_->clear();
+  }
+  _clear_bit(0);
+}
+inline const ::std::string& MsgExercise::name() const {
+  return *name_;
+}
+inline void MsgExercise::set_name(const ::std::string& value) {
+  _set_bit(0);
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+}
+inline void MsgExercise::set_name(const char* value) {
+  _set_bit(0);
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+}
+inline void MsgExercise::set_name(const char* value, size_t size) {
+  _set_bit(0);
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
+  }
+  name_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* MsgExercise::mutable_name() {
+  _set_bit(0);
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
+  }
+  return name_;
+}
+
+// optional bool running = 2 [default = false];
+inline bool MsgExercise::has_running() const {
+  return _has_bit(1);
+}
+inline void MsgExercise::clear_running() {
+  running_ = false;
+  _clear_bit(1);
+}
+inline bool MsgExercise::running() const {
+  return running_;
+}
+inline void MsgExercise::set_running(bool value) {
+  _set_bit(1);
+  running_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// MsgNetworkAddress
+
+// required string IP = 1;
+inline bool MsgNetworkAddress::has_ip() const {
+  return _has_bit(0);
+}
+inline void MsgNetworkAddress::clear_ip() {
+  if (ip_ != &_default_ip_) {
+    ip_->clear();
+  }
+  _clear_bit(0);
+}
+inline const ::std::string& MsgNetworkAddress::ip() const {
+  return *ip_;
+}
+inline void MsgNetworkAddress::set_ip(const ::std::string& value) {
+  _set_bit(0);
+  if (ip_ == &_default_ip_) {
+    ip_ = new ::std::string;
+  }
+  ip_->assign(value);
+}
+inline void MsgNetworkAddress::set_ip(const char* value) {
+  _set_bit(0);
+  if (ip_ == &_default_ip_) {
+    ip_ = new ::std::string;
+  }
+  ip_->assign(value);
+}
+inline void MsgNetworkAddress::set_ip(const char* value, size_t size) {
+  _set_bit(0);
+  if (ip_ == &_default_ip_) {
+    ip_ = new ::std::string;
+  }
+  ip_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* MsgNetworkAddress::mutable_ip() {
+  _set_bit(0);
+  if (ip_ == &_default_ip_) {
+    ip_ = new ::std::string;
+  }
+  return ip_;
+}
+
+// required int32 port = 2 [default = 8080];
+inline bool MsgNetworkAddress::has_port() const {
+  return _has_bit(1);
+}
+inline void MsgNetworkAddress::clear_port() {
+  port_ = 8080;
+  _clear_bit(1);
+}
+inline ::google::protobuf::int32 MsgNetworkAddress::port() const {
+  return port_;
+}
+inline void MsgNetworkAddress::set_port(::google::protobuf::int32 value) {
+  _set_bit(1);
+  port_ = value;
+}
 
 // -------------------------------------------------------------------
 
