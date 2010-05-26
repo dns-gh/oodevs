@@ -21,7 +21,7 @@
 #include "clients_kernel/OrderParameter.h"
 #include "indicators/DataTypeFactory.h"
 #include "indicators/Variable.h"
-#include "gaming/StaticModel.h"
+#include "preparation/StaticModel.h"
 #include <boost/assign/list_of.hpp>
 #include <qvgroupbox.h>
 
