@@ -148,6 +148,17 @@ void PHY_Meteo::Update( const Common::MsgMeteoAttributes& msg )
     pPrecipitation_ = PHY_Precipitation::FindPrecipitation( msg.precipitation() );
     if( !pPrecipitation_ )
         pPrecipitation_ = &PHY_Precipitation::none_;
+    
+    // Lighting
+    pLighting_ = PHY_Lighting::FindLighting( msg.lighting() );
+
+    if( !pLighting_ )
+    {
+        if ( listener_ )
+            pLighting_ = &( listener_->GetLighting() ); 
+        else
+            pLighting_ = &PHY_Lighting::jourSansNuage_;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -200,6 +211,12 @@ void PHY_Meteo::Update( const Common::MsgMissionParameters& msg )
     pPrecipitation_ = PHY_Precipitation::FindPrecipitation( (Common::EnumPrecipitationType ) precipitation.value().enumeration() );
     if( !pPrecipitation_ )
         pPrecipitation_ = &PHY_Precipitation::none_;
+
+    // Lighting
+    if( listener_ )
+        pLighting_ = &( listener_->GetLighting() );
+    else
+        pLighting_ = &PHY_Lighting::jourSansNuage_;
 }
 
 //-----------------------------------------------------------------------------
@@ -219,7 +236,6 @@ void PHY_Meteo::Update( const PHY_Precipitation& precipitation)
 {
     pPrecipitation_ = &precipitation;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Meteo::SetListener
@@ -243,7 +259,7 @@ void PHY_Meteo::UpdateMeteoPatch( int /*date*/, PHY_RawVisionData_ABC& /*dataVis
 // Name: PHY_Meteo::SendCreation
 // Created: HBD 2010-03-31
 // -----------------------------------------------------------------------------
-void PHY_Meteo::SendCreation( dispatcher::ClientPublisher_ABC& publisher) const
+void PHY_Meteo::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
 {
     client::ControlGlobalMeteo msg;
     Common::MsgMeteoAttributes* att = msg().mutable_attributes();
@@ -255,6 +271,7 @@ void PHY_Meteo::SendCreation( dispatcher::ClientPublisher_ABC& publisher) const
     att->set_cloud_density( int( rDensiteCouvertureNuageuse_ * 100. + 0.01 ) );
     att->set_precipitation( pPrecipitation_->GetAsnID() );
     att->set_temperature( 0 );
+    att->set_lighting( pLighting_->GetAsnID() );
     msg.Send( publisher );
 }
 

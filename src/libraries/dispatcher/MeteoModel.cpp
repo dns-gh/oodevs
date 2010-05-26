@@ -130,8 +130,8 @@ void MeteoModel::UnregisterMeteo( weather::PHY_Meteo& meteo )
 // -----------------------------------------------------------------------------
 void MeteoModel::Accept( kernel::ModelVisitor_ABC& visitor )
 {
-    for( CIT_MeteoList it = meteos_.begin(); it != meteos_.end(); ++it )
-        visitor.Visit( **it );
     if( pGlobalMeteo_)
         visitor.Visit( *pGlobalMeteo_ );
+    for( CIT_MeteoList it = meteos_.begin(); it != meteos_.end(); ++it )
+        visitor.Visit( **it );
 }

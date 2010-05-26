@@ -87,6 +87,7 @@ void PHY_GlobalMeteo::SendCreation() const
     att->set_cloud_density( int( rDensiteCouvertureNuageuse_ * 100. + 0.01 ) );
     att->set_precipitation( pPrecipitation_->GetAsnID() );
     att->set_temperature( 0 );
+    att->set_lighting( GetLighting().GetAsnID() );
     msg.Send( NET_Publisher_ABC::Publisher() );
 }
 

@@ -26,6 +26,21 @@ enum EnumPrecipitationType {
    neige                                            = 5;
 }
 
+enum EnumLightingType {
+   jour_sans_nuage_                                 = 0;
+   jour_peu_nuageux_                                = 1;
+   jour_moyennement_nuageux_                        = 2;
+   jour_assez_nuageux_                              = 3;
+   jour_tres_nuageux_                               = 4;
+   nuit_pleine_lune_                                = 5;
+   nuit_trois_quart_de_lune_                        = 6;
+   nuit_demi_lune_                                  = 7;
+   nuit_quart_de_lune_                              = 8;
+   nuit_nouvelle_lune_                              = 9;
+   eclairant_                                       = 10;
+   globalMeteoType_                                 = 11;
+}
+
 enum EnumLogMaintenanceHandlingStatus {
    deplacement_vers_chaine                          = 0;
    attente_disponibilite_remorqueur                 = 1;
@@ -723,5 +738,6 @@ message MsgMeteoAttributes {
    required int32                        cloud_ceiling   = 5;
    required int32                        cloud_density   = 6;
    required Common.EnumPrecipitationType precipitation   = 7;
+   required Common.EnumLightingType      lighting        = 8;
 }
 

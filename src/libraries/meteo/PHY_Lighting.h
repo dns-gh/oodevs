@@ -42,12 +42,14 @@ public:
 
     static const T_LightingMap& GetLightings();
     static const PHY_Lighting* FindLighting( const std::string& strName );
+    static const PHY_Lighting* FindLighting( Common::EnumLightingType nAsnID );
     //@}
 
     //! @name Accessors
     //@{
     const std::string& GetName() const;
           unsigned int GetID  () const;
+    Common::EnumLightingType GetAsnID() const;
     //@}
 
     //! @name Operations
@@ -90,13 +92,14 @@ private:
     //@}
 
 private:
-     PHY_Lighting( const std::string& strName, E_Lighting nType, const PHY_Lighting* pNextDegradedLighting );
+     PHY_Lighting( const std::string& strName, E_Lighting nType, const PHY_Lighting* pNextDegradedLighting, Common::EnumLightingType nAsnID );
     ~PHY_Lighting();
 
 private:
     const std::string    strName_;
     const E_Lighting     nType_;
     const PHY_Lighting* pNextDegradedLighting_;
+    const Common::EnumLightingType nAsnID_;
 
 private:
     static T_LightingMap lightings_;

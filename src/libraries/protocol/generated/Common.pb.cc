@@ -299,6 +299,7 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::EnumDescriptor* EnumDotationFamily_descriptor_ = NULL;
 const ::google::protobuf::EnumDescriptor* EnumAmmunitionFamily_descriptor_ = NULL;
 const ::google::protobuf::EnumDescriptor* EnumPrecipitationType_descriptor_ = NULL;
+const ::google::protobuf::EnumDescriptor* EnumLightingType_descriptor_ = NULL;
 const ::google::protobuf::EnumDescriptor* EnumLogMaintenanceHandlingStatus_descriptor_ = NULL;
 const ::google::protobuf::EnumDescriptor* EnumLogMedicalHandlingStatus_descriptor_ = NULL;
 const ::google::protobuf::EnumDescriptor* EnumUnitVisibility_descriptor_ = NULL;
@@ -1840,7 +1841,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgNote));
   MsgMeteoAttributes_descriptor_ = file->message_type(90);
-  static const int MsgMeteoAttributes_offsets_[7] = {
+  static const int MsgMeteoAttributes_offsets_[8] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMeteoAttributes, temperature_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMeteoAttributes, wind_speed_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMeteoAttributes, wind_direction_),
@@ -1848,6 +1849,7 @@ void protobuf_AssignDesc_Common_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMeteoAttributes, cloud_ceiling_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMeteoAttributes, cloud_density_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMeteoAttributes, precipitation_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMeteoAttributes, lighting_),
   };
   MsgMeteoAttributes_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -1863,24 +1865,25 @@ void protobuf_AssignDesc_Common_2eproto() {
   EnumDotationFamily_descriptor_ = file->enum_type(0);
   EnumAmmunitionFamily_descriptor_ = file->enum_type(1);
   EnumPrecipitationType_descriptor_ = file->enum_type(2);
-  EnumLogMaintenanceHandlingStatus_descriptor_ = file->enum_type(3);
-  EnumLogMedicalHandlingStatus_descriptor_ = file->enum_type(4);
-  EnumUnitVisibility_descriptor_ = file->enum_type(5);
-  EnumFireEffectType_descriptor_ = file->enum_type(6);
-  EnumSimulationState_descriptor_ = file->enum_type(7);
-  EnumMeetingEngagementStatus_descriptor_ = file->enum_type(8);
-  EnumOperationalStatus_descriptor_ = file->enum_type(9);
-  MsgStartUnitFire_type_descriptor_ = file->enum_type(10);
-  EnumAutomatMode_descriptor_ = file->enum_type(11);
-  EnumPopulationAttitude_descriptor_ = file->enum_type(12);
-  EnumUnitTiredness_descriptor_ = file->enum_type(13);
-  EnumUnitMorale_descriptor_ = file->enum_type(14);
-  EnumUnitExperience_descriptor_ = file->enum_type(15);
-  EnumHumanRank_descriptor_ = file->enum_type(16);
-  EnumDiplomacy_descriptor_ = file->enum_type(17);
-  EnumHumanWound_descriptor_ = file->enum_type(18);
-  EnumLogMaintenanceRegimeTravail_descriptor_ = file->enum_type(19);
-  EnumNatureLevel_descriptor_ = file->enum_type(20);
+  EnumLightingType_descriptor_ = file->enum_type(3);
+  EnumLogMaintenanceHandlingStatus_descriptor_ = file->enum_type(4);
+  EnumLogMedicalHandlingStatus_descriptor_ = file->enum_type(5);
+  EnumUnitVisibility_descriptor_ = file->enum_type(6);
+  EnumFireEffectType_descriptor_ = file->enum_type(7);
+  EnumSimulationState_descriptor_ = file->enum_type(8);
+  EnumMeetingEngagementStatus_descriptor_ = file->enum_type(9);
+  EnumOperationalStatus_descriptor_ = file->enum_type(10);
+  MsgStartUnitFire_type_descriptor_ = file->enum_type(11);
+  EnumAutomatMode_descriptor_ = file->enum_type(12);
+  EnumPopulationAttitude_descriptor_ = file->enum_type(13);
+  EnumUnitTiredness_descriptor_ = file->enum_type(14);
+  EnumUnitMorale_descriptor_ = file->enum_type(15);
+  EnumUnitExperience_descriptor_ = file->enum_type(16);
+  EnumHumanRank_descriptor_ = file->enum_type(17);
+  EnumDiplomacy_descriptor_ = file->enum_type(18);
+  EnumHumanWound_descriptor_ = file->enum_type(19);
+  EnumLogMaintenanceRegimeTravail_descriptor_ = file->enum_type(20);
+  EnumNatureLevel_descriptor_ = file->enum_type(21);
 }
 
 namespace {
@@ -2517,83 +2520,92 @@ void protobuf_AddDesc_Common_2eproto() {
     "gObjectAttributeStock\0224\n\tnbc_agent\030\017 \001(\013"
     "2!.Common.MsgObjectAttributeNBCType\"L\n\007M"
     "sgNote\022\014\n\004name\030\001 \002(\t\022\016\n\006number\030\002 \002(\t\022\023\n\013"
-    "description\030\003 \002(\t\022\016\n\006parent\030\004 \002(\r\"\342\001\n\022Ms"
+    "description\030\003 \002(\t\022\016\n\006parent\030\004 \002(\r\"\216\002\n\022Ms"
     "gMeteoAttributes\022\023\n\013temperature\030\001 \002(\005\022\022\n"
     "\nwind_speed\030\002 \002(\005\022*\n\016wind_direction\030\003 \002("
     "\0132\022.Common.MsgHeading\022\023\n\013cloud_floor\030\004 \002"
     "(\005\022\025\n\rcloud_ceiling\030\005 \002(\005\022\025\n\rcloud_densi"
     "ty\030\006 \002(\005\0224\n\rprecipitation\030\007 \002(\0162\035.Common"
-    ".EnumPrecipitationType*m\n\022EnumDotationFa"
-    "mily\022\014\n\010munition\020\000\022\r\n\tcarburant\020\001\022\014\n\010exp"
-    "losif\020\002\022\010\n\004mine\020\003\022\013\n\007barbele\020\004\022\t\n\005piece\020"
-    "\005\022\n\n\006ration\020\006*Q\n\024EnumAmmunitionFamily\022\010\n"
-    "\004obus\020\000\022\017\n\013missile_sol\020\001\022\017\n\013missile_air\020"
-    "\002\022\r\n\tmitraille\020\003*w\n\025EnumPrecipitationTyp"
-    "e\022\030\n\024pas_de_precipitation\020\000\022\021\n\rtempete_s"
-    "able\020\001\022\016\n\nbrouillard\020\002\022\013\n\007crachin\020\003\022\t\n\005p"
-    "luie\020\004\022\t\n\005neige\020\005*\264\003\n EnumLogMaintenance"
-    "HandlingStatus\022\033\n\027deplacement_vers_chain"
-    "e\020\000\022$\n attente_disponibilite_remorqueur\020"
-    "\001\022 \n\034remorqueur_deplacement_aller\020\002\022\031\n\025r"
-    "emorqueur_chargement\020\003\022!\n\035remorqueur_dep"
-    "lacement_retour\020\004\022\033\n\027remorqueur_decharge"
-    "ment\020\005\022\034\n\030diagnostique_maintenance\020\006\0220\n,"
-    "attente_prise_en_charge_par_niveau_super"
-    "ieur\020\007\022 \n\034attente_disponibilite_pieces\020\010"
-    "\022$\n attente_disponibilite_reparateur\020\t\022\016"
-    "\n\nreparation\020\n\022\017\n\013retour_pion\020\013\022\027\n\023termi"
-    "ne_maintenance\020\014*\364\005\n\034EnumLogMedicalHandl"
-    "ingStatus\022*\n&attente_disponibilite_ambul"
-    "ance_releve\020\000\022&\n\"ambulance_releve_deplac"
-    "ement_aller\020\001\022\037\n\033ambulance_releve_charge"
-    "ment\020\002\022/\n+attente_chargement_complet_amb"
-    "ulance_releve\020\003\022\'\n#ambulance_releve_depl"
-    "acement_retour\020\004\022!\n\035ambulance_releve_dec"
-    "hargement\020\005\0223\n/attente_disponibilite_med"
-    "ecin_pour_diagnostique\020\006\022\020\n\014diagnostique"
-    "\020\007\022\031\n\025recherche_secteur_tri\020\010\022*\n&attente"
-    "_disponibilite_medecin_pour_tri\020\t\022\007\n\003tri"
-    "\020\n\022\032\n\026recherche_secteur_soin\020\013\022+\n\'attent"
-    "e_disponibilite_medecin_pour_soin\020\014\022\010\n\004s"
-    "oin\020\r\022\023\n\017hospitalisation\020\016\022-\n)attente_di"
-    "sponibilite_ambulance_ramassage\020\017\022\"\n\036amb"
-    "ulance_ramassage_chargement\020\020\0222\n.attente"
-    "_chargement_complet_ambulance_ramassage\020"
-    "\021\022)\n%ambulance_ramassage_deplacement_all"
-    "er\020\022\022$\n ambulance_ramassage_dechargement"
-    "\020\023\022\013\n\007termine\020\024*_\n\022EnumUnitVisibility\022\r\n"
-    "\tinvisible\020\000\022\014\n\010detected\020\001\022\016\n\nrecognized"
-    "\020\002\022\016\n\nidentified\020\003\022\014\n\010recorded\020\004*1\n\022Enum"
-    "FireEffectType\022\014\n\010fumigene\020\000\022\r\n\teclairan"
-    "t\020\001*H\n\023EnumSimulationState\022\013\n\007running\020\000\022"
-    "\n\n\006paused\020\001\022\013\n\007stopped\020\002\022\013\n\007loading\020\003*l\n"
-    "\033EnumMeetingEngagementStatus\022\020\n\014none_mee"
-    "ting\020\000\022\020\n\014etat_esquive\020\001\022\r\n\tetat_fixe\020\002\022"
-    "\032\n\026etat_poursuite_mission\020\003*[\n\025EnumOpera"
-    "tionalStatus\022\026\n\022detruit_totalement\020\000\022\030\n\024"
-    "detruit_tactiquement\020\001\022\020\n\014operationnel\020\002"
-    "*1\n\025MsgStartUnitFire_type\022\n\n\006direct\020\000\022\014\n"
-    "\010indirect\020\001*+\n\017EnumAutomatMode\022\013\n\007embray"
-    "e\020\000\022\013\n\007debraye\020\001*K\n\026EnumPopulationAttitu"
-    "de\022\t\n\005calme\020\000\022\n\n\006agitee\020\001\022\013\n\007excitee\020\002\022\r"
-    "\n\tagressive\020\003*8\n\021EnumUnitTiredness\022\n\n\006no"
-    "rmal\020\000\022\013\n\007fatigue\020\001\022\n\n\006epuise\020\002*@\n\016EnumU"
-    "nitMorale\022\r\n\tfanatique\020\000\022\007\n\003bon\020\001\022\t\n\005moy"
-    "en\020\002\022\013\n\007mauvais\020\003*@\n\022EnumUnitExperience\022"
-    "\013\n\007veteran\020\000\022\017\n\013experimente\020\001\022\014\n\010conscri"
-    "t\020\002*8\n\rEnumHumanRank\022\014\n\010officier\020\000\022\020\n\014so"
-    "us_officer\020\001\022\007\n\003mdr\020\002*X\n\rEnumDiplomacy\022\021"
-    "\n\runknown_diplo\020\000\022\020\n\014friend_diplo\020\001\022\017\n\013e"
-    "nemy_diplo\020\002\022\021\n\rneutral_diplo\020\003*\210\001\n\016Enum"
-    "HumanWound\022\016\n\nnon_blesse\020\000\022\010\n\004mort\020\001\022\024\n\020"
-    "blesse_urgence_1\020\002\022\024\n\020blesse_urgence_2\020\003"
-    "\022\024\n\020blesse_urgence_3\020\004\022\032\n\026blesse_urgence"
-    "_extreme\020\005*Y\n\037EnumLogMaintenanceRegimeTr"
-    "avail\022\014\n\010regime_1\020\000\022\014\n\010regime_2\020\001\022\014\n\010reg"
-    "ime_3\020\002\022\014\n\010regime_4\020\003*\204\001\n\017EnumNatureLeve"
-    "l\022\024\n\020none_naturelevel\020\000\022\005\n\001o\020\001\022\006\n\002oo\020\002\022\007"
-    "\n\003ooo\020\003\022\005\n\001i\020\004\022\006\n\002ii\020\005\022\007\n\003iii\020\006\022\005\n\001x\020\007\022\006"
-    "\n\002xx\020\010\022\007\n\003xxx\020\t\022\010\n\004xxxx\020\n\022\t\n\005xxxxx\020\013", 12596);
+    ".EnumPrecipitationType\022*\n\010lighting\030\010 \002(\016"
+    "2\030.Common.EnumLightingType*m\n\022EnumDotati"
+    "onFamily\022\014\n\010munition\020\000\022\r\n\tcarburant\020\001\022\014\n"
+    "\010explosif\020\002\022\010\n\004mine\020\003\022\013\n\007barbele\020\004\022\t\n\005pi"
+    "ece\020\005\022\n\n\006ration\020\006*Q\n\024EnumAmmunitionFamil"
+    "y\022\010\n\004obus\020\000\022\017\n\013missile_sol\020\001\022\017\n\013missile_"
+    "air\020\002\022\r\n\tmitraille\020\003*w\n\025EnumPrecipitatio"
+    "nType\022\030\n\024pas_de_precipitation\020\000\022\021\n\rtempe"
+    "te_sable\020\001\022\016\n\nbrouillard\020\002\022\013\n\007crachin\020\003\022"
+    "\t\n\005pluie\020\004\022\t\n\005neige\020\005*\262\002\n\020EnumLightingTy"
+    "pe\022\024\n\020jour_sans_nuage_\020\000\022\025\n\021jour_peu_nua"
+    "geux_\020\001\022\035\n\031jour_moyennement_nuageux_\020\002\022\027"
+    "\n\023jour_assez_nuageux_\020\003\022\026\n\022jour_tres_nua"
+    "geux_\020\004\022\025\n\021nuit_pleine_lune_\020\005\022\035\n\031nuit_t"
+    "rois_quart_de_lune_\020\006\022\023\n\017nuit_demi_lune_"
+    "\020\007\022\027\n\023nuit_quart_de_lune_\020\010\022\027\n\023nuit_nouv"
+    "elle_lune_\020\t\022\016\n\neclairant_\020\n\022\024\n\020globalMe"
+    "teoType_\020\013*\264\003\n EnumLogMaintenanceHandlin"
+    "gStatus\022\033\n\027deplacement_vers_chaine\020\000\022$\n "
+    "attente_disponibilite_remorqueur\020\001\022 \n\034re"
+    "morqueur_deplacement_aller\020\002\022\031\n\025remorque"
+    "ur_chargement\020\003\022!\n\035remorqueur_deplacemen"
+    "t_retour\020\004\022\033\n\027remorqueur_dechargement\020\005\022"
+    "\034\n\030diagnostique_maintenance\020\006\0220\n,attente"
+    "_prise_en_charge_par_niveau_superieur\020\007\022"
+    " \n\034attente_disponibilite_pieces\020\010\022$\n att"
+    "ente_disponibilite_reparateur\020\t\022\016\n\nrepar"
+    "ation\020\n\022\017\n\013retour_pion\020\013\022\027\n\023termine_main"
+    "tenance\020\014*\364\005\n\034EnumLogMedicalHandlingStat"
+    "us\022*\n&attente_disponibilite_ambulance_re"
+    "leve\020\000\022&\n\"ambulance_releve_deplacement_a"
+    "ller\020\001\022\037\n\033ambulance_releve_chargement\020\002\022"
+    "/\n+attente_chargement_complet_ambulance_"
+    "releve\020\003\022\'\n#ambulance_releve_deplacement"
+    "_retour\020\004\022!\n\035ambulance_releve_dechargeme"
+    "nt\020\005\0223\n/attente_disponibilite_medecin_po"
+    "ur_diagnostique\020\006\022\020\n\014diagnostique\020\007\022\031\n\025r"
+    "echerche_secteur_tri\020\010\022*\n&attente_dispon"
+    "ibilite_medecin_pour_tri\020\t\022\007\n\003tri\020\n\022\032\n\026r"
+    "echerche_secteur_soin\020\013\022+\n\'attente_dispo"
+    "nibilite_medecin_pour_soin\020\014\022\010\n\004soin\020\r\022\023"
+    "\n\017hospitalisation\020\016\022-\n)attente_disponibi"
+    "lite_ambulance_ramassage\020\017\022\"\n\036ambulance_"
+    "ramassage_chargement\020\020\0222\n.attente_charge"
+    "ment_complet_ambulance_ramassage\020\021\022)\n%am"
+    "bulance_ramassage_deplacement_aller\020\022\022$\n"
+    " ambulance_ramassage_dechargement\020\023\022\013\n\007t"
+    "ermine\020\024*_\n\022EnumUnitVisibility\022\r\n\tinvisi"
+    "ble\020\000\022\014\n\010detected\020\001\022\016\n\nrecognized\020\002\022\016\n\ni"
+    "dentified\020\003\022\014\n\010recorded\020\004*1\n\022EnumFireEff"
+    "ectType\022\014\n\010fumigene\020\000\022\r\n\teclairant\020\001*H\n\023"
+    "EnumSimulationState\022\013\n\007running\020\000\022\n\n\006paus"
+    "ed\020\001\022\013\n\007stopped\020\002\022\013\n\007loading\020\003*l\n\033EnumMe"
+    "etingEngagementStatus\022\020\n\014none_meeting\020\000\022"
+    "\020\n\014etat_esquive\020\001\022\r\n\tetat_fixe\020\002\022\032\n\026etat"
+    "_poursuite_mission\020\003*[\n\025EnumOperationalS"
+    "tatus\022\026\n\022detruit_totalement\020\000\022\030\n\024detruit"
+    "_tactiquement\020\001\022\020\n\014operationnel\020\002*1\n\025Msg"
+    "StartUnitFire_type\022\n\n\006direct\020\000\022\014\n\010indire"
+    "ct\020\001*+\n\017EnumAutomatMode\022\013\n\007embraye\020\000\022\013\n\007"
+    "debraye\020\001*K\n\026EnumPopulationAttitude\022\t\n\005c"
+    "alme\020\000\022\n\n\006agitee\020\001\022\013\n\007excitee\020\002\022\r\n\tagres"
+    "sive\020\003*8\n\021EnumUnitTiredness\022\n\n\006normal\020\000\022"
+    "\013\n\007fatigue\020\001\022\n\n\006epuise\020\002*@\n\016EnumUnitMora"
+    "le\022\r\n\tfanatique\020\000\022\007\n\003bon\020\001\022\t\n\005moyen\020\002\022\013\n"
+    "\007mauvais\020\003*@\n\022EnumUnitExperience\022\013\n\007vete"
+    "ran\020\000\022\017\n\013experimente\020\001\022\014\n\010conscrit\020\002*8\n\r"
+    "EnumHumanRank\022\014\n\010officier\020\000\022\020\n\014sous_offi"
+    "cer\020\001\022\007\n\003mdr\020\002*X\n\rEnumDiplomacy\022\021\n\runkno"
+    "wn_diplo\020\000\022\020\n\014friend_diplo\020\001\022\017\n\013enemy_di"
+    "plo\020\002\022\021\n\rneutral_diplo\020\003*\210\001\n\016EnumHumanWo"
+    "und\022\016\n\nnon_blesse\020\000\022\010\n\004mort\020\001\022\024\n\020blesse_"
+    "urgence_1\020\002\022\024\n\020blesse_urgence_2\020\003\022\024\n\020ble"
+    "sse_urgence_3\020\004\022\032\n\026blesse_urgence_extrem"
+    "e\020\005*Y\n\037EnumLogMaintenanceRegimeTravail\022\014"
+    "\n\010regime_1\020\000\022\014\n\010regime_2\020\001\022\014\n\010regime_3\020\002"
+    "\022\014\n\010regime_4\020\003*\204\001\n\017EnumNatureLevel\022\024\n\020no"
+    "ne_naturelevel\020\000\022\005\n\001o\020\001\022\006\n\002oo\020\002\022\007\n\003ooo\020\003"
+    "\022\005\n\001i\020\004\022\006\n\002ii\020\005\022\007\n\003iii\020\006\022\005\n\001x\020\007\022\006\n\002xx\020\010\022"
+    "\007\n\003xxx\020\t\022\010\n\004xxxx\020\n\022\t\n\005xxxxx\020\013", 12949);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Common.proto", &protobuf_RegisterTypes);
   MsgTeam::default_instance_ = new MsgTeam();
@@ -2839,6 +2851,30 @@ bool EnumPrecipitationType_IsValid(int value) {
     case 3:
     case 4:
     case 5:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::google::protobuf::EnumDescriptor* EnumLightingType_descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return EnumLightingType_descriptor_;
+}
+bool EnumLightingType_IsValid(int value) {
+  switch(value) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+    case 6:
+    case 7:
+    case 8:
+    case 9:
+    case 10:
+    case 11:
       return true;
     default:
       return false;
@@ -27770,6 +27806,7 @@ const int MsgMeteoAttributes::kCloudFloorFieldNumber;
 const int MsgMeteoAttributes::kCloudCeilingFieldNumber;
 const int MsgMeteoAttributes::kCloudDensityFieldNumber;
 const int MsgMeteoAttributes::kPrecipitationFieldNumber;
+const int MsgMeteoAttributes::kLightingFieldNumber;
 #endif  // !_MSC_VER
 
 MsgMeteoAttributes::MsgMeteoAttributes() {
@@ -27794,6 +27831,7 @@ void MsgMeteoAttributes::SharedCtor() {
   cloud_ceiling_ = 0;
   cloud_density_ = 0;
   precipitation_ = 0;
+  lighting_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -27833,6 +27871,7 @@ void MsgMeteoAttributes::Clear() {
     cloud_ceiling_ = 0;
     cloud_density_ = 0;
     precipitation_ = 0;
+    lighting_ = 0;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -27940,6 +27979,24 @@ bool MsgMeteoAttributes::MergePartialFromCodedStream(
         } else {
           mutable_unknown_fields()->AddVarint(7, value);
         }
+        if (input->ExpectTag(64)) goto parse_lighting;
+        break;
+      }
+      
+      // required .Common.EnumLightingType lighting = 8;
+      case 8: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          goto handle_uninterpreted;
+        }
+       parse_lighting:
+        int value;
+        DO_(::google::protobuf::internal::WireFormatLite::ReadEnum(input, &value));
+        if (Common::EnumLightingType_IsValid(value)) {
+          set_lighting(static_cast< Common::EnumLightingType >(value));
+        } else {
+          mutable_unknown_fields()->AddVarint(8, value);
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -28005,6 +28062,12 @@ void MsgMeteoAttributes::SerializeWithCachedSizes(
       7, this->precipitation(), output);
   }
   
+  // required .Common.EnumLightingType lighting = 8;
+  if (_has_bit(7)) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      8, this->lighting(), output);
+  }
+  
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -28049,6 +28112,12 @@ void MsgMeteoAttributes::SerializeWithCachedSizes(
   if (_has_bit(6)) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
       7, this->precipitation(), target);
+  }
+  
+  // required .Common.EnumLightingType lighting = 8;
+  if (_has_bit(7)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
+      8, this->lighting(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -28110,6 +28179,12 @@ int MsgMeteoAttributes::ByteSize() const {
         ::google::protobuf::internal::WireFormatLite::EnumSize(this->precipitation());
     }
     
+    // required .Common.EnumLightingType lighting = 8;
+    if (has_lighting()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->lighting());
+    }
+    
   }
   if (!unknown_fields().empty()) {
     total_size +=
@@ -28156,6 +28231,9 @@ void MsgMeteoAttributes::MergeFrom(const MsgMeteoAttributes& from) {
     if (from._has_bit(6)) {
       set_precipitation(from.precipitation());
     }
+    if (from._has_bit(7)) {
+      set_lighting(from.lighting());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -28173,7 +28251,7 @@ void MsgMeteoAttributes::CopyFrom(const MsgMeteoAttributes& from) {
 }
 
 bool MsgMeteoAttributes::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000007f) != 0x0000007f) return false;
+  if ((_has_bits_[0] & 0x000000ff) != 0x000000ff) return false;
   
   if (has_wind_direction()) {
     if (!this->wind_direction().IsInitialized()) return false;
@@ -28190,6 +28268,7 @@ void MsgMeteoAttributes::Swap(MsgMeteoAttributes* other) {
     std::swap(cloud_ceiling_, other->cloud_ceiling_);
     std::swap(cloud_density_, other->cloud_density_);
     std::swap(precipitation_, other->precipitation_);
+    std::swap(lighting_, other->lighting_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

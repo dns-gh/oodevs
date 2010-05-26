@@ -16,17 +16,17 @@ using namespace weather;
 
 PHY_Lighting::T_LightingMap PHY_Lighting::lightings_;
 
-PHY_Lighting PHY_Lighting::jourSansNuage_         ( "JourSansNuage"         , eJourSansNuage         , &jourPeuNuageux_         );
-PHY_Lighting PHY_Lighting::jourPeuNuageux_        ( "JourPeuNuageux"        , eJourPeuNuageux        , &jourMoyennementNuageux_ );
-PHY_Lighting PHY_Lighting::jourMoyennementNuageux_( "JourMoyennementNuageux", eJourMoyennementNuageux, &jourAssezNuageux_       );
-PHY_Lighting PHY_Lighting::jourAssezNuageux_      ( "JourAssezNuageux"      , eJourAssezNuageux      , &jourTresNuageux_        );
-PHY_Lighting PHY_Lighting::jourTresNuageux_       ( "JourTresNuageux"       , eJourTresNuageux       , 0                        );
-PHY_Lighting PHY_Lighting::nuitPleineLune_        ( "NuitPleineLune"        , eNuitPleineLune        , &nuitTroisQuartDeLune_   );
-PHY_Lighting PHY_Lighting::nuitTroisQuartDeLune_  ( "NuitTroisQuartDeLune"  , eNuitTroisQuartDeLune  , &nuitDemiLune_           );
-PHY_Lighting PHY_Lighting::nuitDemiLune_          ( "NuitDemiLune"          , eNuitDemiLune          , &nuitQuartDeLune_        );
-PHY_Lighting PHY_Lighting::nuitQuartDeLune_       ( "NuitQuartDeLune"       , eNuitQuartDeLune       , &nuitNouvelleLune_       );
-PHY_Lighting PHY_Lighting::nuitNouvelleLune_      ( "NuitNouvelleLune"      , eNuitNouvelleLune      , 0                        );
-PHY_Lighting PHY_Lighting::eclairant_             ( "Eclairant"             , eEclairant             , 0                        );
+PHY_Lighting PHY_Lighting::jourSansNuage_         ( "JourSansNuage"         , eJourSansNuage         , &jourPeuNuageux_         , Common::jour_sans_nuage_  );
+PHY_Lighting PHY_Lighting::jourPeuNuageux_        ( "JourPeuNuageux"        , eJourPeuNuageux        , &jourMoyennementNuageux_ , Common::jour_peu_nuageux_ );
+PHY_Lighting PHY_Lighting::jourMoyennementNuageux_( "JourMoyennementNuageux", eJourMoyennementNuageux, &jourAssezNuageux_       , Common::jour_moyennement_nuageux_ );
+PHY_Lighting PHY_Lighting::jourAssezNuageux_      ( "JourAssezNuageux"      , eJourAssezNuageux      , &jourTresNuageux_        , Common::jour_assez_nuageux_ );
+PHY_Lighting PHY_Lighting::jourTresNuageux_       ( "JourTresNuageux"       , eJourTresNuageux       , 0                        , Common::jour_tres_nuageux_ );
+PHY_Lighting PHY_Lighting::nuitPleineLune_        ( "NuitPleineLune"        , eNuitPleineLune        , &nuitTroisQuartDeLune_   , Common::nuit_pleine_lune_ );
+PHY_Lighting PHY_Lighting::nuitTroisQuartDeLune_  ( "NuitTroisQuartDeLune"  , eNuitTroisQuartDeLune  , &nuitDemiLune_           , Common::nuit_trois_quart_de_lune_ );
+PHY_Lighting PHY_Lighting::nuitDemiLune_          ( "NuitDemiLune"          , eNuitDemiLune          , &nuitQuartDeLune_        , Common::nuit_demi_lune_ );
+PHY_Lighting PHY_Lighting::nuitQuartDeLune_       ( "NuitQuartDeLune"       , eNuitQuartDeLune       , &nuitNouvelleLune_       , Common::nuit_quart_de_lune_ );
+PHY_Lighting PHY_Lighting::nuitNouvelleLune_      ( "NuitNouvelleLune"      , eNuitNouvelleLune      , 0                        , Common::nuit_nouvelle_lune_ );
+PHY_Lighting PHY_Lighting::eclairant_             ( "Eclairant"             , eEclairant             , 0                        , Common::eclairant_ );
 
 // =============================================================================
 // STATIC INITIALIZATION (MANAGER)
@@ -69,10 +69,11 @@ void PHY_Lighting::Terminate()
 // Name: PHY_Lighting constructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-PHY_Lighting::PHY_Lighting( const std::string& strName, E_Lighting nType, const PHY_Lighting* pNextDegradedLighting )
+PHY_Lighting::PHY_Lighting( const std::string& strName, E_Lighting nType, const PHY_Lighting* pNextDegradedLighting, Common::EnumLightingType nAsnID )
     : strName_              ( strName )
     , nType_                ( nType   )
     , pNextDegradedLighting_( pNextDegradedLighting )
+    , nAsnID_ ( nAsnID  )
 {
 }
 

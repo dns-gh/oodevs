@@ -120,6 +120,7 @@ void PHY_LocalMeteo::SendCreation() const
     att->set_cloud_density( int( rDensiteCouvertureNuageuse_ * 100. + 0.01 ) );
     att->set_precipitation( pPrecipitation_->GetAsnID() );
     att->set_temperature( 0 );
+    att->set_lighting(Common::globalMeteoType_ );
 
     Common::MsgCoordLatLong longlat;
     MIL_Tools::ConvertCoordSimToMos( downRight_, longlat);

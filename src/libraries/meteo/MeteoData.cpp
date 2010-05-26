@@ -64,6 +64,7 @@ void MeteoData::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
     att->set_cloud_density( int( rDensiteCouvertureNuageuse_ ) );
     att->set_precipitation( pPrecipitation_->GetAsnID() );
     att->set_temperature( 0 );
+    att->set_lighting(Common::globalMeteoType_ );
 
     geometry::Point2f downRight( rect_.Right(), rect_.Bottom() );
     geometry::Point2d latlong = converter_.ConvertToGeo( downRight );

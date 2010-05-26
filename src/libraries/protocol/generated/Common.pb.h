@@ -285,6 +285,34 @@ inline bool EnumPrecipitationType_Parse(
   return ::google::protobuf::internal::ParseNamedEnum<EnumPrecipitationType>(
     EnumPrecipitationType_descriptor(), name, value);
 }
+enum EnumLightingType {
+  jour_sans_nuage_ = 0,
+  jour_peu_nuageux_ = 1,
+  jour_moyennement_nuageux_ = 2,
+  jour_assez_nuageux_ = 3,
+  jour_tres_nuageux_ = 4,
+  nuit_pleine_lune_ = 5,
+  nuit_trois_quart_de_lune_ = 6,
+  nuit_demi_lune_ = 7,
+  nuit_quart_de_lune_ = 8,
+  nuit_nouvelle_lune_ = 9,
+  eclairant_ = 10,
+  globalMeteoType_ = 11
+};
+bool EnumLightingType_IsValid(int value);
+const EnumLightingType EnumLightingType_MIN = jour_sans_nuage_;
+const EnumLightingType EnumLightingType_MAX = globalMeteoType_;
+
+const ::google::protobuf::EnumDescriptor* EnumLightingType_descriptor();
+inline const ::std::string& EnumLightingType_Name(EnumLightingType value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    EnumLightingType_descriptor(), value);
+}
+inline bool EnumLightingType_Parse(
+    const ::std::string& name, EnumLightingType* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<EnumLightingType>(
+    EnumLightingType_descriptor(), name, value);
+}
 enum EnumLogMaintenanceHandlingStatus {
   deplacement_vers_chaine = 0,
   attente_disponibilite_remorqueur = 1,
@@ -10050,6 +10078,13 @@ class MsgMeteoAttributes : public ::google::protobuf::Message {
   inline Common::EnumPrecipitationType precipitation() const;
   inline void set_precipitation(Common::EnumPrecipitationType value);
   
+  // required .Common.EnumLightingType lighting = 8;
+  inline bool has_lighting() const;
+  inline void clear_lighting();
+  static const int kLightingFieldNumber = 8;
+  inline Common::EnumLightingType lighting() const;
+  inline void set_lighting(Common::EnumLightingType value);
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -10061,11 +10096,12 @@ class MsgMeteoAttributes : public ::google::protobuf::Message {
   ::google::protobuf::int32 cloud_ceiling_;
   ::google::protobuf::int32 cloud_density_;
   int precipitation_;
+  int lighting_;
   friend void  protobuf_AddDesc_Common_2eproto();
   friend void protobuf_AssignDesc_Common_2eproto();
   friend void protobuf_ShutdownFile_Common_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(8 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -14780,6 +14816,23 @@ inline void MsgMeteoAttributes::set_precipitation(Common::EnumPrecipitationType 
   precipitation_ = value;
 }
 
+// required .Common.EnumLightingType lighting = 8;
+inline bool MsgMeteoAttributes::has_lighting() const {
+  return _has_bit(7);
+}
+inline void MsgMeteoAttributes::clear_lighting() {
+  lighting_ = 0;
+  _clear_bit(7);
+}
+inline Common::EnumLightingType MsgMeteoAttributes::lighting() const {
+  return static_cast< Common::EnumLightingType >(lighting_);
+}
+inline void MsgMeteoAttributes::set_lighting(Common::EnumLightingType value) {
+  GOOGLE_DCHECK(Common::EnumLightingType_IsValid(value));
+  _set_bit(7);
+  lighting_ = value;
+}
+
 
 }  // namespace Common
 
@@ -14814,6 +14867,10 @@ inline const EnumDescriptor* GetEnumDescriptor< Common::EnumAmmunitionFamily>() 
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< Common::EnumPrecipitationType>() {
   return Common::EnumPrecipitationType_descriptor();
+}
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< Common::EnumLightingType>() {
+  return Common::EnumLightingType_descriptor();
 }
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< Common::EnumLogMaintenanceHandlingStatus>() {

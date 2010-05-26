@@ -33,6 +33,22 @@ const PHY_Lighting* PHY_Lighting::FindLighting( const std::string& strName )
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_Lighting::FindPrecipitation
+// Created: SLG 2010-05-26
+// -----------------------------------------------------------------------------
+inline
+const PHY_Lighting* PHY_Lighting::FindLighting( Common::EnumLightingType nAsnID ) 
+{
+    for( CIT_LightingMap it = lightings_.begin(); it != lightings_.end(); ++it )
+    {
+        const PHY_Lighting& lighting = *it->second;
+        if( lighting.GetAsnID() == nAsnID )
+            return &lighting;
+    }
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_Lighting::GetName
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
@@ -50,4 +66,14 @@ inline
 unsigned int PHY_Lighting::GetID() const
 {
     return (unsigned int)nType_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Lighting::GetAsnID
+// Created: SLG 2010-05-26
+// -----------------------------------------------------------------------------
+inline
+Common::EnumLightingType PHY_Lighting::GetAsnID() const
+{
+    return nAsnID_;
 }
