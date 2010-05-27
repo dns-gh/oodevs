@@ -66,7 +66,7 @@ function alatPionsCommon()
         or includedFiles[ "sources/glaise/glaise_appui/alat/pions/common/Parameters.bms" ]
 end
 
-function airOrAlatLCA()
+function airOrAlat_LCA()
     return includedFiles[ "sources/air/pions/common/Parameters.bms" ] 
         or alatPionsCommon()
 end
