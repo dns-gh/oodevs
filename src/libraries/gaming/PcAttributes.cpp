@@ -42,7 +42,7 @@ PcAttributes::~PcAttributes()
 void PcAttributes::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     const Entity_ABC& automata = holder_.Get< TacticalHierarchies >().GetUp();
-    if( const LogisticLinks* links = static_cast< const LogisticLinks* >( automata.Retrieve< LogisticLinks_ABC >() ) )
+    if( const LogisticLinks* links = automata.Retrieve< LogisticLinks >() )
         links->Draw( where, viewport, tools );
     if( const DebugPoints* points = automata.Retrieve< DebugPoints >() )
         points->Draw( where, viewport, tools );

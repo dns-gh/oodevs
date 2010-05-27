@@ -114,7 +114,7 @@ void ChangeLogisticLinksDialog::Show()
     const Automat_ABC& agent = *selected_;
 
     // $$$$ AGE 2006-08-24: display aussi ?
-    const LogisticLinks* log = static_cast< const LogisticLinks* >( agent.Retrieve< LogisticLinks_ABC >() );
+    const LogisticLinks* log = agent.Retrieve< LogisticLinks >();
     if( !log )
         return;
     const AutomatType& type = agent.GetType();
@@ -218,7 +218,7 @@ void ChangeLogisticLinksDialog::Reject()
 // -----------------------------------------------------------------------------
 void ChangeLogisticLinksDialog::NotifyContextMenu( const Automat_ABC& agent, ContextMenu& menu )
 {
-    if( profile_.CanBeOrdered( agent ) && agent.Retrieve< LogisticLinks_ABC >() )
+    if( profile_.CanBeOrdered( agent ) && agent.Retrieve< LogisticLinks >() )
     {
         selected_ = &agent;
         menu.InsertItem( "Command", tr( "Change logistic links" ), this, SLOT( Show() ) );
