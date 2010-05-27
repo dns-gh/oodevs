@@ -301,7 +301,7 @@ float DEC_KnowledgeObjectFunctions::GetSiteFranchissementWidth( boost::shared_pt
 {
     if( pKnowledge && pKnowledge->IsValid() )
         if( const DEC_Knowledge_ObjectAttributeCrossingSite* attribute = pKnowledge->Retrieve< DEC_Knowledge_ObjectAttributeCrossingSite >() )
-            return attribute->GetWidth();
+            return float( attribute->GetWidth() );
     return 0.f;
 }
 
@@ -399,7 +399,7 @@ float DEC_KnowledgeObjectFunctions::EstimatedWorkTime( MIL_Agent_ABC& pion, boos
         if( MIL_Object_ABC* object = pKnowledge->GetObjectKnown() )
         {
             PHY_RoleAction_Objects_DataComputer dataComputer( pion, PHY_RoleAction_Objects_DataComputerPionData::eDestroy, *object );
-            return dataComputer.ComputeWorkTime();
+            return float( dataComputer.ComputeWorkTime() );
         }
     return -1.0f;
 }

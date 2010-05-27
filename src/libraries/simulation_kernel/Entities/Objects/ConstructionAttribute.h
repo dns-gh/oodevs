@@ -97,6 +97,8 @@ public:
     MT_Float GetState() const;
     bool NeedDestruction() const;
     unsigned int GetMaxDotation() const;
+    unsigned int GetCurrentDotation() const;
+    unsigned int GetDotationType() const;
     //@}
 
     //! @name Copy

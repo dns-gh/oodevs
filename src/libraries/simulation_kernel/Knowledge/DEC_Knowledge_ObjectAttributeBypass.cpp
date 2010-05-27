@@ -95,12 +95,7 @@ void DEC_Knowledge_ObjectAttributeBypass::UpdateAttributes()
     if( ! attr_ )
         return;
     
-    const unsigned int nNewBypassPercentage = (unsigned int)( attr_->GetState() * 100. );
-    if( nNewBypassPercentage != nBypassPercentage_ )
-    {
-        nBypassPercentage_ = nNewBypassPercentage;
-        NotifyAttributeUpdated( eOnUpdate );
-    }
+    nBypassPercentage_ = (unsigned int)( attr_->GetState() * 100. );
 }
 
 // -----------------------------------------------------------------------------
@@ -136,10 +131,5 @@ void DEC_Knowledge_ObjectAttributeBypass::UpdateOnCollision( const DEC_Knowledge
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeBypass::Send( Common::MsgObjectAttributes& asn ) const
 {    
-    if ( NeedUpdate() )
-    {
-//        asn.set_bypassPresent( 1 );
-        asn.mutable_bypass()->set_percentage( nBypassPercentage_ );
-        Reset();
-    }
+    asn.mutable_bypass()->set_percentage( nBypassPercentage_ );
 }

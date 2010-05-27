@@ -101,34 +101,14 @@ void DEC_Knowledge_ObjectAttributeSupplyRoute::UpdateAttributes( bool bRecognize
     if ( !attr_ )
         return;
 
-    if( bEquipped_ != attr_->IsEquipped() )
-    {
-        bEquipped_ = attr_->IsEquipped();
-        NotifyAttributeUpdated( eOnUpdate );
-    }
+    bEquipped_ = attr_->IsEquipped();
 
     if( bRecognized )
     {
-        if( rWeightSupported_ != attr_->GetMaxWeight() )
-        {
-            rWeightSupported_ = attr_->GetMaxWeight();
-            NotifyAttributeUpdated( eOnUpdate );
-        }
-        if( rWidth_ != attr_->GetWidth() )
-        {
-            rWidth_ = attr_->GetWidth();
-            NotifyAttributeUpdated( eOnUpdate );
-        }
-        if( rLength_ != attr_->GetLength() )
-        {
-            rLength_ = attr_->GetLength();
-            NotifyAttributeUpdated( eOnUpdate );
-        }
-        if( rFlow_ != attr_->GetFlow() )
-        {
-            rFlow_ = attr_->GetFlow();
-            NotifyAttributeUpdated( eOnUpdate );
-        }
+        rWeightSupported_ = attr_->GetMaxWeight();
+        rWidth_ = attr_->GetWidth();
+        rLength_ = attr_->GetLength();
+        rFlow_ = attr_->GetFlow();
     }
 }
 
@@ -165,14 +145,11 @@ void DEC_Knowledge_ObjectAttributeSupplyRoute::UpdateOnCollision( const DEC_Know
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeSupplyRoute::Send( Common::MsgObjectAttributes& asn ) const
 {
-    if( NeedUpdate() )
-    {
-        asn.mutable_supply_route()->set_equipped  ( bEquipped_ );
-        asn.mutable_supply_route()->set_max_weight( (int)rWeightSupported_ );
-        asn.mutable_supply_route()->set_width     ( (int)rWidth_ );
-        asn.mutable_supply_route()->set_length    ( (int)rLength_ );
-        asn.mutable_supply_route()->set_flow_rate ( (int)rFlow_ );
-    }
+    asn.mutable_supply_route()->set_equipped  ( bEquipped_ );
+    asn.mutable_supply_route()->set_max_weight( (int)rWeightSupported_ );
+    asn.mutable_supply_route()->set_width     ( (int)rWidth_ );
+    asn.mutable_supply_route()->set_length    ( (int)rLength_ );
+    asn.mutable_supply_route()->set_flow_rate ( (int)rFlow_ );
 }
 
 // -----------------------------------------------------------------------------

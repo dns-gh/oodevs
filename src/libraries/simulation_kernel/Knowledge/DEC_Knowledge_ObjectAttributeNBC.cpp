@@ -13,6 +13,7 @@
 #include "DEC_Knowledge_ObjectAttributeNBC.h"
 #include "Entities/Objects/MIL_NbcAgentType.h"
 #include "Entities/Objects/NBCAttribute.h"
+#include "DEC_Knowledge_Object.h"
 #include "protocol/protocol.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeNBC )
@@ -23,7 +24,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeNBC )
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectAttributeNBC::DEC_Knowledge_ObjectAttributeNBC()
     : attr_ ( 0 )
-    , pNbcAgentType_ ( 0 )    
+    , dangerLevel_( 0 )
 {
     // NOTHING
 }
@@ -34,7 +35,7 @@ DEC_Knowledge_ObjectAttributeNBC::DEC_Knowledge_ObjectAttributeNBC()
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectAttributeNBC::DEC_Knowledge_ObjectAttributeNBC( const NBCAttribute& attr )
     : attr_ ( &attr )
-    , pNbcAgentType_ ( 0 )    
+    , dangerLevel_( 0 )
 {
     // NOTHING
 }
@@ -59,9 +60,20 @@ DEC_Knowledge_ObjectAttributeNBC::~DEC_Knowledge_ObjectAttributeNBC()
 void DEC_Knowledge_ObjectAttributeNBC::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< DEC_Knowledge_ObjectAttribute_ABC >( *this );
-//    unsigned int nID;
-//    file >> nID;
-//    pNbcAgentType_ = MIL_NbcAgentType::Find( nID );
+    file >> const_cast< NBCAttribute*& >( attr_ );
+    file >> dangerLevel_;
+    unsigned int size;
+    file >> size;
+
+    for( IT_NBCAgentsList it = agents_.begin() ; it != agents_.end() ; )
+        it = agents_.erase( it );
+
+    int nID;
+    for( unsigned int i = 0 ; i < size ; i++ )
+    {
+        file >> nID;
+        agents_.push_back( nID );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -71,17 +83,26 @@ void DEC_Knowledge_ObjectAttributeNBC::load( MIL_CheckPointInArchive& file, cons
 void DEC_Knowledge_ObjectAttributeNBC::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << boost::serialization::base_object< DEC_Knowledge_ObjectAttribute_ABC >( *this );
-//    unsigned nbc = ( pNbcAgentType_ ? pNbcAgentType_->GetID() : (unsigned int)-1 );
-//    file << nbc;
+    file << const_cast< NBCAttribute*& >( attr_ );
+    file << dangerLevel_;
+    unsigned int size = agents_.size();
+    file << size;
+
+    unsigned int nID;
+    for( CIT_NBCAgentsList iter = agents_.begin() ; iter != agents_.end() ; ++iter )
+    {
+        nID = *iter;
+        file << nID;
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectAttributeNBC::Register
 // Created: JCR 2008-08-18
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeNBC::Register( DEC_Knowledge_Object& /*knObject*/ )
+void DEC_Knowledge_ObjectAttributeNBC::Register( DEC_Knowledge_Object& knObject )
 {
-//    knObject.AttachExtension( *this );
+    knObject.AttachExtension( *this );
 }
 
 // =============================================================================
@@ -94,7 +115,15 @@ void DEC_Knowledge_ObjectAttributeNBC::Register( DEC_Knowledge_Object& /*knObjec
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeNBC::UpdateAttributes()
 {
-//    pNbcAgentType_ = attr_->GetNbcAgentType();
+    if( !attr_ )
+        return;
+
+    dangerLevel_ = attr_->GetDangerLevel();
+    for( IT_NBCAgentsList it = agents_.begin() ; it != agents_.end() ; )
+        it = agents_.erase( it );
+
+    for( NBCAttribute::CIT_NBCAgents iter = attr_->GetNBCAgents().begin() ; iter != attr_->GetNBCAgents().end() ; ++iter )
+        agents_.push_back( ( *iter )->GetID() );
 }
 
 // -----------------------------------------------------------------------------
@@ -128,12 +157,11 @@ void DEC_Knowledge_ObjectAttributeNBC::UpdateOnCollision( const DEC_Knowledge_Ob
 // Name: DEC_Knowledge_ObjectAttributeNBC::BuildMsgSpecificAttributes
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeNBC::Send( Common::MsgObjectAttributes& /*message*/ ) const
+void DEC_Knowledge_ObjectAttributeNBC::Send( Common::MsgObjectAttributes& message ) const
 {
-    if ( attr_ )
-    {
-        // $$$$ SBO 2009-10-27: huu?
-//    asn.set_nbcPresent( 1 );
-//    asn.nbc.nbc_agent = pNbcAgentType_->GetID();    
-    }
+    message.mutable_nbc()->set_danger_level( dangerLevel_ );
+    message.mutable_nbc()->mutable_nbc_agents();
+    if( attr_ )
+        for( NBCAttribute::CIT_NBCAgents iter = attr_->GetNBCAgents().begin() ; iter != attr_->GetNBCAgents().end() ; ++iter )
+            message.mutable_nbc()->mutable_nbc_agents()->add_elem( ( *iter )->GetID() );
 }

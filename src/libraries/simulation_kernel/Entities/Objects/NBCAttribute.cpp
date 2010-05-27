@@ -251,6 +251,15 @@ const NBCAttribute::T_NBCAgents& NBCAttribute::GetNBCAgents() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: NBCAttribute::GetDangerLevel
+// Created: JSR 2010-05-21
+// -----------------------------------------------------------------------------
+unsigned int NBCAttribute::GetDangerLevel() const
+{
+    return danger_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: NBCAttribute::Deserialize
 // Created: AGE 2004-12-01
 // -----------------------------------------------------------------------------

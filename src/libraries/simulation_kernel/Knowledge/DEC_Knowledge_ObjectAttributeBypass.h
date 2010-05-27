@@ -13,7 +13,6 @@
 #define __DEC_Knowledge_ObjectAttributeBypass_h_
 
 #include "DEC_Knowledge_ObjectAttribute_ABC.h"
-#include "DEC_Knowledge_ObjectAttributeUpdatable_ABC.h"
 #include <boost/serialization/export.hpp>
 
 class BypassAttribute;
@@ -22,7 +21,6 @@ class BypassAttribute;
 // Created: NLD 2004-05-04
 // =============================================================================
 class DEC_Knowledge_ObjectAttributeBypass : public DEC_Knowledge_ObjectAttribute_ABC
-                                          , private DEC_Knowledge_ObjectAttributeUpdatable_ABC
 {
 
 public:

@@ -43,8 +43,8 @@ MineAttribute::MineAttribute()
 MineAttribute::MineAttribute( const PHY_DotationCategory& dotation, unsigned int nDefaultMaxNbrDotation )
     : dotation_( &dotation )
     , nFullNbrDotation_( nDefaultMaxNbrDotation )
-    , nCurrentNbrDotation_( 0 )
-    , rMiningPercentage_( 0 )
+    , nCurrentNbrDotation_( nDefaultMaxNbrDotation )
+    , rMiningPercentage_( 1. )
     , nMinesActivityTime_( 0 )
     , nDeathTimeStep_( 0 )
 {
@@ -67,7 +67,7 @@ MineAttribute::MineAttribute( const Common::MsgMissionParameter_Value& attribute
     if( !dotation_ )
         throw std::runtime_error( "Unknown 'Dotation Type' for mine attribute" );
     nCurrentNbrDotation_ = attributes.list( 2 ).quantity();
-    nFullNbrDotation_ = attributes.list( 3 ).areal();
+    nFullNbrDotation_ = unsigned int( attributes.list( 3 ).areal() );
     rMiningPercentage_ = attributes.list( 4 ).quantity();
     //nMinesActivityTime_;
     //nDeathTimeStep_;
@@ -290,4 +290,13 @@ MT_Float MineAttribute::GetState() const
 unsigned int MineAttribute::GetCurrentDotations() const
 {
     return nCurrentNbrDotation_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MineAttribute::GetDotationType
+// Created: JSR 2010-05-27
+// -----------------------------------------------------------------------------
+unsigned int MineAttribute::GetDotationType() const
+{
+    return dotation_ ? dotation_->GetMosID() : 0;
 }

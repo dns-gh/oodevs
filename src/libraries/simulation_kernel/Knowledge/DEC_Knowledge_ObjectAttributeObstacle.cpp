@@ -78,11 +78,8 @@ void DEC_Knowledge_ObjectAttributeObstacle::Register( DEC_Knowledge_Object& knOb
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeObstacle::UpdateAttributes()
 {
-    if ( attr_ && bActivated_ != attr_->IsActivated() )
-    {
+    if ( attr_ )
         bActivated_ = attr_->IsActivated();
-        NotifyAttributeUpdated( eOnUpdate );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -118,12 +115,8 @@ void DEC_Knowledge_ObjectAttributeObstacle::UpdateOnCollision( const DEC_Knowled
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeObstacle::Send( Common::MsgObjectAttributes& asn ) const
 {
-    if( NeedUpdate() )
-    {
-        asn.mutable_obstacle()->set_type( obstacle_ );
-        asn.mutable_obstacle()->set_activated( bActivated_ );
-        Reset();
-    }
+    asn.mutable_obstacle()->set_type( obstacle_ );
+    asn.mutable_obstacle()->set_activated( bActivated_ );
 }
 
 // -----------------------------------------------------------------------------

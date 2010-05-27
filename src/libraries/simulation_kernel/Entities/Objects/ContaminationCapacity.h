@@ -68,7 +68,6 @@ private:
 private:
     //! @name 
     //@{
-    std::string type_;
     int maxToxic_;
     T_LocalisationVector decontaminatedZones_;
     //@}

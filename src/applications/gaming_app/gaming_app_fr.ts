@@ -2021,7 +2021,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Details</source>
-        <translation>Détails</translation>
+        <translation type="obsolete">Détails</translation>
     </message>
     <message>
         <source>Identifier:</source>
@@ -2162,6 +2162,30 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Danger:</source>
         <translation>Danger:</translation>
+    </message>
+    <message>
+        <source>Information</source>
+        <translation>Information</translation>
+    </message>
+    <message>
+        <source>Fire</source>
+        <translation>Feu</translation>
+    </message>
+    <message>
+        <source>Fire class:</source>
+        <translation>Type de feu:</translation>
+    </message>
+    <message>
+        <source>Fire temperature:</source>
+        <translation>Temperature du feu:</translation>
+    </message>
+    <message>
+        <source>Development dotation:</source>
+        <translation>Dotation de valorisation:</translation>
+    </message>
+    <message>
+        <source>Construction dotation:</source>
+        <translation>Dotation de construction:</translation>
     </message>
 </context>
 <context>
@@ -2364,6 +2388,18 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Number of available doctors:</source>
         <translation>Nombre de médecins disponibles:</translation>
+    </message>
+    <message>
+        <source>Fire</source>
+        <translation>Feu</translation>
+    </message>
+    <message>
+        <source>Fire class:</source>
+        <translation>Type de feu:</translation>
+    </message>
+    <message>
+        <source>Fire temperature:</source>
+        <translation>Temperature du feu:</translation>
     </message>
 </context>
 <context>

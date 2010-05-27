@@ -94,13 +94,12 @@ void DEC_Knowledge_ObjectAttributeCrossingSite::Register( DEC_Knowledge_Object& 
 void DEC_Knowledge_ObjectAttributeCrossingSite::UpdateAttributes()
 {
     if ( ! attr_ )
-        return;    
-
+        return;
+    
     rWidth_         = attr_->GetWidth();
     rDepth_         = attr_->GetDepth();
     rCurrentSpeed_  = attr_->GetSpeed();
     bBanksToFitOut_ = attr_->IsBanksToFitOut();
-    NotifyAttributeUpdated( eOnUpdate );
 }
 
 // -----------------------------------------------------------------------------
@@ -140,16 +139,10 @@ void DEC_Knowledge_ObjectAttributeCrossingSite::UpdateOnCollision( const DEC_Kno
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeCrossingSite::Send( Common::MsgObjectAttributes& asn ) const
 {
-//    if( !IsAttributeUpdated( eAttr_Specific ) || !bSpecificAttributesValid_ )
-//        return;
-//    
-    if ( NeedUpdate() )
-    {
-        asn.mutable_crossing_site()->set_width                ( (int)rWidth_ );
-        asn.mutable_crossing_site()->set_depth                ( (int)rDepth_ );
-        asn.mutable_crossing_site()->set_flow_rate            ( (int)rCurrentSpeed_ );
-        asn.mutable_crossing_site()->set_banks_require_fitting( bBanksToFitOut_ );
-    }
+    asn.mutable_crossing_site()->set_width                ( (int)rWidth_ );
+    asn.mutable_crossing_site()->set_depth                ( (int)rDepth_ );
+    asn.mutable_crossing_site()->set_flow_rate            ( (int)rCurrentSpeed_ );
+    asn.mutable_crossing_site()->set_banks_require_fitting( bBanksToFitOut_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -165,7 +158,7 @@ bool DEC_Knowledge_ObjectAttributeCrossingSite::IsBanksToFitOut() const
 // Name: DEC_Knowledge_ObjectAttributeCrossingSite::GetWidth
 // Created: JCR 2008-06-04
 // -----------------------------------------------------------------------------
-float DEC_Knowledge_ObjectAttributeCrossingSite::GetWidth() const
+MT_Float DEC_Knowledge_ObjectAttributeCrossingSite::GetWidth() const
 {
     return rWidth_;
 }

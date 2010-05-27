@@ -37,8 +37,7 @@ ContaminationCapacity::ContaminationCapacity()
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
 ContaminationCapacity::ContaminationCapacity( xml::xistream& xis )
-    : type_ ( xml::attribute< std::string >( xis, "type" ) )
-    , maxToxic_ ( xml::attribute< int >( xis, "max-toxic" ) )
+    : maxToxic_ ( xml::attribute< int >( xis, "max-toxic" ) )
 {
     // NOTHING
 }
@@ -48,8 +47,7 @@ ContaminationCapacity::ContaminationCapacity( xml::xistream& xis )
 // Created: JCR 2008-06-13
 // -----------------------------------------------------------------------------
 ContaminationCapacity::ContaminationCapacity( const ContaminationCapacity& from )
-    : type_ ( from.type_ )
-    , maxToxic_ ( from.maxToxic_ )
+    : maxToxic_ ( from.maxToxic_ )
 {
     // NOTHING
 }
@@ -71,7 +69,6 @@ template< typename Archive >
 void ContaminationCapacity::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
-         & type_
          & maxToxic_
          & decontaminatedZones_;    
 }

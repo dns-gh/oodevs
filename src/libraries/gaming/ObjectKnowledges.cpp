@@ -57,6 +57,7 @@ void ObjectKnowledges::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeCreati
 // -----------------------------------------------------------------------------
 void ObjectKnowledges::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
 {
+    factory_.Register( Get( message.oid() ), message.attributes() );
     Get( message.oid() ).Update( message );
     controller_.Update( *this );
 }

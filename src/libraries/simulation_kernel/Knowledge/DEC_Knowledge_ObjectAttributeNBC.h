@@ -25,6 +25,10 @@ class MIL_CheckPointOutArchive;
 // =============================================================================
 class DEC_Knowledge_ObjectAttributeNBC : public DEC_Knowledge_ObjectAttribute_ABC
 {
+private:
+    typedef std::list< unsigned int >         T_NBCAgentsList;
+    typedef T_NBCAgentsList::const_iterator CIT_NBCAgentsList;
+    typedef T_NBCAgentsList::iterator        IT_NBCAgentsList;
 
 public:
     //! @name Constructors/Destructor
@@ -61,7 +65,8 @@ private:
     //! @name Data Members
     //@{
     const NBCAttribute*     attr_;
-    const MIL_NbcAgentType* pNbcAgentType_;
+    unsigned int dangerLevel_;
+    T_NBCAgentsList agents_;
     //@}
 };
 

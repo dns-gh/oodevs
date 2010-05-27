@@ -90,6 +90,10 @@ ObjectPanel::ObjectPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::C
                 .AddLabel( tr( "Density:" ) )
                 .AddLabel( tr( "Activity time:" ) );
 
+    GetBuilder().AddGroup( tr( "Fire" ) )
+                .AddLabel( tr( "Fire class:" ) )
+                .AddLabel( tr( "Fire temperature:" ) );
+
     Displayer_ABC& infos = GetBuilder().Group( tr( "Information" ) );
     construction_  = dynamic_cast< gui::SpinBoxDisplayer* > ( & infos.Item( tr( "Construction:" ) ) );
     valorisation_  = dynamic_cast< gui::SpinBoxDisplayer* > ( & infos.Item( tr( "Mining:" ) ) );

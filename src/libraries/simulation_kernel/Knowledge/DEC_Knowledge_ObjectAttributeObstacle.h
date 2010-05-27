@@ -13,7 +13,6 @@
 #define __DEC_Knowledge_ObjectAttributeObstacle_h_
 
 #include "DEC_Knowledge_ObjectAttribute_ABC.h"
-#include "DEC_Knowledge_ObjectAttributeUpdatable_ABC.h"
 #include <boost/serialization/export.hpp>
 
 namespace Common
@@ -27,7 +26,6 @@ class ObstacleAttribute;
 // Created: NLD 2004-05-04
 // =============================================================================
 class DEC_Knowledge_ObjectAttributeObstacle : public DEC_Knowledge_ObjectAttribute_ABC
-                                            , private DEC_Knowledge_ObjectAttributeUpdatable_ABC
 {
 
 public:

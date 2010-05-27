@@ -41,6 +41,7 @@ void NBCAttribute::Update( const Common::MsgObjectAttributes& asn )
     {
         const Common::MsgObjectAttributeNBC& nbc = asn.nbc();
         danger_ = nbc.danger_level();
+        agents_.clear();
         for( int i = 0; i < nbc.nbc_agents().elem_size(); ++i )
             agents_.push_back( nbc.nbc_agents().elem( i ) );
         //nbc_.CopyFrom( asn.nbc() );

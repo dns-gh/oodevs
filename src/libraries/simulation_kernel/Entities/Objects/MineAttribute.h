@@ -73,8 +73,9 @@ public:
     //@{    
     unsigned int        GetDotationNeededForConstruction( MT_Float rDeltaPercentage ) const;
     unsigned int        GetDotationRecoveredWhenDestroying( MT_Float rDeltaPercentage ) const;
-    MT_Float    GetState() const;
+    MT_Float            GetState() const;
     unsigned int        GetCurrentDotations() const;
+    unsigned int        GetDotationType() const;
     //@}
 
     //! @name Copy

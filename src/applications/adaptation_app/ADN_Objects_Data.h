@@ -602,7 +602,7 @@ public:
         }
 
     public:
-        ADN_Type_String attitude_;
+        ADN_Type_Enum< E_PopulationAttitude, eNbrPopulationAttitude > attitude_;
     };
 
     class ADN_CapacityInfos_Perception

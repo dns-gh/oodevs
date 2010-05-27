@@ -1165,7 +1165,7 @@
     </message>
     <message>
         <source>Details</source>
-        <translation>Détails</translation>
+        <translation type="obsolete">Détails</translation>
     </message>
     <message>
         <source>Associated object:</source>
@@ -1193,7 +1193,7 @@
     </message>
     <message>
         <source>Construction dotation:</source>
-        <translation type="obsolete">Dotation de construction:</translation>
+        <translation>Dotation de construction:</translation>
     </message>
     <message>
         <source>Mine parameters</source>
@@ -1205,7 +1205,7 @@
     </message>
     <message>
         <source>Density:</source>
-        <translation type="obsolete">Densité:</translation>
+        <translation>Densité:</translation>
     </message>
     <message>
         <source>Mining:</source>

@@ -65,6 +65,19 @@ ObjectKnowledge::~ObjectKnowledge()
     if ( attributes.has_##ASN##()  ) \
         AddAttribute( new CLASS( model, attributes ) )
 
+#define CHECK_ASN_ATTRIBUTE_UPDATE( ASN, CLASS ) \
+    if ( asnMsg.attributes().has_##ASN##() ) \
+    { \
+        CIT_ObjectAttributes it; \
+        for( it = attributes_.begin(); it != attributes_.end(); ++it ) \
+        { \
+            const ObjectAttribute_ABC& obj = *it; \
+            if( dynamic_cast< const CLASS* > ( &obj ) ) break; \
+        } \
+        if( it == attributes_.end() ) \
+            AddAttribute( new CLASS( model_, asnMsg.attributes() ) ); \
+    }
+
 // -----------------------------------------------------------------------------
 // Name: Object::Initialize
 // Created: JCR 2008-06-08
@@ -133,6 +146,17 @@ void ObjectKnowledge::Update( const MsgsSimToClient::MsgObjectKnowledgeUpdate& a
     if( asnMsg.has_real_object()  )
         pObject_ = model_.objects_.Find( asnMsg.real_object() );
 
+    CHECK_ASN_ATTRIBUTE_UPDATE( construction      , ConstructionAttribute );
+    CHECK_ASN_ATTRIBUTE_UPDATE( obstacle          , ObstacleAttribute );
+    CHECK_ASN_ATTRIBUTE_UPDATE( mine              , MineAttribute );
+    CHECK_ASN_ATTRIBUTE_UPDATE( logistic          , LogisticAttribute );
+    CHECK_ASN_ATTRIBUTE_UPDATE( bypass            , BypassAttribute );
+    CHECK_ASN_ATTRIBUTE_UPDATE( crossing_site     , CrossingSiteAttribute );
+    CHECK_ASN_ATTRIBUTE_UPDATE( supply_route      , SupplyRouteAttribute );
+    CHECK_ASN_ATTRIBUTE_UPDATE( nbc               , NBCAttribute );
+    CHECK_ASN_ATTRIBUTE_UPDATE( fire              , FireAttribute );
+    CHECK_ASN_ATTRIBUTE_UPDATE( medical_treatment , MedicalTreatmentAttribute );
+
     std::for_each( attributes_.begin(), attributes_.end(),
                    boost::bind( &ObjectAttribute_ABC::Update, _1, boost::cref( asnMsg.attributes() ) ) );
 }
@@ -179,6 +203,7 @@ void ObjectKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         for( std::vector< const kernel::Automat_ABC* >::const_iterator it = automatPerceptions_.begin(); it != automatPerceptions_.end(); ++it )
             asn().mutable_automat_perception()->add_elem( (*it)->GetId() );
     }
+    asn().mutable_attributes();
     std::for_each( attributes_.begin(), attributes_.end(),
                    boost::bind( &ObjectAttribute_ABC::Send, _1, boost::ref( *asn().mutable_attributes() ) ) );
     asn.Send( publisher );

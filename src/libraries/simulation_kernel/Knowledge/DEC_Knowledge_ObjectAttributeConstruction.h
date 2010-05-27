@@ -13,7 +13,6 @@
 #define __DEC_Knowledge_ObjectAttributeConstruction_h_
 
 #include "DEC_Knowledge_ObjectAttribute_ABC.h"
-#include "DEC_Knowledge_ObjectAttributeUpdatable_ABC.h"
 #include <boost/serialization/export.hpp>
 
 class ConstructionAttribute;
@@ -22,7 +21,6 @@ class ConstructionAttribute;
 // Created: NLD 2004-05-04
 // =============================================================================
 class DEC_Knowledge_ObjectAttributeConstruction : public DEC_Knowledge_ObjectAttribute_ABC
-                                                , public DEC_Knowledge_ObjectAttributeUpdatable_ABC
 {
 
 public:
@@ -64,6 +62,7 @@ private:
     const ConstructionAttribute* attr_;
     MT_Float    rConstructionPercentage_;
     unsigned int        nNbrDotation_;
+    unsigned int        nDotationType_;
     //@}
 };
 

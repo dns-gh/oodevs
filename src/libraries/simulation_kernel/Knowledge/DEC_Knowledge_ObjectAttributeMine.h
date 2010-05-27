@@ -13,7 +13,6 @@
 #define __DEC_Knowledge_ObjectAttributeMine_h_
 
 #include "DEC_Knowledge_ObjectAttribute_ABC.h"
-#include "DEC_Knowledge_ObjectAttributeUpdatable_ABC.h"
 #include <boost/serialization/export.hpp>
 
 class MineAttribute;
@@ -22,7 +21,6 @@ class MineAttribute;
 // Created: NLD 2004-05-04
 // =============================================================================
 class DEC_Knowledge_ObjectAttributeMine : public DEC_Knowledge_ObjectAttribute_ABC
-                                        , private DEC_Knowledge_ObjectAttributeUpdatable_ABC
 {
 
 public:
@@ -59,8 +57,9 @@ private:
     const MineAttribute* attr_;
     unsigned int    nNbrDotationForMining_;    
     unsigned int    nMinesActivityTime_;
-    float   rMiningPercentage_;
+    MT_Float   rMiningPercentage_;
     float   rMinesDensity_;
+    unsigned int nDotationType_;
     //@}
 };
 

@@ -50,7 +50,7 @@ DEC_Knowledge_ObjectAttributeInteractionHeight::~DEC_Knowledge_ObjectAttributeIn
 // Name: DEC_Knowledge_ObjectAttributeInteractionHeight::Get
 // Created: LDC 2009-03-09
 // -----------------------------------------------------------------------------
-float DEC_Knowledge_ObjectAttributeInteractionHeight::Get() const
+MT_Float DEC_Knowledge_ObjectAttributeInteractionHeight::Get() const
 {
     return height_;
 }
@@ -88,7 +88,7 @@ void DEC_Knowledge_ObjectAttributeInteractionHeight::UpdateOnCollision( const DE
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeInteractionHeight::Send( Common::MsgObjectAttributes& asn ) const
 {
-    asn.mutable_interaction_height()->set_height( height_ );
+    asn.mutable_interaction_height()->set_height( float( height_ ) );
 }
     
 // -----------------------------------------------------------------------------

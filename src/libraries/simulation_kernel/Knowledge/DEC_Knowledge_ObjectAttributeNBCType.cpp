@@ -14,6 +14,7 @@
 #include "Entities/Objects/MIL_NBCType.h"
 #include "Entities/Objects/NBCTypeAttribute.h"
 #include "MIL.h"
+#include "protocol/protocol.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeNBCType )
 
@@ -25,6 +26,7 @@ DEC_Knowledge_ObjectAttributeNBCType::DEC_Knowledge_ObjectAttributeNBCType()
     : attr_         ( 0 )
     , pAgent_       ( 0 )
     , concentration_( 0 )
+    , sourceLifeDuration_( 0 )
 {
     // NOTHING
 }
@@ -37,6 +39,7 @@ DEC_Knowledge_ObjectAttributeNBCType::DEC_Knowledge_ObjectAttributeNBCType( cons
     : attr_         ( &attr )
     , pAgent_       ( &attr.GetAgentType() ) 
     , concentration_( attr.GetConcentration() )
+    , sourceLifeDuration_( attr.GetSourceLifeDuration() )
 {
     // NOTHING
 }
@@ -61,13 +64,13 @@ DEC_Knowledge_ObjectAttributeNBCType::~DEC_Knowledge_ObjectAttributeNBCType()
 void DEC_Knowledge_ObjectAttributeNBCType::load( MIL_CheckPointInArchive& file, const uint )
 {
     unsigned int nID;
-    int concentration;
     file >> boost::serialization::base_object< DEC_Knowledge_ObjectAttribute_ABC >( *this );
+    file >> const_cast< NBCTypeAttribute*& >( attr_ );
     file >> nID
-         >> concentration;
+         >> concentration_
+         >> sourceLifeDuration_;
 
-    pAgent_        = MIL_NBCType::Find( nID );
-    concentration_ = concentration;
+    pAgent_ = MIL_NBCType::Find( nID );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,8 +81,10 @@ void DEC_Knowledge_ObjectAttributeNBCType::save( MIL_CheckPointOutArchive& file,
 {
     unsigned int nID = ( pAgent_ ? pAgent_->GetID() : (uint)-1 );
     file << boost::serialization::base_object< DEC_Knowledge_ObjectAttribute_ABC >( *this );
+    file << const_cast< NBCTypeAttribute*& >( attr_ );
     file << nID
-         << concentration_;
+         << concentration_
+         << sourceLifeDuration_;
 }
 
 // -----------------------------------------------------------------------------
@@ -101,9 +106,12 @@ void DEC_Knowledge_ObjectAttributeNBCType::Register( DEC_Knowledge_Object& objec
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeNBCType::UpdateAttributes()
 {
-    if( !pAgent_ )
-        pAgent_ = & attr_->GetAgentType();
+    if( !attr_ )
+        return;
+
+    pAgent_ = & attr_->GetAgentType();
     concentration_ = attr_->GetConcentration();
+    sourceLifeDuration_ = attr_->GetSourceLifeDuration();
 }
 
 // -----------------------------------------------------------------------------
@@ -137,13 +145,9 @@ void DEC_Knowledge_ObjectAttributeNBCType::UpdateOnCollision( const DEC_Knowledg
 // Name: DEC_Knowledge_ObjectAttributeNBCType::BuildMsgSpecificAttributes
 // Created: RFT 2004-05-04
 // ----------------------------------------------------------------------------- 
-// $$$$ _RC_ FDS 2010-01-14: this function send nothing, can we remove content or protobuf translation is needed ? 
-void DEC_Knowledge_ObjectAttributeNBCType::Send( Common::MsgObjectAttributes& /*message*/ ) const
+void DEC_Knowledge_ObjectAttributeNBCType::Send( Common::MsgObjectAttributes& message ) const
 {
-    if ( attr_ )
-    {
-        // asn.m.nbc_agentPresent      = 1;
-        // asn.nbc_agent.agent_id      = pAgent_->GetID();    
-        // asn.nbc_agent.concentration = concentration_;
-    }
+    message.mutable_nbc_agent()->set_agent_id( pAgent_? pAgent_->GetID() : -1 );
+    message.mutable_nbc_agent()->set_concentration( concentration_ );
+    message.mutable_nbc_agent()->set_source_life_duration( sourceLifeDuration_ );
 }

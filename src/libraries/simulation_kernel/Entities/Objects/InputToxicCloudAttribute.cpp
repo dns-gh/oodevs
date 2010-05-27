@@ -221,7 +221,7 @@ void InputToxicCloudAttribute::SendFullState( Common::MsgObjectAttributes& asn )
         {
             asn.mutable_toxic_cloud()->mutable_quantities()->mutable_elem( i )->mutable_coordinate()->set_latitude( (*it).first.rX_ );
             asn.mutable_toxic_cloud()->mutable_quantities()->mutable_elem( i )->mutable_coordinate()->set_longitude( (*it).first.rY_ );
-            asn.mutable_toxic_cloud()->mutable_quantities()->mutable_elem( i )->set_quantity( (*it).second ) ;
+            asn.mutable_toxic_cloud()->mutable_quantities()->mutable_elem( i )->set_quantity( float( (*it).second ) );
         }
     }
 }

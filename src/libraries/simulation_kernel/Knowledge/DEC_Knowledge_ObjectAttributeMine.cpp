@@ -28,6 +28,7 @@ DEC_Knowledge_ObjectAttributeMine::DEC_Knowledge_ObjectAttributeMine()
     , rMiningPercentage_ ( 0. )
     , nMinesActivityTime_ ( 0 )
     , rMinesDensity_ ( 0. )
+    , nDotationType_( 0 )
 {
     // NOTHING
 }
@@ -42,6 +43,7 @@ DEC_Knowledge_ObjectAttributeMine::DEC_Knowledge_ObjectAttributeMine( const Mine
     , rMiningPercentage_ ( 0. )
     , nMinesActivityTime_ ( 0 )
     , rMinesDensity_ ( 0. )
+    , nDotationType_( 0 )
 {
     // NOTHING
 }
@@ -71,7 +73,8 @@ void DEC_Knowledge_ObjectAttributeMine::serialize( Archive& file, const unsigned
          & nNbrDotationForMining_
          & rMiningPercentage_
          & nMinesActivityTime_
-         & rMinesDensity_;
+         & rMinesDensity_
+         & nDotationType_;
 }
 
 // -----------------------------------------------------------------------------
@@ -116,12 +119,9 @@ void DEC_Knowledge_ObjectAttributeMine::UpdateOnCollision( const DEC_Knowledge_O
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeMine::Send( Common::MsgObjectAttributes& asn ) const
 {
-    if ( NeedUpdate() )
-    {
-        asn.mutable_mine()->set_percentage( (unsigned int)( rMiningPercentage_ * 100. ) ); 
-        asn.mutable_mine()->set_dotation_nbr( nNbrDotationForMining_ );      
-        Reset();
-    }
+    asn.mutable_mine()->set_percentage( (unsigned int)( rMiningPercentage_ * 100. ) ); 
+    asn.mutable_mine()->set_dotation_nbr( nNbrDotationForMining_ );
+    asn.mutable_mine()->set_dotation_type( nDotationType_ );
 }
 
 // =============================================================================
@@ -137,15 +137,7 @@ void DEC_Knowledge_ObjectAttributeMine::UpdateAttributes()
     if ( !attr_ )
         return;
 
-    if( attr_->GetCurrentDotations() != nNbrDotationForMining_ )
-    {
-        nNbrDotationForMining_ = attr_->GetCurrentDotations();
-        NotifyAttributeUpdated( eOnUpdate );
-    }
-    
-    if( attr_->GetState() != rMiningPercentage_ )
-    {
-        rMiningPercentage_ = attr_->GetState();
-        NotifyAttributeUpdated( eOnUpdate );
-    }
+    nNbrDotationForMining_ = attr_->GetCurrentDotations();
+    rMiningPercentage_ = attr_->GetState();
+    nDotationType_ = attr_->GetDotationType();
 }

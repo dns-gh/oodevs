@@ -27,6 +27,7 @@
 #include "ADN_Tr.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_Composantes_Dotations_GUI.h"
+#include "ENT/ENT_Tr.h"
 
 #include <qframe.h>
 #include <qlabel.h>
@@ -281,6 +282,7 @@ void ADN_Objects_GUI::Build()
     {
         vInfosConnectors[ eProtectionCapacityPresent ] = & protection->GetConnector();
         builder.AddField< ADN_EditLine_Int >( protection, tr( "Max size" ), vInfosConnectors[ eProtectionCapacity_MaxSize ], tr( "agents" ) );
+        builder.SetValidator( new ADN_IntValidator( 1, INT_MAX, this ) );
         builder.AddField< ADN_CheckBox >( protection, tr( "Genie prepared" ), vInfosConnectors[ eProtectionCapacity_GeniePrepared ] );
     }
 
@@ -303,7 +305,7 @@ void ADN_Objects_GUI::Build()
     ADN_GroupBox* attitudeModifier = new ADN_GroupBox( 3, Qt::Horizontal, tr( ADN_Objects_Data::ADN_CapacityInfos_AttitudeModifier::DISPLAY_NAME.c_str() ), hBox );        
     {
         vInfosConnectors[ eAttitudeModifierCapacityPresent ] = & attitudeModifier->GetConnector();
-        builder.AddField<ADN_EditLine_String>( attitudeModifier, tr( "Attitude" ), vInfosConnectors[eAttitude] );
+        builder.AddEnumField< E_PopulationAttitude >( attitudeModifier, tr( "Attitude" ), vInfosConnectors[eAttitude], ENT_Tr::ConvertFromPopulationAttitude );
     }
 
     ADN_GroupBox* perception = new ADN_GroupBox( 3, Qt::Horizontal, tr( ADN_Objects_Data::ADN_CapacityInfos_Perception::DISPLAY_NAME.c_str() ), hBox );        
@@ -316,6 +318,7 @@ void ADN_Objects_GUI::Build()
     {
         vInfosConnectors[ eScatteringCapacityPresent ] = & scattering->GetConnector();
         builder.AddField<ADN_EditLine_Int>( scattering, tr( "Nombre d'humain par pas de simulation" ), vInfosConnectors[eHumanByTimeStep] );
+        builder.SetValidator( new ADN_IntValidator( 1, INT_MAX, this ) );
     }
 
     // Connect the list to the interface.

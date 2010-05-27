@@ -93,6 +93,7 @@ public:
     //! @name Accessors
     //@{
     const T_NBCAgents&  GetNBCAgents() const;
+    unsigned int        GetDangerLevel() const;
     bool                IsContaminating() const;
     bool                IsPoisonous() const;
     //@}

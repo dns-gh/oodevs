@@ -476,14 +476,12 @@ ADN_Objects_Data::ADN_CapacityInfos_Contamination::ADN_CapacityInfos_Contaminati
 void ADN_Objects_Data::ADN_CapacityInfos_Contamination::ReadArchive( xml::xistream& xis )
 {
 	ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
-	xis >> xml::attribute( "type", type_ ) 
-        >> xml::attribute( "max-toxic", max_toxic_ );
+	xis >> xml::attribute( "max-toxic", max_toxic_ );
 }
 
 void ADN_Objects_Data::ADN_CapacityInfos_Contamination::WriteArchive( xml::xostream& xos )
 {
-	xos << xml::attribute( "type", type_ )
-        << xml::attribute( "max-toxic", max_toxic_ );
+	xos << xml::attribute( "max-toxic", max_toxic_ );
 }
 //@}
 
@@ -519,14 +517,12 @@ ADN_Objects_Data::ADN_CapacityInfos_Intoxication::ADN_CapacityInfos_Intoxication
 void ADN_Objects_Data::ADN_CapacityInfos_Intoxication::ReadArchive( xml::xistream& xis )
 {
 	ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
-	xis >> xml::attribute( "type", type_ ) 
-        >> xml::attribute( "max-toxic", max_toxic_ );
+	xis >> xml::attribute( "max-toxic", max_toxic_ );
 }
 
 void ADN_Objects_Data::ADN_CapacityInfos_Intoxication::WriteArchive( xml::xostream& xos )
 {
-	xos << xml::attribute( "type", type_ )
-        << xml::attribute( "max-toxic", max_toxic_ );
+	xos << xml::attribute( "max-toxic", max_toxic_ );
 }
 //@}
 
@@ -593,7 +589,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Propagation::WriteArchive( xml::xostrea
 // Created: JCR 2008-08-20
 // -----------------------------------------------------------------------------
 ADN_Objects_Data::ADN_CapacityInfos_Protection::ADN_CapacityInfos_Protection()
-    : max_size_( 0 )
+    : max_size_( 1 )
     , geniePrepared_( false )
 {
     max_size_.SetParentNode( *this );
@@ -915,6 +911,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Spawn::WriteArchive( xml::xostream& out
 // Created: MGD 2010-03-19
 // -----------------------------------------------------------------------------
 ADN_Objects_Data::ADN_CapacityInfos_AttitudeModifier::ADN_CapacityInfos_AttitudeModifier()
+    : attitude_( ePopulationAttitude_Calme )
 {
 }
 
@@ -925,7 +922,11 @@ ADN_Objects_Data::ADN_CapacityInfos_AttitudeModifier::ADN_CapacityInfos_Attitude
 void ADN_Objects_Data::ADN_CapacityInfos_AttitudeModifier::ReadArchive( xml::xistream& input )
 {
     bPresent_ = true;
-    input >> xml::attribute( "attitude", attitude_ );
+    std::string strAttitude;
+    input >> xml::attribute( "attitude", strAttitude );
+    attitude_ = ENT_Tr::ConvertToPopulationAttitude( strAttitude );
+    if( attitude_ == (E_PopulationAttitude)-1 )
+        throw ADN_DataException( "Invalid data", tr( "Population types - Invalid population attitude '%1'" ).arg( strAttitude.c_str() ).ascii() );
 }
 
 // -----------------------------------------------------------------------------
@@ -934,7 +935,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_AttitudeModifier::ReadArchive( xml::xis
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ADN_CapacityInfos_AttitudeModifier::WriteArchive( xml::xostream& output )
 {
-    output << xml::attribute( "attitude", attitude_ );
+    output << xml::attribute( "attitude", ENT_Tr::ConvertFromPopulationAttitude( attitude_.GetData() ) );
 }
 //@}
 
@@ -977,7 +978,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Perception::WriteArchive( xml::xostream
 // Created: MGD 2010-03-19
 // -----------------------------------------------------------------------------
 ADN_Objects_Data::ADN_CapacityInfos_Scattering::ADN_CapacityInfos_Scattering()
-: humanByTimeStep_( 0 )
+: humanByTimeStep_( 1 )
 {
 }
 

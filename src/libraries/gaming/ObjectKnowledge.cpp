@@ -74,14 +74,14 @@ void ObjectKnowledge::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate&
 // -----------------------------------------------------------------------------
 void ObjectKnowledge::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( tools::translate( "Object", "Details" ) )
+    displayer.Group( tools::translate( "Object", "Information" ) )
                 .Display( tools::translate( "Object", "Identifier:" ), id_ )
                 .Display( tools::translate( "Object", "Associated object:" ), pRealObject_ )
                 .Display( tools::translate( "Object", "Type:" ), type_ )
                 .Display( tools::translate( "Object", "Perceived:" ), bIsPerceived_ )
                 .Display( tools::translate( "Object", "Relevance:" ), nRelevance_ );
     if( ! position_.empty() )
-        displayer.Group( tools::translate( "Object", "Details" ) )
+        displayer.Group( tools::translate( "Object", "Information" ) )
                  .Display( tools::translate( "Object", "Location:" ), position_ );
 
 }

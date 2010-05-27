@@ -26,8 +26,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( IntoxicationCapacity )
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
 IntoxicationCapacity::IntoxicationCapacity( xml::xistream& xis )
-    : type_ ( xml::attribute< std::string >( xis, "type" ) )
-    , maxToxic_ ( xml::attribute< int >( xis, "max-toxic" ) )
+    : maxToxic_ ( xml::attribute< int >( xis, "max-toxic" ) )
 {
     // NOTHING
 }
@@ -47,8 +46,7 @@ IntoxicationCapacity::IntoxicationCapacity()
 // Created: JCR 2008-06-13
 // -----------------------------------------------------------------------------
 IntoxicationCapacity::IntoxicationCapacity( const IntoxicationCapacity& from )
-    : type_( from.type_ )
-    , maxToxic_( from.maxToxic_ )
+    : maxToxic_( from.maxToxic_ )
 {
     // NOTHING
 }
@@ -71,7 +69,6 @@ void IntoxicationCapacity::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
          & boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this )
-         & type_
          & maxToxic_;
 }
 

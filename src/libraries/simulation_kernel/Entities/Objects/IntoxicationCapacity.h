@@ -50,7 +50,6 @@ private:
 private:
     //! @name Member data
     //@{
-    std::string type_;
     int         maxToxic_;
     //@}
 };

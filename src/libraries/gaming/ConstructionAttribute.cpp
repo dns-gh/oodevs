@@ -49,12 +49,12 @@ void ConstructionAttribute::Display( kernel::Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "Object", "Information" ) )
              .Display( tools::translate( "Object", "Construction:" ), rConstructionPercentage_ * Units::percentage ); 
-//    if ( !construction_ )
-//        return;
-//    displayer.Group( tools::translate( "Object", "Information" ) )
-//             .Item( tools::translate( "Object", "Construction dotation:" ) )
-//                .Start( nDotationConstruction_ )
-//                .Add( " " ).Add( construction_ ).End(); // $$$ AGE 2006-02-22: End devrait renvoyer le parent
+    if ( !construction_ )
+        return;
+    displayer.Group( tools::translate( "Object", "Information" ) )
+             .Item( tools::translate( "Object", "Construction dotation:" ) )
+                .Start( nDotationConstruction_ )
+                .Add( " " ).Add( construction_ ).End();
 }
 
 // -----------------------------------------------------------------------------
@@ -112,7 +112,7 @@ void ConstructionAttribute::UpdateData( const T& message )
     if( message.has_construction()  )
     {
         if( ! construction_ && message.construction().has_dotation_type()  )
-            construction_ = & resolver_.Get( message.construction().dotation_type() );
+            construction_ = resolver_.Find( message.construction().dotation_type() );
         if ( message.construction().has_dotation_nbr()  )
             nDotationConstruction_ = message.construction().dotation_nbr();
         if ( message.construction().has_percentage()  )

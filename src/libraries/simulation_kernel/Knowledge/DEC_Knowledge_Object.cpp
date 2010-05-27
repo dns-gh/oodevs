@@ -20,6 +20,7 @@
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/AvoidanceCapacity.h"
 #include "Entities/Objects/ActivableCapacity.h"
+#include "Entities/Objects/ContaminationCapacity.h"
 
 #include "Entities/Automates/MIL_Automate.h"
 
@@ -557,10 +558,13 @@ void DEC_Knowledge_Object::BuildMsgCurrentPerceptionLevel( MsgsSimToClient::MsgO
 void DEC_Knowledge_Object::BuildMsgAttributes( MsgsSimToClient::MsgObjectKnowledgeUpdate& asn ) const
 {
     assert( pObjectType_ );
+    asn.mutable_attributes();
     if( *pMaxPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ )
         UpdateAttributes( attributes_, 
                       boost::bind( &DEC_Knowledge_ObjectAttribute_ABC::Send, _1, boost::ref( *asn.mutable_attributes() ) ) );
-    
+
+    if( pObjectType_ && pObjectType_->GetCapacity< ContaminationCapacity >() && !IsRecon() && asn.attributes().has_nbc() )
+        asn.mutable_attributes()->mutable_nbc()->set_danger_level( -1 );
 }
 
 // -----------------------------------------------------------------------------
@@ -624,7 +628,10 @@ void DEC_Knowledge_Object::SendMsgCreation() const
     asn().set_type( pObjectType_->GetName().c_str() );
 
     std::for_each( attributes_.begin(), attributes_.end(), 
-        boost::bind( &DEC_Knowledge_ObjectAttribute_ABC::Send, _1, *asn().mutable_attributes() ) );
+        boost::bind( &DEC_Knowledge_ObjectAttribute_ABC::Send, _1, boost::ref( *asn().mutable_attributes() ) ) );
+
+    if( pObjectType_ && pObjectType_->GetCapacity< ContaminationCapacity >() && !IsRecon() && asn().mutable_attributes()->has_nbc() )
+        asn().mutable_attributes()->mutable_nbc()->set_danger_level( -1 );
 
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
@@ -678,6 +685,8 @@ MT_Float DEC_Knowledge_Object::GetMaxInteractionHeight() const
 void DEC_Knowledge_Object::Recon( const MIL_Agent_ABC& agent )
 {
     reconByAgentTypes_.insert( &agent.GetType() );
+    NotifyAttributeUpdated( eAttr_Specific );
+    UpdateOnNetwork();
 }
 
 // -----------------------------------------------------------------------------

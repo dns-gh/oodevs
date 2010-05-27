@@ -13,7 +13,6 @@
 #define __DEC_Knowledge_ObjectAttributeLogistic_h_
 
 #include "DEC_Knowledge_ObjectAttribute_ABC.h"
-#include "DEC_Knowledge_ObjectAttributeUpdatable_ABC.h"
 #include <boost/serialization/export.hpp>
 
 class LogisticAttribute;
@@ -24,7 +23,6 @@ class MIL_AutomateLOG;
 // Created: NLD 2004-05-04
 // =============================================================================
 class DEC_Knowledge_ObjectAttributeLogistic : public DEC_Knowledge_ObjectAttribute_ABC
-                                            , private DEC_Knowledge_ObjectAttributeUpdatable_ABC
 {
 
 public:

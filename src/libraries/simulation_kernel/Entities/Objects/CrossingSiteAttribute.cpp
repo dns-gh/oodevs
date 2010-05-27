@@ -133,9 +133,9 @@ void CrossingSiteAttribute::Register( Object& object ) const
 // -----------------------------------------------------------------------------
 void CrossingSiteAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
 {
-    asn.mutable_crossing_site()->set_width( rWidth_ );
-    asn.mutable_crossing_site()->set_depth( rDepth_ );
-    asn.mutable_crossing_site()->set_flow_rate( rCurrentSpeed_ );
+    asn.mutable_crossing_site()->set_width( int( rWidth_ ) );
+    asn.mutable_crossing_site()->set_depth( int( rDepth_ ) );
+    asn.mutable_crossing_site()->set_flow_rate( int(  rCurrentSpeed_ ) );
     asn.mutable_crossing_site()->set_banks_require_fitting( bBanksToFitOut_ );
 }
 

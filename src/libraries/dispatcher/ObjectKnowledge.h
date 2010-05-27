@@ -118,6 +118,7 @@ private:
     //! @name Types
     //@{   
     typedef boost::ptr_vector< ObjectAttribute_ABC > T_ObjectAttributes;
+    typedef T_ObjectAttributes::const_iterator      CIT_ObjectAttributes;
     //@}
 
 private:

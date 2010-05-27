@@ -25,6 +25,7 @@ DEC_Knowledge_ObjectAttributeConstruction::DEC_Knowledge_ObjectAttributeConstruc
     : attr_ ( 0 )    
     , rConstructionPercentage_ ( 0. )
     , nNbrDotation_ ( 0 )
+    , nDotationType_ ( 0 )
 {
     // NOTHING
 }
@@ -37,6 +38,7 @@ DEC_Knowledge_ObjectAttributeConstruction::DEC_Knowledge_ObjectAttributeConstruc
     : attr_ ( &attr )
     , rConstructionPercentage_ ( 0. )
     , nNbrDotation_ ( 0 )
+    , nDotationType_ ( 0 )
 {
     // NOTHING
 }
@@ -62,10 +64,11 @@ template< typename Archive >
 void DEC_Knowledge_ObjectAttributeConstruction::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< DEC_Knowledge_ObjectAttribute_ABC >( *this );
-//    file & boost::serialization::base_object< DEC_Knowledge_ObjectAttributeUpdatable_ABC >( *this );
     file & const_cast< ConstructionAttribute*& >( attr_ )
          & rConstructionPercentage_
-         & nNbrDotation_;
+         & nNbrDotation_
+         & nDotationType_;
+        
 }
 
 // -----------------------------------------------------------------------------
@@ -110,12 +113,9 @@ void DEC_Knowledge_ObjectAttributeConstruction::UpdateOnCollision( const DEC_Kno
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeConstruction::Send( Common::MsgObjectAttributes& asn ) const
 {
-    if( NeedUpdate() )
-    {
-        asn.mutable_construction()->set_percentage( rConstructionPercentage_ );
-        asn.mutable_construction()->set_dotation_nbr( nNbrDotation_ );
-        Reset();
-    }
+    asn.mutable_construction()->set_percentage( int( rConstructionPercentage_ * 100) );
+    asn.mutable_construction()->set_dotation_nbr( nNbrDotation_ );
+    asn.mutable_construction()->set_dotation_type( nDotationType_ );
 }
 
 // =============================================================================
@@ -128,7 +128,7 @@ void DEC_Knowledge_ObjectAttributeConstruction::Send( Common::MsgObjectAttribute
 // -----------------------------------------------------------------------------
 bool DEC_Knowledge_ObjectAttributeConstruction::IsConstructed() const
 {
-    return rConstructionPercentage_ >= 100;
+    return rConstructionPercentage_ >= 1.;
 }
 
 // -----------------------------------------------------------------------------
@@ -140,15 +140,7 @@ void DEC_Knowledge_ObjectAttributeConstruction::UpdateAttributes( /*const MIL_Kn
     if( ! attr_ )
         return;
        
-//    if( attr_GetNbrDotationForMining() != nNbrDotationForMining_ )
-//    {
-//        nNbrDotationForMining_ = pObjectKnown_->GetNbrDotationForMining();
-//        NotifyAttributeUpdated( eAttr_Dotations );
-//    }
-//    
-    if( attr_->GetState() != rConstructionPercentage_ )
-    {
-        rConstructionPercentage_ = attr_->GetState();
-        NotifyAttributeUpdated( eOnUpdate );
-    }
+    nNbrDotation_ = attr_->GetCurrentDotation();
+    rConstructionPercentage_ = attr_->GetState();
+    nDotationType_ = attr_->GetDotationType();
 }

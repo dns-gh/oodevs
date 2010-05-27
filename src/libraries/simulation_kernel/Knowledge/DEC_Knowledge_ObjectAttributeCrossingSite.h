@@ -13,7 +13,6 @@
 #define __DEC_Knowledge_ObjectAttributeCrossingSite_h_
 
 #include "DEC_Knowledge_ObjectAttribute_ABC.h"
-#include "DEC_Knowledge_ObjectAttributeUpdatable_ABC.h"
 #include <boost/serialization/export.hpp>
 
 class CrossingSiteAttribute;
@@ -22,7 +21,6 @@ class CrossingSiteAttribute;
 // Created: NLD 2004-05-04
 // =============================================================================
 class DEC_Knowledge_ObjectAttributeCrossingSite : public DEC_Knowledge_ObjectAttribute_ABC
-                                                , private DEC_Knowledge_ObjectAttributeUpdatable_ABC
 {
 
 public:
@@ -50,7 +48,7 @@ public:
     //! @name 
     //@{
     bool    IsBanksToFitOut() const;
-    float   GetWidth() const;
+    MT_Float   GetWidth() const;
     //@}
 
 private:
@@ -63,9 +61,9 @@ private:
     //! @name Data Members
     //@{   
     const CrossingSiteAttribute* attr_;
-    float rWidth_;
-    float rDepth_;
-    float rCurrentSpeed_;  // Vitesse du courant
+    MT_Float rWidth_;
+    MT_Float rDepth_;
+    MT_Float rCurrentSpeed_;  // Vitesse du courant
     bool  bBanksToFitOut_; // Berges a amenager
     //@}
 };

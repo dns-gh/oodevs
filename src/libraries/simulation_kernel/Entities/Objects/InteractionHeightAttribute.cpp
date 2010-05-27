@@ -91,7 +91,7 @@ void InteractionHeightAttribute::Register( Object& object ) const
 // -----------------------------------------------------------------------------
 void InteractionHeightAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
 {
-    asn.mutable_interaction_height()->set_height( height_ );
+    asn.mutable_interaction_height()->set_height( float( height_ ) );
 }
 
 // -----------------------------------------------------------------------------

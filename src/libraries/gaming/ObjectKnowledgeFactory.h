@@ -50,6 +50,7 @@ public:
     //! @name Operations
     //@{
     virtual kernel::ObjectKnowledge_ABC* Create( const kernel::Entity_ABC& owner, const MsgsSimToClient::MsgObjectKnowledgeCreation& message );
+    void Register( kernel::ObjectKnowledge_ABC& knowledge, const Common::MsgObjectAttributes& attributes ) const;
     //@}
 
 private:
@@ -57,11 +58,6 @@ private:
     //@{
     ObjectKnowledgeFactory( const ObjectKnowledgeFactory& );            //!< Copy constructor
     ObjectKnowledgeFactory& operator=( const ObjectKnowledgeFactory& ); //!< Assignement operator
-    //@}
-
-    //! @name 
-    //@{
-    void Register( kernel::ObjectKnowledge_ABC& knowledge, const Common::MsgObjectAttributes& attributes ) const;
     //@}
 
 private:

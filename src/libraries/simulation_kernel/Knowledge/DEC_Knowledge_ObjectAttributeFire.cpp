@@ -102,12 +102,11 @@ void DEC_Knowledge_ObjectAttributeFire::Register( DEC_Knowledge_Object& knObject
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeFire::UpdateAttributes()
 {
-    if ( attr_ )
-    {
-        if ( !pFireClass_ )
-            pFireClass_ = & attr_->GetClass();
-        heat_ = attr_->GetHeat();
-    }
+    if ( !attr_ )
+        return;
+
+    pFireClass_ = & attr_->GetClass();
+    heat_ = attr_->GetHeat();
 }
 
 // -----------------------------------------------------------------------------
@@ -143,9 +142,6 @@ void DEC_Knowledge_ObjectAttributeFire::UpdateOnCollision( const DEC_Knowledge_O
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeFire::Send( Common::MsgObjectAttributes& asn ) const
 {
-    if ( pFireClass_ )
-    {
-        asn.mutable_fire()->set_class_id( pFireClass_->GetID() );
-        asn.mutable_fire()->set_heat( heat_ );
-    }
+    asn.mutable_fire()->set_class_id( pFireClass_? pFireClass_->GetID() : -1 );
+    asn.mutable_fire()->set_heat( heat_ );
 }

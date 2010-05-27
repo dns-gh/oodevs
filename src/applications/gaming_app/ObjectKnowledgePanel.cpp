@@ -39,13 +39,15 @@ ObjectKnowledgePanel::ObjectKnowledgePanel( QWidget* parent, PanelStack_ABC& pan
     pKnowledgeListView_->AddColumn( tr( "Known objects" ) );
 
     display_ = new DisplayBuilder( this, factory );
-    display_->AddGroup( tr( "Details" ) )
+    display_->AddGroup( tr( "Information" ) )
                 .AddLabel( tr( "Identifier:" ) )
                 .AddLabel( tr( "Associated object:" ) )
                 .AddLabel( tr( "Location:" ) )
                 .AddLabel( tr( "Type:" ) )
                 .AddLabel( tr( "Construction:" ) )
+                .AddLabel( tr( "Construction dotation:" ) )
                 .AddLabel( tr( "Mining:" ) )
+                .AddLabel( tr( "Development dotation:" ) )
                 .AddLabel( tr( "Bypass:" ) )
                 .AddLabel( tr( "Obstacle type:" ) )
                 .AddLabel( tr( "Reserved obstacle activated:" ) )
@@ -76,6 +78,10 @@ ObjectKnowledgePanel::ObjectKnowledgePanel( QWidget* parent, PanelStack_ABC& pan
     display_->AddGroup( tr( "Mine parameters" ) )
                 .AddLabel( tr( "Activity time:" ) )
                 .AddLabel( tr( "Density:" ) );
+
+    display_->AddGroup( tr( "Fire" ) )
+                .AddLabel( tr( "Fire class:" ) )
+                .AddLabel( tr( "Fire temperature:" ) );
 
     pPerceptionListView_ = new ListDisplayer< ObjectKnowledgePanel >( this, *this, factory );
     pPerceptionListView_->AddColumn( tr( "Agent" ) );

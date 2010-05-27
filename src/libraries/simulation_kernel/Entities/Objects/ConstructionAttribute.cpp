@@ -41,7 +41,7 @@ ConstructionAttribute::ConstructionAttribute()
 // -----------------------------------------------------------------------------
 ConstructionAttribute::ConstructionAttribute( const PHY_DotationCategory& dotation, unsigned int nFullNbrDotation )
     : nFullNbrDotation_( nFullNbrDotation )
-    , nCurrentNbrDotation_( 0 )
+    , nCurrentNbrDotation_( nFullNbrDotation )
     , rConstructionPercentage_( 1.0 )
     , dotation_( &dotation )
     , bBuildByGen_( false )
@@ -237,6 +237,24 @@ bool ConstructionAttribute::HasDotation( const PHY_DotationCategory& dotation ) 
 unsigned int ConstructionAttribute::GetMaxDotation() const
 {
     return nFullNbrDotation_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ConstructionAttribute::GetCurrentDotation
+// Created: JSR 2010-05-27
+// -----------------------------------------------------------------------------
+unsigned int ConstructionAttribute::GetCurrentDotation() const
+{
+    return nCurrentNbrDotation_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ConstructionAttribute::GetDotationType
+// Created: JSR 2010-05-25
+// -----------------------------------------------------------------------------
+unsigned int ConstructionAttribute::GetDotationType() const
+{
+    return dotation_ ? dotation_->GetMosID() : 0;
 }
 
 // -----------------------------------------------------------------------------

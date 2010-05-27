@@ -49,8 +49,9 @@ void NBCAttribute::UpdateData( const T& message )
 
         for( int i = 0; i < message.nbc().nbc_agents().elem_size(); ++i )
             agents_[ i ] = & resolver_.Get( message.nbc().nbc_agents().elem( i ) );
-        controller_.Update( *(NBCAttribute_ABC*)this );
         danger_ = message.nbc().danger_level();
+
+        controller_.Update( *(NBCAttribute_ABC*)this );
     }
 }
 
@@ -87,9 +88,15 @@ void NBCAttribute::DoUpdate( const MsgsSimToClient::MsgObjectCreation& message )
 // -----------------------------------------------------------------------------
 void NBCAttribute::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( tools::translate( "NBC", "NBC" ) )
+    if( danger_ == -1 )
+        displayer.Group( tools::translate( "NBC", "NBC" ) )
+             .Display( tools::translate( "NBC", "Danger:" ), "-" )
+             .Display( tools::translate( "NBC", "NBC agent(s):" ), "-" );
+    else
+        displayer.Group( tools::translate( "NBC", "NBC" ) )
              .Display( tools::translate( "NBC", "Danger:" ), danger_ )
              .Display( tools::translate( "NBC", "NBC agent(s):" ), agents_ );
+
 }
 
 // -----------------------------------------------------------------------------

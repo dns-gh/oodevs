@@ -450,24 +450,23 @@ void Object::SendMsgUpdate() const
                    boost::bind( &ObjectAttribute_ABC::SendUpdate, _1, boost::ref( *asn().mutable_attributes() ) ) );
 
     if( xAttrToUpdate_ & eAttrUpdate_Localisation )
-    {
-//        asn.set_locationPresent( 1 );
         NET_ASN_Tools::WriteLocation( GetLocalisation(), *asn().mutable_location() );
-    }
-        
-    unsigned int xAttr = *reinterpret_cast< unsigned int * >( asn().mutable_attributes() );
-             xAttr <<= 20; // $$$$ 32bits - 1bit / attribute 
+    
+    Common::MsgObjectAttributes& attr = *asn().mutable_attributes();
 
-    if ( xAttr != 0 || asn().has_location() )
+    if ( asn().has_location() || attr.has_construction() || attr.has_obstacle() 
+        || attr.has_mine() || attr.has_activity_time() || attr.has_bypass() 
+        || attr.has_logistic() || attr.has_nbc() || attr.has_crossing_site()
+        || attr.has_supply_route() || attr.has_toxic_cloud() || attr.has_fire()
+        || attr.has_medical_treatment() || attr.has_interaction_height() || attr.has_stock()
+        || attr.has_nbc_agent() )
         asn.Send( NET_Publisher_ABC::Publisher() );
     
     xAttrToUpdate_ = 0;
 
     if( asn().has_location() )
-    {
-        asn().mutable_location()->mutable_coordinates()->Clear();
         asn().mutable_location()->Clear();
-    }
+    asn().mutable_attributes()->Clear();
 }
 
 // -----------------------------------------------------------------------------

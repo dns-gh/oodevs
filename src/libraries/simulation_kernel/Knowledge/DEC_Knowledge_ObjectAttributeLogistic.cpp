@@ -84,11 +84,10 @@ void DEC_Knowledge_ObjectAttributeLogistic::Register( DEC_Knowledge_Object& knOb
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeLogistic::UpdateAttributes()
 {
-    if ( attr_ )
-    {
-        pTC2_ = & attr_->GetTC2();
-        NotifyAttributeUpdated( eOnUpdate );
-    }
+    if ( !attr_ )
+        return;
+
+    pTC2_ = & attr_->GetTC2();
 }
 
 // -----------------------------------------------------------------------------
@@ -124,9 +123,5 @@ void DEC_Knowledge_ObjectAttributeLogistic::UpdateOnCollision( const DEC_Knowled
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeLogistic::Send( Common::MsgObjectAttributes& asn ) const
 {
-    if ( NeedUpdate() )
-    {
-        asn.mutable_logistic()->set_tc2( pTC2_->GetID() );
-        Reset();
-    }
+    asn.mutable_logistic()->set_tc2( pTC2_->GetID() );
 }

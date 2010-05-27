@@ -53,9 +53,9 @@ void MineAttribute::Display( kernel::Displayer_ABC& displayer ) const
              .Item( tools::translate( "Object", "Development dotation:" ) )
                 .Start( nDotationValorization_ )
                 .Add( " " ).Add( valorization_ ).End();
-//    if( density_.IsSet() )
-//        displayer.Group( tools::translate( "Object", "Mine parameters" ) )
-//                 .Display( tools::translate( "Object", "Denstity:" ), density_ * Units::minesPerMeter );
+    if( density_.IsSet() )
+        displayer.Group( tools::translate( "Object", "Mine parameters" ) )
+                 .Display( tools::translate( "Object", "Density:" ), density_ * Units::minesPerMeter );
 }
 
 // -----------------------------------------------------------------------------
@@ -115,7 +115,7 @@ void MineAttribute::UpdateData( const T& message )
     if ( message.has_mine()  )
     {
         if( ! valorization_ && message.mine().has_dotation_type()  )
-            valorization_ = & resolver_.Get( message.mine().dotation_type() );
+            valorization_ = resolver_.Find( message.mine().dotation_type() );
 
         if ( message.mine().has_dotation_nbr()  )
             nDotationValorization_ = message.mine().dotation_nbr();

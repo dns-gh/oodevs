@@ -94,7 +94,7 @@ void MedicalTreatmentAttribute::InitializePatientDiagnosisList( int occupiedBeds
 {
     IT_MedicalTreatmentMap it           = medicalTreatmentMap_.begin();
     IT_PatientDiagnosisList iter        = it->second->begin();
-    float time = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    float time = float( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() );
 
     for( int i = 0 ; i < occupiedDoctors ; i++ )
     {
@@ -203,7 +203,6 @@ void MedicalTreatmentAttribute::Register( Object& object ) const
 // -----------------------------------------------------------------------------
 void MedicalTreatmentAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
 {
-    int i = 0; //i is used to fill elem
     asn.mutable_medical_treatment()->set_available_beds    ( availableBeds_ );
     asn.mutable_medical_treatment()->set_available_doctors ( availableDoctors_ );
     asn.mutable_medical_treatment()->set_beds              ( beds_ );

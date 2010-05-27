@@ -73,36 +73,36 @@ kernel::ObjectKnowledge_ABC* ObjectKnowledgeFactory::Create( const kernel::Entit
 // -----------------------------------------------------------------------------
 void ObjectKnowledgeFactory::Register( kernel::ObjectKnowledge_ABC& knowledge, const Common::MsgObjectAttributes& attributes ) const
 {
-    if ( attributes.has_logistic()  )
+    if ( attributes.has_logistic() && knowledge.Retrieve< kernel::LogisticAttribute_ABC >() == 0 )
         knowledge.Attach< kernel::LogisticAttribute_ABC >( *new LogisticAttribute( controllers_.controller_, model_.agents_ ) );    
     
-    if ( attributes.has_construction()  )
+    if ( attributes.has_construction() && knowledge.Retrieve< kernel::ConstructionAttribute_ABC >() == 0 )
         knowledge.Attach< kernel::ConstructionAttribute_ABC >( *new ConstructionAttribute( controllers_.controller_, static_.objectTypes_ ) );
     
-    if ( attributes.has_mine()  )
+    if ( attributes.has_mine() && knowledge.Retrieve< kernel::MineAttribute_ABC >() == 0 )
         knowledge.Attach< kernel::MineAttribute_ABC >( *new MineAttribute( controllers_.controller_, static_.objectTypes_ ) );
     
-    if ( attributes.has_bypass()  )
+    if ( attributes.has_bypass() && knowledge.Retrieve< kernel::BypassAttribute_ABC >() == 0 )
         knowledge.Attach< kernel::BypassAttribute_ABC >( *new BypassAttribute( controllers_.controller_ ) );
     
-    if ( attributes.has_obstacle()  )
+    if ( attributes.has_obstacle() && knowledge.Retrieve< kernel::ObstacleAttribute_ABC >() == 0 )
         knowledge.Attach< kernel::ObstacleAttribute_ABC >( *new ObstacleAttribute( controllers_.controller_ ) );
 
-    if ( attributes.has_activity_time()  )
+    if ( attributes.has_activity_time() && knowledge.Retrieve< kernel::ActivityTimeAttribute_ABC >() == 0 )
         knowledge.Attach< kernel::ActivityTimeAttribute_ABC >( *new ActivityTimeAttribute( controllers_.controller_ ) );
     
-    if ( attributes.has_crossing_site()  )
+    if ( attributes.has_crossing_site() && knowledge.Retrieve< kernel::CrossingSiteAttribute_ABC >() == 0 )
         knowledge.Attach< kernel::CrossingSiteAttribute_ABC >( *new CrossingSiteAttribute( controllers_.controller_ ) );
     
-    if ( attributes.has_supply_route()  )
+    if ( attributes.has_supply_route() && knowledge.Retrieve< kernel::SupplyRouteAttribute_ABC >() == 0 )
         knowledge.Attach< kernel::SupplyRouteAttribute_ABC >( *new SupplyRouteAttribute( controllers_.controller_ ) );    
     
-    if ( attributes.has_nbc()  )
+    if ( attributes.has_nbc() && knowledge.Retrieve< kernel::NBCAttribute_ABC >() == 0 )
         knowledge.Attach< kernel::NBCAttribute_ABC >( *new NBCAttribute( controllers_.controller_, static_.objectTypes_ ) );
 
-    if( attributes.has_fire()  )
+    if( attributes.has_fire() && knowledge.Retrieve< kernel::FireAttribute_ABC >() == 0 )
         knowledge.Attach< kernel::FireAttribute_ABC >( *new FireAttribute( controllers_.controller_, static_.objectTypes_ ) );
 
-    if( attributes.has_medical_treatment()  )
+    if( attributes.has_medical_treatment() && knowledge.Retrieve< kernel::MedicalTreatmentAttribute_ABC >() == 0 )
         knowledge.Attach< kernel::MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( controllers_.controller_, static_.objectTypes_ ) );
 }
