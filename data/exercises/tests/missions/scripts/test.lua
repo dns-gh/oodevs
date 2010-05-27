@@ -14,13 +14,14 @@ function Start()
     local eventTable =
     {
         {
-            events:Once(),
-            {},
-            function()
+            events.sim:ClientConnected(),
+            { },
+            function( client, profile )
+                if profile ~= "test" then return end
                 ChangeState( "startup" )
             end
         },
-
+        
         {
             events.sim:TickEnded(),
             { "startup" },

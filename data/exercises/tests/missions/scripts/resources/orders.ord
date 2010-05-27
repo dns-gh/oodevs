@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="destroy_all" name="Magic" target="8" time="2007-10-12T12:09:20" type="magicunit"/>
+</actions>

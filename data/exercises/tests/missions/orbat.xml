@@ -5,7 +5,11 @@
     <side id="1" name="red" type="enemy">
       <objects/>
       <tactical>
-        <formation id="2" level="x" name="Formation [2]"/>
+        <formation id="2" level="x" name="Formation [2]">
+          <automat engaged="true" id="9" knowledge-group="3" name="Escadron Blinde AMX 10 RC [9]" type="Escadron Blinde AMX 10 RC">
+            <unit command-post="true" id="11" name="Peloton AMX 10 RC CDP OFF" position="31UDQ8671643828" type="Peloton AMX 10 RC CDP OFF"/>
+          </automat>
+        </formation>
       </tactical>
       <communication>
         <knowledge-group id="3" name="Knowledge group [3]" type="Standard"/>
