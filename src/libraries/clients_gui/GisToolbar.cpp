@@ -12,6 +12,7 @@
 #include "moc_GisToolbar.cpp"
 #include "ColorButton.h"
 #include "TerrainProfiler.h"
+#include "Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/Options.h"
@@ -39,23 +40,23 @@ GisToolbar::GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, c
     , detection_( detection )
     , terrainProfiler_( new TerrainProfiler( parent, controllers, detection, layer ) )
 {
-    setLabel( tr( "GIS tools" ) );
+    setLabel( tools::translate( "GisToolBar", "GIS tools" ) );
     {
         QHBox* box = new QHBox( this );
-        enabled_ = new QCheckBox( tr( "Watershed" ), box );
-        QToolTip::add( enabled_, tr( "Enable/disable watershed display" ) );
+        enabled_ = new QCheckBox( tools::translate( "GisToolBar", "Watershed" ), box );
+        QToolTip::add( enabled_, tools::translate( "GisToolBar", "Enable/disable watershed display" ) );
         mode_ = new QComboBox( box );
-        mode_->insertItem( tr( "<" ) );
-        mode_->insertItem( tr( ">" ) );
+        mode_->insertItem( tools::translate( "GisToolBar", "<" ) );
+        mode_->insertItem( tools::translate( "GisToolBar", ">" ) );
         mode_->setMaximumWidth( 30 );
-        QToolTip::add( mode_, tr( "Display water below or above specified height" ) );
+        QToolTip::add( mode_, tools::translate( "GisToolBar", "Display water below or above specified height" ) );
         height_ = new QSpinBox( 0, 10000, 1, box );
         height_->setSuffix( kernel::Units::meters.AsString() );
         height_->setEnabled( false );
-        QToolTip::add( height_, tr( "Set water height limit" ) );
+        QToolTip::add( height_, tools::translate( "GisToolBar", "Set water height limit" ) );
         color_ = new ColorButton( this );
         color_->SetColor( QColor( 20, 164, 218 ) ); // $$$$ SBO 2010-03-23: default from layer
-        QToolTip::add( color_, tr( "Change watershed color" ) );
+        QToolTip::add( color_, tools::translate( "GisToolBar", "Change watershed color" ) );
 
         connect( enabled_, SIGNAL( toggled( bool ) ), SLOT( OnToggleEnabled( bool ) ) );
         connect( mode_, SIGNAL( activated( int ) ), SLOT( OnModeChanged( int ) ) );
@@ -65,7 +66,7 @@ GisToolbar::GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, c
         addSeparator();
         QToolButton* button = new QToolButton( this );
         button->setIconSet( MakePixmap( "gis_terrainprofiler" ) );
-        QToolTip::add( button, tr( "Show terrain profiler tool" ) );
+        QToolTip::add( button, tools::translate( "GisToolBar", "Show terrain profiler tool" ) );
         button->setToggleButton( true );
         connect( button, SIGNAL( toggled( bool ) ), SLOT( OnToggleCut( bool ) ) );
         connect( terrainProfiler_, SIGNAL( visibilityChanged( bool ) ), button, SLOT( setOn( bool ) ) );

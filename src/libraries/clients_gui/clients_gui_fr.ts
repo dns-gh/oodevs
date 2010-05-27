@@ -153,7 +153,7 @@
     </message>
 </context>
 <context>
-    <name>GisToolbar</name>
+    <name>GisToolBar</name>
     <message>
         <source>GIS tools</source>
         <translation>Outils cartographiques</translation>
@@ -189,6 +189,45 @@
     <message>
         <source>Show terrain profiler tool</source>
         <translation>Affiche l&apos;outil de coupe de terrain</translation>
+    </message>
+</context>
+<context>
+    <name>GisToolbar</name>
+    <message>
+        <source>GIS tools</source>
+        <translation type="obsolete">Outils cartographiques</translation>
+    </message>
+    <message>
+        <source>Watershed</source>
+        <translation type="obsolete">Montée des eaux</translation>
+    </message>
+    <message>
+        <source>Enable/disable watershed display</source>
+        <translation type="obsolete">Active/désactive la montée des eaux</translation>
+    </message>
+    <message>
+        <source>&lt;</source>
+        <translation type="obsolete">&lt;</translation>
+    </message>
+    <message>
+        <source>&gt;</source>
+        <translation type="obsolete">&gt;</translation>
+    </message>
+    <message>
+        <source>Display water below or above specified height</source>
+        <translation type="obsolete">Affiche l&apos;eau au dessous ou au dessus de l&apos;altitude spécifiée</translation>
+    </message>
+    <message>
+        <source>Set water height limit</source>
+        <translation type="obsolete">Défini l&apos;altitude limite de l&apos;eau</translation>
+    </message>
+    <message>
+        <source>Change watershed color</source>
+        <translation type="obsolete">Change la couleur de l&apos;eau</translation>
+    </message>
+    <message>
+        <source>Show terrain profiler tool</source>
+        <translation type="obsolete">Affiche l&apos;outil de coupe de terrain</translation>
     </message>
 </context>
 <context>
