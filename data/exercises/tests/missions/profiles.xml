@@ -18,6 +18,15 @@
       </readwrite>
     </rights>
   </profile>
+  <profile name="triggers" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="4"/>
+        <side id="1"/>
+      </readwrite>
+    </rights>
+  </profile>
   <profile name="Evenement" password="" supervision="true">
     <rights>
       <readonly/>
