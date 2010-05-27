@@ -11,6 +11,11 @@
             <unit command-post="false" id="161" name="Section Test Capteur" position="30TYT1003954604" type="LTO Section Test Capteur"/>
             <unit command-post="false" id="171" name="Peloton aveugle" position="30TYT1003954944" type="LTO Peloton char aveugle"/>
           </automat>
+          <automat engaged="false" id="187" knowledge-group="158" name="Peloton RASIT ABC [187]" type="Peloton RASIT ABC">
+            <unit command-post="true" id="188" name="Groupe CDT RASIT" position="30TXT8352967289" type="Groupe CDT RASIT"/>
+            <unit command-post="false" id="189" name="Groupe RASIT ABC" position="30TXT8404766808" type="Groupe RASIT ABC"/>
+            <unit command-post="false" id="190" name="Groupe RASIT ABC" position="30TXT8365565716" type="Groupe RASIT ABC"/>
+          </automat>
         </formation>
         <formation id="173" level="i" name="Test Robot 173">
           <automat engaged="true" id="174" knowledge-group="158" name="Terroristes [174]" type="Terroristes">
@@ -44,13 +49,34 @@
       <populations/>
       <logistic/>
     </side>
+    <side id="176" name="Camp 176" type="enemy">
+      <objects/>
+      <tactical>
+        <formation id="177" level="i" name="Formation [177]">
+          <automat engaged="false" id="185" knowledge-group="179" name="Module Localisation Radar STAIR [185]" type="Module Localisation Radar STAIR">
+            <unit command-post="true" id="186" name="Module STAIR" position="30TXT8437963954" type="Module STAIR"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="179" name="Knowledge group [179]" type="Standard"/>
+      </communication>
+      <populations/>
+      <logistic/>
+    </side>
   </sides>
   <diplomacies>
     <side id="99">
       <relationship diplomacy="neutral" side="162"/>
+      <relationship diplomacy="enemy" side="176"/>
     </side>
     <side id="162">
       <relationship diplomacy="neutral" side="99"/>
+      <relationship diplomacy="enemy" side="176"/>
+    </side>
+    <side id="176">
+      <relationship diplomacy="enemy" side="99"/>
+      <relationship diplomacy="enemy" side="162"/>
     </side>
   </diplomacies>
 </orbat>
