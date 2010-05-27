@@ -1376,7 +1376,7 @@ void PHY_RolePion_Perceiver::SetVisionModePoint( const MT_Vector2D& vPoint )
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Perceiver::HasChanged() const
 {
-    return bHasChanged_;
+    return bHasChanged_ || bRadarStateHasChanged_;
 }
 
 // -----------------------------------------------------------------------------
