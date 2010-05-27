@@ -45,10 +45,10 @@ CoordinateConverter::CoordinateConverter( const CoordinateSystems& coordSystems 
 CoordinateConverter::CoordinateConverter( const tools::ExerciseConfig& config )
     : planar_( parameters_ )
     , coordinateSystems_( *new CoordinateSystems() )
-    	
 {
     Load( config );
 }
+
 // -----------------------------------------------------------------------------
 // Name: CoordinateConverter::Load
 // Created: AGE 2006-04-28

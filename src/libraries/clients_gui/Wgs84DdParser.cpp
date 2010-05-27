@@ -21,8 +21,8 @@ using namespace gui;
 // Created: AME 2010-03-04
 // -----------------------------------------------------------------------------
 Wgs84DdParser::Wgs84DdParser( const kernel::CoordinateConverter_ABC& converter )
-: converter_( converter )
-, numParameters_( 2 )
+    : converter_( converter )
+    , numParameters_( 2 )
 {
 	// NOTHING
 }

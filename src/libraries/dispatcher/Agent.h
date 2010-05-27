@@ -114,7 +114,7 @@ public:
     Automat*                                                automat_;
     const bool                                              bPC_;
 
-    geometry::Point2d                                       position_;
+    geometry::Point2d                                       position_; // x = longitude, y = latitude
     unsigned int                                            nDirection_;
     unsigned int                                            nHeight_;
     unsigned int                                            nAltitude_;

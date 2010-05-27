@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __CoordinateConverter_h_
-#define __CoordinateConverter_h_
+#ifndef __kernel_CoordinateConverter_h_
+#define __kernel_CoordinateConverter_h_
 
 #include "Types.h"
 #include "CoordinateConverter_ABC.h"
@@ -36,7 +36,7 @@ public:
     //! @name Constructor / Destructor
     //@{
              CoordinateConverter();        
-             CoordinateConverter( const CoordinateSystems& coordSystems );
+    explicit CoordinateConverter( const CoordinateSystems& coordSystems );
     explicit CoordinateConverter( const tools::ExerciseConfig& config );
     virtual ~CoordinateConverter();
     //@}
@@ -96,4 +96,4 @@ private:
 
 }
 
-#endif // __CoordinateConverter_h_
+#endif // __kernel_CoordinateConverter_h_

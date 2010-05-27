@@ -82,7 +82,9 @@ namespace
 
         virtual void NotifyUpdated( const E& move )
         {
-            const geometry::Point2f position = converter_.ConvertFromGeo( move.entity.position_ );
+            // $$$$ _RC_ SBO 2010-05-27: reverse position_ lat/long
+            const geometry::Point2d pos( move.entity.position_.Y(), move.entity.position_.X() );
+            const geometry::Point2f position = converter_.ConvertFromGeo( pos );
             if( box_.IsInside( position ) && zone_.IsInside( position ) )
                 Trigger( move.entity );
         }

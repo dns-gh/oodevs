@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __CoordinateConverter_ABC_h_
-#define __CoordinateConverter_ABC_h_
+#ifndef __kernel_CoordinateConverter_ABC_h_
+#define __kernel_CoordinateConverter_ABC_h_
 
 #include <geometry/Types.h>
 
@@ -38,8 +38,8 @@ public:
     virtual geometry::Point2d ConvertToGeo          ( const geometry::Point2f& pos ) const = 0;
     virtual geometry::Point2f ConvertFromGeo        ( const geometry::Point2d& pos ) const = 0;
     virtual geometry::Point2f ConvertToXY           ( const std::string& mgrs ) const = 0;
-    virtual std::string          ConvertToGeoDms    ( const geometry::Point2f& pos ) const = 0;
-    virtual std::string          ConvertToUtm       ( const geometry::Point2f& pos ) const = 0;
+    virtual std::string       ConvertToGeoDms       ( const geometry::Point2f& pos ) const = 0;
+    virtual std::string       ConvertToUtm          ( const geometry::Point2f& pos ) const = 0;
     virtual geometry::Point2f ConvertFromGeoDms	    ( const std::string& longitude, const std::string& latitude ) const = 0;
     virtual const CoordinateSystems& GetCoordSystem() const = 0;
     virtual std::string GetStringPosition( const geometry::Point2f& position ) const = 0;
@@ -68,4 +68,4 @@ private:
 
 }
 
-#endif // __CoordinateConverter_ABC_h_
+#endif // __kernel_CoordinateConverter_ABC_h_

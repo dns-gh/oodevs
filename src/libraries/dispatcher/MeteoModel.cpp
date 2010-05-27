@@ -74,11 +74,10 @@ void MeteoModel::OnReceiveMsgGlobalMeteo( const MsgsSimToClient::MsgControlGloba
 // -----------------------------------------------------------------------------
 void MeteoModel::OnReceiveMsgLocalMeteoCreation( const MsgsSimToClient::MsgControlLocalMeteoCreation& msg )
 {   
-    geometry::Point2f vUpLeft = converter_->ConvertFromGeo( geometry::Point2d( msg.top_left_coordinate().longitude(), 
-        msg.top_left_coordinate().latitude() ));
-    geometry::Point2f vDownRight = converter_->ConvertFromGeo( geometry::Point2d( msg.bottom_right_coordinate().longitude(), 
-        msg.bottom_right_coordinate().latitude() ));
-
+    const geometry::Point2d topLeft( msg.top_left_coordinate().longitude(), msg.top_left_coordinate().latitude() );
+    const geometry::Point2f vUpLeft = converter_->ConvertFromGeo( topLeft );
+    const geometry::Point2d bottomRight( msg.bottom_right_coordinate().longitude(), msg.bottom_right_coordinate().latitude() );
+    const geometry::Point2f vDownRight = converter_->ConvertFromGeo( bottomRight );
     if( msg.has_attributes() )
     {
         weather::MeteoData* weather = new weather::MeteoData( msg.oid(), vUpLeft, vDownRight, msg.attributes(), *this, *converter_ );

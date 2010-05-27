@@ -93,7 +93,9 @@ std::string AgentManipulator::GetTeam() const
 // -----------------------------------------------------------------------------
 Position AgentManipulator::GetPosition() const
 {
-    return ToPosition( converter_.ConvertFromGeo( agent_.position_ ) );
+    // $$$$ _RC_ SBO 2010-05-27: reverse position_ lat/long
+    const geometry::Point2d pos( agent_.position_.Y(), agent_.position_.X() );
+    return ToPosition( converter_.ConvertFromGeo( pos ) );
 }
 
 // -----------------------------------------------------------------------------

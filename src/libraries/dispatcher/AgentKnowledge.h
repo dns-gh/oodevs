@@ -92,7 +92,7 @@ public:
     MsgsSimToClient::EnumUnitIdentificationLevel   nMaxPerceptionLevel_;
     unsigned int                        nOperationalState_;
     bool                                bDead_;
-    geometry::Point2d                   position_;
+    geometry::Point2d                   position_; // $$$$ _RC_ SBO 2010-05-27: x = latitude, y = longitude !
     unsigned int                        nDirection_;
     unsigned int                        nSpeed_;
     const kernel::Team_ABC*             team_;
