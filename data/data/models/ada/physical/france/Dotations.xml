@@ -2297,7 +2297,7 @@
     <indirect-fire intervention-type="1" life-time="300s" object-type="scattering area" type="effect" x-dispersion="600" y-dispersion="400"/>
   </dotation>
   <dotation category="LTO Obus 155 OE CCR F1 GUIDED" codeEMAT6="" codeEMAT8="1320-300" codeLFRIL="" codeNNO="" d-type="true" id="118" name="munition" nature="Solide" package-mass="0.65" package-size="8" package-volume="0.82" type="Obus">
-    <guided maintain="false" range="1000"/>
+    <guided maintain="false" range="10000"/>
     <attritions>
       <attrition destruction="0.05" protection="CharLourd" repairable-with-evacuation="0.2" repairable-without-evacuation="0.75"/>
       <attrition destruction="0.1" protection="CharMoyen" repairable-with-evacuation="0.3" repairable-without-evacuation="0.6"/>

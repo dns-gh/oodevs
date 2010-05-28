@@ -39,7 +39,7 @@ public:
     virtual void NotifyStartIlluminate( const MIL_Entity_ABC& entity );
     virtual void NotifyStopIlluminate();
 
-    virtual bool IsIlluminated( float range ) const;
+    virtual bool IsIlluminated() const;
     virtual bool IsDefinitevelyIlluminated() const;
     virtual void NotifyStartIlluminatedBy( const MIL_Entity_ABC& entity );
     virtual void NotifyStopIlluminatedBy( const MIL_Entity_ABC& entity );

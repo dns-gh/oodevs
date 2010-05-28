@@ -86,18 +86,11 @@ void PHY_RolePion_Illumination::NotifyStopIlluminate()
 // Name: PHY_RolePion_Illumination::IsIlluminated
 // Created: MGD 2010-02-15
 // -----------------------------------------------------------------------------
-bool PHY_RolePion_Illumination::IsIlluminated( float range ) const
+bool PHY_RolePion_Illumination::IsIlluminated() const
 {
-    if( bIlluminatedDefinitely_ )
-        return true;
-
-    const MT_Vector2D& posOwner = owner_.GetRole< PHY_RoleInterface_Location >().GetPosition();
-    for( std::set< const MIL_Entity_ABC* >::const_iterator it = illuminators_.begin(); it != illuminators_.end(); it++ )
-    {
-      if( posOwner.Distance( (*it)->GetRole< PHY_RoleInterface_Location >().GetPosition() ) < range )
-        return true;
-    }
-    return false;
+    if( !bIlluminatedDefinitely_ && illuminators_.size() == 0 )
+        return false;
+    return true;
 }
 
 // -----------------------------------------------------------------------------

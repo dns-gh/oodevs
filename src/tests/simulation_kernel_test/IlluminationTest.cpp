@@ -68,11 +68,11 @@ BOOST_AUTO_TEST_CASE( IlluminatedByTwoTest )
     role.NotifyStartIlluminatedBy( agent );
     role.NotifyStartIlluminatedBy( agent );//normal double notification to see if agent is added juyt one time
     role.NotifyStartIlluminatedBy( agent2 );
-    BOOST_CHECK( role.IsIlluminated( 2000 ) );
+    BOOST_CHECK( role.IsIlluminated() );
     role.NotifyStopIlluminatedBy( agent );
-    BOOST_CHECK( role.IsIlluminated( 2000 ) );
+    BOOST_CHECK( role.IsIlluminated() );
     role.NotifyStopIlluminatedBy( agent2 );
-    BOOST_CHECK( !role.IsIlluminated( 2000 ) );
+    BOOST_CHECK( !role.IsIlluminated() );
 }
 
 
@@ -87,10 +87,10 @@ BOOST_AUTO_TEST_CASE( IlluminatedDefinitelyTest )
 
     PHY_RolePion_Illumination role( illuminated );
     role.NotifyDefinitelyIlluminated();
-    BOOST_CHECK( role.IsIlluminated( 2000 ) );
+    BOOST_CHECK( role.IsIlluminated() );
     BOOST_CHECK( role.IsDefinitevelyIlluminated() );
     role.NotifyStopIlluminatedBy( agent );
-    BOOST_CHECK( role.IsIlluminated( 2000 ) );
+    BOOST_CHECK( role.IsIlluminated() );
     BOOST_CHECK( role.IsDefinitevelyIlluminated() );
 }
 

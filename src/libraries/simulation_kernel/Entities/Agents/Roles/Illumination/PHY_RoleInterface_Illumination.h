@@ -42,7 +42,7 @@ public:
     virtual void NotifyStartIlluminate( const MIL_Entity_ABC& entity ) = 0;//action state can be sufficient
     virtual void NotifyStopIlluminate() = 0;
 
-    virtual bool IsIlluminated( float range ) const = 0;
+    virtual bool IsIlluminated() const = 0;
     virtual bool IsDefinitevelyIlluminated() const = 0;
     virtual void NotifyStartIlluminatedBy( const MIL_Entity_ABC& entity ) = 0;
     virtual void NotifyStopIlluminatedBy( const MIL_Entity_ABC& entity ) = 0;
