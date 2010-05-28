@@ -9,6 +9,7 @@
           <automat engaged="true" id="9" knowledge-group="3" name="Compagnie INF AMX 10 P [9]" type="Compagnie INF AMX 10 P">
             <unit command-post="true" id="10" name="Section CDT CIE INF AMX10P" position="31UEQ0201754747" type="Section CDT CIE INF AMX10P"/>
             <unit command-post="false" id="11" name="Section CBT INF AMX10P CDS OFF" position="31UEQ0251754247" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="31" name="Section CBT INF AMX10P CDS SOFF" position="31UEQ0190153829" type="Section CBT INF AMX10P CDS SOFF"/>
           </automat>
           <automat engaged="true" id="29" knowledge-group="3" name="Escadron Blinde AMX 10 RC [9]" type="Escadron Blinde AMX 10 RC">
             <unit command-post="true" id="30" name="Peloton AMX 10 RC CDP OFF" position="31UDQ8671643828" type="Peloton AMX 10 RC CDP OFF"/>
