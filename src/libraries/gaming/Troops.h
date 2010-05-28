@@ -45,6 +45,11 @@ public:
     virtual ~Troops();
     //@}
 
+    //! @name Operators
+    //@{
+    int Troops::GetTotalHumans() const;
+    //@}
+
 private:
     //! @name Copy/Assignement
     //@{

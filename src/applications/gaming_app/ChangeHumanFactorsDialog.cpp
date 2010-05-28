@@ -17,6 +17,7 @@
 #include "gaming/HumanFactors.h"
 #include "gaming/tools.h"
 #include "gaming/StaticModel.h"
+#include "gaming/Troops.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -209,7 +210,9 @@ void ChangeHumanFactorsDialog::DoContextMenu( const kernel::Entity_ABC& entity, 
     {
         selected_ = &entity;
         QPopupMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
-        subMenu->insertItem( tr( "Human factors" ), this, SLOT( Show() ) );
+        int id = subMenu->insertItem( tr( "Human factors" ), this, SLOT( Show() ) );
+        bool isAutonomous = entity.Get< Troops >().GetTotalHumans() == 0;
+        subMenu->setItemEnabled( id, !isAutonomous );
     }
 }
 

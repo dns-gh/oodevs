@@ -127,3 +127,17 @@ void Troops::SetSuperior( const kernel::Entity_ABC& superior )
             troops->Update( differences );
         }
 }
+
+// -----------------------------------------------------------------------------
+// Name: Troops::Troops::GetTotalHumans
+// Created: SLG 2010-05-28
+// -----------------------------------------------------------------------------
+int Troops::GetTotalHumans() const
+{
+    int nbrHumans  = 0;
+    for ( unsigned int i = 0; i < unsigned int( kernel::eTroopHealthStateNbrStates ) ; ++i )
+    {
+        nbrHumans += ( humans_[ i ].officers_ + humans_[ i ].subOfficers_ + humans_[ i ].troopers_ );
+    }
+    return nbrHumans;
+}
