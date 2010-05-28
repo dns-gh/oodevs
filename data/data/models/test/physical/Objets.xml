@@ -38,15 +38,15 @@
   </object>
   <object geometry="polygon" name="Zone NBC" symbol="G*MPNR----****X" type="nbc zone">
     <avoidable distance="100"/>
-    <contamination max-toxic="1" type="nbc"/>
+    <contamination max-toxic="1"/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
     <propagation model="input"/>
   </object>
   <object geometry="point" name="Nuage NBC" symbol="G*MPNL----****X" type="nbc cloud">
     <avoidable distance="100"/>
-    <contamination max-toxic="1" type="nbc"/>
+    <contamination max-toxic="1"/>
     <interaction-height height="100"/>
-    <intoxication max-toxic="1" type="nbc"/>
+    <intoxication max-toxic="1"/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
     <propagation model="input"/>
   </object>
@@ -69,7 +69,7 @@
     <bridging/>
   </object>
   <object geometry="point" name="Site ROTA" symbol="G*ROTA*********" type="rota area">
-    <contamination max-toxic="-1" type="nbc"/>
+    <contamination max-toxic="-1"/>
   </object>
   <object geometry="polygon" name="Abattis" symbol="G*MPOS----****X" type="abattis">
     <activable/>
