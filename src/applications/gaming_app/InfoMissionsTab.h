@@ -26,11 +26,6 @@ namespace actions
     class Parameter_ABC;
 }
 
-namespace Common
-{
-    class MsgMissionParameters;
-}
-
 class MissionParameters;
 // =============================================================================
 /** @class  InfoMissionsTab
@@ -41,7 +36,7 @@ class MissionParameters;
 class InfoMissionsTab : public gui::ListDisplayer< InfoMissionsTab >
                       , public tools::Observer_ABC
                       , public tools::SelectionObserver< kernel::Entity_ABC >
-                      , public tools::ElementObserver_ABC< Common::MsgMissionParameters >
+                      , public tools::ElementObserver_ABC< MissionParameters >
 {
 
 public:
