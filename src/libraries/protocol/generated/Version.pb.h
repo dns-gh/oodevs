@@ -87,7 +87,7 @@ class ProtocolVersion : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required string value = 1 [default = "4.0.1"];
+  // required string value = 1 [default = "V4.0.1"];
   inline bool has_value() const;
   inline void clear_value();
   static const int kValueFieldNumber = 1;
@@ -133,7 +133,7 @@ class ProtocolVersion : public ::google::protobuf::Message {
 
 // ProtocolVersion
 
-// required string value = 1 [default = "4.0.1"];
+// required string value = 1 [default = "V4.0.1"];
 inline bool ProtocolVersion::has_value() const {
   return _has_bit(0);
 }
