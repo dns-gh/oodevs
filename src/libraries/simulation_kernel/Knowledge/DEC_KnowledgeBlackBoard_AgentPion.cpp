@@ -38,6 +38,8 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
+#include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
+#include "Entities/Agents/Units/HumanFactors/PHY_Morale.h"
 #include "Decision/DEC_Tools.h"
 #include "protocol/protocol.h"
 
@@ -328,7 +330,11 @@ void DEC_KnowledgeBlackBoard_AgentPion::GetAgentsAttacking( T_ConstKnowledgeAgen
 MT_Float DEC_KnowledgeBlackBoard_AgentPion::GetRapForLocalValue() const
 {
     assert( pKnowledgeRapForLocal_ );
-    return pKnowledgeRapForLocal_->GetValue();
+    MT_Float rapForLocal = pKnowledgeRapForLocal_->GetValue();
+    const PHY_Morale& morale =  pPion_->GetRole< PHY_RoleInterface_HumanFactors >().GetMorale();
+    if( &morale == &PHY_Morale::fanatique_ )
+             return 5.0; // $$$$ _RC_ SLG 2010-05-28: Facteur moral max 
+    return rapForLocal;
 }
 
 // -----------------------------------------------------------------------------
