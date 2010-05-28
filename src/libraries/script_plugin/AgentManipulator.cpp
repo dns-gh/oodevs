@@ -104,7 +104,7 @@ Position AgentManipulator::GetPosition() const
 // -----------------------------------------------------------------------------
 unsigned int AgentManipulator::GetOperationalState() const
 {
-    return agent_.nOperationalState_;
+    return agent_.nOperationalStateValue_;
 }
 
 namespace
