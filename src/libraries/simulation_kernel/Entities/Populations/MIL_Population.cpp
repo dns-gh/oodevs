@@ -703,11 +703,14 @@ void MIL_Population::Move( const MT_Vector2D& destination )
 // -----------------------------------------------------------------------------
 void MIL_Population::FireOnPions( MT_Float rIntensity, PHY_FireResults_Population& fireResult )
 {
-    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
-        (**itConcentration).FireOnPions( rIntensity, fireResult );
+    if( !IsBlinded() )
+    {
+        for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
+            (**itConcentration).FireOnPions( rIntensity, fireResult );
 
-    for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
-        (**itFlow).FireOnPions( rIntensity, fireResult );
+        for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
+            (**itFlow).FireOnPions( rIntensity, fireResult );
+    }
 }
 
 // -----------------------------------------------------------------------------
