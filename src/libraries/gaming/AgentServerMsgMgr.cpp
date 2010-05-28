@@ -202,7 +202,8 @@ void AgentServerMsgMgr::OnReceiveMsgUnitDestruction( const MsgsSimToClient::MsgU
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUnitVisionCones( const MsgsSimToClient::MsgUnitVisionCones& message )
 {
-    GetModel().agents_.GetAgent( message.oid() ).Update( message );
+    if( !simulation_.IsPaused() )
+        GetModel().agents_.GetAgent( message.oid() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------

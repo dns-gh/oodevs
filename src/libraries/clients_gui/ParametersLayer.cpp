@@ -259,7 +259,11 @@ void ParametersLayer::NotifyDone()
     Location_ABC* location = current_;
     handler_ = 0; current_ = 0;
     if( location )
-        handler->Handle( *location );
+    {
+        kernel::Polygon* polygon = dynamic_cast< kernel::Polygon* >( location );
+        if( polygon == 0 || !polygon->IsSegment() )
+            handler->Handle( *location );
+    }
     cursors_->SelectTool( QCursor(), false );
 }
 

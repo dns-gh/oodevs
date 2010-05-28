@@ -45,6 +45,7 @@ public:
     virtual QString GetName() const;
     virtual bool IsValid() const;
     virtual bool IsDone() const;
+    bool IsSegment() const;
     //@}
 
 private:
