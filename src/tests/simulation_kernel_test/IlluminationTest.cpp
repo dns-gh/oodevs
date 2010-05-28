@@ -35,15 +35,13 @@ BOOST_AUTO_TEST_CASE( IlluminatedByOneTest )
     MockAgentWithPosition agent;
 
     const MT_Vector2D pos1;
-    MOCK_EXPECT( illuminated.GetRole< MockRoleLocation >(), GetPosition ).exactly( 2 ).returns( pos1 );
     const MT_Vector2D pos2;
-    MOCK_EXPECT( agent.GetRole< MockRoleLocation >(), GetPosition ).once().returns( pos2 );
 
     PHY_RolePion_Illumination role( illuminated );
     role.NotifyStartIlluminatedBy( agent );
-    BOOST_CHECK( role.IsIlluminated( 2000 ) );
+    BOOST_CHECK( role.IsIlluminated() );
     role.NotifyStopIlluminatedBy( agent );
-    BOOST_CHECK( !role.IsIlluminated( 2000 ) );
+    BOOST_CHECK( !role.IsIlluminated() );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,12 +55,8 @@ BOOST_AUTO_TEST_CASE( IlluminatedByTwoTest )
     MockAgentWithPosition agent2;
 
     const MT_Vector2D pos1;
-    MOCK_EXPECT( illuminated.GetRole< MockRoleLocation >(), GetPosition ).exactly( 3 ).returns( pos1 );
     const MT_Vector2D pos2;
-    // $$$$ _RC_ SBO 2010-04-27: was not verify'ed
-//    MOCK_EXPECT( agent.GetRole< MockRoleLocation >(), GetPosition ).once().returns( pos2 );
     const MT_Vector2D pos3;
-    MOCK_EXPECT( agent2.GetRole< MockRoleLocation >(), GetPosition ).exactly( 2 ).returns( pos3 );
 
     PHY_RolePion_Illumination role( illuminated );
     role.NotifyStartIlluminatedBy( agent );
