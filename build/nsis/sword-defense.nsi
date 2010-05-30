@@ -224,7 +224,7 @@ SectionGroup "Exercises" s_exo
         !insertmacro OT.AddExercise "Ares" "Blois" "s_exo18"
         !insertmacro OT.AddExercise "Porto - 1.9.2" "Porto" "s_exo19"
         !insertmacro OT.AddExercise "BMDrosoville" "Drosoville" "s_exo20"
-        !insertmacro OT.AddExercise "test1_increment1_v1stab" "Mailly" "s_exo21"
+        !insertmacro OT.AddExercise "tests\test1_increment1_v1stab" "Mailly" "s_exo21"
         
         ; Tutorials
         !insertmacro OT.AddExercise "tutorials\01 - Generalites" "Paris_Est" "s_exo4"
