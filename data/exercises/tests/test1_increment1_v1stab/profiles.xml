@@ -8,7 +8,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Admin" password="" supervision="true">
+  <profile name="Admin" password="" scipio-role="superviseur" supervision="true">
     <rights>
       <readonly/>
       <readwrite>
@@ -17,17 +17,21 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Azur" password="" supervision="true">
+  <profile name="Azur" password="" scipio-role="anibas" supervision="false">
     <rights>
-      <readonly/>
+      <readonly>
+        <side id="3"/>
+      </readonly>
       <readwrite>
         <side id="1"/>
       </readwrite>
     </rights>
   </profile>
-  <profile name="Vermillon" password="" supervision="true">
+  <profile name="Vermillon" password="" scipio-role="eniex" supervision="false">
     <rights>
-      <readonly/>
+      <readonly>
+        <side id="1"/>
+      </readonly>
       <readwrite>
         <side id="3"/>
       </readwrite>

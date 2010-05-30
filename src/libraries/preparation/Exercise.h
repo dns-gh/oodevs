@@ -90,6 +90,7 @@ private:
     QString name_;
     T_Resources briefings_;
     T_Resources resources_;
+    QString generatorVersion_;
     //@}
 };
 

@@ -17,6 +17,9 @@ namespace MsgsAuthenticationToClient
     class MsgProfile;
     class MsgProfileDescription;
 }
+
+enum E_ScipioRole;
+
 namespace MsgsClientToSim
 {
     class MsgClientToSim;
@@ -123,6 +126,7 @@ private:
 
     std::string     strLogin_;
     std::string     strPassword_;
+    E_ScipioRole    role_;
 
     // Read only
     T_AutomatSet    readOnlyAutomats_;

@@ -37,10 +37,11 @@ UserProfile::UserProfile( xml::xistream& xis, kernel::Controller& controller, co
     const ExistenceChecker< tools::Resolver< kernel::Automat_ABC > >    automatChecker( model_.agents_ );
     const ExistenceChecker< tools::Resolver< kernel::Population_ABC > > populationChecker( model_.agents_ );
 
-    std::string login, pass;
+    std::string login, pass, role;
     xis >> attribute( "name", login )
         >> attribute( "password", pass )
         >> attribute( "supervision", supervisor_ )
+        >> optional() >> attribute( "scipio-role", role )
         >> start( "rights" )
             >> start( "readonly" )
                 >> list( "side"      , *this, &UserProfile::ReadRights, readSides_, teamChecker )
@@ -57,6 +58,7 @@ UserProfile::UserProfile( xml::xistream& xis, kernel::Controller& controller, co
         >> end();
     login_ = login.c_str();
     password_ = pass.c_str();
+    role_ = role.c_str();
     controller_.Create( *this );
 }
 
@@ -114,8 +116,10 @@ UserProfile::~UserProfile()
 // -----------------------------------------------------------------------------
 void UserProfile::Serialize( xml::xostream& xos ) const
 {
-    xos << start( "profile" )
-            << attribute( "name", login_.ascii() )
+    xos << start( "profile" );
+    if ( role_.length() )
+        xos << attribute( "scipio-role", role_.ascii() );
+    xos     << attribute( "name", login_.ascii() )
             << attribute( "password", password_.ascii() )
             << attribute( "supervision", supervisor_ )
             << start( "rights" )

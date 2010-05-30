@@ -106,6 +106,7 @@ private:
     QString login_;
     QString password_;
     bool    supervisor_;
+    QString role_;
 
     T_Ids readSides_;
     T_Ids readFormations_;

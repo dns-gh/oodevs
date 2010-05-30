@@ -16,11 +16,14 @@
 #include "Automat.h"
 #include <xeumeuleu/xml.h>
 #include "MT/MT_Logger/MT_Logger_lib.h"
+#include "MT_Tools/MT_Scipio_enum.h"
 #include "directia/Brain.h"
 #include "protocol/protocol.h"
 #include "protocol/authenticationsenders.h"
 
 using namespace dispatcher;
+
+std::map< const std::string, unsigned > ProfileManager::roles_;
 
 // -----------------------------------------------------------------------------
 // Name: ProfileManager constructor
@@ -222,4 +225,44 @@ void ProfileManager::SetAutomatRight( const std::string& profile, unsigned int a
     T_ProfileMap::iterator it = profiles_.find( profile );
     if( it != profiles_.end() )
         it->second->SetRight( model_.automats_.Get( automat ), readonly, readwrite );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfileManager::RegisterRole
+// Created: RPD 2010-05-30
+// -----------------------------------------------------------------------------
+void ProfileManager::RegisterRole( const std::string name )
+{
+    if ( roles_.find( name ) == roles_.end() )
+    {
+        roles_.insert( std::pair< const std::string, unsigned >( name, roles_.size() + 1 ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfileManager::RegisterRoles
+// Created: RPD 2010-05-30
+// -----------------------------------------------------------------------------
+void ProfileManager::RegisterRoles()
+{
+    RegisterRole( "superviseur" );
+    RegisterRole( "anibas" );
+    RegisterRole( "eniex" );
+    RegisterRole( "direx" );
+    RegisterRole( "environnement" );
+    RegisterRole( "analyse" );
+    RegisterRole( "gestim" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfileManager::FindRole
+// Created: RPD 2010-05-30
+// -----------------------------------------------------------------------------
+E_ScipioRole ProfileManager::FindRole( const std::string& name )
+{
+    unsigned roleID ( eRoleUndefined );
+    CIT_RoleMap cit = roles_.find( name );
+    if ( cit != roles_.end() )
+        roleID = cit->second;
+    return static_cast< E_ScipioRole >( roleID );
 }

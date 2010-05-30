@@ -43,6 +43,7 @@ RightsPlugin::RightsPlugin( Model& model, ClientPublisher_ABC& clients, const Co
 {
     clientCommands.RegisterMessage( *this, &RightsPlugin::OnReceive );
     registrables.Add( new dispatcher::RegistrableProxy( *profiles_ ) );
+    profiles_->RegisterRoles();
 }
 
 // -----------------------------------------------------------------------------

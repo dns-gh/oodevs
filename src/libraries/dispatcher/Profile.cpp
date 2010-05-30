@@ -9,6 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "Profile.h"
+#include "ProfileManager.h"
 #include "Automat.h"
 #include "Formation.h"
 #include "Model.h"
@@ -20,6 +21,7 @@
 #include "protocol/clientsenders.h"
 #include "protocol/simulationsenders.h"
 #include <xeumeuleu/xml.h>
+#include "MT_Tools/MT_Scipio_enum.h"
 
 using namespace dispatcher;
 
@@ -32,9 +34,12 @@ Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const std::s
     , clients_     ( clients )
     , strLogin_    ( strLogin )
     , bSupervision_( false )
+    , role_        ( eRoleUndefined )
 {
+    std::string role;
     xis >> xml::attribute( "password", strPassword_ )
         >> xml::attribute( "supervision", bSupervision_ )
+        >> xml::optional() >> xml::attribute( "scipio-role", role )
         >> xml::start( "rights" )
             >> xml::start( "readonly" )
                 >> xml::list( "automat"   , *this, &Profile::ReadAutomatRights   , readOnlyAutomats_    )
@@ -49,6 +54,8 @@ Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const std::s
                 >> xml::list( "population", *this, &Profile::ReadPopulationRights, readWritePopulations_ )
             >> xml::end()
         >> xml::end();
+    if ( !role.empty() )
+        role_ = ProfileManager::FindRole( role );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,6 +68,7 @@ Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const MsgsCl
     , strLogin_    ( message.profile().login() )
     , strPassword_ ( message.profile().has_password()  ? message.profile().password() : "" )
     , bSupervision_( message.profile().superviseur() != 0 )
+    , role_        ( message.profile().has_role()   ? static_cast< E_ScipioRole > ( message.profile().role() ) : eRoleUndefined )
 {
     ReadRights( message.profile() );
     SendCreation( clients_ );
@@ -72,9 +80,9 @@ Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const MsgsCl
 // -----------------------------------------------------------------------------
 Profile::~Profile()
 {
-    authentication::ProfileDestruction asn;
-    asn().set_login( strLogin_ );
-    asn.Send( clients_ );
+    authentication::ProfileDestruction message;
+    message().set_login( strLogin_ );
+    message.Send( clients_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -141,7 +149,6 @@ namespace
                 list.insert( entity );
     }
 }
-// $$$$ NLD 2007-01-30: Factoriser ASN & xml
 
 // -----------------------------------------------------------------------------
 // Name: Profile::ReadRights
@@ -274,10 +281,10 @@ bool Profile::CheckRights( const Common::MsgChatTarget& source, const Common::Ms
 namespace
 {
     template< typename List, typename Entity >
-    void Serialize( List& asn, const std::set< const Entity* >& list )
+    void Serialize( List& message, const std::set< const Entity* >& list )
     {
         for( std::set< const Entity* >::const_iterator it = list.begin(); it != list.end(); ++it )
-            asn.add_elem()->set_oid( (*it)->GetId() );
+            message.add_elem()->set_oid( (*it)->GetId() );
     }
 }
 
@@ -285,30 +292,32 @@ namespace
 // Name: Profile::Send
 // Created: NLD 2006-10-09
 // -----------------------------------------------------------------------------
-void Profile::Send( MsgsAuthenticationToClient::MsgProfile& asn ) const
+void Profile::Send( MsgsAuthenticationToClient::MsgProfile& message ) const
 {
-    asn.set_login( strLogin_.c_str() );
-    asn.set_superviseur( bSupervision_ );
+    message.set_login( strLogin_.c_str() );
+    message.set_superviseur( bSupervision_ );
+    if ( role_ != eRoleUndefined )
+        message.set_role( static_cast< MsgsAuthenticationToClient::Role >( role_ ) );
 
-    Serialize( *asn.mutable_read_only_automates(), readOnlyAutomats_ );
-    Serialize( *asn.mutable_read_write_automates(), readWriteAutomats_ );
-    Serialize( *asn.mutable_read_only_camps(), readOnlySides_ );
-    Serialize( *asn.mutable_read_write_camps(), readWriteSides_ );
-    Serialize( *asn.mutable_read_only_formations(), readOnlyFormations_ );
-    Serialize( *asn.mutable_read_write_formations(), readWriteFormations_ );
-    Serialize( *asn.mutable_read_only_populations(), readOnlyPopulations_ );
-    Serialize( *asn.mutable_read_write_populations(), readWritePopulations_ );
+    Serialize( *message.mutable_read_only_automates(), readOnlyAutomats_ );
+    Serialize( *message.mutable_read_write_automates(), readWriteAutomats_ );
+    Serialize( *message.mutable_read_only_camps(), readOnlySides_ );
+    Serialize( *message.mutable_read_write_camps(), readWriteSides_ );
+    Serialize( *message.mutable_read_only_formations(), readOnlyFormations_ );
+    Serialize( *message.mutable_read_write_formations(), readWriteFormations_ );
+    Serialize( *message.mutable_read_only_populations(), readOnlyPopulations_ );
+    Serialize( *message.mutable_read_write_populations(), readWritePopulations_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Profile::Send
 // Created: SBO 2009-12-18
 // -----------------------------------------------------------------------------
-void Profile::Send( MsgsAuthenticationToClient::MsgProfileDescription& asn ) const
+void Profile::Send( MsgsAuthenticationToClient::MsgProfileDescription& message ) const
 {
-    asn.set_login( strLogin_.c_str() );
-    asn.set_password( !strPassword_.empty() );
-    asn.set_supervisor( bSupervision_ );
+    message.set_login( strLogin_.c_str() );
+    message.set_password( !strPassword_.empty() );
+    message.set_supervisor( bSupervision_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -317,10 +326,10 @@ void Profile::Send( MsgsAuthenticationToClient::MsgProfileDescription& asn ) con
 // -----------------------------------------------------------------------------
 void Profile::SendCreation( ClientPublisher_ABC& publisher ) const
 {
-    authentication::ProfileCreation asn;
-    Send( *asn().mutable_profile() );
-    asn().mutable_profile()->set_password( strPassword_.c_str() );
-    asn.Send( publisher );
+    authentication::ProfileCreation message;
+    Send( *message().mutable_profile() );
+    message().mutable_profile()->set_password( strPassword_.c_str() );
+    message.Send( publisher );
 }
 
 // -----------------------------------------------------------------------------
@@ -335,12 +344,14 @@ void Profile::Update( const MsgsClientToAuthentication::MsgProfileUpdateRequest&
     bSupervision_ = message.profile().superviseur() != 0;
     ReadRights( message.profile() );
 
-    authentication::ProfileUpdate asn;
-    asn().set_login( message.login() );
-    if( asn().profile().has_password()  )
-        asn().mutable_profile()->set_password( strPassword_.c_str() );
-    Send( *asn().mutable_profile() );
-    asn.Send( clients_ );
+    authentication::ProfileUpdate updatemessage;
+    updatemessage().set_login( message.login() );
+    if( updatemessage().profile().has_password()  )
+        updatemessage().mutable_profile()->set_password( strPassword_.c_str() );
+    if( updatemessage().profile().has_role()  )
+        updatemessage().mutable_profile()->set_role( static_cast< MsgsAuthenticationToClient::Role >( role_ ) );
+    Send( *updatemessage().mutable_profile() );
+    updatemessage.Send( clients_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -367,8 +378,8 @@ void Profile::SetRight( const kernel::Automat_ABC& entity, bool readonly, bool r
     else
         readWriteAutomats_.erase( &entity );
 
-    authentication::ProfileUpdate asn;
-    asn().set_login( strLogin_.c_str() );
-    Send( *asn().mutable_profile() );
-    asn.Send( clients_ );
+    authentication::ProfileUpdate updatemessage;
+    updatemessage().set_login( strLogin_.c_str() );
+    Send( *updatemessage().mutable_profile() );
+    updatemessage.Send( clients_ );
 }

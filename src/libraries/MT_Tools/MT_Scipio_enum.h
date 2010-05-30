@@ -49,4 +49,16 @@ enum E_OperationalState
     eOpStateOperational,
 };
 
+enum E_ScipioRole
+{
+    eRoleSuperviseur    = 0,
+    eRoleAnibas		    = 1,
+    eRoleEniex		    = 2,
+    eRoleDirex		    = 3,
+    eRoleEnvironnement	= 4,
+    eRoleAnalyse	    = 5,
+    eRoleGestim			= 6,
+    eRoleUndefined      = 999
+};
+
 #endif // __MT_Scipio_enum_h_
