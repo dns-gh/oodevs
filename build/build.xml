@@ -909,7 +909,6 @@
         <nsis todir="${dist.dir}/current/${platform}/scipio-v1-stab" name="sword-defense" script="sword-defense.nsi" nsh="config.nsh">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
-            <arg value="/DEVALUATION=1"/>
             <arg value="/DAPP_MODEL=Scipio-V1.Stab"/>
             <arg value="/X!include sword-defense.nsh"/>
         </nsis>
