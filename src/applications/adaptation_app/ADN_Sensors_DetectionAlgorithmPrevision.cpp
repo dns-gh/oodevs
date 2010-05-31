@@ -25,13 +25,13 @@ namespace
     public:
         virtual void Convert( double input, QString& output ) const
         {
-            if( input >= 3. )
+            if( input == 3. )
                 output = "Identified";
-            else if( input >= 2. )
+            else if( input == 2. )
                 output = "Recognized";
-            else if( input >= 1. )
+            else if( input == 1. )
                 output = "Detected";
-            else if( input >= 0. )
+            else if( input == 0. )
                 output = "Unseen";
         }
         // -----------------------------------------------------------------------------
@@ -128,10 +128,11 @@ ADN_Sensors_DetectionAlgorithmPrevision::ADN_Sensors_DetectionAlgorithmPrevision
     pGraph->setMinimumSize( 400, 200 );
     GQ_PlotAxis& yAxis = pGraph->YAxis();
     yAxis.SetAxisCaption( tr( "Perception" ) );
-    yAxis.SetAxisRange( 0, 3, false );
-    yAxis.ShowTicks( 1 );
-    yAxis.ShowTicksValue( true );
+    yAxis.SetAxisRange( 0, 3, true );
+    yAxis.SetTicksLength( 2 );
+    yAxis.ShowTicks( 2 );
     yAxis.ShowSubTicks( false );
+    yAxis.ShowTicksValue( true );
     yAxis.SetValueToStringConvertor( &convertor );
 
     GQ_PlotAxis& xAxis = pGraph->XAxis();
@@ -360,7 +361,7 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnPopulationDensityChanged( const 
     {
          populationDensityFactor_ = boost::lexical_cast< double >( value.ascii() );
     }
-    catch ( boost::bad_lexical_cast* e)
+    catch ( boost::bad_lexical_cast* /*e*/)
     {
         populationDensityFactor_ = 1;
     }    
@@ -380,7 +381,7 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnPopulationModifierChanged( const
         {
             populationModifier_ = boost::lexical_cast< double >( value.ascii() );
         }
-        catch ( boost::bad_lexical_cast* e)
+        catch ( boost::bad_lexical_cast* /*e*/)
         {
             populationModifier_ = 1;
         }    
@@ -400,7 +401,7 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnPopulationChanged( const QString
        {
            population_ = boost::lexical_cast< double >( value.ascii() );
        }
-    catch ( boost::bad_lexical_cast* e)
+    catch ( boost::bad_lexical_cast* /*e*/)
        {
            populationValue_->setText( "0" );
            population_ = 0; 

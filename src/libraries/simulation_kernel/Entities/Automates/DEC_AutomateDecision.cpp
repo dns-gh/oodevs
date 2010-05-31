@@ -174,6 +174,7 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::Brain& brain )
 
     // State
     brain.RegisterFunction( "DEC_Automate_EstEmbraye", boost::bind( &DEC_AutomateFunctions::IsEngaged, this ) );
+    brain.RegisterFunction( "DEC_Automate_EstEmbraye", &DEC_Decision_ABC::IsAutomateEngaged );
     
     // Debug
     brain.RegisterFunction( "DEC_DecisionalState",
@@ -850,4 +851,13 @@ bool DEC_AutomateDecision::IsPionNeutralized( DEC_Decision_ABC* pPion )
 const std::string& DEC_AutomateDecision::GetDIAType() const
 {
     return DEC_Decision< MIL_Automate >::GetDIAType();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AutomateDecision::IsAutomateEngaged
+// Created: HBD 2010-05-28
+// -----------------------------------------------------------------------------
+bool DEC_AutomateDecision::IsAutomateEngaged() const
+{
+    return pEntity_->IsEngaged();
 }

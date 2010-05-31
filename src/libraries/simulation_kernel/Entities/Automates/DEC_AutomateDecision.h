@@ -105,6 +105,7 @@ public:
     virtual void SetbOrdreTenirSurLR( bool value );
     virtual bool GetbOrdreTenir() const;
     virtual void SetbOrdreTenir( bool value );
+    virtual bool IsAutomateEngaged() const;
 
     virtual std::vector< DEC_Decision_ABC* > GetPionsWithPC();
 

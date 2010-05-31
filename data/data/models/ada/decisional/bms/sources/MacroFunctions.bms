@@ -460,8 +460,11 @@ end
 
 DIA_PushFront = DIA_PushBack
 
+require "debug"
+
 S_Clear = function( list )
     local t={}
+	if not list then BreakForDebug( debug.traceback() ) end
     for k,_ in pairs( list ) do t[k]=1 end
     for k,_ in pairs( t ) do list[k]=nil end
 end

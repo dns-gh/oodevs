@@ -147,7 +147,7 @@ void DEC_LogisticFunctions::AutomateMaintenanceChangeWorkRate( MIL_Automate& cal
 // Name: DEC_LogisticFunctions::EvacuateWoundedHumansToTC2
 // Created: NLD 2005-08-01
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::EvacuateWoundedHumansToTC2( DEC_RolePion_Decision* pPionWounded, DEC_AutomateDecision* pDecTC2 )
+void DEC_LogisticFunctions::EvacuateWoundedHumansToTC2( DEC_Decision_ABC* pPionWounded, DEC_Decision_ABC* pDecTC2 )
 {
     assert( pPionWounded );   
     assert( pDecTC2 );
@@ -172,7 +172,7 @@ bool DEC_LogisticFunctions::HasWoundedHumansToEvacuate( DEC_Decision_ABC* pPion 
 // Name: DEC_LogisticFunctions::ForbidWoundedHumansAutoEvacuation
 // Created: NLD 2005-08-12
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::ForbidWoundedHumansAutoEvacuation( DEC_RolePion_Decision* pPion )
+void DEC_LogisticFunctions::ForbidWoundedHumansAutoEvacuation( DEC_Decision_ABC* pPion )
 {
     assert( pPion );
     pPion->GetPion().GetRole< PHY_RoleInterface_Humans >().ChangeEvacuationMode( PHY_RoleInterface_Humans::eEvacuationMode_Manual );
@@ -182,7 +182,7 @@ void DEC_LogisticFunctions::ForbidWoundedHumansAutoEvacuation( DEC_RolePion_Deci
 // Name: DEC_LogisticFunctions::AllowWoundedHumansAutoEvacuation
 // Created: NLD 2005-08-12
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::AllowWoundedHumansAutoEvacuation( DEC_RolePion_Decision* pPion )
+void DEC_LogisticFunctions::AllowWoundedHumansAutoEvacuation( DEC_Decision_ABC* pPion )
 {
     assert( pPion );
     pPion->GetPion().GetRole< PHY_RoleInterface_Humans >().ChangeEvacuationMode( PHY_RoleInterface_Humans::eEvacuationMode_Auto );

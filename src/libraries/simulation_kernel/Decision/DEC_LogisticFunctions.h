@@ -70,10 +70,10 @@ public:
     static void AutomateMedicalChangePriorities        ( MIL_Automate& callerAutomate, const std::vector< const PHY_HumanWound* >& priorities );
     static void AutomateMedicalChangeTacticalPriorities( MIL_Automate& callerAutomate, const std::vector< const DEC_Decision_ABC* >& priorities );
 
-    static void EvacuateWoundedHumansToTC2       ( DEC_RolePion_Decision* pPionWounded, DEC_AutomateDecision* pDecTC2 );
+    static void EvacuateWoundedHumansToTC2       ( DEC_Decision_ABC* pPionWounded, DEC_Decision_ABC* pDecTC2 );
     static bool HasWoundedHumansToEvacuate       ( DEC_Decision_ABC* pPion );
-    static void ForbidWoundedHumansAutoEvacuation( DEC_RolePion_Decision* pPion );
-    static void AllowWoundedHumansAutoEvacuation ( DEC_RolePion_Decision* pPion ); 
+    static void ForbidWoundedHumansAutoEvacuation( DEC_Decision_ABC* pPion );
+    static void AllowWoundedHumansAutoEvacuation ( DEC_Decision_ABC* pPion ); 
     //@}
 
     //! @name Supply

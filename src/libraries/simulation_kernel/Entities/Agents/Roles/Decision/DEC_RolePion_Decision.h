@@ -121,6 +121,7 @@ public:
     virtual void SetbOrdreTenirSurLR( bool value );
     virtual bool GetbOrdreTenir() const;
     virtual void SetbOrdreTenir( bool value );
+    virtual std::vector< DEC_Decision_ABC* > GetPionsWithPC();
     bool GetbPasserSurLC() const;
     void SetbPasserSurLC( bool value );
     DEC_Decision_ABC* GetpionEnEscorte() const;

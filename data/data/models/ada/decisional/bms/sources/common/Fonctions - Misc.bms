@@ -95,6 +95,8 @@ function S_Liste_Concatene( listResult, listeA, listeB )
 
     end
 
+    _returnValue = listResult
+    do return _returnValue end
 end
 
 function S_ListeLocalisations_Copie( listeSrc, listeDest )

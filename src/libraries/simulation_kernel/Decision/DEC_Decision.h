@@ -79,7 +79,6 @@ public:
     virtual void SetbOrdreTenirSurLR( bool value );
     virtual bool GetbOrdreTenir() const;
     virtual void SetbOrdreTenir( bool value );
-
     virtual void SetAmbianceMission( int );
     virtual void SetAppuieFreinage( bool );
     virtual bool GetDemandeOrdreConduitePoursuivre();

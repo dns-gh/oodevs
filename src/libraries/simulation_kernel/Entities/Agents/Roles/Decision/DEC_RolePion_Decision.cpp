@@ -832,6 +832,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
         boost::function< void ( int, int, const std::string& ) >( boost::bind( &DEC_MiscFunctions::ReportString< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2, _3 ) ) );
     // Hierarchie
     brain.RegisterFunction( "DEC_Pion_PionsAvecPC", boost::bind( &DEC_AgentFunctions::GetPionsWithPC, boost::ref( GetPion() ) ) );
+    brain.RegisterFunction( "DEC_Pion_PionsAvecPC", &DEC_Decision_ABC::GetPionsWithPC );
     brain.RegisterFunction( "DEC_Pion_PionsSansPC", boost::bind( &DEC_AgentFunctions::GetPionsWithoutPC, boost::ref( GetPion() ) ) );
     brain.RegisterFunction( "DEC_Pion_PionPC", boost::bind( &DEC_AgentFunctions::GetPionPC, boost::cref( GetPion() ) ) );
     brain.RegisterFunction( "DEC_Pion_PionPCDeAutomate", 
@@ -1724,7 +1725,7 @@ bool DEC_RolePion_Decision::IsFlying() const
 // -----------------------------------------------------------------------------
 // Name: DEC_RolePion_Decision::GetMajorOperationalState
 // Created: SBO 2009-07-29
-// -----------------------------------------------------------------------------
+// ----------------------------------------------------------------------
 MT_Float DEC_RolePion_Decision::GetMajorOperationalState() const
 {
     return DEC_AgentFunctions::GetMajorOperationalState( GetPion() );
@@ -1853,4 +1854,13 @@ DEC_AutomateDecision* DEC_RolePion_Decision::GetDecAutomate() const
 const std::string& DEC_RolePion_Decision::GetDIAType() const
 {    
     return DEC_Decision< MIL_AgentPion >::GetDIAType();
+}
+
+// -----------------------------------------------------------------------------
+// Name: std::vector< DEC_Decision_ABC* > DEC_RolePion_Decision::GetPionsWithPC
+// Created: HBD 2010-05-27
+// -----------------------------------------------------------------------------
+std::vector< DEC_Decision_ABC* > DEC_RolePion_Decision::GetPionsWithPC()
+{
+    return DEC_AgentFunctions::GetPionsWithPC( GetPion() );
 }

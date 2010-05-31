@@ -110,5 +110,5 @@ void ObjectKnowledgeConverter::NotifyCreated( const ObjectKnowledge_ABC& k )
 // -----------------------------------------------------------------------------
 void ObjectKnowledgeConverter::NotifyDeleted( const ObjectKnowledge_ABC& k )
 {
-    knowledges_[ & k.GetOwner() ].erase( k.GetEntity() );
+   knowledges_[ & k.GetOwner() ].erase( k.GetEntity() );
 }

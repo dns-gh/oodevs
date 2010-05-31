@@ -96,6 +96,7 @@ bool PHY_RoleAction_Flying::Land()
     if( !pActionFly_ ) 
         return false;
 
+    entity_.UnregisterAction( pActionFly_->GetId() );
     rHeight_ = 0.;
     pActionFly_.reset();
     return true;
