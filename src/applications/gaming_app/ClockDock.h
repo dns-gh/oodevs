@@ -15,6 +15,7 @@ namespace kernel
     class Controllers;
 }
 
+class ActionsScheduler;
 class Simulation;
 
 // =============================================================================
@@ -28,15 +29,8 @@ class ClockDock : public QDockWindow
 public:
     //! @name Constructors/Destructor
     //@{
-             ClockDock( QWidget* parent, kernel::Controllers& controllers, const Simulation& simulation );
+             ClockDock( QWidget* parent, kernel::Controllers& controllers, const Simulation& simulation, ActionsScheduler& scheduler );
     virtual ~ClockDock();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    ClockDock( const ClockDock& );            //!< Copy constructor
-    ClockDock& operator=( const ClockDock& ); //!< Assignment operator
     //@}
 };
 

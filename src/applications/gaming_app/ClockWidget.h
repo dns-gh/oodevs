@@ -18,6 +18,7 @@ namespace kernel
     class Controllers;
 }
 
+class ActionsScheduler;
 class Publisher_ABC;
 class Profile;
 
@@ -35,7 +36,7 @@ class ClockWidget : public QHBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ClockWidget( QWidget* parent, kernel::Controllers& controllers, const Simulation& simulation );
+             ClockWidget( QWidget* parent, kernel::Controllers& controllers, const Simulation& simulation, ActionsScheduler& scheduler );
     virtual ~ClockWidget();
     //@}
 

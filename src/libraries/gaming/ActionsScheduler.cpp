@@ -89,10 +89,19 @@ namespace
 // -----------------------------------------------------------------------------
 void ActionsScheduler::Shift( long secs )
 {
-    QDateTime newTime = simulation_.GetDateTime().addSecs( secs );
+    SetDate( simulation_.GetDateTime().addSecs( secs ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsScheduler::SetDate
+// Created: SBO 2010-05-31
+// -----------------------------------------------------------------------------
+void ActionsScheduler::SetDate( const QDateTime& dateTime )
+{
+    QDateTime newTime( dateTime );
     if( newTime < simulation_.GetInitialDateTime() )
         newTime = simulation_.GetInitialDateTime();
     simulation::ControlDatetimeChange message;
-    message().mutable_date_time()->set_data( MakeGDHString( newTime ).c_str() );
-    message.Send( publisher_ );    
+    message().mutable_date_time()->set_data( MakeGDHString( dateTime ).c_str() );
+    message.Send( publisher_ );
 }

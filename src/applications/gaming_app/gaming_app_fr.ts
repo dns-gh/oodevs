@@ -569,6 +569,29 @@
     </message>
 </context>
 <context>
+    <name>ClockEditDialog</name>
+    <message>
+        <source>Edit current time</source>
+        <translation>Editer l&apos;heure courante</translation>
+    </message>
+    <message>
+        <source>Set current date and time: </source>
+        <translation>Modifier la date et l&apos;heure courante: </translation>
+    </message>
+    <message>
+        <source>New date and time: </source>
+        <translation>Nouvelle datet et heure: </translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+</context>
+<context>
     <name>ClockWidget</name>
     <message>
         <source>Day 1</source>
@@ -577,6 +600,10 @@
     <message>
         <source>Configure alarms</source>
         <translation>Configurer les alarmes</translation>
+    </message>
+    <message>
+        <source>Change date and time</source>
+        <translation>Editer la date et l&apos;heure</translation>
     </message>
 </context>
 <context>
@@ -2817,7 +2844,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Clear traces</source>
-        <translation>Effacer les traces</translation>
+        <translation type="obsolete">Effacer les traces</translation>
     </message>
 </context>
 <context>

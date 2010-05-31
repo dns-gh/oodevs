@@ -283,7 +283,8 @@ MainWindow::MainWindow( kernel::Controllers& controllers, ::StaticModel& staticM
     setDockEnabled( infoWnd, Qt::DockTop, false );
 
     // Clock
-    QDockWindow* clockWnd = new ClockDock( this, controllers_, simulation );
+    ActionsScheduler* scheduler = new ActionsScheduler( this, controllers_, simulation, model_.actions_, publisher );
+    QDockWindow* clockWnd = new ClockDock( this, controllers_, simulation, *scheduler );
     moveDockWindow( clockWnd, Qt::DockRight );
     setDockEnabled( clockWnd, Qt::DockTop, false );
 
@@ -319,7 +320,6 @@ MainWindow::MainWindow( kernel::Controllers& controllers, ::StaticModel& staticM
 
     // Actions panel
     {
-        ActionsScheduler* scheduler = new ActionsScheduler( this, controllers_, simulation, model_.actions_, publisher );
         TimelinePanel* timelinePanel = new TimelinePanel( this, controllers_, model_.actions_, *scheduler, config_, *factory );
         moveDockWindow( timelinePanel, Qt::DockTop );
         timelinePanel->hide();

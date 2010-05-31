@@ -47,6 +47,7 @@ public:
     //@{
     QDateTime GetDateTime() const;
     void Shift( long secs );
+    void SetDate( const QDateTime& dateTime );
     //@}
 
 private:

@@ -18,6 +18,7 @@ ChatDock.cpp \
 ChatRoom.cpp \
 ChatWidget.cpp \
 ClockDock.cpp \
+ClockEditDialog.cpp \
 ClockWidget.cpp \
 ConnectDialog.cpp \
 ConnectionMenu.cpp \
