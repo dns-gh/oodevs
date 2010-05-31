@@ -78,7 +78,7 @@ public:
 
     //! @name Event handlers
     //@{
-    void LoadForTransport   ( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable );
+    void LoadForTransport   ( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable, bool& bTransportedByAnother );
     void NotifyMovingInsideObject ( MIL_Object_ABC& object );
     void NotifyMovingOutsideObject( MIL_Object_ABC& object );
     void NotifyPutInsideObject( MIL_Object_ABC& object );

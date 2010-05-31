@@ -189,6 +189,7 @@ int PHY_RoleAction_Transport::Load()
 MT_Float PHY_RoleAction_Transport::DoLoad( const MT_Float rWeightToLoad )
 {
     MT_Float rWeightLoaded = 0.;
+    bool bTransportedByAnother = false;
 
     for( IT_TransportedPionMap it = transportedPions_.begin(); it != transportedPions_.end() && rWeightLoaded < rWeightToLoad; ++it )
     {
@@ -198,14 +199,16 @@ MT_Float PHY_RoleAction_Transport::DoLoad( const MT_Float rWeightToLoad )
         if( it->second.rRemainingWeight_ <= 0. )
             continue;
 
-        if( it->second.rTransportedWeight_ <= 0. /* TODO && pion.CanBeTransported() */ ) // Filer position embarquement si bTransportOnlyLoadable_  + transporteur
+        pion.Apply(&TransportNotificationHandler_ABC::LoadForTransport, transporter_, transportData.bTransportOnlyLoadable_, bTransportedByAnother );
+       
+        if( it->second.rTransportedWeight_ <= 0. && bTransportedByAnother /* TODO && pion.CanBeTransported() */ ) // Filer position embarquement si bTransportOnlyLoadable_  + transporteur
             continue; // LoadForTransport fails when the 'pion' is already transported by another unit
 
-        pion.Apply(&TransportNotificationHandler_ABC::LoadForTransport, transporter_, transportData.bTransportOnlyLoadable_ );
         const MT_Float rTmpWeight = std::min( rWeightToLoad - rWeightLoaded, it->second.rRemainingWeight_ );
         it->second.rTransportedWeight_ += rTmpWeight;
         it->second.rRemainingWeight_   -= rTmpWeight;
         rWeightLoaded                  += rTmpWeight;
+
     }
     return rWeightLoaded;
 }
@@ -395,6 +398,7 @@ bool PHY_RoleAction_Transport::AddPion( MIL_Agent_ABC& transported, bool bTransp
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Transport::MagicLoadPion( MIL_Agent_ABC& transported, bool bTransportOnlyLoadable )
 {
+    bool bTransportedByAnother = false;
     if(   transported == transporter_
         || transportedPions_.find( &transported ) != transportedPions_.end() )
         return;
@@ -404,7 +408,7 @@ void PHY_RoleAction_Transport::MagicLoadPion( MIL_Agent_ABC& transported, bool b
          return;
 
     LoadableStrategy strategy( bTransportOnlyLoadable );
-    transported.Apply(&TransportNotificationHandler_ABC::LoadForTransport, transporter_, bTransportOnlyLoadable );
+    transported.Apply(&TransportNotificationHandler_ABC::LoadForTransport, transporter_, bTransportOnlyLoadable, bTransportedByAnother );
     std::auto_ptr< TransportWeightComputer_ABC > weightComputer( transporter_.GetAlgorithms().transportComputerFactory_->CreateWeightComputer( &strategy ) );
     sTransportData& data = transportedPions_[ &transported ].sTransportData::sTransportData(
             transported.Execute( *weightComputer ).TotalTransportedWeight(),

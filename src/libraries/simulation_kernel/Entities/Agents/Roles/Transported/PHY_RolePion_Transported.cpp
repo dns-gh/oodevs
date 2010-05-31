@@ -118,13 +118,16 @@ void PHY_RolePion_Transported::CancelTransport( const MIL_Agent_ABC& transporter
 // Name: PHY_RolePion_Transported::LoadForTransport
 // Created: NLD 2004-11-19
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Transported::LoadForTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable )
+void PHY_RolePion_Transported::LoadForTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable, bool& bTransportedByAnother )
 {
 
     if( pTransporter_ && pTransporter_ == &transporter)
         return ;//true;
     if( pTransporter_ )
+    {
+        bTransportedByAnother = true;
         return ;//false;
+    }
 
     pTransporter_ = &transporter;
 

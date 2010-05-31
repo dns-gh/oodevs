@@ -34,7 +34,7 @@ TransportNotificationHandler_ABC::~TransportNotificationHandler_ABC()
 // Name: TransportNotificationHandler_ABC::LoadForTransport
 // Created: LDC 2009-10-05
 // -----------------------------------------------------------------------------
-void TransportNotificationHandler_ABC::LoadForTransport( const MIL_Agent_ABC& /*transporter*/, bool /*bTransportOnlyLoadable*/ )
+void TransportNotificationHandler_ABC::LoadForTransport( const MIL_Agent_ABC& /*transporter*/, bool /*bTransportOnlyLoadable*/, bool& /*bTransportedByAnother*/ )
 {
 
 }

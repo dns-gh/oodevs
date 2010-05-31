@@ -257,7 +257,7 @@ const PHY_RolePion_Reinforcement::T_PionSet& PHY_RolePion_Reinforcement::GetRein
 // Name: PHY_RolePion_Reinforcement::LoadForTransport
 // Created: AHC 2009-09-23
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Reinforcement::LoadForTransport( const MIL_Agent_ABC& /*transporter*/, bool /*bTransportOnlyLoadable*/ )
+void PHY_RolePion_Reinforcement::LoadForTransport( const MIL_Agent_ABC& /*transporter*/, bool /*bTransportOnlyLoadable*/, bool& /*bTransportedByAnother*/ )
 {
     CancelReinforcement();
     const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = GetReinforcements();
