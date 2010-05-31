@@ -45,13 +45,17 @@ public:
     virtual QString GetName() const;
     virtual bool IsValid() const;
     virtual bool IsDone() const;
-    bool IsSegment() const;
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
     Polygon& operator=( const Polygon& ); //!< Assignement operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    bool IsSegment() const;
     //@}
 
 private:

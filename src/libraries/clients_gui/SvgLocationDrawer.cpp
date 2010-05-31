@@ -69,14 +69,11 @@ void SvgLocationDrawer::SetColor( const QColor& color )
 // -----------------------------------------------------------------------------
 void SvgLocationDrawer::Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools, const QColor& color, bool overlined )
 {
-    if( location.IsValid() )
-    {
-        SetColor( color );
-        viewport_ = viewport;
-        overlined_ = overlined;
-        tools_ = &tools;
-        location.Accept( *this );
-    }
+    SetColor( color );
+    viewport_ = viewport;
+    overlined_ = overlined;
+    tools_ = &tools;
+    location.Accept( *this );
 }
 
 // -----------------------------------------------------------------------------

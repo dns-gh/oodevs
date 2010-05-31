@@ -86,7 +86,7 @@ void Polygon::Translate( const geometry::Point2f& from, const geometry::Vector2f
 // -----------------------------------------------------------------------------
 bool Polygon::IsValid() const
 {
-    return points_.size() >= 3;
+    return !IsSegment();
 }
 
 // -----------------------------------------------------------------------------
@@ -105,7 +105,7 @@ bool Polygon::IsDone() const
 bool Polygon::IsSegment() const
 {
     // returns false it at least 3 points are different, true otherwise
-    if( points_.size() >= 3 )
+    if( points_.size() > 2 )
         for( CIT_PointVector it = points_.begin() + 1; it != points_.end(); ++it )
             if( *it != points_.front() )
                 for( CIT_PointVector it2 = it; it2 != points_.end(); ++it2 )

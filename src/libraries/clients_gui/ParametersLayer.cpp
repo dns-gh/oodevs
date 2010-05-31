@@ -193,7 +193,7 @@ void ParametersLayer::StartLine( ShapeHandler_ABC& handler )
 void ParametersLayer::StartRectangle( ShapeHandler_ABC& handler )
 {
     cursors_->SelectTool( MAKE_PIXMAP( polygon_cursor ), true );
-    Start( handler, class Rectangle() );
+    Start( handler, kernel::Rectangle() );
 }
 
 // -----------------------------------------------------------------------------
@@ -203,7 +203,7 @@ void ParametersLayer::StartRectangle( ShapeHandler_ABC& handler )
 void ParametersLayer::StartPolygon( ShapeHandler_ABC& handler )
 {
     cursors_->SelectTool( MAKE_PIXMAP( polygon_cursor ), true );
-    Start( handler, class Polygon() );
+    Start( handler, kernel::Polygon() );
 }
 
 // -----------------------------------------------------------------------------
@@ -254,17 +254,16 @@ void ParametersLayer::Reset()
 // -----------------------------------------------------------------------------
 void ParametersLayer::NotifyDone()
 {
-    editor_.EndEdit();
-    ShapeHandler_ABC* handler = handler_;
-    Location_ABC* location = current_;
-    handler_ = 0; current_ = 0;
-    if( location )
+    if( !current_ || current_ && current_->IsValid() )
     {
-        kernel::Polygon* polygon = dynamic_cast< kernel::Polygon* >( location );
-        if( polygon == 0 || !polygon->IsSegment() )
+        editor_.EndEdit();
+        ShapeHandler_ABC* handler = handler_;
+        Location_ABC* location = current_;
+        handler_ = 0; current_ = 0;
+        if( location )
             handler->Handle( *location );
+        cursors_->SelectTool( QCursor(), false );
     }
-    cursors_->SelectTool( QCursor(), false );
 }
 
 // -----------------------------------------------------------------------------
@@ -273,7 +272,7 @@ void ParametersLayer::NotifyDone()
 // -----------------------------------------------------------------------------
 void ParametersLayer::SelectRaster( ShapeHandler_ABC& handler )
 {
-    Location_ABC* location = &class Rectangle().Clone();
+    Location_ABC* location = new kernel::Rectangle();
     location->AddPoint( world_.BottomLeft() );
     location->AddPoint( world_.TopRight() );
     handler.Handle( *location );
