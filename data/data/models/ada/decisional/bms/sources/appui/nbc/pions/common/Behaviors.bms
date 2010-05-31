@@ -192,6 +192,7 @@ node "BEH_Nbc_Pion_FaireUneMesureDans"
 {
     activations =
     {
+        { "ACT_Pion_Nbc_ReconnaitreZone", {} },
         { "ACT_NBC_FaireMesure", {} },
         { "ACT_Dep_SePoster", {} },
     },
@@ -213,13 +214,16 @@ node "BEH_Nbc_Pion_FaireUneMesureDans"
 ]]--[[// Condition de fin de mesure
 ]]--[[//---------------------------------------------------------------------
 ]]if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
-            self.bMesureEffectuee = true
-        end
-
-        --[[//---------------------------------------------------------------------
+            do
+                self.bMesureEffectuee = true
+                Activate( self.activations.ACT_Pion_Nbc_ReconnaitreZone, 1, setmetatable( { self._namedParams.objet, }, { __newindex = function( t, k, v ) if k == "__returnValue" then eEtat = v else rawset( t, k, v ) end end } ) )
+            end
+--[[//---------------------------------------------------------------------
 ]]--[[// Mesure une seule fois
 ]]--[[//---------------------------------------------------------------------
-]]if( not self.bMesureEffectuee ) then
+]]        end
+
+        if( not self.bMesureEffectuee ) then
             do
                 Activate( self.activations.ACT_NBC_FaireMesure, 1, {} )--[[// Juste pour RC
 ]]
@@ -401,5 +405,6 @@ connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Nbc_GererAutoDecontam
 connections[ #connections + 1 ] = { nodes.BEH_Dep_Virtuel_ProgressionVers, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
 connections[ #connections + 1 ] = { nodes.BEH_Nbc_GererAutoDecontamination, "ACT_Nbc_SeDecontaminer", nodes.ACT_Nbc_SeDecontaminer }
 connections[ #connections + 1 ] = { nodes.BEH_Nbc_Pion_FaireDesMesures, "BEH_Nbc_Pion_FaireUneMesureDans", nodes.BEH_Nbc_Pion_FaireUneMesureDans }
+connections[ #connections + 1 ] = { nodes.BEH_Nbc_Pion_FaireUneMesureDans, "ACT_Pion_Nbc_ReconnaitreZone", nodes.ACT_Pion_Nbc_ReconnaitreZone }
 connections[ #connections + 1 ] = { nodes.BEH_Nbc_Pion_FaireUneMesureDans, "ACT_NBC_FaireMesure", nodes.ACT_NBC_FaireMesure }
 connections[ #connections + 1 ] = { nodes.BEH_Nbc_Pion_FaireUneMesureDans, "ACT_Dep_SePoster", nodes.ACT_Dep_SePoster }

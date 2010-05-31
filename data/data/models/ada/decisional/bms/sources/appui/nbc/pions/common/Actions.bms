@@ -153,3 +153,50 @@ includedFiles["sources/appui/nbc/pions/common/Actions.bms"] = true
 
 }
 
+--[[// *****************************************************************************
+]]--[[// ACT_Pion_Nbc_ReconnaitreZone
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Pion_Nbc_ReconnaitreZone"
+{
+    actuators =
+    {
+        deplacement = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.zoneNBC = self.params[1]
+    end,
+
+    select = function( self )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]        if( ModuleBegins() ) then
+            do
+                if( not DEC_Agent_AutomateEstEmbraye() ) then
+                    DEC_RC( eRC_ZoneReconnue )
+                else
+                    DEC_Message( eRC_ZoneReconnue )
+                end
+
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Fin reco dévoiler les attribus du site ROTA
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        DEC_ConnaissanceObjet_Reconnaitre( self._namedParams.zoneNBC )
+                self.params.__returnValue = eActionEffectuee
+        do return end
+
+    end,
+
+    deselect = function( self )
+            end,
+
+}
+
