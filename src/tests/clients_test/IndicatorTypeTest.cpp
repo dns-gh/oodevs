@@ -277,4 +277,9 @@ BOOST_AUTO_TEST_CASE( IndicatorTypeResolver_TestVariableTypeIsCompatibleWithBuil
         boost::shared_ptr< DataType_ABC > rhs( factory.Instanciate( "list(equipment-state)", resolver ) );
         BOOST_CHECK( *lhs == *rhs );
     }
+    {
+        boost::shared_ptr< DataType_ABC > lhs( factory.Instanciate( "perception levels", resolver ) );
+        boost::shared_ptr< DataType_ABC > rhs( factory.Instanciate( "list(perception-level)", resolver ) );
+        BOOST_CHECK( *lhs == *rhs );
+    }
 }

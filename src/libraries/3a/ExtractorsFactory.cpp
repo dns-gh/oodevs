@@ -80,6 +80,8 @@ void ExtractorsFactory::CreateElement( const std::string& type, xml::xistream& x
         Extract< existences::DirectFireUnitId >( name, xis, result );
     else if( value == "fire-component-damage" )
         Extract< events::FireComponentDamages >( name, xis, result );
+    else if( value == "detecting-unit" )
+        Extract< events::UnitDetection >( name, xis, result );
     else
         Error( value );
 }

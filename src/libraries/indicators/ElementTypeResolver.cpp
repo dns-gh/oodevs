@@ -88,6 +88,7 @@ namespace
         boost::replace_all( result, "human states", "list(human-state)" );
         boost::replace_all( result, "human ranks", "list(human-rank)" );
         boost::replace_all( result, "equipment states", "list(equipment-state)" );
+        boost::replace_all( result, "perception levels", "list(perception-level)" );
         boost::replace_all( result, "operator", "string" ); // $$$$ SBO 2009-06-05: 
         return result;
     }

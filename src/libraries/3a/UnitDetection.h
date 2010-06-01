@@ -3,12 +3,12 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2010 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __FireComponentDamages_h_
-#define __FireComponentDamages_h_
+#ifndef __UnitDetection_h_
+#define __UnitDetection_h_
 
 #include "Extractors.h"
 #include "FilterHelper.h"
@@ -19,13 +19,14 @@ namespace extractors
 {
 
 // =============================================================================
-/** @class  FireComponentDamages
-    @brief  FireComponentDamages
-            components='id1,id2,...'
+/** @class  UnitDetection
+    @brief  UnitDetection
+            detected='id' id of unit to be detected
+            visibility='level1,level2...' detection level
 */
-// Created: AGE 2007-10-24
+// Created: SBO 2010-06-01
 // =============================================================================
-class FireComponentDamages : public Extractor< NumericValue >
+class UnitDetection : public Extractor< NumericValue >
 {
 public:
     //! @name Types
@@ -36,16 +37,16 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-                 FireComponentDamages();
-    /*implicit*/ FireComponentDamages( xml::xistream& xis );
-    virtual     ~FireComponentDamages() {}
+                 UnitDetection();
+    /*implicit*/ UnitDetection( xml::xistream& xis );
+    virtual     ~UnitDetection() {}
     //@}
 
     //! @name Operations
     //@{
     bool HasValue( const MsgSimToClient& wrapper ) const
     { 
-        return wrapper.message().has_stop_unit_fire();
+        return wrapper.message().has_unit_detection();
     }
     float Extract( const MsgSimToClient& wrapper ) const;
     //@}
@@ -53,10 +54,11 @@ public:
 private:
     //! @name Member data
     //@{
-    FilterHelper< int > filter_;
+    unsigned long detectedUnitId_;
+    int visibilityMask_;
     //@}
 };
 
 }
 
-#endif // __FireComponentDamages_h_
+#endif // __UnitDetection_h_

@@ -41,7 +41,7 @@ float FireComponentDamages::Extract( const MsgSimToClient& wrapper ) const
     for( int u = 0; u < stop.units_damages().elem_size(); ++u )
     {
         const MsgUnitFireDamages& damages = stop.units_damages().elem( u );
-        for( unsigned e = 0; e < damages.equipments().elem_size(); ++e )
+        for( int e = 0; e < damages.equipments().elem_size(); ++e )
         {
             const MsgUnitEquipmentFireDamage& damage = damages.equipments().elem( e );
             if( filter_.IsAllowed( damage.equipement_type() ) )

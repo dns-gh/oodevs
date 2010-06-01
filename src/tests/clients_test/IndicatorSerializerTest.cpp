@@ -446,4 +446,23 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestHumansStatusForUnits )
     ParseAndCheck( "Sum( Domain( Humans( $ranks, $states ), $Units ) )", expected );
 }
 
+// -----------------------------------------------------------------------------
+// Name: IndicatorSerializer_TestUnitDetection
+// Created: SBO 2010-06-01
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestUnitDetection )
+{
+    const std::string expected = 
+        "<indicator>"
+            "<extract detected='69' function='detecting-unit' id='1' visibility='detected,recognized,identified'/>"
+            "<transform function='domain' id='2' input='1' select='42,51' type='unsigned long'/>"
+            "<reduce function='sum' id='3' input='2' type='unsigned long'/>"
+        "</indicator>";
+
+    RegisterVariable( "units", "unit list", "42,51" );
+    RegisterVariable( "unit", "unit", "69" );
+    RegisterVariable( "visibility", "perception levels", "detected,recognized,identified" );
+    ParseAndCheck( "Sum( Domain( Detecting-unit( $unit, $visibility), $units ) )", expected );
+}
+
 BOOST_AUTO_TEST_SUITE_END()

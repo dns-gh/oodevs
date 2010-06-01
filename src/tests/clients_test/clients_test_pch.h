@@ -10,8 +10,6 @@
 #ifndef __clients_test_pch_h_
 #define __clients_test_pch_h_
 
-#include <qstring.h>
-
 #include <boost/test/auto_unit_test.hpp>
 #include <boost/test/floating_point_comparison.hpp>
 

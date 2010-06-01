@@ -9,7 +9,7 @@
 // *****************************************************************************
 
 #include "clients_test_pch.h"
-
+#undef max
 #include "preparation/IdManager.h"
 #include "preparation/KnowledgeGroup.h"
 #include "preparation/KnowledgeGroupCommunications.h"
@@ -17,19 +17,13 @@
 #include "preparation/Model.h"
 #include "preparation/StaticModel.h"
 #include "preparation/TeamCommunications.h"
-
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/KnowledgeGroupFactory_ABC.h"
 #include "clients_kernel/KnowledgeGroupType.h"
 #include "clients_kernel/Team_ABC.h"
-
 #include "XmlChecks.h"
 #include "MockResolver.h"
-
 #include <xeumeuleu/xml.hpp>
-
-#include <QApplication.h>
-
 
 namespace
 {

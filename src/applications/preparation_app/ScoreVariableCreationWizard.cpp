@@ -54,6 +54,7 @@ ScoreVariableCreationWizard::ScoreVariableCreationWizard( QWidget* parent, kerne
         type_->AddItem( tr( "Zone" ), "zone" );
         type_->AddItem( tr( "Human states" ), "human states" );
         type_->AddItem( tr( "Human ranks" ), "human ranks" );
+        type_->AddItem( tr( "Perception levels" ), "perception levels" );
         type_->AddItem( tr( "Equipment states" ), "equipment states" );
         connect( type_, SIGNAL( activated( int ) ), SLOT( OnChangeType() ) );
         grid->addWidget( box, 0, 0 );
@@ -192,6 +193,11 @@ namespace
     {
         return boost::assign::list_of( "available" )( "unavailable" )( "repairable" )( "repairing" )( "prisoner" );
     }
+
+    std::vector< std::string > PerceptionLevels()
+    {
+        return boost::assign::list_of( "invisible" )( "detected" )( "recognized" )( "identified" )( "recorded" );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -223,6 +229,8 @@ boost::shared_ptr< actions::gui::Param_ABC > ScoreVariableCreationWizard::Create
         result.reset( new ParamStringEnumeration( this, tr( "Human ranks" ), parameter, HumanRanks() ) );
     else if( type == "equipment states" )
         result.reset( new ParamStringEnumeration( this, tr( "Equipment states" ), parameter, EquipmentStates() ) );
+    else if( type == "perception levels" )
+        result.reset( new ParamStringEnumeration( this, tr( "Perception levels" ), parameter, PerceptionLevels() ) );
     return result;
 }
 

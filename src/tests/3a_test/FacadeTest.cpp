@@ -763,7 +763,7 @@ BOOST_AUTO_TEST_CASE( Facade_TestHumans )
     AarFacade facade( publisher, 42 );
     boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
 
-    BOOST_WARN_MESSAGE( 0, "TODO. I'm still lazy." );
+    BOOST_TODO;
 
 //    MockPublisher publisher;
 //    double expectedResult[] = { 0, -54, 0, 0, -100 };
@@ -772,6 +772,10 @@ BOOST_AUTO_TEST_CASE( Facade_TestHumans )
 //    publisher.verify();
 }
 
+// -----------------------------------------------------------------------------
+// Name: Facade_TestTypeAdaptation
+// Created: AGE 2004-12-15
+// -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Facade_TestTypeAdaptation )
 {
     const std::string input =
@@ -786,9 +790,10 @@ BOOST_AUTO_TEST_CASE( Facade_TestTypeAdaptation )
     AarFacade facade( publisher, 42 );
     boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
 }
-/*
+
 BOOST_AUTO_TEST_CASE( Facade_TestBadLexicalCast )
 {
+    /*
     const std::string input =
     "<indicator>"
         "<extract function='maintenance-handling-unit' id='1'/>"
@@ -802,8 +807,13 @@ BOOST_AUTO_TEST_CASE( Facade_TestBadLexicalCast )
     MockPublisher publisher;
     AarFacade facade( publisher, 42 );
     boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
+    */
 }
-*/
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestConflicts
+// Created: SBO 2010-06-01
+// -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Facade_TestConflicts )
 {
     const std::string input =
@@ -845,6 +855,63 @@ BOOST_AUTO_TEST_CASE( Facade_TestConflicts )
     publisher.verify();
 }
 
+namespace
+{
+    MsgSimToClient CreateUnitDetection( unsigned int detector, unsigned int detected, Common::EnumUnitVisibility visibility )
+    {
+        MsgSimToClient result;
+        MsgsSimToClient::MsgUnitDetection& message = *result.mutable_message()->mutable_unit_detection();
+        message.set_oid( detector );
+        message.set_detected_unit_oid( detected );
+        message.set_current_visibility( visibility );
+        message.set_max_visibility( visibility );
+        return result;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestUnitDetection
+// Created: SBO 2010-06-01
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( Facade_TestUnitDetection )
+{
+    const std::string input =
+    "<indicator>"
+        "<extract function='detecting-unit' id='1' detected='69' visibility='detected,recognized,identified'/>"
+        "<transform function='domain' id='2' input='1' select='42,51' type='unsigned long'/>"
+        "<reduce type='int' function='sum' input='2' id='sum'/>"
+        "<result function='plot' input='sum' type='int'/>"
+    "</indicator>";
+    xml::xistringstream xis( input );
+
+    MockPublisher publisher;
+    AarFacade facade( publisher, 42 );
+    boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
+
+    task->Receive( BeginTick() );
+    task->Receive( CreateUnitDetection( 12, 69, Common::detected ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( CreateUnitDetection( 42, 69, Common::identified ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( CreateUnitDetection( 42, 51, Common::recognized ) );
+    task->Receive( CreateUnitDetection( 51, 69, Common::detected ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( CreateUnitDetection( 42, 69, Common::invisible ) );
+    task->Receive( CreateUnitDetection( 51, 69, Common::recorded ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( CreateUnitDetection( 42, 69, Common::recognized ) );
+    task->Receive( CreateUnitDetection( 51, 69, Common::recognized ) );
+    task->Receive( EndTick() );
+
+    double expectedResult[] = { 0, 1, 1, 0, 2 };
+    MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
+    task->Commit();
+    publisher.verify();
+}
 
 // $$$$ AGE 2007-09-10: ressources consommées => variation <0
 //CREATE PROCEDURE dbo.[AAAT_LOGISTIQUE_RESSOURCES_CONSOMMEES_POUR_UNE_OU_PLUSIEURS_UNITES_ENTRE_T1_ET_T2_(Quantites)]

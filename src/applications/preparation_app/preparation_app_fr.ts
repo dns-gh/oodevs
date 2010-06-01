@@ -987,6 +987,14 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <source>Equipment states</source>
         <translation>Etats des équipements</translation>
     </message>
+    <message>
+        <source>Perception level</source>
+        <translation type="obsolete">Niveau de perception</translation>
+    </message>
+    <message>
+        <source>Perception levels</source>
+        <translation>Niveaux de perception</translation>
+    </message>
 </context>
 <context>
     <name>ScoreVariablesList</name>
