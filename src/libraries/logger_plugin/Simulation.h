@@ -44,7 +44,6 @@ public:
     //@{
     void Update( const MsgsSimToClient::MsgControlInformation& message );
     void Update( const MsgsSimToClient::MsgControlBeginTick& message );
-    void Update( const MsgsSimToClient::MsgControlEndTick& message );
 
     virtual QDateTime GetDateTime() const;
     virtual QDateTime GetInitialDateTime() const;

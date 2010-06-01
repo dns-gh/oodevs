@@ -10,8 +10,6 @@
 #ifndef __SimulationPublisher_ABC_h_
 #define __SimulationPublisher_ABC_h_
 
-
-////using namespace Common;
 namespace MsgsDispatcherToSim
 {
     class MsgDispatcherToSim;
@@ -21,7 +19,6 @@ namespace MsgsClientToSim
 {
     class MsgClientToSim;
 }
-
 
 namespace dispatcher
 {

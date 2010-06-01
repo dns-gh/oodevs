@@ -95,13 +95,3 @@ void Simulation::Update( const MsgsSimToClient::MsgControlBeginTick& message )
             initial_ = current_;
     }
 }
-
-// -----------------------------------------------------------------------------
-// Name: Simulation::Update
-// Created: SBO 2010-05-11
-// -----------------------------------------------------------------------------
-void Simulation::Update( const MsgsSimToClient::MsgControlEndTick& message )
-{
-    if( message.has_tick_duration() )
-        tickDuration_ = message.tick_duration();
-}

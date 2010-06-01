@@ -44,7 +44,7 @@ class SimulationModel
 public:
     //! @name Constructors/Destructor
     //@{
-     SimulationModel();
+             SimulationModel();
     virtual ~SimulationModel();
     //@}
 

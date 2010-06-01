@@ -155,10 +155,6 @@ void LoggerPlugin::Receive( const MsgsSimToClient::MsgSimToClient& message )
         date_ = Format( message.message().control_begin_tick().date_time().data().c_str() );
         simulation_->Update( message.message().control_begin_tick() );
     }
-    else if( message.message().has_control_end_tick() )
-    {
-        simulation_->Update( message.message().control_end_tick() );
-    }
     else if( message.message().has_unit_order() )
     {
         kernel::Entity_ABC* agent = model_.Agents().Find( message.message().unit_order().oid() );
