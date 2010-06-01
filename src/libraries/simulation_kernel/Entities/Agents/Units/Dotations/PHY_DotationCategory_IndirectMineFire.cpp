@@ -27,7 +27,7 @@ PHY_DotationCategory_IndirectFire_ABC& PHY_DotationCategory_IndirectMineFire::Cr
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
 PHY_DotationCategory_IndirectMineFire::PHY_DotationCategory_IndirectMineFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis )
-    : PHY_DotationCategory_IndirectObjectCreationFire( type, dotationCategory, xis, "zone minee par dispersion" )
+    : PHY_DotationCategory_IndirectObjectCreationFire( type, dotationCategory, xis, "mined area (scattered)" )
 {
     xis >> xml::attribute( "mine-count", nNbrObjects_ );
 }

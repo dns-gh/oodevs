@@ -86,9 +86,17 @@ void PHY_DotationCategory_IndirectObjectCreationFire::ApplyEffect( const MIL_Age
     points.push_back( vTargetPosition + vRotatedFireDirection );
     const TER_Localisation localisation( TER_Localisation::eEllipse, points );
 
-    MIL_Object_ABC* pObject = MIL_Singletons::GetEntityManager().CreateObject( objectType_, firer.GetArmy(), localisation );
-    ConstructionAttribute* pAttribute = pObject->RetrieveAttribute< ConstructionAttribute >();
-    if( pAttribute )
-        pAttribute->Build( 1. );
-    pObject->GetAttribute< TimeLimitedAttribute >() = TimeLimitedAttribute( nLifeDuration_ );
+    try
+    {
+        MIL_Object_ABC* pObject = MIL_Singletons::GetEntityManager().CreateObject( objectType_, firer.GetArmy(), localisation );
+        ConstructionAttribute* pAttribute = pObject->RetrieveAttribute< ConstructionAttribute >();
+        if( pAttribute )
+            pAttribute->Build( 1. );
+        pObject->GetAttribute< TimeLimitedAttribute >() = TimeLimitedAttribute( nLifeDuration_ );
+    }
+    catch( std::runtime_error& )
+    {
+        // avoid crash if object cannot be created
+        MT_LOG_ERROR_MSG( "Création de l'objet de type" << objectType_ << "impossible" );
+    }
 }
