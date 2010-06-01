@@ -1498,15 +1498,7 @@ void AgentServerMsgMgr::OnReceiveMsgActionCreateFireOrderAck( const MsgsSimToCli
 void AgentServerMsgMgr::OnReceiveMsgAarInformation( const MsgsAarToClient::MsgAarInformation& message )
 {
     GetModel().aar_.Update( message );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgIndicatorInformation
-// Created: SBO 2009-12-18
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgIndicatorInformation( const MsgsAarToClient::MsgAarInformation& asnMsg )
-{
-    GetModel().scoreDefinitions_.Update( asnMsg );
+    GetModel().scoreDefinitions_.Update( message );
 }
 
 // -----------------------------------------------------------------------------
