@@ -30,9 +30,10 @@ function Start()
         {
             events.agents:AgentEnters( drawings:Create( "Area1" ):GetCoordinates() ),
             { "ApplyMagic" },
-            function( )
-                Trace( "step ApplyMagic" )
+            function( entity )
+                if  config.id.blueUnit == entity:GetIdentifier() then
                     actions:IssueOrder( "Magic" )
+                end
             end
         },
     }
