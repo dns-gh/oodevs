@@ -220,6 +220,10 @@
         <source>Description:</source>
         <translation>Description:</translation>
     </message>
+    <message>
+        <source>Error exporting data</source>
+        <translation>Erreur pendant l&apos;export des données</translation>
+    </message>
 </context>
 <context>
     <name>ExportFilter</name>
@@ -324,7 +328,7 @@ Merci de sélectionner un autre fichier à importer.</translation>
     </message>
     <message>
         <source>Time parameters or location are incorrect</source>
-        <translation type="unfinished">Paramètres de temps ou de localisation sont incorrects</translation>
+        <translation>Les paramètres de temps ou de localisation sont incorrects</translation>
     </message>
 </context>
 <context>

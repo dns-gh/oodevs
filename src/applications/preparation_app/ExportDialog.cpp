@@ -91,11 +91,16 @@ void ExportDialog::OnSelectFilter( int index )
 void ExportDialog::OnAccept()
 {
     if( !output_->text().isEmpty() )
-    {
-        const ExportFilter& filter = filters_.at( list_->currentItem() );
-        filter.Execute( output_->text().ascii() );
-        accept();
-    }
+        try
+        {
+            const ExportFilter& filter = filters_.at( list_->currentItem() );
+            filter.Execute( output_->text().ascii() );
+            accept();
+        }
+        catch( std::exception& e )
+        {
+            QMessageBox::critical( this, tr( "Error exporting data" ), e.what() );
+        }
 }
 
 // -----------------------------------------------------------------------------
