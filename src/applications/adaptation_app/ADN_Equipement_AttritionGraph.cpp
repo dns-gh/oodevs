@@ -75,6 +75,29 @@ private:
 };
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Equipement_AttritionGraph::ADN_AttritionGraphTooltip
+// Created: JSR 2010-06-01
+// -----------------------------------------------------------------------------
+ADN_Equipement_AttritionGraph::ADN_GraphTooltip::ADN_GraphTooltip( ADN_Equipement_AttritionGraph* parent )
+    : QToolTip( parent )
+    , graph( parent )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Equipement_AttritionGraph::maybeTip
+// Created: JSR 2010-06-01
+// -----------------------------------------------------------------------------
+void ADN_Equipement_AttritionGraph::ADN_GraphTooltip::maybeTip( const QPoint& point)
+{
+    QRect rc;
+    QString s = graph->GetTextTooltip( point, rc );
+    if( !s.isEmpty() )
+        tip( rc, s );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Equipement_AttritionGraph constructor
 // Created: JSR 2010-04-29
 // -----------------------------------------------------------------------------
@@ -105,6 +128,8 @@ ADN_Equipement_AttritionGraph::ADN_Equipement_AttritionGraph( QWidget* pParent /
     effectStrings_.push_back( tr( "Wounded (%1)" ).arg( ADN_Tr::ConvertFromDoctorSkills( eDoctorSkills_U2 ).c_str() ) );
     effectStrings_.push_back( tr( "Wounded (%1)" ).arg( ADN_Tr::ConvertFromDoctorSkills( eDoctorSkills_U3 ).c_str() ) );
     effectStrings_.push_back( tr( "Unwounded" ) );
+
+    tooltip_ = new ADN_GraphTooltip( this );
 }
 
 // -----------------------------------------------------------------------------
@@ -114,6 +139,7 @@ ADN_Equipement_AttritionGraph::ADN_Equipement_AttritionGraph( QWidget* pParent /
 ADN_Equipement_AttritionGraph::~ADN_Equipement_AttritionGraph()
 {
     delete pConnector_;
+    delete tooltip_;
 }
 
 // -----------------------------------------------------------------------------
@@ -241,6 +267,33 @@ void ADN_Equipement_AttritionGraph::Update()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Equipement_AttritionGraph::GetTextTooltip
+// Created: JSR 2010-06-01
+// -----------------------------------------------------------------------------
+QString ADN_Equipement_AttritionGraph::GetTextTooltip( const QPoint& point, QRect& rc ) const
+{
+    for( CIT_Columns column = columns_.begin(); column != columns_.end(); ++column )
+    {
+        GraphData::CIT_Values value = column->values_.begin();
+        std::vector< QString >::const_iterator string = effectStrings_.begin();
+
+        for( GraphData::CIT_Rectangles rect = column->rectangles_.begin(); rect != column->rectangles_.end(); ++rect, ++value, ++string )
+        {
+            if( rect->contains( point ) )
+            {
+                rc = *rect;
+                double val = *value * column->value_ * 0.01;
+                QString str = QString( "%1:\n %2 % \n%3:\n %4 %" ).arg( column->strName_ )
+                    .arg( column->value_ ).arg( *string ).arg( val, 0, 'g', 3 );
+                return str;
+            }
+        }
+    }
+
+    return QString();
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Equipement_AttritionGraph::paintEvent
 // Created: JSR 2010-04-29
 // -----------------------------------------------------------------------------
@@ -322,13 +375,18 @@ void ADN_Equipement_AttritionGraph::paintEvent( QPaintEvent* )
 
             const double vRatio = ( double ) ( columnHeight - 4 ) / 100.;
 
+            column->rectangles_.clear();
+
             for( GraphData::IT_Values values = column->values_.begin(); values != column->values_.end(); ++values )
             {
                 colorIndex = ( colorIndex + 1 ) % effectColors_.size();
 
                 double value = *values * vRatio;
                 if( value < 0.5 )
+                {
+                    column->rectangles_.push_back( QRect() );
                     continue;
+                }
 
                 unsigned int lineHeight = unsigned int( value ) + 1;
                 lineHeight = std::min( lineHeight, columnHeight - cumulatedHeight - 3 );
@@ -336,10 +394,13 @@ void ADN_Equipement_AttritionGraph::paintEvent( QPaintEvent* )
                 painter.setPen( Qt::NoPen );
                 painter.setBrush( effectColors_[ colorIndex ] );
 
-                painter.drawRect( columnX + 2
+                QRect rc( columnX + 2
                                 , graphHeight - columnHeight + cumulatedHeight + Margin + 2
                                 , columnWidth - 3
                                 , lineHeight );
+                column->rectangles_.push_back( rc );
+
+                painter.drawRect( rc );
 
                 cumulatedHeight += lineHeight;            
             }

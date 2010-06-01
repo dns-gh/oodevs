@@ -36,11 +36,28 @@ public:
         }
 
         typedef std::vector < double >      T_Values;
-        typedef T_Values::iterator        IT_Values;
+        typedef T_Values::iterator         IT_Values;
+        typedef T_Values::const_iterator  CIT_Values;
+
+        typedef std::vector < QRect >          T_Rectangles;
+        typedef T_Rectangles::const_iterator CIT_Rectangles;
 
         unsigned int value_;
         T_Values     values_;
         QString      strName_;
+        T_Rectangles rectangles_;
+    };
+
+    class ADN_GraphTooltip : public QToolTip
+    {
+    public:
+        ADN_GraphTooltip( ADN_Equipement_AttritionGraph* parent );
+
+    protected:
+        virtual void maybeTip( const QPoint& point);
+
+    private:
+        ADN_Equipement_AttritionGraph* graph;
     };
 
 public:
@@ -55,7 +72,8 @@ public:
     void AddAttrition( ADN_Equipement_Data::AttritionInfos& info );
     void RemoveAttrition( ADN_Equipement_Data::AttritionInfos& info );
     void ClearAttritions();
-    void Update();    
+    void Update();
+    QString GetTextTooltip( const QPoint& point, QRect& rc ) const;
     //@}
 
 protected:
@@ -67,8 +85,9 @@ protected:
 private:
     //! @name Member data
     //@{
-    typedef std::vector < GraphData > T_Columns;
-    typedef T_Columns::iterator      IT_Columns;
+    typedef std::vector < GraphData >   T_Columns;
+    typedef T_Columns::iterator        IT_Columns;
+    typedef T_Columns::const_iterator CIT_Columns;
     T_Columns columns_;
 
     typedef std::vector< ADN_Equipement_Data::AttritionInfos* > T_Attritions;
@@ -77,6 +96,8 @@ private:
 
     std::vector < QColor > effectColors_;
     std::vector < QString > effectStrings_;
+
+    ADN_GraphTooltip* tooltip_;
     //@}
 };
 
