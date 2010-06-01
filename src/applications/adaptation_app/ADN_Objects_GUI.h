@@ -70,6 +70,8 @@ public:
 
 		eInterferenceCapacityPresent,
 
+        eInteractWithEnemyCapacityPresent,
+
         eIntoxicationCapacityPresent,
         eIntoxicationCapacity_MaxToxic,
 

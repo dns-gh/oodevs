@@ -10,9 +10,11 @@
 #include "simulation_kernel_pch.h"
 #include "InterferenceCapacity.h"
 #include "Object.h"
+#include "MIL_ObjectType_ABC.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Communications/PHY_RoleInterface_Communications.h"
+#include "Entities/Objects/InteractWithEnemyCapacity.h"
 
 #include <xeumeuleu/xml.h>
 
@@ -22,7 +24,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( InterferenceCapacity )
 // Name: InterferenceCapacity constructor
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
-InterferenceCapacity::InterferenceCapacity( xml::xistream& /*xis*/ )    
+InterferenceCapacity::InterferenceCapacity( xml::xistream& /*xis*/ )
 {
     // NOTHING
 }
@@ -40,7 +42,7 @@ InterferenceCapacity::InterferenceCapacity()
 // Name: InterferenceCapacity constructor
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
-InterferenceCapacity::InterferenceCapacity( const InterferenceCapacity& /*from*/ )    
+InterferenceCapacity::InterferenceCapacity( const InterferenceCapacity& /*from*/ )
 {
     // NOTHING
 }
@@ -91,7 +93,7 @@ void InterferenceCapacity::Instanciate( Object& object ) const
 // -----------------------------------------------------------------------------
 void InterferenceCapacity::ProcessAgentInside( Object& object, MIL_Agent_ABC& agent )
 {
-    if( object.GetArmy().IsAnEnemy( agent.GetArmy() ) == eTristate_True )
+    if( object.GetType().GetCapacity< InteractWithEnemyCapacity >() == 0 || object.GetArmy().IsAnEnemy( agent.GetArmy() ) == eTristate_True )
         agent.GetRole< PHY_RoleInterface_Communications >().Jam( object );
 }
 

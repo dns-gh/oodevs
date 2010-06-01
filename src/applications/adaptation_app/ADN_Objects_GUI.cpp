@@ -268,14 +268,9 @@ void ADN_Objects_GUI::Build()
         vInfosConnectors[ eInterferenceCapacityPresent ] = & interference->GetConnector();
     }
 
-	ADN_GroupBox* supply = new ADN_GroupBox( 3, Qt::Horizontal, tr( ADN_Objects_Data::ADN_CapacityInfos_Supply::DISPLAY_NAME.c_str() ), hBox );        
+	ADN_GroupBox* interactWithEnemy = new ADN_GroupBox( 3, Qt::Horizontal, tr( ADN_Objects_Data::ADN_CapacityInfos_InteractWithEnemy::DISPLAY_NAME.c_str() ), hBox );        
     {
-        vInfosConnectors[ eSupplyCapacityPresent ] = & supply->GetConnector();
-    }
-
-	ADN_GroupBox* occupable = new ADN_GroupBox( 3, Qt::Horizontal, tr( ADN_Objects_Data::ADN_CapacityInfos_Occupable::DISPLAY_NAME.c_str() ), hBox );        
-    {
-        vInfosConnectors[ eOccupableCapacityPresent ] = & occupable->GetConnector();
+        vInfosConnectors[ eInteractWithEnemyCapacityPresent ] = & interactWithEnemy->GetConnector();
     }
 
 	ADN_GroupBox* protection = new ADN_GroupBox( 3, Qt::Horizontal, tr( ADN_Objects_Data::ADN_CapacityInfos_Protection::DISPLAY_NAME.c_str() ), hBox );        
@@ -284,6 +279,16 @@ void ADN_Objects_GUI::Build()
         builder.AddField< ADN_EditLine_Int >( protection, tr( "Max size" ), vInfosConnectors[ eProtectionCapacity_MaxSize ], tr( "agents" ) );
         builder.SetValidator( new ADN_IntValidator( 1, INT_MAX, this ) );
         builder.AddField< ADN_CheckBox >( protection, tr( "Genie prepared" ), vInfosConnectors[ eProtectionCapacity_GeniePrepared ] );
+    }
+
+	ADN_GroupBox* occupable = new ADN_GroupBox( 3, Qt::Horizontal, tr( ADN_Objects_Data::ADN_CapacityInfos_Occupable::DISPLAY_NAME.c_str() ), hBox );        
+    {
+        vInfosConnectors[ eOccupableCapacityPresent ] = & occupable->GetConnector();
+    }
+
+	ADN_GroupBox* supply = new ADN_GroupBox( 3, Qt::Horizontal, tr( ADN_Objects_Data::ADN_CapacityInfos_Supply::DISPLAY_NAME.c_str() ), hBox );        
+    {
+        vInfosConnectors[ eSupplyCapacityPresent ] = & supply->GetConnector();
     }
 
     ADN_GroupBox* bridging = new ADN_GroupBox( 3, Qt::Horizontal, tr( ADN_Objects_Data::ADN_CapacityInfos_Bridging::DISPLAY_NAME.c_str() ), hBox );

@@ -113,7 +113,7 @@ void PHY_MeteoDataManager::OnReceiveMsgMeteo( const MsgsClientToSim::MsgMagicAct
         client::ControlGlobalMeteoAck asnReplyMsg;
         asnReplyMsg.Send( NET_Publisher_ABC::Publisher() );
     }
-    else if( MsgsClientToSim::MsgMagicAction_Type_local_meteo )
+    else if( asnMsg.type() == MsgsClientToSim::MsgMagicAction_Type_local_meteo )
     {
         weather::PHY_Meteo* meteo = new PHY_LocalMeteo( idManager_.GetFreeId(), asnMsg.parametres(), this );
         RegisterMeteo( *meteo );

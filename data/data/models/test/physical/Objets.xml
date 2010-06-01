@@ -36,6 +36,11 @@
     <interference/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
   </object>
+  <object geometry="polygon" name="Zone brouillage totale" symbol="G*EW***********" type="full jamming area">
+    <avoidable distance="250"/>
+    <interference/>
+    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
+  </object>
   <object geometry="polygon" name="Zone NBC" symbol="G*MPNR----****X" type="nbc zone">
     <avoidable distance="100"/>
     <contamination max-toxic="1"/>

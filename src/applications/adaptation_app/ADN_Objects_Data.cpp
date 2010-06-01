@@ -489,7 +489,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Contamination::WriteArchive( xml::xostr
 //! @name ADN_CapacityInfos_InteractionHeight
 //@{
 ADN_Objects_Data::ADN_CapacityInfos_InteractionHeight::ADN_CapacityInfos_InteractionHeight()
-: height_( 0 )
+    : height_( 0 )
 {
     height_.SetParentNode( *this );
 }
@@ -505,6 +505,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_InteractionHeight::WriteArchive( xml::x
     xos << xml::attribute( "height", height_ );
 }
 //@}
+
 
 //! @name ADN_CapacityInfos_Intoxication
 //@{
@@ -1012,6 +1013,8 @@ void ADN_Objects_Data::ADN_CapacityInfos_Scattering::WriteArchive( xml::xostream
     const std::string ADN_Objects_Data::##CLASS##::DISPLAY_NAME( NAME )    
 
     
+#pragma warning( push )
+#pragma warning( disable : 4356 )
 
 INIT_DATA( ADN_CapacityInfos_Activable,        "Activable",         "activable" );
 INIT_DATA( ADN_CapacityInfos_Attrition,        "Attrition",         "attrition" );
@@ -1046,6 +1049,7 @@ INIT_DATA( ADN_CapacityInfos_AttitudeModifier, "AttitudeModifier",  "attitude-mo
 INIT_DATA( ADN_CapacityInfos_Perception      , "Perception"      ,  "perception" );
 INIT_DATA( ADN_CapacityInfos_Scattering      , "Scattering"      ,  "scattering" );
 
+#pragma warning( pop )
 
 //-----------------------------------------------------------------------------
 // Name: ObjectInfos::ObjectInfos
