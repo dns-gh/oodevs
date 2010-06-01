@@ -90,9 +90,9 @@ void SuccessFactorConditionItem::StartEdit( const SuccessFactorCondition& condit
 // -----------------------------------------------------------------------------
 void SuccessFactorConditionItem::CommitTo( SuccessFactorConditions& conditions ) const
 {
-    const Score_ABC* score = 0;
-    if( (score_->Count() > 0) && ( score = score_->GetValue()) )
-        conditions.AddCondition( *new SuccessFactorCondition( *score, operator_->GetValue().ascii(), value_->text().toFloat() ) );
+    if( score_->Count() > 0 )
+        if( const Score_ABC* score = score_->GetValue() )
+            conditions.AddCondition( *new SuccessFactorCondition( *score, operator_->GetValue().ascii(), value_->text().toFloat() ) );
 }
 
 // -----------------------------------------------------------------------------
