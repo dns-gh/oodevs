@@ -440,15 +440,14 @@ void MIL_PopulationElement_ABC::KillAllHumans()
 MT_Float MIL_PopulationElement_ABC::Exterminate( MT_Float rSurface )
 {
     assert( rDensity_ != 0 );
-    unsigned int nKills = unsigned int ( rSurface * rDensity_ );
+    MT_Float rKills = rSurface * rDensity_;
+    if( rKills > nNbrAliveHumans_ )
+        rKills = nNbrAliveHumans_;
 
-    if( nKills > nNbrAliveHumans_ )
-        nKills = nNbrAliveHumans_;
-
-    nNbrDeadHumans_  += nKills;
-    nNbrAliveHumans_ -= nKills;
+    nNbrDeadHumans_  += unsigned int ( rKills );
+    nNbrAliveHumans_ -= unsigned int ( rKills );
     bHumansUpdated_   = true;
-    return MT_Float( nKills )/ rDensity_;
+    return rKills / rDensity_;
 }
 
 // -----------------------------------------------------------------------------
