@@ -2844,7 +2844,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Clear traces</source>
-        <translation type="obsolete">Effacer les traces</translation>
+        <translation type="unfinished">Effacer les traces</translation>
     </message>
 </context>
 <context>

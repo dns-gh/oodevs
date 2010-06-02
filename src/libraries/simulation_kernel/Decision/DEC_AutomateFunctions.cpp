@@ -98,7 +98,7 @@ std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetAutomatPionsWithPC( D
 std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetPionsWithPC( const MIL_Automate& callerAutomate )
 {
     const MIL_Automate::T_PionVector& pions = callerAutomate.GetPions();
-    std::vector< DEC_Decision_ABC* > result( pions.size() );
+    std::vector< DEC_Decision_ABC* > result;
     for( MIL_Automate::CIT_PionVector it = pions.begin(); it != pions.end(); ++it )
     {
         const PHY_RolePion_Communications& role = (*it)->GetRole< PHY_RolePion_Communications >(); // LTO
