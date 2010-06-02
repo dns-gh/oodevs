@@ -251,7 +251,8 @@ QSize ExerciseDialog::sizeHint() const
 void ExerciseDialog::OnAddResource()
 {
     const QString filename = QFileDialog::getOpenFileName( config_.GetExerciseFile().c_str() );
-    AddResource( QFileInfo( filename ).baseName(), filename );
+    if( !filename.isNull() )
+        AddResource( QFileInfo( filename ).baseName(), filename );
 }
 
 // -----------------------------------------------------------------------------
