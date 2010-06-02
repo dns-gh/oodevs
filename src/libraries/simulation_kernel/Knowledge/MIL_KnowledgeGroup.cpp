@@ -857,7 +857,7 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
         MIL_KnowledgeGroup* parent = GetParent();
         if ( GetTimeToDiffuseToKnowledgeGroup() < currentTimeStep )
         {
-            if ( parent && parent->IsEnabled() && IsEnabled() )
+            if ( parent && IsEnabled() )
                 parent->GetKnowledge().GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( boost::bind( &MIL_KnowledgeGroup::UpdateAgentKnowledgeFromParentKnowledgeGroup, this, _1, boost::ref(currentTimeStep) ) );
             RefreshTimeToDiffuseToKnowledgeGroup();
         }
