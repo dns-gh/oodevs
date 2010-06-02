@@ -630,10 +630,10 @@ BOOST_AUTO_TEST_CASE( Facade_TestAllResources )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Facade_TestResourceConsumptionsWithResourceFilter
+// Name: Facade_TestInstantaneousResourceConsumptionsWithResourceFilter
 // Created: AGE 2004-12-15
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( Facade_TestResourceConsumptionsWithResourceFilter )
+BOOST_AUTO_TEST_CASE( Facade_TestInstantaneousResourceConsumptionsWithResourceFilter )
 {
     const std::string input =
     "<indicator>"
@@ -673,6 +673,56 @@ BOOST_AUTO_TEST_CASE( Facade_TestResourceConsumptionsWithResourceFilter )
     task->Receive( EndTick() );
 
     double expectedResult[] = { 0, -54, 0, 0, -100 };
+    MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
+    task->Commit();
+    publisher.verify();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestResourceConsumptionsWithResourceFilter
+// Created: AGE 2004-12-15
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( Facade_TestResourceConsumptionsWithResourceFilter )
+{
+    const std::string input =
+    "<indicator>"
+        "<extract function='resources' id='resources' dotations='42'/>"
+        "<transform type='int' function='derivate' input='resources' id='resources-var' period='1'/>"
+        "<constant type='int' value='0' id='zero'/>"
+        "<transform function='compare' type='int' operator='less' input='resources-var,zero' id='test'/>"
+        "<transform function='filter' type='int' input='test,resources-var' id='consumptions'/>"
+        "<reduce type='int' function='sum' input='consumptions' id='sum'/>"
+        "<transform function='integrate' id='total' input='sum' type='int'/>"        
+        "<result function='plot' input='total' type='int'/>"
+    "</indicator>";
+    xml::xistringstream xis( input );
+
+    MockPublisher publisher;
+    AarFacade facade( publisher, 42 );
+    boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
+
+    task->Receive( BeginTick() );
+    task->Receive( MakeResourceVariation( 4212, 12, 42 ) );
+    task->Receive( MakeResourceVariation( 1242, 13, 42 ) );
+    task->Receive( MakeResourceVariation( 1000, 15, 12 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( MakeResourceVariation( 4200, 12, 42 ) );
+    task->Receive( MakeResourceVariation( 1200, 13, 42 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( MakeResourceVariation( 5200, 12, 42 ) );
+    task->Receive( MakeResourceVariation( 2200, 13, 42 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( MakeResourceVariation( 1000, 14, 15 ) );
+    task->Receive( MakeResourceVariation(  500, 15, 12 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( MakeResourceVariation( 5100, 12, 42 ) );
+    task->Receive( EndTick() );
+
+    double expectedResult[] = { 0, -54, -54, -54, -154 };
     MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
     task->Commit();
     publisher.verify();

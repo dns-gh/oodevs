@@ -58,7 +58,7 @@ void Transports::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
         transported_.clear();
         transported_.resize( message.pions_transportes().elem_size() );
         for( int i = 0; i < message.pions_transportes().elem_size(); ++i )
-            transported_.push_back( resolver_.Find( message.pions_transportes().elem( i ).oid() ) );
+            transported_[i] = resolver_.Find( message.pions_transportes().elem( i ).oid() );
     }
 
     if( message.has_pion_transporteur()  )

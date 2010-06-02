@@ -20,7 +20,7 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_Dotation )
 
-const MT_Float PHY_Dotation::maxCapacity_ = std::numeric_limits< int >::max();
+const MT_Float PHY_Dotation::maxCapacity_ = 10000000;
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Dotation constructor

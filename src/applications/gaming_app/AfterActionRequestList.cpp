@@ -15,6 +15,7 @@
 #include "clients_gui/ListItemToolTip.h"
 #include "clients_gui/ValuedDragObject.h"
 #include "gaming/IndicatorRequest.h"
+#include "gaming/Simulation.h"
 #include "IndicatorPlot.h"
 #include "IndicatorPlotFactory.h"
 #include "icons.h"
@@ -105,6 +106,16 @@ void AfterActionRequestList::NotifyUpdated( const IndicatorRequest& request )
 {
     if( ValuedListItem* item = FindItem( &request, requests_->firstChild() ) )
         Display( request, item );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionRequestList::NotifyUpdated
+// Created: JSR 2010-06-02
+// -----------------------------------------------------------------------------
+void AfterActionRequestList::NotifyUpdated( const Simulation& simulation )
+{
+    if( !simulation.IsConnected() )
+        requests_->clear();
 }
 
 // -----------------------------------------------------------------------------

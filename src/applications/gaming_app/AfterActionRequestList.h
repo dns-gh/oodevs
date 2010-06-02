@@ -20,6 +20,7 @@ namespace kernel
 
 class IndicatorRequest;
 class IndicatorPlotFactory;
+class Simulation;
 
 // =============================================================================
 /** @class  AfterActionRequestList
@@ -29,7 +30,9 @@ class IndicatorPlotFactory;
 // =============================================================================
 class AfterActionRequestList : public QVBox
                              , public tools::Observer_ABC
-                             , public tools::ElementObserver_ABC< IndicatorRequest > 
+                             , public tools::ElementObserver_ABC< IndicatorRequest >
+                             , public tools::ElementObserver_ABC< Simulation >
+
 {
     Q_OBJECT;
 
@@ -57,6 +60,7 @@ private:
     //@{
     virtual void NotifyCreated( const IndicatorRequest& request );
     virtual void NotifyUpdated( const IndicatorRequest& request );
+    virtual void NotifyUpdated( const Simulation& simulation );
     void Display( const IndicatorRequest& request, gui::ValuedListItem* item );
     //@}
 

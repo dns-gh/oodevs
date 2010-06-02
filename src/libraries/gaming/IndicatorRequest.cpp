@@ -72,7 +72,7 @@ void IndicatorRequest::Update( const MsgsAarToClient::MsgPlotResult& message )
         done_ = true;
         result_.resize( message.values_size() );
         for ( int i = 0; i < message.values_size(); ++i )
-            result_.push_back( message.values(i) );
+            result_[i] = message.values(i);
         error_ = message.error();
         controller_.Update( *this );
     }
