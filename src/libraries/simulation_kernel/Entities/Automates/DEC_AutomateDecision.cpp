@@ -406,7 +406,8 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::Brain& brain )
     // Logistique
     brain.RegisterFunction( "DEC_Automate_TC2",
         boost::bind( &DEC_LogisticFunctions::AutomateGetTC2, boost::ref( GetAutomate() ) ) );
-    brain.RegisterFunction( "DEC_DemandeDeRavitaillement", &DEC_LogisticFunctions::AutomateRequestSupply );
+    brain.RegisterFunction( "DEC_DemandeDeRavitaillement",
+        boost::bind( &DEC_LogisticFunctions::AutomateRequestSupply, boost::ref( GetAutomate() ) ) );
 
     // Objects
     brain.RegisterFunction( "DEC_CreerObjetSansDelais",
