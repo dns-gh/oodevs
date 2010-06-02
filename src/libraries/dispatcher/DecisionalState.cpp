@@ -48,7 +48,7 @@ void DecisionalState::Clear()
 // -----------------------------------------------------------------------------
 void DecisionalState::Update( const MsgsSimToClient::MsgDecisionalState& asnMsg )
 {
-    decisionalInfos_[ asnMsg.key() ] = decisionalInfos_[ asnMsg.value() ];
+    decisionalInfos_[ asnMsg.key() ] = asnMsg.value();
 }
 
 // -----------------------------------------------------------------------------
@@ -61,8 +61,8 @@ void DecisionalState::Send( unsigned id, ClientPublisher_ABC& publisher ) const
     {
         client::DecisionalState asn;
         asn().set_oid   ( id );
-        asn().set_key   ( it->first.c_str() );
-        asn().set_value ( it->second.c_str() );
+        asn().set_key   ( it->first );
+        asn().set_value ( it->second );
         asn.Send( publisher );
     }
 }
