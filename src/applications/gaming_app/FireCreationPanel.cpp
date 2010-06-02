@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "FireCreationPanel.h"
 #include "moc_FireCreationPanel.cpp"
+#include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
 #include "actions/DotationType.h"
 #include "actions/Identifier.h"
@@ -101,6 +102,7 @@ void FireCreationPanel::Commit()
     action->AddParameter( *new parameters::DotationType( it.NextElement(), ammunitionsBox_->GetValue(), staticModel_.objectTypes_ ) );
     action->AddParameter( *new parameters::Numeric( it.NextElement(), interventionType_->text().toFloat() ) );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->Attach( *new ActionTasker( *selectedReporter_, false ) );
     action->RegisterAndPublish( actionsModel_ );
 }
 

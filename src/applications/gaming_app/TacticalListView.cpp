@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "icons.h"
 #include "TacticalListView.h"
+#include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
 #include "actions/Automat.h"
 #include "actions/Formation.h"
@@ -134,6 +135,7 @@ bool TacticalListView::Drop( const kernel::Agent_ABC& item, const kernel::Automa
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Automat( it.NextElement(), target, controllers_.controller_ ) );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->Attach( *new ActionTasker( item, false ) );
     action->RegisterAndPublish( actionsModel_ );
     return true;
 }
@@ -152,6 +154,7 @@ bool TacticalListView::Drop( const kernel::Automat_ABC& item, const kernel::Auto
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Automat( it.NextElement(), target, controllers_.controller_ ) );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->Attach( *new ActionTasker( item, false ) );
     action->RegisterAndPublish( actionsModel_ );
     return true;
 }
@@ -170,6 +173,7 @@ bool TacticalListView::Drop( const kernel::Automat_ABC& item, const kernel::Form
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Formation( it.NextElement(), target, controllers_.controller_ ) );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->Attach( *new ActionTasker( item, false ) );
     action->RegisterAndPublish( actionsModel_ );
     return true;
 }

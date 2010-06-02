@@ -9,6 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "AgentListView.h"
+#include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
 #include "actions/Army.h"
 #include "actions/Automat.h"
@@ -183,6 +184,7 @@ bool AgentListView::Drop( const kernel::Agent_ABC& item, const kernel::Automat_A
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Automat( it.NextElement(), target, controllers_.controller_ ) );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->Attach( *new ActionTasker( item, false ) );
     action->RegisterAndPublish( actionsModel_ );
     return true;
 }
@@ -200,6 +202,7 @@ bool AgentListView::Drop( const kernel::Automat_ABC& item, const kernel::Knowled
     if( const kernel::Team_ABC *team = dynamic_cast< const kernel::Team_ABC* >( &target.Get< kernel::CommunicationHierarchies >().GetTop() ) )
         action->AddParameter( *new parameters::Army( it.NextElement(), *team, controllers_.controller_ ) );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->Attach( *new ActionTasker( item, false ) );
     action->RegisterAndPublish( actionsModel_ );
     return true;
 }
