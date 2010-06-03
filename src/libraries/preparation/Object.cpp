@@ -37,6 +37,8 @@ Object::Object( kernel::Controller& controller, const kernel::CoordinateConverte
     , converter_( converter )
     , type_( type )
 {
+    if( type.HasSpawn() )
+        idManager.GetNextId(); // we need to skip one ID for dynamic created object.
     RegisterSelf( *this );
     name_ = name.isEmpty() ? tools::translate( "Object", "%1 [%2]" ).arg( type.GetName().c_str() ).arg( id_ ) : name;
     CreateDictionary( controller );

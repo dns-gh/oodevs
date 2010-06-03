@@ -62,6 +62,7 @@ template< typename T >
 void Parameter< T >::SetValue( const T& value )
 {
     value_ = value;
+    NotifyValueSet();
 }
 
 // -----------------------------------------------------------------------------

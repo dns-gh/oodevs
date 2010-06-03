@@ -42,7 +42,7 @@ public:
     virtual std::string GetType() const;
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void Serialize( xml::xostream& xos ) const;
-    virtual void SetValue( const T& value );
+    void SetValue( const T& value );
     const T& GetValue() const;
     //@}
 
@@ -51,6 +51,11 @@ private:
     //@{
     Parameter( const Parameter& );            //!< Copy constructor
     Parameter& operator=( const Parameter& ); //!< Assignment operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    virtual void NotifyValueSet() {};
     //@}
 
 private:

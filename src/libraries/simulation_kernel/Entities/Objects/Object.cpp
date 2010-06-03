@@ -21,9 +21,9 @@
 #include "ObstacleAttribute.h"
 #include "CrossingSiteAttribute.h"
 #include "SupplyRouteAttribute.h"
+#include "SpawnCapacity.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
-#include "DetectionCapacity.h"
 
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Network/NET_ASN_Tools.h"
@@ -62,6 +62,7 @@ Object::Object( xml::xistream& xis, const MIL_ObjectBuilder_ABC& builder, MIL_Ar
     , pView_      ( 0 )
     , manipulator_( new MIL_ObjectManipulator( *this ) )
 {
+    idManager_.Lock( id_ );
     MIL_Object_ABC::Register();
     if( pLocation )
         Initialize( *pLocation );
@@ -69,7 +70,6 @@ Object::Object( xml::xistream& xis, const MIL_ObjectBuilder_ABC& builder, MIL_Ar
     ObstacleAttribute* pObstacle = RetrieveAttribute< ObstacleAttribute >();
     if( pObstacle )
         pObstacle->SetType( reserved ? Common::ObstacleType_DemolitionTargetType_reserved : Common::ObstacleType_DemolitionTargetType_preliminary );
-    idManager_.Lock( id_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,6 +83,9 @@ Object::Object( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army, const 
     , pView_    ( 0 )
     , manipulator_ ( new MIL_ObjectManipulator( *this ) )
 {
+    if( GetType().GetCapacity< SpawnCapacity >() )
+        idManager_.GetFreeId(); // we need to skip one ID for dynamic created object.
+
     MIL_Object_ABC::Register();
     if( pLocation )
         Initialize( *pLocation );
@@ -114,18 +117,6 @@ Object::~Object()
 {
     MIL_Object_ABC::Unregister();
 }
-
-//TEMP SLG
-/*
-// -----------------------------------------------------------------------------
-// Name: Object constructor
-// Created: SLG 2010-02-17
-// -----------------------------------------------------------------------------
-void Object::CreateChildObject( *this, const DetectionCapacity& capacity )
-{
-    childObject_ = new Object( capacity );
-}
-*/
 
 // -----------------------------------------------------------------------------
 // Name: Object::GetID

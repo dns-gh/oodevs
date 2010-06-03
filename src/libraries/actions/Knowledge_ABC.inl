@@ -26,7 +26,7 @@ template< typename ConcreteEntity >
 Knowledge_ABC< ConcreteEntity >::Knowledge_ABC(const kernel::OrderParameter& parameter, const ConcreteEntity* entity, kernel::Controller& controller )
     : Entity< ConcreteEntity >( parameter, entity, controller )
 {
-    // NOTHING
+    NotifyValueSet();
 }
 
 // -----------------------------------------------------------------------------
@@ -36,23 +36,8 @@ Knowledge_ABC< ConcreteEntity >::Knowledge_ABC(const kernel::OrderParameter& par
 template< typename ConcreteEntity >
 Knowledge_ABC< ConcreteEntity >::~Knowledge_ABC()
 {
-    if( GetValue() )
+    if( isEntityValid_ && GetValue() )
         const_cast< ConcreteEntity* >( GetValue() )->RemoveListener( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Knowledge_ABC::SetValue
-// Created: JSR 2010-05-20
-// -----------------------------------------------------------------------------
-template< typename ConcreteEntity >
-void Knowledge_ABC< ConcreteEntity >::SetValue( const ConcreteEntity*& value )
-{
-    Entity< ConcreteEntity >::SetValue( value );
-    if( ! GetValue() )
-        ThrowInvalidKnowledge();
-    const_cast< ConcreteEntity* >( GetValue() )->AddListener( *this );
-    id_ = GetValue()->GetEntity()->GetId();
-    isEntityValid_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -90,4 +75,18 @@ void Knowledge_ABC< ConcreteEntity >::Serialize( xml::xostream& xos ) const
         ThrowInvalidKnowledge();
     Parameter< const ConcreteEntity* >::Serialize( xos );
     xos << xml::attribute( "value", id_ ); // $$$$ SBO 2007-05-24: 
+}
+
+// -----------------------------------------------------------------------------
+// Name: Knowledge_ABC::NotifyValueSet
+// Created: JSR 2010-06-03
+// -----------------------------------------------------------------------------
+template< typename ConcreteEntity >
+void Knowledge_ABC< ConcreteEntity >::NotifyValueSet()
+{
+    if( ! GetValue() )
+        ThrowInvalidKnowledge();
+    const_cast< ConcreteEntity* >( GetValue() )->AddListener( *this );
+    id_ = GetValue()->GetEntity()->GetId();
+    isEntityValid_ = true;
 }

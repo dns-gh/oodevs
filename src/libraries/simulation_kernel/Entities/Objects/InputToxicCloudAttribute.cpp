@@ -128,15 +128,18 @@ InputToxicCloudAttribute& InputToxicCloudAttribute::operator=( const InputToxicC
 // -----------------------------------------------------------------------------
 void InputToxicCloudAttribute::LoadConfig()
 {
-    xml::xifstream fxis( filename_ );
-    fxis >> xml::start( "étude" )
-            >> xml::start( "résultats" )
-                >> xml::content( dataField_, field_ )
-                >> xml::start( "échéances" )
-                    >> xml::list( "heure", *this, &InputToxicCloudAttribute::ReadFiles )
+    if( !filename_.empty() )
+    {
+        xml::xifstream fxis( filename_ );
+        fxis >> xml::start( "étude" )
+                >> xml::start( "résultats" )
+                    >> xml::content( dataField_, field_ )
+                    >> xml::start( "échéances" )
+                        >> xml::list( "heure", *this, &InputToxicCloudAttribute::ReadFiles )
+                    >> xml::end()
                 >> xml::end()
-            >> xml::end()
-         >> xml::end();
+            >> xml::end();
+    }
 }
 
 namespace 

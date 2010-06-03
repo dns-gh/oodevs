@@ -39,7 +39,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void SetValue( const ConcreteEntity*& value );
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void NotifyDestruction();
     //@}
@@ -49,6 +48,7 @@ private:
     //@{
     virtual void Serialize( xml::xostream& xos ) const;
     virtual void ThrowInvalidKnowledge() const = 0;
+    virtual void NotifyValueSet();
     //@}
 
 private:
