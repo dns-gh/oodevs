@@ -67,6 +67,7 @@ includedFiles["sources/population/asymetriques/common/pion/missions/CommettreAtt
                     self.ePhaseMission = eSInfiltrer
                     if( false == DEC_HasDotation( self._namedParams.mission.dotation_ ) ) then
                         do
+                            DEC_RC( eRC_TirIndirectMunitionInvalide )
                             DEC_RC( eRC_MissionImpossible )
                             Activate( self.activations.ACT_Info_Trace, 1, { "No explosive: mission impossible", } )
                             self.ePhaseMission = eSExfiltrer
