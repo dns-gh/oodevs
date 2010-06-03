@@ -27,6 +27,17 @@ includedFiles["sources/appui/artfdp/pions/son auf1/missions/AssurerMiseEnOeuvre.
                 self.ePhase = self.ePhase or eMettreEnOeuvre
         if( ModuleBegins() ) then
             do
+                if( DEC_ConnaissanceObjet_Type( self._namedParams.mission.zoneImplantation_ ) ~= "gun artillery deployment area" ) then
+                    do
+                        DEC_FinMission()
+                        DEC_RC( eRC_MissionImpossible )
+                                                self.params.__returnValue = eActionEffectuee
+                        Halt( self )
+                        do return end
+
+                    end
+                end
+
                 DEC_SetMission( myself, self._namedParams.mission )
                 F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
                 F_Pion_SeteEtatEchelon( myself, eEtatEchelon_Premier )
