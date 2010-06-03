@@ -15,6 +15,7 @@
 
 namespace gui
 {
+    class RichLabel;
     
 // =============================================================================
 /** @class  PropagationPrototype_ABC
@@ -54,6 +55,7 @@ private:
 protected:
     //! @name Member data
     //@{
+    gui::RichLabel* sourceLabel_;
     std::string source_;    
     ValuedComboBox< std::string >* dataField_;
     QPushButton* pPathButton_;

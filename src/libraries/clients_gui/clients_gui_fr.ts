@@ -263,7 +263,7 @@
     </message>
     <message>
         <source>NBC Agent:</source>
-        <translation>Agent NBC:</translation>
+        <translation type="obsolete">Agent NBC:</translation>
     </message>
     <message>
         <source>Lookup data:</source>
@@ -283,7 +283,15 @@
     </message>
     <message>
         <source>Input file...</source>
-        <translation>Fichier source...</translation>
+        <translation type="obsolete">Fichier source...</translation>
+    </message>
+    <message>
+        <source>Input file:</source>
+        <translation>Fichier source: </translation>
+    </message>
+    <message>
+        <source>Browse...</source>
+        <translation>Parcourir...</translation>
     </message>
 </context>
 <context>
@@ -386,6 +394,10 @@
     <message>
         <source>NBC agent state:</source>
         <translation>Etat agent NBC:</translation>
+    </message>
+    <message>
+        <source>Danger level:</source>
+        <translation>Niveau de danger: </translation>
     </message>
 </context>
 <context>

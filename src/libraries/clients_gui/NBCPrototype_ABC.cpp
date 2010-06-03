@@ -27,9 +27,7 @@ NBCPrototype_ABC::NBCPrototype_ABC( QWidget* parent, const tools::Resolver_ABC< 
     , resolver_( resolver )
     , maxToxic_ ( maxToxic )
 {
-//    new QLabel( tools::translate( "NBCPrototype_ABC", "NBC Agent:" ), this );
-//    nbcAgents_ = new ValuedComboBox< const NBCAgent* >( this );    
-  
+    new QLabel( tools::translate( "NBCPrototype_ABC", "Danger level:" ), this );
     danger_ = new QSpinBox( 0, 10, 1, this );
     nbcAgentsLabel_ = new RichLabel( tools::translate( "NBCPrototype_ABC", "NBC agent(s):" ), this );
     nbcAgents_ = new QListView( this );

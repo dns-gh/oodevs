@@ -73,9 +73,7 @@ void ObstaclePrototype_ABC::showEvent( QShowEvent* e )
 // -----------------------------------------------------------------------------
 bool ObstaclePrototype_ABC::CheckValidity() const
 {
-    if( !( types_->count() && types_->GetValue() ) )
-        return false;
-    return true;
+    return types_->count();
 }
 
 // -----------------------------------------------------------------------------
@@ -95,9 +93,7 @@ bool ObstaclePrototype_ABC::IsActivated() const
 {
     if ( types_->GetValue() == eDemolitionTargetType_Reserved )
         return activation_->isChecked();
-    else if ( types_->GetValue() == eDemolitionTargetType_Preliminary  )
+    else if ( types_->GetValue() == eDemolitionTargetType_Preliminary )
         return true;
-    else
-        return false;
     return false;
 }

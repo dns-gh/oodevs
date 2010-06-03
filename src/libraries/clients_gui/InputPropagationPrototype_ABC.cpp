@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "InputPropagationPrototype_ABC.h"
 #include "moc_InputPropagationPrototype_ABC.cpp"
+#include "RichLabel.h"
 #include "Tools.h"
 #include <qfiledialog.h>
 
@@ -23,9 +24,8 @@ using namespace gui;
 InputPropagationPrototype_ABC::InputPropagationPrototype_ABC( QWidget* parent )
     : ObjectAttributePrototype_ABC( parent, tools::translate( "InputPropagationPrototype_ABC", "Propagation" ) )
 {    
-    new QLabel( tools::translate( "InputPropagationPrototype_ABC", "NBC Agent:" ), this );
-
-    pPathButton_ = new QPushButton( tools::translate( "InputPropagationPrototype_ABC", "Input file..." ), this );
+    sourceLabel_ = new gui::RichLabel( tools::translate( "InputPropagationPrototype_ABC", "Input file:" ), this );
+    pPathButton_ = new QPushButton( tools::translate( "InputPropagationPrototype_ABC", "Browse..." ), this );
     connect( pPathButton_, SIGNAL( clicked() ), this, SLOT( LoadPath() ) );
 
     new QLabel( tools::translate( "InputPropagationPrototype_ABC", "Lookup data:" ), this );
@@ -53,7 +53,10 @@ InputPropagationPrototype_ABC::~InputPropagationPrototype_ABC()
 // -----------------------------------------------------------------------------
 bool InputPropagationPrototype_ABC::CheckValidity() const
 {
-    return ! source_.empty() && ! dataField_->GetValue().empty();
+    bool isValid = ! source_.empty() && ! dataField_->GetValue().empty();
+    if( ! isValid )
+        sourceLabel_->Warn( 3000 );
+    return isValid;
 }
 
 // -----------------------------------------------------------------------------

@@ -151,7 +151,7 @@ bool ObjectPrototype_ABC::CheckValidity() const
         position_->Warn( 3000 );
         return false;
     }
-    return true;
+    return attributes_->CheckValidity();
 }
 
 // -----------------------------------------------------------------------------
