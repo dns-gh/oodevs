@@ -5643,6 +5643,14 @@ du tireur</translation>
         <source>Nombre d&apos;humain par pas de simulation</source>
         <translation>Nombre d&apos;humains par pas de simulation</translation>
     </message>
+    <message>
+        <source>Dotation</source>
+        <translation type="unfinished">Dotation</translation>
+    </message>
+    <message>
+        <source>Use ammunition</source>
+        <translation type="unfinished">Utilise une munition</translation>
+    </message>
 </context>
 <context>
     <name>ADN_OpenFile_Exception</name>

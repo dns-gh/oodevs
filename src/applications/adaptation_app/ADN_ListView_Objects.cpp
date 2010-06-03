@@ -172,7 +172,9 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
     ADN_Objects_Data::ADN_CapacityInfos_Workable& workable = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Workable >( ADN_Objects_GUI::eWorkableCapacityPresent );
     vItemConnectors_[ADN_Objects_GUI::eWorkableCapacity_Size]->Connect( &workable.worker_, bConnect );
 
-    builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Attrition >( ADN_Objects_GUI::eAttritionCapacityPresent );
+    ADN_Objects_Data::ADN_CapacityInfos_Attrition& attrition = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Attrition >( ADN_Objects_GUI::eAttritionCapacityPresent );
+    vItemConnectors_[ADN_Objects_GUI::eAttritionDotation]->Connect( &attrition.ammoCategory_, bConnect );
+    vItemConnectors_[ADN_Objects_GUI::eAttritionCapacityUseDotation]->Connect( &attrition.useAmmo_, bConnect );
     
     ADN_Objects_Data::ADN_CapacityInfos_Contamination& contamination = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Contamination >( ADN_Objects_GUI::eContaminationCapacityPresent );
     vItemConnectors_[ADN_Objects_GUI::eContaminationCapacity_MaxToxic]->Connect( &contamination.max_toxic_, bConnect );

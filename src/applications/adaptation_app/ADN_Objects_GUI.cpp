@@ -15,6 +15,7 @@
 
 #include "ADN_App.h"
 #include "ADN_Workspace.h"
+#include "ADN_ComboBox_Vector.h"
 #include "ADN_CommonGfx.h"
 #include "ADN_Objects_Data.h"
 #include "ADN_ListView_Objects.h"
@@ -208,10 +209,13 @@ void ADN_Objects_GUI::Build()
         builder.AddField< ADN_EditLine_Int >( workable, tr( "Max Animator: " ), vInfosConnectors[ eWorkableCapacity_Size ], tr( "agents" ) ); 
     }
 
-	ADN_GroupBox* attrition = new ADN_GroupBox( 3, Qt::Horizontal, tr( ADN_Objects_Data::ADN_CapacityInfos_Attrition::DISPLAY_NAME.c_str() ), hBox );        
+	ADN_GroupBox* attrition = new ADN_GroupBox( 1, Qt::Horizontal, tr( ADN_Objects_Data::ADN_CapacityInfos_Attrition::DISPLAY_NAME.c_str() ), hBox );        
     {
         vInfosConnectors[ eAttritionCapacityPresent ] = & attrition->GetConnector();
-    }
+        ADN_GroupBox* dotation = new ADN_GroupBox( 2, Qt::Horizontal, tr( "Use ammunition" ), attrition );
+        vInfosConnectors[ eAttritionCapacityUseDotation ] = & dotation->GetConnector();
+        builder.AddField< ADN_ComboBox_Vector<ADN_Equipement_Data::AmmoCategoryInfo> >( dotation, tr( "Dotation" ), vInfosConnectors[ eAttritionDotation ] );
+     }
     
     // NBC
     QGroupBox* gNBC = new QGroupBox( 2, Qt::Horizontal, tr( "NBC" ), hBox );

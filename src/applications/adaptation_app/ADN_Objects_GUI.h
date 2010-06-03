@@ -40,6 +40,8 @@ public:
         eActivableCapacityPresent,
 
 		eAttritionCapacityPresent,
+        eAttritionDotation,
+        eAttritionCapacityUseDotation,
 
         eAvoidableCapacityPresent,
         eAvoidableCapacity_Distance,

@@ -202,7 +202,9 @@ public:
         void ReadArchive( xml::xistream& xis );
         void WriteArchive( xml::xostream& xos );
     public:
-        ADN_TypePtr_InVector_ABC< ADN_Equipement_Data::CategoryInfo > category_;        
+        ADN_TypePtr_InVector_ABC< ADN_Equipement_Data::CategoryInfo > category_;
+        ADN_TypePtr_InVector_ABC< ADN_Equipement_Data::AmmoCategoryInfo > ammoCategory_;
+        ADN_Type_Bool useAmmo_;  // $$$$ LDC: Hack: No time to write a single category_ checkbox with all ammos available. Actually, the mines and explosives categories should vanish but no time to change the sim...
     };
 
      class ADN_CapacityInfos_Avoidable

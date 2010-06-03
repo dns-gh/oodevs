@@ -442,8 +442,11 @@ void ADN_Objects_Data::ADN_CapacityInfos_Mobility::WriteArchive( xml::xostream& 
 //@{
 
 ADN_Objects_Data::ADN_CapacityInfos_Attrition::ADN_CapacityInfos_Attrition()
+: ammoCategory_( (ADN_Equipement_Data::T_AmmoCategoryInfo_Vector&)ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Munition ).categories_, 0, "" )
 {
     category_.SetParentNode( *this );
+    ammoCategory_.SetParentNode( *this );
+    useAmmo_.SetParentNode( *this );
 }
 
 void ADN_Objects_Data::ADN_CapacityInfos_Attrition::ReadArchive( xml::xistream& xis )
@@ -456,12 +459,18 @@ void ADN_Objects_Data::ADN_CapacityInfos_Attrition::ReadArchive( xml::xistream& 
         if( pCategory == 0 )
             throw ADN_DataException( "Donnée invalide", "Dotation invalide : " + dotation );
         category_ = pCategory;
+        ADN_Equipement_Data::AmmoCategoryInfo* ptrAmmo = dynamic_cast<ADN_Equipement_Data::AmmoCategoryInfo*>( pCategory );
+        ammoCategory_ = ptrAmmo;
+        useAmmo_ = ( pCategory->strName_.GetData() == "munition" );
     }
 }
 
 void ADN_Objects_Data::ADN_CapacityInfos_Attrition::WriteArchive( xml::xostream& xos )
 {
-	xos << xml::attribute( "category", category_.GetData()->strName_ );
+    if( useAmmo_.GetData() == true )
+	    xos << xml::attribute( "category", ammoCategory_.GetData()->strName_ );
+    else
+	    xos << xml::attribute( "category", category_.GetData()->strName_ );
 }
 //@}
 
