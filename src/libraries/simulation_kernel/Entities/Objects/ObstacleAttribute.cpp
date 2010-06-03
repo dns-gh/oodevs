@@ -111,6 +111,8 @@ template < typename Archive > void ObstacleAttribute::serialize( Archive& file, 
 void ObstacleAttribute::SetType( Common::ObstacleType_DemolitionTargetType obstacleType )
 {
     obstacle_ = obstacleType;
+    if( Common::ObstacleType_DemolitionTargetType_preliminary == obstacleType )
+        bActivated_ = true;
 }
 
 // -----------------------------------------------------------------------------
