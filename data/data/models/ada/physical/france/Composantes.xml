@@ -7769,6 +7769,9 @@
       <category name="carburant">
         <dotation capacity="390" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="35"/>
       </category>
+      <category name="explosif">
+        <dotation capacity="500" logistic-threshold="10" name="explosif classique" normalized-consumption="500"/>
+      </category>
       <category name="mine">
         <dotation capacity="5" logistic-threshold="10" name="mine classique" normalized-consumption="5"/>
       </category>
