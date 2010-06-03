@@ -370,6 +370,13 @@ void ADN_MainWindow::OpenProject()
         QApplication::restoreOverrideCursor();	// restore original cursor
         QMessageBox::critical( this, exception.GetExceptionTitle().c_str(), exception.GetExceptionMessage().c_str() );
     }
+    catch( std::exception& e )
+    {
+        QApplication::restoreOverrideCursor();	// restore original cursor
+        workspace_.ResetProgressIndicator();
+        QMessageBox::critical( 0, "Error", e.what() );
+        CloseProject();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -394,28 +401,13 @@ void ADN_MainWindow::OpenProject( const std::string& szFilename, const bool isNo
     pTab_->hide();
 
     QApplication::setOverrideCursor( waitCursor ); // this might take time
-
-    try
-    {
-        //workspace_.Load(ADN_Tools::Replace(szFilename,'\\','/'));  // $$$$ SBO 2005-11-18: Does not work on network
-        if( QString( szFilename.c_str() ).startsWith( "//" ) )
-            workspace_.Load( ADN_Tools::Replace( szFilename, '/', '\\' ) );
-        else
-            workspace_.Load( szFilename );
-    }
-    catch( ADN_Exception_ABC& exception )
-    {
-        QApplication::restoreOverrideCursor();	// restore original cursor
-        workspace_.ResetProgressIndicator();
-        throw;
-    }
-
+    if( QString( szFilename.c_str() ).startsWith( "//" ) )
+        workspace_.Load( ADN_Tools::Replace( szFilename, '/', '\\' ) );
+    else
+        workspace_.Load( szFilename );
     QApplication::restoreOverrideCursor();	// restore original cursor
-
-    QString strCaption = tr( "Sword Adaptation Tool - " ) + szFilename.c_str();
-    setCaption( strCaption );
-
-    SetMenuEnabled(true);
+    setCaption( tr( "Sword Adaptation Tool - %1" ).arg( szFilename.c_str() ) );
+    SetMenuEnabled( true );
     pTab_->show();
 }
 
@@ -499,7 +491,6 @@ void ADN_MainWindow::ConfigureDataTest()
 
 extern const char* szVersionNumber;
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_MainWindow::About
 // Created: JDY 03-09-11
@@ -508,7 +499,6 @@ void ADN_MainWindow::About()
 {
     QMessageBox::about( this , tr( "Sword Adaptation Tool" ), "Sword Adaptation Tool - Copyright (c) MASA Group 2009" );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_MainWindow::closeEvent 
@@ -536,9 +526,7 @@ void ADN_MainWindow::ChangeSaveState( bool bNoCommand )
 {
     bNeedSave_ = ! bNoCommand;
     if( bNeedSave_ )
-    {
         setCaption( caption() + "*" );
-    }
     else
     {
         std::string szProject = workspace_.GetProject().GetFileInfos().GetFileName().GetData();
@@ -645,14 +633,9 @@ bool ADN_MainWindow::OfferToSave()
     switch( nResult )
     {
         case QMessageBox::Yes:
-        {
             SaveProject();
-            return true;
-        }
         case QMessageBox::No:
-        {
             return true;
-        }
     }
     return false; // Cancel whatever action prompted the save proposition.
 }

@@ -9,6 +9,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_App.h"
+#include "ADN_Exception_ABC.h"
 #include <windows.h>
 #include <commctrl.h>
 #include <qtranslator.h>
@@ -103,6 +104,11 @@ int main( uint nArgc, char** ppArgv )
         if( app.Initialize( inputFile, outputFile ) )
             app.exec();
     }
+    catch( ADN_Exception_ABC& e )
+    {
+        QMessageBox::critical( 0, e.GetExceptionTitle().c_str(), e.GetExceptionMessage().c_str() );
+        return EXIT_FAILURE;
+    }
     catch( MT_Exception& exception )
     {
         std::stringstream strMsg;
@@ -117,7 +123,6 @@ int main( uint nArgc, char** ppArgv )
         MT_LOG_UNREGISTER_LOGGER( consoleLogger );
         return EXIT_FAILURE;
     }
-
     app.quit();
     MT_LOG_UNREGISTER_LOGGER( consoleLogger );
     return EXIT_SUCCESS;

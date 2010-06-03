@@ -263,7 +263,7 @@ void ADN_Workspace::Load( const std::string& filename )
         qApp->processEvents();
         elements_[n]->GetDataABC().Load();
     }
-    pProgressIndicator_->Reset();
+    ResetProgressIndicator();
 
     GetModels().GetGui().Enable( nOpenMode_ == eOpenMode_Admin );
     GetMissions().GetGui().Enable( nOpenMode_ == eOpenMode_Admin );
@@ -318,7 +318,7 @@ bool ADN_Workspace::SaveAs( const std::string& filename )
     if( !dlgLog.empty() )
     {    
         dlgLog.exec();
-        pProgressIndicator_->Reset();
+        ResetProgressIndicator();
         return false;
     }
 
@@ -343,7 +343,7 @@ bool ADN_Workspace::SaveAs( const std::string& filename )
     catch( ADN_Exception_ABC& )
     {
         dirInfos.SetWorkingDirectory( szOldWorkDir ); // $$$$ NLD 2007-01-15: needed ???
-        pProgressIndicator_->Reset();
+        ResetProgressIndicator();
         throw;
     }
     
@@ -353,13 +353,13 @@ bool ADN_Workspace::SaveAs( const std::string& filename )
         if( !ADN_Tools::CopyFileToFile( dirInfos.GetTempDirectory().GetData() + *it, dirInfos.GetWorkingDirectory().GetData() + *it ) )
         {
             dirInfos.SetWorkingDirectory( szOldWorkDir );
-            pProgressIndicator_->Reset();
+            ResetProgressIndicator();
             throw ADN_SaveFile_Exception( *it );
         }
         
     GetUndoStack().clear();
     // Save is ended
-    pProgressIndicator_->Reset();
+    ResetProgressIndicator();
     return true;
 }
 
