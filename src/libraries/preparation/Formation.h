@@ -64,6 +64,7 @@ public:
     virtual void Remove( kernel::Formation_ABC& formation );
     virtual void Register( kernel::Automat_ABC& automat );
     virtual void Remove( kernel::Automat_ABC& automat );
+    virtual void NotifyParentDestroyed();
     //@}
 
 private:

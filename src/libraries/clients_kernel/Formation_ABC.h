@@ -60,8 +60,8 @@ public:
     virtual void Register( Formation_ABC& formation ) = 0;
     virtual void Remove( Formation_ABC& formation ) = 0;
     virtual void Register( Automat_ABC& automat ) = 0;
-    virtual void Remove( Automat_ABC& automat ) = 0;
-
+    virtual void Remove( Automat_ABC& automat ) = 0; 
+    virtual void NotifyParentDestroyed() = 0;
     //@}
 };
 

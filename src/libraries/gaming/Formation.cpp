@@ -140,3 +140,12 @@ void Formation::Remove( kernel::Automat_ABC& /*automat*/ )
 {
      throw std::exception( __FUNCTION__ " not implemented" );
 }
+    
+// -----------------------------------------------------------------------------
+// Name: Automat::NotifyParentDestroyed
+// Created: RPD 2010-06-03
+// -----------------------------------------------------------------------------
+void Formation::NotifyParentDestroyed()
+{
+    throw std::exception( __FUNCTION__ " not implemented" );
+}

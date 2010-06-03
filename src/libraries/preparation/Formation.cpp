@@ -166,7 +166,7 @@ void Formation::Accept( kernel::ModelVisitor_ABC& visitor ) const
 // Name: Formation::Register
 // Created: MGD 2009-12-21
 // -----------------------------------------------------------------------------
-void Formation::Register( Formation_ABC& formation )
+void Formation::Register( Formation_ABC& /*formation*/ )
 {
     throw std::exception( __FUNCTION__ " not implemented" ); 
 }
@@ -175,7 +175,7 @@ void Formation::Register( Formation_ABC& formation )
 // Name: Formation::Remove
 // Created: MGD 2009-12-21
 // -----------------------------------------------------------------------------
-void Formation::Remove( Formation_ABC& formation )
+void Formation::Remove( Formation_ABC& /*formation*/ )
 {
     throw std::exception( __FUNCTION__ " not implemented" ); 
 }
@@ -184,7 +184,7 @@ void Formation::Remove( Formation_ABC& formation )
 // Name: Formation::Register
 // Created: MGD 2009-12-21
 // -----------------------------------------------------------------------------
-void Formation::Register( Automat_ABC& automat )
+void Formation::Register( Automat_ABC& /*automat*/ )
 {
     throw std::exception( __FUNCTION__ " not implemented" ); 
 }
@@ -193,8 +193,16 @@ void Formation::Register( Automat_ABC& automat )
 // Name: Formation::Remove
 // Created: MGD 2009-12-21
 // -----------------------------------------------------------------------------
-void Formation::Remove( Automat_ABC& automat )
+void Formation::Remove( Automat_ABC& /*automat*/ )
 {
     throw std::exception( __FUNCTION__ " not implemented" ); 
 }
 
+// -----------------------------------------------------------------------------
+// Name: Formation::NotifyParentDestroyed
+// Created: RPD 2010-06-03
+// -----------------------------------------------------------------------------
+void Formation::NotifyParentDestroyed()
+{
+    throw std::exception( __FUNCTION__ " not implemented" ); 
+}

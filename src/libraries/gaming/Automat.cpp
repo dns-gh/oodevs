@@ -111,7 +111,7 @@ void Automat::Accept( kernel::ModelVisitor_ABC& visitor ) const
 // Name: Automat::Register
 // Created: MGD 2009-12-21
 // -----------------------------------------------------------------------------
-void Automat::Register( kernel::Automat_ABC& automat )
+void Automat::Register( kernel::Automat_ABC& /*automat*/ )
 {
      throw std::exception( __FUNCTION__ " not implemented" );  
 }
@@ -119,7 +119,7 @@ void Automat::Register( kernel::Automat_ABC& automat )
 // Name: Automat::Remove
 // Created: MGD 2009-12-21
 // -----------------------------------------------------------------------------
-void Automat::Remove( kernel::Automat_ABC& automat )
+void Automat::Remove( kernel::Automat_ABC& /*automat*/ )
 {
      throw std::exception( __FUNCTION__ " not implemented" );  
 }
@@ -135,7 +135,7 @@ const tools::Resolver< kernel::Automat_ABC >& Automat::GetAutomats() const
 // Name: Automat::Register
 // Created: MGD 2009-12-21
 // -----------------------------------------------------------------------------
-void Automat::Register( kernel::Agent_ABC& automat )
+void Automat::Register( kernel::Agent_ABC& /*automat*/ )
 {
      throw std::exception( __FUNCTION__ " not implemented" );  
 }
@@ -143,7 +143,7 @@ void Automat::Register( kernel::Agent_ABC& automat )
 // Name: Automat::Remove
 // Created: MGD 2009-12-21
 // -----------------------------------------------------------------------------
-void Automat::Remove( kernel::Agent_ABC& automat )
+void Automat::Remove( kernel::Agent_ABC& /*automat*/ )
 {
      throw std::exception( __FUNCTION__ " not implemented" );  
 }
@@ -191,4 +191,12 @@ kernel::Formation_ABC* Automat::GetFormation() const
 {
     throw std::exception( __FUNCTION__ " not implemented" );
 }
-
+    
+// -----------------------------------------------------------------------------
+// Name: Automat::NotifyParentDestroyed
+// Created: RPD 2010-06-03
+// -----------------------------------------------------------------------------
+void Automat::NotifyParentDestroyed()
+{
+    throw std::exception( __FUNCTION__ " not implemented" );
+}

@@ -69,6 +69,7 @@ public:
     virtual void Remove( kernel::Formation_ABC& formation );
     virtual void Register( kernel::Automat_ABC& automat );
     virtual void Remove( kernel::Automat_ABC& automat );
+    virtual void NotifyParentDestroyed();
     //@}
 
 private:
@@ -76,6 +77,12 @@ private:
     //@{
     Formation( const Formation& );            //!< Copy constructor
     Formation& operator=( const Formation& ); //!< Assignement operator
+    //@}
+
+public:
+    //! @name Helpers
+    //@{
+    void NotifyDestructionToChildFormations();
     //@}
 
 private:
@@ -86,7 +93,7 @@ private:
     kernel::Team_ABC&                           team_;
     const kernel::HierarchyLevel_ABC&           level_;
     kernel::Formation_ABC*                      parent_;
-    tools::Resolver< kernel::Formation_ABC >    formations_;
+    tools::Resolver< kernel::Formation_ABC >    childFormations_;
     tools::Resolver< kernel::Automat_ABC >      automats_;
     //@}
 };

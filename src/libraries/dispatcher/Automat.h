@@ -94,6 +94,7 @@ public:
     virtual const tools::Resolver< kernel::Automat_ABC >& GetAutomats() const;
     virtual void Register( kernel::Agent_ABC& automat );
     virtual void Remove( kernel::Agent_ABC& automat );
+    virtual void NotifyParentDestroyed();
     virtual const tools::Resolver< kernel::Agent_ABC >& GetAgents() const;
     virtual kernel::Automat_ABC* GetParentAutomat() const;
     virtual kernel::Formation_ABC* GetFormation() const;
@@ -111,6 +112,7 @@ private:
     void ChangeKnowledgeGroup( unsigned long id );
     template< typename Superior >
     void ChangeSuperior( const Superior& superior );
+    void NotifyDestructionToChildAutomats();
     //@}
 
 private:
@@ -141,7 +143,7 @@ private:
     DecisionalState decisionalInfos_;
 
     tools::Resolver< kernel::Agent_ABC >   agents_;
-    tools::Resolver< kernel::Automat_ABC > automats_;
+    tools::Resolver< kernel::Automat_ABC > childAutomats_;
     //@}
 };
 

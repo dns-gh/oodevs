@@ -71,6 +71,7 @@ Automat::~Automat()
     else if( parentAutomat_ )
         parentAutomat_->Remove( *this );
     knowledgeGroup_->Remove( *this );
+    NotifyDestructionToChildAutomats();
 }
 
 // -----------------------------------------------------------------------------
@@ -331,7 +332,7 @@ namespace
 void Automat::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
-    automats_.Apply( boost::bind( &kernel::Automat_ABC::Accept, _1, boost::ref( visitor ) ) );
+    childAutomats_.Apply( boost::bind( &kernel::Automat_ABC::Accept, _1, boost::ref( visitor ) ) );
     agents_.Apply( boost::bind( &kernel::Agent_ABC::Accept, _1, boost::ref( visitor ) ) );
 }
 
@@ -359,7 +360,7 @@ bool Automat::IsEngaged() const
 // -----------------------------------------------------------------------------
 void Automat::Register( kernel::Automat_ABC& automat )
 {
-    automats_.Register( automat.GetId(), automat );
+    childAutomats_.Register( automat.GetId(), automat );
 }
 // -----------------------------------------------------------------------------
 // Name: Automat::Remove
@@ -367,7 +368,7 @@ void Automat::Register( kernel::Automat_ABC& automat )
 // -----------------------------------------------------------------------------
 void Automat::Remove( kernel::Automat_ABC& automat )
 {
-    automats_.Remove( automat.GetId() );
+    childAutomats_.Remove( automat.GetId() );
 }
 // -----------------------------------------------------------------------------
 // Name: Automat::GetAutomats
@@ -375,7 +376,7 @@ void Automat::Remove( kernel::Automat_ABC& automat )
 // -----------------------------------------------------------------------------
 const tools::Resolver< kernel::Automat_ABC >& Automat::GetAutomats() const
 {
-    return automats_;
+    return childAutomats_;
 }
 // -----------------------------------------------------------------------------
 // Name: Automat::Register
@@ -436,4 +437,22 @@ kernel::KnowledgeGroup_ABC& Automat::GetKnowledgeGroup() const
     if( !knowledgeGroup_ )
         throw std::runtime_error( __FUNCTION__ ": automat without a knowledge group." );
     return *knowledgeGroup_;
-}  
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::NotifyDestructionToChildAutomats
+// Created: RPD 2010-06-01
+// -----------------------------------------------------------------------------
+void Automat::NotifyDestructionToChildAutomats()
+{
+    childAutomats_.Apply( boost::bind( &kernel::Automat_ABC::NotifyParentDestroyed, _1 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::NotifyParentDestroyed()
+// Created: RPD 2010-06-01
+// -----------------------------------------------------------------------------
+void Automat::NotifyParentDestroyed()
+{
+    parentAutomat_ = 0;
+}

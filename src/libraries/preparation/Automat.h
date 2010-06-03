@@ -68,6 +68,7 @@ public:
     virtual const tools::Resolver< kernel::Agent_ABC >& GetAgents() const;
     virtual kernel::Automat_ABC* GetParentAutomat() const;
     virtual kernel::Formation_ABC* GetFormation() const;
+    virtual void NotifyParentDestroyed();
     //@}
 
     //! @name Extensions

@@ -58,6 +58,7 @@ public:
     virtual const tools::Resolver< Automat_ABC >& GetAutomats() const = 0;
     virtual void Register( Agent_ABC& automat ) = 0;
     virtual void Remove( Agent_ABC& automat ) = 0;
+    virtual void NotifyParentDestroyed() = 0;
     virtual const tools::Resolver< Agent_ABC >& GetAgents() const = 0;
     virtual Automat_ABC* GetParentAutomat() const = 0;
     virtual Formation_ABC* GetFormation() const = 0;

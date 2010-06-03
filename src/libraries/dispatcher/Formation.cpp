@@ -48,11 +48,11 @@ Formation::Formation( const Model_ABC& model, const Common::MsgFormationCreation
 // -----------------------------------------------------------------------------
 Formation::~Formation()
 {
-    // $$$ RDS : completement invalide si la formation parente a déja été detruite !!! 
     if( parent_ )
         parent_->Remove( *this );
     else
         team_.Remove( *this );
+    NotifyDestructionToChildFormations();
 }
 
 // -----------------------------------------------------------------------------
@@ -99,7 +99,7 @@ void Formation::SendDestruction( ClientPublisher_ABC& ) const
 void Formation::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
-    formations_.Apply( boost::bind( &kernel::Formation_ABC::Accept, _1, boost::ref( visitor ) ) );
+    childFormations_.Apply( boost::bind( &kernel::Formation_ABC::Accept, _1, boost::ref( visitor ) ) );
     automats_.Apply( boost::bind( &kernel::Automat_ABC::Accept, _1, boost::ref( visitor ) ) );
 }
 
@@ -113,7 +113,7 @@ const kernel::HierarchyLevel_ABC& Formation::GetLevel() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Formation::Register
+// Name: Formation::GetParent
 // Created: MGD 2009-12-22
 // -----------------------------------------------------------------------------
 kernel::Formation_ABC* Formation::GetParent() const
@@ -122,7 +122,7 @@ kernel::Formation_ABC* Formation::GetParent() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Formation::Register
+// Name: Formation::GetTeam
 // Created: MGD 2009-12-22
 // -----------------------------------------------------------------------------
 kernel::Team_ABC& Formation::GetTeam() const
@@ -136,25 +136,26 @@ kernel::Team_ABC& Formation::GetTeam() const
 // -----------------------------------------------------------------------------
 void Formation::Register( kernel::Formation_ABC& formation )
 {
-    formations_.Register( formation.GetId(), formation );
+    childFormations_.Register( formation.GetId(), formation );
 }
+
 // -----------------------------------------------------------------------------
-// Name: Formation::Register
+// Name: Formation::Remove
 // Created: MGD 2009-12-18
 // -----------------------------------------------------------------------------
 void Formation::Remove( kernel::Formation_ABC& formation )
 {
-    formations_.Remove( formation.GetId() );
+    childFormations_.Remove( formation.GetId() );
 }
+
 // -----------------------------------------------------------------------------
 // Name: Formation::GetFormations
 // Created: MGD 2009-12-22
 // -----------------------------------------------------------------------------
 const tools::Resolver< kernel::Formation_ABC >& Formation::GetFormations() const
 {
-    return formations_;
+    return childFormations_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: Formation::Register
@@ -164,14 +165,16 @@ void Formation::Register( kernel::Automat_ABC& automat )
 {
     automats_.Register( automat.GetId(), automat );
 }
+
 // -----------------------------------------------------------------------------
-// Name: Formation::Register
+// Name: Formation::Remove
 // Created: MGD 2009-12-21
 // -----------------------------------------------------------------------------
 void Formation::Remove( kernel::Automat_ABC& automat )
 {
     automats_.Remove( automat.GetId() );
 }
+
 // -----------------------------------------------------------------------------
 // Name: Formation::GetAutomates
 // Created: MGD 2009-12-22
@@ -179,4 +182,22 @@ void Formation::Remove( kernel::Automat_ABC& automat )
 const tools::Resolver< kernel::Automat_ABC >& Formation::GetAutomates() const
 {
     return automats_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::NotifyDestructionToChildFormations
+// Created: RPD 2010-05-31
+// -----------------------------------------------------------------------------
+void Formation::NotifyDestructionToChildFormations()
+{
+    childFormations_.Apply( boost::bind( &kernel::Formation_ABC::NotifyParentDestroyed, _1 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::NotifyParentDestroyed()
+// Created: RPD 2010-05-31
+// -----------------------------------------------------------------------------
+void Formation::NotifyParentDestroyed()
+{
+    parent_ = 0;
 }

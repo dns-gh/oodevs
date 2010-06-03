@@ -114,6 +114,7 @@ namespace
         MOCK_METHOD( GetAgents, 0 );
         MOCK_METHOD( GetParentAutomat, 0 );
         MOCK_METHOD( GetFormation, 0 );
+        MOCK_METHOD( NotifyParentDestroyed, 0 );
     
     };
 

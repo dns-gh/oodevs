@@ -235,7 +235,7 @@ void ProfileManager::RegisterRole( const std::string name )
 {
     if ( roles_.find( name ) == roles_.end() )
     {
-        roles_.insert( std::pair< const std::string, unsigned >( name, roles_.size() + 1 ) );
+        roles_.insert( std::pair< const std::string, unsigned >( name, roles_.size() ) );
     }
 }
 
