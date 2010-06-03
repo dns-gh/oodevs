@@ -110,5 +110,5 @@ ADN_Sensors_Meteos_GUI::~ADN_Sensors_Meteos_GUI()
 void ADN_Sensors_Meteos_GUI::OnCurrentChanged()
 {
     if( ModificatorMeteoInfos* data = static_cast< ModificatorMeteoInfos* >( GetCurrentData() ) )
-        emit WeatherChanged( data->GetItemName(), data->rCoeff_.GetData() );
+         emit WeatherChanged( data->GetItemName(), data->rCoeff_.GetData() );
 }

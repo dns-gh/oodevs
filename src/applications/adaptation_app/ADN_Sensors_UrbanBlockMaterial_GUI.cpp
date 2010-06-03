@@ -109,6 +109,7 @@ ADN_Sensors_UrbanBlockMaterial_GUI::~ADN_Sensors_UrbanBlockMaterial_GUI()
 void ADN_Sensors_UrbanBlockMaterial_GUI::OnCurrentChanged()
 {
     if( ModificatorUrbanBlockInfos* data = static_cast< ModificatorUrbanBlockInfos* >( GetCurrentData() ) )
-        emit UrbanBlockChanged( data->GetItemName(), data->rCoeff_.GetData() );
+        if( data  && data->ptrMaterial_.GetData() )
+            emit UrbanBlockChanged( data->GetItemName(), data->rCoeff_.GetData() );
 
 }

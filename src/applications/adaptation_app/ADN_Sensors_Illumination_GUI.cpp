@@ -114,6 +114,6 @@ ADN_Sensors_Illumination_GUI::~ADN_Sensors_Illumination_GUI()
 void ADN_Sensors_Illumination_GUI::OnCurrentChanged()
 {
     if( ModificatorIlluminationInfos* data = static_cast< ModificatorIlluminationInfos* >( GetCurrentData() ) )
-        emit IlluminationChanged( data->GetItemName(), data->rCoeff_.GetData() );
-
+         emit IlluminationChanged( data->GetItemName(), data->rCoeff_.GetData() );
+        
 }

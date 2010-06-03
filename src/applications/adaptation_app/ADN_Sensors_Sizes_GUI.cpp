@@ -91,7 +91,7 @@ ADN_Sensors_Sizes_GUI::ADN_Sensors_Sizes_GUI(QWidget * parent )
     // connector creation
     pConnector_=new ADN_CT_Sensors_Sizes(*this);
     connect( this, SIGNAL( currentChanged( int, int ) ), SLOT( OnCurrentChanged() ) );
-    connect( this, SIGNAL( selectionChanged() ), SLOT( OnCurrentChanged() ) );
+    connect( this, SIGNAL( selectionChanged() ), SLOT( OnCurrentChanged() ) );  
 }
 
 
@@ -111,6 +111,7 @@ ADN_Sensors_Sizes_GUI::~ADN_Sensors_Sizes_GUI()
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Sizes_GUI::OnCurrentChanged()
 {
-    if( ModificatorSizeInfos* data = static_cast< ModificatorSizeInfos* >( GetCurrentData() ) )
+     ModificatorSizeInfos* data = static_cast< ModificatorSizeInfos* >( GetCurrentData() );
+     if( data  && data->ptrSize_.GetData() )
         emit SizeChanged( data->GetItemName(), data->rCoeff_.GetData() );
 }
