@@ -281,9 +281,8 @@ void UnitMagicOrdersInterface::DestroyComponent()
 // -----------------------------------------------------------------------------
 void UnitMagicOrdersInterface::Move()
 {
-    if( magicMove_ )
-        return;
-    controllers_.Register( *magicMoveLocation_ );
+    if( !magicMove_ )
+        controllers_.Register( *magicMoveLocation_ );
     magicMove_ = true;
     magicMoveLocation_->StartPoint();
 }
