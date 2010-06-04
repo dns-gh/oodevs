@@ -22,6 +22,7 @@
 AutomatTemplateElement::AutomatTemplateElement( AgentsModel& agents, const kernel::Automat_ABC& automat )
     : agents_( agents )
     , type_  ( automat.GetType() )
+    , name_  ( automat.GetName() )
 {
     // NOTHING
 }
@@ -31,6 +32,13 @@ namespace
     const kernel::AutomatType& ReadType( const tools::Resolver_ABC< kernel::AutomatType, std::string >& types, xml::xistream& input )
     {
         return types.Get( xml::attribute< std::string >( input, "automatType" ) );
+    }
+
+    void ReadName( xml::xistream& input, QString& name )
+    {
+        std::string str;
+        input >> xml::optional >> xml::attribute( "name", str );
+        name = str.c_str();
     }
 }
 
@@ -42,7 +50,9 @@ AutomatTemplateElement::AutomatTemplateElement( AgentsModel& agents, const tools
     : agents_( agents )
     , type_  ( ReadType( types, input ) )
 {
-    // NOTHING
+    ReadName( input, name_ );
+    if( name_.isEmpty() )
+        name_ = type_.GetName().c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -62,7 +72,7 @@ kernel::Entity_ABC* AutomatTemplateElement::Instanciate( kernel::Entity_ABC& sup
 {
     if( dynamic_cast< kernel::Formation_ABC* >( &superior )
      || dynamic_cast< kernel::Automat_ABC* >( &superior ) )
-        return &agents_.CreateAutomat( superior, type_ );
+        return &agents_.CreateAutomat( superior, type_, name_ );
     return 0;
 }
 
@@ -73,7 +83,8 @@ kernel::Entity_ABC* AutomatTemplateElement::Instanciate( kernel::Entity_ABC& sup
 void AutomatTemplateElement::Serialize( xml::xostream& output )
 {
     output << xml::attribute( "type", "automat" )
-           << xml::attribute( "automatType", type_.GetName() );
+           << xml::attribute( "automatType", type_.GetName() )
+           << xml::attribute( "name", name_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -92,5 +103,14 @@ bool AutomatTemplateElement::IsCompatible( const kernel::Entity_ABC& superior ) 
 // -----------------------------------------------------------------------------
 QString AutomatTemplateElement::GetName() const
 {
-    return type_.GetName().c_str();
+    return name_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatTemplateElement::Rename
+// Created: JSR 2010-06-03
+// -----------------------------------------------------------------------------
+void AutomatTemplateElement::Rename( const QString& name )
+{
+    name_ = name;
 }

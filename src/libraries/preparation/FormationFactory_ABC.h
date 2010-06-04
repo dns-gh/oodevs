@@ -41,7 +41,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual kernel::Formation_ABC* Create( kernel::Entity_ABC& parent, const kernel::HierarchyLevel_ABC& level ) = 0;
+    virtual kernel::Formation_ABC* Create( kernel::Entity_ABC& parent, const kernel::HierarchyLevel_ABC& level, const QString& name = "" ) = 0;
     virtual kernel::Formation_ABC* Create( xml::xistream& xis, kernel::Entity_ABC& parent, const kernel::FormationLevels& levels ) = 0;
     //@}
 };

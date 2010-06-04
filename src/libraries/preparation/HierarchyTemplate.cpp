@@ -179,6 +179,8 @@ bool HierarchyTemplate::IsCompatible( const kernel::Entity_ABC& superior ) const
 void HierarchyTemplate::Rename( const QString& name )
 {
     name_ = name;
+    if( element_.get() )
+        element_->Rename( name );
 }
 
 // -----------------------------------------------------------------------------

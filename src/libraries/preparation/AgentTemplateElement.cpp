@@ -23,6 +23,7 @@ AgentTemplateElement::AgentTemplateElement( AgentsModel& agents, const kernel::A
     : agents_( agents )
     , type_( agent.GetType() )
     , cp_  ( agent.IsCommandPost() )
+    , name_( agent.GetName() )
 {
     // NOTHING
 }
@@ -32,6 +33,13 @@ namespace
     const kernel::AgentType& ReadType( const tools::Resolver_ABC< kernel::AgentType, std::string >& types, xml::xistream& input )
     {
         return types.Get( xml::attribute< std::string >( input, "agentType" ) );
+    }
+
+    void ReadName( xml::xistream& input, QString& name )
+    {
+        std::string str;
+        input >> xml::optional >> xml::attribute( "name", str );
+        name = str.c_str();
     }
 }
 
@@ -43,6 +51,9 @@ AgentTemplateElement::AgentTemplateElement( AgentsModel& agents, const tools::Re
     : agents_( agents )
     , type_  ( ReadType( types, input ) )
 {
+    ReadName( input, name_ );
+    if( name_.isEmpty() )
+        name_ = type_.GetName().c_str();
     input >> xml::attribute( "commandPost", cp_ );
 }
 
@@ -62,7 +73,7 @@ AgentTemplateElement::~AgentTemplateElement()
 kernel::Entity_ABC* AgentTemplateElement::Instanciate( kernel::Entity_ABC& superior, const geometry::Point2f& center )
 {
     kernel::Automat_ABC* parent = dynamic_cast< kernel::Automat_ABC* >( &superior );
-    return parent ? & agents_.CreateAgent( *parent, type_, center, cp_ ) : 0;
+    return parent ? & agents_.CreateAgent( *parent, type_, center, cp_, name_ ) : 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -73,7 +84,8 @@ void AgentTemplateElement::Serialize( xml::xostream& output )
 {
     output << xml::attribute( "type", "agent" )
            << xml::attribute( "agentType", type_.GetName() )
-           << xml::attribute( "commandPost", cp_ );
+           << xml::attribute( "commandPost", cp_ )
+           << xml::attribute( "name", name_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -91,5 +103,14 @@ bool AgentTemplateElement::IsCompatible( const kernel::Entity_ABC& superior ) co
 // -----------------------------------------------------------------------------
 QString AgentTemplateElement::GetName() const
 {
-    return type_.GetName().c_str();
+    return name_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentTemplateElement::Rename
+// Created: JSR 2010-06-03
+// -----------------------------------------------------------------------------
+void AgentTemplateElement::Rename( const QString& name )
+{
+    name_ = name;
 }

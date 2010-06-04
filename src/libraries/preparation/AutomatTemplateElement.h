@@ -43,6 +43,7 @@ public:
     virtual void Serialize( xml::xostream& output );
     virtual bool IsCompatible( const kernel::Entity_ABC& superior ) const;
     virtual QString GetName() const;
+    virtual void Rename( const QString& name );
     //@}
 
 private:
@@ -57,6 +58,7 @@ private:
     //@{
     AgentsModel& agents_;
     const kernel::AutomatType& type_;
+    QString name_;
     //@}
 };
 

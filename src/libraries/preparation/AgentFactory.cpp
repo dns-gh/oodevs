@@ -75,9 +75,11 @@ AgentFactory::~AgentFactory()
 // Name: AgentFactory::Create
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Agent_ABC* AgentFactory::Create( Automat_ABC& parent, const AgentType& type, const geometry::Point2f& position, bool commandPost )
+Agent_ABC* AgentFactory::Create( Automat_ABC& parent, const AgentType& type, const geometry::Point2f& position, bool commandPost, const QString& name )
 {
     Agent* result = new Agent( type, controllers_.controller_, idManager_, commandPost );
+    if( !name.isEmpty() )
+        result->Rename( name );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< Positions >( *new AgentPositions( *result, static_.coordinateConverter_, controllers_.controller_, position, dico ) );
     result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent ) );
@@ -96,9 +98,11 @@ Agent_ABC* AgentFactory::Create( Automat_ABC& parent, const AgentType& type, con
 // Name: AgentFactory::Create
 // Created: SBO 2006-09-01
 // -----------------------------------------------------------------------------
-kernel::Automat_ABC* AgentFactory::Create( Entity_ABC& parent, const AutomatType& type )
+kernel::Automat_ABC* AgentFactory::Create( Entity_ABC& parent, const AutomatType& type, const QString& name )
 {
     Automat* result = new Automat( type, controllers_.controller_, idManager_ );
+    if( !name.isEmpty() )
+        result->Rename( name );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< Positions >( *new AutomatPositions( *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, &parent ) );

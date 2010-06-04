@@ -22,7 +22,7 @@
 FormationTemplateElement::FormationTemplateElement( FormationModel& formations, const kernel::Formation_ABC& formation )
     : formations_( formations )
     , levelId_   ( formation.GetLevel().GetId() )
-    , name_      ( "Formation - " + formation.GetLevel().GetName() )
+    , name_      ( formation.GetName() )
 {
     // NOTHING
 }
@@ -55,7 +55,7 @@ FormationTemplateElement::~FormationTemplateElement()
 // -----------------------------------------------------------------------------
 kernel::Entity_ABC* FormationTemplateElement::Instanciate( kernel::Entity_ABC& superior, const geometry::Point2f& )
 {
-    return formations_.Create( superior, levelId_ );
+    return formations_.Create( superior, levelId_, name_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,4 +86,13 @@ bool FormationTemplateElement::IsCompatible( const kernel::Entity_ABC& superior 
 QString FormationTemplateElement::GetName() const
 {
     return name_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: FormationTemplateElement::Rename
+// Created: JSR 2010-06-03
+// -----------------------------------------------------------------------------
+void FormationTemplateElement::Rename( const QString& name )
+{
+    name_ = name;
 }

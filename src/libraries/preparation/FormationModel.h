@@ -51,7 +51,7 @@ public:
 
     //! @name Operations
     //@{
-    kernel::Formation_ABC* Create( kernel::Entity_ABC& parent, unsigned int levelId );
+    kernel::Formation_ABC* Create( kernel::Entity_ABC& parent, unsigned int levelId, const QString& name = "" );
     void Create( xml::xistream& xis, kernel::Entity_ABC& parent, Model& model );
     void Purge();
     //@}

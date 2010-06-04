@@ -35,6 +35,7 @@ public:
     virtual void Serialize( xml::xostream& output ) = 0;
     virtual bool IsCompatible( const kernel::Entity_ABC& superior ) const = 0;
     virtual QString GetName() const = 0;
+    virtual void Rename( const QString& name ) = 0;
     //@}
 };
 

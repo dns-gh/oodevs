@@ -66,9 +66,9 @@ void AgentsModel::Purge()
 // Name: AgentsModel::CreateAutomat
 // Created: AGE 2007-05-29
 // -----------------------------------------------------------------------------
-kernel::Automat_ABC& AgentsModel::CreateAutomat( kernel::Entity_ABC& parent, const kernel::AutomatType& type )
+kernel::Automat_ABC& AgentsModel::CreateAutomat( kernel::Entity_ABC& parent, const kernel::AutomatType& type, const QString& name )
 {
-    Automat_ABC* agent = agentFactory_.Create( parent, type );
+    Automat_ABC* agent = agentFactory_.Create( parent, type, name );
     tools::Resolver< Automat_ABC >::Register( agent->GetId(), *agent );
     return *agent;
 }
@@ -132,9 +132,9 @@ kernel::Automat_ABC* AgentsModel::FindAutomat( unsigned long id )
 // Name: AgentsModel::CreateAgent
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-kernel::Agent_ABC& AgentsModel::CreateAgent( Automat_ABC& parent, const AgentType& type, const geometry::Point2f& position, bool commandPost )
+kernel::Agent_ABC& AgentsModel::CreateAgent( Automat_ABC& parent, const AgentType& type, const geometry::Point2f& position, bool commandPost, const QString& name )
 {
-    Agent_ABC* agent = agentFactory_.Create( parent, type, parameters_.Clip( position ), commandPost );
+    Agent_ABC* agent = agentFactory_.Create( parent, type, parameters_.Clip( position ), commandPost, name );
     tools::Resolver< Agent_ABC >::Register( agent->GetId(), *agent );
     return *agent;
 }

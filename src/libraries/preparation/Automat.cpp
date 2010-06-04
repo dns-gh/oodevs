@@ -101,7 +101,7 @@ const AutomatType& Automat::GetType() const
 // -----------------------------------------------------------------------------
 void Automat::Rename( const QString& name )
 {
-    name_ = name;
+    name_ = name + QString( " [%1]" ).arg( id_ );
     Touch();
 }
 

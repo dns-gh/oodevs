@@ -43,9 +43,11 @@ FormationFactory::~FormationFactory()
 // Name: FormationFactory::Create
 // Created: SBO 2006-09-22
 // -----------------------------------------------------------------------------
-kernel::Formation_ABC* FormationFactory::Create( kernel::Entity_ABC& parent, const kernel::HierarchyLevel_ABC& level )
+kernel::Formation_ABC* FormationFactory::Create( kernel::Entity_ABC& parent, const kernel::HierarchyLevel_ABC& level, const QString& name )
 {
     Formation* formation = new Formation( controllers_.controller_, level, idManager_ );
+    if( !name.isEmpty() )
+        formation->Rename( name );
     formation->Attach< kernel::TacticalHierarchies >( *new FormationHierarchies( controllers_.controller_, *formation, &parent ) );
     formation->Attach< kernel::IntelligenceHierarchies >( *new EntityIntelligences( controllers_.controller_, *formation, &parent ) );
     formation->Attach< kernel::Positions >( *new FormationPositions( *formation ) );
