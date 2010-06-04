@@ -417,4 +417,7 @@
   </report>
   <report id="288" message="Vision verrouillee"/>
   <report id="289" message="debut de construction objet"/>
+  <report id="290" message="Object %1 déjà occupé">
+    <parameter type="ObjectKnowledge"/>
+  </report>
 </reports>

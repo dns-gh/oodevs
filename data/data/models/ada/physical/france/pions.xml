@@ -10649,4 +10649,30 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
   </unit>
+  <unit decisional-model="net.masagroup.sword.military.roles.Artillery" id="437" name="Proto PC Batterie ASS" type="Pion ASS">
+    <nature atlas-nature="Vehicule" level="ooo" nature="combat/field artillery"/>
+    <equipments>
+      <equipment count="1" crew="2" type="VTC P4"/>
+      <equipment count="1" crew="4" major="true" type="VAB ATILA"/>
+      <equipment count="2" crew="2" type="TRM 2000 7,62"/>
+      <equipment count="1" crew="2" type="TRM 2000 2Pers"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="2" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="1950s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+  </unit>
 </units>

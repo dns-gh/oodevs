@@ -848,8 +848,11 @@
     <mission dia-behavior="net.masagroup.testSword.military.tasks.EngageAgents" dia-type="T_Mission_Pion_Engage" id="2029" name="EngageAgents">
       <parameter dia-name="entities" name="entities" optional="false" type="AgentKnowledgeListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.testSword.military.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MiseEnOeuvreSurPosition" id="2030" name="DeployOnPosition">
-      <parameter dia-name="objectives" name="objective" optional="false" type="ObjectKnowledgeBM"/>
+    <mission dia-behavior="net.masagroup.sword.military.tasks.ass.pion.Deploy" dia-type="T_Mission_Pion_MiseEnOeuvreSurPosition" id="2030" name="DeployOnPosition">
+      <parameter dia-name="entities" name="objective" optional="false" type="PointBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.military.tasks.ass.pion.Deploy" dia-type="T_Mission_Pion_MiseEnOeuvre" id="2061" name="Deploy">
+      <parameter dia-name="entities" name="objective" optional="false" type="ObjectKnowledgeBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.TakeCover" dia-type="T_Mission_Pion_TakeCover" id="2031" name="TakeCover"/>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.Flee" dia-type="T_Mission_Pion_Flee" id="2032" name="Flee"/>
@@ -938,7 +941,7 @@
     <mission dia-behavior="net.masagroup.sword_france.military.tasks.commun.SoutenirSurPositionEnMesureDeBM" dia-type="T_Mission_Pion_SoutenirSurPositionEnMesureDeBM" id="2060" name="SoutenirSurPositionEnMesureDeBM">
       <parameter dia-name="position" name="position " optional="false" type="PointBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword_france.military.tasks.commun.Appuyer" dia-type="T_Mission_Pion_Appuyer" id="2061" name="Appuyer">
+    <mission dia-behavior="net.masagroup.sword_france.military.tasks.commun.Appuyer" dia-type="T_Mission_Pion_Appuyer" id="2062" name="Appuyer">
       <parameter dia-name="objectives" name="objectives" optional="false" type="AgentListBM"/>
     </mission>
   </units>
@@ -1565,6 +1568,9 @@
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword_france.military.tasks.commun.automat.SuivreBM" dia-type="T_Mission_Automate_SuivreBM" id="1006" mrt-dia-behavior="net.masagroup.sword_france.military.tasks.commun.automat.SuivreBM" name="SuivreBM">
       <parameter dia-name="objective" name="unite a suivre" optional="false" type="AgentBM"/>
+    </mission>
+    <mission cdt-dia-behavior="net.masagroup.sword.military.tasks.ass.automat.Deploy" dia-type="T_Mission_Automate_Deploy" id="1008" mrt-dia-behavior="net.masagroup.sword.military.tasks.ass.automat.Deploy" name="Deploy">
+      <parameter dia-name="deploymentArea" name="zone de deploiement" optional="false" type="AreaBM"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword_france.military.tasks.commun.automat.SoutenirSurPositionEnMesureDeBM" dia-type="T_Mission_Automate_SoutenirSurPositionEnMesureDeBM" id="1007" mrt-dia-behavior="net.masagroup.sword_france.military.tasks.commun.automat.SoutenirSurPositionEnMesureDeBM" name="SoutenirSurPositionEnMesureDeBM">
       <parameter dia-name="position" name="position " optional="false" type="PointBM"/>

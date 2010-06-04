@@ -64,10 +64,15 @@
           <fragorder name="ApplyFire"/>
           <fragorder name="ApplyGuidedFire"/>
         </mission>
+        <mission name="Deploy">
+          <fragorder name="ApplyFire"/>
+          <fragorder name="ApplyGuidedFire"/>
+        </mission>
         <mission name="SuivreAgent"/>
         <mission name="StationnerBM"/>
         <mission name="SeRecompleter"/>
         <mission name="SoutenirSurPositionEnMesureDeBM"/>
+        <mission name="MoveToPoint"/>
       </missions>
     </unit>
     <unit dia-type="BMPion" file="BMPion.bms" name="net.masagroup.sword.military.roles.Genie">
@@ -2933,6 +2938,16 @@
         <mission name="StationnerBM"/>
         <mission name="SuivreBM"/>
         <mission name="SoutenirSurPositionEnMesureDeBM"/>
+      </missions>
+    </automat>
+    <automat dia-type="BMAutomat" file="BMAutomat.bms" name="net.masagroup.sword.military.roles.art.Company">
+      <missions>
+        <mission name="FaireMouvementVersPosition"/>
+        <mission name="FaireMouvementVersBU"/>
+        <mission name="StationnerBM"/>
+        <mission name="SuivreBM"/>
+        <mission name="SoutenirSurPositionEnMesureDeBM"/>
+        <mission name="Deploy"/>
       </missions>
     </automat>
     <automat dia-type="StrategicBomberSquadron" file="Air\Automates\Escadrille Assaut\Model.bms" name="Groupe Assaut AIR">
