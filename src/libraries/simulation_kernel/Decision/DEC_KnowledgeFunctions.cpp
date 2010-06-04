@@ -58,6 +58,17 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetAgentsAttacking( const MI
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::GetAgentsAttackingAlly
+// Created: DDA 2010-06-02
+// -----------------------------------------------------------------------------
+T_ConstKnowledgeAgentVector  DEC_KnowledgeFunctions::GetAgentsAttackingAlly( const DEC_Decision_ABC* agentAlly)
+{
+    T_ConstKnowledgeAgentVector attackers;
+    (*agentAlly).GetPion().GetKnowledge().GetAgentsAttacking( attackers );
+    return attackers;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetDangerousEnemies
 // Created: NLD 2004-04-06
 // -----------------------------------------------------------------------------

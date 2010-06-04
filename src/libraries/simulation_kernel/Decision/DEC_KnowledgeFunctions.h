@@ -37,6 +37,8 @@ public:
     static T_ConstKnowledgeAgentVector GetDetectedAgentsInFuseau        ( const MIL_AgentPion& callerAgent );
     static T_ConstKnowledgeAgentVector GetDetectedAgentsInZone          ( const MIL_AgentPion& callerAgent, const TER_Localisation* area );
     static T_ConstKnowledgeAgentVector GetAgentsAttacking               ( const MIL_AgentPion& callerAgent );
+    static T_ConstKnowledgeAgentVector GetAgentsAttackingAlly           ( const DEC_Decision_ABC* agentAlly);
+   
     static T_ConstKnowledgeAgentVector GetDangerousEnemies              ( const MIL_AgentPion& callerAgent );
     static T_ConstKnowledgeAgentVector GetLivingEnemiesPerceived        ( const MIL_AgentPion& callerAgent );
     static T_ConstKnowledgeAgentVector GetLivingEnemiesPerceivedInFuseau( const MIL_AgentPion& callerAgent );

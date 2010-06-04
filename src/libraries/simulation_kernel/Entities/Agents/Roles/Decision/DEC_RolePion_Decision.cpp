@@ -632,6 +632,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_Connaissances_UnitesDetecteesDansZone",
         boost::function< T_ConstKnowledgeAgentVector( const TER_Localisation* ) >( boost::bind( &DEC_KnowledgeFunctions::GetDetectedAgentsInZone, boost::cref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Connaissances_UnitesPrenantAPartie", boost::bind( &DEC_KnowledgeFunctions::GetAgentsAttacking, boost::ref( GetPion() ) ) );
+    brain.RegisterFunction( "DEC_Connaissances_UnitesPrenantAPartieSurAmi" ,
+        boost::function< T_ConstKnowledgeAgentVector( const DEC_Decision_ABC* )  >( boost::bind( &DEC_KnowledgeFunctions::GetAgentsAttackingAlly, _1 ) ) );
     brain.RegisterFunction( "DEC_Connaissances_UnitesEnnemiesDangereuses", boost::bind( &DEC_KnowledgeFunctions::GetDangerousEnemies, boost::ref( GetPion() ) ) );
 
     brain.RegisterFunction( "DEC_Connaissances_UnitesEnnemiesVivantesPercues", boost::bind( &DEC_KnowledgeFunctions::GetLivingEnemiesPerceived, boost::ref( GetPion() ) ) );

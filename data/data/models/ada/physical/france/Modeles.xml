@@ -5,6 +5,7 @@
       <missions>
         <mission name="Advance"/>
         <mission name="Animate"/>
+        <mission name="Appuyer"/>
         <mission name="DestroyAgents"/>
         <mission name="EngageAgents"/>
         <mission name="Flee"/>

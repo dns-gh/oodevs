@@ -60,7 +60,7 @@ void DefaultTransportCapacityComputer::ApplyOnComposante( PHY_ComposantePion& co
 double DefaultTransportCapacityComputer::WeightCapacity() const
 {
     return rWeightCapacity_;
-}
+} 
 
 // -----------------------------------------------------------------------------
 // Name: DefaultTransportCapacityComputer::WeightLoadedPerTimeStep
