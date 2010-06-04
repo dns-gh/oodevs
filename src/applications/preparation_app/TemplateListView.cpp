@@ -172,4 +172,6 @@ void TemplateListView::keyPressEvent( QKeyEvent* event )
             delete item;
         }
     }
+    else
+        QListView::keyPressEvent( event );
 }
