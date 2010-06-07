@@ -227,7 +227,7 @@ actions::gui::Param_ABC* MissionInterfaceBuilder::BuildAtlasNature( const OrderP
 // -----------------------------------------------------------------------------
 actions::gui::Param_ABC* MissionInterfaceBuilder::BuildDotation( const OrderParameter& parameter ) const
 {
-    return new actions::gui::ParamDotationDType( parameter, staticModel_.objectTypes_ );
+    return new actions::gui::ParamDotationDType( parameter, staticModel_.objectTypes_, *entity_ );
 }
 
 // -----------------------------------------------------------------------------

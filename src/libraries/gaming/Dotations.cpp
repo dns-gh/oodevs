@@ -141,3 +141,13 @@ void Dotations::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC
     if( bEmptyGasTank_ && viewport.IsHotpointVisible() )
         tools.DrawIcon( xpm_gas, where, 150.f );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Dotations::Accept
+// Created: LDC 2010-06-07
+// -----------------------------------------------------------------------------
+bool Dotations::Accept( const kernel::DotationType& type ) const
+{
+    Dotation* dotation = Find( type.GetId() );
+    return( dotation && dotation->quantity_ > 0 );
+}

@@ -84,7 +84,7 @@ Agent_ABC* AgentFactory::Create( Automat_ABC& parent, const AgentType& type, con
     result->Attach< Positions >( *new AgentPositions( *result, static_.coordinateConverter_, controllers_.controller_, position, dico ) );
     result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent ) );
     result->Attach< CommunicationHierarchies >( *new AgentCommunications( controllers_.controller_, *result, &parent ) );
-    result->Attach( *new Dotations( controllers_.controller_, *result, dico ) );
+    result->Attach<kernel::Dotations_ABC>( *new Dotations( controllers_.controller_, *result, dico ) );
     if( commandPost )
         result->Attach( *new CommandPostAttributes( *result ) );
     if( type.IsLogisticSupply() )
@@ -179,7 +179,7 @@ kernel::Agent_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Automat_ABC
     result->Attach< Positions >( *new AgentPositions( xis, *result, static_.coordinateConverter_, controllers_.controller_, dico ) );
     result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent ) );
     result->Attach< CommunicationHierarchies >( *new AgentCommunications( controllers_.controller_, *result, &parent ) );
-    result->Attach( *new Dotations( xis, controllers_.controller_, *result, static_.objectTypes_, dico ) );
+    result->Attach<kernel::Dotations_ABC>( *new Dotations( xis, controllers_.controller_, *result, static_.objectTypes_, dico ) );
     if( result->IsCommandPost() )
         result->Attach( *new CommandPostAttributes( *result ) );
     if( result->GetType().IsLogisticSupply() )

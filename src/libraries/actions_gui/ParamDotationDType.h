@@ -43,7 +43,7 @@ namespace actions
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamDotationDType( const kernel::OrderParameter& parameter, const tools::Resolver_ABC< kernel::DotationType >& resolver );
+             ParamDotationDType( const kernel::OrderParameter& parameter, const tools::Resolver_ABC< kernel::DotationType >& resolver, const kernel::Entity_ABC& agent );
     virtual ~ParamDotationDType();
     //@}
 
@@ -70,6 +70,7 @@ private:
     //@{
     const kernel::OrderParameter& parameter_;
     const tools::Resolver_ABC< kernel::DotationType >& resolver_;
+    const kernel::Entity_ABC& agent_;
     //@}
 };
 

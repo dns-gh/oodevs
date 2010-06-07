@@ -14,6 +14,7 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "tools/Resolver.h"
 #include "clients_kernel/Drawable_ABC.h"
+#include "clients_kernel/Dotations_ABC.h"
 
 namespace MsgsSimToClient
 {
@@ -36,7 +37,8 @@ class Dotation;
 */
 // Created: AGE 2006-02-13
 // =============================================================================
-class Dotations : public HierarchicExtension_ABC
+class Dotations : public kernel::Dotations_ABC
+                , public HierarchicExtension_ABC
                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
                 , public tools::Resolver< Dotation >
                 , public kernel::Drawable_ABC
@@ -53,6 +55,7 @@ public:
     //! @name Operations
     //@{
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual bool Accept( const kernel::DotationType& type ) const;
     //@}
 
 private:

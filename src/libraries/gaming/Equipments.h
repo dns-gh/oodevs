@@ -40,7 +40,8 @@ class Equipment;
 */
 // Created: AGE 2006-02-13
 // =============================================================================
-class Equipments : public HierarchicExtension_ABC
+class Equipments : public kernel::Extension_ABC
+                 , public HierarchicExtension_ABC
                  , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
                  , public tools::Resolver< Equipment >
 {

@@ -77,7 +77,7 @@ Team_ABC* TeamFactory::CreateTeam( const MsgsSimToClient::MsgTeamCreation& messa
     result->Attach< IntelligenceHierarchies > ( *new EntityIntelligences    ( controllers_.controller_, *result, 0, model_.teams_ ) );
     result->Attach( *new Equipments( controllers_.controller_, model_.static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new Troops( controllers_.controller_, model_.agents_, model_.teams_, model_.teams_ ) );
-    result->Attach( *new Dotations( controllers_.controller_, model_.static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
+    result->Attach<kernel::Dotations_ABC>( *new Dotations( controllers_.controller_, model_.static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Update( message );
     result->Polish();
     return result;
@@ -99,7 +99,7 @@ kernel::Formation_ABC* TeamFactory::CreateFormation( const Common::MsgFormationC
     result->Attach< IntelligenceHierarchies >( *new EntityIntelligences( controllers_.controller_, *result, superior, model_.teams_ ) );
     result->Attach( *new Equipments( controllers_.controller_, model_.static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new Troops( controllers_.controller_, model_.agents_, model_.teams_, model_.teams_ ) );
-    result->Attach( *new Dotations( controllers_.controller_, model_.static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
+    result->Attach<kernel::Dotations_ABC>( *new Dotations( controllers_.controller_, model_.static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new ConvexHulls( *result ) );
     result->Update( message );
     result->Polish();

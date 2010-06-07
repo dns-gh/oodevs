@@ -134,7 +134,7 @@ kernel::Automat_ABC* AgentFactory::Create( const MsgsSimToClient::MsgAutomatCrea
     result->Attach( *new LogMedicalConsigns( controllers_.controller_ ) );
     result->Attach( *new LogSupplyConsigns( controllers_.controller_ ) );
     result->Attach( *new Reports( *result, controllers_.controller_, static_.reportFactory_ ) );
-    result->Attach( *new Dotations( controllers_.controller_, static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
+    result->Attach<kernel::Dotations_ABC>( *new Dotations( controllers_.controller_, static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new Equipments( controllers_.controller_, static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new Troops( controllers_.controller_, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new MissionParameters( controllers_.controller_, model_.actionFactory_ ) );
@@ -176,7 +176,7 @@ kernel::Agent_ABC* AgentFactory::Create( const MsgsSimToClient::MsgUnitCreation&
 
     result->Attach< kernel::HumanFactors_ABC >( *new HumanFactors( controllers_.controller_, dico ) );
     result->Attach( *new Reinforcements( controllers_.controller_, model_.agents_, dico ) );
-    result->Attach( *new Dotations( controllers_.controller_, static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
+    result->Attach<kernel::Dotations_ABC>( *new Dotations( controllers_.controller_, static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new Equipments( controllers_.controller_, static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new Lendings( controllers_.controller_, model_.agents_, static_.objectTypes_ ) );
     result->Attach( *new Borrowings( controllers_.controller_, model_.agents_, static_.objectTypes_ ) );

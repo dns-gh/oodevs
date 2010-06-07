@@ -42,8 +42,7 @@ namespace MsgsSimToClient
 */
 // Created: SBO 2007-04-12
 // =============================================================================
-class HierarchicExtension_ABC : public kernel::Extension_ABC
-                              , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitCreation >
+class HierarchicExtension_ABC : public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitCreation >
                               , public kernel::Updatable_ABC< MsgsSimToClient::MsgAutomatCreation >
                               , public kernel::Updatable_ABC< Common::MsgFormationCreation >
                               , public kernel::Updatable_ABC< Common::MsgUnitChangeSuperior >

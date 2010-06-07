@@ -11,6 +11,7 @@
 #include "ParamDotationDType.h"
 #include "actions/DotationType.h"
 #include "clients_kernel/DotationType.h"
+#include "clients_kernel/Dotations_ABC.h"
 #include "protocol/Protocol.h"
 #include "tools/Iterator.h"
 
@@ -20,10 +21,11 @@ using namespace actions::gui;
 // Name: ParamDotationDType constructor
 // Created: SBO 2006-08-09
 // -----------------------------------------------------------------------------
-ParamDotationDType::ParamDotationDType( const kernel::OrderParameter& parameter, const tools::Resolver_ABC< kernel::DotationType >& resolver )
+ParamDotationDType::ParamDotationDType( const kernel::OrderParameter& parameter, const tools::Resolver_ABC< kernel::DotationType >& resolver, const kernel::Entity_ABC& agent )
 : ParamComboBox< int /*Common::MsgDotationType*/ >( parameter )
     , resolver_( resolver )
     , parameter_( parameter )
+    , agent_( agent )
 {
     // NOTHING
 }
@@ -43,15 +45,19 @@ ParamDotationDType::~ParamDotationDType()
 // -----------------------------------------------------------------------------
 void ParamDotationDType::BuildInterface( QWidget* parent )
 {
-    tools::Iterator< const kernel::DotationType& > it = resolver_.CreateIterator();
-    while( it.HasMoreElements() )
+    const kernel::Dotations_ABC* dotations = agent_.Retrieve< kernel::Dotations_ABC >();
+    if( dotations )
     {
-        const kernel::DotationType& type = it.NextElement();
-        if( type.IsDType() )
+        tools::Iterator< const kernel::DotationType& > it = resolver_.CreateIterator();
+        while( it.HasMoreElements() )
         {
-            Common::MsgDotationType dot;
-            dot.set_oid( type.GetId() );
-            AddItem( type.GetCategory().c_str(), dot.oid() );
+            const kernel::DotationType& type = it.NextElement();
+            if( type.IsAmmunition() && dotations->Accept( type ) )
+            {
+                Common::MsgDotationType dot;
+                dot.set_oid( type.GetId() );
+                AddItem( type.GetCategory().c_str(), dot.oid() );
+            }
         }
     }
     ParamComboBox< int /*Common::MsgDotationType*/ >::BuildInterface( parent );

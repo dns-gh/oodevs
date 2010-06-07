@@ -34,7 +34,8 @@ namespace MsgsSimToClient
 */
 // Created: AGE 2006-02-13
 // =============================================================================
-class Troops : public HierarchicExtension_ABC
+class Troops : public kernel::Extension_ABC
+             , public HierarchicExtension_ABC
              , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
 {
 
