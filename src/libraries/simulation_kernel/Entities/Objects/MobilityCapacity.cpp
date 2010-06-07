@@ -75,7 +75,7 @@ void MobilityCapacity::InitializeSpeedPolicy( xml::xistream& xis )
 MobilityCapacity::MobilityCapacity( const MobilityCapacity& from )
     : nSpeedPolicy_ ( from.nSpeedPolicy_ )
     , rDefaultSpeed_ ( from.rDefaultSpeed_ )
-    , rSpeedPolicyMaxSpeedAgentFactor_ ( rSpeedPolicyMaxSpeedAgentFactor_ )
+    , rSpeedPolicyMaxSpeedAgentFactor_ ( from.rSpeedPolicyMaxSpeedAgentFactor_ )
 {
     // NOTHING
 }
