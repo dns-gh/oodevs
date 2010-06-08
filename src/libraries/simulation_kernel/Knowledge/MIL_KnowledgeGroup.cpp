@@ -858,7 +858,10 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
         if ( GetTimeToDiffuseToKnowledgeGroup() < currentTimeStep )
         {
             if ( parent && IsEnabled() )
-                parent->GetKnowledge().GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( boost::bind( &MIL_KnowledgeGroup::UpdateAgentKnowledgeFromParentKnowledgeGroup, this, _1, boost::ref(currentTimeStep) ) );
+            {
+                parent->GetKnowledge().GetKnowledgeAgentContainer().ApplyOnPreviousKnowledgesAgent( boost::bind( &MIL_KnowledgeGroup::UpdateAgentKnowledgeFromParentKnowledgeGroup, this, _1, boost::ref(currentTimeStep) ) );
+                parent->GetKnowledge().GetKnowledgeAgentContainer().SaveAllCurrentKnowledgeAgent();
+            }
             RefreshTimeToDiffuseToKnowledgeGroup();
         }
         // LTO end
@@ -921,7 +924,7 @@ void MIL_KnowledgeGroup::UpdateAgentKnowledgeFromAgentPerception( const DEC_Know
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::UpdateAgentKnowledgeFromParentKnowledgeGroup( const DEC_Knowledge_Agent& agentKnowledge, int currentTimeStep )
 {
-    if( agentKnowledge.IsValid() && ( !parent_ || agentKnowledge.DetectionTick() + parent_->GetType().GetKnowledgeCommunicationDelay() <= currentTimeStep ) )
+    if( agentKnowledge.IsValid() && ( !parent_ || parent_->GetType().GetKnowledgeCommunicationDelay() <= currentTimeStep ) )
         GetAgentKnowledgeToUpdate( agentKnowledge.GetAgentKnown() ).Update( agentKnowledge, currentTimeStep );
 }
 

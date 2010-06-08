@@ -53,6 +53,7 @@ public:
     //@{
     DEC_Knowledge_Agent& CreateKnowledgeAgent ( const MIL_KnowledgeGroup& knowledgeGroup, MIL_Agent_ABC& agentKnown );
     void                 DestroyKnowledgeAgent( DEC_Knowledge_Agent& knowledge );
+    void                 SaveAllCurrentKnowledgeAgent();
     //@}
 
     //! @name Queries
@@ -65,6 +66,16 @@ public:
     void ApplyOnKnowledgesAgent( UnaryFunction fct ) const
     {
         for( CIT_KnowledgeAgentMap itKnowledge = realAgentMap_.begin(); itKnowledge != realAgentMap_.end(); )
+        {
+            DEC_Knowledge_Agent& knowledge = *itKnowledge->second;
+            ++itKnowledge;
+            fct( knowledge );
+        }
+    }
+    template < class UnaryFunction >
+    void ApplyOnPreviousKnowledgesAgent( UnaryFunction fct ) const
+    {
+        for( CIT_KnowledgeAgentMap itKnowledge = previousAgentMap_.begin(); itKnowledge != previousAgentMap_.end(); )
         {
             DEC_Knowledge_Agent& knowledge = *itKnowledge->second;
             ++itKnowledge;
@@ -113,6 +124,7 @@ private:
     //@{
     const MIL_KnowledgeGroup*   pKnowledgeGroup_;
           T_KnowledgeAgentMap   realAgentMap_;
+          T_KnowledgeAgentMap   previousAgentMap_;
           T_KnowledgeAgentIDMap unitKnowledgeFromIDMap_;
     //@}
 

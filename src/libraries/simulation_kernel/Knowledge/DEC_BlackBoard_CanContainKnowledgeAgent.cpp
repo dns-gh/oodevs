@@ -260,6 +260,15 @@ boost::shared_ptr< DEC_Knowledge_Agent > DEC_BlackBoard_CanContainKnowledgeAgent
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeAgent::SaveAllCurrentKnowledgeAgent
+// Created: SLG 2010-06-07
+// -----------------------------------------------------------------------------
+void DEC_BlackBoard_CanContainKnowledgeAgent::SaveAllCurrentKnowledgeAgent()
+{
+    previousAgentMap_ = realAgentMap_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgeAgent::GetDetected
 // Created: NLD 2006-04-13
 // -----------------------------------------------------------------------------

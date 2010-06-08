@@ -34,13 +34,8 @@ public:
     //@{
     template < typename Archive > void serialize( Archive& file, const unsigned int )
     {
-        file & detectionTick_;
+        //NOTHING
     }
-    //@}
-
-    //! @name Methods
-    //@{    
-    unsigned int DetectionTick() const;
     //@}
     
 protected:
@@ -49,8 +44,6 @@ protected:
     unsigned int GetCurrentTimeStep() const; 
     //@}
 
-private:
-    unsigned int detectionTick_;
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ABC )
