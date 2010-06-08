@@ -3313,6 +3313,17 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
+    <name>kernel</name>
+    <message>
+        <source>Resource</source>
+        <translation type="unfinished">Ressource</translation>
+    </message>
+    <message>
+        <source>Quantity</source>
+        <translation type="unfinished">Quantité</translation>
+    </message>
+</context>
+<context>
     <name>tools</name>
     <message>
         <source> - Not connected</source>

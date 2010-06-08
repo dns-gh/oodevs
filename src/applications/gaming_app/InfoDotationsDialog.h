@@ -11,7 +11,7 @@
 #define __InfoDotationsDialog_h_
 
 #include "InfoDialog.h"
-#include "gaming/Dotations.h"
+#include "clients_kernel/Dotations_ABC.h"
 
 namespace kernel
 {
@@ -30,7 +30,7 @@ namespace gui
 */
 // Created: SBO 2007-02-19
 // =============================================================================
-class InfoDotationsDialog : public InfoDialog< Dotations >
+class InfoDotationsDialog : public InfoDialog< kernel::Dotations_ABC >
 {
 
 public:

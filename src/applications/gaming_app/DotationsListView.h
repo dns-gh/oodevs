@@ -30,7 +30,7 @@ namespace gui
 */
 // Created: SBO 2007-02-16
 // =============================================================================
-class DotationsListView : public ResourcesListView_ABC< DotationsListView, Dotations >
+class DotationsListView : public ResourcesListView_ABC< DotationsListView, kernel::Dotations_ABC >
 {
     Q_OBJECT;
 
@@ -49,7 +49,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifyUpdated( const Dotations& a );
+    virtual void NotifyUpdated( const kernel::Dotations_ABC& a );
     //@}
 };
 
