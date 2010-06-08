@@ -941,7 +941,7 @@
     <mission dia-behavior="net.masagroup.sword_france.military.tasks.commun.SoutenirSurPositionEnMesureDeBM" dia-type="T_Mission_Pion_SoutenirSurPositionEnMesureDeBM" id="2060" name="SoutenirSurPositionEnMesureDeBM">
       <parameter dia-name="position" name="position " optional="false" type="PointBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword_france.military.tasks.commun.Appuyer" dia-type="T_Mission_Pion_Appuyer" id="2062" name="Appuyer">
+    <mission dia-behavior="net.masagroup.sword.military.tasks.CombatSupport" dia-type="T_Mission_Pion_Appuyer" id="2062" name="Appuyer">
       <parameter dia-name="objectives" name="objectives" optional="false" type="AgentListBM"/>
     </mission>
   </units>
