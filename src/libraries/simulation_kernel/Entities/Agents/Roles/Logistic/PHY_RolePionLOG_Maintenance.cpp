@@ -34,6 +34,7 @@
 #include "simulation_kernel/DotationComputer_ABC.h"
 #include "simulation_kernel/DotationComputerFactory_ABC.h"
 #include "simulation_kernel/ConsumeDotationNotificationHandler_ABC.h"
+#include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePionLOG_Maintenance )
 
@@ -660,6 +661,8 @@ int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForRepair( PHY_MaintenanceC
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Maintenance::Update( bool /*bIsDead*/ )
 {
+    if( bHasChanged_ )
+        pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
     if( nWorkRateWarningRCTick_ != 0 && MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() > nWorkRateWarningRCTick_ )
     {
         nWorkRateWarningRCTick_ = 0;

@@ -33,6 +33,7 @@
 #include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
 #include "simulation_kernel/OnComponentLendedFunctorComputer_ABC.h"
 #include "simulation_kernel/OnComponentLendedFunctorComputerFactory_ABC.h"
+#include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePionLOG_Medical )
 
@@ -746,7 +747,8 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForHealing( const PHY_MedicalHu
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Medical::Update( bool /*bIsDead*/ )
 {
-    // NOTHING
+    if( bHasChanged_ )
+        pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
 }
 
 // -----------------------------------------------------------------------------

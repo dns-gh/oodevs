@@ -26,6 +26,7 @@
 #include "simulation_kernel/OnComponentFunctorComputerFactory.h"
 #include "simulation_kernel/OnComponentLendedFunctorComputer_ABC.h"
 #include "simulation_kernel/OnComponentLendedFunctorComputerFactory.h"
+#include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePionLOG_Supply )
@@ -390,6 +391,8 @@ PHY_DotationStock* PHY_RolePionLOG_Supply::AddStock( const PHY_DotationCategory&
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Supply::Update( bool /*bIsDead*/ )
 {
+    if( bHasChanged_ )
+        pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
     assert( pStocks_ );
     pStocks_->Update(); // Stock checking
 }
