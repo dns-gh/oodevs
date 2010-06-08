@@ -186,7 +186,7 @@ kernel::Agent_ABC* AgentFactory::Create( const MsgsSimToClient::MsgUnitCreation&
     result->Attach< ConvexHulls >( *new AgentConvexHulls( *result, static_.coordinateConverter_ ) );
     result->Attach( *new DecisionalStates() );
     result->Attach( *new Speeds( static_.coordinateConverter_ ) );
-    result->Attach( *new Weapons( static_.objectTypes_, static_.objectTypes_ ) );
+    result->Attach( *new Weapons( controllers_, static_.objectTypes_, static_.objectTypes_ ) );
     AttachExtensions( *result );
 
     result->Update( message );

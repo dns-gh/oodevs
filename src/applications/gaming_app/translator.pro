@@ -24,6 +24,7 @@ ConnectDialog.cpp \
 ConnectionMenu.cpp \
 DisconnectDialog.cpp \
 DotationsListView.cpp \
+EfficientRangeDialog.cpp \
 EquipmentsListView.cpp \
 EventToolbar.cpp \
 FireResultListView.cpp \

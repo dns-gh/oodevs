@@ -17,12 +17,15 @@
 #include "MedicalTreatmentType.h"
 #include "NBCAgent.h"
 #include "ObjectType.h"
+#include "VolumeType.h"
 #include "WeaponSystemType.h"
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.h>
 
 using namespace kernel;
 using namespace xml;
+
+unsigned int ObjectTypes::nVolumeId = 0;
 
 // -----------------------------------------------------------------------------
 // Name: ObjectTypes constructor
@@ -52,6 +55,7 @@ void ObjectTypes::Load( const tools::ExerciseConfig& config )
     FileLoader( config )
         .Load( "objects", boost::bind( &ObjectTypes::ReadObjectTypes, this, _1 ) )
         .Load( "dotations", boost::bind( &ObjectTypes::ReadDotations, this, _1 ) )
+        .Load( "volumes", boost::bind( &ObjectTypes::ReadVolumes, this, _1 ) )
         .Load( "weapon-systems", boost::bind( &ObjectTypes::ReadWeaponSystems, this, _1 ) )
         .Load( "components", boost::bind( &ObjectTypes::ReadEquipments, this, _1 ) )
         .Load( "nbc", boost::bind( &ObjectTypes::ReadNBC, this, _1 ) )
@@ -74,6 +78,8 @@ void ObjectTypes::Purge()
      tools::StringResolver< ObjectType >::DeleteAll();
     Resolver2< FireClass >::DeleteAll();
     Resolver2< MedicalTreatmentType >::DeleteAll();
+    tools::Resolver< VolumeType >::DeleteAll();
+    nVolumeId = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -138,7 +144,7 @@ void ObjectTypes::ReadWeaponSystems( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ObjectTypes::ReadWeaponSystem( xml::xistream& xis )
 {
-    WeaponSystemType* type = new WeaponSystemType( xis );
+    WeaponSystemType* type = new WeaponSystemType( xis, *this );
     tools::Resolver< WeaponSystemType, std::string >::Register( type->GetId(), *type );
 }
 
@@ -243,4 +249,23 @@ void ObjectTypes::ReadBreakdown( xml::xistream& xis )
 {
     BreakdownType* breakdown = new BreakdownType( xis );
     tools::Resolver< BreakdownType >::Register( breakdown->GetId(), *breakdown );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectTypes::ReadVolumes
+// Created: JSR 2010-06-07
+// -----------------------------------------------------------------------------
+void ObjectTypes::ReadVolumes( xml::xistream& xis )
+{
+    xis >> start( "volumes" ) >> list( "volume", *this, &ObjectTypes::ReadVolume );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectTypes::ReadVolume
+// Created: JSR 2010-06-07
+// -----------------------------------------------------------------------------
+void ObjectTypes::ReadVolume( xml::xistream& xis )
+{
+    VolumeType* volume = new VolumeType( xis, nVolumeId++ );
+    tools::Resolver< VolumeType >::Register( volume->GetId(), *volume );
 }

@@ -9,6 +9,7 @@
 
 #include "clients_kernel_pch.h"
 #include "WeaponSystemType.h"
+#include "VolumeType.h"
 #include <xeumeuleu/xml.h>
 
 using namespace kernel;
@@ -17,13 +18,15 @@ using namespace kernel;
 // Name: WeaponSystemType constructor
 // Created: SBO 2008-08-06
 // -----------------------------------------------------------------------------
-WeaponSystemType::WeaponSystemType( xml::xistream& xis )
+WeaponSystemType::WeaponSystemType( xml::xistream& xis, tools::Resolver< VolumeType >& volumes )
     : launcher_        ( xml::attribute< std::string >( xis, "launcher" ) )
     , ammunition_      ( xml::attribute< std::string >( xis, "munition" ) )
     , maxIndirectRange_( 0 )
     , minIndirectRange_( std::numeric_limits< unsigned int >::max() )
     , maxDirectRange_  ( 0 )
     , minDirectRange_  ( std::numeric_limits< unsigned int >::max() )
+    , volumes_         ( volumes )
+    , phs_             ( volumes.Count(), MT_InterpolatedFunction< MT_Float >( 0., 0. ) )
 {
     ReadDirectFire( xis );
     ReadIndirectFire( xis );
@@ -56,24 +59,39 @@ void WeaponSystemType::ReadDirectFire( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void WeaponSystemType::ReadDirectFireHitProbabilities( xml::xistream& xis )
 {
-    xis >> xml::list( "hit-probability", *this, &WeaponSystemType::ReadDirectFireHitProbability );
+    std::string targetType;
+    xis >> xml::attribute( "target", targetType );
+
+    MT_InterpolatedFunction< MT_Float >* phFunction = 0;
+    tools::Iterator< const kernel::VolumeType& > it = volumes_.CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const kernel::VolumeType& volume = it.NextElement();
+        if( volume.GetName() == targetType )
+        {
+            phFunction = &phs_[ volume.GetId() ];
+            break;
+        }
+    }
+
+    xis >> xml::list( "hit-probability", *this, &WeaponSystemType::ReadDirectFireHitProbability, phFunction );
 }
 
 // -----------------------------------------------------------------------------
 // Name: WeaponSystemType::ReadDirectFireHitProbability
 // Created: SBO 2008-08-14
 // -----------------------------------------------------------------------------
-void WeaponSystemType::ReadDirectFireHitProbability( xml::xistream& xis )
+void WeaponSystemType::ReadDirectFireHitProbability( xml::xistream& xis, MT_InterpolatedFunction< MT_Float >* phFunction )
 {
     unsigned int distance = 0;
     float percentage = 0;
     xis >> xml::attribute( "distance", distance )
         >> xml::attribute( "percentage", percentage );
     if( percentage > 0 )
-    {
         minDirectRange_ = std::min( minDirectRange_, distance );
-        maxDirectRange_ = std::max( maxDirectRange_, distance );
-    }
+    maxDirectRange_ = std::max( maxDirectRange_, distance );
+    if( phFunction )
+        phFunction->AddNewPoint( distance, percentage );
 }
 
 // -----------------------------------------------------------------------------
@@ -114,4 +132,16 @@ unsigned int WeaponSystemType::GetMaxRange() const
 unsigned int WeaponSystemType::GetMinRange() const
 {
     return std::min( minIndirectRange_, minDirectRange_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeaponSystemType::GetEfficientRange
+// Created: JSR 2010-06-07
+// -----------------------------------------------------------------------------
+unsigned int WeaponSystemType::GetEfficientRange( unsigned int volumeId, MT_Float ph ) const
+{
+    VolumeType* volume = volumes_.Find( volumeId );
+    if( volume )
+        return unsigned int( phs_[ volume->GetId() ].GetMaxYForX( ph ) );
+    return 0;
 }

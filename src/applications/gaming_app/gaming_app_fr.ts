@@ -679,6 +679,33 @@ Reason: %3
     </message>
 </context>
 <context>
+    <name>EfficientRangeDialog</name>
+    <message>
+        <source>Efficient Range</source>
+        <translation>Portée Utile de Combat</translation>
+    </message>
+    <message>
+        <source>Display Parameters</source>
+        <translation>Paramètres d&apos;affichage</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Percentage (PH):</source>
+        <translation>Pourcentage (PH):</translation>
+    </message>
+    <message>
+        <source>Size:</source>
+        <translation>Volume:</translation>
+    </message>
+</context>
+<context>
     <name>EquipmentsListView</name>
     <message>
         <source>Equipment</source>
@@ -1959,6 +1986,10 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <source>Terrain toolbar</source>
         <translation>Barre d&apos;outils terrain</translation>
     </message>
+    <message>
+        <source>Efficient Range</source>
+        <translation>Portée utile de combat</translation>
+    </message>
 </context>
 <context>
     <name>MissionInterfaceBuilder</name>
@@ -2844,7 +2875,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Clear traces</source>
-        <translation type="unfinished">Effacer les traces</translation>
+        <translation>Effacer les traces</translation>
     </message>
 </context>
 <context>

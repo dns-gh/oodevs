@@ -29,6 +29,7 @@ namespace kernel
     class WeaponSystemType;
     class FireClass;
     class MedicalTreatmentType;
+    class VolumeType;
 
 // =============================================================================
 /** @class  ObjectTypes
@@ -45,6 +46,7 @@ class ObjectTypes
     , public Resolver2< FireClass >
     , public Resolver2< MedicalTreatmentType >
     , public  tools::Resolver< BreakdownType >
+    , public  tools::Resolver< VolumeType >
 {
 
 public:
@@ -87,7 +89,12 @@ private:
     void ReadBreakdowns( xml::xistream& xis );
     void ReadBreakdownCategory( xml::xistream& xis );
     void ReadBreakdown( xml::xistream& xis );
+    void ReadVolumes( xml::xistream& xis );
+    void ReadVolume( xml::xistream& xis );
     //@}
+
+private:
+    static unsigned int nVolumeId;
 };
 
 }

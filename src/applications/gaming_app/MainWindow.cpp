@@ -351,7 +351,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, ::StaticModel& staticM
     }
 
     gui::HelpSystem* help = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/gaming.xml" ) );
-    new Menu( this, controllers, *prefDialog, *profileDialog, *factory, license, *help, *interpreter, network_, logger );
+    new Menu( this, controllers, staticModel_.objectTypes_, *prefDialog, *profileDialog, *factory, license, *help, *interpreter, network_, logger );
 
     // $$$$ AGE 2006-08-22: prefDialog->GetPreferences()
     gui::TerrainPicker* picker = new gui::TerrainPicker( this );
