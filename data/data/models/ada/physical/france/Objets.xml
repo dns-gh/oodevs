@@ -92,7 +92,6 @@
     <supply-route/>
   </object>
   <object geometry="line" name="Site de franchissement" symbol="G*MPBCL---****X" type="crossing site">
-    <bridging/>
   </object>
   <object geometry="point" name="Site ROTA" symbol="G*ROTA*********" type="rota area">
     <contamination max-toxic="-1"/>
@@ -255,11 +254,9 @@
   </object>
   <object geometry="point" name="Pont flottant continu" symbol="S*GPEVEB--*****" type="continuous pontoon bridge">
     <bridging/>
-    <mobility default-speed="5" max-unit-percentage-speed="50" unit-speed-impact-mode="VitesseMaxAgent"/>
   </object>
   <object geometry="point" name="Pont flottant discontinu" symbol="S*GPEVEB--*****" type="discontinuous pontoon bridge">
     <bridging/>
-    <mobility default-speed="10" max-unit-percentage-speed="50" unit-speed-impact-mode="VitesseMaxAgent"/>
     <workable max-animator="0"/>
   </object>
   <object geometry="point" name="Poste de tir" symbol="G*FPAP----****X" type="firing post">
