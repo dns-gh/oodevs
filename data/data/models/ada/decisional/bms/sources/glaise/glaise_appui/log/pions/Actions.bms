@@ -112,7 +112,9 @@ includedFiles["sources/glaise/glaise_appui/log/pions/Actions.bms"] = true
 ]]if( ModuleBegins() ) then
             do
                 DEC_RC( eRC_Convoi_ChargementEnCours )
-                self.supplyAction = DEC_Ravitaillement_Convoi_StartCharger( self.bSupplyActionReturnCode )
+                self.supplyAction = DEC_Ravitaillement_Convoi_StartCharger(  )
+                actionCallbacks[ self.supplyAction ] = function( arg ) self.bSupplyActionReturnCode = arg end
+
             end
         end
 
@@ -162,7 +164,9 @@ includedFiles["sources/glaise/glaise_appui/log/pions/Actions.bms"] = true
 ]]--[[// Init
 ]]--[[//------------------------------------------------------------------------
 ]]if( ModuleBegins() ) then
-            self.supplyAction = DEC_Ravitaillement_Convoi_StartDecharger( self.bSupplyActionReturnCode )
+            self.supplyAction = DEC_Ravitaillement_Convoi_StartDecharger(  )
+            actionCallbacks[ self.supplyAction ] = function( arg ) self.bSupplyActionReturnCode = arg end
+
         end
 
         if( self.bSupplyActionReturnCode ) then

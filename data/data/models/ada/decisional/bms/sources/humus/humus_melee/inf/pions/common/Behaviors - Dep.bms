@@ -330,9 +330,8 @@ node "BEH_Dep_Pion_INF_PreciserMaintenirContact"
                 if( not DEC_ConnaissanceAgent_EstPercuParUnite( self._namedParams.ksEni ) ) then
                     do
                         --[[// action ACT_RC_SurEni( eRC_PerteDeContactVisuel, ksEni );									
-]]
-self.ptDest = DEC_Geometrie_CreerPoint()
-DEC_Copie_Point( DEC_ConnaissanceAgent_Position( self._namedParams.ksEni ), self.ptDest )
+]]self.ptDest = DEC_Geometrie_CreerPoint()
+                        DEC_Copie_Point( DEC_ConnaissanceAgent_Position( self._namedParams.ksEni ), self.ptDest )
                     end
                 end
 
