@@ -135,7 +135,7 @@ node "ACT_Tir_Pion_INF_TirCouverture"
     end,
 
     select = function( self )
-                self.eTir = self.eTir or eActionTirIndirect_Impossible
+                self.eTir = self.eTir or eActionTirIndirect_EnCours
         self.bReprendre = self.bReprendre or false
         self.bPremierCoupPartie = self.bPremierCoupPartie or false
         self.actionID = self.actionID or 0
