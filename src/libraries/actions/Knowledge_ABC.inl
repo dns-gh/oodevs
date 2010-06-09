@@ -71,8 +71,6 @@ void Knowledge_ABC< ConcreteEntity >::NotifyDestruction()
 template< typename ConcreteEntity >
 void Knowledge_ABC< ConcreteEntity >::Serialize( xml::xostream& xos ) const
 {
-    if( ! GetValue() )
-        ThrowInvalidKnowledge();
     Parameter< const ConcreteEntity* >::Serialize( xos );
     xos << xml::attribute( "value", id_ ); // $$$$ SBO 2007-05-24: 
 }
@@ -83,10 +81,13 @@ void Knowledge_ABC< ConcreteEntity >::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
 void Knowledge_ABC< ConcreteEntity >::NotifyValueSet()
-{
+{    
     if( ! GetValue() )
-        ThrowInvalidKnowledge();
-    const_cast< ConcreteEntity* >( GetValue() )->AddListener( *this );
-    id_ = GetValue()->GetEntity()->GetId();
-    isEntityValid_ = true;
+        isEntityValid_ = false;
+    else
+    {
+        const_cast< ConcreteEntity* >( GetValue() )->AddListener( *this );
+        id_ = GetValue()->GetEntity()->GetId();
+        isEntityValid_ = true;
+    }
 }
