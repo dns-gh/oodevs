@@ -66,8 +66,11 @@ public:
     virtual void Decontaminate();
     virtual void Decontaminate( MT_Float rRatioAgentsWorking );
 
+
     void WearNbcProtectionSuit  ();
     void RemoveNbcProtectionSuit();
+
+    virtual MT_Float GetContaminationQuantity() const;  
 
     virtual void Execute( firing::WeaponReloadingComputer_ABC& algorithm ) const;
 
@@ -96,6 +99,8 @@ private:
     //! @name Tools
     //@{
     bool HasChanged() const;
+    void ContaminateOtherUnits();
+    std::vector<const MIL_NbcAgentType*> GetContaminating() const;
     //@}
 
     MIL_AgentPion&      pion_;
@@ -104,7 +109,6 @@ private:
     MT_Float            rContaminationState_;
     MT_Float            rContaminationQuantity_;
     bool                bHasChanged_;
-
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_NBC* role, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_NBC* role, const unsigned int /*version*/ );
 

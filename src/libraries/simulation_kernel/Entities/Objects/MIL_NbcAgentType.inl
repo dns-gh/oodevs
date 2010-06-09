@@ -177,3 +177,22 @@ MT_Float MIL_NbcAgentType::GetMinPropagationSpeed()
 {
     return rMinPropagationSpeed_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_NbcAgentType::GetContaminationDistance
+// Created: HBD 2010-06-08
+// -----------------------------------------------------------------------------
+inline
+MT_Float MIL_NbcAgentType::GetContaminationDistance()
+{
+    return rContaminationDistance_;
+}
+// -----------------------------------------------------------------------------
+// Name: MIL_NbcAgentType::GetMinContaminationQuantity
+// Created: HBD 2010-06-08
+// -----------------------------------------------------------------------------
+inline
+MT_Float MIL_NbcAgentType::GetMinContaminationQuantity()
+{
+    return rContaminationQuantityGiven_;
+}

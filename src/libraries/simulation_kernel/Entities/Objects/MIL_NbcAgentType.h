@@ -62,6 +62,8 @@ public:
     static MT_Float GetCoefMaxSpeedModificator     ();
     static MT_Float GetCoefReloadingTimeModificator();
     static MT_Float GetMinPropagationSpeed         ();
+    static MT_Float GetContaminationDistance       ();
+    static MT_Float GetMinContaminationQuantity    ();
     //@}
 
 private:
@@ -113,6 +115,8 @@ private:
     static MT_Float          rCoefMaxSpeedModificator_;
     static MT_Float          rCoefReloadingTimeModificator_;
     static MT_Float          rMinPropagationSpeed_;
+    static MT_Float          rContaminationDistance_;
+    static MT_Float          rContaminationQuantityGiven_;
     static MT_Random         randomGenerator_;
 };
 

@@ -68,7 +68,7 @@ void Contaminations::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message
         quantity_ = message.etat_contamination().quantity();
     }
 
-    if( message.has_contamine_par_agents_nbc()  )
+   if( message.has_contamine_par_agents_nbc()  )
     {
         contaminatingNbcAgents_.clear();
         contaminatingNbcAgents_.reserve( message.contamine_par_agents_nbc().elem_size() );

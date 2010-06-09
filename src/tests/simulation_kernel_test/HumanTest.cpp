@@ -124,7 +124,7 @@ BOOST_AUTO_TEST_CASE( HumanApplyPoisonous )
     PHY_Human human = PHY_Human( time, composante);
 
     xml::xistringstream xis( "<nbc>"
-        "<propagation wind-speed-limit='5'/>"
+        "<propagation wind-speed-limit='5' contamination-distance='300' contamination-quantity-given='0.5' />"
         "<nbc-suit max-speed-modifier='0.4' reloading-time-modifier='1.5'/>"
         "<agents>"
         "<agent id='1' name='Biologique'>"

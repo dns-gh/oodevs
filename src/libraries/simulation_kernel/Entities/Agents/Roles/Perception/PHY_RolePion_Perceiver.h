@@ -198,7 +198,7 @@ private:
     };
 
     typedef std::vector< PHY_Perception_ABC* > T_PerceptionVector;
-    typedef T_PerceptionVector::const_iterator IT_PerceptionVector;
+    typedef T_PerceptionVector::iterator IT_PerceptionVector;
     typedef T_PerceptionVector::const_iterator CIT_PerceptionVector;
     //@}
 

@@ -84,3 +84,12 @@ void PHY_RoleHLA_NBC::ChangeStatus( const std::vector< std::string >& statuses )
 {
     bContaminated_ = std::find( statuses.begin(), statuses.end(), "contamine" ) != statuses.end();
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleHLA_NBC::GetContaminationQuantity
+// Created: HBD 2010-06-08
+// -----------------------------------------------------------------------------
+MT_Float PHY_RoleHLA_NBC::GetContaminationQuantity() const
+{
+    return 0.;
+}

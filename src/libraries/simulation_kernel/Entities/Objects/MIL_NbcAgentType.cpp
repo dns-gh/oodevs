@@ -23,7 +23,10 @@ MIL_NbcAgentType::T_NbcAgentTypeMap MIL_NbcAgentType::nbcAgentTypes_;
 MT_Float                            MIL_NbcAgentType::rCoefMaxSpeedModificator_      = 1.;
 MT_Float                            MIL_NbcAgentType::rCoefReloadingTimeModificator_ = 1.;
 MT_Float                            MIL_NbcAgentType::rMinPropagationSpeed_          = 0.;
+MT_Float                            MIL_NbcAgentType::rContaminationDistance_        = 100.;
 MT_Random                           MIL_NbcAgentType::randomGenerator_;
+MT_Float                            MIL_NbcAgentType::rContaminationQuantityGiven_    = 0.5;
+
 
 // =============================================================================
 // FACTORY
@@ -52,6 +55,8 @@ void MIL_NbcAgentType::Initialize( xml::xistream& xis )
             >> xml::end()
             >> xml::start( "propagation" )
                 >> xml::attribute( "wind-speed-limit", rMinPropagationSpeed_ )
+                >> xml::attribute( "contamination-distance", rContaminationDistance_ )
+                >> xml::attribute( "contamination-quantity-given", rContaminationQuantityGiven_ )
             >> xml::end();
 
     if( rCoefMaxSpeedModificator_ < 0 )
@@ -61,6 +66,9 @@ void MIL_NbcAgentType::Initialize( xml::xistream& xis )
 
     if( rMinPropagationSpeed_ < 0 )
         xis.error( "propagation: wind-speed-limit < 0" );
+
+    if( rContaminationDistance_ < 0 )
+        xis.error( "propagation: contamination-distance < 0" );
 
     rMinPropagationSpeed_ = MIL_Tools::ConvertSpeedMosToSim( rMinPropagationSpeed_ );
    

@@ -140,6 +140,8 @@ private:
     ADN_Type_Double rNbcSuitMaxSpeedMultiplier_;
     ADN_Type_Double rNbcSuitReloadSpeedMultiplier_;
     ADN_Type_Double rWindSpeedLimitForSpreading_;
+    ADN_Type_Double rContaminationDistance_;
+    ADN_Type_Double rContaminationQuantityGiven_;
 };
 
 
