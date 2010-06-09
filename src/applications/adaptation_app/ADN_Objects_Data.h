@@ -578,8 +578,7 @@ public:
         }
 
     public:
-        ADN_Objects_Data::ObjectInfos* pObject_;
-        ADN_Type_String ptrObject_;
+        ADN_Type_String strObjectType_;
         ADN_Type_Double rActionRange_;
     };
 
@@ -679,6 +678,7 @@ public:
     private:
         void ReadCapacityArchive ( const std::string& type, xml::xistream& input );
         void InitializeCapacities();
+        void InitializeDefaultParameters();
 
     public:
         ADN_Type_String strName_;

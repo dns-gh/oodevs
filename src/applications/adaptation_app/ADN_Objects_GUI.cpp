@@ -24,6 +24,7 @@
 #include "ADN_GroupBox.h"
 #include "ADN_RadioButton.h"
 #include "ADN_ComboBox_Enum.h"
+#include "ADN_ComboBox_Vector.h"
 #include "ADN_EquipementSelector.h"
 #include "ADN_Tr.h"
 #include "ADN_GuiBuilder.h"
@@ -252,9 +253,8 @@ void ADN_Objects_GUI::Build()
     ADN_GroupBox* spawn = new ADN_GroupBox( 3, Qt::Horizontal, tr( ADN_Objects_Data::ADN_CapacityInfos_Spawn::DISPLAY_NAME.c_str() ), hBox );        
     {
         vInfosConnectors[ eSpawnCapacityPresent ] = & spawn->GetConnector();
-        builder.AddField<ADN_EditLine_Int>( spawn, tr( "Action range" ), vInfosConnectors[eActionRange], tr( "m" ) );
+        builder.AddField<ADN_EditLine_Double>( spawn, tr( "Action range" ), vInfosConnectors[eActionRange], tr( "m" ) );
         builder.AddField<ADN_EditLine_String>( spawn, tr( "Object type" ), vInfosConnectors[eObjectType] );
-        builder.SetEnabled( false );
     }
 
 	ADN_GroupBox* extinguishable = new ADN_GroupBox( 3, Qt::Horizontal, tr( ADN_Objects_Data::ADN_CapacityInfos_Extinguishable::DISPLAY_NAME.c_str() ), hBox );        

@@ -119,6 +119,7 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
     LinkBuilder builder( vItemConnectors_, *pInfos, bConnect );
 
     vItemConnectors_[ ADN_Objects_GUI::eName ]->Connect( &pInfos->strName_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eName ]->Connect( &pInfos->strType_, bConnect );
     vItemConnectors_[ ADN_Objects_GUI::eGeometry ]->Connect( &pInfos->geometries_, bConnect );
     vItemConnectors_[ ADN_Objects_GUI::eSymbol ]->Connect( &pInfos->symbol_, bConnect );
 	
@@ -212,7 +213,7 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
     ADN_Objects_Data::ADN_CapacityInfos_Spawn& spawn = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Spawn >( ADN_Objects_GUI::eSpawnCapacityPresent );
     vItemConnectors_[ADN_Objects_GUI::eSpawnCapacityPresent]->Connect( &spawn.bPresent_, bConnect );
     vItemConnectors_[ADN_Objects_GUI::eActionRange]->Connect( &spawn.rActionRange_, bConnect );
-    vItemConnectors_[ADN_Objects_GUI::eObjectType]->Connect( &spawn.ptrObject_, bConnect );
+    vItemConnectors_[ADN_Objects_GUI::eObjectType]->Connect( &spawn.strObjectType_, bConnect );
 
     ADN_Objects_Data::ADN_CapacityInfos_AttitudeModifier& attitudeModifier = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_AttitudeModifier >( ADN_Objects_GUI::eAttitudeModifierCapacityPresent );
     vItemConnectors_[ADN_Objects_GUI::eAttitudeModifierCapacityPresent]->Connect( &attitudeModifier.bPresent_, bConnect );

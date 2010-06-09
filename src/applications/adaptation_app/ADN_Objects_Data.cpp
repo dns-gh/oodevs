@@ -879,12 +879,10 @@ void ADN_Objects_Data::ADN_CapacityInfos_Detection::WriteArchive( xml::xostream&
 // Created: SLG 2010-02-18
 // -----------------------------------------------------------------------------
 ADN_Objects_Data::ADN_CapacityInfos_Spawn::ADN_CapacityInfos_Spawn()
-    : pObject_( 0 )
+    : strObjectType_( "" )
     , rActionRange_( 0 )
-    , ptrObject_( "" )
 {
     rActionRange_.SetParentNode( *this );
-    ptrObject_.SetParentNode( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -894,12 +892,8 @@ ADN_Objects_Data::ADN_CapacityInfos_Spawn::ADN_CapacityInfos_Spawn()
 void ADN_Objects_Data::ADN_CapacityInfos_Spawn::ReadArchive( xml::xistream& input )
 {
     bPresent_ = true;
-    std::string objectType;
-    input >> xml::attribute( "object", objectType )
+    input >> xml::attribute( "object", strObjectType_ )
           >> xml::attribute( "action-range", rActionRange_ );
-
-    pObject_ = ADN_Workspace::GetWorkspace().GetObjects().GetData().FindObject( objectType );
-    ptrObject_ = pObject_->strName_.GetData();
 }
 
 // -----------------------------------------------------------------------------
@@ -908,9 +902,8 @@ void ADN_Objects_Data::ADN_CapacityInfos_Spawn::ReadArchive( xml::xistream& inpu
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ADN_CapacityInfos_Spawn::WriteArchive( xml::xostream& output )
 {
-    std::string strObject = pObject_->strType_.GetData();
-    output << xml::attribute( "object", strObject )
-           << xml::attribute( "action-range", rActionRange_ );
+    output << xml::attribute( "object", strObjectType_ )
+           << xml::attribute( "action-range", rActionRange_ ); 
 }
 //@}
 
@@ -1080,6 +1073,7 @@ ADN_Objects_Data::ObjectInfos::ObjectInfos()
     , strType_()
 {
     InitializeCapacities();
+    InitializeDefaultParameters();
 }
 
 // -----------------------------------------------------------------------------
@@ -1130,6 +1124,16 @@ void ADN_Objects_Data::ObjectInfos::InitializeCapacities()
     capacities_[ ADN_CapacityInfos_AttitudeModifier::TAG ].reset( new ADN_CapacityInfos_AttitudeModifier() );
     capacities_[ ADN_CapacityInfos_Perception::TAG ].reset( new ADN_CapacityInfos_Perception() );
     capacities_[ ADN_CapacityInfos_Scattering::TAG ].reset( new ADN_CapacityInfos_Scattering() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::InitializeDefaultParameters
+// Created: SLG 2010-06-09
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ObjectInfos::InitializeDefaultParameters()
+{
+    geometries_ = "polygon";
+    symbol_ = "G*GPGAL---****X";
 }
 
 // -----------------------------------------------------------------------------
