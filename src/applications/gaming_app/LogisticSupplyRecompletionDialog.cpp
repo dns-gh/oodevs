@@ -562,7 +562,7 @@ void LogisticSupplyRecompletionDialog::Validate()
     FillSupplies( *stocks );
 
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
-    action->Attach( *new ActionTasker( *selected_, false ) );
+    action->Attach( *new ActionTasker( selected_, false ) );
     action->RegisterAndPublish( actionsModel_ );
 
     selected_ = 0;

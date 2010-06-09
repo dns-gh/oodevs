@@ -19,6 +19,7 @@ namespace kernel
 }
 
 class ActionsScheduler;
+class Services;
 class Simulation;
 class TimelineRuler;
 
@@ -31,6 +32,7 @@ class TimelineRuler;
 class TimelineMarker : public TimelineItem_ABC
                      , public tools::Observer_ABC
                      , public tools::ElementObserver_ABC< Simulation >
+                     , public tools::ElementObserver_ABC< Services >
 {
 
 public:
@@ -58,6 +60,7 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const Simulation& simulation );
+    virtual void NotifyUpdated( const Services& services );
     virtual void draw( QPainter& painter );
     //@}
 

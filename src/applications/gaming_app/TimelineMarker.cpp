@@ -11,6 +11,7 @@
 #include "TimelineMarker.h"
 #include "TimelineRuler.h"
 #include "gaming/ActionsScheduler.h"
+#include "gaming/Services.h"
 #include "clients_kernel/Controllers.h"
 #include <qpainter.h>
 
@@ -44,7 +45,8 @@ TimelineMarker::~TimelineMarker()
 // -----------------------------------------------------------------------------
 void TimelineMarker::Move( long offset )
 {
-    shift_ += offset;
+    if( enabled() )
+        shift_ += offset;
 }
 
 // -----------------------------------------------------------------------------
@@ -108,4 +110,13 @@ void TimelineMarker::DisplayToolTip( QWidget* parent ) const
         QToolTip::remove( parent );
         QToolTip::add( parent, tip );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineMarker::NotifyUpdated
+// Created: SBO 2010-06-09
+// -----------------------------------------------------------------------------
+void TimelineMarker::NotifyUpdated( const Services& services )
+{
+    setEnabled( !services.HasService< replay::Service >() );
 }

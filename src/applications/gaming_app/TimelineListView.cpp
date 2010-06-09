@@ -81,7 +81,7 @@ void TimelineListView::NotifyCreated( const Action_ABC& action )
     QString name = "Magic";
     if( const ActionTasker* tasker = action.Retrieve< ActionTasker >() )
     {
-        entity = &tasker->GetTasker();
+        entity = tasker->GetTasker();
         name = entity->GetName();
     }
 
@@ -99,7 +99,7 @@ void TimelineListView::NotifyDeleted( const Action_ABC& action )
 {
     const kernel::Entity_ABC* entity = 0;
     if( const ActionTasker* tasker = action.Retrieve< ActionTasker >() )
-        entity = &tasker->GetTasker();
+        entity = tasker->GetTasker();
 
     if( gui::ValuedListItem* item = gui::FindItem( entity, firstChild() ) )
     {

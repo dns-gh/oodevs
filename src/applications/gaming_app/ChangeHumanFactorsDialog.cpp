@@ -187,7 +187,7 @@ void ChangeHumanFactorsDialog::SendAction( const kernel::Entity_ABC& entity, Enu
     action->AddParameter( *new parameters::Enumeration( it.NextElement(), ( unsigned int ) moral ) );
     action->AddParameter( *new parameters::Enumeration( it.NextElement(), ( unsigned int ) experience ) );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
-    action->Attach( *new ActionTasker( entity, false ) );
+    action->Attach( *new ActionTasker( &entity, false ) );
     action->RegisterAndPublish( actionsModel_ );
 }
 

@@ -160,7 +160,7 @@ void UnitMagicOrdersInterface::Handle( kernel::Location_ABC& location )
                 tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
                 action->AddParameter( *new parameters::Point( it.NextElement(), static_.coordinateConverter_, location ) );
                 action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
-                action->Attach( *new ActionTasker( *selectedEntity_, false ) );
+                action->Attach( *new ActionTasker( selectedEntity_, false ) );
                 action->RegisterAndPublish( actionsModel_ );
             }
             catch( ... )
@@ -215,7 +215,7 @@ namespace
             MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( strType );
             UnitMagicAction* action = new UnitMagicAction( agent, actionType, controllers_.controller_, true );
             action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
-            action->Attach( *new ActionTasker( agent, false ) );
+            action->Attach( *new ActionTasker( &agent, false ) );
             action->RegisterAndPublish( actionsModel_ );
         }
     private:
@@ -313,7 +313,7 @@ void UnitMagicOrdersInterface::SurrenderTo( int teamPtr )
         tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
         action->AddParameter( *new parameters::Army( it.NextElement(), *( Team_ABC* ) teamPtr, controllers_.controller_ ) );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
-        action->Attach( *new ActionTasker( *selectedEntity_, false ) );
+        action->Attach( *new ActionTasker( selectedEntity_, false ) );
         action->RegisterAndPublish( actionsModel_ );
     }
 }
@@ -370,7 +370,7 @@ void UnitMagicOrdersInterface::CreateAndPublish( const std::string& actionStr )
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( actionStr );
     UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
-    action->Attach( *new ActionTasker( *selectedEntity_, false ) );
+    action->Attach( *new ActionTasker( selectedEntity_, false ) );
     action->RegisterAndPublish( actionsModel_ );
 }
 

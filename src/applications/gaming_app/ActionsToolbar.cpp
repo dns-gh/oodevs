@@ -135,7 +135,7 @@ void ActionsToolbar::Load()
         return;
     try
     {
-        actions_.Load( filename.ascii() );
+        actions_.Load( filename.ascii(), hasReplay_ );
     }
     catch( std::exception& e )
     {

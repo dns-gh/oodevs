@@ -187,7 +187,7 @@ void LogisticSupplyPushFlowDialog::Validate()
     }
 
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
-    action->Attach( *new ActionTasker( *target, false ) );
+    action->Attach( *new ActionTasker( target, false ) );
     action->RegisterAndPublish( actionsModel_ );
 
     hide();

@@ -65,7 +65,7 @@ void TimelineView::NotifyCreated( const Action_ABC& action )
 {
     const kernel::Entity_ABC* entity = 0;
     if( const ActionTasker* tasker = action.Retrieve< ActionTasker >() )
-        entity = &tasker->GetTasker();
+        entity = tasker->GetTasker();
     T_Entities::iterator it = std::find( entities_.begin(), entities_.end(), entity );
     if( it == entities_.end() )
     {
@@ -85,7 +85,7 @@ void TimelineView::NotifyDeleted( const Action_ABC& action )
 {
     const kernel::Entity_ABC* entity = 0;
     if( const ActionTasker* tasker = action.Retrieve< ActionTasker >() )
-        entity = &tasker->GetTasker();
+        entity = tasker->GetTasker();
 
     T_EntityActions::iterator it = actions_.find( entity );
     if( it != actions_.end() )
@@ -298,7 +298,7 @@ void TimelineView::NotifySelected( const actions::Action_ABC* action )
     const kernel::Entity_ABC* entity = 0;
     if( action )
         if( const ActionTasker* tasker = action->Retrieve< ActionTasker >() )
-            entity = &tasker->GetTasker();
+            entity = tasker->GetTasker();
 
     T_EntityActions::iterator it = actions_.find( entity );
     if( it != actions_.end() )

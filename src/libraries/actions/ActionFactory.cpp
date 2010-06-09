@@ -100,7 +100,7 @@ actions::Action_ABC* ActionFactory::CreateAction( const kernel::Entity_ABC& targ
         throw std::runtime_error( __FUNCTION__ " Cannot resolve executing entity" );
 
     action->Attach( *new ActionTiming( controller_, simulation_, *action ) );
-    action->Attach( *new ActionTasker( target, false ) );
+    action->Attach( *new ActionTasker( &target, false ) );
     action->Polish();
     return action.release();
 }
@@ -113,7 +113,7 @@ actions::Action_ABC* ActionFactory::CreateAction( const kernel::Entity_ABC& targ
 {
     std::auto_ptr< actions::Action_ABC > action( new actions::FragOrder( target, fragOrder, controller_, true ) );
     action->Attach( *new ActionTiming( controller_, simulation_, *action ) );
-    action->Attach( *new ActionTasker( target, false ) );
+    action->Attach( *new ActionTasker( &target, false ) );
     action->Polish();
     return action.release();
 }
@@ -122,21 +122,21 @@ actions::Action_ABC* ActionFactory::CreateAction( const kernel::Entity_ABC& targ
 // Name: ActionFactory::CreateAction
 // Created: SBO 2010-05-07
 // -----------------------------------------------------------------------------
-actions::Action_ABC* ActionFactory::CreateAction( xml::xistream& xis ) const
+actions::Action_ABC* ActionFactory::CreateAction( xml::xistream& xis, bool readonly /*= false*/ ) const
 {
     const std::string type = xml::attribute< std::string >( xis, "type" );
     if( type == "mission" )
-        return CreateMission( xis );
+        return CreateMission( xis, readonly );
     if( type == "fragorder" )
-        return CreateFragOrder( xis );
+        return CreateFragOrder( xis, readonly );
     if( type == "magic" )
-        return CreateMagicAction( xis );
+        return CreateMagicAction( xis, readonly );
     if( type == "magicunit" )
-        return CreateUnitMagicAction( xis );
+        return CreateUnitMagicAction( xis, readonly );
     if( type == "magicobject" )
-        return CreateObjectMagicAction( xis );
+        return CreateObjectMagicAction( xis, readonly );
     if( type == "magicknowledge" )
-        return CreateKnowledgeGroupMagicAction( xis );
+        return CreateKnowledgeGroupMagicAction( xis, readonly );
     return 0;
 }
 
@@ -150,7 +150,7 @@ actions::Action_ABC* ActionFactory::CreateAction( const Common::MsgUnitOrder& me
     const kernel::Entity_ABC& tasker = entities_.GetAgent( message.oid() );
     std::auto_ptr< actions::Action_ABC > action( new actions::AgentMission( tasker, mission, controller_, true ) );
     action->Attach( *new ActionTiming( controller_, simulation_, *action ) );
-    action->Attach( *new ActionTasker( tasker ) );
+    action->Attach( *new ActionTasker( &tasker ) );
     action->Polish();
     AddParameters( *action, mission, message.parametres() );
     return action.release();
@@ -166,7 +166,7 @@ actions::Action_ABC* ActionFactory::CreateAction( const Common::MsgAutomatOrder&
     const kernel::Entity_ABC& tasker = entities_.GetAutomat( message.oid() );
     std::auto_ptr< actions::Action_ABC > action( new actions::AutomatMission( tasker, mission, controller_, true ) );
     action->Attach( *new ActionTiming( controller_, simulation_, *action ) );
-    action->Attach( *new ActionTasker( tasker ) );
+    action->Attach( *new ActionTasker( &tasker ) );
     action->Polish();
     AddParameters( *action, mission, message.parametres() );
     return action.release();
@@ -182,7 +182,7 @@ actions::Action_ABC* ActionFactory::CreateAction( const Common::MsgPopulationOrd
     const kernel::Entity_ABC& tasker = entities_.GetPopulation( message.oid() );
     std::auto_ptr< actions::Action_ABC > action( new actions::PopulationMission( tasker, mission, controller_, true ) );
     action->Attach( *new ActionTiming( controller_, simulation_, *action ) );
-    action->Attach( *new ActionTasker( tasker ) );
+    action->Attach( *new ActionTasker( &tasker ) );
     action->Polish();
     AddParameters( *action, mission, message.parametres() );
     return action.release();
@@ -213,7 +213,7 @@ actions::Action_ABC* ActionFactory::CreateAction( const MsgsClientToSim::MsgFrag
     const kernel::FragOrderType& order = fragOrders_.Get( message.frag_order() );
     std::auto_ptr< actions::Action_ABC > action( new actions::FragOrder( tasker, order, controller_, true ) );
     action->Attach( *new ActionTiming( controller_, simulation_, *action ) );
-    action->Attach( *new ActionTasker( tasker ) );
+    action->Attach( *new ActionTasker( &tasker ) );
     action->Polish();
     AddParameters( *action, order, message.parametres() );
     return action.release();
@@ -223,7 +223,7 @@ actions::Action_ABC* ActionFactory::CreateAction( const MsgsClientToSim::MsgFrag
 // Name: ActionFactory::CreateMission
 // Created: SBO 2010-05-07
 // -----------------------------------------------------------------------------
-actions::Action_ABC* ActionFactory::CreateMission( xml::xistream& xis ) const
+actions::Action_ABC* ActionFactory::CreateMission( xml::xistream& xis, bool readonly ) const
 {
     const unsigned long id = xml::attribute< unsigned long >( xis, "target" );
     std::auto_ptr< actions::Mission > action;
@@ -237,7 +237,7 @@ actions::Action_ABC* ActionFactory::CreateMission( xml::xistream& xis ) const
     else
         throw TargetNotFound( id );
     action->Attach( *new ActionTiming( xis, controller_, simulation_, *action ) );
-    action->Attach( *new ActionTasker( *target, false ) );
+    action->Attach( *new ActionTasker( target, readonly ) );
     action->Polish();
 
     tools::Iterator< const kernel::OrderParameter& > it = action->GetType().CreateIterator();
@@ -251,7 +251,7 @@ actions::Action_ABC* ActionFactory::CreateMission( xml::xistream& xis ) const
 // Name: ActionFactory::CreateFragOrder
 // Created: SBO 2010-05-07
 // -----------------------------------------------------------------------------
-actions::Action_ABC* ActionFactory::CreateFragOrder( xml::xistream& xis ) const
+actions::Action_ABC* ActionFactory::CreateFragOrder( xml::xistream& xis, bool readonly ) const
 {
     const unsigned long id = xml::attribute< unsigned long >( xis, "target" );
 
@@ -265,7 +265,7 @@ actions::Action_ABC* ActionFactory::CreateFragOrder( xml::xistream& xis ) const
         throw TargetNotFound( id );
     action.reset( new actions::FragOrder( xis, controller_, fragOrders_, *target ) );
     action->Attach( *new ActionTiming( xis, controller_, simulation_, *action ) );
-    action->Attach( *new ActionTasker( *target, false ) );
+    action->Attach( *new ActionTasker( target, readonly ) );
     action->Polish();
 
     tools::Iterator< const kernel::OrderParameter& > it = action->GetType().CreateIterator();
@@ -279,12 +279,13 @@ actions::Action_ABC* ActionFactory::CreateFragOrder( xml::xistream& xis ) const
 // Name: ActionFactory::CreateMagicAction
 // Created: SBO 2010-05-07
 // -----------------------------------------------------------------------------
-actions::Action_ABC* ActionFactory::CreateMagicAction( xml::xistream& xis ) const
+actions::Action_ABC* ActionFactory::CreateMagicAction( xml::xistream& xis, bool readonly ) const
 {
     const std::string id = xml::attribute< std::string >( xis, "id" );
     std::auto_ptr< actions::MagicAction > action;
     action.reset( new actions::MagicAction( xis, controller_, magicActions_.Get( id ) ) );
     action->Attach( *new ActionTiming( xis, controller_, simulation_, *action ) );
+    action->Attach( *new ActionTasker( 0, readonly ) );
     action->Polish();
 
     tools::Iterator< const kernel::OrderParameter& > it = action->GetType().CreateIterator();
@@ -298,7 +299,7 @@ actions::Action_ABC* ActionFactory::CreateMagicAction( xml::xistream& xis ) cons
 // Name: ActionFactory::CreateUnitMagicAction
 // Created: SBO 2010-05-07
 // -----------------------------------------------------------------------------
-actions::Action_ABC* ActionFactory::CreateUnitMagicAction( xml::xistream& xis ) const
+actions::Action_ABC* ActionFactory::CreateUnitMagicAction( xml::xistream& xis, bool readonly ) const
 {
     const unsigned long targetid = xml::attribute< unsigned long >( xis, "target" );
     const std::string id = xml::attribute< std::string >( xis, "id" );
@@ -314,7 +315,7 @@ actions::Action_ABC* ActionFactory::CreateUnitMagicAction( xml::xistream& xis ) 
 
     action.reset( new actions::UnitMagicAction( xis, controller_, magicActions_.Get( id ), *target ) );
     action->Attach( *new ActionTiming( xis, controller_, simulation_, *action ) );
-    action->Attach( *new ActionTasker( *target, false ) );
+    action->Attach( *new ActionTasker( target, readonly ) );
     action->Polish();
 
     tools::Iterator< const kernel::OrderParameter& > it = action->GetType().CreateIterator();
@@ -328,7 +329,7 @@ actions::Action_ABC* ActionFactory::CreateUnitMagicAction( xml::xistream& xis ) 
 // Name: ActionFactory::CreateObjectMagicAction
 // Created: SBO 2010-05-07
 // -----------------------------------------------------------------------------
-actions::Action_ABC* ActionFactory::CreateObjectMagicAction( xml::xistream& xis ) const
+actions::Action_ABC* ActionFactory::CreateObjectMagicAction( xml::xistream& xis, bool readonly ) const
 {
     const std::string id = xml::attribute< std::string >( xis, "id" );
 
@@ -345,6 +346,7 @@ actions::Action_ABC* ActionFactory::CreateObjectMagicAction( xml::xistream& xis 
 
     action.reset( new actions::ObjectMagicAction( xis, controller_, magicActions_.Get( id ), target ) );
     action->Attach( *new ActionTiming( xis, controller_, simulation_, *action ) );
+    action->Attach( *new ActionTasker( 0, readonly ) );
     action->Polish();
 
     tools::Iterator< const kernel::OrderParameter& > it = action->GetType().CreateIterator();
@@ -361,7 +363,7 @@ actions::Action_ABC* ActionFactory::CreateObjectMagicAction( xml::xistream& xis 
 // Name: ActionFactory::CreateKnowledgeGroupMagicAction
 // Created: SBO 2010-05-07
 // -----------------------------------------------------------------------------
-actions::Action_ABC* ActionFactory::CreateKnowledgeGroupMagicAction( xml::xistream& xis ) const
+actions::Action_ABC* ActionFactory::CreateKnowledgeGroupMagicAction( xml::xistream& xis, bool readonly ) const
 {
     const unsigned long targetid = xml::attribute< unsigned long >( xis, "target" );
     const std::string id = xml::attribute< std::string >( xis, "id" );
@@ -373,7 +375,7 @@ actions::Action_ABC* ActionFactory::CreateKnowledgeGroupMagicAction( xml::xistre
 
     action.reset( new actions::KnowledgeGroupMagicAction( xis, controller_, magicActions_.Get( id ), *target ) );
     action->Attach( *new ActionTiming( xis, controller_, simulation_, *action ) );
-    action->Attach( *new ActionTasker( *target, false ) );
+    action->Attach( *new ActionTasker( target, readonly ) );
     action->Polish();
 
     tools::Iterator< const kernel::OrderParameter& > it = action->GetType().CreateIterator();
@@ -396,7 +398,8 @@ void ActionFactory::AddParameters( actions::Action_ABC& action, const kernel::Or
         if( i >= message.elem_size() )
             throw std::runtime_error( __FUNCTION__ " Mission parameter count does not match mission definition" );
         if( const ActionTasker* tasker = action.Retrieve< ActionTasker >() )
-            if( actions::Parameter_ABC* newParam = factory_.CreateParameter( it.NextElement(), message.elem( i++ ), tasker->GetTasker() ) )
+            if( const kernel::Entity_ABC* entity = tasker->GetTasker() )
+            if( actions::Parameter_ABC* newParam = factory_.CreateParameter( it.NextElement(), message.elem( i++ ), *entity ) )
                 action.AddParameter( *newParam );
     }
 }
