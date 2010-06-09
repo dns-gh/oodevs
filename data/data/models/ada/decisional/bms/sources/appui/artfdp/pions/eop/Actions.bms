@@ -63,7 +63,7 @@ node "ACT_Transport_Pion_EOP_Debarquer"
         self.actionID = self.actionID or 0
         if( ModuleBegins() ) then
             do
-                DEC_Trace( "Landing: begin" )
+                DEC_Message( eRC_DisembarkmentStarted )
                 self.actionID = DEC_StartDebarquement(  )
                 actionCallbacks[ self.actionID ] = function( arg ) self.eEtat_EmbDeb = arg end
 
@@ -87,7 +87,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionEmbDeb_Termine then
-                    DEC_Trace( "Landing: end" )
+                    DEC_Message( eRC_DisembarkmentFinished )
                     if( self._namedParams.bLaisserTransporteur ) then
                         DEC_LaisserTransporteursSansDelai()
                     end
@@ -102,7 +102,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
 
         if( self.bReprise ) then
             do
-                DEC_Trace( "Landing: resume" )
+                DEC_Message( eRC_DisembarkmentResumed )
                 DEC_ReprendAction( self.actionID )
                 --[[// arret du debarquement
 ]]self.bReprise = false
@@ -113,7 +113,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
 ]]    end,
 
     deselect = function( self )
-                DEC_Trace( "Landing: paused" )
+        DEC_Message( eRC_DisembarkmentInterrupted )
         DEC_PauseAction( self.actionID )
         self.bReprise = true
     end,

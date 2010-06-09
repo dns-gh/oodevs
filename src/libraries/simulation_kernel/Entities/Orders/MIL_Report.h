@@ -106,6 +106,14 @@ public:
         eReport_RepairerResourcesLevelReached,
         eReport_HaulerResourcesLevelReached,
         eReport_ConvoyTransporterResourcesLevelReached,
+        eReport_EmbarkmentStarted,
+        eReport_EmbarkmentInterrupted,
+        eReport_EmbarkmentResumed,
+        eReport_EmbarkmentFinished,
+        eReport_DisembarkmentStarted,
+        eReport_DisembarkmentInterrupted,
+        eReport_DisembarkmentResumed,
+        eReport_DisembarkmentFinished,
         eNbrReport
     };
 
@@ -370,7 +378,16 @@ public:
         eRC_AttentatTerroristeDansPopulation,
         eRC_PopulationVictimeExplosionMines, // Parametres : victimes (float), dont_blesses (float), 
         eRC_ExecutionAttentat,
-        eNbr
+
+        eRC_EmbarkmentStarted = 3000,
+        eRC_EmbarkmentInterrupted = 3001,
+        eRC_EmbarkmentResumed = 3002,
+        eRC_EmbarkmentFinished = 3003,
+        eRC_DisembarkmentStarted = 3004,
+        eRC_DisembarkmentInterrupted = 3005,
+        eRC_DisembarkmentResumed = 3006,
+        eRC_DisembarkmentFinished = 3007,
+        eLast
     };
     //@}
 public:

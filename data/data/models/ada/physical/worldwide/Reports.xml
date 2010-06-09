@@ -364,4 +364,13 @@
   </report>
   <report id="262" message="need police backup"/>
   <report id="263" message="need medical backup"/>
+  
+  <report id="3000" message="Embarkment - started"/>
+  <report id="3001" message="Embarkment - interrupted"/>
+  <report id="3002" message="Embarkment - resumed"/>
+  <report id="3003" message="Embarkment - finished"/>
+  <report id="3004" message="Disembarkment - started"/>
+  <report id="3005" message="Disembarkment - interrupted"/>
+  <report id="3006" message="Disembarkment - resumed"/>
+  <report id="3007" message="Disembarkment - finished"/>
 </reports>

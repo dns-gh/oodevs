@@ -305,7 +305,15 @@ eRC_DebutNeutralisationCible = 286
 eRC_FinNeutralisationCible = 287
 eRC_VisionVerrouilleeSur = 288
 eRC_DebutConstructionObjet = 289
-eNbr = 290
+eRC_EmbarkmentStarted = 3000
+eRC_EmbarkmentInterrupted = 3001
+eRC_EmbarkmentResumed = 3002
+eRC_EmbarkmentFinished = 3003
+eRC_DisembarkmentStarted = 3004
+eRC_DisembarkmentInterrupted = 3005
+eRC_DisembarkmentResumed = 3006
+eRC_DisembarkmentFinished = 3007
+
 --[[// Parametre : T_ConnaissanceObjet
 ]]--[[// Parametre : float
 ]]--[[// Parametre : T_Pion

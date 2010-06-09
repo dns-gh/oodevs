@@ -420,4 +420,13 @@
   <report id="290" message="Object %1 déjà occupé">
     <parameter type="ObjectKnowledge"/>
   </report>
+  
+  <report id="3000" message="Embarquement - début"/>
+  <report id="3001" message="Embarquement - interruption"/>
+  <report id="3002" message="Embarquement - reprise"/>
+  <report id="3003" message="Embarquement - fin"/>
+  <report id="3004" message="Débarquement - début"/>
+  <report id="3005" message="Débarquement - interruption"/>
+  <report id="3006" message="Débarquement - reprise"/>
+  <report id="3007" message="Débarquement - fin"/>
 </reports>
