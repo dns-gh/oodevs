@@ -112,8 +112,8 @@ void DEC_KnowledgeObjectFunctions::DecontaminateZone( const MIL_Agent_ABC& calle
     assert( location );
 
     MIL_ObjectFilter filter;
-    filter.Set( "zone nbc" ); // $$$$ TODO JCR ?? 
-    filter.Set( "nuage nbc" ); // $$$$ TODO JCR ?? 
+    filter.Set( "nbc zone" ); 
+    filter.Set( "nbc cloud" );
 
     T_KnowledgeObjectVector knownObjects;
     callerAgent.GetArmy().GetKnowledge().GetObjects( knownObjects, filter );
