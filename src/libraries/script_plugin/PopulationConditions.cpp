@@ -78,7 +78,7 @@ namespace
             }
             else if( const dispatcher::PopulationFlow* f = dynamic_cast< const dispatcher::PopulationFlow* >( &entity ) )
             {
-                MsgLocation location;
+                Common::MsgLocation location;
                 f->flow_.Send( location );
                 for( int i = 0; i < location.coordinates().elem_size(); ++i )
                 {

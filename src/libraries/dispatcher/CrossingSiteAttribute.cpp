@@ -18,9 +18,8 @@ using namespace dispatcher;
 // Name: CrossingSiteAttribute constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-CrossingSiteAttribute::CrossingSiteAttribute( const Model& model, const Common::MsgObjectAttributes& asnMsg )
-    : ObjectAttribute_ABC( model, asnMsg )
-    , nWidth_            ( 0 )
+CrossingSiteAttribute::CrossingSiteAttribute( const Common::MsgObjectAttributes& asnMsg )
+    : nWidth_            ( 0 )
     , nDepth_            ( 0 )
     , nSpeed_            ( 0 )
     , bNeedsConstruction_( false ) 
@@ -34,7 +33,7 @@ CrossingSiteAttribute::CrossingSiteAttribute( const Model& model, const Common::
 // -----------------------------------------------------------------------------
 CrossingSiteAttribute::~CrossingSiteAttribute()
 {
-
+    // NOTHING
 }  
 
 // -----------------------------------------------------------------------------
@@ -62,13 +61,4 @@ void CrossingSiteAttribute::Send( Common::MsgObjectAttributes& asnMsg ) const
     asnMsg.mutable_crossing_site()->set_depth                ( nDepth_ );
     asnMsg.mutable_crossing_site()->set_flow_rate            ( nSpeed_ );
     asnMsg.mutable_crossing_site()->set_banks_require_fitting( bNeedsConstruction_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: CrossingSiteAttribute::Delete
-// Created: NLD 2006-09-28
-// -----------------------------------------------------------------------------
-void CrossingSiteAttribute::Delete( Common::MsgObjectAttributes& /*asnMsg*/ ) const
-{
-//    delete asnMsg().crossing_site;
 }

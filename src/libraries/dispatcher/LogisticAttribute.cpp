@@ -8,11 +8,10 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "LogisticAttribute.h"
+#include "Model_ABC.h"
+#include "dispatcher/Automat_ABC.h"
 #include "protocol/protocol.h"
-#include "Model.h"
-#include "Automat.h"
 
 using namespace dispatcher;
 
@@ -20,10 +19,9 @@ using namespace dispatcher;
 // Name: LogisticAttribute constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-LogisticAttribute::LogisticAttribute( const Model& model, const Common::MsgObjectAttributes& asnMsg )
-    : ObjectAttribute_ABC( model, asnMsg )
-    , model_             ( model )
-    , pTC2_              ( 0 )
+LogisticAttribute::LogisticAttribute( const Model_ABC& model, const Common::MsgObjectAttributes& asnMsg )
+    : automats_( model.Automats() )
+    , pTC2_( 0 )
 {
     Update( asnMsg );
 }
@@ -43,8 +41,8 @@ LogisticAttribute::~LogisticAttribute()
 // -----------------------------------------------------------------------------
 void LogisticAttribute::Update( const Common::MsgObjectAttributes& asnMsg )
 {
-    if ( asnMsg.has_logistic()  )
-        pTC2_ = &model_.automats_.Get( asnMsg.logistic().tc2() );    
+    if( asnMsg.has_logistic() )
+        pTC2_ = &automats_.Get( asnMsg.logistic().tc2() );    
 }
 
 // -----------------------------------------------------------------------------
@@ -53,15 +51,7 @@ void LogisticAttribute::Update( const Common::MsgObjectAttributes& asnMsg )
 // -----------------------------------------------------------------------------
 void LogisticAttribute::Send( Common::MsgObjectAttributes& asnMsg ) const
 {
-    assert( pTC2_ );
+    if( !pTC2_ )
+        throw std::runtime_error( __FUNCTION__ ": logistic superior is not defined" );
     asnMsg.mutable_logistic()->set_tc2( pTC2_->GetId() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticAttribute::Delete
-// Created: NLD 2006-09-28
-// -----------------------------------------------------------------------------
-void LogisticAttribute::Delete( Common::MsgObjectAttributes& /*asnMsg*/ ) const
-{
-    // NOTHING
 }

@@ -21,7 +21,7 @@ namespace xml
 
 namespace kernel
 {
-class VolumeType;
+    class VolumeType;
 
 // =============================================================================
 /** @class  WeaponSystemType
@@ -35,7 +35,7 @@ class WeaponSystemType
 public:
     //! @name Constructors/Destructor
     //@{
-             WeaponSystemType( xml::xistream& xis, tools::Resolver< VolumeType >& volumes );
+             WeaponSystemType( xml::xistream& xis, const tools::Resolver_ABC< VolumeType >& volumes );
     virtual ~WeaponSystemType();
     //@}
 
@@ -50,7 +50,7 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::vector< MT_InterpolatedFunction< MT_Float > >  T_PhVector;
+    typedef std::map< unsigned int, MT_InterpolatedFunction< MT_Float > >  T_HitProbabilities;
     //@}
 
 private:
@@ -77,8 +77,8 @@ private:
     unsigned int minIndirectRange_;
     unsigned int maxDirectRange_;
     unsigned int minDirectRange_;
-    tools::Resolver< VolumeType >& volumes_;
-    T_PhVector phs_;
+    const tools::Resolver_ABC< VolumeType >& volumes_;
+    T_HitProbabilities phs_;
     //@}
 };
 

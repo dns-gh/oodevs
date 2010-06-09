@@ -29,10 +29,8 @@ namespace xml
     class xistream;
 }
 
-class KnowledgeGroupFactory_ABC;
-class ObjectFactory_ABC;
 class IdManager;
-struct Enum_ObstacleType;
+class ObjectFactory_ABC;
 
 // =============================================================================
 /** @class  Team
@@ -60,16 +58,6 @@ public:
     void CreateObject( xml::xistream& xis );
     void Rename( const QString& name );
     virtual void SerializeAttributes( xml::xostream& xos ) const;
-    virtual const kernel::Karma& GetKarma() const;
-    virtual void Register( kernel::Formation_ABC& formation );
-    virtual void Remove( kernel::Formation_ABC& formation );
-    virtual void Register( kernel::Population_ABC& population );
-    virtual void Remove( kernel::Population_ABC& population );
-    virtual void Register( kernel::Object_ABC& object );
-    virtual void Remove( kernel::Object_ABC& object );
-    virtual void Register( kernel::KnowledgeGroup_ABC& knGroup );
-    virtual void Remove( kernel::KnowledgeGroup_ABC& knGroup );
-    virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
     //@}
 
 private:

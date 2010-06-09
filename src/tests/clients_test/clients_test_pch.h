@@ -29,10 +29,6 @@
 
 std::string BOOST_RESOLVE( const std::string& filename );
 
-#ifndef uint
-# define uint unsigned int
-#endif
-
 #pragma warning( push, 0 )
 #include <qapplication.h>
 #include <qdatetime.h>

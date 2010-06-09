@@ -19,8 +19,8 @@ namespace xml
 
 namespace dispatcher
 {
-    class Agent;
-    class Automat;
+    class Agent_ABC;
+    class Automat_ABC;
 }
 
 namespace plugins
@@ -40,8 +40,8 @@ class MissionParameterHeading : public MissionParameter_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionParameterHeading( xml::xistream& xis, const kernel::OrderParameter& type, const dispatcher::Agent& agent );
-             MissionParameterHeading( xml::xistream& xis, const kernel::OrderParameter& type, const dispatcher::Automat& automat );
+             MissionParameterHeading( xml::xistream& xis, const kernel::OrderParameter& type, const dispatcher::Agent_ABC& agent );
+             MissionParameterHeading( xml::xistream& xis, const kernel::OrderParameter& type, const dispatcher::Automat_ABC& automat );
     virtual ~MissionParameterHeading();
     //@}
 

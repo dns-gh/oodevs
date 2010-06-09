@@ -25,6 +25,7 @@
 #include "Point.h"
 #include "OrderParameterTypeResolver.h"
 
+#pragma warning( push, 0 )
 #include <boost/lexical_cast.hpp>
 #include <boost/bind.hpp>
 #include <boost/algorithm/string.hpp>
@@ -32,7 +33,9 @@
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/checked_delete.hpp>
+#pragma warning( pop )
 
+#pragma warning( disable : 4996 )
 
 using namespace plugins;
 using namespace plugins::crossbow;
@@ -294,7 +297,9 @@ void OrderParameterSerializer::Clean( Common::MsgMissionParameter& message ) con
 void OrderParameterSerializer::SerializeDirection( Common::MsgHeading& message, const std::string& value ) const
 {
     std::stringstream ss( value );
-    ss >> boost::lexical_cast< std::string >( message.heading() );
+    std::string heading;
+    ss >> heading;
+    message.set_heading( boost::lexical_cast< int >( heading ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -305,8 +310,8 @@ void OrderParameterSerializer::SerializeDirection( Common::MsgHeading& message, 
 void OrderParameterSerializer::SerializeAutomat( Common::MsgAutomat& message, const std::string& value ) const
 {
     unsigned long id = boost::lexical_cast< unsigned long >( value );
-    if( const dispatcher::Agent* agent = model_.Agents().Find( id ) )
-        message.set_oid( agent->automat_->GetId() );
+    if( const dispatcher::Agent_ABC* agent = model_.Agents().Find( id ) )
+        message.set_oid( agent->GetSuperior().GetId() );
      // $$$$ SBO 2007-06-07: else...
     else
         throw std::runtime_error( "unknown automat [" + value + "]" );

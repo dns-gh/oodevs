@@ -11,7 +11,10 @@
 #define __Kernel_Tools_h_
 
 #include "Types.h"
+#pragma warning( push, 0 )
 #include <qstring.h>
+#pragma warning( pop )
+
 
 // =============================================================================
 /** @class  Tools

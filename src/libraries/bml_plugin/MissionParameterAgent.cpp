@@ -9,7 +9,7 @@
 
 #include "bml_plugin_pch.h"
 #include "MissionParameterAgent.h"
-#include "dispatcher/Agent.h"
+#include "dispatcher/Agent_ABC.h"
 
 using namespace plugins::bml;
 
@@ -17,7 +17,7 @@ using namespace plugins::bml;
 // Name: MissionParameterAgent constructor
 // Created: SBO 2008-06-02
 // -----------------------------------------------------------------------------
-MissionParameterAgent::MissionParameterAgent( const kernel::OrderParameter& type, const dispatcher::Agent& agent )
+MissionParameterAgent::MissionParameterAgent( const kernel::OrderParameter& type, const dispatcher::Agent_ABC& agent )
     : MissionParameter_ABC( type )
     , agent_( agent )
 {

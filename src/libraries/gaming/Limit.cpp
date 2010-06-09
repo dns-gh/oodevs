@@ -12,7 +12,6 @@
 #include "Tools.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/ModelVisitor_ABC.h"
 #include "protocol/MessengerSenders.h"
 #include "protocol/Protocol.h"
 #include "protocol/ServerPublisher_ABC.h"
@@ -122,13 +121,4 @@ void Limit::Activate( kernel::ActionController& actions ) const
 bool Limit::IsLimit() const
 {
     return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Limit::Accept
-// Created: MGD 2009-12-21
-// -----------------------------------------------------------------------------
-void Limit::Accept( kernel::ModelVisitor_ABC& visitor ) const
-{
-    visitor.Visit( *this );
 }

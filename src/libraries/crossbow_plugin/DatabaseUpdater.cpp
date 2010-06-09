@@ -130,7 +130,7 @@ void DatabaseUpdater::Update( const MsgsSimToClient::MsgUnitCreation& msg )
     row.SetField( "name"      , FieldVariant( std::string( msg.nom() ) ) );
     row.SetField( "type"      , FieldVariant( ( long ) msg.type_pion() ) );
 	row.SetField( "session_id", FieldVariant( session_.GetId() ) );
-    UpdateSymbol( row, model_.agents_, msg.oid() );
+    UpdateSymbol( row, model_.Agents(), msg.oid() );
     row.SetGeometry( Point() );
     table->InsertRow( row );
 }
@@ -159,7 +159,7 @@ void DatabaseUpdater::Update( const MsgsSimToClient::MsgUnitKnowledgeCreation& m
    // $$$$ NEEDED ? builder.SetField( "type", msg.type_unite );
 	row.SetField( "session_id", FieldVariant( session_.GetId() ) );
     
-    if( const dispatcher::Agent* realAgent = model_.agents_.Find( msg.oid_unite_reelle() ) )
+    if( const dispatcher::Agent_ABC* realAgent = model_.Agents().Find( msg.oid_unite_reelle() ) )
     {
         std::string a = tools::app6::GetAffiliation( realAgent->Get< dispatcher::EntitySymbols_ABC >().BuildSymbol() );
         row.SetField( "observer_affiliation", FieldVariant( InverseAffiliation( a ) ) );
@@ -189,7 +189,7 @@ void DatabaseUpdater::Update( const MsgsSimToClient::MsgObjectKnowledgeCreation&
 		row.SetField( "state", FieldVariant( msg.attributes().construction().percentage() ) );
 	if ( tools::app6::GetAffiliation( symbol ) != "U" )
         row.SetField( "name", FieldVariant( std::string( knowledge->pObject_->GetName().ascii() ) ) );
-	if( const dispatcher::KnowledgeGroup* knowledgeGroup = model_.knowledgeGroups_.Find( msg.team() ) )
+    if( const dispatcher::KnowledgeGroup* knowledgeGroup = static_cast< const dispatcher::KnowledgeGroup* >( model_.KnowledgeGroups().Find( msg.team() ) ) )
 	{
 		tools::app6::SetAffiliation( symbol, (unsigned int) knowledgeGroup->GetTeam().GetKarma().GetUId() );
         row.SetField( "observer_affiliation", FieldVariant( tools::app6::GetAffiliation( symbol ) ) );
@@ -284,7 +284,7 @@ void DatabaseUpdater::Update( const MsgsSimToClient::MsgObjectCreation& msg )
     row.SetField( "name" , FieldVariant( std::string( msg.name() ) ) );
     row.SetField( "type" , FieldVariant( std::string( msg.type() ) ) );
 	row.SetField( "session_id", FieldVariant( session_.GetId() ) );
-    UpdateSymbol( row, model_.objects_, msg.oid() );
+    UpdateSymbol( row, model_.Objects(), msg.oid() );
     UpdateGeometry( row, msg.location() );
     table->InsertRow( row );
 }
@@ -312,7 +312,7 @@ void DatabaseUpdater::Update( const MsgsSimToClient::MsgObjectKnowledgeUpdate& m
 	    if ( tools::app6::GetAffiliation( symbol ) != "U" )
 		    row->SetField( "name",  FieldVariant( std::string( knowledge->pObject_->GetName() ) ) );
 
-	    if( const dispatcher::KnowledgeGroup* knowledgeGroup = model_.knowledgeGroups_.Find( msg.team() ) )
+	    if( const dispatcher::KnowledgeGroup* knowledgeGroup = static_cast< const dispatcher::KnowledgeGroup* >( model_.KnowledgeGroups().Find( msg.team() ) ) )
 	    {
 		    tools::app6::SetAffiliation( symbol, (unsigned int) knowledgeGroup->GetTeam().GetKarma().GetUId() );
             row->SetField( "observer_affiliation", FieldVariant( tools::app6::GetAffiliation( symbol ) ) );
@@ -367,7 +367,7 @@ void DatabaseUpdater::Update( const Common::MsgFormationCreation& message )
     row.SetField( "type", FieldVariant( -1 ) );
     row.SetField( "engaged", FieldVariant( 0 ) );
 	row.SetField( "session_id", FieldVariant( session_.GetId() ) );
-    UpdateSymbol( row, model_.formations_, message.oid() );
+    UpdateSymbol( row, model_.Formations(), message.oid() );
     table->InsertRow( row );
 }
 
@@ -388,7 +388,7 @@ void DatabaseUpdater::Update( const MsgsSimToClient::MsgAutomatCreation& message
     row.SetField( "type", FieldVariant( ( long ) message.type_automate() ) );
     row.SetField( "engaged", FieldVariant( true ) );
 	row.SetField( "session_id", FieldVariant( session_.GetId() ) );
-    UpdateSymbol( row, model_.automats_, ( long ) message.oid() );
+    UpdateSymbol( row, model_.Automats(), ( long ) message.oid() );
     table->InsertRow( row );
 }
 
@@ -467,7 +467,7 @@ void DatabaseUpdater::Update( const MsgsSimToClient::MsgUnitKnowledgeUpdate& msg
         if( msg.has_mort() )
             row->SetField( "dead", FieldVariant( msg.mort() ) );
         if( msg.has_max_identification_level() )
-            UpdateSymbol( *row, model_.agentKnowledges_, msg.oid() );
+            UpdateSymbol( *row, model_.AgentKnowledges(), msg.oid() );
         if( msg.has_position() )
             row->SetGeometry( Point( msg.position() ) );
         table->UpdateRow( *row );

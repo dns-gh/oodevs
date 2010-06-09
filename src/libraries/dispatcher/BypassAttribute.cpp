@@ -17,9 +17,8 @@ using namespace dispatcher;
 // Name: BypassAttribute constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-BypassAttribute::BypassAttribute( const Model& model, const Common::MsgObjectAttributes& asnMsg )
-    : ObjectAttribute_ABC( model, asnMsg )
-    , nPercentageBypassing_ ( asnMsg.bypass().percentage() )
+BypassAttribute::BypassAttribute( const Common::MsgObjectAttributes& asnMsg )
+    : nPercentageBypassing_( asnMsg.bypass().percentage() )
 {
     // NOTHING
 }
@@ -30,7 +29,7 @@ BypassAttribute::BypassAttribute( const Model& model, const Common::MsgObjectAtt
 // -----------------------------------------------------------------------------
 BypassAttribute::~BypassAttribute()
 {
-
+    // NOTHING
 }  
 
 // -----------------------------------------------------------------------------
@@ -50,13 +49,4 @@ void BypassAttribute::Update( const Common::MsgObjectAttributes& asnMsg )
 void BypassAttribute::Send( Common::MsgObjectAttributes& asnMsg ) const
 {
     asnMsg.mutable_bypass()->set_percentage( nPercentageBypassing_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: BypassAttribute::Delete
-// Created: NLD 2006-09-28
-// -----------------------------------------------------------------------------
-void BypassAttribute::Delete( Common::MsgObjectAttributes& /*asnMsg*/ ) const
-{
-
 }

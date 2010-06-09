@@ -10,19 +10,10 @@
 #ifndef __CrossingSiteAttribute_h_
 #define __CrossingSiteAttribute_h_
 
-
 #include "ObjectAttribute_ABC.h"
-
-
-namespace Common
-{
-    class MsgObjectAttributes;
-}
-
 
 namespace dispatcher
 {
-    class Model;
 
 // =============================================================================
 /** @class  CrossingSiteAttribute
@@ -35,22 +26,24 @@ class CrossingSiteAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     CrossingSiteAttribute( const Model& model, const Common::MsgObjectAttributes& asnMsg );
+    explicit CrossingSiteAttribute( const Common::MsgObjectAttributes& asnMsg );
     virtual ~CrossingSiteAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update   ( const Common::MsgObjectAttributes& asnMsg );
-    virtual void Send     ( Common::MsgObjectAttributes& asnMsg ) const;
-    virtual void Delete( Common::MsgObjectAttributes& asnMsg ) const;
+    virtual void Update( const Common::MsgObjectAttributes& asnMsg );
+    virtual void Send  ( Common::MsgObjectAttributes& asnMsg ) const;
     //@}
 
 private:
+    //! @name Member data
+    //@{
     unsigned int nWidth_;
     unsigned int nDepth_;
     unsigned int nSpeed_;
     bool         bNeedsConstruction_;    
+    //@}
 };
 
 }

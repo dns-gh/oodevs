@@ -10,19 +10,10 @@
 #ifndef __MineAttribute_h_
 #define __MineAttribute_h_
 
-
 #include "ObjectAttribute_ABC.h"
-
-
-namespace Common
-{
-    class MsgObjectAttributes;
-}
-
 
 namespace dispatcher
 {
-    class Model;
 
 // =============================================================================
 /** @class  MineAttribute
@@ -35,15 +26,14 @@ class MineAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     MineAttribute( const Model& model, const Common::MsgObjectAttributes& asnMsg );
+    explicit MineAttribute( const Common::MsgObjectAttributes& asnMsg );
     virtual ~MineAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update   ( const Common::MsgObjectAttributes& asnMsg );
-    virtual void Send     ( Common::MsgObjectAttributes& asnMsg ) const;
-    virtual void Delete( Common::MsgObjectAttributes& asnMsg ) const;
+    virtual void Update( const Common::MsgObjectAttributes& asnMsg );
+    virtual void Send  ( Common::MsgObjectAttributes& asnMsg ) const;
     //@}
 
 private:

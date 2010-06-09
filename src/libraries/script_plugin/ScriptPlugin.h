@@ -119,6 +119,7 @@ private:
     boost::ptr_vector< directia::ScriptRef > pending_;
     long time_;
     bool reset_;
+    unsigned int tickDuration_;
     //@}
 };
 

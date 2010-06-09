@@ -10,7 +10,7 @@
 #include "bml_plugin_pch.h"
 #include "Where.h"
 #include "Point.h"
-#include "dispatcher/Agent.h"
+#include "dispatcher/Agent_ABC.h"
 #include <xeumeuleu/xml.h>
 
 using namespace plugins::bml;
@@ -19,7 +19,7 @@ using namespace plugins::bml;
 // Name: Where constructor
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-Where::Where( const dispatcher::Agent& agent )
+Where::Where( const dispatcher::Agent_ABC& agent )
     : agent_( agent )
 {
     // NOTHING

@@ -8,13 +8,13 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-#include "Agent.h"
 #include "AgentKnowledge.h"
+#include "Agent_ABC.h"
 #include "Model.h"
-#include "protocol/ClientPublisher_ABC.h"
 #include "KnowledgeGroup.h"
 #include "Side.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ClientSenders.h"
 
 using namespace dispatcher;
@@ -24,10 +24,10 @@ using namespace dispatcher;
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
 AgentKnowledge::AgentKnowledge( Model& model, const MsgsSimToClient::MsgUnitKnowledgeCreation& message )
-    : SimpleEntity< kernel::AgentKnowledge_ABC >( message.oid() )
+    : dispatcher::AgentKnowledge_ABC( message.oid() )
     , model_                ( model )
-    , knowledgeGroup_       ( model.knowledgeGroups_.Get( message.oid_groupe_possesseur() ) )
-    , agent_                ( model.agents_.Get( message.oid_unite_reelle() ) )
+    , knowledgeGroup_       ( model.KnowledgeGroups().Get( message.oid_groupe_possesseur() ) )
+    , agent_                ( model.Agents().Get( message.oid_unite_reelle() ) )
     , type_                 ( message.type_unite() )
     , nRelevance_           ( 0 )
     , nPerceptionLevel_     ( MsgsSimToClient::signale )
@@ -42,7 +42,7 @@ AgentKnowledge::AgentKnowledge( Model& model, const MsgsSimToClient::MsgUnitKnow
     , bPrisoner_            ( false )
     , bRefugeeManaged_      ( false )
 {
-    // NOTHING
+    RegisterSelf( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,10 +67,10 @@ AgentKnowledge::~AgentKnowledge()
     }   
 
 // -----------------------------------------------------------------------------
-// Name: AgentKnowledge::Update
+// Name: AgentKnowledge::DoUpdate
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void AgentKnowledge::Update( const MsgsSimToClient::MsgUnitKnowledgeUpdate& message )
+void AgentKnowledge::DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeUpdate& message )
 {
     UPDATE_ASN_ATTRIBUTE( message ,  pertinence               , nRelevance_            );
     UPDATE_ASN_ATTRIBUTE( message ,  identification_level     , nPerceptionLevel_      );
@@ -87,7 +87,7 @@ void AgentKnowledge::Update( const MsgsSimToClient::MsgUnitKnowledgeUpdate& mess
         nDirection_ = message.direction().heading();
 
     if( message.has_camp() )
-        team_ = &model_.sides_.Get( message.camp() );
+        team_ = &model_.Sides().Get( message.camp() );
 
     UPDATE_ASN_ATTRIBUTE( message ,  nature_pc, bPC_ );
 
@@ -101,8 +101,6 @@ void AgentKnowledge::Update( const MsgsSimToClient::MsgUnitKnowledgeUpdate& mess
     UPDATE_ASN_ATTRIBUTE( message ,  rendu                    , bSurrendered_          );
     UPDATE_ASN_ATTRIBUTE( message ,  prisonnier               , bPrisoner_             );
     UPDATE_ASN_ATTRIBUTE( message ,  refugie_pris_en_compte   , bRefugeeManaged_       );
-
-    ApplyUpdate( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -219,4 +217,22 @@ const kernel::KnowledgeGroup_ABC& AgentKnowledge::GetOwner() const
 void AgentKnowledge::Display( kernel::Displayer_ABC& ) const
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledge::GetMaxPerceptionLevel
+// Created: SBO 2010-06-08
+// -----------------------------------------------------------------------------
+MsgsSimToClient::EnumUnitIdentificationLevel AgentKnowledge::GetMaxPerceptionLevel() const
+{
+    return nMaxPerceptionLevel_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledge::GetPosition
+// Created: SBO 2010-06-08
+// -----------------------------------------------------------------------------
+geometry::Point2d AgentKnowledge::GetPosition() const
+{
+    return position_;
 }

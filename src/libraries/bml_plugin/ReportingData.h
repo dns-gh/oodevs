@@ -17,8 +17,8 @@ namespace xml
 
 namespace dispatcher
 {
-    class Agent;
-    class Automat;
+    class Agent_ABC;
+    class Automat_ABC;
 }
 
 namespace plugins
@@ -38,8 +38,8 @@ class ReportingData
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ReportingData( const dispatcher::Agent& entity );
-    explicit ReportingData( const dispatcher::Automat& entity );
+    explicit ReportingData( const dispatcher::Agent_ABC& entity );
+    explicit ReportingData( const dispatcher::Automat_ABC& entity );
     virtual ~ReportingData();
     //@}
 

@@ -8,21 +8,18 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "FireAttribute.h"
 #include "protocol/SimulationSenders.h"
 
-////using namespace Common;
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------
 // Name: FireAttribute constructor
 // Created: RFT 2006-09-26
 // -----------------------------------------------------------------------------
-FireAttribute::FireAttribute( const Model& model, const Common::MsgObjectAttributes& asnMsg )
-    : ObjectAttribute_ABC   ( model, asnMsg )
-    , heat_                 ( asnMsg.fire().heat() )
-    , nFireClass_           ( asnMsg.fire().class_id() )
+FireAttribute::FireAttribute( const Common::MsgObjectAttributes& asnMsg )
+    : heat_( asnMsg.fire().heat() )
+    , nFireClass_( asnMsg.fire().class_id() )
 {
     // NOTHING
 }
@@ -33,8 +30,8 @@ FireAttribute::FireAttribute( const Model& model, const Common::MsgObjectAttribu
 // -----------------------------------------------------------------------------
 FireAttribute::~FireAttribute()
 {
-
-}  
+    // NOTHING
+}
 
 // -----------------------------------------------------------------------------
 // Name: FireAttribute::Update
@@ -55,16 +52,6 @@ void FireAttribute::Update( const Common::MsgObjectAttributes& asnMsg )
 // -----------------------------------------------------------------------------
 void FireAttribute::Send( Common::MsgObjectAttributes& asnMsg ) const
 {
-
     asnMsg.mutable_fire()->set_heat( heat_ );
     asnMsg.mutable_fire()->set_class_id( nFireClass_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: FireAttribute::Delete
-// Created: RFT 2006-09-28
-// -----------------------------------------------------------------------------
-void FireAttribute::Delete( Common::MsgObjectAttributes& /*asnMsg*/ ) const
-{
-    // NOTHING
 }

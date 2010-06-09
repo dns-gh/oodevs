@@ -11,8 +11,8 @@
 #include "MissionParameterHeading.h"
 #include "Point.h"
 #include "SerializationTools.h"
-#include "dispatcher/Agent.h"
-#include "dispatcher/Automat.h"
+#include "dispatcher/Agent_ABC.h"
+#include "dispatcher/Automat_ABC.h"
 #include <boost/bind.hpp>
 
 using namespace plugins::bml;
@@ -21,11 +21,11 @@ using namespace plugins::bml;
 // Name: MissionParameterHeading constructor
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-MissionParameterHeading::MissionParameterHeading( xml::xistream& xis, const kernel::OrderParameter& type, const dispatcher::Agent& agent )
+MissionParameterHeading::MissionParameterHeading( xml::xistream& xis, const kernel::OrderParameter& type, const dispatcher::Agent_ABC& agent )
     : MissionParameter_ABC( type )
     , angle_( 0 )
 {
-    const Point entityPosition( agent.position_.X(), agent.position_.Y() );
+    const Point entityPosition( agent.GetPosition().X(), agent.GetPosition().Y() );
     const Point enemyPosition( xis, NS( "AbstractAbsolutePoint", "cbml" ) );
     angle_ = entityPosition.ComputeBearing( enemyPosition );
 }
@@ -36,12 +36,12 @@ namespace
     {
         PositionComputer() : position_(), count_( 0 ) {}
 
-        void AddAgent( const kernel::Agent_ABC& entity )
+        void AddAgent( const dispatcher::Agent_ABC& entity )
         {
             position_ += entity.GetPosition().ToVector();
             ++count_;
         }
-        void AddAutomat( const kernel::Automat_ABC& entity )
+        void AddAutomat( const dispatcher::Automat_ABC& entity )
         {
             entity.GetAutomats().Apply( boost::bind( &PositionComputer::AddAutomat, boost::ref( *this ), _1 ) );
             entity.GetAgents().Apply( boost::bind( &PositionComputer::AddAgent, boost::ref( *this ), _1 ) );
@@ -56,7 +56,7 @@ namespace
 // Name: MissionParameterHeading constructor
 // Created: SBO 2008-05-23
 // -----------------------------------------------------------------------------
-MissionParameterHeading::MissionParameterHeading( xml::xistream& xis, const kernel::OrderParameter& type, const dispatcher::Automat& automat )
+MissionParameterHeading::MissionParameterHeading( xml::xistream& xis, const kernel::OrderParameter& type, const dispatcher::Automat_ABC& automat )
     : MissionParameter_ABC( type )
     , angle_( 0 )
 {

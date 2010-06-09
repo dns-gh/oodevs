@@ -195,7 +195,7 @@ void Model::Update( const MsgsSimToClient::MsgSimToClient& wrapper )
     if( wrapper.message().has_formation_creation() )
         CreateUpdate< Formation >( formations_, wrapper.message().formation_creation().oid(), wrapper.message().formation_creation(), staticModel_.levels_ ); 
     if( wrapper.message().has_unit_creation() )
-        CreateUpdate< Agent >( agents_, wrapper.message().unit_creation().oid(), wrapper.message().unit_creation(), staticModel_ ); 
+        CreateUpdate< Agent >( agents_, wrapper.message().unit_creation().oid(), wrapper.message().unit_creation(), staticModel_.types_ ); 
     if( wrapper.message().has_unit_environment_type() )
         agents_.Get( wrapper.message().unit_environment_type().oid() ).Update( wrapper.message().unit_environment_type() ); 
     if( wrapper.message().has_unit_destruction() )
@@ -248,7 +248,7 @@ void Model::Update( const MsgsSimToClient::MsgSimToClient& wrapper )
         populations_.Get( wrapper.message().population_order().oid() ).Update( wrapper.message().population_order() ); 
 
     if( wrapper.message().has_object_creation() )
-        CreateUpdate< Object >( objects_, wrapper.message().object_creation().oid(), wrapper.message().object_creation(), staticModel_ ); 
+        CreateUpdate< Object >( objects_, wrapper.message().object_creation().oid(), wrapper.message().object_creation(), staticModel_.objectTypes_ ); 
     if( wrapper.message().has_object_update() )
         objects_.Get( wrapper.message().object_update().oid() ).Update( wrapper.message().object_update() ); 
     if( wrapper.message().has_object_destruction() )
@@ -368,14 +368,14 @@ void Model::CreateUpdate( tools::Resolver< Base >& resolver, const Message& mess
 template< typename Concrete, typename Base, typename Message >
 void Model::CreateUpdate( tools::Resolver< Base >& resolver, unsigned id, const Message& message )
 {
-    Base* pElement = resolver.Find( id );
+    Concrete* pElement = static_cast< Concrete* >( resolver.Find( id ) );
     if( !pElement )
     {
         pElement = new Concrete( *this, message );
         AddExtensions( *pElement );
         resolver.Register( pElement->GetId(), *pElement );
     }
-    static_cast< Concrete* >( pElement )->Update( message );
+    pElement->Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -385,14 +385,14 @@ void Model::CreateUpdate( tools::Resolver< Base >& resolver, unsigned id, const 
 template< typename Concrete, typename Base, typename Message, typename Parameter >
 void Model::CreateUpdate( tools::Resolver< Base >& resolver, unsigned id, const Message& message, const Parameter& parameter )
 {
-    Base* pElement = resolver.Find( id );
+    Concrete* pElement = static_cast< Concrete* >( resolver.Find( id ) );
     if( !pElement )
     {
         pElement = new Concrete( *this, message, parameter );
         AddExtensions( *pElement );
         resolver.Register( pElement->GetId(), *pElement );
     }
-    static_cast< Concrete* >( pElement )->Update( message );
+    pElement->Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -471,9 +471,9 @@ void Model::SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks,
 // -----------------------------------------------------------------------------
 void Model::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
-    sides_                 .Apply( boost::bind( &Sendable< kernel::Team_ABC >::Accept, _1, boost::ref( visitor ) ) );
-    knowledgeGroups_       .Apply( boost::bind( &KnowledgeGroup::Accept, _1, boost::ref( visitor ) ) );
-    agentKnowledges_       .Apply( boost::bind( &AgentKnowledge::Accept, _1, boost::ref( visitor ) ) );
+    sides_                 .Apply( boost::bind( &dispatcher::Team_ABC::Accept, _1, boost::ref( visitor ) ) );
+    knowledgeGroups_       .Apply( boost::bind( &dispatcher::KnowledgeGroup_ABC::Accept, _1, boost::ref( visitor ) ) );
+    agentKnowledges_       .Apply( boost::bind( &dispatcher::AgentKnowledge_ABC::Accept, _1, boost::ref( visitor ) ) );
     objectKnowledges_      .Apply( boost::bind( &ObjectKnowledge::Accept, _1, boost::ref( visitor ) ) );
     populationKnowledges_  .Apply( boost::bind( &PopulationKnowledge::Accept, _1, boost::ref( visitor ) ) );
     logConsignsMaintenance_.Apply( boost::bind( &LogConsignMaintenance::Accept, _1, boost::ref( visitor ) ) );

@@ -10,14 +10,7 @@
 #ifndef __BypassAttribute_h_
 #define __BypassAttribute_h_
 
-
 #include "ObjectAttribute_ABC.h"
-
-
-namespace Common
-{
-    class MsgObjectAttributes;
-}
 
 namespace dispatcher
 {
@@ -34,15 +27,14 @@ class BypassAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     BypassAttribute( const Model& model, const Common::MsgObjectAttributes& asnMsg );
+    explicit BypassAttribute( const Common::MsgObjectAttributes& asnMsg );
     virtual ~BypassAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update   ( const Common::MsgObjectAttributes& asnMsg );
-    virtual void Send     ( Common::MsgObjectAttributes& asnMsg ) const;
-    virtual void Delete( Common::MsgObjectAttributes& asnMsg ) const;
+    virtual void Update( const Common::MsgObjectAttributes& asnMsg );
+    virtual void Send  ( Common::MsgObjectAttributes& asnMsg ) const;
     //@}
 
 private:

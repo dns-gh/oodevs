@@ -18,7 +18,7 @@ namespace script
 {
     namespace events
     {
-        DECLARE_EVENT( TickEnded, int, tick );
+        DECLARE_EVENT2( TickEnded, int, tick, unsigned int, duration );
         DECLARE_EVENT( TimeFlowed, float, delta );
         DECLARE_EVENT( PhaseChanged, std::string, phase );
         

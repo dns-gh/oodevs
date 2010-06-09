@@ -52,7 +52,7 @@ void AgentLogSupply::Update( const MsgsSimToClient::MsgLogSupplyState& asnMsg )
             convoyersAvailability_.push_back( T_Availability( asnMsg.disponibilites_transporteurs_convois().elem( i ) ) );
     }
 
-    if( asnMsg.has_stocks()  )
+    if( asnMsg.has_stocks() )
         for( int i = 0; i < asnMsg.stocks().elem_size(); ++i )
         {
             Dotation* pDotation = stocks_.Find( asnMsg.stocks().elem( i ).ressource_id() );
@@ -73,15 +73,8 @@ void AgentLogSupply::Update( const MsgsSimToClient::MsgLogSupplyState& asnMsg )
 void AgentLogSupply::Send( ClientPublisher_ABC& publisher ) const
 {
     client::LogSupplyState asn;
-
     asn().set_oid_pion( agent_.GetId() );
-
-//    asn().set_chaine_activeePresent( 1 );
-//    asn().set_disponibilites_transporteurs_convoisPresent( 1 );
-//    asn().set_stocksPresent( 1 );
-
     asn().set_chaine_activee( bSystemEnabled_ );
-
     {
         for( std::vector< T_Availability >::const_iterator it = convoyersAvailability_.begin(); it != convoyersAvailability_.end(); ++it )
             it->Send( *asn().mutable_disponibilites_transporteurs_convois()->add_elem() );
@@ -91,9 +84,4 @@ void AgentLogSupply::Send( ClientPublisher_ABC& publisher ) const
             it.NextElement().Send( *asn().mutable_stocks()->add_elem() );
     }
     asn.Send( publisher );
-
-    if( asn().disponibilites_transporteurs_convois().elem_size() > 0 )
-        asn().mutable_disponibilites_transporteurs_convois()->Clear();
-    if( asn().stocks().elem_size() > 0 )
-        asn().mutable_stocks()->Clear();
 }

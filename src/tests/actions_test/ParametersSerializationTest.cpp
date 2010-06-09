@@ -39,6 +39,7 @@
 #include "clients_kernel/ObjectKnowledgeConverter_ABC.h"
 #include "clients_kernel/OrderParameter.h"
 #include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Team_ABC.h"
 
 #include "protocol/protocol.h"
 #include "tools/Resolver.h"
@@ -71,19 +72,6 @@ namespace
     {
         MOCK_METHOD( GetName, 0 );
         MOCK_METHOD( GetId, 0 );
-
-        // $$$$ _RC_ FDS 2010-01-13: to be remove
-        MOCK_METHOD( Accept, 1 );
-        MOCK_METHOD( GetKarma, 0 );
-        MOCK_METHOD_EXT( Register, 1, void( kernel::Formation_ABC& ), RegisterFormation );
-        MOCK_METHOD_EXT( Remove, 1, void( kernel::Formation_ABC& ), RemoveFormation );
-        MOCK_METHOD_EXT( Register, 1, void( kernel::Population_ABC& ), RegisterPopulation );
-        MOCK_METHOD_EXT( Remove, 1, void( kernel::Population_ABC& ), RemovePopulation );
-        MOCK_METHOD_EXT( Register, 1, void( kernel::Object_ABC& ), RegisterObject );
-        MOCK_METHOD_EXT( Remove, 1, void( kernel::Object_ABC& ), RemoveObject );
-        MOCK_METHOD_EXT( Register, 1, void( kernel::KnowledgeGroup_ABC& ), RegisterKnowledgeGroup );
-        MOCK_METHOD_EXT( Remove, 1, void( kernel::KnowledgeGroup_ABC& ), RemoveKnowledgeGroup );
-
     };
 
     MOCK_BASE_CLASS( MockAgent, kernel::Agent_ABC )
@@ -92,9 +80,6 @@ namespace
         MOCK_METHOD( GetId, 0 );
         MOCK_METHOD( GetType, 0 );
         MOCK_METHOD( IsCommandPost, 0 );
-        // $$$$ _RC_ FDS 2010-01-13: to be remove
-        MOCK_METHOD( Accept, 1 );
-        MOCK_METHOD( GetPosition, 0 );
     };
 
     MOCK_BASE_CLASS( MockAutomat, kernel::Automat_ABC )
@@ -102,20 +87,6 @@ namespace
         MOCK_METHOD( GetName, 0 );
         MOCK_METHOD( GetId, 0 );
         MOCK_METHOD( GetType, 0 );
-        // $$$$ _RC_ FDS 2010-01-13: to be remove
-        MOCK_METHOD( Accept, 1 );
-        MOCK_METHOD( GetTeam, 0 );
-        MOCK_METHOD( GetKnowledgeGroup, 0 );
-        MOCK_METHOD_EXT( Register, 1, void ( kernel::Automat_ABC& ), RegisterAutomat );
-        MOCK_METHOD_EXT( Remove, 1, void ( kernel::Automat_ABC& ), RemoveAutomat );
-        MOCK_METHOD( GetAutomats, 0 );
-        MOCK_METHOD_EXT( Register, 1, void ( kernel::Agent_ABC& ), RegisterAgent );
-        MOCK_METHOD_EXT( Remove, 1, void ( kernel::Agent_ABC& ), RemoveAgent );
-        MOCK_METHOD( GetAgents, 0 );
-        MOCK_METHOD( GetParentAutomat, 0 );
-        MOCK_METHOD( GetFormation, 0 );
-        MOCK_METHOD( NotifyParentDestroyed, 0 );
-    
     };
 
     MOCK_BASE_CLASS( MockPopulation, kernel::Population_ABC )
@@ -125,7 +96,6 @@ namespace
         MOCK_METHOD( GetType, 0 );
         MOCK_METHOD( GetLivingHumans, 0 );
         MOCK_METHOD( GetDeadHumans, 0 );
-        MOCK_METHOD( Accept, 1 );      // $$$$ _RC_ FDS 2010-01-13: to be remove
     };
 
     MOCK_BASE_CLASS( MockPopulationKnowledge, kernel::PopulationKnowledge_ABC )
@@ -138,7 +108,6 @@ namespace
 //        MOCK_METHOD_EXT( GetOwner, 0, const kernel::Entity_ABC&(), GetBaseOwner ); // $$$$ SBO 2009-10-30: refactor interface
         MOCK_METHOD_EXT( GetEntity, 0, const kernel::Population_ABC*(), GetPopulationEntity );
         MOCK_METHOD_EXT( GetOwner, 0, const kernel::KnowledgeGroup_ABC&(), GetKnowledgeGroup );
-        MOCK_METHOD( Accept, 1 );      // $$$$ _RC_ FDS 2010-01-13: to be remove
         MOCK_METHOD( Display, 1 );
         MOCK_METHOD( DisplayInList, 1 );
     };
@@ -158,7 +127,6 @@ namespace
         MOCK_METHOD( GetName, 0 );
         MOCK_METHOD( GetId, 0 );
         MOCK_METHOD( GetType, 0 );
-        MOCK_METHOD( Accept, 1 );      // $$$$ _RC_ FDS 2010-01-13: to be remove
         MOCK_METHOD( Display, 1 );
     };
 
@@ -172,7 +140,6 @@ namespace
 //        MOCK_METHOD_EXT( GetOwner, 0, const kernel::Entity_ABC&(), GetBaseOwner ); // $$$$ SBO 2009-10-30: refactor interface
         MOCK_METHOD_EXT( GetEntity, 0, const kernel::Object_ABC*(), GetObjectEntity );
         MOCK_METHOD_EXT( GetOwner, 0, const kernel::Team_ABC&(), GetTeam );
-        MOCK_METHOD( Accept, 1 );      // $$$$ _RC_ FDS 2010-01-13: to be remove
         MOCK_METHOD( Display, 1 );
         MOCK_METHOD( DisplayInList, 1 );
     };

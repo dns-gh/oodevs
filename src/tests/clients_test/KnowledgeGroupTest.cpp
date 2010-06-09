@@ -31,16 +31,6 @@ namespace
     {
         MOCK_METHOD( GetName, 0 );
         MOCK_METHOD( GetId, 0 );
-        MOCK_METHOD( GetKarma, 0 );
-        MOCK_METHOD_EXT( Register, 1, void( kernel::Formation_ABC& ), Regiser1 );
-        MOCK_METHOD_EXT( Remove, 1, void( kernel::Formation_ABC& ), Remove1 );
-        MOCK_METHOD_EXT( Register, 1, void( kernel::Population_ABC& ), Regiser2 );
-        MOCK_METHOD_EXT( Remove, 1, void( kernel::Population_ABC& ), Remove2 );
-        MOCK_METHOD_EXT( Register, 1, void( kernel::Object_ABC& ), Regiser3 );
-        MOCK_METHOD_EXT( Remove, 1, void( kernel::Object_ABC& ), Remove3 );
-        MOCK_METHOD_EXT( Register, 1, void( kernel::KnowledgeGroup_ABC& ), Regiser4 );
-        MOCK_METHOD_EXT( Remove, 1, void( kernel::KnowledgeGroup_ABC& ), Remove4 );
-        MOCK_METHOD( Accept, 1 );
     };
 
     MOCK_BASE_CLASS( MockKnowledgeGroup, kernel::KnowledgeGroup_ABC)
@@ -51,14 +41,7 @@ namespace
         MOCK_METHOD( Select, 1 );
         MOCK_METHOD( ContextMenu, 2 );
         MOCK_METHOD( Activate, 1 );
-        MOCK_METHOD( Accept, 1 );
         MOCK_METHOD( IsActivated, 0 );
-        //MOCK_METHOD( DoUpdate, 1 );
-
-        MOCK_METHOD_EXT( Register, 1, void( kernel::KnowledgeGroup_ABC& ), Register1 );
-        MOCK_METHOD_EXT( Remove, 1, void( kernel::KnowledgeGroup_ABC& ), Remove1 );
-        MOCK_METHOD_EXT( Register, 1, void( kernel::Automat_ABC& ), Register2 );
-        MOCK_METHOD_EXT( Remove, 1, void( kernel::Automat_ABC& ), Remove2 );
     };
 
 

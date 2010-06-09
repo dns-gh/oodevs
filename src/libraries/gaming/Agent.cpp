@@ -16,7 +16,6 @@
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/App6Symbol.h"
-#include "clients_kernel/ModelVisitor_ABC.h"
 #include "clients_kernel/Styles.h"
 #include "Diplomacies.h"
 #include "Tools.h"
@@ -117,22 +116,4 @@ void Agent::CreateDictionary( kernel::Controller& controller )
     const Agent& self = *this;
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Identifier" ), self.id_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Name" ), self.name_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Agent::Accept
-// Created: MGD 2009-12-21
-// -----------------------------------------------------------------------------
-void Agent::Accept( kernel::ModelVisitor_ABC& visitor ) const
-{
-    visitor.Visit( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Agent::GetPosition
-// Created: MGD 2009-12-21
-// -----------------------------------------------------------------------------
-const geometry::Point2d& Agent::GetPosition() const
-{
-     throw std::exception( __FUNCTION__ " not implemented" ); 
 }

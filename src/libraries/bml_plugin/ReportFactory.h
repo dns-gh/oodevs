@@ -23,8 +23,8 @@ namespace kernel
 
 namespace dispatcher
 {
-    class Agent;
-    class Automat;
+    class Agent_ABC;
+    class Automat_ABC;
 }
 
 namespace plugins
@@ -51,8 +51,8 @@ public:
 
     //! @name Operations
     //@{
-    OrderReport* CreateOrderReport( const dispatcher::Agent& entity, const MsgUnitOrder& asn ) const;
-    OrderReport* CreateOrderReport( const dispatcher::Automat& entity, const MsgAutomatOrder& asn ) const;
+    OrderReport* CreateOrderReport( const dispatcher::Agent_ABC& entity, const MsgUnitOrder& asn ) const;
+    OrderReport* CreateOrderReport( const dispatcher::Automat_ABC& entity, const MsgAutomatOrder& asn ) const;
     //@}
 
 private:

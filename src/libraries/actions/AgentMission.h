@@ -35,7 +35,6 @@ public:
     //! @name Operations
     //@{
     virtual void Publish( Publisher_ABC& publisher ) const;
-    virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
     //@}
 
 private:

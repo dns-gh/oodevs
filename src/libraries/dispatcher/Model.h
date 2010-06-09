@@ -24,10 +24,13 @@ namespace Common
 namespace kernel
 {
     class AgentType;
-    class Entity_ABC;
+    class AgentTypes;
     class FormationLevels;
+    class FragOrderType;
+    class MissionType;
     class ModelVisitor_ABC;
     class ObjectType;
+    class ObjectTypes;
     class StaticModel;
 }
 
@@ -38,30 +41,12 @@ namespace tools
 
 namespace dispatcher
 {
-    class LogConsignMaintenance;
-    class LogConsignSupply;
-    class LogConsignMedical;
-    class SimulationModel;
-    class Fire;
-    class PopulationFire;
-    class FireEffect;
-    class FolkModel;
-    class MeteoModel;
-    class Report;
     class CompositeFactory;
     class Factory_ABC;
-
-    class KnowledgeGroup;
-    class Formation;
-    class Automat;
-    class Agent;
-    class Object;
-    class Population;
-    class AgentKnowledge;
-    class ObjectKnowledge;
-    class PopulationKnowledge;
+    class FolkModel;
+    class MeteoModel;
+    class SimulationModel;
     class UrbanKnowledge;
-    class UrbanObject;
 
 // =============================================================================
 /** @class  Model
@@ -152,14 +137,14 @@ private:
 public:
     //! @name Dynamic model
     //@{
-    virtual const tools::Resolver_ABC< Sendable< kernel::Team_ABC > >& Sides() const { return sides_; }
-    virtual const tools::Resolver_ABC< KnowledgeGroup >&        KnowledgeGroups() const { return knowledgeGroups_; }
-    virtual const tools::Resolver_ABC< Formation >&             Formations() const { return formations_; }
-    virtual const tools::Resolver_ABC< Automat >&               Automats() const { return automats_; }
-    virtual const tools::Resolver_ABC< Agent >&                 Agents() const { return agents_; }
-    virtual const tools::Resolver_ABC< Object >&                Objects() const { return objects_; }
-    virtual const tools::Resolver_ABC< Population >&            Populations() const { return populations_; }
-    virtual const tools::Resolver_ABC< AgentKnowledge >&        AgentKnowledges() const { return agentKnowledges_; }
+    virtual const tools::Resolver_ABC< dispatcher::Team_ABC >&           Sides() const { return sides_; }
+    virtual const tools::Resolver_ABC< dispatcher::KnowledgeGroup_ABC >& KnowledgeGroups() const { return knowledgeGroups_; }
+    virtual const tools::Resolver_ABC< dispatcher::Formation_ABC >&      Formations() const { return formations_; }
+    virtual const tools::Resolver_ABC< dispatcher::Automat_ABC >&        Automats() const { return automats_; }
+    virtual const tools::Resolver_ABC< dispatcher::Agent_ABC >&          Agents() const { return agents_; }
+    virtual const tools::Resolver_ABC< dispatcher::Object_ABC >&         Objects() const { return objects_; }
+    virtual const tools::Resolver_ABC< dispatcher::Population_ABC >&     Populations() const { return populations_; }
+    virtual const tools::Resolver_ABC< dispatcher::AgentKnowledge_ABC >& AgentKnowledges() const { return agentKnowledges_; }
     virtual const tools::Resolver_ABC< ObjectKnowledge >&       ObjectKnowledges() const { return objectKnowledges_; }
     virtual const tools::Resolver_ABC< PopulationKnowledge >&   PopulationKnowledges() const { return populationKnowledges_; }
     virtual const tools::Resolver_ABC< LogConsignMaintenance >& LogConsignsMaintenance() const { return logConsignsMaintenance_; }
@@ -174,14 +159,17 @@ public:
 
     //! @name Dynamic model
     //@{
-    tools::Resolver< Sendable< kernel::Team_ABC > > sides_;
-    tools::Resolver< KnowledgeGroup >         knowledgeGroups_;
-    tools::Resolver< Formation >              formations_;
-    tools::Resolver< Automat >                automats_;
-    tools::Resolver< Agent >                  agents_;
-    tools::Resolver< Object >                 objects_;
-    tools::Resolver< Population >             populations_;
-    tools::Resolver< AgentKnowledge >         agentKnowledges_;
+private:
+    tools::Resolver< dispatcher::Team_ABC >           sides_;
+    tools::Resolver< dispatcher::KnowledgeGroup_ABC > knowledgeGroups_;
+    tools::Resolver< dispatcher::Formation_ABC >      formations_;
+    tools::Resolver< dispatcher::Automat_ABC >        automats_;
+    tools::Resolver< dispatcher::Agent_ABC >          agents_;
+    tools::Resolver< dispatcher::Object_ABC >         objects_;
+    tools::Resolver< dispatcher::Population_ABC >     populations_;
+    tools::Resolver< dispatcher::AgentKnowledge_ABC > agentKnowledges_;
+
+public:
     tools::Resolver< ObjectKnowledge >        objectKnowledges_;
     tools::Resolver< PopulationKnowledge >    populationKnowledges_;
     tools::Resolver< LogConsignMaintenance >  logConsignsMaintenance_;

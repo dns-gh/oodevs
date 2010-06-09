@@ -93,7 +93,7 @@ private:
     Updater* current_;
     VisionMap* map_;
     T_Surfaces surfaces_;
-    double elongationFactor_;
+    float elongationFactor_;
     //@}
 };
 

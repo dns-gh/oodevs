@@ -11,7 +11,9 @@
 #define __Primitives_h_
 
 #include "tools/Resolver.h"
+#pragma warning( push, 0 )
 #include <qstring.h>
+#pragma warning( pop )
 
 namespace xml
 {

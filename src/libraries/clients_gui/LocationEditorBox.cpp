@@ -152,7 +152,7 @@ void LocationEditorBox::UpdateParamZone( int index )
 // Name: LocationEditorBox::AddParser
 // Created: AME 2010-03-12
 // -----------------------------------------------------------------------------
-void LocationEditorBox::AddParser( LocationParser_ABC& parser, QString& name )
+void LocationEditorBox::AddParser( LocationParser_ABC& parser, const QString& name )
 {
     int id = parserMenu_->insertItem( name );
     parsers_->AddParser( parser, id );

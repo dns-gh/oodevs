@@ -10,8 +10,7 @@
 #ifndef __Agent_h_
 #define __Agent_h_
 
-#include "clients_kernel/Agent_ABC.h"
-#include "SimpleEntity.h"
+#include "Agent_ABC.h"
 #include "DecisionalState.h"
 #include "tools/Resolver.h"
 #include "protocol/SimulationSenders.h"
@@ -37,15 +36,13 @@ namespace kernel
 {
     class AgentType;
     class CoordinateConverter_ABC;
-    class ModelVisitor_ABC;
-    class StaticModel;
     class Team_ABC;
 }
 
 namespace dispatcher
 {
-    class Automat;
-    class Model;
+    class Automat_ABC;
+    class Model_ABC;
     class Equipment;
     class Dotation;
     class Humans;
@@ -61,31 +58,39 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class Agent : public SimpleEntity< kernel::Agent_ABC >
+class Agent : public dispatcher::Agent_ABC
+            , public kernel::Extension_ABC
+            , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitCreation >
+            , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
+            , public kernel::Updatable_ABC< MsgsSimToClient::MsgDecisionalState >
+            , public kernel::Updatable_ABC< MsgsSimToClient::MsgLogMedicalState >
+            , public kernel::Updatable_ABC< MsgsSimToClient::MsgLogMaintenanceState >
+            , public kernel::Updatable_ABC< MsgsSimToClient::MsgLogSupplyState >
+            , public kernel::Updatable_ABC< Common::MsgUnitChangeSuperior >
+            , public kernel::Updatable_ABC< Common::MsgUnitOrder >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Agent( Model& model, const MsgsSimToClient::MsgUnitCreation& msg, const kernel::StaticModel& staticModel );
+             Agent( Model_ABC& model, const MsgsSimToClient::MsgUnitCreation& msg, const tools::Resolver_ABC< kernel::AgentType >& types );
     virtual ~Agent();
     //@}
 
     //! @name Main
     //@{
-    using kernel::Entity_ABC::Update;
-    void Update( const MsgsSimToClient::MsgUnitCreation&        asnMsg );
-    void Update( const MsgsSimToClient::MsgUnitAttributes&      asnMsg );
-    void Update( const MsgsSimToClient::MsgDecisionalState&     asnMsg );
-    void Update( const MsgsSimToClient::MsgLogMedicalState&     asnMsg );
-    void Update( const MsgsSimToClient::MsgLogMaintenanceState& asnMsg );
-    void Update( const MsgsSimToClient::MsgLogSupplyState&      asnMsg );
-    void Update( const Common::MsgUnitChangeSuperior&  asnMsg );
-    void Update( const Common::MsgUnitOrder&           asnMsg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUnitCreation&        asnMsg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUnitAttributes&      asnMsg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgDecisionalState&     asnMsg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgLogMedicalState&     asnMsg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgLogMaintenanceState& asnMsg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgLogSupplyState&      asnMsg );
+    virtual void DoUpdate( const Common::MsgUnitChangeSuperior&           asnMsg );
+    virtual void DoUpdate( const Common::MsgUnitOrder&                    asnMsg );
 
-    void SendCreation   ( ClientPublisher_ABC& publisher ) const;
-    void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
-    void SendDestruction( ClientPublisher_ABC& publisher ) const;
-    void Accept( kernel::ModelVisitor_ABC& visitor ) const;
+    virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
+    virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
+    virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
+    virtual void ChangeAutomat( unsigned long id );
     //@}
 
     //! @name Accessors
@@ -93,6 +98,17 @@ public:
     virtual const kernel::AgentType& GetType() const;
     virtual bool IsCommandPost() const;
     virtual const geometry::Point2d& GetPosition() const;
+    virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
+    virtual const dispatcher::Automat_ABC& GetSuperior() const;
+    virtual Common::EnumOperationalStatus GetOperationalState() const;
+    virtual unsigned short GetOperationalStateValue() const;
+    virtual const tools::Resolver< dispatcher::Equipment >& Equipments() const;
+    virtual const tools::Resolver< dispatcher::Humans >& Troops() const;
+    virtual unsigned short GetAltitude() const;
+    virtual unsigned short GetSpeed() const;
+    virtual unsigned short GetDirection() const;
+    virtual MsgsSimToClient::ForceRatio_Value GetForceRatio() const;
+    virtual const Order_ABC* GetOrder() const;
     //@}
 
 private:
@@ -102,16 +118,11 @@ private:
     Agent& operator=( const Agent& ); //!< Assignement operator
     //@}
 
-    //! @name Helpers
-    //@{
-    void ChangeAutomat( unsigned long id );
-    //@}
-
-public:
-    Model&                                                  model_;
+private:
+    Model_ABC&                                              model_;
     const kernel::AgentType&                                type_;
     const std::string                                       name_;
-    Automat*                                                automat_;
+    dispatcher::Automat_ABC*                                automat_;
     const bool                                              bPC_;
 
     geometry::Point2d                                       position_; // x = longitude, y = latitude
@@ -133,7 +144,8 @@ public:
     unsigned int                                            nInstallationState_;
     bool                                                    bNbcProtectionSuitEnabled_;
     std::vector< unsigned int >                             nbcAgentTypesContaminating_;
-    MsgsSimToClient::ContaminationState                     contamination_;
+    int                                                     contaminationPercentage_;
+    float                                                   contaminationQuantity_;
 
     bool                                                    communicationJammed_;
     unsigned int                                            knowledgeGroupJammed_;

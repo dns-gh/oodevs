@@ -11,7 +11,6 @@
 #include "AgentMission.h"
 #include "clients_kernel/OrderType.h"
 #include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/ModelVisitor_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "protocol/Protocol.h"
 #include "protocol/ServerPublisher_ABC.h"
@@ -63,13 +62,4 @@ void AgentMission::Publish( Publisher_ABC& publisher ) const
     CommitTo( *message().mutable_parametres() );
     message.Send( publisher, 0 );
     Clean( *message().mutable_parametres() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentMission::Accept
-// Created: MGD 2009-12-18
-// -----------------------------------------------------------------------------
-void AgentMission::Accept( kernel::ModelVisitor_ABC& visitor ) const
-{
-    visitor.Visit( *this );
 }

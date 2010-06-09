@@ -73,7 +73,7 @@ void ObstaclePrototype_ABC::showEvent( QShowEvent* e )
 // -----------------------------------------------------------------------------
 bool ObstaclePrototype_ABC::CheckValidity() const
 {
-    return types_->count();
+    return types_->count() > 0;
 }
 
 // -----------------------------------------------------------------------------

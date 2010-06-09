@@ -10,11 +10,6 @@
 #ifndef __DetectionReport_h_
 #define __DetectionReport_h_
 
-#include "protocol/protocol.h"
-
-using namespace Common;
-
-
 namespace xml
 {
     class xostream;
@@ -22,7 +17,7 @@ namespace xml
 
 namespace dispatcher
 {
-    class Agent;
+    class Agent_ABC;
 }
 
 namespace plugins
@@ -43,7 +38,7 @@ class DetectionReport
 public:
     //! @name Constructors/Destructor
     //@{
-             DetectionReport( const dispatcher::Agent& entity, const dispatcher::Agent& detected, int level );
+             DetectionReport( const dispatcher::Agent_ABC& entity, const dispatcher::Agent_ABC& detected, int level );
     virtual ~DetectionReport();
     //@}
 
@@ -66,8 +61,8 @@ private:
 private:
     //! @name Member data
     //@{
-    const dispatcher::Agent& entity_;
-    const dispatcher::Agent& detected_;
+    const dispatcher::Agent_ABC& entity_;
+    const dispatcher::Agent_ABC& detected_;
     int level_;
     //@}
 };

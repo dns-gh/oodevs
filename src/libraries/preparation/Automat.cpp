@@ -21,11 +21,9 @@
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/App6Symbol.h"
-#include "clients_kernel/ModelVisitor_ABC.h"
 #include <xeumeuleu/xml.h>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: Automat constructor
@@ -33,7 +31,7 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 Automat::Automat( const AutomatType& type, Controller& controller, IdManager& idManager )
     : EntityImplementation< Automat_ABC >( controller, idManager.GetNextId(), "" )
-    , type_         ( &type )
+    , type_( type )
 {
     name_ = type.GetName().c_str() + QString( " [%1]" ).arg( id_ );
     RegisterSelf( *this );
@@ -44,12 +42,10 @@ Automat::Automat( const AutomatType& type, Controller& controller, IdManager& id
 // Name: Automat constructor
 // Created: SBO 2006-10-09
 // -----------------------------------------------------------------------------
-Automat::Automat( xistream& xis, Controller& controller, IdManager& idManager, const AgentTypes& agentTypes )
-    : EntityImplementation< Automat_ABC >( controller, ReadId( xis ), ReadName( xis ) )
+Automat::Automat( xml::xistream& xis, Controller& controller, IdManager& idManager, const AgentTypes& agentTypes )
+    : EntityImplementation< Automat_ABC >( controller, xml::attribute< unsigned long >( xis, "id" ), xml::attribute< std::string >( xis, "name" ).c_str() )
+    , type_( agentTypes.Resolver< AutomatType, std::string >::Get( xml::attribute< std::string >( xis, "type" ) ) )
 {
-    std::string type;
-    xis >> attribute( "type", type );
-    type_ = &agentTypes.Resolver< AutomatType, std::string >::Get( type );
     RegisterSelf( *this );
     CreateDictionary( controller );
     idManager.Lock( id_ );
@@ -65,34 +61,12 @@ Automat::~Automat()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Automat::ReadId
-// Created: AGE 2006-10-12
-// -----------------------------------------------------------------------------
-unsigned long Automat::ReadId( xml::xistream& xis )
-{
-    int id;
-    xis >> attribute( "id", id );
-    return id;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Automat::ReadName
-// Created: AGE 2006-10-12
-// -----------------------------------------------------------------------------
-QString Automat::ReadName( xml::xistream& xis )
-{
-    std::string name;
-    xis >> attribute( "name", name );
-    return name.c_str();
-}
-
-// -----------------------------------------------------------------------------
 // Name: Automat::GetType
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
 const AutomatType& Automat::GetType() const
 {
-    return *type_;
+    return type_;
 }
 
 // -----------------------------------------------------------------------------
@@ -150,9 +124,9 @@ void Automat::CreateDictionary( kernel::Controller& controller )
 // -----------------------------------------------------------------------------
 void Automat::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << attribute( "id", long( id_ ) )
-        << attribute( "name", name_.ascii() )
-        << attribute( "type", type_->GetName() );
+    xos << xml::attribute( "id", id_ )
+        << xml::attribute( "name", name_.ascii() )
+        << xml::attribute( "type", type_.GetName() );
 }
 
 // -----------------------------------------------------------------------------
@@ -161,109 +135,5 @@ void Automat::SerializeAttributes( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void Automat::SerializeLogistics( xml::xostream& xos ) const
 {
-    xos << attribute( "id", long( id_ ) );
+    xos << xml::attribute( "id", id_ );
 }
-
-// -----------------------------------------------------------------------------
-// Name: Automat::Accept
-// Created: MGD 2009-12-21
-// -----------------------------------------------------------------------------
-void Automat::Accept( kernel::ModelVisitor_ABC& visitor ) const
-{
-    visitor.Visit( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Automat::Register
-// Created: MGD 2009-12-21
-// -----------------------------------------------------------------------------
-void Automat::Register( kernel::Automat_ABC& /*automat*/ )
-{
-    throw std::exception( __FUNCTION__ " not implemented" );  
-}
-// -----------------------------------------------------------------------------
-// Name: Automat::Remove
-// Created: MGD 2009-12-21
-// -----------------------------------------------------------------------------
-void Automat::Remove( kernel::Automat_ABC& /*automat*/ )
-{
-    throw std::exception( __FUNCTION__ " not implemented" );  
-}
-// -----------------------------------------------------------------------------
-// Name: Automat::GetAutomats
-// Created: MGD 2009-12-21
-// -----------------------------------------------------------------------------
-const tools::Resolver< kernel::Automat_ABC >& Automat::GetAutomats() const
-{
-    throw std::exception( __FUNCTION__ " not implemented" );  
-}
-// -----------------------------------------------------------------------------
-// Name: Automat::Register
-// Created: MGD 2009-12-21
-// -----------------------------------------------------------------------------
-void Automat::Register( kernel::Agent_ABC& /*automat*/ )
-{
-    throw std::exception( __FUNCTION__ " not implemented" );  
-}
-// -----------------------------------------------------------------------------
-// Name: Automat::Remove
-// Created: MGD 2009-12-21
-// -----------------------------------------------------------------------------
-void Automat::Remove( kernel::Agent_ABC& /*automat*/ )
-{
-    throw std::exception( __FUNCTION__ " not implemented" );  
-}
-// -----------------------------------------------------------------------------
-// Name: Automat::GetAgents
-// Created: MGD 2009-12-21
-// -----------------------------------------------------------------------------
-const tools::Resolver< kernel::Agent_ABC >& Automat::GetAgents() const
-{
-    throw std::exception( __FUNCTION__ " not implemented" );  
-}
-
-// -----------------------------------------------------------------------------
-// Name: Automat::GetTeam
-// Created: MGD 2009-12-23
-// -----------------------------------------------------------------------------
-kernel::Team_ABC& Automat::GetTeam() const
-{
-    throw std::exception( __FUNCTION__ " not implemented" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Automat::GetKnowledgeGroup
-// Created: MGD 2009-12-23
-// -----------------------------------------------------------------------------
-kernel::KnowledgeGroup_ABC& Automat::GetKnowledgeGroup() const
-{
-    throw std::exception( __FUNCTION__ " not implemented" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Automat::GetParentAutomat
-// Created: MGD 2009-12-23
-// -----------------------------------------------------------------------------
-kernel::Automat_ABC* Automat::GetParentAutomat() const
-{
-    throw std::exception( __FUNCTION__ " not implemented" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Automat::GetFormation
-// Created: MGD 2009-12-23
-// -----------------------------------------------------------------------------
-kernel::Formation_ABC* Automat::GetFormation() const
-{
-    throw std::exception( __FUNCTION__ " not implemented" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Automat::NotifyParentDestroyed
-// Created: RPD 2010-06-03
-// -----------------------------------------------------------------------------
-void Automat::NotifyParentDestroyed()
-{
-    throw std::exception( __FUNCTION__ " not implemented" );
-}
-

@@ -10,11 +10,9 @@
 #ifndef __ObjectKnowledge_h_
 #define __ObjectKnowledge_h_
 
-
 #include "Localisation.h"
 #include "SimpleEntity.h"
 #include "clients_kernel/ObjectKnowledge_ABC.h"
-
 #include <boost/ptr_container/ptr_vector.hpp>
 
 namespace Common
@@ -31,13 +29,13 @@ namespace MsgsSimToClient
 namespace kernel
 {
     class Automat_ABC;
+    class KnowledgeGroup_ABC;
     class ModelVisitor_ABC;
 }
 
 namespace dispatcher
 {
-    class KnowledgeGroup;
-    class Model;
+    class Model_ABC;
     class ObjectAttribute_ABC;
     class ClientPublisher_ABC;
 
@@ -53,7 +51,7 @@ class ObjectKnowledge : public SimpleEntity< kernel::ObjectKnowledge_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectKnowledge( const Model& model, const MsgsSimToClient::MsgObjectKnowledgeCreation& asnMsg );
+             ObjectKnowledge( const Model_ABC& model, const MsgsSimToClient::MsgObjectKnowledgeCreation& asnMsg );
     virtual ~ObjectKnowledge();
     //@}
 
@@ -74,10 +72,17 @@ public:
     //@}
 
 private:
-    
+    //! @name Helpers
+    //@{
+    template< typename T >
+    void CreateOrUpdate( const Common::MsgObjectAttributes& message );
+    template< typename T >
+    void CreateOrUpdate( const Common::MsgObjectAttributes& message, const Model_ABC& model );
+    //@}
+
     //! @name Attributes
     //@{
-    void Initialize( const Model& model, const Common::MsgObjectAttributes& attribute );
+    void Initialize( const Model_ABC& model, const Common::MsgObjectAttributes& message );
     void AddAttribute( ObjectAttribute_ABC* attribute );
     //@}
 
@@ -102,12 +107,11 @@ private:
     };
     //@}
 
-public:
-    const Model&                 model_;
+    const Model_ABC&             model_;
     const kernel::Team_ABC&      team_;
     const kernel::Object_ABC*    pObject_;
     const std::string            nType_;
-    const KnowledgeGroup*        knowledgeGroup_;
+    const kernel::KnowledgeGroup_ABC* knowledgeGroup_;
 
     unsigned int                   nRelevance_;
     Localisation                   localisation_;
@@ -118,7 +122,6 @@ private:
     //! @name Types
     //@{   
     typedef boost::ptr_vector< ObjectAttribute_ABC > T_ObjectAttributes;
-    typedef T_ObjectAttributes::const_iterator      CIT_ObjectAttributes;
     //@}
 
 private:

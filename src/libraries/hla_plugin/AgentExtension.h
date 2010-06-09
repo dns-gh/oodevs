@@ -22,7 +22,7 @@ using namespace MsgsSimToClient;
 
 namespace dispatcher
 {
-    class Agent;
+    class Agent_ABC;
 }
 
 namespace plugins
@@ -44,7 +44,7 @@ class AgentExtension : public HlaExtension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentExtension( dispatcher::Agent& holder, const EntityIdentifier& id );
+             AgentExtension( dispatcher::Agent_ABC& holder, const EntityIdentifier& id );
     virtual ~AgentExtension();
     //@}
 
@@ -76,7 +76,7 @@ private:
 private:
     //! @name Member data
     //@{
-    dispatcher::Agent& holder_;
+    dispatcher::Agent_ABC& holder_;
     EntityIdentifier id_;
     Formation    formation_;
     mutable bool spatialChanged_;

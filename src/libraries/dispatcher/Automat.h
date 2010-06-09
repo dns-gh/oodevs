@@ -10,9 +10,7 @@
 #ifndef __Automat_h_
 #define __Automat_h_
 
-
-#include "clients_kernel/Automat_ABC.h"
-#include "SimpleEntity.h"
+#include "Automat_ABC.h"
 #include "DecisionalState.h"
 
 namespace Common
@@ -37,18 +35,13 @@ namespace MsgsSimToClient
     class MsgAutomatAttributes;
 }
 
-namespace kernel
-{
-    class Formation_ABC;
-    class Knowledge_ABC;
-    class ModelVisitor_ABC;
-    class Team_ABC;
-}
 namespace dispatcher
 {
-    class Model_ABC;
-    class DotationQuota;
     class AutomatOrder;
+    class DotationQuota;
+    class Formation_ABC;
+    class KnowledgeGroup_ABC;
+    class Model_ABC;
 
 // =============================================================================
 /** @class  Automat
@@ -56,7 +49,16 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class Automat : public SimpleEntity< kernel::Automat_ABC >
+class Automat : public Automat_ABC
+              , public kernel::Extension_ABC
+              , public kernel::Updatable_ABC< MsgsSimToClient::MsgAutomatCreation >
+              , public kernel::Updatable_ABC< MsgsSimToClient::MsgDecisionalState >
+              , public kernel::Updatable_ABC< MsgsSimToClient::MsgAutomatAttributes >
+              , public kernel::Updatable_ABC< MsgsSimToClient::MsgLogSupplyQuotas >
+              , public kernel::Updatable_ABC< Common::MsgAutomatChangeLogisticLinks >
+              , public kernel::Updatable_ABC< Common::MsgAutomatChangeSuperior >
+              , public kernel::Updatable_ABC< Common::MsgAutomatChangeKnowledgeGroup >
+              , public kernel::Updatable_ABC< Common::MsgAutomatOrder >
 {
 public:
     //! @name Constructors/Destructor
@@ -68,34 +70,33 @@ public:
     //! @name Accessors
     //@{
     virtual const kernel::AutomatType& GetType() const;
-    bool IsEngaged() const;
-    void Accept( kernel::ModelVisitor_ABC& visitor ) const;
+    virtual bool IsEngaged() const;
+    virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
     //@}
 
     //! @name Operations
     //@{
-    void Update( const MsgsSimToClient::MsgAutomatCreation&             msg );
-    void Update( const MsgsSimToClient::MsgDecisionalState&             msg );
-    void Update( const MsgsSimToClient::MsgAutomatAttributes&           msg );
-    void Update( const MsgsSimToClient::MsgLogSupplyQuotas&             msg );
-    void Update( const Common::MsgAutomatChangeLogisticLinks&  msg );
-    void Update( const Common::MsgAutomatChangeSuperior&       msg );
-    void Update( const Common::MsgAutomatChangeKnowledgeGroup& msg );
-    void Update( const Common::MsgAutomatOrder&                msg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgAutomatCreation&    msg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgDecisionalState&    msg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgAutomatAttributes&  msg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgLogSupplyQuotas&    msg );
+    virtual void DoUpdate( const Common::MsgAutomatChangeLogisticLinks&  msg );
+    virtual void DoUpdate( const Common::MsgAutomatChangeSuperior&       msg );
+    virtual void DoUpdate( const Common::MsgAutomatChangeKnowledgeGroup& msg );
+    virtual void DoUpdate( const Common::MsgAutomatOrder&                msg );
 
-    void SendCreation   ( ClientPublisher_ABC& publisher ) const;
-    void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
-    void SendDestruction( ClientPublisher_ABC& publisher ) const;
+    virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
+    virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
+    virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
 
-    virtual kernel::Team_ABC& GetTeam() const;
+    virtual dispatcher::Team_ABC& GetTeam() const;
     virtual kernel::KnowledgeGroup_ABC& GetKnowledgeGroup() const;
-    virtual void Register( kernel::Automat_ABC& automat );
-    virtual void Remove( kernel::Automat_ABC& automat );
-    virtual const tools::Resolver< kernel::Automat_ABC >& GetAutomats() const;
-    virtual void Register( kernel::Agent_ABC& automat );
-    virtual void Remove( kernel::Agent_ABC& automat );
-    virtual void NotifyParentDestroyed();
-    virtual const tools::Resolver< kernel::Agent_ABC >& GetAgents() const;
+    virtual void Register( dispatcher::Automat_ABC& automat );
+    virtual void Remove( dispatcher::Automat_ABC& automat );
+    virtual const tools::Resolver< dispatcher::Automat_ABC >& GetAutomats() const;
+    virtual void Register( dispatcher::Agent_ABC& automat );
+    virtual void Remove( dispatcher::Agent_ABC& automat );
+    virtual const tools::Resolver< dispatcher::Agent_ABC >& GetAgents() const;
     virtual kernel::Automat_ABC* GetParentAutomat() const;
     virtual kernel::Formation_ABC* GetFormation() const;
     //@}
@@ -112,7 +113,8 @@ private:
     void ChangeKnowledgeGroup( unsigned long id );
     template< typename Superior >
     void ChangeSuperior( const Superior& superior );
-    void NotifyDestructionToChildAutomats();
+    template< typename Superior >
+    void MoveChildren( Superior& superior, bool agents );
     //@}
 
 private:
@@ -121,10 +123,10 @@ private:
     Model_ABC&              model_;
     const unsigned long type_; // XML reference - no resolved by dispatcher
     const std::string   name_;
-    kernel::Team_ABC&   team_;
-    kernel::Formation_ABC* parentFormation_;
-    kernel::Automat_ABC*   parentAutomat_;
-    kernel::KnowledgeGroup_ABC* knowledgeGroup_;
+    dispatcher::Team_ABC& team_;
+    dispatcher::Formation_ABC* parentFormation_;
+    dispatcher::Automat_ABC* parentAutomat_;
+    dispatcher::KnowledgeGroup_ABC* knowledgeGroup_;
     tools::Resolver< DotationQuota > quotas_;
 
     Common::EnumAutomatMode                     nAutomatState_;
@@ -142,8 +144,8 @@ private:
 
     DecisionalState decisionalInfos_;
 
-    tools::Resolver< kernel::Agent_ABC >   agents_;
-    tools::Resolver< kernel::Automat_ABC > childAutomats_;
+    tools::Resolver< dispatcher::Agent_ABC >   agents_;
+    tools::Resolver< dispatcher::Automat_ABC > automats_;
     //@}
 };
 

@@ -58,7 +58,6 @@ public:
     virtual bool IsIn( const geometry::Rectangle2f& rectangle ) const;
     virtual geometry::Rectangle2f GetBoundingBox() const;
     virtual void Accept( kernel::LocationVisitor_ABC& visitor ) const;
-    virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
     //@}
 
 private:

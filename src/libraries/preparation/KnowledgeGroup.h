@@ -50,11 +50,6 @@ public:
     void Rename( const QString& name );
     void SetType( kernel::KnowledgeGroupType* const& );
     virtual void SerializeAttributes( xml::xostream& xos ) const;
-    virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
-    virtual void Register( kernel::KnowledgeGroup_ABC& knowledgeGroup );
-    virtual void Remove( kernel::KnowledgeGroup_ABC& knowledgeGroup );
-    virtual void Register( kernel::Automat_ABC& automat );
-    virtual void Remove( kernel::Automat_ABC& automat );
     virtual bool IsActivated() const;
     //@}
 
@@ -75,7 +70,7 @@ private:
     //! @name Member data
     //@{
     kernel::KnowledgeGroupType* type_;
-    std::string strCommunicationDelay_;
+    std::string communicationDelay_;
     bool isActivated_;
     //@}
 };

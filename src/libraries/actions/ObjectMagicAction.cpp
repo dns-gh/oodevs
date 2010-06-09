@@ -13,7 +13,6 @@
 #include "protocol/publisher_ABC.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/ModelVisitor_ABC.h"
 
 using namespace actions;
 
@@ -74,15 +73,6 @@ void ObjectMagicAction::Serialize( xml::xostream& xos ) const
     if( objectId_ != 0 )
         xos << xml::attribute( "target", objectId_ );
     Action_ABC::Serialize( xos );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectMagicAction::Accept
-// Created: JSR 2010-04-21
-// -----------------------------------------------------------------------------
-void ObjectMagicAction::Accept( kernel::ModelVisitor_ABC& visitor ) const
-{
-    visitor.Visit( *this );
 }
 
 // -----------------------------------------------------------------------------

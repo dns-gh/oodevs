@@ -22,8 +22,8 @@
 #include "SerializationTools.h"
 #include "clients_kernel/MissionType.h"
 #include "clients_kernel/OrderParameter.h"
-#include "dispatcher/Automat.h"
-#include "dispatcher/Agent.h"
+#include "dispatcher/Automat_ABC.h"
+#include "dispatcher/Agent_ABC.h"
 #include "dispatcher/Model.h"
 #include <xeumeuleu/xml.h>
 #pragma warning( disable : 4512 )
@@ -35,7 +35,7 @@ using namespace plugins::bml;
 // Name: MissionParameterFactory constructor
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-MissionParameterFactory::MissionParameterFactory( const Mission& mission, const kernel::MissionType& type, const dispatcher::Automat& automat )
+MissionParameterFactory::MissionParameterFactory( const Mission& mission, const kernel::MissionType& type, const dispatcher::Automat_ABC& automat )
     : mission_( mission )
     , type_( type )
     , automat_( &automat )
@@ -48,7 +48,7 @@ MissionParameterFactory::MissionParameterFactory( const Mission& mission, const 
 // Name: MissionParameterFactory constructor
 // Created: SBO 2008-06-02
 // -----------------------------------------------------------------------------
-MissionParameterFactory::MissionParameterFactory( const Mission& mission, const kernel::MissionType& type, const dispatcher::Agent& agent )
+MissionParameterFactory::MissionParameterFactory( const Mission& mission, const kernel::MissionType& type, const dispatcher::Agent_ABC& agent )
     : mission_( mission )
     , type_( type )
     , automat_( 0 )
@@ -84,31 +84,28 @@ namespace
 
 namespace
 {
-    template< typename Entity >
-    struct NameFinder
+    const dispatcher::Automat_ABC* FindAutomat( const dispatcher::Model& model, const std::string& name )
     {
-        explicit NameFinder( const std::string& name ) : name_( name ), result_( 0 ) {}
-        void operator()( const Entity& entity ) const
+        tools::Iterator< const dispatcher::Automat_ABC& > it( model.Automats().CreateIterator() );
+        while( it.HasMoreElements() )
         {
-            if( entity.GetName().ascii() == name_ )
-                result_ = &entity;
+            const dispatcher::Automat_ABC& element = it.NextElement();
+            if( element.GetName().ascii() == name )
+                return &element;
         }
-        std::string name_;
-        mutable const Entity* result_;
-    };
-
-    const dispatcher::Automat* FindAutomat( const dispatcher::Model& model, const std::string& name )
-    {
-        NameFinder< dispatcher::Automat > automatFinder( name );
-        model.automats_.Apply( automatFinder );
-        return automatFinder.result_;
+        return 0;
     }
 
-    const dispatcher::Agent* FindAgent( const dispatcher::Model& model, const std::string& name )
+    const dispatcher::Agent_ABC* FindAgent( const dispatcher::Model& model, const std::string& name )
     {
-        NameFinder< dispatcher::Agent > agentFinder( name );
-        model.agents_.Apply( agentFinder );
-        return agentFinder.result_;
+        tools::Iterator< const dispatcher::Agent_ABC& > it( model.Agents().CreateIterator() );
+        while( it.HasMoreElements() )
+        {
+            const dispatcher::Agent_ABC& element = it.NextElement();
+            if( element.GetName().ascii() == name )
+                return &element;
+        }
+        return 0;
     }
 }
 
@@ -135,8 +132,8 @@ MissionParameter_ABC* MissionParameterFactory::CreateParameter( xml::xistream& x
                 >> xml::end()
         >> xml::end();
     
-    const dispatcher::Agent* agent = 0;
-    const dispatcher::Automat* automat = 0;
+    const dispatcher::Agent_ABC* agent = 0;
+    const dispatcher::Automat_ABC* automat = 0;
     if( !oid.empty() )
     {
         automat = FindAutomat( model, oid );

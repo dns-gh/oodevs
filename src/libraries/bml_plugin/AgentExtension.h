@@ -12,14 +12,21 @@
 
 #include "BmlExtension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "protocol/protocol.h"
 
-using namespace Common;
-using namespace MsgsSimToClient;
+namespace Common
+{
+    class MsgUnitOrder;
+}
+
+namespace MsgsSimToClient
+{
+    class MsgUnitAttributes;
+    class MsgUnitDetection;
+}
 
 namespace dispatcher
 {
-    class Agent;
+    class Agent_ABC;
     class Model;
 }
 
@@ -38,23 +45,23 @@ namespace bml
 // Created: SBO 2008-02-29
 // =============================================================================
 class AgentExtension : public BmlExtension_ABC
-                     , public kernel::Updatable_ABC< MsgUnitAttributes >
-                     , public kernel::Updatable_ABC< MsgUnitOrder >
-                     , public kernel::Updatable_ABC< MsgUnitDetection >
+                     , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
+                     , public kernel::Updatable_ABC< Common::MsgUnitOrder >
+                     , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitDetection >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentExtension( dispatcher::Agent& holder, Publisher_ABC& publisher, const ReportFactory& factory, const Simulation& simulation, const dispatcher::Model& model );
+             AgentExtension( dispatcher::Agent_ABC& holder, Publisher_ABC& publisher, const ReportFactory& factory, const Simulation& simulation, const dispatcher::Model& model );
     virtual ~AgentExtension();
     //@}
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const MsgUnitAttributes& attributes );
-    virtual void DoUpdate( const MsgUnitOrder& message );
-    virtual void DoUpdate( const MsgUnitDetection& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUnitAttributes& attributes );
+    virtual void DoUpdate( const Common::MsgUnitOrder& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUnitDetection& message );
     //@}
 
 private:
@@ -67,7 +74,7 @@ private:
 private:
     //! @name Member data
     //@{
-    dispatcher::Agent& holder_;
+    dispatcher::Agent_ABC& holder_;
     Publisher_ABC& publisher_;
     const ReportFactory& factory_;
     const Simulation& simulation_;

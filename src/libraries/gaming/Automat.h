@@ -14,16 +14,17 @@
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Extension_ABC.h"
-#include "protocol/Protocol.h"
 #include "tools/Resolver_ABC.h"
-
-using namespace Common;
-
 
 namespace kernel
 {
     class Controller;
     class PropertiesDictionary;
+}
+
+namespace MsgsSimToClient
+{
+    class MsgAutomatCreation;
 }
 
 // =============================================================================
@@ -48,23 +49,11 @@ public:
     //! @name Operations
     //@{
     virtual const kernel::AutomatType& GetType() const;
-    virtual kernel::Team_ABC& GetTeam() const;
-    virtual kernel::KnowledgeGroup_ABC& GetKnowledgeGroup() const;
-    virtual void Register( kernel::Automat_ABC& automat );
-    virtual void Remove( kernel::Automat_ABC& automat );
-    virtual const tools::Resolver< kernel::Automat_ABC >& GetAutomats() const;
-    virtual void Register( kernel::Agent_ABC& automat );
-    virtual void Remove( kernel::Agent_ABC& automat );
-    virtual const tools::Resolver< kernel::Agent_ABC >& GetAgents() const;
-    virtual kernel::Automat_ABC* GetParentAutomat() const;
-    virtual kernel::Formation_ABC* GetFormation() const;
-    virtual void NotifyParentDestroyed();
     //@}
 
     //! @name Extensions
     //@{
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
-    virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
     //@}
 
 private:

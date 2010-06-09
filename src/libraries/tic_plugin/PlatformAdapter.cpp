@@ -44,7 +44,7 @@ PlatformAdapter::~PlatformAdapter()
 // -----------------------------------------------------------------------------
 const ComponentType& PlatformAdapter::GetType() const
 {
-    tools::Iterator< const AgentComposition& > it = agent_.type_.CreateIterator();
+    tools::Iterator< const AgentComposition& > it = agent_.GetType().CreateIterator();
     if( it.HasMoreElements() )
         return it.NextElement().GetType();
     throw std::runtime_error( __FUNCTION__ );
@@ -57,7 +57,7 @@ const ComponentType& PlatformAdapter::GetType() const
 geometry::Point2f PlatformAdapter::GetPosition() const
 {
     // $$$$ _RC_ SBO 2010-05-27: reverse position_ lat/long
-    const geometry::Point2d pos( agent_.position_.Y(), agent_.position_.X() );
+    const geometry::Point2d pos( agent_.GetPosition().Y(), agent_.GetPosition().X() );
     return converter_.ConvertFromGeo( pos );
 }
 
@@ -76,7 +76,7 @@ geometry::Point2f PlatformAdapter::GetLastPosition() const
 // -----------------------------------------------------------------------------
 float PlatformAdapter::GetAltitude() const
 {
-    return float( agent_.nAltitude_ );
+    return float( agent_.GetAltitude() );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,7 +85,7 @@ float PlatformAdapter::GetAltitude() const
 // -----------------------------------------------------------------------------
 float PlatformAdapter::GetSpeed() const
 {
-    return float( agent_.nSpeed_ );
+    return float( agent_.GetSpeed() );
 }
 
 // -----------------------------------------------------------------------------
@@ -94,7 +94,7 @@ float PlatformAdapter::GetSpeed() const
 // -----------------------------------------------------------------------------
 float PlatformAdapter::GetHeading() const
 {
-    return float( agent_.nDirection_ );
+    return float( agent_.GetDirection() );
 }
 
 // -----------------------------------------------------------------------------
@@ -103,9 +103,9 @@ float PlatformAdapter::GetHeading() const
 // -----------------------------------------------------------------------------
 Platform_ABC::E_State PlatformAdapter::GetState() const
 {
-    if( agent_.bDead_ )
+    if( agent_.GetOperationalState() == Common::detruit_totalement )
         return destroyed;
-    if( agent_.nOperationalStateValue_ < 100 )
+    if( agent_.GetOperationalStateValue() < 100 )
         return broken;
     return okay;
 }

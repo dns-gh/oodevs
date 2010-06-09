@@ -40,17 +40,11 @@ public:
     //! @name Operations
     //@{
     virtual QString GetTypeName() const;
-
-
     virtual void Select( ActionController& controller ) const;
     virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
     virtual void Activate( ActionController& controller ) const;
     // LTO begin
     virtual bool IsActivated() const = 0;
-    virtual void Register( KnowledgeGroup_ABC& knowledgeGroup ) = 0;
-    virtual void Remove( KnowledgeGroup_ABC& knowledgeGroup ) = 0;
-    virtual void Register( Automat_ABC& automat ) = 0;
-    virtual void Remove( Automat_ABC& automat ) = 0;
     //@}
 };
 

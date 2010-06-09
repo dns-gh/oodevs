@@ -10,8 +10,10 @@
 #ifndef __Formatter_h_
 #define __Formatter_h_
 
+#pragma warning( push, 0 )
 #include <qstring.h>
 #include <qdatetime.h>
+#pragma warning( pop )
 #include "Displayer_ABC.h"
 #include "Types.h"
 

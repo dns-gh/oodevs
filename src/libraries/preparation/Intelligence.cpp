@@ -18,7 +18,6 @@
 #include "clients_kernel/HierarchyLevel_ABC.h"
 #include "clients_kernel/IntelligenceHierarchies.h"
 #include "clients_kernel/App6Symbol.h"
-#include "clients_kernel/ModelVisitor_ABC.h"
 #include "Tools.h"
 #include <xeumeuleu/xml.h>
 
@@ -198,13 +197,4 @@ void Intelligence::SetKarma( const IntelligenceKarma& karma )
     karma_ = karma;
     Touch();
     Get< IntelligenceHierarchies >().UpdateSymbol( false );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Intelligence::Accept
-// Created: MGD 2009-12-21
-// -----------------------------------------------------------------------------
-void Intelligence::Accept( kernel::ModelVisitor_ABC& visitor ) const
-{
-    visitor.Visit( *this );
 }

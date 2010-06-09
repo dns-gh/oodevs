@@ -10,9 +10,6 @@
 #ifndef __Equipment_h_
 #define __Equipment_h_
 
-
-
-////using namespace Common;
 namespace MsgsSimToClient
 {
     class EquipmentDotations_EquipmentDotation;
@@ -20,7 +17,6 @@ namespace MsgsSimToClient
 
 namespace dispatcher
 {
-    class Model;
 
 // =============================================================================
 /** @class  Equipment
@@ -33,7 +29,7 @@ class Equipment
 public:
     //! @name Constructors/Destructor
     //@{
-     Equipment( const Model& model, const MsgsSimToClient::EquipmentDotations_EquipmentDotation& asnMsg );
+    explicit Equipment( const MsgsSimToClient::EquipmentDotations_EquipmentDotation& asnMsg );
     virtual ~Equipment();
     //@}
 

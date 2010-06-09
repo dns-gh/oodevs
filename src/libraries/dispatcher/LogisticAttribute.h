@@ -10,20 +10,13 @@
 #ifndef __LogisticAttribute_h_
 #define __LogisticAttribute_h_
 
-
 #include "ObjectAttribute_ABC.h"
-
-
-namespace Common
-{
-    class MsgObjectAttributes;
-}
-
+#include "tools/Resolver.h"
 
 namespace dispatcher
 {
-    class Model;
-    class Automat;
+    class Automat_ABC;
+    class Model_ABC;
 
 // =============================================================================
 /** @class  LogisticAttribute
@@ -36,20 +29,22 @@ class LogisticAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     LogisticAttribute( const Model& model, const Common::MsgObjectAttributes& asnMsg );
+             LogisticAttribute( const Model_ABC& model, const Common::MsgObjectAttributes& asnMsg );
     virtual ~LogisticAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update   ( const Common::MsgObjectAttributes& asnMsg );
-    virtual void Send     ( Common::MsgObjectAttributes& asnMsg ) const;
-    virtual void Delete( Common::MsgObjectAttributes& asnMsg ) const;
+    virtual void Update( const Common::MsgObjectAttributes& asnMsg );
+    virtual void Send( Common::MsgObjectAttributes& asnMsg ) const;
     //@}
 
 private:
-    const Model&   model_;
-    const Automat* pTC2_;
+    //! @name Member data
+    //@{
+    const tools::Resolver_ABC< dispatcher::Automat_ABC >& automats_;
+    const dispatcher::Automat_ABC* pTC2_;
+    //@}
 };
 
 }

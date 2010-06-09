@@ -47,11 +47,6 @@ public:
     //! @name Operation
     //@{
     // LTO begin
-    virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
-    virtual void Register( kernel::KnowledgeGroup_ABC& knowledgeGroup );
-    virtual void Remove( kernel::KnowledgeGroup_ABC& knowledgeGroup );
-    virtual void Register( kernel::Automat_ABC& knowledgeGroup );
-    virtual void Remove( kernel::Automat_ABC& knowledgeGroup );
     virtual void DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupUpdate& message );
     //@}
 
@@ -69,6 +64,7 @@ private:
     KnowledgeGroup& operator=( const KnowledgeGroup& );
     //@}
 
+private:
     //! @name Member data
     //@{
     const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types_;

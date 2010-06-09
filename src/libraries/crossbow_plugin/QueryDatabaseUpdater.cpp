@@ -130,7 +130,7 @@ void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgUnitCreation& msg )
     builder.SetField( "name", std::string( msg.nom() ) );
     builder.SetField( "type", ( long ) msg.type_pion() );
     builder.SetField( "session_id", session_.GetId() );
-    UpdateSymbol( builder, model_.agents_, msg.oid() );    
+    UpdateSymbol( builder, model_.Agents(), msg.oid() );    
     builder.SetGeometry( Point() );
     database_.Execute( builder );
 }
@@ -160,7 +160,7 @@ void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgUnitKnowledgeCreati
     // $$$$ NEEDED ? builder.SetField( "type", msg.type_unite );
     builder.SetField( "session_id", session_.GetId() );
 
-    if( const dispatcher::Agent* realAgent = model_.agents_.Find( msg.oid_unite_reelle() ) )
+    if( const dispatcher::Agent_ABC* realAgent = model_.Agents().Find( msg.oid_unite_reelle() ) )
     {
         std::string a = tools::app6::GetAffiliation( realAgent->Get< dispatcher::EntitySymbols_ABC >().BuildSymbol() );
         builder.SetField( "observer_affiliation", InverseAffiliation( a ) );
@@ -192,9 +192,10 @@ void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgObjectKnowledgeCrea
         builder.SetField( "state", msg.attributes().construction().percentage() );
 	if ( tools::app6::GetAffiliation( symbol ) != "U" )
 		builder.SetField( "name",  std::string(knowledge->pObject_->GetName() ) );
-	if( const dispatcher::KnowledgeGroup* knowledgeGroup = model_.knowledgeGroups_.Find( msg.team() ) )
+    if( const dispatcher::KnowledgeGroup_ABC* knowledgeGroup = model_.KnowledgeGroups().Find( msg.group() ) )
 	{
-		tools::app6::SetAffiliation( symbol, (unsigned int) knowledgeGroup->GetTeam().GetKarma().GetUId() );
+        // $$$$ _RC_ SBO 2010-06-03: refactor !
+        tools::app6::SetAffiliation( symbol, (unsigned int) knowledgeGroup->GetTeam().GetKarma().GetUId() );
         builder.SetField( "observer_affiliation", tools::app6::GetAffiliation( symbol ) );
     }
     else
@@ -290,7 +291,7 @@ void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgObjectCreation& msg
     builder.SetField( "name", std::string( msg.name() ) );
     builder.SetField( "type", std::string( msg.type() ) );
 	builder.SetField( "session_id", session_.GetId() );
-    UpdateSymbol( builder, model_.objects_, msg.oid() );
+    UpdateSymbol( builder, model_.Objects(), msg.oid() );
     UpdateGeometry( builder, msg.location() );
    
     database_.Execute( builder );
@@ -317,7 +318,7 @@ void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgObjectKnowledgeUpda
     if ( tools::app6::GetAffiliation( symbol ) != "U" )
         builder.SetField( "name",  std::string(knowledge->pObject_->GetName() ) );
 
-    if( const dispatcher::KnowledgeGroup* knowledgeGroup = model_.knowledgeGroups_.Find( msg.team() ) )
+    if( const dispatcher::KnowledgeGroup* knowledgeGroup = static_cast< const dispatcher::KnowledgeGroup* >( model_.KnowledgeGroups().Find( msg.group() ) ) )
     {
         tools::app6::SetAffiliation( symbol, (unsigned int) knowledgeGroup->GetTeam().GetKarma().GetUId() );
         builder.SetField( "observer_affiliation", tools::app6::GetAffiliation( symbol ) );
@@ -413,7 +414,7 @@ void QueryDatabaseUpdater::Update( const Common::MsgFormationCreation& message )
     builder.SetField( "type", -1 );
     builder.SetField( "engaged", 0 );
     builder.SetField( "session_id", session_.GetId() );
-    UpdateSymbol( builder, model_.formations_, message.oid() );
+    UpdateSymbol( builder, model_.Formations(), message.oid() );
     database_.Execute( builder );
 }
 
@@ -435,7 +436,7 @@ void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgAutomatCreation& me
     builder.SetField( "type", ( long ) message.type_automate() );
     builder.SetField( "engaged", 0 );
     builder.SetField( "session_id", session_.GetId() );
-    UpdateSymbol( builder, model_.automats_, message.oid() );
+    UpdateSymbol( builder, model_.Automats(), message.oid() );
     database_.Execute( builder );
 }
 
@@ -507,7 +508,7 @@ void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgUnitKnowledgeUpdate
     if( msg.has_identification_level() )
         builder.SetField( "identification_level", msg.identification_level() );
     if( msg.has_max_identification_level() )
-        UpdateSymbol( builder, model_.agentKnowledges_, msg.oid() );
+        UpdateSymbol( builder, model_.AgentKnowledges(), msg.oid() );
     if ( msg.has_mort() )
         builder.SetField( "dead", msg.mort() );
     if( msg.has_position() )

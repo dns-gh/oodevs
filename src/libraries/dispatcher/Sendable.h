@@ -16,10 +16,17 @@ namespace kernel
 {
     class ModelVisitor_ABC;
 }
+
 namespace dispatcher
 {
     class ClientPublisher_ABC;
 
+// =============================================================================
+/** @class  Sendable
+    @brief  Sendable
+*/
+// Created: MGD 2009-12-18
+// =============================================================================
 template< typename B = kernel::Entity_ABC >
 class Sendable : public SimpleEntity< B >
 {

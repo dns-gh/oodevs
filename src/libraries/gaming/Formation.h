@@ -12,11 +12,12 @@
 
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/EntityImplementation.h"
-#include "protocol/Protocol.h"
 #include "tools/Resolver_ABC.h"
 
-using namespace Common;
-
+namespace Common
+{
+    class MsgFormationCreation;
+}
 
 // =============================================================================
 /** @class  Formation
@@ -37,20 +38,6 @@ public:
     //! @name Accessors
     //@{
     virtual const kernel::HierarchyLevel_ABC& GetLevel() const;
-    virtual kernel::Formation_ABC* GetParent() const;
-    virtual kernel::Team_ABC& GetTeam() const;
-    virtual const tools::Resolver< kernel::Formation_ABC >& GetFormations() const;
-    virtual const tools::Resolver< kernel::Automat_ABC >& GetAutomates() const;
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
-    virtual void Register( kernel::Formation_ABC& formation );
-    virtual void Remove( kernel::Formation_ABC& formation );
-    virtual void Register( kernel::Automat_ABC& automat );
-    virtual void Remove( kernel::Automat_ABC& automat );
-    virtual void NotifyParentDestroyed();
     //@}
 
 private:

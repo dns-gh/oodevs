@@ -24,7 +24,7 @@ using namespace dispatcher;
 LogConsignMaintenance::LogConsignMaintenance( const Model& model, const MsgsSimToClient::MsgLogMaintenanceHandlingCreation& msg )
     : SimpleEntity< >   ( msg.oid_consigne() )
     , model_            ( model )
-    , agent_            ( model.agents_.Get( msg.oid_pion() ) )
+    , agent_            ( model.Agents().Get( msg.oid_pion() ) )
     , nTickCreation_    ( msg.tick_creation() )
     , nEquipmentType_   ( msg.type_equipement() )
     , nBreakdownType_   ( msg.type_panne() )
@@ -54,7 +54,7 @@ void LogConsignMaintenance::Update( const MsgsSimToClient::MsgLogMaintenanceHand
         bDiagnosed_ = msg.diagnostique_effectue() != 0;
     if( msg.has_etat() )
         nState_ = msg.etat();
-    pTreatingAgent_ = ( msg.oid_pion_log_traitant() == 0 ) ? 0 : &model_.agents_.Get( msg.oid_pion_log_traitant() );
+    pTreatingAgent_ = ( msg.oid_pion_log_traitant() == 0 ) ? 0 : &model_.Agents().Get( msg.oid_pion_log_traitant() );
 }
 
 // -----------------------------------------------------------------------------

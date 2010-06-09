@@ -79,7 +79,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentKnowledgeListParameter_ToASN )
     MsgUnitKnowledgeList asnOut;
     BOOST_CHECK_EQUAL( true, param.ToAgentKnowledgeList( asnOut ) );
     BOOST_CHECK_EQUAL( 1, asnOut.elem_size() );
-    BOOST_CHECK_EQUAL( 0, asnOut.elem( 0 ).oid() ); // $$$$ LDC: = knowledge's id
+    BOOST_CHECK_EQUAL( 0u, asnOut.elem( 0 ).oid() ); // $$$$ LDC: = knowledge's id
     asnOut.Clear();
 }
 
@@ -99,7 +99,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentKnowledgeParameter_ToASN )
     MIL_AgentKnowledgeParameter param( asnIn, resolver );
     MsgUnitKnowledge asnOut;
     BOOST_CHECK_EQUAL( true, param.ToAgentKnowledge( asnOut ) );
-    BOOST_CHECK_EQUAL( 0, asnOut.oid() ); // $$$$ LDC: = knowledge's id
+    BOOST_CHECK_EQUAL( 0u, asnOut.oid() ); // $$$$ LDC: = knowledge's id
 }
 
 // -----------------------------------------------------------------------------
@@ -113,7 +113,8 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentListParameter_ToASN )
     MockMIL_EntityManager_ABC entityManager;
     MIL_EffectManager effectManager;
     FixturePion fixture( effectManager );
-    fixture.pPion_->RegisterRole( *new DEC_RolePion_Decision( *fixture.pPion_, StubDEC_Database() ) );
+    StubDEC_Database database;
+    fixture.pPion_->RegisterRole( *new DEC_RolePion_Decision( *fixture.pPion_, database ) );
     MOCK_EXPECT( entityManager, FindAgentPion ).once().returns( fixture.pPion_.get() );
     MIL_AgentListParameter param( asnIn, entityManager );
     asnIn.Clear();
@@ -136,7 +137,8 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentParameter_ToASN )
     MockMIL_EntityManager_ABC entityManager;
     MIL_EffectManager effectManager;
     FixturePion fixture( effectManager );
-    fixture.pPion_->RegisterRole( *new DEC_RolePion_Decision( *fixture.pPion_,  StubDEC_Database() ) );
+    StubDEC_Database database;
+    fixture.pPion_->RegisterRole( *new DEC_RolePion_Decision( *fixture.pPion_, database ) );
     MOCK_EXPECT( entityManager, FindAgentPion ).once().returns( fixture.pPion_.get() );
     MIL_AgentParameter param( asnIn, entityManager );
     MsgUnit asnOut;
@@ -269,7 +271,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_DotationTypeParameter_ToASN )
     MIL_DotationTypeParameter param( asnIn );
     MsgDotationType asnOut;
     BOOST_CHECK_EQUAL( true, param.ToDotationType( asnOut ) );
-    BOOST_CHECK_EQUAL( 42, asnOut.oid() );
+    BOOST_CHECK_EQUAL( 42u, asnOut.oid() );
     UrbanType::Terminate();
 }
 
@@ -469,7 +471,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_ObjectKnowledgeParameter_ToASN )
     MIL_ObjectKnowledgeParameter param( asnIn, resolver );
     MsgObjectKnowledge asnOut;
     BOOST_CHECK_EQUAL( true, param.ToObjectKnowledge( asnOut ) );
-    BOOST_CHECK_EQUAL( 0, asnOut.oid() ); // $$$$ LDC: = knowledge's id
+    BOOST_CHECK_EQUAL( 0u, asnOut.oid() ); // $$$$ LDC: = knowledge's id
 }
 
 // -----------------------------------------------------------------------------

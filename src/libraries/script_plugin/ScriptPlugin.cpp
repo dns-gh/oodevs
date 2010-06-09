@@ -54,6 +54,7 @@ ScriptPlugin::ScriptPlugin( Model& model, const kernel::StaticModel& staticModel
     , factory_   ( new ExtensionFactory( *controller_, *converter_, publisher ) )
     , time_      ( -1 )
     , reset_     ( true )
+    , tickDuration_( 10 )
 {
     model_.RegisterFactory( *factory_ );
     registrables_.Add( new RegistrableProxy( *this ) );
@@ -84,8 +85,11 @@ ScriptPlugin::~ScriptPlugin()
 // -----------------------------------------------------------------------------
 void ScriptPlugin::Receive( const MsgSimToClient& wrapper )
 {
+    if( wrapper.message().has_control_information() )
+        if( wrapper.message().control_information().has_tick_duration() )
+            tickDuration_ = wrapper.message().control_information().tick_duration();
     if( wrapper.message().has_control_end_tick() )
-        controller_->Update( events::TickEnded( wrapper.message().control_end_tick().current_tick() ) );
+        controller_->Update( events::TickEnded( wrapper.message().control_end_tick().current_tick(), tickDuration_ ) );
 }
 
 // -----------------------------------------------------------------------------

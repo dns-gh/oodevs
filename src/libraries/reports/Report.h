@@ -11,8 +11,7 @@
 #define __Report_h_
 
 #include "geometry/Types.h"
-#pragma warning( push )
-#pragma warning( disable : 4996 )
+#pragma warning( push, 0 )
 #include <qstring.h>
 #include <qdatetime.h>
 #include <qcolor.h>

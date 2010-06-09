@@ -26,7 +26,7 @@ using namespace dispatcher;
 LogConsignSupply::LogConsignSupply( const Model& model, const MsgsSimToClient::MsgLogSupplyHandlingCreation& msg )
     : SimpleEntity< >   ( msg.oid_consigne() )
     , model_            ( model )
-    , automat_          ( model.automats_.Get( msg.oid_automate() ) )
+    , automat_          ( model.Automats().Get( msg.oid_automate() ) )
     , nTickCreation_    ( msg.tick_creation() )
     , pTreatingAutomat_ ( 0 )
     , pConvoyingAutomat_( 0 )
@@ -52,13 +52,13 @@ LogConsignSupply::~LogConsignSupply()
 void LogConsignSupply::Update( const MsgsSimToClient::MsgLogSupplyHandlingUpdate& msg )
 {
     if( msg.has_oid_automate_log_traitant() )
-        pTreatingAutomat_ = ( msg.oid_automate_log_traitant() == 0 ) ? 0 : &model_.automats_.Get( msg.oid_automate_log_traitant() );
+        pTreatingAutomat_ = ( msg.oid_automate_log_traitant() == 0 ) ? 0 : &model_.Automats().Get( msg.oid_automate_log_traitant() );
 
     if( msg.has_oid_automate_log_fournissant_moyens_convoi() )
-        pConvoyingAutomat_ = ( msg.oid_automate_log_fournissant_moyens_convoi() == 0 ) ? 0 : &model_.automats_.Get( msg.oid_automate_log_fournissant_moyens_convoi() );
+        pConvoyingAutomat_ = ( msg.oid_automate_log_fournissant_moyens_convoi() == 0 ) ? 0 : &model_.Automats().Get( msg.oid_automate_log_fournissant_moyens_convoi() );
 
     if( msg.has_oid_pion_convoyant() )
-        pConvoy_ = ( msg.oid_pion_convoyant() == 0 ) ? 0 : &model_.agents_.Get( msg.oid_pion_convoyant() );
+        pConvoy_ = ( msg.oid_pion_convoyant() == 0 ) ? 0 : &model_.Agents().Get( msg.oid_pion_convoyant() );
 
     if( msg.has_etat() )
         nState_ = msg.etat();

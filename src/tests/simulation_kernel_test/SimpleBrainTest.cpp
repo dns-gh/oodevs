@@ -33,7 +33,8 @@ BOOST_AUTO_TEST_CASE( InstantiateBrainForMIL_AgentPion )
 {
     MIL_EffectManager effectManager;
     FixturePion fixture( effectManager );
-    DEC_RolePion_Decision decision ( *fixture.pPion_, StubDEC_Database() );
+    StubDEC_Database database;
+    DEC_RolePion_Decision decision ( *fixture.pPion_, database );
 }
 
 // -----------------------------------------------------------------------------
@@ -43,7 +44,8 @@ BOOST_AUTO_TEST_CASE( InstantiateBrainForMIL_AgentPion )
 BOOST_AUTO_TEST_CASE( InstantiateDEC_AutomateDecision )
 {
     FixtureAutomate fixture;
-    DEC_AutomateDecision decision( *fixture.pAutomat_, StubDEC_Database() );
+    StubDEC_Database database;
+    DEC_AutomateDecision decision( *fixture.pAutomat_, database );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,7 +60,8 @@ BOOST_AUTO_TEST_CASE( InstantiateDEC_PopulationDecision )
     DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes );
     StubMIL_PopulationType type( model );
     StubMIL_Population population( type );
-    DEC_PopulationDecision decision( population, StubDEC_Database() );
+    StubDEC_Database database;
+    DEC_PopulationDecision decision( population, database );
 }
 
 class ScriptMocker : public mockpp::ChainableMockObject
@@ -92,8 +95,8 @@ namespace
 class DEC_TestPopulationDecision : public DEC_Decision<MIL_Population>
 {
 public:
-    DEC_TestPopulationDecision( MIL_Population& population, DEC_TestPopulationDecision* pOther )
-        : DEC_Decision( population, StubDEC_Database() ) 
+    DEC_TestPopulationDecision( MIL_Population& population, DEC_TestPopulationDecision* pOther, DEC_DataBase& database )
+        : DEC_Decision( population, database ) 
         , pOther_     ( pOther )
     {
         const DEC_Model_ABC& model = population.GetType().GetModel();
@@ -131,8 +134,9 @@ protected:
         brain.RegisterFunction( "DEC_TestBehaviorCalled",    &NotifyCallFromScript );
         brain.RegisterFunction( "DEC_TestMissionCalled",     &NotifyMissionCallFromScript );
         brain.RegisterFunction( "DEC_GetRawMission",         &GetRawMission );
+        directia::ScriptRef initFunction = brain.GetScriptFunction( "InitTaskParameter" );
         brain.RegisterFunction( "DEC_FillMissionParameters",
-            boost::function< void( const directia::ScriptRef&, boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_MiscFunctions::FillMissionParameters, boost::ref( brain ), boost::ref( brain.GetScriptFunction("InitTaskParameter") ), _1 , _2 ) ) );
+            boost::function< void( const directia::ScriptRef&, boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_MiscFunctions::FillMissionParameters, boost::ref( brain ), boost::ref( initFunction ), _1 , _2 ) ) );
         if( pOther_ )
             brain.RegisterObject< DEC_TestPopulationDecision* >( "other", pOther_ );
     }
@@ -161,7 +165,8 @@ BOOST_AUTO_TEST_CASE( ActivateOrderExecutesBehaviour )
     DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes );
     StubMIL_PopulationType type( model );
     StubMIL_Population population( type );
-    DEC_TestPopulationDecision decision( population, 0 );
+    StubDEC_Database database;
+    DEC_TestPopulationDecision decision( population, 0, database );
     MockMIL_MissionType_ABC missionType;
     std::string typeString( "missionBehavior" );
     MOCK_EXPECT( missionType, GetDIABehavior ).once().returns( typeString );
@@ -187,7 +192,8 @@ BOOST_AUTO_TEST_CASE( ActivateOrderPassesMissionToDecisional )
     DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes );
     StubMIL_PopulationType type( model );
     StubMIL_Population population( type );
-    DEC_TestPopulationDecision decision( population, 0 );
+    StubDEC_Database database;
+    DEC_TestPopulationDecision decision( population, 0, database );
     MockMIL_MissionType_ABC missionType;
     MOCK_EXPECT( missionType, GetDIABehavior ).once().returns( "missionBehaviorWithArg" );
     StubDEC_KnowledgeResolver_ABC resolver;
@@ -213,7 +219,8 @@ BOOST_AUTO_TEST_CASE( DecisionalCanUseMissionParameters )
     DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes );
     StubMIL_PopulationType type( model );
     StubMIL_Population population( type );
-    DEC_TestPopulationDecision decision( population, 0 );
+    StubDEC_Database database;
+    DEC_TestPopulationDecision decision( population, 0, database );
     MockMIL_MissionType_ABC missionType;
     MOCK_EXPECT( missionType, GetDIABehavior ).once().returns( "missionBehavior" );
     StubDEC_KnowledgeResolver_ABC resolver;
@@ -240,7 +247,8 @@ BOOST_AUTO_TEST_CASE( DEC_GetMissionPassesParametersToLua )
     DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes );
     StubMIL_PopulationType type( model );
     StubMIL_Population population( type );
-    DEC_TestPopulationDecision decision( population, 0 );
+    StubDEC_Database database;
+    DEC_TestPopulationDecision decision( population, 0, database );
     MockMIL_MissionType_ABC missionType;
     MOCK_EXPECT( missionType, GetDIABehavior ).once().returns( "testDEC_GetMission" );
     StubDEC_KnowledgeResolver_ABC resolver;
@@ -267,7 +275,8 @@ BOOST_AUTO_TEST_CASE( DEC_GetMissionPassesParametersToLuaMission )
     DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes );
     StubMIL_PopulationType type( model );
     StubMIL_Population population( type );
-    DEC_TestPopulationDecision decision( population, 0 );
+    StubDEC_Database database;
+    DEC_TestPopulationDecision decision( population, 0, database );
     MockMIL_MissionType_ABC missionType;
     MOCK_EXPECT( missionType, GetDIABehavior ).once().returns( "mission" );
     StubDEC_KnowledgeResolver_ABC resolver;
@@ -295,8 +304,9 @@ BOOST_AUTO_TEST_CASE( DEC_GetMissionPassesOtherMissionsParametersToLua )
     DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes );
     StubMIL_PopulationType type( model );
     StubMIL_Population population( type );
-    DEC_TestPopulationDecision otherDecision( population, 0 );
-    DEC_TestPopulationDecision decision( population, &otherDecision );
+    StubDEC_Database database;
+    DEC_TestPopulationDecision otherDecision( population, 0, database );
+    DEC_TestPopulationDecision decision( population, &otherDecision, database );
 
     MockMIL_MissionType_ABC missionType;
     MOCK_EXPECT( missionType, GetDIABehavior ).exactly( 2 ).returns( "testDEC_GetOtherMission" );
@@ -329,7 +339,8 @@ BOOST_AUTO_TEST_CASE( DEC_Decision_GetterTest )
     DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes );
     StubMIL_PopulationType type( model );
     StubMIL_Population population( type );
-    DEC_TestPopulationDecision decision( population, 0 );
+    StubDEC_Database database;
+    DEC_TestPopulationDecision decision( population, 0, database );
 
     decision.SetVariable( "myself.AValue", 42 );
     BOOST_CHECK_EQUAL( 42, decision.GetScalarVariable<int>( "myself.AValue" ) );

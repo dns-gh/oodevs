@@ -18,7 +18,7 @@ using namespace kernel;
 // Name: WeaponSystemType constructor
 // Created: SBO 2008-08-06
 // -----------------------------------------------------------------------------
-WeaponSystemType::WeaponSystemType( xml::xistream& xis, tools::Resolver< VolumeType >& volumes )
+WeaponSystemType::WeaponSystemType( xml::xistream& xis, const tools::Resolver_ABC< VolumeType >& volumes )
     : launcher_        ( xml::attribute< std::string >( xis, "launcher" ) )
     , ammunition_      ( xml::attribute< std::string >( xis, "munition" ) )
     , maxIndirectRange_( 0 )
@@ -26,7 +26,6 @@ WeaponSystemType::WeaponSystemType( xml::xistream& xis, tools::Resolver< VolumeT
     , maxDirectRange_  ( 0 )
     , minDirectRange_  ( std::numeric_limits< unsigned int >::max() )
     , volumes_         ( volumes )
-    , phs_             ( volumes.Count(), MT_InterpolatedFunction< MT_Float >( 0., 0. ) )
 {
     ReadDirectFire( xis );
     ReadIndirectFire( xis );
@@ -140,8 +139,8 @@ unsigned int WeaponSystemType::GetMinRange() const
 // -----------------------------------------------------------------------------
 unsigned int WeaponSystemType::GetEfficientRange( unsigned int volumeId, MT_Float ph ) const
 {
-    VolumeType* volume = volumes_.Find( volumeId );
-    if( volume )
-        return unsigned int( phs_[ volume->GetId() ].GetMaxYForX( ph ) );
+    T_HitProbabilities::const_iterator it = phs_.find( volumeId );
+    if( it != phs_.end() )
+        return unsigned int( it->second.GetMaxYForX( ph ) );
     return 0;
 }

@@ -10,29 +10,19 @@
 #ifndef __KnowledgeGroup_h_
 #define __KnowledgeGroup_h_
 
-
-#include "SimpleEntity.h"
+#include "KnowledgeGroup_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "tools/Resolver.h"
 
 namespace MsgsSimToClient
 {
     class MsgKnowledgeGroupCreation;
     class MsgKnowledgeGroupUpdate;
-    class MsgKnowledgeGroupDestruction;
-}
-
-namespace kernel
-{
-    class ModelVisitor_ABC;
-    class Team_ABC;
 }
 
 namespace dispatcher
 {
     class Model_ABC;
-    class ClientPublisher_ABC;
 
 // =============================================================================
 /** @class  KnowledgeGroup
@@ -40,7 +30,9 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class KnowledgeGroup : public SimpleEntity< kernel::KnowledgeGroup_ABC >
+class KnowledgeGroup : public dispatcher::KnowledgeGroup_ABC
+                     , public kernel::Extension_ABC
+                     , public kernel::Updatable_ABC< MsgsSimToClient::MsgKnowledgeGroupUpdate >
 {
 public:
     //! @name Constructors/Destructor
@@ -51,23 +43,22 @@ public:
 
     //! @name Operations
     //@{
-    void SendCreation   ( ClientPublisher_ABC& publisher ) const;
-    void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
-    void SendDestruction( ClientPublisher_ABC& publisher ) const;
-    void Accept         ( kernel::ModelVisitor_ABC& visitor ) const;
+    virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
+    virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
+    virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
+    virtual void Accept         ( kernel::ModelVisitor_ABC& visitor ) const;
 
-    using SimpleEntity< kernel::KnowledgeGroup_ABC >::Update;
-    void Update( const MsgsSimToClient::MsgKnowledgeGroupUpdate& message ); // LTO
+    virtual void DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupUpdate& message ); // LTO
     virtual bool IsActivated() const { return true; };  // $$$$ _RC_ SLG 2009-12-21: TEMP  // LTO
-    virtual void Register( kernel::KnowledgeGroup_ABC& knowledgeGroup ); // LTO
-    virtual void Remove( kernel::KnowledgeGroup_ABC& knowledgeGroup ); // LTO
-    virtual void Register( kernel::Automat_ABC& automat ); // LTO
-    virtual void Remove( kernel::Automat_ABC& automat ); // LTO
+    virtual void Register( dispatcher::KnowledgeGroup_ABC& knowledgeGroup ); // LTO
+    virtual void Remove( dispatcher::KnowledgeGroup_ABC& knowledgeGroup ); // LTO
+    virtual void Register( dispatcher::Automat_ABC& automat ); // LTO
+    virtual void Remove( dispatcher::Automat_ABC& automat ); // LTO
     //@}
 
     //! @name Accessors
     //@{
-    const kernel::Team_ABC& GetTeam() const;
+    virtual const dispatcher::Team_ABC& GetTeam() const;
     //@}
 
 private:
@@ -79,19 +70,20 @@ private:
 
     //! @name Helpers
     //@{
-    void ChangeSuperior( kernel::KnowledgeGroup_ABC* superior );
+    virtual void ChangeSuperior( dispatcher::KnowledgeGroup_ABC* superior );
     //@}
 
 private:
     //! @name Member data
     //@{
     Model_ABC& model_;
-    kernel::Team_ABC& team_;
-    kernel::KnowledgeGroup_ABC* parent_;
+    dispatcher::Team_ABC& team_;
+    dispatcher::KnowledgeGroup_ABC* parent_;
     std::string type_; // LTO
     bool enabled_; // LTO
-    tools::Resolver< kernel::KnowledgeGroup_ABC > knowledgeGroups_;
-    tools::Resolver< kernel::Automat_ABC > automats_;
+    bool jammed_; // LTO
+    tools::Resolver< dispatcher::KnowledgeGroup_ABC > knowledgeGroups_;
+    tools::Resolver< dispatcher::Automat_ABC > automats_;
     //@}
 };
 

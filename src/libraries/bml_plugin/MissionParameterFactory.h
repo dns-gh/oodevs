@@ -22,8 +22,8 @@ namespace kernel
 
 namespace dispatcher
 {
-    class Automat;
-    class Agent;
+    class Agent_ABC;
+    class Automat_ABC;
     class Model;
 }
 
@@ -46,8 +46,8 @@ class MissionParameterFactory
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionParameterFactory( const Mission& mission, const kernel::MissionType& type, const dispatcher::Automat& automat );
-             MissionParameterFactory( const Mission& mission, const kernel::MissionType& type, const dispatcher::Agent& agent );
+             MissionParameterFactory( const Mission& mission, const kernel::MissionType& type, const dispatcher::Automat_ABC& automat );
+             MissionParameterFactory( const Mission& mission, const kernel::MissionType& type, const dispatcher::Agent_ABC& agent );
     virtual ~MissionParameterFactory();
     //@}
 
@@ -68,8 +68,8 @@ private:
     //@{
     const Mission& mission_;
     const kernel::MissionType& type_;
-    const dispatcher::Automat* automat_;
-    const dispatcher::Agent*   agent_;
+    const dispatcher::Automat_ABC* automat_;
+    const dispatcher::Agent_ABC*   agent_;
     //@}
 };
 

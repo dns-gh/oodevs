@@ -9,20 +9,19 @@
 
 #include "dispatcher_pch.h"
 #include "AgentLogMaintenance.h"
-#include "Model.h"
+#include "Model_ABC.h"
+#include "Automat_ABC.h"
+#include "Agent_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
-#include "Automat.h"
-#include "Agent.h"
 #include "protocol/clientsenders.h"
 
 using namespace dispatcher;
-//using namespace MsgsSimToClient;
 
 // -----------------------------------------------------------------------------
 // Name: AgentLogMaintenance constructor
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-AgentLogMaintenance::AgentLogMaintenance( const Model& model, const kernel::Agent_ABC& agent, const MsgsSimToClient::MsgLogMaintenanceState& asnMsg )
+AgentLogMaintenance::AgentLogMaintenance( const Model_ABC& model, const kernel::Agent_ABC& agent, const MsgsSimToClient::MsgLogMaintenanceState& asnMsg )
     : model_         ( model )
     , agent_         ( agent )
     , bSystemEnabled_( false )
@@ -66,7 +65,7 @@ void AgentLogMaintenance::Update( const MsgsSimToClient::MsgLogMaintenanceState&
     {
         tacticalPriorities_.clear();
         for( int i = 0; i < asnMsg.priorites_tactiques().elem_size(); ++i )
-            tacticalPriorities_.push_back( &model_.automats_.Get( asnMsg.priorites_tactiques().elem( i ).oid() ) );
+            tacticalPriorities_.push_back( &model_.Automats().Get( asnMsg.priorites_tactiques().elem( i ).oid() ) );
     }
 
     if( asnMsg.has_priorites()  )
@@ -87,12 +86,9 @@ void AgentLogMaintenance::Update( const MsgsSimToClient::MsgLogMaintenanceState&
 // -----------------------------------------------------------------------------
 void AgentLogMaintenance::Send( ClientPublisher_ABC& publisher ) const
 {
-    //client::LogMaintenanceState asn;
     client::LogMaintenanceState asn;
     asn().set_oid_pion ( agent_.GetId() );
-
     asn().set_chaine_activee ( bSystemEnabled_ );
-
     {
         for( std::vector< T_Availability >::const_iterator it = repairersAvailability_.begin(); it != repairersAvailability_.end(); ++it )
             it->Send( *asn().mutable_disponibilites_reparateurs()->add_elem() );
@@ -107,16 +103,7 @@ void AgentLogMaintenance::Send( ClientPublisher_ABC& publisher ) const
     }
     {
         for( std::vector< Common::MsgEquipmentType >::const_iterator it = priorities_.begin(); it != priorities_.end(); ++it )
-            asn().mutable_priorites()->add_elem()->set_equipment( (*it).equipment() );
+            asn().mutable_priorites()->add_elem()->set_equipment( it->equipment() );
     }
     asn.Send( publisher );
-
-    if( asn().disponibilites_reparateurs().elem_size() > 0 )
-        asn().mutable_disponibilites_reparateurs()->Clear();
-    if( asn().disponibilites_remorqueurs().elem_size() > 0 )
-        asn().mutable_disponibilites_remorqueurs()->Clear();
-    if( asn().priorites().elem_size() > 0 )
-        asn().mutable_priorites()->Clear();
-    if( asn().priorites_tactiques().elem_size() > 0 )
-        asn().mutable_priorites_tactiques()->Clear();
 }

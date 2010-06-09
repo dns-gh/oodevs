@@ -224,7 +224,7 @@ void ProfileManager::SetAutomatRight( const std::string& profile, unsigned int a
 {
     T_ProfileMap::iterator it = profiles_.find( profile );
     if( it != profiles_.end() )
-        it->second->SetRight( model_.automats_.Get( automat ), readonly, readwrite );
+        it->second->SetRight( model_.Automats().Get( automat ), readonly, readwrite );
 }
 
 // -----------------------------------------------------------------------------
@@ -235,7 +235,7 @@ void ProfileManager::RegisterRole( const std::string name )
 {
     if ( roles_.find( name ) == roles_.end() )
     {
-        roles_.insert( std::pair< const std::string, unsigned >( name, roles_.size() ) );
+        roles_.insert( std::pair< const std::string, unsigned >( name, roles_.size() + 1 ) );
     }
 }
 

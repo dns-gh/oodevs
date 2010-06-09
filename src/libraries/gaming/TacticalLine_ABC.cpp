@@ -85,14 +85,11 @@ namespace
         virtual void VisitLines( const T_PointVector& points )
         {
             loc_.set_type( MsgLocation_Geometry_line );
-//            line_.mutable_location()->mutable_coordinates()->set_n( points.size() );
-//            for (int i = 0; i < points.size(); ++i )
-//                line_.mutable_location()->mutable_coordinates()->add_elem();
             for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
                 converter_.ConvertToGeo( *it, *loc_.mutable_coordinates()->add_elem() );
         }
 
-        virtual void VisitRectangle( const T_PointVector& points ) {}
+        virtual void VisitRectangle( const T_PointVector& ) {}
         virtual void VisitPolygon( const T_PointVector& ) {}
         virtual void VisitCircle( const geometry::Point2f&, float ) {}
         virtual void VisitPoint( const geometry::Point2f& ) {}

@@ -10,10 +10,10 @@
 #ifndef __PositionReport_h_
 #define __PositionReport_h_
 
-#include "protocol/protocol.h"
-
-using namespace Common;
-using namespace MsgsSimToClient;
+namespace MsgsSimToClient
+{
+    class MsgUnitAttributes;
+}
 
 namespace xml
 {
@@ -22,7 +22,7 @@ namespace xml
 
 namespace dispatcher
 {
-    class Agent;
+    class Agent_ABC;
 }
 
 namespace plugins
@@ -44,7 +44,7 @@ class PositionReport
 public:
     //! @name Constructors/Destructor
     //@{
-             PositionReport( const dispatcher::Agent& entity, const MsgUnitAttributes& attributes );
+             PositionReport( const dispatcher::Agent_ABC& entity, const MsgsSimToClient::MsgUnitAttributes& attributes );
     virtual ~PositionReport();
     //@}
 
@@ -69,8 +69,8 @@ private:
 private:
     //! @name Member data
     //@{
-    const dispatcher::Agent& entity_;
-    const MsgUnitAttributes& attributes_;
+    const dispatcher::Agent_ABC& entity_;
+    const MsgsSimToClient::MsgUnitAttributes& attributes_;
     //@}
 };
 

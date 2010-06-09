@@ -81,31 +81,28 @@ const kernel::MissionType& Mission::ResolveMission( xml::xistream& xis )
 
 namespace
 {
-    template< typename Entity >
-    struct NameFinder
+    const dispatcher::Automat_ABC* FindAutomat( const dispatcher::Model& model, const std::string& name )
     {
-        explicit NameFinder( const std::string& name ) : name_( name ), result_( 0 ) {}
-        void operator()( const Entity& entity ) const
+        tools::Iterator< const dispatcher::Automat_ABC& > it( model.Automats().CreateIterator() );
+        while( it.HasMoreElements() )
         {
-            if( entity.GetName().ascii() == name_ )
-                result_ = &entity;
+            const dispatcher::Automat_ABC& element = it.NextElement();
+            if( element.GetName().ascii() == name )
+                return &element;
         }
-        std::string name_;
-        mutable const Entity* result_;
-    };
-
-    const dispatcher::Automat* FindAutomat( const dispatcher::Model& model, const std::string& name )
-    {
-        NameFinder< dispatcher::Automat > automatFinder( name );
-        model.automats_.Apply( automatFinder );
-        return automatFinder.result_;
+        return 0;
     }
 
-    const dispatcher::Agent* FindAgent( const dispatcher::Model& model, const std::string& name )
+    const dispatcher::Agent_ABC* FindAgent( const dispatcher::Model& model, const std::string& name )
     {
-        NameFinder< dispatcher::Agent > agentFinder( name );
-        model.agents_.Apply( agentFinder );
-        return agentFinder.result_;
+        tools::Iterator< const dispatcher::Agent_ABC& > it( model.Agents().CreateIterator() );
+        while( it.HasMoreElements() )
+        {
+            const dispatcher::Agent_ABC& element = it.NextElement();
+            if( element.GetName().ascii() == name )
+                return &element;
+        }
+        return 0;
     }
 }
 

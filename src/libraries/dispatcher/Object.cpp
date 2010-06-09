@@ -25,8 +25,6 @@
 #include "protocol/ClientPublisher_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "clients_kernel/ObjectType.h"
-#include "clients_kernel/ObjectTypes.h"
-#include "clients_kernel/StaticModel.h"
 #include "protocol/clientsenders.h"
 #include <boost/bind.hpp>
 
@@ -36,15 +34,16 @@ using namespace dispatcher;
 // Name: Object constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-Object::Object( Model& model, const MsgsSimToClient::MsgObjectCreation& msg, const kernel::StaticModel& staticModel )
-    : SimpleEntity< kernel::Object_ABC >( msg.oid(), QString( msg.name().c_str() ) )
-    , type_                        ( staticModel.objectTypes_.tools::StringResolver< kernel::ObjectType >::Get( msg.type() ) )
-    , strName_                     ( msg.name()  )
-    , localisation_                ( msg.location() )
-    , side_                        ( model.sides_.Get( msg.team() ) )
+Object::Object( Model_ABC& model, const MsgsSimToClient::MsgObjectCreation& msg, const tools::Resolver_ABC< kernel::ObjectType, std::string >& types )
+    : dispatcher::Object_ABC( msg.oid(), QString( msg.name().c_str() ) )
+    , type_                 ( types.Get( msg.type() ) )
+    , strName_              ( msg.name()  )
+    , localisation_         ( msg.location() )
+    , side_                 ( model.Sides().Get( msg.team() ) )
 {
     Initialize( model, msg.attributes() );
     side_.Register( *this );
+    RegisterSelf( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,18 +57,19 @@ Object::~Object()
 
 #define MSG_ASN_CREATION( ASN, CLASS ) \
     if ( attributes.has_##ASN##()  ) \
-        AddAttribute( new CLASS( model, attributes ) )
+        AddAttribute( new CLASS( attributes ) )
 
 // -----------------------------------------------------------------------------
 // Name: Object::Initialize
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-void Object::Initialize( Model& model, const Common::MsgObjectAttributes& attributes )
+void Object::Initialize( Model_ABC& model, const Common::MsgObjectAttributes& attributes )
 {
     MSG_ASN_CREATION( construction      , ConstructionAttribute );
     MSG_ASN_CREATION( obstacle          , ObstacleAttribute );
     MSG_ASN_CREATION( mine              , MineAttribute );
-    MSG_ASN_CREATION( logistic          , LogisticAttribute );
+    if( attributes.has_logistic() )
+        AddAttribute( new LogisticAttribute( model, attributes ) );
     MSG_ASN_CREATION( bypass            , BypassAttribute );
     MSG_ASN_CREATION( crossing_site     , CrossingSiteAttribute );
     MSG_ASN_CREATION( supply_route      , SupplyRouteAttribute );
@@ -89,10 +89,10 @@ void Object::AddAttribute( ObjectAttribute_ABC* attribute )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Object::Update
+// Name: Object::DoUpdate
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void Object::Update( const MsgsSimToClient::MsgObjectUpdate& msg )
+void Object::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& msg )
 {
     if( msg.has_location()  )
         localisation_.Update( msg.location() );
@@ -135,9 +135,6 @@ void Object::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         boost::bind( &ObjectAttribute_ABC::Send, _1, boost::ref( *asn().mutable_attributes() ) ) );
 
     asn.Send( publisher );
-
-//    if( pAttributes_ )
-//        pAttributes_->Delete( asn.specific_attributes );
 }
 
 // -----------------------------------------------------------------------------
@@ -176,4 +173,13 @@ void Object::Display( kernel::Displayer_ABC& ) const
 const kernel::ObjectType& Object::GetType() const
 {
     return type_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Object::GetTeam
+// Created: SBO 2010-06-07
+// -----------------------------------------------------------------------------
+const dispatcher::Team_ABC& Object::GetTeam() const
+{
+    return side_;
 }

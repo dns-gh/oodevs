@@ -20,9 +20,6 @@
 #pragma warning( disable : 4996 4512 )
 #include <qstring.h>
 #include <qstringlist.h>
-#include "protocol/protocol.h"
-
-using namespace Common;
 #pragma warning( pop )
 
 #endif // __script_plugin_pch_h_

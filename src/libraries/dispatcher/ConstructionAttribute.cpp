@@ -8,22 +8,19 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "ConstructionAttribute.h"
 #include "protocol/SimulationSenders.h"
 
-////using namespace Common;
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------
 // Name: ConstructionAttribute constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-ConstructionAttribute::ConstructionAttribute( const Model& model, const Common::MsgObjectAttributes& asnMsg )
-    : ObjectAttribute_ABC( model, asnMsg )
-    , dotation_ ( 0 )
-    , nNbrDotationForConstruction_  ( 0 )
-    , nPercentageConstruction_      ( 0 )
+ConstructionAttribute::ConstructionAttribute( const Common::MsgObjectAttributes& asnMsg )
+    : dotation_ ( 0 )
+    , nNbrDotationForConstruction_( 0 )
+    , nPercentageConstruction_( 0 )
 {
     Update( asnMsg );
 }
@@ -34,7 +31,7 @@ ConstructionAttribute::ConstructionAttribute( const Model& model, const Common::
 // -----------------------------------------------------------------------------
 ConstructionAttribute::~ConstructionAttribute()
 {
-
+    // NOTHING
 }  
 
 // -----------------------------------------------------------------------------
@@ -63,13 +60,4 @@ void ConstructionAttribute::Send( Common::MsgObjectAttributes& asnMsg ) const
     asnMsg.mutable_construction()->set_dotation_type( dotation_ );
     asnMsg.mutable_construction()->set_dotation_nbr( nNbrDotationForConstruction_ );
     asnMsg.mutable_construction()->set_percentage( nPercentageConstruction_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConstructionAttribute::Delete
-// Created: NLD 2006-09-28
-// -----------------------------------------------------------------------------
-void ConstructionAttribute::Delete( Common::MsgObjectAttributes& /*asnMsg*/ ) const
-{
-//    delete asnMsg().mine_jam;
 }

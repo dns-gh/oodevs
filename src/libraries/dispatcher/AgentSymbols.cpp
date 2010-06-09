@@ -41,13 +41,13 @@ AgentSymbols::~AgentSymbols()
 // -----------------------------------------------------------------------------
 std::string AgentSymbols::BuildSymbol( bool up /* = true */ ) const
 {
-    std::string symbol( holder_.type_.GetSymbol() );
+    std::string symbol( holder_.GetType().GetSymbol() );
     symbol = symbol.substr( symbol.find_last_of( "/" ) + 1 );
-    tools::app6::SetCommandPost( symbol, holder_.bPC_ );
-    tools::app6::SetLevel( symbol, holder_.type_.GetLevelSymbol() );
-    if( up && holder_.automat_ )
+    tools::app6::SetCommandPost( symbol, holder_.IsCommandPost() );
+    tools::app6::SetLevel( symbol, holder_.GetType().GetLevelSymbol() );
+    if( up )
     {
-        const EntitySymbols_ABC& symbols = holder_.automat_->Get< EntitySymbols_ABC >();
+        const EntitySymbols_ABC& symbols = holder_.GetSuperior().Get< EntitySymbols_ABC >();
         return tools::app6::MergeSymbol( symbol, symbols.BuildSymbol() );
     }
     return symbol;

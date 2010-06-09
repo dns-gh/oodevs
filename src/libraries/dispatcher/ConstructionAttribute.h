@@ -10,19 +10,10 @@
 #ifndef __ConstructionAttribute_h_
 #define __ConstructionAttribute_h_
 
-
 #include "ObjectAttribute_ABC.h"
-
-
-namespace Common
-{
-    class MsgObjectAttributes;
-}
-
 
 namespace dispatcher
 {
-    class Model;
 
 // =============================================================================
 /** @class  ConstructionAttribute
@@ -35,15 +26,14 @@ class ConstructionAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     ConstructionAttribute( const Model& model, const Common::MsgObjectAttributes& asnMsg );
+    explicit ConstructionAttribute( const Common::MsgObjectAttributes& asnMsg );
     virtual ~ConstructionAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update   ( const Common::MsgObjectAttributes& asnMsg );
-    virtual void Send     ( Common::MsgObjectAttributes& asnMsg ) const;
-    virtual void Delete( Common::MsgObjectAttributes& asnMsg ) const;
+    virtual void Update( const Common::MsgObjectAttributes& asnMsg );
+    virtual void Send  ( Common::MsgObjectAttributes& asnMsg ) const;
     //@}
 
 private:

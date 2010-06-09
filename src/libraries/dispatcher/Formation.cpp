@@ -9,27 +9,24 @@
 
 #include "dispatcher_pch.h"
 #include "Formation.h"
-
-#include "clients_kernel/Automat_ABC.h"
+#include "Model_ABC.h"
+#include "dispatcher/Automat_ABC.h"
 #include "clients_kernel/HierarchyLevel_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
-#include "clients_kernel/Team_ABC.h"
+#include "dispatcher/Team_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
-#include "Model_ABC.h"
-
-#include <boost/bind.hpp>
-#include "protocol/simulationsenders.h"
 #include "protocol/clientsenders.h"
+#include "protocol/simulationsenders.h"
+#include <boost/bind.hpp>
 
 using namespace dispatcher;
-////using namespace Common;
 
 // -----------------------------------------------------------------------------
 // Name: Formation constructor
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
 Formation::Formation( const Model_ABC& model, const Common::MsgFormationCreation& msg, const tools::Resolver_ABC< kernel::HierarchyLevel_ABC >& levels )
-    : SimpleEntity< kernel::Formation_ABC >( msg.oid(), QString(msg.nom().c_str()) )
+    : Formation_ABC( msg.oid(), msg.nom().c_str() )
     , model_ ( model )
     , name_  ( msg.nom() )
     , team_  ( model.Sides().Get( msg.oid_camp() ) )
@@ -48,11 +45,36 @@ Formation::Formation( const Model_ABC& model, const Common::MsgFormationCreation
 // -----------------------------------------------------------------------------
 Formation::~Formation()
 {
+    // $$$ RDS : completement invalide si la formation parente a déja été detruite !!! 
     if( parent_ )
+    {
+        MoveChildren( *parent_, formations_ );
+        MoveChildren( *parent_, automats_ );
         parent_->Remove( *this );
+    }
     else
+    {
+        MoveChildren( team_, formations_ );
+        // at this point, automats should be already deleted
         team_.Remove( *this );
-    NotifyDestructionToChildFormations();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::MoveChildren
+// Created: SBO 2010-06-01
+// -----------------------------------------------------------------------------
+template< typename Superior, typename Entity >
+void Formation::MoveChildren( Superior& superior, tools::Resolver< Entity >& entities )
+{
+    tools::Iterator< const Entity& > it( entities.CreateIterator() );
+    while( it.HasMoreElements() )
+    {
+        Entity& entity = const_cast< Entity& >( it.NextElement() );
+        Remove( entity );
+        superior.Register( entity );
+    }
+    entities.Clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -99,8 +121,8 @@ void Formation::SendDestruction( ClientPublisher_ABC& ) const
 void Formation::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
-    childFormations_.Apply( boost::bind( &kernel::Formation_ABC::Accept, _1, boost::ref( visitor ) ) );
-    automats_.Apply( boost::bind( &kernel::Automat_ABC::Accept, _1, boost::ref( visitor ) ) );
+    formations_.Apply( boost::bind( &dispatcher::Formation_ABC::Accept, _1, boost::ref( visitor ) ) );
+    automats_.Apply( boost::bind( &dispatcher::Automat_ABC::Accept, _1, boost::ref( visitor ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -113,7 +135,7 @@ const kernel::HierarchyLevel_ABC& Formation::GetLevel() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Formation::GetParent
+// Name: Formation::Register
 // Created: MGD 2009-12-22
 // -----------------------------------------------------------------------------
 kernel::Formation_ABC* Formation::GetParent() const
@@ -122,7 +144,7 @@ kernel::Formation_ABC* Formation::GetParent() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Formation::GetTeam
+// Name: Formation::Register
 // Created: MGD 2009-12-22
 // -----------------------------------------------------------------------------
 kernel::Team_ABC& Formation::GetTeam() const
@@ -134,70 +156,48 @@ kernel::Team_ABC& Formation::GetTeam() const
 // Name: Formation::Register
 // Created: MGD 2009-12-18
 // -----------------------------------------------------------------------------
-void Formation::Register( kernel::Formation_ABC& formation )
+void Formation::Register( dispatcher::Formation_ABC& formation )
 {
-    childFormations_.Register( formation.GetId(), formation );
+    formations_.Register( formation.GetId(), formation );
 }
-
 // -----------------------------------------------------------------------------
-// Name: Formation::Remove
+// Name: Formation::Register
 // Created: MGD 2009-12-18
 // -----------------------------------------------------------------------------
-void Formation::Remove( kernel::Formation_ABC& formation )
+void Formation::Remove( dispatcher::Formation_ABC& formation )
 {
-    childFormations_.Remove( formation.GetId() );
+    formations_.Remove( formation.GetId() );
 }
-
 // -----------------------------------------------------------------------------
 // Name: Formation::GetFormations
 // Created: MGD 2009-12-22
 // -----------------------------------------------------------------------------
-const tools::Resolver< kernel::Formation_ABC >& Formation::GetFormations() const
+const tools::Resolver< dispatcher::Formation_ABC >& Formation::GetFormations() const
 {
-    return childFormations_;
+    return formations_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: Formation::Register
 // Created: MGD 2009-12-21
 // -----------------------------------------------------------------------------
-void Formation::Register( kernel::Automat_ABC& automat )
+void Formation::Register( dispatcher::Automat_ABC& automat )
 {
     automats_.Register( automat.GetId(), automat );
 }
-
 // -----------------------------------------------------------------------------
-// Name: Formation::Remove
+// Name: Formation::Register
 // Created: MGD 2009-12-21
 // -----------------------------------------------------------------------------
-void Formation::Remove( kernel::Automat_ABC& automat )
+void Formation::Remove( dispatcher::Automat_ABC& automat )
 {
     automats_.Remove( automat.GetId() );
 }
-
 // -----------------------------------------------------------------------------
 // Name: Formation::GetAutomates
 // Created: MGD 2009-12-22
 // -----------------------------------------------------------------------------
-const tools::Resolver< kernel::Automat_ABC >& Formation::GetAutomates() const
+const tools::Resolver< dispatcher::Automat_ABC >& Formation::GetAutomates() const
 {
     return automats_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Formation::NotifyDestructionToChildFormations
-// Created: RPD 2010-05-31
-// -----------------------------------------------------------------------------
-void Formation::NotifyDestructionToChildFormations()
-{
-    childFormations_.Apply( boost::bind( &kernel::Formation_ABC::NotifyParentDestroyed, _1 ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Formation::NotifyParentDestroyed()
-// Created: RPD 2010-05-31
-// -----------------------------------------------------------------------------
-void Formation::NotifyParentDestroyed()
-{
-    parent_ = 0;
 }

@@ -14,10 +14,8 @@
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/TacticalHierarchies.h"
-#include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/HierarchyLevel_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "clients_kernel/ModelVisitor_ABC.h"
 #include "Tools.h"
 #include <xeumeuleu/xml.h>
 
@@ -83,43 +81,6 @@ const HierarchyLevel_ABC& Formation::GetLevel() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Formation::GetParent
-// Created: MGD 2009-12-22
-// -----------------------------------------------------------------------------
-kernel::Formation_ABC* Formation::GetParent() const
-{
-    throw std::exception( __FUNCTION__ " not implemented" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Formation::GetTeam
-// Created: MGD 2009-12-22
-// -----------------------------------------------------------------------------
-kernel::Team_ABC& Formation::GetTeam() const
-{
-    throw std::exception( __FUNCTION__ " not implemented" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Formation::GetFormations
-// Created: MGD 2009-12-22
-// -----------------------------------------------------------------------------
-const tools::Resolver< kernel::Formation_ABC >& Formation::GetFormations() const
-{
-    throw std::exception( __FUNCTION__ " not implemented" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Formation::GetAutomates
-// Created: MGD 2009-12-22
-// -----------------------------------------------------------------------------
-const tools::Resolver< kernel::Automat_ABC >& Formation::GetAutomates() const
-{
-    throw std::exception( __FUNCTION__ " not implemented" );
-}
-
-
-// -----------------------------------------------------------------------------
 // Name: Formation::Rename
 // Created: SBO 2006-10-10
 // -----------------------------------------------------------------------------
@@ -151,58 +112,4 @@ void Formation::CreateDictionary( kernel::Controller& controller )
     Attach( dictionary );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Formation", "Info/Identifier" ), (const unsigned long)id_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Formation", "Info/Name" ), name_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Formation::Accept
-// Created: MGD 2009-12-21
-// -----------------------------------------------------------------------------
-void Formation::Accept( kernel::ModelVisitor_ABC& visitor ) const
-{
-    visitor.Visit( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Formation::Register
-// Created: MGD 2009-12-21
-// -----------------------------------------------------------------------------
-void Formation::Register( Formation_ABC& /*formation*/ )
-{
-    throw std::exception( __FUNCTION__ " not implemented" ); 
-}
-
-// -----------------------------------------------------------------------------
-// Name: Formation::Remove
-// Created: MGD 2009-12-21
-// -----------------------------------------------------------------------------
-void Formation::Remove( Formation_ABC& /*formation*/ )
-{
-    throw std::exception( __FUNCTION__ " not implemented" ); 
-}
-
-// -----------------------------------------------------------------------------
-// Name: Formation::Register
-// Created: MGD 2009-12-21
-// -----------------------------------------------------------------------------
-void Formation::Register( Automat_ABC& /*automat*/ )
-{
-    throw std::exception( __FUNCTION__ " not implemented" ); 
-}
-
-// -----------------------------------------------------------------------------
-// Name: Formation::Remove
-// Created: MGD 2009-12-21
-// -----------------------------------------------------------------------------
-void Formation::Remove( Automat_ABC& /*automat*/ )
-{
-    throw std::exception( __FUNCTION__ " not implemented" ); 
-}
-
-// -----------------------------------------------------------------------------
-// Name: Formation::NotifyParentDestroyed
-// Created: RPD 2010-06-03
-// -----------------------------------------------------------------------------
-void Formation::NotifyParentDestroyed()
-{
-    throw std::exception( __FUNCTION__ " not implemented" ); 
 }

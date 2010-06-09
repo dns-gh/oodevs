@@ -39,8 +39,8 @@ class AgentType
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentType( xml::xistream& xis, const  tools::Resolver_ABC< ComponentType, std::string >& componentResolver
-                                          , const  tools::Resolver_ABC< DecisionalModel, std::string >& modelResolver
+             AgentType( xml::xistream& xis, const tools::Resolver_ABC< ComponentType, std::string >& componentResolver
+                                          , const tools::Resolver_ABC< DecisionalModel, std::string >& modelResolver
                                           , const SymbolFactory& symbolFactory );
     virtual ~AgentType();
     //@}

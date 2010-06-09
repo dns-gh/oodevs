@@ -17,8 +17,8 @@ namespace plugin
 {
     struct Service {};
 
-GENERATE_ASN_MSG_SENDER( PluginToClient, MsgsPluginToClient, TextMessage, text_message );
-GENERATE_ASN_MSG_SENDER( PluginToClient, MsgsPluginToClient, IntelligenceCreation, intelligence_creation );
+GENERATE_ASN_MSG_SENDER( PluginToClient, MsgsPluginToClient, PluginTextMessage, plugin_text_message );
+GENERATE_ASN_MSG_SENDER( PluginToClient, MsgsMessengerToClient, IntelligenceCreation, plugin_intelligence_creation );
 
 }
 

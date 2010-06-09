@@ -10,7 +10,8 @@ class StubMIL_Automate : public MIL_Automate
 public:
     explicit StubMIL_Automate( MIL_AutomateType& type ) : MIL_Automate( type ) 
     {
-        RegisterRole( *new DEC_AutomateDecision( *this, StubDEC_Database() ) ) ;
+        StubDEC_Database database;
+        RegisterRole( *new DEC_AutomateDecision( *this, database ) ) ;
     }
     virtual ~StubMIL_Automate() {}
 };

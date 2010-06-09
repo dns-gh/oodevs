@@ -11,7 +11,6 @@
 #include "MagicAction.h"
 #include "protocol/simulationsenders.h"
 #include "protocol/publisher_ABC.h"
-#include "clients_kernel/ModelVisitor_ABC.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Controller.h"
 
@@ -59,15 +58,6 @@ void MagicAction::Polish()
 {
     if( registered_ )
         controller_.Create( *(Action_ABC*)this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MagicAction::Accept
-// Created: JSR 2010-04-06
-// -----------------------------------------------------------------------------
-void MagicAction::Accept( kernel::ModelVisitor_ABC& visitor ) const
-{
-    visitor.Visit( *this );
 }
 
 // -----------------------------------------------------------------------------

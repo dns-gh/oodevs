@@ -28,7 +28,7 @@ AgentType::AgentType( xml::xistream& xis, const tools::Resolver_ABC< ComponentTy
     xis >> attribute( "name", name_ )
         >> attribute( "type", type_ )
         >> attribute( "id", id_ )
-        >> attribute(  "decisional-model", modelName );
+        >> attribute( "decisional-model", modelName );
     model_ = & modelResolver.Get( modelName );
 
     std::auto_ptr< AgentNature > nature( new AgentNature( xis ) );

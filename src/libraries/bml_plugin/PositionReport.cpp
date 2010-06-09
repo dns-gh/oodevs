@@ -20,7 +20,7 @@ using namespace plugins::bml;
 // Name: PositionReport constructor
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-PositionReport::PositionReport( const dispatcher::Agent& entity, const MsgUnitAttributes& attributes )
+PositionReport::PositionReport( const dispatcher::Agent_ABC& entity, const MsgsSimToClient::MsgUnitAttributes& attributes )
     : entity_( entity )
     , attributes_( attributes )
 {

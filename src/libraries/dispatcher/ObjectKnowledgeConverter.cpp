@@ -44,7 +44,7 @@ const kernel::ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( const kernel:
     while( it.HasMoreElements() )
     {
         const dispatcher::ObjectKnowledge& k = it.NextElement();
-        if( & k.team_ == &owner && k.pObject_ == &base )
+        if( & k.GetOwner() == &owner && k.GetEntity() == &base )
             return &k;
     }
     return 0;

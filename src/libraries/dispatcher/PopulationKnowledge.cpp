@@ -29,9 +29,9 @@ using namespace dispatcher;
 PopulationKnowledge::PopulationKnowledge( Model& model, const MsgsSimToClient::MsgPopulationKnowledgeCreation& msg )
     : SimpleEntity< kernel::PopulationKnowledge_ABC >( msg.oid_connaissance())
     , model_           ( model )
-    , knowledgeGroup_  ( model.knowledgeGroups_.Get( msg.oid_groupe_possesseur() ) )
-    , population_      ( model.populations_.Get( msg.oid_population_reelle() ) )
-    , team_            ( model.sides_.Get( msg.camp() ) )
+    , knowledgeGroup_  ( model.KnowledgeGroups().Get( msg.oid_groupe_possesseur() ) )
+    , population_      ( model.Populations().Get( msg.oid_population_reelle() ) )
+    , team_            ( model.Sides().Get( msg.camp() ) )
     , nDominationState_( 0 )
 {
     // NOTHING

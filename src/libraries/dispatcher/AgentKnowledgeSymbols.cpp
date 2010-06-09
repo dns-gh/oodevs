@@ -40,7 +40,8 @@ AgentKnowledgeSymbols::~AgentKnowledgeSymbols()
 // -----------------------------------------------------------------------------
 std::string AgentKnowledgeSymbols::BuildSymbol( bool /*up = true*/ ) const
 {
-    std::string symbol = holder_.agent_.Get< EntitySymbols_ABC >().BuildSymbol( true );
-    tools::app6::FilterPerceptionLevel( symbol, (unsigned int)holder_.nMaxPerceptionLevel_ );
+    const kernel::Entity_ABC* entity = holder_.GetEntity();
+    std::string symbol = entity ? entity->Get< EntitySymbols_ABC >().BuildSymbol( true ) : "";
+    tools::app6::FilterPerceptionLevel( symbol, (unsigned int)holder_.GetMaxPerceptionLevel() );
     return symbol;
 }

@@ -14,7 +14,7 @@
 
 namespace dispatcher
 {
-    class Object;
+    class Object_ABC;
 
 // =============================================================================
 /** @class  ObjectSymbols
@@ -28,7 +28,7 @@ class ObjectSymbols : public EntitySymbols_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ObjectSymbols( const Object& holder );
+    explicit ObjectSymbols( const dispatcher::Object_ABC& holder );
     virtual ~ObjectSymbols();
     //@}
 
@@ -47,7 +47,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const Object& holder_;
+    const dispatcher::Object_ABC& holder_;
     //@}
 };
 

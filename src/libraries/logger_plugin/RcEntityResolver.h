@@ -11,7 +11,6 @@
 #define __RcEntityResolver_h_
 
 #include "reports/RcEntityResolver_ABC.h"
-#include <qstring.h>
 
 namespace dispatcher
 {

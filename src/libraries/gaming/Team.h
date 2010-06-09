@@ -13,9 +13,11 @@
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Karma.h"
-#include "protocol/Protocol.h"
 
-using namespace Common;
+namespace MsgsSimToClient
+{
+    class MsgTeamCreation;
+}
 
 // =============================================================================
 /** @class  Team
@@ -33,16 +35,10 @@ public:
     virtual ~Team();
     //@}
 
+    //! @name Accessors
+    //@{
     virtual const kernel::Karma& GetKarma() const;
-    virtual void Register( kernel::Formation_ABC& formation );
-    virtual void Remove( kernel::Formation_ABC& formation );
-    virtual void Register( kernel::Population_ABC& population );
-    virtual void Remove( kernel::Population_ABC& population );
-    virtual void Register( kernel::Object_ABC& object );
-    virtual void Remove( kernel::Object_ABC& object );
-    virtual void Register( kernel::KnowledgeGroup_ABC& knGroup );
-    virtual void Remove( kernel::KnowledgeGroup_ABC& knGroup );
-    virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
+    //@}
 
 private:
     //! @name Copy / Assignement

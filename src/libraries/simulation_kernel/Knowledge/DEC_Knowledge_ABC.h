@@ -32,7 +32,7 @@ public:
     
     //! @name CheckPoints
     //@{
-    template < typename Archive > void serialize( Archive& file, const unsigned int )
+    template < typename Archive > void serialize( Archive& /*file*/, const unsigned int /*version*/ )
     {
         //NOTHING
     }

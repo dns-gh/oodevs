@@ -15,7 +15,6 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/LocationProxy.h"
-#include "clients_kernel/ModelVisitor_ABC.h"
 #include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
@@ -181,13 +180,4 @@ void Drawing::SerializeLocation( Common::MsgCoordLatLongList& list ) const
     location_.Accept( serializer );
     for( unsigned int i = 0; i < serializer.points_.size(); ++i )
         *list.add_elem() = serializer.points_[i];
-}
-
-// -----------------------------------------------------------------------------
-// Name: Drawing::Accept
-// Created: MGD 2009-12-21
-// -----------------------------------------------------------------------------
-void Drawing::Accept( kernel::ModelVisitor_ABC& visitor ) const
-{
-    visitor.Visit( *this );
 }

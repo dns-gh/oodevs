@@ -12,16 +12,8 @@
 
 #include "ObjectAttribute_ABC.h"
 
-
-namespace Common
-{
-    class MsgObjectAttributes;
-}
-
-
 namespace dispatcher
 {
-    class Model;
 
 // =============================================================================
 /** @class  SupplyRouteAttribute
@@ -34,23 +26,25 @@ class SupplyRouteAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     SupplyRouteAttribute( const Model& model, const Common::MsgObjectAttributes& asnMsg );
+    explicit SupplyRouteAttribute( const Common::MsgObjectAttributes& message );
     virtual ~SupplyRouteAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update   ( const Common::MsgObjectAttributes& asnMsg );
-    virtual void Send     ( Common::MsgObjectAttributes& asnMsg ) const;
-    virtual void Delete( Common::MsgObjectAttributes& asnMsg ) const;
+    virtual void Update( const Common::MsgObjectAttributes& message );
+    virtual void Send  ( Common::MsgObjectAttributes& message ) const;
     //@}
 
 private:
+    //! @name Member data
+    //@{
     bool         bEquipped_;
     unsigned int nMaxWeight_;
     unsigned int nWidth_;
     unsigned int nLength_;
     unsigned int nFlow_;
+    //@}
 };
 
 }

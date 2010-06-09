@@ -9,19 +9,16 @@
 
 #include "dispatcher_pch.h"
 #include "PopulationConcentrationKnowledge.h"
+#include "EntityPublisher.h"
 #include "Population.h"
-#include "protocol/ClientPublisher_ABC.h"
 #include "PopulationConcentration.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
-#include "EntityPublisher.h"
 #include "clients_kernel/PopulationKnowledge_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
-
+#include "protocol/ClientPublisher_ABC.h"
 #include "protocol/clientsenders.h"
 
 using namespace dispatcher;
-//using namespace Common;
-//using namespace MsgsSimToClient;
 
 // -----------------------------------------------------------------------------
 // Name: PopulationConcentrationKnowledge constructor
@@ -30,7 +27,7 @@ using namespace dispatcher;
 PopulationConcentrationKnowledge::PopulationConcentrationKnowledge( const kernel::PopulationKnowledge_ABC& populationKnowledge, const MsgsSimToClient::MsgPopulationConcentrationKnowledgeCreation& msg )
     : SimpleEntity< >     ( msg.oid_connaissance_concentration() )
     , populationKnowledge_( populationKnowledge )
-    , pConcentration_     ( msg.oid_concentration_reelle() == 0 ? 0 : &static_cast< const Population* >( populationKnowledge_.GetEntity() )->concentrations_.Get( msg.oid_concentration_reelle() ) ) // $$$$ SBO 2008-07-11: 
+    , pConcentration_     ( msg.oid_concentration_reelle() == 0 ? 0 : &populationKnowledge_.GetEntity()->GetConcentration( msg.oid_concentration_reelle() ) ) // $$$$ SBO 2008-07-11: 
     , position_           ( msg.position() )
     , nNbrAliveHumans_    ( 0 )
     , nNbrDeadHumans_     ( 0 )
@@ -62,7 +59,7 @@ PopulationConcentrationKnowledge::~PopulationConcentrationKnowledge()
 void PopulationConcentrationKnowledge::Update( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate& msg )
 {
     if( msg.has_oid_concentration_reelle()  )
-        pConcentration_ = msg.oid_concentration_reelle() == 0 ? 0 : &static_cast< const Population* >( populationKnowledge_.GetEntity() )->concentrations_.Get( msg.oid_concentration_reelle() ); // $$$$ SBO 2008-07-11: 
+        pConcentration_ = msg.oid_concentration_reelle() == 0 ? 0 : &populationKnowledge_.GetEntity()->GetConcentration( msg.oid_concentration_reelle() ); // $$$$ SBO 2008-07-11: 
 
     if( msg.has_attitude()  )
     {

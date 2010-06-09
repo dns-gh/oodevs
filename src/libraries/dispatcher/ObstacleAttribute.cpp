@@ -13,17 +13,14 @@
 
 using namespace dispatcher;
 
-//using namespace Common;
-
 // -----------------------------------------------------------------------------
 // Name: ObstacleAttribute constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-ObstacleAttribute::ObstacleAttribute( const Model& model, const Common::MsgObjectAttributes& asnMsg )
-    : ObjectAttribute_ABC( model, asnMsg )
-    , obstacle_ ( asnMsg.obstacle().type() )
+ObstacleAttribute::ObstacleAttribute( const Common::MsgObjectAttributes& message )
+    : obstacle_( Common::ObstacleType_DemolitionTargetType_preliminary )
 {
-    // NOTHING
+    Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -32,33 +29,24 @@ ObstacleAttribute::ObstacleAttribute( const Model& model, const Common::MsgObjec
 // -----------------------------------------------------------------------------
 ObstacleAttribute::~ObstacleAttribute()
 {
-
+    // NOTHING
 }  
 
 // -----------------------------------------------------------------------------
 // Name: ObstacleAttribute::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void ObstacleAttribute::Update( const Common::MsgObjectAttributes& asnMsg )
+void ObstacleAttribute::Update( const Common::MsgObjectAttributes& message )
 {
-    if( asnMsg.has_obstacle() )
-        obstacle_ = asnMsg.obstacle().type();
+    if( message.has_obstacle() )
+        obstacle_ = message.obstacle().type();
 }
 
 // -----------------------------------------------------------------------------
 // Name: ObstacleAttribute::Send
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void ObstacleAttribute::Send( Common::MsgObjectAttributes& asnMsg ) const
+void ObstacleAttribute::Send( Common::MsgObjectAttributes& message ) const
 {
-    asnMsg.mutable_obstacle()->set_type ( obstacle_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObstacleAttribute::Delete
-// Created: NLD 2006-09-28
-// -----------------------------------------------------------------------------
-void ObstacleAttribute::Delete( Common::MsgObjectAttributes& /*asnMsg*/ ) const
-{
-    // NOTHING
+    message.mutable_obstacle()->set_type( obstacle_ );
 }

@@ -29,9 +29,9 @@ namespace kernel
 
 namespace dispatcher
 {
+    class Agent_ABC;
+    class Automat_ABC;
     class Model;
-    class Automat;
-    class Agent;
     class SimulationPublisher_ABC;
 }
 
@@ -101,8 +101,8 @@ private:
     const dispatcher::Model& model_;
     const kernel::StaticModel& staticModel_;
     const kernel::MissionType& type_;
-    const dispatcher::Automat* automatTaskee_;
-    const dispatcher::Agent* agentTaskee_;
+    const dispatcher::Automat_ABC* automatTaskee_;
+    const dispatcher::Agent_ABC* agentTaskee_;
     T_Parameters parameters_;
     std::auto_ptr< MissionParameterFactory > factory_;
     //@}

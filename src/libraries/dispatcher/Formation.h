@@ -10,17 +10,8 @@
 #ifndef __Formation_h_
 #define __Formation_h_
 
+#include "Formation_ABC.h"
 
-#include "SimpleEntity.h"
-#include "clients_kernel/Formation_ABC.h"
-
-namespace kernel
-{
-    class HierarchyLevel_ABC;
-    class ModelVisitor_ABC;
-    class Team_ABC;
-}
-//using namespace MsgsSimToClient;
 namespace Common
 {
     enum EnumNatureLevel;
@@ -30,7 +21,6 @@ namespace Common
 namespace dispatcher
 {
     class Model_ABC;
-    class ClientPublisher_ABC;
     class Team_ABC;
 
 // =============================================================================
@@ -39,7 +29,7 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class Formation : public SimpleEntity< kernel::Formation_ABC > 
+class Formation : public dispatcher::Formation_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -53,23 +43,22 @@ public:
     virtual const kernel::HierarchyLevel_ABC& GetLevel() const;
     virtual kernel::Formation_ABC* GetParent() const;
     virtual kernel::Team_ABC& GetTeam() const;
-    virtual const tools::Resolver< kernel::Formation_ABC >& GetFormations() const;
-    virtual const tools::Resolver< kernel::Automat_ABC >& GetAutomates() const;
+    virtual const tools::Resolver< dispatcher::Formation_ABC >& GetFormations() const;
+    virtual const tools::Resolver< dispatcher::Automat_ABC >& GetAutomates() const;
     //@}
 
     //! @name Operations
     //@{
-    void SendCreation   ( ClientPublisher_ABC& publisher ) const;
-    void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
-    void SendDestruction( ClientPublisher_ABC& publisher ) const;
+    virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
+    virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
+    virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
 
     virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
 
-    virtual void Register( kernel::Formation_ABC& formation );
-    virtual void Remove( kernel::Formation_ABC& formation );
-    virtual void Register( kernel::Automat_ABC& automat );
-    virtual void Remove( kernel::Automat_ABC& automat );
-    virtual void NotifyParentDestroyed();
+    virtual void Register( dispatcher::Formation_ABC& formation );
+    virtual void Remove( dispatcher::Formation_ABC& formation );
+    virtual void Register( dispatcher::Automat_ABC& automat );
+    virtual void Remove( dispatcher::Automat_ABC& automat );
     //@}
 
 private:
@@ -79,10 +68,10 @@ private:
     Formation& operator=( const Formation& ); //!< Assignement operator
     //@}
 
-public:
     //! @name Helpers
     //@{
-    void NotifyDestructionToChildFormations();
+    template< typename Superior, typename Entity >
+    void MoveChildren( Superior& superior, tools::Resolver< Entity >& entities );
     //@}
 
 private:
@@ -90,11 +79,11 @@ private:
     //@{
     const Model_ABC&                            model_;
     const std::string                           name_;
-    kernel::Team_ABC&                           team_;
+    dispatcher::Team_ABC&                       team_;
     const kernel::HierarchyLevel_ABC&           level_;
-    kernel::Formation_ABC*                      parent_;
-    tools::Resolver< kernel::Formation_ABC >    childFormations_;
-    tools::Resolver< kernel::Automat_ABC >      automats_;
+    dispatcher::Formation_ABC*                  parent_;
+    tools::Resolver< dispatcher::Formation_ABC > formations_;
+    tools::Resolver< dispatcher::Automat_ABC >   automats_;
     //@}
 };
 

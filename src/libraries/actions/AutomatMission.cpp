@@ -13,7 +13,6 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "protocol/ServerPublisher_ABC.h"
 #include "protocol/simulationsenders.h"
-#include "clients_kernel/ModelVisitor_ABC.h"
 
 using namespace Common;
 using namespace kernel;
@@ -60,13 +59,4 @@ void AutomatMission::Publish( Publisher_ABC& publisher ) const
     CommitTo( *message().mutable_parametres() );
     message.Send( publisher );
     Clean( *message().mutable_parametres() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomatMission::Accept
-// Created: MGD 2009-12-18
-// -----------------------------------------------------------------------------
-void AutomatMission::Accept( kernel::ModelVisitor_ABC& visitor ) const
-{
-    visitor.Visit( *this );
 }

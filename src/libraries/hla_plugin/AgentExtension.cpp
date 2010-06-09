@@ -34,7 +34,7 @@ using namespace MsgsSimToClient;
 // Name: AgentExtension constructor
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
-AgentExtension::AgentExtension( dispatcher::Agent& holder, const EntityIdentifier& id )
+AgentExtension::AgentExtension( dispatcher::Agent_ABC& holder, const EntityIdentifier& id )
     : holder_            ( holder )
     , id_                ( id )
     , spatialChanged_    ( true )
@@ -127,7 +127,7 @@ void AgentExtension::UpdateEntityIdentifier( UpdateFunctor_ABC& functor ) const
 // -----------------------------------------------------------------------------
 void AgentExtension::UpdateSpatial( UpdateFunctor_ABC& functor ) const
 {
-    Spatial spatial( holder_.GetPosition().X(), holder_.GetPosition().Y(), (float)holder_.nHeight_, (float)holder_.nSpeed_, (unsigned short)holder_.nDirection_ );
+    Spatial spatial( holder_.GetPosition().X(), holder_.GetPosition().Y(), (float)holder_.GetAltitude(), (float)holder_.GetSpeed(), (unsigned short)holder_.GetDirection() );
     Serializer archive;
     spatial.Serialize( archive );
     functor.Visit( AttributeIdentifier( "Spatial" ), archive );
@@ -140,7 +140,7 @@ void AgentExtension::UpdateSpatial( UpdateFunctor_ABC& functor ) const
 // -----------------------------------------------------------------------------
 void AgentExtension::UpdateAggregateMarking( UpdateFunctor_ABC& functor ) const
 {
-    AggregateMarking marking( holder_.name_ );
+    AggregateMarking marking( holder_.GetName().ascii() );
     Serializer archive;
     marking.Serialize( archive );
     functor.Visit( AttributeIdentifier( "AggregateMarking" ), archive );
@@ -165,7 +165,7 @@ void AgentExtension::UpdateAggregateState( UpdateFunctor_ABC& functor ) const
 void AgentExtension::UpdateForceIdentifier( UpdateFunctor_ABC& functor ) const
 {
     unsigned char force = 0; // Other
-    const kernel::Karma& karma = holder_.automat_->GetTeam().GetKarma();
+    const kernel::Karma& karma = holder_.GetSuperior().GetTeam().GetKarma();
     if( karma == kernel::Karma::friend_ )
         force = 1;
     else if( karma == kernel::Karma::enemy_ )
@@ -212,6 +212,6 @@ namespace
 void AgentExtension::UpdateComposition( UpdateFunctor_ABC& functor ) const
 {
     SilentEntitiesSerializer serializer;
-    holder_.equipments_.Apply( boost::bind( &SilentEntitiesSerializer::SerializeEquipment, boost::ref( serializer ), _1 ) );
+    holder_.Equipments().Apply( boost::bind( &SilentEntitiesSerializer::SerializeEquipment, boost::ref( serializer ), _1 ) );
     serializer.Commit( functor );
 }

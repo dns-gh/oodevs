@@ -15,10 +15,10 @@
 #include "ModelResolver.h"
 #include "AgentManipulator.h"
 #include "AutomatManipulator.h"
-#include "directia/Brain.h"
-
 #include "clients_kernel/Entity_ABC.h"
+#include "protocol/Protocol.h"
 #include "tools/ElementObserver_ABC.h"
+#include <directia/Brain.h>
 
 using namespace plugins::script;
 
@@ -60,12 +60,12 @@ void ClientConditions::RegisterIn( directia::Brain& brain )
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Condition_ABC > ClientConditions::UserChose()
 {
-    struct UserChoice : public SimpleEventCondition< MsgTextMessage >
+    struct UserChoice : public SimpleEventCondition< Common::MsgTextMessage >
     {
         UserChoice( kernel::Controller& controller )
             : SimpleEventCondition( controller ) {}
 
-        virtual void NotifyUpdated( const MsgTextMessage& message )
+        virtual void NotifyUpdated( const Common::MsgTextMessage& message )
         {
             CommandString command( message.message() );
             if( command.Command() == "choose" )
@@ -82,13 +82,13 @@ boost::shared_ptr< Condition_ABC > ClientConditions::UserChose()
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Condition_ABC > ClientConditions::MissionChosen()
 {
-    struct MissionChoice : public SimpleEventCondition< MsgTextMessage >
+    struct MissionChoice : public SimpleEventCondition< Common::MsgTextMessage >
     {
         MissionChoice( kernel::Controller& controller, const dispatcher::Model& model )
             : SimpleEventCondition( controller )
             , resolver_( new ModelResolver( model ) ){}
 
-        virtual void NotifyUpdated( const MsgTextMessage& message )
+        virtual void NotifyUpdated( const Common::MsgTextMessage& message )
         {
             CommandString command( message.message() );
             if( command.Command() == "mission" )
@@ -116,12 +116,12 @@ boost::shared_ptr< Condition_ABC > ClientConditions::MissionChosen()
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Condition_ABC > ClientConditions::EntitySelected()
 {
-    struct EntitySelected : public SimpleEventCondition< MsgTextMessage >
+    struct EntitySelected : public SimpleEventCondition< Common::MsgTextMessage >
     {
         EntitySelected( kernel::Controller& controller, const dispatcher::Model& model )
             : SimpleEventCondition( controller ), resolver_( new ModelResolver( model ) ) {}
 
-        virtual void NotifyUpdated( const MsgTextMessage& message )
+        virtual void NotifyUpdated( const Common::MsgTextMessage& message )
         {
             CommandString command( message.message() );
             if( command.Command() == "select" )

@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "Humans.h"
 #include "protocol/protocol.h"
 
@@ -18,7 +17,7 @@ using namespace dispatcher;
 // Name: Humans constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-Humans::Humans( const Model& /*model*/, const MsgsSimToClient::HumanDotations_HumanDotation& asnMsg )
+Humans::Humans( const MsgsSimToClient::HumanDotations_HumanDotation& asnMsg )
     : nRank_                    ( asnMsg.rang() )
     , nNbrTotal_                ( asnMsg.nb_total() )
     , nNbrOperational_          ( asnMsg.nb_operationnels() )
@@ -29,6 +28,7 @@ Humans::Humans( const Model& /*model*/, const MsgsSimToClient::HumanDotations_Hu
     , nNbrInLogisticMedical_    ( asnMsg.nb_dans_chaine_sante() )
     , nNbrInLogisticMaintenance_( asnMsg.nb_utilises_pour_maintenance() )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -37,7 +37,7 @@ Humans::Humans( const Model& /*model*/, const MsgsSimToClient::HumanDotations_Hu
 // -----------------------------------------------------------------------------
 Humans::~Humans()
 {
-
+    // NOTHING
 }
         
 // -----------------------------------------------------------------------------

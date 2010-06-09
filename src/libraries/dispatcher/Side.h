@@ -10,11 +10,9 @@
 #ifndef __Side_h_
 #define __Side_h_
 
-#include "Sendable.h"
-#include "clients_kernel/Team_ABC.h"
+#include "Team_ABC.h"
 #include "clients_kernel/Karma.h"
 #include "tools/Resolver.h"
-
 
 namespace Common
 {
@@ -28,18 +26,9 @@ namespace MsgsSimToClient
     class MsgChangeDiplomacyAck;
 }
 
-namespace kernel
-{
-    class Formation_ABC;
-    class KnowledgeGroup_ABC;
-    class ModelVisitor_ABC;
-    class Object_ABC;
-    class Population_ABC;
-}
 namespace dispatcher
 {
     class Model_ABC;
-    class ClientPublisher_ABC;
 
 // =============================================================================
 /** @class  Side
@@ -47,7 +36,10 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class Side : public Sendable< kernel::Team_ABC >
+class Side : public dispatcher::Team_ABC
+           , public kernel::Extension_ABC
+           , public kernel::Updatable_ABC< Common::MsgChangeDiplomacy >
+           , public kernel::Updatable_ABC< MsgsSimToClient::MsgChangeDiplomacyAck >
 {
 public:
     //! @name Constructors/Destructor
@@ -58,9 +50,8 @@ public:
 
     //! @name Operations
     //@{
-    using kernel::Entity_ABC::Update;
-    void Update( const Common::MsgChangeDiplomacy&    asnMsg );
-    void Update( const MsgsSimToClient::MsgChangeDiplomacyAck& asnMsg );
+    virtual void DoUpdate( const Common::MsgChangeDiplomacy& asnMsg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgChangeDiplomacyAck& asnMsg );
     virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
@@ -68,14 +59,14 @@ public:
     virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
 
     virtual const kernel::Karma& GetKarma() const;
-    virtual void Register( kernel::Formation_ABC& formation );
-    virtual void Remove( kernel::Formation_ABC& formation );
-    virtual void Register( kernel::Population_ABC& population );
-    virtual void Remove( kernel::Population_ABC& population );
-    virtual void Register( kernel::Object_ABC& object );
-    virtual void Remove( kernel::Object_ABC& object );
-    virtual void Register( kernel::KnowledgeGroup_ABC& knGroup );
-    virtual void Remove( kernel::KnowledgeGroup_ABC& knGroup );
+    virtual void Register( dispatcher::Formation_ABC& formation );
+    virtual void Remove( dispatcher::Formation_ABC& formation );
+    virtual void Register( dispatcher::Population_ABC& population );
+    virtual void Remove( dispatcher::Population_ABC& population );
+    virtual void Register( dispatcher::Object_ABC& object );
+    virtual void Remove( dispatcher::Object_ABC& object );
+    virtual void Register( dispatcher::KnowledgeGroup_ABC& knGroup );
+    virtual void Remove( dispatcher::KnowledgeGroup_ABC& knGroup );
     //@}
 
 private:
@@ -93,15 +84,15 @@ private:
 private:
     //! @name Member data
     //@{
-    const Model_ABC&        model_;
-    const std::string   name_;
+    const Model_ABC& model_;
+    const std::string name_;
     Common::EnumDiplomacy nType_;
     kernel::Karma karma_;
-    T_Diplomacies       diplomacies_;
-    tools::Resolver< kernel::KnowledgeGroup_ABC > knowledgeGroups_;
-    tools::Resolver< kernel::Formation_ABC >      formations_;
-    tools::Resolver< kernel::Object_ABC >         objects_;
-    tools::Resolver< kernel::Population_ABC >     populations_;
+    T_Diplomacies diplomacies_;
+    tools::Resolver< dispatcher::KnowledgeGroup_ABC > knowledgeGroups_;
+    tools::Resolver< dispatcher::Formation_ABC >      formations_;
+    tools::Resolver< dispatcher::Object_ABC >         objects_;
+    tools::Resolver< dispatcher::Population_ABC >     populations_;
     //@}
 };
 

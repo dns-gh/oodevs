@@ -15,7 +15,6 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "protocol/simulationsenders.h"
 #include "protocol/ServerPublisher_ABC.h"
-#include "clients_kernel/ModelVisitor_ABC.h"
 #include <xeumeuleu/xml.h>
 
 using namespace Common;
@@ -106,12 +105,3 @@ void FragOrder::Publish( Publisher_ABC& publisher ) const
     message.Send( publisher );
     message().Clear();
 }
-// -----------------------------------------------------------------------------
-// Name: FragOrder::Accept
-// Created: MGD 2009-12-18
-// -----------------------------------------------------------------------------
-void FragOrder::Accept( kernel::ModelVisitor_ABC& visitor ) const
-{
-    visitor.Visit( *this );
-}
-

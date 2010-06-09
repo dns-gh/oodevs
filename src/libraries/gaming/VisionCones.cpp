@@ -73,7 +73,7 @@ private:
     VisionCones* cones_;
     VisionMap* map_;
     T_Surfaces surfaces_;
-    double elongationFactor_;
+    float elongationFactor_;
     bool cancelled_;
     bool deprecated_;
     bool computed_;
@@ -90,7 +90,7 @@ VisionCones::VisionCones( const Agent_ABC& agent, SurfaceFactory& factory, Worke
     , map_             ( factory_.CreateVisionMap() )
     , needUpdating_    ( true )
     , current_         ( 0 )
-    , elongationFactor_( 1 )
+    , elongationFactor_( 1.f )
 {
     // NOTHING
 }

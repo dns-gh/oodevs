@@ -12,14 +12,15 @@
 
 #include "BmlExtension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "protocol/protocol.h"
 
-using namespace Common;
-
+namespace Common
+{
+    class MsgAutomatOrder;
+}
 
 namespace dispatcher
 {
-    class Automat;
+    class Automat_ABC;
 }
 
 namespace plugins
@@ -36,19 +37,19 @@ namespace bml
 // Created: SBO 2008-05-22
 // =============================================================================
 class AutomatExtension : public BmlExtension_ABC
-                       , public kernel::Updatable_ABC< MsgAutomatOrder >
+                       , public kernel::Updatable_ABC< Common::MsgAutomatOrder >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AutomatExtension( dispatcher::Automat& holder, Publisher_ABC& publisher, const ReportFactory& factory );
+             AutomatExtension( dispatcher::Automat_ABC& holder, Publisher_ABC& publisher, const ReportFactory& factory );
     virtual ~AutomatExtension();
     //@}
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const MsgAutomatOrder& message );
+    virtual void DoUpdate( const Common::MsgAutomatOrder& message );
     //@}
 
 private:
@@ -61,7 +62,7 @@ private:
 private:
     //! @name Member data
     //@{
-    dispatcher::Automat& holder_;
+    dispatcher::Automat_ABC& holder_;
     Publisher_ABC& publisher_;
     const ReportFactory& factory_;
     //@}

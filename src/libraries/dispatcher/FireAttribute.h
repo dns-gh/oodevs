@@ -10,18 +10,10 @@
 #ifndef __FireAttribute_h_
 #define __FireAttribute_h_
 
-
 #include "ObjectAttribute_ABC.h"
-
-
-namespace Common
-{
-    class MsgObjectAttributes;
-}
 
 namespace dispatcher
 {
-    class Model;
 
 // =============================================================================
 /** @class  FireAttribute
@@ -34,15 +26,14 @@ class FireAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     FireAttribute( const Model& model, const Common::MsgObjectAttributes& asnMsg );
+    explicit FireAttribute( const Common::MsgObjectAttributes& asnMsg );
     virtual ~FireAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update   ( const Common::MsgObjectAttributes& asnMsg );
-    virtual void Send     ( Common::MsgObjectAttributes& asnMsg ) const;
-    virtual void Delete( Common::MsgObjectAttributes& asnMsg ) const;
+    virtual void Update( const Common::MsgObjectAttributes& asnMsg );
+    virtual void Send  ( Common::MsgObjectAttributes& asnMsg ) const;
     //@}
 
 private:

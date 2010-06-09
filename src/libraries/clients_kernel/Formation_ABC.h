@@ -11,12 +11,9 @@
 #define __Formation_ABC_h_
 
 #include "Entity_ABC.h"
-#include "tools/Resolver.h"
 
 namespace kernel
 {
-    class Automat_ABC;
-    class Team_ABC;
     class HierarchyLevel_ABC;
 
 // =============================================================================
@@ -43,10 +40,6 @@ public:
     //! @name Accessors
     //@{
     virtual const HierarchyLevel_ABC& GetLevel() const = 0;
-    virtual Formation_ABC* GetParent() const = 0;
-    virtual Team_ABC& GetTeam() const = 0;
-    virtual const tools::Resolver< Formation_ABC >& GetFormations() const = 0;
-    virtual const tools::Resolver< Automat_ABC >& GetAutomates() const = 0;
     //@}
 
     //! @name Operations
@@ -56,12 +49,6 @@ public:
     virtual void Select( ActionController& controller ) const;
     virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
     virtual void Activate( ActionController& controller ) const;
-
-    virtual void Register( Formation_ABC& formation ) = 0;
-    virtual void Remove( Formation_ABC& formation ) = 0;
-    virtual void Register( Automat_ABC& automat ) = 0;
-    virtual void Remove( Automat_ABC& automat ) = 0; 
-    virtual void NotifyParentDestroyed() = 0;
     //@}
 };
 

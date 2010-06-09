@@ -23,7 +23,7 @@ namespace kernel
 
 namespace dispatcher
 {
-    class Model;
+    class Model_ABC;
 
 // =============================================================================
 /** @class  Loan
@@ -36,8 +36,8 @@ class Loan
 public:
     //! @name Constructors/Destructor
     //@{
-     Loan( const Model& model, const MsgsSimToClient::BorrowedEquipments_BorrowedEquipment& message );
-     Loan( const Model& model, const MsgsSimToClient::LentEquipments_LentEquipment&         message );
+             Loan( const Model_ABC& model, const MsgsSimToClient::BorrowedEquipments_BorrowedEquipment& message );
+             Loan( const Model_ABC& model, const MsgsSimToClient::LentEquipments_LentEquipment&         message );
     virtual ~Loan();
     //@}
 
@@ -48,7 +48,7 @@ public:
     //@}
 
 private:
-    const kernel::Agent_ABC* agent_;         // Borrower / lender
+    const kernel::Agent_ABC& agent_;         // Borrower / lender
     unsigned int equipmentType_; // XML reference - no resolved by dispatcher
     unsigned int quantity_;
 };

@@ -82,12 +82,12 @@ std::string ReportFactory::RenderParameter( const MsgMissionParameter& value ) c
         ss << value.value().areal();
     else if (value.value().has_unit() )
     {
-        if( const dispatcher::Agent* agent = model_.agents_.Find( value.value().unit().oid() ) )
+        if( const dispatcher::Agent_ABC* agent = model_.Agents().Find( value.value().unit().oid() ) )
             ss << agent->GetName().ascii() << " [" << agent->GetId() << "]";
     }
     else if (value.value().has_unitknowledge() )
     {
-        if( const dispatcher::AgentKnowledge* knowledge = model_.agentKnowledges_.Find( value.value().unitknowledge().oid() ) )
+        if( const dispatcher::AgentKnowledge_ABC* knowledge = model_.AgentKnowledges().Find( value.value().unitknowledge().oid() ) )
             ss << knowledge->GetName().ascii() << " [" << knowledge->GetId() << "]";
     }
 //    else if( value.value().has_objectknowledge() )

@@ -9,7 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "ObjectSymbols.h"
-#include "Object.h"
+#include "Object_ABC.h"
 #include "Side.h"
 #include "clients_kernel/ObjectType.h"
 #include "tools/App6Symbol.h"
@@ -20,7 +20,7 @@ using namespace dispatcher;
 // Name: ObjectSymbols constructor
 // Created: SBO 2008-02-14
 // -----------------------------------------------------------------------------
-ObjectSymbols::ObjectSymbols( const Object& holder )
+ObjectSymbols::ObjectSymbols( const dispatcher::Object_ABC& holder )
     : holder_( holder )
 {
     // NOTHING
@@ -41,8 +41,8 @@ ObjectSymbols::~ObjectSymbols()
 // -----------------------------------------------------------------------------
 std::string ObjectSymbols::BuildSymbol( bool up /*= true*/ ) const
 {
-    std::string symbol( holder_.type_.GetSymbol() );
+    std::string symbol( holder_.GetType().GetSymbol() );
     if( up )
-        return tools::app6::MergeSymbol( holder_.side_.Get< EntitySymbols_ABC >().BuildSymbol(), symbol );
+        return tools::app6::MergeSymbol( holder_.GetTeam().Get< EntitySymbols_ABC >().BuildSymbol(), symbol );
     return symbol;
 }

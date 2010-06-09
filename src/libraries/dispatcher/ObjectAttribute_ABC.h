@@ -17,7 +17,6 @@ namespace Common
 
 namespace dispatcher
 {
-    class Model;
 
 // =============================================================================
 /** @class  ObjectAttribute_ABC
@@ -30,19 +29,15 @@ class ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectAttribute_ABC( const Model& model, const Common::MsgObjectAttributes& asnMsg );
-    virtual ~ObjectAttribute_ABC();
+             ObjectAttribute_ABC() {}
+    virtual ~ObjectAttribute_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update( const Common::MsgObjectAttributes& asnMsg ) = 0;
-    virtual void Send  ( Common::MsgObjectAttributes& asnMsg ) const = 0;
-    virtual void Delete( Common::MsgObjectAttributes& asnMsg ) const = 0;
+    virtual void Update( const Common::MsgObjectAttributes& message ) = 0;
+    virtual void Send  ( Common::MsgObjectAttributes& message ) const = 0;
     //@}
-
-protected:
-    unsigned int nType_;
 };
 
 }

@@ -9,6 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "NBCAttribute.h"
+#include "protocol/Protocol.h"
 
 using namespace dispatcher;
 
@@ -16,8 +17,8 @@ using namespace dispatcher;
 // Name: NBCAttribute constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-NBCAttribute::NBCAttribute( const Model& model, const Common::MsgObjectAttributes& asnMsg )
-    : ObjectAttribute_ABC( model, asnMsg )    
+NBCAttribute::NBCAttribute( const Common::MsgObjectAttributes& asnMsg )
+    : danger_( 0 )
 {
     Update( asnMsg );
 }
@@ -60,13 +61,4 @@ void NBCAttribute::Send( Common::MsgObjectAttributes& asn ) const
     for( std::vector< unsigned int >::const_iterator it = agents_.begin(); it != agents_.end(); ++it )
         nbc.mutable_nbc_agents()->add_elem( *it );
     //asn.mutable_nbc()->CopyFrom( nbc_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: NBCAttribute::Delete
-// Created: NLD 2006-09-28
-// -----------------------------------------------------------------------------
-void NBCAttribute::Delete( Common::MsgObjectAttributes& /*asnMsg*/ ) const
-{
-    // NOTHING
 }

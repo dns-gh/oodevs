@@ -1,2 +1,47 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<scores/>
+<scores>
+  <score name="Detection">
+    <formula><![CDATA[sum( domain( detecting-unit( $unit, $visibility ), $units ) )]]></formula>
+    <gauge type="Default"/>
+    <constants>
+      <constant id="$unit" type="unit" value="11"/>
+      <constant id="$units" type="unit list" value="8"/>
+      <constant id="$visibility" type="perception levels" value="detected,identified,recognized"/>
+    </constants>
+    <indicators>
+      <indicator>
+        <extract detected="11" function="detecting-unit" id="1" visibility="detected,identified,recognized"/>
+        <transform function="domain" id="2" input="1" select="8" type="unsigned long"/>
+        <reduce function="sum" id="3" input="2" type="unsigned long"/>
+        <result function="indicator" input="3" name="Detection" type="unsigned long"/>
+      </indicator>
+      <indicator>
+        <extract detected="11" function="detecting-unit" id="1" visibility="detected,identified,recognized"/>
+        <transform function="domain" id="2" input="1" select="8" type="unsigned long"/>
+        <reduce function="sum" id="3" input="2" type="unsigned long"/>
+        <transform function="derivate" id="5" input="3" period="10" type="unsigned long"/>
+        <result function="indicator" input="5" name="Detection/Tendency" type="unsigned long"/>
+      </indicator>
+    </indicators>
+  </score>
+  <score name="OpState">
+    <formula><![CDATA[select( operational-state(), $unit )]]></formula>
+    <gauge type="Default"/>
+    <constants>
+      <constant id="$unit" type="unit" value="8"/>
+    </constants>
+    <indicators>
+      <indicator>
+        <extract function="operational-state" id="1"/>
+        <reduce function="select" id="2" input="1" key="8" type="float"/>
+        <result function="indicator" input="2" name="OpState" type="float"/>
+      </indicator>
+      <indicator>
+        <extract function="operational-state" id="1"/>
+        <reduce function="select" id="2" input="1" key="8" type="float"/>
+        <transform function="derivate" id="4" input="2" period="10" type="float"/>
+        <result function="indicator" input="4" name="OpState/Tendency" type="float"/>
+      </indicator>
+    </indicators>
+  </score>
+</scores>

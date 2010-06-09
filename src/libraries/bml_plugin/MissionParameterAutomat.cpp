@@ -9,7 +9,7 @@
 
 #include "bml_plugin_pch.h"
 #include "MissionParameterAutomat.h"
-#include "dispatcher/Automat.h"
+#include "dispatcher/Automat_ABC.h"
 
 using namespace plugins::bml;
 
@@ -17,7 +17,7 @@ using namespace plugins::bml;
 // Name: MissionParameterAutomat constructor
 // Created: SBO 2008-06-02
 // -----------------------------------------------------------------------------
-MissionParameterAutomat::MissionParameterAutomat( const kernel::OrderParameter& type, const dispatcher::Automat& automat )
+MissionParameterAutomat::MissionParameterAutomat( const kernel::OrderParameter& type, const dispatcher::Automat_ABC& automat )
     : MissionParameter_ABC( type )
     , automat_( automat )
 {

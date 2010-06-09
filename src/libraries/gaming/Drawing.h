@@ -54,7 +54,6 @@ public:
     //! @name Operations
     //@{
     virtual void DoUpdate( const MsgsMessengerToClient::MsgShapeUpdate& message );
-    virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
     //@}
 
 private:

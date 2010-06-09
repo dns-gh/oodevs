@@ -10,7 +10,6 @@
 #include "actions_pch.h"
 #include "PopulationMission.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/ModelVisitor_ABC.h"
 #include "clients_kernel/OrderType.h"
 #include "protocol/SimulationSenders.h"
 #include "protocol/ServerPublisher_ABC.h"
@@ -61,13 +60,4 @@ void PopulationMission::Publish( Publisher_ABC& publisher ) const
     CommitTo( *message().mutable_parametres() );
     message.Send( publisher, 0 );
     Clean( *message().mutable_parametres() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PopulationMission::Accept
-// Created: MGD 2009-12-18
-// -----------------------------------------------------------------------------
-void PopulationMission::Accept( kernel::ModelVisitor_ABC& visitor ) const
-{
-    visitor.Visit( *this );
 }

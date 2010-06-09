@@ -10,14 +10,12 @@
 #include "clients_gui_pch.h"
 #include "TerrainObjectProxy.h"
 #include "Tools.h"
-#include "clients_kernel/ModelVisitor_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "protocol/SimulationSenders.h"
 #include <urban/Architecture.h>
 #include <urban/Soil.h>
 #include <urban/TerrainObject_ABC.h>
 #include <urban/Vegetation.h>
-
 
 using namespace gui;
 
@@ -134,16 +132,6 @@ void TerrainObjectProxy::AddDictionaryForSoil( kernel::PropertiesDictionary& dic
         dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Soil/compoundClearing" ), soil->GetCompoundClearing() );
     }
 }
-
-// -----------------------------------------------------------------------------
-// Name: TerrainObjectProxy::Accept
-// Created: MGD 2009-12-21
-// -----------------------------------------------------------------------------
-void TerrainObjectProxy::Accept( kernel::ModelVisitor_ABC& visitor ) const
-{
-    visitor.Visit( *this );
-}
-
 
 // -----------------------------------------------------------------------------
 // Name: TerrainObjectProxy::SetSelected

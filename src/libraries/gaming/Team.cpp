@@ -10,29 +10,38 @@
 #include "gaming_pch.h"
 #include "Team.h"
 #include "Tools.h"
-#include "clients_kernel/ModelVisitor_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 
 using namespace kernel;
+
+namespace
+{
+    kernel::Karma MakeKarma( const Common::EnumDiplomacy& diplomacy )
+    {
+        switch( diplomacy )
+        {
+            case Common::friend_diplo : return kernel::Karma::friend_;
+            case Common::enemy_diplo  : return kernel::Karma::enemy_;
+            case Common::neutral_diplo: return kernel::Karma::neutral_;
+            case Common::unknown_diplo: 
+            default: return kernel::Karma::unknown_;
+        }
+    }
+
+    QString MakeName( const std::string& name )
+    {
+        return name.empty() ? QString( tools::translate( "Team", "Army %1" ) ).arg( name.c_str() ) : name.c_str();
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: Team constructor
 // Created: NLD 2005-02-14
 // -----------------------------------------------------------------------------
 Team::Team( const MsgsSimToClient::MsgTeamCreation& message, Controller& controller )
-    : EntityImplementation< Team_ABC >( controller, message.oid(), QString( message.nom().c_str() ) )
+    : EntityImplementation< Team_ABC >( controller, message.oid(), MakeName( message.nom() ) )
+    , karma_( MakeKarma( message.type() ) )
 {
-    if( name_.isEmpty() )
-        name_ = QString( tools::translate( "Team", "Army %1" ) ).arg( message.oid() );
-    
-    switch( message.type() )
-    {
-        case Common::unknown_diplo: karma_ = kernel::Karma::unknown_; break;
-        case Common::friend_diplo : karma_ = kernel::Karma::friend_;  break;
-        case Common::enemy_diplo  : karma_ = kernel::Karma::enemy_;   break;
-        case Common::neutral_diplo: karma_ = kernel::Karma::neutral_; break;
-    }
-
     CreateDictionary( controller );
 }
 
@@ -58,7 +67,6 @@ void Team::CreateDictionary( kernel::Controller& controller )
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Team", "Info/Name" ), self.name_ );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: Team::GetKarma
 // Created: MGD 2009-12-18
@@ -66,86 +74,4 @@ void Team::CreateDictionary( kernel::Controller& controller )
 const kernel::Karma& Team::GetKarma() const
 {
     return karma_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Team::CreateDictionary
-// Created: MGD 2009-12-18
-// -----------------------------------------------------------------------------
-void Team::Register( Formation_ABC& /*formation*/ )
-{
-     throw std::exception( __FUNCTION__ " not implemented" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Team::CreateDictionary
-// Created: MGD 2009-12-18
-// -----------------------------------------------------------------------------
-void Team::Remove( Formation_ABC& /*formation*/ )
-{
-     throw std::exception( __FUNCTION__ " not implemented" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Team::CreateDictionary
-// Created: MGD 2009-12-18
-// -----------------------------------------------------------------------------
-void Team::Register( Population_ABC& /*population*/ )
-{
-     throw std::exception( __FUNCTION__ " not implemented" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Team::CreateDictionary
-// Created: MGD 2009-12-18
-// -----------------------------------------------------------------------------
-void Team::Remove( Population_ABC& /*population*/ )
-{
-     throw std::exception( __FUNCTION__ " not implemented" );
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: Team::CreateDictionary
-// Created: MGD 2009-12-18
-// -----------------------------------------------------------------------------
-void Team::Register( Object_ABC& /*object*/ )
-{
-     throw std::exception( __FUNCTION__ " not implemented" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Team::CreateDictionary
-// Created: MGD 2009-12-18
-// -----------------------------------------------------------------------------
-void Team::Remove( Object_ABC& /*object*/ )
-{
-     throw std::exception( __FUNCTION__ " not implemented" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Team::CreateDictionary
-// Created: MGD 2009-12-18
-// -----------------------------------------------------------------------------
-void Team::Register( KnowledgeGroup_ABC& /*knGroup*/ )
-{
-     throw std::exception( __FUNCTION__ " not implemented" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Team::CreateDictionary
-// Created: MGD 2009-12-18
-// -----------------------------------------------------------------------------
-void Team::Remove( KnowledgeGroup_ABC& /*knGroup*/ )
-{
-    //NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Team::Accept
-// Created: MGD 2009-12-21
-// -----------------------------------------------------------------------------
-void Team::Accept( kernel::ModelVisitor_ABC& visitor ) const
-{
-    visitor.Visit( *this );
 }

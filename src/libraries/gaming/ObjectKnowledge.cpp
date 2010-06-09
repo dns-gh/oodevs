@@ -14,7 +14,6 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/ModelVisitor_ABC.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/ObjectIcons.h"
 #include "clients_kernel/ObjectType.h"
@@ -160,13 +159,4 @@ const Entity_ABC& ObjectKnowledge::GetOwner() const
 std::string ObjectKnowledge::GetSymbol() const
 {
     return type_ ? type_->GetSymbol() : "";
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectKnowledge::Accept
-// Created: MGD 2009-12-21
-// -----------------------------------------------------------------------------
-void ObjectKnowledge::Accept( kernel::ModelVisitor_ABC& visitor ) const
-{
-    visitor.Visit( *this );
 }

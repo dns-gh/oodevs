@@ -10,20 +10,11 @@
 #ifndef __MedicalTreatmentAttribute_h_
 #define __MedicalTreatmentAttribute_h_
 
-
 #include "ObjectAttribute_ABC.h"
 #include <list>
 
-
-namespace Common
-{
-    class MsgObjectAttributes;
-}
-
-
 namespace dispatcher
 {
-    class Model;
 
 // =============================================================================
 /** @class  MedicalTreatmentAttribute
@@ -33,33 +24,28 @@ namespace dispatcher
 // =============================================================================
 class MedicalTreatmentAttribute : public ObjectAttribute_ABC
 {
-private:
-    typedef std::list< int >                           T_MedicalTreatmentTypeList;
-    typedef T_MedicalTreatmentTypeList::const_iterator CIT_MedicalTreatmentTypeList;
-    typedef T_MedicalTreatmentTypeList::iterator       IT_MedicalTreatmentTypeList;
 
 public:
     //! @name Constructors/Destructor
     //@{
-     MedicalTreatmentAttribute( const Model& model, const Common::MsgObjectAttributes& asnMsg );
+    explicit MedicalTreatmentAttribute( const Common::MsgObjectAttributes& asnMsg );
     virtual ~MedicalTreatmentAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update   ( const Common::MsgObjectAttributes& asnMsg );
-    virtual void Send     ( Common::MsgObjectAttributes& asnMsg ) const;
-    virtual void Delete( Common::MsgObjectAttributes& asnMsg ) const;
+    virtual void Update( const Common::MsgObjectAttributes& asnMsg );
+    virtual void Send  ( Common::MsgObjectAttributes& asnMsg ) const;
     //@}
 
 private:
     //! @name Data members
     //@{
-    int                        beds_;            
-    int                        availableBeds_;   
-    int                        doctors_;         
-    int                        availableDoctors_;
-    T_MedicalTreatmentTypeList medicalTreatmentList_; // XML reference - no resolved by dispatcher
+    int              beds_;            
+    int              availableBeds_;   
+    int              doctors_;         
+    int              availableDoctors_;
+    std::list< int > medicalTreatmentList_; // XML reference - no resolved by dispatcher
     //@}
 };
 

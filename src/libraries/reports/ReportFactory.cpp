@@ -171,6 +171,5 @@ QString ReportFactory::RenderParameter( const Common::MsgMissionParameter& value
             return QString( value.value().acharstr().c_str() );
     }
     throw std::runtime_error( tools::translate( "ReportFactory", "Unhandled report parameter type: '%1'." ).arg( value.GetDescriptor()->full_name().c_str() ).ascii() );
-    return "";
 }
 

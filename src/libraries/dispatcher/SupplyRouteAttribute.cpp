@@ -17,15 +17,14 @@ using namespace dispatcher;
 // Name: SupplyRouteAttribute constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-SupplyRouteAttribute::SupplyRouteAttribute( const Model& model, const Common::MsgObjectAttributes& asnMsg )
-    : ObjectAttribute_ABC( model, asnMsg )
-    , bEquipped_         ( false )
-    , nMaxWeight_        ( 0 )
-    , nWidth_            ( 0 )
-    , nLength_           ( 0 )
-    , nFlow_             ( 0 )
+SupplyRouteAttribute::SupplyRouteAttribute( const Common::MsgObjectAttributes& message )
+    : bEquipped_  ( false )
+    , nMaxWeight_ ( 0 )
+    , nWidth_     ( 0 )
+    , nLength_    ( 0 )
+    , nFlow_      ( 0 )
 {
-    Update( asnMsg );
+    Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -34,22 +33,22 @@ SupplyRouteAttribute::SupplyRouteAttribute( const Model& model, const Common::Ms
 // -----------------------------------------------------------------------------
 SupplyRouteAttribute::~SupplyRouteAttribute()
 {
-
-}  
+    // NOTHING
+}
 
 // -----------------------------------------------------------------------------
 // Name: SupplyRouteAttribute::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void SupplyRouteAttribute::Update( const Common::MsgObjectAttributes& asnMsg )
+void SupplyRouteAttribute::Update( const Common::MsgObjectAttributes& message )
 {
-    if( asnMsg.has_supply_route() )
+    if( message.has_supply_route() )
     {
-        bEquipped_  = asnMsg.supply_route().equipped();
-        nMaxWeight_ = asnMsg.supply_route().max_weight();
-        nWidth_     = asnMsg.supply_route().width();
-        nLength_    = asnMsg.supply_route().length();
-        nFlow_      = asnMsg.supply_route().flow_rate();
+        bEquipped_  = message.supply_route().equipped();
+        nMaxWeight_ = message.supply_route().max_weight();
+        nWidth_     = message.supply_route().width();
+        nLength_    = message.supply_route().length();
+        nFlow_      = message.supply_route().flow_rate();
     }
 }
 
@@ -57,21 +56,11 @@ void SupplyRouteAttribute::Update( const Common::MsgObjectAttributes& asnMsg )
 // Name: SupplyRouteAttribute::Send
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void SupplyRouteAttribute::Send( Common::MsgObjectAttributes& asnMsg ) const
+void SupplyRouteAttribute::Send( Common::MsgObjectAttributes& message ) const
 {
-    asnMsg.mutable_supply_route()->set_equipped         ( bEquipped_ );
-    asnMsg.mutable_supply_route()->set_max_weight       ( nMaxWeight_ );
-    asnMsg.mutable_supply_route()->set_width            ( nWidth_ );
-    asnMsg.mutable_supply_route()->set_length           ( nLength_ );
-    asnMsg.mutable_supply_route()->set_flow_rate        ( nFlow_ );
+    message.mutable_supply_route()->set_equipped  ( bEquipped_ );
+    message.mutable_supply_route()->set_max_weight( nMaxWeight_ );
+    message.mutable_supply_route()->set_width     ( nWidth_ );
+    message.mutable_supply_route()->set_length    ( nLength_ );
+    message.mutable_supply_route()->set_flow_rate ( nFlow_ );
 }
-
-// -----------------------------------------------------------------------------
-// Name: SupplyRouteAttribute::Delete
-// Created: NLD 2006-09-28
-// -----------------------------------------------------------------------------
-void SupplyRouteAttribute::Delete( Common::MsgObjectAttributes& /*asnMsg*/ ) const
-{
-//    delete asnMsg().logistic_route;
-}
-

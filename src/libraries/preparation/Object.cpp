@@ -19,7 +19,6 @@
 #include "clients_kernel/ObjectHierarchies.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/ObjectTypes.h"
-#include "clients_kernel/ModelVisitor_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Styles.h"
@@ -123,13 +122,4 @@ void Object::CreateDictionary( kernel::Controller& controller )
     dico.Register( *(const Entity_ABC*)this, tools::translate( "Object", "Info/Identifier" ), constSelf.id_ );
     dico.Register( *(const Entity_ABC*)this, tools::translate( "Object", "Info/Name" ), name_ );
     dico.Register( *(const Entity_ABC*)this, tools::translate( "Object", "Info/Type" ), constSelf.type_.GetType() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::Accept
-// Created: MGD 2009-12-21
-// -----------------------------------------------------------------------------
-void Object::Accept( kernel::ModelVisitor_ABC& visitor ) const
-{
-    visitor.Visit( *this );
 }

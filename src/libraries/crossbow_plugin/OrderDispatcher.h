@@ -10,7 +10,6 @@
 #ifndef __OrderDispatcher_h_
 #define __OrderDispatcher_h_
 
-
 namespace Common
 {
     class MsgMissionParameters;
@@ -26,8 +25,8 @@ namespace dispatcher
 {
     class SimulationPublisher_ABC;
     class Model;
-    class Agent;
-    class Automat;
+    class Agent_ABC;
+    class Automat_ABC;
 }
 
 namespace plugins
@@ -76,8 +75,8 @@ private:
 
     //! @name Mission Helpers
     //@{
-    void DispatchMission( dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Agent& agent, const Row_ABC& row );
-    void DispatchMission( dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Automat& automat, const Row_ABC& row );
+    void DispatchMission( dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Agent_ABC& agent, const Row_ABC& row );
+    void DispatchMission( dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Automat_ABC& automat, const Row_ABC& row );
     void DispatchFragOrder( dispatcher::SimulationPublisher_ABC& publisher, unsigned long targetId, const Row_ABC& row );
     //@}
 

@@ -11,13 +11,13 @@
 #include "Population.h"
 #include "Model.h"
 #include "Side.h"
-#include "protocol/ClientPublisher_ABC.h"
 #include "PopulationConcentration.h"
 #include "PopulationFlow.h"
-#include "clients_kernel/ModelVisitor_ABC.h"
 #include "PopulationOrder.h"
-#include <boost/bind.hpp>
+#include "clients_kernel/ModelVisitor_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "protocol/clientsenders.h"
+#include <boost/bind.hpp>
 
 using namespace dispatcher;
 
@@ -26,15 +26,16 @@ using namespace dispatcher;
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
 Population::Population( Model& model, const MsgsSimToClient::MsgPopulationCreation& msg )
-    : SimpleEntity< kernel::Population_ABC >( msg.oid(), QString(msg.nom().c_str()) )
+    : dispatcher::Population_ABC( msg.oid(), QString(msg.nom().c_str()) )
     , model_           ( model )
     , nType_           ( msg.type_population() )
     , strName_         ( msg.nom() )
-    , side_            ( model.sides_.Get( msg.oid_camp() ) )
+    , side_            ( model.Sides().Get( msg.oid_camp() ) )
     , nDominationState_( 0 )
     , order_           ( 0 )
 {
     side_.Register( *this );
+    RegisterSelf( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -47,30 +48,29 @@ Population::~Population()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Population::Update
+// Name: Population::DoUpdate
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-void Population::Update( const MsgsSimToClient::MsgPopulationCreation& message )
+void Population::DoUpdate( const MsgsSimToClient::MsgPopulationCreation& message )
 {
     decisionalInfos_.Clear();
-    ApplyUpdate( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Population::Update
+// Name: Population::DoUpdate
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Population::Update( const MsgsSimToClient::MsgPopulationUpdate& msg )
+void Population::DoUpdate( const MsgsSimToClient::MsgPopulationUpdate& msg )
 {
     if( msg.has_etat_domination() )
         nDominationState_ = msg.etat_domination();
 }
 
 // -----------------------------------------------------------------------------
-// Name: Population::Update
+// Name: Population::DoUpdate
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Population::Update( const MsgsSimToClient::MsgPopulationConcentrationCreation& msg )
+void Population::DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationCreation& msg )
 {
     PopulationConcentration* element = concentrations_.Find( msg.oid() );
     if( !element )
@@ -79,38 +79,35 @@ void Population::Update( const MsgsSimToClient::MsgPopulationConcentrationCreati
         model_.AddExtensions( *element );
         concentrations_.Register( element->GetId(), *element );
     }
-    element->ApplyUpdate( msg );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Population::Update
+// Name: Population::DoUpdate
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Population::Update( const MsgsSimToClient::MsgPopulationConcentrationUpdate& msg )
+void Population::DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationUpdate& msg )
 {
     concentrations_.Get( msg.oid() ).Update( msg );
-    ApplyUpdate( msg );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Population::Update
+// Name: Population::DoUpdate
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Population::Update( const MsgsSimToClient::MsgPopulationConcentrationDestruction& msg )
+void Population::DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationDestruction& msg )
 {
     if( PopulationConcentration* concentration = concentrations_.Find( msg.oid() ) )
     {
         concentrations_.Remove( msg.oid() );
         delete concentration;
     }
-    ApplyUpdate( msg );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Population::Update
+// Name: Population::DoUpdate
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Population::Update( const MsgsSimToClient::MsgPopulationFlowCreation& msg )
+void Population::DoUpdate( const MsgsSimToClient::MsgPopulationFlowCreation& msg )
 {
     PopulationFlow* element = flows_.Find( msg.oid() );
     if( !element )
@@ -119,38 +116,35 @@ void Population::Update( const MsgsSimToClient::MsgPopulationFlowCreation& msg )
         model_.AddExtensions( *element );
         flows_.Register( element->GetId(), *element );
     }
-    element->ApplyUpdate( msg );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Population::Update
+// Name: Population::DoUpdate
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Population::Update( const MsgsSimToClient::MsgPopulationFlowUpdate& msg )
+void Population::DoUpdate( const MsgsSimToClient::MsgPopulationFlowUpdate& msg )
 {
     flows_.Get( msg.oid() ).Update( msg );
-    ApplyUpdate( msg );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Population::Update
+// Name: Population::DoUpdate
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Population::Update( const MsgsSimToClient::MsgPopulationFlowDestruction& msg )
+void Population::DoUpdate( const MsgsSimToClient::MsgPopulationFlowDestruction& msg )
 {
     if( PopulationFlow* flow = flows_.Find( msg.oid() ) )
     {
         flows_.Remove( msg.oid() );
         delete flow;
     }
-    ApplyUpdate( msg );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Population::Update
+// Name: Population::DoUpdate
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void Population::Update( const Common::MsgPopulationOrder& msg )
+void Population::DoUpdate( const Common::MsgPopulationOrder& msg )
 {
     order_.release();
     if( msg.mission() != 0 )
@@ -158,10 +152,10 @@ void Population::Update( const Common::MsgPopulationOrder& msg )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Population::Update
+// Name: Population::DoUpdate
 // Created: ZEBRE 2007-06-21
 // -----------------------------------------------------------------------------
-void Population::Update( const MsgsSimToClient::MsgDecisionalState& msg )
+void Population::DoUpdate( const MsgsSimToClient::MsgDecisionalState& msg )
 {
     decisionalInfos_.Update( msg );
 }
@@ -190,12 +184,8 @@ void Population::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     {
         client::PopulationUpdate asn;
-
-        //asn().set_has_etat_domination()( 1 );
-
         asn().set_oid             ( GetId() );
         asn().set_etat_domination ( nDominationState_ );
-
         asn.Send( publisher );
     }
 

@@ -27,7 +27,7 @@ namespace gui
 */
 // Created: AME 2010-03-12
 // =============================================================================
-class LocationEditorBox :public QHBox
+class LocationEditorBox : public QHBox
 {
     Q_OBJECT;
 public:
@@ -40,7 +40,7 @@ public:
     //! @name Operations
     //@{
     void FillDefaultMenu();
-    void AddParser( LocationParser_ABC& parser, QString& name );
+    void AddParser( LocationParser_ABC& parser, const QString& name );
     bool GetPosition( geometry::Point2f& result );
     void SelectDefaultParser( int index );
     void UpdateField( const geometry::Point2f& position );

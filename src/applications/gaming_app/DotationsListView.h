@@ -24,13 +24,16 @@ namespace gui
     class ValuedListItem;
 }
 
+class DotationsListView;
+typedef ResourcesListView_ABC< DotationsListView, kernel::Dotations_ABC > DotationsListViewBase;
+
 // =============================================================================
 /** @class  DotationsListView
     @brief  DotationsListView
 */
 // Created: SBO 2007-02-16
 // =============================================================================
-class DotationsListView : public ResourcesListView_ABC< DotationsListView, kernel::Dotations_ABC >
+class DotationsListView : public DotationsListViewBase
 {
     Q_OBJECT;
 

@@ -9,27 +9,23 @@
 
 #include "bml_plugin_pch.h"
 #include "Who.h"
-#include "dispatcher/Agent.h"
-#include "dispatcher/Automat.h"
-#include "dispatcher/Side.h"
+#include "dispatcher/Agent_ABC.h"
+#include "dispatcher/Automat_ABC.h"
+#include "dispatcher/Team_ABC.h"
 #include "dispatcher/Equipment.h"
 #include "dispatcher/Humans.h"
 #include "clients_kernel/Karma.h"
+#include "protocol/protocol.h"
 #include <xeumeuleu/xml.h>
 #include <boost/bind.hpp>
 
 using namespace plugins::bml;
 
-#include "protocol/protocol.h"
-
-using namespace Common;
-using namespace MsgsSimToClient;
-
 // -----------------------------------------------------------------------------
 // Name: Who constructor
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-Who::Who( const dispatcher::Agent& entity )
+Who::Who( const dispatcher::Agent_ABC& entity )
     : agent_( &entity )
     , automat_( 0 )
     , attributes_( 0 )
@@ -42,7 +38,7 @@ Who::Who( const dispatcher::Agent& entity )
 // Name: Who constructor
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-Who::Who( const dispatcher::Automat& entity )
+Who::Who( const dispatcher::Automat_ABC& entity )
     : agent_( 0 )
     , automat_( &entity )
     , attributes_( 0 )
@@ -55,7 +51,7 @@ Who::Who( const dispatcher::Automat& entity )
 // Name: Who constructor
 // Created: SBO 2008-07-22
 // -----------------------------------------------------------------------------
-Who::Who( const dispatcher::Agent& entity, int detectionLevel )
+Who::Who( const dispatcher::Agent_ABC& entity, int detectionLevel )
     : agent_( &entity )
     , automat_( 0 )
     , attributes_( 0 )
@@ -67,12 +63,12 @@ Who::Who( const dispatcher::Agent& entity, int detectionLevel )
 namespace
 {
     // $$$$ SBO 2008-07-24: hack to force update of real entities
-    int ComputeLevel( const MsgUnitAttributes& attributes )
+    int ComputeLevel( const MsgsSimToClient::MsgUnitAttributes& attributes )
     {
         return attributes.has_etat_operationnel() 
             || attributes.has_dotation_eff_materiel() 
             || attributes.has_dotation_eff_personnel() 
-            ? identified : -1;
+            ? Common::identified : -1;
     }
 }
 
@@ -80,7 +76,7 @@ namespace
 // Name: Who constructor
 // Created: SBO 2008-07-22
 // -----------------------------------------------------------------------------
-Who::Who( const dispatcher::Agent& entity, const MsgUnitAttributes& attributes )
+Who::Who( const dispatcher::Agent_ABC& entity, const MsgsSimToClient::MsgUnitAttributes& attributes )
     : agent_( &entity )
     , automat_( 0 )
     , attributes_( &attributes )
@@ -107,7 +103,7 @@ xml::xostream& plugins::bml::operator<<( xml::xostream& xos, const Who& who )
     xos << xml::start( "C_BML_Who" )
             << xml::start( "WhoRef" )
                 << xml::start( "UnitRef" )
-                    << xml::content( "jc3iedm:OID", who.agent_ ? who.agent_->name_ : who.automat_->GetName().ascii() );
+                    << xml::content( "jc3iedm:OID", who.agent_ ? who.agent_->GetName() : who.automat_->GetName().ascii() );
     if( who.attributes_ )
         who.SendEquipmentStatus( xos );
     if( who.level_ != -1 )
@@ -171,13 +167,13 @@ void Who::SendEquipmentStatus( xml::xostream& xos ) const
     if( attributes_->has_dotation_eff_materiel() )
     {
         AvailabilityComputer computer;
-        agent_->equipments_.Apply( boost::bind( &AvailabilityComputer::AddEquipment, boost::ref( computer ), _1 ) );
+        agent_->Equipments().Apply( boost::bind( &AvailabilityComputer::AddEquipment, boost::ref( computer ), _1 ) );
         SerializeAvailability( "SPLC2", xos, computer.Percentage() );
     }
     if( attributes_->has_dotation_eff_personnel() )
     {
         AvailabilityComputer computer;
-        agent_->troops_.Apply( boost::bind( &AvailabilityComputer::AddHuman, boost::ref( computer ), _1 ) );
+        agent_->Troops().Apply( boost::bind( &AvailabilityComputer::AddHuman, boost::ref( computer ), _1 ) );
         SerializeAvailability( "PERSVC", xos, computer.Percentage() );
     }
     xos << xml::end();
@@ -201,7 +197,7 @@ void Who::SendStatus( xml::xostream& xos ) const
 
 namespace
 {
-    std::string Hostility( const dispatcher::Automat& entity )
+    std::string Hostility( const dispatcher::Automat_ABC& entity )
     {
         const kernel::Karma& karma = entity.GetTeam().GetKarma();
         if( karma == kernel::Karma::friend_ )
@@ -214,14 +210,14 @@ namespace
             return "UNK";
     }
 
-    std::string OperationalState( const EnumOperationalStatus& status )
+    std::string OperationalState( const Common::EnumOperationalStatus& status )
     {
         switch( status )
         {
-            case detruit_tactiquement:
-            case detruit_totalement:
+            case Common::detruit_tactiquement:
+            case Common::detruit_totalement:
                 return "NOP";
-            case operationnel:
+            case Common::operationnel:
                 return "OPR";
             default:
                 break;
@@ -236,10 +232,10 @@ namespace
 // -----------------------------------------------------------------------------
 std::string Who::GetFilterHostility() const
 {
-    if( level_ > detected )
+    if( level_ > Common::detected )
     {
         if( agent_ )
-            return Hostility( *agent_->automat_ );
+            return Hostility( agent_->GetSuperior() );
         return Hostility( *automat_ );
     }
     return "UNK";
@@ -251,7 +247,7 @@ std::string Who::GetFilterHostility() const
 // -----------------------------------------------------------------------------
 std::string Who::GetFilterOperationalState() const
 {
-    if( agent_ && level_ > recognized )
-        return OperationalState( agent_->nOperationalState_ );
+    if( agent_ && level_ > Common::recognized )
+        return OperationalState( agent_->GetOperationalState() );
     return "NKN";
 }

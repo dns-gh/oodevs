@@ -10,19 +10,18 @@
 #ifndef __Automat_h_
 #define __Automat_h_
 
-#include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Automat_ABC.h"
-#include "tools/Resolver_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
+#include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
+#include "tools/Resolver_ABC.h"
 
 namespace kernel
 {
     class AutomatType;
     class AgentTypes;
     class Controller;
-    class KnowledgeGroup_ABC;
 }
 
 namespace xml
@@ -57,18 +56,6 @@ public:
     //@{
     virtual const kernel::AutomatType& GetType() const;
     void Rename( const QString& name );
-    virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
-    virtual kernel::Team_ABC& GetTeam() const;
-    virtual kernel::KnowledgeGroup_ABC& GetKnowledgeGroup() const;
-    virtual void Register( kernel::Automat_ABC& automat );
-    virtual void Remove( kernel::Automat_ABC& automat );
-    virtual const tools::Resolver< kernel::Automat_ABC >& GetAutomats() const;
-    virtual void Register( kernel::Agent_ABC& automat );
-    virtual void Remove( kernel::Agent_ABC& automat );
-    virtual const tools::Resolver< kernel::Agent_ABC >& GetAgents() const;
-    virtual kernel::Automat_ABC* GetParentAutomat() const;
-    virtual kernel::Formation_ABC* GetFormation() const;
-    virtual void NotifyParentDestroyed();
     //@}
 
     //! @name Extensions
@@ -89,15 +76,12 @@ private:
     virtual void SerializeLogistics ( xml::xostream& xos ) const;
     void CreateDictionary( kernel::Controller& controller );
     void InitializeSymbol() const;
-
-    static unsigned long ReadId  ( xml::xistream& xis );
-    static QString       ReadName( xml::xistream& xis );
     //@}
 
 private:
     //! @name Member data
     //@{
-    const kernel::AutomatType* type_;
+    const kernel::AutomatType& type_;
     mutable std::string symbol_;
     //@}
 };

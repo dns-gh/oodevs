@@ -107,7 +107,7 @@ void TicExtension::DoUpdate( const MsgUnitEnvironmentType& message )
 // -----------------------------------------------------------------------------
 void TicExtension::CreatePlatforms( float timeStep )
 {
-    const AgentType& type = holder_.type_;
+    const AgentType& type = holder_.GetType();
     tools::Iterator< const AgentComposition& > it = type.CreateIterator();
     while( it.HasMoreElements() )
     {

@@ -11,14 +11,12 @@
 #include "Automat.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/Karma.h"
-#include "clients_kernel/ModelVisitor_ABC.h"
 #include "Diplomacies.h"
 #include "Tools.h"
 
@@ -96,107 +94,4 @@ void Automat::InitializeSymbol() const
     const Entity_ABC& team = hierarchies.GetTop();
     const Diplomacies_ABC* diplo = team.Retrieve< Diplomacies_ABC >();
     App6Symbol::SetKarma( symbol_, diplo ? diplo->GetKarma() : Karma::unknown_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Automat::Accept
-// Created: MGD 2009-12-21
-// -----------------------------------------------------------------------------
-void Automat::Accept( kernel::ModelVisitor_ABC& visitor ) const
-{
-    visitor.Visit( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Automat::Register
-// Created: MGD 2009-12-21
-// -----------------------------------------------------------------------------
-void Automat::Register( kernel::Automat_ABC& /*automat*/ )
-{
-     throw std::exception( __FUNCTION__ " not implemented" );  
-}
-// -----------------------------------------------------------------------------
-// Name: Automat::Remove
-// Created: MGD 2009-12-21
-// -----------------------------------------------------------------------------
-void Automat::Remove( kernel::Automat_ABC& /*automat*/ )
-{
-     throw std::exception( __FUNCTION__ " not implemented" );  
-}
-// -----------------------------------------------------------------------------
-// Name: Automat::GetAutomats
-// Created: MGD 2009-12-21
-// -----------------------------------------------------------------------------
-const tools::Resolver< kernel::Automat_ABC >& Automat::GetAutomats() const
-{
-     throw std::exception( __FUNCTION__ " not implemented" );  
-}
-// -----------------------------------------------------------------------------
-// Name: Automat::Register
-// Created: MGD 2009-12-21
-// -----------------------------------------------------------------------------
-void Automat::Register( kernel::Agent_ABC& /*automat*/ )
-{
-     throw std::exception( __FUNCTION__ " not implemented" );  
-}
-// -----------------------------------------------------------------------------
-// Name: Automat::Remove
-// Created: MGD 2009-12-21
-// -----------------------------------------------------------------------------
-void Automat::Remove( kernel::Agent_ABC& /*automat*/ )
-{
-     throw std::exception( __FUNCTION__ " not implemented" );  
-}
-// -----------------------------------------------------------------------------
-// Name: Automat::GetAgents
-// Created: MGD 2009-12-21
-// -----------------------------------------------------------------------------
-const tools::Resolver< kernel::Agent_ABC >& Automat::GetAgents() const
-{
-    throw std::exception( __FUNCTION__ " not implemented" );  
-}
-
-// -----------------------------------------------------------------------------
-// Name: Automat::GetTeam
-// Created: MGD 2009-12-23
-// -----------------------------------------------------------------------------
-kernel::Team_ABC& Automat::GetTeam() const
-{
-    throw std::exception( __FUNCTION__ " not implemented" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Automat::GetKnowledgeGroup
-// Created: MGD 2009-12-23
-// -----------------------------------------------------------------------------
-kernel::KnowledgeGroup_ABC& Automat::GetKnowledgeGroup() const
-{
-    throw std::exception( __FUNCTION__ " not implemented" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Automat::GetParentAutomat
-// Created: MGD 2009-12-23
-// -----------------------------------------------------------------------------
-kernel::Automat_ABC* Automat::GetParentAutomat() const
-{
-    throw std::exception( __FUNCTION__ " not implemented" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Automat::GetFormation
-// Created: MGD 2009-12-23
-// -----------------------------------------------------------------------------
-kernel::Formation_ABC* Automat::GetFormation() const
-{
-    throw std::exception( __FUNCTION__ " not implemented" );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: Automat::NotifyParentDestroyed
-// Created: RPD 2010-06-03
-// -----------------------------------------------------------------------------
-void Automat::NotifyParentDestroyed()
-{
-    throw std::exception( __FUNCTION__ " not implemented" );
 }

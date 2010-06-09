@@ -11,7 +11,6 @@
 #include "KnowledgeGroup.h"
 #include "Tools.h"
 #include "clients_kernel/KnowledgeGroupType.h"
-#include "clients_kernel/ModelVisitor_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroup constructor
@@ -55,33 +54,6 @@ std::string KnowledgeGroup::GetType() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: KnowledgeGroup::Accept
-// Created: MGD 2009-12-21
-// -----------------------------------------------------------------------------
-void KnowledgeGroup::Accept( kernel::ModelVisitor_ABC& visitor ) const
-{
-    visitor.Visit( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroup::Accept
-// Created: MGD 2009-12-21
-// -----------------------------------------------------------------------------
-void KnowledgeGroup::Register( kernel::KnowledgeGroup_ABC& knowledgeGroup )
-{
-    //NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroup::Accept
-// Created: MGD 2009-12-21
-// -----------------------------------------------------------------------------
-void KnowledgeGroup::Remove( kernel::KnowledgeGroup_ABC& knowledgeGroup )
-{
-    //NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: KnowledgeGroup::DoUpdate
 // Created: FHD 2009-12-21
 // -----------------------------------------------------------------------------
@@ -92,23 +64,5 @@ void KnowledgeGroup::DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupUpdate& m
     if( message.enabled() != activated_ )
         activated_ = message.enabled();
     Touch();
-}
-
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroup::Accept
-// Created: MGD 2009-12-21
-// -----------------------------------------------------------------------------
-void KnowledgeGroup::Register( kernel::Automat_ABC& automat )
-{
-    //NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroup::Accept
-// Created: MGD 2009-12-21
-// -----------------------------------------------------------------------------
-void KnowledgeGroup::Remove( kernel::Automat_ABC& automat )
-{
-    //NOTHING
 }
 // LTO end

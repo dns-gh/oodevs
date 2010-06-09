@@ -24,7 +24,7 @@ using namespace dispatcher;
 LogConsignMedical::LogConsignMedical( const Model& model, const MsgsSimToClient::MsgLogMedicalHandlingCreation& msg )
     : SimpleEntity< >   ( msg.oid_consigne() )
     , model_            ( model )
-    , agent_            ( model.agents_.Get( msg.oid_pion() ) )
+    , agent_            ( model.Agents().Get( msg.oid_pion() ) )
     , nTickCreation_    ( msg.tick_creation() )
     , pTreatingAgent_   ( 0 )
     , nRank_            ( msg.rang() )
@@ -53,7 +53,7 @@ LogConsignMedical::~LogConsignMedical()
 void LogConsignMedical::Update( const MsgsSimToClient::MsgLogMedicalHandlingUpdate& msg )
 {
     if( msg.has_oid_pion_log_traitant() )
-        pTreatingAgent_ = ( msg.oid_pion_log_traitant() == 0 ) ? 0 : &model_.agents_.Get( msg.oid_pion_log_traitant() );
+        pTreatingAgent_ = ( msg.oid_pion_log_traitant() == 0 ) ? 0 : &model_.Agents().Get( msg.oid_pion_log_traitant() );
 
     if( msg.has_blessure() )
         nWound_ = msg.blessure();

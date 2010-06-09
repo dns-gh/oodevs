@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "dispatcher_kernel_test_pch.h"
+#include "dispatcher_test_pch.h"
 #include "dispatcher/MissionParameter_Agent.h"
 #include "dispatcher/MissionParameter_AgentKnowledge.h"
 #include "dispatcher/MissionParameter_AgentKnowledgeList.h"

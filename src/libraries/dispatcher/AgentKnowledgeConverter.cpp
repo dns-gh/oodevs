@@ -9,10 +9,10 @@
 
 #include "dispatcher_pch.h"
 #include "AgentKnowledgeConverter.h"
-#include "Agent.h"
-#include "AgentKnowledge.h"
-#include "Automat.h"
-#include "KnowledgeGroup.h"
+#include "Agent_ABC.h"
+#include "AgentKnowledge_ABC.h"
+#include "Automat_ABC.h"
+#include "KnowledgeGroup_ABC.h"
 #include "Model.h"
 #include "PopulationKnowledge.h"
 #include "tools/Resolver.h"
@@ -45,11 +45,11 @@ AgentKnowledgeConverter::~AgentKnowledgeConverter()
 const kernel::AgentKnowledge_ABC* AgentKnowledgeConverter::Find( const kernel::Agent_ABC& base, const kernel::Entity_ABC& owner )
 {
     const kernel::Entity_ABC& group = FindGroup( owner );
-    tools::Iterator< const dispatcher::AgentKnowledge& > it = model_.agentKnowledges_.CreateIterator();
+    tools::Iterator< const dispatcher::AgentKnowledge_ABC& > it = model_.AgentKnowledges().CreateIterator();
     while( it.HasMoreElements() )
     {
-        const dispatcher::AgentKnowledge& k = it.NextElement();
-        if( & k.knowledgeGroup_ == &group && &k.agent_ == &base )
+        const dispatcher::AgentKnowledge_ABC& k = it.NextElement();
+        if( & k.GetOwner() == &group && k.GetEntity() == &base )
             return &k;
     }
     return 0;
@@ -66,7 +66,7 @@ const kernel::PopulationKnowledge_ABC* AgentKnowledgeConverter::Find( const kern
     while( it.HasMoreElements() )
     {
         const dispatcher::PopulationKnowledge& k = it.NextElement();
-        if( & k.knowledgeGroup_ == &group && &k.population_ == &base )
+        if( & k.GetOwner() == &group && k.GetEntity() == &base )
             return &k;
     }
     return 0;
@@ -114,9 +114,9 @@ const kernel::PopulationKnowledge_ABC* AgentKnowledgeConverter::Find( const kern
 // -----------------------------------------------------------------------------
 const kernel::Entity_ABC& AgentKnowledgeConverter::FindGroup( const kernel::Entity_ABC& owner )
 {
-    if( const dispatcher::Automat* automat = dynamic_cast< const dispatcher::Automat* >( &owner ) )
+    if( const dispatcher::Automat_ABC* automat = dynamic_cast< const dispatcher::Automat_ABC* >( &owner ) )
         return automat->GetKnowledgeGroup();
-    else if( const dispatcher::Agent* agent = dynamic_cast< const dispatcher::Agent* >( &owner ) )
-        return agent->automat_->GetKnowledgeGroup();
+    else if( const dispatcher::Agent_ABC* agent = dynamic_cast< const dispatcher::Agent_ABC* >( &owner ) )
+        return agent->GetSuperior().GetKnowledgeGroup();
     throw std::runtime_error( __FUNCTION__ );
 }

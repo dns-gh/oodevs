@@ -11,17 +11,14 @@
 #define __NBCAttribute_h_
 
 #include "ObjectAttribute_ABC.h"
-#include "protocol/SimulationSenders.h"
 
 namespace Common
 {
-    class MsgObjectAttributes;
     class MsgObjectAttributeNBC;
 }
 
 namespace dispatcher
 {
-    class Model;
 
 // =============================================================================
 /** @class  NBCAttribute
@@ -34,7 +31,7 @@ class NBCAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             NBCAttribute( const Model& model, const Common::MsgObjectAttributes& asnMsg );
+    explicit NBCAttribute( const Common::MsgObjectAttributes& asnMsg );
     virtual ~NBCAttribute();
     //@}
 
@@ -42,7 +39,6 @@ public:
     //@{
     virtual void Update( const Common::MsgObjectAttributes& asnMsg );
     virtual void Send( Common::MsgObjectAttributes& asnMsg ) const;
-    virtual void Delete( Common::MsgObjectAttributes& asnMsg ) const;
     //@}
 
 private:

@@ -8,8 +8,8 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-#include "protocol/SimulationSenders.h"
 #include "MineAttribute.h"
+#include "protocol/SimulationSenders.h"
 
 using namespace dispatcher;
 
@@ -17,11 +17,10 @@ using namespace dispatcher;
 // Name: MineAttribute constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-MineAttribute::MineAttribute( const Model& model, const Common::MsgObjectAttributes& asnMsg )
-    : ObjectAttribute_ABC( model, asnMsg )
-    , dotation_ ( 0 )
-    , nPercentageMining_     ( 0 )
-    , nNbrDotationForMining_ ( 0 )
+MineAttribute::MineAttribute( const Common::MsgObjectAttributes& asnMsg )
+    : dotation_( 0 )
+    , nPercentageMining_( 0 )
+    , nNbrDotationForMining_( 0 )
 {
     Update( asnMsg );
 }
@@ -32,7 +31,7 @@ MineAttribute::MineAttribute( const Model& model, const Common::MsgObjectAttribu
 // -----------------------------------------------------------------------------
 MineAttribute::~MineAttribute()
 {
-
+    // NOTHING
 }  
 
 // -----------------------------------------------------------------------------
@@ -61,13 +60,4 @@ void MineAttribute::Send( Common::MsgObjectAttributes& asnMsg ) const
     asnMsg.mutable_mine()->set_dotation_type( dotation_ );
     asnMsg.mutable_mine()->set_dotation_nbr( nNbrDotationForMining_ );
     asnMsg.mutable_mine()->set_percentage( nPercentageMining_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MineAttribute::Delete
-// Created: NLD 2006-09-28
-// -----------------------------------------------------------------------------
-void MineAttribute::Delete( Common::MsgObjectAttributes& /*asnMsg*/ ) const
-{
-
 }

@@ -58,9 +58,9 @@ boost::shared_ptr< Condition_ABC > SimulationConditions::TickEnded()
         ClientConnected( kernel::Controller& controller )
             : SimpleEventCondition( controller ) {}
 
-        virtual void NotifyUpdated( const events::TickEnded& )
+        virtual void NotifyUpdated( const events::TickEnded& ev )
         {
-            Trigger();
+            Trigger( ev.tick, ev.duration );
         };
     };
 

@@ -10,10 +10,9 @@
 #ifndef __Object_h_
 #define __Object_h_
 
-
 #include "Localisation.h"
-#include "clients_kernel/Object_ABC.h"
-#include "SimpleEntity.h"
+#include "Object_ABC.h"
+#include "tools/Resolver.h"
 #include <boost/ptr_container/ptr_vector.hpp>
 
 namespace Common
@@ -27,19 +26,10 @@ namespace MsgsSimToClient
     class MsgObjectUpdate;
 }
 
-namespace kernel
-{
-    class ModelVisitor_ABC;
-    class ObjectType;
-    class StaticModel;
-    class Team_ABC;
-}
-
 namespace dispatcher
 {
-    class Model;
+    class Model_ABC;
     class ObjectAttribute_ABC;
-    class ClientPublisher_ABC;
 
 // =============================================================================
 /** @class  Object
@@ -47,26 +37,28 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class Object : public SimpleEntity< kernel::Object_ABC >
+class Object : public dispatcher::Object_ABC
+             , public kernel::Extension_ABC
+             , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectUpdate >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Object( Model& model, const MsgsSimToClient::MsgObjectCreation& msg, const kernel::StaticModel& staticModel );
+             Object( Model_ABC& model, const MsgsSimToClient::MsgObjectCreation& msg, const tools::Resolver_ABC< kernel::ObjectType, std::string >& types );
     virtual ~Object();
     //@}
 
     //! @name Operations
     //@{
-    using kernel::Entity_ABC::Update;
-    void Update( const MsgsSimToClient::MsgObjectUpdate&   msg );
-    void SendCreation   ( ClientPublisher_ABC& publisher ) const;
-    void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
-    void SendDestruction( ClientPublisher_ABC& publisher ) const;
-    void Accept( kernel::ModelVisitor_ABC& visitor ) const;
+    virtual void DoUpdate( const MsgsSimToClient::MsgObjectUpdate& msg );
+    virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
+    virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
+    virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
+    virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
 
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual const kernel::ObjectType& GetType() const;
+    virtual const dispatcher::Team_ABC& GetTeam() const;
     //@}
 
 private:
@@ -78,7 +70,7 @@ private:
 
     //! @name Attributes
     //@{
-    void Initialize( Model& model, const Common::MsgObjectAttributes& attribute );
+    void Initialize( Model_ABC& model, const Common::MsgObjectAttributes& attribute );
     void AddAttribute( ObjectAttribute_ABC* attribute );
     //@}
 
@@ -88,12 +80,12 @@ private:
     typedef boost::ptr_vector< ObjectAttribute_ABC > T_ObjectAttributes;
     //@}
 
-public:    
+private:
     const kernel::ObjectType&    type_;
 
     const std::string            strName_;
           Localisation           localisation_;
-          kernel::Team_ABC&      side_;
+          dispatcher::Team_ABC&  side_;
     
     T_ObjectAttributes           attributes_;
 };

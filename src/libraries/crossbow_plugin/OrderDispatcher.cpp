@@ -19,8 +19,8 @@
 #include "clients_kernel/OrderParameter.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include "dispatcher/Model.h"
-#include "dispatcher/Agent.h"
-#include "dispatcher/Automat.h"
+#include "dispatcher/Agent_ABC.h"
+#include "dispatcher/Automat_ABC.h"
 #include "protocol/simulationsenders.h"
 #include "protocol/clientsenders.h"
 #include <boost/lexical_cast.hpp>
@@ -80,9 +80,9 @@ OrderDispatcher::~OrderDispatcher()
 void OrderDispatcher::Dispatch( dispatcher::SimulationPublisher_ABC& publisher, const Row_ABC& row )
 {
     const unsigned long id = GetTargetId( row );
-    if( const dispatcher::Agent* agent = model_.agents_.Find( id ) )
+    if( const dispatcher::Agent_ABC* agent = model_.Agents().Find( id ) )
         DispatchMission( publisher, *agent, row );
-    else if( const dispatcher::Automat* automat = model_.automats_.Find( id ) )
+    else if( const dispatcher::Automat_ABC* automat = model_.Automats().Find( id ) )
         DispatchMission( publisher, *automat, row );
     else
         MT_LOG_ERROR_MSG( "Unable to resolve order target unit : " << id );
@@ -140,11 +140,11 @@ namespace
 // Updated: JCR
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
-void OrderDispatcher::DispatchMission( dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Agent& agent, const Row_ABC& row )
+void OrderDispatcher::DispatchMission( dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Agent_ABC& agent, const Row_ABC& row )
 {
-    if( agent.automat_->IsEngaged() )
+    if( agent.GetSuperior().IsEngaged() )
     {
-        DispatchMission( publisher, *agent.automat_, row );
+        DispatchMission( publisher, agent.GetSuperior(), row );
         return;
     }
 
@@ -175,7 +175,7 @@ void OrderDispatcher::DispatchMission( dispatcher::SimulationPublisher_ABC& publ
 // Updated: JCR
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
-void OrderDispatcher::DispatchMission( dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Automat& automat, const Row_ABC& row )
+void OrderDispatcher::DispatchMission( dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Automat_ABC& automat, const Row_ABC& row )
 {
     const kernel::OrderType* type = GetAutomatMission( row );
     if( !type )

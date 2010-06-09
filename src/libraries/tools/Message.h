@@ -42,32 +42,7 @@ public:
 
     //! @name Operations
     //@{
-    Message& operator >> ( bool&               n );
-    Message& operator >> ( unsigned char&      n );
-    Message& operator >> ( char&               n );
-    Message& operator >> ( unsigned short&     n );
-    Message& operator >> ( short&              n );
-    Message& operator >> ( unsigned long&      n );
-    Message& operator >> ( long&               n );
-    Message& operator >> ( unsigned long long& n );
-    Message& operator >> ( long long&          n );
-    Message& operator >> ( float&              n );
-    Message& operator >> ( double&             n );
-    Message& operator >> ( std::string& string );
-
-    Message& operator << ( bool               n );
-    Message& operator << ( unsigned char      n );
-    Message& operator << ( char               n );
-    Message& operator << ( unsigned short     n );
-    Message& operator << ( short              n );
-    Message& operator << ( unsigned long      n );
-    Message& operator << ( long               n );
-    Message& operator << ( unsigned long long n );
-    Message& operator << ( long long          n );
-    Message& operator << ( float              n );
-    Message& operator << ( double             n );
-    Message& operator << ( const std::string& string );
-    Message& operator << ( const char*        pString );
+    Message& operator >> ( unsigned long& n );
 
     unsigned long Size() const;
     void Read ( char* data, unsigned size );
@@ -83,11 +58,6 @@ public:
 private:
     //! @name Helpers
     //@{
-    template< typename T >
-    void Write( const T& element )
-    {
-        Write( reinterpret_cast< const char* >( &element ), sizeof( T ) );
-    }
     template< typename T >
     void Read( T& element )
     {

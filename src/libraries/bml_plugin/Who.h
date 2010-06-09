@@ -10,10 +10,10 @@
 #ifndef __Who_h_
 #define __Who_h_
 
-#include "protocol/protocol.h"
-
-using namespace Common;
-using namespace MsgsSimToClient;
+namespace MsgsSimToClient
+{
+    class MsgUnitAttributes;
+}
 
 namespace xml
 {
@@ -22,8 +22,8 @@ namespace xml
 
 namespace dispatcher
 {
-    class Agent;
-    class Automat;
+    class Agent_ABC;
+    class Automat_ABC;
 }
 
 namespace plugins
@@ -43,10 +43,10 @@ class Who
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Who( const dispatcher::Agent& entity );
-    explicit Who( const dispatcher::Automat& entity );
-             Who( const dispatcher::Agent& entity, const MsgUnitAttributes& attributes );
-             Who( const dispatcher::Agent& entity, int detectionLevel );
+    explicit Who( const dispatcher::Agent_ABC& entity );
+    explicit Who( const dispatcher::Automat_ABC& entity );
+             Who( const dispatcher::Agent_ABC& entity, const MsgsSimToClient::MsgUnitAttributes& attributes );
+             Who( const dispatcher::Agent_ABC& entity, int detectionLevel );
     virtual ~Who();
     //@}
 
@@ -74,9 +74,9 @@ private:
 private:
     //! @name Member data
     //@{
-    const dispatcher::Agent* agent_;
-    const dispatcher::Automat* automat_;
-    const MsgUnitAttributes* attributes_;
+    const dispatcher::Agent_ABC* agent_;
+    const dispatcher::Automat_ABC* automat_;
+    const MsgsSimToClient::MsgUnitAttributes* attributes_;
     int level_;
     //@}
 };

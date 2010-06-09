@@ -35,7 +35,7 @@ using namespace dispatcher;
 // Name: ObjectKnowledge constructor
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-ObjectKnowledge::ObjectKnowledge( const Model& model, const MsgsSimToClient::MsgObjectKnowledgeCreation& asnMsg )
+ObjectKnowledge::ObjectKnowledge( const Model_ABC& model, const MsgsSimToClient::MsgObjectKnowledgeCreation& asnMsg )
     : SimpleEntity< kernel::ObjectKnowledge_ABC >( asnMsg.oid() )
     , model_                        ( model )
     , team_                         ( model.Sides().Get( asnMsg.team() ) )
@@ -63,31 +63,55 @@ ObjectKnowledge::~ObjectKnowledge()
 
 #define CHECK_ASN_ATTRIBUTE_CREATION( ASN, CLASS ) \
     if ( attributes.has_##ASN##()  ) \
-        AddAttribute( new CLASS( model, attributes ) )
+        AddAttribute( new CLASS( attributes ) )
 
-#define CHECK_ASN_ATTRIBUTE_UPDATE( ASN, CLASS ) \
-    if ( asnMsg.attributes().has_##ASN##() ) \
-    { \
-        CIT_ObjectAttributes it; \
-        for( it = attributes_.begin(); it != attributes_.end(); ++it ) \
-        { \
-            const ObjectAttribute_ABC& obj = *it; \
-            if( dynamic_cast< const CLASS* > ( &obj ) ) break; \
-        } \
-        if( it == attributes_.end() ) \
-            AddAttribute( new CLASS( model_, asnMsg.attributes() ) ); \
-    }
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledge::CreateOrUpdate
+// Created: SBO 2010-06-09
+// -----------------------------------------------------------------------------
+template< typename T >
+void ObjectKnowledge::CreateOrUpdate( const Common::MsgObjectAttributes& message )
+{
+    T_ObjectAttributes::iterator it;
+    for( it = attributes_.begin(); it != attributes_.end(); ++it )
+        if( dynamic_cast< T* >( &*it ) )
+        {
+            it->Update( message );
+            break;
+        }
+    if( it == attributes_.end() )
+        AddAttribute( new T( message ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledge::CreateOrUpdate
+// Created: SBO 2010-06-09
+// -----------------------------------------------------------------------------
+template< typename T >
+void ObjectKnowledge::CreateOrUpdate( const Common::MsgObjectAttributes& message, const Model_ABC& model )
+{
+    T_ObjectAttributes::iterator it;
+    for( it = attributes_.begin(); it != attributes_.end(); ++it )
+        if( dynamic_cast< T* >( &*it ) )
+        {
+            it->Update( message );
+            break;
+        }
+    if( it == attributes_.end() )
+        AddAttribute( new T( model, message ) );
+}
 
 // -----------------------------------------------------------------------------
 // Name: Object::Initialize
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-void ObjectKnowledge::Initialize( const Model& model, const Common::MsgObjectAttributes& attributes )
+void ObjectKnowledge::Initialize( const Model_ABC& model, const Common::MsgObjectAttributes& attributes )
 {
     CHECK_ASN_ATTRIBUTE_CREATION( construction      , ConstructionAttribute );
     CHECK_ASN_ATTRIBUTE_CREATION( obstacle          , ObstacleAttribute );
     CHECK_ASN_ATTRIBUTE_CREATION( mine              , MineAttribute );
-    CHECK_ASN_ATTRIBUTE_CREATION( logistic          , LogisticAttribute );
+    if( attributes.has_logistic() )
+        AddAttribute( new LogisticAttribute( model, attributes ) );
     CHECK_ASN_ATTRIBUTE_CREATION( bypass            , BypassAttribute );
     CHECK_ASN_ATTRIBUTE_CREATION( crossing_site     , CrossingSiteAttribute );
     CHECK_ASN_ATTRIBUTE_CREATION( supply_route      , SupplyRouteAttribute );
@@ -114,7 +138,7 @@ void ObjectKnowledge::Update( const MsgsSimToClient::MsgObjectKnowledgeCreation&
     bool realObjectChanged = ( message.real_object() && ! pObject_ )
                           || ( pObject_ && pObject_->GetId() != ( unsigned int )message.real_object() );
     if( realObjectChanged )
-        pObject_ = model_.objects_.Find( message.real_object() );
+        pObject_ = model_.Objects().Find( message.real_object() );
 
     ApplyUpdate( message );
 }
@@ -140,25 +164,34 @@ void ObjectKnowledge::Update( const MsgsSimToClient::MsgObjectKnowledgeUpdate& a
         optionals_.automat_perceptionPresent = 1;
         automatPerceptions_.clear();
         for( int i = 0; i < asnMsg.automat_perception().elem_size(); ++i )
-            automatPerceptions_.push_back( &model_.automats_.Get( asnMsg.automat_perception().elem( i )) );
+            automatPerceptions_.push_back( &model_.Automats().Get( asnMsg.automat_perception().elem( i )) );
     }
 
     if( asnMsg.has_real_object()  )
-        pObject_ = model_.objects_.Find( asnMsg.real_object() );
+        pObject_ = model_.Objects().Find( asnMsg.real_object() );
 
-    CHECK_ASN_ATTRIBUTE_UPDATE( construction      , ConstructionAttribute );
-    CHECK_ASN_ATTRIBUTE_UPDATE( obstacle          , ObstacleAttribute );
-    CHECK_ASN_ATTRIBUTE_UPDATE( mine              , MineAttribute );
-    CHECK_ASN_ATTRIBUTE_UPDATE( logistic          , LogisticAttribute );
-    CHECK_ASN_ATTRIBUTE_UPDATE( bypass            , BypassAttribute );
-    CHECK_ASN_ATTRIBUTE_UPDATE( crossing_site     , CrossingSiteAttribute );
-    CHECK_ASN_ATTRIBUTE_UPDATE( supply_route      , SupplyRouteAttribute );
-    CHECK_ASN_ATTRIBUTE_UPDATE( nbc               , NBCAttribute );
-    CHECK_ASN_ATTRIBUTE_UPDATE( fire              , FireAttribute );
-    CHECK_ASN_ATTRIBUTE_UPDATE( medical_treatment , MedicalTreatmentAttribute );
-
-    std::for_each( attributes_.begin(), attributes_.end(),
-                   boost::bind( &ObjectAttribute_ABC::Update, _1, boost::cref( asnMsg.attributes() ) ) );
+    if( asnMsg.attributes().has_construction() )
+        CreateOrUpdate< ConstructionAttribute >( asnMsg.attributes() );
+    if( asnMsg.attributes().has_obstacle() )
+        CreateOrUpdate< ObstacleAttribute >( asnMsg.attributes() );
+    if( asnMsg.attributes().has_mine() )
+        CreateOrUpdate< MineAttribute >( asnMsg.attributes() );
+    if( asnMsg.attributes().has_logistic() )
+        CreateOrUpdate< LogisticAttribute >( asnMsg.attributes(), model_ );
+    if( asnMsg.attributes().has_mine() )
+        CreateOrUpdate< MineAttribute >( asnMsg.attributes() );
+    if( asnMsg.attributes().has_bypass() )
+        CreateOrUpdate< BypassAttribute >( asnMsg.attributes() );
+    if( asnMsg.attributes().has_crossing_site() )
+        CreateOrUpdate< CrossingSiteAttribute >( asnMsg.attributes() );
+    if( asnMsg.attributes().has_supply_route() )
+        CreateOrUpdate< SupplyRouteAttribute >( asnMsg.attributes() );
+    if( asnMsg.attributes().has_nbc() )
+        CreateOrUpdate< NBCAttribute >( asnMsg.attributes() );
+    if( asnMsg.attributes().has_fire() )
+        CreateOrUpdate< FireAttribute >( asnMsg.attributes() );
+    if( asnMsg.attributes().has_medical_treatment() )
+        CreateOrUpdate< MedicalTreatmentAttribute >( asnMsg.attributes() );
 }
 
 // -----------------------------------------------------------------------------

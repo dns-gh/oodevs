@@ -253,12 +253,3 @@ Platform::E_State Platform::GetState() const
 {
     return state_;
 }
-
-// -----------------------------------------------------------------------------
-// Name: Platform::Accept
-// Created: MGD 2009-12-18
-// -----------------------------------------------------------------------------
-void Platform::Accept( kernel::ModelVisitor_ABC& visitor ) const
-{
-    visitor.Visit( *this );
-}

@@ -20,7 +20,7 @@ using namespace plugins::bml;
 // Name: DetectionReport constructor
 // Created: SBO 2008-07-22
 // -----------------------------------------------------------------------------
-DetectionReport::DetectionReport( const dispatcher::Agent& entity, const dispatcher::Agent& detected, int level )
+DetectionReport::DetectionReport( const dispatcher::Agent_ABC& entity, const dispatcher::Agent_ABC& detected, int level )
     : entity_( entity )
     , detected_( detected )
     , level_( level )

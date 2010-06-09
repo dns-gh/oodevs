@@ -31,8 +31,8 @@ class MissionFactory
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionFactory( const  tools::Resolver_ABC< MissionType, std::string >& unitMissions, const  tools::Resolver_ABC< MissionType, std::string >& automatMissions
-                           , const  tools::Resolver_ABC< MissionType, std::string >& populationMissions, const  tools::Resolver_ABC< FragOrderType, std::string >& fragOrders );
+             MissionFactory( const tools::Resolver_ABC< MissionType, std::string >& unitMissions, const tools::Resolver_ABC< MissionType, std::string >& automatMissions
+                           , const tools::Resolver_ABC< MissionType, std::string >& populationMissions, const tools::Resolver_ABC< FragOrderType, std::string >& fragOrders );
     virtual ~MissionFactory();
     //@}
 

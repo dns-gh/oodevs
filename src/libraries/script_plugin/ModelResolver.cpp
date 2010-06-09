@@ -53,8 +53,8 @@ const kernel::Entity_ABC* ModelResolver::Resolve( const std::string& type, const
 {
     kernel::Entity_ABC* entity = 0;
     if( type == "agent" )
-        entity = model_.agents_.Find( boost::lexical_cast< unsigned int >( id ) );
+        entity = model_.Agents().Find( boost::lexical_cast< unsigned int >( id ) );
     else if( type == "automat" )
-        entity = model_.automats_.Find( boost::lexical_cast< unsigned int >( id ) );
+        entity = model_.Automats().Find( boost::lexical_cast< unsigned int >( id ) );
     return entity;
 }

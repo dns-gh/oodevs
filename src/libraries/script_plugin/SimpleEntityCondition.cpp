@@ -37,7 +37,7 @@ void EntityConditionBase::Trigger( BaseCondition& that, const dispatcher::Agent&
 void EntityConditionBase::Trigger( BaseCondition& that, const dispatcher::AgentKnowledge& entity )
 {
     const KnowledgeManipulator* k = entity.Retrieve< KnowledgeManipulator >();
-    const AgentManipulator* a = entity.agent_.Retrieve< AgentManipulator >();
+    const AgentManipulator* a = entity.GetEntity() ? entity.GetEntity()->Retrieve< AgentManipulator >() : 0;
     if( k && a )
         that.Trigger( k, a );
 }

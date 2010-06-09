@@ -9,9 +9,9 @@
 
 #include "bml_plugin_pch.h"
 #include "ReportingData.h"
-#include "dispatcher/Agent.h"
-#include "dispatcher/Automat.h"
-#include "dispatcher/Side.h"
+#include "dispatcher/Agent_ABC.h"
+#include "dispatcher/Automat_ABC.h"
+#include "dispatcher/Team_ABC.h"
 #include <xeumeuleu/xml.h>
 #pragma warning( push, 1 )
 #include <boost/date_time/posix_time/posix_time.hpp>
@@ -32,9 +32,9 @@ namespace
 // Name: ReportingData constructor
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-ReportingData::ReportingData( const dispatcher::Agent& entity )
+ReportingData::ReportingData( const dispatcher::Agent_ABC& entity )
     : reportDatetime_( CurrentTime() )
-    , organisation_( entity.automat_->GetTeam().GetName() )
+    , organisation_( entity.GetSuperior().GetTeam().GetName() )
 {
     // NOTHING
 }
@@ -43,7 +43,7 @@ ReportingData::ReportingData( const dispatcher::Agent& entity )
 // Name: ReportingData constructor
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-ReportingData::ReportingData( const dispatcher::Automat& entity )
+ReportingData::ReportingData( const dispatcher::Automat_ABC& entity )
     : reportDatetime_( CurrentTime() )
     , organisation_( entity.GetTeam().GetName() )
 {

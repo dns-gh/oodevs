@@ -81,7 +81,7 @@ events =
 
     sim =
     {
-        TickEnded       = function( self ) return condition end,
+        TickEnded       = function( self ) return condition( tick, duration ) end,
         ClientConnected = function( self ) return condition( strClient, strProfile ) end,
         ClientLeft      = function( self ) return condition( strClient ) end
     },

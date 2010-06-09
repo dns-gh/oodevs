@@ -10,8 +10,7 @@
 #ifndef __Population_h_
 #define __Population_h_
 
-#include "SimpleEntity.h"
-#include "clients_kernel/Population_ABC.h"
+#include "Population_ABC.h"
 #include "DecisionalState.h"
 
 namespace Common
@@ -35,7 +34,6 @@ namespace MsgsSimToClient
 namespace kernel
 {
     class ModelVisitor_ABC;
-    class Team_ABC;
 }
 
 namespace dispatcher
@@ -44,6 +42,7 @@ namespace dispatcher
     class PopulationConcentration;
     class PopulationFlow;
     class PopulationOrder;
+    class Team_ABC;
 
 // =============================================================================
 /** @class  Population
@@ -51,7 +50,18 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class Population : public SimpleEntity< kernel::Population_ABC >
+class Population : public dispatcher::Population_ABC
+                 , public kernel::Extension_ABC
+                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationCreation >
+                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationUpdate >
+                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationConcentrationCreation >
+                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationConcentrationUpdate >
+                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationConcentrationDestruction >
+                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationFlowCreation >
+                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationFlowUpdate >
+                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationFlowDestruction >
+                 , public kernel::Updatable_ABC< Common::MsgPopulationOrder >
+                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgDecisionalState >
 {
 public:
     //! @name Constructors/Destructor
@@ -62,22 +72,22 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const MsgsSimToClient::MsgPopulationCreation&                 msg );
-    void Update( const MsgsSimToClient::MsgPopulationUpdate&                   msg );
-    void Update( const MsgsSimToClient::MsgPopulationConcentrationCreation&    msg );
-    void Update( const MsgsSimToClient::MsgPopulationConcentrationUpdate&      msg );
-    void Update( const MsgsSimToClient::MsgPopulationConcentrationDestruction& msg );
-    void Update( const MsgsSimToClient::MsgPopulationFlowCreation&             msg );
-    void Update( const MsgsSimToClient::MsgPopulationFlowUpdate&               msg );
-    void Update( const MsgsSimToClient::MsgPopulationFlowDestruction&          msg );
-    void Update( const Common::MsgPopulationOrder&                    msg );
-    void Update( const MsgsSimToClient::MsgDecisionalState&                    msg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationCreation&                 msg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationUpdate&                   msg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationCreation&    msg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationUpdate&      msg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationDestruction& msg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationFlowCreation&             msg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationFlowUpdate&               msg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationFlowDestruction&          msg );
+    virtual void DoUpdate( const Common::MsgPopulationOrder&                    msg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgDecisionalState&                    msg );
 
-    void SendCreation   ( ClientPublisher_ABC& publisher ) const;
-    void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
-    void SendDestruction( ClientPublisher_ABC& publisher ) const;
+    virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
+    virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
+    virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
 
-    void Accept( kernel::ModelVisitor_ABC& visitor ) const;
+    virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
 
     virtual const kernel::PopulationType& GetType() const;
     virtual unsigned int GetLivingHumans() const;
@@ -96,18 +106,16 @@ private:
     //@{
           Model&        model_;
     const unsigned long nType_;
-    const std::string   strName_;
-    kernel::Team_ABC&   side_;
+    const std::string strName_;
+    dispatcher::Team_ABC& side_;
     
-    unsigned int        nDominationState_;
+    unsigned int nDominationState_;
     std::auto_ptr< PopulationOrder > order_;
     DecisionalState decisionalInfos_;
-    //@}
 
-public:
     tools::Resolver< PopulationConcentration > concentrations_;
-    tools::Resolver< PopulationFlow          > flows_;
-
+    tools::Resolver< PopulationFlow > flows_;
+    //@}
 };
 
 }

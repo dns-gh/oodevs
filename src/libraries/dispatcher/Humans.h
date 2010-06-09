@@ -22,7 +22,6 @@ namespace MsgsSimToClient
 
 namespace dispatcher
 {
-    class Model;
 
 // =============================================================================
 /** @class  Humans
@@ -35,7 +34,7 @@ class Humans
 public:
     //! @name Constructors/Destructor
     //@{
-     Humans( const Model& model, const MsgsSimToClient::HumanDotations_HumanDotation& asnMsg );
+    explicit Humans( const MsgsSimToClient::HumanDotations_HumanDotation& asnMsg );
     virtual ~Humans();
     //@}
 

@@ -15,7 +15,6 @@
 #include "Tools.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
-#include "clients_kernel/ModelVisitor_ABC.h"
 #include "clients_kernel/PopulationType.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Styles.h"
@@ -352,15 +351,6 @@ void Population::DisplayInTooltip( Displayer_ABC& displayer ) const
 void Population::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
 {
     const_cast< Population* >( this )->displayers_.insert( &displayer );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Population::Accept
-// Created: MGD 2009-12-21
-// -----------------------------------------------------------------------------
-void Population::Accept( kernel::ModelVisitor_ABC& visitor ) const
-{
-    visitor.Visit( *this );
 }
 
 // -----------------------------------------------------------------------------

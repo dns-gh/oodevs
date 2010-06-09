@@ -11,16 +11,10 @@
 #define __ToxicCloudAttribute_h_
 
 #include "ObjectAttribute_ABC.h"
-
-namespace Common
-{
-    class LocatedQuantityList;
-    class MsgObjectAttributes;
-}
+#include "protocol/Protocol.h"
 
 namespace dispatcher
 {
-    class Model;
 
 // =============================================================================
 /** @class  ToxicCloudAttribute
@@ -33,15 +27,14 @@ class ToxicCloudAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     ToxicCloudAttribute( const Model& model, const Common::MsgObjectAttributes& asnMsg );
+    explicit ToxicCloudAttribute( const Common::MsgObjectAttributes& message );
     virtual ~ToxicCloudAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update   ( const Common::MsgObjectAttributes& asnMsg );
-    virtual void Send     ( Common::MsgObjectAttributes& asnMsg ) const;
-    virtual void Delete( Common::MsgObjectAttributes& asnMsg ) const;
+    virtual void Update( const Common::MsgObjectAttributes& message );
+    virtual void Send  ( Common::MsgObjectAttributes& message ) const;
     //@}
 private:
     //! @name 
@@ -52,7 +45,7 @@ private:
 private:
     //! @name Data member
     //@{
-    Common::MsgLocatedQuantityList  quantities_;
+    Common::MsgLocatedQuantityList quantities_;
     //@}
 };
 

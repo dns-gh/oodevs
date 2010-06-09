@@ -11,7 +11,7 @@
 #include "KnowledgeManipulator.h"
 #include "directia/Brain.h"
 #include "dispatcher/AgentKnowledge.h"
-#include "dispatcher/KnowledgeGroup.h"
+#include "dispatcher/KnowledgeGroup_ABC.h"
 #include "dispatcher/Side.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 
@@ -65,7 +65,7 @@ unsigned int KnowledgeManipulator::GetIdentifier() const
 Position KnowledgeManipulator::GetPosition() const
 {
     // $$$$ _RC_ SBO 2010-05-27: reverse position_ lat/long
-    const geometry::Point2d pos( knowledge_.position_.Y(), knowledge_.position_.X() );
+    const geometry::Point2d pos( knowledge_.GetPosition().Y(), knowledge_.GetPosition().X() );
     return ToPosition( converter_.ConvertFromGeo( pos ) );
 }
 
@@ -75,7 +75,8 @@ Position KnowledgeManipulator::GetPosition() const
 // -----------------------------------------------------------------------------
 std::string KnowledgeManipulator::GetOwnerTeam() const
 {
-    return std::string( knowledge_.knowledgeGroup_.GetTeam().GetName() );
+    // $$$$ _RC_ SBO 2010-06-03: refactor !
+    return std::string( static_cast< const dispatcher::KnowledgeGroup_ABC& >( knowledge_.GetOwner() ).GetTeam().GetName() );
 }
 
 

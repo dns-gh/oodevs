@@ -11,21 +11,17 @@
 #include "KnowledgeGroup.h"
 #include "IdManager.h"
 #include "Tools.h"
-
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h" // LTO
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/KnowledgeGroupType.h" // LTO
-#include "clients_kernel/ModelVisitor_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Team_ABC.h"
-
 #include <xeumeuleu/xml.h>
 
 using namespace kernel;
 using namespace xml;
-
 
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroup constructor
@@ -34,7 +30,6 @@ using namespace xml;
 KnowledgeGroup::KnowledgeGroup( Controller& controller, IdManager& idManager, tools::Resolver_ABC< KnowledgeGroupType, std::string >& types )
     : EntityImplementation< KnowledgeGroup_ABC >( controller, idManager.GetNextId(), "" )
     , type_( types.Find( "Standard" ) ) // $$$$ SBO 2006-11-17: Hard coded default
-    , strCommunicationDelay_() // LTO
     , isActivated_( true ) // LTO
 {
     UpdateCommunicationDelay();
@@ -49,12 +44,10 @@ KnowledgeGroup::KnowledgeGroup( Controller& controller, IdManager& idManager, to
 // -----------------------------------------------------------------------------
 KnowledgeGroup::KnowledgeGroup( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, tools::Resolver_ABC< KnowledgeGroupType, std::string >& types )
     : EntityImplementation< KnowledgeGroup_ABC >( controller, xml::attribute< unsigned int >( xis, "id" ), "" )
-    , strCommunicationDelay_() // LTO
+    , type_( &types.Get( xml::attribute< std::string >( xis, "type" ) ) )
 {
-    std::string type, name;
-    xis >> attribute( "type", type )
-        >> optional() >> attribute( "name", name );
-    type_ = &types.Get( type );
+    std::string name;
+    xis >> optional() >> attribute( "name", name );
     UpdateCommunicationDelay(); // LTO
     name_ = name.empty() ? tools::translate( "KnowledgeGroup", "Knowledge group [%1]" ).arg( id_ ) : name.c_str();
     idManager.Lock( id_ );
@@ -83,7 +76,7 @@ void KnowledgeGroup::CreateDictionary( kernel::Controller& controller )
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "KnowledgeGroup", "Info/Identifier" ), (const unsigned long)id_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "KnowledgeGroup", "Info/Name" ), name_, *this, &KnowledgeGroup::Rename );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "KnowledgeGroup", "Type/Name" ), type_, *this, &KnowledgeGroup::SetType );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "KnowledgeGroup", "Type/Delay" ), ((const KnowledgeGroup*)this)->strCommunicationDelay_ ); // LTO
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "KnowledgeGroup", "Type/Delay" ), ((const KnowledgeGroup*)this)->communicationDelay_ ); // LTO
 }
 
 // -----------------------------------------------------------------------------
@@ -93,7 +86,7 @@ void KnowledgeGroup::CreateDictionary( kernel::Controller& controller )
 // -----------------------------------------------------------------------------
 void KnowledgeGroup::UpdateCommunicationDelay()
 {
-    strCommunicationDelay_ = type_ ? type_->ShowCommunicationDelay() : "0m0s";
+    communicationDelay_ = type_ ? type_->ShowCommunicationDelay() : "0m0s";
 }
 
 // -----------------------------------------------------------------------------
@@ -104,7 +97,6 @@ void KnowledgeGroup::Rename( const QString& name )
 {
     if( name == name_ )
         return;
-
     name_ = name;
     Touch();
 }
@@ -118,7 +110,6 @@ void KnowledgeGroup::SetType( kernel::KnowledgeGroupType* const& type )
 {
     if( type == type_ )
         return;
-
     type_ = type;
     UpdateCommunicationDelay();
     Touch();
@@ -130,58 +121,9 @@ void KnowledgeGroup::SetType( kernel::KnowledgeGroupType* const& type )
 // -----------------------------------------------------------------------------
 void KnowledgeGroup::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << attribute( "id", long( id_ ) )
+    xos << attribute( "id", id_ )
         << attribute( "type", type_->GetName() )
         << attribute( "name", name_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroup::Accept
-// Created: MGD 2009-12-21
-// -----------------------------------------------------------------------------
-void KnowledgeGroup::Accept( kernel::ModelVisitor_ABC& visitor ) const
-{
-    visitor.Visit( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroup::Accept
-// Created: MGD 2009-12-21
-// LTO
-// -----------------------------------------------------------------------------
-void KnowledgeGroup::Register( kernel::KnowledgeGroup_ABC& knowledgeGroup )
-{
-    Get< kernel::CommunicationHierarchies >().RegisterSubordinate( knowledgeGroup );
-}
-
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroup::Accept
-// Created: MGD 2009-12-21
-// LTO
-// -----------------------------------------------------------------------------
-void KnowledgeGroup::Remove( kernel::KnowledgeGroup_ABC& knowledgeGroup )
-{
-    Get< kernel::CommunicationHierarchies >().UnregisterSubordinate( knowledgeGroup );
-}
-
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroup::Accept
-// Created: MGD 2009-12-21
-// LTO
-// -----------------------------------------------------------------------------
-void KnowledgeGroup::Register( kernel::Automat_ABC& automat )
-{
-    throw std::exception( __FUNCTION__ " not implemented" ); 
-}
-
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroup::Accept
-// Created: MGD 2009-12-21
-// LTO
-// -----------------------------------------------------------------------------
-void KnowledgeGroup::Remove( kernel::Automat_ABC& automat )
-{
-    throw std::exception( __FUNCTION__ " not implemented" ); 
 }
 
 // -----------------------------------------------------------------------------

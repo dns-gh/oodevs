@@ -27,8 +27,8 @@ namespace kernel
 // Created: AGE 2006-08-07
 // =============================================================================
 class Population_ABC : public Entity_ABC
-                     , public  tools::Resolver< PopulationFlow_ABC >
-                     , public  tools::Resolver< PopulationConcentration_ABC >
+                     , public tools::Resolver< PopulationFlow_ABC >
+                     , public tools::Resolver< PopulationConcentration_ABC >
 {
 public:
     //! @name Static

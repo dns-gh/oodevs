@@ -21,7 +21,7 @@ using namespace plugins::bml;
 // Name: AutomatExtension constructor
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-AutomatExtension::AutomatExtension( dispatcher::Automat& holder, Publisher_ABC& publisher, const ReportFactory& factory )
+AutomatExtension::AutomatExtension( dispatcher::Automat_ABC& holder, Publisher_ABC& publisher, const ReportFactory& factory )
     : holder_( holder )
     , publisher_( publisher )
     , factory_( factory )
@@ -42,7 +42,7 @@ AutomatExtension::~AutomatExtension()
 // Name: AutomatExtension::DoUpdate
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-void AutomatExtension::DoUpdate( const MsgAutomatOrder& message )
+void AutomatExtension::DoUpdate( const Common::MsgAutomatOrder& message )
 {
     try
     {

@@ -31,7 +31,7 @@ namespace kernel
 
 namespace dispatcher
 {
-    class Model;
+    class Model_ABC;
     class ClientPublisher_ABC;
 
 // =============================================================================
@@ -45,7 +45,7 @@ class AgentLogMaintenance
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentLogMaintenance( const Model& model, const kernel::Agent_ABC& agent, const MsgsSimToClient::MsgLogMaintenanceState& asnMsg );
+             AgentLogMaintenance( const Model_ABC& model, const kernel::Agent_ABC& agent, const MsgsSimToClient::MsgLogMaintenanceState& asnMsg );
     virtual ~AgentLogMaintenance();
     //@}
 
@@ -69,7 +69,7 @@ private:
     //@}
 
 private:
-    const Model&             model_;
+    const Model_ABC&         model_;
     const kernel::Agent_ABC& agent_;
     bool                     bSystemEnabled_;
     std::vector< Common::MsgEquipmentType >        priorities_;

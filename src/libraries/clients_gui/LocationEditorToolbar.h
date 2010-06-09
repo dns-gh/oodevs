@@ -13,7 +13,10 @@
 #include "LocationEditor_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "FeatureNameParser.h"
+#pragma warning( push )
+#pragma warning( disable : 4512 )
 #include <boost/ptr_container/ptr_map.hpp>
+#pragma warning( pop )
 
 namespace kernel
 {

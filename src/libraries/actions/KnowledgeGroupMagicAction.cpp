@@ -13,7 +13,6 @@
 #include "protocol/publisher_ABC.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/ModelVisitor_ABC.h"
 
 using namespace actions;
 
@@ -70,15 +69,6 @@ void KnowledgeGroupMagicAction::Polish()
 {
     if( registered_ )
         controller_.Create( *(Action_ABC*)this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroupMagicAction::Accept
-// Created: JSR 2010-04-20
-// -----------------------------------------------------------------------------
-void KnowledgeGroupMagicAction::Accept( kernel::ModelVisitor_ABC& visitor ) const
-{
-    visitor.Visit( *this );
 }
 
 // -----------------------------------------------------------------------------

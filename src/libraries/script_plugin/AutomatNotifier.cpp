@@ -13,7 +13,6 @@
 #include "clients_kernel/Controller.h"
 #include "protocol/protocol.h"
 
-using namespace Common;
 using namespace plugins::script;
 
 // -----------------------------------------------------------------------------
@@ -40,7 +39,7 @@ AutomatNotifier::~AutomatNotifier()
 // Name: AutomatNotifier::DoUpdate
 // Created: SBO 2008-08-13
 // -----------------------------------------------------------------------------
-void AutomatNotifier::DoUpdate( const MsgAutomatOrder& )
+void AutomatNotifier::DoUpdate( const Common::MsgAutomatOrder& )
 {
     controller_.Update( events::AutomatMissionStarted( automat_ ) );
 }

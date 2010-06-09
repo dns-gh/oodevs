@@ -18,9 +18,8 @@ using namespace dispatcher;
 // Name: ActivityTimeAttribute constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-ActivityTimeAttribute::ActivityTimeAttribute( const Model& model, const Common::MsgObjectAttributes& asnMsg )
-    : ObjectAttribute_ABC( model, asnMsg )    
-    , nActivityTime_  ( 0 )
+ActivityTimeAttribute::ActivityTimeAttribute( const Common::MsgObjectAttributes& asnMsg )
+    : nActivityTime_( 0 )
 {
     Update( asnMsg );
 }
@@ -31,7 +30,7 @@ ActivityTimeAttribute::ActivityTimeAttribute( const Model& model, const Common::
 // -----------------------------------------------------------------------------
 ActivityTimeAttribute::~ActivityTimeAttribute()
 {
-
+    // NOTHING
 }  
 
 // -----------------------------------------------------------------------------
@@ -41,9 +40,7 @@ ActivityTimeAttribute::~ActivityTimeAttribute()
 void ActivityTimeAttribute::Update( const Common::MsgObjectAttributes& asnMsg )
 {    
     if( asnMsg.has_activity_time()  )
-    {        
         nActivityTime_ = asnMsg.activity_time().value();
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -53,13 +50,4 @@ void ActivityTimeAttribute::Update( const Common::MsgObjectAttributes& asnMsg )
 void ActivityTimeAttribute::Send( Common::MsgObjectAttributes& asnMsg ) const
 {
     asnMsg.mutable_activity_time()->set_value( nActivityTime_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActivityTimeAttribute::Delete
-// Created: NLD 2006-09-28
-// -----------------------------------------------------------------------------
-void ActivityTimeAttribute::Delete( Common::MsgObjectAttributes& /*asnMsg*/ ) const
-{
-//    delete asnMsg().mine_jam;
 }

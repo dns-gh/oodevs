@@ -75,7 +75,7 @@ unsigned int AgentManipulator::GetIdentifier() const
 // -----------------------------------------------------------------------------
 std::string AgentManipulator::GetName() const
 {
-    return agent_.name_;
+    return agent_.GetName().ascii();
 }
 
 // -----------------------------------------------------------------------------
@@ -84,7 +84,7 @@ std::string AgentManipulator::GetName() const
 // -----------------------------------------------------------------------------
 std::string AgentManipulator::GetTeam() const
 {
-    return std::string( agent_.automat_->GetTeam().GetName() );
+    return std::string( agent_.GetSuperior().GetTeam().GetName() );
 }
 
 // -----------------------------------------------------------------------------
@@ -94,7 +94,7 @@ std::string AgentManipulator::GetTeam() const
 Position AgentManipulator::GetPosition() const
 {
     // $$$$ _RC_ SBO 2010-05-27: reverse position_ lat/long
-    const geometry::Point2d pos( agent_.position_.Y(), agent_.position_.X() );
+    const geometry::Point2d pos( agent_.GetPosition().Y(), agent_.GetPosition().X() );
     return ToPosition( converter_.ConvertFromGeo( pos ) );
 }
 
@@ -104,7 +104,7 @@ Position AgentManipulator::GetPosition() const
 // -----------------------------------------------------------------------------
 unsigned int AgentManipulator::GetOperationalState() const
 {
-    return agent_.nOperationalStateValue_;
+    return agent_.GetOperationalStateValue();
 }
 
 namespace
@@ -127,7 +127,7 @@ namespace
 // -----------------------------------------------------------------------------
 std::string AgentManipulator::GetForceRatio() const
 {
-    return ResolveForceRatio( agent_.nForceRatioState_ );
+    return ResolveForceRatio( agent_.GetForceRatio() );
 }
 
 // -----------------------------------------------------------------------------
@@ -136,7 +136,8 @@ std::string AgentManipulator::GetForceRatio() const
 // -----------------------------------------------------------------------------
 unsigned int AgentManipulator::GetMission() const
 {
-    return agent_.order_.get() ? agent_.order_->GetId() : 0;
+    const dispatcher::Order_ABC* order = agent_.GetOrder();
+    return order ? order->GetId() : 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -148,7 +149,7 @@ void AgentManipulator::Teleport( const dispatcher::Position& position )
     simulation::UnitMagicAction message;
     message().set_oid( agent_.GetId() );
     message().set_type( MsgsClientToSim::MsgUnitMagicAction_Type_move_to );
-    MsgPoint point;
+    Common::MsgPoint point;
     Common::MsgMissionParameter& parameter = *message().mutable_parametres()->add_elem();
     parameter.set_null_value( false );
     Common::MsgLocation& location = *parameter.mutable_value()->mutable_point()->mutable_location();

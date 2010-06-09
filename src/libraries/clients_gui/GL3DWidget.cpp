@@ -226,6 +226,25 @@ void Gl3dWidget::DrawConvexPolygon( const Polygon2f& polygon ) const
     const Polygon2f::T_Vertices& points = polygon.Vertices();
     DrawConvexPolygon( points );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Gl3dWidget::DrawConvexPolygon
+// Created: SBO 2010-06-09
+// -----------------------------------------------------------------------------
+void Gl3dWidget::DrawConvexPolygon( const T_PointVector& points, bool selected ) const
+{
+    //SLG TODO
+}
+
+// -----------------------------------------------------------------------------
+// Name: Gl3dWidget::DrawDecoratedPolygon
+// Created: SBO 2010-06-09
+// -----------------------------------------------------------------------------
+void Gl3dWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const urban::UrbanDecoration* decoration ) const
+{
+    //SLG TODO
+}
+
 // -----------------------------------------------------------------------------
 // Name: Gl3dWidget::DrawArrow
 // Created: AGE 2006-03-28

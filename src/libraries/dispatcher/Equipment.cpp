@@ -17,7 +17,7 @@ using namespace dispatcher;
 // Name: Equipment constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-Equipment::Equipment( const Model& /*model*/, const MsgsSimToClient::EquipmentDotations_EquipmentDotation& message )
+Equipment::Equipment( const MsgsSimToClient::EquipmentDotations_EquipmentDotation& message )
    : nEquipmentType_   ( message.type_equipement() )
    , nNbrAvailable_    ( message.nb_disponibles() )
    , nNbrUnavailable_  ( message.nb_indisponibles() )
@@ -25,6 +25,7 @@ Equipment::Equipment( const Model& /*model*/, const MsgsSimToClient::EquipmentDo
    , nNbrInMaintenance_( message.nb_dans_chaine_maintenance() )
    , nNbrPrisoner_     ( message.nb_prisonniers() )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -33,7 +34,7 @@ Equipment::Equipment( const Model& /*model*/, const MsgsSimToClient::EquipmentDo
 // -----------------------------------------------------------------------------
 Equipment::~Equipment()
 {
-
+    // NOTHING
 }
       
 // -----------------------------------------------------------------------------

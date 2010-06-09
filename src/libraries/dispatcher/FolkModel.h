@@ -10,14 +10,16 @@
 #ifndef __FolkModel_h_
 #define __FolkModel_h_
 
-
 #include "SimpleEntity.h"
 
-
-////using namespace Common;
 namespace MsgsSimToClient
 {
     class MsgFolkCreation;
+}
+
+namespace kernel
+{
+    class ModelVisitor_ABC;
 }
 
 namespace dispatcher

@@ -55,6 +55,7 @@ void TeamHierarchies::DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupCreation
 // -----------------------------------------------------------------------------
 void TeamHierarchies::DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupUpdate& message )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

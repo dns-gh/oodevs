@@ -15,13 +15,10 @@
 namespace Common
 {
     enum ObstacleType_DemolitionTargetType;
-
-    class MsgObjectAttributes;
 }
 
 namespace dispatcher
 {
-    class Model;
 
 // =============================================================================
 /** @class  ObstacleAttribute
@@ -34,19 +31,21 @@ class ObstacleAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     ObstacleAttribute( const Model& model, const Common::MsgObjectAttributes& asnMsg );
+    explicit ObstacleAttribute( const Common::MsgObjectAttributes& message );
     virtual ~ObstacleAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update   ( const Common::MsgObjectAttributes& asnMsg );
-    virtual void Send     ( Common::MsgObjectAttributes& asnMsg ) const;
-    virtual void Delete( Common::MsgObjectAttributes& asnMsg ) const;
+    virtual void Update( const Common::MsgObjectAttributes& message );
+    virtual void Send  ( Common::MsgObjectAttributes& message ) const;
     //@}
 
 private:
+    //! @name Member data
+    //@{
     Common::ObstacleType_DemolitionTargetType obstacle_;
+    //@}
 };
 
 }

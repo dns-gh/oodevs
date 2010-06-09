@@ -23,8 +23,8 @@ namespace kernel
 
 namespace dispatcher
 {
-    class Agent;
-    class Automat;
+    class Agent_ABC;
+    class Automat_ABC;
 }
 
 namespace plugins
@@ -47,8 +47,8 @@ class OrderReport
 public:
     //! @name Constructors/Destructor
     //@{
-             OrderReport( const dispatcher::Agent& agent, const tools::Resolver_ABC< kernel::MissionType >& missions, const MsgUnitOrder& asn );
-             OrderReport( const dispatcher::Automat& automat, const tools::Resolver_ABC< kernel::MissionType >& missions, const MsgAutomatOrder& asn );
+             OrderReport( const dispatcher::Agent_ABC& agent, const tools::Resolver_ABC< kernel::MissionType >& missions, const MsgUnitOrder& asn );
+             OrderReport( const dispatcher::Automat_ABC& automat, const tools::Resolver_ABC< kernel::MissionType >& missions, const MsgAutomatOrder& asn );
     virtual ~OrderReport();
     //@}
 

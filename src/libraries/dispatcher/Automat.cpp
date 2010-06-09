@@ -9,19 +9,18 @@
 
 #include "dispatcher_pch.h"
 #include "Automat.h"
-
 #include "Agent.h"
 #include "AutomatOrder.h"
-#include "protocol/ClientPublisher_ABC.h"
 #include "DotationQuota.h"
 #include "Formation.h"
 #include "KnowledgeGroup.h"
 #include "Model.h"
-#include "clients_kernel/ModelVisitor_ABC.h"
 #include "Report.h"
 #include "Side.h"
-#include <boost/bind.hpp>
+#include "clients_kernel/ModelVisitor_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "protocol/clientsenders.h"
+#include <boost/bind.hpp>
 
 using namespace dispatcher;
 
@@ -30,14 +29,14 @@ using namespace dispatcher;
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
 Automat::Automat( Model_ABC& model, const MsgsSimToClient::MsgAutomatCreation& msg )
-    : SimpleEntity< kernel::Automat_ABC >( msg.oid(), QString( msg.nom().c_str() ) )
+    : Automat_ABC       ( msg.oid(), QString( msg.nom().c_str() ) )
     , model_            ( model )
     , type_             ( msg.type_automate() )
     , name_             ( msg.nom().c_str() )
     , team_             ( model.Sides().Get( msg.oid_camp() ) )
-    , parentFormation_  ( msg.oid_parent().has_formation() ? static_cast< Formation* >( &model.Formations().Get( msg.oid_parent().formation().oid() ) ) : 0 )
-    , parentAutomat_    ( msg.oid_parent().has_automate()  ? static_cast< Automat* >( &model.Automats().Get( msg.oid_parent().automate().oid() ) ) : 0 )
-    , knowledgeGroup_   ( static_cast< KnowledgeGroup* >( &model.KnowledgeGroups().Get( msg.oid_groupe_connaissance() ) ) )
+    , parentFormation_  ( msg.oid_parent().has_formation() ? &model.Formations().Get( msg.oid_parent().formation().oid() ) : 0 )
+    , parentAutomat_    ( msg.oid_parent().has_automate()  ? &model.Automats().Get( msg.oid_parent().automate().oid() ) : 0 )
+    , knowledgeGroup_   ( &model.KnowledgeGroups().Get( msg.oid_groupe_connaissance() ) )
     , pTC2_             ( 0 )
     , pLogMaintenance_  ( 0 )
     , pLogMedical_      ( 0 )
@@ -57,6 +56,7 @@ Automat::Automat( Model_ABC& model, const MsgsSimToClient::MsgAutomatCreation& m
         parentFormation_->Register( *this );
     else if( parentAutomat_ )
         parentAutomat_->Register( *this );
+    RegisterSelf( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,18 +67,50 @@ Automat::~Automat()
 {
     quotas_.DeleteAll();
     if( parentFormation_ )
+    {
+        MoveChildren( *parentFormation_, false );
         parentFormation_->Remove( *this );
+    }
     else if( parentAutomat_ )
+    {
+        MoveChildren( *parentAutomat_, true );
         parentAutomat_->Remove( *this );
+    }
     knowledgeGroup_->Remove( *this );
-    NotifyDestructionToChildAutomats();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat::MoveChildren
+// Created: SBO 2010-06-01
+// -----------------------------------------------------------------------------
+template< typename Superior >
+void Automat::MoveChildren( Superior& superior, bool agents )
+{
+    tools::Iterator< const dispatcher::Automat_ABC& > it( automats_.CreateIterator() );
+    while( it.HasMoreElements() )
+    {
+        dispatcher::Automat_ABC& entity = const_cast< dispatcher::Automat_ABC& >( it.NextElement() );
+        Remove( entity );
+        superior.Register( entity );
+    }
+    automats_.Clear();
+    if( agents )
+    {
+        tools::Iterator< const dispatcher::Agent_ABC& > it( agents_.CreateIterator() );
+        while( it.HasMoreElements() )
+        {
+            dispatcher::Agent_ABC& entity = const_cast< dispatcher::Agent_ABC& >( it.NextElement() );
+            static_cast< Agent& >( entity ).ChangeAutomat( superior.GetId() ); // $$$$ SBO 2010-06-02: add Register/Remove on Agent_ABC
+        }
+        agents_.Clear();
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: Automat::Update
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-void Automat::Update( const MsgsSimToClient::MsgAutomatCreation& msg )
+void Automat::DoUpdate( const MsgsSimToClient::MsgAutomatCreation& msg )
 {
     ChangeKnowledgeGroup( msg.oid_groupe_connaissance() );
     if( parentFormation_ && 
@@ -88,30 +120,29 @@ void Automat::Update( const MsgsSimToClient::MsgAutomatCreation& msg )
     if( parentAutomat_ && ( msg.oid_parent().has_formation() || ( msg.oid_parent().has_automate()  && msg.oid_parent().automate().oid()  != parentAutomat_  ->GetId() ) ) )
        ChangeSuperior( msg.oid_parent() );
     decisionalInfos_.Clear();
-    ApplyUpdate( msg );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Automat::Update
+// Name: Automat::DoUpdate
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Automat::Update( const Common::MsgAutomatChangeLogisticLinks& msg )
+void Automat::DoUpdate( const Common::MsgAutomatChangeLogisticLinks& msg )
 {
-    if( msg.has_oid_tc2()  )
+    if( msg.has_oid_tc2() )
         pTC2_ = msg.oid_tc2() == 0 ? 0 : &model_.Automats().Get( msg.oid_tc2() );
-    if( msg.has_oid_maintenance()  )
+    if( msg.has_oid_maintenance() )
         pLogMaintenance_ = msg.oid_maintenance() == 0 ? 0 : &model_.Automats().Get( msg.oid_maintenance() );
-    if( msg.has_oid_sante()  )
+    if( msg.has_oid_sante() )
         pLogMedical_ = msg.oid_sante() == 0 ? 0 : &model_.Automats().Get( msg.oid_sante() );
-    if( msg.has_oid_ravitaillement()  )
+    if( msg.has_oid_ravitaillement() )
         pLogSupply_ = msg.oid_ravitaillement() == 0 ? 0 : &model_.Automats().Get( msg.oid_ravitaillement() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Automat::Update
+// Name: Automat::DoUpdate
 // Created: SBO 2008-02-13
 // -----------------------------------------------------------------------------
-void Automat::Update( const Common::MsgAutomatChangeSuperior& msg )
+void Automat::DoUpdate( const Common::MsgAutomatChangeSuperior& msg )
 {
     ChangeSuperior( msg.oid_superior() );
 }
@@ -120,7 +151,7 @@ void Automat::Update( const Common::MsgAutomatChangeSuperior& msg )
 // Name: Automat::Update
 // Created: SBO 2008-02-13
 // -----------------------------------------------------------------------------
-void Automat::Update( const Common::MsgAutomatChangeKnowledgeGroup& msg )
+void Automat::DoUpdate( const Common::MsgAutomatChangeKnowledgeGroup& msg )
 {
     ChangeKnowledgeGroup( msg.oid_groupe_connaissance() );
 }
@@ -165,10 +196,10 @@ void Automat::ChangeSuperior( const Superior& superior )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Automat::Update
+// Name: Automat::DoUpdate
 // Created: NLD 2006-10-05
 // -----------------------------------------------------------------------------
-void Automat::Update( const MsgsSimToClient::MsgAutomatAttributes& msg )
+void Automat::DoUpdate( const MsgsSimToClient::MsgAutomatAttributes& msg )
 {
     if( msg.has_etat_automate()  )
         nAutomatState_ = msg.etat_automate();
@@ -183,19 +214,19 @@ void Automat::Update( const MsgsSimToClient::MsgAutomatAttributes& msg )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Automat::Update
+// Name: Automat::DoUpdate
 // Created: ZEBRE 2007-06-21
 // -----------------------------------------------------------------------------
-void Automat::Update( const MsgsSimToClient::MsgDecisionalState& asnMsg )
+void Automat::DoUpdate( const MsgsSimToClient::MsgDecisionalState& asnMsg )
 {
     decisionalInfos_.Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Automat::Update
+// Name: Automat::DoUpdate
 // Created: NLD 2007-03-29
 // -----------------------------------------------------------------------------
-void Automat::Update( const MsgsSimToClient::MsgLogSupplyQuotas& msg )
+void Automat::DoUpdate( const MsgsSimToClient::MsgLogSupplyQuotas& msg )
 {
     quotas_.DeleteAll();
     for( int i = 0; i < msg.quotas().elem_size(); ++i )
@@ -206,15 +237,14 @@ void Automat::Update( const MsgsSimToClient::MsgLogSupplyQuotas& msg )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Automat::Update
+// Name: Automat::DoUpdate
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void Automat::Update( const Common::MsgAutomatOrder& msg )
+void Automat::DoUpdate( const Common::MsgAutomatOrder& msg )
 {
     order_.reset();
     if( msg.mission() != 0 )
         order_.reset( new AutomatOrder( model_, *this, msg ) );
-    ApplyUpdate( msg );
 }
 
 namespace
@@ -332,8 +362,8 @@ namespace
 void Automat::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
-    childAutomats_.Apply( boost::bind( &kernel::Automat_ABC::Accept, _1, boost::ref( visitor ) ) );
-    agents_.Apply( boost::bind( &kernel::Agent_ABC::Accept, _1, boost::ref( visitor ) ) );
+    automats_.Apply( boost::bind( &dispatcher::Automat_ABC::Accept, _1, boost::ref( visitor ) ) );
+    agents_.Apply( boost::bind( &dispatcher::Agent_ABC::Accept, _1, boost::ref( visitor ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -358,31 +388,31 @@ bool Automat::IsEngaged() const
 // Name: Automat::Register
 // Created: MGD 2009-12-21
 // -----------------------------------------------------------------------------
-void Automat::Register( kernel::Automat_ABC& automat )
+void Automat::Register( dispatcher::Automat_ABC& automat )
 {
-    childAutomats_.Register( automat.GetId(), automat );
+    automats_.Register( automat.GetId(), automat );
 }
 // -----------------------------------------------------------------------------
 // Name: Automat::Remove
 // Created: MGD 2009-12-21
 // -----------------------------------------------------------------------------
-void Automat::Remove( kernel::Automat_ABC& automat )
+void Automat::Remove( dispatcher::Automat_ABC& automat )
 {
-    childAutomats_.Remove( automat.GetId() );
+    automats_.Remove( automat.GetId() );
 }
 // -----------------------------------------------------------------------------
 // Name: Automat::GetAutomats
 // Created: MGD 2009-12-21
 // -----------------------------------------------------------------------------
-const tools::Resolver< kernel::Automat_ABC >& Automat::GetAutomats() const
+const tools::Resolver< dispatcher::Automat_ABC >& Automat::GetAutomats() const
 {
-    return childAutomats_;
+    return automats_;
 }
 // -----------------------------------------------------------------------------
 // Name: Automat::Register
 // Created: MGD 2009-12-21
 // -----------------------------------------------------------------------------
-void Automat::Register( kernel::Agent_ABC& automat )
+void Automat::Register( dispatcher::Agent_ABC& automat )
 {
     agents_.Register( automat.GetId(), automat );
 }
@@ -390,7 +420,7 @@ void Automat::Register( kernel::Agent_ABC& automat )
 // Name: Automat::Remove
 // Created: MGD 2009-12-21
 // -----------------------------------------------------------------------------
-void Automat::Remove( kernel::Agent_ABC& automat )
+void Automat::Remove( dispatcher::Agent_ABC& automat )
 {
     agents_.Remove( automat.GetId() );
 }
@@ -398,7 +428,7 @@ void Automat::Remove( kernel::Agent_ABC& automat )
 // Name: Automat::GetAgents
 // Created: MGD 2009-12-21
 // -----------------------------------------------------------------------------
-const tools::Resolver< kernel::Agent_ABC >& Automat::GetAgents() const
+const tools::Resolver< dispatcher::Agent_ABC >& Automat::GetAgents() const
 {
     return agents_;
 }
@@ -424,7 +454,7 @@ kernel::Formation_ABC* Automat::GetFormation() const
 // Name: Automat::GetFormation
 // Created: MGD 2009-12-23
 // -----------------------------------------------------------------------------
-kernel::Team_ABC& Automat::GetTeam() const
+dispatcher::Team_ABC& Automat::GetTeam() const
 {
     return team_;
 }
@@ -437,22 +467,4 @@ kernel::KnowledgeGroup_ABC& Automat::GetKnowledgeGroup() const
     if( !knowledgeGroup_ )
         throw std::runtime_error( __FUNCTION__ ": automat without a knowledge group." );
     return *knowledgeGroup_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Formation::NotifyDestructionToChildAutomats
-// Created: RPD 2010-06-01
-// -----------------------------------------------------------------------------
-void Automat::NotifyDestructionToChildAutomats()
-{
-    childAutomats_.Apply( boost::bind( &kernel::Automat_ABC::NotifyParentDestroyed, _1 ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Formation::NotifyParentDestroyed()
-// Created: RPD 2010-06-01
-// -----------------------------------------------------------------------------
-void Automat::NotifyParentDestroyed()
-{
-    parentAutomat_ = 0;
-}
+}  

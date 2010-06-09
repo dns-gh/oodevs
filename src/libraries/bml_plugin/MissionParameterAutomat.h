@@ -14,7 +14,7 @@
 
 namespace dispatcher
 {
-    class Automat;
+    class Automat_ABC;
 }
 
 namespace plugins
@@ -34,7 +34,7 @@ class MissionParameterAutomat : public MissionParameter_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionParameterAutomat( const kernel::OrderParameter& type, const dispatcher::Automat& automat );
+             MissionParameterAutomat( const kernel::OrderParameter& type, const dispatcher::Automat_ABC& automat );
     virtual ~MissionParameterAutomat();
     //@}
 
@@ -54,7 +54,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const dispatcher::Automat& automat_;
+    const dispatcher::Automat_ABC& automat_;
     //@}
 };
 

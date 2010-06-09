@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "MedicalTreatmentAttribute.h"
 #include "protocol/SimulationSenders.h"
 
@@ -18,9 +17,8 @@ using namespace dispatcher;
 // Name: MedicalTreatmentAttribute constructor
 // Created: RFT 2006-09-26
 // -----------------------------------------------------------------------------
-MedicalTreatmentAttribute::MedicalTreatmentAttribute( const Model& model, const Common::MsgObjectAttributes& message )
-    : ObjectAttribute_ABC( model, message )
-    , beds_              ( 0 )
+MedicalTreatmentAttribute::MedicalTreatmentAttribute( const Common::MsgObjectAttributes& message )
+    : beds_              ( 0 )
     , availableBeds_     ( 0 )
     , doctors_           ( 0 )
     , availableDoctors_  ( 0 )
@@ -49,7 +47,7 @@ void MedicalTreatmentAttribute::Update( const Common::MsgObjectAttributes& messa
         availableBeds_      = message.medical_treatment().available_beds();
         doctors_            = message.medical_treatment().doctors();
         availableDoctors_   = message.medical_treatment().available_doctors();
-        for( unsigned int i = 0 ; i < message.medical_treatment().type_id().elem_size() ; i++ )
+        for( int i = 0 ; i < message.medical_treatment().type_id().elem_size() ; i++ )
             medicalTreatmentList_.push_back( message.medical_treatment().type_id().elem( i ) );
     }
 }
@@ -60,21 +58,12 @@ void MedicalTreatmentAttribute::Update( const Common::MsgObjectAttributes& messa
 // -----------------------------------------------------------------------------
 void MedicalTreatmentAttribute::Send( Common::MsgObjectAttributes& message ) const
 {
-    message.mutable_medical_treatment()->set_available_beds    ( availableBeds_ );
-    message.mutable_medical_treatment()->set_available_doctors ( availableDoctors_ );
-    message.mutable_medical_treatment()->set_beds              ( beds_ );
-    message.mutable_medical_treatment()->set_doctors           ( doctors_ );
+    message.mutable_medical_treatment()->set_available_beds   ( availableBeds_ );
+    message.mutable_medical_treatment()->set_available_doctors( availableDoctors_ );
+    message.mutable_medical_treatment()->set_beds             ( beds_ );
+    message.mutable_medical_treatment()->set_doctors          ( doctors_ );
     //Get the list of the ID of each medical treatment
-    for( CIT_MedicalTreatmentTypeList iter = medicalTreatmentList_.begin() ; iter != medicalTreatmentList_.end() ; ++iter )
+    for( std::list< int >::const_iterator iter = medicalTreatmentList_.begin() ; iter != medicalTreatmentList_.end() ; ++iter )
         message.mutable_medical_treatment()->mutable_type_id()->add_elem( *iter );
 
-}
-
-// -----------------------------------------------------------------------------
-// Name: MedicalTreatmentAttribute::Delete
-// Created: RFT 2006-09-28
-// -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::Delete( Common::MsgObjectAttributes& /*message*/ ) const
-{
-    // NOTHING
 }

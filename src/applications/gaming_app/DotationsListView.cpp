@@ -16,7 +16,7 @@
 // Created: SBO 2007-02-16
 // -----------------------------------------------------------------------------
 DotationsListView::DotationsListView( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
-    : ResourcesListView_ABC< DotationsListView, kernel::Dotations_ABC >( parent, *this, controllers, factory )
+    : DotationsListViewBase( parent, *this, controllers, factory )
 {
     AddColumn( tr( "Resource" ) )
     .AddColumn( tr( "Quantity" ) );
@@ -51,7 +51,7 @@ void DotationsListView::NotifyUpdated( const kernel::Dotations_ABC& a )
     {
         const Dotations* dotations = dynamic_cast< const Dotations* >( &a );
         if( !dotations )
-            throw std::runtime_error( "Unhandled Dotations_ABC" );
+            throw std::runtime_error( __FUNCTION__ ": Unhandled Dotations_ABC" );
         DeleteTail( DisplayList( dotations->CreateIterator() ) );
     }
 }

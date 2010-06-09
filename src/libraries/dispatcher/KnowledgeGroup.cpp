@@ -11,8 +11,9 @@
 #include "KnowledgeGroup.h"
 #include "Side.h"
 #include "Model.h"
-#include "protocol/ClientPublisher_ABC.h"
+#include "dispatcher/Automat_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include <boost/bind.hpp>
 
@@ -23,16 +24,25 @@ using namespace dispatcher;
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
 KnowledgeGroup::KnowledgeGroup( Model_ABC& model, const MsgsSimToClient::MsgKnowledgeGroupCreation& msg )
-    : SimpleEntity< kernel::KnowledgeGroup_ABC >( msg.oid() )
+    : KnowledgeGroup_ABC( msg.oid() )
     , model_( model )
     , team_( model_.Sides().Get( msg.oid_camp() ) )
     , parent_( msg.has_oid_parent() ? &model_.KnowledgeGroups().Get( msg.oid_parent() ) : 0 )
     , type_( msg.type() ) // LTO
     , enabled_( true ) // LTO
+    , jammed_( msg.has_jam() && msg.jam() )
 {
     // LTO begin
-    ChangeSuperior( parent_ );
+    if( parent_ )
+    {
+        if( parent_ == this )
+           throw std::runtime_error( __FUNCTION__ ": recursive hierarchy." );
+        parent_->Register( *this );
+    }
+    else
+        team_.Register( *this );
     // LTO end
+    RegisterSelf( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,22 +52,24 @@ KnowledgeGroup::KnowledgeGroup( Model_ABC& model, const MsgsSimToClient::MsgKnow
 KnowledgeGroup::~KnowledgeGroup()
 {
     // LTO begin
-    tools::Iterator< const kernel::KnowledgeGroup_ABC& > it( knowledgeGroups_.CreateIterator() );
+    tools::Iterator< const dispatcher::KnowledgeGroup_ABC& > it( knowledgeGroups_.CreateIterator() );
     while( it.HasMoreElements() )
     {
-        kernel::KnowledgeGroup_ABC& entity = const_cast< kernel::KnowledgeGroup_ABC& >( it.NextElement() );
-        static_cast< KnowledgeGroup& >( entity ).ChangeSuperior( parent_ );
+        dispatcher::KnowledgeGroup_ABC& entity = const_cast< dispatcher::KnowledgeGroup_ABC& >( it.NextElement() );
+        entity.ChangeSuperior( parent_ );
     }
-    ChangeSuperior( 0 );
-    team_.Remove( *this );
+    if( parent_ )
+        parent_->Remove( *this );
+    else
+        team_.Remove( *this );
     // LTO end
 }
 
 // -----------------------------------------------------------------------------
-// Name: KnowledgeGroup::Update
+// Name: KnowledgeGroup::DoUpdate
 // Created: SBO 2010-03-04
 // -----------------------------------------------------------------------------
-void KnowledgeGroup::Update( const MsgsSimToClient::MsgKnowledgeGroupUpdate& message )
+void KnowledgeGroup::DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupUpdate& message )
 {
     // LTO begin
     if( message.has_type() )
@@ -73,7 +85,7 @@ void KnowledgeGroup::Update( const MsgsSimToClient::MsgKnowledgeGroupUpdate& mes
 // Name: KnowledgeGroup::ChangeSuperior
 // Created: SBO 2010-03-04
 // -----------------------------------------------------------------------------
-void KnowledgeGroup::ChangeSuperior( kernel::KnowledgeGroup_ABC* superior )
+void KnowledgeGroup::ChangeSuperior( dispatcher::KnowledgeGroup_ABC* superior )
 {
     // LTO begin
     if( superior == this )
@@ -104,6 +116,8 @@ void KnowledgeGroup::SendCreation( ClientPublisher_ABC& publisher ) const
     message().set_type( type_ );
     if( parent_ )
         message().set_oid_parent( parent_->GetId() );
+    if( jammed_ )
+        message().set_jam( true );
     // LTO end
     message.Send( publisher );
 }
@@ -152,7 +166,7 @@ void KnowledgeGroup::Accept( kernel::ModelVisitor_ABC& visitor ) const
 // Created: MGD 2009-12-21
 // LTO
 // -----------------------------------------------------------------------------
-void KnowledgeGroup::Register( kernel::KnowledgeGroup_ABC& knowledgeGroup )
+void KnowledgeGroup::Register( dispatcher::KnowledgeGroup_ABC& knowledgeGroup )
 {
     knowledgeGroups_.Register( knowledgeGroup.GetId(), knowledgeGroup );
 }
@@ -161,7 +175,7 @@ void KnowledgeGroup::Register( kernel::KnowledgeGroup_ABC& knowledgeGroup )
 // Created: MGD 2009-12-21
 // LTO
 // -----------------------------------------------------------------------------
-void KnowledgeGroup::Remove( kernel::KnowledgeGroup_ABC& knowledgeGroup )
+void KnowledgeGroup::Remove( dispatcher::KnowledgeGroup_ABC& knowledgeGroup )
 {
     knowledgeGroups_.Remove( knowledgeGroup.GetId() );
 }
@@ -171,7 +185,7 @@ void KnowledgeGroup::Remove( kernel::KnowledgeGroup_ABC& knowledgeGroup )
 // Created: MGD 2009-12-21
 // LTO
 // -----------------------------------------------------------------------------
-void KnowledgeGroup::Register( kernel::Automat_ABC& automat )
+void KnowledgeGroup::Register( dispatcher::Automat_ABC& automat )
 {
     automats_.Register( automat.GetId(), automat );
 }
@@ -181,7 +195,7 @@ void KnowledgeGroup::Register( kernel::Automat_ABC& automat )
 // Created: MGD 2009-12-21
 // LTO
 // -----------------------------------------------------------------------------
-void KnowledgeGroup::Remove( kernel::Automat_ABC& automat )
+void KnowledgeGroup::Remove( dispatcher::Automat_ABC& automat )
 {
     automats_.Remove( automat.GetId() );
 }
@@ -190,7 +204,7 @@ void KnowledgeGroup::Remove( kernel::Automat_ABC& automat )
 // Name: KnowledgeGroup::GetTeam
 // Created: SBO 2010-03-04
 // -----------------------------------------------------------------------------
-const kernel::Team_ABC& KnowledgeGroup::GetTeam() const
+const dispatcher::Team_ABC& KnowledgeGroup::GetTeam() const
 {
     return team_;
 }

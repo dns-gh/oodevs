@@ -10,49 +10,28 @@
 #ifndef __Model_ABC_h_
 #define __Model_ABC_h_
 
-#include "clients_kernel/Team_ABC.h"
-
-#include "MessageHandler_ABC.h"
-#include "CompositeFactory.h"
-#include "EntityPublisher.h"
 #include "Sendable.h"
 #include "tools/Resolver.h"
 
-namespace kernel
-{
-    class AgentTypes;
-    class AgentType;
-    class MissionType;
-    class FragOrderType;
-    class Entity_ABC;
-    class ObjectType;
-    class ObjectTypes;
-}
-
-namespace tools
-{
-    class ExerciseConfig;
-}
-
 namespace dispatcher
 {
-    class LogConsignMaintenance;
-    class LogConsignSupply;
-    class LogConsignMedical;
+    class Agent_ABC;
+    class AgentKnowledge_ABC;
+    class Automat_ABC;
     class Fire;
-    class PopulationFire;
     class FireEffect;
-    class Report;
-    class Side;
-    class KnowledgeGroup;
-    class Formation;
-    class Automat;
-    class Agent;
-    class Object;
-    class Population;
-    class AgentKnowledge;
+    class Formation_ABC;
+    class KnowledgeGroup_ABC;
+    class LogConsignMaintenance;
+    class LogConsignMedical;
+    class LogConsignSupply;
+    class Object_ABC;
     class ObjectKnowledge;
+    class Population_ABC;
+    class PopulationFire;
     class PopulationKnowledge;
+    class Report;
+    class Team_ABC;
     class UrbanObject;
 
 // =============================================================================
@@ -67,20 +46,20 @@ class Model_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Model_ABC() {}
+             Model_ABC() {}
     virtual ~Model_ABC() {}
     //@}
 
     //! @name data accessor
     //@{
-    virtual const tools::Resolver_ABC< Sendable< kernel::Team_ABC > >& Sides() const = 0;
-    virtual const tools::Resolver_ABC< KnowledgeGroup >&        KnowledgeGroups() const = 0;
-    virtual const tools::Resolver_ABC< Formation >&             Formations() const = 0;
-    virtual const tools::Resolver_ABC< Automat >&               Automats() const = 0;
-    virtual const tools::Resolver_ABC< Agent >&                 Agents() const = 0;
-    virtual const tools::Resolver_ABC< Object >&                Objects() const = 0;
-    virtual const tools::Resolver_ABC< Population >&            Populations() const = 0;
-    virtual const tools::Resolver_ABC< AgentKnowledge >&        AgentKnowledges() const = 0;
+    virtual const tools::Resolver_ABC< dispatcher::Team_ABC >&           Sides() const = 0;
+    virtual const tools::Resolver_ABC< dispatcher::KnowledgeGroup_ABC >& KnowledgeGroups() const = 0;
+    virtual const tools::Resolver_ABC< dispatcher::Formation_ABC >&      Formations() const = 0;
+    virtual const tools::Resolver_ABC< dispatcher::Automat_ABC >&        Automats() const = 0;
+    virtual const tools::Resolver_ABC< dispatcher::Agent_ABC >&          Agents() const = 0;
+    virtual const tools::Resolver_ABC< dispatcher::Object_ABC >&         Objects() const = 0;
+    virtual const tools::Resolver_ABC< dispatcher::Population_ABC >&     Populations() const = 0;
+    virtual const tools::Resolver_ABC< dispatcher::AgentKnowledge_ABC >& AgentKnowledges() const = 0;
     virtual const tools::Resolver_ABC< ObjectKnowledge >&       ObjectKnowledges() const = 0;
     virtual const tools::Resolver_ABC< PopulationKnowledge >&   PopulationKnowledges() const = 0;
     virtual const tools::Resolver_ABC< LogConsignMaintenance >& LogConsignsMaintenance() const = 0;

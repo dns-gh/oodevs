@@ -10,7 +10,6 @@
 #ifndef __AgentLogMedical_h_
 #define __AgentLogMedical_h_
 
-
 #include "EquipmentAvailability.h"
 
 namespace Common
@@ -32,7 +31,7 @@ namespace kernel
 
 namespace dispatcher
 {
-    class Model;
+    class Model_ABC;
     class ClientPublisher_ABC;
 
 // =============================================================================
@@ -46,7 +45,7 @@ class AgentLogMedical
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentLogMedical( const Model& model, const kernel::Agent_ABC& agent, const MsgsSimToClient::MsgLogMedicalState& asnMsg );
+             AgentLogMedical( const Model_ABC& model, const kernel::Agent_ABC& agent, const MsgsSimToClient::MsgLogMedicalState& asnMsg );
     virtual ~AgentLogMedical();
     //@}
 
@@ -71,7 +70,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const Model&             model_;
+    const Model_ABC&         model_;
     const kernel::Agent_ABC& agent_;
     bool                     bSystemEnabled_;
 

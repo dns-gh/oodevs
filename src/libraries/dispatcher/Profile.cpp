@@ -92,7 +92,7 @@ Profile::~Profile()
 void Profile::ReadAutomatRights( xml::xistream& xis, T_AutomatSet& container )
 {
     const int id = xml::attribute< int >( xis, "id" );
-    if( const kernel::Automat_ABC* pAutomat = model_.automats_.Find( id ) )
+    if( const kernel::Automat_ABC* pAutomat = model_.Automats().Find( id ) )
         container.insert( pAutomat );
     else
         MT_LOG_ERROR_MSG( "Invalid automat id ('" << id << "') while reading profiles" );
@@ -105,7 +105,7 @@ void Profile::ReadAutomatRights( xml::xistream& xis, T_AutomatSet& container )
 void Profile::ReadSideRights( xml::xistream& xis, T_SideSet& container )
 {
     const int id = xml::attribute< int >( xis, "id" );
-    if( const kernel::Team_ABC* pSide = model_.sides_.Find( id ) )
+    if( const kernel::Team_ABC* pSide = model_.Sides().Find( id ) )
         container.insert( pSide );
     else
         MT_LOG_ERROR_MSG( "Invalid side id ('" << id << "') while reading profiles" );
@@ -118,7 +118,7 @@ void Profile::ReadSideRights( xml::xistream& xis, T_SideSet& container )
 void Profile::ReadFormationRights( xml::xistream& xis, T_FormationSet&  container )
 {
     const int id = xml::attribute< int >( xis, "id" );
-    if( const kernel::Formation_ABC* pFormation = model_.formations_.Find( id ) )
+    if( const kernel::Formation_ABC* pFormation = model_.Formations().Find( id ) )
         container.insert( pFormation );
     else
         MT_LOG_ERROR_MSG( "Invalid formation id ('" << id << "') while reading profiles" );
@@ -131,7 +131,7 @@ void Profile::ReadFormationRights( xml::xistream& xis, T_FormationSet&  containe
 void Profile::ReadPopulationRights( xml::xistream& xis, T_PopulationSet& container )
 {
     const int id = xml::attribute< int >( xis, "id" );
-    if( const kernel::Population_ABC* pPopulation = model_.populations_.Find( id ) )
+    if( const kernel::Population_ABC* pPopulation = model_.Populations().Find( id ) )
         container.insert( pPopulation );
     else
         MT_LOG_ERROR_MSG( "Invalid population id ('" << id << "') while reading profiles" );
@@ -157,21 +157,21 @@ namespace
 void Profile::ReadRights( const MsgsAuthenticationToClient::MsgProfile& message )
 {
     if( message.has_read_only_automates()  )
-        SetRights( message.read_only_automates(), readOnlyAutomats_, model_.automats_ );
+        SetRights( message.read_only_automates(), readOnlyAutomats_, model_.Automats() );
     if( message.has_read_only_camps()  )
-        SetRights( message.read_only_camps(), readOnlySides_, model_.sides_ );
+        SetRights( message.read_only_camps(), readOnlySides_, model_.Sides() );
     if( message.has_read_only_formations()  )
-        SetRights( message.read_only_formations(), readOnlyFormations_, model_.formations_ );
+        SetRights( message.read_only_formations(), readOnlyFormations_, model_.Formations() );
     if( message.has_read_only_populations()  )
-        SetRights( message.read_only_populations(), readOnlyPopulations_, model_.populations_ );
+        SetRights( message.read_only_populations(), readOnlyPopulations_, model_.Populations() );
     if( message.has_read_write_automates()  )
-        SetRights( message.read_write_automates(), readWriteAutomats_, model_.automats_ );
+        SetRights( message.read_write_automates(), readWriteAutomats_, model_.Automats() );
     if( message.has_read_write_camps()  )
-        SetRights( message.read_write_camps(), readWriteSides_, model_.sides_ );
+        SetRights( message.read_write_camps(), readWriteSides_, model_.Sides() );
     if( message.has_read_write_formations()  )
-        SetRights( message.read_write_formations(), readWriteFormations_, model_.formations_ );
+        SetRights( message.read_write_formations(), readWriteFormations_, model_.Formations() );
     if( message.has_read_write_populations()  )
-        SetRights( message.read_write_populations(), readWritePopulations_, model_.populations_ );
+        SetRights( message.read_write_populations(), readWritePopulations_, model_.Populations() );
 }
 
 // -----------------------------------------------------------------------------

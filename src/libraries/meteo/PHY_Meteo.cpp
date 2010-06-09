@@ -17,10 +17,8 @@
 #include "protocol/ServerPublisher_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ClientSenders.h"
-#include "clients_kernel/ModelVisitor_ABC.h"
 
 #pragma warning( push, 0 )
-#pragma warning( disable: 4996 )
 #include <qstring.h>
 #pragma warning( pop )
 #include <xeumeuleu/xml.h>
@@ -309,15 +307,6 @@ void PHY_Meteo::ContextMenu( kernel::ActionController& , const QPoint& ) const
 void PHY_Meteo::Activate( kernel::ActionController& ) const
 {
     //NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Meteo::Accept
-// Created: HBD 2010-03-31
-// -----------------------------------------------------------------------------
-void PHY_Meteo::Accept( kernel::ModelVisitor_ABC& visitor ) const
-{
-    visitor.Visit( *this );
 }
 
 // -----------------------------------------------------------------------------

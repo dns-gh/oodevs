@@ -3316,11 +3316,11 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <name>kernel</name>
     <message>
         <source>Resource</source>
-        <translation type="unfinished">Ressource</translation>
+        <translation type="obsolete">Ressource</translation>
     </message>
     <message>
         <source>Quantity</source>
-        <translation type="unfinished">Quantité</translation>
+        <translation type="obsolete">Quantité</translation>
     </message>
 </context>
 <context>

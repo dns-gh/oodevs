@@ -9,20 +9,19 @@
 
 #include "dispatcher_pch.h"
 #include "AgentLogMedical.h"
-#include "Model.h"
+#include "Model_ABC.h"
+#include "Automat_ABC.h"
+#include "Agent_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
-#include "Automat.h"
-#include "Agent.h"
 #include "protocol/clientsenders.h"
 
 using namespace dispatcher;
-//using namespace MsgsSimToClient;
 
 // -----------------------------------------------------------------------------
 // Name: AgentLogMedical constructor
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-AgentLogMedical::AgentLogMedical( const Model& model, const kernel::Agent_ABC& agent, const MsgsSimToClient::MsgLogMedicalState& asnMsg )
+AgentLogMedical::AgentLogMedical( const Model_ABC& model, const kernel::Agent_ABC& agent, const MsgsSimToClient::MsgLogMedicalState& asnMsg )
     : model_         ( model )
     , agent_         ( agent )
     , bSystemEnabled_( false )
@@ -73,7 +72,7 @@ void AgentLogMedical::Update( const MsgsSimToClient::MsgLogMedicalState& asnMsg 
     {
         tacticalPriorities_.clear();
         for( int i = 0; i < asnMsg.priorites_tactiques().elem_size(); ++i )
-            tacticalPriorities_.push_back( &model_.automats_.Get( asnMsg.priorites_tactiques().elem( i ).oid() ) );
+            tacticalPriorities_.push_back( &model_.Automats().Get( asnMsg.priorites_tactiques().elem( i ).oid() ) );
     }
 
     if( asnMsg.has_priorites()  )

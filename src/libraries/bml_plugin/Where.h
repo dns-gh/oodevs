@@ -17,7 +17,7 @@ namespace xml
 
 namespace dispatcher
 {
-    class Agent;
+    class Agent_ABC;
 }
 
 namespace plugins
@@ -37,7 +37,7 @@ class Where
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Where( const dispatcher::Agent& agent );
+    explicit Where( const dispatcher::Agent_ABC& agent );
     virtual ~Where();
     //@}
 
@@ -56,7 +56,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const dispatcher::Agent& agent_;
+    const dispatcher::Agent_ABC& agent_;
     //@}
 };
 
