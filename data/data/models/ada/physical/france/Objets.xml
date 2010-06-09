@@ -91,8 +91,7 @@
   <object geometry="line" name="Itinéraire logistique" symbol="G*SPLRM---****X" type="logistic route">
     <supply-route/>
   </object>
-  <object geometry="line" name="Site de franchissement" symbol="G*MPBCL---****X" type="crossing site">
-  </object>
+  <object geometry="line" name="Site de franchissement" symbol="G*MPBCL---****X" type="crossing site"/>
   <object geometry="point" name="Site ROTA" symbol="G*ROTA*********" type="rota area">
     <contamination max-toxic="-1"/>
   </object>
