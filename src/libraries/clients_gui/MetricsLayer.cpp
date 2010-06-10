@@ -67,6 +67,7 @@ void MetricsLayer::Paint( kernel::Viewport_ABC& )
                 tools_.DrawLine( start, end );
             }
         }
+        start_ =  metricPoints_.front();
         glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
         glColor4f( COLOR_WHITE );
         glLineWidth( 2 );
