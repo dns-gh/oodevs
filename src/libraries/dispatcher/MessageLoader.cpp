@@ -13,7 +13,6 @@
 #include "MessageHandler_ABC.h"
 #include "Config.h"
 #include "tools/InputBinaryStream.h"
-//#include "tools/AsnMessageDecoder.h"
 #include "tools/thread/BarrierCommand.h"
 #include <boost/filesystem/operations.hpp>
 #include <boost/bind.hpp>

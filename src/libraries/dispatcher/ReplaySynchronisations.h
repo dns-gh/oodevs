@@ -13,13 +13,11 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 
-
 namespace MsgsMessengerToClient
 {
     class MsgLimaCreation;
     class MsgLimitCreation;
 }
-
 
 namespace MsgsSimToClient
 {

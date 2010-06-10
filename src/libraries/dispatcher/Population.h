@@ -31,14 +31,9 @@ namespace MsgsSimToClient
     class MsgPopulationConcentrationDestruction;
 }
 
-namespace kernel
-{
-    class ModelVisitor_ABC;
-}
-
 namespace dispatcher
 {
-    class Model;
+    class Model_ABC;
     class PopulationConcentration;
     class PopulationFlow;
     class PopulationOrder;
@@ -47,6 +42,7 @@ namespace dispatcher
 // =============================================================================
 /** @class  Population
     @brief  Population
+    // $$$$ SBO 2010-06-10: refactor Flow/Concentration resolver to avoid downcasting
 */
 // Created: NLD 2006-09-19
 // =============================================================================
@@ -66,7 +62,7 @@ class Population : public dispatcher::Population_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Population( Model& model, const MsgsSimToClient::MsgPopulationCreation& msg );
+             Population( Model_ABC& model, const MsgsSimToClient::MsgPopulationCreation& msg );
     virtual ~Population();
     //@}
 
@@ -80,7 +76,7 @@ public:
     virtual void DoUpdate( const MsgsSimToClient::MsgPopulationFlowCreation&             msg );
     virtual void DoUpdate( const MsgsSimToClient::MsgPopulationFlowUpdate&               msg );
     virtual void DoUpdate( const MsgsSimToClient::MsgPopulationFlowDestruction&          msg );
-    virtual void DoUpdate( const Common::MsgPopulationOrder&                    msg );
+    virtual void DoUpdate( const Common::MsgPopulationOrder&                             msg );
     virtual void DoUpdate( const MsgsSimToClient::MsgDecisionalState&                    msg );
 
     virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
@@ -104,7 +100,7 @@ private:
 private:
     //! @name Member data
     //@{
-          Model&        model_;
+          Model_ABC&    model_;
     const unsigned long nType_;
     const std::string strName_;
     dispatcher::Team_ABC& side_;
@@ -112,9 +108,6 @@ private:
     unsigned int nDominationState_;
     std::auto_ptr< PopulationOrder > order_;
     DecisionalState decisionalInfos_;
-
-    tools::Resolver< PopulationConcentration > concentrations_;
-    tools::Resolver< PopulationFlow > flows_;
     //@}
 };
 

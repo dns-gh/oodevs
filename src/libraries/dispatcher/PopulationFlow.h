@@ -10,15 +10,9 @@
 #ifndef __PopulationFlow_h_
 #define __PopulationFlow_h_
 
-
 #include "Localisation.h"
-#include "SimpleEntity.h"
-#include "clients_kernel/PopulationFlow_ABC.h"
+#include "PopulationFlow_ABC.h"
 
-namespace kernel
-{
-    class ModelVisitor_ABC;
-}
 namespace Common
 {
     enum EnumPopulationAttitude;
@@ -33,7 +27,6 @@ namespace MsgsSimToClient
 namespace dispatcher
 {
     class Population;
-    class ClientPublisher_ABC;
 
 // =============================================================================
 /** @class  PopulationFlow
@@ -41,7 +34,9 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class PopulationFlow : public SimpleEntity< kernel::PopulationFlow_ABC >
+class PopulationFlow : public dispatcher::PopulationFlow_ABC
+                     , public kernel::Extension_ABC
+                     , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationFlowUpdate >
 {
 public:
     //! @name Constructors/Destructor
@@ -52,17 +47,19 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const MsgsSimToClient::MsgPopulationFlowUpdate& msg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationFlowUpdate& msg );
 
-    void SendCreation   ( ClientPublisher_ABC& publisher ) const;
-    void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
-    void SendDestruction( ClientPublisher_ABC& publisher ) const;
-    void Accept( kernel::ModelVisitor_ABC& visitor ) const;
+    virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
+    virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
+    virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
+    virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
 
     virtual unsigned int GetDeadHumans() const;
     virtual unsigned int GetLivingHumans() const;
     virtual unsigned int GetDensity() const;
     virtual QString      GetAttitude() const;
+
+    const Localisation& GetLocation() const;
     //@}
 
 private:
@@ -72,7 +69,9 @@ private:
     PopulationFlow& operator=( const PopulationFlow& ); //!< Assignement operator
     //@}
 
-public:
+private:
+    //! @name Member data
+    //@{
     const Population&   population_;
     const unsigned long nID_;
 
@@ -83,6 +82,7 @@ public:
     unsigned long                nNbrAliveHumans_;
     unsigned long                nNbrDeadHumans_;
     Common::EnumPopulationAttitude nAttitude_;    
+    //@}
 };
 
 }

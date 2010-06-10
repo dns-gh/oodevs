@@ -10,19 +10,8 @@
 #ifndef __PopulationConcentration_h_
 #define __PopulationConcentration_h_
 
-
-#include "SimpleEntity.h"
-#include "clients_kernel/PopulationConcentration_ABC.h"
+#include "PopulationConcentration_ABC.h"
 #include "protocol/SimulationSenders.h"
-
-namespace kernel
-{
-    class ModelVisitor_ABC;
-}
-namespace Common
-{
-    class MsgCoordLatLong;
-}
 
 namespace MsgsSimToClient
 {
@@ -33,7 +22,6 @@ namespace MsgsSimToClient
 namespace dispatcher
 {
     class Population;
-    class ClientPublisher_ABC;
 
 // =============================================================================
 /** @class  PopulationConcentration
@@ -41,29 +29,31 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class PopulationConcentration : public SimpleEntity< kernel::PopulationConcentration_ABC >
+class PopulationConcentration : public dispatcher::PopulationConcentration_ABC
+                              , public kernel::Extension_ABC
+                              , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationConcentrationUpdate >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    PopulationConcentration( const Population& population, const MsgsSimToClient::MsgPopulationConcentrationCreation& msg );
+             PopulationConcentration( const Population& population, const MsgsSimToClient::MsgPopulationConcentrationCreation& msg );
     virtual ~PopulationConcentration();
     //@}
 
     //! @name Operations
     //@{
-    void Update( const MsgsSimToClient::MsgPopulationConcentrationUpdate& msg );
-
-    void SendCreation   ( ClientPublisher_ABC& publisher ) const;
-    void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
-    void SendDestruction( ClientPublisher_ABC& publisher ) const;
+    virtual void DoUpdate       ( const MsgsSimToClient::MsgPopulationConcentrationUpdate& msg );
+    virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
+    virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
+    virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
+    virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
 
     virtual unsigned int GetDeadHumans() const;
     virtual unsigned int GetLivingHumans() const;
     virtual unsigned int GetDensity() const;
     virtual QString      GetAttitude() const;
 
-    void Accept( kernel::ModelVisitor_ABC& visitor ) const;
+    virtual const Common::MsgCoordLatLong& GetPosition() const;
     //@}
 
 private:
@@ -73,7 +63,9 @@ private:
     PopulationConcentration& operator=( const PopulationConcentration& ); //!< Assignement operator
     //@}
 
-public:
+private:
+    //! @name Member data
+    //@{
     const Population&   population_;
     const unsigned long nID_;
     const Common::MsgCoordLatLong position_;
@@ -81,6 +73,7 @@ public:
     unsigned long                nNbrAliveHumans_;
     unsigned long                nNbrDeadHumans_;
     Common::EnumPopulationAttitude nAttitude_;    
+    //@}
 };
 
 }

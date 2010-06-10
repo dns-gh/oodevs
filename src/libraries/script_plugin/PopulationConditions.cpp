@@ -70,16 +70,16 @@ namespace
 
         virtual void Visit( const kernel::Entity_ABC& entity )
         {
-            if( const dispatcher::PopulationConcentration* c = dynamic_cast< const dispatcher::PopulationConcentration* >( &entity ) )
+            if( const dispatcher::PopulationConcentration_ABC* c = dynamic_cast< const dispatcher::PopulationConcentration_ABC* >( &entity ) )
             {
-                const geometry::Point2f p = converter_->ConvertToXY( c->position_ );
+                const geometry::Point2f p = converter_->ConvertToXY( c->GetPosition() );
                 points_.push_back( p );
                 box_.Incorporate( p );
             }
-            else if( const dispatcher::PopulationFlow* f = dynamic_cast< const dispatcher::PopulationFlow* >( &entity ) )
+            else if( const dispatcher::PopulationFlow_ABC* f = dynamic_cast< const dispatcher::PopulationFlow_ABC* >( &entity ) )
             {
                 Common::MsgLocation location;
-                f->flow_.Send( location );
+                f->GetLocation().Send( location );
                 for( int i = 0; i < location.coordinates().elem_size(); ++i )
                 {
                     const geometry::Point2f p = converter_->ConvertToXY( location.coordinates().elem(i) );

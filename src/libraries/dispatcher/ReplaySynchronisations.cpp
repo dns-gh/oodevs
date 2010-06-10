@@ -12,9 +12,7 @@
 #include "Synchroniser.h"
 #include "ReplayModel_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
-//#include "protocol/protocol.h"
 
-//using namespace Common;
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------

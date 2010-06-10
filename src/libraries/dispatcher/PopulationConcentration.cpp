@@ -10,9 +10,8 @@
 #include "dispatcher_pch.h"
 #include "PopulationConcentration.h"
 #include "Population.h"
-#include "protocol/ClientPublisher_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
-#include "EntityPublisher.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "protocol/clientsenders.h"
 
 using namespace dispatcher;
@@ -22,7 +21,7 @@ using namespace dispatcher;
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
 PopulationConcentration::PopulationConcentration( const Population& population, const MsgsSimToClient::MsgPopulationConcentrationCreation& msg )
-    : SimpleEntity< kernel::PopulationConcentration_ABC >( msg.oid() )
+    : dispatcher::PopulationConcentration_ABC( msg.oid() )
     , population_     ( population )
     , nID_            ( msg.oid() )
     , position_       ( msg.position() )
@@ -30,7 +29,7 @@ PopulationConcentration::PopulationConcentration( const Population& population, 
     , nNbrDeadHumans_ ( 0 )
     , nAttitude_      ( Common::agressive )    
 {
-//    Attach< EntityPublisher_ABC >( *new EntityPublisher< PopulationConcentration >( *this ) );
+    Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -43,10 +42,10 @@ PopulationConcentration::~PopulationConcentration()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationConcentration::Update
+// Name: PopulationConcentration::DoUpdate
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void PopulationConcentration::Update( const MsgsSimToClient::MsgPopulationConcentrationUpdate& msg )
+void PopulationConcentration::DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationUpdate& msg )
 {
     if( msg.has_attitude()  )
         nAttitude_ = msg.attitude();
@@ -56,10 +55,6 @@ void PopulationConcentration::Update( const MsgsSimToClient::MsgPopulationConcen
         nNbrAliveHumans_ = msg.nb_humains_vivants();
 }
 
-// =============================================================================
-// NETWORK
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PopulationConcentration::SendCreation
 // Created: NLD 2006-10-02
@@ -67,11 +62,9 @@ void PopulationConcentration::Update( const MsgsSimToClient::MsgPopulationConcen
 void PopulationConcentration::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::PopulationConcentrationCreation asn;
-
     asn().set_oid( nID_ );
     asn().set_oid_population( population_.GetId() );
     *asn().mutable_position() = position_;
-
     asn.Send( publisher );
 }
 
@@ -82,17 +75,11 @@ void PopulationConcentration::SendCreation( ClientPublisher_ABC& publisher ) con
 void PopulationConcentration::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     client::PopulationConcentrationUpdate asn;
-
-//    asn().set_attitudePresent( 1 );
-//    asn().set_nb_humains_mortsPresent( 1 );
-//    asn().set_nb_humains_vivantsPresent( 1 );
-
     asn().set_oid( nID_ );
     asn().set_oid_population( population_.GetId() );
     asn().set_attitude( nAttitude_ );
     asn().set_nb_humains_morts( nNbrDeadHumans_ );
     asn().set_nb_humains_vivants( nNbrAliveHumans_ );
-    
     asn.Send( publisher );
 }
 
@@ -151,4 +138,13 @@ unsigned int PopulationConcentration::GetDensity() const
 QString PopulationConcentration::GetAttitude() const
 {
     throw std::runtime_error( __FUNCTION__ " not implemented" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationConcentration::GetPosition
+// Created: SBO 2010-06-10
+// -----------------------------------------------------------------------------
+const Common::MsgCoordLatLong& PopulationConcentration::GetPosition() const
+{
+    return position_;
 }

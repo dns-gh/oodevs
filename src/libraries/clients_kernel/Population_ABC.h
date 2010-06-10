@@ -15,7 +15,6 @@
 
 namespace kernel
 {
-    class Team_ABC;
     class PopulationType;
     class PopulationFlow_ABC;
     class PopulationConcentration_ABC;

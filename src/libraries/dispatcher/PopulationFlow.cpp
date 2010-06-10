@@ -10,9 +10,8 @@
 #include "dispatcher_pch.h"
 #include "PopulationFlow.h"
 #include "Population.h"
-#include "protocol/ClientPublisher_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
-#include "EntityPublisher.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "protocol/clientsenders.h"
 
 using namespace dispatcher;
@@ -22,7 +21,7 @@ using namespace dispatcher;
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
 PopulationFlow::PopulationFlow( const Population& population, const MsgsSimToClient::MsgPopulationFlowCreation& msg )
-    : SimpleEntity< kernel::PopulationFlow_ABC >( msg.oid() ) 
+    : dispatcher::PopulationFlow_ABC( msg.oid() ) 
     , population_     ( population )
     , nID_            ( msg.oid() )
     , path_           ()
@@ -33,7 +32,7 @@ PopulationFlow::PopulationFlow( const Population& population, const MsgsSimToCli
     , nNbrDeadHumans_ ( 0 )
     , nAttitude_      ( Common::agressive )    
 {
-//    Attach< EntityPublisher_ABC >( *new EntityPublisher< PopulationFlow >( *this ) );
+    RegisterSelf( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -46,10 +45,10 @@ PopulationFlow::~PopulationFlow()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationFlow::Update
+// Name: PopulationFlow::DoUpdate
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void PopulationFlow::Update( const MsgsSimToClient::MsgPopulationFlowUpdate& msg )
+void PopulationFlow::DoUpdate( const MsgsSimToClient::MsgPopulationFlowUpdate& msg )
 {
     if( msg.has_itineraire()  )
         path_.Update( msg.itineraire().location() );
@@ -67,10 +66,6 @@ void PopulationFlow::Update( const MsgsSimToClient::MsgPopulationFlowUpdate& msg
         nNbrAliveHumans_ = msg.nb_humains_vivants();
 }
 
-// =============================================================================
-// NETWORK
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PopulationFlow::SendCreation
 // Created: NLD 2006-10-02
@@ -78,10 +73,8 @@ void PopulationFlow::Update( const MsgsSimToClient::MsgPopulationFlowUpdate& msg
 void PopulationFlow::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::PopulationFlowCreation asn;
-
     asn().set_oid( nID_ );
     asn().set_oid_population( population_.GetId() );
-
     asn.Send( publisher );
 }
 
@@ -92,15 +85,6 @@ void PopulationFlow::SendCreation( ClientPublisher_ABC& publisher ) const
 void PopulationFlow::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     client::PopulationFlowUpdate asn;
-
-//    asn.set_itinerairePresent( 1 );
-//    asn.set_fluxPresent( 1 );
-//    asn.set_directionPresent( 1 ); 
-//    asn.set_vitessePresent( 1 );
-//    asn.set_attitudePresent( 1 );
-//    asn.set_nb_humains_mortsPresent( 1 );
-//    asn.set_nb_humains_vivantsPresent( 1 );
-
     asn().set_oid( nID_ );
     asn().set_oid_population( population_.GetId() );
     asn().mutable_direction()->set_heading( nDirection_ ); 
@@ -110,7 +94,6 @@ void PopulationFlow::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     asn().set_nb_humains_vivants( nNbrAliveHumans_ );
     path_.Send( *asn().mutable_itineraire()->mutable_location() );
     flow_.Send( *asn().mutable_flux()->mutable_location() );
-   
     asn.Send( publisher );
 }
 
@@ -169,4 +152,13 @@ unsigned int PopulationFlow::GetDensity() const
 QString PopulationFlow::GetAttitude() const
 {
     throw std::runtime_error( __FUNCTION__ " not implemented" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationFlow::GetLocation
+// Created: SBO 2010-06-10
+// -----------------------------------------------------------------------------
+const Localisation& PopulationFlow::GetLocation() const
+{
+    return flow_;
 }

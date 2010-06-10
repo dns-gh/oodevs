@@ -25,8 +25,8 @@ using namespace dispatcher;
 // Name: Population constructor
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-Population::Population( Model& model, const MsgsSimToClient::MsgPopulationCreation& msg )
-    : dispatcher::Population_ABC( msg.oid(), QString(msg.nom().c_str()) )
+Population::Population( Model_ABC& model, const MsgsSimToClient::MsgPopulationCreation& msg )
+    : dispatcher::Population_ABC( msg.oid(), QString( msg.nom().c_str() ) )
     , model_           ( model )
     , nType_           ( msg.type_population() )
     , strName_         ( msg.nom() )
@@ -51,7 +51,7 @@ Population::~Population()
 // Name: Population::DoUpdate
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-void Population::DoUpdate( const MsgsSimToClient::MsgPopulationCreation& message )
+void Population::DoUpdate( const MsgsSimToClient::MsgPopulationCreation& /*message*/ )
 {
     decisionalInfos_.Clear();
 }
@@ -72,12 +72,11 @@ void Population::DoUpdate( const MsgsSimToClient::MsgPopulationUpdate& msg )
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationCreation& msg )
 {
-    PopulationConcentration* element = concentrations_.Find( msg.oid() );
-    if( !element )
+    if( ! FindConcentration( msg.oid() ) )
     {
-        element = new PopulationConcentration( *this, msg );
-        model_.AddExtensions( *element );
-        concentrations_.Register( element->GetId(), *element );
+        PopulationConcentration* element = new PopulationConcentration( *this, msg );
+        static_cast< Model* >( &model_ )->AddExtensions( *element ); // $$$$ SBO 2010-06-10: use population part factory or something
+        tools::Resolver< kernel::PopulationConcentration_ABC >::Register( element->GetId(), *element );
     }
 }
 
@@ -87,7 +86,7 @@ void Population::DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationCrea
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationUpdate& msg )
 {
-    concentrations_.Get( msg.oid() ).Update( msg );
+    const_cast< kernel::PopulationConcentration_ABC& >( GetConcentration( msg.oid() ) ).Update( msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,9 +95,9 @@ void Population::DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationUpda
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationDestruction& msg )
 {
-    if( PopulationConcentration* concentration = concentrations_.Find( msg.oid() ) )
+    if( const kernel::PopulationConcentration_ABC* concentration = FindConcentration( msg.oid() ) )
     {
-        concentrations_.Remove( msg.oid() );
+        tools::Resolver< kernel::PopulationConcentration_ABC >::Remove( msg.oid() );
         delete concentration;
     }
 }
@@ -109,12 +108,11 @@ void Population::DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationDest
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const MsgsSimToClient::MsgPopulationFlowCreation& msg )
 {
-    PopulationFlow* element = flows_.Find( msg.oid() );
-    if( !element )
+    if( !FindFlow( msg.oid() ) )
     {
-        element = new PopulationFlow( *this, msg );
-        model_.AddExtensions( *element );
-        flows_.Register( element->GetId(), *element );
+        PopulationFlow* element = new PopulationFlow( *this, msg );
+        static_cast< Model& >( model_ ).AddExtensions( *element ); // $$$$ SBO 2010-06-10: use population part factory or something
+        tools::Resolver< kernel::PopulationFlow_ABC >::Register( element->GetId(), *element );
     }
 }
 
@@ -124,7 +122,7 @@ void Population::DoUpdate( const MsgsSimToClient::MsgPopulationFlowCreation& msg
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const MsgsSimToClient::MsgPopulationFlowUpdate& msg )
 {
-    flows_.Get( msg.oid() ).Update( msg );
+    const_cast< kernel::PopulationFlow_ABC& >( GetFlow( msg.oid() ) ).Update( msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -133,9 +131,9 @@ void Population::DoUpdate( const MsgsSimToClient::MsgPopulationFlowUpdate& msg )
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const MsgsSimToClient::MsgPopulationFlowDestruction& msg )
 {
-    if( PopulationFlow* flow = flows_.Find( msg.oid() ) )
+    if( const kernel::PopulationFlow_ABC* flow = FindFlow( msg.oid() ) )
     {
-        flows_.Remove( msg.oid() );
+        tools::Resolver< kernel::PopulationFlow_ABC >::Remove( msg.oid() );
         delete flow;
     }
 }
@@ -167,12 +165,10 @@ void Population::DoUpdate( const MsgsSimToClient::MsgDecisionalState& msg )
 void Population::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::PopulationCreation asn;
-
     asn().set_oid             ( GetId() );
     asn().set_oid_camp        ( side_.GetId() );
     asn().set_type_population ( nType_ );
     asn().set_nom             ( strName_.c_str() );
-
     asn.Send( publisher );
 }
 
@@ -213,8 +209,16 @@ void Population::SendDestruction( ClientPublisher_ABC& ) const
 void Population::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
-    concentrations_.Apply( boost::bind( &PopulationConcentration::Accept, _1, boost::ref( visitor ) ) );
-    flows_.Apply( boost::bind( &PopulationFlow::Accept, _1, boost::ref( visitor ) ) );
+    {
+        tools::Iterator< const kernel::PopulationConcentration_ABC& > it = tools::Resolver< kernel::PopulationConcentration_ABC >::CreateIterator();
+        while( it.HasMoreElements() )
+            static_cast< const dispatcher::PopulationConcentration_ABC& >( it.NextElement() ).Accept( visitor );
+    }
+    {
+        tools::Iterator< const kernel::PopulationFlow_ABC& > it = tools::Resolver< kernel::PopulationFlow_ABC >::CreateIterator();
+        while( it.HasMoreElements() )
+            static_cast< const dispatcher::PopulationFlow_ABC& >( it.NextElement() ).Accept( visitor );
+    }
 }
 
 // -----------------------------------------------------------------------------
