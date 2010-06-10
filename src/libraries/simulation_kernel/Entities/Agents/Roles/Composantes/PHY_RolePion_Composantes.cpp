@@ -846,7 +846,7 @@ void PHY_RolePion_Composantes::ApplyContamination( const MIL_ToxicEffectManipula
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::ApplyPoisonous
+// Name: PHY_RolePion_Composantes::ApplyPoisonous   
 // Created: NLD 2006-10-27
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::ApplyPoisonous( const MIL_ToxicEffectManipulator& contamination )
@@ -946,7 +946,6 @@ void PHY_RolePion_Composantes::ApplyDirectFireOnMajorComposantes( const PHY_Dota
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::ApplyPopulationFire( PHY_Composante_ABC& compTarget, const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, PHY_FireResults_ABC& fireResult )
 {
-
     assert( std::find( composantes_.begin(), composantes_.end(), &compTarget ) != composantes_.end() );
 
     PHY_FireDamages_Agent& fireDamages = fireResult.GetDamages( pion_ );

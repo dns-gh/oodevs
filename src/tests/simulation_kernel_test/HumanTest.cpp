@@ -128,7 +128,7 @@ BOOST_AUTO_TEST_CASE( HumanApplyPoisonous )
         "<nbc-suit max-speed-modifier='0.4' reloading-time-modifier='1.5'/>"
         "<agents>"
         "<agent id='1' name='Biologique'>"
-        "<effects affliction='intoxication' type='liquid'>"
+        "<effects intoxication='true' type='liquid'>"
         "<effect percentage='0' wound='nonblesse'/>"
         "<effect percentage='0.2' wound='u1'/>"
         "<effect percentage='0.15' wound='u2'/>"

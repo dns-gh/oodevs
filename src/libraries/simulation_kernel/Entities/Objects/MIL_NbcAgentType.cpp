@@ -201,9 +201,9 @@ MIL_NbcAgentType::~MIL_NbcAgentType()
 // -----------------------------------------------------------------------------
 bool MIL_NbcAgentType::ReadPoisonousData( xml::xistream& xis, T_HumanPoisonousVector& data )
 {
-    std::string affliction = "nothing";
-    xis >> xml::optional() >> xml::attribute( "affliction", affliction );
-    if( affliction != "intoxication" )
+    bool intoxication = false;
+    xis >> xml::optional() >> xml::attribute( "intoxication", intoxication );
+    if( !intoxication )
         return false;
     xis >> xml::list( "effect", *this, &MIL_NbcAgentType::ReadEffect, data );
 

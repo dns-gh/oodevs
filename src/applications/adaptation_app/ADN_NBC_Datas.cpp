@@ -114,8 +114,7 @@ void ADN_NBC_Datas::NbcIntoxInfos::ReadEffect( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_NBC_Datas::NbcIntoxInfos::ReadArchive( xml::xistream& input )
 {
-    const std::string affliction = xml::attribute( input, "affliction", std::string() );
-    bIntoxPresent_ = affliction == "intoxication";
+    input >>  xml::attribute( "intoxication",bIntoxPresent_ );
     if( bIntoxPresent_.GetData() )
     {
         input >> xml::list( "effect", *this, &ADN_NBC_Datas::NbcIntoxInfos::ReadEffect );
@@ -148,7 +147,7 @@ void ADN_NBC_Datas::NbcIntoxInfos::WriteContent( xml::xostream& output )
         if( rNbAlivedHumans_.GetData() + rNbHurtedHumans1_.GetData() + rNbHurtedHumans2_.GetData() + rNbHurtedHumans3_.GetData() + rNbHurtedHumansE_.GetData() + rNbDeadHumans_.GetData() != 100.0 )
             throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "NBC - Agent '%1' - Poisoning effect data sum < 100" ).arg( GetParentNode()->GetNodeName().c_str() ).ascii() );
 
-        output << xml::attribute( "affliction", "intoxication" )
+        output << xml::attribute( "intoxication", "true" )
                << xml::start( "effect" )
                 << xml::attribute( "wound", "nonblesse" )
                 << xml::attribute( "percentage", rNbAlivedHumans_.GetData() / 100.0 )
