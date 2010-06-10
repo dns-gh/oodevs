@@ -9,13 +9,11 @@
 
 #include "clients_gui_pch.h"
 #include "MetricsLayer.h"
-#include "clients_kernel/Controllers.h"
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/GlTooltip_ABC.h"
 #include "clients_kernel/Styles.h"
-#include "clients_kernel/OptionVariant.h"
 #include "Tools.h"
 #include <qfont.h>
 
@@ -26,13 +24,12 @@ using namespace gui;
 // Name: MetricsLayer constructor
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-MetricsLayer::MetricsLayer( Controllers& controllers, const kernel::DetectionMap& elevation, GlTools_ABC& tools )
-    : controllers_      ( controllers )
-    , tools_            ( tools )
+MetricsLayer::MetricsLayer( const kernel::DetectionMap& elevation, GlTools_ABC& tools )
+    : tools_            ( tools )
     , elevation_        ( elevation )
     , multiRulingMode_  ( false )
 {
-    controllers_.Register( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -78,7 +75,7 @@ void MetricsLayer::Paint( kernel::Viewport_ABC& )
         glColor4f( COLOR_BLACK );
 
         const geometry::Point2f middle( 0.5f * ( metricPoints_.front().X() + end_.X() ), 0.5f * ( metricPoints_.front().Y() + end_.Y() ) );
-        const QString message = tools::translate( "Règle GL", "%1m\n%2°" ).arg( ComputeRuleDistance(), 0, 'f', 1 ).arg( ComputeAngle(), 0, 'f', 1 );
+        const QString message = tools::translate( "Règle GL", "2D: %1m\n3D: %2m\n%3°" ).arg( ComputeRuleDistance( false ), 0, 'f', 1 ).arg( ComputeRuleDistance( true ), 0, 'f', 1 ).arg( ComputeAngle(), 0, 'f', 1 );
         if( !tooltip_.get() )
         {
             std::auto_ptr< kernel::GlTooltip_ABC > tooltip( tools_.CreateTooltip() );
@@ -157,10 +154,10 @@ bool MetricsLayer::HandleMouseMove( QMouseEvent* event, const geometry::Point2f&
 // Name: MetricsLayer::ComputeRuleDistance
 // Created: SLG 2010-03-01
 // -----------------------------------------------------------------------------
-float MetricsLayer::ComputeRuleDistance()
+float MetricsLayer::ComputeRuleDistance( bool b3dComputation )
 {
     float distance = 0;
-    if( b3dComputation_ )
+    if( b3dComputation )
     {
         for( CIT_MetricPoints it = ( metricPoints_.begin() + 1 ); it != metricPoints_.end(); ++it )
         {
@@ -186,14 +183,4 @@ float MetricsLayer::ComputeRuleDistance()
         distance += metricPoints_.back().Distance( end_ );
         return distance;
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalLinesLayer::OptionChanged
-// Created: AGE 2006-11-21
-// -----------------------------------------------------------------------------
-void MetricsLayer::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
-{
-    if( name == "3dDistanceComputation" )
-        b3dComputation_ = value.To< bool >();
 }

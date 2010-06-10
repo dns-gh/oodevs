@@ -284,7 +284,7 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
     Layer_ABC& watershed            = *new WatershedLayer( controllers_, staticModel_.detection_ );
     Layer_ABC& elevation3d          = *new Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
     Layer_ABC& grid                 = *new GridLayer( controllers_, *glProxy_ );
-    Layer_ABC& metrics              = *new MetricsLayer( controllers_, staticModel_.detection_, *glProxy_ );
+    Layer_ABC& metrics              = *new MetricsLayer( staticModel_.detection_, *glProxy_ );
     Layer_ABC& intelligences        = *new ::IntelligencesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, model_.intelligences_ );
     Layer_ABC& limits               = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, *modelBuilder_, *glProxy_, *eventStrategy_, profile );
     Layer_ABC& objectsLayer         = *new ::ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );

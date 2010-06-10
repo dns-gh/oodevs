@@ -488,8 +488,16 @@
     <message>
         <source>%1m
 %2&#xb0;</source>
-        <translation>%1m
+        <translation type="obsolete">%1m
 %2</translation>
+    </message>
+    <message>
+        <source>2D: %1m
+3D: %2m
+%3&#xb0;</source>
+        <translation>2D: %1m
+3D: %2m
+%3°</translation>
     </message>
 </context>
 <context>
@@ -1066,7 +1074,7 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>Général</translation>
+        <translation type="obsolete">Général</translation>
     </message>
     <message>
         <source>Ok</source>
