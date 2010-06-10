@@ -295,3 +295,15 @@ void DEC_OrdersFunctions::AutomateSetMissionLimaScheduleFlag( MIL_Automate& call
     GetHigherEngagedAutomate( caller ).ApplyOnHierarchy( functor );
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_OrdersFunctions::IsMissionAvailable
+// Created: MGD 2010-06-10
+// -----------------------------------------------------------------------------
+bool DEC_OrdersFunctions::IsMissionAvailable( MIL_AgentPion& callerAgent, std::string diaType )
+{
+    const MIL_MissionType_ABC* pMissionType = MIL_PionMissionType::FindFromDiaID( diaType );
+    if( pMissionType )
+        return callerAgent.GetOrderManager().IsMissionAvailable( *pMissionType );
+    return false;
+}
+

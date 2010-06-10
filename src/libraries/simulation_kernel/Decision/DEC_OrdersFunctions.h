@@ -57,6 +57,8 @@ public:
     static void GiveAutomateMission             ( boost::shared_ptr< MIL_Mission_ABC > pMission, MIL_Automate& callerAutomate );
     static std::list<MIL_Fuseau*> SplitFuseau   ( MIL_Automate& callerAutomate, unsigned int nbrSubFuseaux );
 
+    static bool IsMissionAvailable( MIL_AgentPion& callerAgent, std::string diaType );
+
 private:
     //! @name Tools
     //@{
