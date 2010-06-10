@@ -741,6 +741,22 @@
         <source>Group %1</source>
         <translation>Groupe %1</translation>
     </message>
+    <message>
+        <source>Info/Identifier</source>
+        <translation type="unfinished">Info/Identifiant</translation>
+    </message>
+    <message>
+        <source>Info/Name</source>
+        <translation type="unfinished">Info/Nom</translation>
+    </message>
+    <message>
+        <source>Type/Name</source>
+        <translation type="unfinished">Type/Nom</translation>
+    </message>
+    <message>
+        <source>Type/Delay</source>
+        <translation type="unfinished">Type/Délai</translation>
+    </message>
 </context>
 <context>
     <name>Lima</name>

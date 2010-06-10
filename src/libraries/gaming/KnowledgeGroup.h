@@ -58,6 +58,12 @@ public:
     //@}
 
 private:
+    
+    //! @name Accessors
+    //@{
+    void CreateDictionary( kernel::Controller& controller );
+    //@}
+
     //! @name Copy/Assignment
     //@{
     KnowledgeGroup( const KnowledgeGroup& );
@@ -67,7 +73,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types_;
+    std::string delay_;    
     std::string type_;    
     bool activated_;
     //@}

@@ -11,6 +11,8 @@
 #include "KnowledgeGroup.h"
 #include "Tools.h"
 #include "clients_kernel/KnowledgeGroupType.h"
+#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroup constructor
@@ -18,11 +20,13 @@
 // -----------------------------------------------------------------------------
 KnowledgeGroup::KnowledgeGroup( unsigned long nId, kernel::Controller& controller, const std::string& type, const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types )
     : kernel::EntityImplementation< kernel::KnowledgeGroup_ABC >( controller, nId, QString( tools::translate( "KnowledgeGroup", "Group %1" ) ).arg( nId ) )
-    , types_( types )
     , type_( type )
     , activated_( true ) // LTO
 {
     RegisterSelf( *this );
+    kernel::KnowledgeGroupType* pType = types.Find( type_ );
+    delay_ = pType ? pType->ShowCommunicationDelay() : "0m0s";
+    CreateDictionary( controller );
 }
 
 // -----------------------------------------------------------------------------
@@ -66,3 +70,13 @@ void KnowledgeGroup::DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupUpdate& m
     Touch();
 }
 // LTO end
+
+void KnowledgeGroup::CreateDictionary( kernel::Controller& controller )
+{
+    kernel::PropertiesDictionary* dictionary = new kernel::PropertiesDictionary( controller );
+    Attach( *dictionary );
+    dictionary->Register( *this, tools::translate( "KnowledgeGroup", "Info/Identifier" ), id_ );
+    dictionary->Register( *this, tools::translate( "KnowledgeGroup", "Info/Name" ), name_ );
+    dictionary->Register( *this, tools::translate( "KnowledgeGroup", "Type/Name" ), type_ );
+    dictionary->Register( *this, tools::translate( "KnowledgeGroup", "Type/Delay" ), delay_ ); // LTO
+}
