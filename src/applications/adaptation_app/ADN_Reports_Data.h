@@ -92,9 +92,10 @@ public:
 
         void ReadArchive( xml::xistream& input );
         void ReadParameter( xml::xistream& input );
-        void WriteArchive( xml::xostream& output, unsigned long id );
+        void WriteArchive( xml::xostream& output );
 
     public:
+        ADN_Type_Int id_;
         ADN_Type_String message_;
         T_ReportParameter_Vector parameters_;
     };

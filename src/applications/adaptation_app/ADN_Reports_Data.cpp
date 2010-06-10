@@ -205,7 +205,8 @@ ADN_Reports_Data::ReportInfo* ADN_Reports_Data::ReportInfo::CreateCopy()
 // -----------------------------------------------------------------------------
 void ADN_Reports_Data::ReportInfo::ReadArchive( xml::xistream& input )
 {
-    input >> xml::attribute( "message", message_ )
+    input >> xml::attribute( "id", id_ )
+          >> xml::attribute( "message", message_ )
           >> xml::list( "parameter", *this, &ADN_Reports_Data::ReportInfo::ReadParameter );
 }
 
@@ -224,10 +225,10 @@ void ADN_Reports_Data::ReportInfo::ReadParameter( xml::xistream& input )
 // Name: ADN_Reports_Data::WriteArchive
 // Created: SBO 2006-12-14
 // -----------------------------------------------------------------------------
-void ADN_Reports_Data::ReportInfo::WriteArchive( xml::xostream& output, unsigned long id )
+void ADN_Reports_Data::ReportInfo::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "report" )
-            << xml::attribute( "id", id )
+            << xml::attribute( "id", id_ )
             << xml::attribute( "message",  message_ );
     for( unsigned long i = 0; i < parameters_.size(); ++i )
         parameters_[i]->WriteArchive( output );
@@ -301,6 +302,6 @@ void ADN_Reports_Data::WriteArchive( xml::xostream& output )
     output << xml::start( "reports" );
     ADN_Tools::AddSchema( output, "Reports" );
     for( unsigned long i = 0; i < reports_.size(); ++i )
-        reports_[i]->WriteArchive( output, i );
+        reports_[i]->WriteArchive( output );
     output << xml::end();
 }
