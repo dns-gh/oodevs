@@ -101,7 +101,7 @@ void Dotations::Update( const std::vector< Dotation >& differences )
     if( const kernel::Entity_ABC* superior = GetSuperior() )
         if( Dotations* dotations = const_cast< Dotations* >( superior->Retrieve< Dotations >() ) )
             dotations->Update( differences );
-    controller_.Update( *this );
+    controller_.Update( *(Dotations_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
