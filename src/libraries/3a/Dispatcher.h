@@ -80,7 +80,9 @@ private:
             if( ! function )
             {
                 function = that_->factory_( value );
-                function->BeginTick();
+                // BeginTick should not be called if we are between two ticks, but only if a tick has already begun.
+                if( !that_->frameWasEnded_ )
+                    function->BeginTick();
             }
             function->Receive( *message_ );
         }

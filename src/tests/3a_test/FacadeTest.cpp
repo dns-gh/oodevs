@@ -58,6 +58,18 @@ namespace
 
     }
 
+    MsgSimToClient MakeUnitCreation( unsigned long id )
+    {
+        MsgSimToClient result;
+        MsgUnitCreation& message = *result.mutable_message()->mutable_unit_creation();
+        message.set_oid( id );
+        message.set_type_pion( 42 );
+        message.set_nom( "test" );
+        message.set_oid_automate( 12 );
+        message.set_pc( false );
+        return result;
+    }
+
     class MockPublisher : public dispatcher::ClientPublisher_ABC, public mockpp::ChainableMockObject
     {
     public:
@@ -95,6 +107,7 @@ namespace
         return xis;
     }
 }
+
 // -----------------------------------------------------------------------------
 // Name: Facade_TestOperationalState
 // Created: AGE 2004-12-15
@@ -120,9 +133,12 @@ BOOST_AUTO_TEST_CASE( Facade_TestOperationalState )
     task->Receive( EndTick() );
 
     task->Receive( BeginTick() );
+    task->Receive( MakeUnitCreation( 51 ) ); //testing unit creation in a tick
     task->Receive( OperationalState( 75, 1 ) );
     task->Receive( OperationalState( 85, 3 ) );
     task->Receive( EndTick() );
+
+    task->Receive( MakeUnitCreation( 52 ) ); //testing unit creation between two ticks
 
     task->Receive( BeginTick() );
     task->Receive( OperationalState( 75, 2 ) );
