@@ -72,7 +72,7 @@ namespace
 {
     std::string MakeLink( const std::string& file )
     {
-        return QString( "file://%1" ).arg( QFileInfo( file.c_str() ).absFilePath() ).ascii();
+        return QFileInfo( file.c_str() ).absFilePath().ascii();
     }
 }
 
@@ -102,8 +102,18 @@ void ExerciseMenu::OnSelect( int index )
     if( index >= 0 && index < int( links_.size() ) )
     {
         QString tmp = QString::fromUtf8( links_[index].c_str() );
-        QUrl::encode( tmp );
-        interpreter_.Interprete( tmp );
+        QStringList path = QStringList::split( ":", tmp );
+        if( path.size() > 1 && path.front().length() == 1 )
+        {
+            const QString drive = path.front();
+            path.pop_front();
+            tmp = path.join( ":" );
+            QUrl::encode( tmp );
+            tmp = QString( "%1:%2" ).arg( drive ).arg( tmp );
+        }
+        else
+            QUrl::encode( tmp );
+        interpreter_.Interprete( QString( "file://%1" ).arg( tmp ) );
     }
 }
 
