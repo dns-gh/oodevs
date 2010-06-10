@@ -180,7 +180,10 @@ void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgObjectKnowledgeCrea
     InsertQueryBuilder builder( database_.GetTableName( "KnowledgeObjects" ) );
 
     const dispatcher::ObjectKnowledge* knowledge = model_.objectKnowledges_.Find( msg.oid() );
-    std::string symbol = knowledge->pObject_->GetType().GetSymbol(); 
+    const kernel::Object_ABC* entity = knowledge->GetEntity();
+    if( !entity ) // $$$$ _RC_ SBO 2010-06-10: no real object => giving up
+        return;
+    std::string symbol = entity ? entity->GetType().GetSymbol() : "";
 
     builder.SetId( "id" );
     builder.SetField( "public_oid", msg.oid() );
@@ -191,7 +194,7 @@ void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgObjectKnowledgeCrea
     if ( msg.attributes().has_construction() )
         builder.SetField( "state", msg.attributes().construction().percentage() );
 	if ( tools::app6::GetAffiliation( symbol ) != "U" )
-		builder.SetField( "name",  std::string(knowledge->pObject_->GetName() ) );
+		builder.SetField( "name",  entity->GetName().ascii() );
     if( const dispatcher::KnowledgeGroup_ABC* knowledgeGroup = model_.KnowledgeGroups().Find( msg.group() ) )
 	{
         // $$$$ _RC_ SBO 2010-06-03: refactor !
@@ -314,9 +317,12 @@ void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgObjectKnowledgeUpda
         builder.SetField( "state", msg.attributes().construction().percentage() );
 
     const dispatcher::ObjectKnowledge* knowledge = model_.objectKnowledges_.Find( msg.oid() );
-    std::string symbol( knowledge->pObject_->GetType().GetSymbol() ); 
+    const kernel::Object_ABC* entity = knowledge->GetEntity();
+    if( !entity ) // $$$$ _RC_ SBO 2010-06-10: no real object => giving up
+        return;
+    std::string symbol( entity->GetType().GetSymbol() ); 
     if ( tools::app6::GetAffiliation( symbol ) != "U" )
-        builder.SetField( "name",  std::string(knowledge->pObject_->GetName() ) );
+        builder.SetField( "name", entity->GetName().ascii() );
 
     if( const dispatcher::KnowledgeGroup* knowledgeGroup = static_cast< const dispatcher::KnowledgeGroup* >( model_.KnowledgeGroups().Find( msg.group() ) ) )
     {

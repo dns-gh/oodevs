@@ -178,7 +178,10 @@ void DatabaseUpdater::Update( const MsgsSimToClient::MsgObjectKnowledgeCreation&
     std::auto_ptr< Table_ABC > table( geometryDb_.OpenTable( "KnowledgeObjects" ) );
 
 	const dispatcher::ObjectKnowledge* knowledge = model_.objectKnowledges_.Find( msg.oid() );
-	std::string symbol = knowledge->pObject_->GetType().GetSymbol(); 
+    const kernel::Object_ABC* entity = knowledge->GetEntity();
+    if( !entity ) // $$$$ _RC_ SBO 2010-06-10: no real object => giving up
+        return;
+	std::string symbol = entity->GetType().GetSymbol(); 
     Row_ABC& row = table->CreateRow();
     row.SetField( "public_oid", FieldVariant( (long) msg.oid() ) );
     row.SetField( "type", FieldVariant( std::string( msg.type() ) ) );
@@ -188,7 +191,7 @@ void DatabaseUpdater::Update( const MsgsSimToClient::MsgObjectKnowledgeCreation&
     if ( msg.attributes().has_construction() )
 		row.SetField( "state", FieldVariant( msg.attributes().construction().percentage() ) );
 	if ( tools::app6::GetAffiliation( symbol ) != "U" )
-        row.SetField( "name", FieldVariant( std::string( knowledge->pObject_->GetName().ascii() ) ) );
+        row.SetField( "name", FieldVariant( std::string( entity->GetName().ascii() ) ) );
     if( const dispatcher::KnowledgeGroup* knowledgeGroup = static_cast< const dispatcher::KnowledgeGroup* >( model_.KnowledgeGroups().Find( msg.team() ) ) )
 	{
 		tools::app6::SetAffiliation( symbol, (unsigned int) knowledgeGroup->GetTeam().GetKarma().GetUId() );
@@ -308,9 +311,12 @@ void DatabaseUpdater::Update( const MsgsSimToClient::MsgObjectKnowledgeUpdate& m
 		    row->SetField( "state", FieldVariant( msg.attributes().construction().percentage() ) );
 
 	    const dispatcher::ObjectKnowledge* knowledge = model_.objectKnowledges_.Find( msg.oid() );
-	    std::string symbol( knowledge->pObject_->GetType().GetSymbol() ); 
+        const kernel::Object_ABC* entity = knowledge->GetEntity();
+        if( !entity ) // $$$$ _RC_ SBO 2010-06-10: no real object => giving up
+            return;
+	    std::string symbol = entity->GetType().GetSymbol(); 
 	    if ( tools::app6::GetAffiliation( symbol ) != "U" )
-		    row->SetField( "name",  FieldVariant( std::string( knowledge->pObject_->GetName() ) ) );
+		    row->SetField( "name",  FieldVariant( std::string( entity->GetName() ) ) );
 
 	    if( const dispatcher::KnowledgeGroup* knowledgeGroup = static_cast< const dispatcher::KnowledgeGroup* >( model_.KnowledgeGroups().Find( msg.team() ) ) )
 	    {
