@@ -38,7 +38,7 @@ NotesPanel::NotesPanel( QMainWindow* mainWindow, kernel::Controller& controller,
 {
     setResizeEnabled( true );
     setCloseMode( QDockWindow::Always );
-    setCaption( tools::translate( "NotePanel", "Notations" ) );
+    setCaption( tools::translate( "Notes", "Notations" ) );
 
     notes_ = new QListView( this );
     notes_->addColumn( tools::translate( "Notes", "Tree" ) );
@@ -161,7 +161,7 @@ void NotesPanel::NotifyDeleted( const Note& element )
         {
             noteDialog_->SetUpdate( false );
             QMessageBox::information( this, tools::translate( "Notes", "Current note edited has been deleted" ),
-                tools::translate( "Notes", "The current note edited will be recreated if"), QMessageBox::Yes );
+                tools::translate( "Notes", "The current note edited will be recreated"), QMessageBox::Yes );
         }
         itemsList_.erase( item );
         delete item;
@@ -197,7 +197,7 @@ void NotesPanel::OnContextMenu( QListViewItem* item, const QPoint& point, int)
         menu->insertItem( tools::translate( "Notes", "Update note" ), this, SLOT( UpdateNote() ) );
         menu->insertSeparator();
         menu->insertItem( tools::translate( "Notes", "Delete note" ), this, SLOT( ConfirmDeleteNote() ) );
-        menu->insertItem( tools::translate( "Notes", "Delete note & children notes" ), this,  SLOT( ConfirmDeleteAllTreeNote() ) );
+        menu->insertItem( tools::translate( "Notes", "Delete note and children notes" ), this,  SLOT( ConfirmDeleteAllTreeNote() ) );
         menu->insertSeparator();
     }
     menu->insertItem( tools::translate( "Notes", "Add note" ), this, SLOT( PreCreationProcess() ) );
@@ -213,7 +213,7 @@ void NotesPanel::ConfirmDeleteAllTreeNote()
     int result = QMessageBox::question( this,
         tools::translate( "Notes", "Delete note" ),
         tools::translate( "Notes", "Are you sure you want to delete this note and its children?" ),
-        tools::translate( "Notes", "&Yes" ), tools::translate( "Notes","&No" ), QString::null, 0, 1 );
+        tools::translate( "Notes", "Yes" ), tools::translate( "Notes","No" ), QString::null, 0, 1 );
 
     if( result == 0 )
         if( QListViewItem* item = notes_->selectedItem() )
@@ -238,7 +238,7 @@ void NotesPanel::ConfirmDeleteNote()
     int result = QMessageBox::question( this,
         tools::translate( "Notes", "Delete note" ),
         tools::translate( "Notes", "Are you sure you want to delete this note?" ),
-        tools::translate( "Notes","&Yes" ), tools::translate( "Notes","&No" ), QString::null, 0, 1 );
+        tools::translate( "Notes", "Yes" ), tools::translate( "Notes", "No" ), QString::null, 0, 1 );
 
    if( result == 0 )
         if( QListViewItem* item = notes_->selectedItem() )

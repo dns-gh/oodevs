@@ -36,18 +36,18 @@ NoteDialog::NoteDialog( QDockWindow* parent, Publisher_ABC &publisher)
     setCaption( tools::translate( "NoteDialog", "Create note" ) );
     setFixedSize( 400, 150 );
 
-    QGroupBox* boxId_ = new QGroupBox( 3, Qt::Horizontal, tools::translate( "NoteDialog", "Id" ), this );
-    QGroupBox* boxName_ = new QGroupBox( 3, Qt::Horizontal, tools::translate( "NoteDialog", "Name" ), this );
-    QGroupBox* boxDesc_ = new QGroupBox( 3, Qt::Horizontal, tools::translate( "NoteDialog", "Text" ), this );
+    QGroupBox* boxId_ = new QGroupBox( 3, Qt::Horizontal, tools::translate( "Notes", "Value" ), this );
+    QGroupBox* boxName_ = new QGroupBox( 3, Qt::Horizontal, tools::translate( "Notes", "Name" ), this );
+    QGroupBox* boxDesc_ = new QGroupBox( 3, Qt::Horizontal, tools::translate( "Notes", "Text" ), this );
 
     textName_ = new QLineEdit( boxName_ );
     textId_  = new QLineEdit( boxId_ );
     textDesc_ = new QTextEdit( boxDesc_);
  
     QHBox* box = new QHBox( this );
-    buttonOk_ = new QPushButton( tools::translate( "NoteDialog", "Ok" ), box );
+    buttonOk_ = new QPushButton( tools::translate( "Notes", "Ok" ), box );
     buttonOk_->setEnabled( false );
-    QButton* buttonCancel_ = new QPushButton( tools::translate( "NoteDialog", "Cancel" ), box );
+    QButton* buttonCancel_ = new QPushButton( tools::translate( "Notes", "Cancel" ), box );
 
     connect( buttonOk_, SIGNAL( clicked() ), SLOT( OnAccept() ) );
     connect( buttonCancel_, SIGNAL( clicked() ), SLOT( OnReject() ) );

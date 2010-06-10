@@ -272,11 +272,6 @@ unsigned int NotesModel::CreateNote( std::vector< std::string >& fields, const u
 {
     unsigned int id = idManager_.NextId();
     boost::algorithm::replace_all( fields[3], "<br>", "\n" );
-//    boost::posix_time::ptime time = boost::posix_time::from_iso_string( fields[4] );
-//    fields[4] = boost::posix_time::to_simple_string(time);
-//    time = boost::posix_time::from_iso_string( fields[5] );
-//    fields[5] = boost::posix_time::to_simple_string(time);
-
     std::auto_ptr< Note > note( new Note( id, fields, parent, currentTime_ ) );
     Register( note->GetId(), *note );
     if( note->GetParent() != 0 )    

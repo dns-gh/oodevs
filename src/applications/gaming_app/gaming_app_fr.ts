@@ -2057,6 +2057,73 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
+    <name>Notes</name>
+    <message>
+        <source>Notations</source>
+        <translation>Notations</translation>
+    </message>
+    <message>
+        <source>Tree</source>
+        <translation>Nom</translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation>Valeur</translation>
+    </message>
+    <message>
+        <source>Text</source>
+        <translation>Commentaires</translation>
+    </message>
+    <message>
+        <source>Creation Date</source>
+        <translation>Date de création</translation>
+    </message>
+    <message>
+        <source>Last Update</source>
+        <translation>Date de modification</translation>
+    </message>
+    <message>
+        <source>Current note edited has been deleted</source>
+        <translation>La note qui est en train d&apos;être éditée a été supprimée</translation>
+    </message>
+    <message>
+        <source>Update note</source>
+        <translation>Modifier la note</translation>
+    </message>
+    <message>
+        <source>Delete note</source>
+        <translation>Supprimer la note</translation>
+    </message>
+    <message>
+        <source>Add note</source>
+        <translation>Ajouter une note</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete this note and its children?</source>
+        <translation>Voulez-vous supprimer cette note et ses descendants ?</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete this note?</source>
+        <translation>Voulez-vous supprimer cette note ?</translation>
+    </message>
+    <message>
+        <source>The current note edited will be recreated</source>
+        <translation type="unfinished">La note courante va être recréee</translation>
+    </message>
+    <message>
+        <source>Delete note and children notes</source>
+        <translation type="unfinished">Effacer la note et ses descendants</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished">Oui</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished">Non</translation>
+    </message>
+</context>
+<context>
     <name>ObjectCreationPanel</name>
     <message>
         <source>Objects</source>

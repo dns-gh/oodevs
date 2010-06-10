@@ -63,6 +63,8 @@ MedicalReliefAmbulancesListView.cpp \
 Menu.cpp \
 MissionInterfaceBuilder.cpp \
 MissionPanel.cpp \
+NotesDialog.cpp \
+NotesPanel.cpp \
 ObjectCreationPanel.cpp \
 ObjectKnowledgePanel.cpp \
 ObjectMagicOrdersInterface.cpp \
