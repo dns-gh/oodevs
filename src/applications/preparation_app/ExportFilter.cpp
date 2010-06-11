@@ -114,7 +114,7 @@ namespace
 
     std::string MakeXsl( const std::string& file, const std::string& lang = "" )
     {
-        const std::string extension( lang.empty() ? "_" + lang : "" );
+        const std::string extension( lang.empty() ? "" : "_" + lang );
         const std::string xsl( file + extension + ".xsl" );
         bfs::path filter( tools::GeneralConfig::BuildResourceChildFile( ( bfs::path( "export" ) / xsl ).native_file_string() ) );
         return filter.native_file_string();

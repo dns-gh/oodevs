@@ -11,14 +11,12 @@
 #include "ExerciseDialog.h"
 #include "moc_ExerciseDialog.cpp"
 #include "clients_kernel/Controllers.h"
-#include "tools/ExerciseConfig.h"
-//#pragma warning( push )
-//#pragma warning( disable: 4127 4512 4511 )
-#include <boost/filesystem/path.hpp>
-//#pragma warning( pop )
 #include <boost/algorithm/string.hpp>
-namespace bfs = boost::filesystem;
+#include "tools/ExerciseConfig.h"
+#include <boost/filesystem/path.hpp>
 #include <qvgroupbox.h>
+
+namespace bfs = boost::filesystem;
 
 // -----------------------------------------------------------------------------
 // Name: ExerciseDialog constructor
