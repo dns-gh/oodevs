@@ -21,6 +21,7 @@ namespace kernel
 }
 
 class ScoresModel;
+class SuccessFactor;
 class SuccessFactorActionTypes;
 class SuccessFactorsModel;
 
@@ -46,6 +47,7 @@ private slots:
     //@{
     void OnCreateTextChanged( const QString& text );
     void OnCreateButtonClicked();
+    void OnDelete( const SuccessFactor& factor );
     //@}
 
 private:
@@ -58,12 +60,14 @@ private:
     //! @name Helpers
     //@{
     virtual QSize sizeHint() const;
+    virtual void showEvent( QShowEvent* e );
     //@}
 
 private:
     //! @name Member data
     //@{
     SuccessFactorsModel& model_;
+    const ScoresModel& scores_;
     QLineEdit* editor_;
     QButton* createButton_;
     //@}

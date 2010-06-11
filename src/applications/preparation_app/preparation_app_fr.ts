@@ -1091,6 +1091,14 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
+    <message>
+        <source>Warning</source>
+        <translation>Avertissement</translation>
+    </message>
+    <message>
+        <source>No score has been defined, success factors cannot be created without scores.</source>
+        <translation>Aucun score n&apos;a été défini, un facteur de succès ne peut être créé sans score.</translation>
+    </message>
 </context>
 <context>
     <name>SuccessFactorEditor</name>

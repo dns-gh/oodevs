@@ -11,6 +11,7 @@
 #include "SuccessFactorDialog.h"
 #include "moc_SuccessFactorDialog.cpp"
 #include "SuccessFactorList.h"
+#include "preparation/ScoresModel.h"
 #include "preparation/SuccessFactorsModel.h"
 
 namespace
@@ -38,6 +39,7 @@ namespace
 SuccessFactorDialog::SuccessFactorDialog( QWidget* parent, kernel::Controllers& controllers, SuccessFactorsModel& model, gui::ItemFactory_ABC& factory, const SuccessFactorActionTypes& actionTypes, const ScoresModel& scores )
     : QDialog( parent, "SuccessFactorDialog" )
     , model_( model )
+    , scores_( scores )
 {
     setModal( false );
     setCaption( tr( "Success factors" ) );
@@ -47,6 +49,7 @@ SuccessFactorDialog::SuccessFactorDialog( QWidget* parent, kernel::Controllers& 
     {
         SuccessFactorList* factors = new SuccessFactorList( this, controllers, factory, actionTypes, scores );
         grid->addWidget( factors, 0, 0 );
+        connect( factors, SIGNAL( Deleted( const SuccessFactor& ) ), SLOT( OnDelete( const SuccessFactor& ) ) );
     }
     {
         QGroupBox* box = new QHGroupBox( tr( "Create new factor" ), this );
@@ -101,4 +104,24 @@ void SuccessFactorDialog::OnCreateButtonClicked()
 QSize SuccessFactorDialog::sizeHint() const
 {
     return QSize( 400, 400 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SuccessFactorDialog::OnDelete
+// Created: SBO 2010-06-11
+// -----------------------------------------------------------------------------
+void SuccessFactorDialog::OnDelete( const SuccessFactor& factor )
+{
+    model_.Delete( factor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SuccessFactorDialog::showEvent
+// Created: SBO 2010-06-11
+// -----------------------------------------------------------------------------
+void SuccessFactorDialog::showEvent( QShowEvent* e )
+{
+    QDialog::showEvent( e );
+    if( scores_.Count() == 0 )
+        QMessageBox::warning( this, tr( "Warning" ), tr( "No score has been defined, success factors cannot be created without scores." ) );
 }
