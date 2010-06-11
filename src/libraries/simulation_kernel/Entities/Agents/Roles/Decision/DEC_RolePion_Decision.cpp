@@ -244,7 +244,6 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
     directia::ScriptRef initQueryFunction = brain.GetScriptFunction( "InitQueryReturn" );
 
 // Missions
-   brain.RegisterFunction( "DEC_IsMissionAvailable", boost::function< bool( std::string ) >( boost::bind( &DEC_OrdersFunctions::IsMissionAvailable, boost::ref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_CreerMissionPion",
         boost::function< boost::shared_ptr< MIL_Mission_ABC >( const std::string& ) >( boost::bind( &DEC_OrdersFunctions::CreatePionMissionBM, boost::ref( GetPion().GetAutomate() ), this, _1 ) ) );
     brain.RegisterFunction( "DEC_DonnerMissionPion",

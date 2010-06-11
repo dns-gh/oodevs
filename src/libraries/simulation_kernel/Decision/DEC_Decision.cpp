@@ -167,6 +167,7 @@ void RegisterCommonUserFunctions( directia::Brain& brain, unsigned int id )
     brain.RegisterFunction( "DEC_AssignMissionGenObjectListParameter",       &MIL_MissionParameterFactory::SetGenObjectListParameter );
     brain.RegisterFunction( "DEC_AssignMissionPionListParameter",            &MIL_MissionParameterFactory::SetPionListParameter );
     brain.RegisterFunction( "DEC_AssignMissionLocationListParameter",        &MIL_MissionParameterFactory::SetLocationListParameter );
+    brain.RegisterFunction( "DEC_AssignMissionPointListParameter",           &MIL_MissionParameterFactory::SetPointListParameter );
     brain.RegisterFunction( "DEC_AssignMissionUrbanBlockParameter",          &MIL_MissionParameterFactory::SetUrbanBlockParameter );
     
     directia::ScriptRef initParameterFunction = brain.GetScriptFunction( "InitTaskParameter" );

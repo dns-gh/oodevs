@@ -765,7 +765,7 @@
       <parameter dia-name="campRefugies_" name="Camp refugies" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveToPoint" id="2000" name="MoveToPoint">
-      <parameter dia-name="objectives" name="objectives" optional="false" type="PointBM"/>
+      <parameter dia-name="objectives" name="objectives" optional="false" type="PointListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveToPolygon" id="2001" name="MoveToPolygon">
       <parameter dia-name="objectives" name="objectives" optional="false" type="AreaBM"/>
@@ -878,7 +878,7 @@
       <parameter dia-name="objectives" name="destination" optional="false" type="PointListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.ReconnoiterPath" dia-type="T_Mission_Pion_ReconnoiterPath" id="2040" name="ReconnoiterPath">
-      <parameter dia-name="objectives" name="destination" optional="false" type="PathBM"/>
+      <parameter dia-name="objectives" name="destination" optional="false" type="PointListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveOnPath" id="2041" name="MoveOnPath">
       <parameter dia-name="objectives" name="destination" optional="false" type="PathBM"/>
@@ -896,7 +896,7 @@
       <parameter dia-name="objectives" name="objectives" optional="false" type="PathBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.OpenPath" dia-type="T_Mission_Pion_OpenPath" id="2047" name="OpenPath">
-      <parameter dia-name="objectives" name="destination" optional="false" type="PathBM"/>
+      <parameter dia-name="objectives" name="destination" optional="false" type="PointListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.Animate" dia-type="T_Mission_Pion_Animate" id="2048" name="Animate">
       <parameter dia-name="entities" name="entities" optional="false" type="ObjectKnowledgeListBM"/>
@@ -916,7 +916,7 @@
       <parameter dia-name="objectives" name="objectives" optional="false" type="PointBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword_france.military.tasks.commun.SuivreAgent" dia-type="T_Mission_Pion_SuivreAgent" id="2053" name="SuivreAgent">
-      <parameter dia-name="objective" name="unite a suivre" optional="false" type="AgentBM"/>
+      <parameter dia-name="objective" name="unite a suivre" optional="false" type="AgentListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword_france.military.tasks.commun.Stationner" dia-type="T_Mission_Pion_StationnerBM" id="2054" name="StationnerBM">
       <parameter dia-name="position" name="position de stationnement" optional="false" type="PointBM"/>
@@ -939,10 +939,14 @@
       <parameter dia-name="destinations" name="destination" optional="false" type="PointBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword_france.military.tasks.commun.SoutenirSurPositionEnMesureDeBM" dia-type="T_Mission_Pion_SoutenirSurPositionEnMesureDeBM" id="2060" name="SoutenirSurPositionEnMesureDeBM">
-      <parameter dia-name="position" name="position " optional="false" type="PointBM"/>
+      <parameter dia-name="position" name="position" optional="false" type="PointBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword_france.military.tasks.commun.Appuyer" dia-type="T_Mission_Pion_Appuyer" id="2062" name="Appuyer">
       <parameter dia-name="objectives" name="objectives" optional="false" type="AgentListBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword_france.military.tasks.commun.PrendreEnComptePrisonniers" dia-type="T_Mission_Pion_PrendreEnComptePrisonniersBM" id="2063" name="Prendre En Compte Prisonniers BM">
+      <parameter dia-name="prisoners" name="objectifs" optional="false" type="AgentKnowledgeListBM"/>
+      <parameter dia-name="camps" name="Camps de prisonniers" optional="false" type="ObjectKnowledgeListBM"/>
     </mission>
   </units>
   <automats>
@@ -1558,7 +1562,7 @@
       <parameter dia-name="objective" name="destination" optional="false" type="PointBM"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword_france.military.tasks.commun.automat.FaireMouvementVersPosition" dia-type="T_Mission_Automate_FaireMouvementVersPosition" id="1003" mrt-dia-behavior="net.masagroup.sword_france.military.tasks.commun.automat.FaireMouvementVersPosition" name="FaireMouvementVersPosition">
-      <parameter dia-name="position" name="destination" optional="false" type="PointBM"/>
+      <parameter dia-name="position" name="destination" optional="false" type="PathBM"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword_france.military.tasks.commun.automat.FaireMouvementVersBU" dia-type="T_Mission_Automate_FaireMouvementVersBU" id="1004" mrt-dia-behavior="net.masagroup.sword_france.military.tasks.commun.automat.FaireMouvementVersBU" name="FaireMouvementVersBU">
       <parameter dia-name="position" name="destination" optional="false" type="UrbanBlockBM"/>
@@ -1574,6 +1578,9 @@
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword_france.military.tasks.commun.automat.SoutenirSurPositionEnMesureDeBM" dia-type="T_Mission_Automate_SoutenirSurPositionEnMesureDeBM" id="1007" mrt-dia-behavior="net.masagroup.sword_france.military.tasks.commun.automat.SoutenirSurPositionEnMesureDeBM" name="SoutenirSurPositionEnMesureDeBM">
       <parameter dia-name="position" name="position " optional="false" type="PointBM"/>
+    </mission>
+    <mission cdt-dia-behavior="net.masagroup.sword_france.military.tasks.SGTIA.ReconnaitreItineraire" dia-type="T_Mission_Automate_ReconnaitreItineraire" id="1009" mrt-dia-behavior="net.masagroup.sword_france.military.tasks.SGTIA.ReconnaitreItineraire" name="ReconnaitreItineraire">
+      <parameter dia-name="objectives" name="destination" optional="false" type="PathBM"/>
     </mission>
   </automats>
   <populations>

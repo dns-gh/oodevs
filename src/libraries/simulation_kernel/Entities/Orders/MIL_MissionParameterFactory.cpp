@@ -523,6 +523,18 @@ void MIL_MissionParameterFactory::SetLocationListParameter( boost::shared_ptr< M
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_MissionParameterFactory::SetPointListParameter
+// Created: MGD 2010-06-02
+// -----------------------------------------------------------------------------
+void MIL_MissionParameterFactory::SetPointListParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< boost::shared_ptr< MT_Vector2D > >& pointList )
+{
+    boost::shared_ptr< MIL_PointListParameter > listParam( new MIL_PointListParameter( pointList ) );
+    pMission->SetParameter( parameter, listParam );    
+}
+
+
+
+// -----------------------------------------------------------------------------
 // Name: MIL_MissionParameterFactory::SetPolygonListParameter
 // Created: LDC 2009-09-25
 // -----------------------------------------------------------------------------

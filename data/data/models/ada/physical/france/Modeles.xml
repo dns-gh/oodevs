@@ -54,6 +54,7 @@
         <mission name="SoutenirSurPositionEnMesureDeBM"/>
         <mission name="Se Faire Decontaminer BM"/>
         <mission name="Orienter Guider Refugies BM"/>
+        <mission name="Prendre En Compte Prisonniers BM"/>
         <mission name="Se Faire Transporter BM"/>
         <mission name="Decrocher BM"/>
       </missions>
@@ -69,6 +70,7 @@
           <fragorder name="ApplyGuidedFire"/>
         </mission>
         <mission name="SuivreAgent"/>
+        <mission name="StayClose"/>
         <mission name="StationnerBM"/>
         <mission name="SeRecompleter"/>
         <mission name="SoutenirSurPositionEnMesureDeBM"/>
@@ -85,9 +87,11 @@
         <mission name="RemoveObstacle"/>
         <mission name="OpenPath"/>
         <mission name="SuivreAgent"/>
+        <mission name="StayClose"/>
         <mission name="StationnerBM"/>
         <mission name="SeRecompleter"/>
         <mission name="SoutenirSurPositionEnMesureDeBM"/>
+        <mission name="MoveToPoint"/>
       </missions>
     </unit>
     <unit dia-type="PatrouilleAIR" file="Air\Pions\Patrouille Assaut\model.bms" name="Patrouille AIR Assaut">
@@ -2938,6 +2942,7 @@
         <mission name="StationnerBM"/>
         <mission name="SuivreBM"/>
         <mission name="SoutenirSurPositionEnMesureDeBM"/>
+        <mission name="ReconnaitreItineraire"/>
       </missions>
     </automat>
     <automat dia-type="BMAutomat" file="BMAutomat.bms" name="net.masagroup.sword.military.roles.art.Company">

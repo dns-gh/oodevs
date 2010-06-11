@@ -349,6 +349,7 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::Brain& brain )
             boost::function< bool (unsigned int)> ( boost::bind( &DEC_OrdersFunctions::GetMissionLimaFlag < MIL_Automate >, boost::ref( GetAutomate() ), _1 ) ) );
     brain.RegisterFunction( "DEC_SetMissionLimaFlagHoraire",
             boost::function< void (unsigned int, bool)> ( boost::bind( &DEC_OrdersFunctions::AutomateSetMissionLimaScheduleFlag, boost::ref( GetAutomate() ), _1, _2 ) ) );
+    brain.RegisterFunction( "DEC_IsMissionAvailable", &DEC_OrdersFunctions::IsMissionAvailable );
 
     // MRT / conduite
     brain.RegisterFunction( "DEC_MRT_CreerMissionPion",
