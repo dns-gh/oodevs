@@ -1242,9 +1242,12 @@ void ADN_Objects_Data::ObjectInfos::WriteArchive( xml::xostream& xos )
 {
     xos << xml::start( "object" )
         << xml::attribute( "name", strName_ )
-        << xml::attribute( "type", strType_ ) 
         << xml::attribute( "geometry", geometries_.GetData() )
         << xml::attribute( "symbol", symbol_ );
+    if( strType_ == "" )
+        xos << xml::attribute( "type", strName_ ); 
+    else
+        xos << xml::attribute( "type", strType_ ); 
 
 	for( CIT_CapacityMap it = capacities_.begin(); capacities_.end() != it; ++it )
 		if( it->second->bPresent_.GetData() )
