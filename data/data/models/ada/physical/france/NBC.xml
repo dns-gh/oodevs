@@ -32,7 +32,7 @@
       </effects>
     </agent>
     <agent id="3" name="HCN">
-      <effects type="liquid"/>
+      <effects intoxication="false" type="liquid"/>
       <effects intoxication="true" life-time="30m" propagation="20" type="gaseous">
         <effect percentage="0" wound="nonblesse"/>
         <effect percentage="0.2" wound="u1"/>
@@ -71,7 +71,7 @@
       </effects>
     </agent>
     <agent id="6" name="gaz sarin">
-      <effects type="liquid"/>
+      <effects intoxication="false" type="liquid"/>
       <effects intoxication="true" life-time="3600s" propagation="20" type="gaseous">
         <effect percentage="0.2" wound="nonblesse"/>
         <effect percentage="0.05" wound="u1"/>
@@ -82,7 +82,7 @@
       </effects>
     </agent>
     <agent id="7" name="soman">
-      <effects type="liquid"/>
+      <effects intoxication="false" type="liquid"/>
       <effects contamination="true" intoxication="true" life-time="3600s" propagation="20" type="gaseous">
         <effect percentage="0.2" wound="nonblesse"/>
         <effect percentage="0.05" wound="u1"/>

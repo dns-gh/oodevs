@@ -131,7 +131,8 @@ void ADN_NBC_Datas::NbcIntoxInfos::ReadArchive( xml::xistream& input )
 void ADN_NBC_Datas::NbcIntoxInfos::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "effects" )
-           << xml::attribute( "type", "liquid" );
+           << xml::attribute( "type", "liquid" )
+           << xml::attribute( "intoxication", "false" );
     WriteContent( output );
     output << xml::end();
 }
