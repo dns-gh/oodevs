@@ -233,7 +233,7 @@ void ActionsToolbar::NotifyUpdated( const Simulation& simulation )
             {
                 try
                 {
-                    actions_.Load( *it );
+                    actions_.Load( *it, hasReplay_ );
                 }
                 catch( std::exception& e )
                 {
