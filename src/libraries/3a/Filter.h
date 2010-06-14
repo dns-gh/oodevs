@@ -32,7 +32,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    Filter( xml::xistream&, Function1_ABC< K, T >& next )
+    Filter( xml::xistream&, Function1_ABC< K, Result_Type >& next )
         : next_( next ) {}
     virtual ~Filter() {}
     //@}
@@ -74,7 +74,7 @@ private:
 private:
     //! @name Member data
     //@{
-    Function1_ABC< K, T >& next_;
+    Function1_ABC< K, Result_Type >& next_;
     //@}
 };
 

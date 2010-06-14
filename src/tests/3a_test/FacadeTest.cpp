@@ -647,6 +647,8 @@ BOOST_AUTO_TEST_CASE( Facade_TestAllResources )
 
 // -----------------------------------------------------------------------------
 // Name: Facade_TestInstantaneousResourceConsumptionsWithResourceFilter
+// $$$$ SBO 2010-06-14: triggers a runtime_error if "Compare" is created with < K, T > instead of < K, NumericValue >
+//                      (see TranformationFactory), for now, compare can only be used to compare numeric values (not positions for instance)
 // Created: AGE 2004-12-15
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Facade_TestInstantaneousResourceConsumptionsWithResourceFilter )
@@ -656,7 +658,7 @@ BOOST_AUTO_TEST_CASE( Facade_TestInstantaneousResourceConsumptionsWithResourceFi
         "<extract function='resources' id='resources' dotations='42'/>"
         "<transform type='int' function='derivate' input='resources' id='resources-var' period='1'/>"
         "<constant type='int' value='0' id='zero'/>"
-        "<transform function='compare' type='int' operator='less' input='resources-var,zero' id='test'/>"
+        "<transform function='compare' type='bool' operator='less' input='resources-var,zero' id='test'/>"
         "<transform function='filter' type='int' input='test,resources-var' id='consumptions'/>"
         "<reduce type='int' function='sum' input='consumptions' id='sum'/>"
         "<result function='plot' input='sum' type='int'/>"
@@ -705,7 +707,7 @@ BOOST_AUTO_TEST_CASE( Facade_TestResourceConsumptionsWithResourceFilter )
         "<extract function='resources' id='resources' dotations='42'/>"
         "<transform type='int' function='derivate' input='resources' id='resources-var' period='1'/>"
         "<constant type='int' value='0' id='zero'/>"
-        "<transform function='compare' type='int' operator='less' input='resources-var,zero' id='test'/>"
+        "<transform function='compare' type='bool' operator='less' input='resources-var,zero' id='test'/>"
         "<transform function='filter' type='int' input='test,resources-var' id='consumptions'/>"
         "<reduce type='int' function='sum' input='consumptions' id='sum'/>"
         "<transform function='integrate' id='total' input='sum' type='int'/>"        
@@ -857,9 +859,14 @@ BOOST_AUTO_TEST_CASE( Facade_TestTypeAdaptation )
     boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
 }
 
+// -----------------------------------------------------------------------------
+// Name: Facade_TestTypeBadLexicalCast
+// $$$$ SBO 2010-06-14: triggers bad_lexical_cast if "IsOneOf" is created with < K, T > instead of < K, NumericValue >
+//                      (see TranformationFactory), for now, IsOneOf can only be used with numeric values (not positions for instance)
+// Created: SBO 2010-06-01
+// -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Facade_TestBadLexicalCast )
 {
-    /*
     const std::string input =
     "<indicator>"
         "<extract function='maintenance-handling-unit' id='1'/>"
@@ -873,7 +880,6 @@ BOOST_AUTO_TEST_CASE( Facade_TestBadLexicalCast )
     MockPublisher publisher;
     AarFacade facade( publisher, 42 );
     boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
-    */
 }
 
 // -----------------------------------------------------------------------------

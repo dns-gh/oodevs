@@ -31,7 +31,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    IsOneOf( xml::xistream& xis, Function1_ABC< K, bool >& next )
+    IsOneOf( xml::xistream& xis, Function1_ABC< K, Result_Type >& next )
         : next_( next )
         , filter_( xis, "select" )
     {
@@ -80,7 +80,7 @@ private:
 private:
     //! @name Member data
     //@{
-    Function1_ABC< K, bool >& next_;
+    Function1_ABC< K, Result_Type >& next_;
     FilterHelper< T > filter_;
     //@}
 };

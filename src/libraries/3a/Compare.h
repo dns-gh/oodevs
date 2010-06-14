@@ -34,7 +34,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    Compare( xml::xistream& xis, Function1_ABC< K, bool >& next )
+    Compare( xml::xistream& xis, Function1_ABC< K, Result_Type >& next )
         : operator_( MakeOperator( xis ) )
         , next_    ( next )
     {}
@@ -95,7 +95,7 @@ private:
     //! @name Member data
     //@{
     T_Operator operator_;
-    Function1_ABC< K, bool >& next_;
+    Function1_ABC< K, Result_Type >& next_;
     //@}
 };
 

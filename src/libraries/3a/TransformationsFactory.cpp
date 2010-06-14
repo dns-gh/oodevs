@@ -65,23 +65,23 @@ void TransformationsFactory::Transform( const std::string& name, xml::xistream& 
     typedef NumericValue K;
     const std::string function = xml::attribute< std::string >( xis, "function" );
     if( function == "distance" )
-        Transform2< Distance< K > >( name, xis, result );
+        Transform2< Distance< K > >( name, xis, result ); // Numeric ( position, position )
     else if( function == "contains" )
-        Transform2< ::Contains< K > >( name, xis, result );
+        Transform2< ::Contains< K > >( name, xis, result ); // bool ( zone, position )
     else if( function == "filter" )
-        Transform2< Filter< K, T > >( name, xis, result );
+        Transform2< Filter< K, T > >( name, xis, result ); // T ( bool, T )
     else if( function == "is-one-of" )
-        Transform1< IsOneOf< K, T > >( name, xis, result );
+        Transform1< IsOneOf< K, NumericValue > >( name, xis, result ); // bool ( T )
     else if( function == "derivate" )
-        Transform1< Derivate< K, T > >( name, xis, result );
+        Transform1< Derivate< K, T > >( name, xis, result ); // T ( T )
     else if( function == "integrate" )
-        Transform1< Integrate< K, T > >( name, xis, result );
+        Transform1< Integrate< K, T > >( name, xis, result ); // T ( T )
     else if( function == "domain" )
-        Transform1< Domain< K, T > >( name, xis, result );
+        Transform1< Domain< K, T > >( name, xis, result ); // T ( T )
     else if( function == "compare" )
-        Transform2< Compare< K, T > >( name, xis, result );
+        Transform2< Compare< K, NumericValue > >( name, xis, result ); // bool ( T, T )
     else if( function == "compose" )
-        Compose< T >( name, xis, result );
+        Compose< T >( name, xis, result ); // T ( T )
     else
         Error( function );
 }
