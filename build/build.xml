@@ -663,7 +663,7 @@
     </target>
 
     <target name="dispatcher_test">
-        <build-test name="dispatcher" depends="boost"
+        <build-test name="dispatcher" depends="boost,qt"
             libs="lib${ant.project.name}_clients_kernel-${platform}-mt,libprotobuf,
             lib${ant.project.name}_dispatcher-${platform}-mt,
             lib${ant.project.name}_protocol-${platform}-mt">
