@@ -41,11 +41,11 @@ namespace
 // Name: MenuPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-MenuPage::MenuPage( QWidgetStack* pages, const QString& title )
-    : Page_ABC( pages )
+MenuPage::MenuPage( QWidgetStack* pages, Page_ABC& previous, unsigned short buttonFlags, const QString& title )
+    : Page_ABC( pages, previous, buttonFlags )
 {
-
     QVBox* box = new QVBox(this);
+    AddContent( box );
     box->setSpacing( 5 );    
     box->setBackgroundOrigin( QWidget::WindowOrigin );
     // title 
@@ -60,6 +60,7 @@ MenuPage::MenuPage( QWidgetStack* pages, const QString& title )
     spacer->setBackgroundOrigin( QWidget::WindowOrigin );
     // main container 
     container_ = new TransparentContainer( box);
+
     // subtitle 
     QFont subTitleFont( "Century Gothic", 12, QFont::Bold );  
     subTitleFont.setItalic( true );
@@ -69,7 +70,6 @@ MenuPage::MenuPage( QWidgetStack* pages, const QString& title )
     subTitle_->setFont( subTitleFont);  
     
     layout()->setAlignment( Qt::AlignCenter );
-
 }
 
 // -----------------------------------------------------------------------------
@@ -85,9 +85,9 @@ MenuPage::~MenuPage()
 // Name: MenuPage::AddLink
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-void MenuPage::AddLink( const QString& title, Page_ABC& page, bool enabled, const QString& subTitle, const char* slot /*= 0*/ )
+void MenuPage::AddLink( const QString& title, Page_ABC& page, const QString& subTitle, const char* slot /*= 0*/ )
 {
-    MenuButton* button = new MenuButton( title, container_, enabled);
+    MenuButton* button = new MenuButton( title, container_ );
     subTitles_[ button ] = subTitle ; 
     connect( button, SIGNAL( clicked() ), &page, slot ? slot : SLOT( show() ) );
     connect( button, SIGNAL( Selected( MenuButton* ) ), this, SLOT( OnSelectedItem( MenuButton* ) ) );

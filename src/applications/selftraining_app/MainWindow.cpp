@@ -41,7 +41,6 @@ namespace
 MainWindow::MainWindow( kernel::Controllers& controllers )
     : QMainWindow( 0, 0, Qt::WDestructiveClose )
     , config_( GetConfig() )
-    , interpreter_( new LinkInterpreter( this, controllers ) )
     , exercises_( new ExerciseService( controllers, *config_ ) )
     , exerciseLister_( new NetworkExerciseLister( *config_ ) )
 {
@@ -50,7 +49,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers )
     setFixedSize( 800, 600 );
     SetStyle();
     pages_ = new QWidgetStack( this );
-    new HomePage( pages_, *config_, controllers, *interpreter_, *exerciseLister_ );
+    new HomePage( pages_, *config_, controllers, *exerciseLister_ );
     setCentralWidget( pages_ );
     CenterWindow();
 }

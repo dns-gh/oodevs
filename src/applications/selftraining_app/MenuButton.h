@@ -26,7 +26,7 @@ class MenuButton : public QButton
 public:
     //! @name Constructors/Destructor
     //@{
-             MenuButton( const QString& text, QWidget* parent, bool enabled = true );
+             MenuButton( const QString& text, QWidget* parent );
     virtual ~MenuButton();
     //@}
 
@@ -61,7 +61,6 @@ private:
     QFont selectedFont_;
     QFont disabledFont_;
     bool hasMouse_;
-    bool enabled_ ; 
     //@}
 };
 

@@ -10,6 +10,7 @@
 #include "selftraining_app_pch.h"
 #include "OptionsPage.h"
 #include "moc_OptionsPage.cpp"
+#include "Application.h"
 #include "clients_gui/Tools.h"
 #include "tools/GeneralConfig.h"
 #include <qcombobox.h>
@@ -33,7 +34,7 @@ namespace
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
 OptionsPage::OptionsPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config )
-    : ContentPage( pages, tools::translate( "OptionsPage", "Options" ), previous )
+    : ContentPage( pages, tools::translate( "OptionsPage", "Options" ), previous, eButtonBack | eButtonQuit )
     , selectedLanguage_( ReadLang() )
 {
     languages_[ tools::translate( "OptionsPage", "English" ) ]  = "en";
@@ -85,6 +86,8 @@ OptionsPage::~OptionsPage()
 void OptionsPage::OnChangeLanguage( const QString& lang )
 {
     selectedLanguage_ = languages_[ lang ];
+    Commit();
+    static_cast< Application* >( qApp )->CreateTranslators();
 }
 
 // -----------------------------------------------------------------------------
@@ -109,4 +112,6 @@ void OptionsPage::OnChangeDataDirectory()
     if( directory.isEmpty() )
         return;
     dataDirectory_->setText( directory );
+    Commit();
 }
+

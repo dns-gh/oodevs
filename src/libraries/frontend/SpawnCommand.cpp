@@ -94,7 +94,7 @@ void SpawnCommand::Start()
                 workingDirectory_.c_str(), &startupInfo, &internal_->pid_) )
     {
         DWORD errCode = GetLastError();
-        throw std::exception( tools::translate( "SpawnCommand", "Could not start process: %1" ).arg( debug.c_str() ).ascii() );
+        throw std::exception( tools::translate( "SpawnCommand", "Could not start process: %1, error: %2" ).arg( debug.c_str() ).arg( errCode ).ascii() );
     }
 }
 

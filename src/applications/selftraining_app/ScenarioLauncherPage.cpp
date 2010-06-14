@@ -39,10 +39,10 @@ namespace bpt = boost::posix_time;
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
 ScenarioLauncherPage::ScenarioLauncherPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const tools::GeneralConfig& config, const QString& title /*= ""*/ )
-    : ContentPage( pages, title.isEmpty() ? tools::translate( "ScenarioLauncherPage", "Scenario" ) : title, previous )
+    : ContentPage( pages, title.isEmpty() ? tools::translate( "ScenarioLauncherPage", "Scenario" ) : title, previous, eButtonBack | eButtonStart )
     , config_( config )
     , controllers_( controllers )
-    , progressPage_( new ProgressPage( pages, *this, tools::translate( "ScenarioLauncherPage", "Starting %1" ).arg( title ), controllers ) )
+    , progressPage_( new ProgressPage( pages, *this, tools::translate( "ScenarioLauncherPage", "Starting %1" ).arg( title.isEmpty() ? tools::translate( "ScenarioLauncherPage", "Scenario" ) : title ), controllers ) )
     , lister_( config, "" )
 {
     QVBox* box = new QVBox( this );
@@ -65,8 +65,8 @@ ScenarioLauncherPage::ScenarioLauncherPage( QWidgetStack* pages, Page_ABC& previ
         AddPlugin< frontend::HlaPluginConfigPanel >( tabs, tools::translate( "ScenarioLauncherPage", "HLA" ) );
         AddPlugin< frontend::CrossbowPluginConfigPanel >( tabs, tools::translate( "ScenarioLauncherPage", "Crossbow" ) );
     }
+    EnableButton( eButtonStart, false );
     AddContent( box );
-    AddNextButton( tools::translate( "ScenarioLauncherPage", "Start" ), *this, SLOT( OnStart() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -140,6 +140,7 @@ void ScenarioLauncherPage::OnSelect( const QString& exercise, const Profile& pro
 {
     exercise_ = exercise;
     profile_ = profile;
+    EnableButton( eButtonStart, !exercise_.isEmpty() && profile_.IsValid() );
 }
 
 // -----------------------------------------------------------------------------

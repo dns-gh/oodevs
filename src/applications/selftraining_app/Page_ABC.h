@@ -13,6 +13,7 @@
 #include <qvbox.h>
 
 class QWidgetStack;
+class QuitPage;
 
 // =============================================================================
 /** @class  Page_ABC
@@ -22,13 +23,31 @@ class QWidgetStack;
 // =============================================================================
 class Page_ABC : public QVBox
 {
+    Q_OBJECT
+
+protected:
+    enum EButtonFlags
+    {
+        eButtonBack     = 0x01,
+        eButtonQuit     = 0x02,
+        eButtonOptions  = 0x04,
+        eButtonStart    = 0x08,
+        eButtonJoin     = 0x10,
+        eButtonEdit     = 0x20,
+    };
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Page_ABC( QWidgetStack* pages );
+             Page_ABC( QWidgetStack* pages, Page_ABC& previous, unsigned short flags );
     virtual ~Page_ABC();
     //@}
+
+protected:
+    void AddContent( QWidget* widget );
+    void AddTitle( const QString& title );
+    void EnableButton( unsigned short flags, bool enable );
+    void Previous();
 
 private:
     //! @name Copy/Assignment
@@ -43,10 +62,28 @@ private:
     virtual void Update() {};
     //@}
 
+private slots:
+    //! @name Slots
+    //@{
+    virtual void OnOptions() {}
+    virtual void OnStart() {}
+    virtual void OnJoin() {}
+    virtual void OnEdit() {}
+
+    void OnBack();
+    void OnQuit();
+    //@}
+
 private:
     //! @name Member data
     //@{
+    QGridLayout* grid_;
     QWidgetStack* pages_;
+    Page_ABC& previous_;
+    static QuitPage* quitPage_;
+    QButton* startButton_;
+    QButton* joinButton_;
+    QButton* editButton_;
     //@}
 };
 

@@ -17,6 +17,7 @@ static uint MYWM_TASKBARCREATED = 0;
 typedef BOOL (WINAPI *PtrShell_NotifyIcon)(DWORD,PNOTIFYICONDATA);
 static PtrShell_NotifyIcon ptrShell_NotifyIcon = 0;
 
+#if defined(UNICODE)
 static void resolveLibs()
 {
     QLibrary lib("shell32");
@@ -27,6 +28,7 @@ static void resolveLibs()
 	ptrShell_NotifyIcon = (PtrShell_NotifyIcon) lib.resolve( "Shell_NotifyIconW" );
     }
 }
+#endif
 
 class TrayIcon::TrayIconPrivate : public QWidget
 {
@@ -73,7 +75,7 @@ public:
 	    }
 	}
 
-	res = Shell_NotifyIconA(msg, &tnd);
+	res = Shell_NotifyIconA(msg, &tnd) != 0;
 
 	return res;
     }

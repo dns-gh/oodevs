@@ -17,14 +17,13 @@
 // Name: MenuButton constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-MenuButton::MenuButton( const QString& text, QWidget* parent, bool enabled )
+MenuButton::MenuButton( const QString& text, QWidget* parent )
     : QButton( parent )
     , mask_( "resources/images/selftraining/menu-mask.png" )
     , baseFont_( "Century Gothic", 16, QFont::Bold )
     , selectedFont_( "Century Gothic", 18, QFont::Bold )
     , disabledFont_( "Century Gothic", 18, QFont::Bold )
     , hasMouse_( false )
-    , enabled_ ( enabled )
 {
     disabledFont_.setItalic( true ) ;
     setFont( baseFont_ );
@@ -69,8 +68,8 @@ void MenuButton::leaveEvent( QEvent* )
 // -----------------------------------------------------------------------------
 void MenuButton::drawButton( QPainter* painter )
 {
-    const QFont& font = enabled_ ? ( hasMouse_ ? selectedFont_ : baseFont_ ) : disabledFont_  ; 
-    const QColorGroup::ColorRole& colorRole = enabled_ ? ( hasMouse_ ? QColorGroup::BrightText : QColorGroup::ButtonText ) : QColorGroup::Light ; 
+    const QFont& font = isEnabled() ? ( hasMouse_ ? selectedFont_ : baseFont_ ) : disabledFont_  ; 
+    const QColorGroup::ColorRole& colorRole = isEnabled() ? ( hasMouse_ ? QColorGroup::BrightText : QColorGroup::ButtonText ) : QColorGroup::Light ; 
     painter->drawImage( rect(), mask_ );
     painter->setFont( font );
     painter->setPen( colorGroup().color( colorRole ) );

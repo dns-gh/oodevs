@@ -44,8 +44,8 @@ public:
 private slots:
     //! @name Slots
     //@{
+    virtual void OnJoin();
     void SelectExercise( const QString& exercise, const Profile& profile );
-    void JoinExercise();
     void ReloadExerciseList();
     //@}
 

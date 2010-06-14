@@ -55,7 +55,7 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void OnStart();
+    virtual void OnStart();
     void OnSelect( const QString& exercise, const Profile& profile );
     void OnSelectCheckpoint( const QString& session, const QString& checkpoint );
     //@}

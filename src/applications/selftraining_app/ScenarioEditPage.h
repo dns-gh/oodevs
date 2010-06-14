@@ -48,10 +48,12 @@ public:
 private slots:
     //! @name Operations
     //@{
+    virtual void OnEdit();
     void Update();
     void CreateExercise();
-    void EditExercise();
     void OnSelect( const QString& exercise, const Profile& profile );
+    void EditNameChanged( const QString& string );
+    void ComboChanged( int index );
     //@}
 
 private:
@@ -64,6 +66,7 @@ private:
     //! @name Helpers
     //@{
     void Edit( const QString& exercise );
+    void UpdateCreateButton();
     //@}
 
 private:
@@ -78,6 +81,7 @@ private:
     QComboBox* editTerrainList_;
     QComboBox* editModelList_;
     QLineEdit* editName_;
+    QPushButton* createButton_;
     //@}
 };
 

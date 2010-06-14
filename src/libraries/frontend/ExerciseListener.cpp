@@ -45,6 +45,9 @@ ExerciseListener::~ExerciseListener()
     // NOTHING
 }
 
+#pragma warning( push )
+#pragma warning( disable : 4702 ) // unreachable code
+
 // -----------------------------------------------------------------------------
 // Name: ExerciseListener::Wait
 // Created: RDS 2008-07-23
@@ -81,6 +84,8 @@ bool ExerciseListener::Wait()
     }
     return false;
 }
+
+#pragma warning( pop )
 
 // -----------------------------------------------------------------------------
 // Name: ExerciseListener::GetPercentage

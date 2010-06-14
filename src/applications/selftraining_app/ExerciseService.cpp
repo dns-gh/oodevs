@@ -63,7 +63,7 @@ ExerciseService::~ExerciseService()
 // Name: ExerciseService::NotifyCreated
 // Created: LDC 2008-10-23
 // -----------------------------------------------------------------------------
-void ExerciseService::NotifyCreated( const boost::shared_ptr< frontend::Process_ABC >& process )
+void ExerciseService::NotifyCreated( const boost::shared_ptr< frontend::Process_ABC >& /*process*/ )
 {
     // NOTHING
 }
@@ -131,7 +131,7 @@ void ExerciseService::RunNetwork()
 // Name: ExerciseService::OnReceive
 // Created: LDC 2008-10-24
 // -----------------------------------------------------------------------------
-void ExerciseService::OnReceive( const boost::system::error_code& error, size_t bytes_received )
+void ExerciseService::OnReceive( const boost::system::error_code& error, size_t /*bytes_received*/ )
 {
     if( !error )
     {

@@ -20,7 +20,7 @@
 // Created: SBO 2008-10-14
 // -----------------------------------------------------------------------------
 ProgressPage::ProgressPage( QWidgetStack* pages, Page_ABC& previous, const QString& title, kernel::Controllers& controllers )
-    : ContentPage( pages, title, previous )
+    : ContentPage( pages, title, previous, 0 )
     , controllers_( controllers )
 {
     QVBox* box = new QVBox( this );

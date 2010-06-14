@@ -72,7 +72,7 @@ void ProcessWrapper::ThreadStart()
     }
     catch( ... )
     {
-        // NOTHING
+        controller_.Delete( shared_from_this() );
     }
 }
 

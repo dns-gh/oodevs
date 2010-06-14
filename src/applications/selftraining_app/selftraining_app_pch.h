@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#pragma warning( disable : 4231 )
+#pragma warning( disable : 4231 4355 )
 
 #ifndef __selftraining_app_pch_h_
 #define __selftraining_app_pch_h_

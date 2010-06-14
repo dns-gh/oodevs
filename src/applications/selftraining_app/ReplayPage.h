@@ -49,7 +49,7 @@ private slots:
     
     //! @name Operations
     //@{
-    void OnStart();
+    virtual void OnStart();
     void OnSelectExercise( const QString& exercise, const Profile& profile );
     void OnSelectSession( const QString& session );
     //@}

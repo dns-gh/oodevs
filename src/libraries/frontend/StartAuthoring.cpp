@@ -3,29 +3,29 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2008 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2010 MASA Group
 //
 // *****************************************************************************
 
-#include "selftraining_app_pch.h"
-#include "ContentPage.h"
+#include "frontend_pch.h"
+#include "StartAuthoring.h"
+
+using namespace frontend;
 
 // -----------------------------------------------------------------------------
-// Name: ContentPage constructor
-// Created: SBO 2008-02-21
+// Name: StartAuthoring constructor
+// Created: JSR 2010-06-10
 // -----------------------------------------------------------------------------
-ContentPage::ContentPage( QWidgetStack* pages, const QString& title, Page_ABC& previous, unsigned short buttonFlags )
-    : Page_ABC( pages, previous, buttonFlags )
+StartAuthoring::StartAuthoring( const tools::GeneralConfig& config, bool attach /*= false*/ )
+    : SpawnCommand( config, "adaptation_app.exe", attach )
 {
-    AddTitle( title );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ContentPage destructor
-// Created: SBO 2008-02-21
+// Name: StartAuthoring destructor
+// Created: JSR 2010-06-10
 // -----------------------------------------------------------------------------
-ContentPage::~ContentPage()
+StartAuthoring::~StartAuthoring()
 {
     // NOTHING
 }
-

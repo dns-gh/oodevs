@@ -36,6 +36,12 @@ public:
     virtual ~Application();
     //@}
 
+public:
+    //! @name Operations
+    //@{
+    void CreateTranslators();
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{

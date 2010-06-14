@@ -23,13 +23,12 @@ class MenuButton ;
 // =============================================================================
 class MenuPage : public Page_ABC
 {
-    
-    Q_OBJECT ;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MenuPage( QWidgetStack* pages, const QString& title = "" );
+    explicit MenuPage( QWidgetStack* pages, Page_ABC& previous, unsigned short buttonFlags, const QString& title = "" );
     virtual ~MenuPage();
     //@}
 
@@ -38,7 +37,7 @@ protected:
     
     //! @name Operations
     //@{
-    void AddLink( const QString& title, Page_ABC& page, bool enabled = true, const QString& subtitle="" ,const char* slot = 0 );
+    void AddLink( const QString& title, Page_ABC& page, const QString& subtitle="", const char* slot = 0 );
     //@}
 
 protected slots:
@@ -54,10 +53,6 @@ private:
     //@{
     MenuPage( const MenuPage& );            //!< Copy constructor
     MenuPage& operator=( const MenuPage& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
     //@}
 
 private:

@@ -1,22 +1,22 @@
 HEADERS = 
 
 SOURCES = Application.cpp \
+AuthoringPage.cpp \
 BattleCenterJoinPage.cpp \
 BattleCenterLauncherPage.cpp \
 BattleCenterPage.cpp \
-ContentPage.cpp \
+CreateTerrainPage.cpp \
 ExerciseList.cpp \
 HomePage.cpp \
 MainWindow.cpp \
 MessageDialog.cpp \
 OptionsPage.cpp \
+Page_ABC.cpp \
 ProcessDialogs.cpp \
-ProfileList.cpp \
 QuitPage.cpp \
 ReplayPage.cpp \
 ScenarioEditPage.cpp \
 ScenarioLauncherPage.cpp \
-ScenarioPage.cpp \
 SelfTrainingPage.cpp \
 SessionList.cpp \
 SessionTray.cpp \

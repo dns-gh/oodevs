@@ -19,11 +19,10 @@
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
 BattleCenterPage::BattleCenterPage( QWidgetStack* pages, Page_ABC& previous, const Config& config, kernel::Controllers& controllers, NetworkExerciseLister& lister )
-    : MenuPage( pages )
+    : MenuPage( pages, previous, eButtonBack | eButtonQuit)
 {
-    AddLink( tools::translate( "BattleCenterPage", "Start" ), *new BattleCenterLauncherPage( pages, *this, controllers, config ), true, tools::translate( "ScenarioPage", "Start multiplayer training session" ) );
-    AddLink( tools::translate( "BattleCenterPage", "Join" ),  *new BattleCenterJoinPage( pages, *this, controllers, config, lister ), true, tools::translate( "ScenarioPage", "Join multiplayer training session" ) );
-    AddLink( tools::translate( "BattleCenterPage", "Back" ),  previous );
+    AddLink( tools::translate( "BattleCenterPage", "Start" ), *new BattleCenterLauncherPage( pages, *this, controllers, config ), tools::translate( "ScenarioPage", "Start multiplayer training session" ) );
+    AddLink( tools::translate( "BattleCenterPage", "Join" ),  *new BattleCenterJoinPage( pages, *this, controllers, config, lister ), tools::translate( "ScenarioPage", "Join multiplayer training session" ) );
 }
 
 // -----------------------------------------------------------------------------

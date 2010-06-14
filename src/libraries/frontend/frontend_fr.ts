@@ -146,7 +146,11 @@ Connexion SDE: sde://user:password@host:port/db_name.sword</translation>
     </message>
     <message>
         <source>Could not start process: %1</source>
-        <translation>Impossible de démarrer le processus: %1</translation>
+        <translation type="obsolete">Impossible de démarrer le processus: %1</translation>
+    </message>
+    <message>
+        <source>Could not start process: %1, error: %2</source>
+        <translation>Impossible de démarrer le processus: %1, erreur: %2</translation>
     </message>
 </context>
 <context>

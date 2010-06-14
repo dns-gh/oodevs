@@ -26,15 +26,8 @@ class ContentPage : public Page_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ContentPage( QWidgetStack* pages, const QString& title, Page_ABC& previous );
+             ContentPage( QWidgetStack* pages, const QString& title, Page_ABC& previous, unsigned short buttonFlags );
     virtual ~ContentPage();
-    //@}
-
-    //! @name Operations
-    //@{
-    void AddContent( QWidget* widget );
-    void AddNextButton( const QString& caption, Page_ABC& page, const char* slot = 0 );
-    void Previous();
     //@}
 
 private:
@@ -42,21 +35,6 @@ private:
     //@{
     ContentPage( const ContentPage& );            //!< Copy constructor
     ContentPage& operator=( const ContentPage& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    void AddTitle( const QString& title );
-    void AddBackButton( Page_ABC& previous );
-    QButton* AddNextButton( const QString& caption );
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    QGridLayout* grid_;
-    Page_ABC& previous_;
-    Page_ABC* next_;
     //@}
 };
 

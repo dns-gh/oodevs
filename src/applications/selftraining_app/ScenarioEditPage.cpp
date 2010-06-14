@@ -25,7 +25,7 @@
 // Created: RDS 2008-09-09
 // -----------------------------------------------------------------------------
 ScenarioEditPage::ScenarioEditPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, kernel::Controllers& controllers )
-    : ContentPage( pages, tools::translate( "ScenarioEditPage", "Scenario" ), previous )
+    : ContentPage( pages, tools::translate( "ScenarioEditPage", "Scenario" ), previous, eButtonBack | eButtonEdit )
     , config_( config )
     , controllers_( controllers )
     , lister_( config_, "" )
@@ -43,16 +43,23 @@ ScenarioEditPage::ScenarioEditPage( QWidgetStack* pages, Page_ABC& previous, con
         editName_ = new QLineEdit( tools::translate( "ScenarioEditPage", "Enter exercise name" ), hbox );
         connect( editName_, SIGNAL( textChanged( const QString& ) ), SLOT( EditNameChanged( const QString& ) ) );
         editTerrainList_ = new QComboBox( hbox );
+        connect( editTerrainList_, SIGNAL( activated( int ) ), SLOT( ComboChanged( int ) ) );
         editModelList_ = new QComboBox( hbox );
-        QPushButton* button = new QPushButton( tools::translate( "ScenarioEditPage", "Create" ), hbox );
-        connect( button, SIGNAL( clicked() ), this, SLOT( CreateExercise() ) );
+        connect( editModelList_, SIGNAL( activated( int ) ), SLOT( ComboChanged( int ) ) );
+        createButton_ = new QPushButton( tools::translate( "ScenarioEditPage", "Create" ), hbox );
+        createButton_->setEnabled( false );
+        QPalette p( palette() );
+        p.setColor( QPalette::Active, QColorGroup::ButtonText, QColor( 240, 240, 240 ) );
+        p.setColor( QPalette::Disabled, QColorGroup::Text, QColor( 140, 140, 150 ) );
+        createButton_->setPalette( p );
+        connect( createButton_, SIGNAL( clicked() ), this, SLOT( CreateExercise() ) );
     }
     {
         exercises_ = new ExerciseList( box, config_, lister_, "", true, false );
         connect( exercises_, SIGNAL( Select( const QString&, const Profile& ) ), this, SLOT( OnSelect( const QString&, const Profile& ) ) );
     }
+    EnableButton( eButtonEdit, false );
     AddContent( box ); 
-    AddNextButton( tools::translate( "ScenarioEditPage", "Edit" ), *this, SLOT( EditExercise() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -109,7 +116,7 @@ void ScenarioEditPage::CreateExercise()
 // Name: ScenarioEditPage::EditExercise
 // Created: SBO 2008-10-07
 // -----------------------------------------------------------------------------
-void ScenarioEditPage::EditExercise()
+void ScenarioEditPage::OnEdit()
 {
     if( !exercise_.isEmpty() )
         Edit( exercise_ );
@@ -134,4 +141,35 @@ void ScenarioEditPage::Edit( const QString& exercise )
 void ScenarioEditPage::OnSelect( const QString& exercise, const Profile& )
 {
     exercise_ = exercise;
+    EnableButton( eButtonEdit, !exercise_.isEmpty() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScenarioEditPage::EditNameChanged
+// Created: JSR 2010-06-11
+// -----------------------------------------------------------------------------
+void ScenarioEditPage::EditNameChanged( const QString& )
+{
+    UpdateCreateButton();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScenarioEditPage::ComboChanged
+// Created: JSR 2010-06-11
+// -----------------------------------------------------------------------------
+void ScenarioEditPage::ComboChanged( int )
+{
+    UpdateCreateButton();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScenarioEditPage::UpdateCreateButton
+// Created: JSR 2010-06-11
+// -----------------------------------------------------------------------------
+void ScenarioEditPage::UpdateCreateButton()
+{
+    bool enable = editTerrainList_->currentItem() > 0 && editModelList_->currentItem() > 0
+        && !editName_->text().isEmpty() && !exercises_->Exists( editName_->text() )
+        && editName_->text() != tools::translate( "ScenarioEditPage", "Enter exercise name" );
+    createButton_->setEnabled( enable );
 }

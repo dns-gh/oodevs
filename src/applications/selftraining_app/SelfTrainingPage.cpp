@@ -9,20 +9,20 @@
 
 #include "selftraining_app_pch.h"
 #include "SelfTrainingPage.h"
-#include "ScenarioPage.h"
-#include "TutorialPage.h" 
+#include "BattleCenterPage.h"
+#include "Config.h"
+#include "ScenarioLauncherPage.h"
 #include "clients_gui/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: SelfTrainingPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-SelfTrainingPage::SelfTrainingPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, kernel::Controllers& controllers, gui::LinkInterpreter_ABC& interpreter )
-    : MenuPage( pages )
+SelfTrainingPage::SelfTrainingPage( QWidgetStack* pages, Page_ABC& previous, const Config& config, kernel::Controllers& controllers, NetworkExerciseLister& lister )
+    : MenuPage( pages, previous, eButtonBack | eButtonQuit )
 {
-    AddLink( tools::translate( "SelfTrainingPage", "Scenario" ), *new ScenarioPage( pages, *this, config, controllers ), true, tools::translate( "SelfTrainingPage", "Start scenarios" ) );
-    AddLink( tools::translate( "SelfTrainingPage", "Tutorials" ), *new TutorialPage( pages, *this, config, controllers, interpreter ), true, tools::translate( "SelfTrainingPage", "Start tutorials" ) );
-    AddLink( tools::translate( "SelfTrainingPage", "Back" ), previous );
+    AddLink( tools::translate( "SelfTrainingPage", "Single" ), *new ScenarioLauncherPage( pages, *this, controllers, config ), tools::translate( "SelfTrainingPage", "Start a single training session" ) );
+    AddLink( tools::translate( "SelfTrainingPage", "Multiplayer" ), *new BattleCenterPage( pages, *this, config, controllers, lister ), tools::translate( "SelfTrainingPage", "Start or join a multiplayer training session" ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -38,13 +38,7 @@ Application::Application( int argc, char** argv )
     : QApplication( argc, argv )
     , controllers_( new kernel::Controllers() )  
 {
-    const QString locale = ReadLang();
-    AddTranslator( "qt", locale );
-    AddTranslator( "frontend", locale );
-    AddTranslator( "clients_kernel", locale );
-    AddTranslator( "clients_gui", locale );
-    AddTranslator( "selftraining_app", locale );
-    AddTranslator( "tools", locale );
+    CreateTranslators();
 
     // Child processe status 
     mainWindow_ = new MainWindow( *controllers_ );
@@ -86,6 +80,21 @@ Application::Application( int argc, char** argv )
 Application::~Application()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Application::CreateTranslators
+// Created: JSR 2010-06-11
+// -----------------------------------------------------------------------------
+void Application::CreateTranslators()
+{
+    const QString locale = ReadLang();
+    AddTranslator( "qt", locale );
+    AddTranslator( "frontend", locale );
+    AddTranslator( "clients_kernel", locale );
+    AddTranslator( "clients_gui", locale );
+    AddTranslator( "selftraining_app", locale );
+    AddTranslator( "tools", locale );
 }
 
 // -----------------------------------------------------------------------------

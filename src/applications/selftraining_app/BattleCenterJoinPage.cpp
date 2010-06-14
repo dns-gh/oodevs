@@ -28,7 +28,7 @@
 // Created: SBO 2008-10-14
 // -----------------------------------------------------------------------------
 BattleCenterJoinPage::BattleCenterJoinPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, NetworkExerciseLister& lister )
-    : ContentPage    ( pages, tools::translate( "BattleCenterJoinPage", "Join" ), previous )
+    : ContentPage    ( pages, tools::translate( "BattleCenterJoinPage", "Join" ), previous, eButtonBack | eButtonJoin )
     , controllers_   ( controllers )
     , progressPage_  ( new ProgressPage( pages, *this, tools::translate( "BattleCenterJoinPage", "Joining host" ), controllers ) )
     , config_        ( config )
@@ -58,8 +58,8 @@ BattleCenterJoinPage::BattleCenterJoinPage( QWidgetStack* pages, Page_ABC& previ
         connect( exercises_, SIGNAL( Select( const QString&, const Profile& ) ), this, SLOT( SelectExercise( const QString&, const Profile& ) ) );
     }
     ReloadExerciseList();
+    EnableButton( eButtonJoin, false );
     AddContent( box ); 
-    AddNextButton( tools::translate( "BattleCenterJoinPage", "Join" ), *this, SLOT( JoinExercise() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -88,13 +88,14 @@ void BattleCenterJoinPage::SelectExercise( const QString& exercise, const Profil
 {
     exercise_ = exercise;
     profile_ = profile;
+    EnableButton( eButtonJoin, !exercise_.isEmpty() && profile_.IsValid() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: BattleCenterJoinPage::JoinExercise
+// Name: BattleCenterJoinPage::OnJoin
 // Created: SBO 2008-10-14
 // -----------------------------------------------------------------------------
-void BattleCenterJoinPage::JoinExercise()
+void BattleCenterJoinPage::OnJoin()
 {
     if( exercise_.isEmpty() || !profile_.IsValid() || ! dialogs::KillRunningProcesses( this ) )
         return;

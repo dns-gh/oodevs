@@ -23,14 +23,13 @@
 #include "frontend/JoinAnalysis.h"
 #include "clients_gui/Tools.h"
 #include "clients_kernel/Controllers.h" 
-#include "tools/GeneralConfig.h"
 
 // -----------------------------------------------------------------------------
 // Name: ReplayPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
 ReplayPage::ReplayPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const tools::GeneralConfig& config )
-    : ContentPage( pages, tools::translate( "ReplayPage", "Replay" ), previous )
+    : ContentPage( pages, tools::translate( "ReplayPage", "Replay" ), previous, eButtonBack | eButtonStart )
     , config_( config )
     , controllers_( controllers ) 
     , progressPage_( new ProgressPage( pages, *this, tools::translate( "ReplayPage", "Starting replay session" ), controllers ) )
@@ -40,6 +39,7 @@ ReplayPage::ReplayPage( QWidgetStack* pages, Page_ABC& previous, kernel::Control
     {
         QHBox* hbox = new QHBox( mainBox );
         hbox->setBackgroundOrigin( QWidget::WindowOrigin );
+        hbox->setMargin( 10 );
         hbox->setSpacing( 10 );
         {
             exercises_ = new ExerciseList( hbox, config, *lister_, "", false, true );
@@ -50,8 +50,8 @@ ReplayPage::ReplayPage( QWidgetStack* pages, Page_ABC& previous, kernel::Control
             connect( sessions_, SIGNAL( Select( const QString& ) ), this, SLOT( OnSelectSession( const QString& ) ) );
         }
     }
+    EnableButton( eButtonStart, false );
     AddContent( mainBox );
-    AddNextButton( tools::translate( "ReplayPage", "Start" ), *this, SLOT( OnStart() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -112,6 +112,7 @@ void ReplayPage::OnSelectExercise( const QString& exercise, const Profile& profi
     }
     exercise_ = exercise;
     profile_ = profile;
+    EnableButton( eButtonStart, !exercise.isEmpty() && !session_.isEmpty() && profile_.IsValid() );
 }
 
 // -----------------------------------------------------------------------------
@@ -121,6 +122,7 @@ void ReplayPage::OnSelectExercise( const QString& exercise, const Profile& profi
 void ReplayPage::OnSelectSession( const QString& session )
 {
     session_ = session;
+    EnableButton( eButtonStart, !exercise_.isEmpty() && !session_.isEmpty() && profile_.IsValid() );
 }
 
 // -----------------------------------------------------------------------------
