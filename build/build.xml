@@ -666,6 +666,7 @@
         <build-test name="dispatcher" depends="boost,qt"
             libs="lib${ant.project.name}_clients_kernel-${platform}-mt,libprotobuf,
             lib${ant.project.name}_dispatcher-${platform}-mt,
+            lib${ant.project.name}_MT_Tools-${platform}-mt,
             lib${ant.project.name}_protocol-${platform}-mt">
         </build-test>
     </target>
