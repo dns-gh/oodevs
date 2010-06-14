@@ -79,10 +79,10 @@ void ADN_NBC_GUI::Build()
     QHBox* hBox = new QHBox( pGroup );
     hBox->setSpacing( 5 );
 
-    QGroupBox* liquidGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Liquid" ), hBox );
+    ADN_GroupBox* liquidGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Liquid" ), hBox );
     ADN_NBC_Intox_GUI* liquid = new ADN_NBC_Intox_GUI( liquidGroup );
     vInfosConnectors[eLiquidGroup] = &liquid->GetConnector();
-
+    vInfosConnectors[eLiquidGroupPresent] = &liquidGroup->GetConnector();
     ADN_GroupBox* gazGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Gaseous" ), hBox );
     vInfosConnectors[eGazGroupPresent] = &gazGroup->GetConnector();
 

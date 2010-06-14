@@ -34,6 +34,7 @@ public:
     {
         eName,
         eLiquidGroup,
+        eLiquidGroupPresent,
         eGazGroupPresent,
         eGazGroup,
         eGazLifetime,

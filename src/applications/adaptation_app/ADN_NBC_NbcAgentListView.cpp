@@ -70,6 +70,7 @@ void ADN_NBC_NbcAgentListView::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_NBC_GUI::eGazLifetime]->Connect( &pInfos->gazInfos_.lifeTime_, bConnect );
     vItemConnectors_[ADN_NBC_GUI::eGazSpreadAngle]->Connect( &pInfos->gazInfos_.rSpreadAngle_, bConnect );
     vItemConnectors_[ADN_NBC_GUI::eGazGroupPresent]->Connect( &pInfos->bGazPresent_, bConnect );
+    vItemConnectors_[ADN_NBC_GUI::eLiquidGroupPresent]->Connect( &pInfos->bLiquidPresent_, bConnect );
 }
 
 

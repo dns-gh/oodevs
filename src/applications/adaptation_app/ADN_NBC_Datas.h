@@ -107,6 +107,7 @@ public:
         int             nMosId_;
         NbcIntoxInfos   liquidInfos_;
         ADN_Type_Bool   bGazPresent_;
+        ADN_Type_Bool   bLiquidPresent_;
         NbcGazInfos     gazInfos_;
     };
 

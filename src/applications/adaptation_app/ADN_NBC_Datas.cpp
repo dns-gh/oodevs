@@ -294,6 +294,7 @@ ADN_NBC_Datas::NbcAgentInfos* ADN_NBC_Datas::NbcAgentInfos::CreateCopy()
 {
     NbcAgentInfos* pCopy = new NbcAgentInfos();
     pCopy->liquidInfos_.CopyFrom( liquidInfos_ );
+    pCopy->bLiquidPresent_ = bLiquidPresent_.GetData();
     pCopy->gazInfos_.CopyFrom( gazInfos_ );
     pCopy->bGazPresent_ = bGazPresent_.GetData();
     return pCopy;
@@ -307,7 +308,10 @@ void ADN_NBC_Datas::NbcAgentInfos::ReadEffect( xml::xistream& input )
 {
     const std::string type = xml::attribute< std::string >( input, "type" );
     if( type == "liquid" )
+    {
+        bLiquidPresent_ = true;
         liquidInfos_.ReadArchive( input );    
+    }
     else if( type == "gaseous" )
     {
         bGazPresent_ = true;
@@ -331,10 +335,13 @@ void ADN_NBC_Datas::NbcAgentInfos::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_NBC_Datas::NbcAgentInfos::WriteArchive( xml::xostream& output )
 {
+    if ( !bLiquidPresent_.GetData() && !bGazPresent_.GetData() )
+        return;
     output << xml::start( "agent" )
            << xml::attribute( "name", strName_ )
            << xml::attribute( "id", nMosId_ );
-    liquidInfos_.WriteArchive( output );
+    if( bLiquidPresent_.GetData() )
+        liquidInfos_.WriteArchive( output );
     if( bGazPresent_.GetData() )
         gazInfos_.WriteArchive( output );
     output << xml::end();
