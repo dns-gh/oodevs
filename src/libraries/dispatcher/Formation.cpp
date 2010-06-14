@@ -45,7 +45,6 @@ Formation::Formation( const Model_ABC& model, const Common::MsgFormationCreation
 // -----------------------------------------------------------------------------
 Formation::~Formation()
 {
-    // $$$ RDS : completement invalide si la formation parente a déja été detruite !!! 
     if( parent_ )
     {
         MoveChildren( *parent_, formations_ );
@@ -71,10 +70,36 @@ void Formation::MoveChildren( Superior& superior, tools::Resolver< Entity >& ent
     while( it.HasMoreElements() )
     {
         Entity& entity = const_cast< Entity& >( it.NextElement() );
-        Remove( entity );
-        superior.Register( entity );
+        entity.SetSuperior( superior );
     }
     entities.Clear();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::SetSuperior
+// Created: SBO 2010-06-14
+// -----------------------------------------------------------------------------
+void Formation::SetSuperior( dispatcher::Formation_ABC& superior )
+{
+    if( parent_ )
+        parent_->Remove( *this );
+    else
+        team_.Remove( *this );
+    parent_ = &superior;
+    parent_->Register( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::SetSuperior
+// Created: SBO 2010-06-14
+// -----------------------------------------------------------------------------
+void Formation::SetSuperior( dispatcher::Team_ABC& /*superior*/ )
+{
+    if( parent_ )
+    {
+        parent_->Remove( *this );
+        parent_ = 0;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -138,7 +163,7 @@ const kernel::HierarchyLevel_ABC& Formation::GetLevel() const
 // Name: Formation::Register
 // Created: MGD 2009-12-22
 // -----------------------------------------------------------------------------
-kernel::Formation_ABC* Formation::GetParent() const
+dispatcher::Formation_ABC* Formation::GetParent() const
 {
     return parent_;
 }
@@ -147,7 +172,7 @@ kernel::Formation_ABC* Formation::GetParent() const
 // Name: Formation::Register
 // Created: MGD 2009-12-22
 // -----------------------------------------------------------------------------
-kernel::Team_ABC& Formation::GetTeam() const
+dispatcher::Team_ABC& Formation::GetTeam() const
 {
     return team_;
 }

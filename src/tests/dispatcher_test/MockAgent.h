@@ -35,6 +35,9 @@ MOCK_BASE_CLASS( MockAgent, dispatcher::Agent_ABC )
     MOCK_METHOD( SendFullUpdate, 1 );
     MOCK_METHOD( SendDestruction, 1 );
     MOCK_METHOD( Accept, 1 );
+
+    // dispatcher::Agent_ABC
+    MOCK_METHOD( SetSuperior, 1 );
 };
 
 #endif // __MockAgent_h_

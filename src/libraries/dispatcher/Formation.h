@@ -41,8 +41,8 @@ public:
     //! @name Accessors
     //@{
     virtual const kernel::HierarchyLevel_ABC& GetLevel() const;
-    virtual kernel::Formation_ABC* GetParent() const;
-    virtual kernel::Team_ABC& GetTeam() const;
+    virtual dispatcher::Formation_ABC* GetParent() const;
+    virtual dispatcher::Team_ABC& GetTeam() const;
     virtual const tools::Resolver< dispatcher::Formation_ABC >& GetFormations() const;
     virtual const tools::Resolver< dispatcher::Automat_ABC >& GetAutomates() const;
     //@}
@@ -72,6 +72,8 @@ private:
     //@{
     template< typename Superior, typename Entity >
     void MoveChildren( Superior& superior, tools::Resolver< Entity >& entities );
+    virtual void SetSuperior( dispatcher::Formation_ABC& superior );
+    virtual void SetSuperior( dispatcher::Team_ABC& superior );
     //@}
 
 private:

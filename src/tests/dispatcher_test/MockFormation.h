@@ -41,6 +41,8 @@ MOCK_BASE_CLASS( MockFormation, dispatcher::Formation_ABC )
     MOCK_METHOD_EXT( Remove, 1, void ( dispatcher::Formation_ABC& ), RemoveFormation );
     MOCK_METHOD_EXT( Register, 1, void ( dispatcher::Automat_ABC& ), RegisterAutomat );
     MOCK_METHOD_EXT( Remove, 1, void ( dispatcher::Automat_ABC& ), RemoveAutomat );
+    MOCK_METHOD_EXT( SetSuperior, 1, void ( dispatcher::Formation_ABC& ), SetSuperiorFormation );
+    MOCK_METHOD_EXT( SetSuperior, 1, void ( dispatcher::Team_ABC& ), SetSuperiorTeam );
 
     // Sendable
     MOCK_METHOD( SendCreation, 1 );

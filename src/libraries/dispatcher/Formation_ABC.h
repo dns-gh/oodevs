@@ -14,14 +14,10 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "tools/Resolver.h"
 
-namespace kernel
-{
-    class Team_ABC;
-}
-
 namespace dispatcher
 {
     class Automat_ABC;
+    class Team_ABC;
 
 // =============================================================================
 /** @class  Formation_ABC
@@ -42,8 +38,8 @@ public:
 
     //! @name Accessors
     //@{
-    virtual kernel::Formation_ABC* GetParent() const = 0;
-    virtual kernel::Team_ABC& GetTeam() const = 0;
+    virtual dispatcher::Formation_ABC* GetParent() const = 0;
+    virtual dispatcher::Team_ABC& GetTeam() const = 0;
     virtual const tools::Resolver< dispatcher::Formation_ABC >& GetFormations() const = 0;
     virtual const tools::Resolver< dispatcher::Automat_ABC >& GetAutomates() const = 0;
     //@}
@@ -54,6 +50,8 @@ public:
     virtual void Remove( dispatcher::Formation_ABC& formation ) = 0;
     virtual void Register( dispatcher::Automat_ABC& automat ) = 0;
     virtual void Remove( dispatcher::Automat_ABC& automat ) = 0;
+    virtual void SetSuperior( dispatcher::Formation_ABC& superior ) = 0;
+    virtual void SetSuperior( dispatcher::Team_ABC& superior ) = 0;
     //@}
 };
 

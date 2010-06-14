@@ -90,7 +90,7 @@ public:
     virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
-    virtual void ChangeAutomat( unsigned long id );
+    virtual void SetSuperior( dispatcher::Automat_ABC& superior );
     //@}
 
     //! @name Accessors

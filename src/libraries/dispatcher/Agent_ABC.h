@@ -53,6 +53,11 @@ public:
     virtual MsgsSimToClient::ForceRatio_Value GetForceRatio() const = 0;
     virtual const Order_ABC* GetOrder() const = 0;
     //@}
+
+    //! @name Operations
+    //@{
+    virtual void SetSuperior( dispatcher::Automat_ABC& superior ) = 0;
+    //@}
 };
 
 }

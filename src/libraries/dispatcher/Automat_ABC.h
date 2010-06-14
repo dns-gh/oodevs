@@ -16,13 +16,13 @@
 
 namespace kernel
 {
-    class Formation_ABC;
     class KnowledgeGroup_ABC;
 }
 
 namespace dispatcher
 {
     class Agent_ABC;
+    class Formation_ABC;
     class Team_ABC;
 
 // =============================================================================
@@ -49,16 +49,18 @@ public:
     virtual kernel::KnowledgeGroup_ABC& GetKnowledgeGroup() const = 0;
     virtual const tools::Resolver< dispatcher::Agent_ABC >& GetAgents() const = 0;
     virtual const tools::Resolver< dispatcher::Automat_ABC >& GetAutomats() const = 0;
-    virtual kernel::Automat_ABC* GetParentAutomat() const = 0;
-    virtual kernel::Formation_ABC* GetFormation() const = 0;
+    virtual dispatcher::Automat_ABC* GetParentAutomat() const = 0;
+    virtual dispatcher::Formation_ABC* GetFormation() const = 0;
     //@}
 
     //! @name Operations
     //@{
-    virtual void Register( dispatcher::Automat_ABC& automat ) = 0;
-    virtual void Remove( dispatcher::Automat_ABC& automat ) = 0;
-    virtual void Register( dispatcher::Agent_ABC& automat ) = 0;
-    virtual void Remove( dispatcher::Agent_ABC& automat ) = 0;
+    virtual void Register( dispatcher::Automat_ABC& entity ) = 0;
+    virtual void Remove( dispatcher::Automat_ABC& entity ) = 0;
+    virtual void Register( dispatcher::Agent_ABC& entity ) = 0;
+    virtual void Remove( dispatcher::Agent_ABC& entity ) = 0;
+    virtual void SetSuperior( dispatcher::Formation_ABC& superior ) = 0;
+    virtual void SetSuperior( dispatcher::Automat_ABC& superior ) = 0;
     //@}
 };
 

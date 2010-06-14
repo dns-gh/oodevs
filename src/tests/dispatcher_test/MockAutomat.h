@@ -45,6 +45,8 @@ MOCK_BASE_CLASS( MockAutomat, dispatcher::Automat_ABC )
     MOCK_METHOD( GetParentAutomat, 0 );
     MOCK_METHOD( GetFormation, 0 );
     MOCK_METHOD( IsEngaged, 0 );
+    MOCK_METHOD_EXT( SetSuperior, 1, void ( dispatcher::Formation_ABC& ), SetSuperiorFormation );
+    MOCK_METHOD_EXT( SetSuperior, 1, void ( dispatcher::Automat_ABC& ), SetSuperiorAutomat );
 
     // dispatcher::Sendable< kernel::Automat_ABC >
     MOCK_METHOD( SendCreation, 1 );

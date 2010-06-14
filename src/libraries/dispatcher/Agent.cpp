@@ -106,14 +106,14 @@ Agent::~Agent()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Agent::ChangeAutomat
-// Created: SBO 2008-07-10
+// Name: Agent::SetSuperior
+// Created: SBO 2010-06-14
 // -----------------------------------------------------------------------------
-void Agent::ChangeAutomat( unsigned long id )
+void Agent::SetSuperior( dispatcher::Automat_ABC& superior )
 {
     if( automat_ )
         automat_->Remove( *this );
-    automat_ = &model_.Automats().Get( id );
+    automat_ = &superior;
     automat_->Register( *this );
 }
 
@@ -124,7 +124,7 @@ void Agent::ChangeAutomat( unsigned long id )
 void Agent::DoUpdate( const MsgsSimToClient::MsgUnitCreation& msg )
 {
     if( automat_->GetId() != msg.oid_automate() )
-        ChangeAutomat( msg.oid_automate() );
+        SetSuperior( model_.Automats().Get( msg.oid_automate() ) );
     decisionalInfos_.Clear();
 }
 
@@ -345,7 +345,7 @@ void Agent::DoUpdate( const MsgsSimToClient::MsgLogSupplyState& asnMsg )
 // -----------------------------------------------------------------------------
 void Agent::DoUpdate( const Common::MsgUnitChangeSuperior& asnMsg )
 {
-    ChangeAutomat( asnMsg.oid_automate() );
+    SetSuperior( model_.Automats().Get( asnMsg.oid_automate() ) );
 }
 
 // -----------------------------------------------------------------------------

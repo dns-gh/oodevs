@@ -97,8 +97,8 @@ public:
     virtual void Register( dispatcher::Agent_ABC& automat );
     virtual void Remove( dispatcher::Agent_ABC& automat );
     virtual const tools::Resolver< dispatcher::Agent_ABC >& GetAgents() const;
-    virtual kernel::Automat_ABC* GetParentAutomat() const;
-    virtual kernel::Formation_ABC* GetFormation() const;
+    virtual dispatcher::Automat_ABC* GetParentAutomat() const;
+    virtual dispatcher::Formation_ABC* GetFormation() const;
     //@}
 
 private:
@@ -111,10 +111,14 @@ private:
     //! @name Helpers
     //@{
     void ChangeKnowledgeGroup( unsigned long id );
+    template< typename Message >
+    void ChangeSuperior( const Message& superior );
+    virtual void SetSuperior( dispatcher::Formation_ABC& superior );
+    virtual void SetSuperior( dispatcher::Automat_ABC& superior );
+    void ResetSuperior();
     template< typename Superior >
-    void ChangeSuperior( const Superior& superior );
-    template< typename Superior >
-    void MoveChildren( Superior& superior, bool agents );
+    void MoveChildren( Superior& superior );
+    void MoveAgents( dispatcher::Automat_ABC& superior );
     //@}
 
 private:

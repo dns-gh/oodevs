@@ -68,12 +68,13 @@ Automat::~Automat()
     quotas_.DeleteAll();
     if( parentFormation_ )
     {
-        MoveChildren( *parentFormation_, false );
+        MoveChildren( *parentFormation_ );
         parentFormation_->Remove( *this );
     }
     else if( parentAutomat_ )
     {
-        MoveChildren( *parentAutomat_, true );
+        MoveChildren( *parentAutomat_ );
+        MoveAgents( *parentAutomat_ );
         parentAutomat_->Remove( *this );
     }
     knowledgeGroup_->Remove( *this );
@@ -84,26 +85,30 @@ Automat::~Automat()
 // Created: SBO 2010-06-01
 // -----------------------------------------------------------------------------
 template< typename Superior >
-void Automat::MoveChildren( Superior& superior, bool agents )
+void Automat::MoveChildren( Superior& superior )
 {
     tools::Iterator< const dispatcher::Automat_ABC& > it( automats_.CreateIterator() );
     while( it.HasMoreElements() )
     {
         dispatcher::Automat_ABC& entity = const_cast< dispatcher::Automat_ABC& >( it.NextElement() );
-        Remove( entity );
-        superior.Register( entity );
+        entity.SetSuperior( superior );
     }
     automats_.Clear();
-    if( agents )
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat::MoveAgents
+// Created: SBO 2010-06-14
+// -----------------------------------------------------------------------------
+void Automat::MoveAgents( dispatcher::Automat_ABC& superior )
+{
+    tools::Iterator< const dispatcher::Agent_ABC& > it( agents_.CreateIterator() );
+    while( it.HasMoreElements() )
     {
-        tools::Iterator< const dispatcher::Agent_ABC& > it( agents_.CreateIterator() );
-        while( it.HasMoreElements() )
-        {
-            dispatcher::Agent_ABC& entity = const_cast< dispatcher::Agent_ABC& >( it.NextElement() );
-            static_cast< Agent& >( entity ).ChangeAutomat( superior.GetId() ); // $$$$ SBO 2010-06-02: add Register/Remove on Agent_ABC
-        }
-        agents_.Clear();
+        dispatcher::Agent_ABC& entity = const_cast< dispatcher::Agent_ABC& >( it.NextElement() );
+        entity.SetSuperior( superior );
     }
+    agents_.Clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -174,24 +179,52 @@ void Automat::ChangeKnowledgeGroup( unsigned long id )
 // Name: Automat::ChangeSuperior
 // Created: SBO 2008-07-10
 // -----------------------------------------------------------------------------
-template< typename Superior >
-void Automat::ChangeSuperior( const Superior& superior )
+template< typename Message >
+void Automat::ChangeSuperior( const Message& superior )
+{
+    if( superior.has_formation() )
+        SetSuperior( model_.Formations().Get( superior.formation().oid() ) );
+    else if( superior.has_automate() )
+        SetSuperior( model_.Automats().Get( superior.automate().oid() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat::SetSuperior
+// Created: SBO 2010-06-14
+// -----------------------------------------------------------------------------
+void Automat::SetSuperior( dispatcher::Formation_ABC& superior )
+{
+    ResetSuperior();
+    superior.Register( *this );
+    parentFormation_ = &superior;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat::SetSuperior
+// Created: SBO 2010-06-14
+// -----------------------------------------------------------------------------
+void Automat::SetSuperior( dispatcher::Automat_ABC& superior )
+{
+    ResetSuperior();
+    superior.Register( *this );
+    parentAutomat_ = &superior;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat::ResetSuperior
+// Created: SBO 2010-06-14
+// -----------------------------------------------------------------------------
+void Automat::ResetSuperior()
 {
     if( parentFormation_ )
+    {
         parentFormation_->Remove( *this );
-    if( parentAutomat_ )
-        parentAutomat_->Remove( *this );
-    parentFormation_ = 0;
-    parentAutomat_   = 0;
-    if( superior.has_formation() )
-    {
-        parentFormation_ = &model_.Formations().Get( superior.formation().oid() );
-        parentFormation_->Register( *this );
+        parentFormation_ = 0;
     }
-    else if( superior.has_automate() )
+    else if( parentAutomat_ )
     {
-        parentAutomat_ = &model_.Automats().Get( superior.automate().oid() );
-        parentAutomat_->Register( *this );
+        parentAutomat_->Remove( *this );
+        parentAutomat_ = 0;
     }
 }
 
@@ -436,7 +469,7 @@ const tools::Resolver< dispatcher::Agent_ABC >& Automat::GetAgents() const
 // Name: Automat::GetParentAutomat
 // Created: MGD 2009-12-23
 // -----------------------------------------------------------------------------
-kernel::Automat_ABC* Automat::GetParentAutomat() const
+dispatcher::Automat_ABC* Automat::GetParentAutomat() const
 {
     return parentAutomat_;
 }
@@ -445,7 +478,7 @@ kernel::Automat_ABC* Automat::GetParentAutomat() const
 // Name: Automat::GetFormation
 // Created: MGD 2009-12-23
 // -----------------------------------------------------------------------------
-kernel::Formation_ABC* Automat::GetFormation() const
+dispatcher::Formation_ABC* Automat::GetFormation() const
 {
     return parentFormation_;
 }
