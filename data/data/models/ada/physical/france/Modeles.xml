@@ -14,7 +14,7 @@
         <mission name="Mount"/>
         <mission name="MoveAndObserve"/>
         <mission name="MoveObserveReconnoiter"/>
-        <mission name="MoveOnPath"/>
+        <mission name="MoveOnRoute"/>
         <mission name="MoveToPoint">
           <fragorder name="Illuminate"/>
         </mission>
@@ -39,7 +39,7 @@
         <mission name="ObserveUrbanBlock"/>
         <mission name="ObserveAgent"/>
         <mission name="ObserveObject"/>
-        <mission name="ReconnoiterPath"/>
+        <mission name="ReconnoiterRoute"/>
         <mission name="ReconnoiterPoint"/>
         <mission name="ReconnoiterUrbanBlock"/>
         <mission name="SeekAndDestroy"/>
@@ -85,7 +85,7 @@
         <mission name="Activate"/>
         <mission name="Bypass"/>
         <mission name="RemoveObstacle"/>
-        <mission name="OpenPath"/>
+        <mission name="OpenRoute"/>
         <mission name="SuivreAgent"/>
         <mission name="StayClose"/>
         <mission name="StationnerBM"/>
