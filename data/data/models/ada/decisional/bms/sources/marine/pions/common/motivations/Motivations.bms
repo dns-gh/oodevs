@@ -33,9 +33,11 @@ motivation_plugin.motivations[ "MOT_GarderSesDistances" ] =
 
 node "ActivatedByMOT_GarderSesDistances"
 {
+    feedbacks = { { { "done_ActivatedByMOT_GarderSesDistances" }, "ActivatedByMOT_GarderSesDistances" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_GarderSesDistances, {value} ) end,
     activations =
     {
-        { "BEH_MOT_Pion_MARINE_GarderSesDistances", {} },
+        { "BEH_MOT_Pion_MARINE_GarderSesDistances", { "done_BEH_MOT_Pion_MARINE_GarderSesDistances" } },
     },
 
     create = function( self )
@@ -107,6 +109,8 @@ node "ActivatedByMOT_GarderSesDistances"
 
 node "ActivatedByMOT_ManoeuvrerSurEnis"
 {
+    feedbacks = { { { "done_ActivatedByMOT_ManoeuvrerSurEnis" }, "ActivatedByMOT_ManoeuvrerSurEnis" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_ManoeuvrerSurEnis, {value} ) end,
     create = function( self )
     end,
 
@@ -173,6 +177,8 @@ node "ActivatedByMOT_ManoeuvrerSurEnis"
 
 node "ActivatedByMOT_Manoeuvrer"
 {
+    feedbacks = { { { "done_ActivatedByMOT_Manoeuvrer" }, "ActivatedByMOT_Manoeuvrer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_Manoeuvrer, {value} ) end,
     create = function( self )
     end,
 
@@ -233,6 +239,8 @@ node "ActivatedByMOT_Manoeuvrer"
 
 node "ActivatedByMOT_TirerSurEnis"
 {
+    feedbacks = { { { "done_ActivatedByMOT_TirerSurEnis" }, "ActivatedByMOT_TirerSurEnis" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_TirerSurEnis, {value} ) end,
     create = function( self )
     end,
 
@@ -287,9 +295,11 @@ node "ActivatedByMOT_TirerSurEnis"
 
 node "ActivatedByMOT_RiposterSurEnis"
 {
+    feedbacks = { { { "done_ActivatedByMOT_RiposterSurEnis" }, "ActivatedByMOT_RiposterSurEnis" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_RiposterSurEnis, {value} ) end,
     activations =
     {
-        { "BEH_MOT_RiposterSurEnis", {} },
+        { "BEH_MOT_RiposterSurEnis", { "done_BEH_MOT_RiposterSurEnis" } },
     },
 
     create = function( self )
@@ -352,9 +362,11 @@ node "ActivatedByMOT_RiposterSurEnis"
 
 node "ActivatedByMOT_SePoster"
 {
+    feedbacks = { { { "done_ActivatedByMOT_SePoster" }, "ActivatedByMOT_SePoster" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_SePoster, {value} ) end,
     activations =
     {
-        { "BEH_MOT_SePoster", {} },
+        { "BEH_MOT_SePoster", { "done_BEH_MOT_SePoster" } },
     },
 
     create = function( self )
@@ -413,9 +425,11 @@ node "ActivatedByMOT_SePoster"
 
 node "ActivatedByMOT_PasserEnSilenceRadio"
 {
+    feedbacks = { { { "done_ActivatedByMOT_PasserEnSilenceRadio" }, "ActivatedByMOT_PasserEnSilenceRadio" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_PasserEnSilenceRadio, {value} ) end,
     activations =
     {
-        { "BEH_MOT_PasserEnSilenceRadio", {} },
+        { "BEH_MOT_PasserEnSilenceRadio", { "done_BEH_MOT_PasserEnSilenceRadio" } },
     },
 
     create = function( self )
@@ -473,9 +487,11 @@ node "ActivatedByMOT_PasserEnSilenceRadio"
 
 node "ActivatedByMOT_PasserEnAlerteDeNiveau4"
 {
+    feedbacks = { { { "done_ActivatedByMOT_PasserEnAlerteDeNiveau4" }, "ActivatedByMOT_PasserEnAlerteDeNiveau4" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_PasserEnAlerteDeNiveau4, {value} ) end,
     activations =
     {
-        { "BEH_MOT_PasserEnAlerteDeNiveau4", {} },
+        { "BEH_MOT_PasserEnAlerteDeNiveau4", { "done_BEH_MOT_PasserEnAlerteDeNiveau4" } },
     },
 
     create = function( self )
@@ -533,9 +549,11 @@ node "ActivatedByMOT_PasserEnAlerteDeNiveau4"
 
 node "ActivatedByMOT_PasserEnTirRestreint"
 {
+    feedbacks = { { { "done_ActivatedByMOT_PasserEnTirRestreint" }, "ActivatedByMOT_PasserEnTirRestreint" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_PasserEnTirRestreint, {value} ) end,
     activations =
     {
-        { "BEH_MOT_PasserEnTirRestreint", {} },
+        { "BEH_MOT_PasserEnTirRestreint", { "done_BEH_MOT_PasserEnTirRestreint" } },
     },
 
     create = function( self )
@@ -593,9 +611,11 @@ node "ActivatedByMOT_PasserEnTirRestreint"
 
 node "ActivatedByMOT_PasserEnTirInterdit"
 {
+    feedbacks = { { { "done_ActivatedByMOT_PasserEnTirInterdit" }, "ActivatedByMOT_PasserEnTirInterdit" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_PasserEnTirInterdit, {value} ) end,
     activations =
     {
-        { "BEH_MOT_PasserEnTirInterdit", {} },
+        { "BEH_MOT_PasserEnTirInterdit", { "done_BEH_MOT_PasserEnTirInterdit" } },
     },
 
     create = function( self )
@@ -653,9 +673,11 @@ node "ActivatedByMOT_PasserEnTirInterdit"
 
 node "ActivatedByMOT_PasserEnTirLibre"
 {
+    feedbacks = { { { "done_ActivatedByMOT_PasserEnTirLibre" }, "ActivatedByMOT_PasserEnTirLibre" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_PasserEnTirLibre, {value} ) end,
     activations =
     {
-        { "BEH_MOT_PasserEnTirLibre", {} },
+        { "BEH_MOT_PasserEnTirLibre", { "done_BEH_MOT_PasserEnTirLibre" } },
     },
 
     create = function( self )
@@ -715,9 +737,11 @@ node "ActivatedByMOT_PasserEnTirLibre"
 
 node "ActivatedByMOT_RiposteSurPopulations"
 {
+    feedbacks = { { { "done_ActivatedByMOT_RiposteSurPopulations" }, "ActivatedByMOT_RiposteSurPopulations" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_RiposteSurPopulations, {value} ) end,
     activations =
     {
-        { "BEH_MOT_RiposteSurPopulations", {} },
+        { "BEH_MOT_RiposteSurPopulations", { "done_BEH_MOT_RiposteSurPopulations" } },
     },
 
     create = function( self )
@@ -774,9 +798,11 @@ node "ActivatedByMOT_RiposteSurPopulations"
 
 node "ActivatedByMOT_EsquivePopulations"
 {
+    feedbacks = { { { "done_ActivatedByMOT_EsquivePopulations" }, "ActivatedByMOT_EsquivePopulations" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_EsquivePopulations, {value} ) end,
     activations =
     {
-        { "BEH_MOT_DecrochageFaceAPopulations", {} },
+        { "BEH_MOT_DecrochageFaceAPopulations", { "done_BEH_MOT_DecrochageFaceAPopulations" } },
     },
 
     create = function( self )
@@ -835,9 +861,11 @@ node "ActivatedByMOT_EsquivePopulations"
 
 node "ActivatedByMOT_PasserEnEmploiForceInterdit"
 {
+    feedbacks = { { { "done_ActivatedByMOT_PasserEnEmploiForceInterdit" }, "ActivatedByMOT_PasserEnEmploiForceInterdit" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_PasserEnEmploiForceInterdit, {value} ) end,
     activations =
     {
-        { "BEH_MOT_PasserEnEmploiForceInterdit", {} },
+        { "BEH_MOT_PasserEnEmploiForceInterdit", { "done_BEH_MOT_PasserEnEmploiForceInterdit" } },
     },
 
     create = function( self )
@@ -895,9 +923,11 @@ node "ActivatedByMOT_PasserEnEmploiForceInterdit"
 
 node "ActivatedByMOT_PasserEnMaintienADistanceParMoyensNonLetaux"
 {
+    feedbacks = { { { "done_ActivatedByMOT_PasserEnMaintienADistanceParMoyensNonLetaux" }, "ActivatedByMOT_PasserEnMaintienADistanceParMoyensNonLetaux" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_PasserEnMaintienADistanceParMoyensNonLetaux, {value} ) end,
     activations =
     {
-        { "BEH_MOT_PasserEnMaintienADistanceParMoyensNonLetaux", {} },
+        { "BEH_MOT_PasserEnMaintienADistanceParMoyensNonLetaux", { "done_BEH_MOT_PasserEnMaintienADistanceParMoyensNonLetaux" } },
     },
 
     create = function( self )
@@ -955,9 +985,11 @@ node "ActivatedByMOT_PasserEnMaintienADistanceParMoyensNonLetaux"
 
 node "ActivatedByMOT_PasserEnDispersionParMoyensDeDefenseActifs"
 {
+    feedbacks = { { { "done_ActivatedByMOT_PasserEnDispersionParMoyensDeDefenseActifs" }, "ActivatedByMOT_PasserEnDispersionParMoyensDeDefenseActifs" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_PasserEnDispersionParMoyensDeDefenseActifs, {value} ) end,
     activations =
     {
-        { "BEH_MOT_PasserEnDispersionParMoyensDeDefenseActifs", {} },
+        { "BEH_MOT_PasserEnDispersionParMoyensDeDefenseActifs", { "done_BEH_MOT_PasserEnDispersionParMoyensDeDefenseActifs" } },
     },
 
     create = function( self )
@@ -1015,9 +1047,11 @@ node "ActivatedByMOT_PasserEnDispersionParMoyensDeDefenseActifs"
 
 node "ActivatedByMOT_PasserEnArmesLetalesAutorisees"
 {
+    feedbacks = { { { "done_ActivatedByMOT_PasserEnArmesLetalesAutorisees" }, "ActivatedByMOT_PasserEnArmesLetalesAutorisees" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_PasserEnArmesLetalesAutorisees, {value} ) end,
     activations =
     {
-        { "BEH_MOT_PasserEnArmesLetalesAutorisees", {} },
+        { "BEH_MOT_PasserEnArmesLetalesAutorisees", { "done_BEH_MOT_PasserEnArmesLetalesAutorisees" } },
     },
 
     create = function( self )

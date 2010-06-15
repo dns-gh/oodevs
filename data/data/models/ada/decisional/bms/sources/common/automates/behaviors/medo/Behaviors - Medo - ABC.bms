@@ -27,12 +27,14 @@ include "Common/Automates/Actions/Medo/Actions - Medo - ABC.bms"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Mission_Automate_ABC_AssignerSoutenirA"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_ABC_AssignerSoutenirA" }, "BEH_Mission_Automate_ABC_AssignerSoutenirA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_ABC_AssignerSoutenirA, {value} ) end,
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ABC_AssignerSoutenirA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "done_ACT_Mission_Automate_ControleCreation_EnCours" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "done_ACT_Mission_Automate_ControleCreation_OK" } },
+        { "ACT_Mission_Automate_ABC_AssignerSoutenirA", { "done_ACT_Mission_Automate_ABC_AssignerSoutenirA" } },
     },
 
     create = function( self )
@@ -67,7 +69,8 @@ elseif switch_1 == eActionHalt
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_ABC_AssignerSoutenirA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.pAAppuyer, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Mission_Automate_ABC_AssignerSoutenirA, rForce, { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.pAAppuyer, self._namedParams.eEtatEchelon, } )
+self.done_ACT_Mission_Automate_ABC_AssignerSoutenirA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
 --[[// *****************************************************************************
@@ -80,12 +83,14 @@ elseif switch_1 == eActionHalt
 
 node "BEH_Mission_Automate_ABC_AssignerAppuyerA"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_ABC_AssignerAppuyerA" }, "BEH_Mission_Automate_ABC_AssignerAppuyerA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_ABC_AssignerAppuyerA, {value} ) end,
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ABC_AssignerAppuyerA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "done_ACT_Mission_Automate_ControleCreation_EnCours" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "done_ACT_Mission_Automate_ControleCreation_OK" } },
+        { "ACT_Mission_Automate_ABC_AssignerAppuyerA", { "done_ACT_Mission_Automate_ABC_AssignerAppuyerA" } },
     },
 
     create = function( self )
@@ -120,7 +125,8 @@ elseif switch_1 == eActionHalt
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_ABC_AssignerAppuyerA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.pAAppuyer, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Mission_Automate_ABC_AssignerAppuyerA, rForce, { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.pAAppuyer, self._namedParams.eEtatEchelon, } )
+self.done_ACT_Mission_Automate_ABC_AssignerAppuyerA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
 --[[//=============================================================================
@@ -136,12 +142,14 @@ elseif switch_1 == eActionHalt
 
 node "BEH_Mission_Automate_ABC_AssignerSemparerZoneA"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_ABC_AssignerSemparerZoneA" }, "BEH_Mission_Automate_ABC_AssignerSemparerZoneA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_ABC_AssignerSemparerZoneA, {value} ) end,
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ABC_AssignerSemparerZoneA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "done_ACT_Mission_Automate_ControleCreation_EnCours" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "done_ACT_Mission_Automate_ControleCreation_OK" } },
+        { "ACT_Mission_Automate_ABC_AssignerSemparerZoneA", { "done_ACT_Mission_Automate_ABC_AssignerSemparerZoneA" } },
     },
 
     create = function( self )
@@ -176,7 +184,8 @@ elseif switch_1 == eActionHalt
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_ABC_AssignerSemparerZoneA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.zone, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Mission_Automate_ABC_AssignerSemparerZoneA, rForce, { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.zone, self._namedParams.eEtatEchelon, } )
+self.done_ACT_Mission_Automate_ABC_AssignerSemparerZoneA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
 --[[// *****************************************************************************
@@ -189,12 +198,14 @@ elseif switch_1 == eActionHalt
 
 node "BEH_Mission_Automate_ABC_AssignerReconnaitreA"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_ABC_AssignerReconnaitreA" }, "BEH_Mission_Automate_ABC_AssignerReconnaitreA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_ABC_AssignerReconnaitreA, {value} ) end,
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ABC_AssignerReconnaitreA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "done_ACT_Mission_Automate_ControleCreation_EnCours" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "done_ACT_Mission_Automate_ControleCreation_OK" } },
+        { "ACT_Mission_Automate_ABC_AssignerReconnaitreA", { "done_ACT_Mission_Automate_ABC_AssignerReconnaitreA" } },
     },
 
     create = function( self )
@@ -228,7 +239,8 @@ elseif switch_1 == eActionHalt
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_ABC_AssignerReconnaitreA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Mission_Automate_ABC_AssignerReconnaitreA, rForce, { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.eEtatEchelon, } )
+self.done_ACT_Mission_Automate_ABC_AssignerReconnaitreA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
 --[[// *****************************************************************************
@@ -241,12 +253,14 @@ elseif switch_1 == eActionHalt
 
 node "BEH_Mission_Automate_ABC_AssignerReconnaitrePtA"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_ABC_AssignerReconnaitrePtA" }, "BEH_Mission_Automate_ABC_AssignerReconnaitrePtA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_ABC_AssignerReconnaitrePtA, {value} ) end,
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ABC_AssignerReconnaitrePtA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "done_ACT_Mission_Automate_ControleCreation_EnCours" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "done_ACT_Mission_Automate_ControleCreation_OK" } },
+        { "ACT_Mission_Automate_ABC_AssignerReconnaitrePtA", { "done_ACT_Mission_Automate_ABC_AssignerReconnaitrePtA" } },
     },
 
     create = function( self )
@@ -281,7 +295,8 @@ elseif switch_1 == eActionHalt
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_ABC_AssignerReconnaitrePtA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.pointAReconnaitre, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Mission_Automate_ABC_AssignerReconnaitrePtA, rForce, { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.pointAReconnaitre, self._namedParams.eEtatEchelon, } )
+self.done_ACT_Mission_Automate_ABC_AssignerReconnaitrePtA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
 --[[// *****************************************************************************
@@ -294,12 +309,14 @@ elseif switch_1 == eActionHalt
 
 node "BEH_Mission_Automate_ABC_AssignerEclairerA"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_ABC_AssignerEclairerA" }, "BEH_Mission_Automate_ABC_AssignerEclairerA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_ABC_AssignerEclairerA, {value} ) end,
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ABC_AssignerEclairerA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "done_ACT_Mission_Automate_ControleCreation_EnCours" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "done_ACT_Mission_Automate_ControleCreation_OK" } },
+        { "ACT_Mission_Automate_ABC_AssignerEclairerA", { "done_ACT_Mission_Automate_ABC_AssignerEclairerA" } },
     },
 
     create = function( self )
@@ -333,7 +350,8 @@ elseif switch_1 == eActionHalt
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_ABC_AssignerEclairerA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Mission_Automate_ABC_AssignerEclairerA, rForce, { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.eEtatEchelon, } )
+self.done_ACT_Mission_Automate_ABC_AssignerEclairerA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
 --[[// *****************************************************************************
@@ -346,12 +364,14 @@ elseif switch_1 == eActionHalt
 
 node "BEH_Mission_Automate_ABC_AssignerEclairerPtA"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_ABC_AssignerEclairerPtA" }, "BEH_Mission_Automate_ABC_AssignerEclairerPtA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_ABC_AssignerEclairerPtA, {value} ) end,
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ABC_AssignerEclairerPtA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "done_ACT_Mission_Automate_ControleCreation_EnCours" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "done_ACT_Mission_Automate_ControleCreation_OK" } },
+        { "ACT_Mission_Automate_ABC_AssignerEclairerPtA", { "done_ACT_Mission_Automate_ABC_AssignerEclairerPtA" } },
     },
 
     create = function( self )
@@ -386,7 +406,8 @@ elseif switch_1 == eActionHalt
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_ABC_AssignerEclairerPtA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.ptDest, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Mission_Automate_ABC_AssignerEclairerPtA, rForce, { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.ptDest, self._namedParams.eEtatEchelon, } )
+self.done_ACT_Mission_Automate_ABC_AssignerEclairerPtA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
 --[[// *****************************************************************************
@@ -399,12 +420,14 @@ elseif switch_1 == eActionHalt
 
 node "BEH_Mission_Automate_ABC_AssignerReconnaitrePointA"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_ABC_AssignerReconnaitrePointA" }, "BEH_Mission_Automate_ABC_AssignerReconnaitrePointA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_ABC_AssignerReconnaitrePointA, {value} ) end,
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ABC_AssignerReconnaitrePointA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "done_ACT_Mission_Automate_ControleCreation_EnCours" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "done_ACT_Mission_Automate_ControleCreation_OK" } },
+        { "ACT_Mission_Automate_ABC_AssignerReconnaitrePointA", { "done_ACT_Mission_Automate_ABC_AssignerReconnaitrePointA" } },
     },
 
     create = function( self )
@@ -439,7 +462,8 @@ elseif switch_1 == eActionHalt
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_ABC_AssignerReconnaitrePointA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.ptDest, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Mission_Automate_ABC_AssignerReconnaitrePointA, rForce, { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.ptDest, self._namedParams.eEtatEchelon, } )
+self.done_ACT_Mission_Automate_ABC_AssignerReconnaitrePointA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
 --[[// *****************************************************************************
@@ -452,12 +476,14 @@ elseif switch_1 == eActionHalt
 
 node "BEH_Mission_Automate_ABC_AssignerAttaquerA"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_ABC_AssignerAttaquerA" }, "BEH_Mission_Automate_ABC_AssignerAttaquerA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_ABC_AssignerAttaquerA, {value} ) end,
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ABC_AssignerAttaquerA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "done_ACT_Mission_Automate_ControleCreation_EnCours" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "done_ACT_Mission_Automate_ControleCreation_OK" } },
+        { "ACT_Mission_Automate_ABC_AssignerAttaquerA", { "done_ACT_Mission_Automate_ABC_AssignerAttaquerA" } },
     },
 
     create = function( self )
@@ -491,7 +517,8 @@ elseif switch_1 == eActionHalt
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_ABC_AssignerAttaquerA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Mission_Automate_ABC_AssignerAttaquerA, rForce, { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.eEtatEchelon, } )
+self.done_ACT_Mission_Automate_ABC_AssignerAttaquerA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
 --[[// *****************************************************************************
@@ -504,12 +531,14 @@ elseif switch_1 == eActionHalt
 
 node "BEH_Mission_Automate_ABC_AssignerReduireA"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_ABC_AssignerReduireA" }, "BEH_Mission_Automate_ABC_AssignerReduireA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_ABC_AssignerReduireA, {value} ) end,
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ABC_AssignerReduireA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "done_ACT_Mission_Automate_ControleCreation_EnCours" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "done_ACT_Mission_Automate_ControleCreation_OK" } },
+        { "ACT_Mission_Automate_ABC_AssignerReduireA", { "done_ACT_Mission_Automate_ABC_AssignerReduireA" } },
     },
 
     create = function( self )
@@ -544,7 +573,8 @@ elseif switch_1 == eActionHalt
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_ABC_AssignerReduireA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.pionReduire, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Mission_Automate_ABC_AssignerReduireA, rForce, { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.pionReduire, self._namedParams.eEtatEchelon, } )
+self.done_ACT_Mission_Automate_ABC_AssignerReduireA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
 --[[// *****************************************************************************
@@ -557,12 +587,14 @@ elseif switch_1 == eActionHalt
 
 node "BEH_Mission_Automate_ABC_AssignerFixerA"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_ABC_AssignerFixerA" }, "BEH_Mission_Automate_ABC_AssignerFixerA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_ABC_AssignerFixerA, {value} ) end,
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ABC_AssignerFixerA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "done_ACT_Mission_Automate_ControleCreation_EnCours" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "done_ACT_Mission_Automate_ControleCreation_OK" } },
+        { "ACT_Mission_Automate_ABC_AssignerFixerA", { "done_ACT_Mission_Automate_ABC_AssignerFixerA" } },
     },
 
     create = function( self )
@@ -597,7 +629,8 @@ elseif switch_1 == eActionHalt
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_ABC_AssignerFixerA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.uniteAFixer, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Mission_Automate_ABC_AssignerFixerA, rForce, { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.uniteAFixer, self._namedParams.eEtatEchelon, } )
+self.done_ACT_Mission_Automate_ABC_AssignerFixerA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
 --[[// *****************************************************************************
@@ -610,12 +643,14 @@ elseif switch_1 == eActionHalt
 
 node "BEH_Mission_Automate_ABC_AssignerSurveillerA"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_ABC_AssignerSurveillerA" }, "BEH_Mission_Automate_ABC_AssignerSurveillerA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_ABC_AssignerSurveillerA, {value} ) end,
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ABC_AssignerSurveillerA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "done_ACT_Mission_Automate_ControleCreation_EnCours" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "done_ACT_Mission_Automate_ControleCreation_OK" } },
+        { "ACT_Mission_Automate_ABC_AssignerSurveillerA", { "done_ACT_Mission_Automate_ABC_AssignerSurveillerA" } },
     },
 
     create = function( self )
@@ -650,7 +685,8 @@ elseif switch_1 == eActionHalt
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_ABC_AssignerSurveillerA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.ptInstallation, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Mission_Automate_ABC_AssignerSurveillerA, rForce, { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.ptInstallation, self._namedParams.eEtatEchelon, } )
+self.done_ACT_Mission_Automate_ABC_AssignerSurveillerA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
 --[[// *****************************************************************************
@@ -663,12 +699,14 @@ elseif switch_1 == eActionHalt
 
 node "BEH_Mission_Automate_ABC_AssignerControlerA"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_ABC_AssignerControlerA" }, "BEH_Mission_Automate_ABC_AssignerControlerA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_ABC_AssignerControlerA, {value} ) end,
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ABC_AssignerControlerSecteurA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "done_ACT_Mission_Automate_ControleCreation_EnCours" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "done_ACT_Mission_Automate_ControleCreation_OK" } },
+        { "ACT_Mission_Automate_ABC_AssignerControlerSecteurA", { "done_ACT_Mission_Automate_ABC_AssignerControlerSecteurA" } },
     },
 
     create = function( self )
@@ -703,7 +741,8 @@ elseif switch_1 == eActionHalt
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_ABC_AssignerControlerSecteurA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.zoneAControler, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Mission_Automate_ABC_AssignerControlerSecteurA, rForce, { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.zoneAControler, self._namedParams.eEtatEchelon, } )
+self.done_ACT_Mission_Automate_ABC_AssignerControlerSecteurA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
 --[[// *****************************************************************************
@@ -716,12 +755,14 @@ elseif switch_1 == eActionHalt
 
 node "BEH_Mission_Automate_ABC_AssignerBarrerA"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_ABC_AssignerBarrerA" }, "BEH_Mission_Automate_ABC_AssignerBarrerA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_ABC_AssignerBarrerA, {value} ) end,
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ABC_AssignerBarrerA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "done_ACT_Mission_Automate_ControleCreation_EnCours" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "done_ACT_Mission_Automate_ControleCreation_OK" } },
+        { "ACT_Mission_Automate_ABC_AssignerBarrerA", { "done_ACT_Mission_Automate_ABC_AssignerBarrerA" } },
     },
 
     create = function( self )
@@ -756,7 +797,8 @@ elseif switch_1 == eActionHalt
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_ABC_AssignerBarrerA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.positionInstallation, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Mission_Automate_ABC_AssignerBarrerA, rForce, { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.positionInstallation, self._namedParams.eEtatEchelon, } )
+self.done_ACT_Mission_Automate_ABC_AssignerBarrerA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
 --[[// *****************************************************************************
@@ -769,12 +811,14 @@ elseif switch_1 == eActionHalt
 
 node "BEH_Mission_Automate_AssignerArmerPointControleA"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_AssignerArmerPointControleA" }, "BEH_Mission_Automate_AssignerArmerPointControleA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_AssignerArmerPointControleA, {value} ) end,
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ABC_AssignerArmerPointControleA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "done_ACT_Mission_Automate_ControleCreation_EnCours" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "done_ACT_Mission_Automate_ControleCreation_OK" } },
+        { "ACT_Mission_Automate_ABC_AssignerArmerPointControleA", { "done_ACT_Mission_Automate_ABC_AssignerArmerPointControleA" } },
     },
 
     create = function( self )
@@ -809,7 +853,8 @@ elseif switch_1 == eActionHalt
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_ABC_AssignerArmerPointControleA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.pointControle, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Mission_Automate_ABC_AssignerArmerPointControleA, rForce, { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.pointControle, self._namedParams.eEtatEchelon, } )
+self.done_ACT_Mission_Automate_ABC_AssignerArmerPointControleA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
 --[[// *****************************************************************************
@@ -822,12 +867,14 @@ elseif switch_1 == eActionHalt
 
 node "BEH_Mission_Automate_ABC_AssignerEscorterA"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_ABC_AssignerEscorterA" }, "BEH_Mission_Automate_ABC_AssignerEscorterA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_ABC_AssignerEscorterA, {value} ) end,
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ABC_AssignerEscorterA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "done_ACT_Mission_Automate_ControleCreation_EnCours" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "done_ACT_Mission_Automate_ControleCreation_OK" } },
+        { "ACT_Mission_Automate_ABC_AssignerEscorterA", { "done_ACT_Mission_Automate_ABC_AssignerEscorterA" } },
     },
 
     create = function( self )
@@ -862,7 +909,8 @@ elseif switch_1 == eActionHalt
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_ABC_AssignerEscorterA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.pionAEscorter, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Mission_Automate_ABC_AssignerEscorterA, rForce, { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.pionAEscorter, self._namedParams.eEtatEchelon, } )
+self.done_ACT_Mission_Automate_ABC_AssignerEscorterA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
 --[[// *****************************************************************************
@@ -875,12 +923,14 @@ elseif switch_1 == eActionHalt
 
 node "BEH_Mission_Automate_ABC_AssignerEscorterAutomateA"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_ABC_AssignerEscorterAutomateA" }, "BEH_Mission_Automate_ABC_AssignerEscorterAutomateA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_ABC_AssignerEscorterAutomateA, {value} ) end,
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ABC_AssignerEscorterUnitesA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "done_ACT_Mission_Automate_ControleCreation_EnCours" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "done_ACT_Mission_Automate_ControleCreation_OK" } },
+        { "ACT_Mission_Automate_ABC_AssignerEscorterUnitesA", { "done_ACT_Mission_Automate_ABC_AssignerEscorterUnitesA" } },
     },
 
     create = function( self )
@@ -915,7 +965,8 @@ elseif switch_1 == eActionHalt
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_ABC_AssignerEscorterUnitesA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.automateAEscorter, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Mission_Automate_ABC_AssignerEscorterUnitesA, rForce, { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.automateAEscorter, self._namedParams.eEtatEchelon, } )
+self.done_ACT_Mission_Automate_ABC_AssignerEscorterUnitesA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
 --[[//=============================================================================
@@ -931,12 +982,14 @@ elseif switch_1 == eActionHalt
 
 node "BEH_Mission_Automate_ABC_AssignerFreinerA"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_ABC_AssignerFreinerA" }, "BEH_Mission_Automate_ABC_AssignerFreinerA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_ABC_AssignerFreinerA, {value} ) end,
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ABC_AssignerFreinerA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "done_ACT_Mission_Automate_ControleCreation_EnCours" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "done_ACT_Mission_Automate_ControleCreation_OK" } },
+        { "ACT_Mission_Automate_ABC_AssignerFreinerA", { "done_ACT_Mission_Automate_ABC_AssignerFreinerA" } },
     },
 
     create = function( self )
@@ -970,7 +1023,8 @@ elseif switch_1 == eActionHalt
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_ABC_AssignerFreinerA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Mission_Automate_ABC_AssignerFreinerA, rForce, { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.eEtatEchelon, } )
+self.done_ACT_Mission_Automate_ABC_AssignerFreinerA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
 --[[// *****************************************************************************
@@ -983,12 +1037,14 @@ elseif switch_1 == eActionHalt
 
 node "BEH_Mission_Automate_ABC_AssignerJalonnerA"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_ABC_AssignerJalonnerA" }, "BEH_Mission_Automate_ABC_AssignerJalonnerA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_ABC_AssignerJalonnerA, {value} ) end,
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ABC_AssignerJalonnerA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "done_ACT_Mission_Automate_ControleCreation_EnCours" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "done_ACT_Mission_Automate_ControleCreation_OK" } },
+        { "ACT_Mission_Automate_ABC_AssignerJalonnerA", { "done_ACT_Mission_Automate_ABC_AssignerJalonnerA" } },
     },
 
     create = function( self )
@@ -1022,7 +1078,8 @@ elseif switch_1 == eActionHalt
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_ABC_AssignerJalonnerA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Mission_Automate_ABC_AssignerJalonnerA, rForce, { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.eEtatEchelon, } )
+self.done_ACT_Mission_Automate_ABC_AssignerJalonnerA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
 }

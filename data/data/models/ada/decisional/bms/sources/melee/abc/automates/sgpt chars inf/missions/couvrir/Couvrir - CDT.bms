@@ -20,9 +20,11 @@ includedFiles["sources/melee/abc/automates/sgpt chars inf/missions/couvrir/Couvr
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_ABC_Couvrir"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ABC_Couvrir" }, "MIS_Automate_CDT_ABC_Couvrir" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ABC_Couvrir, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_Couvrir", {} },
+        { "BEH_Conduite_Automate_ABC_Couvrir", { "done_BEH_Conduite_Automate_ABC_Couvrir" } },
     },
 
     create = function( self )

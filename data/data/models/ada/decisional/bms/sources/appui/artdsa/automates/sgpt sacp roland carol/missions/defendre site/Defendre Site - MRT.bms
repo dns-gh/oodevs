@@ -3,13 +3,15 @@ includedFiles["sources/appui/artdsa/automates/sgpt sacp roland carol/missions/de
 
 node "MIS_Automate_MRT_ASA_DefendreSite"
 {
+    feedbacks = { { { "done_MIS_Automate_MRT_ASA_DefendreSite" }, "MIS_Automate_MRT_ASA_DefendreSite" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_MRT_ASA_DefendreSite, {value} ) end,
     activations =
     {
-        { "BEH_ROE_Automate_TirLibre", {} },
-        { "BEH_Ordre_Automate_Poursuivre_", {} },
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
-        { "BEH_Medo_Automate_ASA_AssignerMissionsDefendreSiteAListe", {} },
-        { "BEH_Mission_Automate_AssignerStationnerA", {} },
+        { "BEH_ROE_Automate_TirLibre", { "done_BEH_ROE_Automate_TirLibre" } },
+        { "BEH_Ordre_Automate_Poursuivre_", { "done_BEH_Ordre_Automate_Poursuivre_" } },
+        { "BEH_Medo_Automate_ControleCreationMission", { "done_BEH_Medo_Automate_ControleCreationMission" } },
+        { "BEH_Medo_Automate_ASA_AssignerMissionsDefendreSiteAListe", { "done_BEH_Medo_Automate_ASA_AssignerMissionsDefendreSiteAListe" } },
+        { "BEH_Mission_Automate_AssignerStationnerA", { "done_BEH_Mission_Automate_AssignerStationnerA" } },
     },
 
     create = function( self )
@@ -30,7 +32,7 @@ node "MIS_Automate_MRT_ASA_DefendreSite"
                 if( DIA_IsListEmpty( self.listeSectionRolandCarol ) ) then
                     do
                         DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
-                                                self.params.__returnValue = eActionImpossible
+                                                self:SendFeedback( eActionImpossible )
                         Halt( self )
                         do return end
 
@@ -73,7 +75,8 @@ node "MIS_Automate_MRT_ASA_DefendreSite"
 --[[//controle des creations de missions
 ]]                    end
 
-                    Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.listeSectionRolandCarol ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatMissionsDefendreSite = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( self.listeSectionRolandCarol ), } )
+self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eEtatMissionsDefendreSite = v[1] end
                     --[[//Defendre zone à partir de position calculées
 ]]if( not DIA_IsListEmpty( self.listeSectionRolandCarol ) ) then
                         Activate( self.activations.BEH_Medo_Automate_ASA_AssignerMissionsDefendreSiteAListe, 1, { ePhase_MRT, self.listeSectionRolandCarol, self._namedParams.mission.positionsSections_, self._namedParams.mission.zone_, } )
@@ -85,14 +88,14 @@ node "MIS_Automate_MRT_ASA_DefendreSite"
                                 cases_switch_1[1] = true
 elseif switch_1 == eMRT_MissionImpossible then
                     DEC_RC( eRC_MissionImpossible )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eMRT_Valider then
                     DEC_MRT_Valide()
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 

@@ -9,13 +9,15 @@ includedFiles["sources/appui/genie/pions/missions/appui a la mobilite/Reconnaitr
 ]]--[[// *****************************************************************************
 ]]node "MIS_Pion_GEN_ReconnaitreSiteFranchissement"
 {
+    feedbacks = { { { "done_MIS_Pion_GEN_ReconnaitreSiteFranchissement" }, "MIS_Pion_GEN_ReconnaitreSiteFranchissement" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_GEN_ReconnaitreSiteFranchissement, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_ProgressionVers", {} },
-        { "ACT_Obs_ReconnaitreSiteFranchissement", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
+        { "ACT_Obs_ReconnaitreSiteFranchissement", { "done_ACT_Obs_ReconnaitreSiteFranchissement" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "done_BEH_Dep_SePosterFaceADirectionDangereuse" } },
     },
 
     create = function( self )
@@ -46,7 +48,7 @@ includedFiles["sources/appui/genie/pions/missions/appui a la mobilite/Reconnaitr
                 if( self.ptObjet == nil ) then
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
-                                                self.params.__returnValue = eActionImpossible
+                                                self:SendFeedback( eActionImpossible )
                         Halt( self )
                         do return end
 
@@ -60,7 +62,8 @@ includedFiles["sources/appui/genie/pions/missions/appui a la mobilite/Reconnaitr
 ]]        end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
                 self.ePhase = eFinMission
@@ -94,7 +97,8 @@ elseif switch_1 == eProgresser then
                         end
                     end
 
-                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.ptObjet, eProgressionReco, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.ptObjet, eProgressionReco, eTypeItiMouvement, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                 --[[// Reconnaisance
 ]]                cases_switch_1[2] = true
@@ -135,6 +139,8 @@ elseif switch_1 == eFinMission then
 
 node "ACT_Obs_ReconnaitreSiteFranchissement"
 {
+    feedbacks = { { { "done_ACT_Obs_ReconnaitreSiteFranchissement" }, "ACT_Obs_ReconnaitreSiteFranchissement" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obs_ReconnaitreSiteFranchissement, {value} ) end,
     actuators =
     {
         deplacement = 1,
@@ -174,7 +180,7 @@ node "ACT_Obs_ReconnaitreSiteFranchissement"
                 if( 1 * 60 <= DEC_TempsSim() - self.rTempsDebut ) then
                     do
                         DEC_ConnaissanceObjet_Reconnaitre( self._namedParams.obj )
-                                                self.params.__returnValue = eActionEffectuee
+                                                self:SendFeedback( eActionEffectuee )
                         Halt( self )
                         do return end
 

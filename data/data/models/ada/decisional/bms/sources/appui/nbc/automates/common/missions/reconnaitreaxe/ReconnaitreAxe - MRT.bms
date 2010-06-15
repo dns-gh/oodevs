@@ -10,9 +10,11 @@ includedFiles["sources/appui/nbc/automates/common/missions/reconnaitreaxe/Reconn
 ]]--[[// *****************************************************************************
 ]]node "BEH_Medo_Automate_NBC_AssignerReconnaitreA"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_NBC_AssignerReconnaitreA" }, "BEH_Medo_Automate_NBC_AssignerReconnaitreA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_NBC_AssignerReconnaitreA, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_NBC_AssignerReconnaitreA", {} },
+        { "BEH_Mission_Automate_NBC_AssignerReconnaitreA", { "done_BEH_Mission_Automate_NBC_AssignerReconnaitreA" } },
     },
 
     create = function( self )

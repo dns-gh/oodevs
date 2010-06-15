@@ -47,15 +47,17 @@ include "Melee/Abc/Automates/Common/Gestion pions detruits.bms"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Defaut"
 {
+    feedbacks = { { { "done_BEH_Defaut" }, "BEH_Defaut" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Defaut, {value} ) end,
     activations =
     {
-        { "BEH_RC_Automate_Situation", {} },
-        { "BEH_Nbc_Automate_GererAlerteNiv4", {} },
-        { "BEH_ROE_Automate_GererOrdre", {} },
-        { "BEH_Misc_Automate_GererLesMoyens", {} },
-        { "BEH_Rens_Automate_GererSilenceRadio", {} },
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
-        { "BEH_Conduite_Automate_ABC_GererAppui_Mortier", {} },
+        { "BEH_RC_Automate_Situation", { "done_BEH_RC_Automate_Situation" } },
+        { "BEH_Nbc_Automate_GererAlerteNiv4", { "done_BEH_Nbc_Automate_GererAlerteNiv4" } },
+        { "BEH_ROE_Automate_GererOrdre", { "done_BEH_ROE_Automate_GererOrdre" } },
+        { "BEH_Misc_Automate_GererLesMoyens", { "done_BEH_Misc_Automate_GererLesMoyens" } },
+        { "BEH_Rens_Automate_GererSilenceRadio", { "done_BEH_Rens_Automate_GererSilenceRadio" } },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "done_BEH_Ordre_Automate_RecevoirOrdreInopine" } },
+        { "BEH_Conduite_Automate_ABC_GererAppui_Mortier", { "done_BEH_Conduite_Automate_ABC_GererAppui_Mortier" } },
     },
 
     create = function( self )
@@ -111,9 +113,11 @@ include "Melee/Abc/Automates/Common/Gestion pions detruits.bms"
 
 node "BEH_RC_Automate_GererConditionOperationnelle"
 {
+    feedbacks = { { { "done_BEH_RC_Automate_GererConditionOperationnelle" }, "BEH_RC_Automate_GererConditionOperationnelle" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_RC_Automate_GererConditionOperationnelle, {value} ) end,
     activations =
     {
-        { "ACT_Warning", {} },
+        { "ACT_Warning", { "done_ACT_Warning" } },
     },
 
     create = function( self )
@@ -160,9 +164,11 @@ elseif switch_1 == eEtatEchelon_Eclairage then
 
 node "BEH_Conduite_Automate_ABC_GererAppui_Mortier"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_ABC_GererAppui_Mortier" }, "BEH_Conduite_Automate_ABC_GererAppui_Mortier" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_ABC_GererAppui_Mortier, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_GererOrdre_Mortier", {} },
+        { "BEH_Conduite_Automate_ABC_GererOrdre_Mortier", { "done_BEH_Conduite_Automate_ABC_GererOrdre_Mortier" } },
     },
 
     create = function( self )
@@ -186,9 +192,11 @@ node "BEH_Conduite_Automate_ABC_GererAppui_Mortier"
 
 node "BEH_Conduite_Automate_ABC_GererOrdre_Mortier"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_ABC_GererOrdre_Mortier" }, "BEH_Conduite_Automate_ABC_GererOrdre_Mortier" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_ABC_GererOrdre_Mortier, {value} ) end,
     activations =
     {
-        { "ACT_MOT_Automate_ABC_DemandeAppliqerFeux", {} },
+        { "ACT_MOT_Automate_ABC_DemandeAppliqerFeux", { "done_ACT_MOT_Automate_ABC_DemandeAppliqerFeux" } },
     },
 
     create = function( self )
@@ -222,6 +230,8 @@ if( rIterateur < #( self._namedParams.selAppuis_Mortier ) ) then
 
 node "ACT_MOT_Automate_ABC_DemandeAppliqerFeux"
 {
+    feedbacks = { { { "done_ACT_MOT_Automate_ABC_DemandeAppliqerFeux" }, "ACT_MOT_Automate_ABC_DemandeAppliqerFeux" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_MOT_Automate_ABC_DemandeAppliqerFeux, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pMortier = self.params[1]

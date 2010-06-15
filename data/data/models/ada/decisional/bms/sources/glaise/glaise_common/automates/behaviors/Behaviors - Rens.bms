@@ -9,9 +9,11 @@ includedFiles["sources/glaise/glaise_common/automates/behaviors/Behaviors - Rens
 ]]--[[// *****************************************************************************
 ]]node "BEH_Rens_Automate_GererSilenceRadio"
 {
+    feedbacks = { { { "done_BEH_Rens_Automate_GererSilenceRadio" }, "BEH_Rens_Automate_GererSilenceRadio" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Rens_Automate_GererSilenceRadio, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadio", {} },
+        { "BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadio", { "done_BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadio" } },
     },
 
     create = function( self )
@@ -39,11 +41,13 @@ includedFiles["sources/glaise/glaise_common/automates/behaviors/Behaviors - Rens
 
 node "BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadio"
 {
+    feedbacks = { { { "done_BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadio" }, "BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadio" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadio, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Automate_ConduitePasserEnSilenceRadio", {} },
-        { "BEH_Ordre_Automate_ConduiteFinSilenceRadio", {} },
-        { "ACT_Ordre_Suppression", {} },
+        { "BEH_Ordre_Automate_ConduitePasserEnSilenceRadio", { "done_BEH_Ordre_Automate_ConduitePasserEnSilenceRadio" } },
+        { "BEH_Ordre_Automate_ConduiteFinSilenceRadio", { "done_BEH_Ordre_Automate_ConduiteFinSilenceRadio" } },
+        { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
     },
 
     create = function( self )
@@ -109,11 +113,13 @@ elseif switch_1 == "Rep_OrderConduite_ArreterSilenceRadio" then
 
 node "BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadar"
 {
+    feedbacks = { { { "done_BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadar" }, "BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadar" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadar, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Automate_ConduitePasserEnSilenceRadar", {} },
-        { "BEH_Ordre_Automate_ConduiteFinSilenceRadar", {} },
-        { "ACT_Ordre_Suppression", {} },
+        { "BEH_Ordre_Automate_ConduitePasserEnSilenceRadar", { "done_BEH_Ordre_Automate_ConduitePasserEnSilenceRadar" } },
+        { "BEH_Ordre_Automate_ConduiteFinSilenceRadar", { "done_BEH_Ordre_Automate_ConduiteFinSilenceRadar" } },
+        { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
     },
 
     create = function( self )
@@ -179,9 +185,11 @@ elseif switch_1 == "Rep_OrderConduite_ArreterSilenceRadar" then
 
 node "BEH_Ordre_Automate_ConduitePasserEnSilenceRadio"
 {
+    feedbacks = { { { "done_BEH_Ordre_Automate_ConduitePasserEnSilenceRadio" }, "BEH_Ordre_Automate_ConduitePasserEnSilenceRadio" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Ordre_Automate_ConduitePasserEnSilenceRadio, {value} ) end,
     activations =
     {
-        { "ACT_Ordre_PasserEnSilenceRadio", {} },
+        { "ACT_Ordre_PasserEnSilenceRadio", { "done_ACT_Ordre_PasserEnSilenceRadio" } },
     },
 
     create = function( self )
@@ -217,9 +225,11 @@ do
 
 node "BEH_Ordre_Automate_ConduiteFinSilenceRadio"
 {
+    feedbacks = { { { "done_BEH_Ordre_Automate_ConduiteFinSilenceRadio" }, "BEH_Ordre_Automate_ConduiteFinSilenceRadio" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Ordre_Automate_ConduiteFinSilenceRadio, {value} ) end,
     activations =
     {
-        { "ACT_Ordre_FinSilenceRadio", {} },
+        { "ACT_Ordre_FinSilenceRadio", { "done_ACT_Ordre_FinSilenceRadio" } },
     },
 
     create = function( self )
@@ -251,6 +261,8 @@ do
 
 node "ACT_Ordre_PasserEnSilenceRadio"
 {
+    feedbacks = { { { "done_ACT_Ordre_PasserEnSilenceRadio" }, "ACT_Ordre_PasserEnSilenceRadio" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Ordre_PasserEnSilenceRadio, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -276,6 +288,8 @@ node "ACT_Ordre_PasserEnSilenceRadio"
 ]]--[[// *****************************************************************************
 ]]node "ACT_Ordre_FinSilenceRadio"
 {
+    feedbacks = { { { "done_ACT_Ordre_FinSilenceRadio" }, "ACT_Ordre_FinSilenceRadio" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Ordre_FinSilenceRadio, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -301,9 +315,11 @@ node "ACT_Ordre_PasserEnSilenceRadio"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Ordre_Automate_ConduitePasserEnSilenceRadar"
 {
+    feedbacks = { { { "done_BEH_Ordre_Automate_ConduitePasserEnSilenceRadar" }, "BEH_Ordre_Automate_ConduitePasserEnSilenceRadar" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Ordre_Automate_ConduitePasserEnSilenceRadar, {value} ) end,
     activations =
     {
-        { "ACT_Ordre_PasserEnSilenceRadar", {} },
+        { "ACT_Ordre_PasserEnSilenceRadar", { "done_ACT_Ordre_PasserEnSilenceRadar" } },
     },
 
     create = function( self )
@@ -338,9 +354,11 @@ do
 
 node "BEH_Ordre_Automate_ConduiteFinSilenceRadar"
 {
+    feedbacks = { { { "done_BEH_Ordre_Automate_ConduiteFinSilenceRadar" }, "BEH_Ordre_Automate_ConduiteFinSilenceRadar" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Ordre_Automate_ConduiteFinSilenceRadar, {value} ) end,
     activations =
     {
-        { "ACT_Ordre_FinSilenceRadar", {} },
+        { "ACT_Ordre_FinSilenceRadar", { "done_ACT_Ordre_FinSilenceRadar" } },
     },
 
     create = function( self )
@@ -372,6 +390,8 @@ do
 
 node "ACT_Ordre_FinSilenceRadar"
 {
+    feedbacks = { { { "done_ACT_Ordre_FinSilenceRadar" }, "ACT_Ordre_FinSilenceRadar" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Ordre_FinSilenceRadar, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -397,6 +417,8 @@ node "ACT_Ordre_FinSilenceRadar"
 ]]--[[// *****************************************************************************
 ]]node "ACT_Ordre_PasserEnSilenceRadar"
 {
+    feedbacks = { { { "done_ACT_Ordre_PasserEnSilenceRadar" }, "ACT_Ordre_PasserEnSilenceRadar" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Ordre_PasserEnSilenceRadar, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]

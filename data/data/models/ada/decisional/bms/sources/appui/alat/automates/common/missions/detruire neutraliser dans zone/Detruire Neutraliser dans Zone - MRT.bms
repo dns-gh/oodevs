@@ -6,6 +6,8 @@ includedFiles["sources/appui/alat/automates/common/missions/detruire neutraliser
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "MIS_Automate_MRT_ALAT_DetruireNeutraliserDansZone"
 {
+    feedbacks = { { { "done_MIS_Automate_MRT_ALAT_DetruireNeutraliserDansZone" }, "MIS_Automate_MRT_ALAT_DetruireNeutraliserDansZone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_MRT_ALAT_DetruireNeutraliserDansZone, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission
@@ -24,7 +26,7 @@ includedFiles["sources/appui/alat/automates/common/missions/detruire neutraliser
                 if( DIA_IsListEmpty( self.listeDetruire ) ) then
                     do
                         DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
-                                                self.params.__returnValue = eActionImpossible
+                                                self:SendFeedback( eActionImpossible )
                         Halt( self )
                         do return end
 
@@ -35,7 +37,7 @@ includedFiles["sources/appui/alat/automates/common/missions/detruire neutraliser
         end
 
         DEC_MRT_Valide()
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         Halt( self )
         do return end
 

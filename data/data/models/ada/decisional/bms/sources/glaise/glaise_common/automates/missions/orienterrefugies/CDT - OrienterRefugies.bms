@@ -10,9 +10,11 @@ includedFiles["sources/glaise/glaise_common/automates/missions/orienterrefugies/
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_OrienterRefugies"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_OrienterRefugies" }, "MIS_Automate_CDT_OrienterRefugies" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_OrienterRefugies, {value} ) end,
     activations =
     {
-        { "BEH_Dispositif_Automate_FaireSuivreLeSE", {} },
+        { "BEH_Dispositif_Automate_FaireSuivreLeSE", { "done_BEH_Dispositif_Automate_FaireSuivreLeSE" } },
     },
 
     create = function( self )

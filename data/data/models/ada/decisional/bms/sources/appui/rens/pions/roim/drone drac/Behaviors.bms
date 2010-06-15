@@ -73,12 +73,14 @@ include "Appui/Rens/Pions/Roim/Drone DRAC/Missions/Missions.bms"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Defaut"
 {
+    feedbacks = { { { "done_BEH_Defaut" }, "BEH_Defaut" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Defaut, {value} ) end,
     activations =
     {
-        { "BEH_MOT_DesactiveSauvegarde", {} },
-        { "BEH_Info_Pion_RendreCompte", {} },
-        { "BEH_Info_Pion_Rens_Disponibilite", {} },
-        { "ACT_Info_Trace", {} },
+        { "BEH_MOT_DesactiveSauvegarde", { "done_BEH_MOT_DesactiveSauvegarde" } },
+        { "BEH_Info_Pion_RendreCompte", { "done_BEH_Info_Pion_RendreCompte" } },
+        { "BEH_Info_Pion_Rens_Disponibilite", { "done_BEH_Info_Pion_Rens_Disponibilite" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
     },
 
     create = function( self )
@@ -119,9 +121,11 @@ include "Appui/Rens/Pions/Roim/Drone DRAC/Missions/Missions.bms"
 
 node "BEH_Dep_Virtuel_ProgressionVers"
 {
+    feedbacks = { { { "done_BEH_Dep_Virtuel_ProgressionVers" }, "BEH_Dep_Virtuel_ProgressionVers" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Virtuel_ProgressionVers, {value} ) end,
     activations =
     {
-        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
     },
 
     create = function( self )
@@ -143,11 +147,13 @@ node "BEH_Dep_Virtuel_ProgressionVers"
 
 node "BEH_Dep_Virtuel_PreparationAction"
 {
+    feedbacks = { { { "done_BEH_Dep_Virtuel_PreparationAction" }, "BEH_Dep_Virtuel_PreparationAction" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Virtuel_PreparationAction, {value} ) end,
     create = function( self )
     end,
 
     activate = function( self )
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         do return end
 
     end,

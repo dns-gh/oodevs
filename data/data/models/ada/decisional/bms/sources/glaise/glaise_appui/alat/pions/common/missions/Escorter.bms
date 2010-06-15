@@ -31,22 +31,24 @@ include "bit.lua"
 ]]--[[//------------------------------------------------------------------------------
 ]]node "MIS_Pion_ALAT_Escorter"
 {
+    feedbacks = { { { "done_MIS_Pion_ALAT_Escorter" }, "MIS_Pion_ALAT_Escorter" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_ALAT_Escorter, {value} ) end,
     activations =
     {
-        { "ACT_Maj_Pion_PasserEnTirLibre", {} },
-        { "BEH_Ordre_Inopine", {} },
-        { "Act_AbonnerPionAAppui", {} },
-        { "ACT_Maj_Pions_ObjectifEsquive", {} },
-        { "ACT_Maj_Pion_ALAT_ParametresRecompletement", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Obs_EtablirVisionCur", {} },
-        { "BEH_Log_Pion_ALAT_Recompletement", {} },
-        { "ACT_Pion_Rens_PartageConnaissancesDansZoneAvec", {} },
-        { "BEH_Dep_Pion_ALAT_SePoser", {} },
-        { "BEH_Dep_Pion_ALAT_EclairerItinerairePion", {} },
-        { "BEH_Eni_Pion_ALAT_GererEniEscorter", {} },
-        { "ACT_Maj_Pion_PasserEnTirSurRiposte", {} },
-        { "BEH_Manoeuvre_Pion_AllerStationner", {} },
+        { "ACT_Maj_Pion_PasserEnTirLibre", { "done_ACT_Maj_Pion_PasserEnTirLibre" } },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "Act_AbonnerPionAAppui", { "done_Act_AbonnerPionAAppui" } },
+        { "ACT_Maj_Pions_ObjectifEsquive", { "done_ACT_Maj_Pions_ObjectifEsquive" } },
+        { "ACT_Maj_Pion_ALAT_ParametresRecompletement", { "done_ACT_Maj_Pion_ALAT_ParametresRecompletement" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "ACT_Obs_EtablirVisionCur", { "done_ACT_Obs_EtablirVisionCur" } },
+        { "BEH_Log_Pion_ALAT_Recompletement", { "done_BEH_Log_Pion_ALAT_Recompletement" } },
+        { "ACT_Pion_Rens_PartageConnaissancesDansZoneAvec", { "done_ACT_Pion_Rens_PartageConnaissancesDansZoneAvec" } },
+        { "BEH_Dep_Pion_ALAT_SePoser", { "done_BEH_Dep_Pion_ALAT_SePoser" } },
+        { "BEH_Dep_Pion_ALAT_EclairerItinerairePion", { "done_BEH_Dep_Pion_ALAT_EclairerItinerairePion" } },
+        { "BEH_Eni_Pion_ALAT_GererEniEscorter", { "done_BEH_Eni_Pion_ALAT_GererEniEscorter" } },
+        { "ACT_Maj_Pion_PasserEnTirSurRiposte", { "done_ACT_Maj_Pion_PasserEnTirSurRiposte" } },
+        { "BEH_Manoeuvre_Pion_AllerStationner", { "done_BEH_Manoeuvre_Pion_AllerStationner" } },
     },
 
     create = function( self )
@@ -82,7 +84,8 @@ include "bit.lua"
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
                 if( self.ePhase ~= eFinMission and self.ePhase ~= eSExfiltrer ) then
@@ -147,20 +150,21 @@ include "bit.lua"
                                                         do
                                 DEC_Trace( "Impossible de rejoindre plot de ravitaillement" )
                                 DEC_Warning( eRC_MissionImpossible )
-                                                                self.params.__returnValue = eActionImpossible
+                                                                self:SendFeedback( eActionImpossible )
                                 Halt( self )
                                 do return end
 
                             end
 
-                                                        self.params.__returnValue = eActionImpossible
+                                                        self:SendFeedback( eActionImpossible )
                             Halt( self )
                             do return end
 
                         end
                     end
 
-                    Activate( self.activations.BEH_Log_Pion_ALAT_Recompletement, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Log_Pion_ALAT_Recompletement, GetMotivation( "MOT_Manoeuvrer" ), {} )
+self.done_BEH_Log_Pion_ALAT_Recompletement = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eAppuyer then
@@ -227,13 +231,13 @@ elseif switch_1 == eSExfiltrer then
                                                         do
                                 DEC_Trace( "Impossible de S'exfiltrer" )
                                 DEC_Warning( eRC_MissionImpossible )
-                                                                self.params.__returnValue = eActionImpossible
+                                                                self:SendFeedback( eActionImpossible )
                                 Halt( self )
                                 do return end
 
                             end
 
-                                                        self.params.__returnValue = eActionImpossible
+                                                        self:SendFeedback( eActionImpossible )
                             Halt( self )
                             do return end
 
@@ -241,7 +245,8 @@ elseif switch_1 == eSExfiltrer then
                     end
 
                     Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
-                    Activate( self.activations.BEH_Manoeuvre_Pion_AllerStationner, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( { self._namedParams.mission.pointRegroupement_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Manoeuvre_Pion_AllerStationner, GetMotivation( "MOT_Manoeuvrer" ), { self._namedParams.mission.pointRegroupement_, } )
+self.done_BEH_Manoeuvre_Pion_AllerStationner = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                                 cases_switch_1[3] = true
 elseif switch_1 == eFinMission then
@@ -253,7 +258,7 @@ elseif switch_1 == eFinMission then
                                 myself:ClearplotsRavitaillement_()
                                 F_Pion_SetobjectifEsquive( myself, nil )
                                 DEC_FinMission()
-                                                                self.params.__returnValue = eActionEffectuee
+                                                                self:SendFeedback( eActionEffectuee )
                                 Halt( self )
                                 do return end
 
@@ -262,7 +267,8 @@ elseif switch_1 == eFinMission then
                         end
                     end
 
-                    Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), {} )
+self.done_BEH_Dep_Pion_ALAT_SePoser = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                                 cases_switch_1[4] = true
                 end
@@ -282,9 +288,11 @@ elseif switch_1 == eFinMission then
 
 node "BEH_Eni_Pion_ALAT_GererEniEscorter"
 {
+    feedbacks = { { { "done_BEH_Eni_Pion_ALAT_GererEniEscorter" }, "BEH_Eni_Pion_ALAT_GererEniEscorter" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Pion_ALAT_GererEniEscorter, {value} ) end,
     activations =
     {
-        { "BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire", {} },
+        { "BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire", { "done_BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire" } },
     },
 
     create = function( self )

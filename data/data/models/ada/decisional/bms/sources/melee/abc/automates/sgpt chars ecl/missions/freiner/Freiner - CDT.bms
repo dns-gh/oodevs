@@ -20,9 +20,11 @@ includedFiles["sources/melee/abc/automates/sgpt chars ecl/missions/freiner/Frein
 ]]--[[// ******************************************************************************
 ]]node "MIS_Automate_CDT_ABC_Freiner"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ABC_Freiner" }, "MIS_Automate_CDT_ABC_Freiner" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ABC_Freiner, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_Freiner", {} },
+        { "BEH_Conduite_Automate_ABC_Freiner", { "done_BEH_Conduite_Automate_ABC_Freiner" } },
     },
 
     create = function( self )

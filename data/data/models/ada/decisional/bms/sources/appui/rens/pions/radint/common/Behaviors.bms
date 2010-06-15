@@ -23,14 +23,16 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Defaut"
 {
+    feedbacks = { { { "done_BEH_Defaut" }, "BEH_Defaut" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Defaut, {value} ) end,
     activations =
     {
-        { "BEH_Mot_Pion_Rens_AffecterVariablesDEtat", {} },
-        { "BEH_MAJ_EtatDefaut", {} },
-        { "BEH_ROE", {} },
-        { "BEH_Ambiance", {} },
-        { "BEH_Nbc", {} },
-        { "BEH_Rens", {} },
+        { "BEH_Mot_Pion_Rens_AffecterVariablesDEtat", { "done_BEH_Mot_Pion_Rens_AffecterVariablesDEtat" } },
+        { "BEH_MAJ_EtatDefaut", { "done_BEH_MAJ_EtatDefaut" } },
+        { "BEH_ROE", { "done_BEH_ROE" } },
+        { "BEH_Ambiance", { "done_BEH_Ambiance" } },
+        { "BEH_Nbc", { "done_BEH_Nbc" } },
+        { "BEH_Rens", { "done_BEH_Rens" } },
     },
 
     create = function( self )
@@ -72,6 +74,8 @@ include "bit.lua"
 
 node "BEH_Mot_Pion_Rens_AffecterVariablesDEtat"
 {
+    feedbacks = { { { "done_BEH_Mot_Pion_Rens_AffecterVariablesDEtat" }, "BEH_Mot_Pion_Rens_AffecterVariablesDEtat" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mot_Pion_Rens_AffecterVariablesDEtat, {value} ) end,
     create = function( self )
     end,
 
@@ -149,10 +153,12 @@ elseif switch_1 == eMoral_Mauvais then
 
 node "BEH_Dep_Pion_RENS_MonterA"
 {
+    feedbacks = { { { "done_BEH_Dep_Pion_RENS_MonterA" }, "BEH_Dep_Pion_RENS_MonterA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Pion_RENS_MonterA, {value} ) end,
     activations =
     {
-        { "ACT_Dep_Pion_RENS_VolerA", {} },
-        { "ACT_Misc_Delai", {} },
+        { "ACT_Dep_Pion_RENS_VolerA", { "done_ACT_Dep_Pion_RENS_VolerA" } },
+        { "ACT_Misc_Delai", { "done_ACT_Misc_Delai" } },
     },
 
     create = function( self )
@@ -170,7 +176,8 @@ node "BEH_Dep_Pion_RENS_MonterA"
             end
         end
 
-        Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, 15, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatDelai = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Misc_Delai, 1, { 1, 15, } )
+self.done_ACT_Misc_Delai = function( self, _, v ) self.eEtatDelai = v[1] end
     end,
 
 }

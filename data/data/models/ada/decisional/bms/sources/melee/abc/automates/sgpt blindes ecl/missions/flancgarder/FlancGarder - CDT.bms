@@ -22,9 +22,11 @@ includedFiles["sources/melee/abc/automates/sgpt blindes ecl/missions/flancgarder
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_ABC_FlancGarder"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ABC_FlancGarder" }, "MIS_Automate_CDT_ABC_FlancGarder" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ABC_FlancGarder, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_FlancGarder", {} },
+        { "BEH_Conduite_Automate_ABC_FlancGarder", { "done_BEH_Conduite_Automate_ABC_FlancGarder" } },
     },
 
     create = function( self )

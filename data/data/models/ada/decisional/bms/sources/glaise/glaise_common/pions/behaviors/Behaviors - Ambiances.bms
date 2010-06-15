@@ -11,11 +11,13 @@ includedFiles["sources/glaise/glaise_common/pions/behaviors/Behaviors - Ambiance
 ]]--[[// *****************************************************************************
 ]]node "BEH_Ambiance"
 {
+    feedbacks = { { { "done_BEH_Ambiance" }, "BEH_Ambiance" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Ambiance, {value} ) end,
     activations =
     {
-        { "ACT_Ordre_Suppression", {} },
-        { "ACT_Info_Trace", {} },
-        { "ACT_Dep_ModulationVitesse", {} },
+        { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "ACT_Dep_ModulationVitesse", { "done_ACT_Dep_ModulationVitesse" } },
     },
 
     create = function( self )

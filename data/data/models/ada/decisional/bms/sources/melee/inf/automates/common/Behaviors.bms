@@ -41,15 +41,17 @@ include "Melee/Inf/Automates/Common/Missions/Behaviors.bms"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Defaut"
 {
+    feedbacks = { { { "done_BEH_Defaut" }, "BEH_Defaut" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Defaut, {value} ) end,
     activations =
     {
-        { "BEH_RC_Automate_Situation", {} },
-        { "BEH_Nbc_Automate_GererAlerteNiv4", {} },
-        { "BEH_ROE_Automate_GererOrdre", {} },
-        { "BEH_Misc_Automate_GererLesMoyens", {} },
-        { "BEH_Rens_Automate_GererSilenceRadio", {} },
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
-        { "BEH_Ordre_Automate_INF_GererTransporteur", {} },
+        { "BEH_RC_Automate_Situation", { "done_BEH_RC_Automate_Situation" } },
+        { "BEH_Nbc_Automate_GererAlerteNiv4", { "done_BEH_Nbc_Automate_GererAlerteNiv4" } },
+        { "BEH_ROE_Automate_GererOrdre", { "done_BEH_ROE_Automate_GererOrdre" } },
+        { "BEH_Misc_Automate_GererLesMoyens", { "done_BEH_Misc_Automate_GererLesMoyens" } },
+        { "BEH_Rens_Automate_GererSilenceRadio", { "done_BEH_Rens_Automate_GererSilenceRadio" } },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "done_BEH_Ordre_Automate_RecevoirOrdreInopine" } },
+        { "BEH_Ordre_Automate_INF_GererTransporteur", { "done_BEH_Ordre_Automate_INF_GererTransporteur" } },
     },
 
     create = function( self )
@@ -104,9 +106,11 @@ include "Melee/Inf/Automates/Common/Missions/Behaviors.bms"
 
 node "BEH_Situation_Automate_INF_FinDeMission_Sur"
 {
+    feedbacks = { { { "done_BEH_Situation_Automate_INF_FinDeMission_Sur" }, "BEH_Situation_Automate_INF_FinDeMission_Sur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Situation_Automate_INF_FinDeMission_Sur, {value} ) end,
     activations =
     {
-        { "BEH_Situation_Automate_INF_FinDeMission", {} },
+        { "BEH_Situation_Automate_INF_FinDeMission", { "done_BEH_Situation_Automate_INF_FinDeMission" } },
     },
 
     create = function( self )
@@ -126,6 +130,8 @@ node "BEH_Situation_Automate_INF_FinDeMission_Sur"
 
 node "BEH_Situation_Automate_INF_FinDeMission"
 {
+    feedbacks = { { { "done_BEH_Situation_Automate_INF_FinDeMission" }, "BEH_Situation_Automate_INF_FinDeMission" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Situation_Automate_INF_FinDeMission, {value} ) end,
     create = function( self )
     end,
 
@@ -139,7 +145,7 @@ node "BEH_Situation_Automate_INF_FinDeMission"
                 end
 
                 self.lst_Pions_EnTete = S_ObtenirTousPionsDe( eEtatEchelon_Premier )
-                                self.params.__returnValue = eActionEnCours
+                                self:SendFeedback( eActionEnCours )
                 do return end
 
             end
@@ -153,11 +159,11 @@ node "BEH_Situation_Automate_INF_FinDeMission"
         end
 
         if( GetActivity() >= rFinDeMission ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             do return end
         end
 
-                self.params.__returnValue = eActionEnCours
+                self:SendFeedback( eActionEnCours )
         do return end
 
     end,
@@ -166,9 +172,11 @@ node "BEH_Situation_Automate_INF_FinDeMission"
 
 node "BEH_Ordre_Automate_INF_GererTransporteur"
 {
+    feedbacks = { { { "done_BEH_Ordre_Automate_INF_GererTransporteur" }, "BEH_Ordre_Automate_INF_GererTransporteur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Ordre_Automate_INF_GererTransporteur, {value} ) end,
     activations =
     {
-        { "ACT_Ordre_Suppression", {} },
+        { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
     },
 
     create = function( self )
@@ -203,12 +211,14 @@ do
 
 node "BEH_Conduite_Automate_HOT_Defaut"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_HOT_Defaut" }, "BEH_Conduite_Automate_HOT_Defaut" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_HOT_Defaut, {value} ) end,
     activations =
     {
-        { "BEH_Dispositif_Automate_INF_GererLesPionsDetruits", {} },
-        { "BEH_Dispositif_Automate_INF_GererReleve", {} },
-        { "BEH_Conduite_Automate_INF_GererAppuis_INF", {} },
-        { "BEH_Conduite_Automate_INF_GererAppuis_ABC", {} },
+        { "BEH_Dispositif_Automate_INF_GererLesPionsDetruits", { "done_BEH_Dispositif_Automate_INF_GererLesPionsDetruits" } },
+        { "BEH_Dispositif_Automate_INF_GererReleve", { "done_BEH_Dispositif_Automate_INF_GererReleve" } },
+        { "BEH_Conduite_Automate_INF_GererAppuis_INF", { "done_BEH_Conduite_Automate_INF_GererAppuis_INF" } },
+        { "BEH_Conduite_Automate_INF_GererAppuis_ABC", { "done_BEH_Conduite_Automate_INF_GererAppuis_ABC" } },
     },
 
     create = function( self )
@@ -236,9 +246,11 @@ node "BEH_Conduite_Automate_HOT_Defaut"
 
 node "BEH_RC_Automate_GererConditionOperationnelle"
 {
+    feedbacks = { { { "done_BEH_RC_Automate_GererConditionOperationnelle" }, "BEH_RC_Automate_GererConditionOperationnelle" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_RC_Automate_GererConditionOperationnelle, {value} ) end,
     activations =
     {
-        { "ACT_Warning", {} },
+        { "ACT_Warning", { "done_ACT_Warning" } },
     },
 
     create = function( self )

@@ -22,11 +22,13 @@ include "bit.lua"
 ]]--[[//-----------------------------------------------------------------------------
 ]]node "BEH_Conduite_Automate_INF_Reconnaitre_AssignerReco"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_INF_Reconnaitre_AssignerReco" }, "BEH_Conduite_Automate_INF_Reconnaitre_AssignerReco" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_INF_Reconnaitre_AssignerReco, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_ABC_AssignerSoutenirA", {} },
-        { "BEH_Mission_Automate_INF_AssignerAppuyerA", {} },
-        { "BEH_Mission_Automate_INF_AssignerA_ReconnaitrePt", {} },
+        { "BEH_Mission_Automate_ABC_AssignerSoutenirA", { "done_BEH_Mission_Automate_ABC_AssignerSoutenirA" } },
+        { "BEH_Mission_Automate_INF_AssignerAppuyerA", { "done_BEH_Mission_Automate_INF_AssignerAppuyerA" } },
+        { "BEH_Mission_Automate_INF_AssignerA_ReconnaitrePt", { "done_BEH_Mission_Automate_INF_AssignerA_ReconnaitrePt" } },
     },
 
     create = function( self )
@@ -38,7 +40,7 @@ include "bit.lua"
                 self.eAction = self.eAction or nil
         self.ptDest = self.ptDest or DEC_Geometrie_CalculerPointArrivee()
         if( not ModuleBegins() ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -72,7 +74,8 @@ elseif switch_1 == "SectionInfanterie"
 
             end
         else
-            Activate( self.activations.BEH_Mission_Automate_INF_AssignerA_ReconnaitrePt, 1, setmetatable( { ePhase_CDT, self._namedParams.pPion, self.ptDest, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+            Activate( self.activations.BEH_Mission_Automate_INF_AssignerA_ReconnaitrePt, 1, { ePhase_CDT, self._namedParams.pPion, self.ptDest, } )
+self.done_BEH_Mission_Automate_INF_AssignerA_ReconnaitrePt = function( self, _, v ) self.eAction = v[1] end
         end
 
     end,
@@ -84,9 +87,11 @@ elseif switch_1 == "SectionInfanterie"
 
 node "BEH_Conduite_Automate_INF_Reduire_Manoeuvre"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_INF_Reduire_Manoeuvre" }, "BEH_Conduite_Automate_INF_Reduire_Manoeuvre" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_INF_Reduire_Manoeuvre, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_INF_Assaut_Manoeuvre", {} },
+        { "BEH_Conduite_Automate_INF_Assaut_Manoeuvre", { "done_BEH_Conduite_Automate_INF_Assaut_Manoeuvre" } },
     },
 
     create = function( self )
@@ -100,7 +105,7 @@ node "BEH_Conduite_Automate_INF_Reduire_Manoeuvre"
         if( self.eAction == eActionEffectuee ) then
             do
                 self.eAction = eActionEnCours
-                                self.params.__returnValue = eActionEffectuee
+                                self:SendFeedback( eActionEffectuee )
                 Halt( self )
                 do return end
 
@@ -109,12 +114,13 @@ node "BEH_Conduite_Automate_INF_Reduire_Manoeuvre"
 
         local pPion = S_Cherche_Automate_INF_PionMission( DEC_Automate_PionsSansPC(), "T_Mission_Pion_INF_Semparer" )
         if( ( pPion == 0 or pPion == nil ) ) then
-            self.params.__returnValue = eActionEnCours
+            self:SendFeedback( eActionEnCours )
             do return end
         end
 
         if( DEC_ConnaissanceAgent_EstValide( self.ksEni ) ) then
-            Activate( self.activations.BEH_Conduite_Automate_INF_Assaut_Manoeuvre, 1, setmetatable( { pPion, self.ksEni, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+            Activate( self.activations.BEH_Conduite_Automate_INF_Assaut_Manoeuvre, 1, { pPion, self.ksEni, } )
+self.done_BEH_Conduite_Automate_INF_Assaut_Manoeuvre = function( self, _, v ) self.eAction = v[1] end
         end
 
     end,
@@ -128,11 +134,13 @@ node "BEH_Conduite_Automate_INF_Reduire_Manoeuvre"
 
 node "BEH_Situation_Automate_INF_Assaut"
 {
+    feedbacks = { { { "done_BEH_Situation_Automate_INF_Assaut" }, "BEH_Situation_Automate_INF_Assaut" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Situation_Automate_INF_Assaut, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_INF_Assaut_Manoeuvre", {} },
-        { "BEH_Conduite_Automate_INF_Assaut_Reduction", {} },
-        { "BEH_Conduite_Automate_INF_Assaut_Reduction_SurPriseContact", {} },
+        { "BEH_Conduite_Automate_INF_Assaut_Manoeuvre", { "done_BEH_Conduite_Automate_INF_Assaut_Manoeuvre" } },
+        { "BEH_Conduite_Automate_INF_Assaut_Reduction", { "done_BEH_Conduite_Automate_INF_Assaut_Reduction" } },
+        { "BEH_Conduite_Automate_INF_Assaut_Reduction_SurPriseContact", { "done_BEH_Conduite_Automate_INF_Assaut_Reduction_SurPriseContact" } },
     },
 
     create = function( self )
@@ -207,10 +215,12 @@ elseif switch_1 == eEtatSituationEnnemi_PretPourConduiteTir then
 
 node "BEH_Conduite_Automate_INF_Assaut_Manoeuvre"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_INF_Assaut_Manoeuvre" }, "BEH_Conduite_Automate_INF_Assaut_Manoeuvre" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_INF_Assaut_Manoeuvre, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_INF_AssignerA_Fixer", {} },
-        { "BEH_Mission_Automate_INF_AssignerA_Couvrir", {} },
+        { "BEH_Mission_Automate_INF_AssignerA_Fixer", { "done_BEH_Mission_Automate_INF_AssignerA_Fixer" } },
+        { "BEH_Mission_Automate_INF_AssignerA_Couvrir", { "done_BEH_Mission_Automate_INF_AssignerA_Couvrir" } },
     },
 
     create = function( self )
@@ -228,7 +238,7 @@ node "BEH_Conduite_Automate_INF_Assaut_Manoeuvre"
         --[[// Pas d'appui
 ]]--[[// --------------------------------------------------------------------------------
 ]]if( ( #( selAppui ) == 0 or #( selAppui ) == nil ) or ( not DEC_ConnaissanceAgent_EstValide( self.ksEni ) and not DEC_ConnaissanceAgent_EstValide( self._namedParams.ksEniManoeuvre ) ) ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             Halt( self )
             do return end
         end
@@ -240,7 +250,7 @@ node "BEH_Conduite_Automate_INF_Assaut_Manoeuvre"
         else
 --[[// L'appui (MILAN ou HOT) devrait l'avoir detruit
 ]]--[[// On reste dans la meme configuration
-]]            self.params.__returnValue = eActionEffectuee
+]]            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -260,7 +270,7 @@ if( DEC_ConnaissanceAgent_EstValide( self._namedParams.ksEniManoeuvre ) ) then
 ]]--[[//-----------------------------------------------------------------------------
 ]]local pionCouv = S_Cherche_Automate_TypePion( selAppui, "SectionInfanterie" )
         if( ( pionCouv == 0 or pionCouv == nil ) ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             Halt( self )
             do return end
         end
@@ -284,9 +294,11 @@ if( DEC_ConnaissanceAgent_EstValide( self._namedParams.ksEniManoeuvre ) ) then
 
 node "BEH_Conduite_Automate_INF_Assaut_Reduction_SurPriseContact"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_INF_Assaut_Reduction_SurPriseContact" }, "BEH_Conduite_Automate_INF_Assaut_Reduction_SurPriseContact" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_INF_Assaut_Reduction_SurPriseContact, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_INF_Assaut_Reduction", {} },
+        { "BEH_Conduite_Automate_INF_Assaut_Reduction", { "done_BEH_Conduite_Automate_INF_Assaut_Reduction" } },
     },
 
     create = function( self )
@@ -319,9 +331,11 @@ node "BEH_Conduite_Automate_INF_Assaut_Reduction_SurPriseContact"
 
 node "BEH_Conduite_Automate_INF_Assaut_Reduction"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_INF_Assaut_Reduction" }, "BEH_Conduite_Automate_INF_Assaut_Reduction" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_INF_Assaut_Reduction, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_INF_AssignerA_Reduire", {} },
+        { "BEH_Mission_Automate_INF_AssignerA_Reduire", { "done_BEH_Mission_Automate_INF_AssignerA_Reduire" } },
     },
 
     create = function( self )
@@ -336,7 +350,7 @@ node "BEH_Conduite_Automate_INF_Assaut_Reduction"
         --[[// Pas d'appui
 ]]--[[// --------------------------------------------------------------------------------
 ]]if( ( #( selAppui ) == 0 or #( selAppui ) == nil ) ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             Halt( self )
             do return end
         end
@@ -347,7 +361,7 @@ node "BEH_Conduite_Automate_INF_Assaut_Reduction"
 
         --[[// Pas d'ennemi trouve a proximite
 ]]if( not DEC_ConnaissanceAgent_EstValide( self.ksEni ) ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             Halt( self )
             do return end
         end
@@ -360,7 +374,7 @@ node "BEH_Conduite_Automate_INF_Assaut_Reduction"
 do
                 --[[// L'appui (MILAN ou HOT) devrait l'avoir detruit
 ]]--[[// On reste dans la meme configuration
-]]                self.params.__returnValue = eActionEffectuee
+]]                self:SendFeedback( eActionEffectuee )
                 Halt( self )
                 do return end
 

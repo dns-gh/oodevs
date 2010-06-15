@@ -14,11 +14,13 @@ includedFiles["sources/melee/inf/automates/sgpt inf ac/missions/freiner/Freiner 
 ]]
 node "MIS_Automate_CDT_INF_Freiner"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_INF_Freiner" }, "MIS_Automate_CDT_INF_Freiner" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_INF_Freiner, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_INF_Defaut", {} },
-        { "BEH_Conduite_Automate_INF_CadreRetrograde", {} },
-        { "BEH_Conduite_Automate_INF_Freiner", {} },
+        { "BEH_Conduite_Automate_INF_Defaut", { "done_BEH_Conduite_Automate_INF_Defaut" } },
+        { "BEH_Conduite_Automate_INF_CadreRetrograde", { "done_BEH_Conduite_Automate_INF_CadreRetrograde" } },
+        { "BEH_Conduite_Automate_INF_Freiner", { "done_BEH_Conduite_Automate_INF_Freiner" } },
     },
 
     create = function( self )
@@ -44,7 +46,7 @@ node "MIS_Automate_CDT_INF_Freiner"
             do
                 self.eActionMission = eActionEnCours
                                 do
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -53,7 +55,8 @@ node "MIS_Automate_CDT_INF_Freiner"
             end
         end
 
-        Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, { true, } )
+self.done_BEH_Conduite_Automate_INF_Defaut = function( self, _, v ) self.eActionMission = v[1] end
         Activate( self.activations.BEH_Conduite_Automate_INF_CadreRetrograde, 1, {} )
         Activate( self.activations.BEH_Conduite_Automate_INF_Freiner, 1, {} )
     end,

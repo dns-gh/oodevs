@@ -21,12 +21,14 @@ includedFiles["sources/glaise/glaise_appui/nbc/automates/common/MRT generique.bm
 ]]--[[// *****************************************************************************
 ]]node "BEH_Medo_Automate_NBC_DonnerLesOrdresPourMission"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_NBC_DonnerLesOrdresPourMission" }, "BEH_Medo_Automate_NBC_DonnerLesOrdresPourMission" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_NBC_DonnerLesOrdresPourMission, {value} ) end,
     activations =
     {
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
-        { "BEH_Medo_Automate_NBC_AssignerReconnaitreA", {} },
-        { "BEH_Medo_Automate_NBC_AssignerDecontaminerZoneA", {} },
-        { "BEH_Medo_Automate_NBC_AssignerReconnaitreZoneA", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", { "done_BEH_Medo_Automate_ControleCreationMission" } },
+        { "BEH_Medo_Automate_NBC_AssignerReconnaitreA", { "done_BEH_Medo_Automate_NBC_AssignerReconnaitreA" } },
+        { "BEH_Medo_Automate_NBC_AssignerDecontaminerZoneA", { "done_BEH_Medo_Automate_NBC_AssignerDecontaminerZoneA" } },
+        { "BEH_Medo_Automate_NBC_AssignerReconnaitreZoneA", { "done_BEH_Medo_Automate_NBC_AssignerReconnaitreZoneA" } },
     },
 
     create = function( self )
@@ -160,7 +162,8 @@ elseif switch_1 == eMRT_AssignerMissions then
                                     end
                                 end
 
-                                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.selABC_NBC_Reco ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( self.selABC_NBC_Reco ), } )
+self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eEtat = v[1] end
                                 Activate( self.activations.BEH_Medo_Automate_NBC_AssignerReconnaitreA, 1, { self.selABC_NBC_Reco, } )
                                 _continue = false
                             --[[//-----------------------------------------------------------------------------
@@ -216,7 +219,8 @@ elseif switch_2 == "T_Mission_Automate_NBC_DecontaminerUneZone" then
                                     end
                                 end
 
-                                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.selABC_NBC_Dec ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( self.selABC_NBC_Dec ), } )
+self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eEtat = v[1] end
                                 Activate( self.activations.BEH_Medo_Automate_NBC_AssignerDecontaminerZoneA, 1, { self.selABC_NBC_Dec, } )
                                 _continue = false
                             --[[//-----------------------------------------------------------------------------
@@ -231,7 +235,8 @@ elseif switch_2 == "T_Mission_Automate_NBC_ReconnaitreUneZone" then
                                     end
                                 end
 
-                                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.selABC_NBC_Reco ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( self.selABC_NBC_Reco ), } )
+self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eEtat = v[1] end
                                 Activate( self.activations.BEH_Medo_Automate_NBC_AssignerReconnaitreZoneA, 1, { self.selABC_NBC_Reco, } )
                                 _continue = false
                                                         cases_switch_2[5] = true
@@ -246,7 +251,7 @@ elseif switch_2 == "T_Mission_Automate_NBC_ReconnaitreUneZone" then
 elseif switch_1 == eMRT_MissionImpossible then
                     DEC_Trace( "MISSION IMPOSSIBLE" )
                     DEC_RC( eRC_MissionImpossible )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -256,7 +261,7 @@ elseif switch_1 == eMRT_MissionImpossible then
 ]]                end
                 if cases_switch_1[3] or switch_1 == eMRT_Valider then
                     DEC_MRT_Valide()
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 

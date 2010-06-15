@@ -9,10 +9,12 @@ includedFiles["sources/common/pions/behaviors/Behaviors - POP - Roe.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "BEH_ROE_GererEmploiForceInterdit"
 {
+    feedbacks = { { { "done_BEH_ROE_GererEmploiForceInterdit" }, "BEH_ROE_GererEmploiForceInterdit" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_ROE_GererEmploiForceInterdit, {value} ) end,
     activations =
     {
-        { "ACT_Tir_ChangerConsignePopulation", {} },
-        { "ACT_RC", {} },
+        { "ACT_Tir_ChangerConsignePopulation", { "done_ACT_Tir_ChangerConsignePopulation" } },
+        { "ACT_RC", { "done_ACT_RC" } },
     },
 
     create = function( self )
@@ -33,10 +35,12 @@ includedFiles["sources/common/pions/behaviors/Behaviors - POP - Roe.bms"] = true
 
 node "BEH_ROE_GererMaintienADistanceParMoyensNonLetaux"
 {
+    feedbacks = { { { "done_BEH_ROE_GererMaintienADistanceParMoyensNonLetaux" }, "BEH_ROE_GererMaintienADistanceParMoyensNonLetaux" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_ROE_GererMaintienADistanceParMoyensNonLetaux, {value} ) end,
     activations =
     {
-        { "ACT_Tir_ChangerConsignePopulation", {} },
-        { "ACT_RC", {} },
+        { "ACT_Tir_ChangerConsignePopulation", { "done_ACT_Tir_ChangerConsignePopulation" } },
+        { "ACT_RC", { "done_ACT_RC" } },
     },
 
     create = function( self )
@@ -57,10 +61,12 @@ node "BEH_ROE_GererMaintienADistanceParMoyensNonLetaux"
 
 node "BEH_ROE_GererDispersionParMoyensDeDefenseActifs"
 {
+    feedbacks = { { { "done_BEH_ROE_GererDispersionParMoyensDeDefenseActifs" }, "BEH_ROE_GererDispersionParMoyensDeDefenseActifs" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_ROE_GererDispersionParMoyensDeDefenseActifs, {value} ) end,
     activations =
     {
-        { "ACT_Tir_ChangerConsignePopulation", {} },
-        { "ACT_RC", {} },
+        { "ACT_Tir_ChangerConsignePopulation", { "done_ACT_Tir_ChangerConsignePopulation" } },
+        { "ACT_RC", { "done_ACT_RC" } },
     },
 
     create = function( self )
@@ -81,10 +87,12 @@ node "BEH_ROE_GererDispersionParMoyensDeDefenseActifs"
 
 node "BEH_ROE_GererArmesLetalesAutorisees"
 {
+    feedbacks = { { { "done_BEH_ROE_GererArmesLetalesAutorisees" }, "BEH_ROE_GererArmesLetalesAutorisees" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_ROE_GererArmesLetalesAutorisees, {value} ) end,
     activations =
     {
-        { "ACT_Tir_ChangerConsignePopulation", {} },
-        { "ACT_RC", {} },
+        { "ACT_Tir_ChangerConsignePopulation", { "done_ACT_Tir_ChangerConsignePopulation" } },
+        { "ACT_RC", { "done_ACT_RC" } },
     },
 
     create = function( self )
@@ -105,13 +113,15 @@ node "BEH_ROE_GererArmesLetalesAutorisees"
 
 node "BEH_ROE_Recevoir_OrdreInopinePopulation"
 {
+    feedbacks = { { { "done_BEH_ROE_Recevoir_OrdreInopinePopulation" }, "BEH_ROE_Recevoir_OrdreInopinePopulation" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_ROE_Recevoir_OrdreInopinePopulation, {value} ) end,
     activations =
     {
-        { "ACT_Maj_Pion_PasserEnEmploiForceInterdit", {} },
-        { "ACT_Maj_Pion_PasserEnMaintienADistanceParMoyensNonLetaux", {} },
-        { "ACT_Maj_Pion_PasserEnDispersionParMoyensDeDefenseActifs", {} },
-        { "ACT_Maj_Pion_PasserEnArmesLetalesAutorisees", {} },
-        { "ACT_Ordre_Suppression", {} },
+        { "ACT_Maj_Pion_PasserEnEmploiForceInterdit", { "done_ACT_Maj_Pion_PasserEnEmploiForceInterdit" } },
+        { "ACT_Maj_Pion_PasserEnMaintienADistanceParMoyensNonLetaux", { "done_ACT_Maj_Pion_PasserEnMaintienADistanceParMoyensNonLetaux" } },
+        { "ACT_Maj_Pion_PasserEnDispersionParMoyensDeDefenseActifs", { "done_ACT_Maj_Pion_PasserEnDispersionParMoyensDeDefenseActifs" } },
+        { "ACT_Maj_Pion_PasserEnArmesLetalesAutorisees", { "done_ACT_Maj_Pion_PasserEnArmesLetalesAutorisees" } },
+        { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
     },
 
     create = function( self )

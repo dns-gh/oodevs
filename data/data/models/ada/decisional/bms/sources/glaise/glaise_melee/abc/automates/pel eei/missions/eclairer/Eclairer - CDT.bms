@@ -20,9 +20,11 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/pel eei/missions/eclair
 ]]--[[// ******************************************************************************
 ]]node "MIS_Automate_CDT_ABC_Eclairer"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ABC_Eclairer" }, "MIS_Automate_CDT_ABC_Eclairer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ABC_Eclairer, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_Eclairer", {} },
+        { "BEH_Conduite_Automate_ABC_Eclairer", { "done_BEH_Conduite_Automate_ABC_Eclairer" } },
     },
 
     create = function( self )

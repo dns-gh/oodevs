@@ -12,17 +12,19 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_ABC_GTIA_DonnerCoupArret"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ABC_GTIA_DonnerCoupArret" }, "MIS_Automate_CDT_ABC_GTIA_DonnerCoupArret" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ABC_GTIA_DonnerCoupArret, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_AnalyserSituationPourMissionRetrograde", {} },
-        { "BEH_GTIA_OrganiserLesMoyensPourDonnerCAR", {} },
-        { "BEH_GTIA_RendreCompte", {} },
-        { "BEH_GTIA_EchelonnerDispositif", {} },
-        { "BEH_GTIA_RepartirDansFuseaux", {} },
-        { "BEH_GTIA_GererAppuisInternesEnDefense", {} },
-        { "BEH_GTIA_AssignerLesOrdresPourCoupArret", {} },
-        { "BEH_GTIA_ORDRE_Decrocher", {} },
-        { "BEH_GTIA_Decrocher", {} },
+        { "ACT_GTIA_AnalyserSituationPourMissionRetrograde", { "done_ACT_GTIA_AnalyserSituationPourMissionRetrograde" } },
+        { "BEH_GTIA_OrganiserLesMoyensPourDonnerCAR", { "done_BEH_GTIA_OrganiserLesMoyensPourDonnerCAR" } },
+        { "BEH_GTIA_RendreCompte", { "done_BEH_GTIA_RendreCompte" } },
+        { "BEH_GTIA_EchelonnerDispositif", { "done_BEH_GTIA_EchelonnerDispositif" } },
+        { "BEH_GTIA_RepartirDansFuseaux", { "done_BEH_GTIA_RepartirDansFuseaux" } },
+        { "BEH_GTIA_GererAppuisInternesEnDefense", { "done_BEH_GTIA_GererAppuisInternesEnDefense" } },
+        { "BEH_GTIA_AssignerLesOrdresPourCoupArret", { "done_BEH_GTIA_AssignerLesOrdresPourCoupArret" } },
+        { "BEH_GTIA_ORDRE_Decrocher", { "done_BEH_GTIA_ORDRE_Decrocher" } },
+        { "BEH_GTIA_Decrocher", { "done_BEH_GTIA_Decrocher" } },
     },
 
     create = function( self )
@@ -89,9 +91,11 @@ include "bit.lua"
 
 node "BEH_GTIA_Decrocher"
 {
+    feedbacks = { { { "done_BEH_GTIA_Decrocher" }, "BEH_GTIA_Decrocher" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_Decrocher, {value} ) end,
     activations =
     {
-        { "ACT_Info_Trace", {} },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
     },
 
     create = function( self )
@@ -121,9 +125,11 @@ node "BEH_GTIA_Decrocher"
 
 node "BEH_GTIA_ORDRE_Decrocher"
 {
+    feedbacks = { { { "done_BEH_GTIA_ORDRE_Decrocher" }, "BEH_GTIA_ORDRE_Decrocher" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_ORDRE_Decrocher, {value} ) end,
     activations =
     {
-        { "ACT_Ordre_Suppression", {} },
+        { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
     },
 
     create = function( self )
@@ -160,9 +166,11 @@ do
 
 node "BEH_GTIA_OrganiserLesMoyensPourDonnerCAR"
 {
+    feedbacks = { { { "done_BEH_GTIA_OrganiserLesMoyensPourDonnerCAR" }, "BEH_GTIA_OrganiserLesMoyensPourDonnerCAR" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_OrganiserLesMoyensPourDonnerCAR, {value} ) end,
     activations =
     {
-        { "BEH_GTIA_OrganiserMoyensVersPionsOp", {} },
+        { "BEH_GTIA_OrganiserMoyensVersPionsOp", { "done_BEH_GTIA_OrganiserMoyensVersPionsOp" } },
     },
 
     create = function( self )
@@ -183,9 +191,11 @@ node "BEH_GTIA_OrganiserLesMoyensPourDonnerCAR"
 
 node "BEH_GTIA_AssignerLesOrdresPourCoupArret"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerLesOrdresPourCoupArret" }, "BEH_GTIA_AssignerLesOrdresPourCoupArret" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerLesOrdresPourCoupArret, {value} ) end,
     activations =
     {
-        { "BEH_GTIA_AssignerLesMissionsCAR", {} },
+        { "BEH_GTIA_AssignerLesMissionsCAR", { "done_BEH_GTIA_AssignerLesMissionsCAR" } },
     },
 
     create = function( self )
@@ -208,13 +218,15 @@ node "BEH_GTIA_AssignerLesOrdresPourCoupArret"
 
 node "BEH_GTIA_AssignerLesMissionsCAR"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerLesMissionsCAR" }, "BEH_GTIA_AssignerLesMissionsCAR" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerLesMissionsCAR, {value} ) end,
     activations =
     {
-        { "BEH_GTIA_AssignerMissionsDefensesEcl", {} },
-        { "BEH_GTIA_AssignerMissionsDefensesPE", {} },
-        { "BEH_GTIA_AssignerMissionsDefensesSE", {} },
-        { "BEH_GTIA_AssignerMissionsDefenseSEAppui", {} },
-        { "BEH_GTIA_AssignerMissionDefensePC", {} },
+        { "BEH_GTIA_AssignerMissionsDefensesEcl", { "done_BEH_GTIA_AssignerMissionsDefensesEcl" } },
+        { "BEH_GTIA_AssignerMissionsDefensesPE", { "done_BEH_GTIA_AssignerMissionsDefensesPE" } },
+        { "BEH_GTIA_AssignerMissionsDefensesSE", { "done_BEH_GTIA_AssignerMissionsDefensesSE" } },
+        { "BEH_GTIA_AssignerMissionsDefenseSEAppui", { "done_BEH_GTIA_AssignerMissionsDefenseSEAppui" } },
+        { "BEH_GTIA_AssignerMissionDefensePC", { "done_BEH_GTIA_AssignerMissionDefensePC" } },
     },
 
     create = function( self )
@@ -242,11 +254,13 @@ node "BEH_GTIA_AssignerLesMissionsCAR"
 
 node "BEH_GTIA_AssignerMissionsDefenseSEAppui"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerMissionsDefenseSEAppui" }, "BEH_GTIA_AssignerMissionsDefenseSEAppui" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerMissionsDefenseSEAppui, {value} ) end,
     activations =
     {
-        { "BEH_GTIA_AssignerMissionDefenseLogA", {} },
-        { "BEH_GTIA_AssignerMissionDefenseGenieA", {} },
-        { "BEH_GTIA_AssignerMissionRetrogradeART", {} },
+        { "BEH_GTIA_AssignerMissionDefenseLogA", { "done_BEH_GTIA_AssignerMissionDefenseLogA" } },
+        { "BEH_GTIA_AssignerMissionDefenseGenieA", { "done_BEH_GTIA_AssignerMissionDefenseGenieA" } },
+        { "BEH_GTIA_AssignerMissionRetrogradeART", { "done_BEH_GTIA_AssignerMissionRetrogradeART" } },
     },
 
     create = function( self )
@@ -291,10 +305,12 @@ node "BEH_GTIA_AssignerMissionsDefenseSEAppui"
 
 node "BEH_GTIA_AssignerMissionDefenseGenieA"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerMissionDefenseGenieA" }, "BEH_GTIA_AssignerMissionDefenseGenieA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerMissionDefenseGenieA, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_AssignerMissionDefensiveRealiserTravauxA", {} },
-        { "ACT_GTIA_AssignerMissionDefense", {} },
+        { "ACT_GTIA_AssignerMissionDefensiveRealiserTravauxA", { "done_ACT_GTIA_AssignerMissionDefensiveRealiserTravauxA" } },
+        { "ACT_GTIA_AssignerMissionDefense", { "done_ACT_GTIA_AssignerMissionDefense" } },
     },
 
     create = function( self )
@@ -324,9 +340,11 @@ node "BEH_GTIA_AssignerMissionDefenseGenieA"
 
 node "BEH_GTIA_AssignerMissionDefenseLogA"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerMissionDefenseLogA" }, "BEH_GTIA_AssignerMissionDefenseLogA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerMissionDefenseLogA, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_AssignerMissionDeployerTC2", {} },
+        { "ACT_GTIA_AssignerMissionDeployerTC2", { "done_ACT_GTIA_AssignerMissionDeployerTC2" } },
     },
 
     create = function( self )
@@ -350,9 +368,11 @@ node "BEH_GTIA_AssignerMissionDefenseLogA"
 
 node "BEH_GTIA_AssignerMissionDefensePC"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerMissionDefensePC" }, "BEH_GTIA_AssignerMissionDefensePC" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerMissionDefensePC, {value} ) end,
     activations =
     {
-        { "ACT_Mission_Automate_AssignerDecrocherA", {} },
+        { "ACT_Mission_Automate_AssignerDecrocherA", { "done_ACT_Mission_Automate_AssignerDecrocherA" } },
     },
 
     create = function( self )
@@ -376,10 +396,12 @@ node "BEH_GTIA_AssignerMissionDefensePC"
 
 node "BEH_GTIA_AssignerMissionsDefensesEcl"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerMissionsDefensesEcl" }, "BEH_GTIA_AssignerMissionsDefensesEcl" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerMissionsDefensesEcl, {value} ) end,
     activations =
     {
-        { "BEH_GTIA_AssignerMissionsDefensesPEclSurveiller", {} },
-        { "BEH_GTIA_AssignerMissionsDefensesDecrocher", {} },
+        { "BEH_GTIA_AssignerMissionsDefensesPEclSurveiller", { "done_BEH_GTIA_AssignerMissionsDefensesPEclSurveiller" } },
+        { "BEH_GTIA_AssignerMissionsDefensesDecrocher", { "done_BEH_GTIA_AssignerMissionsDefensesDecrocher" } },
     },
 
     create = function( self )
@@ -408,9 +430,11 @@ node "BEH_GTIA_AssignerMissionsDefensesEcl"
 
 node "BEH_GTIA_AssignerMissionsDefensesPEclSurveiller"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerMissionsDefensesPEclSurveiller" }, "BEH_GTIA_AssignerMissionsDefensesPEclSurveiller" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerMissionsDefensesPEclSurveiller, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_AssignerMissionDefense", {} },
+        { "ACT_GTIA_AssignerMissionDefense", { "done_ACT_GTIA_AssignerMissionDefense" } },
     },
 
     create = function( self )
@@ -440,10 +464,12 @@ do
 
 node "BEH_GTIA_AssignerMissionsDefensesPE"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerMissionsDefensesPE" }, "BEH_GTIA_AssignerMissionsDefensesPE" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerMissionsDefensesPE, {value} ) end,
     activations =
     {
-        { "BEH_GTIA_AssignerMissionsDefensesPETenir", {} },
-        { "BEH_GTIA_AssignerMissionsDefensesDecrocher", {} },
+        { "BEH_GTIA_AssignerMissionsDefensesPETenir", { "done_BEH_GTIA_AssignerMissionsDefensesPETenir" } },
+        { "BEH_GTIA_AssignerMissionsDefensesDecrocher", { "done_BEH_GTIA_AssignerMissionsDefensesDecrocher" } },
     },
 
     create = function( self )
@@ -472,9 +498,11 @@ node "BEH_GTIA_AssignerMissionsDefensesPE"
 
 node "BEH_GTIA_AssignerMissionsDefensesPETenir"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerMissionsDefensesPETenir" }, "BEH_GTIA_AssignerMissionsDefensesPETenir" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerMissionsDefensesPETenir, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_AssignerMissionDefense", {} },
+        { "ACT_GTIA_AssignerMissionDefense", { "done_ACT_GTIA_AssignerMissionDefense" } },
     },
 
     create = function( self )
@@ -515,10 +543,12 @@ do
 
 node "BEH_GTIA_AssignerMissionsDefensesSE"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerMissionsDefensesSE" }, "BEH_GTIA_AssignerMissionsDefensesSE" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerMissionsDefensesSE, {value} ) end,
     activations =
     {
-        { "BEH_GTIA_AssignerMissionsDefensesSESoutenir", {} },
-        { "ACT_GTIA_AssignerMissionDefense", {} },
+        { "BEH_GTIA_AssignerMissionsDefensesSESoutenir", { "done_BEH_GTIA_AssignerMissionsDefensesSESoutenir" } },
+        { "ACT_GTIA_AssignerMissionDefense", { "done_ACT_GTIA_AssignerMissionDefense" } },
     },
 
     create = function( self )
@@ -569,9 +599,11 @@ do
 
 node "BEH_GTIA_AssignerMissionsDefensesSESoutenir"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerMissionsDefensesSESoutenir" }, "BEH_GTIA_AssignerMissionsDefensesSESoutenir" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerMissionsDefensesSESoutenir, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_AssignerMissionDefense", {} },
+        { "ACT_GTIA_AssignerMissionDefense", { "done_ACT_GTIA_AssignerMissionDefense" } },
     },
 
     create = function( self )
@@ -634,9 +666,11 @@ do
 
 node "BEH_GTIA_AssignerMissionsDefensesDecrocher"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerMissionsDefensesDecrocher" }, "BEH_GTIA_AssignerMissionsDefensesDecrocher" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerMissionsDefensesDecrocher, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_AssignerMissionDefense", {} },
+        { "ACT_GTIA_AssignerMissionDefense", { "done_ACT_GTIA_AssignerMissionDefense" } },
     },
 
     create = function( self )
@@ -668,6 +702,8 @@ do
 
 node "ACT_GTIA_AssignerMissionDefense"
 {
+    feedbacks = { { { "done_ACT_GTIA_AssignerMissionDefense" }, "ACT_GTIA_AssignerMissionDefense" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_GTIA_AssignerMissionDefense, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -843,6 +879,8 @@ elseif switch_1 == "T_Mission_Automate_SoutenirSurPositionEnMesureDe" then
 ]]--[[// *****************************************************************************
 ]]node "ACT_GTIA_AssignerMissionDefensiveRealiserTravauxA"
 {
+    feedbacks = { { { "done_ACT_GTIA_AssignerMissionDefensiveRealiserTravauxA" }, "ACT_GTIA_AssignerMissionDefensiveRealiserTravauxA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_GTIA_AssignerMissionDefensiveRealiserTravauxA, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionGenie = self.params[1]

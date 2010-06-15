@@ -31,9 +31,11 @@ include "bit.lua"
 
 node "BEH_Dep_Pion_INF_AborderEnnemi"
 {
+    feedbacks = { { { "done_BEH_Dep_Pion_INF_AborderEnnemi" }, "BEH_Dep_Pion_INF_AborderEnnemi" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Pion_INF_AborderEnnemi, {value} ) end,
     activations =
     {
-        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
     },
 
     create = function( self )
@@ -58,7 +60,7 @@ node "BEH_Dep_Pion_INF_AborderEnnemi"
                 self.eActionDeplacement = eActionEnCours
                                 do
                     if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), ptEni_Courant, 100 ) ) then
-                        self.params.__returnValue = eActionEffectuee
+                        self:SendFeedback( eActionEffectuee )
                         do return end
                     end
 
@@ -71,13 +73,14 @@ node "BEH_Dep_Pion_INF_AborderEnnemi"
         if( not S_Geometrie_EstProchePosition( self.ptPosition_Ennemie, ptEni_Courant, 1200 ) or not ( DEC_ConnaissanceAgent_EstEnMouvement( self._namedParams.ksEni ) or S_Geometrie_EstProchePosition( self.ptPosition_Ennemie, ptEni_Courant, 300 ) ) ) then
             do
                 DEC_Copie_Point( ptEni_Courant, self.ptPosition_Ennemie )
-                                self.params.__returnValue = eActionEnPause
+                                self:SendFeedback( eActionEnPause )
                 do return end
 
             end
         end
 
-        Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.ptPosition_Ennemie, eProgressionDirect, eTypeItiAttaque, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionDeplacement = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.ptPosition_Ennemie, eProgressionDirect, eTypeItiAttaque, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eActionDeplacement = v[1] end
     end,
 
     destroy = function( self )

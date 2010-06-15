@@ -14,6 +14,8 @@ includedFiles["sources/appui/artfdp/pions/common/Actions.bms"] = true
 ]]
 node "ACT_Obj_Pion_ASS_RealiserObjet"
 {
+    feedbacks = { { { "done_ACT_Obj_Pion_ASS_RealiserObjet" }, "ACT_Obj_Pion_ASS_RealiserObjet" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obj_Pion_ASS_RealiserObjet, {value} ) end,
     actuators =
     {
         deplacement = 1,
@@ -38,7 +40,7 @@ node "ACT_Obj_Pion_ASS_RealiserObjet"
                 if( ( self._namedParams.locObjet == 0 or self._namedParams.locObjet == nil ) ) then
                     do
                         --[[// RC_ TravauxImpossible
-]]                        self.params.__returnValue = eActionImpossible
+]]                        self:SendFeedback( eActionImpossible )
                         Halt( self )
                         do return end
 
@@ -47,7 +49,7 @@ node "ACT_Obj_Pion_ASS_RealiserObjet"
 
                 local xType = S_TypeObject_ToString( self._namedParams.eTypeObjet )
                 if( not DEC_Agent_PeutConstruireObjet( xType ) ) then
-                    self.params.__returnValue = eActionImpossible
+                    self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
                 end
@@ -88,7 +90,7 @@ elseif switch_1 == eActionObjetTerminee then
                     end
 
                     self.actionID = DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -96,7 +98,7 @@ elseif switch_1 == eActionObjetTerminee then
                 elseif switch_1 == eActionObjetPasDeCapacite then
                     DEC_Trace( "object construction: no capability" )
                     self.actionID = DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -108,7 +110,7 @@ elseif switch_1 == eActionObjetTerminee then
                 end
                 if cases_switch_1[4] or switch_1 == eActionObjetImpossible then
                     self.actionID = DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -149,6 +151,8 @@ elseif switch_1 == eActionObjetTerminee then
 
 node "ACT_Info_Pion_ASS_DisponibiliteAuTir"
 {
+    feedbacks = { { { "done_ACT_Info_Pion_ASS_DisponibiliteAuTir" }, "ACT_Info_Pion_ASS_DisponibiliteAuTir" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Info_Pion_ASS_DisponibiliteAuTir, {value} ) end,
     actuators =
     {
         tir_indirect = 1,
@@ -175,6 +179,8 @@ node "ACT_Info_Pion_ASS_DisponibiliteAuTir"
 
 node "ACT_Tir_Pion_ASS_SurPosition"
 {
+    feedbacks = { { { "done_ACT_Tir_Pion_ASS_SurPosition" }, "ACT_Tir_Pion_ASS_SurPosition" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Tir_Pion_ASS_SurPosition, {value} ) end,
     actuators =
     {
         tir_indirect = 1,
@@ -218,7 +224,7 @@ node "ACT_Tir_Pion_ASS_SurPosition"
                 if switch_1 == eActionTirIndirect_Impossible then
                     DEC_Trace( "fire on: disabled knowledge" )
                     self.actionID = DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -235,7 +241,7 @@ node "ACT_Tir_Pion_ASS_SurPosition"
                     end
 
                     self.actionID = DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -263,7 +269,7 @@ node "ACT_Tir_Pion_ASS_SurPosition"
 --[[// {	if( ! DEC_Agent_AutomateEstEmbraye() )	    DEC_RC(  eRC_TirAnnule  );    else        DEC_Message(  eRC_TirAnnule  );}
 ]]
                     self.actionID = DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -272,7 +278,7 @@ node "ACT_Tir_Pion_ASS_SurPosition"
                     DEC_Trace( "fire on: no capability" )
                     DEC_RC( eRC_TirAnnule )
                     self.actionID = DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -296,7 +302,7 @@ node "ACT_Tir_Pion_ASS_SurPosition"
                 end
             end
 
-                self.params.__returnValue = eActionEnCours
+                self:SendFeedback( eActionEnCours )
         do return end
 
     end,
@@ -327,6 +333,8 @@ node "ACT_Tir_Pion_ASS_SurPosition"
 
 node "ACT_MAJ_Pion_ASS_EtatTirIndirect"
 {
+    feedbacks = { { { "done_ACT_MAJ_Pion_ASS_EtatTirIndirect" }, "ACT_MAJ_Pion_ASS_EtatTirIndirect" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_MAJ_Pion_ASS_EtatTirIndirect, {value} ) end,
     actuators =
     {
         tir_indirect = 1,
@@ -345,6 +353,8 @@ node "ACT_MAJ_Pion_ASS_EtatTirIndirect"
 
 node "ACT_Tir_Pion_ASS_PreparerTirSur"
 {
+    feedbacks = { { { "done_ACT_Tir_Pion_ASS_PreparerTirSur" }, "ACT_Tir_Pion_ASS_PreparerTirSur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Tir_Pion_ASS_PreparerTirSur, {value} ) end,
     actuators =
     {
         tir_indirect = 1,

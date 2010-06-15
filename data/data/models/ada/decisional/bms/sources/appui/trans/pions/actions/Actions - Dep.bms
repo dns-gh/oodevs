@@ -9,6 +9,8 @@ includedFiles["sources/appui/trans/pions/actions/Actions - Dep.bms"] = true
 ]]--[[// *****************************************************************************/
 ]]node "ACT_Dep_SeDeplacer"
 {
+    feedbacks = { { { "done_ACT_Dep_SeDeplacer" }, "ACT_Dep_SeDeplacer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Dep_SeDeplacer, {value} ) end,
     actuators =
     {
         deplacement = 1,
@@ -61,7 +63,7 @@ elseif switch_1 == eEtatActionDeplacement_ManqueCarburant then
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eEtatActionDeplacement_Termine then
                     self.actionDeplacement = DEC_StopAction( self.actionDeplacement )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -105,6 +107,8 @@ elseif switch_1 == eEtatActionDeplacement_DejaEnDeplacement then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Dep_SePoster"
 {
+    feedbacks = { { { "done_ACT_Dep_SePoster" }, "ACT_Dep_SePoster" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Dep_SePoster, {value} ) end,
     actuators =
     {
         deplacement = 1,
@@ -126,6 +130,8 @@ elseif switch_1 == eEtatActionDeplacement_DejaEnDeplacement then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Dep_SePosterFaceADir"
 {
+    feedbacks = { { { "done_ACT_Dep_SePosterFaceADir" }, "ACT_Dep_SePosterFaceADir" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Dep_SePosterFaceADir, {value} ) end,
     actuators =
     {
         deplacement = 1,

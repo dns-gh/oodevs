@@ -11,24 +11,26 @@ includedFiles["sources/common/pions/behaviors/Behaviors - Info.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "BEH_Info_Pion_RendreCompte"
 {
+    feedbacks = { { { "done_BEH_Info_Pion_RendreCompte" }, "BEH_Info_Pion_RendreCompte" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Info_Pion_RendreCompte, {value} ) end,
     activations =
     {
-        { "ACT_AFFICHE_EtatDecisionnel", {} },
-        { "ACT_Info_Trace", {} },
-        { "BEH_Info_Pion_RendreCompteSurEtatOperationnel", {} },
-        { "BEH_Info_Pion_RendreCompteSurAmbiance", {} },
-        { "BEH_Info_Pion_RendreCompteSurNBC", {} },
-        { "BEH_Info_Pion_RendreCompteSurROE", {} },
-        { "BEH_Info_Pion_RendreCompteSurSilenceRadio", {} },
-        { "BEH_Info_Pion_RendreCompteSurSilenceRadar", {} },
-        { "BEH_Info_Pion_RendreCompteSurPresencePop", {} },
-        { "BEH_Info_Pion_RendreCompteSurPriseAPartiParArt", {} },
-        { "BEH_Info_Pion_RendreCompteSurSituationDeplacement", {} },
-        { "BEH_Info_Pion_RendreCompteSurSituationMissions", {} },
-        { "BEH_Info_Pion_RendreCompteSurLima", {} },
-        { "BEH_Info_Pion_RendreCompteSurSituationCoordination", {} },
-        { "BEH_Info_Pion_RendreCompteSurPriseAPartiParEnis", {} },
-        { "BEH_Info_Pion_RendreCompteSurPriseDeContact", {} },
+        { "ACT_AFFICHE_EtatDecisionnel", { "done_ACT_AFFICHE_EtatDecisionnel" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "BEH_Info_Pion_RendreCompteSurEtatOperationnel", { "done_BEH_Info_Pion_RendreCompteSurEtatOperationnel" } },
+        { "BEH_Info_Pion_RendreCompteSurAmbiance", { "done_BEH_Info_Pion_RendreCompteSurAmbiance" } },
+        { "BEH_Info_Pion_RendreCompteSurNBC", { "done_BEH_Info_Pion_RendreCompteSurNBC" } },
+        { "BEH_Info_Pion_RendreCompteSurROE", { "done_BEH_Info_Pion_RendreCompteSurROE" } },
+        { "BEH_Info_Pion_RendreCompteSurSilenceRadio", { "done_BEH_Info_Pion_RendreCompteSurSilenceRadio" } },
+        { "BEH_Info_Pion_RendreCompteSurSilenceRadar", { "done_BEH_Info_Pion_RendreCompteSurSilenceRadar" } },
+        { "BEH_Info_Pion_RendreCompteSurPresencePop", { "done_BEH_Info_Pion_RendreCompteSurPresencePop" } },
+        { "BEH_Info_Pion_RendreCompteSurPriseAPartiParArt", { "done_BEH_Info_Pion_RendreCompteSurPriseAPartiParArt" } },
+        { "BEH_Info_Pion_RendreCompteSurSituationDeplacement", { "done_BEH_Info_Pion_RendreCompteSurSituationDeplacement" } },
+        { "BEH_Info_Pion_RendreCompteSurSituationMissions", { "done_BEH_Info_Pion_RendreCompteSurSituationMissions" } },
+        { "BEH_Info_Pion_RendreCompteSurLima", { "done_BEH_Info_Pion_RendreCompteSurLima" } },
+        { "BEH_Info_Pion_RendreCompteSurSituationCoordination", { "done_BEH_Info_Pion_RendreCompteSurSituationCoordination" } },
+        { "BEH_Info_Pion_RendreCompteSurPriseAPartiParEnis", { "done_BEH_Info_Pion_RendreCompteSurPriseAPartiParEnis" } },
+        { "BEH_Info_Pion_RendreCompteSurPriseDeContact", { "done_BEH_Info_Pion_RendreCompteSurPriseDeContact" } },
     },
 
     create = function( self )
@@ -82,9 +84,11 @@ includedFiles["sources/common/pions/behaviors/Behaviors - Info.bms"] = true
 
 node "BEH_Info_Pion_RendreCompteSurNBC"
 {
+    feedbacks = { { { "done_BEH_Info_Pion_RendreCompteSurNBC" }, "BEH_Info_Pion_RendreCompteSurNBC" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Info_Pion_RendreCompteSurNBC, {value} ) end,
     activations =
     {
-        { "ACT_RC", {} },
+        { "ACT_RC", { "done_ACT_RC" } },
     },
 
     create = function( self )
@@ -130,9 +134,11 @@ elseif switch_1 == eEtatNbc_Niv4 then
 
 node "BEH_Info_Pion_RendreCompteSurROE"
 {
+    feedbacks = { { { "done_BEH_Info_Pion_RendreCompteSurROE" }, "BEH_Info_Pion_RendreCompteSurROE" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Info_Pion_RendreCompteSurROE, {value} ) end,
     activations =
     {
-        { "ACT_RC", {} },
+        { "ACT_RC", { "done_ACT_RC" } },
     },
 
     create = function( self )
@@ -174,9 +180,11 @@ elseif switch_1 == eEtatROE_TirLibre then
 
 node "BEH_Info_Pion_RendreCompteSurLima"
 {
+    feedbacks = { { { "done_BEH_Info_Pion_RendreCompteSurLima" }, "BEH_Info_Pion_RendreCompteSurLima" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Info_Pion_RendreCompteSurLima, {value} ) end,
     activations =
     {
-        { "ACT_RC_SurLima", {} },
+        { "ACT_RC_SurLima", { "done_ACT_RC_SurLima" } },
     },
 
     create = function( self )
@@ -245,9 +253,11 @@ elseif switch_1 == eEtatLima_aucune then
 
 node "BEH_Info_Pion_RendreCompteSurSituationCoordination"
 {
+    feedbacks = { { { "done_BEH_Info_Pion_RendreCompteSurSituationCoordination" }, "BEH_Info_Pion_RendreCompteSurSituationCoordination" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Info_Pion_RendreCompteSurSituationCoordination, {value} ) end,
     activations =
     {
-        { "ACT_RC", {} },
+        { "ACT_RC", { "done_ACT_RC" } },
     },
 
     create = function( self )
@@ -295,9 +305,11 @@ elseif switch_1 == eEtatOrdreCoordination_Attendre then
 
 node "BEH_Info_Pion_RendreCompteSurSilenceRadio"
 {
+    feedbacks = { { { "done_BEH_Info_Pion_RendreCompteSurSilenceRadio" }, "BEH_Info_Pion_RendreCompteSurSilenceRadio" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Info_Pion_RendreCompteSurSilenceRadio, {value} ) end,
     activations =
     {
-        { "ACT_RC", {} },
+        { "ACT_RC", { "done_ACT_RC" } },
     },
 
     create = function( self )
@@ -334,9 +346,11 @@ elseif switch_1 == eEtatRadio_Ouverte then
 
 node "BEH_Info_Pion_RendreCompteSurSilenceRadar"
 {
+    feedbacks = { { { "done_BEH_Info_Pion_RendreCompteSurSilenceRadar" }, "BEH_Info_Pion_RendreCompteSurSilenceRadar" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Info_Pion_RendreCompteSurSilenceRadar, {value} ) end,
     activations =
     {
-        { "ACT_RC", {} },
+        { "ACT_RC", { "done_ACT_RC" } },
     },
 
     create = function( self )
@@ -373,9 +387,11 @@ elseif switch_1 == eEtatRadar_Ouvert then
 
 node "BEH_Info_Pion_RendreCompteSurEtatOperationnel"
 {
+    feedbacks = { { { "done_BEH_Info_Pion_RendreCompteSurEtatOperationnel" }, "BEH_Info_Pion_RendreCompteSurEtatOperationnel" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Info_Pion_RendreCompteSurEtatOperationnel, {value} ) end,
     activations =
     {
-        { "ACT_RC", {} },
+        { "ACT_RC", { "done_ACT_RC" } },
     },
 
     create = function( self )
@@ -414,9 +430,11 @@ elseif switch_1 == eEtatDestruction_None then
 
 node "BEH_Info_Pion_RendreCompteSurAmbiance"
 {
+    feedbacks = { { { "done_BEH_Info_Pion_RendreCompteSurAmbiance" }, "BEH_Info_Pion_RendreCompteSurAmbiance" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Info_Pion_RendreCompteSurAmbiance, {value} ) end,
     activations =
     {
-        { "ACT_RC", {} },
+        { "ACT_RC", { "done_ACT_RC" } },
     },
 
     create = function( self )
@@ -450,6 +468,8 @@ elseif switch_1 == eEtatAmbiance_Vitesse then
 
 node "BEH_Info_Pion_RendreCompteSurSituationMissions"
 {
+    feedbacks = { { { "done_BEH_Info_Pion_RendreCompteSurSituationMissions" }, "BEH_Info_Pion_RendreCompteSurSituationMissions" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Info_Pion_RendreCompteSurSituationMissions, {value} ) end,
     create = function( self )
     end,
 
@@ -470,10 +490,12 @@ node "BEH_Info_Pion_RendreCompteSurSituationMissions"
 
 node "BEH_Info_Pion_RendreCompteSurPriseAPartiParArt"
 {
+    feedbacks = { { { "done_BEH_Info_Pion_RendreCompteSurPriseAPartiParArt" }, "BEH_Info_Pion_RendreCompteSurPriseAPartiParArt" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Info_Pion_RendreCompteSurPriseAPartiParArt, {value} ) end,
     activations =
     {
-        { "ACT_Warning", {} },
-        { "ACT_RC", {} },
+        { "ACT_Warning", { "done_ACT_Warning" } },
+        { "ACT_RC", { "done_ACT_RC" } },
     },
 
     create = function( self )
@@ -501,9 +523,11 @@ node "BEH_Info_Pion_RendreCompteSurPriseAPartiParArt"
 
 node "BEH_Info_Pion_RendreCompteSurPriseAPartiParEnis"
 {
+    feedbacks = { { { "done_BEH_Info_Pion_RendreCompteSurPriseAPartiParEnis" }, "BEH_Info_Pion_RendreCompteSurPriseAPartiParEnis" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Info_Pion_RendreCompteSurPriseAPartiParEnis, {value} ) end,
     activations =
     {
-        { "BEH_Info_Pion_RendreCompteSurPriseAPartiDe", {} },
+        { "BEH_Info_Pion_RendreCompteSurPriseAPartiDe", { "done_BEH_Info_Pion_RendreCompteSurPriseAPartiDe" } },
     },
 
     create = function( self )
@@ -529,9 +553,11 @@ node "BEH_Info_Pion_RendreCompteSurPriseAPartiParEnis"
 
 node "BEH_Info_Pion_RendreCompteSurPriseAPartiDe"
 {
+    feedbacks = { { { "done_BEH_Info_Pion_RendreCompteSurPriseAPartiDe" }, "BEH_Info_Pion_RendreCompteSurPriseAPartiDe" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Info_Pion_RendreCompteSurPriseAPartiDe, {value} ) end,
     activations =
     {
-        { "ACT_RC", {} },
+        { "ACT_RC", { "done_ACT_RC" } },
     },
 
     create = function( self )
@@ -567,9 +593,11 @@ node "BEH_Info_Pion_RendreCompteSurPriseAPartiDe"
 
 node "BEH_Info_Pion_RendreCompteSurPriseDeContact"
 {
+    feedbacks = { { { "done_BEH_Info_Pion_RendreCompteSurPriseDeContact" }, "BEH_Info_Pion_RendreCompteSurPriseDeContact" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Info_Pion_RendreCompteSurPriseDeContact, {value} ) end,
     activations =
     {
-        { "ACT_RC", {} },
+        { "ACT_RC", { "done_ACT_RC" } },
     },
 
     create = function( self )
@@ -593,9 +621,11 @@ node "BEH_Info_Pion_RendreCompteSurPriseDeContact"
 
 node "BEH_Info_Pion_RendreCompteSurPresencePop"
 {
+    feedbacks = { { { "done_BEH_Info_Pion_RendreCompteSurPresencePop" }, "BEH_Info_Pion_RendreCompteSurPresencePop" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Info_Pion_RendreCompteSurPresencePop, {value} ) end,
     activations =
     {
-        { "ACT_RC", {} },
+        { "ACT_RC", { "done_ACT_RC" } },
     },
 
     create = function( self )
@@ -632,10 +662,12 @@ node "BEH_Info_Pion_RendreCompteSurPresencePop"
 
 node "BEH_Info_Pion_RendreCompteSurSituationDeplacement"
 {
+    feedbacks = { { { "done_BEH_Info_Pion_RendreCompteSurSituationDeplacement" }, "BEH_Info_Pion_RendreCompteSurSituationDeplacement" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Info_Pion_RendreCompteSurSituationDeplacement, {value} ) end,
     activations =
     {
-        { "ACT_RC_SurObjet", {} },
-        { "ACT_RC", {} },
+        { "ACT_RC_SurObjet", { "done_ACT_RC_SurObjet" } },
+        { "ACT_RC", { "done_ACT_RC" } },
     },
 
     create = function( self )
@@ -714,12 +746,14 @@ elseif switch_1 == eEtatDeplacement_EnReco then
 
 node "BEH_Info_Mos"
 {
+    feedbacks = { { { "done_BEH_Info_Mos" }, "BEH_Info_Mos" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Info_Mos, {value} ) end,
     activations =
     {
-        { "BEH_Info_RenseignerSurRapFor", {} },
-        { "BEH_Info_RenseignerSurROE", {} },
-        { "BEH_Info_RenseignerSurEtatDec", {} },
-        { "BEH_Info_RenseignerSurEtatOperationnel", {} },
+        { "BEH_Info_RenseignerSurRapFor", { "done_BEH_Info_RenseignerSurRapFor" } },
+        { "BEH_Info_RenseignerSurROE", { "done_BEH_Info_RenseignerSurROE" } },
+        { "BEH_Info_RenseignerSurEtatDec", { "done_BEH_Info_RenseignerSurEtatDec" } },
+        { "BEH_Info_RenseignerSurEtatOperationnel", { "done_BEH_Info_RenseignerSurEtatOperationnel" } },
     },
 
     create = function( self )
@@ -749,10 +783,12 @@ node "BEH_Info_Mos"
 
 node "BEH_Info_RenseignerSurRapFor"
 {
+    feedbacks = { { { "done_BEH_Info_RenseignerSurRapFor" }, "BEH_Info_RenseignerSurRapFor" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Info_RenseignerSurRapFor, {value} ) end,
     activations =
     {
-        { "ACT_Misc_Delai", {} },
-        { "ACT_Info_EtatRapFor", {} },
+        { "ACT_Misc_Delai", { "done_ACT_Misc_Delai" } },
+        { "ACT_Info_EtatRapFor", { "done_ACT_Info_EtatRapFor" } },
     },
 
     create = function( self )
@@ -778,7 +814,8 @@ node "BEH_Info_RenseignerSurRapFor"
                     end
                 end
 
-                Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, 1, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                Activate( self.activations.ACT_Misc_Delai, 1, { 1, 1, } )
+self.done_ACT_Misc_Delai = function( self, _, v ) self.eEtat = v[1] end
                                 do return end
 
             end
@@ -793,7 +830,8 @@ node "BEH_Info_RenseignerSurRapFor"
                     end
                 end
 
-                Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, 2, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                Activate( self.activations.ACT_Misc_Delai, 1, { 1, 2, } )
+self.done_ACT_Misc_Delai = function( self, _, v ) self.eEtat = v[1] end
                                 do return end
 
             end
@@ -808,7 +846,8 @@ node "BEH_Info_RenseignerSurRapFor"
                     end
                 end
 
-                Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, 3, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                Activate( self.activations.ACT_Misc_Delai, 1, { 1, 3, } )
+self.done_ACT_Misc_Delai = function( self, _, v ) self.eEtat = v[1] end
                                 do return end
 
             end
@@ -849,10 +888,12 @@ elseif switch_1 == eEtatRapportDeForce_Defavorable then
 
 node "BEH_Info_RenseignerSurROE"
 {
+    feedbacks = { { { "done_BEH_Info_RenseignerSurROE" }, "BEH_Info_RenseignerSurROE" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Info_RenseignerSurROE, {value} ) end,
     activations =
     {
-        { "ACT_Info_EtatROE", {} },
-        { "ACT_Info_EtatROEPopulation", {} },
+        { "ACT_Info_EtatROE", { "done_ACT_Info_EtatROE" } },
+        { "ACT_Info_EtatROEPopulation", { "done_ACT_Info_EtatROEPopulation" } },
     },
 
     create = function( self )
@@ -928,9 +969,11 @@ elseif switch_1 == eEtatROEPopulation_ArmesLetalesAutorisees then
 
 node "BEH_Info_RenseignerSurEtatDec"
 {
+    feedbacks = { { { "done_BEH_Info_RenseignerSurEtatDec" }, "BEH_Info_RenseignerSurEtatDec" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Info_RenseignerSurEtatDec, {value} ) end,
     activations =
     {
-        { "ACT_Info_EtatDec", {} },
+        { "ACT_Info_EtatDec", { "done_ACT_Info_EtatDec" } },
     },
 
     create = function( self )
@@ -969,9 +1012,11 @@ elseif switch_1 == eEtatDec_RAS
 
 node "BEH_Info_RenseignerSurEtatOperationnel"
 {
+    feedbacks = { { { "done_BEH_Info_RenseignerSurEtatOperationnel" }, "BEH_Info_RenseignerSurEtatOperationnel" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Info_RenseignerSurEtatOperationnel, {value} ) end,
     activations =
     {
-        { "ACT_Info_EtatOperationnel", {} },
+        { "ACT_Info_EtatOperationnel", { "done_ACT_Info_EtatOperationnel" } },
     },
 
     create = function( self )

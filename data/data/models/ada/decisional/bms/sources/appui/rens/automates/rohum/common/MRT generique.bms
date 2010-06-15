@@ -12,11 +12,13 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Medo_Automate_RENS_ROHUM_AssignerMissions"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_RENS_ROHUM_AssignerMissions" }, "BEH_Medo_Automate_RENS_ROHUM_AssignerMissions" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_RENS_ROHUM_AssignerMissions, {value} ) end,
     activations =
     {
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
-        { "BEH_Medo_Automate_RENS_ROHUM_AssignerRenseignerA", {} },
-        { "BEH_Medo_Automate_RENS_ROHUM_AssignerSExfiltrerA", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", { "done_BEH_Medo_Automate_ControleCreationMission" } },
+        { "BEH_Medo_Automate_RENS_ROHUM_AssignerRenseignerA", { "done_BEH_Medo_Automate_RENS_ROHUM_AssignerRenseignerA" } },
+        { "BEH_Medo_Automate_RENS_ROHUM_AssignerSExfiltrerA", { "done_BEH_Medo_Automate_RENS_ROHUM_AssignerSExfiltrerA" } },
     },
 
     create = function( self )
@@ -137,7 +139,8 @@ elseif switch_1 == eMRT_AssignerMissions then
                                 --[[//-----------------------------------------------------------------------------
 ]]--[[// Renseigner Sur
 ]]--[[//-----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.sel_Infiltration ) + #( self.sel_Radar ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+]]Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( self.sel_Infiltration ) + #( self.sel_Radar ), } )
+self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eEtat = v[1] end
                                 Activate( self.activations.BEH_Medo_Automate_RENS_ROHUM_AssignerRenseignerA, 1, { self.sel_Infiltration, eEtatEchelon_Premier, } )
                                 Activate( self.activations.BEH_Medo_Automate_RENS_ROHUM_AssignerRenseignerA, 1, { self.sel_Radar, eEtatEchelon_Premier, } )
                                 _continue = false
@@ -146,7 +149,8 @@ elseif switch_1 == eMRT_AssignerMissions then
 ]]--[[//-----------------------------------------------------------------------------
 ]]                            cases_switch_2[1] = true
 elseif switch_2 == "T_Mission_Automate_RENS_ROHUM_SExfiltrer" then
-                                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.sel_Infiltration ) + #( self.sel_Radar ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( self.sel_Infiltration ) + #( self.sel_Radar ), } )
+self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eEtat = v[1] end
                                 Activate( self.activations.BEH_Medo_Automate_RENS_ROHUM_AssignerSExfiltrerA, 1, { self.sel_Infiltration, eEtatEchelon_Premier, } )
                                 Activate( self.activations.BEH_Medo_Automate_RENS_ROHUM_AssignerSExfiltrerA, 1, { self.sel_Radar, eEtatEchelon_Premier, } )
                                 _continue = false
@@ -172,7 +176,7 @@ elseif switch_2 == "T_Mission_Automate_RENS_ROHUM_OrienterGuider" then
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eMRT_Valider then
                     DEC_MRT_Valide()
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 

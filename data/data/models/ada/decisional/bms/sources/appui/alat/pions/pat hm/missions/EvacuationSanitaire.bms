@@ -25,6 +25,8 @@ includedFiles["sources/appui/alat/pions/pat hm/missions/EvacuationSanitaire.bms"
 ]]--[[//------------------------------------------------------------------------------
 ]]node "MIS_Pion_ALAT_EvacuerBlesses"
 {
+    feedbacks = { { { "done_MIS_Pion_ALAT_EvacuerBlesses" }, "MIS_Pion_ALAT_EvacuerBlesses" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_ALAT_EvacuerBlesses, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission

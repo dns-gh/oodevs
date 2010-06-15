@@ -9,9 +9,11 @@ includedFiles["sources/appui/rens/automates/rohum/section rohum/missions/renseig
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_RENS_ROHUM_RenseignerSur"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_RENS_ROHUM_RenseignerSur" }, "MIS_Automate_CDT_RENS_ROHUM_RenseignerSur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_RENS_ROHUM_RenseignerSur, {value} ) end,
     activations =
     {
-        { "BEH_Auto_CDT_RENS_ROHUM_RenseignerSur", {} },
+        { "BEH_Auto_CDT_RENS_ROHUM_RenseignerSur", { "done_BEH_Auto_CDT_RENS_ROHUM_RenseignerSur" } },
     },
 
     create = function( self )

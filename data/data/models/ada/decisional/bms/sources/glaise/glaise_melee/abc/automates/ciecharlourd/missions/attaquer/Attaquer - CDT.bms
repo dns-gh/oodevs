@@ -20,9 +20,11 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/ciecharlourd/missions/a
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_ABC_Attaquer"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ABC_Attaquer" }, "MIS_Automate_CDT_ABC_Attaquer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ABC_Attaquer, {value} ) end,
     activations =
     {
-        { "BEH_Auto_CDT_ABC_Attaquer", {} },
+        { "BEH_Auto_CDT_ABC_Attaquer", { "done_BEH_Auto_CDT_ABC_Attaquer" } },
     },
 
     create = function( self )

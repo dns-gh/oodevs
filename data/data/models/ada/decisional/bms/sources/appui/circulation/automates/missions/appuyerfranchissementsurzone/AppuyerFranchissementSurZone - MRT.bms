@@ -9,11 +9,13 @@ includedFiles["sources/appui/circulation/automates/missions/appuyerfranchissemen
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_MRT_LOG_AppuyerFranchissementDansZone"
 {
+    feedbacks = { { { "done_MIS_Automate_MRT_LOG_AppuyerFranchissementDansZone" }, "MIS_Automate_MRT_LOG_AppuyerFranchissementDansZone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_MRT_LOG_AppuyerFranchissementDansZone, {value} ) end,
     activations =
     {
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
-        { "BEH_Medo_Automate_CIRCU_AssignerMissionsAppuyerFranchissementSurUnPointAListe", {} },
-        { "BEH_Medo_Automate_CIRCU_AssignerMissionsRenforcerAListe", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", { "done_BEH_Medo_Automate_ControleCreationMission" } },
+        { "BEH_Medo_Automate_CIRCU_AssignerMissionsAppuyerFranchissementSurUnPointAListe", { "done_BEH_Medo_Automate_CIRCU_AssignerMissionsAppuyerFranchissementSurUnPointAListe" } },
+        { "BEH_Medo_Automate_CIRCU_AssignerMissionsRenforcerAListe", { "done_BEH_Medo_Automate_CIRCU_AssignerMissionsRenforcerAListe" } },
     },
 
     create = function( self )
@@ -94,7 +96,8 @@ includedFiles["sources/appui/circulation/automates/missions/appuyerfranchissemen
 
                     local listePourRenforcement = S_Cherche_Automate_Filtre_PionNonDansListe( selPions, self.listePionsPourMission )
                     --[[// controle de creation des missions de construction de zone à mobilité améliorée
-]]Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.listePionsPourMission ) + #( listePourRenforcement ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatMissionAppuyer = v else rawset( t, k, v ) end end } ) )
+]]Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( self.listePionsPourMission ) + #( listePourRenforcement ), } )
+self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eEtatMissionAppuyer = v[1] end
                     --[[// ordre de creation des missions
 ]]if( ( #( self.listePionsPourMission ) ~= 0 and #( self.listePionsPourMission ) ~= nil ) ) then
                         Activate( self.activations.BEH_Medo_Automate_CIRCU_AssignerMissionsAppuyerFranchissementSurUnPointAListe, 1, { ePhase_MRT, self.listePionsPourMission, self.listobj, } )
@@ -112,7 +115,7 @@ includedFiles["sources/appui/circulation/automates/missions/appuyerfranchissemen
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eMRT_MissionImpossible then
                     DEC_RC( eRC_MissionImpossible )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -122,7 +125,7 @@ elseif switch_1 == eMRT_MissionImpossible then
 ]]--[[//---------------------------------------------------------------------
 ]]elseif switch_1 == eMRT_Valider then
                     DEC_MRT_Valide()
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 

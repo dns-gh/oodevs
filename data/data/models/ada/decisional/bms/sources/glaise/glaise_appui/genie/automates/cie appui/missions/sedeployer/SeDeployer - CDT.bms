@@ -22,9 +22,11 @@ includedFiles["sources/glaise/glaise_appui/genie/automates/cie appui/missions/se
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_GEN_SeDeployer"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_GEN_SeDeployer" }, "MIS_Automate_CDT_GEN_SeDeployer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_GEN_SeDeployer, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "done_BEH_Ordre_Automate_RecevoirOrdreInopine" } },
     },
 
     create = function( self )

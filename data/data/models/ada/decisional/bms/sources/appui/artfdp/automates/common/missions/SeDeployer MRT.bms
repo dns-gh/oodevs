@@ -20,9 +20,11 @@ includedFiles["sources/appui/artfdp/automates/common/missions/SeDeployer MRT.bms
 ]]--[[// *****************************************************************************
 ]]node "BEH_Medo_Automate_AssignerSeDeployerA"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_AssignerSeDeployerA" }, "BEH_Medo_Automate_AssignerSeDeployerA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_AssignerSeDeployerA, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_AssignerFaireMouvementA_Aleatoire", {} },
+        { "BEH_Mission_Automate_AssignerFaireMouvementA_Aleatoire", { "done_BEH_Mission_Automate_AssignerFaireMouvementA_Aleatoire" } },
     },
 
     create = function( self )
@@ -52,9 +54,11 @@ for _,pion in pairs( self._namedParams.listePions or {} ) do
 
 node "BEH_Mission_Automate_AssignerFaireMouvementA_Aleatoire"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_AssignerFaireMouvementA_Aleatoire" }, "BEH_Mission_Automate_AssignerFaireMouvementA_Aleatoire" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_AssignerFaireMouvementA_Aleatoire, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_AssignerFaireMouvementA", {} },
+        { "BEH_Mission_Automate_AssignerFaireMouvementA", { "done_BEH_Mission_Automate_AssignerFaireMouvementA" } },
     },
 
     create = function( self )

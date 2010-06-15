@@ -19,12 +19,14 @@ include "Emergency/Automates/Common/Missions/Actions - Medo.bms"
 ]]--[[//=============================================================================
 ]]node "BEH_Mission_Automate_Emergency_AssignerA_EvacuateArea"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_Emergency_AssignerA_EvacuateArea" }, "BEH_Mission_Automate_Emergency_AssignerA_EvacuateArea" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_Emergency_AssignerA_EvacuateArea, {value} ) end,
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_Emergency_AssignerA_EvacuateArea", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "done_ACT_Mission_Automate_ControleCreation_EnCours" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "done_ACT_Mission_Automate_ControleCreation_OK" } },
+        { "ACT_Mission_Automate_Emergency_AssignerA_EvacuateArea", { "done_ACT_Mission_Automate_Emergency_AssignerA_EvacuateArea" } },
     },
 
     create = function( self )
@@ -58,7 +60,8 @@ elseif switch_1 == eActionHalt
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_Emergency_AssignerA_EvacuateArea, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.locZone, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Mission_Automate_Emergency_AssignerA_EvacuateArea, rForce, { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.locZone, } )
+self.done_ACT_Mission_Automate_Emergency_AssignerA_EvacuateArea = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
 --[[//=============================================================================
@@ -69,12 +72,14 @@ elseif switch_1 == eActionHalt
 
 node "BEH_Mission_Automate_Emergency_AssignerA_Alert"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_Emergency_AssignerA_Alert" }, "BEH_Mission_Automate_Emergency_AssignerA_Alert" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_Emergency_AssignerA_Alert, {value} ) end,
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_Emergency_AssignerA_Alert", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "done_ACT_Mission_Automate_ControleCreation_EnCours" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "done_ACT_Mission_Automate_ControleCreation_OK" } },
+        { "ACT_Mission_Automate_Emergency_AssignerA_Alert", { "done_ACT_Mission_Automate_Emergency_AssignerA_Alert" } },
     },
 
     create = function( self )
@@ -108,7 +113,8 @@ elseif switch_1 == eActionHalt
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_Emergency_AssignerA_Alert, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.locations, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Mission_Automate_Emergency_AssignerA_Alert, rForce, { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.locations, } )
+self.done_ACT_Mission_Automate_Emergency_AssignerA_Alert = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
 }

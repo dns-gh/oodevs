@@ -6,6 +6,8 @@ include "Common/Automates/Behaviors.bms"
 
 node "BEH_Defaut"
 {
+    feedbacks = { { { "done_BEH_Defaut" }, "BEH_Defaut" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Defaut, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.nDummy = self.params[1]

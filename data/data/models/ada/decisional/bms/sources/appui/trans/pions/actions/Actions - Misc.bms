@@ -10,6 +10,8 @@ includedFiles["sources/appui/trans/pions/actions/Actions - Misc.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Misc_Delai"
 {
+    feedbacks = { { { "done_ACT_Misc_Delai" }, "ACT_Misc_Delai" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Misc_Delai, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.id = self.params[1]
@@ -30,7 +32,7 @@ includedFiles["sources/appui/trans/pions/actions/Actions - Misc.bms"] = true
 
                 if( self._namedParams.rDelai * 60 <= DEC_TempsSim() - self.rTempsDebut ) then
                     do
-                                                self.params.__returnValue = eActionEffectuee
+                                                self:SendFeedback( eActionEffectuee )
                         Halt( self )
                         do return end
 
@@ -53,6 +55,8 @@ includedFiles["sources/appui/trans/pions/actions/Actions - Misc.bms"] = true
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "ACT_Pions_SInstaller"
 {
+    feedbacks = { { { "done_ACT_Pions_SInstaller" }, "ACT_Pions_SInstaller" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Pions_SInstaller, {value} ) end,
     actuators =
     {
         installation = 1,
@@ -69,6 +73,8 @@ includedFiles["sources/appui/trans/pions/actions/Actions - Misc.bms"] = true
 
 node "ACT_Pions_SeDesinstaller"
 {
+    feedbacks = { { { "done_ACT_Pions_SeDesinstaller" }, "ACT_Pions_SeDesinstaller" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Pions_SeDesinstaller, {value} ) end,
     actuators =
     {
         installation = 1,

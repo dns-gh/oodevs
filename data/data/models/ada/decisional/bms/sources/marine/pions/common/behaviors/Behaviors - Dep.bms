@@ -12,9 +12,11 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Dep_Pion_MARINE_RejoindrePoint"
 {
+    feedbacks = { { { "done_BEH_Dep_Pion_MARINE_RejoindrePoint" }, "BEH_Dep_Pion_MARINE_RejoindrePoint" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Pion_MARINE_RejoindrePoint, {value} ) end,
     activations =
     {
-        { "BEH_Dep_Pion_MARINE_RejoindreParItineraire", {} },
+        { "BEH_Dep_Pion_MARINE_RejoindreParItineraire", { "done_BEH_Dep_Pion_MARINE_RejoindreParItineraire" } },
     },
 
     create = function( self )
@@ -34,7 +36,7 @@ include "bit.lua"
 ]]self.listePoints = self.listePoints or DEC_Geometrie_CreerListePoints()
         self.eEtat = self.eEtat or eActionEnCours
         if( ( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self._namedParams.point ) == 0 or DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self._namedParams.point ) == nil ) ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -44,11 +46,12 @@ include "bit.lua"
         end
 
         if( self.eEtat ~= eActionEnCours ) then
-            self.params.__returnValue = self.eEtat
+            self:SendFeedback( self.eEtat )
             Halt( self )
             do return end
         else
-            Activate( self.activations.BEH_Dep_Pion_MARINE_RejoindreParItineraire, 1, setmetatable( { self.listePoints, self._namedParams.typeProgression, self._namedParams.ePathType, self._namedParams.distanceMin, self._namedParams.distanceMax, self._namedParams.forceDelaiSucces, self._namedParams.forceDelaiPenalite, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+            Activate( self.activations.BEH_Dep_Pion_MARINE_RejoindreParItineraire, 1, { self.listePoints, self._namedParams.typeProgression, self._namedParams.ePathType, self._namedParams.distanceMin, self._namedParams.distanceMax, self._namedParams.forceDelaiSucces, self._namedParams.forceDelaiPenalite, } )
+self.done_BEH_Dep_Pion_MARINE_RejoindreParItineraire = function( self, _, v ) self.eEtat = v[1] end
         end
 
     end,
@@ -62,9 +65,11 @@ include "bit.lua"
 
 node "BEH_Dep_Pion_MARINE_RejoindrePion"
 {
+    feedbacks = { { { "done_BEH_Dep_Pion_MARINE_RejoindrePion" }, "BEH_Dep_Pion_MARINE_RejoindrePion" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Pion_MARINE_RejoindrePion, {value} ) end,
     activations =
     {
-        { "BEH_Dep_Pion_MARINE_RejoindrePoint", {} },
+        { "BEH_Dep_Pion_MARINE_RejoindrePoint", { "done_BEH_Dep_Pion_MARINE_RejoindrePoint" } },
     },
 
     create = function( self )
@@ -90,7 +95,7 @@ node "BEH_Dep_Pion_MARINE_RejoindrePion"
         end
 
         if( ( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self.positionPion ) == 0 or DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self.positionPion ) == nil ) ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -102,13 +107,14 @@ node "BEH_Dep_Pion_MARINE_RejoindrePion"
 
         if( self.eEtat ~= eActionEnCours ) then
             do
-                                self.params.__returnValue = self.eEtat
+                                self:SendFeedback( self.eEtat )
                 do return end
 
             end
         else
 do
-                Activate( self.activations.BEH_Dep_Pion_MARINE_RejoindrePoint, 1, setmetatable( { self.positionPion, self._namedParams.typeProgression, self._namedParams.ePathType, self._namedParams.distanceMin, self._namedParams.distanceMax, self._namedParams.forceDelaiSucces, self._namedParams.forceDelaiPenalite, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                Activate( self.activations.BEH_Dep_Pion_MARINE_RejoindrePoint, 1, { self.positionPion, self._namedParams.typeProgression, self._namedParams.ePathType, self._namedParams.distanceMin, self._namedParams.distanceMax, self._namedParams.forceDelaiSucces, self._namedParams.forceDelaiPenalite, } )
+self.done_BEH_Dep_Pion_MARINE_RejoindrePoint = function( self, _, v ) self.eEtat = v[1] end
             end
         end
 
@@ -156,11 +162,13 @@ do
 
 node "BEH_Dep_Pion_MARINE_RejoindreParItineraire"
 {
+    feedbacks = { { { "done_BEH_Dep_Pion_MARINE_RejoindreParItineraire" }, "BEH_Dep_Pion_MARINE_RejoindreParItineraire" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Pion_MARINE_RejoindreParItineraire, {value} ) end,
     activations =
     {
-        { "ACT_Obs_EtablirVisionCur", {} },
-        { "BEH_Dep_Progresser", {} },
-        { "ACT_Info_Trace", {} },
+        { "ACT_Obs_EtablirVisionCur", { "done_ACT_Obs_EtablirVisionCur" } },
+        { "BEH_Dep_Progresser", { "done_BEH_Dep_Progresser" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
     },
 
     create = function( self )
@@ -189,7 +197,7 @@ node "BEH_Dep_Pion_MARINE_RejoindreParItineraire"
 ]]if( DEC_Geometrie_PositionsEgales( myself:DEC_Agent_Position(), DEC_ListePoints_GetAt( self._namedParams.listePoints, DEC_ListePoints_Size( self._namedParams.listePoints ) - 1 ) ) ) then
             do
                 self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_MARINE_RejoindreParItineraire" )
-                                self.params.__returnValue = eActionEffectuee
+                                self:SendFeedback( eActionEffectuee )
                 Halt( self )
                 do return end
 
@@ -215,7 +223,7 @@ node "BEH_Dep_Pion_MARINE_RejoindreParItineraire"
                 self.eEtat = eActionEnCours
                                 do
                     self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_MARINE_RejoindreParItineraire: " )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -225,7 +233,8 @@ node "BEH_Dep_Pion_MARINE_RejoindreParItineraire"
         end
 
         Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
-        Activate( self.activations.BEH_Dep_Progresser, 1, setmetatable( { self.itineraire, self._namedParams.typeProgression, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Dep_Progresser, 1, { self.itineraire, self._namedParams.typeProgression, } )
+self.done_BEH_Dep_Progresser = function( self, _, v ) self.eEtat = v[1] end
          do
             local _continue = true
             local switch_1 = DEC_Itineraire_Etat( self.itineraire )
@@ -260,7 +269,7 @@ node "BEH_Dep_Pion_MARINE_RejoindreParItineraire"
                                     if( self.forceDelai >= 1 ) then
                                         do
                                             self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_MARINE_RejoindreParItineraire: " )
-                                                                                        self.params.__returnValue = eActionEffectuee
+                                                                                        self:SendFeedback( eActionEffectuee )
                                             Halt( self )
                                             do return end
 
@@ -280,7 +289,7 @@ elseif switch_1 == eItineraire_Invalide then
                     end
 
                     self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_MARINE_RejoindreParItineraire: " )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -296,14 +305,14 @@ elseif switch_1 == eItineraire_Impossible then
                     end
 
                     self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_MARINE_RejoindreParItineraire: " )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
                                 end
                 if cases_switch_1[4] or switch_1 == eItineraire_Annule then
                     self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_MARINE_RejoindreParItineraire: " )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -331,9 +340,11 @@ elseif switch_1 == eItineraire_Impossible then
 
 node "BEH_Dep_Pion_MARINE_Suivre"
 {
+    feedbacks = { { { "done_BEH_Dep_Pion_MARINE_Suivre" }, "BEH_Dep_Pion_MARINE_Suivre" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Pion_MARINE_Suivre, {value} ) end,
     activations =
     {
-        { "BEH_Dep_Pion_MARINE_RejoindrePoint", {} },
+        { "BEH_Dep_Pion_MARINE_RejoindrePoint", { "done_BEH_Dep_Pion_MARINE_RejoindrePoint" } },
     },
 
     create = function( self )
@@ -369,7 +380,7 @@ do
             do
                 self.eEtat = eActionEnCours
                                 do
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -381,20 +392,21 @@ do
         if( self.eEtat == eActionImpossible ) then
             do
                                 do
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
             end
         end
 
-        Activate( self.activations.BEH_Dep_Pion_MARINE_RejoindrePoint, 1, setmetatable( { self.pointARejoindre, self._namedParams.typeProgression, self._namedParams.ePathType, 0, 1105199104, 0.05, 0.1, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Dep_Pion_MARINE_RejoindrePoint, 1, { self.pointARejoindre, self._namedParams.typeProgression, self._namedParams.ePathType, 0, 1105199104, 0.05, 0.1, } )
+self.done_BEH_Dep_Pion_MARINE_RejoindrePoint = function( self, _, v ) self.eEtat = v[1] end
     end,
 
 }

@@ -10,6 +10,8 @@ includedFiles["sources/population/populations/Actions - misc.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Info_Trace"
 {
+    feedbacks = { { { "done_ACT_Info_Trace" }, "ACT_Info_Trace" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Info_Trace, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.message = self.params[1]
@@ -32,6 +34,8 @@ includedFiles["sources/population/populations/Actions - misc.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Ordre_Suppression"
 {
+    feedbacks = { { { "done_ACT_Ordre_Suppression" }, "ACT_Ordre_Suppression" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Ordre_Suppression, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.ordre = self.params[1]
@@ -51,6 +55,8 @@ includedFiles["sources/population/populations/Actions - misc.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Misc_Delai"
 {
+    feedbacks = { { { "done_ACT_Misc_Delai" }, "ACT_Misc_Delai" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Misc_Delai, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.id = self.params[1]
@@ -71,7 +77,7 @@ includedFiles["sources/population/populations/Actions - misc.bms"] = true
 
                 if( self._namedParams.rDelai * 60 <= DEC_TempsSim() - self.rTempsDebut ) then
                     do
-                                                self.params.__returnValue = eActionEffectuee
+                                                self:SendFeedback( eActionEffectuee )
                         Halt( self )
                         do return end
 

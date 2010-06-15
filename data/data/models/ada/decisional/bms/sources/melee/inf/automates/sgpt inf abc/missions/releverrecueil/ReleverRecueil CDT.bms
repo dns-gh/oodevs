@@ -14,9 +14,11 @@ includedFiles["sources/melee/inf/automates/sgpt inf abc/missions/releverrecueil/
 ]]
 node "MIS_Automate_CDT_INF_ReleverEnRecueillant"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_INF_ReleverEnRecueillant" }, "MIS_Automate_CDT_INF_ReleverEnRecueillant" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_INF_ReleverEnRecueillant, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_INF_Defaut", {} },
+        { "BEH_Conduite_Automate_INF_Defaut", { "done_BEH_Conduite_Automate_INF_Defaut" } },
     },
 
     create = function( self )
@@ -43,7 +45,7 @@ node "MIS_Automate_CDT_INF_ReleverEnRecueillant"
             do
                 self.eActionMission = eActionEnCours
                                 do
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -52,7 +54,8 @@ node "MIS_Automate_CDT_INF_ReleverEnRecueillant"
             end
         end
 
-        Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, { true, } )
+self.done_BEH_Conduite_Automate_INF_Defaut = function( self, _, v ) self.eActionMission = v[1] end
     end,
 
     destroy = function( self )

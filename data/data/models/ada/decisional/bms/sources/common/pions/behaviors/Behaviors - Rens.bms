@@ -9,9 +9,11 @@ includedFiles["sources/common/pions/behaviors/Behaviors - Rens.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "BEH_Rens"
 {
+    feedbacks = { { { "done_BEH_Rens" }, "BEH_Rens" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Rens, {value} ) end,
     activations =
     {
-        { "BEH_Rens_Recevoir_OrdreInopine", {} },
+        { "BEH_Rens_Recevoir_OrdreInopine", { "done_BEH_Rens_Recevoir_OrdreInopine" } },
     },
 
     create = function( self )
@@ -32,9 +34,11 @@ includedFiles["sources/common/pions/behaviors/Behaviors - Rens.bms"] = true
 
 node "BEH_Rens_Recevoir_OrdreInopine"
 {
+    feedbacks = { { { "done_BEH_Rens_Recevoir_OrdreInopine" }, "BEH_Rens_Recevoir_OrdreInopine" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Rens_Recevoir_OrdreInopine, {value} ) end,
     activations =
     {
-        { "ACT_Ordre_Suppression", {} },
+        { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
     },
 
     create = function( self )
@@ -87,10 +91,12 @@ elseif switch_1 == "Rep_OrderConduite_ArreterSilenceRadar" then
 
 node "BEH_Rens_PasserEnSilenceRadio"
 {
+    feedbacks = { { { "done_BEH_Rens_PasserEnSilenceRadio" }, "BEH_Rens_PasserEnSilenceRadio" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Rens_PasserEnSilenceRadio, {value} ) end,
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "ACT_Rens_CommuterRadio", {} },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "ACT_Rens_CommuterRadio", { "done_ACT_Rens_CommuterRadio" } },
     },
 
     create = function( self )
@@ -117,9 +123,11 @@ node "BEH_Rens_PasserEnSilenceRadio"
 
 node "BEH_Rens_PasserEnSilenceRadar"
 {
+    feedbacks = { { { "done_BEH_Rens_PasserEnSilenceRadar" }, "BEH_Rens_PasserEnSilenceRadar" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Rens_PasserEnSilenceRadar, {value} ) end,
     activations =
     {
-        { "ACT_Pion_Rens_PasserEnSilenceRadar", {} },
+        { "ACT_Pion_Rens_PasserEnSilenceRadar", { "done_ACT_Pion_Rens_PasserEnSilenceRadar" } },
     },
 
     create = function( self )

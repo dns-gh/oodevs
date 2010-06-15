@@ -17,10 +17,12 @@ include "bit.lua"
 ]]
 node "BEH_Eni_Pion_Milice_GererContactEni"
 {
+    feedbacks = { { { "done_BEH_Eni_Pion_Milice_GererContactEni" }, "BEH_Eni_Pion_Milice_GererContactEni" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Pion_Milice_GererContactEni, {value} ) end,
     activations =
     {
-        { "ACT_MAJ_EnnemiEnCours", {} },
-        { "BEH_Feu_Pion_Milice_ConduireLesFeux_Sur", {} },
+        { "ACT_MAJ_EnnemiEnCours", { "done_ACT_MAJ_EnnemiEnCours" } },
+        { "BEH_Feu_Pion_Milice_ConduireLesFeux_Sur", { "done_BEH_Feu_Pion_Milice_ConduireLesFeux_Sur" } },
     },
 
     create = function( self )
@@ -43,11 +45,13 @@ node "BEH_Eni_Pion_Milice_GererContactEni"
 
 node "BEH_Feu_Pion_Milice_ConduireLesFeux_Sur"
 {
+    feedbacks = { { { "done_BEH_Feu_Pion_Milice_ConduireLesFeux_Sur" }, "BEH_Feu_Pion_Milice_ConduireLesFeux_Sur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Feu_Pion_Milice_ConduireLesFeux_Sur, {value} ) end,
     activations =
     {
-        { "ACT_MAJ_EnnemiEnCours", {} },
-        { "ACT_RC_SurEni", {} },
-        { "BEH_Tir_Pion_Milice_FaireFeu", {} },
+        { "ACT_MAJ_EnnemiEnCours", { "done_ACT_MAJ_EnnemiEnCours" } },
+        { "ACT_RC_SurEni", { "done_ACT_RC_SurEni" } },
+        { "BEH_Tir_Pion_Milice_FaireFeu", { "done_BEH_Tir_Pion_Milice_FaireFeu" } },
     },
 
     create = function( self )
@@ -65,7 +69,7 @@ node "BEH_Feu_Pion_Milice_ConduireLesFeux_Sur"
 ]]--[[// On tir sur l'ennemi
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eAction_Tir == eActionEffectuee ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -75,7 +79,7 @@ node "BEH_Feu_Pion_Milice_ConduireLesFeux_Sur"
                                 do
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -104,7 +108,7 @@ node "BEH_Feu_Pion_Milice_ConduireLesFeux_Sur"
                         self.eAction_Tir = eActionEnCours
                         --[[// MAJ Stimulus tir inefficace
 ]]g_bTirInefficace = true
-                                                self.params.__returnValue = eActionEnPause
+                                                self:SendFeedback( eActionEnPause )
                         do return end
 
                     end
@@ -116,7 +120,8 @@ node "BEH_Feu_Pion_Milice_ConduireLesFeux_Sur"
 --[[// Tout le monde tir lorsque l'on est a distance de tir			
 ]]        end
 
-        Activate( self.activations.BEH_Tir_Pion_Milice_FaireFeu, 1, setmetatable( { self._namedParams.ksEni, rPH, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction_Tir = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Tir_Pion_Milice_FaireFeu, 1, { self._namedParams.ksEni, rPH, } )
+self.done_BEH_Tir_Pion_Milice_FaireFeu = function( self, _, v ) self.eAction_Tir = v[1] end
     end,
 
 --[[// Tir Embarque
@@ -125,10 +130,12 @@ node "BEH_Feu_Pion_Milice_ConduireLesFeux_Sur"
 
 node "BEH_Tir_Pion_Milice_FaireFeu"
 {
+    feedbacks = { { { "done_BEH_Tir_Pion_Milice_FaireFeu" }, "BEH_Tir_Pion_Milice_FaireFeu" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Tir_Pion_Milice_FaireFeu, {value} ) end,
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "ACT_Tir_DirectSur", {} },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "ACT_Tir_DirectSur", { "done_ACT_Tir_DirectSur" } },
     },
 
     create = function( self )
@@ -146,7 +153,7 @@ node "BEH_Tir_Pion_Milice_FaireFeu"
                                 do
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -156,7 +163,7 @@ node "BEH_Tir_Pion_Milice_FaireFeu"
         if( self.eAction == eActionEffectuee ) then
             do
                 self.eAction = eActionEnCours
-                                self.params.__returnValue = eActionEffectuee
+                                self:SendFeedback( eActionEffectuee )
                 Halt( self )
                 do return end
 
@@ -172,7 +179,7 @@ node "BEH_Tir_Pion_Milice_FaireFeu"
             Activate( self.activations.ACT_Info_Trace, 1, { self.stMsg .. "NOK.", } )
         end
 
-                self.params.__returnValue = eActionReturn
+                self:SendFeedback( eActionReturn )
         do return end
 
     end,
@@ -184,6 +191,8 @@ node "BEH_Tir_Pion_Milice_FaireFeu"
 
 node "BEH_Eni_Pion_VAB_Offensif_Manoeuvre"
 {
+    feedbacks = { { { "done_BEH_Eni_Pion_VAB_Offensif_Manoeuvre" }, "BEH_Eni_Pion_VAB_Offensif_Manoeuvre" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Pion_VAB_Offensif_Manoeuvre, {value} ) end,
     create = function( self )
     end,
 

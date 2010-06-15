@@ -36,11 +36,13 @@ include "bit.lua"
 ]]--[[//-----------------------------------------------------------------------------
 ]]node "BEH_Poste_Pion_INF_ArretCourt"
 {
+    feedbacks = { { { "done_BEH_Poste_Pion_INF_ArretCourt" }, "BEH_Poste_Pion_INF_ArretCourt" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Poste_Pion_INF_ArretCourt, {value} ) end,
     activations =
     {
-        { "BEH_MOT_Pion_INF_Debarquer", {} },
-        { "ACT_Obs_EtablirVisionVersPt", {} },
-        { "ACT_Dep_Pion_INF_Arret", {} },
+        { "BEH_MOT_Pion_INF_Debarquer", { "done_BEH_MOT_Pion_INF_Debarquer" } },
+        { "ACT_Obs_EtablirVisionVersPt", { "done_ACT_Obs_EtablirVisionVersPt" } },
+        { "ACT_Dep_Pion_INF_Arret", { "done_ACT_Dep_Pion_INF_Arret" } },
     },
 
     create = function( self )
@@ -67,7 +69,7 @@ include "bit.lua"
                 if( ( self._namedParams.rDelaiPoste == 0 or self._namedParams.rDelaiPoste == nil ) ) then
                     do
                         DEC_Trace( "assert: rDelaiPoste == 0, arret court." )
-                                                self.params.__returnValue = eActionEffectuee
+                                                self:SendFeedback( eActionEffectuee )
                         Halt( self )
                         do return end
 
@@ -89,7 +91,7 @@ include "bit.lua"
                 self.eAction = eActionEnCours
                                 do
                     DEC_Trace( "fin arret court" )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -98,7 +100,8 @@ include "bit.lua"
             end
         end
 
-        Activate( self.activations.ACT_Dep_Pion_INF_Arret, 1, setmetatable( { self._namedParams.rDelaiPoste, "observation", }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Dep_Pion_INF_Arret, 1, { self._namedParams.rDelaiPoste, "observation", } )
+self.done_ACT_Dep_Pion_INF_Arret = function( self, _, v ) self.eAction = v[1] end
     end,
 
     destroy = function( self )
@@ -114,9 +117,11 @@ include "bit.lua"
 
 node "BEH_Obs_Pion_INF_RecoPoint_Copie"
 {
+    feedbacks = { { { "done_BEH_Obs_Pion_INF_RecoPoint_Copie" }, "BEH_Obs_Pion_INF_RecoPoint_Copie" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Obs_Pion_INF_RecoPoint_Copie, {value} ) end,
     activations =
     {
-        { "BEH_Obs_Pion_INF_RecoPoint", {} },
+        { "BEH_Obs_Pion_INF_RecoPoint", { "done_BEH_Obs_Pion_INF_RecoPoint" } },
     },
 
     create = function( self )
@@ -133,12 +138,13 @@ node "BEH_Obs_Pion_INF_RecoPoint_Copie"
         end
 
         if( self.eAction ~= eActionEnCours ) then
-            self.params.__returnValue = self.eAction
+            self:SendFeedback( self.eAction )
             Halt( self )
             do return end
         end
 
-        Activate( self.activations.BEH_Obs_Pion_INF_RecoPoint, 1, setmetatable( { self.ptCopie, self._namedParams.rDelai, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Obs_Pion_INF_RecoPoint, 1, { self.ptCopie, self._namedParams.rDelai, } )
+self.done_BEH_Obs_Pion_INF_RecoPoint = function( self, _, v ) self.eAction = v[1] end
     end,
 
 --[[//=============================================================================
@@ -150,6 +156,8 @@ node "BEH_Obs_Pion_INF_RecoPoint_Copie"
 
 node "BEH_Obs_Pion_INF_RecoPoint"
 {
+    feedbacks = { { { "done_BEH_Obs_Pion_INF_RecoPoint" }, "BEH_Obs_Pion_INF_RecoPoint" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Obs_Pion_INF_RecoPoint, {value} ) end,
     instances =
     {
         max = 1,
@@ -158,10 +166,10 @@ node "BEH_Obs_Pion_INF_RecoPoint"
 
     activations =
     {
-        { "BEH_Poste_Pion_INF_ArretCourt", {} },
-        { "ACT_RC", {} },
-        { "ACT_Obs_EtablirVisionVersPt", {} },
-        { "ACT_Obs_ReconnaitrePoint", {} },
+        { "BEH_Poste_Pion_INF_ArretCourt", { "done_BEH_Poste_Pion_INF_ArretCourt" } },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "ACT_Obs_EtablirVisionVersPt", { "done_ACT_Obs_EtablirVisionVersPt" } },
+        { "ACT_Obs_ReconnaitrePoint", { "done_ACT_Obs_ReconnaitrePoint" } },
     },
 
     create = function( self )
@@ -188,18 +196,20 @@ node "BEH_Obs_Pion_INF_RecoPoint"
 ]]        end
 
         if( self.eActionArret == eActionEffectuee or self.eAction == eActionEffectuee ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
 
         if( self._namedParams.rDelai > 0 ) then
-            Activate( self.activations.BEH_Poste_Pion_INF_ArretCourt, 1, setmetatable( { self._namedParams.pt, self._namedParams.rDelai, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionArret = v else rawset( t, k, v ) end end } ) )
+            Activate( self.activations.BEH_Poste_Pion_INF_ArretCourt, 1, { self._namedParams.pt, self._namedParams.rDelai, } )
+self.done_BEH_Poste_Pion_INF_ArretCourt = function( self, _, v ) self.eActionArret = v[1] end
         end
 
         Activate( self.activations.ACT_RC, 1, { eRC_ReconnaissancePoint, } )
         Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1, { self._namedParams.pt, } )
-        Activate( self.activations.ACT_Obs_ReconnaitrePoint, 1, setmetatable( { self._namedParams.pt, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Obs_ReconnaitrePoint, 1, { self._namedParams.pt, } )
+self.done_ACT_Obs_ReconnaitrePoint = function( self, _, v ) self.eAction = v[1] end
     end,
 
 --[[//=============================================================================
@@ -212,6 +222,8 @@ node "BEH_Obs_Pion_INF_RecoPoint"
 
 node "BEH_Obs_Pion_INF_ReconnaitrePoint_Maintenu"
 {
+    feedbacks = { { { "done_BEH_Obs_Pion_INF_ReconnaitrePoint_Maintenu" }, "BEH_Obs_Pion_INF_ReconnaitrePoint_Maintenu" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Obs_Pion_INF_ReconnaitrePoint_Maintenu, {value} ) end,
     instances =
     {
         boost = 0.9--[[// Au cas ou l'on fait une nouvelle reco
@@ -221,9 +233,9 @@ node "BEH_Obs_Pion_INF_ReconnaitrePoint_Maintenu"
 --[[// pour eviter les oscilations
 ]]    activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "ACT_RC", {} },
-        { "ACT_Obs_ReconnaitrePoint", {} },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "ACT_Obs_ReconnaitrePoint", { "done_ACT_Obs_ReconnaitrePoint" } },
     },
 
     create = function( self )
@@ -282,10 +294,12 @@ node "BEH_Obs_Pion_INF_ReconnaitrePoint_Maintenu"
 
 node "BEH_Obs_Pion_INF_EnReconnaissance"
 {
+    feedbacks = { { { "done_BEH_Obs_Pion_INF_EnReconnaissance" }, "BEH_Obs_Pion_INF_EnReconnaissance" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Obs_Pion_INF_EnReconnaissance, {value} ) end,
     activations =
     {
-        { "ACT_Misc_Pion_Ambiance", {} },
-        { "BEH_Obs_Pion_INF_RecoPoint", {} },
+        { "ACT_Misc_Pion_Ambiance", { "done_ACT_Misc_Pion_Ambiance" } },
+        { "BEH_Obs_Pion_INF_RecoPoint", { "done_BEH_Obs_Pion_INF_RecoPoint" } },
     },
 
     create = function( self )
@@ -314,7 +328,7 @@ node "BEH_Obs_Pion_INF_EnReconnaissance"
             do
                 self.eActionReco = eActionEnCours
                                 do
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -324,7 +338,8 @@ node "BEH_Obs_Pion_INF_EnReconnaissance"
         end
 
         local rRecoTime = S_Delai_INF_RecoDebarque( self.ptMissionCopie )
-        Activate( self.activations.BEH_Obs_Pion_INF_RecoPoint, 1, setmetatable( { self.ptMissionCopie, rRecoTime, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionReco = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Obs_Pion_INF_RecoPoint, 1, { self.ptMissionCopie, rRecoTime, } )
+self.done_BEH_Obs_Pion_INF_RecoPoint = function( self, _, v ) self.eActionReco = v[1] end
     end,
 
 --[[//=============================================================================
@@ -334,11 +349,13 @@ node "BEH_Obs_Pion_INF_EnReconnaissance"
 
 node "BEH_Obs_Pion_INF_SurveillerSecteur"
 {
+    feedbacks = { { { "done_BEH_Obs_Pion_INF_SurveillerSecteur" }, "BEH_Obs_Pion_INF_SurveillerSecteur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Obs_Pion_INF_SurveillerSecteur, {value} ) end,
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "ACT_Obs_SurveillerZone", {} },
-        { "ACT_Obs_ObserverZone", {} },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "ACT_Obs_SurveillerZone", { "done_ACT_Obs_SurveillerZone" } },
+        { "ACT_Obs_ObserverZone", { "done_ACT_Obs_ObserverZone" } },
     },
 
     create = function( self )
@@ -353,7 +370,8 @@ node "BEH_Obs_Pion_INF_SurveillerSecteur"
         end
 
         Activate( self.activations.ACT_Obs_SurveillerZone, 1, { self._namedParams.locSecteur, } )
-        Activate( self.activations.ACT_Obs_ObserverZone, 1, setmetatable( { DEC_Agent_Position(), M_CAPACITE_SURVEILLANCE(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Obs_ObserverZone, 1, { DEC_Agent_Position(), M_CAPACITE_SURVEILLANCE(), } )
+self.done_ACT_Obs_ObserverZone = function( self, _, v ) self.eAction = v[1] end
     end,
 
 --[[//=============================================================================
@@ -363,10 +381,12 @@ node "BEH_Obs_Pion_INF_SurveillerSecteur"
 
 node "BEH_Delai_Pion_INF_PreparerMission"
 {
+    feedbacks = { { { "done_BEH_Delai_Pion_INF_PreparerMission" }, "BEH_Delai_Pion_INF_PreparerMission" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Delai_Pion_INF_PreparerMission, {value} ) end,
     activations =
     {
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Misc_Delai", {} },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "ACT_Misc_Delai", { "done_ACT_Misc_Delai" } },
     },
 
     create = function( self )
@@ -385,7 +405,7 @@ node "BEH_Delai_Pion_INF_PreparerMission"
                 self.eAction = eActionEnCours
                                 do
                     SetStateVariable( "VE_PreparationMission", 0 )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -394,7 +414,8 @@ node "BEH_Delai_Pion_INF_PreparerMission"
             end
         end
 
-        Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, self._namedParams.rDelai, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Misc_Delai, 1, { 1, self._namedParams.rDelai, } )
+self.done_ACT_Misc_Delai = function( self, _, v ) self.eAction = v[1] end
     end,
 
 }

@@ -14,11 +14,13 @@ includedFiles["sources/glaise/glaise_melee/inf/automates/cie vab/missions/contro
 ]]
 node "MIS_Automate_CDT_INF_Controler"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_INF_Controler" }, "MIS_Automate_CDT_INF_Controler" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_INF_Controler, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_GererFuseau", {} },
-        { "BEH_Conduite_Automate_INF_Defaut", {} },
-        { "BEH_Situation_Automate_INF_Controler", {} },
+        { "BEH_Conduite_Automate_GererFuseau", { "done_BEH_Conduite_Automate_GererFuseau" } },
+        { "BEH_Conduite_Automate_INF_Defaut", { "done_BEH_Conduite_Automate_INF_Defaut" } },
+        { "BEH_Situation_Automate_INF_Controler", { "done_BEH_Situation_Automate_INF_Controler" } },
     },
 
     create = function( self )
@@ -46,7 +48,7 @@ node "MIS_Automate_CDT_INF_Controler"
             do
                 self.eActionMission = eActionEnCours
                                 do
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -55,7 +57,8 @@ node "MIS_Automate_CDT_INF_Controler"
             end
         end
 
-        Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, { true, } )
+self.done_BEH_Conduite_Automate_INF_Defaut = function( self, _, v ) self.eActionMission = v[1] end
         Activate( self.activations.BEH_Situation_Automate_INF_Controler, 1, {} )
     end,
 

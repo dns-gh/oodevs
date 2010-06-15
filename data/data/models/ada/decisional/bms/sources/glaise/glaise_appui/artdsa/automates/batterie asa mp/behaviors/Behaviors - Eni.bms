@@ -7,9 +7,11 @@ includedFiles["sources/glaise/glaise_appui/artdsa/automates/batterie asa mp/beha
 ]]--[[//------------------------------------------------------------------------------
 ]]node "BEH_Eni_ASA_HAWK_GererTirsDefendreZone"
 {
+    feedbacks = { { { "done_BEH_Eni_ASA_HAWK_GererTirsDefendreZone" }, "BEH_Eni_ASA_HAWK_GererTirsDefendreZone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_ASA_HAWK_GererTirsDefendreZone, {value} ) end,
     activations =
     {
-        { "BEH_Eni_Automate_ASA_HAWK_AffecterPistesASectionsDeTir", {} },
+        { "BEH_Eni_Automate_ASA_HAWK_AffecterPistesASectionsDeTir", { "done_BEH_Eni_Automate_ASA_HAWK_AffecterPistesASectionsDeTir" } },
     },
 
     create = function( self )
@@ -50,9 +52,11 @@ do
 
 node "BEH_Eni_ASA_HAWK_GererTirsDefendreSite"
 {
+    feedbacks = { { { "done_BEH_Eni_ASA_HAWK_GererTirsDefendreSite" }, "BEH_Eni_ASA_HAWK_GererTirsDefendreSite" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_ASA_HAWK_GererTirsDefendreSite, {value} ) end,
     activations =
     {
-        { "BEH_Eni_Automate_ASA_HAWK_AffecterPistesASectionsDeTir", {} },
+        { "BEH_Eni_Automate_ASA_HAWK_AffecterPistesASectionsDeTir", { "done_BEH_Eni_Automate_ASA_HAWK_AffecterPistesASectionsDeTir" } },
     },
 
     create = function( self )
@@ -91,9 +95,11 @@ do
 
 node "BEH_Eni_ASA_HAWK_GererTirsSurveiller"
 {
+    feedbacks = { { { "done_BEH_Eni_ASA_HAWK_GererTirsSurveiller" }, "BEH_Eni_ASA_HAWK_GererTirsSurveiller" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_ASA_HAWK_GererTirsSurveiller, {value} ) end,
     activations =
     {
-        { "BEH_Eni_Automate_ASA_HAWK_AffecterPistesASectionsDeTir", {} },
+        { "BEH_Eni_Automate_ASA_HAWK_AffecterPistesASectionsDeTir", { "done_BEH_Eni_Automate_ASA_HAWK_AffecterPistesASectionsDeTir" } },
     },
 
     create = function( self )
@@ -130,6 +136,8 @@ do
 
 node "BEH_Eni_Automate_ASA_HAWK_AffecterPistesASectionsDeTir"
 {
+    feedbacks = { { { "done_BEH_Eni_Automate_ASA_HAWK_AffecterPistesASectionsDeTir" }, "BEH_Eni_Automate_ASA_HAWK_AffecterPistesASectionsDeTir" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Automate_ASA_HAWK_AffecterPistesASectionsDeTir, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.sListeEnisADetruire = self.params[1]

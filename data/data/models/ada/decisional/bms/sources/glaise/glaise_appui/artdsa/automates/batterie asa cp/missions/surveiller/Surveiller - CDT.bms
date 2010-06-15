@@ -6,9 +6,11 @@ includedFiles["sources/glaise/glaise_appui/artdsa/automates/batterie asa cp/miss
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "MIS_Automate_CDT_ASA_Surveiller"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ASA_Surveiller" }, "MIS_Automate_CDT_ASA_Surveiller" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ASA_Surveiller, {value} ) end,
     activations =
     {
-        { "ACT_Info_Trace", {} },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
     },
 
     create = function( self )

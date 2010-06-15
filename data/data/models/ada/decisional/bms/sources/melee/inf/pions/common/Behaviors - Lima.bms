@@ -21,11 +21,13 @@ include "bit.lua"
 ]]--[[//-----------------------------------------------------------------------------
 ]]node "BEH_Lima_Pion_INF_SurLCA"
 {
+    feedbacks = { { { "done_BEH_Lima_Pion_INF_SurLCA" }, "BEH_Lima_Pion_INF_SurLCA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Lima_Pion_INF_SurLCA, {value} ) end,
     activations =
     {
-        { "ACT_Dep_PasserSurLima", {} },
-        { "BEH_Poste_Pion_INF_ArretCourt", {} },
-        { "BEH_Misc_Pion_INF_MAJ_Repli", {} },
+        { "ACT_Dep_PasserSurLima", { "done_ACT_Dep_PasserSurLima" } },
+        { "BEH_Poste_Pion_INF_ArretCourt", { "done_BEH_Poste_Pion_INF_ArretCourt" } },
+        { "BEH_Misc_Pion_INF_MAJ_Repli", { "done_BEH_Misc_Pion_INF_MAJ_Repli" } },
     },
 
     create = function( self )
@@ -48,13 +50,14 @@ include "bit.lua"
 
         Activate( self.activations.ACT_Dep_PasserSurLima, 1, { eEtatLima_LCA, } )
         if( self.eAction ~= eActionEnCours ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
 
         --[[// $$$$ Pour le moment comme les points particuliers	
-]]Activate( self.activations.BEH_Poste_Pion_INF_ArretCourt, 1, setmetatable( { self.repPt, S_TempsObservationPoint_Ambiance(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+]]Activate( self.activations.BEH_Poste_Pion_INF_ArretCourt, 1, { self.repPt, S_TempsObservationPoint_Ambiance(), } )
+self.done_BEH_Poste_Pion_INF_ArretCourt = function( self, _, v ) self.eAction = v[1] end
         Activate( self.activations.BEH_Misc_Pion_INF_MAJ_Repli, 1, {} )
     end,
 
@@ -66,10 +69,12 @@ include "bit.lua"
 
 node "BEH_Lima_Pion_INF_SurLD"
 {
+    feedbacks = { { { "done_BEH_Lima_Pion_INF_SurLD" }, "BEH_Lima_Pion_INF_SurLD" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Lima_Pion_INF_SurLD, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_SePoster_EnAttente", {} },
-        { "ACT_Dep_PasserSurLima", {} },
+        { "BEH_Ordre_SePoster_EnAttente", { "done_BEH_Ordre_SePoster_EnAttente" } },
+        { "ACT_Dep_PasserSurLima", { "done_ACT_Dep_PasserSurLima" } },
     },
 
     create = function( self )
@@ -83,7 +88,7 @@ node "BEH_Lima_Pion_INF_SurLD"
             do
                 --[[// Cas embrayé --> on flague la lima pour tout le monde
 ]]DEC_SetMissionLimaFlag( self._namedParams.lima, true )
-                                self.params.__returnValue = eActionEffectuee
+                                self:SendFeedback( eActionEffectuee )
                 Halt( self )
                 do return end
 
@@ -91,7 +96,8 @@ node "BEH_Lima_Pion_INF_SurLD"
 --[[// Se poster
 ]]        end
 
-        Activate( self.activations.BEH_Ordre_SePoster_EnAttente, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eOrdre = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_SePoster_EnAttente, 1, {} )
+self.done_BEH_Ordre_SePoster_EnAttente = function( self, _, v ) self.eOrdre = v[1] end
         --[[// MAJ Etat Lima
 ]]Activate( self.activations.ACT_Dep_PasserSurLima, 1, { eEtatLima_LD, } )
     end,
@@ -104,11 +110,13 @@ node "BEH_Lima_Pion_INF_SurLD"
 
 node "BEH_Lima_Pion_INF_SurLCAR"
 {
+    feedbacks = { { { "done_BEH_Lima_Pion_INF_SurLCAR" }, "BEH_Lima_Pion_INF_SurLCAR" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Lima_Pion_INF_SurLCAR, {value} ) end,
     activations =
     {
-        { "ACT_Dep_PasserSurLima", {} },
-        { "BEH_Poste_Pion_INF_TomberEnGarde", {} },
-        { "BEH_Ordre_SePoster_EnAttente", {} },
+        { "ACT_Dep_PasserSurLima", { "done_ACT_Dep_PasserSurLima" } },
+        { "BEH_Poste_Pion_INF_TomberEnGarde", { "done_BEH_Poste_Pion_INF_TomberEnGarde" } },
+        { "BEH_Ordre_SePoster_EnAttente", { "done_BEH_Ordre_SePoster_EnAttente" } },
     },
 
     create = function( self )
@@ -130,7 +138,7 @@ node "BEH_Lima_Pion_INF_SurLCAR"
                 self.eAction = eActionEnCours
                                 do
                     StartEvent( "BEH_Mot_Delai_Pion_INF_AugmenterAgression", 5 )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -140,13 +148,16 @@ node "BEH_Lima_Pion_INF_SurLCAR"
         end
 
         Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, { true, } )
-        Activate( self.activations.BEH_Ordre_SePoster_EnAttente, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_SePoster_EnAttente, 1, {} )
+self.done_BEH_Ordre_SePoster_EnAttente = function( self, _, v ) self.eAction = v[1] end
     end,
 
 }
 
 node "BEH_Lima_Pion_INF_SurLR"
 {
+    feedbacks = { { { "done_BEH_Lima_Pion_INF_SurLR" }, "BEH_Lima_Pion_INF_SurLR" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Lima_Pion_INF_SurLR, {value} ) end,
     create = function( self )
     end,
 
@@ -165,11 +176,13 @@ node "BEH_Lima_Pion_INF_SurLR"
 
 node "BEH_Lima_Pion_INF_GererLIA"
 {
+    feedbacks = { { { "done_BEH_Lima_Pion_INF_GererLIA" }, "BEH_Lima_Pion_INF_GererLIA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Lima_Pion_INF_GererLIA, {value} ) end,
     activations =
     {
-        { "ACT_RC", {} },
-        { "ACT_Dep_PasserSurLima", {} },
-        { "ACT_Limas_Suppression", {} },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "ACT_Dep_PasserSurLima", { "done_ACT_Dep_PasserSurLima" } },
+        { "ACT_Limas_Suppression", { "done_ACT_Limas_Suppression" } },
     },
 
     create = function( self )

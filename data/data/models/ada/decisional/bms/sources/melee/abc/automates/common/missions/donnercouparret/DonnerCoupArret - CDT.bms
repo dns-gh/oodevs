@@ -23,12 +23,14 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Conduite_Automate_ABC_DonnerUnCoupDArret"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_ABC_DonnerUnCoupDArret" }, "BEH_Conduite_Automate_ABC_DonnerUnCoupDArret" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_ABC_DonnerUnCoupDArret, {value} ) end,
     activations =
     {
-        { "BEH_Dispositif_Automate_ABC_GererLesAppuis_", {} },
-        { "BEH_Dispositif_Automate_ABC_GererLeDispositifStatiqueSurLima_", {} },
-        { "BEH_Conduite_Automate_ABC_DonnerCoupArret_FaireDecrocherLesPions", {} },
-        { "BEH_RC_Automate_GererConditionOperationnelle", {} },
+        { "BEH_Dispositif_Automate_ABC_GererLesAppuis_", { "done_BEH_Dispositif_Automate_ABC_GererLesAppuis_" } },
+        { "BEH_Dispositif_Automate_ABC_GererLeDispositifStatiqueSurLima_", { "done_BEH_Dispositif_Automate_ABC_GererLeDispositifStatiqueSurLima_" } },
+        { "BEH_Conduite_Automate_ABC_DonnerCoupArret_FaireDecrocherLesPions", { "done_BEH_Conduite_Automate_ABC_DonnerCoupArret_FaireDecrocherLesPions" } },
+        { "BEH_RC_Automate_GererConditionOperationnelle", { "done_BEH_RC_Automate_GererConditionOperationnelle" } },
     },
 
     create = function( self )
@@ -83,10 +85,12 @@ include "bit.lua"
 
 node "BEH_Conduite_Automate_ABC_DonnerCoupArret_FaireDecrocherLesPions"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_ABC_DonnerCoupArret_FaireDecrocherLesPions" }, "BEH_Conduite_Automate_ABC_DonnerCoupArret_FaireDecrocherLesPions" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_ABC_DonnerCoupArret_FaireDecrocherLesPions, {value} ) end,
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "BEH_Mission_Automate_AssignerDecrocherA", {} },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "BEH_Mission_Automate_AssignerDecrocherA", { "done_BEH_Mission_Automate_AssignerDecrocherA" } },
     },
 
     create = function( self )

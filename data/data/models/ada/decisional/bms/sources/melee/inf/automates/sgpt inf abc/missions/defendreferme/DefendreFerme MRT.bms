@@ -14,9 +14,11 @@ includedFiles["sources/melee/inf/automates/sgpt inf abc/missions/defendreferme/D
 ]]
 node "MIS_Automate_MRT_INF_DefendreFerme"
 {
+    feedbacks = { { { "done_MIS_Automate_MRT_INF_DefendreFerme" }, "MIS_Automate_MRT_INF_DefendreFerme" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_MRT_INF_DefendreFerme, {value} ) end,
     activations =
     {
-        { "BEH_Medo_Automate_INF_PreparerMission_Statique", {} },
+        { "BEH_Medo_Automate_INF_PreparerMission_Statique", { "done_BEH_Medo_Automate_INF_PreparerMission_Statique" } },
     },
 
     create = function( self )
@@ -45,7 +47,7 @@ node "MIS_Automate_MRT_INF_DefendreFerme"
                     DEC_RC( eRC_MissionImpossible )
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -58,7 +60,7 @@ node "MIS_Automate_MRT_INF_DefendreFerme"
                                 do
                     DEC_Trace( "MIS_Automate_MRT_INF_DefendreFerme : fin MRT" )
                     DEC_MRT_Valide()
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -70,7 +72,8 @@ node "MIS_Automate_MRT_INF_DefendreFerme"
 ]]--[[//-----------------------------------------------------------------------------
 ]]        end
 
-        Activate( self.activations.BEH_Medo_Automate_INF_PreparerMission_Statique, 1, setmetatable( { "T_Mission_Automate_INF_DefendreFerme", 0, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCreationMRT = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Medo_Automate_INF_PreparerMission_Statique, 1, { "T_Mission_Automate_INF_DefendreFerme", 0, } )
+self.done_BEH_Medo_Automate_INF_PreparerMission_Statique = function( self, _, v ) self.eCreationMRT = v[1] end
     end,
 
     destroy = function( self )

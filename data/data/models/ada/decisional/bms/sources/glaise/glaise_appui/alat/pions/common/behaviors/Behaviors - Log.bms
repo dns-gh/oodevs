@@ -19,13 +19,15 @@ include "bit.lua"
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "BEH_Log_Pion_ALAT_Recompletement"
 {
+    feedbacks = { { { "done_BEH_Log_Pion_ALAT_Recompletement" }, "BEH_Log_Pion_ALAT_Recompletement" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Log_Pion_ALAT_Recompletement, {value} ) end,
     activations =
     {
-        { "BEH_Dep_Pion_ALAT_RejoindrePoint", {} },
-        { "BEH_Dep_Pion_ALAT_RejoindrePion", {} },
-        { "BEH_Log_Pion_ALAT_SeRecompleterSurPlot", {} },
-        { "BEH_Log_Pion_ALAT_SeRecompleterSurTC2", {} },
-        { "BEH_Dep_Pion_ALAT_SePoser", {} },
+        { "BEH_Dep_Pion_ALAT_RejoindrePoint", { "done_BEH_Dep_Pion_ALAT_RejoindrePoint" } },
+        { "BEH_Dep_Pion_ALAT_RejoindrePion", { "done_BEH_Dep_Pion_ALAT_RejoindrePion" } },
+        { "BEH_Log_Pion_ALAT_SeRecompleterSurPlot", { "done_BEH_Log_Pion_ALAT_SeRecompleterSurPlot" } },
+        { "BEH_Log_Pion_ALAT_SeRecompleterSurTC2", { "done_BEH_Log_Pion_ALAT_SeRecompleterSurTC2" } },
+        { "BEH_Dep_Pion_ALAT_SePoser", { "done_BEH_Dep_Pion_ALAT_SePoser" } },
     },
 
     create = function( self )
@@ -69,7 +71,7 @@ include "bit.lua"
                                 DEC_Warning( eRC_MissionImpossible )
                             end
 
-                                                        self.params.__returnValue = eActionImpossible
+                                                        self:SendFeedback( eActionImpossible )
                             Halt( self )
                             do return end
 
@@ -102,7 +104,8 @@ include "bit.lua"
 --[[//rejoindre le plot de ravitaillement selectionné
 ]]                            end
 
-                            Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, setmetatable( { self.positionPlotRavitaillement, eProgressionDefaut, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                            Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, { self.positionPlotRavitaillement, eProgressionDefaut, eTypeItiInfiltration, } )
+self.done_BEH_Dep_Pion_ALAT_RejoindrePoint = function( self, _, v ) self.eEtat = v[1] end
                         end
 --[[//rejoindre le TC2 si on en a un
 ]]                    else
@@ -120,7 +123,8 @@ do
                                 end
                             end
 
-                            Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePion, 1, setmetatable( { pionTC2, eProgressionDefaut, eTypeItiInfiltration, 6000, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                            Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePion, 1, { pionTC2, eProgressionDefaut, eTypeItiInfiltration, 6000, } )
+self.done_BEH_Dep_Pion_ALAT_RejoindrePion = function( self, _, v ) self.eEtat = v[1] end
                         end
                     end
 
@@ -132,7 +136,7 @@ elseif switch_1 == eRecompleter then
                             self.eEtat = eActionEnCours
                                                         do
                                 myself.bEnPhaseRavitaillement_ = false
-                                                                self.params.__returnValue = eActionEffectuee
+                                                                self:SendFeedback( eActionEffectuee )
                                 Halt( self )
                                 do return end
 
@@ -147,7 +151,7 @@ elseif switch_1 == eRecompleter then
                                 DEC_Warning( eRC_MissionImpossible )
                             end
 
-                                                        self.params.__returnValue = eActionImpossible
+                                                        self:SendFeedback( eActionImpossible )
                             Halt( self )
                             do return end
 
@@ -155,9 +159,11 @@ elseif switch_1 == eRecompleter then
                     end
 
                     if( DEC_ConnaissanceObjet_EstValide( myself.plotRavitaillementAssigne_ ) ) then
-                        Activate( self.activations.BEH_Log_Pion_ALAT_SeRecompleterSurPlot, 1, setmetatable( { myself.plotRavitaillementAssigne_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                        Activate( self.activations.BEH_Log_Pion_ALAT_SeRecompleterSurPlot, 1, { myself.plotRavitaillementAssigne_, } )
+self.done_BEH_Log_Pion_ALAT_SeRecompleterSurPlot = function( self, _, v ) self.eEtat = v[1] end
                     else
-                        Activate( self.activations.BEH_Log_Pion_ALAT_SeRecompleterSurTC2, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                        Activate( self.activations.BEH_Log_Pion_ALAT_SeRecompleterSurTC2, 1, {} )
+self.done_BEH_Log_Pion_ALAT_SeRecompleterSurTC2 = function( self, _, v ) self.eEtat = v[1] end
                     end
 
                     Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, 1, {} )--[[//empeche le pion de se déplacer pendant son ravitaillement
@@ -191,10 +197,12 @@ elseif switch_1 == eRecompleter then
 
 node "BEH_Log_Pion_ALAT_GererPlotsRavitaillement"
 {
+    feedbacks = { { { "done_BEH_Log_Pion_ALAT_GererPlotsRavitaillement" }, "BEH_Log_Pion_ALAT_GererPlotsRavitaillement" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Log_Pion_ALAT_GererPlotsRavitaillement, {value} ) end,
     activations =
     {
-        { "BEH_Log_Pion_ALAT_Recompletement", {} },
-        { "BEH_Mot_Pion_ALAT_AffecterVariablesDEtat", {} },
+        { "BEH_Log_Pion_ALAT_Recompletement", { "done_BEH_Log_Pion_ALAT_Recompletement" } },
+        { "BEH_Mot_Pion_ALAT_AffecterVariablesDEtat", { "done_BEH_Mot_Pion_ALAT_AffecterVariablesDEtat" } },
     },
 
     create = function( self )
@@ -249,10 +257,12 @@ do
 
 node "BEH_Log_Pion_ALAT_SeRecompleterSurPlot"
 {
+    feedbacks = { { { "done_BEH_Log_Pion_ALAT_SeRecompleterSurPlot" }, "BEH_Log_Pion_ALAT_SeRecompleterSurPlot" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Log_Pion_ALAT_SeRecompleterSurPlot, {value} ) end,
     activations =
     {
-        { "ACT_RC", {} },
-        { "ACT_Misc_Delai", {} },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "ACT_Misc_Delai", { "done_ACT_Misc_Delai" } },
     },
 
     create = function( self )
@@ -263,7 +273,7 @@ node "BEH_Log_Pion_ALAT_SeRecompleterSurPlot"
     activate = function( self )
         self.eEtat = self.eEtat or eActionEnCours
         if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.plotRavitaillement ) ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             Halt( self )
             do return end
         end
@@ -275,7 +285,7 @@ node "BEH_Log_Pion_ALAT_SeRecompleterSurPlot"
                                 do
                     F_POLY_PION_ALAT_RECOMPLETEMENT( myself.porteeAction_, myself.ambianceMission_ )
                     Activate( self.activations.ACT_RC, 1, { eRC_RavitaillementTermine, } )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -290,14 +300,15 @@ node "BEH_Log_Pion_ALAT_SeRecompleterSurPlot"
                     DEC_Warning( eRC_MissionImpossible )
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
             end
         end
 
-        Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, M_DOCTRINE_ALAT_TEMPS_RECOMPLETEMENT(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Misc_Delai, 1, { 1, M_DOCTRINE_ALAT_TEMPS_RECOMPLETEMENT(), } )
+self.done_ACT_Misc_Delai = function( self, _, v ) self.eEtat = v[1] end
     end,
 
 --[[// -----------------------------------------------------------------------------
@@ -311,10 +322,12 @@ node "BEH_Log_Pion_ALAT_SeRecompleterSurPlot"
 
 node "BEH_Log_Pion_ALAT_SeRecompleterSurTC2"
 {
+    feedbacks = { { { "done_BEH_Log_Pion_ALAT_SeRecompleterSurTC2" }, "BEH_Log_Pion_ALAT_SeRecompleterSurTC2" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Log_Pion_ALAT_SeRecompleterSurTC2, {value} ) end,
     activations =
     {
-        { "ACT_RC", {} },
-        { "ACT_Misc_Delai", {} },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "ACT_Misc_Delai", { "done_ACT_Misc_Delai" } },
     },
 
     create = function( self )
@@ -329,7 +342,7 @@ node "BEH_Log_Pion_ALAT_SeRecompleterSurTC2"
                                 do
                     F_POLY_PION_ALAT_RECOMPLETEMENT( myself.porteeAction_, myself.ambianceMission_ )
                     Activate( self.activations.ACT_RC, 1, { eRC_RavitaillementTermine, } )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -344,14 +357,15 @@ node "BEH_Log_Pion_ALAT_SeRecompleterSurTC2"
                     DEC_Warning( eRC_MissionImpossible )
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
             end
         end
 
-        Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, M_DOCTRINE_ALAT_TEMPS_RECOMPLETEMENT(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Misc_Delai, 1, { 1, M_DOCTRINE_ALAT_TEMPS_RECOMPLETEMENT(), } )
+self.done_ACT_Misc_Delai = function( self, _, v ) self.eEtat = v[1] end
     end,
 
 --[[// -----------------------------------------------------------------------------
@@ -362,9 +376,11 @@ node "BEH_Log_Pion_ALAT_SeRecompleterSurTC2"
 
 node "BEH_Log_Pion_ALAT_AjoutNouveauPlotsDansFuseau"
 {
+    feedbacks = { { { "done_BEH_Log_Pion_ALAT_AjoutNouveauPlotsDansFuseau" }, "BEH_Log_Pion_ALAT_AjoutNouveauPlotsDansFuseau" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Log_Pion_ALAT_AjoutNouveauPlotsDansFuseau, {value} ) end,
     activations =
     {
-        { "BEH_Log_Pion_ALAT_GererPlotsRavitaillement", {} },
+        { "BEH_Log_Pion_ALAT_GererPlotsRavitaillement", { "done_BEH_Log_Pion_ALAT_GererPlotsRavitaillement" } },
     },
 
     create = function( self )

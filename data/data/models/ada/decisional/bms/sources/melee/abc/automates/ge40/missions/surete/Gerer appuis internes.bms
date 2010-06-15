@@ -13,9 +13,11 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "BEH_GTIA_GererAppuisInternesPourSurete"
 {
+    feedbacks = { { { "done_BEH_GTIA_GererAppuisInternesPourSurete" }, "BEH_GTIA_GererAppuisInternesPourSurete" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_GererAppuisInternesPourSurete, {value} ) end,
     activations =
     {
-        { "BEH_GTIA_GererAppuiDansZonePour", {} },
+        { "BEH_GTIA_GererAppuiDansZonePour", { "done_BEH_GTIA_GererAppuiDansZonePour" } },
     },
 
     create = function( self )
@@ -42,9 +44,11 @@ include "bit.lua"
 
 node "BEH_GTIA_GererAppuiDansZonePour"
 {
+    feedbacks = { { { "done_BEH_GTIA_GererAppuiDansZonePour" }, "BEH_GTIA_GererAppuiDansZonePour" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_GererAppuiDansZonePour, {value} ) end,
     activations =
     {
-        { "BEH_GTIA_AssignerMissionsPourAppuyerDansZone", {} },
+        { "BEH_GTIA_AssignerMissionsPourAppuyerDansZone", { "done_BEH_GTIA_AssignerMissionsPourAppuyerDansZone" } },
     },
 
     create = function( self )
@@ -71,9 +75,11 @@ node "BEH_GTIA_GererAppuiDansZonePour"
 
 node "BEH_GTIA_AssignerMissionsPourAppuyerDansZone"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerMissionsPourAppuyerDansZone" }, "BEH_GTIA_AssignerMissionsPourAppuyerDansZone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerMissionsPourAppuyerDansZone, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_AssignerMissionAppuyerPourSurete", {} },
+        { "ACT_GTIA_AssignerMissionAppuyerPourSurete", { "done_ACT_GTIA_AssignerMissionAppuyerPourSurete" } },
     },
 
     create = function( self )
@@ -117,6 +123,8 @@ do
 
 node "ACT_GTIA_AssignerMissionAppuyerPourSurete"
 {
+    feedbacks = { { { "done_ACT_GTIA_AssignerMissionAppuyerPourSurete" }, "ACT_GTIA_AssignerMissionAppuyerPourSurete" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_GTIA_AssignerMissionAppuyerPourSurete, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionAppui = self.params[1]

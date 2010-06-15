@@ -9,14 +9,16 @@ includedFiles["sources/population/asymetriques/common/pion/missions/Renseigner.b
 ]]--[[// *****************************************************************************
 ]]node "MIS_Pion_ASY_Renseigner"
 {
+    feedbacks = { { { "done_MIS_Pion_ASY_Renseigner" }, "MIS_Pion_ASY_Renseigner" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_ASY_Renseigner, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Info_Trace", {} },
-        { "ACT_RC", {} },
-        { "ACT_Pion_ASY_Renseigner", {} },
-        { "ACT_Misc_Delai", {} },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "ACT_Pion_ASY_Renseigner", { "done_ACT_Pion_ASY_Renseigner" } },
+        { "ACT_Misc_Delai", { "done_ACT_Misc_Delai" } },
     },
 
     create = function( self )
@@ -32,7 +34,8 @@ includedFiles["sources/population/asymetriques/common/pion/missions/Renseigner.b
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
                 self.ePhaseMission = eFinMission
@@ -61,7 +64,8 @@ elseif switch_1 == eTransmettreInformations then
                         end
                     else
 if( self.eEtatDelai == eActionEnCours ) then
-                            Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { MIS_Pion_ASY_Renseigner, 2.0, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatDelai = v else rawset( t, k, v ) end end } ) )
+                            Activate( self.activations.ACT_Misc_Delai, 1, { MIS_Pion_ASY_Renseigner, 2.0, } )
+self.done_ACT_Misc_Delai = function( self, _, v ) self.eEtatDelai = v[1] end
                         else
 do
                                 Activate( self.activations.ACT_RC, 1, { eRC_FinLiaison, } )
@@ -93,6 +97,8 @@ elseif switch_1 == eFinMission then
 
 node "ACT_Pion_ASY_Renseigner"
 {
+    feedbacks = { { { "done_ACT_Pion_ASY_Renseigner" }, "ACT_Pion_ASY_Renseigner" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Pion_ASY_Renseigner, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.destinataire = self.params[1]

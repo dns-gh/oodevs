@@ -20,9 +20,11 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/ciecharlourd/missions/a
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_MRT_ABC_Appuyer"
 {
+    feedbacks = { { { "done_MIS_Automate_MRT_ABC_Appuyer" }, "MIS_Automate_MRT_ABC_Appuyer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_MRT_ABC_Appuyer, {value} ) end,
     activations =
     {
-        { "BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionDynamique", {} },
+        { "BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionDynamique", { "done_BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionDynamique" } },
     },
 
     create = function( self )

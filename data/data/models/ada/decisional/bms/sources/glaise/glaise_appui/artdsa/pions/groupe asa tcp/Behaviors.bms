@@ -52,6 +52,8 @@ etat_ROE = 1,
 
 node "BEH_ASA_Defaut"
 {
+    feedbacks = { { { "done_BEH_ASA_Defaut" }, "BEH_ASA_Defaut" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_ASA_Defaut, {value} ) end,
     create = function( self )
     end,
 

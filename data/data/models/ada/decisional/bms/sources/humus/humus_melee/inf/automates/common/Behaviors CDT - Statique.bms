@@ -19,9 +19,11 @@ include "bit.lua"
 
 node "BEH_Situation_Automate_INF_CadreDefensif_InstallerPC"
 {
+    feedbacks = { { { "done_BEH_Situation_Automate_INF_CadreDefensif_InstallerPC" }, "BEH_Situation_Automate_INF_CadreDefensif_InstallerPC" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Situation_Automate_INF_CadreDefensif_InstallerPC, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_INF_AssignerMission_PC", {} },
+        { "BEH_Conduite_Automate_INF_AssignerMission_PC", { "done_BEH_Conduite_Automate_INF_AssignerMission_PC" } },
     },
 
     create = function( self )
@@ -53,10 +55,12 @@ node "BEH_Situation_Automate_INF_CadreDefensif_InstallerPC"
 
 node "BEH_Conduite_Automate_INF_AssignerMission_PC"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_INF_AssignerMission_PC" }, "BEH_Conduite_Automate_INF_AssignerMission_PC" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_INF_AssignerMission_PC, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_AssignerSuivreA", {} },
-        { "BEH_Mission_Automate_AssignerFaireMouvementA", {} },
+        { "BEH_Mission_Automate_AssignerSuivreA", { "done_BEH_Mission_Automate_AssignerSuivreA" } },
+        { "BEH_Mission_Automate_AssignerFaireMouvementA", { "done_BEH_Mission_Automate_AssignerFaireMouvementA" } },
     },
 
     create = function( self )

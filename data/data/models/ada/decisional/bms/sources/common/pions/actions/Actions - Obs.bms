@@ -28,6 +28,8 @@ end
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_Misc_VerouillerConnaissance"
 {
+    feedbacks = { { { "done_ACT_Misc_VerouillerConnaissance" }, "ACT_Misc_VerouillerConnaissance" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Misc_VerouillerConnaissance, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.connaissance = self.params[1]
@@ -35,28 +37,28 @@ end
 
     select = function( self )
         --[[// ----------------------------------------------------------------------------- 
-        ]]--[[// Init
-        ]]--[[// ----------------------------------------------------------------------------- 
-        ]]        if( ModuleBegins() ) then
-        do
-            local eEtatRequete = DEC_ConnaissanceAgent_Verrouiller( self._namedParams.connaissance )
-            if( eEtatRequete == eRequeteInvalide ) then
-                self.params.__returnValue = eActionImpossible
-                Halt( self )
-                do return end
+]]--[[// Init
+]]--[[// ----------------------------------------------------------------------------- 
+]]        if( ModuleBegins() ) then
+            do
+                local eEtatRequete = DEC_ConnaissanceAgent_Verrouiller( self._namedParams.connaissance )
+                if( eEtatRequete == eRequeteInvalide ) then
+                    self:SendFeedback( eActionImpossible )
+                    Halt( self )
+                    do return end
+                end
+
             end
-
         end
-    end
 
-    --[[// Pas de on focus loss: Pas d'actuateur        
-    ]]    end,
+--[[// Pas de on focus loss: Pas d'actuateur        
+]]    end,
 
     deselect = function( self )
-    end,
+            end,
 
     destroy = function( self )
-        DEC_ConnaissanceAgent_Deverrouiller( self._namedParams.connaissance )
+                DEC_ConnaissanceAgent_Deverrouiller( self._namedParams.connaissance )
     end,
 
 }
@@ -69,6 +71,8 @@ end
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_Obs_ElargirObservation"
 {
+    feedbacks = { { { "done_ACT_Obs_ElargirObservation" }, "ACT_Obs_ElargirObservation" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obs_ElargirObservation, {value} ) end,
     create = function( self )
     end,
 
@@ -83,7 +87,7 @@ end
     deselect = function( self )
         DEC_Perception_DesactiverCoupsDeSonde()
         self.selected = false
-    end,
+            end,
 
     destroy = function( self )
     end,
@@ -101,6 +105,8 @@ end
 ]]--[[// *****************************************************************************
 ]]node "ACT_Obs_ReconnaitrePoint"
 {
+    feedbacks = { { { "done_ACT_Obs_ReconnaitrePoint" }, "ACT_Obs_ReconnaitrePoint" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obs_ReconnaitrePoint, {value} ) end,
     actuators =
     {
         reconnaissance = 1,
@@ -113,7 +119,8 @@ end
     end,
 
     select = function( self )
-        self.bInit = self.bInit or false
+        --[[// init
+]]        self.bInit = self.bInit or false
         self.bRecoMax = self.bRecoMax or false
         self.bRecoMaxObj = self.bRecoMaxObj or false
         self.ptRecoCopie = self.ptRecoCopie or DEC_Geometrie_CreerPoint()
@@ -127,15 +134,15 @@ end
         end
 
         if( not self.bInit ) then
-            self.bInit = true
-            DEC_Trace( ">> En reconnaissance..." )
+                self.bInit = true
+                DEC_Trace( ">> En reconnaissance..." )
             self.pPt = DEC_Perception_ActiverReconnaissancePoint( self.ptRecoCopie, M_POLY_MODELE_PION_CAPACITE_RECO_POINT(), M_POLY_MODELE_PION_VITESSE_RECO_POINT() )
             RegisterPerception_ReconnaissancePoint_Callback( self.pPt, function () self.bRecoMax = true end )
             self.pPtObj = DEC_Perception_ActiverDetectionObjetLocalisation( self.loc, self.ptRecoCopie, M_POLY_MODELE_PION_VITESSE_RECO_POINT() )
             RegisterPerception_ReconnaissancePoint_Callback( self.pPtObj, function () self.bRecoMaxObj = true end )
-        end
+            end
 
-         F_Pion_SeteEtatDeplacement( myself, eEtatDeplacement_EnReco )
+        F_Pion_SeteEtatDeplacement( myself, eEtatDeplacement_EnReco )
         if( self.bRecoMax ) then
             self.params.__returnValue = eActionEffectuee
         end
@@ -143,8 +150,8 @@ end
     end,
 
     deselect = function( self )
-        self.bInit = false
-         F_Pion_SeteEtatDeplacement( myself, eEtatDeplacement_aucun )
+                self.bInit = false
+        F_Pion_SeteEtatDeplacement( myself, eEtatDeplacement_aucun )
         RemovePerception_ReconnaissancePoint_Callback ( self.pPt )
         RemovePerception_ReconnaissancePoint_Callback ( self.pPtObj )
         DEC_Perception_DesactiverReconnaissancePoint( self.pPt )
@@ -152,7 +159,7 @@ end
     end,
 
     destroy = function( self )
-        F_Pion_SeteEtatDeplacement( myself, eEtatDeplacement_aucun )
+                F_Pion_SeteEtatDeplacement( myself, eEtatDeplacement_aucun )
         DEC_Trace( "<< fin reconnaissance" )
         RemovePerception_ReconnaissancePoint_Callback ( self.pPtObj )
         RemovePerception_ReconnaissancePoint_Callback ( self.pPt )
@@ -171,6 +178,8 @@ end
 ]]--[[// *****************************************************************************
 ]]node "ACT_Obs_ObserverZone"
 {
+    feedbacks = { { { "done_ACT_Obs_ObserverZone" }, "ACT_Obs_ObserverZone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obs_ObserverZone, {value} ) end,
     actuators =
     {
         reconnaissance = 1,
@@ -183,110 +192,112 @@ end
     end,
 
     select = function( self )
-        self.bRecoMax = self.bRecoMax or false
+                self.bRecoMax = self.bRecoMax or false
         self.bRecoMaxObj = self.bRecoMaxObj or false
         self.ptRecoCopie = self.ptRecoCopie or DEC_Geometrie_CreerPoint()
         self.loc = self.loc or DEC_Geometrie_ConvertirPointEnLocalisation( self.ptRecoCopie )
         self.perceptionPoint = self.perceptionPoint or -1
         self.pPtObj = self.pPtObj or nil
         if( ModuleBegins() ) then
-            DEC_Copie_Point( self._namedParams.pointAReconnaitre, self.ptRecoCopie )
+                DEC_Copie_Point( self._namedParams.pointAReconnaitre, self.ptRecoCopie )
 
-            DEC_Trace( ">> En surveillance..." )
+                DEC_Trace( ">> En surveillance..." )
             self.perceptionPoint = DEC_Perception_ActiverReconnaissancePoint( self.ptRecoCopie, self._namedParams.rCapacite, M_POLY_MODELE_PION_VITESSE_RECO_POINT() )
             RegisterPerception_ReconnaissancePoint_Callback( self.perceptionPoint, function () self.bRecoMax = true end )
             self.pPtObj = DEC_Perception_ActiverDetectionObjetLocalisation( self.loc, self.ptRecoCopie, M_POLY_MODELE_PION_VITESSE_RECO_POINT() )
             RegisterPerception_ReconnaissancePoint_Callback( self.pPtObj, function () self.bRecoMaxObj = true end )
             if( not DEC_Agent_AutomateEstEmbraye() ) then
-                DEC_RC( eRC_DebutSurveillance )
-            else
-                DEC_Message( eRC_DebutSurveillance )
-            end
-        end
+                        DEC_RC( eRC_DebutSurveillance )
+                    else
+                        DEC_Message( eRC_DebutSurveillance )
+                    end
+                end
 
         if( self.bRecoMax ) then
-            self.params.__returnValue = eActionEffectuee
-            return
+            self:SendFeedback( eActionEffectuee )
+            do return end
         end
 
-        --[[// si perte de l'actuateur, alors, on kill l'instance de cette action
-        ]]--[[// en effet, on ne fait pas deux reconnaissance a la fois quand on n'a
-        ]]--[[// pas les capacites
-        ]]--[[// CR
-        ]]--[[// CR
-        ]]    end,
+--[[// si perte de l'actuateur, alors, on kill l'instance de cette action
+]]--[[// en effet, on ne fait pas deux reconnaissance a la fois quand on n'a
+]]--[[// pas les capacites
+]]--[[// CR
+]]--[[// CR
+]]    end,
 
-        deselect = function( self )
-            DEC_Trace( " << fin surveillance" )
+    deselect = function( self )
+                DEC_Trace( " << fin surveillance" )
             RemovePerception_ReconnaissancePoint_Callback ( self.perceptionPoint )
             RemovePerception_ReconnaissancePoint_Callback ( self.pPtObj )
-            DEC_Perception_DesactiverReconnaissancePoint( self.perceptionPoint )
-            DEC_Perception_DesactiverDetectionObjetLocalisation( self.pPtObj )
-            do
-                if( not DEC_Agent_AutomateEstEmbraye() ) then
-                    DEC_RC( eRC_FinSurveillance )
-                else
-                    DEC_Message( eRC_FinSurveillance )
-                end
-
+        DEC_Perception_DesactiverReconnaissancePoint( self.perceptionPoint )
+        DEC_Perception_DesactiverDetectionObjetLocalisation( self.pPtObj )
+        do
+            if( not DEC_Agent_AutomateEstEmbraye() ) then
+                DEC_RC( eRC_FinSurveillance )
+            else
+                DEC_Message( eRC_FinSurveillance )
             end
 
-            Halt( self )
+        end
+
+                Halt( self )
             return
-        end,
+    end,
 
-        destroy = function( self )
-            DEC_Trace( " << fin surveillance" )
+    destroy = function( self )
+                DEC_Trace( " << fin surveillance" )
             RemovePerception_ReconnaissancePoint_Callback ( self.perceptionPoint )
             RemovePerception_ReconnaissancePoint_Callback ( self.pPtObj )
-            DEC_Perception_DesactiverReconnaissancePoint( self.perceptionPoint )
-            DEC_Perception_DesactiverDetectionObjetLocalisation( self.pPtObj )
-            do
-                if( not DEC_Agent_AutomateEstEmbraye() ) then
-                    DEC_RC( eRC_FinSurveillance )
-                else
-                    DEC_Message( eRC_FinSurveillance )
-                end
-
+        DEC_Perception_DesactiverReconnaissancePoint( self.perceptionPoint )
+        DEC_Perception_DesactiverDetectionObjetLocalisation( self.pPtObj )
+        do
+            if( not DEC_Agent_AutomateEstEmbraye() ) then
+                DEC_RC( eRC_FinSurveillance )
+            else
+                DEC_Message( eRC_FinSurveillance )
             end
 
-        end,
+        end
 
-    }
+    end,
 
-    --[[// *****************************************************************************
-    ]]--[[// ACT_Obs_ObserverPoint
-    ]]--[[// 
-    ]]--[[// Commentaires: idem action reco point...sert à simuler la position 
-    ]]--[[//               d'observation d'un point. 
-    ]]--[[//               MIA: A Virer??
-    ]]--[[//
-    ]]--[[// *****************************************************************************
-    ]]node "ACT_Obs_ObserverPoint"
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Obs_ObserverPoint
+]]--[[// 
+]]--[[// Commentaires: idem action reco point...sert à simuler la position 
+]]--[[//               d'observation d'un point. 
+]]--[[//               MIA: A Virer??
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Obs_ObserverPoint"
+{
+    feedbacks = { { { "done_ACT_Obs_ObserverPoint" }, "ACT_Obs_ObserverPoint" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obs_ObserverPoint, {value} ) end,
+    actuators =
     {
-        actuators =
-        {
-            reconnaissance = 1,
-        },
+        reconnaissance = 1,
+    },
 
-        create = function( self )
-            self._namedParams = {}
-            self._namedParams.pointAObserver = self.params[1]
-        end,
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pointAObserver = self.params[1]
+    end,
 
-        select = function( self )
-            self.bRecoMax = self.bRecoMax or false
-            self.bRecoMaxObj = self.bRecoMaxObj or false
-            self.ptRecoCopie = self.ptRecoCopie or DEC_Geometrie_CreerPoint()
-            self.loc = self.loc or DEC_Geometrie_ConvertirPointEnLocalisation( self.ptRecoCopie )
+    select = function( self )
+                self.bRecoMax = self.bRecoMax or false
+        self.bRecoMaxObj = self.bRecoMaxObj or false
+        self.ptRecoCopie = self.ptRecoCopie or DEC_Geometrie_CreerPoint()
+        self.loc = self.loc or DEC_Geometrie_ConvertirPointEnLocalisation( self.ptRecoCopie )
             self.perceptionPoint = self.perceptionPoint or -1
-            self.pPtObj = self.pPtObj or nil
+        self.pPtObj = self.pPtObj or nil
             if( ModuleBegins() ) then
                 if( not DEC_Agent_AutomateEstEmbraye() ) then
-                    DEC_RC( eRC_DebutSurveillance )
-                else
-                    DEC_Message( eRC_DebutSurveillance )
-                end
+                        DEC_RC( eRC_DebutSurveillance )
+                    else
+                        DEC_Message( eRC_DebutSurveillance )
+                    end
 
                 DEC_Copie_Point( self._namedParams.pointAObserver, self.ptRecoCopie )
 
@@ -297,69 +308,71 @@ end
                 RegisterPerception_ReconnaissancePoint_Callback( self.pPtObj, function () self.bRecoMaxObj = true end )
             end
 
-            if( self.bRecoMax ) then
-                self.params.__returnValue = eActionEffectuee
+        if( self.bRecoMax ) then
+            self:SendFeedback( eActionEffectuee )
             end
         end,
 
-        --[[// CR
-        ]]--[[// si perte de l'actuateur, alors, on kill l'instance de cette action
-        ]]--[[// en effet, on ne fait pas deux reconnaissance a la fois quand on n'a
-        ]]--[[// pas les capacites
-        ]]--[[// CR
+--[[// CR
+]]--[[// si perte de l'actuateur, alors, on kill l'instance de cette action
+]]--[[// en effet, on ne fait pas deux reconnaissance a la fois quand on n'a
+]]--[[// pas les capacites
+]]--[[// CR
         ]]
-        deselect = function( self )
-            do
-                if( not DEC_Agent_AutomateEstEmbraye() ) then
-                    DEC_RC( eRC_FinSurveillance )
-                else
-                    DEC_Message( eRC_FinSurveillance )
-                end
-
+    deselect = function( self )
+                do
+            if( not DEC_Agent_AutomateEstEmbraye() ) then
+                DEC_RC( eRC_FinSurveillance )
+            else
+                DEC_Message( eRC_FinSurveillance )
             end
+
+        end
 
             RemovePerception_ReconnaissancePoint_Callback ( self.perceptionPoint )
             RemovePerception_ReconnaissancePoint_Callback ( self.pPtObj )
-            DEC_Perception_DesactiverReconnaissancePoint( self.perceptionPoint )
-            DEC_Perception_DesactiverDetectionObjetLocalisation( self.pPtObj )
-            Halt( self )
+        DEC_Perception_DesactiverReconnaissancePoint( self.perceptionPoint )
+        DEC_Perception_DesactiverDetectionObjetLocalisation( self.pPtObj )
+                Halt( self )
             return
-        end,
+    end,
 
-        destroy = function( self )
-            do
-                if( not DEC_Agent_AutomateEstEmbraye() ) then
-                    DEC_RC( eRC_FinSurveillance )
-                else
-                    DEC_Message( eRC_FinSurveillance )
-                end
-
+    destroy = function( self )
+                do
+            if( not DEC_Agent_AutomateEstEmbraye() ) then
+                DEC_RC( eRC_FinSurveillance )
+            else
+                DEC_Message( eRC_FinSurveillance )
             end
+
+        end
 
             RemovePerception_ReconnaissancePoint_Callback ( self.perceptionPoint )
             RemovePerception_ReconnaissancePoint_Callback ( self.pPtObj )
-            DEC_Perception_DesactiverReconnaissancePoint( self.perceptionPoint )
-            DEC_Perception_DesactiverDetectionObjetLocalisation( self.pPtObj )
-        end,
+        DEC_Perception_DesactiverReconnaissancePoint( self.perceptionPoint )
+        DEC_Perception_DesactiverDetectionObjetLocalisation( self.pPtObj )
+    end,
 
-    }
+}
 
-    --[[// *****************************************************************************
-    ]]--[[// ACT_Obs_SurveillerZone
-    ]]--[[// 
-    ]]--[[// Commentaires: renommage DEC_Perception_StartSurveillerLocalisation en 
-    ]]--[[//                         DEC_Perception_StartReconnaissanceLocalisation
-    ]]--[[//
-    ]]--[[// *****************************************************************************
-    ]]node "ACT_Obs_SurveillerZone"
-    {
-        create = function( self )
-            self._namedParams = {}
-            self._namedParams.zone = self.params[1]
-        end,
+--[[// *****************************************************************************
+]]--[[// ACT_Obs_SurveillerZone
+]]--[[// 
+]]--[[// Commentaires: renommage DEC_Perception_StartSurveillerLocalisation en 
+]]--[[//                         DEC_Perception_StartReconnaissanceLocalisation
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Obs_SurveillerZone"
+{
+    feedbacks = { { { "done_ACT_Obs_SurveillerZone" }, "ACT_Obs_SurveillerZone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obs_SurveillerZone, {value} ) end,
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.zone = self.params[1]
+    end,
 
-        select = function( self )
-            self.point = self.point or nil
+    select = function( self )
+                self.point = self.point or nil
             if( not self.selected ) then
                 self.selected = true
                 DEC_Trace( ">> Surveillance du secteur activée " )
@@ -367,110 +380,116 @@ end
             end
         end,
 
-        deselect = function( self )
+    deselect = function( self )
             DEC_Perception_DesactiverReconnaissanceLocalisation( self.point )
             self.selected = false
-        end,
+            end,
 
-        destroy = function( self )
-        end,
+    destroy = function( self )
+    end,
 
-    }
+}
 
-    --[[// ******************************************************************************
-    ]]--[[// ACT_Obs_EtablirVisionCur
-    ]]--[[// 
-    ]]--[[// Commentaires: 
-    ]]--[[//
-    ]]--[[// ******************************************************************************
-    ]]node "ACT_Obs_EtablirVisionCur"
+--[[// ******************************************************************************
+]]--[[// ACT_Obs_EtablirVisionCur
+]]--[[// 
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// ******************************************************************************
+]]node "ACT_Obs_EtablirVisionCur"
+{
+    feedbacks = { { { "done_ACT_Obs_EtablirVisionCur" }, "ACT_Obs_EtablirVisionCur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obs_EtablirVisionCur, {value} ) end,
+    actuators =
     {
-        actuators =
-        {
-            observation = 1,
-        },
+        observation = 1,
+    },
 
-        create = function( self )
-        end,
+    create = function( self )
+    end,
 
-        select = function( self )
-            self.bVisionCur = self.bVisionCur or false
-            if( not self.bVisionCur ) then
+    select = function( self )
+                self.bVisionCur = self.bVisionCur or false
+        if( not self.bVisionCur ) then
                 DEC_Perception_VisionNormale()
                 self.bVisionCur = true
             end
 
-        end,
+    end,
 
-        deselect = function( self )
-            self.bVisionCur = false
-        end,
+    deselect = function( self )
+                self.bVisionCur = false
+    end,
 
-    }
+}
 
-    --[[// ******************************************************************************
-    ]]--[[// ACT_Obs_EtablirVisionFaceADir
-    ]]--[[// 
-    ]]--[[// Commentaires:
-    ]]--[[// 
-    ]]--[[// ******************************************************************************
-    ]]node "ACT_Obs_EtablirVisionFaceADir"
+--[[// ******************************************************************************
+]]--[[// ACT_Obs_EtablirVisionFaceADir
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[// 
+]]--[[// ******************************************************************************
+]]node "ACT_Obs_EtablirVisionFaceADir"
+{
+    feedbacks = { { { "done_ACT_Obs_EtablirVisionFaceADir" }, "ACT_Obs_EtablirVisionFaceADir" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obs_EtablirVisionFaceADir, {value} ) end,
+    actuators =
     {
-        actuators =
-        {
-            observation = 1,
-        },
+        observation = 1,
+    },
 
-        create = function( self )
-            self._namedParams = {}
-            self._namedParams.dir = self.params[1]
-        end,
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.dir = self.params[1]
+    end,
 
-        select = function( self )
-            self.bVisionDir = self.bVisionDir or false
-            if( not self.bVisionDir ) then
+    select = function( self )
+                self.bVisionDir = self.bVisionDir or false
+        if( not self.bVisionDir ) then
                 DEC_Perception_VisionVerrouilleeSurDirection( self._namedParams.dir )
                 self.bVisionDir = true
             end
 
-        end,
+    end,
 
-        deselect = function( self )
-            self.bVisionDir = false
-        end,
+    deselect = function( self )
+                self.bVisionDir = false
+    end,
 
-    }
+}
 
-    --[[// *****************************************************************************
-    ]]--[[// ACT_Obs_EtablirVisionVersPt
-    ]]--[[//
-    ]]--[[// Commentaires:
-    ]]--[[//
-    ]]--[[// *****************************************************************************
-    ]]node "ACT_Obs_EtablirVisionVersPt"
+--[[// *****************************************************************************
+]]--[[// ACT_Obs_EtablirVisionVersPt
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Obs_EtablirVisionVersPt"
+{
+    feedbacks = { { { "done_ACT_Obs_EtablirVisionVersPt" }, "ACT_Obs_EtablirVisionVersPt" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obs_EtablirVisionVersPt, {value} ) end,
+    actuators =
     {
-        actuators =
-        {
-            observation = 1,
-        },
+        observation = 1,
+    },
 
-        create = function( self )
-            self._namedParams = {}
-            self._namedParams.pt = self.params[1]
-        end,
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pt = self.params[1]
+    end,
 
-        select = function( self )
-            self.bVisionPt = self.bVisionPt or false
-            if( not self.bVisionPt ) then
+    select = function( self )
+                self.bVisionPt = self.bVisionPt or false
+        if( not self.bVisionPt ) then
                 DEC_Perception_VisionVerrouilleeSurPoint( self._namedParams.pt )
                 self.bVisionPt = true
             end
 
-        end,
+    end,
 
-        deselect = function( self )
-            self.bVisionPt = false
-        end,
+    deselect = function( self )
+                self.bVisionPt = false
+    end,
 
-    }
+}
 

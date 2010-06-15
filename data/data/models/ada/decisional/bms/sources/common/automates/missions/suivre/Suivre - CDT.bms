@@ -9,10 +9,12 @@ includedFiles["sources/common/automates/missions/suivre/Suivre - CDT.bms"] = tru
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_Suivre"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_Suivre" }, "MIS_Automate_CDT_Suivre" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_Suivre, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
-        { "BEH_CoordDep_Automate_ActiverCoordinationAmisSur", {} },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "done_BEH_Ordre_Automate_RecevoirOrdreInopine" } },
+        { "BEH_CoordDep_Automate_ActiverCoordinationAmisSur", { "done_BEH_CoordDep_Automate_ActiverCoordinationAmisSur" } },
     },
 
     create = function( self )
@@ -28,7 +30,7 @@ includedFiles["sources/common/automates/missions/suivre/Suivre - CDT.bms"] = tru
         self.eEtatODC = self.eEtatODC or eActionEnCours
         if( self.eEtatODC == eActionHalt ) then
             do
-                                self.params.__returnValue = eActionEffectuee
+                                self:SendFeedback( eActionEffectuee )
                 Halt( self )
                 do return end
 
@@ -36,7 +38,8 @@ includedFiles["sources/common/automates/missions/suivre/Suivre - CDT.bms"] = tru
             end
         end
 
-        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatODC = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )
+self.done_BEH_Ordre_Automate_RecevoirOrdreInopine = function( self, _, v ) self.eEtatODC = v[1] end
         Activate( self.activations.BEH_CoordDep_Automate_ActiverCoordinationAmisSur, 1, { S_ObtenirPionsOperationnelsPour( self._namedParams.mission.compagnie_ ), } )
     end,
 
@@ -51,9 +54,11 @@ includedFiles["sources/common/automates/missions/suivre/Suivre - CDT.bms"] = tru
 
 node "BEH_CoordDep_Automate_ActiverCoordinationAmisSur"
 {
+    feedbacks = { { { "done_BEH_CoordDep_Automate_ActiverCoordinationAmisSur" }, "BEH_CoordDep_Automate_ActiverCoordinationAmisSur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_CoordDep_Automate_ActiverCoordinationAmisSur, {value} ) end,
     activations =
     {
-        { "ACT_Ordre_Automate_Pause", {} },
+        { "ACT_Ordre_Automate_Pause", { "done_ACT_Ordre_Automate_Pause" } },
     },
 
     create = function( self )

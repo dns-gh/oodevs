@@ -9,12 +9,14 @@ includedFiles["sources/appui/genie/pions/missions/participation a la protection/
 ]]--[[// *****************************************************************************
 ]]node "MIS_Pion_GEN_RealiserTravauxProtection"
 {
+    feedbacks = { { { "done_MIS_Pion_GEN_RealiserTravauxProtection" }, "MIS_Pion_GEN_RealiserTravauxProtection" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_GEN_RealiserTravauxProtection, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_GEN_AllerFaireTravauxSur", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Dep_GEN_AllerFaireTravauxSur", { "done_BEH_Dep_GEN_AllerFaireTravauxSur" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "done_BEH_Dep_SePosterFaceADirectionDangereuse" } },
     },
 
     create = function( self )
@@ -40,7 +42,8 @@ includedFiles["sources/appui/genie/pions/missions/participation a la protection/
 ]]        end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
                 self.ePhaseMission = eFinMission
@@ -71,7 +74,8 @@ elseif switch_1 == eProgresser then
                         end
                     end
 
-                    Activate( self.activations.BEH_Dep_GEN_AllerFaireTravauxSur, 1, setmetatable( { self._namedParams.mission.travaux_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_GEN_AllerFaireTravauxSur, 1, { self._namedParams.mission.travaux_, } )
+self.done_BEH_Dep_GEN_AllerFaireTravauxSur = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                 --[[// Fin de la mission
 ]]                cases_switch_1[2] = true
@@ -95,9 +99,11 @@ elseif switch_1 == eFinMission then
 
 node "BEH_Dep_GEN_AllerFaireTravauxSur"
 {
+    feedbacks = { { { "done_BEH_Dep_GEN_AllerFaireTravauxSur" }, "BEH_Dep_GEN_AllerFaireTravauxSur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_GEN_AllerFaireTravauxSur, {value} ) end,
     activations =
     {
-        { "BEH_Obj_GEN_AllerContruireObjetSur", {} },
+        { "BEH_Obj_GEN_AllerContruireObjetSur", { "done_BEH_Obj_GEN_AllerContruireObjetSur" } },
     },
 
     create = function( self )
@@ -116,11 +122,12 @@ node "BEH_Dep_GEN_AllerFaireTravauxSur"
         end
 
         if( self.rIterateur == #( self._namedParams.travaux ) ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             do return end
         end
 
-        Activate( self.activations.BEH_Obj_GEN_AllerContruireObjetSur, 1, setmetatable( { DEC_UserTypeList_GetAt( self._namedParams.travaux, self.rIterateur ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Obj_GEN_AllerContruireObjetSur, 1, { DEC_UserTypeList_GetAt( self._namedParams.travaux, self.rIterateur ), } )
+self.done_BEH_Obj_GEN_AllerContruireObjetSur = function( self, _, v ) self.eEtat = v[1] end
     end,
 
 --[[// *****************************************************************************
@@ -133,6 +140,8 @@ node "BEH_Dep_GEN_AllerFaireTravauxSur"
 
 node "BEH_Obj_GEN_AllerContruireObjetSur"
 {
+    feedbacks = { { { "done_BEH_Obj_GEN_AllerContruireObjetSur" }, "BEH_Obj_GEN_AllerContruireObjetSur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Obj_GEN_AllerContruireObjetSur, {value} ) end,
     instances =
     {
         max = 1,
@@ -140,8 +149,8 @@ node "BEH_Obj_GEN_AllerContruireObjetSur"
 
     activations =
     {
-        { "BEH_Dep_ProgressionVers", {} },
-        { "BEH_Objet_Pion_GEN_RealiserObjet", {} },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
+        { "BEH_Objet_Pion_GEN_RealiserObjet", { "done_BEH_Objet_Pion_GEN_RealiserObjet" } },
     },
 
     create = function( self )
@@ -154,7 +163,7 @@ node "BEH_Obj_GEN_AllerContruireObjetSur"
         self.positionObjet = self.positionObjet or S_Geometrie_BarycentreZone( DEC_GenObject_Localisation( self._namedParams.objet ) )
         --[[// Fin construction
 ]]if( self.eEtat == eActionEffectuee ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -168,7 +177,7 @@ node "BEH_Obj_GEN_AllerContruireObjetSur"
                 if( ( positionTest == 0 or positionTest == nil ) ) then
                     do
                         DEC_Trace( "Objet planifie en dehors du fuseau..." )
-                                                self.params.__returnValue = eActionEffectuee
+                                                self:SendFeedback( eActionEffectuee )
                         Halt( self )
                         do return end
 
@@ -184,7 +193,8 @@ node "BEH_Obj_GEN_AllerContruireObjetSur"
         if( DEC_Geometrie_Distance( self.positionObjet, DEC_Agent_Position() ) > 10 ) then
             Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.positionObjet, eProgressionDirect, eTypeItiMouvement, } )
         else
-            Activate( self.activations.BEH_Objet_Pion_GEN_RealiserObjet, 1, setmetatable( { self._namedParams.objet, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+            Activate( self.activations.BEH_Objet_Pion_GEN_RealiserObjet, 1, { self._namedParams.objet, } )
+self.done_BEH_Objet_Pion_GEN_RealiserObjet = function( self, _, v ) self.eEtat = v[1] end
         end
 
     end,
@@ -199,6 +209,8 @@ node "BEH_Obj_GEN_AllerContruireObjetSur"
 
 node "BEH_Objet_Pion_GEN_RealiserObjet"
 {
+    feedbacks = { { { "done_BEH_Objet_Pion_GEN_RealiserObjet" }, "BEH_Objet_Pion_GEN_RealiserObjet" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Objet_Pion_GEN_RealiserObjet, {value} ) end,
     instances =
     {
         max = 1,
@@ -206,9 +218,9 @@ node "BEH_Objet_Pion_GEN_RealiserObjet"
 
     activations =
     {
-        { "ACT_RC", {} },
-        { "ACT_Obj_Pion_GEN_PreparerObstacle", {} },
-        { "BEH_Objet_Pion_GEN_RealiserTravaux", {} },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "ACT_Obj_Pion_GEN_PreparerObstacle", { "done_ACT_Obj_Pion_GEN_PreparerObstacle" } },
+        { "BEH_Objet_Pion_GEN_RealiserTravaux", { "done_BEH_Objet_Pion_GEN_RealiserTravaux" } },
     },
 
     create = function( self )
@@ -222,7 +234,7 @@ node "BEH_Objet_Pion_GEN_RealiserObjet"
             do
                 self.eEtat = eActionEnCours
                                 do
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -249,9 +261,11 @@ node "BEH_Objet_Pion_GEN_RealiserObjet"
 ]]        end
 
         if( DEC_GenObject_TypeObstacleManoeuvre( self._namedParams.objet ) ) then
-            Activate( self.activations.ACT_Obj_Pion_GEN_PreparerObstacle, 1, setmetatable( { self._namedParams.objet, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+            Activate( self.activations.ACT_Obj_Pion_GEN_PreparerObstacle, 1, { self._namedParams.objet, } )
+self.done_ACT_Obj_Pion_GEN_PreparerObstacle = function( self, _, v ) self.eEtat = v[1] end
         else
-            Activate( self.activations.BEH_Objet_Pion_GEN_RealiserTravaux, 1, setmetatable( { self._namedParams.objet, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+            Activate( self.activations.BEH_Objet_Pion_GEN_RealiserTravaux, 1, { self._namedParams.objet, } )
+self.done_BEH_Objet_Pion_GEN_RealiserTravaux = function( self, _, v ) self.eEtat = v[1] end
         end
 
     end,
@@ -266,10 +280,12 @@ node "BEH_Objet_Pion_GEN_RealiserObjet"
 
 node "BEH_Objet_Pion_GEN_RealiserTravaux"
 {
+    feedbacks = { { { "done_BEH_Objet_Pion_GEN_RealiserTravaux" }, "BEH_Objet_Pion_GEN_RealiserTravaux" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Objet_Pion_GEN_RealiserTravaux, {value} ) end,
     activations =
     {
-        { "ACT_Obj_Pion_GEN_RealiserTravaux", {} },
-        { "ACT_Obj_Pion_GEN_ValoriserObstacle", {} },
+        { "ACT_Obj_Pion_GEN_RealiserTravaux", { "done_ACT_Obj_Pion_GEN_RealiserTravaux" } },
+        { "ACT_Obj_Pion_GEN_ValoriserObstacle", { "done_ACT_Obj_Pion_GEN_ValoriserObstacle" } },
     },
 
     create = function( self )
@@ -303,7 +319,8 @@ node "BEH_Objet_Pion_GEN_RealiserTravaux"
                         end
                     end
 
-                    Activate( self.activations.ACT_Obj_Pion_GEN_RealiserTravaux, 1, setmetatable( { self._namedParams.objet, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.ACT_Obj_Pion_GEN_RealiserTravaux, 1, { self._namedParams.objet, } )
+self.done_ACT_Obj_Pion_GEN_RealiserTravaux = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                 --[[//-----------------------------------------------------------------
 ]]--[[// Valorisation si obsqtacle
@@ -311,7 +328,7 @@ node "BEH_Objet_Pion_GEN_RealiserTravaux"
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eValoriserObstacle then
                     if( not DEC_Agent_PeutValoriserObjet( myself.objMisEnCours_ ) ) then
-                        self.params.__returnValue = eActionEffectuee
+                        self:SendFeedback( eActionEffectuee )
                         Halt( self )
                         do return end
                     end
@@ -321,7 +338,7 @@ elseif switch_1 == eValoriserObstacle then
                         do
                             self.eEtat = eActionEnCours
                                                         do
-                                                                self.params.__returnValue = eActionEffectuee
+                                                                self:SendFeedback( eActionEffectuee )
                                 Halt( self )
                                 do return end
 
@@ -330,7 +347,8 @@ elseif switch_1 == eValoriserObstacle then
                         end
                     end
 
-                    Activate( self.activations.ACT_Obj_Pion_GEN_ValoriserObstacle, 1, setmetatable( { myself.objMisEnCours_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.ACT_Obj_Pion_GEN_ValoriserObstacle, 1, { myself.objMisEnCours_, } )
+self.done_ACT_Obj_Pion_GEN_ValoriserObstacle = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                                 cases_switch_1[2] = true
                 end

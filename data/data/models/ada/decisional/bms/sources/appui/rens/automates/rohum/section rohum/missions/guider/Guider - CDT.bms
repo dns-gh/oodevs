@@ -9,9 +9,11 @@ includedFiles["sources/appui/rens/automates/rohum/section rohum/missions/guider/
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_RENS_ROHUM_OrienterGuider"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_RENS_ROHUM_OrienterGuider" }, "MIS_Automate_CDT_RENS_ROHUM_OrienterGuider" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_RENS_ROHUM_OrienterGuider, {value} ) end,
     activations =
     {
-        { "BEH_Connaissance_Automate_RENS_ROHUM_AssurerLaLiaisonAvec", {} },
+        { "BEH_Connaissance_Automate_RENS_ROHUM_AssurerLaLiaisonAvec", { "done_BEH_Connaissance_Automate_RENS_ROHUM_AssurerLaLiaisonAvec" } },
     },
 
     create = function( self )

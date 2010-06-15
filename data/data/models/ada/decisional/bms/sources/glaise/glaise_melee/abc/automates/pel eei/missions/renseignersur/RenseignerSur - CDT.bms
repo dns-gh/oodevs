@@ -22,9 +22,11 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/pel eei/missions/rensei
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_ABC_RenseignerSur"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ABC_RenseignerSur" }, "MIS_Automate_CDT_ABC_RenseignerSur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ABC_RenseignerSur, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_RenseignerSur", {} },
+        { "BEH_Conduite_Automate_ABC_RenseignerSur", { "done_BEH_Conduite_Automate_ABC_RenseignerSur" } },
     },
 
     create = function( self )

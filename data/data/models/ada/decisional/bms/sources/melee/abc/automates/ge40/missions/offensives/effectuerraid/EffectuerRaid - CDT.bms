@@ -14,15 +14,17 @@ includedFiles["sources/melee/abc/automates/ge40/missions/offensives/effectuerrai
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_ABC_GTIA_EffectuerRaid"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ABC_GTIA_EffectuerRaid" }, "MIS_Automate_CDT_ABC_GTIA_EffectuerRaid" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ABC_GTIA_EffectuerRaid, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_AnalyserSituationPourAttaquer", {} },
-        { "BEH_GTIA_OrganiserLesMoyensPourAttaquer", {} },
-        { "BEH_GTIA_RendreCompte", {} },
-        { "BEH_GTIA_EchelonnerDispositif", {} },
-        { "BEH_GTIA_RepartirDansFuseaux", {} },
-        { "BEH_GTIA_GererAppuisInternes", {} },
-        { "BEH_GTIA_AssignerLesOrdresPourAttaquer", {} },
+        { "ACT_GTIA_AnalyserSituationPourAttaquer", { "done_ACT_GTIA_AnalyserSituationPourAttaquer" } },
+        { "BEH_GTIA_OrganiserLesMoyensPourAttaquer", { "done_BEH_GTIA_OrganiserLesMoyensPourAttaquer" } },
+        { "BEH_GTIA_RendreCompte", { "done_BEH_GTIA_RendreCompte" } },
+        { "BEH_GTIA_EchelonnerDispositif", { "done_BEH_GTIA_EchelonnerDispositif" } },
+        { "BEH_GTIA_RepartirDansFuseaux", { "done_BEH_GTIA_RepartirDansFuseaux" } },
+        { "BEH_GTIA_GererAppuisInternes", { "done_BEH_GTIA_GererAppuisInternes" } },
+        { "BEH_GTIA_AssignerLesOrdresPourAttaquer", { "done_BEH_GTIA_AssignerLesOrdresPourAttaquer" } },
     },
 
     create = function( self )

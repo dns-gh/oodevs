@@ -12,6 +12,8 @@ includedFiles["sources/common/pions/actions/Actions - Transport.bms"] = true
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_Transport_Pion_TransportEmbarquer"
 {
+    feedbacks = { { { "done_ACT_Transport_Pion_TransportEmbarquer" }, "ACT_Transport_Pion_TransportEmbarquer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Transport_Pion_TransportEmbarquer, {value} ) end,
     actuators =
     {
         deplacement = 1,
@@ -59,7 +61,7 @@ elseif switch_1 == eActionTransport_Finished then
                     end
 
                     self.actionEmbarquer = DEC_StopAction( self.actionEmbarquer )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -69,7 +71,7 @@ elseif switch_1 == eActionTransport_Finished then
                     end
 
                     self.actionEmbarquer = DEC_StopAction( self.actionEmbarquer )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -99,6 +101,8 @@ elseif switch_1 == eActionTransport_Finished then
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_Transport_Pion_TransportDebarquer"
 {
+    feedbacks = { { { "done_ACT_Transport_Pion_TransportDebarquer" }, "ACT_Transport_Pion_TransportDebarquer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Transport_Pion_TransportDebarquer, {value} ) end,
     actuators =
     {
         deplacement = 1,
@@ -146,7 +150,7 @@ elseif switch_1 == eActionTransport_Finished then
                     end
 
                     self.actionDebarquer = DEC_StopAction( self.actionDebarquer )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -156,7 +160,7 @@ elseif switch_1 == eActionTransport_Finished then
                     end
 
                     self.actionDebarquer = DEC_StopAction( self.actionDebarquer )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 

@@ -26,6 +26,8 @@ includedFiles["sources/melee/inf/pions/grp mortier/Actions.bms"] = true
 ]]--[[//-----------------------------------------------------------------------------
 ]]node "ACT_Transport_Pion_INF_Debarquer"
 {
+    feedbacks = { { { "done_ACT_Transport_Pion_INF_Debarquer" }, "ACT_Transport_Pion_INF_Debarquer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Transport_Pion_INF_Debarquer, {value} ) end,
     actuators =
     {
         deplacement = 1,
@@ -59,7 +61,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                 or switch_1 == eActionEmbDeb_PasDeTransporteurs then
                     DEC_Trace( "Debarquement : ignore transporteur" )
                     self.actionID = DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -67,7 +69,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                 if cases_switch_1[2] or switch_1 == eActionEmbDeb_Termine then
                     DEC_Message( eRC_DisembarkmentFinished )
                     self.actionID = DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -101,13 +103,15 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
 
 node "ACT_Tir_Pion_INF_TirCouverture"
 {
+    feedbacks = { { { "done_ACT_Tir_Pion_INF_TirCouverture" }, "ACT_Tir_Pion_INF_TirCouverture" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Tir_Pion_INF_TirCouverture, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.repEni = self.params[1]
     end,
 
     select = function( self )
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         Halt( self )
         do return end
 
@@ -121,6 +125,8 @@ node "ACT_Tir_Pion_INF_TirCouverture"
 ]]--[[// ============================================================================
 ]]node "ACT_Tir_Pion_Mortier_SurPosition"
 {
+    feedbacks = { { { "done_ACT_Tir_Pion_Mortier_SurPosition" }, "ACT_Tir_Pion_Mortier_SurPosition" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Tir_Pion_Mortier_SurPosition, {value} ) end,
     actuators =
     {
         tir = 1,
@@ -166,7 +172,7 @@ node "ACT_Tir_Pion_INF_TirCouverture"
                     end
 
                     self.actionID = DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -185,7 +191,7 @@ node "ACT_Tir_Pion_INF_TirCouverture"
 
                     end
 
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -213,7 +219,7 @@ node "ACT_Tir_Pion_INF_TirCouverture"
                     end
 
                     self.actionID = DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -232,7 +238,7 @@ node "ACT_Tir_Pion_INF_TirCouverture"
                     end
 
                     self.actionID = DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -258,7 +264,7 @@ node "ACT_Tir_Pion_INF_TirCouverture"
                 end
             end
 
-                self.params.__returnValue = eActionEnCours
+                self:SendFeedback( eActionEnCours )
         do return end
 
     end,
@@ -282,6 +288,8 @@ node "ACT_Tir_Pion_INF_TirCouverture"
 ]]--[[// ============================================================================
 ]]node "ACT_Tir_Pion_Mortier_SurConnaissance"
 {
+    feedbacks = { { { "done_ACT_Tir_Pion_Mortier_SurConnaissance" }, "ACT_Tir_Pion_Mortier_SurConnaissance" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Tir_Pion_Mortier_SurConnaissance, {value} ) end,
     actuators =
     {
         tir = 1,
@@ -329,7 +337,7 @@ node "ACT_Tir_Pion_INF_TirCouverture"
                     end
 
                     self.actionID = DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -348,7 +356,7 @@ node "ACT_Tir_Pion_INF_TirCouverture"
 
                     end
 
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -368,7 +376,7 @@ node "ACT_Tir_Pion_INF_TirCouverture"
                     end
 
                     self.actionID = DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -387,7 +395,7 @@ node "ACT_Tir_Pion_INF_TirCouverture"
                     end
 
                     self.actionID = DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -413,7 +421,7 @@ node "ACT_Tir_Pion_INF_TirCouverture"
                 end
             end
 
-                self.params.__returnValue = eActionEnCours
+                self:SendFeedback( eActionEnCours )
         do return end
 
     end,
@@ -440,6 +448,8 @@ node "ACT_Tir_Pion_INF_TirCouverture"
 ]]--[[// ============================================================================  
 ]]node "ACT_Tir_Pion_Mortier_PreparerTirSur"
 {
+    feedbacks = { { { "done_ACT_Tir_Pion_Mortier_PreparerTirSur" }, "ACT_Tir_Pion_Mortier_PreparerTirSur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Tir_Pion_Mortier_PreparerTirSur, {value} ) end,
     actuators =
     {
         tir = 1,

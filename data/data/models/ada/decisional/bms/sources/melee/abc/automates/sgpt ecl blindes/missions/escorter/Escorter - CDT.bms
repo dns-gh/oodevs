@@ -10,9 +10,11 @@ includedFiles["sources/melee/abc/automates/sgpt ecl blindes/missions/escorter/Es
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_ABC_EscorterUnite"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ABC_EscorterUnite" }, "MIS_Automate_CDT_ABC_EscorterUnite" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ABC_EscorterUnite, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_Escorter", {} },
+        { "BEH_Conduite_Automate_ABC_Escorter", { "done_BEH_Conduite_Automate_ABC_Escorter" } },
     },
 
     create = function( self )
@@ -44,9 +46,11 @@ includedFiles["sources/melee/abc/automates/sgpt ecl blindes/missions/escorter/Es
 
 node "MIS_Automate_CDT_ABC_EscorterUnites"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ABC_EscorterUnites" }, "MIS_Automate_CDT_ABC_EscorterUnites" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ABC_EscorterUnites, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_Escorter", {} },
+        { "BEH_Conduite_Automate_ABC_Escorter", { "done_BEH_Conduite_Automate_ABC_Escorter" } },
     },
 
     create = function( self )

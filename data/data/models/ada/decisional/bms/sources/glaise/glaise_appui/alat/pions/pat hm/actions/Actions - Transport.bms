@@ -9,6 +9,8 @@ includedFiles["sources/glaise/glaise_appui/alat/pions/pat hm/actions/Actions - T
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "ACT_Transport_Pion_ALAT_HM_HelitransportEmbarquer"
 {
+    feedbacks = { { { "done_ACT_Transport_Pion_ALAT_HM_HelitransportEmbarquer" }, "ACT_Transport_Pion_ALAT_HM_HelitransportEmbarquer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Transport_Pion_ALAT_HM_HelitransportEmbarquer, {value} ) end,
     actuators =
     {
         embarquer = 1,
@@ -44,14 +46,14 @@ includedFiles["sources/glaise/glaise_appui/alat/pions/pat hm/actions/Actions - T
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionTransport_Finished then
                     self.actionEmbarquer = DEC_StopAction( self.actionEmbarquer )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionTransport_Impossible then
                     self.actionEmbarquer = DEC_StopAction( self.actionEmbarquer )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -78,6 +80,8 @@ elseif switch_1 == eActionTransport_Finished then
 ]]--[[//------------------------------------------------------------------------------
 ]]node "ACT_Transport_Pion_ALAT_HM_HelitransportDebarquer"
 {
+    feedbacks = { { { "done_ACT_Transport_Pion_ALAT_HM_HelitransportDebarquer" }, "ACT_Transport_Pion_ALAT_HM_HelitransportDebarquer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Transport_Pion_ALAT_HM_HelitransportDebarquer, {value} ) end,
     actuators =
     {
         debarquer = 1,
@@ -115,14 +119,14 @@ elseif switch_1 == eActionTransport_Finished then
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionTransport_Finished then
                     DEC_StopAction( self.actionDebarquer )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionTransport_Impossible then
                     DEC_StopAction( self.actionDebarquer )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -150,6 +154,8 @@ elseif switch_1 == eActionTransport_Finished then
 ]]--[[//------------------------------------------------------------------------------
 ]]node "ACT_Log_Pion_ALAT_HM_BloquerLiaisonSanitaire"
 {
+    feedbacks = { { { "done_ACT_Log_Pion_ALAT_HM_BloquerLiaisonSanitaire" }, "ACT_Log_Pion_ALAT_HM_BloquerLiaisonSanitaire" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Log_Pion_ALAT_HM_BloquerLiaisonSanitaire, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]

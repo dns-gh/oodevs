@@ -9,6 +9,8 @@ includedFiles["sources/appui/genie/automates/cie blindee/missions/faire franchir
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_MRT_GEN_FaireFranchir"
 {
+    feedbacks = { { { "done_MIS_Automate_MRT_GEN_FaireFranchir" }, "MIS_Automate_MRT_GEN_FaireFranchir" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_MRT_GEN_FaireFranchir, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission

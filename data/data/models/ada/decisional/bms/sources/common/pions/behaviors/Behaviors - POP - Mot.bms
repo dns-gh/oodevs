@@ -13,9 +13,11 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "BEH_MOT_RiposteSurPopulations"
 {
+    feedbacks = { { { "done_BEH_MOT_RiposteSurPopulations" }, "BEH_MOT_RiposteSurPopulations" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MOT_RiposteSurPopulations, {value} ) end,
     activations =
     {
-        { "BEH_RiposteSurPopulation", {} },
+        { "BEH_RiposteSurPopulation", { "done_BEH_RiposteSurPopulation" } },
     },
 
     create = function( self )
@@ -43,9 +45,11 @@ do
 
 node "BEH_MOT_DecrochageFaceAPopulations"
 {
+    feedbacks = { { { "done_BEH_MOT_DecrochageFaceAPopulations" }, "BEH_MOT_DecrochageFaceAPopulations" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MOT_DecrochageFaceAPopulations, {value} ) end,
     activations =
     {
-        { "BEH_Pop_Pion_PresAuDecrochageFaceA", {} },
+        { "BEH_Pop_Pion_PresAuDecrochageFaceA", { "done_BEH_Pop_Pion_PresAuDecrochageFaceA" } },
     },
 
     create = function( self )
@@ -87,9 +91,11 @@ do
 
 node "BEH_MOT_PasserEnEmploiForceInterdit"
 {
+    feedbacks = { { { "done_BEH_MOT_PasserEnEmploiForceInterdit" }, "BEH_MOT_PasserEnEmploiForceInterdit" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MOT_PasserEnEmploiForceInterdit, {value} ) end,
     activations =
     {
-        { "BEH_ROE_GererEmploiForceInterdit", {} },
+        { "BEH_ROE_GererEmploiForceInterdit", { "done_BEH_ROE_GererEmploiForceInterdit" } },
     },
 
     create = function( self )
@@ -109,9 +115,11 @@ node "BEH_MOT_PasserEnEmploiForceInterdit"
 
 node "BEH_MOT_PasserEnMaintienADistanceParMoyensNonLetaux"
 {
+    feedbacks = { { { "done_BEH_MOT_PasserEnMaintienADistanceParMoyensNonLetaux" }, "BEH_MOT_PasserEnMaintienADistanceParMoyensNonLetaux" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MOT_PasserEnMaintienADistanceParMoyensNonLetaux, {value} ) end,
     activations =
     {
-        { "BEH_ROE_GererMaintienADistanceParMoyensNonLetaux", {} },
+        { "BEH_ROE_GererMaintienADistanceParMoyensNonLetaux", { "done_BEH_ROE_GererMaintienADistanceParMoyensNonLetaux" } },
     },
 
     create = function( self )
@@ -131,9 +139,11 @@ node "BEH_MOT_PasserEnMaintienADistanceParMoyensNonLetaux"
 
 node "BEH_MOT_PasserEnDispersionParMoyensDeDefenseActifs"
 {
+    feedbacks = { { { "done_BEH_MOT_PasserEnDispersionParMoyensDeDefenseActifs" }, "BEH_MOT_PasserEnDispersionParMoyensDeDefenseActifs" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MOT_PasserEnDispersionParMoyensDeDefenseActifs, {value} ) end,
     activations =
     {
-        { "BEH_ROE_GererDispersionParMoyensDeDefenseActifs", {} },
+        { "BEH_ROE_GererDispersionParMoyensDeDefenseActifs", { "done_BEH_ROE_GererDispersionParMoyensDeDefenseActifs" } },
     },
 
     create = function( self )
@@ -153,9 +163,11 @@ node "BEH_MOT_PasserEnDispersionParMoyensDeDefenseActifs"
 
 node "BEH_MOT_PasserEnArmesLetalesAutorisees"
 {
+    feedbacks = { { { "done_BEH_MOT_PasserEnArmesLetalesAutorisees" }, "BEH_MOT_PasserEnArmesLetalesAutorisees" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MOT_PasserEnArmesLetalesAutorisees, {value} ) end,
     activations =
     {
-        { "BEH_ROE_GererArmesLetalesAutorisees", {} },
+        { "BEH_ROE_GererArmesLetalesAutorisees", { "done_BEH_ROE_GererArmesLetalesAutorisees" } },
     },
 
     create = function( self )

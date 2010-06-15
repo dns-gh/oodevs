@@ -45,14 +45,16 @@ include "Glaise/Glaise_Appui/Nbc/Automates/Common/Gestion pions detruits.bms"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Defaut"
 {
+    feedbacks = { { { "done_BEH_Defaut" }, "BEH_Defaut" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Defaut, {value} ) end,
     activations =
     {
-        { "BEH_Nbc_Automate_GererAlerteNiv4", {} },
-        { "BEH_ROE_Automate_GererOrdre", {} },
-        { "BEH_Rens_Automate_GererSilenceRadio", {} },
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
-        { "BEH_RC_Automate_Situation", {} },
-        { "BEH_Misc_Automate_GererLesMoyens", {} },
+        { "BEH_Nbc_Automate_GererAlerteNiv4", { "done_BEH_Nbc_Automate_GererAlerteNiv4" } },
+        { "BEH_ROE_Automate_GererOrdre", { "done_BEH_ROE_Automate_GererOrdre" } },
+        { "BEH_Rens_Automate_GererSilenceRadio", { "done_BEH_Rens_Automate_GererSilenceRadio" } },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "done_BEH_Ordre_Automate_RecevoirOrdreInopine" } },
+        { "BEH_RC_Automate_Situation", { "done_BEH_RC_Automate_Situation" } },
+        { "BEH_Misc_Automate_GererLesMoyens", { "done_BEH_Misc_Automate_GererLesMoyens" } },
     },
 
     create = function( self )
@@ -106,9 +108,11 @@ include "Glaise/Glaise_Appui/Nbc/Automates/Common/Gestion pions detruits.bms"
 
 node "BEH_Ordre_Automate_NBC_FairePosterLePremierEchelon_"
 {
+    feedbacks = { { { "done_BEH_Ordre_Automate_NBC_FairePosterLePremierEchelon_" }, "BEH_Ordre_Automate_NBC_FairePosterLePremierEchelon_" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Ordre_Automate_NBC_FairePosterLePremierEchelon_, {value} ) end,
     activations =
     {
-        { "ACT_Ordre_Automate_Pause", {} },
+        { "ACT_Ordre_Automate_Pause", { "done_ACT_Ordre_Automate_Pause" } },
     },
 
     create = function( self )

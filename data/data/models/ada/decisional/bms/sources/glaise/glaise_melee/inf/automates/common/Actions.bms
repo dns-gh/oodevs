@@ -20,6 +20,8 @@ includedFiles["sources/glaise/glaise_melee/inf/automates/common/Actions.bms"] = 
 ]]--[[// ----------------------------------------------------------------------------
 ]]node "ACT_Misc_Automate_INF_Defini_PionAppuiMobile"
 {
+    feedbacks = { { { "done_ACT_Misc_Automate_INF_Defini_PionAppuiMobile" }, "ACT_Misc_Automate_INF_Defini_PionAppuiMobile" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Misc_Automate_INF_Defini_PionAppuiMobile, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionAppui = self.params[1]
@@ -45,6 +47,8 @@ includedFiles["sources/glaise/glaise_melee/inf/automates/common/Actions.bms"] = 
 ]]--[[// ----------------------------------------------------------------------------
 ]]node "ACT_MOT_Automate_INF_DemandeAppliqerFeux"
 {
+    feedbacks = { { { "done_ACT_MOT_Automate_INF_DemandeAppliqerFeux" }, "ACT_MOT_Automate_INF_DemandeAppliqerFeux" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_MOT_Automate_INF_DemandeAppliqerFeux, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pMortier = self.params[1]
@@ -75,6 +79,8 @@ includedFiles["sources/glaise/glaise_melee/inf/automates/common/Actions.bms"] = 
 ]]--[[// ----------------------------------------------------------------------------
 ]]node "ACT_Conduite_Automate_INF_AffecterEchelonPion"
 {
+    feedbacks = { { { "done_ACT_Conduite_Automate_INF_AffecterEchelonPion" }, "ACT_Conduite_Automate_INF_AffecterEchelonPion" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Conduite_Automate_INF_AffecterEchelonPion, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]

@@ -12,6 +12,8 @@ include "bit.lua"
 ]]--[[// ****************************************************************************
 ]]node "ACT_Obj_Pion_GEN_RealiserTravaux"
 {
+    feedbacks = { { { "done_ACT_Obj_Pion_GEN_RealiserTravaux" }, "ACT_Obj_Pion_GEN_RealiserTravaux" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obj_Pion_GEN_RealiserTravaux, {value} ) end,
     actuators =
     {
         obstacle = 1,
@@ -106,7 +108,7 @@ if( DEC_GenObject_Type( self._namedParams.objet ) == eTypeObjectBouchonMines ) t
 
                     end
 
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     do return end
 
                     _continue = false
@@ -115,7 +117,7 @@ if( DEC_GenObject_Type( self._namedParams.objet ) == eTypeObjectBouchonMines ) t
                 or switch_1 == eActionObjetImpossible then
                     DEC_Trace( "  travaux impossible " )
                     DEC_Trace( EnumToString( self.eActionObjet, E_EtatActionObjet ) )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     do return end
 
                     _continue = false
@@ -153,6 +155,8 @@ if( DEC_GenObject_Type( self._namedParams.objet ) == eTypeObjectBouchonMines ) t
 ]]--[[// ******************************************************************************
 ]]node "ACT_Obj_Pion_GEN_PreparerObstacle"
 {
+    feedbacks = { { { "done_ACT_Obj_Pion_GEN_PreparerObstacle" }, "ACT_Obj_Pion_GEN_PreparerObstacle" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obj_Pion_GEN_PreparerObstacle, {value} ) end,
     actuators =
     {
         obstacle = 1,
@@ -224,7 +228,7 @@ if( DEC_GenObject_Type( self._namedParams.objet ) == eTypeObjectBouchonMines ) t
 
                     end
 
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     do return end
 
                                 end
@@ -232,7 +236,7 @@ if( DEC_GenObject_Type( self._namedParams.objet ) == eTypeObjectBouchonMines ) t
                 or switch_1 == eActionObjetImpossible
                 or switch_1 == eActionObjetManqueDotation then
                     DEC_Trace( "Impossible de contruire l'objet" )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     do return end
 
                     _continue = false
@@ -272,6 +276,8 @@ if( DEC_GenObject_Type( self._namedParams.objet ) == eTypeObjectBouchonMines ) t
 ]]--[[// ******************************************************************************
 ]]node "ACT_Obj_Pion_GEN_ActiverObstacle"
 {
+    feedbacks = { { { "done_ACT_Obj_Pion_GEN_ActiverObstacle" }, "ACT_Obj_Pion_GEN_ActiverObstacle" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obj_Pion_GEN_ActiverObstacle, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.repObj = self.params[1]
@@ -292,12 +298,12 @@ if( DEC_GenObject_Type( self._namedParams.objet ) == eTypeObjectBouchonMines ) t
 ]]if( DEC_ActiverObjet( self._namedParams.repObj ) ) then
             do
                 DEC_Trace( "  fin activation " )
-                                self.params.__returnValue = eActionEffectuee
+                                self:SendFeedback( eActionEffectuee )
                 do return end
 
             end
         else
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             do return end
         end
 
@@ -315,6 +321,8 @@ if( DEC_GenObject_Type( self._namedParams.objet ) == eTypeObjectBouchonMines ) t
 ]]--[[// ******************************************************************************
 ]]node "ACT_Obj_Pion_GEN_ValoriserObstacle"
 {
+    feedbacks = { { { "done_ACT_Obj_Pion_GEN_ValoriserObstacle" }, "ACT_Obj_Pion_GEN_ValoriserObstacle" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obj_Pion_GEN_ValoriserObstacle, {value} ) end,
     actuators =
     {
         obstacle = 1,
@@ -384,7 +392,7 @@ if( DEC_GenObject_Type( self._namedParams.objet ) == eTypeObjectBouchonMines ) t
 
                     end
 
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     do return end
 
                                 end
@@ -392,7 +400,7 @@ if( DEC_GenObject_Type( self._namedParams.objet ) == eTypeObjectBouchonMines ) t
                 or switch_1 == eActionObjetImpossible
                 or switch_1 == eActionObjetManqueDotation then
                     DEC_Trace( "Impossible de valoriser l'objet" )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     do return end
 
                     _continue = false
@@ -430,6 +438,8 @@ if( DEC_GenObject_Type( self._namedParams.objet ) == eTypeObjectBouchonMines ) t
 ]]--[[// ******************************************************************************
 ]]node "ACT_Obj_Pion_GEN_ReduireObstacle"
 {
+    feedbacks = { { { "done_ACT_Obj_Pion_GEN_ReduireObstacle" }, "ACT_Obj_Pion_GEN_ReduireObstacle" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obj_Pion_GEN_ReduireObstacle, {value} ) end,
     actuators =
     {
         obstacle = 1,
@@ -500,7 +510,7 @@ if( DEC_GenObject_Type( self._namedParams.objet ) == eTypeObjectBouchonMines ) t
 
                     end
 
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     do return end
 
                                 end
@@ -544,6 +554,8 @@ if( DEC_GenObject_Type( self._namedParams.objet ) == eTypeObjectBouchonMines ) t
 ]]--[[// ******************************************************************************
 ]]node "ACT_Obj_Pion_GEN_CreerContournement"
 {
+    feedbacks = { { { "done_ACT_Obj_Pion_GEN_CreerContournement" }, "ACT_Obj_Pion_GEN_CreerContournement" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obj_Pion_GEN_CreerContournement, {value} ) end,
     actuators =
     {
         obstacle = 1,
@@ -613,7 +625,7 @@ if( DEC_GenObject_Type( self._namedParams.objet ) == eTypeObjectBouchonMines ) t
 
                     end
 
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     do return end
 
                                 end
@@ -657,6 +669,8 @@ if( DEC_GenObject_Type( self._namedParams.objet ) == eTypeObjectBouchonMines ) t
 ]]--[[// ******************************************************************************
 ]]node "ACT_Obj_Pion_GEN_ReprendreTravaux"
 {
+    feedbacks = { { { "done_ACT_Obj_Pion_GEN_ReprendreTravaux" }, "ACT_Obj_Pion_GEN_ReprendreTravaux" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obj_Pion_GEN_ReprendreTravaux, {value} ) end,
     actuators =
     {
         obstacle = 1,
@@ -727,7 +741,7 @@ if( DEC_GenObject_Type( self._namedParams.objet ) == eTypeObjectBouchonMines ) t
 
                     end
 
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     do return end
 
                                 end

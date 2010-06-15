@@ -12,9 +12,11 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Ordre_Inopine"
 {
+    feedbacks = { { { "done_BEH_Ordre_Inopine" }, "BEH_Ordre_Inopine" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Ordre_Inopine, {value} ) end,
     activations =
     {
-        { "ACT_Ordre_Suppression", {} },
+        { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
     },
 
     create = function( self )
@@ -37,7 +39,7 @@ do
         end
 
         if( F_Pion_GetbOrdreInterrompreMission( myself ) or bOrdreConduiteInterrompre ) then
-            self.params.__returnValue = eActionHalt
+            self:SendFeedback( eActionHalt )
             do return end
         end
 

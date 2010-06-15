@@ -19,9 +19,11 @@ includedFiles["sources/common/automates/missions/sefairetransporter/MRT - SeFair
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_MRT_SeFaireTransporter"
 {
+    feedbacks = { { { "done_MIS_Automate_MRT_SeFaireTransporter" }, "MIS_Automate_MRT_SeFaireTransporter" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_MRT_SeFaireTransporter, {value} ) end,
     activations =
     {
-        { "BEH_Medo_Automate_PreparerMission_SeFaireTransporter", {} },
+        { "BEH_Medo_Automate_PreparerMission_SeFaireTransporter", { "done_BEH_Medo_Automate_PreparerMission_SeFaireTransporter" } },
     },
 
     create = function( self )
@@ -47,7 +49,7 @@ includedFiles["sources/common/automates/missions/sefairetransporter/MRT - SeFair
                     DEC_RC( eRC_MissionImpossible )
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -59,7 +61,7 @@ includedFiles["sources/common/automates/missions/sefairetransporter/MRT - SeFair
                 self.eCreationMRT = eActionEnCours
                                 do
                     DEC_MRT_Valide()
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -68,7 +70,8 @@ includedFiles["sources/common/automates/missions/sefairetransporter/MRT - SeFair
             end
         end
 
-        Activate( self.activations.BEH_Medo_Automate_PreparerMission_SeFaireTransporter, 1, setmetatable( { self._namedParams.mission.zoneEmbarquement_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCreationMRT = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Medo_Automate_PreparerMission_SeFaireTransporter, 1, { self._namedParams.mission.zoneEmbarquement_, } )
+self.done_BEH_Medo_Automate_PreparerMission_SeFaireTransporter = function( self, _, v ) self.eCreationMRT = v[1] end
     end,
 
 --[[// *****************************************************************************
@@ -81,10 +84,12 @@ includedFiles["sources/common/automates/missions/sefairetransporter/MRT - SeFair
 
 node "BEH_Medo_Automate_PreparerMission_SeFaireTransporter"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_PreparerMission_SeFaireTransporter" }, "BEH_Medo_Automate_PreparerMission_SeFaireTransporter" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_PreparerMission_SeFaireTransporter, {value} ) end,
     activations =
     {
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
-        { "BEH_Medo_Automate_FaireTransporter_DansZone", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", { "done_BEH_Medo_Automate_ControleCreationMission" } },
+        { "BEH_Medo_Automate_FaireTransporter_DansZone", { "done_BEH_Medo_Automate_FaireTransporter_DansZone" } },
     },
 
     create = function( self )
@@ -110,7 +115,7 @@ node "BEH_Medo_Automate_PreparerMission_SeFaireTransporter"
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( ( #( self.selPions ) == 0 or #( self.selPions ) == nil ) ) then
                         do
-                                                        self.params.__returnValue = eActionImpossible
+                                                        self:SendFeedback( eActionImpossible )
                             Halt( self )
                             do return end
 
@@ -129,7 +134,7 @@ elseif switch_1 == eMRT_AssignerMissions then
                                                         do
                             end
 
-                                                        self.params.__returnValue = eActionImpossible
+                                                        self:SendFeedback( eActionImpossible )
                             Halt( self )
                             do return end
 
@@ -140,7 +145,7 @@ elseif switch_1 == eMRT_AssignerMissions then
                         do
                             self.eValidationMRT = eActionEnCours
                                                         do
-                                                                self.params.__returnValue = eActionEffectuee
+                                                                self:SendFeedback( eActionEffectuee )
                                 Halt( self )
                                 do return end
 
@@ -149,8 +154,10 @@ elseif switch_1 == eMRT_AssignerMissions then
                         end
                     end
 
-                    Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.selPions ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
-                    Activate( self.activations.BEH_Medo_Automate_FaireTransporter_DansZone, 1, setmetatable( { self.selPions, self._namedParams.Zone, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMRT = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( self.selPions ), } )
+self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eValidationMRT = v[1] end
+                    Activate( self.activations.BEH_Medo_Automate_FaireTransporter_DansZone, 1, { self.selPions, self._namedParams.Zone, } )
+self.done_BEH_Medo_Automate_FaireTransporter_DansZone = function( self, _, v ) self.eActionMRT = v[1] end
                     _continue = false--[[// Assigne les missions
 ]]
                                 cases_switch_1[2] = true
@@ -169,9 +176,11 @@ elseif switch_1 == eMRT_AssignerMissions then
 
 node "BEH_Medo_Automate_FaireTransporter_DansZone"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_FaireTransporter_DansZone" }, "BEH_Medo_Automate_FaireTransporter_DansZone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_FaireTransporter_DansZone, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_AssignerSeFaireTransporterA_DansZone", {} },
+        { "BEH_Mission_Automate_AssignerSeFaireTransporterA_DansZone", { "done_BEH_Mission_Automate_AssignerSeFaireTransporterA_DansZone" } },
     },
 
     create = function( self )
@@ -200,9 +209,11 @@ node "BEH_Medo_Automate_FaireTransporter_DansZone"
 
 node "BEH_Mission_Automate_AssignerSeFaireTransporterA_DansZone"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_AssignerSeFaireTransporterA_DansZone" }, "BEH_Mission_Automate_AssignerSeFaireTransporterA_DansZone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_AssignerSeFaireTransporterA_DansZone, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_AssignerSeFaireTransporterA", {} },
+        { "BEH_Mission_Automate_AssignerSeFaireTransporterA", { "done_BEH_Mission_Automate_AssignerSeFaireTransporterA" } },
     },
 
     create = function( self )

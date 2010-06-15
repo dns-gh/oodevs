@@ -9,6 +9,8 @@ includedFiles["sources/glaise/glaise_appui/rens/automates/rohum/cder rbrr/missio
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_MRT_RENS_ROHUM_OrienterGuider"
 {
+    feedbacks = { { { "done_MIS_Automate_MRT_RENS_ROHUM_OrienterGuider" }, "MIS_Automate_MRT_RENS_ROHUM_OrienterGuider" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_MRT_RENS_ROHUM_OrienterGuider, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission

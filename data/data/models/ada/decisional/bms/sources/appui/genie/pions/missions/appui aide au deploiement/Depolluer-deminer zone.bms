@@ -9,13 +9,15 @@ includedFiles["sources/appui/genie/pions/missions/appui aide au deploiement/Depo
 ]]--[[// *****************************************************************************
 ]]node "MIS_Pion_GEN_DepolluerZone"
 {
+    feedbacks = { { { "done_MIS_Pion_GEN_DepolluerZone" }, "MIS_Pion_GEN_DepolluerZone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_GEN_DepolluerZone, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_ProgressionVers", {} },
-        { "BEH_Objet_Pion_GEN_DeminerZone", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
+        { "BEH_Objet_Pion_GEN_DeminerZone", { "done_BEH_Objet_Pion_GEN_DeminerZone" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "done_BEH_Dep_SePosterFaceADirectionDangereuse" } },
     },
 
     create = function( self )
@@ -37,7 +39,7 @@ includedFiles["sources/appui/genie/pions/missions/appui aide au deploiement/Depo
                 if( ( self.ptObst == 0 or self.ptObst == nil ) ) then
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
-                                                self.params.__returnValue = eActionImpossible
+                                                self:SendFeedback( eActionImpossible )
                         Halt( self )
                         do return end
 
@@ -51,7 +53,8 @@ includedFiles["sources/appui/genie/pions/missions/appui aide au deploiement/Depo
 ]]        end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
                 self.ePhase = eFinMission
@@ -85,7 +88,8 @@ elseif switch_1 == eProgresser then
                         end
                     end
 
-                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.ptObst, eProgressionReco, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.ptObst, eProgressionReco, eTypeItiMouvement, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                 --[[// Depolluer
 ]]                cases_switch_1[2] = true
@@ -103,7 +107,8 @@ elseif switch_1 == eDeminerObstacle then
                         end
                     end
 
-                    Activate( self.activations.BEH_Objet_Pion_GEN_DeminerZone, 1, setmetatable( { self._namedParams.mission.zone_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Objet_Pion_GEN_DeminerZone, 1, { self._namedParams.mission.zone_, } )
+self.done_BEH_Objet_Pion_GEN_DeminerZone = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                 --[[// Fin de la mission
 ]]                cases_switch_1[3] = true
@@ -127,11 +132,13 @@ elseif switch_1 == eFinMission then
 
 node "BEH_Objet_Pion_GEN_DeminerZone"
 {
+    feedbacks = { { { "done_BEH_Objet_Pion_GEN_DeminerZone" }, "BEH_Objet_Pion_GEN_DeminerZone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Objet_Pion_GEN_DeminerZone, {value} ) end,
     activations =
     {
-        { "BEH_Objet_Pion_GEN_Deminer", {} },
-        { "ACT_Pion_GEN_AttendreRenforcementPour", {} },
-        { "ACT_Info_Trace", {} },
+        { "BEH_Objet_Pion_GEN_Deminer", { "done_BEH_Objet_Pion_GEN_Deminer" } },
+        { "ACT_Pion_GEN_AttendreRenforcementPour", { "done_ACT_Pion_GEN_AttendreRenforcementPour" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
     },
 
     create = function( self )
@@ -168,7 +175,7 @@ do
             do
                 Activate( self.activations.ACT_Info_Trace, 1, { "Plus d'obstacles connus dans la zone", } )
                 --[[// pas sûr: peut être laisser "tourner" le comportement si reco en même temps
-]]                self.params.__returnValue = eActionEffectuee
+]]                self:SendFeedback( eActionEffectuee )
                 do return end
 
             end
@@ -186,6 +193,8 @@ do
 
 node "BEH_Objet_Pion_GEN_Deminer"
 {
+    feedbacks = { { { "done_BEH_Objet_Pion_GEN_Deminer" }, "BEH_Objet_Pion_GEN_Deminer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Objet_Pion_GEN_Deminer, {value} ) end,
     instances =
     {
         max = 1,
@@ -194,8 +203,8 @@ node "BEH_Objet_Pion_GEN_Deminer"
 
     activations =
     {
-        { "BEH_Dep_ProgressionVers", {} },
-        { "ACT_Obj_Pion_GEN_ReduireObstacle", {} },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
+        { "ACT_Obj_Pion_GEN_ReduireObstacle", { "done_ACT_Obj_Pion_GEN_ReduireObstacle" } },
     },
 
     create = function( self )
@@ -213,7 +222,7 @@ node "BEH_Objet_Pion_GEN_Deminer"
                 --[[// Normalement tj ok car localisation dans zone
 ]]self.positionProcheObjet = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( DEC_ConnaissanceObjet_Localisation( self._namedParams.obj ) )
                 if( ( self.positionProcheObjet == 0 or self.positionProcheObjet == nil ) ) then
-                    self.params.__returnValue = eActionImpossible
+                    self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
                 end

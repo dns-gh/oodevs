@@ -30,6 +30,8 @@ include "bit.lua"
 
 node "BEH_Manoeuvre_RompreContact"
 {
+    feedbacks = { { { "done_BEH_Manoeuvre_RompreContact" }, "BEH_Manoeuvre_RompreContact" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Manoeuvre_RompreContact, {value} ) end,
     instances =
     {
         boost = 1.5,
@@ -37,7 +39,7 @@ node "BEH_Manoeuvre_RompreContact"
 
     activations =
     {
-        { "BEH_Manoeuvre_Pion_INF_SeReplier", {} },
+        { "BEH_Manoeuvre_Pion_INF_SeReplier", { "done_BEH_Manoeuvre_Pion_INF_SeReplier" } },
     },
 
     create = function( self )
@@ -48,7 +50,7 @@ node "BEH_Manoeuvre_RompreContact"
         --[[// Sur une mission retrograde
 ]]--[[// behavior BEH_Decrocher(); //  ? Stimulus, Esquive		
 ]]if( F_Pion_GetobjectifEsquive( myself ) == nil and myself.ptRegroupement_ == nil ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -58,7 +60,7 @@ node "BEH_Manoeuvre_RompreContact"
                 F_Pion_SetobjectifEsquive( myself, nil )
                 self.eActionRupture = eActionEnCours
                 --[[// Se Retablir ?
-]]                self.params.__returnValue = eActionEffectuee
+]]                self:SendFeedback( eActionEffectuee )
                 do return end
 
             end
@@ -66,14 +68,16 @@ node "BEH_Manoeuvre_RompreContact"
 ]]        end
 
         if( myself.ptRegroupement_ ~= nil ) then
-            Activate( self.activations.BEH_Manoeuvre_Pion_INF_SeReplier, 3 * S_Force_Pion_INF_Regroupement( myself.ptRegroupement_ ), setmetatable( { myself.ptRegroupement_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionRupture = v else rawset( t, k, v ) end end } ) )
+            Activate( self.activations.BEH_Manoeuvre_Pion_INF_SeReplier, 3 * S_Force_Pion_INF_Regroupement( myself.ptRegroupement_ ), { myself.ptRegroupement_, } )
+self.done_BEH_Manoeuvre_Pion_INF_SeReplier = function( self, _, v ) self.eActionRupture = v[1] end
         else
 if( F_Pion_GetobjectifEsquive( myself ) ~= nil ) then
-                Activate( self.activations.BEH_Manoeuvre_Pion_INF_SeReplier, S_Force_Pion_INF_Regroupement( F_Pion_GetobjectifEsquive( myself ) ), setmetatable( { F_Pion_GetobjectifEsquive( myself ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionRupture = v else rawset( t, k, v ) end end } ) )
+                Activate( self.activations.BEH_Manoeuvre_Pion_INF_SeReplier, S_Force_Pion_INF_Regroupement( F_Pion_GetobjectifEsquive( myself ) ), { F_Pion_GetobjectifEsquive( myself ), } )
+self.done_BEH_Manoeuvre_Pion_INF_SeReplier = function( self, _, v ) self.eActionRupture = v[1] end
             end
         end
 
-                self.params.__returnValue = self.eActionRupture
+                self:SendFeedback( self.eActionRupture )
         do return end
 
     end,
@@ -85,6 +89,8 @@ if( F_Pion_GetobjectifEsquive( myself ) ~= nil ) then
 
 node "BEH_Manoeuvre_Pion_INF_SeReplier"
 {
+    feedbacks = { { { "done_BEH_Manoeuvre_Pion_INF_SeReplier" }, "BEH_Manoeuvre_Pion_INF_SeReplier" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Manoeuvre_Pion_INF_SeReplier, {value} ) end,
     instances =
     {
         boost = 2,
@@ -92,8 +98,8 @@ node "BEH_Manoeuvre_Pion_INF_SeReplier"
 
     activations =
     {
-        { "BEH_Mot_Pion_Embarquer", {} },
-        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Mot_Pion_Embarquer", { "done_BEH_Mot_Pion_Embarquer" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
     },
 
     create = function( self )
@@ -115,7 +121,7 @@ node "BEH_Manoeuvre_Pion_INF_SeReplier"
                                 do
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -126,7 +132,7 @@ node "BEH_Manoeuvre_Pion_INF_SeReplier"
             do
                 self.eAction = eActionEnCours
                                 do
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -140,11 +146,12 @@ node "BEH_Manoeuvre_Pion_INF_SeReplier"
         end
 
         if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), self._namedParams.ptRepli, 0 ) ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             do return end
         end
 
-        Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.ptRepli, eProgressionDirect, eTypeItiRepli, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.ptRepli, eProgressionDirect, eTypeItiRepli, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] end
     end,
 
 --[[// ----------------------------------------------------------------------------
@@ -155,6 +162,8 @@ node "BEH_Manoeuvre_Pion_INF_SeReplier"
 
 node "BEH_Misc_Pion_INF_MAJ_Repli"
 {
+    feedbacks = { { { "done_BEH_Misc_Pion_INF_MAJ_Repli" }, "BEH_Misc_Pion_INF_MAJ_Repli" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Misc_Pion_INF_MAJ_Repli, {value} ) end,
     create = function( self )
     end,
 

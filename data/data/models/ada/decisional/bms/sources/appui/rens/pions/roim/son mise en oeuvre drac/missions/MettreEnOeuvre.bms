@@ -9,9 +9,11 @@ includedFiles["sources/appui/rens/pions/roim/son mise en oeuvre drac/missions/Me
 ]]--[[// *****************************************************************************
 ]]node "MIS_Pion_RENS_ROIM_MettreEnOeuvre"
 {
+    feedbacks = { { { "done_MIS_Pion_RENS_ROIM_MettreEnOeuvre" }, "MIS_Pion_RENS_ROIM_MettreEnOeuvre" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_RENS_ROIM_MettreEnOeuvre, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Pion_RENS_MettreEnOeuvre_DRAC", {} },
+        { "BEH_Mission_Pion_RENS_MettreEnOeuvre_DRAC", { "done_BEH_Mission_Pion_RENS_MettreEnOeuvre_DRAC" } },
     },
 
     create = function( self )
@@ -25,13 +27,13 @@ includedFiles["sources/appui/rens/pions/roim/son mise en oeuvre drac/missions/Me
 ]]--[[// Terminaison
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eEtat == eActionImpossible ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             Halt( self )
             do return end
         end
 
         if( self.eEtat == eActionEffectuee ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -43,7 +45,8 @@ includedFiles["sources/appui/rens/pions/roim/son mise en oeuvre drac/missions/Me
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Comportement de la mission
 ]]--[[//-----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_Mission_Pion_RENS_MettreEnOeuvre_DRAC, 1, setmetatable( { self._namedParams.mission.positionDeploiement_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+]]Activate( self.activations.BEH_Mission_Pion_RENS_MettreEnOeuvre_DRAC, 1, { self._namedParams.mission.positionDeploiement_, } )
+self.done_BEH_Mission_Pion_RENS_MettreEnOeuvre_DRAC = function( self, _, v ) self.eEtat = v[1] end
     end,
 
 --[[// *****************************************************************************
@@ -56,15 +59,17 @@ includedFiles["sources/appui/rens/pions/roim/son mise en oeuvre drac/missions/Me
 
 node "BEH_Mission_Pion_RENS_MettreEnOeuvre_DRAC"
 {
+    feedbacks = { { { "done_BEH_Mission_Pion_RENS_MettreEnOeuvre_DRAC" }, "BEH_Mission_Pion_RENS_MettreEnOeuvre_DRAC" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Pion_RENS_MettreEnOeuvre_DRAC, {value} ) end,
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "ACT_RC", {} },
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_ProgressionVers", {} },
-        { "BEH_Dispositif_Pion_Rens_MettreEnOeuvreDRAC", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
+        { "BEH_Dispositif_Pion_Rens_MettreEnOeuvreDRAC", { "done_BEH_Dispositif_Pion_Rens_MettreEnOeuvreDRAC" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "done_BEH_Dep_SePosterFaceADirectionDangereuse" } },
     },
 
     create = function( self )
@@ -94,7 +99,8 @@ do
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
                 self.ePhaseMission = eFinMission
@@ -136,7 +142,8 @@ elseif switch_1 == eProgresser then
                         end
                     end
 
-                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.positionDeploiement, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.positionDeploiement, eProgressionDirect, eTypeItiMouvement, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                 --[[// Mettre en oeuvre
 ]]                cases_switch_1[2] = true
@@ -154,7 +161,8 @@ elseif switch_1 == eSurveiller then
                         end
                     end
 
-                    Activate( self.activations.BEH_Dispositif_Pion_Rens_MettreEnOeuvreDRAC, 1, setmetatable( { self.pionDrone, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dispositif_Pion_Rens_MettreEnOeuvreDRAC, 1, { self.pionDrone, } )
+self.done_BEH_Dispositif_Pion_Rens_MettreEnOeuvreDRAC = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                 --[[// Fin de la mission de reconnaissance
 ]]                cases_switch_1[3] = true
@@ -180,11 +188,13 @@ elseif switch_1 == eFinMission then
 
 node "BEH_Dispositif_Pion_Rens_MettreEnOeuvreDRAC"
 {
+    feedbacks = { { { "done_BEH_Dispositif_Pion_Rens_MettreEnOeuvreDRAC" }, "BEH_Dispositif_Pion_Rens_MettreEnOeuvreDRAC" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dispositif_Pion_Rens_MettreEnOeuvreDRAC, {value} ) end,
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "ACT_Transport_Pion_Rens_DebarquerDRAC", {} },
-        { "ACT_Misc_ProgrammerDRAC", {} },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "ACT_Transport_Pion_Rens_DebarquerDRAC", { "done_ACT_Transport_Pion_Rens_DebarquerDRAC" } },
+        { "ACT_Misc_ProgrammerDRAC", { "done_ACT_Misc_ProgrammerDRAC" } },
     },
 
     create = function( self )
@@ -205,7 +215,7 @@ node "BEH_Dispositif_Pion_Rens_MettreEnOeuvreDRAC"
 ]]--[[//                     Il faut donc le débarquer pour pouvoir le lancer
 ]]--[[// ********************************************************************
 ]]Activate( self.activations.ACT_Transport_Pion_Rens_DebarquerDRAC, 1, { self._namedParams.pionDrone, } )
-                                self.params.__returnValue = eActionEffectuee
+                                self:SendFeedback( eActionEffectuee )
                 do return end
 
             end
@@ -214,7 +224,8 @@ node "BEH_Dispositif_Pion_Rens_MettreEnOeuvreDRAC"
 ]]--[[// ************************************************************************
 ]]        end
 
-        Activate( self.activations.ACT_Misc_ProgrammerDRAC, 1, setmetatable( { self._namedParams.pionDrone, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Misc_ProgrammerDRAC, 1, { self._namedParams.pionDrone, } )
+self.done_ACT_Misc_ProgrammerDRAC = function( self, _, v ) self.eEtat = v[1] end
     end,
 
 --[[// *****************************************************************************
@@ -227,6 +238,8 @@ node "BEH_Dispositif_Pion_Rens_MettreEnOeuvreDRAC"
 
 node "ACT_Misc_ProgrammerDRAC"
 {
+    feedbacks = { { { "done_ACT_Misc_ProgrammerDRAC" }, "ACT_Misc_ProgrammerDRAC" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Misc_ProgrammerDRAC, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionDrone = self.params[1]
@@ -274,7 +287,7 @@ node "ACT_Misc_ProgrammerDRAC"
 
                         end
 
-                                                self.params.__returnValue = eActionEffectuee
+                                                self:SendFeedback( eActionEffectuee )
                         Halt( self )
                         do return end
 
@@ -297,6 +310,8 @@ node "ACT_Misc_ProgrammerDRAC"
 ]]--[[// *****************************************************************************
 ]]node "ACT_Transport_Pion_Rens_DebarquerDRAC"
 {
+    feedbacks = { { { "done_ACT_Transport_Pion_Rens_DebarquerDRAC" }, "ACT_Transport_Pion_Rens_DebarquerDRAC" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Transport_Pion_Rens_DebarquerDRAC, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionDrone = self.params[1]

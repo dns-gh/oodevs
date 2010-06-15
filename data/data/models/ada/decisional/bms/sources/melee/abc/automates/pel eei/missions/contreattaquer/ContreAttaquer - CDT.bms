@@ -18,9 +18,11 @@ includedFiles["sources/melee/abc/automates/pel eei/missions/contreattaquer/Contr
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_ABC_ContreAttaquer"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ABC_ContreAttaquer" }, "MIS_Automate_CDT_ABC_ContreAttaquer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ABC_ContreAttaquer, {value} ) end,
     activations =
     {
-        { "BEH_Auto_CDT_ABC_Attaquer", {} },
+        { "BEH_Auto_CDT_ABC_Attaquer", { "done_BEH_Auto_CDT_ABC_Attaquer" } },
     },
 
     create = function( self )

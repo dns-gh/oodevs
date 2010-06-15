@@ -9,10 +9,12 @@ includedFiles["sources/glaise/glaise_appui/log/pions/missions/Evacuer.bms"] = tr
 ]]--[[// *****************************************************************************
 ]]node "MIS_Pion_LOG_Evacuer"
 {
+    feedbacks = { { { "done_MIS_Pion_LOG_Evacuer" }, "MIS_Pion_LOG_Evacuer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_LOG_Evacuer, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_Misc_Pion_LOG_ActiverMaintenance", {} },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "ACT_Misc_Pion_LOG_ActiverMaintenance", { "done_ACT_Misc_Pion_LOG_ActiverMaintenance" } },
     },
 
     create = function( self )
@@ -42,7 +44,8 @@ includedFiles["sources/glaise/glaise_appui/log/pions/missions/Evacuer.bms"] = tr
             end
         end
 
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreConduite = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreConduite = v[1] end
         Activate( self.activations.ACT_Misc_Pion_LOG_ActiverMaintenance, 1, {} )--[[//-------------------------------------------------------------------------
 ]]--[[// Activation de la chaîne
 ]]--[[//-------------------------------------------------------------------------

@@ -9,12 +9,14 @@ includedFiles["sources/appui/nbc/automates/common/missions/armersitedecontaminat
 ]]--[[// *****************************************************************************
 ]]node "BEH_Conduite_Automate_NBC_ArmerUnSiteDeDecontamination"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_NBC_ArmerUnSiteDeDecontamination" }, "BEH_Conduite_Automate_NBC_ArmerUnSiteDeDecontamination" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_NBC_ArmerUnSiteDeDecontamination, {value} ) end,
     activations =
     {
-        { "BEH_Dispositif_Automate_NBC_FaireSuivreLeSE_", {} },
-        { "BEH_CoordDep_Automate_NBC_AssurerLaCoordinationInterne_", {} },
-        { "BEH_Dispositif_Automate_NBC_GererPionsDetruits_", {} },
-        { "BEH_Dispositif_Automate_NBC_FaireArmerSite_", {} },
+        { "BEH_Dispositif_Automate_NBC_FaireSuivreLeSE_", { "done_BEH_Dispositif_Automate_NBC_FaireSuivreLeSE_" } },
+        { "BEH_CoordDep_Automate_NBC_AssurerLaCoordinationInterne_", { "done_BEH_CoordDep_Automate_NBC_AssurerLaCoordinationInterne_" } },
+        { "BEH_Dispositif_Automate_NBC_GererPionsDetruits_", { "done_BEH_Dispositif_Automate_NBC_GererPionsDetruits_" } },
+        { "BEH_Dispositif_Automate_NBC_FaireArmerSite_", { "done_BEH_Dispositif_Automate_NBC_FaireArmerSite_" } },
     },
 
     create = function( self )
@@ -46,10 +48,12 @@ includedFiles["sources/appui/nbc/automates/common/missions/armersitedecontaminat
 
 node "BEH_Dispositif_Automate_NBC_FaireArmerSite_"
 {
+    feedbacks = { { { "done_BEH_Dispositif_Automate_NBC_FaireArmerSite_" }, "BEH_Dispositif_Automate_NBC_FaireArmerSite_" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dispositif_Automate_NBC_FaireArmerSite_, {value} ) end,
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "BEH_Mission_Automate_NBC_AssignerArmerSiteA", {} },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "BEH_Mission_Automate_NBC_AssignerArmerSiteA", { "done_BEH_Mission_Automate_NBC_AssignerArmerSiteA" } },
     },
 
     create = function( self )

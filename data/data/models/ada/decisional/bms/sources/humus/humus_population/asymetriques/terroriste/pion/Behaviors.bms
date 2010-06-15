@@ -93,6 +93,8 @@ include "Humus/Humus_Population/Asymetriques/Common/Pion/Missions/CommettreAtten
 ]]--[[//=============================================================================
 ]]node "BEH_Defaut"
 {
+    feedbacks = { { { "done_BEH_Defaut" }, "BEH_Defaut" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Defaut, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.nDummy = self.params[1]
@@ -109,6 +111,8 @@ include "Humus/Humus_Population/Asymetriques/Common/Pion/Missions/CommettreAtten
 
 node "ACT_ASY_DevenirVisible"
 {
+    feedbacks = { { { "done_ACT_ASY_DevenirVisible" }, "ACT_ASY_DevenirVisible" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_ASY_DevenirVisible, {value} ) end,
     create = function( self )
     end,
 

@@ -12,11 +12,13 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Conduite_Automate_ABC_Jalonner"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_ABC_Jalonner" }, "BEH_Conduite_Automate_ABC_Jalonner" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_ABC_Jalonner, {value} ) end,
     activations =
     {
-        { "BEH_Dispositif_Automate_ABC_GererLeDispositifRetrograde_", {} },
-        { "BEH_CoordDep_Automate_ABC_CoordinationRetrograde_", {} },
-        { "BEH_Conduite_ABC_Automate_Jalonner_GererLesLC", {} },
+        { "BEH_Dispositif_Automate_ABC_GererLeDispositifRetrograde_", { "done_BEH_Dispositif_Automate_ABC_GererLeDispositifRetrograde_" } },
+        { "BEH_CoordDep_Automate_ABC_CoordinationRetrograde_", { "done_BEH_CoordDep_Automate_ABC_CoordinationRetrograde_" } },
+        { "BEH_Conduite_ABC_Automate_Jalonner_GererLesLC", { "done_BEH_Conduite_ABC_Automate_Jalonner_GererLesLC" } },
     },
 
     create = function( self )
@@ -45,9 +47,11 @@ include "bit.lua"
 
 node "BEH_Conduite_ABC_Automate_Jalonner_GererLesLC"
 {
+    feedbacks = { { { "done_BEH_Conduite_ABC_Automate_Jalonner_GererLesLC" }, "BEH_Conduite_ABC_Automate_Jalonner_GererLesLC" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_ABC_Automate_Jalonner_GererLesLC, {value} ) end,
     activations =
     {
-        { "ACT_Ordre_Automate_PasserSurLC", {} },
+        { "ACT_Ordre_Automate_PasserSurLC", { "done_ACT_Ordre_Automate_PasserSurLC" } },
     },
 
     create = function( self )

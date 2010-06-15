@@ -12,13 +12,15 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "MIS_Pion_GEN_AmeliorerMobilite"
 {
+    feedbacks = { { { "done_MIS_Pion_GEN_AmeliorerMobilite" }, "MIS_Pion_GEN_AmeliorerMobilite" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_GEN_AmeliorerMobilite, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_ProgressionVers", {} },
-        { "BEH_Objet_Pion_GEN_RealiserZoneMobilite", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
+        { "BEH_Objet_Pion_GEN_RealiserZoneMobilite", { "done_BEH_Objet_Pion_GEN_RealiserZoneMobilite" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "done_BEH_Dep_SePosterFaceADirectionDangereuse" } },
     },
 
     create = function( self )
@@ -44,7 +46,7 @@ include "bit.lua"
                 if( ( self.ptObst == 0 or self.ptObst == nil ) ) then
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
-                                                self.params.__returnValue = eActionImpossible
+                                                self:SendFeedback( eActionImpossible )
                         Halt( self )
                         do return end
 
@@ -58,7 +60,8 @@ include "bit.lua"
 ]]        end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
                 self.ePhaseMission = eFinMission
@@ -92,7 +95,8 @@ elseif switch_1 == eProgresser then
                         end
                     end
 
-                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.ptObst, eProgressionReco, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.ptObst, eProgressionReco, eTypeItiMouvement, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                 --[[// Depolluer
 ]]                cases_switch_1[2] = true
@@ -110,7 +114,8 @@ elseif switch_1 == eDeminerObstacle then
                         end
                     end
 
-                    Activate( self.activations.BEH_Objet_Pion_GEN_RealiserZoneMobilite, 1, setmetatable( { self.genObs, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Objet_Pion_GEN_RealiserZoneMobilite, 1, { self.genObs, } )
+self.done_BEH_Objet_Pion_GEN_RealiserZoneMobilite = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                 --[[// Fin de la mission
 ]]                cases_switch_1[3] = true
@@ -138,6 +143,8 @@ elseif switch_1 == eFinMission then
 
 node "BEH_Objet_Pion_GEN_RealiserZoneMobilite"
 {
+    feedbacks = { { { "done_BEH_Objet_Pion_GEN_RealiserZoneMobilite" }, "BEH_Objet_Pion_GEN_RealiserZoneMobilite" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Objet_Pion_GEN_RealiserZoneMobilite, {value} ) end,
     instances =
     {
         max = 1,
@@ -145,8 +152,8 @@ node "BEH_Objet_Pion_GEN_RealiserZoneMobilite"
 
     activations =
     {
-        { "ACT_RC", {} },
-        { "ACT_Obj_Pion_GEN_RealiserZoneMobilite", {} },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "ACT_Obj_Pion_GEN_RealiserZoneMobilite", { "done_ACT_Obj_Pion_GEN_RealiserZoneMobilite" } },
     },
 
     create = function( self )
@@ -160,7 +167,7 @@ node "BEH_Objet_Pion_GEN_RealiserZoneMobilite"
             do
                 self.eEtat = eActionEnCours
                                 do
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -185,7 +192,8 @@ node "BEH_Objet_Pion_GEN_RealiserZoneMobilite"
 ]]--[[//-----------------------------------------------------------------
 ]]        end
 
-        Activate( self.activations.ACT_Obj_Pion_GEN_RealiserZoneMobilite, 1, setmetatable( { self._namedParams.genObs:Getloc_obstacle_(), self._namedParams.genObs:Gettype_obstacle_(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Obj_Pion_GEN_RealiserZoneMobilite, 1, { self._namedParams.genObs:Getloc_obstacle_(), self._namedParams.genObs:Gettype_obstacle_(), } )
+self.done_ACT_Obj_Pion_GEN_RealiserZoneMobilite = function( self, _, v ) self.eEtat = v[1] end
     end,
 
 --[[// ****************************************************************************
@@ -198,6 +206,8 @@ node "BEH_Objet_Pion_GEN_RealiserZoneMobilite"
 
 node "ACT_Obj_Pion_GEN_RealiserZoneMobilite"
 {
+    feedbacks = { { { "done_ACT_Obj_Pion_GEN_RealiserZoneMobilite" }, "ACT_Obj_Pion_GEN_RealiserZoneMobilite" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obj_Pion_GEN_RealiserZoneMobilite, {value} ) end,
     actuators =
     {
         obstacle = 1,
@@ -270,7 +280,7 @@ node "ACT_Obj_Pion_GEN_RealiserZoneMobilite"
 
                     end
 
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     do return end
 
                     _continue = false
@@ -278,7 +288,7 @@ node "ACT_Obj_Pion_GEN_RealiserZoneMobilite"
                 or switch_1 == eActionObjetPasDeCapacite
                 or switch_1 == eActionObjetImpossible then
                     DEC_Trace( "  impossible works " )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     do return end
 
                     _continue = false

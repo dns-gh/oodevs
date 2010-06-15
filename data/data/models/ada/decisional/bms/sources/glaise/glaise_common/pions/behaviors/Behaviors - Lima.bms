@@ -11,16 +11,18 @@ includedFiles["sources/glaise/glaise_common/pions/behaviors/Behaviors - Lima.bms
 ]]--[[// *****************************************************************************
 ]]node "BEH_Lima_GererLimas"
 {
+    feedbacks = { { { "done_BEH_Lima_GererLimas" }, "BEH_Lima_GererLimas" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Lima_GererLimas, {value} ) end,
     activations =
     {
-        { "BEH_Lima_Pion_SePosterSurLC", {} },
-        { "BEH_Lima_Pion_Gen_SePosterSurLCA", {} },
-        { "BEH_Lima_Pion_NBC_SePosterSurLCA", {} },
-        { "BEH_Lima_Pion_ABC_SePosterSurLCA", {} },
-        { "BEH_Lima_Pion_INF_SurLCA", {} },
-        { "BEH_Lima_Pion_ABC_PasserSurLD", {} },
-        { "BEH_Lima_Pion_INF_SurLD", {} },
-        { "ACT_Limas_Suppression", {} },
+        { "BEH_Lima_Pion_SePosterSurLC", { "done_BEH_Lima_Pion_SePosterSurLC" } },
+        { "BEH_Lima_Pion_Gen_SePosterSurLCA", { "done_BEH_Lima_Pion_Gen_SePosterSurLCA" } },
+        { "BEH_Lima_Pion_NBC_SePosterSurLCA", { "done_BEH_Lima_Pion_NBC_SePosterSurLCA" } },
+        { "BEH_Lima_Pion_ABC_SePosterSurLCA", { "done_BEH_Lima_Pion_ABC_SePosterSurLCA" } },
+        { "BEH_Lima_Pion_INF_SurLCA", { "done_BEH_Lima_Pion_INF_SurLCA" } },
+        { "BEH_Lima_Pion_ABC_PasserSurLD", { "done_BEH_Lima_Pion_ABC_PasserSurLD" } },
+        { "BEH_Lima_Pion_INF_SurLD", { "done_BEH_Lima_Pion_INF_SurLD" } },
+        { "ACT_Limas_Suppression", { "done_ACT_Limas_Suppression" } },
     },
 
     create = function( self )
@@ -190,11 +192,13 @@ if( meleeInfPionsCommon() ) then
 
 node "BEH_Lima_GererLCAR"
 {
+    feedbacks = { { { "done_BEH_Lima_GererLCAR" }, "BEH_Lima_GererLCAR" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Lima_GererLCAR, {value} ) end,
     activations =
     {
-        { "BEH_Lima_Pion_ABC_SePosterSurLCAR", {} },
-        { "BEH_Lima_Pion_INF_SurLCAR", {} },
-        { "ACT_Limas_Suppression", {} },
+        { "BEH_Lima_Pion_ABC_SePosterSurLCAR", { "done_BEH_Lima_Pion_ABC_SePosterSurLCAR" } },
+        { "BEH_Lima_Pion_INF_SurLCAR", { "done_BEH_Lima_Pion_INF_SurLCAR" } },
+        { "ACT_Limas_Suppression", { "done_ACT_Limas_Suppression" } },
     },
 
     create = function( self )
@@ -288,11 +292,13 @@ if( F_POLY_LIMA_PION_SUR_LCAR() ) then
 
 node "BEH_Lima_GererLR"
 {
+    feedbacks = { { { "done_BEH_Lima_GererLR" }, "BEH_Lima_GererLR" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Lima_GererLR, {value} ) end,
     activations =
     {
-        { "ACT_Dep_PasserSurLima", {} },
-        { "BEH_Lima_Pion_INF_SurLR", {} },
-        { "ACT_Limas_Suppression", {} },
+        { "ACT_Dep_PasserSurLima", { "done_ACT_Dep_PasserSurLima" } },
+        { "BEH_Lima_Pion_INF_SurLR", { "done_BEH_Lima_Pion_INF_SurLR" } },
+        { "ACT_Limas_Suppression", { "done_ACT_Limas_Suppression" } },
     },
 
     create = function( self )
@@ -363,10 +369,12 @@ if( meleeInfPionsCommon() ) then
 
 node "BEH_Lima_GererLIA"
 {
+    feedbacks = { { { "done_BEH_Lima_GererLIA" }, "BEH_Lima_GererLIA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Lima_GererLIA, {value} ) end,
     activations =
     {
-        { "ACT_Dep_PasserSurLima", {} },
-        { "ACT_Limas_Suppression", {} },
+        { "ACT_Dep_PasserSurLima", { "done_ACT_Dep_PasserSurLima" } },
+        { "ACT_Limas_Suppression", { "done_ACT_Limas_Suppression" } },
     },
 
     create = function( self )
@@ -418,10 +426,12 @@ do
 
 node "BEH_Lima_Pion_SePosterSurLC"
 {
+    feedbacks = { { { "done_BEH_Lima_Pion_SePosterSurLC" }, "BEH_Lima_Pion_SePosterSurLC" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Lima_Pion_SePosterSurLC, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_SePoster_EnAttente", {} },
-        { "ACT_Dep_PasserSurLima", {} },
+        { "BEH_Ordre_SePoster_EnAttente", { "done_BEH_Ordre_SePoster_EnAttente" } },
+        { "ACT_Dep_PasserSurLima", { "done_ACT_Dep_PasserSurLima" } },
     },
 
     create = function( self )
@@ -436,7 +446,7 @@ node "BEH_Lima_Pion_SePosterSurLC"
                 --[[// Cas embrayé --> on flague la lima pour tout le monde
 ]]DEC_SetMissionLimaFlag( self._namedParams.limaLC, true )
                 DEC_SetMissionLimaFlagHoraire( self._namedParams.limaLC, true )
-                                self.params.__returnValue = eActionEffectuee
+                                self:SendFeedback( eActionEffectuee )
                 Halt( self )
                 do return end
 
@@ -444,7 +454,8 @@ node "BEH_Lima_Pion_SePosterSurLC"
 --[[// On se poster
 ]]        end
 
-        Activate( self.activations.BEH_Ordre_SePoster_EnAttente, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eOrdre = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_SePoster_EnAttente, 1, {} )
+self.done_BEH_Ordre_SePoster_EnAttente = function( self, _, v ) self.eOrdre = v[1] end
         --[[// MAJ Etat Lima
 ]]Activate( self.activations.ACT_Dep_PasserSurLima, 1, { eEtatLima_LC, } )
     end,

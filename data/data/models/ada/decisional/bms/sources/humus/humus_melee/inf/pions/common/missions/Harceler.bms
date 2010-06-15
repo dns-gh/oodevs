@@ -17,17 +17,19 @@ include "bit.lua"
 ]]--[[//UTILISE POUR LA MISSION REZZOU
 ]]node "BEH_Mission_Pion_INF_Rezzou"
 {
+    feedbacks = { { { "done_BEH_Mission_Pion_INF_Rezzou" }, "BEH_Mission_Pion_INF_Rezzou" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Pion_INF_Rezzou, {value} ) end,
     activations =
     {
-        { "BEH_Lima_Pion_RejoindreFuseau_EnAttente", {} },
-        { "BEH_Ordre_Inopine", {} },
-        { "BEH_Mot_Pion_Embarquer", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_ProgressionVers", {} },
-        { "ACT_RC", {} },
-        { "BEH_Eni_Pion_VAB_Semparer", {} },
-        { "BEH_Mission_Pion_VAB_Semparer", {} },
-        { "ACT_Info_Trace", {} },
+        { "BEH_Lima_Pion_RejoindreFuseau_EnAttente", { "done_BEH_Lima_Pion_RejoindreFuseau_EnAttente" } },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "BEH_Mot_Pion_Embarquer", { "done_BEH_Mot_Pion_Embarquer" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "BEH_Eni_Pion_VAB_Semparer", { "done_BEH_Eni_Pion_VAB_Semparer" } },
+        { "BEH_Mission_Pion_VAB_Semparer", { "done_BEH_Mission_Pion_VAB_Semparer" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
     },
 
     create = function( self )
@@ -51,13 +53,13 @@ include "bit.lua"
             do
                                 do
                     DEC_Warning( eRC_MissionImpossible )
-                                        self.params.__returnValue = eSeReplier
+                                        self:SendFeedback( eSeReplier )
                     Halt( self )
                     do return end
 
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -65,7 +67,8 @@ include "bit.lua"
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
                 self.ePhase = eSeReplier
@@ -100,7 +103,8 @@ include "bit.lua"
 --[[//Déplacement vers la zone de regroupement
 ]]                            end
 
-                            Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.mission.pointRegroupement_, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                            Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.mission.pointRegroupement_, eProgressionDirect, eTypeItiMouvement, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] end
                             _continue = false
                         --[[// Attendre pour poursuivre la mission
 ]]                        cases_switch_1[1] = true
@@ -140,7 +144,8 @@ elseif switch_1 == eRejoindre then
 ]]if( S_RapForLocal() == eEtatRapportDeForce_Favorable ) then
                                         do
                                             Activate( self.activations.BEH_Eni_Pion_VAB_Semparer, 1, {} )
-                                            Activate( self.activations.BEH_Mission_Pion_VAB_Semparer, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCurrentPhase = v else rawset( t, k, v ) end end } ) )
+                                            Activate( self.activations.BEH_Mission_Pion_VAB_Semparer, 1, {} )
+self.done_BEH_Mission_Pion_VAB_Semparer = function( self, _, v ) self.eCurrentPhase = v[1] end
                                         end
 --[[//Rapport de force défavorable ou neutre => se replier
 ]]                                    else
@@ -160,7 +165,7 @@ do
                             _continue = false
                                                 cases_switch_1[3] = true
 elseif switch_1 == eSeReplier then
-                                                        self.params.__returnValue = eSeReplier
+                                                        self:SendFeedback( eSeReplier )
                             Halt( self )
                             do return end
 
@@ -169,7 +174,7 @@ elseif switch_1 == eSeReplier then
                                                 end
                     end
 
-                                self.params.__returnValue = self.ePhase
+                                self:SendFeedback( self.ePhase )
                 do return end
 
             end
@@ -188,12 +193,14 @@ do
 
 node "BEH_Eni_Pion_VAB_Semparer"
 {
+    feedbacks = { { { "done_BEH_Eni_Pion_VAB_Semparer" }, "BEH_Eni_Pion_VAB_Semparer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Pion_VAB_Semparer, {value} ) end,
     activations =
     {
-        { "ACT_RC_SurEni", {} },
-        { "ACT_MAJ_EtatSituationEni", {} },
-        { "BEH_Eni_Pion_VAB_PreparerEngagement", {} },
-        { "BEH_Eni_Pion_ManoeuvreDetruire", {} },
+        { "ACT_RC_SurEni", { "done_ACT_RC_SurEni" } },
+        { "ACT_MAJ_EtatSituationEni", { "done_ACT_MAJ_EtatSituationEni" } },
+        { "BEH_Eni_Pion_VAB_PreparerEngagement", { "done_BEH_Eni_Pion_VAB_PreparerEngagement" } },
+        { "BEH_Eni_Pion_ManoeuvreDetruire", { "done_BEH_Eni_Pion_ManoeuvreDetruire" } },
     },
 
     create = function( self )
@@ -255,12 +262,14 @@ do
 
 node "BEH_Eni_Pion_VAB_PreparerEngagement"
 {
+    feedbacks = { { { "done_BEH_Eni_Pion_VAB_PreparerEngagement" }, "BEH_Eni_Pion_VAB_PreparerEngagement" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Pion_VAB_PreparerEngagement, {value} ) end,
     activations =
     {
-        { "ACT_MAJ_EnnemiEnCours", {} },
-        { "ACT_Obs_EtablirVisionVersPt", {} },
-        { "ACT_Misc_Pion_Ambiance", {} },
-        { "ACT_Dep_SePosterFaceA", {} },
+        { "ACT_MAJ_EnnemiEnCours", { "done_ACT_MAJ_EnnemiEnCours" } },
+        { "ACT_Obs_EtablirVisionVersPt", { "done_ACT_Obs_EtablirVisionVersPt" } },
+        { "ACT_Misc_Pion_Ambiance", { "done_ACT_Misc_Pion_Ambiance" } },
+        { "ACT_Dep_SePosterFaceA", { "done_ACT_Dep_SePosterFaceA" } },
     },
 
     create = function( self )
@@ -286,7 +295,7 @@ node "BEH_Eni_Pion_VAB_PreparerEngagement"
         if( self.bUniteAppuis_OK ) then
             do
                 DEC_Trace( "Renforts en position" )
-                                self.params.__returnValue = eActionEffectuee
+                                self:SendFeedback( eActionEffectuee )
                 do return end
 
             end
@@ -305,16 +314,18 @@ node "BEH_Eni_Pion_VAB_PreparerEngagement"
 
 node "BEH_Mission_Pion_VAB_Semparer"
 {
+    feedbacks = { { { "done_BEH_Mission_Pion_VAB_Semparer" }, "BEH_Mission_Pion_VAB_Semparer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Pion_VAB_Semparer, {value} ) end,
     activations =
     {
-        { "BEH_Lima_Pion_RejoindreFuseau_EnAttente", {} },
-        { "BEH_Mot_Pion_Embarquer", {} },
-        { "BEH_Dep_ProgressionVers", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Obs_Pion_INF_EnReconnaissance", {} },
-        { "ACT_Misc_Pion_Ambiance", {} },
-        { "BEH_MOT_Pion_INF_Debarquer", {} },
-        { "ACT_Dep_Pion_INF_Arret", {} },
+        { "BEH_Lima_Pion_RejoindreFuseau_EnAttente", { "done_BEH_Lima_Pion_RejoindreFuseau_EnAttente" } },
+        { "BEH_Mot_Pion_Embarquer", { "done_BEH_Mot_Pion_Embarquer" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Obs_Pion_INF_EnReconnaissance", { "done_BEH_Obs_Pion_INF_EnReconnaissance" } },
+        { "ACT_Misc_Pion_Ambiance", { "done_ACT_Misc_Pion_Ambiance" } },
+        { "BEH_MOT_Pion_INF_Debarquer", { "done_BEH_MOT_Pion_INF_Debarquer" } },
+        { "ACT_Dep_Pion_INF_Arret", { "done_ACT_Dep_Pion_INF_Arret" } },
     },
 
     create = function( self )
@@ -351,7 +362,7 @@ node "BEH_Mission_Pion_VAB_Semparer"
                             self.eAction = eActionEnCours
                                                         do
                                 self.ePhase = eObserver
-                                                                self.params.__returnValue = self.ePhase
+                                                                self:SendFeedback( self.ePhase )
                                 do return end
 
                             end
@@ -360,7 +371,8 @@ node "BEH_Mission_Pion_VAB_Semparer"
 --[[//Progression directe vers la zone d'attente
 ]]                    end
 
-                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.pointCentreLocalisation, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.pointCentreLocalisation, eProgressionDirect, eTypeItiMouvement, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eObserver then
@@ -368,7 +380,7 @@ elseif switch_1 == eObserver then
                     if( ( F_Pion_GeteniEnCours( myself ) ~= 0 and F_Pion_GeteniEnCours( myself ) ~= nil ) ) then
                         do
                             self.ePhase = eRejoindreAssaut
-                                                        self.params.__returnValue = self.ePhase
+                                                        self:SendFeedback( self.ePhase )
                             do return end
 
                         end
@@ -379,7 +391,7 @@ elseif switch_1 == eObserver then
                     if( self.eAction == eActionHalt ) then
                         do
                             DEC_Trace( "Patrouille accrochee" )
-                                                        self.params.__returnValue = eActionHalt
+                                                        self:SendFeedback( eActionHalt )
                             Halt( self )
                             do return end
 
@@ -391,7 +403,7 @@ elseif switch_1 == eObserver then
                             self.eAction = eActionEnCours
                                                         do
                                 self.ePhase = eRejoindre
-                                                                self.params.__returnValue = self.ePhase
+                                                                self:SendFeedback( self.ePhase )
                                 do return end
 
                             end
@@ -400,7 +412,8 @@ elseif switch_1 == eObserver then
 --[[//On envoie une patrouille en reconnaissance.
 ]]                    end
 
-                    Activate( self.activations.BEH_Obs_Pion_INF_EnReconnaissance, 1, setmetatable( { self.pointCentreLocalisation, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Obs_Pion_INF_EnReconnaissance, 1, { self.pointCentreLocalisation, } )
+self.done_BEH_Obs_Pion_INF_EnReconnaissance = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// On rejoint l'objectif pour s'en emparer
@@ -453,7 +466,8 @@ elseif switch_1 == eRejoindre then
 ]]                    end
 
                     Activate( self.activations.ACT_Misc_Pion_Ambiance, 1, { eEtatAmbiance_Surete, } )
-                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.pointCentreLocalisation, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.pointCentreLocalisation, eProgressionDirect, eTypeItiMouvement, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// Une fois sur place, on fouille les lieux		
@@ -475,7 +489,7 @@ elseif switch_1 == eFouiller then
                         do
                             self.eAction = eActionEnCours
                                                         do
-                                                                self.params.__returnValue = eSeReplier
+                                                                self:SendFeedback( eSeReplier )
                                 Halt( self )
                                 do return end
 
@@ -484,7 +498,8 @@ elseif switch_1 == eFouiller then
                         end
                     end
 
-                    Activate( self.activations.ACT_Dep_Pion_INF_Arret, 1, setmetatable( { M_TEMPS_FOUILLE(), "fouille des lieux ... ", }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.ACT_Dep_Pion_INF_Arret, 1, { M_TEMPS_FOUILLE(), "fouille des lieux ... ", } )
+self.done_ACT_Dep_Pion_INF_Arret = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                                 cases_switch_1[5] = true
 
@@ -492,7 +507,7 @@ elseif switch_1 == eFouiller then
                                 end
             end
 
-                self.params.__returnValue = self.ePhase
+                self:SendFeedback( self.ePhase )
         do return end
 
     end,

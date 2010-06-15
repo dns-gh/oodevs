@@ -21,10 +21,12 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/jalonne
 ]]--[[// *****************************************************************************
 ]]node "BEH_Conduite_Automate_ABC_Jalonner"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_ABC_Jalonner" }, "BEH_Conduite_Automate_ABC_Jalonner" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_ABC_Jalonner, {value} ) end,
     activations =
     {
-        { "BEH_Dispositif_Automate_ABC_GererLeDispositifRetrograde_", {} },
-        { "BEH_CoordDep_Automate_ABC_CoordinationRetrograde_", {} },
+        { "BEH_Dispositif_Automate_ABC_GererLeDispositifRetrograde_", { "done_BEH_Dispositif_Automate_ABC_GererLeDispositifRetrograde_" } },
+        { "BEH_CoordDep_Automate_ABC_CoordinationRetrograde_", { "done_BEH_CoordDep_Automate_ABC_CoordinationRetrograde_" } },
     },
 
     create = function( self )

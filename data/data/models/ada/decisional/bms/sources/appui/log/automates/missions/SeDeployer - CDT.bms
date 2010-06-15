@@ -9,9 +9,11 @@ includedFiles["sources/appui/log/automates/missions/SeDeployer - CDT.bms"] = tru
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_LOG_SeDeployer"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_LOG_SeDeployer" }, "MIS_Automate_CDT_LOG_SeDeployer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_LOG_SeDeployer, {value} ) end,
     activations =
     {
-        { "ACT_Ordre_Automate_LOG_OrdresInopines", {} },
+        { "ACT_Ordre_Automate_LOG_OrdresInopines", { "done_ACT_Ordre_Automate_LOG_OrdresInopines" } },
     },
 
     create = function( self )

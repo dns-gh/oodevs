@@ -36,10 +36,12 @@ include "bit.lua"
 ]]--[[//-----------------------------------------------------------------------------
 ]]node "BEH_Feu_Pion_INF_TirTactique_Couverture"
 {
+    feedbacks = { { { "done_BEH_Feu_Pion_INF_TirTactique_Couverture" }, "BEH_Feu_Pion_INF_TirTactique_Couverture" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Feu_Pion_INF_TirTactique_Couverture, {value} ) end,
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "BEH_Feu_Pion_INF_ConduireLesFeux_Sur", {} },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "BEH_Feu_Pion_INF_ConduireLesFeux_Sur", { "done_BEH_Feu_Pion_INF_ConduireLesFeux_Sur" } },
     },
 
     create = function( self )
@@ -53,7 +55,7 @@ include "bit.lua"
         end
 
         if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.repEni ) ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -92,13 +94,13 @@ do
         if( bAttente ) then
             do
                 Activate( self.activations.ACT_Info_Trace, 1, { "Tir couverture : attente", } )
-                                self.params.__returnValue = eActionEnPause
+                                self:SendFeedback( eActionEnPause )
                 do return end
 
             end
         end
 
-                self.params.__returnValue = eActionEnCours
+                self:SendFeedback( eActionEnCours )
         do return end
 
     end,
@@ -117,6 +119,8 @@ do
 
 node "BEH_Feu_Pion_INF_FixerNeutraliser"
 {
+    feedbacks = { { { "done_BEH_Feu_Pion_INF_FixerNeutraliser" }, "BEH_Feu_Pion_INF_FixerNeutraliser" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Feu_Pion_INF_FixerNeutraliser, {value} ) end,
     instances =
     {
         max = 1,
@@ -124,8 +128,8 @@ node "BEH_Feu_Pion_INF_FixerNeutraliser"
 
     activations =
     {
-        { "ACT_Tir_Pion_INF_Neutraliser", {} },
-        { "BEH_Feu_Pion_INF_ConduireLesFeux_Sur", {} },
+        { "ACT_Tir_Pion_INF_Neutraliser", { "done_ACT_Tir_Pion_INF_Neutraliser" } },
+        { "BEH_Feu_Pion_INF_ConduireLesFeux_Sur", { "done_BEH_Feu_Pion_INF_ConduireLesFeux_Sur" } },
     },
 
     create = function( self )
@@ -139,17 +143,18 @@ node "BEH_Feu_Pion_INF_FixerNeutraliser"
 ]]if( ModuleBegins() ) then
             do
                 Activate( self.activations.ACT_Tir_Pion_INF_Neutraliser, 1, { self._namedParams.ksEni, } )
-                Activate( self.activations.BEH_Feu_Pion_INF_ConduireLesFeux_Sur, 1, setmetatable( { self._namedParams.ksEni, eFormationTir, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                Activate( self.activations.BEH_Feu_Pion_INF_ConduireLesFeux_Sur, 1, { self._namedParams.ksEni, eFormationTir, } )
+self.done_BEH_Feu_Pion_INF_ConduireLesFeux_Sur = function( self, _, v ) self.eAction = v[1] end
             end
 --[[// Lorsque l'on fixe, on ne tire qu'une seule fois.
 ]]        else
 do
                 if( self.eAction ~= eActionEffectuee ) then
-                    self.params.__returnValue = self.eAction
+                    self:SendFeedback( self.eAction )
                     do return end
                 end
 
-                                self.params.__returnValue = eActionEffectuee
+                                self:SendFeedback( eActionEffectuee )
                 do return end
 
             end
@@ -166,6 +171,8 @@ do
 
 node "BEH_Feu_Pion_INF_TirFixer"
 {
+    feedbacks = { { { "done_BEH_Feu_Pion_INF_TirFixer" }, "BEH_Feu_Pion_INF_TirFixer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Feu_Pion_INF_TirFixer, {value} ) end,
     instances =
     {
         boost = 1.1,
@@ -173,9 +180,9 @@ node "BEH_Feu_Pion_INF_TirFixer"
 
     activations =
     {
-        { "ACT_MAJ_EnnemiEnCours", {} },
-        { "ACT_Info_Trace", {} },
-        { "BEH_Feu_Pion_INF_FixerNeutraliser", {} },
+        { "ACT_MAJ_EnnemiEnCours", { "done_ACT_MAJ_EnnemiEnCours" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "BEH_Feu_Pion_INF_FixerNeutraliser", { "done_BEH_Feu_Pion_INF_FixerNeutraliser" } },
     },
 
     create = function( self )
@@ -192,7 +199,7 @@ node "BEH_Feu_Pion_INF_TirFixer"
         end
 
         if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.repEni ) ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             Halt( self )
             do return end
         end
@@ -204,7 +211,7 @@ node "BEH_Feu_Pion_INF_TirFixer"
                                 do
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -212,7 +219,7 @@ node "BEH_Feu_Pion_INF_TirFixer"
         end
 
         if( self.eAction == eActionHalt or self.eAction == eActionEffectuee ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -221,7 +228,7 @@ node "BEH_Feu_Pion_INF_TirFixer"
             do
                 Activate( self.activations.ACT_Info_Trace, 1, { "Ennemi en deplacement", } )
                 self.eAction = eActionEnCours
-                                self.params.__returnValue = eActionEnCours
+                                self:SendFeedback( eActionEnCours )
                 do return end
 
             end
@@ -231,14 +238,15 @@ node "BEH_Feu_Pion_INF_TirFixer"
         if( not S_Eni_EstEnMouvement( self._namedParams.repEni ) ) then
             do
                 self.eAction = eActionEnPause
-                                self.params.__returnValue = eActionEnPause
+                                self:SendFeedback( eActionEnPause )
                 do return end
 
             end
         end
 
         if( self.eAction == eActionEnCours ) then
-            Activate( self.activations.BEH_Feu_Pion_INF_FixerNeutraliser, 1, setmetatable( { self._namedParams.repEni, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+            Activate( self.activations.BEH_Feu_Pion_INF_FixerNeutraliser, 1, { self._namedParams.repEni, } )
+self.done_BEH_Feu_Pion_INF_FixerNeutraliser = function( self, _, v ) self.eAction = v[1] end
         end
 
     end,
@@ -251,6 +259,8 @@ node "BEH_Feu_Pion_INF_TirFixer"
 
 node "BEH_Feu_Pion_INF_TirCouverture_Fixe"
 {
+    feedbacks = { { { "done_BEH_Feu_Pion_INF_TirCouverture_Fixe" }, "BEH_Feu_Pion_INF_TirCouverture_Fixe" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Feu_Pion_INF_TirCouverture_Fixe, {value} ) end,
     instances =
     {
         boost = 1.1,
@@ -258,9 +268,9 @@ node "BEH_Feu_Pion_INF_TirCouverture_Fixe"
 
     activations =
     {
-        { "ACT_MAJ_EnnemiEnCours", {} },
-        { "ACT_Info_Trace", {} },
-        { "BEH_Feu_Pion_INF_ConduireLesFeux_Sur", {} },
+        { "ACT_MAJ_EnnemiEnCours", { "done_ACT_MAJ_EnnemiEnCours" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "BEH_Feu_Pion_INF_ConduireLesFeux_Sur", { "done_BEH_Feu_Pion_INF_ConduireLesFeux_Sur" } },
     },
 
     create = function( self )
@@ -277,7 +287,7 @@ node "BEH_Feu_Pion_INF_TirCouverture_Fixe"
         end
 
         if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.repEni ) ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             Halt( self )
             do return end
         end
@@ -289,7 +299,7 @@ node "BEH_Feu_Pion_INF_TirCouverture_Fixe"
                                 do
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -299,7 +309,7 @@ node "BEH_Feu_Pion_INF_TirCouverture_Fixe"
 ]]        end
 
         if( self.eAction == eActionHalt or self.eAction == eActionEffectuee ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -315,14 +325,15 @@ node "BEH_Feu_Pion_INF_TirCouverture_Fixe"
         if( self.eAction == eActionEnPause ) then
             do
                 self.eAction = eActionEnCours
-                                self.params.__returnValue = eActionEnPause
+                                self:SendFeedback( eActionEnPause )
                 do return end
 
             end
         end
 
         if( self.eAction == eActionEnCours ) then
-            Activate( self.activations.BEH_Feu_Pion_INF_ConduireLesFeux_Sur, 1, setmetatable( { self._namedParams.repEni, eFormationTir_Embarque, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+            Activate( self.activations.BEH_Feu_Pion_INF_ConduireLesFeux_Sur, 1, { self._namedParams.repEni, eFormationTir_Embarque, } )
+self.done_BEH_Feu_Pion_INF_ConduireLesFeux_Sur = function( self, _, v ) self.eAction = v[1] end
         end
 
     end,
@@ -337,14 +348,16 @@ node "BEH_Feu_Pion_INF_TirCouverture_Fixe"
 
 node "BEH_Feu_Pion_INF_ConduireLesFeux_Sur"
 {
+    feedbacks = { { { "done_BEH_Feu_Pion_INF_ConduireLesFeux_Sur" }, "BEH_Feu_Pion_INF_ConduireLesFeux_Sur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Feu_Pion_INF_ConduireLesFeux_Sur, {value} ) end,
     activations =
     {
-        { "ACT_MAJ_EnnemiEnCours", {} },
-        { "ACT_RC", {} },
-        { "ACT_MAJ_EtatSituationEni", {} },
-        { "BEH_Tir_Pion_INF_FaireFeu_Debarque", {} },
-        { "BEH_Tir_Pion_INF_FaireFeu_Embarque", {} },
-        { "BEH_Tir_Pion_INF_FaireFeu", {} },
+        { "ACT_MAJ_EnnemiEnCours", { "done_ACT_MAJ_EnnemiEnCours" } },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "ACT_MAJ_EtatSituationEni", { "done_ACT_MAJ_EtatSituationEni" } },
+        { "BEH_Tir_Pion_INF_FaireFeu_Debarque", { "done_BEH_Tir_Pion_INF_FaireFeu_Debarque" } },
+        { "BEH_Tir_Pion_INF_FaireFeu_Embarque", { "done_BEH_Tir_Pion_INF_FaireFeu_Embarque" } },
+        { "BEH_Tir_Pion_INF_FaireFeu", { "done_BEH_Tir_Pion_INF_FaireFeu" } },
     },
 
     create = function( self )
@@ -363,7 +376,7 @@ node "BEH_Feu_Pion_INF_ConduireLesFeux_Sur"
 ]]--[[// On tir sur l'ennemi
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eAction_Tir == eActionEffectuee ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -373,7 +386,7 @@ node "BEH_Feu_Pion_INF_ConduireLesFeux_Sur"
                                 do
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -403,7 +416,7 @@ node "BEH_Feu_Pion_INF_ConduireLesFeux_Sur"
                         self.eAction_Tir = eActionEnCours
                         --[[// MAJ Stimulus tir inefficace
 ]]g_bTirInefficace = true
-                                                self.params.__returnValue = eActionEnPause
+                                                self:SendFeedback( eActionEnPause )
                         do return end
 
                     end
@@ -420,16 +433,19 @@ node "BEH_Feu_Pion_INF_ConduireLesFeux_Sur"
             local switch_1 = self._namedParams.eFormationTir
             local cases_switch_1 = {}
                 if switch_1 == eFormationTir_Debarque then
-                    Activate( self.activations.BEH_Tir_Pion_INF_FaireFeu_Debarque, 1, setmetatable( { self._namedParams.ksEni, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction_Tir = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Tir_Pion_INF_FaireFeu_Debarque, 1, { self._namedParams.ksEni, } )
+self.done_BEH_Tir_Pion_INF_FaireFeu_Debarque = function( self, _, v ) self.eAction_Tir = v[1] end
                     _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eFormationTir_Embarque then
-                    Activate( self.activations.BEH_Tir_Pion_INF_FaireFeu_Embarque, 1, setmetatable( { self._namedParams.ksEni, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction_Tir = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Tir_Pion_INF_FaireFeu_Embarque, 1, { self._namedParams.ksEni, } )
+self.done_BEH_Tir_Pion_INF_FaireFeu_Embarque = function( self, _, v ) self.eAction_Tir = v[1] end
                     _continue = false
                                 cases_switch_1[2] = true
 
                 else
-                    Activate( self.activations.BEH_Tir_Pion_INF_FaireFeu, 1, setmetatable( { self._namedParams.ksEni, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction_Tir = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Tir_Pion_INF_FaireFeu, 1, { self._namedParams.ksEni, } )
+self.done_BEH_Tir_Pion_INF_FaireFeu = function( self, _, v ) self.eAction_Tir = v[1] end
                                 end
             end
 
@@ -442,10 +458,12 @@ elseif switch_1 == eFormationTir_Embarque then
 
 node "BEH_Tir_Pion_INF_FaireFeu_Embarque"
 {
+    feedbacks = { { { "done_BEH_Tir_Pion_INF_FaireFeu_Embarque" }, "BEH_Tir_Pion_INF_FaireFeu_Embarque" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Tir_Pion_INF_FaireFeu_Embarque, {value} ) end,
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "ACT_Tir_Pion_INF_TirCouverture", {} },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "ACT_Tir_Pion_INF_TirCouverture", { "done_ACT_Tir_Pion_INF_TirCouverture" } },
     },
 
     create = function( self )
@@ -462,7 +480,7 @@ node "BEH_Tir_Pion_INF_FaireFeu_Embarque"
                                 do
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -472,7 +490,7 @@ node "BEH_Tir_Pion_INF_FaireFeu_Embarque"
         if( self.eAction == eActionEffectuee ) then
             do
                 self.eAction = eActionEnCours
-                                self.params.__returnValue = eActionEffectuee
+                                self:SendFeedback( eActionEffectuee )
                 Halt( self )
                 do return end
 
@@ -482,13 +500,14 @@ node "BEH_Tir_Pion_INF_FaireFeu_Embarque"
         if( S_Tir_EstAPortee( self._namedParams.repEni, GetStateVariable( "VE_Agressivite_Tir" ) ) ) then
             do
                 Activate( self.activations.ACT_Info_Trace, 1, { self.stMsg .. "OK.", } )
-                Activate( self.activations.ACT_Tir_Pion_INF_TirCouverture, 1, setmetatable( { self._namedParams.repEni, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                Activate( self.activations.ACT_Tir_Pion_INF_TirCouverture, 1, { self._namedParams.repEni, } )
+self.done_ACT_Tir_Pion_INF_TirCouverture = function( self, _, v ) self.eAction = v[1] end
             end
         else
             Activate( self.activations.ACT_Info_Trace, 1, { self.stMsg .. "NOK.", } )
         end
 
-                self.params.__returnValue = eActionReturn
+                self:SendFeedback( eActionReturn )
         do return end
 
     end,
@@ -500,10 +519,12 @@ node "BEH_Tir_Pion_INF_FaireFeu_Embarque"
 
 node "BEH_Tir_Pion_INF_FaireFeu_Debarque"
 {
+    feedbacks = { { { "done_BEH_Tir_Pion_INF_FaireFeu_Debarque" }, "BEH_Tir_Pion_INF_FaireFeu_Debarque" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Tir_Pion_INF_FaireFeu_Debarque, {value} ) end,
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "BEH_Tir_Pion_INF_TirDebarque", {} },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "BEH_Tir_Pion_INF_TirDebarque", { "done_BEH_Tir_Pion_INF_TirDebarque" } },
     },
 
     create = function( self )
@@ -520,7 +541,7 @@ node "BEH_Tir_Pion_INF_FaireFeu_Debarque"
                                 do
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -530,7 +551,7 @@ node "BEH_Tir_Pion_INF_FaireFeu_Debarque"
         if( self.eAction == eActionEffectuee ) then
             do
                 self.eAction = eActionEnCours
-                                self.params.__returnValue = eActionEffectuee
+                                self:SendFeedback( eActionEffectuee )
                 Halt( self )
                 do return end
 
@@ -541,13 +562,14 @@ node "BEH_Tir_Pion_INF_FaireFeu_Debarque"
             do
                 Activate( self.activations.ACT_Info_Trace, 1, { self.stMsg .. "OK.", } )
                 --[[// action ACT_MAJ_EtatSituationEni( eTypeContexte_ExecuteTir );
-]]Activate( self.activations.BEH_Tir_Pion_INF_TirDebarque, 1, setmetatable( { self._namedParams.repEni, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+]]Activate( self.activations.BEH_Tir_Pion_INF_TirDebarque, 1, { self._namedParams.repEni, } )
+self.done_BEH_Tir_Pion_INF_TirDebarque = function( self, _, v ) self.eAction = v[1] end
             end
         else
             Activate( self.activations.ACT_Info_Trace, 1, { self.stMsg .. "NOK.", } )
         end
 
-                self.params.__returnValue = eActionReturn
+                self:SendFeedback( eActionReturn )
         do return end
 
     end,
@@ -559,10 +581,12 @@ node "BEH_Tir_Pion_INF_FaireFeu_Debarque"
 
 node "BEH_Tir_Pion_INF_FaireFeu"
 {
+    feedbacks = { { { "done_BEH_Tir_Pion_INF_FaireFeu" }, "BEH_Tir_Pion_INF_FaireFeu" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Tir_Pion_INF_FaireFeu, {value} ) end,
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "ACT_Tir_DirectSur", {} },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "ACT_Tir_DirectSur", { "done_ACT_Tir_DirectSur" } },
     },
 
     create = function( self )
@@ -579,7 +603,7 @@ node "BEH_Tir_Pion_INF_FaireFeu"
                                 do
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -589,7 +613,7 @@ node "BEH_Tir_Pion_INF_FaireFeu"
         if( self.eAction == eActionEffectuee ) then
             do
                 self.eAction = eActionEnCours
-                                self.params.__returnValue = eActionEffectuee
+                                self:SendFeedback( eActionEffectuee )
                 Halt( self )
                 do return end
 
@@ -600,13 +624,14 @@ node "BEH_Tir_Pion_INF_FaireFeu"
             do
                 Activate( self.activations.ACT_Info_Trace, 1, { self.stMsg .. "OK.", } )
                 --[[// action ACT_MAJ_EtatSituationEni( eTypeContexte_ExecuteTir );
-]]Activate( self.activations.ACT_Tir_DirectSur, 1, setmetatable( { self._namedParams.repEni, 1, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+]]Activate( self.activations.ACT_Tir_DirectSur, 1, { self._namedParams.repEni, 1, } )
+self.done_ACT_Tir_DirectSur = function( self, _, v ) self.eAction = v[1] end
             end
         else
             Activate( self.activations.ACT_Info_Trace, 1, { self.stMsg .. "NOK.", } )
         end
 
-                self.params.__returnValue = eActionReturn
+                self:SendFeedback( eActionReturn )
         do return end
 
     end,

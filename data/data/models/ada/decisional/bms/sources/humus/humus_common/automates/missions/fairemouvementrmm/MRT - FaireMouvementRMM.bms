@@ -18,9 +18,11 @@ includedFiles["sources/humus/humus_common/automates/missions/fairemouvementrmm/M
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_MRT_FaireMouvementRMM"
 {
+    feedbacks = { { { "done_MIS_Automate_MRT_FaireMouvementRMM" }, "MIS_Automate_MRT_FaireMouvementRMM" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_MRT_FaireMouvementRMM, {value} ) end,
     activations =
     {
-        { "BEH_Automate_MRT_SeDeplacer", {} },
+        { "BEH_Automate_MRT_SeDeplacer", { "done_BEH_Automate_MRT_SeDeplacer" } },
     },
 
     create = function( self )
@@ -64,7 +66,8 @@ includedFiles["sources/humus/humus_common/automates/missions/fairemouvementrmm/M
                     end
 
                         if _continue then
-                        Activate( self.activations.BEH_Automate_MRT_SeDeplacer, 1, setmetatable( { myself:DEC_Automate_PionsSansPC(), self._namedParams.mission.itineraire_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                        Activate( self.activations.BEH_Automate_MRT_SeDeplacer, 1, { myself:DEC_Automate_PionsSansPC(), self._namedParams.mission.itineraire_, } )
+self.done_BEH_Automate_MRT_SeDeplacer = function( self, _, v ) self.eEtat = v[1] end
                         _continue = false
                     end
                 --[[//-----------------------------------------------------------------------------
@@ -74,7 +77,7 @@ includedFiles["sources/humus/humus_common/automates/missions/fairemouvementrmm/M
 elseif switch_1 == eTerminerMission then
                     --[[//Fin MRT
 ]]DEC_MRT_Valide()
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 

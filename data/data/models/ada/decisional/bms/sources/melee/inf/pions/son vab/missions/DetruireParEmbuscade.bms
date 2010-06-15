@@ -18,20 +18,22 @@ include "bit.lua"
 
 node "MIS_Pion_INF_DetruireEmbuscade"
 {
+    feedbacks = { { { "done_MIS_Pion_INF_DetruireEmbuscade" }, "MIS_Pion_INF_DetruireEmbuscade" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_INF_DetruireEmbuscade, {value} ) end,
     activations =
     {
-        { "ACT_Maj_Pion_PasserEnTirSurRiposte", {} },
-        { "BEH_Misc_Pion_DefinirTypeMission", {} },
-        { "BEH_MAJ_AgressiviteMission", {} },
-        { "ACT_Misc_Pion_INF_MAJ_PositionRegroupement", {} },
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_Ordre_Suppression", {} },
-        { "BEH_Eni_Pion_VAB_DetruireEmbuscade", {} },
-        { "BEH_Mission_Pion_VAB_DetruireEmbuscade", {} },
-        { "ACT_Misc_Pion_Ambiance", {} },
-        { "BEH_Manoeuvre_RompreContact", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Poste_Pion_INF_TomberEnGarde", {} },
+        { "ACT_Maj_Pion_PasserEnTirSurRiposte", { "done_ACT_Maj_Pion_PasserEnTirSurRiposte" } },
+        { "BEH_Misc_Pion_DefinirTypeMission", { "done_BEH_Misc_Pion_DefinirTypeMission" } },
+        { "BEH_MAJ_AgressiviteMission", { "done_BEH_MAJ_AgressiviteMission" } },
+        { "ACT_Misc_Pion_INF_MAJ_PositionRegroupement", { "done_ACT_Misc_Pion_INF_MAJ_PositionRegroupement" } },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
+        { "BEH_Eni_Pion_VAB_DetruireEmbuscade", { "done_BEH_Eni_Pion_VAB_DetruireEmbuscade" } },
+        { "BEH_Mission_Pion_VAB_DetruireEmbuscade", { "done_BEH_Mission_Pion_VAB_DetruireEmbuscade" } },
+        { "ACT_Misc_Pion_Ambiance", { "done_ACT_Misc_Pion_Ambiance" } },
+        { "BEH_Manoeuvre_RompreContact", { "done_BEH_Manoeuvre_RompreContact" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Poste_Pion_INF_TomberEnGarde", { "done_BEH_Poste_Pion_INF_TomberEnGarde" } },
     },
 
     create = function( self )
@@ -59,7 +61,8 @@ node "MIS_Pion_INF_DetruireEmbuscade"
         Activate( self.activations.BEH_MAJ_AgressiviteMission, 1, { eReconnu, M_TIR_PH_MISSION_DETRUIRE(), } )
         Activate( self.activations.ACT_Misc_Pion_INF_MAJ_PositionRegroupement, 1, { self._namedParams.mission.positionRegroupement_, } )
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
                 self.ePhase = eRompreContact
@@ -120,8 +123,10 @@ do
                         end
                     end
 
-                    Activate( self.activations.BEH_Eni_Pion_VAB_DetruireEmbuscade, GetMotivation( "MOT_ManoeuvrerSurEnis" ), setmetatable( { self.eCurrentPhase, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    Activate( self.activations.BEH_Mission_Pion_VAB_DetruireEmbuscade, GetMotivation( "MOT_Mission" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCurrentPhase = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Eni_Pion_VAB_DetruireEmbuscade, GetMotivation( "MOT_ManoeuvrerSurEnis" ), { self.eCurrentPhase, } )
+self.done_BEH_Eni_Pion_VAB_DetruireEmbuscade = function( self, _, v ) self.eAction = v[1] end
+                    Activate( self.activations.BEH_Mission_Pion_VAB_DetruireEmbuscade, GetMotivation( "MOT_Mission" ), {} )
+self.done_BEH_Mission_Pion_VAB_DetruireEmbuscade = function( self, _, v ) self.eCurrentPhase = v[1] end
                     _continue = false
                 --[[// Decrocher sur ordre ou non
 ]]                cases_switch_1[1] = true
@@ -140,7 +145,8 @@ elseif switch_1 == eRompreContact then
 ]]                    end
 
                     Activate( self.activations.ACT_Misc_Pion_Ambiance, 1, { eEtatAmbiance_Vitesse, } )
-                    Activate( self.activations.BEH_Manoeuvre_RompreContact, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Manoeuvre_RompreContact, 1, {} )
+self.done_BEH_Manoeuvre_RompreContact = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
@@ -150,7 +156,7 @@ elseif switch_1 == eFinMission then
                                                         do
                                 DEC_Trace( "fin de mission" )
                                 DEC_FinMission()
-                                                                self.params.__returnValue = eActionEffectuee
+                                                                self:SendFeedback( eActionEffectuee )
                                 Halt( self )
                                 do return end
 
@@ -160,7 +166,8 @@ elseif switch_1 == eFinMission then
                     end
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                    Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, { true, } )
+self.done_BEH_Poste_Pion_INF_TomberEnGarde = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                                 cases_switch_1[3] = true
 
@@ -174,20 +181,22 @@ elseif switch_1 == eFinMission then
 
 node "BEH_Mission_Pion_VAB_DetruireEmbuscade"
 {
+    feedbacks = { { { "done_BEH_Mission_Pion_VAB_DetruireEmbuscade" }, "BEH_Mission_Pion_VAB_DetruireEmbuscade" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Pion_VAB_DetruireEmbuscade, {value} ) end,
     activations =
     {
-        { "BEH_Lima_Pion_RejoindreFuseau_EnAttente", {} },
-        { "BEH_Mot_Pion_Embarquer", {} },
-        { "BEH_Dep_Pion_INF_MiseEnPlace_Mission", {} },
-        { "ACT_RC", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Dep_PasserEnModeFurtif", {} },
-        { "BEH_MOT_Pion_INF_Debarquer", {} },
-        { "BEH_Obj_Pion_INF_GererInstallationObstacle", {} },
-        { "BEH_Dep_Pion_INF_RejoindrePositionTir_Embusc", {} },
-        { "ACT_Dep_Pion_INF_ActiverFurtivite", {} },
-        { "ACT_Obs_EtablirVisionVersPt", {} },
-        { "ACT_Obs_ObserverZone", {} },
+        { "BEH_Lima_Pion_RejoindreFuseau_EnAttente", { "done_BEH_Lima_Pion_RejoindreFuseau_EnAttente" } },
+        { "BEH_Mot_Pion_Embarquer", { "done_BEH_Mot_Pion_Embarquer" } },
+        { "BEH_Dep_Pion_INF_MiseEnPlace_Mission", { "done_BEH_Dep_Pion_INF_MiseEnPlace_Mission" } },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "ACT_Dep_PasserEnModeFurtif", { "done_ACT_Dep_PasserEnModeFurtif" } },
+        { "BEH_MOT_Pion_INF_Debarquer", { "done_BEH_MOT_Pion_INF_Debarquer" } },
+        { "BEH_Obj_Pion_INF_GererInstallationObstacle", { "done_BEH_Obj_Pion_INF_GererInstallationObstacle" } },
+        { "BEH_Dep_Pion_INF_RejoindrePositionTir_Embusc", { "done_BEH_Dep_Pion_INF_RejoindrePositionTir_Embusc" } },
+        { "ACT_Dep_Pion_INF_ActiverFurtivite", { "done_ACT_Dep_Pion_INF_ActiverFurtivite" } },
+        { "ACT_Obs_EtablirVisionVersPt", { "done_ACT_Obs_EtablirVisionVersPt" } },
+        { "ACT_Obs_ObserverZone", { "done_ACT_Obs_ObserverZone" } },
     },
 
     create = function( self )
@@ -217,13 +226,13 @@ node "BEH_Mission_Pion_VAB_DetruireEmbuscade"
             do
                                 do
                     DEC_Warning( eRC_MissionImpossible )
-                                        self.params.__returnValue = eFinMission
+                                        self:SendFeedback( eFinMission )
                     Halt( self )
                     do return end
 
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -241,7 +250,7 @@ node "BEH_Mission_Pion_VAB_DetruireEmbuscade"
                             self.eAction = eActionEnCours
                                                         do
                                 self.ePhase = eInstallerDispositif
-                                                                self.params.__returnValue = self.ePhase
+                                                                self:SendFeedback( self.ePhase )
                                 do return end
 
                             end
@@ -251,7 +260,8 @@ node "BEH_Mission_Pion_VAB_DetruireEmbuscade"
 
                     Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
                     --[[// Rejoins une position d'observation de la position a Barrer
-]]Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, setmetatable( { M_TEMPS_PREPARATION_MISSION(), self.mission.positionEmbuscade_, true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+]]Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, { M_TEMPS_PREPARATION_MISSION(), self.mission.positionEmbuscade_, true, } )
+self.done_BEH_Dep_Pion_INF_MiseEnPlace_Mission = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                 --[[// Rejoins la position d'enbuscade et prepare le terrain
 ]]                cases_switch_1[1] = true
@@ -267,7 +277,7 @@ elseif switch_1 == eInstallerDispositif then
                                                         do
                                 StartActivateOverride( self, self.activations.BEH_Obj_Pion_INF_GererInstallationObstacle, 1.5, { self.ptEmbuscade, self.mission.natureObstacle_, } )
                                 self.ePhase = eSurveiller
-                                                                self.params.__returnValue = self.ePhase
+                                                                self:SendFeedback( self.ePhase )
                                 do return end
 
                             end
@@ -275,7 +285,8 @@ elseif switch_1 == eInstallerDispositif then
                         end
                     end
 
-                    Activate( self.activations.BEH_Dep_Pion_INF_RejoindrePositionTir_Embusc, 1, setmetatable( { self.ptEmbuscade, self.mission.positionRegroupement_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_Pion_INF_RejoindrePositionTir_Embusc, 1, { self.ptEmbuscade, self.mission.positionRegroupement_, } )
+self.done_BEH_Dep_Pion_INF_RejoindrePositionTir_Embusc = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                 --[[// Surveille la position
 ]]                cases_switch_1[2] = true
@@ -293,7 +304,7 @@ elseif switch_1 == eSurveiller then
                                 end
             end
 
-                self.params.__returnValue = self.ePhase
+                self:SendFeedback( self.ePhase )
         do return end
 
     end,
@@ -309,9 +320,11 @@ elseif switch_1 == eSurveiller then
 
 node "BEH_Eni_Pion_VAB_DetruireEmbuscade"
 {
+    feedbacks = { { { "done_BEH_Eni_Pion_VAB_DetruireEmbuscade" }, "BEH_Eni_Pion_VAB_DetruireEmbuscade" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Pion_VAB_DetruireEmbuscade, {value} ) end,
     activations =
     {
-        { "BEH_Eni_Pion_INF_DetruireEmbuscade", {} },
+        { "BEH_Eni_Pion_INF_DetruireEmbuscade", { "done_BEH_Eni_Pion_INF_DetruireEmbuscade" } },
     },
 
     create = function( self )
@@ -334,7 +347,7 @@ node "BEH_Eni_Pion_VAB_DetruireEmbuscade"
                 if( DEC_ConnaissanceAgent_EstValide( ksEni_Percu ) and ( S_Geometrie_EstProchePosition( self.ptEmbuscade, DEC_ConnaissanceAgent_Position( ksEni_Percu ), rDist_Max ) or S_Geometrie_EstProchePosition( DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( ksEni_Percu ), rDist_Max ) ) ) then
                     do
                         DEC_RC( eRC_PointTenuParEni, ksEni_Percu )
-                                                self.params.__returnValue = eActionHalt
+                                                self:SendFeedback( eActionHalt )
                         Halt( self )
                         do return end
 
@@ -347,13 +360,14 @@ node "BEH_Eni_Pion_VAB_DetruireEmbuscade"
         end
 
         if( self.eAction ~= eActionEnCours ) then
-            self.params.__returnValue = eActionHalt
+            self:SendFeedback( eActionHalt )
             do return end
         end
 
         --[[// Gestion des unites percues
 ]]--[[//
-]]Activate( self.activations.BEH_Eni_Pion_INF_DetruireEmbuscade, 1, setmetatable( { self.ptEmbuscade, self.mission.natureObstacle_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+]]Activate( self.activations.BEH_Eni_Pion_INF_DetruireEmbuscade, 1, { self.ptEmbuscade, self.mission.natureObstacle_, } )
+self.done_BEH_Eni_Pion_INF_DetruireEmbuscade = function( self, _, v ) self.eAction = v[1] end
     end,
 
     destroy = function( self )

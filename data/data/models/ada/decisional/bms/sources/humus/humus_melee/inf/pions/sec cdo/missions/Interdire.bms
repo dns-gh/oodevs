@@ -21,15 +21,17 @@ includedFiles["sources/humus/humus_melee/inf/pions/sec cdo/missions/Interdire.bm
 ]]--[[//=============================================================================
 ]]node "MIS_Pion_INF_Interdire"
 {
+    feedbacks = { { { "done_MIS_Pion_INF_Interdire" }, "MIS_Pion_INF_Interdire" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_INF_Interdire, {value} ) end,
     activations =
     {
-        { "BEH_Misc_Pion_DefinirTypeMission", {} },
-        { "BEH_MAJ_AgressiviteMission", {} },
-        { "BEH_Ordre_Inopine", {} },
-        { "BEH_Mission_Pion_INF_Interdire", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Poste_Pion_INF_TomberEnGarde", {} },
-        { "ACT_Info_Trace", {} },
+        { "BEH_Misc_Pion_DefinirTypeMission", { "done_BEH_Misc_Pion_DefinirTypeMission" } },
+        { "BEH_MAJ_AgressiviteMission", { "done_BEH_MAJ_AgressiviteMission" } },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "BEH_Mission_Pion_INF_Interdire", { "done_BEH_Mission_Pion_INF_Interdire" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Poste_Pion_INF_TomberEnGarde", { "done_BEH_Poste_Pion_INF_TomberEnGarde" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
     },
 
     create = function( self )
@@ -52,7 +54,8 @@ includedFiles["sources/humus/humus_melee/inf/pions/sec cdo/missions/Interdire.bm
         Activate( self.activations.BEH_Misc_Pion_DefinirTypeMission, 1, { eTypeContact_Defensif, } )
         Activate( self.activations.BEH_MAJ_AgressiviteMission, 1, { eReconnu, M_TIR_PH_MISSION_STATIQUE(), } )
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
                 self.ePhase = eFinMission
@@ -79,7 +82,8 @@ includedFiles["sources/humus/humus_melee/inf/pions/sec cdo/missions/Interdire.bm
                                 end
                             end
 
-                            Activate( self.activations.BEH_Mission_Pion_INF_Interdire, GetMotivation( "MOT_Mission" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCurrentPhase = v else rawset( t, k, v ) end end } ) )
+                            Activate( self.activations.BEH_Mission_Pion_INF_Interdire, GetMotivation( "MOT_Mission" ), {} )
+self.done_BEH_Mission_Pion_INF_Interdire = function( self, _, v ) self.eCurrentPhase = v[1] end
                             _continue = false
                                                 cases_switch_1[1] = true
 elseif switch_1 == eFinMission then
@@ -89,7 +93,7 @@ elseif switch_1 == eFinMission then
                                                                         do
                                         DEC_Trace( "mission MIS_Pion_INF_Interdire: fin" )
                                         DEC_FinMission()
-                                                                                self.params.__returnValue = eActionEffectuee
+                                                                                self:SendFeedback( eActionEffectuee )
                                         Halt( self )
                                         do return end
 
@@ -99,7 +103,8 @@ elseif switch_1 == eFinMission then
                             end
 
                             Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                            Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                            Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, { true, } )
+self.done_BEH_Poste_Pion_INF_TomberEnGarde = function( self, _, v ) self.eAction = v[1] end
                             _continue = false
                                                 cases_switch_1[2] = true
 

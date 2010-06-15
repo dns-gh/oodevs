@@ -11,9 +11,11 @@ includedFiles["sources/melee/abc/automates/ge40/missions/Reorganiser moyens.bms"
 ]]--[[// *****************************************************************************
 ]]node "BEH_GTIA_OrganiserMoyensVersPionsOp"
 {
+    feedbacks = { { { "done_BEH_GTIA_OrganiserMoyensVersPionsOp" }, "BEH_GTIA_OrganiserMoyensVersPionsOp" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_OrganiserMoyensVersPionsOp, {value} ) end,
     activations =
     {
-        { "BEH_GTIA_TransfererMoyensOp", {} },
+        { "BEH_GTIA_TransfererMoyensOp", { "done_BEH_GTIA_TransfererMoyensOp" } },
     },
 
     create = function( self )
@@ -49,9 +51,11 @@ includedFiles["sources/melee/abc/automates/ge40/missions/Reorganiser moyens.bms"
 
 node "BEH_GTIA_TransfererMoyensOp"
 {
+    feedbacks = { { { "done_BEH_GTIA_TransfererMoyensOp" }, "BEH_GTIA_TransfererMoyensOp" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_TransfererMoyensOp, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_TransfererMoyensVers", {} },
+        { "ACT_GTIA_TransfererMoyensVers", { "done_ACT_GTIA_TransfererMoyensVers" } },
     },
 
     create = function( self )
@@ -92,6 +96,8 @@ do
 
 node "ACT_GTIA_TransfererMoyensVers"
 {
+    feedbacks = { { { "done_ACT_GTIA_TransfererMoyensVers" }, "ACT_GTIA_TransfererMoyensVers" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_GTIA_TransfererMoyensVers, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionSub = self.params[1]

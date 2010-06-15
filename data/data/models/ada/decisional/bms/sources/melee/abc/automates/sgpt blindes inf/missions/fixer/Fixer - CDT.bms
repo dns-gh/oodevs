@@ -20,9 +20,11 @@ includedFiles["sources/melee/abc/automates/sgpt blindes inf/missions/fixer/Fixer
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_ABC_Fixer"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ABC_Fixer" }, "MIS_Automate_CDT_ABC_Fixer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ABC_Fixer, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_Fixer", {} },
+        { "BEH_Conduite_Automate_ABC_Fixer", { "done_BEH_Conduite_Automate_ABC_Fixer" } },
     },
 
     create = function( self )

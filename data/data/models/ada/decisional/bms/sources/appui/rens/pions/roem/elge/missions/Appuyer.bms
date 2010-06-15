@@ -9,14 +9,16 @@ includedFiles["sources/appui/rens/pions/roem/elge/missions/Appuyer.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "MIS_Pion_RENS_ROEM_Appuyer"
 {
+    feedbacks = { { { "done_MIS_Pion_RENS_ROEM_Appuyer" }, "MIS_Pion_RENS_ROEM_Appuyer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_RENS_ROEM_Appuyer, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_Info_Trace", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_ProgressionVers", {} },
-        { "BEH_Objet_Rens_ActiverBrouilleur", {} },
-        { "BEH_Objet_Rens_DeposerBrouilleur", {} },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
+        { "BEH_Objet_Rens_ActiverBrouilleur", { "done_BEH_Objet_Rens_ActiverBrouilleur" } },
+        { "BEH_Objet_Rens_DeposerBrouilleur", { "done_BEH_Objet_Rens_DeposerBrouilleur" } },
     },
 
     create = function( self )
@@ -28,7 +30,8 @@ includedFiles["sources/appui/rens/pions/roem/elge/missions/Appuyer.bms"] = true
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
                 self.ePhaseMission = eFinMission
@@ -41,7 +44,7 @@ includedFiles["sources/appui/rens/pions/roem/elge/missions/Appuyer.bms"] = true
 ]]        end
 
         if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -78,7 +81,8 @@ elseif switch_1 == eProgresser then
                         end
                     end
 
-                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.positionDeploiement_, eProgressionReco, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.mission.positionDeploiement_, eProgressionReco, eTypeItiMouvement, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                 --[[// eAppuyer
 ]]                cases_switch_1[2] = true
@@ -105,7 +109,8 @@ elseif switch_1 == eAppuyer then
 ]]--[[//---------------------------------------------------------------------
 ]]                    end
 
-                    Activate( self.activations.BEH_Objet_Rens_DeposerBrouilleur, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Objet_Rens_DeposerBrouilleur, 1, {} )
+self.done_BEH_Objet_Rens_DeposerBrouilleur = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                 --[[// Fin de la mission --> SUR ORDRE
 ]]                cases_switch_1[3] = true
@@ -115,7 +120,8 @@ elseif switch_1 == eFinMission then
                         do return end
                     end
 
-                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.pointRegroupement_, eProgressionReco, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.mission.pointRegroupement_, eProgressionReco, eTypeItiMouvement, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                                 cases_switch_1[4] = true
 
@@ -135,13 +141,15 @@ elseif switch_1 == eFinMission then
 
 node "BEH_Objet_Rens_DeposerBrouilleur"
 {
+    feedbacks = { { { "done_BEH_Objet_Rens_DeposerBrouilleur" }, "BEH_Objet_Rens_DeposerBrouilleur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Objet_Rens_DeposerBrouilleur, {value} ) end,
     create = function( self )
     end,
 
     activate = function( self )
         self.eEtat = self.eEtat or eActionEnCours
         if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             do return end
         end
 
@@ -157,10 +165,12 @@ node "BEH_Objet_Rens_DeposerBrouilleur"
 
 node "BEH_Objet_Rens_ActiverBrouilleur"
 {
+    feedbacks = { { { "done_BEH_Objet_Rens_ActiverBrouilleur" }, "BEH_Objet_Rens_ActiverBrouilleur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Objet_Rens_ActiverBrouilleur, {value} ) end,
     activations =
     {
-        { "ACT_Misc_Delai", {} },
-        { "ACT_Obs_Pion_RENS_ActiverBrouillage", {} },
+        { "ACT_Misc_Delai", { "done_ACT_Misc_Delai" } },
+        { "ACT_Obs_Pion_RENS_ActiverBrouillage", { "done_ACT_Obs_Pion_RENS_ActiverBrouillage" } },
     },
 
     create = function( self )
@@ -182,7 +192,8 @@ node "BEH_Objet_Rens_ActiverBrouilleur"
             end
         end
 
-        Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, 15, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Misc_Delai, 1, { 1, 15, } )
+self.done_ACT_Misc_Delai = function( self, _, v ) self.eEtat = v[1] end
         Activate( self.activations.ACT_Obs_Pion_RENS_ActiverBrouillage, 1, { self._namedParams.eTypeObjectZoneBrouillage, } )
     end,
 

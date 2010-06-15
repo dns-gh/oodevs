@@ -7,6 +7,8 @@ includedFiles["sources/appui/alat/automates/common/behaviors/Behaviors - Tir.bms
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "BEH_Automate_ALAT_CoordonnerFeux"
 {
+    feedbacks = { { { "done_BEH_Automate_ALAT_CoordonnerFeux" }, "BEH_Automate_ALAT_CoordonnerFeux" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Automate_ALAT_CoordonnerFeux, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.listePionsACoordonner = self.params[1]

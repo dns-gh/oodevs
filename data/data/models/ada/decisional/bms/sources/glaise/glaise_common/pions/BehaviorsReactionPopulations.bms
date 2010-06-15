@@ -29,11 +29,13 @@ include "Glaise/Glaise_Common/Pions/behaviors/behaviors - POP - Rens.bms"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Default_ReactionPopulations"
 {
+    feedbacks = { { { "done_BEH_Default_ReactionPopulations" }, "BEH_Default_ReactionPopulations" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Default_ReactionPopulations, {value} ) end,
     activations =
     {
-        { "BEH_ROE_Recevoir_OrdreInopinePopulation", {} },
-        { "BEH_Pop_RC", {} },
-        { "BEH_Pop_RenseignerAuContact", {} },
+        { "BEH_ROE_Recevoir_OrdreInopinePopulation", { "done_BEH_ROE_Recevoir_OrdreInopinePopulation" } },
+        { "BEH_Pop_RC", { "done_BEH_Pop_RC" } },
+        { "BEH_Pop_RenseignerAuContact", { "done_BEH_Pop_RenseignerAuContact" } },
     },
 
     create = function( self )
@@ -54,6 +56,8 @@ include "Glaise/Glaise_Common/Pions/behaviors/behaviors - POP - Rens.bms"
 
 node "BEH_Pop_RC"
 {
+    feedbacks = { { { "done_BEH_Pop_RC" }, "BEH_Pop_RC" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pop_RC, {value} ) end,
     create = function( self )
     end,
 

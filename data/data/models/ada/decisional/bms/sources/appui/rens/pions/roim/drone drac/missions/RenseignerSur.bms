@@ -9,14 +9,16 @@ includedFiles["sources/appui/rens/pions/roim/drone drac/missions/RenseignerSur.b
 ]]--[[// *****************************************************************************
 ]]node "MIS_Pion_RENS_ROIM_SDTI_RenseignerSur"
 {
+    feedbacks = { { { "done_MIS_Pion_RENS_ROIM_SDTI_RenseignerSur" }, "MIS_Pion_RENS_ROIM_SDTI_RenseignerSur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_RENS_ROIM_SDTI_RenseignerSur, {value} ) end,
     activations =
     {
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Info_Trace", {} },
-        { "ACT_Calcul_Distance_Max_Itineraire", {} },
-        { "BEH_Dep_ProgressionSur", {} },
-        { "ACT_Dep_Pion_RENS_VolerA", {} },
-        { "ACT_Obs_Pion_RENS_ActiverCamera", {} },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "ACT_Calcul_Distance_Max_Itineraire", { "done_ACT_Calcul_Distance_Max_Itineraire" } },
+        { "BEH_Dep_ProgressionSur", { "done_BEH_Dep_ProgressionSur" } },
+        { "ACT_Dep_Pion_RENS_VolerA", { "done_ACT_Dep_Pion_RENS_VolerA" } },
+        { "ACT_Obs_Pion_RENS_ActiverCamera", { "done_ACT_Obs_Pion_RENS_ActiverCamera" } },
     },
 
     create = function( self )
@@ -99,7 +101,7 @@ includedFiles["sources/appui/rens/pions/roim/drone drac/missions/RenseignerSur.b
 ]]--[[// ----------------------------------------------------------------
 ]]--[[//                                              09/01/2008 10:24:20
 ]]--[[// ****************************************************************
-]]                    
+]]                    end
 
                     Activate( self.activations.ACT_Calcul_Distance_Max_Itineraire, 1, { self._namedParams.mission.ficelleDeVole_, self._namedParams.mission, } )
                     --[[// ****************************************************************
@@ -108,8 +110,8 @@ includedFiles["sources/appui/rens/pions/roim/drone drac/missions/RenseignerSur.b
 ]]--[[// ----------------------------------------------------------------
 ]]--[[//                                              09/01/2008 10:26:24
 ]]--[[// ****************************************************************
-]]
-        Activate( self.activations.BEH_Dep_ProgressionSur, 1, setmetatable( { self.ficelleDeVol, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+]]Activate( self.activations.BEH_Dep_ProgressionSur, 1, { self.ficelleDeVol, eProgressionDirect, eTypeItiMouvement, } )
+self.done_BEH_Dep_ProgressionSur = function( self, _, v ) self.eEtat = v[1] end
                     --[[// Prendre de la hauteur
 ]]--[[// données doctrine 
 ]]Activate( self.activations.ACT_Dep_Pion_RENS_VolerA, 1, { M_HAUTEUR_DE_VOL(), } )
@@ -122,11 +124,11 @@ includedFiles["sources/appui/rens/pions/roim/drone drac/missions/RenseignerSur.b
         ]]elseif switch_1 == eFinMission then
                     --[[// IMPORTANT POUR AUTOMATE
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                    
+
 
                 else
                                 end
-            end,
+    end,
 
 --[[// ****************************************************************************
 ]]--[[// ACT_Calcul_Distance_Max_Itineraire
@@ -140,6 +142,8 @@ includedFiles["sources/appui/rens/pions/roim/drone drac/missions/RenseignerSur.b
 
 node "ACT_Calcul_Distance_Max_Itineraire"
 {
+    feedbacks = { { { "done_ACT_Calcul_Distance_Max_Itineraire" }, "ACT_Calcul_Distance_Max_Itineraire" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Calcul_Distance_Max_Itineraire, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.Iti = self.params[1]

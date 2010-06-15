@@ -12,13 +12,15 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "MIS_Population_CommettreExactions"
 {
+    feedbacks = { { { "done_MIS_Population_CommettreExactions" }, "MIS_Population_CommettreExactions" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Population_CommettreExactions, {value} ) end,
     activations =
     {
-        { "BEH_Pop_RejoindreInstallation", {} },
-        { "BEH_Pop_RejoindrePoint", {} },
-        { "BEH_Pop_PAPPions", {} },
-        { "BEH_Pop_RalentissementPions", {} },
-        { "BEH_Pop_DegraderInstallations", {} },
+        { "BEH_Pop_RejoindreInstallation", { "done_BEH_Pop_RejoindreInstallation" } },
+        { "BEH_Pop_RejoindrePoint", { "done_BEH_Pop_RejoindrePoint" } },
+        { "BEH_Pop_PAPPions", { "done_BEH_Pop_PAPPions" } },
+        { "BEH_Pop_RalentissementPions", { "done_BEH_Pop_RalentissementPions" } },
+        { "BEH_Pop_DegraderInstallations", { "done_BEH_Pop_DegraderInstallations" } },
     },
 
     create = function( self )

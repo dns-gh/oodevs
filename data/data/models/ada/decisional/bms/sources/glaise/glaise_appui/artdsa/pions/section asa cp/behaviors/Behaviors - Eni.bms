@@ -10,6 +10,8 @@ includedFiles["sources/glaise/glaise_appui/artdsa/pions/section asa cp/behaviors
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "BEH_Eni_Pion_ASA_Roland_Carol_InterceptionBalistique"
 {
+    feedbacks = { { { "done_BEH_Eni_Pion_ASA_Roland_Carol_InterceptionBalistique" }, "BEH_Eni_Pion_ASA_Roland_Carol_InterceptionBalistique" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Pion_ASA_Roland_Carol_InterceptionBalistique, {value} ) end,
     instances =
     {
         boost = 1.0001,
@@ -17,7 +19,7 @@ includedFiles["sources/glaise/glaise_appui/artdsa/pions/section asa cp/behaviors
 
     activations =
     {
-        { "BEH_Eni_Pion_ASA_InterceptionBalistique_Direct", {} },
+        { "BEH_Eni_Pion_ASA_InterceptionBalistique_Direct", { "done_BEH_Eni_Pion_ASA_InterceptionBalistique_Direct" } },
     },
 
     create = function( self )
@@ -53,9 +55,11 @@ do
 
 node "BEH_Eni_Pion_ASA_GererEniDefendreZone"
 {
+    feedbacks = { { { "done_BEH_Eni_Pion_ASA_GererEniDefendreZone" }, "BEH_Eni_Pion_ASA_GererEniDefendreZone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Pion_ASA_GererEniDefendreZone, {value} ) end,
     activations =
     {
-        { "BEH_Eni_Pion_ASA_Roland_Carol_InterceptionBalistique", {} },
+        { "BEH_Eni_Pion_ASA_Roland_Carol_InterceptionBalistique", { "done_BEH_Eni_Pion_ASA_Roland_Carol_InterceptionBalistique" } },
     },
 
     create = function( self )
@@ -85,9 +89,11 @@ do
 
 node "BEH_Eni_Pion_ASA_GererEniDefendreSite"
 {
+    feedbacks = { { { "done_BEH_Eni_Pion_ASA_GererEniDefendreSite" }, "BEH_Eni_Pion_ASA_GererEniDefendreSite" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Pion_ASA_GererEniDefendreSite, {value} ) end,
     activations =
     {
-        { "BEH_Eni_Pion_ASA_Roland_Carol_InterceptionBalistique", {} },
+        { "BEH_Eni_Pion_ASA_Roland_Carol_InterceptionBalistique", { "done_BEH_Eni_Pion_ASA_Roland_Carol_InterceptionBalistique" } },
     },
 
     create = function( self )
@@ -114,9 +120,11 @@ do
 
 node "BEH_Eni_Pion_ASA_RolandCarol_GererEniSurveiller"
 {
+    feedbacks = { { { "done_BEH_Eni_Pion_ASA_RolandCarol_GererEniSurveiller" }, "BEH_Eni_Pion_ASA_RolandCarol_GererEniSurveiller" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Pion_ASA_RolandCarol_GererEniSurveiller, {value} ) end,
     activations =
     {
-        { "BEH_Eni_Pion_ASA_Roland_Carol_InterceptionBalistique", {} },
+        { "BEH_Eni_Pion_ASA_Roland_Carol_InterceptionBalistique", { "done_BEH_Eni_Pion_ASA_Roland_Carol_InterceptionBalistique" } },
     },
 
     create = function( self )

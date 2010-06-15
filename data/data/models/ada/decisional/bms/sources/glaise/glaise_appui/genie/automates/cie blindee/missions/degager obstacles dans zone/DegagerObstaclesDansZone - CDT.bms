@@ -9,11 +9,13 @@ includedFiles["sources/glaise/glaise_appui/genie/automates/cie blindee/missions/
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_GEN_DegagerObstaclesDansZone"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_GEN_DegagerObstaclesDansZone" }, "MIS_Automate_CDT_GEN_DegagerObstaclesDansZone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_GEN_DegagerObstaclesDansZone, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
-        { "ACT_Warning", {} },
-        { "BEH_Mission_Automate_GEN_CDT_DegagerPlanObjets_", {} },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "done_BEH_Ordre_Automate_RecevoirOrdreInopine" } },
+        { "ACT_Warning", { "done_ACT_Warning" } },
+        { "BEH_Mission_Automate_GEN_CDT_DegagerPlanObjets_", { "done_BEH_Mission_Automate_GEN_CDT_DegagerPlanObjets_" } },
     },
 
     create = function( self )
@@ -70,11 +72,13 @@ includedFiles["sources/glaise/glaise_appui/genie/automates/cie blindee/missions/
 
 node "BEH_Mission_Automate_GEN_CDT_DegagerPlanObjets_"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_GEN_CDT_DegagerPlanObjets_" }, "BEH_Mission_Automate_GEN_CDT_DegagerPlanObjets_" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_GEN_CDT_DegagerPlanObjets_, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_AssignerFaireMouvementA", {} },
-        { "BEH_Misc_Automate_GEN_GererReductionDesObstacles", {} },
-        { "BEH_Misc_Automate_GEN_GererRenforcementsPourDegagerObstacles", {} },
+        { "BEH_Mission_Automate_AssignerFaireMouvementA", { "done_BEH_Mission_Automate_AssignerFaireMouvementA" } },
+        { "BEH_Misc_Automate_GEN_GererReductionDesObstacles", { "done_BEH_Misc_Automate_GEN_GererReductionDesObstacles" } },
+        { "BEH_Misc_Automate_GEN_GererRenforcementsPourDegagerObstacles", { "done_BEH_Misc_Automate_GEN_GererRenforcementsPourDegagerObstacles" } },
     },
 
     create = function( self )
@@ -118,12 +122,14 @@ node "BEH_Mission_Automate_GEN_CDT_DegagerPlanObjets_"
 
 node "BEH_Misc_Automate_GEN_GererRenforcementsPourDegagerObstacles"
 {
+    feedbacks = { { { "done_BEH_Misc_Automate_GEN_GererRenforcementsPourDegagerObstacles" }, "BEH_Misc_Automate_GEN_GererRenforcementsPourDegagerObstacles" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Misc_Automate_GEN_GererRenforcementsPourDegagerObstacles, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Automate_GEN_VerifierRenfortPourDetruireObjets", {} },
-        { "BEH_Misc_Automate_GEN_GererRenforcementObstacle", {} },
-        { "BEH_Misc_Automate_GEN_GererFinRenforcementObstacle", {} },
-        { "BEH_Mission_Automate_AssignerDecrocherA", {} },
+        { "BEH_Ordre_Automate_GEN_VerifierRenfortPourDetruireObjets", { "done_BEH_Ordre_Automate_GEN_VerifierRenfortPourDetruireObjets" } },
+        { "BEH_Misc_Automate_GEN_GererRenforcementObstacle", { "done_BEH_Misc_Automate_GEN_GererRenforcementObstacle" } },
+        { "BEH_Misc_Automate_GEN_GererFinRenforcementObstacle", { "done_BEH_Misc_Automate_GEN_GererFinRenforcementObstacle" } },
+        { "BEH_Mission_Automate_AssignerDecrocherA", { "done_BEH_Mission_Automate_AssignerDecrocherA" } },
     },
 
     create = function( self )
@@ -202,10 +208,12 @@ do
 
 node "BEH_Misc_Automate_GEN_GererReductionDesObstacles"
 {
+    feedbacks = { { { "done_BEH_Misc_Automate_GEN_GererReductionDesObstacles" }, "BEH_Misc_Automate_GEN_GererReductionDesObstacles" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Misc_Automate_GEN_GererReductionDesObstacles, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_Gen_AssignerDegagerObjetA", {} },
-        { "BEH_Mission_Automate_AssignerDecrocherA", {} },
+        { "BEH_Mission_Automate_Gen_AssignerDegagerObjetA", { "done_BEH_Mission_Automate_Gen_AssignerDegagerObjetA" } },
+        { "BEH_Mission_Automate_AssignerDecrocherA", { "done_BEH_Mission_Automate_AssignerDecrocherA" } },
     },
 
     create = function( self )
@@ -283,9 +291,11 @@ do
 
 node "BEH_Mission_Automate_Gen_AssignerDegagerObjetA"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_Gen_AssignerDegagerObjetA" }, "BEH_Mission_Automate_Gen_AssignerDegagerObjetA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_Gen_AssignerDegagerObjetA, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_GEN_AssignerDegagerA", {} },
+        { "BEH_Mission_Automate_GEN_AssignerDegagerA", { "done_BEH_Mission_Automate_GEN_AssignerDegagerA" } },
     },
 
     create = function( self )

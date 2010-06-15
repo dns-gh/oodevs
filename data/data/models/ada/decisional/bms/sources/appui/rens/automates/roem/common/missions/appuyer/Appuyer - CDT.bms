@@ -9,6 +9,8 @@ includedFiles["sources/appui/rens/automates/roem/common/missions/appuyer/Appuyer
 ]]--[[// *****************************************************************************
 ]]node "BEH_Automate_CDT_RENS_ROEM_Appuyer"
 {
+    feedbacks = { { { "done_BEH_Automate_CDT_RENS_ROEM_Appuyer" }, "BEH_Automate_CDT_RENS_ROEM_Appuyer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Automate_CDT_RENS_ROEM_Appuyer, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params[1]

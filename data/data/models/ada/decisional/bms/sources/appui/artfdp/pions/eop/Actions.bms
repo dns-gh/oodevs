@@ -15,6 +15,8 @@ includedFiles["sources/appui/artfdp/pions/eop/Actions.bms"] = true
 
 node "ACT_Dep_Pion_EOP_ActiverFurtivite"
 {
+    feedbacks = { { { "done_ACT_Dep_Pion_EOP_ActiverFurtivite" }, "ACT_Dep_Pion_EOP_ActiverFurtivite" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Dep_Pion_EOP_ActiverFurtivite, {value} ) end,
     actuators =
     {
         furtivite = 1,
@@ -47,6 +49,8 @@ node "ACT_Dep_Pion_EOP_ActiverFurtivite"
 
 node "ACT_Transport_Pion_EOP_Debarquer"
 {
+    feedbacks = { { { "done_ACT_Transport_Pion_EOP_Debarquer" }, "ACT_Transport_Pion_EOP_Debarquer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Transport_Pion_EOP_Debarquer, {value} ) end,
     actuators =
     {
         deplacement = 1,
@@ -81,7 +85,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                 or switch_1 == eActionEmbDeb_PasDeTransporteurs then
                     DEC_Trace( "Landing: carrier ignored" )
                     self.actionID = DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -93,7 +97,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                     end
 
                     self.actionID = DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 

@@ -15,13 +15,15 @@ includedFiles["sources/emergency/pions/common/missions/EvacuateArea.bms"] = true
 ]]--[[//------------------------------------------------------------------------------
 ]]node "MIS_Pion_Emergency_EvacuateArea"
 {
+    feedbacks = { { { "done_MIS_Pion_Emergency_EvacuateArea" }, "MIS_Pion_Emergency_EvacuateArea" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_Emergency_EvacuateArea, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_ProgressionVers", {} },
-        { "ACT_RC", {} },
-        { "BEH_Pion_Emergency_EvacuateArea", {} },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "BEH_Pion_Emergency_EvacuateArea", { "done_BEH_Pion_Emergency_EvacuateArea" } },
     },
 
     create = function( self )
@@ -43,7 +45,8 @@ includedFiles["sources/emergency/pions/common/missions/EvacuateArea.bms"] = true
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
                 self.ePhase = eFinMission
@@ -60,7 +63,8 @@ includedFiles["sources/emergency/pions/common/missions/EvacuateArea.bms"] = true
                     if( self.eAction == eActionEnCours ) then
                         do
                             Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                            Activate( self.activations.BEH_Dep_ProgressionVers, GetMotivation( "MOT_Mission" ), setmetatable( { self.position, eProgressionDefaut, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                            Activate( self.activations.BEH_Dep_ProgressionVers, GetMotivation( "MOT_Mission" ), { self.position, eProgressionDefaut, eTypeItiMouvement, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] end
                                                         do return end
 
                         end
@@ -79,7 +83,7 @@ elseif switch_1 == eFinMission then
                     if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
                         do
                             DEC_FinMission()
-                                                        self.params.__returnValue = eActionEffectuee
+                                                        self:SendFeedback( eActionEffectuee )
                             Halt( self )
                             do return end
 
@@ -97,11 +101,13 @@ elseif switch_1 == eFinMission then
 
 node "BEH_Pion_Emergency_EvacuateArea"
 {
+    feedbacks = { { { "done_BEH_Pion_Emergency_EvacuateArea" }, "BEH_Pion_Emergency_EvacuateArea" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pion_Emergency_EvacuateArea, {value} ) end,
     activations =
     {
-        { "ACT_Obj_Pion_Emergency_RealiserObjet", {} },
-        { "ACT_Pion_Emergency_InfluenceInArea", {} },
-        { "ACT_Pion_Emergency_TriggerActivityInArea", {} },
+        { "ACT_Obj_Pion_Emergency_RealiserObjet", { "done_ACT_Obj_Pion_Emergency_RealiserObjet" } },
+        { "ACT_Pion_Emergency_InfluenceInArea", { "done_ACT_Pion_Emergency_InfluenceInArea" } },
+        { "ACT_Pion_Emergency_TriggerActivityInArea", { "done_ACT_Pion_Emergency_TriggerActivityInArea" } },
     },
 
     create = function( self )

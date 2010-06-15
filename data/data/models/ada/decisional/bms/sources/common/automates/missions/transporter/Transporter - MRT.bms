@@ -5,6 +5,8 @@ includedFiles["sources/common/automates/missions/transporter/Transporter - MRT.b
 ]]
 node "MIS_Automate_MRT_Transporter"
 {
+    feedbacks = { { { "done_MIS_Automate_MRT_Transporter" }, "MIS_Automate_MRT_Transporter" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_MRT_Transporter, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission
@@ -21,7 +23,7 @@ node "MIS_Automate_MRT_Transporter"
                 if( DIA_IsListEmpty( self.listeTransporteurs ) ) then
                     do
                         DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
-                                                self.params.__returnValue = eActionImpossible
+                                                self:SendFeedback( eActionImpossible )
                         Halt( self )
                         do return end
 
@@ -35,7 +37,7 @@ node "MIS_Automate_MRT_Transporter"
 ]]if( DIA_IsListEmpty( self.listePionsATransporter ) ) then
                     do
                         DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
-                                                self.params.__returnValue = eActionImpossible
+                                                self:SendFeedback( eActionImpossible )
                         Halt( self )
                         do return end
 
@@ -46,7 +48,7 @@ node "MIS_Automate_MRT_Transporter"
         end
 
         DEC_MRT_Valide()
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         Halt( self )
         do return end
 

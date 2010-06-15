@@ -22,9 +22,11 @@ includedFiles["sources/melee/abc/automates/esc xl/missions/reconnaitrepoint/Reco
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_ABC_ReconnaitrePoint"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ABC_ReconnaitrePoint" }, "MIS_Automate_CDT_ABC_ReconnaitrePoint" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ABC_ReconnaitrePoint, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_ReconnaitrePointSurete", {} },
+        { "BEH_Conduite_Automate_ABC_ReconnaitrePointSurete", { "done_BEH_Conduite_Automate_ABC_ReconnaitrePointSurete" } },
     },
 
     create = function( self )

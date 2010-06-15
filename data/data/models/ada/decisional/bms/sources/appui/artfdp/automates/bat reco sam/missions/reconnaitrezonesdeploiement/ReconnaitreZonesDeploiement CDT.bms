@@ -17,9 +17,11 @@ includedFiles["sources/appui/artfdp/automates/bat reco sam/missions/reconnaitrez
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_ASS_ReconnaitreZonesDeploiement"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ASS_ReconnaitreZonesDeploiement" }, "MIS_Automate_CDT_ASS_ReconnaitreZonesDeploiement" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ASS_ReconnaitreZonesDeploiement, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_ASS_ReconnaitreZonesDeploiement", {} },
+        { "BEH_Conduite_Automate_ASS_ReconnaitreZonesDeploiement", { "done_BEH_Conduite_Automate_ASS_ReconnaitreZonesDeploiement" } },
     },
 
     create = function( self )

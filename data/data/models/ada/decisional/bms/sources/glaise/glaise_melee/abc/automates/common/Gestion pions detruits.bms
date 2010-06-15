@@ -30,9 +30,11 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/common/Gestion pions de
 ]]--[[// *****************************************************************************
 ]]node "BEH_Dispositif_Automate_ABC_GererPionsDetruits_"
 {
+    feedbacks = { { { "done_BEH_Dispositif_Automate_ABC_GererPionsDetruits_" }, "BEH_Dispositif_Automate_ABC_GererPionsDetruits_" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dispositif_Automate_ABC_GererPionsDetruits_, {value} ) end,
     activations =
     {
-        { "BEH_Dispositif_Automate_ABC_AssignerReleve", {} },
+        { "BEH_Dispositif_Automate_ABC_AssignerReleve", { "done_BEH_Dispositif_Automate_ABC_AssignerReleve" } },
     },
 
     create = function( self )
@@ -114,6 +116,8 @@ do
 
 node "BEH_Dispositif_Automate_ABC_AssignerReleve"
 {
+    feedbacks = { { { "done_BEH_Dispositif_Automate_ABC_AssignerReleve" }, "BEH_Dispositif_Automate_ABC_AssignerReleve" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dispositif_Automate_ABC_AssignerReleve, {value} ) end,
     instances =
     {
         max = 1,

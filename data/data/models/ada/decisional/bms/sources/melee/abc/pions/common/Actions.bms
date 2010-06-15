@@ -12,6 +12,8 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "ACT_Tir_Pion_ABC_FaireFeuSur"
 {
+    feedbacks = { { { "done_ACT_Tir_Pion_ABC_FaireFeuSur" }, "ACT_Tir_Pion_ABC_FaireFeuSur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Tir_Pion_ABC_FaireFeuSur, {value} ) end,
     actuators =
     {
         tir = 1,
@@ -52,7 +54,7 @@ include "bit.lua"
         end
 
         DEC_Trace( "Fin ouverture du feu" )
-                self.params.__returnValue = eActionHalt
+                self:SendFeedback( eActionHalt )
         Halt( self )
         do return end
 

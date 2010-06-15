@@ -21,11 +21,13 @@ includedFiles["sources/humus/humus_melee/abc/automates/common/missions/armerpoin
 ]]--[[// *****************************************************************************
 ]]node "BEH_Conduite_Automate_ABC_ArmerPointDeControle"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_ABC_ArmerPointDeControle" }, "BEH_Conduite_Automate_ABC_ArmerPointDeControle" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_ABC_ArmerPointDeControle, {value} ) end,
     activations =
     {
-        { "BEH_Dispositif_Automate_ABC_GererLeDispositif_", {} },
-        { "BEH_RC_Automate_GererConditionOperationnelle", {} },
-        { "BEH_Dispositif_Automate_ABC_FaireArmerPointControle_", {} },
+        { "BEH_Dispositif_Automate_ABC_GererLeDispositif_", { "done_BEH_Dispositif_Automate_ABC_GererLeDispositif_" } },
+        { "BEH_RC_Automate_GererConditionOperationnelle", { "done_BEH_RC_Automate_GererConditionOperationnelle" } },
+        { "BEH_Dispositif_Automate_ABC_FaireArmerPointControle_", { "done_BEH_Dispositif_Automate_ABC_FaireArmerPointControle_" } },
     },
 
     create = function( self )
@@ -70,9 +72,11 @@ includedFiles["sources/humus/humus_melee/abc/automates/common/missions/armerpoin
 
 node "BEH_Dispositif_Automate_ABC_FaireArmerPointControle_"
 {
+    feedbacks = { { { "done_BEH_Dispositif_Automate_ABC_FaireArmerPointControle_" }, "BEH_Dispositif_Automate_ABC_FaireArmerPointControle_" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dispositif_Automate_ABC_FaireArmerPointControle_, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_AssignerArmerPointControleA", {} },
+        { "BEH_Mission_Automate_AssignerArmerPointControleA", { "done_BEH_Mission_Automate_AssignerArmerPointControleA" } },
     },
 
     create = function( self )

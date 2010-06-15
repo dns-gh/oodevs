@@ -16,9 +16,11 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Rc_Automate_INF_PIA_Sur"
 {
+    feedbacks = { { { "done_BEH_Rc_Automate_INF_PIA_Sur" }, "BEH_Rc_Automate_INF_PIA_Sur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Rc_Automate_INF_PIA_Sur, {value} ) end,
     activations =
     {
-        { "ACT_RC_Automate_SurPion", {} },
+        { "ACT_RC_Automate_SurPion", { "done_ACT_RC_Automate_SurPion" } },
     },
 
     create = function( self )

@@ -34,9 +34,11 @@ include "Melee/Inf/Automates/Common/Missions/Behaviors MRT - Retrograde.bms"
 ]]--[[//-----------------------------------------------------------------------------    	
 ]]node "BEH_Medo_Automate_INF_AssignerMission_PC"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_INF_AssignerMission_PC" }, "BEH_Medo_Automate_INF_AssignerMission_PC" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_INF_AssignerMission_PC, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_AssignerSuivreA", {} },
+        { "BEH_Mission_Automate_AssignerSuivreA", { "done_BEH_Mission_Automate_AssignerSuivreA" } },
     },
 
     create = function( self )
@@ -74,9 +76,11 @@ include "Melee/Inf/Automates/Common/Missions/Behaviors MRT - Retrograde.bms"
 
 node "BEH_Medo_Automate_INF_AssignerMissionRetrogradeVers_PC"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_INF_AssignerMissionRetrogradeVers_PC" }, "BEH_Medo_Automate_INF_AssignerMissionRetrogradeVers_PC" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_INF_AssignerMissionRetrogradeVers_PC, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_AssignerDecrocherA", {} },
+        { "BEH_Mission_Automate_AssignerDecrocherA", { "done_BEH_Mission_Automate_AssignerDecrocherA" } },
     },
 
     create = function( self )
@@ -107,9 +111,11 @@ node "BEH_Medo_Automate_INF_AssignerMissionRetrogradeVers_PC"
 
 node "BEH_Medo_Automate_INF_AssignerMissionRetrograde_PC"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_INF_AssignerMissionRetrograde_PC" }, "BEH_Medo_Automate_INF_AssignerMissionRetrograde_PC" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_INF_AssignerMissionRetrograde_PC, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_AssignerDecrocherA", {} },
+        { "BEH_Mission_Automate_AssignerDecrocherA", { "done_BEH_Mission_Automate_AssignerDecrocherA" } },
     },
 
     create = function( self )
@@ -134,6 +140,8 @@ node "BEH_Medo_Automate_INF_AssignerMissionRetrograde_PC"
 
 node "BEH_Medo_Automate_INF_InitialiseSE"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_INF_InitialiseSE" }, "BEH_Medo_Automate_INF_InitialiseSE" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_INF_InitialiseSE, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.lstPionsAppui = self.params[1]

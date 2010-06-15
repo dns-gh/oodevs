@@ -11,6 +11,8 @@ includedFiles["sources/common/pions/actions/Actions - Objet.bms"] = true
 ]]--[[// pas d'actuateurs!
 ]]node "ACT_Obj_OccuperEmbossement"
 {
+    feedbacks = { { { "done_ACT_Obj_OccuperEmbossement" }, "ACT_Obj_OccuperEmbossement" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obj_OccuperEmbossement, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.repEmbossement = self.params[1]
@@ -44,6 +46,8 @@ includedFiles["sources/common/pions/actions/Actions - Objet.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Obj_Pion_AnimerSite"
 {
+    feedbacks = { { { "done_ACT_Obj_Pion_AnimerSite" }, "ACT_Obj_Pion_AnimerSite" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obj_Pion_AnimerSite, {value} ) end,
     actuators =
     {
         deplacement = 1,

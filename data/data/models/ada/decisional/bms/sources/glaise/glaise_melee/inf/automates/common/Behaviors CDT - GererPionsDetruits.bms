@@ -25,10 +25,12 @@ include "bit.lua"
 ]]--[[// ----------------------------------------------------------------------------
 ]]node "BEH_Dispositif_Automate_INF_GererLesPionsDetruits"
 {
+    feedbacks = { { { "done_BEH_Dispositif_Automate_INF_GererLesPionsDetruits" }, "BEH_Dispositif_Automate_INF_GererLesPionsDetruits" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dispositif_Automate_INF_GererLesPionsDetruits, {value} ) end,
     activations =
     {
-        { "ACT_Conduite_Automate_INF_AffecterEchelonPion", {} },
-        { "BEH_Conduite_Automate_INF_SuivreCompromis", {} },
+        { "ACT_Conduite_Automate_INF_AffecterEchelonPion", { "done_ACT_Conduite_Automate_INF_AffecterEchelonPion" } },
+        { "BEH_Conduite_Automate_INF_SuivreCompromis", { "done_BEH_Conduite_Automate_INF_SuivreCompromis" } },
     },
 
     create = function( self )
@@ -85,6 +87,8 @@ do
 
 node "BEH_Conduite_Automate_INF_SuivreCompromis"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_INF_SuivreCompromis" }, "BEH_Conduite_Automate_INF_SuivreCompromis" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_INF_SuivreCompromis, {value} ) end,
     instances =
     {
         max = 1,
@@ -93,7 +97,7 @@ node "BEH_Conduite_Automate_INF_SuivreCompromis"
 
     activations =
     {
-        { "BEH_Mission_Automate_AssignerSuivreA", {} },
+        { "BEH_Mission_Automate_AssignerSuivreA", { "done_BEH_Mission_Automate_AssignerSuivreA" } },
     },
 
     create = function( self )

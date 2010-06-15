@@ -101,23 +101,25 @@ include "Melee/Inf/Pions/Common/Behaviors - Eni.bms"
 ]]
 node "BEH_Defaut"
 {
+    feedbacks = { { { "done_BEH_Defaut" }, "BEH_Defaut" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Defaut, {value} ) end,
     activations =
     {
-        { "ACT_Maj_Pion_PasserEnTirLibre", {} },
-        { "BEH_MAJ_EtatDefaut", {} },
-        { "BEH_Mot_Pion_INF_AffecterVariablesDEtat", {} },
-        { "BEH_Ambiance", {} },
-        { "BEH_Misc_Pion_INF_ModulationVitesse", {} },
-        { "BEH_ROE", {} },
-        { "BEH_Nbc", {} },
-        { "BEH_Rens", {} },
-        { "BEH_MOT_Pion_INF_GarderSesDistances", {} },
-        { "BEH_Misc_Pion_INF_Default", {} },
-        { "BEH_MOT_Pion_InitialisePreparationMission", {} },
-        { "BEH_MOT_Pion_INF_InitialisePoste", {} },
-        { "ACT_MAJ_EnnemiEnCours", {} },
-        { "BEH_Misc_Pion_INF_MAJ_Mission", {} },
-        { "BEH_Misc_Pion_INF_MAJ_Repli", {} },
+        { "ACT_Maj_Pion_PasserEnTirLibre", { "done_ACT_Maj_Pion_PasserEnTirLibre" } },
+        { "BEH_MAJ_EtatDefaut", { "done_BEH_MAJ_EtatDefaut" } },
+        { "BEH_Mot_Pion_INF_AffecterVariablesDEtat", { "done_BEH_Mot_Pion_INF_AffecterVariablesDEtat" } },
+        { "BEH_Ambiance", { "done_BEH_Ambiance" } },
+        { "BEH_Misc_Pion_INF_ModulationVitesse", { "done_BEH_Misc_Pion_INF_ModulationVitesse" } },
+        { "BEH_ROE", { "done_BEH_ROE" } },
+        { "BEH_Nbc", { "done_BEH_Nbc" } },
+        { "BEH_Rens", { "done_BEH_Rens" } },
+        { "BEH_MOT_Pion_INF_GarderSesDistances", { "done_BEH_MOT_Pion_INF_GarderSesDistances" } },
+        { "BEH_Misc_Pion_INF_Default", { "done_BEH_Misc_Pion_INF_Default" } },
+        { "BEH_MOT_Pion_InitialisePreparationMission", { "done_BEH_MOT_Pion_InitialisePreparationMission" } },
+        { "BEH_MOT_Pion_INF_InitialisePoste", { "done_BEH_MOT_Pion_INF_InitialisePoste" } },
+        { "ACT_MAJ_EnnemiEnCours", { "done_ACT_MAJ_EnnemiEnCours" } },
+        { "BEH_Misc_Pion_INF_MAJ_Mission", { "done_BEH_Misc_Pion_INF_MAJ_Mission" } },
+        { "BEH_Misc_Pion_INF_MAJ_Repli", { "done_BEH_Misc_Pion_INF_MAJ_Repli" } },
     },
 
     create = function( self )
@@ -204,12 +206,14 @@ do
 
 node "BEH_Poste_Pion_INF_TomberEnGarde"
 {
+    feedbacks = { { { "done_BEH_Poste_Pion_INF_TomberEnGarde" }, "BEH_Poste_Pion_INF_TomberEnGarde" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Poste_Pion_INF_TomberEnGarde, {value} ) end,
     activations =
     {
-        { "BEH_MOT_Pion_INF_Debarquer", {} },
-        { "ACT_RC", {} },
-        { "ACT_Obs_EtablirVisionFaceADir", {} },
-        { "ACT_Dep_Pion_INF_Arret", {} },
+        { "BEH_MOT_Pion_INF_Debarquer", { "done_BEH_MOT_Pion_INF_Debarquer" } },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "ACT_Obs_EtablirVisionFaceADir", { "done_ACT_Obs_EtablirVisionFaceADir" } },
+        { "ACT_Dep_Pion_INF_Arret", { "done_ACT_Dep_Pion_INF_Arret" } },
     },
 
     create = function( self )
@@ -231,10 +235,11 @@ node "BEH_Poste_Pion_INF_TomberEnGarde"
         local mission = DEC_GetMission( myself )
         Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { DEC_GetDirectionDanger( mission ), } )
         if( self.eAction == eActionEnCours ) then
-            Activate( self.activations.ACT_Dep_Pion_INF_Arret, 1, setmetatable( { M_DELAI_TOMBE_EN_GARDE(), "Tombe en garde", }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+            Activate( self.activations.ACT_Dep_Pion_INF_Arret, 1, { M_DELAI_TOMBE_EN_GARDE(), "Tombe en garde", } )
+self.done_ACT_Dep_Pion_INF_Arret = function( self, _, v ) self.eAction = v[1] end
         else
 if( not ( bDebarquement and DEC_Agent_EstEmbarque() ) ) then
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
                 do return end
             end
         end
@@ -250,6 +255,8 @@ if( not ( bDebarquement and DEC_Agent_EstEmbarque() ) ) then
 
 node "BEH_Misc_Pion_INF_MAJ_Mission"
 {
+    feedbacks = { { { "done_BEH_Misc_Pion_INF_MAJ_Mission" }, "BEH_Misc_Pion_INF_MAJ_Mission" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Misc_Pion_INF_MAJ_Mission, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.typeMission = self.params[1]
@@ -270,11 +277,13 @@ node "BEH_Misc_Pion_INF_MAJ_Mission"
 
 node "BEH_Misc_Pion_INF_ModulationVitesse"
 {
+    feedbacks = { { { "done_BEH_Misc_Pion_INF_ModulationVitesse" }, "BEH_Misc_Pion_INF_ModulationVitesse" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Misc_Pion_INF_ModulationVitesse, {value} ) end,
     activations =
     {
-        { "ACT_Dep_ModulationVitesse", {} },
-        { "ACT_RC", {} },
-        { "ACT_Info_Trace", {} },
+        { "ACT_Dep_ModulationVitesse", { "done_ACT_Dep_ModulationVitesse" } },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
     },
 
     create = function( self )
@@ -307,6 +316,8 @@ do
 
 node "BEH_Eni_Pion_INF_Tenir"
 {
+    feedbacks = { { { "done_BEH_Eni_Pion_INF_Tenir" }, "BEH_Eni_Pion_INF_Tenir" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Pion_INF_Tenir, {value} ) end,
     instances =
     {
         max = 1,
@@ -340,6 +351,8 @@ node "BEH_Eni_Pion_INF_Tenir"
 
 node "BEH_Mot_Pion_INF_AffecterVariablesDEtat"
 {
+    feedbacks = { { { "done_BEH_Mot_Pion_INF_AffecterVariablesDEtat" }, "BEH_Mot_Pion_INF_AffecterVariablesDEtat" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mot_Pion_INF_AffecterVariablesDEtat, {value} ) end,
     create = function( self )
     end,
 
@@ -442,10 +455,12 @@ elseif switch_1 == eMoral_Mauvais then
 
 node "BEH_Dep_Virtuel_ProgressionVers"
 {
+    feedbacks = { { { "done_BEH_Dep_Virtuel_ProgressionVers" }, "BEH_Dep_Virtuel_ProgressionVers" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Virtuel_ProgressionVers, {value} ) end,
     activations =
     {
-        { "BEH_Mot_Pion_Embarquer", {} },
-        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Mot_Pion_Embarquer", { "done_BEH_Mot_Pion_Embarquer" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
     },
 
     create = function( self )
@@ -469,9 +484,11 @@ node "BEH_Dep_Virtuel_ProgressionVers"
 
 node "BEH_Dep_Virtuel_PreparationAction"
 {
+    feedbacks = { { { "done_BEH_Dep_Virtuel_PreparationAction" }, "BEH_Dep_Virtuel_PreparationAction" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Virtuel_PreparationAction, {value} ) end,
     activations =
     {
-        { "BEH_MOT_Pion_INF_Debarquer", {} },
+        { "BEH_MOT_Pion_INF_Debarquer", { "done_BEH_MOT_Pion_INF_Debarquer" } },
     },
 
     create = function( self )
@@ -480,7 +497,7 @@ node "BEH_Dep_Virtuel_PreparationAction"
     activate = function( self )
         Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )
         if( not DEC_Agent_EstEmbarque() ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             do return end
         end
 
@@ -498,6 +515,8 @@ node "BEH_Dep_Virtuel_PreparationAction"
 
 node "BEH_MAJ_Pion_INF_AgressiviteTir"
 {
+    feedbacks = { { { "done_BEH_MAJ_Pion_INF_AgressiviteTir" }, "BEH_MAJ_Pion_INF_AgressiviteTir" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MAJ_Pion_INF_AgressiviteTir, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.rPH = self.params[1]
@@ -524,9 +543,11 @@ node "BEH_MAJ_Pion_INF_AgressiviteTir"
 
 node "BEH_Dep_Pion_INF_RejoindrePositionAppui"
 {
+    feedbacks = { { { "done_BEH_Dep_Pion_INF_RejoindrePositionAppui" }, "BEH_Dep_Pion_INF_RejoindrePositionAppui" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Pion_INF_RejoindrePositionAppui, {value} ) end,
     activations =
     {
-        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
     },
 
     create = function( self )
@@ -549,7 +570,7 @@ node "BEH_Dep_Pion_INF_RejoindrePositionAppui"
                                 do
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -560,7 +581,7 @@ node "BEH_Dep_Pion_INF_RejoindrePositionAppui"
             do
                 self.eAction = eActionEnCours
                                 do
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -569,7 +590,8 @@ node "BEH_Dep_Pion_INF_RejoindrePositionAppui"
             end
         end
 
-        Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.ptAppui, self._namedParams.typeProg, eTypeItiAppui, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.ptAppui, self._namedParams.typeProg, eTypeItiAppui, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] end
     end,
 
 --[[// *****************************************************************************
@@ -583,10 +605,12 @@ node "BEH_Dep_Pion_INF_RejoindrePositionAppui"
 
 node "BEH_Dep_Pion_INF_RejoindrePositionAppuiPour"
 {
+    feedbacks = { { { "done_BEH_Dep_Pion_INF_RejoindrePositionAppuiPour" }, "BEH_Dep_Pion_INF_RejoindrePositionAppuiPour" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Pion_INF_RejoindrePositionAppuiPour, {value} ) end,
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
     },
 
     create = function( self )
@@ -604,7 +628,7 @@ node "BEH_Dep_Pion_INF_RejoindrePositionAppuiPour"
             do
                 self.eEtat = eActionEnCours
                                 do
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -614,7 +638,8 @@ node "BEH_Dep_Pion_INF_RejoindrePositionAppuiPour"
         end
 
         Activate( self.activations.ACT_Info_Trace, 1, { "L'unite rejoint la position d'appui...", } )
-        Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.positionAppui, eProgressionDirect, eTypeItiAppui, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.positionAppui, eProgressionDirect, eTypeItiAppui, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
     end,
 
 --[[//-----------------------------------------------------------------------------
@@ -625,6 +650,8 @@ node "BEH_Dep_Pion_INF_RejoindrePositionAppuiPour"
 
 node "BEH_Feu_Pion_INF_TirAppui"
 {
+    feedbacks = { { { "done_BEH_Feu_Pion_INF_TirAppui" }, "BEH_Feu_Pion_INF_TirAppui" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Feu_Pion_INF_TirAppui, {value} ) end,
     instances =
     {
         boost = 1.1,
@@ -633,9 +660,9 @@ node "BEH_Feu_Pion_INF_TirAppui"
 
     activations =
     {
-        { "ACT_MAJ_EnnemiEnCours", {} },
-        { "BEH_Feu_Pion_INF_TirCouverture_Fixe", {} },
-        { "BEH_Feu_Pion_INF_ConduireLesFeux_Sur", {} },
+        { "ACT_MAJ_EnnemiEnCours", { "done_ACT_MAJ_EnnemiEnCours" } },
+        { "BEH_Feu_Pion_INF_TirCouverture_Fixe", { "done_BEH_Feu_Pion_INF_TirCouverture_Fixe" } },
+        { "BEH_Feu_Pion_INF_ConduireLesFeux_Sur", { "done_BEH_Feu_Pion_INF_ConduireLesFeux_Sur" } },
     },
 
     create = function( self )
@@ -649,16 +676,18 @@ node "BEH_Feu_Pion_INF_TirAppui"
         self.eActionFixer = self.eActionFixer or eActionEnCours
         Activate( self.activations.ACT_MAJ_EnnemiEnCours, 1, { self._namedParams.ksEni, } )
         if( DEC_ConnaissanceAgent_EstDetruitTactique( self._namedParams.ksEni ) or self.eAction == eActionEffectuee ) then
-            self.params.__returnValue = self.eAction
+            self:SendFeedback( self.eAction )
             Halt( self )
             do return end
         end
 
         if( self.eActionFixer == eActionEnCours ) then
-            Activate( self.activations.BEH_Feu_Pion_INF_TirCouverture_Fixe, 1, setmetatable( { self._namedParams.ksEni, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionFixer = v else rawset( t, k, v ) end end } ) )
+            Activate( self.activations.BEH_Feu_Pion_INF_TirCouverture_Fixe, 1, { self._namedParams.ksEni, } )
+self.done_BEH_Feu_Pion_INF_TirCouverture_Fixe = function( self, _, v ) self.eActionFixer = v[1] end
         end
 
-        Activate( self.activations.BEH_Feu_Pion_INF_ConduireLesFeux_Sur, 1, setmetatable( { self._namedParams.ksEni, eFormationTir_Debarque, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Feu_Pion_INF_ConduireLesFeux_Sur, 1, { self._namedParams.ksEni, eFormationTir_Debarque, } )
+self.done_BEH_Feu_Pion_INF_ConduireLesFeux_Sur = function( self, _, v ) self.eAction = v[1] end
     end,
 
 }

@@ -14,10 +14,12 @@ includedFiles["sources/melee/inf/automates/cie vab/missions/harceler/Harceler CD
 ]]
 node "MIS_Automate_CDT_INF_Harceler"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_INF_Harceler" }, "MIS_Automate_CDT_INF_Harceler" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_INF_Harceler, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_INF_Defaut", {} },
-        { "BEH_Conduite_Automate_INF_Harceler", {} },
+        { "BEH_Conduite_Automate_INF_Defaut", { "done_BEH_Conduite_Automate_INF_Defaut" } },
+        { "BEH_Conduite_Automate_INF_Harceler", { "done_BEH_Conduite_Automate_INF_Harceler" } },
     },
 
     create = function( self )
@@ -43,7 +45,7 @@ node "MIS_Automate_CDT_INF_Harceler"
             do
                 self.eActionMission = eActionEnCours
                                 do
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -52,7 +54,8 @@ node "MIS_Automate_CDT_INF_Harceler"
             end
         end
 
-        Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, setmetatable( { false, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, { false, } )
+self.done_BEH_Conduite_Automate_INF_Defaut = function( self, _, v ) self.eActionMission = v[1] end
         Activate( self.activations.BEH_Conduite_Automate_INF_Harceler, 1, {} )
     end,
 
@@ -63,11 +66,13 @@ node "MIS_Automate_CDT_INF_Harceler"
 
 node "BEH_Conduite_Automate_INF_Harceler"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_INF_Harceler" }, "BEH_Conduite_Automate_INF_Harceler" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_INF_Harceler, {value} ) end,
     activations =
     {
-        { "BEH_Situation_Automate_INF_Harceler_GestionSituation", {} },
-        { "BEH_Dispositif_Automate_INF_GererLesPionsDetruits", {} },
-        { "BEH_Dispositif_Automate_INF_GererReleve", {} },
+        { "BEH_Situation_Automate_INF_Harceler_GestionSituation", { "done_BEH_Situation_Automate_INF_Harceler_GestionSituation" } },
+        { "BEH_Dispositif_Automate_INF_GererLesPionsDetruits", { "done_BEH_Dispositif_Automate_INF_GererLesPionsDetruits" } },
+        { "BEH_Dispositif_Automate_INF_GererReleve", { "done_BEH_Dispositif_Automate_INF_GererReleve" } },
     },
 
     create = function( self )
@@ -98,13 +103,15 @@ node "BEH_Conduite_Automate_INF_Harceler"
 
 node "BEH_Situation_Automate_INF_Harceler_GestionSituation"
 {
+    feedbacks = { { { "done_BEH_Situation_Automate_INF_Harceler_GestionSituation" }, "BEH_Situation_Automate_INF_Harceler_GestionSituation" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Situation_Automate_INF_Harceler_GestionSituation, {value} ) end,
     activations =
     {
-        { "BEH_Situation_Automate_INF_FinDeMission_Sur", {} },
-        { "ACT_Info_Trace", {} },
-        { "BEH_Mission_Automate_ABC_AssignerSoutenirA", {} },
-        { "BEH_Mission_Automate_INF_AssignerAppuyerA", {} },
-        { "BEH_Conduite_Automate_INF_Harceler_FaireRejoindrePositionRegroupement", {} },
+        { "BEH_Situation_Automate_INF_FinDeMission_Sur", { "done_BEH_Situation_Automate_INF_FinDeMission_Sur" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "BEH_Mission_Automate_ABC_AssignerSoutenirA", { "done_BEH_Mission_Automate_ABC_AssignerSoutenirA" } },
+        { "BEH_Mission_Automate_INF_AssignerAppuyerA", { "done_BEH_Mission_Automate_INF_AssignerAppuyerA" } },
+        { "BEH_Conduite_Automate_INF_Harceler_FaireRejoindrePositionRegroupement", { "done_BEH_Conduite_Automate_INF_Harceler_FaireRejoindrePositionRegroupement" } },
     },
 
     create = function( self )
@@ -191,10 +198,12 @@ elseif switch_1 == eEtatPhaseMission_ArriveSurLocalisation then
 
 node "BEH_Conduite_Automate_INF_Harceler_FaireRejoindrePositionRegroupement"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_INF_Harceler_FaireRejoindrePositionRegroupement" }, "BEH_Conduite_Automate_INF_Harceler_FaireRejoindrePositionRegroupement" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_INF_Harceler_FaireRejoindrePositionRegroupement, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_AssignerStationnerA", {} },
-        { "BEH_Mission_Automate_AssignerFaireMouvementA", {} },
+        { "BEH_Mission_Automate_AssignerStationnerA", { "done_BEH_Mission_Automate_AssignerStationnerA" } },
+        { "BEH_Mission_Automate_AssignerFaireMouvementA", { "done_BEH_Mission_Automate_AssignerFaireMouvementA" } },
     },
 
     create = function( self )

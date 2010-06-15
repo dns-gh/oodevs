@@ -37,13 +37,15 @@ include "bit.lua"
 
 node "BEH_Dep_Pion_INF_Appuyer"
 {
+    feedbacks = { { { "done_BEH_Dep_Pion_INF_Appuyer" }, "BEH_Dep_Pion_INF_Appuyer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Pion_INF_Appuyer, {value} ) end,
     activations =
     {
-        { "ACT_Misc_Pion_Ambiance", {} },
-        { "ACT_Dep_ModulationVitesse", {} },
-        { "BEH_Mot_Pion_Embarquer", {} },
-        { "BEH_Dep_Suivre_Elastique", {} },
-        { "BEH_Dep_Pion_INF_GererPhaseAppuyer", {} },
+        { "ACT_Misc_Pion_Ambiance", { "done_ACT_Misc_Pion_Ambiance" } },
+        { "ACT_Dep_ModulationVitesse", { "done_ACT_Dep_ModulationVitesse" } },
+        { "BEH_Mot_Pion_Embarquer", { "done_BEH_Mot_Pion_Embarquer" } },
+        { "BEH_Dep_Suivre_Elastique", { "done_BEH_Dep_Suivre_Elastique" } },
+        { "BEH_Dep_Pion_INF_GererPhaseAppuyer", { "done_BEH_Dep_Pion_INF_GererPhaseAppuyer" } },
     },
 
     create = function( self )
@@ -74,7 +76,8 @@ node "BEH_Dep_Pion_INF_Appuyer"
             do return end
         end
 
-        Activate( self.activations.BEH_Dep_Pion_INF_GererPhaseAppuyer, 2, setmetatable( { self._namedParams.tAmi, self._namedParams.rDist_SuiviMin, self._namedParams.rDist_SuiviMax, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCurrentPhase = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Dep_Pion_INF_GererPhaseAppuyer, 2, { self._namedParams.tAmi, self._namedParams.rDist_SuiviMin, self._namedParams.rDist_SuiviMax, } )
+self.done_BEH_Dep_Pion_INF_GererPhaseAppuyer = function( self, _, v ) self.eCurrentPhase = v[1] end
     end,
 
     destroy = function( self )
@@ -85,16 +88,18 @@ node "BEH_Dep_Pion_INF_Appuyer"
 
 node "BEH_Dep_Pion_INF_GererPhaseAppuyer"
 {
+    feedbacks = { { { "done_BEH_Dep_Pion_INF_GererPhaseAppuyer" }, "BEH_Dep_Pion_INF_GererPhaseAppuyer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Pion_INF_GererPhaseAppuyer, {value} ) end,
     activations =
     {
-        { "ACT_Ordre_Pion_INF_AC_FaireRalentir", {} },
-        { "ACT_RC", {} },
-        { "ACT_Obs_EtablirVisionFaceADir", {} },
-        { "ACT_Dep_Pion_INF_Arret", {} },
-        { "ACT_Dep_PasserEnModeFurtif", {} },
-        { "BEH_Dep_Pion_INF_RejoindrePositionAppui", {} },
-        { "BEH_MOT_Pion_INF_Debarquer", {} },
-        { "ACT_Misc_UnitesEnAppui_EnPosition", {} },
+        { "ACT_Ordre_Pion_INF_AC_FaireRalentir", { "done_ACT_Ordre_Pion_INF_AC_FaireRalentir" } },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "ACT_Obs_EtablirVisionFaceADir", { "done_ACT_Obs_EtablirVisionFaceADir" } },
+        { "ACT_Dep_Pion_INF_Arret", { "done_ACT_Dep_Pion_INF_Arret" } },
+        { "ACT_Dep_PasserEnModeFurtif", { "done_ACT_Dep_PasserEnModeFurtif" } },
+        { "BEH_Dep_Pion_INF_RejoindrePositionAppui", { "done_BEH_Dep_Pion_INF_RejoindrePositionAppui" } },
+        { "BEH_MOT_Pion_INF_Debarquer", { "done_BEH_MOT_Pion_INF_Debarquer" } },
+        { "ACT_Misc_UnitesEnAppui_EnPosition", { "done_ACT_Misc_UnitesEnAppui_EnPosition" } },
     },
 
     create = function( self )
@@ -118,7 +123,7 @@ node "BEH_Dep_Pion_INF_GererPhaseAppuyer"
                     DEC_Trace( "impossible d'aller sur position d'appui" )
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -173,7 +178,7 @@ elseif switch_1 == eAttendre then
                                             self.ePhase = eSuivreUnite
                                         end
 
-                                                                                self.params.__returnValue = self.ePhase
+                                                                                self:SendFeedback( self.ePhase )
                                         do return end
 
                                     end
@@ -183,7 +188,8 @@ elseif switch_1 == eAttendre then
 
                             local mission = DEC_GetMission( myself )
                             Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { DEC_GetDirectionDanger( mission ), } )
-                            Activate( self.activations.ACT_Dep_Pion_INF_Arret, 1, setmetatable( { M_TEMPS_ATTENTE_APPUI(), "", }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                            Activate( self.activations.ACT_Dep_Pion_INF_Arret, 1, { M_TEMPS_ATTENTE_APPUI(), "", } )
+self.done_ACT_Dep_Pion_INF_Arret = function( self, _, v ) self.eAction = v[1] end
                             _continue = false
                                                 cases_switch_1[2] = true
 elseif switch_1 == eAppuyer then
@@ -194,7 +200,7 @@ elseif switch_1 == eAppuyer then
                             if( rDist > self._namedParams.rDist_SuiviMax ) then
                                 do
                                     self.ePhase = eSuivreUnite
-                                                                        self.params.__returnValue = eSuivreUnite
+                                                                        self:SendFeedback( eSuivreUnite )
                                     do return end
 
                                 end
@@ -211,7 +217,8 @@ elseif switch_1 == eAppuyer then
                                 end
                             else
 do
-                                    Activate( self.activations.BEH_Dep_Pion_INF_RejoindrePositionAppui, 1, setmetatable( { self._namedParams.tAmi, self.repCurEni, eProgressionDirect, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                                    Activate( self.activations.BEH_Dep_Pion_INF_RejoindrePositionAppui, 1, { self._namedParams.tAmi, self.repCurEni, eProgressionDirect, } )
+self.done_BEH_Dep_Pion_INF_RejoindrePositionAppui = function( self, _, v ) self.eAction = v[1] end
                                                                         do return end
 
                                 end
@@ -241,7 +248,7 @@ if( not S_Geometrie_EstProchePosition( DEC_ConnaissanceAgent_Position( F_Pion_Ge
                                     if( self.ePhase ~= eSePoster ) then
                                         do
                                             self.eAction = eActionEnCours
-                                                                                        self.params.__returnValue = self.ePhase
+                                                                                        self:SendFeedback( self.ePhase )
                                             do return end
 
                                         end
@@ -270,7 +277,7 @@ if( not S_Geometrie_EstProchePosition( DEC_ConnaissanceAgent_Position( F_Pion_Ge
                                                 end
                     end
 
-                                self.params.__returnValue = self.ePhase
+                                self:SendFeedback( self.ePhase )
                 do return end
 
             end

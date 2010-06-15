@@ -12,12 +12,14 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_GEN_OuvrirItineraires"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_GEN_OuvrirItineraires" }, "MIS_Automate_CDT_GEN_OuvrirItineraires" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_GEN_OuvrirItineraires, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
-        { "ACT_Warning", {} },
-        { "BEH_Conduite_Automate_GEN_OuvrirAxe_GererSE_", {} },
-        { "BEH_Mission_Automate_GEN_CDT_OuvrirAxesProgressionGererRenforcement", {} },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "done_BEH_Ordre_Automate_RecevoirOrdreInopine" } },
+        { "ACT_Warning", { "done_ACT_Warning" } },
+        { "BEH_Conduite_Automate_GEN_OuvrirAxe_GererSE_", { "done_BEH_Conduite_Automate_GEN_OuvrirAxe_GererSE_" } },
+        { "BEH_Mission_Automate_GEN_CDT_OuvrirAxesProgressionGererRenforcement", { "done_BEH_Mission_Automate_GEN_CDT_OuvrirAxesProgressionGererRenforcement" } },
     },
 
     create = function( self )
@@ -69,12 +71,14 @@ include "bit.lua"
 
 node "BEH_Mission_Automate_GEN_CDT_OuvrirAxesProgressionGererRenforcement"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_GEN_CDT_OuvrirAxesProgressionGererRenforcement" }, "BEH_Mission_Automate_GEN_CDT_OuvrirAxesProgressionGererRenforcement" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_GEN_CDT_OuvrirAxesProgressionGererRenforcement, {value} ) end,
     activations =
     {
-        { "BEH_Misc_Automate_GEN_CDT_OuvrirAxesProgressionGererRenforcementDe", {} },
-        { "BEH_Objet_Automate_GEN_VerifierRenfortPourContourner", {} },
-        { "BEH_Misc_Automate_GEN_GererRenforcementObstacle", {} },
-        { "BEH_Misc_Automate_GEN_GererFinRenforcementBrechageObstacle", {} },
+        { "BEH_Misc_Automate_GEN_CDT_OuvrirAxesProgressionGererRenforcementDe", { "done_BEH_Misc_Automate_GEN_CDT_OuvrirAxesProgressionGererRenforcementDe" } },
+        { "BEH_Objet_Automate_GEN_VerifierRenfortPourContourner", { "done_BEH_Objet_Automate_GEN_VerifierRenfortPourContourner" } },
+        { "BEH_Misc_Automate_GEN_GererRenforcementObstacle", { "done_BEH_Misc_Automate_GEN_GererRenforcementObstacle" } },
+        { "BEH_Misc_Automate_GEN_GererFinRenforcementBrechageObstacle", { "done_BEH_Misc_Automate_GEN_GererFinRenforcementBrechageObstacle" } },
     },
 
     create = function( self )
@@ -148,9 +152,11 @@ do
 
 node "BEH_Misc_Automate_GEN_GererFinRenforcementBrechageObstacle"
 {
+    feedbacks = { { { "done_BEH_Misc_Automate_GEN_GererFinRenforcementBrechageObstacle" }, "BEH_Misc_Automate_GEN_GererFinRenforcementBrechageObstacle" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Misc_Automate_GEN_GererFinRenforcementBrechageObstacle, {value} ) end,
     activations =
     {
-        { "BEH_Misc_Automate_GEN_GererFinRenforcementBrechageObstaclePour", {} },
+        { "BEH_Misc_Automate_GEN_GererFinRenforcementBrechageObstaclePour", { "done_BEH_Misc_Automate_GEN_GererFinRenforcementBrechageObstaclePour" } },
     },
 
     create = function( self )
@@ -188,9 +194,11 @@ node "BEH_Misc_Automate_GEN_GererFinRenforcementBrechageObstacle"
 
 node "BEH_Misc_Automate_GEN_GererFinRenforcementBrechageObstaclePour"
 {
+    feedbacks = { { { "done_BEH_Misc_Automate_GEN_GererFinRenforcementBrechageObstaclePour" }, "BEH_Misc_Automate_GEN_GererFinRenforcementBrechageObstaclePour" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Misc_Automate_GEN_GererFinRenforcementBrechageObstaclePour, {value} ) end,
     activations =
     {
-        { "ACT_Ordre_Automate_Interrompre", {} },
+        { "ACT_Ordre_Automate_Interrompre", { "done_ACT_Ordre_Automate_Interrompre" } },
     },
 
     create = function( self )
@@ -225,6 +233,8 @@ node "BEH_Misc_Automate_GEN_GererFinRenforcementBrechageObstaclePour"
 
 node "BEH_Misc_Automate_GEN_CDT_OuvrirAxesProgressionGererRenforcementDe"
 {
+    feedbacks = { { { "done_BEH_Misc_Automate_GEN_CDT_OuvrirAxesProgressionGererRenforcementDe" }, "BEH_Misc_Automate_GEN_CDT_OuvrirAxesProgressionGererRenforcementDe" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Misc_Automate_GEN_CDT_OuvrirAxesProgressionGererRenforcementDe, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -261,9 +271,11 @@ node "BEH_Misc_Automate_GEN_CDT_OuvrirAxesProgressionGererRenforcementDe"
 
 node "BEH_Conduite_Automate_GEN_OuvrirAxe_GererSE_"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_GEN_OuvrirAxe_GererSE_" }, "BEH_Conduite_Automate_GEN_OuvrirAxe_GererSE_" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_GEN_OuvrirAxe_GererSE_, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_GEN_OuvrirAxe_FaireSuivre", {} },
+        { "BEH_Conduite_Automate_GEN_OuvrirAxe_FaireSuivre", { "done_BEH_Conduite_Automate_GEN_OuvrirAxe_FaireSuivre" } },
     },
 
     create = function( self )
@@ -304,9 +316,11 @@ do
 
 node "BEH_Conduite_Automate_GEN_OuvrirAxe_FaireSuivre"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_GEN_OuvrirAxe_FaireSuivre" }, "BEH_Conduite_Automate_GEN_OuvrirAxe_FaireSuivre" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_GEN_OuvrirAxe_FaireSuivre, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_AssignerSuivreA", {} },
+        { "BEH_Mission_Automate_AssignerSuivreA", { "done_BEH_Mission_Automate_AssignerSuivreA" } },
     },
 
     create = function( self )

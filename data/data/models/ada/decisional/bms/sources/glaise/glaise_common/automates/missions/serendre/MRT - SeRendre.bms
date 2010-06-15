@@ -11,11 +11,13 @@ includedFiles["sources/glaise/glaise_common/automates/missions/serendre/MRT - Se
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_MRT_SeRendre"
 {
+    feedbacks = { { { "done_MIS_Automate_MRT_SeRendre" }, "MIS_Automate_MRT_SeRendre" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_MRT_SeRendre, {value} ) end,
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
-        { "BEH_Medo_Automate_Prisonniers_AssignerFaireMouvementA", {} },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "BEH_Medo_Automate_ControleCreationMission", { "done_BEH_Medo_Automate_ControleCreationMission" } },
+        { "BEH_Medo_Automate_Prisonniers_AssignerFaireMouvementA", { "done_BEH_Medo_Automate_Prisonniers_AssignerFaireMouvementA" } },
     },
 
     create = function( self )
@@ -32,7 +34,7 @@ includedFiles["sources/glaise/glaise_common/automates/missions/serendre/MRT - Se
 ]]if( ( self.posCampPrisonnier == 0 or self.posCampPrisonnier == nil ) ) then
             do
                 Activate( self.activations.ACT_Info_Trace, 1, { "----- Pas de camps de prisonniers ----- ", } )
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -59,7 +61,7 @@ includedFiles["sources/glaise/glaise_common/automates/missions/serendre/MRT - Se
                     DEC_Trace( "!!!!Attention toutes les missions n'ont pas été données!!" )
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -71,7 +73,7 @@ includedFiles["sources/glaise/glaise_common/automates/missions/serendre/MRT - Se
                 self.eValidationMRT = eActionEnCours
                                 do
                     DEC_MRT_Valide()
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -80,7 +82,8 @@ includedFiles["sources/glaise/glaise_common/automates/missions/serendre/MRT - Se
             end
         end
 
-        Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( DEC_Automate_PionsAvecPC() ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( DEC_Automate_PionsAvecPC() ), } )
+self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eValidationMRT = v[1] end
         Activate( self.activations.BEH_Medo_Automate_Prisonniers_AssignerFaireMouvementA, 1, { DEC_Automate_PionsAvecPC(), self.posCampPrisonnier, } )
     end,
 
@@ -94,9 +97,11 @@ includedFiles["sources/glaise/glaise_common/automates/missions/serendre/MRT - Se
 
 node "BEH_Medo_Automate_Prisonniers_AssignerFaireMouvementA"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_Prisonniers_AssignerFaireMouvementA" }, "BEH_Medo_Automate_Prisonniers_AssignerFaireMouvementA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_Prisonniers_AssignerFaireMouvementA, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_AssignerFaireMouvementA", {} },
+        { "BEH_Mission_Automate_AssignerFaireMouvementA", { "done_BEH_Mission_Automate_AssignerFaireMouvementA" } },
     },
 
     create = function( self )

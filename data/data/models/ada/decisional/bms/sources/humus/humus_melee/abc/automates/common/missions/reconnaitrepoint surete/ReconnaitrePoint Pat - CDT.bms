@@ -20,11 +20,13 @@ includedFiles["sources/humus/humus_melee/abc/automates/common/missions/reconnait
 ]]--[[// *****************************************************************************
 ]]node "BEH_Conduite_Automate_ABC_ReconnaitrePointSurete"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_ABC_ReconnaitrePointSurete" }, "BEH_Conduite_Automate_ABC_ReconnaitrePointSurete" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_ABC_ReconnaitrePointSurete, {value} ) end,
     activations =
     {
-        { "BEH_Dispositif_Automate_ABC_GererLesAppuis_", {} },
-        { "BEH_Dispositif_Automate_ABC_GererLeDispositif_", {} },
-        { "BEH_RC_Automate_GererConditionOperationnelle", {} },
+        { "BEH_Dispositif_Automate_ABC_GererLesAppuis_", { "done_BEH_Dispositif_Automate_ABC_GererLesAppuis_" } },
+        { "BEH_Dispositif_Automate_ABC_GererLeDispositif_", { "done_BEH_Dispositif_Automate_ABC_GererLeDispositif_" } },
+        { "BEH_RC_Automate_GererConditionOperationnelle", { "done_BEH_RC_Automate_GererConditionOperationnelle" } },
     },
 
     create = function( self )

@@ -12,11 +12,13 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Conduite_Automate_INF_Freiner"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_INF_Freiner" }, "BEH_Conduite_Automate_INF_Freiner" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_INF_Freiner, {value} ) end,
     activations =
     {
-        { "BEH_Dispositif_Automate_INF_GererLeDispositifRetrograde_", {} },
-        { "BEH_CoordDep_Automate_INF_CoordinationRetrograde_", {} },
-        { "BEH_Conduite_INF_Automate_Freiner_GererLesLC", {} },
+        { "BEH_Dispositif_Automate_INF_GererLeDispositifRetrograde_", { "done_BEH_Dispositif_Automate_INF_GererLeDispositifRetrograde_" } },
+        { "BEH_CoordDep_Automate_INF_CoordinationRetrograde_", { "done_BEH_CoordDep_Automate_INF_CoordinationRetrograde_" } },
+        { "BEH_Conduite_INF_Automate_Freiner_GererLesLC", { "done_BEH_Conduite_INF_Automate_Freiner_GererLesLC" } },
     },
 
     create = function( self )
@@ -45,9 +47,11 @@ include "bit.lua"
 
 node "BEH_Conduite_INF_Automate_Freiner_GererLesLC"
 {
+    feedbacks = { { { "done_BEH_Conduite_INF_Automate_Freiner_GererLesLC" }, "BEH_Conduite_INF_Automate_Freiner_GererLesLC" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_INF_Automate_Freiner_GererLesLC, {value} ) end,
     activations =
     {
-        { "ACT_Ordre_Automate_PasserSurLC", {} },
+        { "ACT_Ordre_Automate_PasserSurLC", { "done_ACT_Ordre_Automate_PasserSurLC" } },
     },
 
     create = function( self )
@@ -75,10 +79,12 @@ for _,pion in pairs( selPionsFr or {} ) do
 
 node "BEH_Dispositif_Automate_INF_GererLeDispositifRetrograde_"
 {
+    feedbacks = { { { "done_BEH_Dispositif_Automate_INF_GererLeDispositifRetrograde_" }, "BEH_Dispositif_Automate_INF_GererLeDispositifRetrograde_" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dispositif_Automate_INF_GererLeDispositifRetrograde_, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_AssignerDecrocherA", {} },
-        { "BEH_Mission_Automate_INF_AssignerAppuyerA", {} },
+        { "BEH_Mission_Automate_AssignerDecrocherA", { "done_BEH_Mission_Automate_AssignerDecrocherA" } },
+        { "BEH_Mission_Automate_INF_AssignerAppuyerA", { "done_BEH_Mission_Automate_INF_AssignerAppuyerA" } },
     },
 
     create = function( self )
@@ -146,10 +152,12 @@ do
 
 node "BEH_CoordDep_Automate_INF_CoordinationRetrograde_"
 {
+    feedbacks = { { { "done_BEH_CoordDep_Automate_INF_CoordinationRetrograde_" }, "BEH_CoordDep_Automate_INF_CoordinationRetrograde_" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_CoordDep_Automate_INF_CoordinationRetrograde_, {value} ) end,
     activations =
     {
-        { "BEH_CoordDep_Automate_INF_CoordonnerJalonnement", {} },
-        { "BEH_CoordDep_Automate_INF_CoordonnerMouvement", {} },
+        { "BEH_CoordDep_Automate_INF_CoordonnerJalonnement", { "done_BEH_CoordDep_Automate_INF_CoordonnerJalonnement" } },
+        { "BEH_CoordDep_Automate_INF_CoordonnerMouvement", { "done_BEH_CoordDep_Automate_INF_CoordonnerMouvement" } },
     },
 
     create = function( self )
@@ -171,9 +179,11 @@ node "BEH_CoordDep_Automate_INF_CoordinationRetrograde_"
 
 node "BEH_CoordDep_Automate_INF_CoordonnerJalonnement"
 {
+    feedbacks = { { { "done_BEH_CoordDep_Automate_INF_CoordonnerJalonnement" }, "BEH_CoordDep_Automate_INF_CoordonnerJalonnement" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_CoordDep_Automate_INF_CoordonnerJalonnement, {value} ) end,
     activations =
     {
-        { "ACT_Ordre_Automate_INF_Decrocher", {} },
+        { "ACT_Ordre_Automate_INF_Decrocher", { "done_ACT_Ordre_Automate_INF_Decrocher" } },
     },
 
     create = function( self )
@@ -226,9 +236,11 @@ do
 
 node "BEH_CoordDep_Automate_INF_CoordonnerMouvement"
 {
+    feedbacks = { { { "done_BEH_CoordDep_Automate_INF_CoordonnerMouvement" }, "BEH_CoordDep_Automate_INF_CoordonnerMouvement" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_CoordDep_Automate_INF_CoordonnerMouvement, {value} ) end,
     activations =
     {
-        { "ACT_Ordre_Automate_Pause", {} },
+        { "ACT_Ordre_Automate_Pause", { "done_ACT_Ordre_Automate_Pause" } },
     },
 
     create = function( self )
@@ -276,6 +288,8 @@ do
 
 node "ACT_Ordre_Automate_INF_Decrocher"
 {
+    feedbacks = { { { "done_ACT_Ordre_Automate_INF_Decrocher" }, "ACT_Ordre_Automate_INF_Decrocher" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Ordre_Automate_INF_Decrocher, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -297,6 +311,8 @@ node "ACT_Ordre_Automate_INF_Decrocher"
 
 node "BEH_Conduite_Automate_INF_AppuyerCompromis"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_INF_AppuyerCompromis" }, "BEH_Conduite_Automate_INF_AppuyerCompromis" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_INF_AppuyerCompromis, {value} ) end,
     instances =
     {
         max = 1,
@@ -304,8 +320,8 @@ node "BEH_Conduite_Automate_INF_AppuyerCompromis"
 
     activations =
     {
-        { "BEH_Mission_Automate_ABC_AssignerSoutenirA", {} },
-        { "BEH_Mission_Automate_INF_AssignerAppuyerA", {} },
+        { "BEH_Mission_Automate_ABC_AssignerSoutenirA", { "done_BEH_Mission_Automate_ABC_AssignerSoutenirA" } },
+        { "BEH_Mission_Automate_INF_AssignerAppuyerA", { "done_BEH_Mission_Automate_INF_AssignerAppuyerA" } },
     },
 
     create = function( self )

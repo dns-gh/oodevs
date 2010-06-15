@@ -14,20 +14,22 @@ includedFiles["sources/melee/inf/pions/son appui/missions/Surveiller.bms"] = tru
 ]]
 node "MIS_Pion_INF_SurveillerSecteur"
 {
+    feedbacks = { { { "done_MIS_Pion_INF_SurveillerSecteur" }, "MIS_Pion_INF_SurveillerSecteur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_INF_SurveillerSecteur, {value} ) end,
     activations =
     {
-        { "ACT_Maj_Pion_PasserEnTirSurRiposte", {} },
-        { "BEH_Misc_Pion_DefinirTypeMission", {} },
-        { "BEH_MAJ_AgressiviteMission", {} },
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_Maj_Pion_PasserEnTirLibre", {} },
-        { "ACT_Ordre_Suppression", {} },
-        { "BEH_Eni_Pion_INF_SurveillerSecteur", {} },
-        { "BEH_Mission_Pion_INF_SurveillerSecteur", {} },
-        { "ACT_Obs_EtablirVisionCur", {} },
-        { "BEH_Manoeuvre_RompreContact", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Poste_Pion_INF_TomberEnGarde", {} },
+        { "ACT_Maj_Pion_PasserEnTirSurRiposte", { "done_ACT_Maj_Pion_PasserEnTirSurRiposte" } },
+        { "BEH_Misc_Pion_DefinirTypeMission", { "done_BEH_Misc_Pion_DefinirTypeMission" } },
+        { "BEH_MAJ_AgressiviteMission", { "done_BEH_MAJ_AgressiviteMission" } },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "ACT_Maj_Pion_PasserEnTirLibre", { "done_ACT_Maj_Pion_PasserEnTirLibre" } },
+        { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
+        { "BEH_Eni_Pion_INF_SurveillerSecteur", { "done_BEH_Eni_Pion_INF_SurveillerSecteur" } },
+        { "BEH_Mission_Pion_INF_SurveillerSecteur", { "done_BEH_Mission_Pion_INF_SurveillerSecteur" } },
+        { "ACT_Obs_EtablirVisionCur", { "done_ACT_Obs_EtablirVisionCur" } },
+        { "BEH_Manoeuvre_RompreContact", { "done_BEH_Manoeuvre_RompreContact" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Poste_Pion_INF_TomberEnGarde", { "done_BEH_Poste_Pion_INF_TomberEnGarde" } },
     },
 
     create = function( self )
@@ -52,7 +54,8 @@ node "MIS_Pion_INF_SurveillerSecteur"
         Activate( self.activations.BEH_MAJ_AgressiviteMission, 1, { eIdentifie, M_TIR_PH_MISSION_STATIQUE(), } )
         Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, {} )
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
                 self.ePhase = eSeReplier
@@ -93,7 +96,7 @@ elseif switch_1 == "Rep_OrderConduite_Decrocher" then
                     DEC_Warning( eRC_MissionImpossible )
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -130,8 +133,10 @@ elseif switch_1 == "Rep_OrderConduite_Decrocher" then
 --[[// behavior BEH_Horaire_Pion_INF_SurveillerSecteur( eCurrentPhase ) return in eAction;
 ]]                    end
 
-                    Activate( self.activations.BEH_Eni_Pion_INF_SurveillerSecteur, GetMotivation( "MOT_ManoeuvrerSurEnis" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionEnnemi = v else rawset( t, k, v ) end end } ) )
-                    Activate( self.activations.BEH_Mission_Pion_INF_SurveillerSecteur, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCurrentPhase = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Eni_Pion_INF_SurveillerSecteur, GetMotivation( "MOT_ManoeuvrerSurEnis" ), {} )
+self.done_BEH_Eni_Pion_INF_SurveillerSecteur = function( self, _, v ) self.eActionEnnemi = v[1] end
+                    Activate( self.activations.BEH_Mission_Pion_INF_SurveillerSecteur, 1, {} )
+self.done_BEH_Mission_Pion_INF_SurveillerSecteur = function( self, _, v ) self.eCurrentPhase = v[1] end
                     _continue = false
                 --[[// Rejoins une position de replis
 ]]                cases_switch_1[1] = true
@@ -148,7 +153,8 @@ elseif switch_1 == eSeReplier then
                         end
                     else
 do
-                            Activate( self.activations.BEH_Manoeuvre_RompreContact, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                            Activate( self.activations.BEH_Manoeuvre_RompreContact, 1, {} )
+self.done_BEH_Manoeuvre_RompreContact = function( self, _, v ) self.eAction = v[1] end
                                                         do return end
 
                         end
@@ -166,7 +172,7 @@ do
 ]]--[[// On rend compte de la mission
 ]]--[[//-----------------------------------------------------------------------------												
 ]]DEC_FinMission()
-                                                                self.params.__returnValue = eActionEffectuee
+                                                                self:SendFeedback( eActionEffectuee )
                                 Halt( self )
                                 do return end
 
@@ -176,7 +182,8 @@ do
                     end
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                    Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, { true, } )
+self.done_BEH_Poste_Pion_INF_TomberEnGarde = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                                 cases_switch_1[3] = true
 

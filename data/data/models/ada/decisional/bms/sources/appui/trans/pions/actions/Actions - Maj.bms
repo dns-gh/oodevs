@@ -9,6 +9,8 @@ includedFiles["sources/appui/trans/pions/actions/Actions - Maj.bms"] = true
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_MAJ_EtatPhaseMission"
 {
+    feedbacks = { { { "done_ACT_MAJ_EtatPhaseMission" }, "ACT_MAJ_EtatPhaseMission" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_MAJ_EtatPhaseMission, {value} ) end,
     actuators =
     {
         etat_Mission = 1,
@@ -61,6 +63,8 @@ includedFiles["sources/appui/trans/pions/actions/Actions - Maj.bms"] = true
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_MAJ_EtatDestruction"
 {
+    feedbacks = { { { "done_ACT_MAJ_EtatDestruction" }, "ACT_MAJ_EtatDestruction" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_MAJ_EtatDestruction, {value} ) end,
     actuators =
     {
         etat_Destruction = 1,
@@ -93,6 +97,8 @@ includedFiles["sources/appui/trans/pions/actions/Actions - Maj.bms"] = true
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_MAJ_EtatDec"
 {
+    feedbacks = { { { "done_ACT_MAJ_EtatDec" }, "ACT_MAJ_EtatDec" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_MAJ_EtatDec, {value} ) end,
     actuators =
     {
         etat_Dec = 1,
@@ -125,6 +131,8 @@ includedFiles["sources/appui/trans/pions/actions/Actions - Maj.bms"] = true
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_MAJ_EtatOrdreCoordination"
 {
+    feedbacks = { { { "done_ACT_MAJ_EtatOrdreCoordination" }, "ACT_MAJ_EtatOrdreCoordination" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_MAJ_EtatOrdreCoordination, {value} ) end,
     actuators =
     {
         etat_OrdreCoordination = 1,

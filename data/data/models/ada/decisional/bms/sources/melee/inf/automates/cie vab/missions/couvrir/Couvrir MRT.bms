@@ -14,9 +14,11 @@ includedFiles["sources/melee/inf/automates/cie vab/missions/couvrir/Couvrir MRT.
 ]]
 node "MIS_Automate_MRT_INF_Couvrir"
 {
+    feedbacks = { { { "done_MIS_Automate_MRT_INF_Couvrir" }, "MIS_Automate_MRT_INF_Couvrir" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_MRT_INF_Couvrir, {value} ) end,
     activations =
     {
-        { "BEH_Medo_Automate_INF_PreparerMission_Statique", {} },
+        { "BEH_Medo_Automate_INF_PreparerMission_Statique", { "done_BEH_Medo_Automate_INF_PreparerMission_Statique" } },
     },
 
     create = function( self )
@@ -46,7 +48,7 @@ node "MIS_Automate_MRT_INF_Couvrir"
                     DEC_RC( eRC_MissionImpossible )
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -59,7 +61,7 @@ node "MIS_Automate_MRT_INF_Couvrir"
                                 do
                     DEC_Trace( "T_Mission_Automate_INF_Couvrir : fin MRT" )
                     DEC_MRT_Valide()
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -71,7 +73,8 @@ node "MIS_Automate_MRT_INF_Couvrir"
 ]]--[[//-----------------------------------------------------------------------------
 ]]        end
 
-        Activate( self.activations.BEH_Medo_Automate_INF_PreparerMission_Statique, 1, setmetatable( { "T_Mission_Automate_INF_Couvrir", self.rN_Position, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCreationMRT = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Medo_Automate_INF_PreparerMission_Statique, 1, { "T_Mission_Automate_INF_Couvrir", self.rN_Position, } )
+self.done_BEH_Medo_Automate_INF_PreparerMission_Statique = function( self, _, v ) self.eCreationMRT = v[1] end
     end,
 
     destroy = function( self )

@@ -9,13 +9,15 @@ includedFiles["sources/appui/alat/pions/common/missions/FaireMouvement.bms"] = t
 ]]--[[//------------------------------------------------------------------------------
 ]]node "MIS_Pion_FaireMouvement"
 {
+    feedbacks = { { { "done_MIS_Pion_FaireMouvement" }, "MIS_Pion_FaireMouvement" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_FaireMouvement, {value} ) end,
     activations =
     {
-        { "ACT_Maj_Pion_PasserEnTirSurRiposte", {} },
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_Pion_ALAT_RejoindreParItineraire", {} },
-        { "BEH_Dep_Pion_ALAT_SePoser", {} },
+        { "ACT_Maj_Pion_PasserEnTirSurRiposte", { "done_ACT_Maj_Pion_PasserEnTirSurRiposte" } },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Dep_Pion_ALAT_RejoindreParItineraire", { "done_BEH_Dep_Pion_ALAT_RejoindreParItineraire" } },
+        { "BEH_Dep_Pion_ALAT_SePoser", { "done_BEH_Dep_Pion_ALAT_SePoser" } },
     },
 
     create = function( self )
@@ -42,7 +44,8 @@ includedFiles["sources/appui/alat/pions/common/missions/FaireMouvement.bms"] = t
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
                 self.ePhase = eFinMission
@@ -69,7 +72,8 @@ includedFiles["sources/appui/alat/pions/common/missions/FaireMouvement.bms"] = t
                         end
                     end
 
-                    Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindreParItineraire, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( { self._namedParams.mission.itineraire_, eProgressionDefaut, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindreParItineraire, GetMotivation( "MOT_Manoeuvrer" ), { self._namedParams.mission.itineraire_, eProgressionDefaut, eTypeItiInfiltration, } )
+self.done_BEH_Dep_Pion_ALAT_RejoindreParItineraire = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eFinMission then
@@ -81,7 +85,7 @@ elseif switch_1 == eFinMission then
                                 myself:ClearplotsRavitaillement_()
                                 F_Pion_SetobjectifEsquive( myself, nil )
                                 DEC_FinMission()
-                                                                self.params.__returnValue = eActionEffectuee
+                                                                self:SendFeedback( eActionEffectuee )
                                 Halt( self )
                                 do return end
 
@@ -90,7 +94,8 @@ elseif switch_1 == eFinMission then
                         end
                     end
 
-                    Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), {} )
+self.done_BEH_Dep_Pion_ALAT_SePoser = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                                 cases_switch_1[2] = true
                 end

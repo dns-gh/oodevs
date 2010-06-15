@@ -9,9 +9,11 @@ includedFiles["sources/appui/rens/automates/roem/stations mrod_elodee/missions/r
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_RENS_ROEM_RenseignerSur"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_RENS_ROEM_RenseignerSur" }, "MIS_Automate_CDT_RENS_ROEM_RenseignerSur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_RENS_ROEM_RenseignerSur, {value} ) end,
     activations =
     {
-        { "BEH_Automate_CDT_RENS_ROEM_RenseignerSur", {} },
+        { "BEH_Automate_CDT_RENS_ROEM_RenseignerSur", { "done_BEH_Automate_CDT_RENS_ROEM_RenseignerSur" } },
     },
 
     create = function( self )

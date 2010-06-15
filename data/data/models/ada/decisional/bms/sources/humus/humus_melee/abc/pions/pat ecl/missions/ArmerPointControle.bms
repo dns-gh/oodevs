@@ -21,10 +21,12 @@ includedFiles["sources/humus/humus_melee/abc/pions/pat ecl/missions/ArmerPointCo
 ]]--[[// *****************************************************************************
 ]]node "MIS_Pion_ABC_ArmerPointDeControle"
 {
+    feedbacks = { { { "done_MIS_Pion_ABC_ArmerPointDeControle" }, "MIS_Pion_ABC_ArmerPointDeControle" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_ABC_ArmerPointDeControle, {value} ) end,
     activations =
     {
-        { "ACT_Dep_PasserEnModeFurtif", {} },
-        { "BEH_Mission_Pion_ABC_ArmerPointDeControle", {} },
+        { "ACT_Dep_PasserEnModeFurtif", { "done_ACT_Dep_PasserEnModeFurtif" } },
+        { "BEH_Mission_Pion_ABC_ArmerPointDeControle", { "done_BEH_Mission_Pion_ABC_ArmerPointDeControle" } },
     },
 
     create = function( self )
@@ -38,13 +40,13 @@ includedFiles["sources/humus/humus_melee/abc/pions/pat ecl/missions/ArmerPointCo
 ]]--[[// Terminaison
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eEtat == eActionImpossible ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             Halt( self )
             do return end
         end
 
         if( self.eEtat == eActionEffectuee ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -56,7 +58,8 @@ includedFiles["sources/humus/humus_melee/abc/pions/pat ecl/missions/ArmerPointCo
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Comportement de la mission
 ]]--[[//-----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_Mission_Pion_ABC_ArmerPointDeControle, 1, setmetatable( { self._namedParams.mission, M_MODELE_PION_ABC_ARMER_UN_PIA_PH(), M_MODELE_PION_ABC_ARMER_UN_PIA_ID(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+]]Activate( self.activations.BEH_Mission_Pion_ABC_ArmerPointDeControle, 1, { self._namedParams.mission, M_MODELE_PION_ABC_ARMER_UN_PIA_PH(), M_MODELE_PION_ABC_ARMER_UN_PIA_ID(), } )
+self.done_BEH_Mission_Pion_ABC_ArmerPointDeControle = function( self, _, v ) self.eEtat = v[1] end
     end,
 
 }

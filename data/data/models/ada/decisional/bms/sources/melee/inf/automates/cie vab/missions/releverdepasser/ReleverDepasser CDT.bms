@@ -17,10 +17,12 @@ include "bit.lua"
 ]]
 node "MIS_Automate_CDT_INF_Relever"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_INF_Relever" }, "MIS_Automate_CDT_INF_Relever" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_INF_Relever, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_INF_Defaut", {} },
-        { "BEH_Conduite_Automate_INF_Relever", {} },
+        { "BEH_Conduite_Automate_INF_Defaut", { "done_BEH_Conduite_Automate_INF_Defaut" } },
+        { "BEH_Conduite_Automate_INF_Relever", { "done_BEH_Conduite_Automate_INF_Relever" } },
     },
 
     create = function( self )
@@ -46,7 +48,7 @@ node "MIS_Automate_CDT_INF_Relever"
             do
                 self.eActionMission = eActionEnCours
                                 do
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -55,7 +57,8 @@ node "MIS_Automate_CDT_INF_Relever"
             end
         end
 
-        Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, setmetatable( { false, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, { false, } )
+self.done_BEH_Conduite_Automate_INF_Defaut = function( self, _, v ) self.eActionMission = v[1] end
         Activate( self.activations.BEH_Conduite_Automate_INF_Relever, 1, {} )
     end,
 
@@ -66,14 +69,16 @@ node "MIS_Automate_CDT_INF_Relever"
 
 node "BEH_Conduite_Automate_INF_Relever"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_INF_Relever" }, "BEH_Conduite_Automate_INF_Relever" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_INF_Relever, {value} ) end,
     activations =
     {
-        { "BEH_Medo_Automate_INF_InitialiseSE", {} },
-        { "BEH_Conduite_Automate_INF_CadreStatique", {} },
-        { "BEH_Situation_Automate_INF_Relever", {} },
-        { "BEH_Conduite_Automate_INF_Relever_PrepareReleve_Valide", {} },
-        { "BEH_Conduite_Automate_INF_Relever_AssignerReleve", {} },
-        { "BEH_Conduite_Automate_INF_Relever_ApresReleve", {} },
+        { "BEH_Medo_Automate_INF_InitialiseSE", { "done_BEH_Medo_Automate_INF_InitialiseSE" } },
+        { "BEH_Conduite_Automate_INF_CadreStatique", { "done_BEH_Conduite_Automate_INF_CadreStatique" } },
+        { "BEH_Situation_Automate_INF_Relever", { "done_BEH_Situation_Automate_INF_Relever" } },
+        { "BEH_Conduite_Automate_INF_Relever_PrepareReleve_Valide", { "done_BEH_Conduite_Automate_INF_Relever_PrepareReleve_Valide" } },
+        { "BEH_Conduite_Automate_INF_Relever_AssignerReleve", { "done_BEH_Conduite_Automate_INF_Relever_AssignerReleve" } },
+        { "BEH_Conduite_Automate_INF_Relever_ApresReleve", { "done_BEH_Conduite_Automate_INF_Relever_ApresReleve" } },
     },
 
     create = function( self )
@@ -92,7 +97,7 @@ node "BEH_Conduite_Automate_INF_Relever"
         if( self.eActionReleve == eActionImpossible ) then
             do
                 DEC_RC( eRC_MissionImpossible )
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -116,7 +121,8 @@ node "BEH_Conduite_Automate_INF_Relever"
 
                     Activate( self.activations.BEH_Conduite_Automate_INF_CadreStatique, 1, {} )
                     Activate( self.activations.BEH_Situation_Automate_INF_Relever, 1, { self.rN_PE, self.mission.compagnie_, } )
-                    Activate( self.activations.BEH_Conduite_Automate_INF_Relever_PrepareReleve_Valide, 1, setmetatable( { self.rN_PE, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionReleve = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Conduite_Automate_INF_Relever_PrepareReleve_Valide, 1, { self.rN_PE, } )
+self.done_BEH_Conduite_Automate_INF_Relever_PrepareReleve_Valide = function( self, _, v ) self.eActionReleve = v[1] end
                     _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eRelever then
@@ -129,7 +135,8 @@ elseif switch_1 == eRelever then
                         end
                     end
 
-                    Activate( self.activations.BEH_Conduite_Automate_INF_Relever_AssignerReleve, 1, setmetatable( { self.mission.compagnie_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionReleve = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Conduite_Automate_INF_Relever_AssignerReleve, 1, { self.mission.compagnie_, } )
+self.done_BEH_Conduite_Automate_INF_Relever_AssignerReleve = function( self, _, v ) self.eActionReleve = v[1] end
                     _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
@@ -146,9 +153,11 @@ elseif switch_1 == eFinMission then
 
 node "BEH_Situation_Automate_INF_Relever"
 {
+    feedbacks = { { { "done_BEH_Situation_Automate_INF_Relever" }, "BEH_Situation_Automate_INF_Relever" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Situation_Automate_INF_Relever, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_INF_Relever_PrepareReleveSur", {} },
+        { "BEH_Conduite_Automate_INF_Relever_PrepareReleveSur", { "done_BEH_Conduite_Automate_INF_Relever_PrepareReleveSur" } },
     },
 
     create = function( self )
@@ -180,9 +189,11 @@ do
 
 node "BEH_Conduite_Automate_INF_Relever_PrepareReleveSur"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_INF_Relever_PrepareReleveSur" }, "BEH_Conduite_Automate_INF_Relever_PrepareReleveSur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_INF_Relever_PrepareReleveSur, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_INF_Relever_PrepareReleve_Valide", {} },
+        { "BEH_Conduite_Automate_INF_Relever_PrepareReleve_Valide", { "done_BEH_Conduite_Automate_INF_Relever_PrepareReleve_Valide" } },
     },
 
     create = function( self )
@@ -199,6 +210,8 @@ node "BEH_Conduite_Automate_INF_Relever_PrepareReleveSur"
 
 node "BEH_Conduite_Automate_INF_Relever_PrepareReleve_Valide"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_INF_Relever_PrepareReleve_Valide" }, "BEH_Conduite_Automate_INF_Relever_PrepareReleve_Valide" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_INF_Relever_PrepareReleve_Valide, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.rN_ = self.params[1]
@@ -206,11 +219,11 @@ node "BEH_Conduite_Automate_INF_Relever_PrepareReleve_Valide"
 
     activate = function( self )
         if( self._namedParams.rN_ == ( GetActivity() - 1 ) ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             do return end
         end
 
-                self.params.__returnValue = eActionEnCours
+                self:SendFeedback( eActionEnCours )
         do return end
 
     end,
@@ -219,9 +232,11 @@ node "BEH_Conduite_Automate_INF_Relever_PrepareReleve_Valide"
 
 node "BEH_Conduite_Automate_INF_Relever_AssignerReleve"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_INF_Relever_AssignerReleve" }, "BEH_Conduite_Automate_INF_Relever_AssignerReleve" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_INF_Relever_AssignerReleve, {value} ) end,
     activations =
     {
-        { "ACT_Conduite_Automate_ReleverUnite", {} },
+        { "ACT_Conduite_Automate_ReleverUnite", { "done_ACT_Conduite_Automate_ReleverUnite" } },
     },
 
     create = function( self )
@@ -257,14 +272,14 @@ node "BEH_Conduite_Automate_INF_Relever_AssignerReleve"
                 end
 
                 if( ( self.rN_PionOK == 0 or self.rN_PionOK == nil ) ) then
-                    self.params.__returnValue = eActionImpossible
+                    self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
                 end
 
             end
         else
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             do return end
         end
 
@@ -274,9 +289,11 @@ node "BEH_Conduite_Automate_INF_Relever_AssignerReleve"
 
 node "BEH_Conduite_Automate_INF_Relever_ApresReleve"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_INF_Relever_ApresReleve" }, "BEH_Conduite_Automate_INF_Relever_ApresReleve" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_INF_Relever_ApresReleve, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_INF_CadreOffensif", {} },
+        { "BEH_Conduite_Automate_INF_CadreOffensif", { "done_BEH_Conduite_Automate_INF_CadreOffensif" } },
     },
 
     create = function( self )

@@ -9,6 +9,8 @@ includedFiles["sources/common/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Warning"
 {
+    feedbacks = { { { "done_ACT_Warning" }, "ACT_Warning" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Warning, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.typeRC = self.params[1]
@@ -32,6 +34,8 @@ includedFiles["sources/common/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Misc_Delai"
 {
+    feedbacks = { { { "done_ACT_Misc_Delai" }, "ACT_Misc_Delai" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Misc_Delai, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.id = self.params[1]
@@ -52,7 +56,7 @@ includedFiles["sources/common/Actions.bms"] = true
 
                 if( self._namedParams.rDelai * 60 <= DEC_TempsSim() - self.rTempsDebut ) then
                     do
-                                                self.params.__returnValue = eActionEffectuee
+                                                self:SendFeedback( eActionEffectuee )
                         Halt( self )
                         do return end
 
@@ -75,6 +79,8 @@ includedFiles["sources/common/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Info_Trace"
 {
+    feedbacks = { { { "done_ACT_Info_Trace" }, "ACT_Info_Trace" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Info_Trace, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.message = self.params[1]
@@ -97,6 +103,8 @@ includedFiles["sources/common/Actions.bms"] = true
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_AFFICHE_EtatDecisionnel"
 {
+    feedbacks = { { { "done_ACT_AFFICHE_EtatDecisionnel" }, "ACT_AFFICHE_EtatDecisionnel" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_AFFICHE_EtatDecisionnel, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.cle = self.params[1]

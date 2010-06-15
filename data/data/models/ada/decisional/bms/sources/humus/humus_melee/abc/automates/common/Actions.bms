@@ -20,6 +20,8 @@ includedFiles["sources/humus/humus_melee/abc/automates/common/Actions.bms"] = tr
 ]]--[[// *****************************************************************************
 ]]node "ACT_Ordre_Automate_ABC_Decrocher"
 {
+    feedbacks = { { { "done_ACT_Ordre_Automate_ABC_Decrocher" }, "ACT_Ordre_Automate_ABC_Decrocher" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Ordre_Automate_ABC_Decrocher, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]

@@ -41,9 +41,11 @@ include "Population/Populations/Missions/Manifester.bms"
 ]]--[[// *****************************************************************************
 ]]node "DefaultBehavior"
 {
+    feedbacks = { { { "done_Default" }, "Default" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_Default, {value} ) end,
     activations =
     {
-        { "BEH_Default", {} },
+        { "BEH_Default", { "done_BEH_Default" } },
     },
 
     create = function( self )
@@ -65,9 +67,11 @@ connections = connections or {}
 connections[ #connections + 1 ] = { nodes.Default, "Default", nodes.DefaultBehavior }
 node "BEH_Default"
 {
+    feedbacks = { { { "done_BEH_Default" }, "BEH_Default" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Default, {value} ) end,
     activations =
     {
-        { "ACT_Ordre_Suppression", {} },
+        { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
     },
 
     create = function( self )
@@ -155,9 +159,11 @@ elseif switch_1 == "Rep_OrderConduite_Population_ChangerAttitude" then
 
 node "BEH_Pop_RejoindrePoint"
 {
+    feedbacks = { { { "done_BEH_Pop_RejoindrePoint" }, "BEH_Pop_RejoindrePoint" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pop_RejoindrePoint, {value} ) end,
     activations =
     {
-        { "ACT_Pop_RejoindrePoint", {} },
+        { "ACT_Pop_RejoindrePoint", { "done_ACT_Pop_RejoindrePoint" } },
     },
 
     create = function( self )
@@ -179,9 +185,11 @@ node "BEH_Pop_RejoindrePoint"
 
 node "BEH_Pop_Stationner"
 {
+    feedbacks = { { { "done_BEH_Pop_Stationner" }, "BEH_Pop_Stationner" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pop_Stationner, {value} ) end,
     activations =
     {
-        { "ACT_Pop_Stationner", {} },
+        { "ACT_Pop_Stationner", { "done_ACT_Pop_Stationner" } },
     },
 
     create = function( self )
@@ -205,6 +213,8 @@ node "BEH_Pop_Stationner"
 
 node "BEH_Pop_RejoindreInstallation"
 {
+    feedbacks = { { { "done_BEH_Pop_RejoindreInstallation" }, "BEH_Pop_RejoindreInstallation" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pop_RejoindreInstallation, {value} ) end,
     instances =
     {
         max = 1,
@@ -212,7 +222,7 @@ node "BEH_Pop_RejoindreInstallation"
 
     activations =
     {
-        { "BEH_Pop_RejoindrePoint", {} },
+        { "BEH_Pop_RejoindrePoint", { "done_BEH_Pop_RejoindrePoint" } },
     },
 
     create = function( self )
@@ -242,10 +252,12 @@ node "BEH_Pop_RejoindreInstallation"
 
 node "BEH_Pop_DegraderInstallations"
 {
+    feedbacks = { { { "done_BEH_Pop_DegraderInstallations" }, "BEH_Pop_DegraderInstallations" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pop_DegraderInstallations, {value} ) end,
     activations =
     {
-        { "ACT_Misc_Delai", {} },
-        { "ACT_Pop_DegraderInstallations", {} },
+        { "ACT_Misc_Delai", { "done_ACT_Misc_Delai" } },
+        { "ACT_Pop_DegraderInstallations", { "done_ACT_Pop_DegraderInstallations" } },
     },
 
     create = function( self )
@@ -258,7 +270,8 @@ node "BEH_Pop_DegraderInstallations"
         if( self.eEtatDelai == eActionEnCours and GetStateVariable( "VE_Courage" ) > 0 ) then
             do
                 --[[//un echauffouré dure g_delaiAltercations min, ce qui signifie qu'il n'y a de tir réel qu'un tick toute les 2 min
-]]Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { BEH_Pop_DegraderInstallations, g_delaiAltercations, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatDelai = v else rawset( t, k, v ) end end } ) )
+]]Activate( self.activations.ACT_Misc_Delai, 1, { BEH_Pop_DegraderInstallations, g_delaiAltercations, } )
+self.done_ACT_Misc_Delai = function( self, _, v ) self.eEtatDelai = v[1] end
                 Activate( self.activations.ACT_Pop_DegraderInstallations, 1, { self._namedParams.zone, 0, } )
             end
         else
@@ -283,9 +296,11 @@ if( GetStateVariable( "VE_Courage" ) > 0 ) then
 
 node "BEH_Pop_RalentissementPions"
 {
+    feedbacks = { { { "done_BEH_Pop_RalentissementPions" }, "BEH_Pop_RalentissementPions" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pop_RalentissementPions, {value} ) end,
     activations =
     {
-        { "ACT_Pop_RalentissementPions", {} },
+        { "ACT_Pop_RalentissementPions", { "done_ACT_Pop_RalentissementPions" } },
     },
 
     create = function( self )
@@ -305,10 +320,12 @@ node "BEH_Pop_RalentissementPions"
 
 node "BEH_Pop_PAPPions"
 {
+    feedbacks = { { { "done_BEH_Pop_PAPPions" }, "BEH_Pop_PAPPions" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pop_PAPPions, {value} ) end,
     activations =
     {
-        { "ACT_Misc_Delai", {} },
-        { "ACT_Pop_PAPPions", {} },
+        { "ACT_Misc_Delai", { "done_ACT_Misc_Delai" } },
+        { "ACT_Pop_PAPPions", { "done_ACT_Pop_PAPPions" } },
     },
 
     create = function( self )
@@ -319,7 +336,8 @@ node "BEH_Pop_PAPPions"
         if( self.eEtatDelai == eActionEnCours and GetStateVariable( "VE_Courage" ) > 0 ) then
             do
                 --[[//un echauffouré dure g_delaiAltercations min, ce qui signifie qu'il n'y a de tir réel qu'un tick toute les 2 min
-]]Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { BEH_Pop_PAPPions, g_delaiAltercations, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatDelai = v else rawset( t, k, v ) end end } ) )
+]]Activate( self.activations.ACT_Misc_Delai, 1, { BEH_Pop_PAPPions, g_delaiAltercations, } )
+self.done_ACT_Misc_Delai = function( self, _, v ) self.eEtatDelai = v[1] end
                 Activate( self.activations.ACT_Pop_PAPPions, 1, { 0.01, } )
             end
         else
@@ -344,10 +362,12 @@ if( GetStateVariable( "VE_Courage" ) > 0 ) then
 
 node "BEH_Pop_PAPPion"
 {
+    feedbacks = { { { "done_BEH_Pop_PAPPion" }, "BEH_Pop_PAPPion" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pop_PAPPion, {value} ) end,
     activations =
     {
-        { "ACT_Misc_Delai", {} },
-        { "ACT_Pop_PAPPion", {} },
+        { "ACT_Misc_Delai", { "done_ACT_Misc_Delai" } },
+        { "ACT_Pop_PAPPion", { "done_ACT_Pop_PAPPion" } },
     },
 
     create = function( self )
@@ -360,7 +380,8 @@ node "BEH_Pop_PAPPion"
         if( self.eEtatDelai == eActionEnCours and GetStateVariable( "VE_Courage" ) > 0 ) then
             do
                 --[[//un echauffouré dure g_delaiAltercations min, ce qui signifie qu'il n'y a de tir réel qu'un tick toute les 2 min
-]]Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { BEH_Pop_PAPPion, g_delaiAltercations, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatDelai = v else rawset( t, k, v ) end end } ) )
+]]Activate( self.activations.ACT_Misc_Delai, 1, { BEH_Pop_PAPPion, g_delaiAltercations, } )
+self.done_ACT_Misc_Delai = function( self, _, v ) self.eEtatDelai = v[1] end
                 Activate( self.activations.ACT_Pop_PAPPion, 1, { self._namedParams.pion, 0.01, } )
             end
         else
@@ -385,9 +406,11 @@ if( GetStateVariable( "VE_Courage" ) > 0 ) then
 
 node "BEH_Pop_RepondreALaPriseAPartie"
 {
+    feedbacks = { { { "done_BEH_Pop_RepondreALaPriseAPartie" }, "BEH_Pop_RepondreALaPriseAPartie" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pop_RepondreALaPriseAPartie, {value} ) end,
     activations =
     {
-        { "BEH_Pop_PAPPion", {} },
+        { "BEH_Pop_PAPPion", { "done_BEH_Pop_PAPPion" } },
     },
 
     create = function( self )

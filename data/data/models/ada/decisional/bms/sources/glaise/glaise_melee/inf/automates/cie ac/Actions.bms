@@ -14,6 +14,8 @@ includedFiles["sources/glaise/glaise_melee/inf/automates/cie ac/Actions.bms"] = 
 ]]
 node "ACT_Conduite_Automate_HOT_AppuiFreinage"
 {
+    feedbacks = { { { "done_ACT_Conduite_Automate_HOT_AppuiFreinage" }, "ACT_Conduite_Automate_HOT_AppuiFreinage" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Conduite_Automate_HOT_AppuiFreinage, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionHOT = self.params[1]

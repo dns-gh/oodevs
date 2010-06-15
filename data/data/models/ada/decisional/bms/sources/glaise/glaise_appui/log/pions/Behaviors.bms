@@ -61,19 +61,21 @@ include "glaise/glaise_Appui/Log/Pions/Missions/Missions.bms"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Defaut"
 {
+    feedbacks = { { { "done_BEH_Defaut" }, "BEH_Defaut" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Defaut, {value} ) end,
     activations =
     {
-        { "BEH_Mot_AffecterVariablesDEtat", {} },
-        { "BEH_MAJ_EtatDefaut", {} },
-        { "BEH_Ambiance", {} },
-        { "BEH_Nbc", {} },
-        { "BEH_ROE", {} },
-        { "BEH_Rens", {} },
-        { "BEH_Ordre_Pion_LOG_OrdresInopines", {} },
-        { "ACT_Misc_Pion_LOG_ActiverSante", {} },
-        { "ACT_Misc_Pion_LOG_ActiverMaintenance", {} },
-        { "ACT_Misc_Pion_LOG_ActiverRavitaillement", {} },
-        { "BEH_Log_Pion_GererActivationsChaines", {} },
+        { "BEH_Mot_AffecterVariablesDEtat", { "done_BEH_Mot_AffecterVariablesDEtat" } },
+        { "BEH_MAJ_EtatDefaut", { "done_BEH_MAJ_EtatDefaut" } },
+        { "BEH_Ambiance", { "done_BEH_Ambiance" } },
+        { "BEH_Nbc", { "done_BEH_Nbc" } },
+        { "BEH_ROE", { "done_BEH_ROE" } },
+        { "BEH_Rens", { "done_BEH_Rens" } },
+        { "BEH_Ordre_Pion_LOG_OrdresInopines", { "done_BEH_Ordre_Pion_LOG_OrdresInopines" } },
+        { "ACT_Misc_Pion_LOG_ActiverSante", { "done_ACT_Misc_Pion_LOG_ActiverSante" } },
+        { "ACT_Misc_Pion_LOG_ActiverMaintenance", { "done_ACT_Misc_Pion_LOG_ActiverMaintenance" } },
+        { "ACT_Misc_Pion_LOG_ActiverRavitaillement", { "done_ACT_Misc_Pion_LOG_ActiverRavitaillement" } },
+        { "BEH_Log_Pion_GererActivationsChaines", { "done_BEH_Log_Pion_GererActivationsChaines" } },
     },
 
     create = function( self )
@@ -147,6 +149,8 @@ include "glaise/glaise_Appui/Log/Pions/Missions/Missions.bms"
 
 node "BEH_Mot_AffecterVariablesDEtat"
 {
+    feedbacks = { { { "done_BEH_Mot_AffecterVariablesDEtat" }, "BEH_Mot_AffecterVariablesDEtat" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mot_AffecterVariablesDEtat, {value} ) end,
     create = function( self )
     end,
 
@@ -164,12 +168,14 @@ node "BEH_Mot_AffecterVariablesDEtat"
 
 node "BEH_Ordre_Pion_LOG_OrdresInopines"
 {
+    feedbacks = { { { "done_BEH_Ordre_Pion_LOG_OrdresInopines" }, "BEH_Ordre_Pion_LOG_OrdresInopines" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Ordre_Pion_LOG_OrdresInopines, {value} ) end,
     activations =
     {
-        { "ACT_Misc_Pion_LOG_PreterRemorqueurs", {} },
-        { "ACT_Misc_Pion_LOG_RecupererRemorqueurs", {} },
-        { "ACT_Misc_Pion_LOG_PreterVSRAM", {} },
-        { "ACT_Misc_Pion_LOG_RecupererVSRAM", {} },
+        { "ACT_Misc_Pion_LOG_PreterRemorqueurs", { "done_ACT_Misc_Pion_LOG_PreterRemorqueurs" } },
+        { "ACT_Misc_Pion_LOG_RecupererRemorqueurs", { "done_ACT_Misc_Pion_LOG_RecupererRemorqueurs" } },
+        { "ACT_Misc_Pion_LOG_PreterVSRAM", { "done_ACT_Misc_Pion_LOG_PreterVSRAM" } },
+        { "ACT_Misc_Pion_LOG_RecupererVSRAM", { "done_ACT_Misc_Pion_LOG_RecupererVSRAM" } },
     },
 
     create = function( self )
@@ -276,11 +282,13 @@ elseif switch_1 == "Rep_OrderConduite_ModifierPrioritesTactiquesBlesses" then
 
 node "BEH_Log_Pion_GererActivationsChaines"
 {
+    feedbacks = { { { "done_BEH_Log_Pion_GererActivationsChaines" }, "BEH_Log_Pion_GererActivationsChaines" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Log_Pion_GererActivationsChaines, {value} ) end,
     activations =
     {
-        { "ACT_Misc_Pion_LOG_ActiverSante", {} },
-        { "ACT_Misc_Pion_LOG_ActiverMaintenance", {} },
-        { "ACT_Misc_Pion_LOG_ActiverRavitaillement", {} },
+        { "ACT_Misc_Pion_LOG_ActiverSante", { "done_ACT_Misc_Pion_LOG_ActiverSante" } },
+        { "ACT_Misc_Pion_LOG_ActiverMaintenance", { "done_ACT_Misc_Pion_LOG_ActiverMaintenance" } },
+        { "ACT_Misc_Pion_LOG_ActiverRavitaillement", { "done_ACT_Misc_Pion_LOG_ActiverRavitaillement" } },
     },
 
     create = function( self )
@@ -306,9 +314,11 @@ node "BEH_Log_Pion_GererActivationsChaines"
 
 node "BEH_Dep_Virtuel_ProgressionVers"
 {
+    feedbacks = { { { "done_BEH_Dep_Virtuel_ProgressionVers" }, "BEH_Dep_Virtuel_ProgressionVers" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Virtuel_ProgressionVers, {value} ) end,
     activations =
     {
-        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
     },
 
     create = function( self )
@@ -330,11 +340,13 @@ node "BEH_Dep_Virtuel_ProgressionVers"
 
 node "BEH_Dep_Virtuel_PreparationAction"
 {
+    feedbacks = { { { "done_BEH_Dep_Virtuel_PreparationAction" }, "BEH_Dep_Virtuel_PreparationAction" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Virtuel_PreparationAction, {value} ) end,
     create = function( self )
     end,
 
     activate = function( self )
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         do return end
 
     end,

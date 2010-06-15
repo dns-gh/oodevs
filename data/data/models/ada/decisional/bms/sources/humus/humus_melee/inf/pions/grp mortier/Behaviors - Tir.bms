@@ -17,11 +17,13 @@ include "bit.lua"
 ]]
 node "BEH_Ordre_Pion_Mortier_AppliquerLesFeux"
 {
+    feedbacks = { { { "done_BEH_Ordre_Pion_Mortier_AppliquerLesFeux" }, "BEH_Ordre_Pion_Mortier_AppliquerLesFeux" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Ordre_Pion_Mortier_AppliquerLesFeux, {value} ) end,
     activations =
     {
-        { "ACT_RC", {} },
-        { "BEH_MOT_Pion_INF_Debarquer", {} },
-        { "BEH_Tir_Pion_Mortier_AppliquerFeux", {} },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "BEH_MOT_Pion_INF_Debarquer", { "done_BEH_MOT_Pion_INF_Debarquer" } },
+        { "BEH_Tir_Pion_Mortier_AppliquerFeux", { "done_BEH_Tir_Pion_Mortier_AppliquerFeux" } },
     },
 
     create = function( self )
@@ -38,14 +40,15 @@ node "BEH_Ordre_Pion_Mortier_AppliquerLesFeux"
         end
 
         if( self.eAction ~= eActionEnCours ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
 
         Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 2, {} )
         if( not DEC_Agent_EstEmbarque() ) then
-            Activate( self.activations.BEH_Tir_Pion_Mortier_AppliquerFeux, 1, setmetatable( { self._namedParams.ptCible, self._namedParams.rIT, self._namedParams.dotation, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+            Activate( self.activations.BEH_Tir_Pion_Mortier_AppliquerFeux, 1, { self._namedParams.ptCible, self._namedParams.rIT, self._namedParams.dotation, } )
+self.done_BEH_Tir_Pion_Mortier_AppliquerFeux = function( self, _, v ) self.eAction = v[1] end
         end
 
     end,
@@ -58,11 +61,13 @@ node "BEH_Ordre_Pion_Mortier_AppliquerLesFeux"
 
 node "BEH_Tir_Pion_Mortier_AppliquerFeux"
 {
+    feedbacks = { { { "done_BEH_Tir_Pion_Mortier_AppliquerFeux" }, "BEH_Tir_Pion_Mortier_AppliquerFeux" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Tir_Pion_Mortier_AppliquerFeux, {value} ) end,
     activations =
     {
-        { "ACT_Dep_SePosterFaceADir", {} },
-        { "BEH_Tir_Pion_Mortier_PreparerTirSur", {} },
-        { "ACT_Tir_Pion_Mortier_SurPosition", {} },
+        { "ACT_Dep_SePosterFaceADir", { "done_ACT_Dep_SePosterFaceADir" } },
+        { "BEH_Tir_Pion_Mortier_PreparerTirSur", { "done_BEH_Tir_Pion_Mortier_PreparerTirSur" } },
+        { "ACT_Tir_Pion_Mortier_SurPosition", { "done_ACT_Tir_Pion_Mortier_SurPosition" } },
     },
 
     create = function( self )
@@ -89,7 +94,7 @@ node "BEH_Tir_Pion_Mortier_AppliquerFeux"
 
                         end
 
-                                                self.params.__returnValue = eActionImpossible
+                                                self:SendFeedback( eActionImpossible )
                         Halt( self )
                         do return end
 
@@ -108,7 +113,7 @@ node "BEH_Tir_Pion_Mortier_AppliquerFeux"
 
                         end
 
-                                                self.params.__returnValue = eActionImpossible
+                                                self:SendFeedback( eActionImpossible )
                         Halt( self )
                         do return end
 
@@ -122,14 +127,15 @@ node "BEH_Tir_Pion_Mortier_AppliquerFeux"
             do
                 Activate( self.activations.ACT_Dep_SePosterFaceADir, 1, { self.dirCible, } )
                 self.eAction = eActionEnCours
-                                self.params.__returnValue = eActionEffectuee
+                                self:SendFeedback( eActionEffectuee )
                 do return end
 
             end
         end
 
         Activate( self.activations.BEH_Tir_Pion_Mortier_PreparerTirSur, 2, { self._namedParams.ptCible, M_DELAI_PREPARATION_TIR(), } )
-        Activate( self.activations.ACT_Tir_Pion_Mortier_SurPosition, 1, setmetatable( { self._namedParams.ptCible, self._namedParams.rIT, self._namedParams.dotation, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Tir_Pion_Mortier_SurPosition, 1, { self._namedParams.ptCible, self._namedParams.rIT, self._namedParams.dotation, } )
+self.done_ACT_Tir_Pion_Mortier_SurPosition = function( self, _, v ) self.eAction = v[1] end
     end,
 
 --[[// ============================================================================
@@ -140,10 +146,12 @@ node "BEH_Tir_Pion_Mortier_AppliquerFeux"
 
 node "BEH_Tir_Pion_Mortier_PreparerTirSur"
 {
+    feedbacks = { { { "done_BEH_Tir_Pion_Mortier_PreparerTirSur" }, "BEH_Tir_Pion_Mortier_PreparerTirSur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Tir_Pion_Mortier_PreparerTirSur, {value} ) end,
     activations =
     {
-        { "ACT_Tir_Pion_Mortier_PreparerTirSur", {} },
-        { "ACT_Misc_Delai", {} },
+        { "ACT_Tir_Pion_Mortier_PreparerTirSur", { "done_ACT_Tir_Pion_Mortier_PreparerTirSur" } },
+        { "ACT_Misc_Delai", { "done_ACT_Misc_Delai" } },
     },
 
     create = function( self )
@@ -157,7 +165,8 @@ node "BEH_Tir_Pion_Mortier_PreparerTirSur"
         if( self.eAction == eActionEnCours ) then
             do
                 Activate( self.activations.ACT_Tir_Pion_Mortier_PreparerTirSur, 1, { self._namedParams.ptCible, } )
-                Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, self._namedParams.rDelai, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                Activate( self.activations.ACT_Misc_Delai, 1, { 1, self._namedParams.rDelai, } )
+self.done_ACT_Misc_Delai = function( self, _, v ) self.eAction = v[1] end
             end
         end
 
@@ -171,9 +180,11 @@ node "BEH_Tir_Pion_Mortier_PreparerTirSur"
 
 node "BEH_Tir_Pion_INF_TirDebarque"
 {
+    feedbacks = { { { "done_BEH_Tir_Pion_INF_TirDebarque" }, "BEH_Tir_Pion_INF_TirDebarque" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Tir_Pion_INF_TirDebarque, {value} ) end,
     activations =
     {
-        { "ACT_Tir_DirectSur", {} },
+        { "ACT_Tir_DirectSur", { "done_ACT_Tir_DirectSur" } },
     },
 
     create = function( self )
@@ -184,8 +195,9 @@ node "BEH_Tir_Pion_INF_TirDebarque"
     activate = function( self )
         self.eAction = self.eAction or eActionEnCours
         local eActionReturn = self.eAction
-        Activate( self.activations.ACT_Tir_DirectSur, 1, setmetatable( { self._namedParams.ksEni, 1, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                self.params.__returnValue = eActionReturn
+        Activate( self.activations.ACT_Tir_DirectSur, 1, { self._namedParams.ksEni, 1, } )
+self.done_ACT_Tir_DirectSur = function( self, _, v ) self.eAction = v[1] end
+                self:SendFeedback( eActionReturn )
         do return end
 
     end,
@@ -199,11 +211,13 @@ node "BEH_Tir_Pion_INF_TirDebarque"
 
 node "BEH_MOT_Pion_Mortier_AppliquerLesFeux"
 {
+    feedbacks = { { { "done_BEH_MOT_Pion_Mortier_AppliquerLesFeux" }, "BEH_MOT_Pion_Mortier_AppliquerLesFeux" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MOT_Pion_Mortier_AppliquerLesFeux, {value} ) end,
     activations =
     {
-        { "ACT_RC", {} },
-        { "BEH_MOT_Pion_INF_Debarquer", {} },
-        { "BEH_Tir_Pion_Mortier_AppliquerFeux", {} },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "BEH_MOT_Pion_INF_Debarquer", { "done_BEH_MOT_Pion_INF_Debarquer" } },
+        { "BEH_Tir_Pion_Mortier_AppliquerFeux", { "done_BEH_Tir_Pion_Mortier_AppliquerFeux" } },
     },
 
     create = function( self )

@@ -20,9 +20,11 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/escadron reco/missions/
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_MRT_ABC_Controler"
 {
+    feedbacks = { { { "done_MIS_Automate_MRT_ABC_Controler" }, "MIS_Automate_MRT_ABC_Controler" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_MRT_ABC_Controler, {value} ) end,
     activations =
     {
-        { "BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionStatique", {} },
+        { "BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionStatique", { "done_BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionStatique" } },
     },
 
     create = function( self )

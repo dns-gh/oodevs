@@ -20,14 +20,16 @@ include "bit.lua"
 
 node "MIS_Pion_ASS_EOP_AcquerirObjectifs"
 {
+    feedbacks = { { { "done_MIS_Pion_ASS_EOP_AcquerirObjectifs" }, "MIS_Pion_ASS_EOP_AcquerirObjectifs" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_ASS_EOP_AcquerirObjectifs, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_Dep_Pion_EOP_ActiverFurtivite", {} },
-        { "BEH_Pion_EOP_AcquerirObjectifs_Mission", {} },
-        { "BEH_Transport_Pion_EOP_RecupererTransporteur", {} },
-        { "BEH_Dep_ProgressionVers", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "ACT_Dep_Pion_EOP_ActiverFurtivite", { "done_ACT_Dep_Pion_EOP_ActiverFurtivite" } },
+        { "BEH_Pion_EOP_AcquerirObjectifs_Mission", { "done_BEH_Pion_EOP_AcquerirObjectifs_Mission" } },
+        { "BEH_Transport_Pion_EOP_RecupererTransporteur", { "done_BEH_Transport_Pion_EOP_RecupererTransporteur" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
     },
 
     create = function( self )
@@ -48,7 +50,8 @@ node "MIS_Pion_ASS_EOP_AcquerirObjectifs"
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
                 self.ePhase = eSeReplier
@@ -81,7 +84,8 @@ elseif switch_1 == eSeReplier then
                         end
                     end
 
-                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.positionDebarquement_, eProgressionDirect, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.mission.positionDebarquement_, eProgressionDirect, eTypeItiInfiltration, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
@@ -93,7 +97,7 @@ elseif switch_1 == eFinMission then
                     if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
                         do
                             DEC_FinMission()
-                                                        self.params.__returnValue = eActionEffectuee
+                                                        self:SendFeedback( eActionEffectuee )
                             Halt( self )
                             do return end
 
@@ -112,16 +116,18 @@ elseif switch_1 == eFinMission then
 
 node "BEH_Pion_EOP_AcquerirObjectifs_Mission"
 {
+    feedbacks = { { { "done_BEH_Pion_EOP_AcquerirObjectifs_Mission" }, "BEH_Pion_EOP_AcquerirObjectifs_Mission" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pion_EOP_AcquerirObjectifs_Mission, {value} ) end,
     activations =
     {
-        { "ACT_Dep_PasserEnModeFurtif", {} },
-        { "BEH_Mot_Pion_EOP_Debarquer", {} },
-        { "BEH_Dep_Pion_EOP_PreparerDebarquement", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_RC", {} },
-        { "BEH_Dep_Pion_EOP_AcquerirObjectifs_Mission", {} },
-        { "ACT_Dep_Pion_EOP_ActiverFurtivite", {} },
-        { "BEH_Obs_Pion_ASS_ReconnaissanceZone", {} },
+        { "ACT_Dep_PasserEnModeFurtif", { "done_ACT_Dep_PasserEnModeFurtif" } },
+        { "BEH_Mot_Pion_EOP_Debarquer", { "done_BEH_Mot_Pion_EOP_Debarquer" } },
+        { "BEH_Dep_Pion_EOP_PreparerDebarquement", { "done_BEH_Dep_Pion_EOP_PreparerDebarquement" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "BEH_Dep_Pion_EOP_AcquerirObjectifs_Mission", { "done_BEH_Dep_Pion_EOP_AcquerirObjectifs_Mission" } },
+        { "ACT_Dep_Pion_EOP_ActiverFurtivite", { "done_ACT_Dep_Pion_EOP_ActiverFurtivite" } },
+        { "BEH_Obs_Pion_ASS_ReconnaissanceZone", { "done_BEH_Obs_Pion_ASS_ReconnaissanceZone" } },
     },
 
     create = function( self )
@@ -163,7 +169,8 @@ node "BEH_Pion_EOP_AcquerirObjectifs_Mission"
                 if cases_switch_1[1] or switch_1 == eDeployer
                 or switch_1 == eRejoindre then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                    Activate( self.activations.BEH_Dep_Pion_EOP_AcquerirObjectifs_Mission, 1, setmetatable( { self.mission.positionInstallation_, self.mission.positionDebarquement_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_Pion_EOP_AcquerirObjectifs_Mission, 1, { self.mission.positionInstallation_, self.mission.positionDebarquement_, } )
+self.done_BEH_Dep_Pion_EOP_AcquerirObjectifs_Mission = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eSurveiller then
@@ -183,11 +190,13 @@ elseif switch_1 == eSurveiller then
 
 node "BEH_Dep_Pion_EOP_PreparerDebarquement"
 {
+    feedbacks = { { { "done_BEH_Dep_Pion_EOP_PreparerDebarquement" }, "BEH_Dep_Pion_EOP_PreparerDebarquement" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Pion_EOP_PreparerDebarquement, {value} ) end,
     activations =
     {
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Dep_SePoster", {} },
-        { "ACT_Misc_Pion_DelaiInstallation", {} },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "ACT_Dep_SePoster", { "done_ACT_Dep_SePoster" } },
+        { "ACT_Misc_Pion_DelaiInstallation", { "done_ACT_Misc_Pion_DelaiInstallation" } },
     },
 
     create = function( self )
@@ -200,7 +209,7 @@ node "BEH_Dep_Pion_EOP_PreparerDebarquement"
         if( self.eActionDelai == eActionEffectuee ) then
             do
                 self.eActionDelai = eActionEnCours
-                                self.params.__returnValue = eActionEffectuee
+                                self:SendFeedback( eActionEffectuee )
                 Halt( self )
                 do return end
 
@@ -208,16 +217,19 @@ node "BEH_Dep_Pion_EOP_PreparerDebarquement"
         end
 
         Activate( self.activations.ACT_Dep_SePoster, 1, {} )
-        Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, setmetatable( { eNiveauInstallation_Poste, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionDelai = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, { eNiveauInstallation_Poste, } )
+self.done_ACT_Misc_Pion_DelaiInstallation = function( self, _, v ) self.eActionDelai = v[1] end
     end,
 
 }
 
 node "BEH_Dep_Pion_EOP_AcquerirObjectifs_Mission"
 {
+    feedbacks = { { { "done_BEH_Dep_Pion_EOP_AcquerirObjectifs_Mission" }, "BEH_Dep_Pion_EOP_AcquerirObjectifs_Mission" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Pion_EOP_AcquerirObjectifs_Mission, {value} ) end,
     activations =
     {
-        { "BEH_Dep_Progresser", {} },
+        { "BEH_Dep_Progresser", { "done_BEH_Dep_Progresser" } },
     },
 
     create = function( self )
@@ -238,7 +250,7 @@ node "BEH_Dep_Pion_EOP_AcquerirObjectifs_Mission"
                     self.it = S_Misc_DetruireItineraire( self.it, "BEH_Pion_INF_ApprocherObjectifMission" )
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -250,7 +262,7 @@ node "BEH_Dep_Pion_EOP_AcquerirObjectifs_Mission"
                 self.eAction = eActionEnCours
                                 do
                     self.it = S_Misc_DetruireItineraire( self.it, "BEH_Pion_INF_ApprocherObjectifMission" )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -259,7 +271,8 @@ node "BEH_Dep_Pion_EOP_AcquerirObjectifs_Mission"
             end
         end
 
-        Activate( self.activations.BEH_Dep_Progresser, 1, setmetatable( { self.it, eProgressionReco, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Dep_Progresser, 1, { self.it, eProgressionReco, } )
+self.done_BEH_Dep_Progresser = function( self, _, v ) self.eAction = v[1] end
     end,
 
     destroy = function( self )

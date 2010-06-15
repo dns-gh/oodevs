@@ -9,9 +9,11 @@ includedFiles["sources/appui/log/automates/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Ordre_Automate_LOG_OrdresInopines"
 {
+    feedbacks = { { { "done_ACT_Ordre_Automate_LOG_OrdresInopines" }, "ACT_Ordre_Automate_LOG_OrdresInopines" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Ordre_Automate_LOG_OrdresInopines, {value} ) end,
     activations =
     {
-        { "ACT_Ordre_Suppression", {} },
+        { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
     },
 
     create = function( self )

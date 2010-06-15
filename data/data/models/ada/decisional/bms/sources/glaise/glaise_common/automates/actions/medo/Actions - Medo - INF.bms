@@ -55,6 +55,8 @@ include "bit.lua"
 
 node "ACT_Mission_Automate_INF_AssignerAppuyerA"
 {
+    feedbacks = { { { "done_ACT_Mission_Automate_INF_AssignerAppuyerA" }, "ACT_Mission_Automate_INF_AssignerAppuyerA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Mission_Automate_INF_AssignerAppuyerA, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -94,7 +96,7 @@ elseif switch_1 == ePhase_CDT then
         end
 
         if( self.missionPion == nil ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             do return end
         end
 
@@ -104,7 +106,7 @@ elseif switch_1 == ePhase_CDT then
                 DEC_Trace( "Assigne mission 'Appuyer' a " .. DEC_GetSzName( self._namedParams.pPion ) )
             end
         else
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             do return end
         end
 
@@ -122,7 +124,7 @@ elseif switch_1 == ePhase_CDT then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
 
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         do return end
 
     end,
@@ -135,9 +137,11 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[//=============================================================================
 ]]node "ACT_Mission_Automate_INF_AssignerA_SurveillerZone"
 {
+    feedbacks = { { { "done_ACT_Mission_Automate_INF_AssignerA_SurveillerZone" }, "ACT_Mission_Automate_INF_AssignerA_SurveillerZone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Mission_Automate_INF_AssignerA_SurveillerZone, {value} ) end,
     activations =
     {
-        { "ACT_Medo_Automate_AffecterFuseaux_Compagnie", {} },
+        { "ACT_Medo_Automate_AffecterFuseaux_Compagnie", { "done_ACT_Medo_Automate_AffecterFuseaux_Compagnie" } },
     },
 
     create = function( self )
@@ -182,7 +186,7 @@ elseif switch_1 == ePhase_CDT then
         end
 
         if( self.missionPion == nil ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             do return end
         end
 
@@ -196,7 +200,7 @@ elseif switch_1 == ePhase_CDT then
                     do
                         self.ptZone = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( self._namedParams.locZone )
                         if( ( self.ptZone == 0 or self.ptZone == nil ) ) then
-                            self.params.__returnValue = eActionImpossible
+                            self:SendFeedback( eActionImpossible )
                             Halt( self )
                             do return end
                         end
@@ -227,7 +231,8 @@ elseif switch_1 == eMRT_RetablirFuseau then
                         end
                     end
 
-                    Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux_Compagnie, 1, setmetatable( { self._namedParams.pPion, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionFuseau = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux_Compagnie, 1, { self._namedParams.pPion, } )
+self.done_ACT_Medo_Automate_AffecterFuseaux_Compagnie = function( self, _, v ) self.eActionFuseau = v[1] end
                     _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eMRT_Valider then
@@ -235,7 +240,7 @@ elseif switch_1 == eMRT_Valider then
                         DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
                     end
 
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     do return end
 
                                 end
@@ -251,9 +256,11 @@ elseif switch_1 == eMRT_Valider then
 
 node "ACT_Mission_Automate_INF_AssignerA_SurveillerSurPosition"
 {
+    feedbacks = { { { "done_ACT_Mission_Automate_INF_AssignerA_SurveillerSurPosition" }, "ACT_Mission_Automate_INF_AssignerA_SurveillerSurPosition" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Mission_Automate_INF_AssignerA_SurveillerSurPosition, {value} ) end,
     activations =
     {
-        { "ACT_Medo_Automate_AffecterFuseaux_Compagnie", {} },
+        { "ACT_Medo_Automate_AffecterFuseaux_Compagnie", { "done_ACT_Medo_Automate_AffecterFuseaux_Compagnie" } },
     },
 
     create = function( self )
@@ -298,7 +305,7 @@ elseif switch_1 == ePhase_CDT then
         end
 
         if( self.missionPion == nil ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             do return end
         end
 
@@ -329,7 +336,8 @@ elseif switch_1 == eMRT_RetablirFuseau then
                         end
                     end
 
-                    Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux_Compagnie, 1, setmetatable( { self._namedParams.pPion, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionFuseau = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux_Compagnie, 1, { self._namedParams.pPion, } )
+self.done_ACT_Medo_Automate_AffecterFuseaux_Compagnie = function( self, _, v ) self.eActionFuseau = v[1] end
                     _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eMRT_Valider then
@@ -337,7 +345,7 @@ elseif switch_1 == eMRT_Valider then
                         DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
                     end
 
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     do return end
 
                                 end
@@ -353,6 +361,8 @@ elseif switch_1 == eMRT_Valider then
 
 node "ACT_Mission_Automate_INF_AssignerA_Controler"
 {
+    feedbacks = { { { "done_ACT_Mission_Automate_INF_AssignerA_Controler" }, "ACT_Mission_Automate_INF_AssignerA_Controler" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Mission_Automate_INF_AssignerA_Controler, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -392,7 +402,7 @@ elseif switch_1 == ePhase_CDT then
         end
 
         if( self.missionPion == nil ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             do return end
         end
 
@@ -402,7 +412,7 @@ elseif switch_1 == ePhase_CDT then
                 DEC_Trace( "Assigne mission 'Controler' a " .. DEC_GetSzName( self._namedParams.pPion ) )
             end
         else
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             do return end
         end
 
@@ -420,7 +430,7 @@ elseif switch_1 == ePhase_CDT then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
 
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         do return end
 
     end,
@@ -434,6 +444,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[//=============================================================================
 ]]node "ACT_Mission_Automate_INF_AssignerA_Harceler"
 {
+    feedbacks = { { { "done_ACT_Mission_Automate_INF_AssignerA_Harceler" }, "ACT_Mission_Automate_INF_AssignerA_Harceler" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Mission_Automate_INF_AssignerA_Harceler, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -475,7 +487,7 @@ elseif switch_1 == ePhase_CDT then
         end
 
         if( self.missionPion == nil ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             do return end
         end
 
@@ -485,7 +497,7 @@ elseif switch_1 == ePhase_CDT then
                 DEC_Trace( "Assigne mission 'Harceler' a " .. DEC_GetSzName( self._namedParams.pPion ) )
             end
         else
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             do return end
         end
 
@@ -493,7 +505,7 @@ elseif switch_1 == ePhase_CDT then
         --[[//DEC_Debug( "assert halt failed : " +  "AssignerA_Harceler: ptRegroupement != 0"  );	
 ]]if( not ( ( self.ptRegroupement ~= 0 and self.ptRegroupement ~= nil ) ) ) then
             do
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -514,7 +526,7 @@ elseif switch_1 == ePhase_CDT then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
 
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         do return end
 
     end,
@@ -529,6 +541,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[//-----------------------------------------------------------------------------
 ]]node "ACT_Mission_Automate_INF_AssignerA_Semparer"
 {
+    feedbacks = { { { "done_ACT_Mission_Automate_INF_AssignerA_Semparer" }, "ACT_Mission_Automate_INF_AssignerA_Semparer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Mission_Automate_INF_AssignerA_Semparer, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -567,7 +581,7 @@ elseif switch_1 == ePhase_CDT then
         end
 
         if( self.missionPion == nil ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             do return end
         end
 
@@ -577,7 +591,7 @@ elseif switch_1 == ePhase_CDT then
                 DEC_Trace( "Assigne mission 'Semparer' a " .. DEC_GetSzName( self._namedParams.pPion ) )
             end
         else
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             do return end
         end
 
@@ -595,7 +609,7 @@ elseif switch_1 == ePhase_CDT then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
 
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         do return end
 
     end,
@@ -607,6 +621,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[//-----------------------------------------------------------------------------
 ]]node "ACT_Mission_Automate_INF_AssignerA_Reconnaitre"
 {
+    feedbacks = { { { "done_ACT_Mission_Automate_INF_AssignerA_Reconnaitre" }, "ACT_Mission_Automate_INF_AssignerA_Reconnaitre" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Mission_Automate_INF_AssignerA_Reconnaitre, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -645,7 +661,7 @@ elseif switch_1 == ePhase_CDT then
         end
 
         if( self.missionPion == nil ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             do return end
         end
 
@@ -656,7 +672,7 @@ elseif switch_1 == ePhase_CDT then
         --[[//DEC_Debug( "assert halt failed : " +  "pas de point d'arrivee"  );
 ]]if( not ( ( self.dest ~= 0 and self.dest ~= nil ) ) ) then
             do
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -668,7 +684,7 @@ elseif switch_1 == ePhase_CDT then
                 DEC_Trace( "Assigne mission 'Reconnaitre' a " .. DEC_GetSzName( self._namedParams.pPion ) )
             end
         else
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             do return end
         end
 
@@ -686,7 +702,7 @@ elseif switch_1 == ePhase_CDT then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
 
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         do return end
 
     end,
@@ -695,6 +711,8 @@ elseif switch_1 == ePhase_CDT then
 
 node "ACT_Mission_Automate_INF_AssignerA_ReconnaitrePt"
 {
+    feedbacks = { { { "done_ACT_Mission_Automate_INF_AssignerA_ReconnaitrePt" }, "ACT_Mission_Automate_INF_AssignerA_ReconnaitrePt" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Mission_Automate_INF_AssignerA_ReconnaitrePt, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -733,7 +751,7 @@ elseif switch_1 == ePhase_CDT then
         end
 
         if( self.missionPion == nil ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             do return end
         end
 
@@ -746,7 +764,7 @@ elseif switch_1 == ePhase_CDT then
 
             end
         else
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             do return end
         end
 
@@ -760,7 +778,7 @@ elseif switch_1 == ePhase_CDT then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
 
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         do return end
 
     end,
@@ -773,6 +791,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[//=============================================================================
 ]]node "ACT_Mission_Automate_INF_AssignerA_Reduire"
 {
+    feedbacks = { { { "done_ACT_Mission_Automate_INF_AssignerA_Reduire" }, "ACT_Mission_Automate_INF_AssignerA_Reduire" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Mission_Automate_INF_AssignerA_Reduire, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -812,7 +832,7 @@ elseif switch_1 == ePhase_CDT then
         end
 
         if( self.missionPion == nil ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             do return end
         end
 
@@ -822,7 +842,7 @@ elseif switch_1 == ePhase_CDT then
                 DEC_Trace( "Assigne mission 'Reduire' a " .. DEC_GetSzName( self._namedParams.pPion ) )
             end
         else
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             do return end
         end
 
@@ -836,7 +856,7 @@ elseif switch_1 == ePhase_CDT then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
 
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         do return end
 
     end,
@@ -849,6 +869,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[//=============================================================================
 ]]node "ACT_Mission_Automate_INF_AssignerA_PrendrePreciserContact"
 {
+    feedbacks = { { { "done_ACT_Mission_Automate_INF_AssignerA_PrendrePreciserContact" }, "ACT_Mission_Automate_INF_AssignerA_PrendrePreciserContact" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Mission_Automate_INF_AssignerA_PrendrePreciserContact, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -887,7 +909,7 @@ elseif switch_1 == ePhase_CDT then
         end
 
         if( self.missionPion == nil ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             do return end
         end
 
@@ -897,7 +919,7 @@ elseif switch_1 == ePhase_CDT then
                 DEC_Trace( "Assigne mission 'PrendrePreciserContact' a " .. DEC_GetSzName( self._namedParams.pPion ) )
             end
         else
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             do return end
         end
 
@@ -911,7 +933,7 @@ elseif switch_1 == ePhase_CDT then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
 
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         do return end
 
     end,
@@ -924,6 +946,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[//=============================================================================
 ]]node "ACT_Mission_Automate_INF_AssignerA_Fixer"
 {
+    feedbacks = { { { "done_ACT_Mission_Automate_INF_AssignerA_Fixer" }, "ACT_Mission_Automate_INF_AssignerA_Fixer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Mission_Automate_INF_AssignerA_Fixer, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -962,7 +986,7 @@ elseif switch_1 == ePhase_CDT then
         end
 
         if( self.missionPion == nil ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             do return end
         end
 
@@ -972,7 +996,7 @@ elseif switch_1 == ePhase_CDT then
                 DEC_Trace( "Assigne mission 'Fixer' a " .. DEC_GetSzName( self._namedParams.pPion ) )
             end
         else
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             do return end
         end
 
@@ -986,7 +1010,7 @@ elseif switch_1 == ePhase_CDT then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
 
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         do return end
 
     end,
@@ -1001,6 +1025,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[//-----------------------------------------------------------------------------
 ]]node "ACT_Mission_Automate_INF_AssignerA_Interdire"
 {
+    feedbacks = { { { "done_ACT_Mission_Automate_INF_AssignerA_Interdire" }, "ACT_Mission_Automate_INF_AssignerA_Interdire" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Mission_Automate_INF_AssignerA_Interdire, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -1040,7 +1066,7 @@ elseif switch_1 == ePhase_CDT then
         end
 
         if( self.missionPion == nil ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             do return end
         end
 
@@ -1050,7 +1076,7 @@ elseif switch_1 == ePhase_CDT then
                 DEC_Trace( "Assigne mission 'Interdire' a " .. DEC_GetSzName( self._namedParams.pPion ) )
             end
         else
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             do return end
         end
 
@@ -1059,7 +1085,7 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[//DEC_Debug( "assert halt failed : " +  "AssignerA_Interdire: ptInterdire != 0"  );
 ]]if( not ( ( self._namedParams.ptInterdire ~= 0 and self._namedParams.ptInterdire ~= nil ) ) ) then
             do
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -1077,7 +1103,7 @@ elseif switch_1 == ePhase_CDT then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
 
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         do return end
 
     end,
@@ -1089,6 +1115,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[//-----------------------------------------------------------------------------
 ]]node "ACT_Mission_Automate_INF_AssignerA_Defendre"
 {
+    feedbacks = { { { "done_ACT_Mission_Automate_INF_AssignerA_Defendre" }, "ACT_Mission_Automate_INF_AssignerA_Defendre" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Mission_Automate_INF_AssignerA_Defendre, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -1128,7 +1156,7 @@ elseif switch_1 == ePhase_CDT then
         end
 
         if( self.missionPion == nil ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             do return end
         end
 
@@ -1138,7 +1166,7 @@ elseif switch_1 == ePhase_CDT then
                 DEC_Trace( "Assigne mission 'Defendre' a " .. DEC_GetSzName( self._namedParams.pPion ) )
             end
         else
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             do return end
         end
 
@@ -1147,7 +1175,7 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[//DEC_Debug( "assert halt failed : " +  "AssignerA_Defendre: ptDefendre != 0"  );
 ]]if( not ( ( self._namedParams.ptDefendre ~= 0 and self._namedParams.ptDefendre ~= nil ) ) ) then
             do
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -1165,7 +1193,7 @@ elseif switch_1 == ePhase_CDT then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
 
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         do return end
 
     end,
@@ -1178,6 +1206,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[//-----------------------------------------------------------------------------
 ]]node "ACT_Mission_Automate_INF_AssignerA_Freiner"
 {
+    feedbacks = { { { "done_ACT_Mission_Automate_INF_AssignerA_Freiner" }, "ACT_Mission_Automate_INF_AssignerA_Freiner" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Mission_Automate_INF_AssignerA_Freiner, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -1217,7 +1247,7 @@ elseif switch_1 == ePhase_CDT then
         end
 
         if( self.missionPion == nil ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             do return end
         end
 
@@ -1228,7 +1258,7 @@ elseif switch_1 == ePhase_CDT then
                 DEC_Trace( "Assigne mission 'Freiner' a " .. DEC_GetSzName( self._namedParams.pPion ) )
             end
         else
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             do return end
         end
 
@@ -1252,7 +1282,7 @@ elseif switch_1 == ePhase_CDT then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
 
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         do return end
 
     end,
@@ -1268,6 +1298,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[//=============================================================================
 ]]node "ACT_Mission_Automate_INF_AssignerA_Couvrir"
 {
+    feedbacks = { { { "done_ACT_Mission_Automate_INF_AssignerA_Couvrir" }, "ACT_Mission_Automate_INF_AssignerA_Couvrir" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Mission_Automate_INF_AssignerA_Couvrir, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -1312,7 +1344,7 @@ elseif switch_1 == ePhase_CDT then
         end
 
         if( self.missionPion == nil ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             do return end
         end
 
@@ -1322,14 +1354,14 @@ elseif switch_1 == ePhase_CDT then
                 DEC_Trace( "Assigne mission 'Couvrir' a " .. DEC_GetSzName( self._namedParams.pPion ) )
             end
         else
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             do return end
         end
 
         --[[//DEC_Debug( "assert halt failed : " +  "AssignerA_Couvrir pAppui != 0."  );
 ]]if( not ( self._namedParams.pAppui ~= nil ) ) then
             do
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -1350,7 +1382,7 @@ elseif switch_1 == ePhase_CDT then
         --[[//DEC_Debug( "assert halt failed : " +  "BEH_Mission_Automate_INF_AssignerA_Couvrir : ptCouv"  );
 ]]if( not ( ( self.ptCouv ~= 0 and self.ptCouv ~= nil ) ) ) then
             do
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -1371,7 +1403,7 @@ elseif switch_1 == ePhase_CDT then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
 
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         do return end
 
     end,
@@ -1384,9 +1416,11 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[//=============================================================================
 ]]node "ACT_Mission_Automate_INF_AssignerA_Barrer"
 {
+    feedbacks = { { { "done_ACT_Mission_Automate_INF_AssignerA_Barrer" }, "ACT_Mission_Automate_INF_AssignerA_Barrer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Mission_Automate_INF_AssignerA_Barrer, {value} ) end,
     activations =
     {
-        { "ACT_Medo_Automate_AffecterFuseaux_Compagnie", {} },
+        { "ACT_Medo_Automate_AffecterFuseaux_Compagnie", { "done_ACT_Medo_Automate_AffecterFuseaux_Compagnie" } },
     },
 
     create = function( self )
@@ -1431,7 +1465,7 @@ elseif switch_1 == ePhase_CDT then
         end
 
         if( self.missionPion == nil ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             do return end
         end
 
@@ -1452,7 +1486,7 @@ elseif switch_1 == ePhase_CDT then
                     --[[//DEC_Debug( "assert halt failed : " +  "ACT_Mission_Automate_INF_AssignerA_Barrer : ptBarrer != 0"  );
 ]]if( not ( ( self._namedParams.ptBarrer ~= 0 and self._namedParams.ptBarrer ~= nil ) ) ) then
                         do
-                                                        self.params.__returnValue = eActionImpossible
+                                                        self:SendFeedback( eActionImpossible )
                             Halt( self )
                             do return end
 
@@ -1491,7 +1525,8 @@ elseif switch_1 == eMRT_RetablirFuseau then
                         end
                     end
 
-                    Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux_Compagnie, 1, setmetatable( { self._namedParams.pPion, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionFuseau = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux_Compagnie, 1, { self._namedParams.pPion, } )
+self.done_ACT_Medo_Automate_AffecterFuseaux_Compagnie = function( self, _, v ) self.eActionFuseau = v[1] end
                     _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eMRT_Valider then
@@ -1503,13 +1538,13 @@ elseif switch_1 == eMRT_Valider then
                         DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
                     end
 
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     do return end
 
                     _continue = false--[[//-----------------------------------------------------------------------------
 ]]
                 elseif switch_1 == eMRT_Effectuee then
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     do return end
 
                                 end
@@ -1528,6 +1563,8 @@ elseif switch_1 == eMRT_Valider then
 
 node "ACT_Mission_Automate_INF_AssignerEscorterA"
 {
+    feedbacks = { { { "done_ACT_Mission_Automate_INF_AssignerEscorterA" }, "ACT_Mission_Automate_INF_AssignerEscorterA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Mission_Automate_INF_AssignerEscorterA, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -1567,7 +1604,7 @@ elseif switch_1 == ePhase_CDT then
         end
 
         if( self.missionPion == nil ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             do return end
         end
 
@@ -1576,7 +1613,7 @@ elseif switch_1 == ePhase_CDT then
             do
             end
         else
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             do return end
         end
 
@@ -1594,7 +1631,7 @@ elseif switch_1 == ePhase_CDT then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
 
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         do return end
 
     end,
@@ -1610,6 +1647,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_INF_AssignerEscorterUnitesA"
 {
+    feedbacks = { { { "done_ACT_Mission_Automate_INF_AssignerEscorterUnitesA" }, "ACT_Mission_Automate_INF_AssignerEscorterUnitesA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Mission_Automate_INF_AssignerEscorterUnitesA, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -1649,7 +1688,7 @@ elseif switch_1 == ePhase_CDT then
         end
 
         if( self.missionPion == nil ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             do return end
         end
 
@@ -1658,7 +1697,7 @@ elseif switch_1 == ePhase_CDT then
             do
             end
         else
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             do return end
         end
 
@@ -1676,7 +1715,7 @@ elseif switch_1 == ePhase_CDT then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
 
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         do return end
 
     end,
@@ -1692,6 +1731,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_INF_AssignerSoutenirA"
 {
+    feedbacks = { { { "done_ACT_Mission_Automate_INF_AssignerSoutenirA" }, "ACT_Mission_Automate_INF_AssignerSoutenirA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Mission_Automate_INF_AssignerSoutenirA, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -1731,7 +1772,7 @@ elseif switch_1 == ePhase_CDT then
         end
 
         if( self.missionPion == nil ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             do return end
         end
 
@@ -1740,7 +1781,7 @@ elseif switch_1 == ePhase_CDT then
             do
             end
         else
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             do return end
         end
 
@@ -1759,7 +1800,7 @@ elseif switch_1 == ePhase_CDT then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
 
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         do return end
 
     end,

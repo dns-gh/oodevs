@@ -6,6 +6,8 @@ includedFiles["sources/glaise/glaise_appui/alat/pions/common/actions/Actions - L
 ]]--[[//------------------------------------------------------------------------------
 ]]node "ACT_Log_Pion_ALAT_RealiserPlotLogistique"
 {
+    feedbacks = { { { "done_ACT_Log_Pion_ALAT_RealiserPlotLogistique" }, "ACT_Log_Pion_ALAT_RealiserPlotLogistique" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Log_Pion_ALAT_RealiserPlotLogistique, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.point = self.params[1]
@@ -51,14 +53,14 @@ includedFiles["sources/glaise/glaise_appui/alat/pions/common/actions/Actions - L
             local cases_switch_1 = {}
                 if switch_1 == eActionObjetTerminee then
                     DEC_StopAction( self.actionCreerPlot )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
                                 end
                 if cases_switch_1[1] or switch_1 == eActionObjetManqueDotation then
                     DEC_StopAction( self.actionCreerPlot )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -66,7 +68,7 @@ includedFiles["sources/glaise/glaise_appui/alat/pions/common/actions/Actions - L
                 if cases_switch_1[2] or switch_1 == eActionObjetImpossible then
                     DEC_StopAction( self.actionCreerPlot )
                     DEC_Trace( "ACT_ALAT_RealiserPlotRavitaillement --> objet impossible " )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -74,7 +76,7 @@ includedFiles["sources/glaise/glaise_appui/alat/pions/common/actions/Actions - L
                 if cases_switch_1[3] or switch_1 == eActionObjetPasDeCapacite then
                     DEC_StopAction( self.actionCreerPlot )
                     DEC_Trace( "ACT_ALAT_RealiserPlotRavitaillement --> pas de capacite " )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 

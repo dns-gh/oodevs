@@ -9,9 +9,11 @@ includedFiles["sources/appui/circulation/automates/missions/appuyermouvementdans
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_LOG_AppuyerMouvementDansZone"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_LOG_AppuyerMouvementDansZone" }, "MIS_Automate_CDT_LOG_AppuyerMouvementDansZone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_LOG_AppuyerMouvementDansZone, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "done_BEH_Ordre_Automate_RecevoirOrdreInopine" } },
     },
 
     create = function( self )

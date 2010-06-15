@@ -9,13 +9,15 @@ includedFiles["sources/melee/abc/automates/ge40/missions/defensives/freiner/Coor
 ]]--[[// *****************************************************************************
 ]]node "BEH_GTIA_AssurerLaCoordinationRetrograde"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssurerLaCoordinationRetrograde" }, "BEH_GTIA_AssurerLaCoordinationRetrograde" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssurerLaCoordinationRetrograde, {value} ) end,
     activations =
     {
-        { "BEH_GTIA_AssurerLaCoordinationRetrogradeIntraEchelon", {} },
-        { "BEH_GTIA_AssurerLaCoordinationRetrogradeInterEchelon", {} },
-        { "BEH_GTIA_AssurerLaCoordinationRetrogradeSurRetard", {} },
-        { "BEH_GTIA_AssurerLaCoordinationSurLR", {} },
-        { "BEH_GTIA_AssurerLaCoordinationAuContact", {} },
+        { "BEH_GTIA_AssurerLaCoordinationRetrogradeIntraEchelon", { "done_BEH_GTIA_AssurerLaCoordinationRetrogradeIntraEchelon" } },
+        { "BEH_GTIA_AssurerLaCoordinationRetrogradeInterEchelon", { "done_BEH_GTIA_AssurerLaCoordinationRetrogradeInterEchelon" } },
+        { "BEH_GTIA_AssurerLaCoordinationRetrogradeSurRetard", { "done_BEH_GTIA_AssurerLaCoordinationRetrogradeSurRetard" } },
+        { "BEH_GTIA_AssurerLaCoordinationSurLR", { "done_BEH_GTIA_AssurerLaCoordinationSurLR" } },
+        { "BEH_GTIA_AssurerLaCoordinationAuContact", { "done_BEH_GTIA_AssurerLaCoordinationAuContact" } },
     },
 
     create = function( self )
@@ -53,9 +55,11 @@ includedFiles["sources/melee/abc/automates/ge40/missions/defensives/freiner/Coor
 
 node "BEH_GTIA_AssurerLaCoordinationSurLR"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssurerLaCoordinationSurLR" }, "BEH_GTIA_AssurerLaCoordinationSurLR" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssurerLaCoordinationSurLR, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_Automate_DonnerOrdreTenirSurLR", {} },
+        { "ACT_GTIA_Automate_DonnerOrdreTenirSurLR", { "done_ACT_GTIA_Automate_DonnerOrdreTenirSurLR" } },
     },
 
     create = function( self )
@@ -80,9 +84,11 @@ node "BEH_GTIA_AssurerLaCoordinationSurLR"
 
 node "BEH_GTIA_AssurerLaCoordinationAuContact"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssurerLaCoordinationAuContact" }, "BEH_GTIA_AssurerLaCoordinationAuContact" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssurerLaCoordinationAuContact, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_Automate_DonnerOrdreTenir", {} },
+        { "ACT_GTIA_Automate_DonnerOrdreTenir", { "done_ACT_GTIA_Automate_DonnerOrdreTenir" } },
     },
 
     create = function( self )
@@ -113,9 +119,11 @@ do
 
 node "BEH_GTIA_AssurerLaCoordinationRetrogradeSurRetard"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssurerLaCoordinationRetrogradeSurRetard" }, "BEH_GTIA_AssurerLaCoordinationRetrogradeSurRetard" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssurerLaCoordinationRetrogradeSurRetard, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_Automate_DonnerOrdreDecrocher", {} },
+        { "ACT_GTIA_Automate_DonnerOrdreDecrocher", { "done_ACT_GTIA_Automate_DonnerOrdreDecrocher" } },
     },
 
     create = function( self )
@@ -151,9 +159,11 @@ node "BEH_GTIA_AssurerLaCoordinationRetrogradeSurRetard"
 
 node "BEH_GTIA_AssurerLaCoordinationRetrogradeInterEchelon"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssurerLaCoordinationRetrogradeInterEchelon" }, "BEH_GTIA_AssurerLaCoordinationRetrogradeInterEchelon" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssurerLaCoordinationRetrogradeInterEchelon, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_Automate_DonnerOrdreDecrocher", {} },
+        { "ACT_GTIA_Automate_DonnerOrdreDecrocher", { "done_ACT_GTIA_Automate_DonnerOrdreDecrocher" } },
     },
 
     create = function( self )
@@ -193,9 +203,11 @@ node "BEH_GTIA_AssurerLaCoordinationRetrogradeInterEchelon"
 
 node "BEH_GTIA_AssurerLaCoordinationRetrogradeIntraEchelon"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssurerLaCoordinationRetrogradeIntraEchelon" }, "BEH_GTIA_AssurerLaCoordinationRetrogradeIntraEchelon" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssurerLaCoordinationRetrogradeIntraEchelon, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_Automate_DonnerOrdreDecrocher", {} },
+        { "ACT_GTIA_Automate_DonnerOrdreDecrocher", { "done_ACT_GTIA_Automate_DonnerOrdreDecrocher" } },
     },
 
     create = function( self )
@@ -237,6 +249,8 @@ if( DEC_Geometrie_CalculerAutomateDistanceLigneAvant( self.resultatCalcul, pion 
 
 node "ACT_GTIA_Automate_DonnerOrdreDecrocher"
 {
+    feedbacks = { { { "done_ACT_GTIA_Automate_DonnerOrdreDecrocher" }, "ACT_GTIA_Automate_DonnerOrdreDecrocher" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_GTIA_Automate_DonnerOrdreDecrocher, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -264,6 +278,8 @@ node "ACT_GTIA_Automate_DonnerOrdreDecrocher"
 ]]--[[// *****************************************************************************
 ]]node "ACT_GTIA_Automate_DonnerOrdreTenirSurLR"
 {
+    feedbacks = { { { "done_ACT_GTIA_Automate_DonnerOrdreTenirSurLR" }, "ACT_GTIA_Automate_DonnerOrdreTenirSurLR" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_GTIA_Automate_DonnerOrdreTenirSurLR, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -291,6 +307,8 @@ node "ACT_GTIA_Automate_DonnerOrdreDecrocher"
 ]]--[[// *****************************************************************************
 ]]node "ACT_GTIA_Automate_DonnerOrdreTenir"
 {
+    feedbacks = { { { "done_ACT_GTIA_Automate_DonnerOrdreTenir" }, "ACT_GTIA_Automate_DonnerOrdreTenir" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_GTIA_Automate_DonnerOrdreTenir, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]

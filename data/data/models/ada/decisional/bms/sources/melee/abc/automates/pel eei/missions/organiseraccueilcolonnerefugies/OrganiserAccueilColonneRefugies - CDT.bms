@@ -20,9 +20,11 @@ includedFiles["sources/melee/abc/automates/pel eei/missions/organiseraccueilcolo
 ]]--[[// ******************************************************************************
 ]]node "MIS_Automate_CDT_ABC_OrganiserAccueilColonneRefugies"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ABC_OrganiserAccueilColonneRefugies" }, "MIS_Automate_CDT_ABC_OrganiserAccueilColonneRefugies" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ABC_OrganiserAccueilColonneRefugies, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_OrganiserAccueilColonneRefugies", {} },
+        { "BEH_Conduite_Automate_ABC_OrganiserAccueilColonneRefugies", { "done_BEH_Conduite_Automate_ABC_OrganiserAccueilColonneRefugies" } },
     },
 
     create = function( self )

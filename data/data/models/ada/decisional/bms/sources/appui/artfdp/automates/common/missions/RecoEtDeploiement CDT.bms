@@ -12,12 +12,14 @@ includedFiles["sources/appui/artfdp/automates/common/missions/RecoEtDeploiement 
 ]]
 node "BEH_Conduite_Automate_ASS_RecoEtDeploiement"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_ASS_RecoEtDeploiement" }, "BEH_Conduite_Automate_ASS_RecoEtDeploiement" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_ASS_RecoEtDeploiement, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_ASS_AssignerReconnaitreZoneDeploiementA", {} },
-        { "ACT_Ordre_Suppression", {} },
-        { "BEH_Conduite_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA", {} },
-        { "BEH_Conduite_Automate_ASS_SuivreA", {} },
+        { "BEH_Conduite_Automate_ASS_AssignerReconnaitreZoneDeploiementA", { "done_BEH_Conduite_Automate_ASS_AssignerReconnaitreZoneDeploiementA" } },
+        { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
+        { "BEH_Conduite_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA", { "done_BEH_Conduite_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA" } },
+        { "BEH_Conduite_Automate_ASS_SuivreA", { "done_BEH_Conduite_Automate_ASS_SuivreA" } },
     },
 
     create = function( self )
@@ -179,9 +181,11 @@ do
 
 node "BEH_Conduite_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA" }, "BEH_Conduite_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA", {} },
+        { "BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA", { "done_BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA" } },
     },
 
     create = function( self )

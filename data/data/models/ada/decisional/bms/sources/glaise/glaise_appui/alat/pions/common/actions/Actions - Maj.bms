@@ -8,6 +8,8 @@ includedFiles["sources/glaise/glaise_appui/alat/pions/common/actions/Actions - M
 ]]--[[//------------------------------------------------------------------------------
 ]]node "ACT_Maj_Pions_ObjectifCourant"
 {
+    feedbacks = { { { "done_ACT_Maj_Pions_ObjectifCourant" }, "ACT_Maj_Pions_ObjectifCourant" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Maj_Pions_ObjectifCourant, {value} ) end,
     actuators =
     {
         objectifCourant = 1,
@@ -38,6 +40,8 @@ includedFiles["sources/glaise/glaise_appui/alat/pions/common/actions/Actions - M
 ]]--[[//------------------------------------------------------------------------------
 ]]node "ACT_Maj_Pion_ALAT_ParametresRecompletement"
 {
+    feedbacks = { { { "done_ACT_Maj_Pion_ALAT_ParametresRecompletement" }, "ACT_Maj_Pion_ALAT_ParametresRecompletement" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Maj_Pion_ALAT_ParametresRecompletement, {value} ) end,
     actuators =
     {
         parametresRecompletement = 1,
@@ -58,6 +62,8 @@ includedFiles["sources/glaise/glaise_appui/alat/pions/common/actions/Actions - M
 
 node "Act_AbonnerPionAAppui"
 {
+    feedbacks = { { { "done_Act_AbonnerPionAAppui" }, "Act_AbonnerPionAAppui" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_Act_AbonnerPionAAppui, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]

@@ -11,9 +11,11 @@ includedFiles["sources/appui/artfdp/automates/bat reco tir sam/missions/recoetde
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_ASS_RecoEtDeploiement"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ASS_RecoEtDeploiement" }, "MIS_Automate_CDT_ASS_RecoEtDeploiement" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ASS_RecoEtDeploiement, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_ASS_RecoEtDeploiement_PourSAM", {} },
+        { "BEH_Conduite_Automate_ASS_RecoEtDeploiement_PourSAM", { "done_BEH_Conduite_Automate_ASS_RecoEtDeploiement_PourSAM" } },
     },
 
     create = function( self )
@@ -40,12 +42,14 @@ includedFiles["sources/appui/artfdp/automates/bat reco tir sam/missions/recoetde
 
 node "BEH_Conduite_Automate_ASS_RecoEtDeploiement_PourSAM"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_ASS_RecoEtDeploiement_PourSAM" }, "BEH_Conduite_Automate_ASS_RecoEtDeploiement_PourSAM" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_ASS_RecoEtDeploiement_PourSAM, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_ASS_AssignerReconnaitreZoneDeploiementA", {} },
-        { "ACT_Ordre_Suppression", {} },
-        { "BEH_Conduite_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA", {} },
-        { "BEH_Conduite_Automate_ASS_SuivreA", {} },
+        { "BEH_Conduite_Automate_ASS_AssignerReconnaitreZoneDeploiementA", { "done_BEH_Conduite_Automate_ASS_AssignerReconnaitreZoneDeploiementA" } },
+        { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
+        { "BEH_Conduite_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA", { "done_BEH_Conduite_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA" } },
+        { "BEH_Conduite_Automate_ASS_SuivreA", { "done_BEH_Conduite_Automate_ASS_SuivreA" } },
     },
 
     create = function( self )

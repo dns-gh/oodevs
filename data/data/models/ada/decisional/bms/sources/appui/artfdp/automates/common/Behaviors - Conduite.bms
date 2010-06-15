@@ -18,9 +18,11 @@ includedFiles["sources/appui/artfdp/automates/common/Behaviors - Conduite.bms"] 
 ]]--[[//-----------------------------------------------------------------------------
 ]]node "BEH_Conduite_Automate_ASS_Defaut"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_ASS_Defaut" }, "BEH_Conduite_Automate_ASS_Defaut" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_ASS_Defaut, {value} ) end,
     activations =
     {
-        { "BEH_Situation_Automate_ASS_FinMission", {} },
+        { "BEH_Situation_Automate_ASS_FinMission", { "done_BEH_Situation_Automate_ASS_FinMission" } },
     },
 
     create = function( self )
@@ -41,7 +43,7 @@ includedFiles["sources/appui/artfdp/automates/common/Behaviors - Conduite.bms"] 
                                 do
                     DEC_RC( eRC_FinMission )
                     DEC_FinMission()
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -50,7 +52,8 @@ includedFiles["sources/appui/artfdp/automates/common/Behaviors - Conduite.bms"] 
             end
         end
 
-        Activate( self.activations.BEH_Situation_Automate_ASS_FinMission, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Situation_Automate_ASS_FinMission, 1, {} )
+self.done_BEH_Situation_Automate_ASS_FinMission = function( self, _, v ) self.eActionMission = v[1] end
     end,
 
 --[[//-----------------------------------------------------------------------------
@@ -61,6 +64,8 @@ includedFiles["sources/appui/artfdp/automates/common/Behaviors - Conduite.bms"] 
 
 node "BEH_Situation_Automate_ASS_FinMission"
 {
+    feedbacks = { { { "done_BEH_Situation_Automate_ASS_FinMission" }, "BEH_Situation_Automate_ASS_FinMission" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Situation_Automate_ASS_FinMission, {value} ) end,
     create = function( self )
     end,
 
@@ -98,7 +103,7 @@ do
         end
 
         if( rN_Fin == #( self.lst_Pions_EnTete ) ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             do return end
         end
 
@@ -108,9 +113,11 @@ do
 
 node "BEH_Conduite_Automate_ASS_SuivreA"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_ASS_SuivreA" }, "BEH_Conduite_Automate_ASS_SuivreA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_ASS_SuivreA, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_AssignerSuivreA", {} },
+        { "BEH_Mission_Automate_AssignerSuivreA", { "done_BEH_Mission_Automate_AssignerSuivreA" } },
     },
 
     create = function( self )
@@ -130,9 +137,11 @@ node "BEH_Conduite_Automate_ASS_SuivreA"
 
 node "BEH_Conduite_Automate_ASS_AssignerReconnaitreZoneDeploiementA"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_ASS_AssignerReconnaitreZoneDeploiementA" }, "BEH_Conduite_Automate_ASS_AssignerReconnaitreZoneDeploiementA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_ASS_AssignerReconnaitreZoneDeploiementA, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_ASS_AssignerReconnaitreZoneDeploiementA", {} },
+        { "BEH_Mission_Automate_ASS_AssignerReconnaitreZoneDeploiementA", { "done_BEH_Mission_Automate_ASS_AssignerReconnaitreZoneDeploiementA" } },
     },
 
     create = function( self )

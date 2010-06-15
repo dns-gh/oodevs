@@ -21,12 +21,14 @@ includedFiles["sources/humus/humus_melee/abc/automates/common/missions/attaquer/
 ]]--[[// *****************************************************************************
 ]]node "BEH_Auto_CDT_ABC_Attaquer"
 {
+    feedbacks = { { { "done_BEH_Auto_CDT_ABC_Attaquer" }, "BEH_Auto_CDT_ABC_Attaquer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Auto_CDT_ABC_Attaquer, {value} ) end,
     activations =
     {
-        { "BEH_CoordDep_Automate_ABC_AssurerLaCoordinationInterne_", {} },
-        { "BEH_Dispositif_Automate_ABC_GererLesAppuis_", {} },
-        { "BEH_Dispositif_Automate_ABC_GererLeDispositif_", {} },
-        { "BEH_RC_Automate_GererConditionOperationnelle", {} },
+        { "BEH_CoordDep_Automate_ABC_AssurerLaCoordinationInterne_", { "done_BEH_CoordDep_Automate_ABC_AssurerLaCoordinationInterne_" } },
+        { "BEH_Dispositif_Automate_ABC_GererLesAppuis_", { "done_BEH_Dispositif_Automate_ABC_GererLesAppuis_" } },
+        { "BEH_Dispositif_Automate_ABC_GererLeDispositif_", { "done_BEH_Dispositif_Automate_ABC_GererLeDispositif_" } },
+        { "BEH_RC_Automate_GererConditionOperationnelle", { "done_BEH_RC_Automate_GererConditionOperationnelle" } },
     },
 
     create = function( self )

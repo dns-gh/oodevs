@@ -10,6 +10,8 @@ includedFiles["sources/population/asymetriques/common/pion/Actions.bms"] = true
 ]]--[[// ******************************************************************************
 ]]node "ACT_Eni_Pion_ASY_CommettreAttentatContrePopulation"
 {
+    feedbacks = { { { "done_ACT_Eni_Pion_ASY_CommettreAttentatContrePopulation" }, "ACT_Eni_Pion_ASY_CommettreAttentatContrePopulation" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Eni_Pion_ASY_CommettreAttentatContrePopulation, {value} ) end,
     actuators =
     {
         deplacement = 1,
@@ -47,7 +49,7 @@ includedFiles["sources/population/asymetriques/common/pion/Actions.bms"] = true
             end
         end
 
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         Halt( self )
         do return end
 
@@ -63,6 +65,8 @@ includedFiles["sources/population/asymetriques/common/pion/Actions.bms"] = true
 ]]--[[// ******************************************************************************
 ]]node "ACT_Eni_Pion_ASY_CommettreAttentatContreInstallation"
 {
+    feedbacks = { { { "done_ACT_Eni_Pion_ASY_CommettreAttentatContreInstallation" }, "ACT_Eni_Pion_ASY_CommettreAttentatContreInstallation" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Eni_Pion_ASY_CommettreAttentatContreInstallation, {value} ) end,
     actuators =
     {
         deplacement = 1,
@@ -101,7 +105,7 @@ includedFiles["sources/population/asymetriques/common/pion/Actions.bms"] = true
             end
         end
 
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         Halt( self )
         do return end
 
@@ -117,6 +121,8 @@ includedFiles["sources/population/asymetriques/common/pion/Actions.bms"] = true
 ]]--[[// ******************************************************************************
 ]]node "ACT_Eni_Pion_ASY_DetruireComposanteMajeure"
 {
+    feedbacks = { { { "done_ACT_Eni_Pion_ASY_DetruireComposanteMajeure" }, "ACT_Eni_Pion_ASY_DetruireComposanteMajeure" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Eni_Pion_ASY_DetruireComposanteMajeure, {value} ) end,
     actuators =
     {
         deplacement = 1,
@@ -146,7 +152,7 @@ includedFiles["sources/population/asymetriques/common/pion/Actions.bms"] = true
             end
         end
 
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         do return end
 
     end,
@@ -170,6 +176,8 @@ includedFiles["sources/population/asymetriques/common/pion/Actions.bms"] = true
 ]]--[[// ******************************************************************************
 ]]node "ACT_Eni_Pion_ASY_AssassinerOfficier"
 {
+    feedbacks = { { { "done_ACT_Eni_Pion_ASY_AssassinerOfficier" }, "ACT_Eni_Pion_ASY_AssassinerOfficier" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Eni_Pion_ASY_AssassinerOfficier, {value} ) end,
     actuators =
     {
         deplacement = 1,
@@ -195,7 +203,7 @@ do
             end
         end
 
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         do return end
 
     end,
@@ -210,6 +218,8 @@ do
 ]]--[[// ******************************************************************************
 ]]node "ACT_Eni_Pion_ASY_CommettreExactions"
 {
+    feedbacks = { { { "done_ACT_Eni_Pion_ASY_CommettreExactions" }, "ACT_Eni_Pion_ASY_CommettreExactions" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Eni_Pion_ASY_CommettreExactions, {value} ) end,
     actuators =
     {
         tir = 1,

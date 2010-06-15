@@ -24,9 +24,11 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "MIS_Pion_INF_Soutenir"
 {
+    feedbacks = { { { "done_MIS_Pion_INF_Soutenir" }, "MIS_Pion_INF_Soutenir" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_INF_Soutenir, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Pion_INF_SoutenirUneUnite", {} },
+        { "BEH_Mission_Pion_INF_SoutenirUneUnite", { "done_BEH_Mission_Pion_INF_SoutenirUneUnite" } },
     },
 
     create = function( self )
@@ -40,13 +42,13 @@ include "bit.lua"
 ]]--[[// Terminaison
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eEtat == eActionImpossible ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             Halt( self )
             do return end
         end
 
         if( self.eEtat == eActionEffectuee ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -54,7 +56,8 @@ include "bit.lua"
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Comportement de la mission
 ]]--[[//-----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_Mission_Pion_INF_SoutenirUneUnite, 1, setmetatable( { self._namedParams.mission.uniteASoutenir_, M_MODELE_PION_INF_SOUTENIR_PH(), M_MODELE_PION_INF_SOUTENIR_ID(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+]]Activate( self.activations.BEH_Mission_Pion_INF_SoutenirUneUnite, 1, { self._namedParams.mission.uniteASoutenir_, M_MODELE_PION_INF_SOUTENIR_PH(), M_MODELE_PION_INF_SOUTENIR_ID(), } )
+self.done_BEH_Mission_Pion_INF_SoutenirUneUnite = function( self, _, v ) self.eEtat = v[1] end
     end,
 
 --[[// *****************************************************************************
@@ -64,17 +67,19 @@ include "bit.lua"
 
 node "BEH_Mission_Pion_INF_SoutenirUneUnite"
 {
+    feedbacks = { { { "done_BEH_Mission_Pion_INF_SoutenirUneUnite" }, "BEH_Mission_Pion_INF_SoutenirUneUnite" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Pion_INF_SoutenirUneUnite, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "BEH_MAJ_Pion_INF_AgressiviteTir", {} },
-        { "BEH_MOT_DesactiveSauvegarde", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Info_Trace", {} },
-        { "ACT_Dep_ModulationVitesse", {} },
-        { "BEH_Dep_Pion_MILAN_Appuyer", {} },
-        { "BEH_Dep_Suivre", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "BEH_MAJ_Pion_INF_AgressiviteTir", { "done_BEH_MAJ_Pion_INF_AgressiviteTir" } },
+        { "BEH_MOT_DesactiveSauvegarde", { "done_BEH_MOT_DesactiveSauvegarde" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "ACT_Dep_ModulationVitesse", { "done_ACT_Dep_ModulationVitesse" } },
+        { "BEH_Dep_Pion_MILAN_Appuyer", { "done_BEH_Dep_Pion_MILAN_Appuyer" } },
+        { "BEH_Dep_Suivre", { "done_BEH_Dep_Suivre" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "done_BEH_Dep_SePosterFaceADirectionDangereuse" } },
     },
 
     create = function( self )
@@ -99,7 +104,8 @@ node "BEH_Mission_Pion_INF_SoutenirUneUnite"
             end
         end
 
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Agressivite
 ]]--[[//-----------------------------------------------------------------------------
@@ -210,11 +216,13 @@ elseif switch_1 == eFinMission then
 
 node "BEH_Dep_Pion_MILAN_Appuyer"
 {
+    feedbacks = { { { "done_BEH_Dep_Pion_MILAN_Appuyer" }, "BEH_Dep_Pion_MILAN_Appuyer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Pion_MILAN_Appuyer, {value} ) end,
     activations =
     {
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
-        { "ACT_Info_Trace", {} },
-        { "BEH_Dep_Pion_INF_RejoindrePositionAppuiPour", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "done_BEH_Dep_SePosterFaceADirectionDangereuse" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "BEH_Dep_Pion_INF_RejoindrePositionAppuiPour", { "done_BEH_Dep_Pion_INF_RejoindrePositionAppuiPour" } },
     },
 
     create = function( self )
@@ -241,7 +249,8 @@ node "BEH_Dep_Pion_MILAN_Appuyer"
             end
         end
 
-        Activate( self.activations.BEH_Dep_Pion_INF_RejoindrePositionAppuiPour, 1.1, setmetatable( { self._namedParams.ami, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Dep_Pion_INF_RejoindrePositionAppuiPour, 1.1, { self._namedParams.ami, } )
+self.done_BEH_Dep_Pion_INF_RejoindrePositionAppuiPour = function( self, _, v ) self.eEtat = v[1] end
     end,
 
     destroy = function( self )

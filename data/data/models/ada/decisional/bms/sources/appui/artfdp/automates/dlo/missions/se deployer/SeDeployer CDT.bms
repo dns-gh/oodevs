@@ -9,6 +9,8 @@ includedFiles["sources/appui/artfdp/automates/dlo/missions/se deployer/SeDeploye
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_ASS_SeDeployer"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ASS_SeDeployer" }, "MIS_Automate_CDT_ASS_SeDeployer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ASS_SeDeployer, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission

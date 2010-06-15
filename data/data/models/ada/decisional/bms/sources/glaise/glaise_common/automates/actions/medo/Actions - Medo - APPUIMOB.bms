@@ -9,6 +9,8 @@ includedFiles["sources/glaise/glaise_common/automates/actions/medo/Actions - Med
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "ACT_Mission_Automate_LOG_AssignerTransporterUniteA"
 {
+    feedbacks = { { { "done_ACT_Mission_Automate_LOG_AssignerTransporterUniteA" }, "ACT_Mission_Automate_LOG_AssignerTransporterUniteA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Mission_Automate_LOG_AssignerTransporterUniteA, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -26,7 +28,7 @@ includedFiles["sources/glaise/glaise_common/automates/actions/medo/Actions - Med
 
             end
         else
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             do return end
         end
 
@@ -60,7 +62,7 @@ elseif switch_1 == ePhase_CDT then
         end
 
         if( self.missionPion == nil ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             do return end
         end
 
@@ -78,7 +80,7 @@ elseif switch_1 == ePhase_CDT then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
 
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         do return end
 
     end,

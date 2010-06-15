@@ -12,10 +12,12 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "MIS_Pion_ABC_Eclairer"
 {
+    feedbacks = { { { "done_MIS_Pion_ABC_Eclairer" }, "MIS_Pion_ABC_Eclairer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_ABC_Eclairer, {value} ) end,
     activations =
     {
-        { "BEH_Dep_Pion_ABC_GererDeboucherEclairage", {} },
-        { "BEH_Mission_Pion_ABC_Eclairer", {} },
+        { "BEH_Dep_Pion_ABC_GererDeboucherEclairage", { "done_BEH_Dep_Pion_ABC_GererDeboucherEclairage" } },
+        { "BEH_Mission_Pion_ABC_Eclairer", { "done_BEH_Mission_Pion_ABC_Eclairer" } },
     },
 
     create = function( self )
@@ -50,7 +52,8 @@ include "bit.lua"
         end
 
         Activate( self.activations.BEH_Dep_Pion_ABC_GererDeboucherEclairage, 1, {} )
-        Activate( self.activations.BEH_Mission_Pion_ABC_Eclairer, 1, setmetatable( { self._namedParams.mission.itineraire_, M_MODELE_PION_ABC_ECLAIRER_PH(), M_MODELE_PION_ABC_ECLAIRER_ID(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Mission_Pion_ABC_Eclairer, 1, { self._namedParams.mission.itineraire_, M_MODELE_PION_ABC_ECLAIRER_PH(), M_MODELE_PION_ABC_ECLAIRER_ID(), } )
+self.done_BEH_Mission_Pion_ABC_Eclairer = function( self, _, v ) self.eEtat = v[1] end
     end,
 
 }

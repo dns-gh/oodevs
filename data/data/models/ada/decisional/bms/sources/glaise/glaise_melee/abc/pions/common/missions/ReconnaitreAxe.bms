@@ -21,14 +21,16 @@ includedFiles["sources/glaise/glaise_melee/abc/pions/common/missions/Reconnaitre
 ]]--[[// *****************************************************************************
 ]]node "BEH_Mission_Pion_ABC_ReconnaitreAxe"
 {
+    feedbacks = { { { "done_BEH_Mission_Pion_ABC_ReconnaitreAxe" }, "BEH_Mission_Pion_ABC_ReconnaitreAxe" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Pion_ABC_ReconnaitreAxe, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "BEH_MAJ_Pion_ABC_AgressiviteTir", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Info_Trace", {} },
-        { "BEH_Dep_ProgressionSur", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "BEH_MAJ_Pion_ABC_AgressiviteTir", { "done_BEH_MAJ_Pion_ABC_AgressiviteTir" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "BEH_Dep_ProgressionSur", { "done_BEH_Dep_ProgressionSur" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "done_BEH_Dep_SePosterFaceADirectionDangereuse" } },
     },
 
     create = function( self )
@@ -52,12 +54,13 @@ includedFiles["sources/glaise/glaise_melee/abc/pions/common/missions/Reconnaitre
             end
         end
 
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Pion detruit
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -110,7 +113,8 @@ elseif switch_1 == eProgresser then
 --[[// force de 1.
 ]]                    end
 
-                    Activate( self.activations.BEH_Dep_ProgressionSur, 1, setmetatable( { self._namedParams.mission.itineraire_, eProgressionReco, eTypeItiReconnaissance, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_ProgressionSur, 1, { self._namedParams.mission.itineraire_, eProgressionReco, eTypeItiReconnaissance, } )
+self.done_BEH_Dep_ProgressionSur = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                 --[[//---------------------------------------------------------------------
 ]]--[[// 4) Fin de la mission de reconnaissance

@@ -23,18 +23,20 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Mission_Pion_ABC_Escorter"
 {
+    feedbacks = { { { "done_BEH_Mission_Pion_ABC_Escorter" }, "BEH_Mission_Pion_ABC_Escorter" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Pion_ABC_Escorter, {value} ) end,
     activations =
     {
-        { "ACT_Misc_Pion_ABC_Escorter", {} },
-        { "BEH_Ordre_Inopine", {} },
-        { "BEH_MAJ_Pion_ABC_AgressiviteTir", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Info_Trace", {} },
-        { "ACT_Dep_ModulationVitesse", {} },
-        { "BEH_Dep_Suivre", {} },
-        { "BEH_Dep_Progresser", {} },
-        { "BEH_Dep_ReagirFaceAObstacle", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "ACT_Misc_Pion_ABC_Escorter", { "done_ACT_Misc_Pion_ABC_Escorter" } },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "BEH_MAJ_Pion_ABC_AgressiviteTir", { "done_BEH_MAJ_Pion_ABC_AgressiviteTir" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "ACT_Dep_ModulationVitesse", { "done_ACT_Dep_ModulationVitesse" } },
+        { "BEH_Dep_Suivre", { "done_BEH_Dep_Suivre" } },
+        { "BEH_Dep_Progresser", { "done_BEH_Dep_Progresser" } },
+        { "BEH_Dep_ReagirFaceAObstacle", { "done_BEH_Dep_ReagirFaceAObstacle" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "done_BEH_Dep_SePosterFaceADirectionDangereuse" } },
     },
 
     create = function( self )
@@ -56,7 +58,8 @@ include "bit.lua"
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
                 self.ePhaseMission = eFinMission
@@ -73,7 +76,7 @@ include "bit.lua"
 ]]--[[// Pion detruit
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -137,7 +140,8 @@ elseif switch_1 == eProgresser then
                         end
                     end
 
-                    Activate( self.activations.BEH_Dep_Progresser, 1, setmetatable( { F_Pion_GetitMvt( self._namedParams.pionAmi ), eProgressionReco, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_Progresser, 1, { F_Pion_GetitMvt( self._namedParams.pionAmi ), eProgressionReco, } )
+self.done_BEH_Dep_Progresser = function( self, _, v ) self.eEtat = v[1] end
                     --[[//-----------------------------------------------------------------------------
 ]]--[[// Obstacle
 ]]--[[//-----------------------------------------------------------------------------
@@ -168,18 +172,20 @@ elseif switch_1 == eFinMission then
 
 node "BEH_Mission_Pion_ABC_EscorterAutomate"
 {
+    feedbacks = { { { "done_BEH_Mission_Pion_ABC_EscorterAutomate" }, "BEH_Mission_Pion_ABC_EscorterAutomate" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Pion_ABC_EscorterAutomate, {value} ) end,
     activations =
     {
-        { "ACT_Misc_Pion_ABC_Escorter", {} },
-        { "BEH_Ordre_Inopine", {} },
-        { "BEH_MAJ_Pion_ABC_AgressiviteTir", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Info_Trace", {} },
-        { "ACT_Dep_ModulationVitesse", {} },
-        { "BEH_Dep_Suivre", {} },
-        { "BEH_Dep_Progresser", {} },
-        { "BEH_Dep_ReagirFaceAObstacle", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "ACT_Misc_Pion_ABC_Escorter", { "done_ACT_Misc_Pion_ABC_Escorter" } },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "BEH_MAJ_Pion_ABC_AgressiviteTir", { "done_BEH_MAJ_Pion_ABC_AgressiviteTir" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "ACT_Dep_ModulationVitesse", { "done_ACT_Dep_ModulationVitesse" } },
+        { "BEH_Dep_Suivre", { "done_BEH_Dep_Suivre" } },
+        { "BEH_Dep_Progresser", { "done_BEH_Dep_Progresser" } },
+        { "BEH_Dep_ReagirFaceAObstacle", { "done_BEH_Dep_ReagirFaceAObstacle" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "done_BEH_Dep_SePosterFaceADirectionDangereuse" } },
     },
 
     create = function( self )
@@ -242,7 +248,8 @@ do
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
                 self.ePhaseMission = eFinMission
@@ -259,7 +266,7 @@ do
 ]]--[[// Pion detruit
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -322,7 +329,8 @@ elseif switch_1 == eProgresser then
                         end
                     end
 
-                    Activate( self.activations.BEH_Dep_Progresser, 1, setmetatable( { F_Pion_GetitMvt( pionTemoin ), eProgressionReco, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_Progresser, 1, { F_Pion_GetitMvt( pionTemoin ), eProgressionReco, } )
+self.done_BEH_Dep_Progresser = function( self, _, v ) self.eEtat = v[1] end
                     --[[//-----------------------------------------------------------------------------
 ]]--[[// Obstacle
 ]]--[[//-----------------------------------------------------------------------------
@@ -361,6 +369,8 @@ elseif switch_1 == eFinMission then
 
 node "ACT_Misc_Pion_ABC_Escorter"
 {
+    feedbacks = { { { "done_ACT_Misc_Pion_ABC_Escorter" }, "ACT_Misc_Pion_ABC_Escorter" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Misc_Pion_ABC_Escorter, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionAmi = self.params[1]

@@ -29,6 +29,8 @@ motivation_plugin.motivations[ "MOT_ASA_TirerSurEnis" ] =
 
 node "ActivatedByMOT_ASA_TirerSurEnis"
 {
+    feedbacks = { { { "done_ActivatedByMOT_ASA_TirerSurEnis" }, "ActivatedByMOT_ASA_TirerSurEnis" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_ASA_TirerSurEnis, {value} ) end,
     create = function( self )
     end,
 

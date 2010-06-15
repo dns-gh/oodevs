@@ -14,11 +14,13 @@ includedFiles["sources/appui/alat/pions/common/behaviors/Behaviors - Obs.bms"] =
 ]]--[[//------------------------------------------------------------------------------
 ]]node "BEH_Obs_Pion_ALAT_ReconnaitreZone"
 {
+    feedbacks = { { { "done_BEH_Obs_Pion_ALAT_ReconnaitreZone" }, "BEH_Obs_Pion_ALAT_ReconnaitreZone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Obs_Pion_ALAT_ReconnaitreZone, {value} ) end,
     activations =
     {
-        { "ACT_Obs_Pions_ALAT_EnregistrerPuisAllerReconnaitreNonVus", {} },
-        { "ACT_Obs_EtablirVisionCur", {} },
-        { "BEH_Dep_Pion_ALAT_RejoindrePoint", {} },
+        { "ACT_Obs_Pions_ALAT_EnregistrerPuisAllerReconnaitreNonVus", { "done_ACT_Obs_Pions_ALAT_EnregistrerPuisAllerReconnaitreNonVus" } },
+        { "ACT_Obs_EtablirVisionCur", { "done_ACT_Obs_EtablirVisionCur" } },
+        { "BEH_Dep_Pion_ALAT_RejoindrePoint", { "done_BEH_Dep_Pion_ALAT_RejoindrePoint" } },
     },
 
     create = function( self )
@@ -55,7 +57,7 @@ includedFiles["sources/appui/alat/pions/common/behaviors/Behaviors - Obs.bms"] =
 for _,y in pairs( DEC_Connaissances_UnitesEnnemiesVivantesDansZone( self._namedParams.zone ) or {} ) do
                         local _continue = true
 if( x == y ) then
-                                self.params.__returnValue = eActionEffectuee
+                                self:SendFeedback( eActionEffectuee )
                                 Halt( self )
                                 do return end
                             end
@@ -64,12 +66,13 @@ if( x == y ) then
 
                     end
 
-                    Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, setmetatable( { self.positionARejoindre, eProgressionDefaut, eTypeItiReconnaissance, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, { self.positionARejoindre, eProgressionDefaut, eTypeItiReconnaissance, } )
+self.done_BEH_Dep_Pion_ALAT_RejoindrePoint = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eSePoster then
                     if( DEC_ALAT_ReconnaissanceNonVuTerminee() ) then
-                        self.params.__returnValue = eActionEffectuee
+                        self:SendFeedback( eActionEffectuee )
                         Halt( self )
                         do return end
                     end
@@ -91,6 +94,8 @@ elseif switch_1 == eSePoster then
 
 node "BEH_Obs_Pion_ALAT_ProgressionTactiqueVers"
 {
+    feedbacks = { { { "done_BEH_Obs_Pion_ALAT_ProgressionTactiqueVers" }, "BEH_Obs_Pion_ALAT_ProgressionTactiqueVers" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Obs_Pion_ALAT_ProgressionTactiqueVers, {value} ) end,
     instances =
     {
         max = 1,
@@ -98,11 +103,11 @@ node "BEH_Obs_Pion_ALAT_ProgressionTactiqueVers"
 
     activations =
     {
-        { "ACT_Misc_VerouillerConnaissance", {} },
-        { "ACT_Obs_EtablirVisionVersPt", {} },
-        { "ACT_Dep_SePosterFaceA", {} },
-        { "ACT_Misc_Delai", {} },
-        { "BEH_Dep_Pion_ALAT_RejoindrePoint", {} },
+        { "ACT_Misc_VerouillerConnaissance", { "done_ACT_Misc_VerouillerConnaissance" } },
+        { "ACT_Obs_EtablirVisionVersPt", { "done_ACT_Obs_EtablirVisionVersPt" } },
+        { "ACT_Dep_SePosterFaceA", { "done_ACT_Dep_SePosterFaceA" } },
+        { "ACT_Misc_Delai", { "done_ACT_Misc_Delai" } },
+        { "BEH_Dep_Pion_ALAT_RejoindrePoint", { "done_BEH_Dep_Pion_ALAT_RejoindrePoint" } },
     },
 
     create = function( self )
@@ -117,7 +122,7 @@ node "BEH_Obs_Pion_ALAT_ProgressionTactiqueVers"
         self.eEtat = self.eEtat or eActionEnCours
         self.eEtatDeplacement = self.eEtatDeplacement or eActionEnCours
         if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.eni ) ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             Halt( self )
             do return end
         end
@@ -135,13 +140,13 @@ node "BEH_Obs_Pion_ALAT_ProgressionTactiqueVers"
         if( self.eEtat == eActionImpossible ) then
             do
                                 do
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -152,7 +157,7 @@ node "BEH_Obs_Pion_ALAT_ProgressionTactiqueVers"
             do
                 self.eEtatDeplacement = eActionEnCours
                                 do
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -164,13 +169,13 @@ node "BEH_Obs_Pion_ALAT_ProgressionTactiqueVers"
         if( self.eEtatDeplacement == eActionImpossible ) then
             do
                                 do
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -186,12 +191,14 @@ node "BEH_Obs_Pion_ALAT_ProgressionTactiqueVers"
         if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self.anciennePosition ) >= self._namedParams.distance ) then
             do
                 Activate( self.activations.ACT_Dep_SePosterFaceA, 1, { self._namedParams.eni, } )
-                Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, self._namedParams.temps, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                Activate( self.activations.ACT_Misc_Delai, 1, { 1, self._namedParams.temps, } )
+self.done_ACT_Misc_Delai = function( self, _, v ) self.eEtat = v[1] end
             end
         else
 do
                 Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1, { DEC_ConnaissanceAgent_Position( self._namedParams.eni ), } )
-                Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, setmetatable( { DEC_ConnaissanceAgent_Position( self._namedParams.eni ), eProgressionDefaut, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatDeplacement = v else rawset( t, k, v ) end end } ) )
+                Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, { DEC_ConnaissanceAgent_Position( self._namedParams.eni ), eProgressionDefaut, eTypeItiInfiltration, } )
+self.done_BEH_Dep_Pion_ALAT_RejoindrePoint = function( self, _, v ) self.eEtatDeplacement = v[1] end
             end
         end
 
@@ -201,6 +208,8 @@ do
 
 node "BEH_Obs_Pion_ALAT_ReconnaitreUnite"
 {
+    feedbacks = { { { "done_BEH_Obs_Pion_ALAT_ReconnaitreUnite" }, "BEH_Obs_Pion_ALAT_ReconnaitreUnite" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Obs_Pion_ALAT_ReconnaitreUnite, {value} ) end,
     instances =
     {
         boost = 1.000001,
@@ -208,7 +217,7 @@ node "BEH_Obs_Pion_ALAT_ReconnaitreUnite"
 
     activations =
     {
-        { "BEH_Obs_Pion_ALAT_ProgressionTactiqueVers", {} },
+        { "BEH_Obs_Pion_ALAT_ProgressionTactiqueVers", { "done_BEH_Obs_Pion_ALAT_ProgressionTactiqueVers" } },
     },
 
     create = function( self )
@@ -221,22 +230,23 @@ node "BEH_Obs_Pion_ALAT_ReconnaitreUnite"
     activate = function( self )
         self.eEtat = self.eEtat or eActionEnCours
         if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.eni ) ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             Halt( self )
             do return end
         end
 
         if( DEC_ConnaissanceAgent_EstMort( self._namedParams.eni ) ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             Halt( self )
             do return end
         end
 
         if( not S_Eni_EstNiveauPerceptionGTIA( self._namedParams.eni, eReconnu ) ) then
-            Activate( self.activations.BEH_Obs_Pion_ALAT_ProgressionTactiqueVers, 1, setmetatable( { self._namedParams.distance, self._namedParams.temps, self._namedParams.eni, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+            Activate( self.activations.BEH_Obs_Pion_ALAT_ProgressionTactiqueVers, 1, { self._namedParams.distance, self._namedParams.temps, self._namedParams.eni, } )
+self.done_BEH_Obs_Pion_ALAT_ProgressionTactiqueVers = function( self, _, v ) self.eEtat = v[1] end
         end
 
-                self.params.__returnValue = self.eEtat
+                self:SendFeedback( self.eEtat )
         do return end
 
     end,
@@ -251,9 +261,11 @@ node "BEH_Obs_Pion_ALAT_ReconnaitreUnite"
 
 node "BEH_Eni_Pion_ALAT_GererUnitesDetectes"
 {
+    feedbacks = { { { "done_BEH_Eni_Pion_ALAT_GererUnitesDetectes" }, "BEH_Eni_Pion_ALAT_GererUnitesDetectes" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Pion_ALAT_GererUnitesDetectes, {value} ) end,
     activations =
     {
-        { "BEH_Obs_Pion_ALAT_ReconnaitreUnite", {} },
+        { "BEH_Obs_Pion_ALAT_ReconnaitreUnite", { "done_BEH_Obs_Pion_ALAT_ReconnaitreUnite" } },
     },
 
     create = function( self )

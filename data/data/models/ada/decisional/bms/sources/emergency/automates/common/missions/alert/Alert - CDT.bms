@@ -15,6 +15,8 @@ includedFiles["sources/emergency/automates/common/missions/alert/Alert - CDT.bms
 ]]--[[//------------------------------------------------------------------------------
 ]]node "MIS_Automate_CDT_Emergency_Alert"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_Emergency_Alert" }, "MIS_Automate_CDT_Emergency_Alert" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_Emergency_Alert, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission

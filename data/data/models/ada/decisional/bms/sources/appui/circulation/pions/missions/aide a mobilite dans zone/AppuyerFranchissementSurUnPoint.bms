@@ -11,9 +11,11 @@ includedFiles["sources/appui/circulation/pions/missions/aide a mobilite dans zon
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "MIS_Pion_LOG_AppuyerFranchissementSurUnPoint"
 {
+    feedbacks = { { { "done_MIS_Pion_LOG_AppuyerFranchissementSurUnPoint" }, "MIS_Pion_LOG_AppuyerFranchissementSurUnPoint" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_LOG_AppuyerFranchissementSurUnPoint, {value} ) end,
     activations =
     {
-        { "BEH_Pion_CIRCU_RealiserObjetDansZone", {} },
+        { "BEH_Pion_CIRCU_RealiserObjetDansZone", { "done_BEH_Pion_CIRCU_RealiserObjetDansZone" } },
     },
 
     create = function( self )
@@ -24,7 +26,7 @@ includedFiles["sources/appui/circulation/pions/missions/aide a mobilite dans zon
     activate = function( self )
         --[[// Validité de la connaissance
 ]]if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.mission.pontFlottant_ ) ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end

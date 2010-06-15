@@ -25,15 +25,17 @@ include "bit.lua"
 --[[//-----------------------------------------------------------------------------
 ]]node "MIS_Pion_INF_ReconnaitrePoint"
 {
+    feedbacks = { { { "done_MIS_Pion_INF_ReconnaitrePoint" }, "MIS_Pion_INF_ReconnaitrePoint" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_INF_ReconnaitrePoint, {value} ) end,
     activations =
     {
-        { "BEH_Misc_Pion_DefinirTypeMission", {} },
-        { "BEH_MAJ_AgressiviteMission", {} },
-        { "BEH_Ordre_Inopine", {} },
-        { "BEH_Eni_Pion_VAB_RecoPoint", {} },
-        { "BEH_Mission_Pion_VAB_RecoPoint", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Poste_Pion_INF_TomberEnGarde", {} },
+        { "BEH_Misc_Pion_DefinirTypeMission", { "done_BEH_Misc_Pion_DefinirTypeMission" } },
+        { "BEH_MAJ_AgressiviteMission", { "done_BEH_MAJ_AgressiviteMission" } },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "BEH_Eni_Pion_VAB_RecoPoint", { "done_BEH_Eni_Pion_VAB_RecoPoint" } },
+        { "BEH_Mission_Pion_VAB_RecoPoint", { "done_BEH_Mission_Pion_VAB_RecoPoint" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Poste_Pion_INF_TomberEnGarde", { "done_BEH_Poste_Pion_INF_TomberEnGarde" } },
     },
 
     create = function( self )
@@ -75,7 +77,8 @@ include "bit.lua"
             end
         end
 
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionOrdre = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eActionOrdre = v[1] end
         do
         end
 --[[//=============================================================================
@@ -100,7 +103,8 @@ include "bit.lua"
                         do
                             --[[// -> Gestion l'ennemi
 ]]Activate( self.activations.BEH_Eni_Pion_VAB_RecoPoint, GetMotivation( "MOT_ManoeuvrerSurEnis" ), {} )
-                            Activate( self.activations.BEH_Mission_Pion_VAB_RecoPoint, GetMotivation( "MOT_Mission" ), setmetatable( { self.pt, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCurrentPhase = v else rawset( t, k, v ) end end } ) )
+                            Activate( self.activations.BEH_Mission_Pion_VAB_RecoPoint, GetMotivation( "MOT_Mission" ), { self.pt, } )
+self.done_BEH_Mission_Pion_VAB_RecoPoint = function( self, _, v ) self.eCurrentPhase = v[1] end
                                                         do return end
 
                         end
@@ -122,7 +126,7 @@ include "bit.lua"
                                                         do
                                 DEC_Trace( "Fin reconnaissance du point " .. DEC_PointToString( self.pt ) )
                                 DEC_FinMission()
-                                                                self.params.__returnValue = eActionEffectuee
+                                                                self:SendFeedback( eActionEffectuee )
                                 Halt( self )
                                 do return end
 
@@ -132,7 +136,8 @@ include "bit.lua"
                     end
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                    Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, { true, } )
+self.done_BEH_Poste_Pion_INF_TomberEnGarde = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                                 cases_switch_1[2] = true
 
@@ -154,16 +159,18 @@ include "bit.lua"
 
 node "BEH_Mission_Pion_VAB_RecoPoint"
 {
+    feedbacks = { { { "done_BEH_Mission_Pion_VAB_RecoPoint" }, "BEH_Mission_Pion_VAB_RecoPoint" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Pion_VAB_RecoPoint, {value} ) end,
     activations =
     {
-        { "BEH_Lima_Pion_RejoindreFuseau_EnAttente", {} },
-        { "BEH_Mot_Pion_Embarquer", {} },
-        { "BEH_Dep_Pion_INF_MiseEnPlace_Mission", {} },
-        { "ACT_Obs_EtablirVisionVersPt", {} },
-        { "ACT_Obs_ReconnaitrePoint", {} },
-        { "BEH_MOT_Pion_INF_Debarquer", {} },
-        { "BEH_Obs_Pion_INF_RecoPoint", {} },
-        { "ACT_Dep_Pion_INF_Arret", {} },
+        { "BEH_Lima_Pion_RejoindreFuseau_EnAttente", { "done_BEH_Lima_Pion_RejoindreFuseau_EnAttente" } },
+        { "BEH_Mot_Pion_Embarquer", { "done_BEH_Mot_Pion_Embarquer" } },
+        { "BEH_Dep_Pion_INF_MiseEnPlace_Mission", { "done_BEH_Dep_Pion_INF_MiseEnPlace_Mission" } },
+        { "ACT_Obs_EtablirVisionVersPt", { "done_ACT_Obs_EtablirVisionVersPt" } },
+        { "ACT_Obs_ReconnaitrePoint", { "done_ACT_Obs_ReconnaitrePoint" } },
+        { "BEH_MOT_Pion_INF_Debarquer", { "done_BEH_MOT_Pion_INF_Debarquer" } },
+        { "BEH_Obs_Pion_INF_RecoPoint", { "done_BEH_Obs_Pion_INF_RecoPoint" } },
+        { "ACT_Dep_Pion_INF_Arret", { "done_ACT_Dep_Pion_INF_Arret" } },
     },
 
     create = function( self )
@@ -199,7 +206,8 @@ node "BEH_Mission_Pion_VAB_RecoPoint"
             end
         end
 
-        Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, setmetatable( { M_TEMPS_PREPARATION_MISSION_RECO(), self._namedParams.pt, true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionRejoindre = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, { M_TEMPS_PREPARATION_MISSION_RECO(), self._namedParams.pt, true, } )
+self.done_BEH_Dep_Pion_INF_MiseEnPlace_Mission = function( self, _, v ) self.eActionRejoindre = v[1] end
         Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1, { self._namedParams.pt, } )
          do
             local _continue = true
@@ -230,7 +238,8 @@ elseif switch_1 == eObserver then
                         end
                     end
 
-                    Activate( self.activations.BEH_Obs_Pion_INF_RecoPoint, 1.1, setmetatable( { self._namedParams.pt, S_Delai_INF_RecoDebarque( self._namedParams.pt ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Obs_Pion_INF_RecoPoint, 1.1, { self._namedParams.pt, S_Delai_INF_RecoDebarque( self._namedParams.pt ), } )
+self.done_BEH_Obs_Pion_INF_RecoPoint = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eRejoindreAssaut then
@@ -250,20 +259,21 @@ elseif switch_1 == eFouiller then
 ]]if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
-                                                        self.params.__returnValue = eFinMission
+                                                        self:SendFeedback( eFinMission )
                             Halt( self )
                             do return end
 
                         end
                     end
 
-                    Activate( self.activations.ACT_Dep_Pion_INF_Arret, 1, setmetatable( { M_DELAI_NETTOYAGE_RECO(), "fouille de la position", }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.ACT_Dep_Pion_INF_Arret, 1, { M_DELAI_NETTOYAGE_RECO(), "fouille de la position", } )
+self.done_ACT_Dep_Pion_INF_Arret = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                                 cases_switch_1[4] = true
                 end
             end
 
-                self.params.__returnValue = self.ePhase
+                self:SendFeedback( self.ePhase )
         do return end
 
     end,
@@ -280,10 +290,12 @@ elseif switch_1 == eFouiller then
 
 node "BEH_Eni_Pion_VAB_RecoPoint"
 {
+    feedbacks = { { { "done_BEH_Eni_Pion_VAB_RecoPoint" }, "BEH_Eni_Pion_VAB_RecoPoint" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Pion_VAB_RecoPoint, {value} ) end,
     activations =
     {
-        { "ACT_RC_SurEni", {} },
-        { "ACT_Dep_SePosterFaceA", {} },
+        { "ACT_RC_SurEni", { "done_ACT_RC_SurEni" } },
+        { "ACT_Dep_SePosterFaceA", { "done_ACT_Dep_SePosterFaceA" } },
     },
 
     create = function( self )

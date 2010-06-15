@@ -26,17 +26,19 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Mission_Pion_ABC_Jalonner"
 {
+    feedbacks = { { { "done_BEH_Mission_Pion_ABC_Jalonner" }, "BEH_Mission_Pion_ABC_Jalonner" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Pion_ABC_Jalonner, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "BEH_MAJ_Pion_ABC_AgressiviteTir", {} },
-        { "BEH_MOT_DesactiveSauvegarde", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Info_Trace", {} },
-        { "BEH_Dep_Pion_ABC_RejoindreFuseau", {} },
-        { "BEH_Lima_Pion_ABC_Jalonner_GererLimas", {} },
-        { "BEH_Dep_ProgressionSur", {} },
-        { "BEH_Eni_Pion_ABC_JalonnerLesGros", {} },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "BEH_MAJ_Pion_ABC_AgressiviteTir", { "done_BEH_MAJ_Pion_ABC_AgressiviteTir" } },
+        { "BEH_MOT_DesactiveSauvegarde", { "done_BEH_MOT_DesactiveSauvegarde" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "BEH_Dep_Pion_ABC_RejoindreFuseau", { "done_BEH_Dep_Pion_ABC_RejoindreFuseau" } },
+        { "BEH_Lima_Pion_ABC_Jalonner_GererLimas", { "done_BEH_Lima_Pion_ABC_Jalonner_GererLimas" } },
+        { "BEH_Dep_ProgressionSur", { "done_BEH_Dep_ProgressionSur" } },
+        { "BEH_Eni_Pion_ABC_JalonnerLesGros", { "done_BEH_Eni_Pion_ABC_JalonnerLesGros" } },
     },
 
     create = function( self )
@@ -62,7 +64,8 @@ include "bit.lua"
             end
         end
 
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Agressivite
 ]]--[[//-----------------------------------------------------------------------------
@@ -105,7 +108,8 @@ include "bit.lua"
                         end
                     end
 
-                    Activate( self.activations.BEH_Dep_Pion_ABC_RejoindreFuseau, 1, setmetatable( { eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_Pion_ABC_RejoindreFuseau, 1, { eProgressionDirect, eTypeItiMouvement, } )
+self.done_BEH_Dep_Pion_ABC_RejoindreFuseau = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// 2) Jalonner l'eni
@@ -130,8 +134,10 @@ elseif switch_1 == eJalonner then
                         end
                     end
 
-                    Activate( self.activations.BEH_Lima_Pion_ABC_Jalonner_GererLimas, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatRecueil = v else rawset( t, k, v ) end end } ) )
-                    Activate( self.activations.BEH_Dep_ProgressionSur, 1, setmetatable( { self._namedParams.mission.itineraire_, eProgressionDirect, eTypeItiReconnaissance, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Lima_Pion_ABC_Jalonner_GererLimas, 1, {} )
+self.done_BEH_Lima_Pion_ABC_Jalonner_GererLimas = function( self, _, v ) self.eEtatRecueil = v[1] end
+                    Activate( self.activations.BEH_Dep_ProgressionSur, 1, { self._namedParams.mission.itineraire_, eProgressionDirect, eTypeItiReconnaissance, } )
+self.done_BEH_Dep_ProgressionSur = function( self, _, v ) self.eEtat = v[1] end
                     --[[//=============================================================================
 ]]--[[// Activer par automate
 ]]--[[//=============================================================================
@@ -172,10 +178,12 @@ elseif switch_1 == eFinMission then
 
 node "BEH_Eni_Pion_ABC_JalonnerLesGros"
 {
+    feedbacks = { { { "done_BEH_Eni_Pion_ABC_JalonnerLesGros" }, "BEH_Eni_Pion_ABC_JalonnerLesGros" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Pion_ABC_JalonnerLesGros, {value} ) end,
     activations =
     {
-        { "BEH_Eni_Pion_ABC_JalonnementSur", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "BEH_Eni_Pion_ABC_JalonnementSur", { "done_BEH_Eni_Pion_ABC_JalonnementSur" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "done_BEH_Dep_SePosterFaceADirectionDangereuse" } },
     },
 
     create = function( self )
@@ -220,6 +228,8 @@ node "BEH_Eni_Pion_ABC_JalonnerLesGros"
 
 node "BEH_Eni_Pion_ABC_JalonnementSur"
 {
+    feedbacks = { { { "done_BEH_Eni_Pion_ABC_JalonnementSur" }, "BEH_Eni_Pion_ABC_JalonnementSur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Pion_ABC_JalonnementSur, {value} ) end,
     instances =
     {
         max = 1--[[// tres important!
@@ -228,9 +238,9 @@ node "BEH_Eni_Pion_ABC_JalonnementSur"
 
     activations =
     {
-        { "ACT_Obs_EtablirVisionVersPt", {} },
-        { "ACT_Dep_ModulationVitesse", {} },
-        { "BEH_Eni_SePosterFaceA", {} },
+        { "ACT_Obs_EtablirVisionVersPt", { "done_ACT_Obs_EtablirVisionVersPt" } },
+        { "ACT_Dep_ModulationVitesse", { "done_ACT_Dep_ModulationVitesse" } },
+        { "BEH_Eni_SePosterFaceA", { "done_BEH_Eni_SePosterFaceA" } },
     },
 
     create = function( self )
@@ -267,9 +277,11 @@ node "BEH_Eni_Pion_ABC_JalonnementSur"
 
 node "BEH_Lima_Pion_ABC_Jalonner_GererLimas"
 {
+    feedbacks = { { { "done_BEH_Lima_Pion_ABC_Jalonner_GererLimas" }, "BEH_Lima_Pion_ABC_Jalonner_GererLimas" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Lima_Pion_ABC_Jalonner_GererLimas, {value} ) end,
     activations =
     {
-        { "ACT_Dep_PasserSurLima", {} },
+        { "ACT_Dep_PasserSurLima", { "done_ACT_Dep_PasserSurLima" } },
     },
 
     create = function( self )
@@ -319,7 +331,7 @@ elseif switch_1 == eTypeLima_LR
                                             Activate( self.activations.ACT_Dep_PasserSurLima, 1, { eEtatLima_LIA, } )
                                             --[[// DEC_RC( eRC_SurLima, eTypeLima_LIA );
 ]]DEC_Trace( "Passage LIA" )
-                                                                                        self.params.__returnValue = eActionEffectuee
+                                                                                        self:SendFeedback( eActionEffectuee )
                                             do return end
 
                                         end
@@ -350,9 +362,11 @@ elseif switch_1 == eTypeLima_LR
 
 node "BEH_Dep_Pion_ABC_RejoindreFuseau"
 {
+    feedbacks = { { { "done_BEH_Dep_Pion_ABC_RejoindreFuseau" }, "BEH_Dep_Pion_ABC_RejoindreFuseau" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Pion_ABC_RejoindreFuseau, {value} ) end,
     activations =
     {
-        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
     },
 
     create = function( self )
@@ -371,7 +385,7 @@ node "BEH_Dep_Pion_ABC_RejoindreFuseau"
 ]]if( ModuleBegins() ) then
             do
                 if( DEC_Geometrie_EstPointDansFuseau( DEC_Agent_Position() ) ) then
-                    self.params.__returnValue = eActionEffectuee
+                    self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
                 end
@@ -386,7 +400,7 @@ node "BEH_Dep_Pion_ABC_RejoindreFuseau"
             do
                 self.eEtat = eActionEnCours
                                 do
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -395,7 +409,8 @@ node "BEH_Dep_Pion_ABC_RejoindreFuseau"
             end
         end
 
-        Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.positionArrivee, self._namedParams.eTypeProgression, self._namedParams.ePathType, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.positionArrivee, self._namedParams.eTypeProgression, self._namedParams.ePathType, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
     end,
 
 }

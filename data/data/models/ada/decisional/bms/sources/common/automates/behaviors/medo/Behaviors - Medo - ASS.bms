@@ -23,12 +23,14 @@ include "Common/Automates/Actions/Medo/Actions - Medo - ASS.bms"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Mission_Automate_ASS_AssignerReconnaitreZoneDeploiementA"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_ASS_AssignerReconnaitreZoneDeploiementA" }, "BEH_Mission_Automate_ASS_AssignerReconnaitreZoneDeploiementA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_ASS_AssignerReconnaitreZoneDeploiementA, {value} ) end,
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ASS_AssignerReconnaitreZoneDeploiementA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "done_ACT_Mission_Automate_ControleCreation_EnCours" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "done_ACT_Mission_Automate_ControleCreation_OK" } },
+        { "ACT_Mission_Automate_ASS_AssignerReconnaitreZoneDeploiementA", { "done_ACT_Mission_Automate_ASS_AssignerReconnaitreZoneDeploiementA" } },
     },
 
     create = function( self )
@@ -62,7 +64,8 @@ elseif switch_1 == eActionHalt
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_ASS_AssignerReconnaitreZoneDeploiementA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.ptZone, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Mission_Automate_ASS_AssignerReconnaitreZoneDeploiementA, rForce, { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.ptZone, } )
+self.done_ACT_Mission_Automate_ASS_AssignerReconnaitreZoneDeploiementA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
 --[[// *****************************************************************************
@@ -75,12 +78,14 @@ elseif switch_1 == eActionHalt
 
 node "BEH_Mission_Automate_ASS_AcquerirObjectifsA"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_ASS_AcquerirObjectifsA" }, "BEH_Mission_Automate_ASS_AcquerirObjectifsA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_ASS_AcquerirObjectifsA, {value} ) end,
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ASS_AcquerirObjectifsA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "done_ACT_Mission_Automate_ControleCreation_EnCours" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "done_ACT_Mission_Automate_ControleCreation_OK" } },
+        { "ACT_Mission_Automate_ASS_AcquerirObjectifsA", { "done_ACT_Mission_Automate_ASS_AcquerirObjectifsA" } },
     },
 
     create = function( self )
@@ -115,7 +120,8 @@ elseif switch_1 == eActionHalt
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_ASS_AcquerirObjectifsA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.ptDeploiement, self._namedParams.locZone, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Mission_Automate_ASS_AcquerirObjectifsA, rForce, { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.ptDeploiement, self._namedParams.locZone, } )
+self.done_ACT_Mission_Automate_ASS_AcquerirObjectifsA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
 --[[// *****************************************************************************
@@ -128,12 +134,14 @@ elseif switch_1 == eActionHalt
 
 node "BEH_Mission_Automate_ASS_DLOAcquerirObjectifsA"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_ASS_DLOAcquerirObjectifsA" }, "BEH_Mission_Automate_ASS_DLOAcquerirObjectifsA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_ASS_DLOAcquerirObjectifsA, {value} ) end,
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ASS_DLOAcquerirObjectifsA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "done_ACT_Mission_Automate_ControleCreation_EnCours" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "done_ACT_Mission_Automate_ControleCreation_OK" } },
+        { "ACT_Mission_Automate_ASS_DLOAcquerirObjectifsA", { "done_ACT_Mission_Automate_ASS_DLOAcquerirObjectifsA" } },
     },
 
     create = function( self )
@@ -169,7 +177,8 @@ elseif switch_1 == eActionHalt
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_ASS_DLOAcquerirObjectifsA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.zone, self._namedParams.uniteAAppuyer, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Mission_Automate_ASS_DLOAcquerirObjectifsA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.zone, self._namedParams.uniteAAppuyer, self._namedParams.eEtatEchelon, } )
+self.done_ACT_Mission_Automate_ASS_DLOAcquerirObjectifsA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
 --[[// *****************************************************************************
@@ -182,12 +191,14 @@ elseif switch_1 == eActionHalt
 
 node "BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA" }, "BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA, {value} ) end,
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2Zones", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "done_ACT_Mission_Automate_ControleCreation_EnCours" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "done_ACT_Mission_Automate_ControleCreation_OK" } },
+        { "ACT_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2Zones", { "done_ACT_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2Zones" } },
     },
 
     create = function( self )
@@ -222,7 +233,8 @@ elseif switch_1 == eActionHalt
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2Zones, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.zoneImplantationTir1, self._namedParams.zoneImplantationTir2, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2Zones, rForce, { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.zoneImplantationTir1, self._namedParams.zoneImplantationTir2, } )
+self.done_ACT_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2Zones = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
 }

@@ -18,10 +18,12 @@ includedFiles["sources/common/pions/missions/SuivreUnite.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "MIS_Pion_Suivre"
 {
+    feedbacks = { { { "done_MIS_Pion_Suivre" }, "MIS_Pion_Suivre" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_Suivre, {value} ) end,
     activations =
     {
-        { "ACT_Obs_EtablirVisionVersPt", {} },
-        { "BEH_Dep_Suivre", {} },
+        { "ACT_Obs_EtablirVisionVersPt", { "done_ACT_Obs_EtablirVisionVersPt" } },
+        { "BEH_Dep_Suivre", { "done_BEH_Dep_Suivre" } },
     },
 
     create = function( self )

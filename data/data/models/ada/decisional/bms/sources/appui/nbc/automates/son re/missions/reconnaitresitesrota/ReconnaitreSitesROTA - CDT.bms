@@ -9,9 +9,11 @@ includedFiles["sources/appui/nbc/automates/son re/missions/reconnaitresitesrota/
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_NBC_ReconnaitreDesSitesROTA"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_NBC_ReconnaitreDesSitesROTA" }, "MIS_Automate_CDT_NBC_ReconnaitreDesSitesROTA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_NBC_ReconnaitreDesSitesROTA, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_NBC_ReconnaitreSitesROTA", {} },
+        { "BEH_Conduite_Automate_NBC_ReconnaitreSitesROTA", { "done_BEH_Conduite_Automate_NBC_ReconnaitreSitesROTA" } },
     },
 
     create = function( self )

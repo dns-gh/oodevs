@@ -24,6 +24,8 @@ includedFiles["sources/glaise/glaise_appui/nbc/automates/common/Gestion pions de
 ]]--[[// *****************************************************************************
 ]]node "BEH_Dispositif_Automate_NBC_GererPionsDetruits_"
 {
+    feedbacks = { { { "done_BEH_Dispositif_Automate_NBC_GererPionsDetruits_" }, "BEH_Dispositif_Automate_NBC_GererPionsDetruits_" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dispositif_Automate_NBC_GererPionsDetruits_, {value} ) end,
     create = function( self )
     end,
 

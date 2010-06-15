@@ -12,10 +12,12 @@ includedFiles["sources/humus/humus_common/automates/missions/decrocher/MRT - Dec
 ]]
 node "MIS_Automate_MRT_Decrocher"
 {
+    feedbacks = { { { "done_MIS_Automate_MRT_Decrocher" }, "MIS_Automate_MRT_Decrocher" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_MRT_Decrocher, {value} ) end,
     activations =
     {
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
-        { "BEH_Medo_Automate_AssignerDecrocherA", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", { "done_BEH_Medo_Automate_ControleCreationMission" } },
+        { "BEH_Medo_Automate_AssignerDecrocherA", { "done_BEH_Medo_Automate_AssignerDecrocherA" } },
     },
 
     create = function( self )
@@ -45,7 +47,7 @@ node "MIS_Automate_MRT_Decrocher"
                     DEC_Trace( "!!!!Attention toutes les missions n'ont pas été données au PE!!!" )
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -57,7 +59,7 @@ node "MIS_Automate_MRT_Decrocher"
                 self.eValidationMRT = eActionEnCours
                                 do
                     DEC_MRT_Valide()
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -66,7 +68,8 @@ node "MIS_Automate_MRT_Decrocher"
             end
         end
 
-        Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( DEC_Automate_PionsAvecPC() ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( DEC_Automate_PionsAvecPC() ), } )
+self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eValidationMRT = v[1] end
         Activate( self.activations.BEH_Medo_Automate_AssignerDecrocherA, 1, { DEC_Automate_PionsAvecPC(), self._namedParams.mission.pointRegroupement_, } )
     end,
 
@@ -80,10 +83,12 @@ node "MIS_Automate_MRT_Decrocher"
 
 node "BEH_Medo_Automate_AssignerDecrocherA"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_AssignerDecrocherA" }, "BEH_Medo_Automate_AssignerDecrocherA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_AssignerDecrocherA, {value} ) end,
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "BEH_Mission_Automate_AssignerDecrocherA", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
+        { "BEH_Mission_Automate_AssignerDecrocherA", { "done_BEH_Mission_Automate_AssignerDecrocherA" } },
     },
 
     create = function( self )
@@ -98,7 +103,7 @@ node "BEH_Medo_Automate_AssignerDecrocherA"
             do
                 DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
                 Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 do return end
 
             end

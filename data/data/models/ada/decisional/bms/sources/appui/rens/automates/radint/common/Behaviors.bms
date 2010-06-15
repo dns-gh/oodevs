@@ -10,14 +10,16 @@ includedFiles["sources/appui/rens/automates/radint/common/Behaviors.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "BEH_Defaut"
 {
+    feedbacks = { { { "done_BEH_Defaut" }, "BEH_Defaut" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Defaut, {value} ) end,
     activations =
     {
-        { "BEH_RC_Automate_Situation", {} },
-        { "BEH_Nbc_Automate_GererAlerteNiv4", {} },
-        { "BEH_Rens_Automate_GererSilenceRadio", {} },
-        { "BEH_ROE_Automate_GererOrdre", {} },
-        { "BEH_Misc_Automate_GererLesMoyens", {} },
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
+        { "BEH_RC_Automate_Situation", { "done_BEH_RC_Automate_Situation" } },
+        { "BEH_Nbc_Automate_GererAlerteNiv4", { "done_BEH_Nbc_Automate_GererAlerteNiv4" } },
+        { "BEH_Rens_Automate_GererSilenceRadio", { "done_BEH_Rens_Automate_GererSilenceRadio" } },
+        { "BEH_ROE_Automate_GererOrdre", { "done_BEH_ROE_Automate_GererOrdre" } },
+        { "BEH_Misc_Automate_GererLesMoyens", { "done_BEH_Misc_Automate_GererLesMoyens" } },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "done_BEH_Ordre_Automate_RecevoirOrdreInopine" } },
     },
 
     create = function( self )
@@ -72,9 +74,11 @@ includedFiles["sources/appui/rens/automates/radint/common/Behaviors.bms"] = true
 
 node "BEH_Medo_Automate_RENS_RADINT_AssignerRenseignerA"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_RENS_RADINT_AssignerRenseignerA" }, "BEH_Medo_Automate_RENS_RADINT_AssignerRenseignerA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_RENS_RADINT_AssignerRenseignerA, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_RENS_RADINT_AssignerRenseignerA", {} },
+        { "BEH_Mission_Automate_RENS_RADINT_AssignerRenseignerA", { "done_BEH_Mission_Automate_RENS_RADINT_AssignerRenseignerA" } },
     },
 
     create = function( self )

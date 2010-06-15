@@ -9,6 +9,8 @@ include "bit.lua"
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "BEH_Log_Automate_ALAT_GererPlotsRavitaillement"
 {
+    feedbacks = { { { "done_BEH_Log_Automate_ALAT_GererPlotsRavitaillement" }, "BEH_Log_Automate_ALAT_GererPlotsRavitaillement" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Log_Automate_ALAT_GererPlotsRavitaillement, {value} ) end,
     create = function( self )
     end,
 
@@ -73,6 +75,8 @@ do
 
 node "BEH_Log_Automate_ALAT_AjoutNouveauxPlotsDansFuseau"
 {
+    feedbacks = { { { "done_BEH_Log_Automate_ALAT_AjoutNouveauxPlotsDansFuseau" }, "BEH_Log_Automate_ALAT_AjoutNouveauxPlotsDansFuseau" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Log_Automate_ALAT_AjoutNouveauxPlotsDansFuseau, {value} ) end,
     create = function( self )
     end,
 
@@ -101,6 +105,8 @@ do
 
 node "BEH_Log_Automate_ALAT_GererRavitaillementsCoordonne"
 {
+    feedbacks = { { { "done_BEH_Log_Automate_ALAT_GererRavitaillementsCoordonne" }, "BEH_Log_Automate_ALAT_GererRavitaillementsCoordonne" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Log_Automate_ALAT_GererRavitaillementsCoordonne, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.listePions = self.params[1]
@@ -162,10 +168,12 @@ do
 
 node "BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX"
 {
+    feedbacks = { { { "done_BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX" }, "BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX, {value} ) end,
     activations =
     {
-        { "BEH_Medo_Automate_ALAT_AssignerMissionsHeliporterPlotsRavitaillementAListe", {} },
-        { "BEH_Medo_Automate_ALAT_AssignerMissionsIMEXAListe", {} },
+        { "BEH_Medo_Automate_ALAT_AssignerMissionsHeliporterPlotsRavitaillementAListe", { "done_BEH_Medo_Automate_ALAT_AssignerMissionsHeliporterPlotsRavitaillementAListe" } },
+        { "BEH_Medo_Automate_ALAT_AssignerMissionsIMEXAListe", { "done_BEH_Medo_Automate_ALAT_AssignerMissionsIMEXAListe" } },
     },
 
     create = function( self )

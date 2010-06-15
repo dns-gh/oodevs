@@ -20,9 +20,11 @@ includedFiles["sources/melee/abc/automates/esc amx-erc/missions/jalonner/Jalonne
 ]]--[[// ******************************************************************************
 ]]node "MIS_Automate_CDT_ABC_Jalonner"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ABC_Jalonner" }, "MIS_Automate_CDT_ABC_Jalonner" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ABC_Jalonner, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_Jalonner", {} },
+        { "BEH_Conduite_Automate_ABC_Jalonner", { "done_BEH_Conduite_Automate_ABC_Jalonner" } },
     },
 
     create = function( self )

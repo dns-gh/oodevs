@@ -12,6 +12,8 @@ include "bit.lua"
 ]]--[[// *****************************************************************************/
 ]]node "ACT_Dep_SeDeplacer"
 {
+    feedbacks = { { { "done_ACT_Dep_SeDeplacer" }, "ACT_Dep_SeDeplacer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Dep_SeDeplacer, {value} ) end,
     actuators = F_DEPLACEMENT_ACTUATEURS()
 ,
 
@@ -65,7 +67,7 @@ elseif switch_1 == eEtatActionDeplacement_ManqueCarburant then
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eEtatActionDeplacement_Termine then
                     self.actionDeplacement = DEC_StopAction( self.actionDeplacement )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -123,6 +125,8 @@ elseif switch_1 == eEtatActionDeplacement_DejaEnDeplacement then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Dep_ModulationVitesse"
 {
+    feedbacks = { { { "done_ACT_Dep_ModulationVitesse" }, "ACT_Dep_ModulationVitesse" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Dep_ModulationVitesse, {value} ) end,
     actuators =
     {
         vitesse = 1,
@@ -151,6 +155,8 @@ elseif switch_1 == eEtatActionDeplacement_DejaEnDeplacement then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Dep_ModulationVitesseCourante"
 {
+    feedbacks = { { { "done_ACT_Dep_ModulationVitesseCourante" }, "ACT_Dep_ModulationVitesseCourante" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Dep_ModulationVitesseCourante, {value} ) end,
     actuators =
     {
         vitesse = 1,
@@ -179,6 +185,8 @@ elseif switch_1 == eEtatActionDeplacement_DejaEnDeplacement then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Dep_SePoster"
 {
+    feedbacks = { { { "done_ACT_Dep_SePoster" }, "ACT_Dep_SePoster" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Dep_SePoster, {value} ) end,
     actuators =
     {
         deplacement = 1,
@@ -200,6 +208,8 @@ elseif switch_1 == eEtatActionDeplacement_DejaEnDeplacement then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Dep_SePosterFaceADir"
 {
+    feedbacks = { { { "done_ACT_Dep_SePosterFaceADir" }, "ACT_Dep_SePosterFaceADir" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Dep_SePosterFaceADir, {value} ) end,
     actuators =
     {
         deplacement = 1,
@@ -235,6 +245,8 @@ elseif switch_1 == eEtatActionDeplacement_DejaEnDeplacement then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Dep_SePosterFaceA"
 {
+    feedbacks = { { { "done_ACT_Dep_SePosterFaceA" }, "ACT_Dep_SePosterFaceA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Dep_SePosterFaceA, {value} ) end,
     actuators =
     {
         deplacement = 1,
@@ -276,6 +288,8 @@ elseif switch_1 == eEtatActionDeplacement_DejaEnDeplacement then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Dep_PasserEnModeFurtif"
 {
+    feedbacks = { { { "done_ACT_Dep_PasserEnModeFurtif" }, "ACT_Dep_PasserEnModeFurtif" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Dep_PasserEnModeFurtif, {value} ) end,
     create = function( self )
     end,
 
@@ -308,6 +322,8 @@ elseif switch_1 == eEtatActionDeplacement_DejaEnDeplacement then
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_Dep_PasserSurLima"
 {
+    feedbacks = { { { "done_ACT_Dep_PasserSurLima" }, "ACT_Dep_PasserSurLima" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Dep_PasserSurLima, {value} ) end,
     actuators =
     {
         etat_Lima = 1,
@@ -340,6 +356,8 @@ elseif switch_1 == eEtatActionDeplacement_DejaEnDeplacement then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Dep_SePosterFaceAObstacle"
 {
+    feedbacks = { { { "done_ACT_Dep_SePosterFaceAObstacle" }, "ACT_Dep_SePosterFaceAObstacle" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Dep_SePosterFaceAObstacle, {value} ) end,
     actuators =
     {
         deplacement = 1,

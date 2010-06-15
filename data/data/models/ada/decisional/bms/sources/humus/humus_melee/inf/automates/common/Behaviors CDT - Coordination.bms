@@ -24,11 +24,13 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "BEH_CoordDep_Automate_AvecPions"
 {
+    feedbacks = { { { "done_BEH_CoordDep_Automate_AvecPions" }, "BEH_CoordDep_Automate_AvecPions" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_CoordDep_Automate_AvecPions, {value} ) end,
     activations =
     {
-        { "ACT_Info_Automate_Trace", {} },
-        { "ACT_Ordre_Automate_Ralentir", {} },
-        { "ACT_Ordre_Automate_Pause", {} },
+        { "ACT_Info_Automate_Trace", { "done_ACT_Info_Automate_Trace" } },
+        { "ACT_Ordre_Automate_Ralentir", { "done_ACT_Ordre_Automate_Ralentir" } },
+        { "ACT_Ordre_Automate_Pause", { "done_ACT_Ordre_Automate_Pause" } },
     },
 
     create = function( self )
@@ -137,9 +139,11 @@ if( self.bEnAttente and rDist_AvtLigne < self._namedParams.rDist_Min ) then
 
 node "BEH_CoordDep_Automate_INF_AvecAutomate"
 {
+    feedbacks = { { { "done_BEH_CoordDep_Automate_INF_AvecAutomate" }, "BEH_CoordDep_Automate_INF_AvecAutomate" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_CoordDep_Automate_INF_AvecAutomate, {value} ) end,
     activations =
     {
-        { "BEH_CoordDep_Automate_INF_AvecAutomate_Pion", {} },
+        { "BEH_CoordDep_Automate_INF_AvecAutomate_Pion", { "done_BEH_CoordDep_Automate_INF_AvecAutomate_Pion" } },
     },
 
     create = function( self )
@@ -184,10 +188,12 @@ node "BEH_CoordDep_Automate_INF_AvecAutomate"
 
 node "BEH_CoordDep_Automate_INF_AvecAutomate_Pion"
 {
+    feedbacks = { { { "done_BEH_CoordDep_Automate_INF_AvecAutomate_Pion" }, "BEH_CoordDep_Automate_INF_AvecAutomate_Pion" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_CoordDep_Automate_INF_AvecAutomate_Pion, {value} ) end,
     activations =
     {
-        { "ACT_Ordre_Automate_Pause", {} },
-        { "ACT_Info_Automate_Trace", {} },
+        { "ACT_Ordre_Automate_Pause", { "done_ACT_Ordre_Automate_Pause" } },
+        { "ACT_Info_Automate_Trace", { "done_ACT_Info_Automate_Trace" } },
     },
 
     create = function( self )
@@ -293,10 +299,12 @@ do
 
 node "BEH_CoordDep_Automate_INF_Retrograde"
 {
+    feedbacks = { { { "done_BEH_CoordDep_Automate_INF_Retrograde" }, "BEH_CoordDep_Automate_INF_Retrograde" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_CoordDep_Automate_INF_Retrograde, {value} ) end,
     activations =
     {
-        { "ACT_Info_Automate_Trace", {} },
-        { "ACT_Ordre_Automate_Pause", {} },
+        { "ACT_Info_Automate_Trace", { "done_ACT_Info_Automate_Trace" } },
+        { "ACT_Ordre_Automate_Pause", { "done_ACT_Ordre_Automate_Pause" } },
     },
 
     create = function( self )
@@ -374,6 +382,8 @@ node "BEH_CoordDep_Automate_INF_Retrograde"
 
 node "BEH_Automate_INF_ConduitePause"
 {
+    feedbacks = { { { "done_BEH_Automate_INF_ConduitePause" }, "BEH_Automate_INF_ConduitePause" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Automate_INF_ConduitePause, {value} ) end,
     create = function( self )
     end,
 
@@ -384,11 +394,13 @@ node "BEH_Automate_INF_ConduitePause"
 
 node "BEH_Conduite_Automate_INF_FlancGarder"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_INF_FlancGarder" }, "BEH_Conduite_Automate_INF_FlancGarder" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_INF_FlancGarder, {value} ) end,
     activations =
     {
-        { "BEH_CoordDep_Automate_INF_AvecAutomate", {} },
-        { "BEH_Conduite_Automate_INF_FlancGarder_Regroupement", {} },
-        { "BEH_Conduite_Automate_INF_FlancGarder_Tenir", {} },
+        { "BEH_CoordDep_Automate_INF_AvecAutomate", { "done_BEH_CoordDep_Automate_INF_AvecAutomate" } },
+        { "BEH_Conduite_Automate_INF_FlancGarder_Regroupement", { "done_BEH_Conduite_Automate_INF_FlancGarder_Regroupement" } },
+        { "BEH_Conduite_Automate_INF_FlancGarder_Tenir", { "done_BEH_Conduite_Automate_INF_FlancGarder_Tenir" } },
     },
 
     create = function( self )
@@ -406,9 +418,11 @@ node "BEH_Conduite_Automate_INF_FlancGarder"
 
 node "BEH_Conduite_Automate_INF_FlancGarder_Regroupement"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_INF_FlancGarder_Regroupement" }, "BEH_Conduite_Automate_INF_FlancGarder_Regroupement" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_INF_FlancGarder_Regroupement, {value} ) end,
     activations =
     {
-        { "ACT_Conduite_Automate_PointRegroupement_Pion", {} },
+        { "ACT_Conduite_Automate_PointRegroupement_Pion", { "done_ACT_Conduite_Automate_PointRegroupement_Pion" } },
     },
 
     create = function( self )
@@ -451,9 +465,11 @@ node "BEH_Conduite_Automate_INF_FlancGarder_Regroupement"
 
 node "BEH_Conduite_Automate_INF_FlancGarder_Tenir"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_INF_FlancGarder_Tenir" }, "BEH_Conduite_Automate_INF_FlancGarder_Tenir" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_INF_FlancGarder_Tenir, {value} ) end,
     activations =
     {
-        { "ACT_Ordre_Automate_Pause", {} },
+        { "ACT_Ordre_Automate_Pause", { "done_ACT_Ordre_Automate_Pause" } },
     },
 
     create = function( self )

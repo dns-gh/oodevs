@@ -9,6 +9,8 @@ includedFiles["sources/appui/circulation/automates/missions/armerpias/ArmerPIAs 
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_LOG_ArmerPIAs"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_LOG_ArmerPIAs" }, "MIS_Automate_CDT_LOG_ArmerPIAs" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_LOG_ArmerPIAs, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission

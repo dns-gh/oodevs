@@ -9,10 +9,12 @@ includedFiles["sources/appui/trans/automates/behaviors/Behaviors - Ordre.bms"] =
 ]]--[[// *****************************************************************************
 ]]node "BEH_Ordre_Automate_RecevoirOrdreInopine"
 {
+    feedbacks = { { { "done_BEH_Ordre_Automate_RecevoirOrdreInopine" }, "BEH_Ordre_Automate_RecevoirOrdreInopine" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Ordre_Automate_RecevoirOrdreInopine, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Automate_Interrompre_", {} },
-        { "ACT_Ordre_Suppression", {} },
+        { "BEH_Ordre_Automate_Interrompre_", { "done_BEH_Ordre_Automate_Interrompre_" } },
+        { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
     },
 
     create = function( self )
@@ -35,7 +37,7 @@ do
         end
 
         if( bOrdreConduiteInterrompre ) then
-            self.params.__returnValue = eActionHalt
+            self:SendFeedback( eActionHalt )
             do return end
         end
 
@@ -52,9 +54,11 @@ do
 
 node "BEH_Ordre_Automate_Interrompre_"
 {
+    feedbacks = { { { "done_BEH_Ordre_Automate_Interrompre_" }, "BEH_Ordre_Automate_Interrompre_" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Ordre_Automate_Interrompre_, {value} ) end,
     activations =
     {
-        { "ACT_Ordre_Automate_Interrompre", {} },
+        { "ACT_Ordre_Automate_Interrompre", { "done_ACT_Ordre_Automate_Interrompre" } },
     },
 
     create = function( self )

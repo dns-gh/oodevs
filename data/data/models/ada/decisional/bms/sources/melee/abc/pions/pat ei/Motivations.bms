@@ -53,9 +53,11 @@ motivation_plugin.motivations[ "MOT_SInfiltrer" ] =
 
 node "ActivatedByMOT_SInfiltrer"
 {
+    feedbacks = { { { "done_ActivatedByMOT_SInfiltrer" }, "ActivatedByMOT_SInfiltrer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_SInfiltrer, {value} ) end,
     activations =
     {
-        { "BEH_Pion_ABC_GarderSesDistancesPourSInfiltrer", {} },
+        { "BEH_Pion_ABC_GarderSesDistancesPourSInfiltrer", { "done_BEH_Pion_ABC_GarderSesDistancesPourSInfiltrer" } },
     },
 
     create = function( self )
@@ -115,9 +117,11 @@ node "ActivatedByMOT_SInfiltrer"
 
 node "ActivatedByMOT_PoursuivreFaceAEni"
 {
+    feedbacks = { { { "done_ActivatedByMOT_PoursuivreFaceAEni" }, "ActivatedByMOT_PoursuivreFaceAEni" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_PoursuivreFaceAEni, {value} ) end,
     activations =
     {
-        { "BEH_MOT_DesactiveSauvegarde", {} },
+        { "BEH_MOT_DesactiveSauvegarde", { "done_BEH_MOT_DesactiveSauvegarde" } },
     },
 
     create = function( self )

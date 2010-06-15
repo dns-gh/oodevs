@@ -19,22 +19,24 @@ include "bit.lua"
 
 node "BEH_Medo_Automate_INF_PreparerMission_Statique"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_INF_PreparerMission_Statique" }, "BEH_Medo_Automate_INF_PreparerMission_Statique" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_INF_PreparerMission_Statique, {value} ) end,
     activations =
     {
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
-        { "BEH_Medo_Automate_INF_AssignerDefendre_DansZone", {} },
-        { "BEH_Medo_Automate_INF_AssignerBarrer_DansZone", {} },
-        { "BEH_Medo_Automate_INF_AssignerDefendre_SurLima", {} },
-        { "BEH_Medo_Automate_INF_AssignerBarrer_SurLima", {} },
-        { "BEH_Medo_Automate_INF_AssignerDefendre_SurPoints", {} },
-        { "BEH_Medo_Automate_INF_AssignerBarrer_SurPoints", {} },
-        { "BEH_Medo_Automate_INF_AssignerSurveiller_Zone", {} },
-        { "BEH_Medo_Automate_INF_AssignerInterdire_SurPoints", {} },
-        { "BEH_Medo_Automate_INF_AssignerCouvrir", {} },
-        { "BEH_Medo_Automate_INF_AssignerMission_PC", {} },
-        { "BEH_Medo_Automate_INF_AssignerAppuyerA_Mortier", {} },
-        { "BEH_Medo_Automate_INF_InitialiseSE", {} },
-        { "ACT_Medo_Automate_AffecterFuseaux_Compagnie", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", { "done_BEH_Medo_Automate_ControleCreationMission" } },
+        { "BEH_Medo_Automate_INF_AssignerDefendre_DansZone", { "done_BEH_Medo_Automate_INF_AssignerDefendre_DansZone" } },
+        { "BEH_Medo_Automate_INF_AssignerBarrer_DansZone", { "done_BEH_Medo_Automate_INF_AssignerBarrer_DansZone" } },
+        { "BEH_Medo_Automate_INF_AssignerDefendre_SurLima", { "done_BEH_Medo_Automate_INF_AssignerDefendre_SurLima" } },
+        { "BEH_Medo_Automate_INF_AssignerBarrer_SurLima", { "done_BEH_Medo_Automate_INF_AssignerBarrer_SurLima" } },
+        { "BEH_Medo_Automate_INF_AssignerDefendre_SurPoints", { "done_BEH_Medo_Automate_INF_AssignerDefendre_SurPoints" } },
+        { "BEH_Medo_Automate_INF_AssignerBarrer_SurPoints", { "done_BEH_Medo_Automate_INF_AssignerBarrer_SurPoints" } },
+        { "BEH_Medo_Automate_INF_AssignerSurveiller_Zone", { "done_BEH_Medo_Automate_INF_AssignerSurveiller_Zone" } },
+        { "BEH_Medo_Automate_INF_AssignerInterdire_SurPoints", { "done_BEH_Medo_Automate_INF_AssignerInterdire_SurPoints" } },
+        { "BEH_Medo_Automate_INF_AssignerCouvrir", { "done_BEH_Medo_Automate_INF_AssignerCouvrir" } },
+        { "BEH_Medo_Automate_INF_AssignerMission_PC", { "done_BEH_Medo_Automate_INF_AssignerMission_PC" } },
+        { "BEH_Medo_Automate_INF_AssignerAppuyerA_Mortier", { "done_BEH_Medo_Automate_INF_AssignerAppuyerA_Mortier" } },
+        { "BEH_Medo_Automate_INF_InitialiseSE", { "done_BEH_Medo_Automate_INF_InitialiseSE" } },
+        { "ACT_Medo_Automate_AffecterFuseaux_Compagnie", { "done_ACT_Medo_Automate_AffecterFuseaux_Compagnie" } },
     },
 
     create = function( self )
@@ -145,7 +147,7 @@ if( rN_Appui > 0 ) then
                         do
                             DEC_Trace( "Pas de 1er echelon" )
                             DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
-                                                        self.params.__returnValue = eActionImpossible
+                                                        self:SendFeedback( eActionImpossible )
                             Halt( self )
                             do return end
 
@@ -174,7 +176,7 @@ elseif switch_1 == eMRT_AssignerMissions then
                                                         do
                             end
 
-                                                        self.params.__returnValue = eActionImpossible
+                                                        self:SendFeedback( eActionImpossible )
                             Halt( self )
                             do return end
 
@@ -187,7 +189,7 @@ elseif switch_1 == eMRT_AssignerMissions then
                                 DEC_Trace( "eValidationMRT == eActionImpossible" )
                             end
 
-                                                        self.params.__returnValue = eActionImpossible
+                                                        self:SendFeedback( eActionImpossible )
                             Halt( self )
                             do return end
 
@@ -206,7 +208,8 @@ elseif switch_1 == eMRT_AssignerMissions then
                         end
                     end
 
-                    Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.lstPionsAttaque ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( self.lstPionsAttaque ), } )
+self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eValidationMRT = v[1] end
                      do
                         local _continue = true
                         local switch_2 = self._namedParams.eTypeMission
@@ -230,7 +233,7 @@ elseif switch_2 == "T_Mission_Automate_INF_DonnerCoupArret" then
                                 if( ( self.limaLCAR == 0 or self.limaLCAR == nil ) ) then
                                     do
                                         DEC_Warning( eRC_MissionImpossibleLimaInvalide )
-                                                                                self.params.__returnValue = eActionImpossible
+                                                                                self:SendFeedback( eActionImpossible )
                                         Halt( self )
                                         do return end
 
@@ -247,7 +250,7 @@ elseif switch_2 == "T_Mission_Automate_INF_RecueillirUnite" then
                                 if( ( self.limaLR == 0 or self.limaLR == nil ) ) then
                                     do
                                         DEC_Warning( eRC_MissionImpossibleLimaInvalide )
-                                                                                self.params.__returnValue = eActionImpossible
+                                                                                self:SendFeedback( eActionImpossible )
                                         Halt( self )
                                         do return end
 
@@ -280,14 +283,15 @@ elseif switch_2 == "T_Mission_Automate_INF_Interdire" then
 
                             else
                                 DEC_Trace( "Mission Inconnue" )
-                                                                self.params.__returnValue = eActionImpossible
+                                                                self:SendFeedback( eActionImpossible )
                                 Halt( self )
                                 do return end
 
                                                         end
                         end
 
-                    Activate( self.activations.BEH_Medo_Automate_INF_AssignerMission_PC, 1, setmetatable( { self.lstPionsAttaque, self.lstPionsAppui, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMRT = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Medo_Automate_INF_AssignerMission_PC, 1, { self.lstPionsAttaque, self.lstPionsAppui, } )
+self.done_BEH_Medo_Automate_INF_AssignerMission_PC = function( self, _, v ) self.eActionMRT = v[1] end
                     Activate( self.activations.BEH_Medo_Automate_INF_AssignerAppuyerA_Mortier, 1, { self.selPions_INF_Mortier, } )
                     --[[// if ( eTypeMission != T_Mission_Automate_INF_DonnerCoupArret )
 ]]Activate( self.activations.BEH_Medo_Automate_INF_InitialiseSE, 1, { self.lstPionsAppui, } )
@@ -299,7 +303,7 @@ elseif switch_1 == eMRT_RetablirFuseau then
                         do
                             self.eValidationMRT = eActionEnCours
                                                         do
-                                                                self.params.__returnValue = eActionEffectuee
+                                                                self:SendFeedback( eActionEffectuee )
                                 Halt( self )
                                 do return end
 
@@ -311,7 +315,8 @@ elseif switch_1 == eMRT_RetablirFuseau then
                     for _,x_pion in pairs( self.lstPionsAttaque or {} ) do
                     local _continue = true
                         --[[//-----------------------------------------------------------------------------
-]]Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux_Compagnie, 1, setmetatable( { x_pion, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
+]]Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux_Compagnie, 1, { x_pion, } )
+self.done_ACT_Medo_Automate_AffecterFuseaux_Compagnie = function( self, _, v ) self.eValidationMRT = v[1] end
 
                     end
 
@@ -328,10 +333,12 @@ elseif switch_1 == eMRT_RetablirFuseau then
 
 node "BEH_Medo_Automate_INF_AssignerDefendre_DansZone"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_INF_AssignerDefendre_DansZone" }, "BEH_Medo_Automate_INF_AssignerDefendre_DansZone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_INF_AssignerDefendre_DansZone, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_INF_AssignerA_Defendre", {} },
-        { "ACT_Warning", {} },
+        { "BEH_Mission_Automate_INF_AssignerA_Defendre", { "done_BEH_Mission_Automate_INF_AssignerA_Defendre" } },
+        { "ACT_Warning", { "done_ACT_Warning" } },
     },
 
     create = function( self )
@@ -383,7 +390,7 @@ do
                         DEC_Trace( "Pions in same fuseau or location not in fuseau" )
                         --[[// Sur Lima
 ]]Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleZoneHorsFuseau, } )
-                                                self.params.__returnValue = eActionImpossible
+                                                self:SendFeedback( eActionImpossible )
                         do return end
 
                     end
@@ -398,10 +405,12 @@ do
 
 node "BEH_Medo_Automate_INF_AssignerDefendre_SurLima"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_INF_AssignerDefendre_SurLima" }, "BEH_Medo_Automate_INF_AssignerDefendre_SurLima" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_INF_AssignerDefendre_SurLima, {value} ) end,
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "BEH_Medo_Automate_INF_AssignerDefendre_SurPoints", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
+        { "BEH_Medo_Automate_INF_AssignerDefendre_SurPoints", { "done_BEH_Medo_Automate_INF_AssignerDefendre_SurPoints" } },
     },
 
     create = function( self )
@@ -435,7 +444,7 @@ node "BEH_Medo_Automate_INF_AssignerDefendre_SurLima"
         end
 
         if( not self.bValide ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             do return end
         end
 
@@ -453,9 +462,11 @@ node "BEH_Medo_Automate_INF_AssignerDefendre_SurLima"
 
 node "BEH_Medo_Automate_INF_AssignerDefendre_SurPoints"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_INF_AssignerDefendre_SurPoints" }, "BEH_Medo_Automate_INF_AssignerDefendre_SurPoints" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_INF_AssignerDefendre_SurPoints, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_INF_AssignerA_Defendre", {} },
+        { "BEH_Mission_Automate_INF_AssignerA_Defendre", { "done_BEH_Mission_Automate_INF_AssignerA_Defendre" } },
     },
 
     create = function( self )
@@ -511,10 +522,12 @@ node "BEH_Medo_Automate_INF_AssignerDefendre_SurPoints"
 
 node "BEH_Medo_Automate_INF_AssignerInterdire_SurPoints"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_INF_AssignerInterdire_SurPoints" }, "BEH_Medo_Automate_INF_AssignerInterdire_SurPoints" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_INF_AssignerInterdire_SurPoints, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_INF_AssignerA_Barrer", {} },
-        { "BEH_Mission_Automate_INF_AssignerA_Interdire", {} },
+        { "BEH_Mission_Automate_INF_AssignerA_Barrer", { "done_BEH_Mission_Automate_INF_AssignerA_Barrer" } },
+        { "BEH_Mission_Automate_INF_AssignerA_Interdire", { "done_BEH_Mission_Automate_INF_AssignerA_Interdire" } },
     },
 
     create = function( self )
@@ -577,10 +590,12 @@ node "BEH_Medo_Automate_INF_AssignerInterdire_SurPoints"
 
 node "BEH_Medo_Automate_INF_AssignerBarrer_DansZone"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_INF_AssignerBarrer_DansZone" }, "BEH_Medo_Automate_INF_AssignerBarrer_DansZone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_INF_AssignerBarrer_DansZone, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_INF_AssignerA_BarrerDansZone", {} },
-        { "ACT_Warning", {} },
+        { "BEH_Mission_Automate_INF_AssignerA_BarrerDansZone", { "done_BEH_Mission_Automate_INF_AssignerA_BarrerDansZone" } },
+        { "ACT_Warning", { "done_ACT_Warning" } },
     },
 
     create = function( self )
@@ -638,7 +653,7 @@ do
 	*/]]Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleZoneHorsFuseau, } )
                         DEC_Trace( "CACA" )
                         --[[// Sur Lima
-]]                        self.params.__returnValue = eActionImpossible
+]]                        self:SendFeedback( eActionImpossible )
                         do return end
 
                     end
@@ -653,10 +668,12 @@ do
 
 node "BEH_Medo_Automate_INF_AssignerBarrer_SurLima"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_INF_AssignerBarrer_SurLima" }, "BEH_Medo_Automate_INF_AssignerBarrer_SurLima" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_INF_AssignerBarrer_SurLima, {value} ) end,
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "BEH_Medo_Automate_INF_AssignerBarrer_SurPoints", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
+        { "BEH_Medo_Automate_INF_AssignerBarrer_SurPoints", { "done_BEH_Medo_Automate_INF_AssignerBarrer_SurPoints" } },
     },
 
     create = function( self )
@@ -690,7 +707,7 @@ node "BEH_Medo_Automate_INF_AssignerBarrer_SurLima"
         end
 
         if( not self.bValide ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             do return end
         end
 
@@ -707,9 +724,11 @@ node "BEH_Medo_Automate_INF_AssignerBarrer_SurLima"
 
 node "BEH_Medo_Automate_INF_AssignerBarrer_SurPoints"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_INF_AssignerBarrer_SurPoints" }, "BEH_Medo_Automate_INF_AssignerBarrer_SurPoints" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_INF_AssignerBarrer_SurPoints, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_INF_AssignerA_Barrer", {} },
+        { "BEH_Mission_Automate_INF_AssignerA_Barrer", { "done_BEH_Mission_Automate_INF_AssignerA_Barrer" } },
     },
 
     create = function( self )
@@ -764,9 +783,11 @@ node "BEH_Medo_Automate_INF_AssignerBarrer_SurPoints"
 
 node "BEH_Medo_Automate_INF_AssignerCouvrir"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_INF_AssignerCouvrir" }, "BEH_Medo_Automate_INF_AssignerCouvrir" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_INF_AssignerCouvrir, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_INF_AssignerA_Couvrir", {} },
+        { "BEH_Mission_Automate_INF_AssignerA_Couvrir", { "done_BEH_Mission_Automate_INF_AssignerA_Couvrir" } },
     },
 
     create = function( self )
@@ -804,9 +825,11 @@ node "BEH_Medo_Automate_INF_AssignerCouvrir"
 
 node "BEH_Medo_Automate_INF_AssignerSurveiller_Zone"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_INF_AssignerSurveiller_Zone" }, "BEH_Medo_Automate_INF_AssignerSurveiller_Zone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_INF_AssignerSurveiller_Zone, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_INF_AssignerA_SurveillerZone", {} },
+        { "BEH_Mission_Automate_INF_AssignerA_SurveillerZone", { "done_BEH_Mission_Automate_INF_AssignerA_SurveillerZone" } },
     },
 
     create = function( self )

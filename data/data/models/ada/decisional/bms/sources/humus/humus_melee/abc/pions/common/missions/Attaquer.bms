@@ -21,16 +21,18 @@ includedFiles["sources/humus/humus_melee/abc/pions/common/missions/Attaquer.bms"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Mission_Pion_ABC_Attaquer"
 {
+    feedbacks = { { { "done_BEH_Mission_Pion_ABC_Attaquer" }, "BEH_Mission_Pion_ABC_Attaquer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Pion_ABC_Attaquer, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "BEH_MAJ_Pion_ABC_AgressiviteTir", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Info_Trace", {} },
-        { "BEH_Dep_Pion_ABC_GererDeboucher", {} },
-        { "BEH_Dep_ProgressionSur", {} },
-        { "ACT_Dep_ModulationVitesse", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "BEH_MAJ_Pion_ABC_AgressiviteTir", { "done_BEH_MAJ_Pion_ABC_AgressiviteTir" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "BEH_Dep_Pion_ABC_GererDeboucher", { "done_BEH_Dep_Pion_ABC_GererDeboucher" } },
+        { "BEH_Dep_ProgressionSur", { "done_BEH_Dep_ProgressionSur" } },
+        { "ACT_Dep_ModulationVitesse", { "done_ACT_Dep_ModulationVitesse" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "done_BEH_Dep_SePosterFaceADirectionDangereuse" } },
     },
 
     create = function( self )
@@ -44,7 +46,8 @@ includedFiles["sources/humus/humus_melee/abc/pions/common/missions/Attaquer.bms"
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
                 self.ePhaseMission = eFinMission
@@ -57,7 +60,7 @@ includedFiles["sources/humus/humus_melee/abc/pions/common/missions/Attaquer.bms"
 ]]        end
 
         if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -98,7 +101,8 @@ elseif switch_1 == eDonnerAssaut then
                         end
                     end
 
-                    Activate( self.activations.BEH_Dep_ProgressionSur, 1, setmetatable( { self._namedParams.mission.itineraireAssaut_, eProgressionDefaut, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_ProgressionSur, 1, { self._namedParams.mission.itineraireAssaut_, eProgressionDefaut, eTypeItiMouvement, } )
+self.done_BEH_Dep_ProgressionSur = function( self, _, v ) self.eEtat = v[1] end
                     Activate( self.activations.ACT_Dep_ModulationVitesse, 1, { 1, } )
                     _continue = false
                 --[[// 5) Fin de la mission
@@ -125,10 +129,12 @@ elseif switch_1 == eFinMission then
 
 node "BEH_Dep_Pion_ABC_GererDeboucher"
 {
+    feedbacks = { { { "done_BEH_Dep_Pion_ABC_GererDeboucher" }, "BEH_Dep_Pion_ABC_GererDeboucher" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Pion_ABC_GererDeboucher, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_SePosterPourDeboucher", {} },
-        { "ACT_Points_Suppression", {} },
+        { "BEH_Ordre_SePosterPourDeboucher", { "done_BEH_Ordre_SePosterPourDeboucher" } },
+        { "ACT_Points_Suppression", { "done_ACT_Points_Suppression" } },
     },
 
     create = function( self )
@@ -186,10 +192,12 @@ do
 
 node "BEH_Ordre_SePosterPourDeboucher"
 {
+    feedbacks = { { { "done_BEH_Ordre_SePosterPourDeboucher" }, "BEH_Ordre_SePosterPourDeboucher" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Ordre_SePosterPourDeboucher, {value} ) end,
     activations =
     {
-        { "ACT_Dep_SePoster", {} },
-        { "ACT_Dep_PasserSurLima", {} },
+        { "ACT_Dep_SePoster", { "done_ACT_Dep_SePoster" } },
+        { "ACT_Dep_PasserSurLima", { "done_ACT_Dep_PasserSurLima" } },
     },
 
     create = function( self )

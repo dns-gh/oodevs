@@ -15,15 +15,17 @@ include "Glaise/Glaise_Common/Pions/Actions/Actions - Transport.bms"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Transport_Pion_Transporter"
 {
+    feedbacks = { { { "done_BEH_Transport_Pion_Transporter" }, "BEH_Transport_Pion_Transporter" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Transport_Pion_Transporter, {value} ) end,
     activations =
     {
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Maj_Pions_ObjectifEsquive", {} },
-        { "ACT_Obs_EtablirVisionCur", {} },
-        { "BEH_Dep_ProgressionVers", {} },
-        { "ACT_RC_SurPion", {} },
-        { "ACT_Transport_Pion_TransportEmbarquer", {} },
-        { "ACT_Transport_Pion_TransportDebarquer", {} },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "ACT_Maj_Pions_ObjectifEsquive", { "done_ACT_Maj_Pions_ObjectifEsquive" } },
+        { "ACT_Obs_EtablirVisionCur", { "done_ACT_Obs_EtablirVisionCur" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
+        { "ACT_RC_SurPion", { "done_ACT_RC_SurPion" } },
+        { "ACT_Transport_Pion_TransportEmbarquer", { "done_ACT_Transport_Pion_TransportEmbarquer" } },
+        { "ACT_Transport_Pion_TransportDebarquer", { "done_ACT_Transport_Pion_TransportDebarquer" } },
     },
 
     create = function( self )
@@ -50,7 +52,7 @@ if( DEC_Transport_EnCoursDeTransport() ) then
         if( ( #( self.sUnitesATransporter ) == 0 or #( self.sUnitesATransporter ) == nil ) ) then
             do
                 g_bTransportEnCours = false
-                                self.params.__returnValue = eActionEffectuee
+                                self:SendFeedback( eActionEffectuee )
                 Halt( self )
                 do return end
 
@@ -84,7 +86,7 @@ if( DEC_Transport_EnCoursDeTransport() ) then
                                 DEC_Trace( "Transporter : Impossible Rejoindre Point d'embarquemement" )
                             end
 
-                                                        self.params.__returnValue = eActionImpossible
+                                                        self:SendFeedback( eActionImpossible )
                             Halt( self )
                             do return end
 
@@ -93,7 +95,8 @@ if( DEC_Transport_EnCoursDeTransport() ) then
 
                     Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.posEmbarquement, } )
                     Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
-                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.posEmbarquement, eProgressionDirect, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.posEmbarquement, eProgressionDirect, eTypeItiInfiltration, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eTransporterEmbarquer then
@@ -115,7 +118,7 @@ elseif switch_1 == eTransporterEmbarquer then
                                 DEC_Trace( "Transporter : Impossible d'embarquer" )
                             end
 
-                                                        self.params.__returnValue = eActionImpossible
+                                                        self:SendFeedback( eActionImpossible )
                             Halt( self )
                             do return end
 
@@ -164,7 +167,8 @@ do
                     if( ( ( #( self.listeUnitesPretes ) ~= 0 and #( self.listeUnitesPretes ) ~= nil ) ) and not attendreUnites ) then
                         do
                             DEC_Transport_AjouterPions( self.listeUnitesPretes, not self._namedParams.avecMateriel )
-                            Activate( self.activations.ACT_Transport_Pion_TransportEmbarquer, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                            Activate( self.activations.ACT_Transport_Pion_TransportEmbarquer, 1, {} )
+self.done_ACT_Transport_Pion_TransportEmbarquer = function( self, _, v ) self.eEtat = v[1] end
                             Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_TransportEmbarquement, } )
                         end
                     end
@@ -189,13 +193,13 @@ elseif switch_1 == eTransporterAllerDebarquer then
                         do
                                                         do
                                 g_bTransportEnCours = false
-                                                                self.params.__returnValue = eActionImpossible
+                                                                self:SendFeedback( eActionImpossible )
                                 Halt( self )
                                 do return end
 
                             end
 
-                                                        self.params.__returnValue = eActionImpossible
+                                                        self:SendFeedback( eActionImpossible )
                             Halt( self )
                             do return end
 
@@ -204,7 +208,8 @@ elseif switch_1 == eTransporterAllerDebarquer then
 
                     Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.posDebarquement, } )
                     Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
-                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.posDebarquement, eProgressionDirect, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.posDebarquement, eProgressionDirect, eTypeItiInfiltration, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                                 cases_switch_1[3] = true
 elseif switch_1 == eTransporterDebarquer then
@@ -225,20 +230,21 @@ elseif switch_1 == eTransporterDebarquer then
                         do
                                                         do
                                 g_bTransportEnCours = false
-                                                                self.params.__returnValue = eActionImpossible
+                                                                self:SendFeedback( eActionImpossible )
                                 Halt( self )
                                 do return end
 
                             end
 
-                                                        self.params.__returnValue = eActionImpossible
+                                                        self:SendFeedback( eActionImpossible )
                             Halt( self )
                             do return end
 
                         end
                     end
 
-                    Activate( self.activations.ACT_Transport_Pion_TransportDebarquer, 1, setmetatable( { self._namedParams.posDebarquement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.ACT_Transport_Pion_TransportDebarquer, 1, { self._namedParams.posDebarquement, } )
+self.done_ACT_Transport_Pion_TransportDebarquer = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                                 cases_switch_1[4] = true
                 end

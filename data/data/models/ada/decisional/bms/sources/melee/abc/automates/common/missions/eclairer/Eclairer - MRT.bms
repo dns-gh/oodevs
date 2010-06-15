@@ -20,9 +20,11 @@ includedFiles["sources/melee/abc/automates/common/missions/eclairer/Eclairer - M
 ]]--[[// *****************************************************************************
 ]]node "BEH_Medo_Automate_ABC_AssignerMissionEclairerA"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_ABC_AssignerMissionEclairerA" }, "BEH_Medo_Automate_ABC_AssignerMissionEclairerA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_ABC_AssignerMissionEclairerA, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_ABC_AssignerEclairerA", {} },
+        { "BEH_Mission_Automate_ABC_AssignerEclairerA", { "done_BEH_Mission_Automate_ABC_AssignerEclairerA" } },
     },
 
     create = function( self )

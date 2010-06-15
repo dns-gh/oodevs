@@ -15,15 +15,17 @@ includedFiles["sources/melee/inf/pions/son vab/missions/Eclairer.bms"] = true
 
 node "MIS_Pion_INF_Eclairer"
 {
+    feedbacks = { { { "done_MIS_Pion_INF_Eclairer" }, "MIS_Pion_INF_Eclairer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_INF_Eclairer, {value} ) end,
     activations =
     {
-        { "ACT_Maj_Pion_PasserEnTirInterdit", {} },
-        { "BEH_Misc_Pion_DefinirTypeMission", {} },
-        { "BEH_MAJ_AgressiviteMission", {} },
-        { "BEH_Ordre_Inopine", {} },
-        { "BEH_Mission_Pion_INF_RecoAxe", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Poste_Pion_INF_TomberEnGarde", {} },
+        { "ACT_Maj_Pion_PasserEnTirInterdit", { "done_ACT_Maj_Pion_PasserEnTirInterdit" } },
+        { "BEH_Misc_Pion_DefinirTypeMission", { "done_BEH_Misc_Pion_DefinirTypeMission" } },
+        { "BEH_MAJ_AgressiviteMission", { "done_BEH_MAJ_AgressiviteMission" } },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "BEH_Mission_Pion_INF_RecoAxe", { "done_BEH_Mission_Pion_INF_RecoAxe" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Poste_Pion_INF_TomberEnGarde", { "done_BEH_Poste_Pion_INF_TomberEnGarde" } },
     },
 
     create = function( self )
@@ -48,7 +50,8 @@ node "MIS_Pion_INF_Eclairer"
         Activate( self.activations.BEH_Misc_Pion_DefinirTypeMission, 1, { eTypeContact_Offensif, } )
         Activate( self.activations.BEH_MAJ_AgressiviteMission, 1, { eIdentifie, M_TIR_PH_MISSION_MANOEUVRE(), } )
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
                 self.ePhase = eFinMission
@@ -64,7 +67,8 @@ node "MIS_Pion_INF_Eclairer"
                 if switch_1 == eReconnaitre then
                     if( self.eCurrentPhase ~= eFinMission ) then
                         do
-                            Activate( self.activations.BEH_Mission_Pion_INF_RecoAxe, GetMotivation( "MOT_Mission" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCurrentPhase = v else rawset( t, k, v ) end end } ) )
+                            Activate( self.activations.BEH_Mission_Pion_INF_RecoAxe, GetMotivation( "MOT_Mission" ), {} )
+self.done_BEH_Mission_Pion_INF_RecoAxe = function( self, _, v ) self.eCurrentPhase = v[1] end
                             _continue = false
                         end
                     else
@@ -79,7 +83,7 @@ elseif switch_1 == eFinMission then
                                                         do
                                 DEC_Trace( "Fin mission de mission Eclairer" )
                                 DEC_FinMission()
-                                                                self.params.__returnValue = eActionEffectuee
+                                                                self:SendFeedback( eActionEffectuee )
                                 Halt( self )
                                 do return end
 
@@ -89,7 +93,8 @@ elseif switch_1 == eFinMission then
                     end
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                    Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, { true, } )
+self.done_BEH_Poste_Pion_INF_TomberEnGarde = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                                 cases_switch_1[2] = true
 

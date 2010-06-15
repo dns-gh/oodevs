@@ -19,6 +19,8 @@ includedFiles["sources/appui/appuimob/pions/Actions.bms"] = true
 ]]--[[// ----------------------------------------------------------------------------
 ]]node "ACT_Transport_Pion_LOG_Transport"
 {
+    feedbacks = { { { "done_ACT_Transport_Pion_LOG_Transport" }, "ACT_Transport_Pion_LOG_Transport" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Transport_Pion_LOG_Transport, {value} ) end,
     actuators =
     {
         transporter = 1,
@@ -32,7 +34,7 @@ includedFiles["sources/appui/appuimob/pions/Actions.bms"] = true
     select = function( self )
         --[[// Pas d'unitées prêtes
 ]]        if( #( self._namedParams.selListPions ) <= 0 ) then
-            self.params.__returnValue = eActionEnCours
+            self:SendFeedback( eActionEnCours )
             Halt( self )
             do return end
         end
@@ -47,10 +49,10 @@ includedFiles["sources/appui/appuimob/pions/Actions.bms"] = true
         end
 
         if( not DEC_Transport_EstTermine() ) then
-            self.params.__returnValue = eActionEnCours
+            self:SendFeedback( eActionEnCours )
             do return end
         else
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             do return end
         end
 
@@ -75,6 +77,8 @@ includedFiles["sources/appui/appuimob/pions/Actions.bms"] = true
 ]]--[[// ----------------------------------------------------------------------------
 ]]node "ACT_Transport_Pion_LOG_Embarquer"
 {
+    feedbacks = { { { "done_ACT_Transport_Pion_LOG_Embarquer" }, "ACT_Transport_Pion_LOG_Embarquer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Transport_Pion_LOG_Embarquer, {value} ) end,
     actuators =
     {
         deplacement = 1,
@@ -102,18 +106,18 @@ includedFiles["sources/appui/appuimob/pions/Actions.bms"] = true
             local switch_1 = self.eActionTransport
             local cases_switch_1 = {}
                 if switch_1 == eActionTransport_Running then
-                                        self.params.__returnValue = eActionEnCours
+                                        self:SendFeedback( eActionEnCours )
                     do return end
 
                                 end
                 if cases_switch_1[1] or switch_1 == eActionTransport_Finished then
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionTransport_Impossible then
                     DEC_Trace( "Erreur durant le transport" )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     do return end
 
                                 end
@@ -123,7 +127,7 @@ includedFiles["sources/appui/appuimob/pions/Actions.bms"] = true
             do
                 self.bPause = false
                 DEC_ReprendAction( self.actionPt )
-                                self.params.__returnValue = eActionEnCours
+                                self:SendFeedback( eActionEnCours )
                 do return end
 
             end
@@ -149,6 +153,8 @@ includedFiles["sources/appui/appuimob/pions/Actions.bms"] = true
 ]]--[[// ----------------------------------------------------------------------------
 ]]node "ACT_Transport_Pion_LOG_Debarquer"
 {
+    feedbacks = { { { "done_ACT_Transport_Pion_LOG_Debarquer" }, "ACT_Transport_Pion_LOG_Debarquer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Transport_Pion_LOG_Debarquer, {value} ) end,
     actuators =
     {
         deplacement = 1,
@@ -176,18 +182,18 @@ includedFiles["sources/appui/appuimob/pions/Actions.bms"] = true
             local switch_1 = self.eActionTransport
             local cases_switch_1 = {}
                 if switch_1 == eActionTransport_Running then
-                                        self.params.__returnValue = eActionEnCours
+                                        self:SendFeedback( eActionEnCours )
                     do return end
 
                                 end
                 if cases_switch_1[1] or switch_1 == eActionTransport_Finished then
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionTransport_Impossible then
                     DEC_Trace( "Erreur durant le transport" )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     do return end
 
                                 end
@@ -197,7 +203,7 @@ includedFiles["sources/appui/appuimob/pions/Actions.bms"] = true
             do
                 self.bPause = false
                 DEC_ReprendAction( self.actionPt )
-                                self.params.__returnValue = eActionEnCours
+                                self:SendFeedback( eActionEnCours )
                 do return end
 
             end

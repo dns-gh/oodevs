@@ -9,9 +9,11 @@ includedFiles["sources/population/populations/missions/FaireMouvement.bms"] = tr
 ]]--[[// *****************************************************************************
 ]]node "MIS_Population_FaireMouvement"
 {
+    feedbacks = { { { "done_MIS_Population_FaireMouvement" }, "MIS_Population_FaireMouvement" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Population_FaireMouvement, {value} ) end,
     activations =
     {
-        { "BEH_Pop_RejoindrePoint", {} },
+        { "BEH_Pop_RejoindrePoint", { "done_BEH_Pop_RejoindrePoint" } },
     },
 
     create = function( self )

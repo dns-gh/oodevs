@@ -10,9 +10,11 @@ includedFiles["sources/melee/abc/automates/ge40/missions/offensives/Gerer appuis
 ]]--[[// *****************************************************************************
 ]]node "BEH_GTIA_GererAppuisInternes"
 {
+    feedbacks = { { { "done_BEH_GTIA_GererAppuisInternes" }, "BEH_GTIA_GererAppuisInternes" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_GererAppuisInternes, {value} ) end,
     activations =
     {
-        { "BEH_GTIA_GererAppuiPour", {} },
+        { "BEH_GTIA_GererAppuiPour", { "done_BEH_GTIA_GererAppuiPour" } },
     },
 
     create = function( self )
@@ -39,9 +41,11 @@ includedFiles["sources/melee/abc/automates/ge40/missions/offensives/Gerer appuis
 
 node "BEH_GTIA_GererAppuiPour"
 {
+    feedbacks = { { { "done_BEH_GTIA_GererAppuiPour" }, "BEH_GTIA_GererAppuiPour" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_GererAppuiPour, {value} ) end,
     activations =
     {
-        { "BEH_GTIA_AssignerMissionsPourAppuyer", {} },
+        { "BEH_GTIA_AssignerMissionsPourAppuyer", { "done_BEH_GTIA_AssignerMissionsPourAppuyer" } },
     },
 
     create = function( self )
@@ -68,9 +72,11 @@ node "BEH_GTIA_GererAppuiPour"
 
 node "BEH_GTIA_AssignerMissionsPourAppuyer"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerMissionsPourAppuyer" }, "BEH_GTIA_AssignerMissionsPourAppuyer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerMissionsPourAppuyer, {value} ) end,
     activations =
     {
-        { "BEH_GTIA_AssignerMissionMeleeA", {} },
+        { "BEH_GTIA_AssignerMissionMeleeA", { "done_BEH_GTIA_AssignerMissionMeleeA" } },
     },
 
     create = function( self )

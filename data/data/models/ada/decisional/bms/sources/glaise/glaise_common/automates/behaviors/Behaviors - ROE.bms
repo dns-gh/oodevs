@@ -20,9 +20,11 @@ includedFiles["sources/glaise/glaise_common/automates/behaviors/Behaviors - ROE.
 ]]--[[// *****************************************************************************
 ]]node "BEH_ROE_Automate_GererOrdre"
 {
+    feedbacks = { { { "done_BEH_ROE_Automate_GererOrdre" }, "BEH_ROE_Automate_GererOrdre" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_ROE_Automate_GererOrdre, {value} ) end,
     activations =
     {
-        { "BEH_ROE_Automate_RecevoirOrdreInopine", {} },
+        { "BEH_ROE_Automate_RecevoirOrdreInopine", { "done_BEH_ROE_Automate_RecevoirOrdreInopine" } },
     },
 
     create = function( self )
@@ -46,12 +48,14 @@ includedFiles["sources/glaise/glaise_common/automates/behaviors/Behaviors - ROE.
 
 node "BEH_ROE_Automate_RecevoirOrdreInopine"
 {
+    feedbacks = { { { "done_BEH_ROE_Automate_RecevoirOrdreInopine" }, "BEH_ROE_Automate_RecevoirOrdreInopine" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_ROE_Automate_RecevoirOrdreInopine, {value} ) end,
     activations =
     {
-        { "BEH_ROE_Automate_TirLibre", {} },
-        { "BEH_ROE_Automate_TirRestreint", {} },
-        { "BEH_ROE_Automate_TirInterdit", {} },
-        { "ACT_Ordre_Suppression", {} },
+        { "BEH_ROE_Automate_TirLibre", { "done_BEH_ROE_Automate_TirLibre" } },
+        { "BEH_ROE_Automate_TirRestreint", { "done_BEH_ROE_Automate_TirRestreint" } },
+        { "BEH_ROE_Automate_TirInterdit", { "done_BEH_ROE_Automate_TirInterdit" } },
+        { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
     },
 
     create = function( self )
@@ -143,9 +147,11 @@ elseif switch_2 == eEtatROE_TirInterdit then
 
 node "BEH_ROE_Automate_TirLibre"
 {
+    feedbacks = { { { "done_BEH_ROE_Automate_TirLibre" }, "BEH_ROE_Automate_TirLibre" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_ROE_Automate_TirLibre, {value} ) end,
     activations =
     {
-        { "ACT_ROE_Automate_DonnerOrdreTirLibre", {} },
+        { "ACT_ROE_Automate_DonnerOrdreTirLibre", { "done_ACT_ROE_Automate_DonnerOrdreTirLibre" } },
     },
 
     create = function( self )
@@ -170,9 +176,11 @@ node "BEH_ROE_Automate_TirLibre"
 
 node "BEH_ROE_Automate_TirRestreint"
 {
+    feedbacks = { { { "done_BEH_ROE_Automate_TirRestreint" }, "BEH_ROE_Automate_TirRestreint" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_ROE_Automate_TirRestreint, {value} ) end,
     activations =
     {
-        { "ACT_ROE_Automate_DonnerOrdreTirRestreint", {} },
+        { "ACT_ROE_Automate_DonnerOrdreTirRestreint", { "done_ACT_ROE_Automate_DonnerOrdreTirRestreint" } },
     },
 
     create = function( self )
@@ -197,9 +205,11 @@ node "BEH_ROE_Automate_TirRestreint"
 
 node "BEH_ROE_Automate_TirInterdit"
 {
+    feedbacks = { { { "done_BEH_ROE_Automate_TirInterdit" }, "BEH_ROE_Automate_TirInterdit" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_ROE_Automate_TirInterdit, {value} ) end,
     activations =
     {
-        { "ACT_ROE_Automate_DonnerOrdreTirInterdit", {} },
+        { "ACT_ROE_Automate_DonnerOrdreTirInterdit", { "done_ACT_ROE_Automate_DonnerOrdreTirInterdit" } },
     },
 
     create = function( self )
@@ -224,6 +234,8 @@ node "BEH_ROE_Automate_TirInterdit"
 
 node "ACT_ROE_Automate_DonnerOrdreTirLibre"
 {
+    feedbacks = { { { "done_ACT_ROE_Automate_DonnerOrdreTirLibre" }, "ACT_ROE_Automate_DonnerOrdreTirLibre" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_ROE_Automate_DonnerOrdreTirLibre, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -250,6 +262,8 @@ node "ACT_ROE_Automate_DonnerOrdreTirLibre"
 ]]--[[// *****************************************************************************
 ]]node "ACT_ROE_Automate_DonnerOrdreTirRestreint"
 {
+    feedbacks = { { { "done_ACT_ROE_Automate_DonnerOrdreTirRestreint" }, "ACT_ROE_Automate_DonnerOrdreTirRestreint" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_ROE_Automate_DonnerOrdreTirRestreint, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -276,6 +290,8 @@ node "ACT_ROE_Automate_DonnerOrdreTirLibre"
 ]]--[[// *****************************************************************************
 ]]node "ACT_ROE_Automate_DonnerOrdreTirInterdit"
 {
+    feedbacks = { { { "done_ACT_ROE_Automate_DonnerOrdreTirInterdit" }, "ACT_ROE_Automate_DonnerOrdreTirInterdit" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_ROE_Automate_DonnerOrdreTirInterdit, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]

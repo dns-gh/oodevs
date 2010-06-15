@@ -18,17 +18,19 @@ include "bit.lua"
 
 node "BEH_Pion_ASS_ReconnaitreZoneDeploiement_Mission"
 {
+    feedbacks = { { { "done_BEH_Pion_ASS_ReconnaitreZoneDeploiement_Mission" }, "BEH_Pion_ASS_ReconnaitreZoneDeploiement_Mission" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pion_ASS_ReconnaitreZoneDeploiement_Mission, {value} ) end,
     activations =
     {
-        { "ACT_RC", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Misc_Delai", {} },
-        { "BEH_Obs_Pion_ASS_Reconnaissance_PositionDeploiement", {} },
-        { "BEH_Dep_ProgressionVers", {} },
-        { "ACT_Obs_EtablirVisionFaceADir", {} },
-        { "BEH_Pion_ASS_Installer_ZoneImplantationCanon", {} },
-        { "BEH_Pion_ASS_Installer_ZoneImplantationLRM", {} },
-        { "BEH_Pion_ASS_Installer_ZoneImplantationSimple", {} },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "ACT_Misc_Delai", { "done_ACT_Misc_Delai" } },
+        { "BEH_Obs_Pion_ASS_Reconnaissance_PositionDeploiement", { "done_BEH_Obs_Pion_ASS_Reconnaissance_PositionDeploiement" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
+        { "ACT_Obs_EtablirVisionFaceADir", { "done_ACT_Obs_EtablirVisionFaceADir" } },
+        { "BEH_Pion_ASS_Installer_ZoneImplantationCanon", { "done_BEH_Pion_ASS_Installer_ZoneImplantationCanon" } },
+        { "BEH_Pion_ASS_Installer_ZoneImplantationLRM", { "done_BEH_Pion_ASS_Installer_ZoneImplantationLRM" } },
+        { "BEH_Pion_ASS_Installer_ZoneImplantationSimple", { "done_BEH_Pion_ASS_Installer_ZoneImplantationSimple" } },
     },
 
     create = function( self )
@@ -72,7 +74,8 @@ node "BEH_Pion_ASS_ReconnaitreZoneDeploiement_Mission"
 ]]                    end
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1.2, { eEtatPhaseMission_PreparationMission, } )
-                    Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, self._namedParams.rDelaiPreparation, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.ACT_Misc_Delai, 1, { 1, self._namedParams.rDelaiPreparation, } )
+self.done_ACT_Misc_Delai = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                 --[[// ------------------------------------------------------------------------
 ]]--[[// Rejoindre la position du site
@@ -93,10 +96,12 @@ elseif switch_1 == eRejoindre then
                     --[[// On fait une reconnaissance de la position lorsque l'on arrive
 ]]--[[// a proximite
 ]]if( self.eActionReco == eActionEnCours and S_Geometrie_EstProchePosition( DEC_Agent_Position(), self.mission.positionDeploiement_, 800 ) ) then
-                        Activate( self.activations.BEH_Obs_Pion_ASS_Reconnaissance_PositionDeploiement, 1.1, setmetatable( { self.mission.positionDeploiement_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionReco = v else rawset( t, k, v ) end end } ) )
+                        Activate( self.activations.BEH_Obs_Pion_ASS_Reconnaissance_PositionDeploiement, 1.1, { self.mission.positionDeploiement_, } )
+self.done_BEH_Obs_Pion_ASS_Reconnaissance_PositionDeploiement = function( self, _, v ) self.eActionReco = v[1] end
                     end
 
-                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.mission.positionDeploiement_, eProgressionDefaut, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.mission.positionDeploiement_, eProgressionDefaut, eTypeItiMouvement, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eDeployer then
@@ -118,17 +123,20 @@ elseif switch_1 == eDeployer then
                         local cases_switch_2 = {}
                             if switch_2 == eTypeObjectZoneImplantationCanon then
                                 Activate( self.activations.BEH_Pion_ASS_Installer_ZoneImplantationCanon, 1.1, { self.mission.positionDeploiement_, self._namedParams.eType_ZoneImplantation, } )
-                                Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.ptRepli, eProgressionDefaut, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                                Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.ptRepli, eProgressionDefaut, eTypeItiMouvement, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] end
                                 _continue = false
                                                         cases_switch_2[1] = true
 elseif switch_2 == eTypeObjectZoneImplantationLRM then
-                                Activate( self.activations.BEH_Pion_ASS_Installer_ZoneImplantationLRM, 1, setmetatable( { self.mission.positionDeploiement_, self._namedParams.eType_ZoneImplantation, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                                Activate( self.activations.BEH_Pion_ASS_Installer_ZoneImplantationLRM, 1, { self.mission.positionDeploiement_, self._namedParams.eType_ZoneImplantation, } )
+self.done_BEH_Pion_ASS_Installer_ZoneImplantationLRM = function( self, _, v ) self.eAction = v[1] end
                                 _continue = false
                                                         cases_switch_2[2] = true
 
                             else
                                 Activate( self.activations.BEH_Pion_ASS_Installer_ZoneImplantationSimple, 1.1, { self.mission.positionDeploiement_, self._namedParams.eType_ZoneImplantation, } )
-                                Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.ptRepli, eProgressionDefaut, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                                Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.ptRepli, eProgressionDefaut, eTypeItiMouvement, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] end
                                                         end
                         end
 
@@ -142,14 +150,14 @@ elseif switch_1 == eFinMission then
                     if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
                         do
                             DEC_FinMission()
-                                                        self.params.__returnValue = eActionEffectuee
+                                                        self:SendFeedback( eActionEffectuee )
                             Halt( self )
                             do return end
 
                         end
                     end
 
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     do return end
 
                                 end
@@ -167,11 +175,13 @@ elseif switch_1 == eFinMission then
 
 node "BEH_Pion_ASS_Installer_ZoneImplantationSimple"
 {
+    feedbacks = { { { "done_BEH_Pion_ASS_Installer_ZoneImplantationSimple" }, "BEH_Pion_ASS_Installer_ZoneImplantationSimple" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pion_ASS_Installer_ZoneImplantationSimple, {value} ) end,
     activations =
     {
-        { "ACT_RC", {} },
-        { "ACT_Obj_Pion_ASS_RealiserObjet", {} },
-        { "ACT_Dep_SePoster", {} },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "ACT_Obj_Pion_ASS_RealiserObjet", { "done_ACT_Obj_Pion_ASS_RealiserObjet" } },
+        { "ACT_Dep_SePoster", { "done_ACT_Dep_SePoster" } },
     },
 
     create = function( self )
@@ -188,7 +198,7 @@ node "BEH_Pion_ASS_Installer_ZoneImplantationSimple"
         end
 
         if( self.eActionObj ~= eActionEnCours ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             do return end
         end
 
@@ -198,7 +208,8 @@ node "BEH_Pion_ASS_Installer_ZoneImplantationSimple"
                 if( self.eActionObj == eActionEnCours ) then
                     do
                         Activate( self.activations.ACT_RC, 1, { eRC_DebutTravaux, } )
-                        Activate( self.activations.ACT_Obj_Pion_ASS_RealiserObjet, 1, setmetatable( { self._namedParams.eType_ZoneImplantation, self.locInstallation, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionObj = v else rawset( t, k, v ) end end } ) )
+                        Activate( self.activations.ACT_Obj_Pion_ASS_RealiserObjet, 1, { self._namedParams.eType_ZoneImplantation, self.locInstallation, } )
+self.done_ACT_Obj_Pion_ASS_RealiserObjet = function( self, _, v ) self.eActionObj = v[1] end
                     end
                 end
 
@@ -217,10 +228,12 @@ node "BEH_Pion_ASS_Installer_ZoneImplantationSimple"
 
 node "BEH_Pion_ASS_Installer_ZoneImplantationCanon"
 {
+    feedbacks = { { { "done_BEH_Pion_ASS_Installer_ZoneImplantationCanon" }, "BEH_Pion_ASS_Installer_ZoneImplantationCanon" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pion_ASS_Installer_ZoneImplantationCanon, {value} ) end,
     activations =
     {
-        { "ACT_Obj_Pion_ASS_RealiserObjet", {} },
-        { "ACT_Dep_SePoster", {} },
+        { "ACT_Obj_Pion_ASS_RealiserObjet", { "done_ACT_Obj_Pion_ASS_RealiserObjet" } },
+        { "ACT_Dep_SePoster", { "done_ACT_Dep_SePoster" } },
     },
 
     create = function( self )
@@ -241,7 +254,7 @@ node "BEH_Pion_ASS_Installer_ZoneImplantationCanon"
         end
 
         if( self.eActionObj1 ~= eActionEnCours and self.eActionObj2 ~= eActionEnCours ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             do return end
         end
 
@@ -257,11 +270,13 @@ node "BEH_Pion_ASS_Installer_ZoneImplantationCanon"
         if( eNiveauInstallation_Poste == eNiveauInstallation or eNiveauInstallation_PosteAmenage == eNiveauInstallation ) then
             do
                 if( self.eActionObj1 == eActionEnCours ) then
-                    Activate( self.activations.ACT_Obj_Pion_ASS_RealiserObjet, 1, setmetatable( { self._namedParams.eType_ZoneImplantation, self.locInstallation_1, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionObj1 = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.ACT_Obj_Pion_ASS_RealiserObjet, 1, { self._namedParams.eType_ZoneImplantation, self.locInstallation_1, } )
+self.done_ACT_Obj_Pion_ASS_RealiserObjet = function( self, _, v ) self.eActionObj1 = v[1] end
                 end
 
                 if( self.eActionObj2 == eActionEnCours ) then
-                    Activate( self.activations.ACT_Obj_Pion_ASS_RealiserObjet, 1, setmetatable( { self._namedParams.eType_ZoneImplantation, self.locInstallation_2, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionObj2 = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.ACT_Obj_Pion_ASS_RealiserObjet, 1, { self._namedParams.eType_ZoneImplantation, self.locInstallation_2, } )
+self.done_ACT_Obj_Pion_ASS_RealiserObjet = function( self, _, v ) self.eActionObj2 = v[1] end
                 end
 
             end
@@ -279,9 +294,11 @@ node "BEH_Pion_ASS_Installer_ZoneImplantationCanon"
 
 node "BEH_Pion_ASS_Installer_ZoneImplantationLRM"
 {
+    feedbacks = { { { "done_BEH_Pion_ASS_Installer_ZoneImplantationLRM" }, "BEH_Pion_ASS_Installer_ZoneImplantationLRM" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pion_ASS_Installer_ZoneImplantationLRM, {value} ) end,
     activations =
     {
-        { "ACT_Obj_Pion_ASS_RealiserObjet", {} },
+        { "ACT_Obj_Pion_ASS_RealiserObjet", { "done_ACT_Obj_Pion_ASS_RealiserObjet" } },
     },
 
     create = function( self )
@@ -300,7 +317,7 @@ node "BEH_Pion_ASS_Installer_ZoneImplantationLRM"
                 self.lstPositions = S_Geometrie_CreerPositionTir_LRM( self._namedParams.ptInstallation, 750 )
                 --[[// Recupere la premiere position d'installation
 ]]if( ( DEC_ListePoints_Size( self.lstPositions ) == 0 or DEC_ListePoints_Size( self.lstPositions ) == nil ) ) then
-                    self.params.__returnValue = eActionEffectuee
+                    self:SendFeedback( eActionEffectuee )
                     do return end
                 end
 
@@ -319,7 +336,7 @@ node "BEH_Pion_ASS_Installer_ZoneImplantationLRM"
                         self.eActionObj = eActionEnCours
                     end
                 else
-                    self.params.__returnValue = eActionEffectuee
+                    self:SendFeedback( eActionEffectuee )
                     do return end
                 end
 
@@ -329,7 +346,8 @@ node "BEH_Pion_ASS_Installer_ZoneImplantationLRM"
         local eNiveauInstallation = DEC_Agent_NiveauInstallation()
         if( eNiveauInstallation_Poste == eNiveauInstallation or eNiveauInstallation_PosteAmenage == eNiveauInstallation ) then
             do
-                Activate( self.activations.ACT_Obj_Pion_ASS_RealiserObjet, 1, setmetatable( { self._namedParams.eType_ZoneImplantation, self.locInstallation, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionObj = v else rawset( t, k, v ) end end } ) )
+                Activate( self.activations.ACT_Obj_Pion_ASS_RealiserObjet, 1, { self._namedParams.eType_ZoneImplantation, self.locInstallation, } )
+self.done_ACT_Obj_Pion_ASS_RealiserObjet = function( self, _, v ) self.eActionObj = v[1] end
             end
         end
 

@@ -22,9 +22,11 @@ include "bit.lua"
 ]]--[[//-------------------------------------------------------------------------
 ]]node "BEH_Conduite_Automate_INF_GererAppuis_INF"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_INF_GererAppuis_INF" }, "BEH_Conduite_Automate_INF_GererAppuis_INF" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_INF_GererAppuis_INF, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_INF_AssignerAppuyerA", {} },
+        { "BEH_Mission_Automate_INF_AssignerAppuyerA", { "done_BEH_Mission_Automate_INF_AssignerAppuyerA" } },
     },
 
     create = function( self )
@@ -83,9 +85,11 @@ do
 
 node "BEH_Conduite_Automate_INF_GererAppuis_ABC"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_INF_GererAppuis_ABC" }, "BEH_Conduite_Automate_INF_GererAppuis_ABC" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_INF_GererAppuis_ABC, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_ABC_AssignerSoutenirA", {} },
+        { "BEH_Mission_Automate_ABC_AssignerSoutenirA", { "done_BEH_Mission_Automate_ABC_AssignerSoutenirA" } },
     },
 
     create = function( self )
@@ -143,10 +147,12 @@ do
 
 node "BEH_Conduite_Automate_INF_GererAppui_Mortier"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_INF_GererAppui_Mortier" }, "BEH_Conduite_Automate_INF_GererAppui_Mortier" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_INF_GererAppui_Mortier, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_INF_GererOrdre_Mortier", {} },
-        { "BEH_Conduite_Automate_INF_GererMission_Mortier", {} },
+        { "BEH_Conduite_Automate_INF_GererOrdre_Mortier", { "done_BEH_Conduite_Automate_INF_GererOrdre_Mortier" } },
+        { "BEH_Conduite_Automate_INF_GererMission_Mortier", { "done_BEH_Conduite_Automate_INF_GererMission_Mortier" } },
     },
 
     create = function( self )
@@ -168,9 +174,11 @@ node "BEH_Conduite_Automate_INF_GererAppui_Mortier"
 
 node "BEH_Conduite_Automate_INF_GererMission_Mortier"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_INF_GererMission_Mortier" }, "BEH_Conduite_Automate_INF_GererMission_Mortier" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_INF_GererMission_Mortier, {value} ) end,
     activations =
     {
-        { "BEH_Automate_HUMUS_AssignerAppuyerA_Mortier", {} },
+        { "BEH_Automate_HUMUS_AssignerAppuyerA_Mortier", { "done_BEH_Automate_HUMUS_AssignerAppuyerA_Mortier" } },
     },
 
     create = function( self )
@@ -216,9 +224,11 @@ do
 
 node "BEH_Automate_HUMUS_AssignerAppuyerA_Mortier"
 {
+    feedbacks = { { { "done_BEH_Automate_HUMUS_AssignerAppuyerA_Mortier" }, "BEH_Automate_HUMUS_AssignerAppuyerA_Mortier" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Automate_HUMUS_AssignerAppuyerA_Mortier, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_INF_AssignerAppuyerA", {} },
+        { "BEH_Mission_Automate_INF_AssignerAppuyerA", { "done_BEH_Mission_Automate_INF_AssignerAppuyerA" } },
     },
 
     create = function( self )
@@ -274,9 +284,11 @@ node "BEH_Automate_HUMUS_AssignerAppuyerA_Mortier"
 
 node "BEH_Conduite_Automate_INF_GererOrdre_Mortier"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_INF_GererOrdre_Mortier" }, "BEH_Conduite_Automate_INF_GererOrdre_Mortier" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_INF_GererOrdre_Mortier, {value} ) end,
     activations =
     {
-        { "ACT_MOT_Automate_INF_DemandeAppliqerFeux", {} },
+        { "ACT_MOT_Automate_INF_DemandeAppliqerFeux", { "done_ACT_MOT_Automate_INF_DemandeAppliqerFeux" } },
     },
 
     create = function( self )
@@ -314,9 +326,11 @@ do
 
 node "BEH_Conduite_Automate_INF_GererMission_PC"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_INF_GererMission_PC" }, "BEH_Conduite_Automate_INF_GererMission_PC" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_INF_GererMission_PC, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_AssignerSuivreA", {} },
+        { "BEH_Mission_Automate_AssignerSuivreA", { "done_BEH_Mission_Automate_AssignerSuivreA" } },
     },
 
     create = function( self )
@@ -372,9 +386,11 @@ elseif switch_1 == "SectionInfanterie"
 
 node "BEH_Conduite_Automate_INF_Gerer_UniteInconnues"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_INF_Gerer_UniteInconnues" }, "BEH_Conduite_Automate_INF_Gerer_UniteInconnues" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_INF_Gerer_UniteInconnues, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_AssignerSuivreA", {} },
+        { "BEH_Mission_Automate_AssignerSuivreA", { "done_BEH_Mission_Automate_AssignerSuivreA" } },
     },
 
     create = function( self )

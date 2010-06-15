@@ -41,9 +41,11 @@ motivation_plugin.motivations[ "MOT_AppliquerLesFeux" ] =
 
 node "ActivatedByMOT_AppliquerLesFeux"
 {
+    feedbacks = { { { "done_ActivatedByMOT_AppliquerLesFeux" }, "ActivatedByMOT_AppliquerLesFeux" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_AppliquerLesFeux, {value} ) end,
     activations =
     {
-        { "BEH_MOT_Pion_Mortier_AppliquerLesFeux", {} },
+        { "BEH_MOT_Pion_Mortier_AppliquerLesFeux", { "done_BEH_MOT_Pion_Mortier_AppliquerLesFeux" } },
     },
 
     create = function( self )

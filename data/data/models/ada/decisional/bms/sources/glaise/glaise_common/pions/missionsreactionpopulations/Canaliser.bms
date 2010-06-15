@@ -9,15 +9,17 @@ includedFiles["sources/glaise/glaise_common/pions/missionsreactionpopulations/Ca
 ]]--[[// *****************************************************************************
 ]]node "MIS_Pion_CanaliserPopulations"
 {
+    feedbacks = { { { "done_MIS_Pion_CanaliserPopulations" }, "MIS_Pion_CanaliserPopulations" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_CanaliserPopulations, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Info_Trace", {} },
-        { "BEH_Dep_Virtuel_ProgressionVers", {} },
-        { "ACT_Pion_Canaliser", {} },
-        { "BEH_Dep_Virtuel_PreparationAction", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "BEH_Dep_Virtuel_ProgressionVers", { "done_BEH_Dep_Virtuel_ProgressionVers" } },
+        { "ACT_Pion_Canaliser", { "done_ACT_Pion_Canaliser" } },
+        { "BEH_Dep_Virtuel_PreparationAction", { "done_BEH_Dep_Virtuel_PreparationAction" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "done_BEH_Dep_SePosterFaceADirectionDangereuse" } },
     },
 
     create = function( self )
@@ -33,7 +35,8 @@ includedFiles["sources/glaise/glaise_common/pions/missionsreactionpopulations/Ca
         self.localisation = self.localisation or self._namedParams.mission.zone_
         self.objectif = self.objectif or nil
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
                 self.ePhaseMission = eFinMission
@@ -46,7 +49,7 @@ includedFiles["sources/glaise/glaise_common/pions/missionsreactionpopulations/Ca
 ]]        end
 
         if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -56,7 +59,7 @@ includedFiles["sources/glaise/glaise_common/pions/missionsreactionpopulations/Ca
                 F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
                 DEC_SetMission( myself, self._namedParams.mission )
                 if( not DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( self.localisation, self.objectif ) ) then
-                    self.params.__returnValue = eActionImpossible
+                    self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
                 end
@@ -101,7 +104,8 @@ elseif switch_1 == eAnimer then
                             Activate( self.activations.ACT_Pion_Canaliser, 1, { self.localisation, } )
                         end
 
-                        Activate( self.activations.BEH_Dep_Virtuel_PreparationAction, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.ePreparation = v else rawset( t, k, v ) end end } ) )
+                        Activate( self.activations.BEH_Dep_Virtuel_PreparationAction, 1, {} )
+self.done_BEH_Dep_Virtuel_PreparationAction = function( self, _, v ) self.ePreparation = v[1] end
                         _continue = false
                     end
                 --[[// 3) Fin de la mission de reconnaissance SUR ORDRE
@@ -129,6 +133,8 @@ elseif switch_1 == eFinMission then
 
 node "ACT_Pion_Canaliser"
 {
+    feedbacks = { { { "done_ACT_Pion_Canaliser" }, "ACT_Pion_Canaliser" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Pion_Canaliser, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.loc = self.params[1]

@@ -20,9 +20,11 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/ciecharmoyen/missions/s
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_ABC_Soutenir"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ABC_Soutenir" }, "MIS_Automate_CDT_ABC_Soutenir" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ABC_Soutenir, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_Soutenir", {} },
+        { "BEH_Conduite_Automate_ABC_Soutenir", { "done_BEH_Conduite_Automate_ABC_Soutenir" } },
     },
 
     create = function( self )

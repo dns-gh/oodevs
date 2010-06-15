@@ -16,10 +16,12 @@ include "Glaise/Glaise_Common/Pions/Actions/Actions - Embarquement.bms"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Mot_Pion_Embarquer"
 {
+    feedbacks = { { { "done_BEH_Mot_Pion_Embarquer" }, "BEH_Mot_Pion_Embarquer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mot_Pion_Embarquer, {value} ) end,
     activations =
     {
-        { "ACT_Transport_Pion_Embarquer", {} },
-        { "ACT_Transport_MaintenirEtat", {} },
+        { "ACT_Transport_Pion_Embarquer", { "done_ACT_Transport_Pion_Embarquer" } },
+        { "ACT_Transport_MaintenirEtat", { "done_ACT_Transport_MaintenirEtat" } },
     },
 
     create = function( self )

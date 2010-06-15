@@ -9,6 +9,8 @@ includedFiles["sources/glaise/glaise_common/automates/actions/Actions - Conduite
 ]]--[[// *****************************************************************************
 ]]node "ACT_Conduite_Automate_PointRegroupement_Pion"
 {
+    feedbacks = { { { "done_ACT_Conduite_Automate_PointRegroupement_Pion" }, "ACT_Conduite_Automate_PointRegroupement_Pion" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Conduite_Automate_PointRegroupement_Pion, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -38,6 +40,8 @@ includedFiles["sources/glaise/glaise_common/automates/actions/Actions - Conduite
 ]]--[[// *****************************************************************************
 ]]node "ACT_Conduite_Automate_ReleverUnite"
 {
+    feedbacks = { { { "done_ACT_Conduite_Automate_ReleverUnite" }, "ACT_Conduite_Automate_ReleverUnite" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Conduite_Automate_ReleverUnite, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionReleve = self.params[1]
@@ -61,13 +65,13 @@ includedFiles["sources/glaise/glaise_common/automates/actions/Actions - Conduite
         end
 
         if( not self.bRelevePossible ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             do return end
         end
 
         --[[// On met a jour l'echelon
 ]]F_Pion_SeteEtatEchelon( self._namedParams.pionReleve, F_Pion_GeteEtatEchelon( self._namedParams.pionARelever ) )
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         do return end
 
     end,

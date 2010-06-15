@@ -9,6 +9,8 @@ includedFiles["sources/appui/circulation/automates/missions/reconnaitreitinerair
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_LOG_ReconnaitreItineraire"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_LOG_ReconnaitreItineraire" }, "MIS_Automate_CDT_LOG_ReconnaitreItineraire" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_LOG_ReconnaitreItineraire, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission

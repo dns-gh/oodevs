@@ -73,11 +73,13 @@ include "Humus/Humus_Melee/Inf/Pions/Grp Mortier/Missions/Appuyer.bms"
 
 node "BEH_Misc_Pion_INF_Default"
 {
+    feedbacks = { { { "done_BEH_Misc_Pion_INF_Default" }, "BEH_Misc_Pion_INF_Default" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Misc_Pion_INF_Default, {value} ) end,
     activations =
     {
-        { "BEH_MOT_Pion_INF_GarderSesDistances_GererTransport", {} },
-        { "BEH_MOT_Pion_INF_EtrePrudent_GererTransport", {} },
-        { "BEH_Mot_Pion_Embarquer", {} },
+        { "BEH_MOT_Pion_INF_GarderSesDistances_GererTransport", { "done_BEH_MOT_Pion_INF_GarderSesDistances_GererTransport" } },
+        { "BEH_MOT_Pion_INF_EtrePrudent_GererTransport", { "done_BEH_MOT_Pion_INF_EtrePrudent_GererTransport" } },
+        { "BEH_Mot_Pion_Embarquer", { "done_BEH_Mot_Pion_Embarquer" } },
     },
 
     create = function( self )
@@ -101,10 +103,12 @@ node "BEH_Misc_Pion_INF_Default"
 
 node "BEH_Eni_Pion_INF_GererContactEni"
 {
+    feedbacks = { { { "done_BEH_Eni_Pion_INF_GererContactEni" }, "BEH_Eni_Pion_INF_GererContactEni" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Pion_INF_GererContactEni, {value} ) end,
     activations =
     {
-        { "BEH_Eni_Pion_INF_DetruitEtFixe", {} },
-        { "BEH_Feu_Pion_INF_TirAppui", {} },
+        { "BEH_Eni_Pion_INF_DetruitEtFixe", { "done_BEH_Eni_Pion_INF_DetruitEtFixe" } },
+        { "BEH_Feu_Pion_INF_TirAppui", { "done_BEH_Feu_Pion_INF_TirAppui" } },
     },
 
     create = function( self )

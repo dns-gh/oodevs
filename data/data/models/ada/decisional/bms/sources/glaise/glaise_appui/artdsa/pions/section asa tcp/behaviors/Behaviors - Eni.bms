@@ -6,6 +6,8 @@ includedFiles["sources/glaise/glaise_appui/artdsa/pions/section asa tcp/behavior
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "BEH_Eni_Pion_ASA_MISTRAL_InterceptionBalistique"
 {
+    feedbacks = { { { "done_BEH_Eni_Pion_ASA_MISTRAL_InterceptionBalistique" }, "BEH_Eni_Pion_ASA_MISTRAL_InterceptionBalistique" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Pion_ASA_MISTRAL_InterceptionBalistique, {value} ) end,
     instances =
     {
         boost = 1.0001,
@@ -13,7 +15,7 @@ includedFiles["sources/glaise/glaise_appui/artdsa/pions/section asa tcp/behavior
 
     activations =
     {
-        { "BEH_Eni_Pion_ASA_InterceptionBalistique_Direct", {} },
+        { "BEH_Eni_Pion_ASA_InterceptionBalistique_Direct", { "done_BEH_Eni_Pion_ASA_InterceptionBalistique_Direct" } },
     },
 
     create = function( self )
@@ -79,9 +81,11 @@ do
 
 node "BEH_Eni_Pion_ASA_GererEniDefendreZone"
 {
+    feedbacks = { { { "done_BEH_Eni_Pion_ASA_GererEniDefendreZone" }, "BEH_Eni_Pion_ASA_GererEniDefendreZone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Pion_ASA_GererEniDefendreZone, {value} ) end,
     activations =
     {
-        { "BEH_Eni_Pion_ASA_MISTRAL_InterceptionBalistique", {} },
+        { "BEH_Eni_Pion_ASA_MISTRAL_InterceptionBalistique", { "done_BEH_Eni_Pion_ASA_MISTRAL_InterceptionBalistique" } },
     },
 
     create = function( self )
@@ -111,9 +115,11 @@ do
 
 node "BEH_Eni_Pion_ASA_GererEniDefendreSite"
 {
+    feedbacks = { { { "done_BEH_Eni_Pion_ASA_GererEniDefendreSite" }, "BEH_Eni_Pion_ASA_GererEniDefendreSite" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Pion_ASA_GererEniDefendreSite, {value} ) end,
     activations =
     {
-        { "BEH_Eni_Pion_ASA_MISTRAL_InterceptionBalistique", {} },
+        { "BEH_Eni_Pion_ASA_MISTRAL_InterceptionBalistique", { "done_BEH_Eni_Pion_ASA_MISTRAL_InterceptionBalistique" } },
     },
 
     create = function( self )
@@ -140,9 +146,11 @@ do
 
 node "BEH_Eni_Pion_ASA_MISTRAL_GererEniSurveiller"
 {
+    feedbacks = { { { "done_BEH_Eni_Pion_ASA_MISTRAL_GererEniSurveiller" }, "BEH_Eni_Pion_ASA_MISTRAL_GererEniSurveiller" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Pion_ASA_MISTRAL_GererEniSurveiller, {value} ) end,
     activations =
     {
-        { "BEH_Eni_Pion_ASA_MISTRAL_InterceptionBalistique", {} },
+        { "BEH_Eni_Pion_ASA_MISTRAL_InterceptionBalistique", { "done_BEH_Eni_Pion_ASA_MISTRAL_InterceptionBalistique" } },
     },
 
     create = function( self )

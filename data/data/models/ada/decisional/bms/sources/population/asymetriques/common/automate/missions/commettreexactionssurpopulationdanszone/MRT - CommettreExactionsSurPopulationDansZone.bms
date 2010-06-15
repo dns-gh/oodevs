@@ -11,10 +11,12 @@ includedFiles["sources/population/asymetriques/common/automate/missions/commettr
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_MRT_ASY_CommettreExactionsSurPopulationDansZone"
 {
+    feedbacks = { { { "done_MIS_Automate_MRT_ASY_CommettreExactionsSurPopulationDansZone" }, "MIS_Automate_MRT_ASY_CommettreExactionsSurPopulationDansZone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_MRT_ASY_CommettreExactionsSurPopulationDansZone, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_ASY_AssignerCommettreExactionsA", {} },
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
+        { "BEH_Mission_Automate_ASY_AssignerCommettreExactionsA", { "done_BEH_Mission_Automate_ASY_AssignerCommettreExactionsA" } },
+        { "BEH_Medo_Automate_ControleCreationMission", { "done_BEH_Medo_Automate_ControleCreationMission" } },
     },
 
     create = function( self )
@@ -66,7 +68,7 @@ includedFiles["sources/population/asymetriques/common/automate/missions/commettr
                     DEC_Trace( "!!!!Mind out some first line units didn't receive mission!!!!" )
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -78,7 +80,7 @@ includedFiles["sources/population/asymetriques/common/automate/missions/commettr
                 self.eValidationMRT = eActionEnCours
                                 do
                     DEC_MRT_Valide()
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -87,7 +89,8 @@ includedFiles["sources/population/asymetriques/common/automate/missions/commettr
             end
         end
 
-        Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( DEC_Automate_PionsAvecPC() ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( DEC_Automate_PionsAvecPC() ), } )
+self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eValidationMRT = v[1] end
     end,
 
 --[[// *****************************************************************************
@@ -100,12 +103,14 @@ includedFiles["sources/population/asymetriques/common/automate/missions/commettr
 
 node "BEH_Mission_Automate_ASY_AssignerCommettreExactionsA"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_ASY_AssignerCommettreExactionsA" }, "BEH_Mission_Automate_ASY_AssignerCommettreExactionsA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_ASY_AssignerCommettreExactionsA, {value} ) end,
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_AssignerCommettreExactionsDansZone", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "done_ACT_Mission_Automate_ControleCreation_EnCours" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "done_ACT_Mission_Automate_ControleCreation_OK" } },
+        { "ACT_Mission_Automate_AssignerCommettreExactionsDansZone", { "done_ACT_Mission_Automate_AssignerCommettreExactionsDansZone" } },
     },
 
     create = function( self )
@@ -139,7 +144,8 @@ elseif switch_1 == eActionHalt
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_AssignerCommettreExactionsDansZone, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.zone, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Mission_Automate_AssignerCommettreExactionsDansZone, rForce, { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.zone, } )
+self.done_ACT_Mission_Automate_AssignerCommettreExactionsDansZone = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
 --[[// *****************************************************************************
@@ -152,6 +158,8 @@ elseif switch_1 == eActionHalt
 
 node "ACT_Mission_Automate_AssignerCommettreExactionsDansZone"
 {
+    feedbacks = { { { "done_ACT_Mission_Automate_AssignerCommettreExactionsDansZone" }, "ACT_Mission_Automate_AssignerCommettreExactionsDansZone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Mission_Automate_AssignerCommettreExactionsDansZone, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -190,7 +198,7 @@ elseif switch_1 == ePhase_CDT then
         end
 
         if( self.missionPion == nil ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             do return end
         end
 
@@ -198,7 +206,7 @@ elseif switch_1 == ePhase_CDT then
 ]]if( ModuleBegins() ) then
             DEC_Trace( "$$ Commettre Exactions Dans Zone : " .. DEC_GetSzName( self._namedParams.pPion ) .. " $$" )
         else
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             do return end
         end
 
@@ -215,7 +223,7 @@ elseif switch_1 == ePhase_CDT then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
 
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         do return end
 
     end,

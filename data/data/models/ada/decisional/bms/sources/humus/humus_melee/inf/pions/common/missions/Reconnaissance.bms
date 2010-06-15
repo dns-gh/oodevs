@@ -9,15 +9,17 @@ includedFiles["sources/humus/humus_melee/inf/pions/common/missions/Reconnaissanc
 ]]--[[//=============================================================================
 ]]node "BEH_Mission_Pion_INF_RecoAxe"
 {
+    feedbacks = { { { "done_BEH_Mission_Pion_INF_RecoAxe" }, "BEH_Mission_Pion_INF_RecoAxe" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Pion_INF_RecoAxe, {value} ) end,
     activations =
     {
-        { "BEH_Lima_Pion_RejoindreFuseau_EnAttente", {} },
-        { "BEH_Mot_Pion_Embarquer", {} },
-        { "BEH_Delai_Pion_INF_PreparerMission", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Obs_EtablirVisionCur", {} },
-        { "BEH_Dep_ProgressionSur", {} },
-        { "BEH_Lima_GererLimas", {} },
+        { "BEH_Lima_Pion_RejoindreFuseau_EnAttente", { "done_BEH_Lima_Pion_RejoindreFuseau_EnAttente" } },
+        { "BEH_Mot_Pion_Embarquer", { "done_BEH_Mot_Pion_Embarquer" } },
+        { "BEH_Delai_Pion_INF_PreparerMission", { "done_BEH_Delai_Pion_INF_PreparerMission" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "ACT_Obs_EtablirVisionCur", { "done_ACT_Obs_EtablirVisionCur" } },
+        { "BEH_Dep_ProgressionSur", { "done_BEH_Dep_ProgressionSur" } },
+        { "BEH_Lima_GererLimas", { "done_BEH_Lima_GererLimas" } },
     },
 
     create = function( self )
@@ -69,7 +71,8 @@ includedFiles["sources/humus/humus_melee/inf/pions/common/missions/Reconnaissanc
 
                             Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
                             --[[// Progression sur l'itineraire
-]]Activate( self.activations.BEH_Dep_ProgressionSur, 1, setmetatable( { self.mission.itineraire_, eProgressionReco, eTypeItiReconnaissance, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+]]Activate( self.activations.BEH_Dep_ProgressionSur, 1, { self.mission.itineraire_, eProgressionReco, eTypeItiReconnaissance, } )
+self.done_BEH_Dep_ProgressionSur = function( self, _, v ) self.eAction = v[1] end
                             Activate( self.activations.BEH_Lima_GererLimas, 1.5, {} )
                             _continue = false
                                                 cases_switch_1[2] = true
@@ -79,7 +82,7 @@ elseif switch_1 == eFinMission then
                         end
                     end
 
-                                self.params.__returnValue = self.ePhase
+                                self:SendFeedback( self.ePhase )
                 do return end
 
             end

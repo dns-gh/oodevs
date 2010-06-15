@@ -6,6 +6,8 @@ includedFiles["sources/appui/artdsa/pions/samp hawk/behaviors/Behaviors - Eni.bm
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "BEH_Eni_Pion_ASA_HAWK_InterceptionBalistique"
 {
+    feedbacks = { { { "done_BEH_Eni_Pion_ASA_HAWK_InterceptionBalistique" }, "BEH_Eni_Pion_ASA_HAWK_InterceptionBalistique" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Pion_ASA_HAWK_InterceptionBalistique, {value} ) end,
     instances =
     {
         boost = 1.0001,
@@ -13,7 +15,7 @@ includedFiles["sources/appui/artdsa/pions/samp hawk/behaviors/Behaviors - Eni.bm
 
     activations =
     {
-        { "BEH_Eni_Pion_ASA_InterceptionBalistique_Direct", {} },
+        { "BEH_Eni_Pion_ASA_InterceptionBalistique_Direct", { "done_BEH_Eni_Pion_ASA_InterceptionBalistique_Direct" } },
     },
 
     create = function( self )
@@ -28,7 +30,7 @@ includedFiles["sources/appui/artdsa/pions/samp hawk/behaviors/Behaviors - Eni.bm
 
     activate = function( self )
         if( DEC_ConnaissanceAgent_EstMort( self._namedParams.ennemi ) ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -45,9 +47,11 @@ includedFiles["sources/appui/artdsa/pions/samp hawk/behaviors/Behaviors - Eni.bm
 
 node "BEH_Eni_GererDemandesDeTirsCentralisees"
 {
+    feedbacks = { { { "done_BEH_Eni_GererDemandesDeTirsCentralisees" }, "BEH_Eni_GererDemandesDeTirsCentralisees" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_GererDemandesDeTirsCentralisees, {value} ) end,
     activations =
     {
-        { "BEH_Eni_Pion_ASA_HAWK_InterceptionBalistique", {} },
+        { "BEH_Eni_Pion_ASA_HAWK_InterceptionBalistique", { "done_BEH_Eni_Pion_ASA_HAWK_InterceptionBalistique" } },
     },
 
     create = function( self )

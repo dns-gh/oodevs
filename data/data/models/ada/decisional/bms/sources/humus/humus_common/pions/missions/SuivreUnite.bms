@@ -18,10 +18,12 @@ includedFiles["sources/humus/humus_common/pions/missions/SuivreUnite.bms"] = tru
 ]]--[[// *****************************************************************************
 ]]node "MIS_Pion_Suivre"
 {
+    feedbacks = { { { "done_MIS_Pion_Suivre" }, "MIS_Pion_Suivre" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_Suivre, {value} ) end,
     activations =
     {
-        { "BEH_Dep_Suivre", {} },
-        { "ACT_Info_Trace", {} },
+        { "BEH_Dep_Suivre", { "done_BEH_Dep_Suivre" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
     },
 
     create = function( self )

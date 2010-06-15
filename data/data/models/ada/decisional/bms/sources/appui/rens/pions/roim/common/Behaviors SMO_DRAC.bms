@@ -9,10 +9,12 @@ includedFiles["sources/appui/rens/pions/roim/common/Behaviors SMO_DRAC.bms"] = t
 ]]--[[// *****************************************************************************
 ]]node "BEH_Dep_Pion_Rens_GererDrones"
 {
+    feedbacks = { { { "done_BEH_Dep_Pion_Rens_GererDrones" }, "BEH_Dep_Pion_Rens_GererDrones" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Pion_Rens_GererDrones, {value} ) end,
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "BEH_Dep_Pion_Rens_GererEmbarquementDrone", {} },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "BEH_Dep_Pion_Rens_GererEmbarquementDrone", { "done_BEH_Dep_Pion_Rens_GererEmbarquementDrone" } },
     },
 
     create = function( self )
@@ -64,10 +66,12 @@ includedFiles["sources/appui/rens/pions/roim/common/Behaviors SMO_DRAC.bms"] = t
 
 node "BEH_Dep_Pion_Rens_GererEmbarquementDrone"
 {
+    feedbacks = { { { "done_BEH_Dep_Pion_Rens_GererEmbarquementDrone" }, "BEH_Dep_Pion_Rens_GererEmbarquementDrone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Pion_Rens_GererEmbarquementDrone, {value} ) end,
     activations =
     {
-        { "BEH_Transport_Pion_Rens_GererEmbarquementDrone", {} },
-        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Transport_Pion_Rens_GererEmbarquementDrone", { "done_BEH_Transport_Pion_Rens_GererEmbarquementDrone" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
     },
 
     create = function( self )
@@ -111,10 +115,12 @@ if( DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.pionDrone:DE
 
 node "BEH_Transport_Pion_Rens_GererEmbarquementDrone"
 {
+    feedbacks = { { { "done_BEH_Transport_Pion_Rens_GererEmbarquementDrone" }, "BEH_Transport_Pion_Rens_GererEmbarquementDrone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Transport_Pion_Rens_GererEmbarquementDrone, {value} ) end,
     activations =
     {
-        { "BEH_Transport_Pion_Rens_EmbarquerDrone", {} },
-        { "BEH_Transport_Pion_Rens_ExploiterDrone", {} },
+        { "BEH_Transport_Pion_Rens_EmbarquerDrone", { "done_BEH_Transport_Pion_Rens_EmbarquerDrone" } },
+        { "BEH_Transport_Pion_Rens_ExploiterDrone", { "done_BEH_Transport_Pion_Rens_ExploiterDrone" } },
     },
 
     create = function( self )
@@ -143,9 +149,11 @@ node "BEH_Transport_Pion_Rens_GererEmbarquementDrone"
 
 node "BEH_Transport_Pion_Rens_EmbarquerDrone"
 {
+    feedbacks = { { { "done_BEH_Transport_Pion_Rens_EmbarquerDrone" }, "BEH_Transport_Pion_Rens_EmbarquerDrone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Transport_Pion_Rens_EmbarquerDrone, {value} ) end,
     activations =
     {
-        { "ACT_Misc_Pion_Rens_EmbarquerDrone", {} },
+        { "ACT_Misc_Pion_Rens_EmbarquerDrone", { "done_ACT_Misc_Pion_Rens_EmbarquerDrone" } },
     },
 
     create = function( self )
@@ -167,10 +175,12 @@ node "BEH_Transport_Pion_Rens_EmbarquerDrone"
 
 node "BEH_Transport_Pion_Rens_ExploiterDrone"
 {
+    feedbacks = { { { "done_BEH_Transport_Pion_Rens_ExploiterDrone" }, "BEH_Transport_Pion_Rens_ExploiterDrone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Transport_Pion_Rens_ExploiterDrone, {value} ) end,
     activations =
     {
-        { "ACT_RC", {} },
-        { "ACT_Misc_Pion_Rens_ExploiterDrone", {} },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "ACT_Misc_Pion_Rens_ExploiterDrone", { "done_ACT_Misc_Pion_Rens_ExploiterDrone" } },
     },
 
     create = function( self )
@@ -231,6 +241,8 @@ node "BEH_Transport_Pion_Rens_ExploiterDrone"
 
 node "ACT_Misc_Pion_Rens_EmbarquerDrone"
 {
+    feedbacks = { { { "done_ACT_Misc_Pion_Rens_EmbarquerDrone" }, "ACT_Misc_Pion_Rens_EmbarquerDrone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Misc_Pion_Rens_EmbarquerDrone, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionDrone = self.params[1]
@@ -256,6 +268,8 @@ node "ACT_Misc_Pion_Rens_EmbarquerDrone"
 ]]--[[// *****************************************************************************
 ]]node "ACT_Misc_Pion_Rens_ExploiterDrone"
 {
+    feedbacks = { { { "done_ACT_Misc_Pion_Rens_ExploiterDrone" }, "ACT_Misc_Pion_Rens_ExploiterDrone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Misc_Pion_Rens_ExploiterDrone, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionDrone = self.params[1]

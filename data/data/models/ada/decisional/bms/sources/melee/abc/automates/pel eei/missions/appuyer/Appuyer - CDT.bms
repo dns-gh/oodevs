@@ -20,9 +20,11 @@ includedFiles["sources/melee/abc/automates/pel eei/missions/appuyer/Appuyer - CD
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_ABC_Appuyer"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ABC_Appuyer" }, "MIS_Automate_CDT_ABC_Appuyer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ABC_Appuyer, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_Appuyer", {} },
+        { "BEH_Conduite_Automate_ABC_Appuyer", { "done_BEH_Conduite_Automate_ABC_Appuyer" } },
     },
 
     create = function( self )

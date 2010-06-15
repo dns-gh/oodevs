@@ -30,9 +30,11 @@ includedFiles["sources/humus/humus_melee/inf/automates/common/Gestion pions detr
 ]]--[[// *****************************************************************************
 ]]node "BEH_Dispositif_Automate_INF_GererPionsDetruits_"
 {
+    feedbacks = { { { "done_BEH_Dispositif_Automate_INF_GererPionsDetruits_" }, "BEH_Dispositif_Automate_INF_GererPionsDetruits_" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dispositif_Automate_INF_GererPionsDetruits_, {value} ) end,
     activations =
     {
-        { "BEH_Dispositif_Automate_INF_AssignerReleve", {} },
+        { "BEH_Dispositif_Automate_INF_AssignerReleve", { "done_BEH_Dispositif_Automate_INF_AssignerReleve" } },
     },
 
     create = function( self )
@@ -114,6 +116,8 @@ do
 
 node "BEH_Dispositif_Automate_INF_AssignerReleve"
 {
+    feedbacks = { { { "done_BEH_Dispositif_Automate_INF_AssignerReleve" }, "BEH_Dispositif_Automate_INF_AssignerReleve" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dispositif_Automate_INF_AssignerReleve, {value} ) end,
     instances =
     {
         max = 1,

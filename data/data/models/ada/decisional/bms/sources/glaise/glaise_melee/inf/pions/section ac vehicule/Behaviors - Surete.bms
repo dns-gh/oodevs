@@ -34,6 +34,8 @@ include "bit.lua"
 ]]--[[//-----------------------------------------------------------------------------
 ]]node "BEH_Manoeuvre_Pion_HOT_Appuyer"
 {
+    feedbacks = { { { "done_BEH_Manoeuvre_Pion_HOT_Appuyer" }, "BEH_Manoeuvre_Pion_HOT_Appuyer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Manoeuvre_Pion_HOT_Appuyer, {value} ) end,
     instances =
     {
         max = 1,
@@ -41,9 +43,9 @@ include "bit.lua"
 
     activations =
     {
-        { "BEH_Dep_Pion_HOT_AppuyerFreinage", {} },
-        { "BEH_Dep_Pion_INF_Appuyer", {} },
-        { "BEH_Eni_Pion_HOT_Appuyer", {} },
+        { "BEH_Dep_Pion_HOT_AppuyerFreinage", { "done_BEH_Dep_Pion_HOT_AppuyerFreinage" } },
+        { "BEH_Dep_Pion_INF_Appuyer", { "done_BEH_Dep_Pion_INF_Appuyer" } },
+        { "BEH_Eni_Pion_HOT_Appuyer", { "done_BEH_Eni_Pion_HOT_Appuyer" } },
     },
 
     create = function( self )
@@ -68,9 +70,11 @@ include "bit.lua"
         end
 
         if( myself.bAppuieFreinage_ ) then
-            Activate( self.activations.BEH_Dep_Pion_HOT_AppuyerFreinage, GetMotivation( "MOT_Mission" ), setmetatable( { self._namedParams.tAmi, M_DISTANCE_SUIVI_MIN(), M_DISTANCE_SUIVI_MAX(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCurrentPhase = v else rawset( t, k, v ) end end } ) )
+            Activate( self.activations.BEH_Dep_Pion_HOT_AppuyerFreinage, GetMotivation( "MOT_Mission" ), { self._namedParams.tAmi, M_DISTANCE_SUIVI_MIN(), M_DISTANCE_SUIVI_MAX(), } )
+self.done_BEH_Dep_Pion_HOT_AppuyerFreinage = function( self, _, v ) self.eCurrentPhase = v[1] end
         else
-            Activate( self.activations.BEH_Dep_Pion_INF_Appuyer, GetMotivation( "MOT_Mission" ), setmetatable( { self._namedParams.tAmi, M_DISTANCE_SUIVI_MIN(), M_DISTANCE_SUIVI_MAX(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCurrentPhase = v else rawset( t, k, v ) end end } ) )
+            Activate( self.activations.BEH_Dep_Pion_INF_Appuyer, GetMotivation( "MOT_Mission" ), { self._namedParams.tAmi, M_DISTANCE_SUIVI_MIN(), M_DISTANCE_SUIVI_MAX(), } )
+self.done_BEH_Dep_Pion_INF_Appuyer = function( self, _, v ) self.eCurrentPhase = v[1] end
         end
 
         --[[// Gestion des ennemis
@@ -86,11 +90,13 @@ include "bit.lua"
 
 node "BEH_Eni_Pion_HOT_Appuyer"
 {
+    feedbacks = { { { "done_BEH_Eni_Pion_HOT_Appuyer" }, "BEH_Eni_Pion_HOT_Appuyer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Pion_HOT_Appuyer, {value} ) end,
     activations =
     {
-        { "BEH_Feu_Pion_INF_ConduireLesFeux_Sur", {} },
-        { "ACT_Misc_UnitesEnAppui_EnPosition", {} },
-        { "ACT_Dep_SePosterFaceA", {} },
+        { "BEH_Feu_Pion_INF_ConduireLesFeux_Sur", { "done_BEH_Feu_Pion_INF_ConduireLesFeux_Sur" } },
+        { "ACT_Misc_UnitesEnAppui_EnPosition", { "done_ACT_Misc_UnitesEnAppui_EnPosition" } },
+        { "ACT_Dep_SePosterFaceA", { "done_ACT_Dep_SePosterFaceA" } },
     },
 
     create = function( self )
@@ -148,15 +154,17 @@ do
 
 node "BEH_Dep_Pion_HOT_AppuyerFreinage"
 {
+    feedbacks = { { { "done_BEH_Dep_Pion_HOT_AppuyerFreinage" }, "BEH_Dep_Pion_HOT_AppuyerFreinage" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Pion_HOT_AppuyerFreinage, {value} ) end,
     activations =
     {
-        { "ACT_Misc_Pion_Ambiance", {} },
-        { "ACT_Dep_ModulationVitesse", {} },
-        { "ACT_Dep_PasserEnModeFurtif", {} },
-        { "ACT_RC", {} },
-        { "BEH_Dep_Pion_INF_RejoindrePositionAppui", {} },
-        { "ACT_Obs_EtablirVisionFaceADir", {} },
-        { "ACT_Misc_UnitesEnAppui_EnPosition", {} },
+        { "ACT_Misc_Pion_Ambiance", { "done_ACT_Misc_Pion_Ambiance" } },
+        { "ACT_Dep_ModulationVitesse", { "done_ACT_Dep_ModulationVitesse" } },
+        { "ACT_Dep_PasserEnModeFurtif", { "done_ACT_Dep_PasserEnModeFurtif" } },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "BEH_Dep_Pion_INF_RejoindrePositionAppui", { "done_BEH_Dep_Pion_INF_RejoindrePositionAppui" } },
+        { "ACT_Obs_EtablirVisionFaceADir", { "done_ACT_Obs_EtablirVisionFaceADir" } },
+        { "ACT_Misc_UnitesEnAppui_EnPosition", { "done_ACT_Misc_UnitesEnAppui_EnPosition" } },
     },
 
     create = function( self )
@@ -214,7 +222,7 @@ elseif switch_1 == eSePoster then
                                 end
             end
 
-                self.params.__returnValue = self.ePhase
+                self:SendFeedback( self.ePhase )
         do return end
 
     end,

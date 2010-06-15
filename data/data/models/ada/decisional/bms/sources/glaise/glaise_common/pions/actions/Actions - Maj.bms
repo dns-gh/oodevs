@@ -14,6 +14,8 @@ includedFiles["sources/glaise/glaise_common/pions/actions/Actions - Maj.bms"] = 
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_MAJ_EtatPhaseMission"
 {
+    feedbacks = { { { "done_ACT_MAJ_EtatPhaseMission" }, "ACT_MAJ_EtatPhaseMission" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_MAJ_EtatPhaseMission, {value} ) end,
     actuators =
     {
         etat_Mission = 1,
@@ -45,6 +47,8 @@ includedFiles["sources/glaise/glaise_common/pions/actions/Actions - Maj.bms"] = 
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_MAJ_EtatDec"
 {
+    feedbacks = { { { "done_ACT_MAJ_EtatDec" }, "ACT_MAJ_EtatDec" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_MAJ_EtatDec, {value} ) end,
     actuators =
     {
         etat_Dec = 1,
@@ -77,6 +81,8 @@ includedFiles["sources/glaise/glaise_common/pions/actions/Actions - Maj.bms"] = 
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_MAJ_EtatDestruction"
 {
+    feedbacks = { { { "done_ACT_MAJ_EtatDestruction" }, "ACT_MAJ_EtatDestruction" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_MAJ_EtatDestruction, {value} ) end,
     actuators =
     {
         etat_Destruction = 1,
@@ -109,6 +115,8 @@ includedFiles["sources/glaise/glaise_common/pions/actions/Actions - Maj.bms"] = 
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_MAJ_EtatOrdreCoordination"
 {
+    feedbacks = { { { "done_ACT_MAJ_EtatOrdreCoordination" }, "ACT_MAJ_EtatOrdreCoordination" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_MAJ_EtatOrdreCoordination, {value} ) end,
     actuators =
     {
         etat_OrdreCoordination = 1,
@@ -144,6 +152,8 @@ includedFiles["sources/glaise/glaise_common/pions/actions/Actions - Maj.bms"] = 
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_Maj_Pions_ObjectifEsquive"
 {
+    feedbacks = { { { "done_ACT_Maj_Pions_ObjectifEsquive" }, "ACT_Maj_Pions_ObjectifEsquive" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Maj_Pions_ObjectifEsquive, {value} ) end,
     actuators =
     {
         objectifEsquive = 1,
@@ -175,6 +185,8 @@ includedFiles["sources/glaise/glaise_common/pions/actions/Actions - Maj.bms"] = 
 ]]--[[// *****************************************************************************
 ]]node "ACT_MAJ_EnnemiEnCours"
 {
+    feedbacks = { { { "done_ACT_MAJ_EnnemiEnCours" }, "ACT_MAJ_EnnemiEnCours" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_MAJ_EnnemiEnCours, {value} ) end,
     actuators =
     {
         ennemi = 1,
@@ -207,6 +219,8 @@ includedFiles["sources/glaise/glaise_common/pions/actions/Actions - Maj.bms"] = 
 ]]--[[// *****************************************************************************
 ]]node "ACT_MAJ_EnAppuiPionMobile"
 {
+    feedbacks = { { { "done_ACT_MAJ_EnAppuiPionMobile" }, "ACT_MAJ_EnAppuiPionMobile" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_MAJ_EnAppuiPionMobile, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionAppui = self.params[1]
@@ -233,6 +247,8 @@ includedFiles["sources/glaise/glaise_common/pions/actions/Actions - Maj.bms"] = 
 ]]--[[// *****************************************************************************
 ]]node "ACT_MAJ_EtatPrudence"
 {
+    feedbacks = { { { "done_ACT_MAJ_EtatPrudence" }, "ACT_MAJ_EtatPrudence" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_MAJ_EtatPrudence, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.eEtatDecPrudence = self.params[1]
@@ -261,6 +277,8 @@ includedFiles["sources/glaise/glaise_common/pions/actions/Actions - Maj.bms"] = 
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_Maj_Pion_PasserEnTirLibre"
 {
+    feedbacks = { { { "done_ACT_Maj_Pion_PasserEnTirLibre" }, "ACT_Maj_Pion_PasserEnTirLibre" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Maj_Pion_PasserEnTirLibre, {value} ) end,
     create = function( self )
     end,
 
@@ -281,6 +299,8 @@ includedFiles["sources/glaise/glaise_common/pions/actions/Actions - Maj.bms"] = 
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_Maj_Pion_PasserEnTirSurRiposte"
 {
+    feedbacks = { { { "done_ACT_Maj_Pion_PasserEnTirSurRiposte" }, "ACT_Maj_Pion_PasserEnTirSurRiposte" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Maj_Pion_PasserEnTirSurRiposte, {value} ) end,
     create = function( self )
     end,
 
@@ -301,6 +321,8 @@ includedFiles["sources/glaise/glaise_common/pions/actions/Actions - Maj.bms"] = 
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_Maj_Pion_PasserEnTirInterdit"
 {
+    feedbacks = { { { "done_ACT_Maj_Pion_PasserEnTirInterdit" }, "ACT_Maj_Pion_PasserEnTirInterdit" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Maj_Pion_PasserEnTirInterdit, {value} ) end,
     create = function( self )
     end,
 

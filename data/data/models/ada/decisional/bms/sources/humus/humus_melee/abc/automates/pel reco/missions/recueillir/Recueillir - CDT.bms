@@ -20,9 +20,11 @@ includedFiles["sources/humus/humus_melee/abc/automates/pel reco/missions/recueil
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_ABC_RecueillirUnite"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ABC_RecueillirUnite" }, "MIS_Automate_CDT_ABC_RecueillirUnite" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ABC_RecueillirUnite, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_Recueillir", {} },
+        { "BEH_Conduite_Automate_ABC_Recueillir", { "done_BEH_Conduite_Automate_ABC_Recueillir" } },
     },
 
     create = function( self )

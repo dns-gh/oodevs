@@ -14,10 +14,12 @@ includedFiles["sources/melee/inf/automates/section te/missions/surveiller/Survei
 ]]
 node "MIS_Automate_CDT_INF_Surveiller"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_INF_Surveiller" }, "MIS_Automate_CDT_INF_Surveiller" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_INF_Surveiller, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_GererFuseau", {} },
-        { "BEH_Situation_Automate_INF_Surveiller", {} },
+        { "BEH_Conduite_Automate_GererFuseau", { "done_BEH_Conduite_Automate_GererFuseau" } },
+        { "BEH_Situation_Automate_INF_Surveiller", { "done_BEH_Situation_Automate_INF_Surveiller" } },
     },
 
     create = function( self )
@@ -49,11 +51,13 @@ node "MIS_Automate_CDT_INF_Surveiller"
 
 node "BEH_Situation_Automate_INF_Surveiller"
 {
+    feedbacks = { { { "done_BEH_Situation_Automate_INF_Surveiller" }, "BEH_Situation_Automate_INF_Surveiller" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Situation_Automate_INF_Surveiller, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_INF_Defaut", {} },
-        { "BEH_Conduite_Automate_INF_GererAppuis_INF", {} },
-        { "BEH_Conduite_Automate_INF_GererAppuis_ABC", {} },
+        { "BEH_Conduite_Automate_INF_Defaut", { "done_BEH_Conduite_Automate_INF_Defaut" } },
+        { "BEH_Conduite_Automate_INF_GererAppuis_INF", { "done_BEH_Conduite_Automate_INF_GererAppuis_INF" } },
+        { "BEH_Conduite_Automate_INF_GererAppuis_ABC", { "done_BEH_Conduite_Automate_INF_GererAppuis_ABC" } },
     },
 
     create = function( self )

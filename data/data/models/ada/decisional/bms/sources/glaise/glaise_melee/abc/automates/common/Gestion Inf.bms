@@ -28,9 +28,11 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Conduite_Automate_ABC_GererAppuiMortier_"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_ABC_GererAppuiMortier_" }, "BEH_Conduite_Automate_ABC_GererAppuiMortier_" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_ABC_GererAppuiMortier_, {value} ) end,
     activations =
     {
-        { "ACT_Ordre_Automate_ABC_DonnerAppliqerFeuxA", {} },
+        { "ACT_Ordre_Automate_ABC_DonnerAppliqerFeuxA", { "done_ACT_Ordre_Automate_ABC_DonnerAppliqerFeuxA" } },
     },
 
     create = function( self )
@@ -69,6 +71,8 @@ do
 
 node "ACT_Ordre_Automate_ABC_DonnerAppliqerFeuxA"
 {
+    feedbacks = { { { "done_ACT_Ordre_Automate_ABC_DonnerAppliqerFeuxA" }, "ACT_Ordre_Automate_ABC_DonnerAppliqerFeuxA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Ordre_Automate_ABC_DonnerAppliqerFeuxA, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pMortier = self.params[1]

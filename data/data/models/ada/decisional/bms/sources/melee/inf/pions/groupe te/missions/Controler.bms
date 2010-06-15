@@ -14,19 +14,21 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "MIS_Pion_INF_ControlerSecteur"
 {
+    feedbacks = { { { "done_MIS_Pion_INF_ControlerSecteur" }, "MIS_Pion_INF_ControlerSecteur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_INF_ControlerSecteur, {value} ) end,
     activations =
     {
-        { "ACT_Maj_Pion_PasserEnTirLibre", {} },
-        { "BEH_Misc_Pion_DefinirTypeMission", {} },
-        { "BEH_Misc_Defini_AppuisMobile", {} },
-        { "BEH_MAJ_AgressiviteMission", {} },
-        { "BEH_Ordre_Inopine", {} },
-        { "BEH_Obj_Pion_VAB_NettoyerObstacle", {} },
-        { "BEH_Eni_Pion_VAB_Controler_Traiter", {} },
-        { "BEH_Mission_Pion_VAB_ControlerSecteur", {} },
-        { "BEH_Manoeuvre_RompreContact", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Poste_Pion_INF_TomberEnGarde", {} },
+        { "ACT_Maj_Pion_PasserEnTirLibre", { "done_ACT_Maj_Pion_PasserEnTirLibre" } },
+        { "BEH_Misc_Pion_DefinirTypeMission", { "done_BEH_Misc_Pion_DefinirTypeMission" } },
+        { "BEH_Misc_Defini_AppuisMobile", { "done_BEH_Misc_Defini_AppuisMobile" } },
+        { "BEH_MAJ_AgressiviteMission", { "done_BEH_MAJ_AgressiviteMission" } },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "BEH_Obj_Pion_VAB_NettoyerObstacle", { "done_BEH_Obj_Pion_VAB_NettoyerObstacle" } },
+        { "BEH_Eni_Pion_VAB_Controler_Traiter", { "done_BEH_Eni_Pion_VAB_Controler_Traiter" } },
+        { "BEH_Mission_Pion_VAB_ControlerSecteur", { "done_BEH_Mission_Pion_VAB_ControlerSecteur" } },
+        { "BEH_Manoeuvre_RompreContact", { "done_BEH_Manoeuvre_RompreContact" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Poste_Pion_INF_TomberEnGarde", { "done_BEH_Poste_Pion_INF_TomberEnGarde" } },
     },
 
     create = function( self )
@@ -50,7 +52,8 @@ include "bit.lua"
         Activate( self.activations.BEH_Misc_Defini_AppuisMobile, 1, {} )
         Activate( self.activations.BEH_MAJ_AgressiviteMission, 1, { eReconnu, M_TIR_PH_MISSION_DETRUIRE(), } )
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
                 self.ePhase = eSeReplier
@@ -92,7 +95,8 @@ include "bit.lua"
                     end
 
                     Activate( self.activations.BEH_Eni_Pion_VAB_Controler_Traiter, 1, { self._namedParams.mission.zone_, } )
-                    Activate( self.activations.BEH_Mission_Pion_VAB_ControlerSecteur, GetMotivation( "MOT_Mission" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.ePhaseMission = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Mission_Pion_VAB_ControlerSecteur, GetMotivation( "MOT_Mission" ), {} )
+self.done_BEH_Mission_Pion_VAB_ControlerSecteur = function( self, _, v ) self.ePhaseMission = v[1] end
                     _continue = false
                 --[[// Rejoins la position de replis
 ]]                cases_switch_1[1] = true
@@ -111,7 +115,8 @@ elseif switch_1 == eSeReplier then
                         end
                     else
 do
-                            Activate( self.activations.BEH_Manoeuvre_RompreContact, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                            Activate( self.activations.BEH_Manoeuvre_RompreContact, 1, {} )
+self.done_BEH_Manoeuvre_RompreContact = function( self, _, v ) self.eAction = v[1] end
                                                         do return end
 
                         end
@@ -125,7 +130,7 @@ do
                             self.eAction = eActionEnCours
                                                         do
                                 DEC_FinMission()
-                                                                self.params.__returnValue = eActionEffectuee
+                                                                self:SendFeedback( eActionEffectuee )
                                 Halt( self )
                                 do return end
 
@@ -135,7 +140,8 @@ do
                     end
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                    Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, { true, } )
+self.done_BEH_Poste_Pion_INF_TomberEnGarde = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                                 cases_switch_1[3] = true
 
@@ -149,17 +155,19 @@ do
 
 node "BEH_Mission_Pion_VAB_ControlerSecteur"
 {
+    feedbacks = { { { "done_BEH_Mission_Pion_VAB_ControlerSecteur" }, "BEH_Mission_Pion_VAB_ControlerSecteur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Pion_VAB_ControlerSecteur, {value} ) end,
     activations =
     {
-        { "BEH_Lima_Pion_RejoindreFuseau_EnAttente", {} },
-        { "BEH_Mot_Pion_Embarquer", {} },
-        { "BEH_Dep_Pion_INF_MiseEnPlace_Mission", {} },
-        { "ACT_RC", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Obs_Pion_INF_SurveillerSecteur", {} },
-        { "BEH_Dispositif_Pion_VAB_InstallationDefensive", {} },
-        { "ACT_Misc_Pion_DelaiInstallation", {} },
-        { "ACT_Pion_VAB_ControleZone", {} },
+        { "BEH_Lima_Pion_RejoindreFuseau_EnAttente", { "done_BEH_Lima_Pion_RejoindreFuseau_EnAttente" } },
+        { "BEH_Mot_Pion_Embarquer", { "done_BEH_Mot_Pion_Embarquer" } },
+        { "BEH_Dep_Pion_INF_MiseEnPlace_Mission", { "done_BEH_Dep_Pion_INF_MiseEnPlace_Mission" } },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Obs_Pion_INF_SurveillerSecteur", { "done_BEH_Obs_Pion_INF_SurveillerSecteur" } },
+        { "BEH_Dispositif_Pion_VAB_InstallationDefensive", { "done_BEH_Dispositif_Pion_VAB_InstallationDefensive" } },
+        { "ACT_Misc_Pion_DelaiInstallation", { "done_ACT_Misc_Pion_DelaiInstallation" } },
+        { "ACT_Pion_VAB_ControleZone", { "done_ACT_Pion_VAB_ControleZone" } },
     },
 
     create = function( self )
@@ -188,13 +196,13 @@ node "BEH_Mission_Pion_VAB_ControlerSecteur"
             do
                                 do
                     DEC_Warning( eRC_MissionImpossible )
-                                        self.params.__returnValue = eFinMission
+                                        self:SendFeedback( eFinMission )
                     Halt( self )
                     do return end
 
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -215,7 +223,7 @@ node "BEH_Mission_Pion_VAB_ControlerSecteur"
                             self.eAction = eActionEnCours
                                                         do
                                 self.ePhase = eInstallerDispositif
-                                                                self.params.__returnValue = self.ePhase
+                                                                self:SendFeedback( self.ePhase )
                                 do return end
 
                             end
@@ -224,7 +232,8 @@ node "BEH_Mission_Pion_VAB_ControlerSecteur"
                     end
 
                     Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
-                    Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, setmetatable( { M_TEMPS_PREPARATION_MISSION(), self.ptMission, true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, { M_TEMPS_PREPARATION_MISSION(), self.ptMission, true, } )
+self.done_BEH_Dep_Pion_INF_MiseEnPlace_Mission = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eInstallerDispositif then
@@ -237,7 +246,7 @@ elseif switch_1 == eInstallerDispositif then
                             self.eAction = eActionEnCours
                                                         do
                                 self.ePhase = eSurveiller
-                                                                self.params.__returnValue = self.ePhase
+                                                                self:SendFeedback( self.ePhase )
                                 do return end
 
                             end
@@ -246,7 +255,8 @@ elseif switch_1 == eInstallerDispositif then
 --[[// Temps de mise en place du dispositif
 ]]                    end
 
-                    Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, setmetatable( { eNiveauInstallation_PosteAmenage, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, { eNiveauInstallation_PosteAmenage, } )
+self.done_ACT_Misc_Pion_DelaiInstallation = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                 --[[// L'ensemble du dispositif est installe, on surveiller la zone
 ]]                cases_switch_1[2] = true
@@ -261,7 +271,7 @@ elseif switch_1 == eSurveiller then
                                 end
             end
 
-                self.params.__returnValue = self.ePhase
+                self:SendFeedback( self.ePhase )
         do return end
 
     end,
@@ -273,9 +283,11 @@ elseif switch_1 == eSurveiller then
 
 node "BEH_Eni_Pion_VAB_Controler_Traiter"
 {
+    feedbacks = { { { "done_BEH_Eni_Pion_VAB_Controler_Traiter" }, "BEH_Eni_Pion_VAB_Controler_Traiter" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Pion_VAB_Controler_Traiter, {value} ) end,
     activations =
     {
-        { "ACT_MAJ_EnnemiEnCours", {} },
+        { "ACT_MAJ_EnnemiEnCours", { "done_ACT_MAJ_EnnemiEnCours" } },
     },
 
     create = function( self )

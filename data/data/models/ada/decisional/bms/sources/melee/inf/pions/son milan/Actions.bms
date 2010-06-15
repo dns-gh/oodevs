@@ -19,6 +19,8 @@ includedFiles["sources/melee/inf/pions/son milan/Actions.bms"] = true
 ]]--[[//-----------------------------------------------------------------------------
 ]]node "ACT_Transport_Pion_INF_Debarquer"
 {
+    feedbacks = { { { "done_ACT_Transport_Pion_INF_Debarquer" }, "ACT_Transport_Pion_INF_Debarquer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Transport_Pion_INF_Debarquer, {value} ) end,
     actuators =
     {
         deplacement = 1,
@@ -52,7 +54,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                 or switch_1 == eActionEmbDeb_PasDeTransporteurs then
                     DEC_Trace( "Debarquement : ignore transporteur" )
                     self.actionID = DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -60,7 +62,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                 if cases_switch_1[2] or switch_1 == eActionEmbDeb_Termine then
                     DEC_Message( eRC_DisembarkmentFinished )
                     self.actionID = DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -101,6 +103,8 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
 ]]--[[//-----------------------------------------------------------------------------
 ]]node "ACT_Tir_Pion_INF_TirDebarque"
 {
+    feedbacks = { { { "done_ACT_Tir_Pion_INF_TirDebarque" }, "ACT_Tir_Pion_INF_TirDebarque" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Tir_Pion_INF_TirDebarque, {value} ) end,
     actuators =
     {
         tir = 1,
@@ -146,7 +150,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                     end
 
                     self.actionID = DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -157,7 +161,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                     end
 
                     self.actionID = DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -168,7 +172,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                     end
 
                     self.actionID = DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -180,7 +184,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
 --[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMunition );
 ]]
                     self.actionID = DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -191,7 +195,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                     end
 
                     self.actionID = DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -206,7 +210,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                 end
             end
 
-                self.params.__returnValue = eActionEnCours
+                self:SendFeedback( eActionEnCours )
         do return end
 
     end,
@@ -238,6 +242,8 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
 ]]--[[//-----------------------------------------------------------------------------
 ]]node "ACT_Tir_Pion_INF_TirCouverture"
 {
+    feedbacks = { { { "done_ACT_Tir_Pion_INF_TirCouverture" }, "ACT_Tir_Pion_INF_TirCouverture" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Tir_Pion_INF_TirCouverture, {value} ) end,
     actuators =
     {
         tir_couverture = 1,
@@ -282,7 +288,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                     end
 
                     self.actionID = DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -293,7 +299,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                     end
 
                     self.actionID = DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -304,7 +310,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                     end
 
                     self.actionID = DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -316,7 +322,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
 --[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMunition );
 ]]
                     self.actionID = DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -327,7 +333,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                     end
 
                     self.actionID = DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -342,7 +348,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                 end
             end
 
-                self.params.__returnValue = eActionEnCours
+                self:SendFeedback( eActionEnCours )
         do return end
 
     end,

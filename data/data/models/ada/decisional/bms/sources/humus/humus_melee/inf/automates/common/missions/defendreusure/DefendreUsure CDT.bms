@@ -17,10 +17,12 @@ include "bit.lua"
 ]]
 node "BEH_Conduite_Automate_INF_MenerDefenseUsure"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_INF_MenerDefenseUsure" }, "BEH_Conduite_Automate_INF_MenerDefenseUsure" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_INF_MenerDefenseUsure, {value} ) end,
     activations =
     {
-        { "BEH_CoordDep_Automate_INF_Retrograde", {} },
-        { "BEH_Conduite_Automate_INF_MenerDefenseUsure_AffecterAppuis", {} },
+        { "BEH_CoordDep_Automate_INF_Retrograde", { "done_BEH_CoordDep_Automate_INF_Retrograde" } },
+        { "BEH_Conduite_Automate_INF_MenerDefenseUsure_AffecterAppuis", { "done_BEH_Conduite_Automate_INF_MenerDefenseUsure_AffecterAppuis" } },
     },
 
     create = function( self )
@@ -51,10 +53,12 @@ do
 
 node "BEH_Conduite_Automate_INF_MenerDefenseUsure_AffecterAppuis"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_INF_MenerDefenseUsure_AffecterAppuis" }, "BEH_Conduite_Automate_INF_MenerDefenseUsure_AffecterAppuis" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_INF_MenerDefenseUsure_AffecterAppuis, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_INF_AppuyerCompromis", {} },
-        { "ACT_Misc_Automate_INF_Defini_PionAppuiMobile", {} },
+        { "BEH_Conduite_Automate_INF_AppuyerCompromis", { "done_BEH_Conduite_Automate_INF_AppuyerCompromis" } },
+        { "ACT_Misc_Automate_INF_Defini_PionAppuiMobile", { "done_ACT_Misc_Automate_INF_Defini_PionAppuiMobile" } },
     },
 
     create = function( self )

@@ -12,13 +12,15 @@ include "bit.lua"
 ]]--[[// ******************************************************************************
 ]]node "MIS_Pion_GEN_RetablirItineraire"
 {
+    feedbacks = { { { "done_MIS_Pion_GEN_RetablirItineraire" }, "MIS_Pion_GEN_RetablirItineraire" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_GEN_RetablirItineraire, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_ProgressionSur", {} },
-        { "BEH_Dep_GEN_Retablir_ReagirFaceAObstacles", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Dep_ProgressionSur", { "done_BEH_Dep_ProgressionSur" } },
+        { "BEH_Dep_GEN_Retablir_ReagirFaceAObstacles", { "done_BEH_Dep_GEN_Retablir_ReagirFaceAObstacles" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "done_BEH_Dep_SePosterFaceADirectionDangereuse" } },
     },
 
     create = function( self )
@@ -41,7 +43,8 @@ include "bit.lua"
 ]]        end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
                 self.ePhaseMission = eFinMission
@@ -76,7 +79,8 @@ elseif switch_1 == eProgresser then
                         end
                     end
 
-                    Activate( self.activations.BEH_Dep_ProgressionSur, 1, setmetatable( { self._namedParams.mission.itineraire_, eProgressionReco, eTypeItiDeminage, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_ProgressionSur, 1, { self._namedParams.mission.itineraire_, eProgressionReco, eTypeItiDeminage, } )
+self.done_BEH_Dep_ProgressionSur = function( self, _, v ) self.eEtat = v[1] end
                     --[[// Nettoyage obstacle si possible
 ]]Activate( self.activations.BEH_Dep_GEN_Retablir_ReagirFaceAObstacles, 2, {} )
                     _continue = false
@@ -102,9 +106,11 @@ elseif switch_1 == eFinMission then
 
 node "BEH_Dep_GEN_Retablir_ReagirFaceAObstacles"
 {
+    feedbacks = { { { "done_BEH_Dep_GEN_Retablir_ReagirFaceAObstacles" }, "BEH_Dep_GEN_Retablir_ReagirFaceAObstacles" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_GEN_Retablir_ReagirFaceAObstacles, {value} ) end,
     activations =
     {
-        { "BEH_Objet_Pion_GEN_ReduireObstacle", {} },
+        { "BEH_Objet_Pion_GEN_ReduireObstacle", { "done_BEH_Objet_Pion_GEN_ReduireObstacle" } },
     },
 
     create = function( self )
@@ -134,11 +140,13 @@ node "BEH_Dep_GEN_Retablir_ReagirFaceAObstacles"
 
 node "BEH_Objet_Pion_GEN_ReduireObstacle"
 {
+    feedbacks = { { { "done_BEH_Objet_Pion_GEN_ReduireObstacle" }, "BEH_Objet_Pion_GEN_ReduireObstacle" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Objet_Pion_GEN_ReduireObstacle, {value} ) end,
     activations =
     {
-        { "ACT_Obj_Pion_GEN_ReduireObstacle", {} },
-        { "ACT_Pion_GEN_AttendreRenforcementPour", {} },
-        { "ACT_Dep_SePoster", {} },
+        { "ACT_Obj_Pion_GEN_ReduireObstacle", { "done_ACT_Obj_Pion_GEN_ReduireObstacle" } },
+        { "ACT_Pion_GEN_AttendreRenforcementPour", { "done_ACT_Pion_GEN_AttendreRenforcementPour" } },
+        { "ACT_Dep_SePoster", { "done_ACT_Dep_SePoster" } },
     },
 
     create = function( self )
@@ -171,7 +179,7 @@ node "BEH_Objet_Pion_GEN_ReduireObstacle"
                     do
                         self.eEtat = eActionEnCours
                                                 do
-                                                        self.params.__returnValue = eActionEffectuee
+                                                        self:SendFeedback( eActionEffectuee )
                             do return end
 
                         end
@@ -179,7 +187,8 @@ node "BEH_Objet_Pion_GEN_ReduireObstacle"
                     end
                 end
 
-                Activate( self.activations.ACT_Obj_Pion_GEN_ReduireObstacle, 1, setmetatable( { self._namedParams.obj, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                Activate( self.activations.ACT_Obj_Pion_GEN_ReduireObstacle, 1, { self._namedParams.obj, } )
+self.done_ACT_Obj_Pion_GEN_ReduireObstacle = function( self, _, v ) self.eEtat = v[1] end
             end
         else
 do

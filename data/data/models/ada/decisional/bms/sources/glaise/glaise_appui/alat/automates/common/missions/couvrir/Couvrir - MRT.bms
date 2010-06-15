@@ -23,6 +23,8 @@ includedFiles["sources/glaise/glaise_appui/alat/automates/common/missions/couvri
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "MIS_Automate_MRT_ALAT_Couvrir"
 {
+    feedbacks = { { { "done_MIS_Automate_MRT_ALAT_Couvrir" }, "MIS_Automate_MRT_ALAT_Couvrir" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_MRT_ALAT_Couvrir, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission
@@ -48,7 +50,7 @@ includedFiles["sources/glaise/glaise_appui/alat/automates/common/missions/couvri
                 if( DIA_IsListEmpty( self.listePatrouillesPeutFaireMissionCouvrir ) ) then
                     do
                         DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
-                                                self.params.__returnValue = eActionImpossible
+                                                self:SendFeedback( eActionImpossible )
                         Halt( self )
                         do return end
 
@@ -61,7 +63,7 @@ includedFiles["sources/glaise/glaise_appui/alat/automates/common/missions/couvri
         end
 
         DEC_MRT_Valide()
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         Halt( self )
         do return end
 

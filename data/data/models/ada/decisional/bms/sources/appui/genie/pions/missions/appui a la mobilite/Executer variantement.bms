@@ -9,9 +9,11 @@ includedFiles["sources/appui/genie/pions/missions/appui a la mobilite/Executer v
 ]]--[[// *****************************************************************************
 ]]node "MIS_Pion_GEN_ExecuterVariantement"
 {
+    feedbacks = { { { "done_MIS_Pion_GEN_ExecuterVariantement" }, "MIS_Pion_GEN_ExecuterVariantement" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_GEN_ExecuterVariantement, {value} ) end,
     activations =
     {
-        { "BEH_Objet_Pion_GEN_EquiperExploiterPointFranchissement", {} },
+        { "BEH_Objet_Pion_GEN_EquiperExploiterPointFranchissement", { "done_BEH_Objet_Pion_GEN_EquiperExploiterPointFranchissement" } },
     },
 
     create = function( self )

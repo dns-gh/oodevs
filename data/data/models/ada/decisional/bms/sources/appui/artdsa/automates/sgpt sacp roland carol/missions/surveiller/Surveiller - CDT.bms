@@ -6,6 +6,8 @@ includedFiles["sources/appui/artdsa/automates/sgpt sacp roland carol/missions/su
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "MIS_Automate_CDT_ASA_Surveiller"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ASA_Surveiller" }, "MIS_Automate_CDT_ASA_Surveiller" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ASA_Surveiller, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission

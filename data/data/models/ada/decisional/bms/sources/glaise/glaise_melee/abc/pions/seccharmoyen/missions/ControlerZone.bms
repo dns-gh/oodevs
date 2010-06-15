@@ -20,9 +20,11 @@ includedFiles["sources/glaise/glaise_melee/abc/pions/seccharmoyen/missions/Contr
 ]]--[[// *****************************************************************************
 ]]node "MIS_Pion_ABC_ControlerZone"
 {
+    feedbacks = { { { "done_MIS_Pion_ABC_ControlerZone" }, "MIS_Pion_ABC_ControlerZone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_ABC_ControlerZone, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Pion_ABC_ControlerSecteur", {} },
+        { "BEH_Mission_Pion_ABC_ControlerSecteur", { "done_BEH_Mission_Pion_ABC_ControlerSecteur" } },
     },
 
     create = function( self )
@@ -36,13 +38,13 @@ includedFiles["sources/glaise/glaise_melee/abc/pions/seccharmoyen/missions/Contr
 ]]--[[// Terminaison
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eEtat == eActionImpossible ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             Halt( self )
             do return end
         end
 
         if( self.eEtat == eActionEffectuee ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -50,7 +52,8 @@ includedFiles["sources/glaise/glaise_melee/abc/pions/seccharmoyen/missions/Contr
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Comportement de la mission
 ]]--[[//-----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_Mission_Pion_ABC_ControlerSecteur, 1, setmetatable( { self._namedParams.mission, M_MODELE_PION_ABC_CONTROLER_PH(), M_MODELE_PION_ABC_CONTROLER_ID(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+]]Activate( self.activations.BEH_Mission_Pion_ABC_ControlerSecteur, 1, { self._namedParams.mission, M_MODELE_PION_ABC_CONTROLER_PH(), M_MODELE_PION_ABC_CONTROLER_ID(), } )
+self.done_BEH_Mission_Pion_ABC_ControlerSecteur = function( self, _, v ) self.eEtat = v[1] end
     end,
 
 }

@@ -18,9 +18,11 @@ includedFiles["sources/appui/artfdp/automates/bat reco trf1/missions/reconnaitre
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_MRT_ASS_ReconnaitreZonesDeploiement"
 {
+    feedbacks = { { { "done_MIS_Automate_MRT_ASS_ReconnaitreZonesDeploiement" }, "MIS_Automate_MRT_ASS_ReconnaitreZonesDeploiement" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_MRT_ASS_ReconnaitreZonesDeploiement, {value} ) end,
     activations =
     {
-        { "BEH_Medo_Automate_PreparerMission_ReconnaitreZonesDeploiement", {} },
+        { "BEH_Medo_Automate_PreparerMission_ReconnaitreZonesDeploiement", { "done_BEH_Medo_Automate_PreparerMission_ReconnaitreZonesDeploiement" } },
     },
 
     create = function( self )
@@ -47,7 +49,7 @@ includedFiles["sources/appui/artfdp/automates/bat reco trf1/missions/reconnaitre
             do
                 DEC_MRT_Valide()
                 DEC_Trace( "!!!!Mind out some first line units didn't receive mission!!!!" )
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -58,14 +60,15 @@ includedFiles["sources/appui/artfdp/automates/bat reco trf1/missions/reconnaitre
             do
                 self.eValidationMRT = eActionEnCours
                 DEC_MRT_Valide()
-                                self.params.__returnValue = eActionEffectuee
+                                self:SendFeedback( eActionEffectuee )
                 Halt( self )
                 do return end
 
             end
         end
 
-        Activate( self.activations.BEH_Medo_Automate_PreparerMission_ReconnaitreZonesDeploiement, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Medo_Automate_PreparerMission_ReconnaitreZonesDeploiement, 1, {} )
+self.done_BEH_Medo_Automate_PreparerMission_ReconnaitreZonesDeploiement = function( self, _, v ) self.eValidationMRT = v[1] end
     end,
 
 }

@@ -12,13 +12,15 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "MIS_Pion_OrienterRefugies"
 {
+    feedbacks = { { { "done_MIS_Pion_OrienterRefugies" }, "MIS_Pion_OrienterRefugies" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_OrienterRefugies, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_Pion_AllerRecupererRefugies", {} },
-        { "BEH_Dep_Pion_AllerDebarquerRefugies", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Dep_Pion_AllerRecupererRefugies", { "done_BEH_Dep_Pion_AllerRecupererRefugies" } },
+        { "BEH_Dep_Pion_AllerDebarquerRefugies", { "done_BEH_Dep_Pion_AllerDebarquerRefugies" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "done_BEH_Dep_SePosterFaceADirectionDangereuse" } },
     },
 
     create = function( self )
@@ -43,7 +45,8 @@ include "bit.lua"
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
                 self.ePhase = eFinMission
@@ -88,7 +91,8 @@ elseif switch_1 == eDebarquer then
                         end
                     end
 
-                    Activate( self.activations.BEH_Dep_Pion_AllerDebarquerRefugies, 1, setmetatable( { self._namedParams.mission.refugies_, self._namedParams.mission.campRefugies_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_Pion_AllerDebarquerRefugies, 1, { self._namedParams.mission.refugies_, self._namedParams.mission.campRefugies_, } )
+self.done_BEH_Dep_Pion_AllerDebarquerRefugies = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                 --[[// Fin mission
 ]]                cases_switch_1[3] = true
@@ -121,9 +125,11 @@ elseif switch_1 == eFinMission then
 
 node "BEH_Dep_Pion_AllerRecupererRefugies"
 {
+    feedbacks = { { { "done_BEH_Dep_Pion_AllerRecupererRefugies" }, "BEH_Dep_Pion_AllerRecupererRefugies" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Pion_AllerRecupererRefugies, {value} ) end,
     activations =
     {
-        { "BEH_Dep_Pion_GererEmbarquementRefugie", {} },
+        { "BEH_Dep_Pion_GererEmbarquementRefugie", { "done_BEH_Dep_Pion_GererEmbarquementRefugie" } },
     },
 
     create = function( self )
@@ -155,10 +161,12 @@ if( DEC_ConnaissanceAgent_EstValide( refugie ) and not DEC_Refugies_EstEmbarque(
 
 node "BEH_Dep_Pion_GererEmbarquementRefugie"
 {
+    feedbacks = { { { "done_BEH_Dep_Pion_GererEmbarquementRefugie" }, "BEH_Dep_Pion_GererEmbarquementRefugie" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Pion_GererEmbarquementRefugie, {value} ) end,
     activations =
     {
-        { "ACT_Transport_Pion_EmbarquerRefugie", {} },
-        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_Transport_Pion_EmbarquerRefugie", { "done_ACT_Transport_Pion_EmbarquerRefugie" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
     },
 
     create = function( self )
@@ -185,10 +193,12 @@ node "BEH_Dep_Pion_GererEmbarquementRefugie"
 
 node "BEH_Dep_Pion_AllerDebarquerRefugies"
 {
+    feedbacks = { { { "done_BEH_Dep_Pion_AllerDebarquerRefugies" }, "BEH_Dep_Pion_AllerDebarquerRefugies" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Pion_AllerDebarquerRefugies, {value} ) end,
     activations =
     {
-        { "ACT_Transport_Pion_DebarquerRefugieDansCamp", {} },
-        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_Transport_Pion_DebarquerRefugieDansCamp", { "done_ACT_Transport_Pion_DebarquerRefugieDansCamp" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
     },
 
     create = function( self )
@@ -202,7 +212,7 @@ node "BEH_Dep_Pion_AllerDebarquerRefugies"
         self.localisation = self.localisation or DEC_ConnaissanceObjet_Localisation( self._namedParams.campRefugie )
         --[[// Gestion erreur
 ]]if( ( self.localisation == 0 or self.localisation == nil ) ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -212,7 +222,7 @@ node "BEH_Dep_Pion_AllerDebarquerRefugies"
             do
                 self.point = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( self.localisation )
                 if( ( self.point == 0 or self.point == nil ) ) then
-                    self.params.__returnValue = eActionEffectuee
+                    self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
                 end
@@ -243,6 +253,8 @@ for _,refugie in pairs( self._namedParams.refugies or {} ) do
 
 node "ACT_Transport_Pion_EmbarquerRefugie"
 {
+    feedbacks = { { { "done_ACT_Transport_Pion_EmbarquerRefugie" }, "ACT_Transport_Pion_EmbarquerRefugie" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Transport_Pion_EmbarquerRefugie, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.refugie = self.params[1]
@@ -265,6 +277,8 @@ node "ACT_Transport_Pion_EmbarquerRefugie"
 ]]--[[// *****************************************************************************
 ]]node "ACT_Transport_Pion_DebarquerRefugieDansCamp"
 {
+    feedbacks = { { { "done_ACT_Transport_Pion_DebarquerRefugieDansCamp" }, "ACT_Transport_Pion_DebarquerRefugieDansCamp" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Transport_Pion_DebarquerRefugieDansCamp, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.refugie = self.params[1]

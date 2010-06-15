@@ -13,10 +13,12 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "BEH_GTIA_RepartirDansFuseaux"
 {
+    feedbacks = { { { "done_BEH_GTIA_RepartirDansFuseaux" }, "BEH_GTIA_RepartirDansFuseaux" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_RepartirDansFuseaux, {value} ) end,
     activations =
     {
-        { "BEH_GTIA_RepartirPionsMeleeDansFuseaux", {} },
-        { "BEH_GTIA_RepartirPionsDansFuseaux", {} },
+        { "BEH_GTIA_RepartirPionsMeleeDansFuseaux", { "done_BEH_GTIA_RepartirPionsMeleeDansFuseaux" } },
+        { "BEH_GTIA_RepartirPionsDansFuseaux", { "done_BEH_GTIA_RepartirPionsDansFuseaux" } },
     },
 
     create = function( self )
@@ -65,9 +67,11 @@ include "bit.lua"
 
 node "BEH_GTIA_RepartirPionsDansFuseaux"
 {
+    feedbacks = { { { "done_BEH_GTIA_RepartirPionsDansFuseaux" }, "BEH_GTIA_RepartirPionsDansFuseaux" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_RepartirPionsDansFuseaux, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_AssignerFuseau", {} },
+        { "ACT_GTIA_AssignerFuseau", { "done_ACT_GTIA_AssignerFuseau" } },
     },
 
     create = function( self )
@@ -103,11 +107,13 @@ do
 
 node "BEH_GTIA_RepartirPionsMeleeDansFuseaux"
 {
+    feedbacks = { { { "done_BEH_GTIA_RepartirPionsMeleeDansFuseaux" }, "BEH_GTIA_RepartirPionsMeleeDansFuseaux" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_RepartirPionsMeleeDansFuseaux, {value} ) end,
     activations =
     {
-        { "BEH_GTIA_AssignerFuseauMeleeSuivantTerrain", {} },
-        { "BEH_GTIA_AssignerFuseauMeleeSuivantEnisEmbarques", {} },
-        { "BEH_GTIA_AssignerFuseauMeleeSuivantEnisDebarques", {} },
+        { "BEH_GTIA_AssignerFuseauMeleeSuivantTerrain", { "done_BEH_GTIA_AssignerFuseauMeleeSuivantTerrain" } },
+        { "BEH_GTIA_AssignerFuseauMeleeSuivantEnisEmbarques", { "done_BEH_GTIA_AssignerFuseauMeleeSuivantEnisEmbarques" } },
+        { "BEH_GTIA_AssignerFuseauMeleeSuivantEnisDebarques", { "done_BEH_GTIA_AssignerFuseauMeleeSuivantEnisDebarques" } },
     },
 
     create = function( self )
@@ -138,9 +144,11 @@ node "BEH_GTIA_RepartirPionsMeleeDansFuseaux"
 
 node "BEH_GTIA_AssignerFuseauMeleeSuivantTerrain"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerFuseauMeleeSuivantTerrain" }, "BEH_GTIA_AssignerFuseauMeleeSuivantTerrain" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerFuseauMeleeSuivantTerrain, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_AssignerFuseau", {} },
+        { "ACT_GTIA_AssignerFuseau", { "done_ACT_GTIA_AssignerFuseau" } },
     },
 
     create = function( self )
@@ -187,9 +195,11 @@ do
 
 node "BEH_GTIA_AssignerFuseauMeleeSuivantEnisDebarques"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerFuseauMeleeSuivantEnisDebarques" }, "BEH_GTIA_AssignerFuseauMeleeSuivantEnisDebarques" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerFuseauMeleeSuivantEnisDebarques, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_AssignerFuseau", {} },
+        { "ACT_GTIA_AssignerFuseau", { "done_ACT_GTIA_AssignerFuseau" } },
     },
 
     create = function( self )
@@ -240,9 +250,11 @@ do
 
 node "BEH_GTIA_AssignerFuseauMeleeSuivantEnisEmbarques"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerFuseauMeleeSuivantEnisEmbarques" }, "BEH_GTIA_AssignerFuseauMeleeSuivantEnisEmbarques" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerFuseauMeleeSuivantEnisEmbarques, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_AssignerFuseau", {} },
+        { "ACT_GTIA_AssignerFuseau", { "done_ACT_GTIA_AssignerFuseau" } },
     },
 
     create = function( self )
@@ -293,6 +305,8 @@ do
 
 node "ACT_GTIA_AssignerFuseau"
 {
+    feedbacks = { { { "done_ACT_GTIA_AssignerFuseau" }, "ACT_GTIA_AssignerFuseau" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_GTIA_AssignerFuseau, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]

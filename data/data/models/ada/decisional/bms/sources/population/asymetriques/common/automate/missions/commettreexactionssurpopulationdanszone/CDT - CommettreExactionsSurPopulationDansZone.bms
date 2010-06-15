@@ -9,9 +9,11 @@ includedFiles["sources/population/asymetriques/common/automate/missions/commettr
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_ASY_CommettreExactionsSurPopulationDansZone"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ASY_CommettreExactionsSurPopulationDansZone" }, "MIS_Automate_CDT_ASY_CommettreExactionsSurPopulationDansZone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ASY_CommettreExactionsSurPopulationDansZone, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "done_BEH_Ordre_Automate_RecevoirOrdreInopine" } },
     },
 
     create = function( self )
@@ -30,7 +32,7 @@ includedFiles["sources/population/asymetriques/common/automate/missions/commettr
         self.eEtatODC = self.eEtatODC or eActionEnCours
         if( self.eEtatODC == eActionHalt ) then
             do
-                                self.params.__returnValue = eActionEffectuee
+                                self:SendFeedback( eActionEffectuee )
                 Halt( self )
                 do return end
 
@@ -38,7 +40,8 @@ includedFiles["sources/population/asymetriques/common/automate/missions/commettr
             end
         end
 
-        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatODC = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )
+self.done_BEH_Ordre_Automate_RecevoirOrdreInopine = function( self, _, v ) self.eEtatODC = v[1] end
     end,
 
 }

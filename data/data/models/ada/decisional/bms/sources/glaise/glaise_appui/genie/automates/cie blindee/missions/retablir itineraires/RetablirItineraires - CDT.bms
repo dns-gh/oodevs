@@ -9,12 +9,14 @@ includedFiles["sources/glaise/glaise_appui/genie/automates/cie blindee/missions/
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_GEN_RetablirItineraires"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_GEN_RetablirItineraires" }, "MIS_Automate_CDT_GEN_RetablirItineraires" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_GEN_RetablirItineraires, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
-        { "ACT_Warning", {} },
-        { "BEH_Conduite_Automate_GEN_OuvrirAxe_GererSE_", {} },
-        { "BEH_Mission_Automate_GEN_CDT_RetablirItinerairesGererRenforcement", {} },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "done_BEH_Ordre_Automate_RecevoirOrdreInopine" } },
+        { "ACT_Warning", { "done_ACT_Warning" } },
+        { "BEH_Conduite_Automate_GEN_OuvrirAxe_GererSE_", { "done_BEH_Conduite_Automate_GEN_OuvrirAxe_GererSE_" } },
+        { "BEH_Mission_Automate_GEN_CDT_RetablirItinerairesGererRenforcement", { "done_BEH_Mission_Automate_GEN_CDT_RetablirItinerairesGererRenforcement" } },
     },
 
     create = function( self )
@@ -67,12 +69,14 @@ includedFiles["sources/glaise/glaise_appui/genie/automates/cie blindee/missions/
 
 node "BEH_Mission_Automate_GEN_CDT_RetablirItinerairesGererRenforcement"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_GEN_CDT_RetablirItinerairesGererRenforcement" }, "BEH_Mission_Automate_GEN_CDT_RetablirItinerairesGererRenforcement" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_GEN_CDT_RetablirItinerairesGererRenforcement, {value} ) end,
     activations =
     {
-        { "BEH_Misc_Automate_GEN_CDT_OuvrirAxesProgressionGererRenforcementDe", {} },
-        { "BEH_Objet_Automate_GEN_VerifierRenfortPourDetruireObjet", {} },
-        { "BEH_Misc_Automate_GEN_GererRenforcementReductionObstacle", {} },
-        { "BEH_Misc_Automate_GEN_GererFinRenforcementBrechageObstacle", {} },
+        { "BEH_Misc_Automate_GEN_CDT_OuvrirAxesProgressionGererRenforcementDe", { "done_BEH_Misc_Automate_GEN_CDT_OuvrirAxesProgressionGererRenforcementDe" } },
+        { "BEH_Objet_Automate_GEN_VerifierRenfortPourDetruireObjet", { "done_BEH_Objet_Automate_GEN_VerifierRenfortPourDetruireObjet" } },
+        { "BEH_Misc_Automate_GEN_GererRenforcementReductionObstacle", { "done_BEH_Misc_Automate_GEN_GererRenforcementReductionObstacle" } },
+        { "BEH_Misc_Automate_GEN_GererFinRenforcementBrechageObstacle", { "done_BEH_Misc_Automate_GEN_GererFinRenforcementBrechageObstacle" } },
     },
 
     create = function( self )
@@ -147,9 +151,11 @@ do
 
 node "BEH_Misc_Automate_GEN_GererRenforcementReductionObstacle"
 {
+    feedbacks = { { { "done_BEH_Misc_Automate_GEN_GererRenforcementReductionObstacle" }, "BEH_Misc_Automate_GEN_GererRenforcementReductionObstacle" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Misc_Automate_GEN_GererRenforcementReductionObstacle, {value} ) end,
     activations =
     {
-        { "BEH_Misc_Automate_GEN_GererRenforcementReductionObstaclePour", {} },
+        { "BEH_Misc_Automate_GEN_GererRenforcementReductionObstaclePour", { "done_BEH_Misc_Automate_GEN_GererRenforcementReductionObstaclePour" } },
     },
 
     create = function( self )
@@ -223,9 +229,11 @@ node "BEH_Misc_Automate_GEN_GererRenforcementReductionObstacle"
 
 node "BEH_Misc_Automate_GEN_GererRenforcementReductionObstaclePour"
 {
+    feedbacks = { { { "done_BEH_Misc_Automate_GEN_GererRenforcementReductionObstaclePour" }, "BEH_Misc_Automate_GEN_GererRenforcementReductionObstaclePour" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Misc_Automate_GEN_GererRenforcementReductionObstaclePour, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_GEN_RenforcerRepObjet", {} },
+        { "BEH_Mission_Automate_GEN_RenforcerRepObjet", { "done_BEH_Mission_Automate_GEN_RenforcerRepObjet" } },
     },
 
     create = function( self )

@@ -25,6 +25,8 @@ includedFiles["sources/glaise/glaise_melee/common/Behaviors - Mot.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "BEH_Mot_AffecterVariablesDEtat"
 {
+    feedbacks = { { { "done_BEH_Mot_AffecterVariablesDEtat" }, "BEH_Mot_AffecterVariablesDEtat" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mot_AffecterVariablesDEtat, {value} ) end,
     create = function( self )
     end,
 
@@ -56,9 +58,11 @@ includedFiles["sources/glaise/glaise_melee/common/Behaviors - Mot.bms"] = true
 
 node "BEH_MOT_TenirFaceAuxEnnemis"
 {
+    feedbacks = { { { "done_BEH_MOT_TenirFaceAuxEnnemis" }, "BEH_MOT_TenirFaceAuxEnnemis" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MOT_TenirFaceAuxEnnemis, {value} ) end,
     activations =
     {
-        { "ACT_Dep_SePosterFaceA", {} },
+        { "ACT_Dep_SePosterFaceA", { "done_ACT_Dep_SePosterFaceA" } },
     },
 
     create = function( self )

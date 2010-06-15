@@ -9,10 +9,12 @@ includedFiles["sources/common/pions/missionsreactionpopulations/Securiser.bms"] 
 ]]--[[// *****************************************************************************
 ]]node "MIS_Pion_SecuriserZoneContrePopulations"
 {
+    feedbacks = { { { "done_MIS_Pion_SecuriserZoneContrePopulations" }, "MIS_Pion_SecuriserZoneContrePopulations" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_SecuriserZoneContrePopulations, {value} ) end,
     activations =
     {
-        { "BEH_MAJ_AgressiviteMission", {} },
-        { "BEH_Pop_Pion_BloquerPopulation", {} },
+        { "BEH_MAJ_AgressiviteMission", { "done_BEH_MAJ_AgressiviteMission" } },
+        { "BEH_Pop_Pion_BloquerPopulation", { "done_BEH_Pop_Pion_BloquerPopulation" } },
     },
 
     create = function( self )
@@ -28,7 +30,7 @@ includedFiles["sources/common/pions/missionsreactionpopulations/Securiser.bms"] 
 ]]--[[// Pion detruit
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -60,7 +62,8 @@ includedFiles["sources/common/pions/missionsreactionpopulations/Securiser.bms"] 
             end
         end
 
-        Activate( self.activations.BEH_Pop_Pion_BloquerPopulation, 1, setmetatable( { self.objectif, 500, 525, 0, "SecuriserZoneContrePopulations", }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatAction = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Pop_Pion_BloquerPopulation, 1, { self.objectif, 500, 525, 0, "SecuriserZoneContrePopulations", } )
+self.done_BEH_Pop_Pion_BloquerPopulation = function( self, _, v ) self.eEtatAction = v[1] end
     end,
 
 }

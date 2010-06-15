@@ -12,10 +12,12 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Pop_Pion_PresAuDecrochageFaceA"
 {
+    feedbacks = { { { "done_BEH_Pop_Pion_PresAuDecrochageFaceA" }, "BEH_Pop_Pion_PresAuDecrochageFaceA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pop_Pion_PresAuDecrochageFaceA, {value} ) end,
     activations =
     {
-        { "BEH_Pop_Pion_EsquiveFaceA", {} },
-        { "BEH_EsquiverLaPopulationIncontrolable", {} },
+        { "BEH_Pop_Pion_EsquiveFaceA", { "done_BEH_Pop_Pion_EsquiveFaceA" } },
+        { "BEH_EsquiverLaPopulationIncontrolable", { "done_BEH_EsquiverLaPopulationIncontrolable" } },
     },
 
     create = function( self )
@@ -60,10 +62,12 @@ include "bit.lua"
 
 node "BEH_EsquiverLaPopulationIncontrolable"
 {
+    feedbacks = { { { "done_BEH_EsquiverLaPopulationIncontrolable" }, "BEH_EsquiverLaPopulationIncontrolable" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_EsquiverLaPopulationIncontrolable, {value} ) end,
     activations =
     {
-        { "ACT_Misc_Delai", {} },
-        { "BEH_Pop_Pion_EsquiveFaceA", {} },
+        { "ACT_Misc_Delai", { "done_ACT_Misc_Delai" } },
+        { "BEH_Pop_Pion_EsquiveFaceA", { "done_BEH_Pop_Pion_EsquiveFaceA" } },
     },
 
     create = function( self )
@@ -119,7 +123,8 @@ node "BEH_EsquiverLaPopulationIncontrolable"
 
         --[[// on checke au bout de 15 minutes
 ]]if( self.eEtatDelai == eActionEnCours ) then
-            Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { BEH_EsquiverLaPopulationIncontrolable, self.delai, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatDelai = v else rawset( t, k, v ) end end } ) )
+            Activate( self.activations.ACT_Misc_Delai, 1, { BEH_EsquiverLaPopulationIncontrolable, self.delai, } )
+self.done_ACT_Misc_Delai = function( self, _, v ) self.eEtatDelai = v[1] end
         else
 do
                 local domination = 0
@@ -178,6 +183,8 @@ do
 
 node "BEH_Pop_Pion_EsquiveFaceA"
 {
+    feedbacks = { { { "done_BEH_Pop_Pion_EsquiveFaceA" }, "BEH_Pop_Pion_EsquiveFaceA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pop_Pion_EsquiveFaceA, {value} ) end,
     instances =
     {
         max = 1,
@@ -186,9 +193,9 @@ node "BEH_Pop_Pion_EsquiveFaceA"
 
     activations =
     {
-        { "ACT_Dep_ModulationVitesse", {} },
-        { "ACT_Dep_SeDeplacer", {} },
-        { "ACT_Pion_FuirPopulations", {} },
+        { "ACT_Dep_ModulationVitesse", { "done_ACT_Dep_ModulationVitesse" } },
+        { "ACT_Dep_SeDeplacer", { "done_ACT_Dep_SeDeplacer" } },
+        { "ACT_Pion_FuirPopulations", { "done_ACT_Pion_FuirPopulations" } },
     },
 
     create = function( self )
@@ -243,7 +250,8 @@ do
 
         --[[// Aller au plus vite
 ]]Activate( self.activations.ACT_Dep_ModulationVitesse, 1, { 1, } )
-        Activate( self.activations.ACT_Dep_SeDeplacer, 1, setmetatable( { self.itEsquive, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Dep_SeDeplacer, 1, { self.itEsquive, } )
+self.done_ACT_Dep_SeDeplacer = function( self, _, v ) self.eEtat = v[1] end
         Activate( self.activations.ACT_Pion_FuirPopulations, 1, {} )
     end,
 
@@ -257,6 +265,8 @@ do
 
 node "BEH_Pop_Pion_SecuriserPopulation"
 {
+    feedbacks = { { { "done_BEH_Pop_Pion_SecuriserPopulation" }, "BEH_Pop_Pion_SecuriserPopulation" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pop_Pion_SecuriserPopulation, {value} ) end,
     instances =
     {
         max = 1,
@@ -264,9 +274,9 @@ node "BEH_Pop_Pion_SecuriserPopulation"
 
     activations =
     {
-        { "ACT_Pion_Securiser", {} },
-        { "BEH_Dep_Virtuel_PreparationAction", {} },
-        { "BEH_Dep_Virtuel_ProgressionVers", {} },
+        { "ACT_Pion_Securiser", { "done_ACT_Pion_Securiser" } },
+        { "BEH_Dep_Virtuel_PreparationAction", { "done_BEH_Dep_Virtuel_PreparationAction" } },
+        { "BEH_Dep_Virtuel_ProgressionVers", { "done_BEH_Dep_Virtuel_ProgressionVers" } },
     },
 
     create = function( self )
@@ -287,7 +297,8 @@ node "BEH_Pop_Pion_SecuriserPopulation"
                     Activate( self.activations.ACT_Pion_Securiser, 1, { self._namedParams.pop, } )
                 end
 
-                Activate( self.activations.BEH_Dep_Virtuel_PreparationAction, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.ePreparation = v else rawset( t, k, v ) end end } ) )
+                Activate( self.activations.BEH_Dep_Virtuel_PreparationAction, 1, {} )
+self.done_BEH_Dep_Virtuel_PreparationAction = function( self, _, v ) self.ePreparation = v[1] end
             end
         else
 if( DEC_Geometrie_Distance( DEC_Agent_Position(), self.pointSecurisation ) > 10 ) then
@@ -313,9 +324,11 @@ if( DEC_Geometrie_Distance( DEC_Agent_Position(), self.pointSecurisation ) > 10 
 
 node "BEH_Pop_Pion_SecuriserPopulationDans"
 {
+    feedbacks = { { { "done_BEH_Pop_Pion_SecuriserPopulationDans" }, "BEH_Pop_Pion_SecuriserPopulationDans" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pop_Pion_SecuriserPopulationDans, {value} ) end,
     activations =
     {
-        { "BEH_Pop_Pion_SecuriserPopulation", {} },
+        { "BEH_Pop_Pion_SecuriserPopulation", { "done_BEH_Pop_Pion_SecuriserPopulation" } },
     },
 
     create = function( self )
@@ -362,16 +375,18 @@ do
 
 node "BEH_Pop_Pion_BloquerPopulation"
 {
+    feedbacks = { { { "done_BEH_Pop_Pion_BloquerPopulation" }, "BEH_Pop_Pion_BloquerPopulation" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pop_Pion_BloquerPopulation, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Info_Trace", {} },
-        { "BEH_Dep_Virtuel_ProgressionVers", {} },
-        { "BEH_Pop_GererPositionBarrage", {} },
-        { "ACT_Pion_CreerObjetSur", {} },
-        { "BEH_Pop_Pion_AnimerBlocagePopulation", {} },
-        { "BEH_Dep_Virtuel_PreparationAction", {} },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "BEH_Dep_Virtuel_ProgressionVers", { "done_BEH_Dep_Virtuel_ProgressionVers" } },
+        { "BEH_Pop_GererPositionBarrage", { "done_BEH_Pop_GererPositionBarrage" } },
+        { "ACT_Pion_CreerObjetSur", { "done_ACT_Pion_CreerObjetSur" } },
+        { "BEH_Pop_Pion_AnimerBlocagePopulation", { "done_BEH_Pop_Pion_AnimerBlocagePopulation" } },
+        { "BEH_Dep_Virtuel_PreparationAction", { "done_BEH_Dep_Virtuel_PreparationAction" } },
     },
 
     create = function( self )
@@ -391,7 +406,8 @@ node "BEH_Pop_Pion_BloquerPopulation"
         self.localisation = self.localisation or DEC_Geometrie_CreerLocalisationCercle( self._namedParams.objectif, self._namedParams.rMin )
         self.localisationEtendue = self.localisationEtendue or DEC_Geometrie_CreerLocalisationCercle( self._namedParams.objectif, self._namedParams.rMax )
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
                 self.ePhaseMission = eFinMission
@@ -446,7 +462,8 @@ elseif switch_1 == eAnimer then
 ]]                            end
 
                             Activate( self.activations.BEH_Pop_Pion_AnimerBlocagePopulation, 1, { self.posteControle, self._namedParams.permeabilite, } )
-                            Activate( self.activations.BEH_Dep_Virtuel_PreparationAction, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.ePreparation = v else rawset( t, k, v ) end end } ) )
+                            Activate( self.activations.BEH_Dep_Virtuel_PreparationAction, 1, {} )
+self.done_BEH_Dep_Virtuel_PreparationAction = function( self, _, v ) self.ePreparation = v[1] end
                         end
                     end
 
@@ -455,7 +472,7 @@ elseif switch_1 == eAnimer then
 ]]                cases_switch_1[3] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                                        self.params.__returnValue = eActionHalt
+                                        self:SendFeedback( eActionHalt )
                     do return end
 
                 end
@@ -481,10 +498,12 @@ elseif switch_1 == eFinMission then
 
 node "BEH_Pop_GererPositionBarrage"
 {
+    feedbacks = { { { "done_BEH_Pop_GererPositionBarrage" }, "BEH_Pop_GererPositionBarrage" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pop_GererPositionBarrage, {value} ) end,
     activations =
     {
-        { "BEH_Dep_Virtuel_ProgressionVers", {} },
-        { "BEH_Pop_Pion_RejoindrePopulationLaPlusProche", {} },
+        { "BEH_Dep_Virtuel_ProgressionVers", { "done_BEH_Dep_Virtuel_ProgressionVers" } },
+        { "BEH_Pop_Pion_RejoindrePopulationLaPlusProche", { "done_BEH_Pop_Pion_RejoindrePopulationLaPlusProche" } },
     },
 
     create = function( self )
@@ -515,10 +534,12 @@ node "BEH_Pop_GererPositionBarrage"
 
 node "BEH_Pop_Pion_AnimerBlocagePopulation"
 {
+    feedbacks = { { { "done_BEH_Pop_Pion_AnimerBlocagePopulation" }, "BEH_Pop_Pion_AnimerBlocagePopulation" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pop_Pion_AnimerBlocagePopulation, {value} ) end,
     activations =
     {
-        { "ACT_Pion_Animer", {} },
-        { "BEH_AttaqueDePopulation", {} },
+        { "ACT_Pion_Animer", { "done_ACT_Pion_Animer" } },
+        { "BEH_AttaqueDePopulation", { "done_BEH_AttaqueDePopulation" } },
     },
 
     create = function( self )
@@ -565,9 +586,11 @@ if( S_PopulationTropAggressive( pop ) ) then
 
 node "BEH_Pop_Pion_RejoindrePopulationLaPlusProche"
 {
+    feedbacks = { { { "done_BEH_Pop_Pion_RejoindrePopulationLaPlusProche" }, "BEH_Pop_Pion_RejoindrePopulationLaPlusProche" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pop_Pion_RejoindrePopulationLaPlusProche, {value} ) end,
     activations =
     {
-        { "BEH_Pop_Pion_RejoindrePopulation", {} },
+        { "BEH_Pop_Pion_RejoindrePopulation", { "done_BEH_Pop_Pion_RejoindrePopulation" } },
     },
 
     create = function( self )
@@ -603,6 +626,8 @@ do
 
 node "BEH_Pop_Pion_RejoindrePopulation"
 {
+    feedbacks = { { { "done_BEH_Pop_Pion_RejoindrePopulation" }, "BEH_Pop_Pion_RejoindrePopulation" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pop_Pion_RejoindrePopulation, {value} ) end,
     instances =
     {
         max = 1,
@@ -610,8 +635,8 @@ node "BEH_Pop_Pion_RejoindrePopulation"
 
     activations =
     {
-        { "BEH_Dep_ProgressionVers", {} },
-        { "BEH_Dep_SePoster", {} },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
+        { "BEH_Dep_SePoster", { "done_BEH_Dep_SePoster" } },
     },
 
     create = function( self )

@@ -6,10 +6,12 @@ includedFiles["sources/glaise/glaise_appui/artdsa/automates/batterie asa mp/miss
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "MIS_Automate_CDT_ASA_HAWK_Surveiller"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ASA_HAWK_Surveiller" }, "MIS_Automate_CDT_ASA_HAWK_Surveiller" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ASA_HAWK_Surveiller, {value} ) end,
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "BEH_Eni_ASA_HAWK_GererTirsSurveiller", {} },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "BEH_Eni_ASA_HAWK_GererTirsSurveiller", { "done_BEH_Eni_ASA_HAWK_GererTirsSurveiller" } },
     },
 
     create = function( self )

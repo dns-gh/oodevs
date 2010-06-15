@@ -58,17 +58,19 @@ include "Appui/Circulation/Pions/Missions/Missions.bms"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Defaut"
 {
+    feedbacks = { { { "done_BEH_Defaut" }, "BEH_Defaut" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Defaut, {value} ) end,
     activations =
     {
-        { "ACT_Dep_ModulationVitesse", {} },
-        { "BEH_MAJ_EtatDefaut", {} },
-        { "BEH_Mot_AffecterVariablesDEtat", {} },
-        { "BEH_Mot_Pion_Embarquer", {} },
-        { "BEH_ROE", {} },
-        { "BEH_Ambiance", {} },
-        { "BEH_Nbc", {} },
-        { "BEH_Rens", {} },
-        { "BEH_Ordre_Pion_CIRCU_OrdresInopines", {} },
+        { "ACT_Dep_ModulationVitesse", { "done_ACT_Dep_ModulationVitesse" } },
+        { "BEH_MAJ_EtatDefaut", { "done_BEH_MAJ_EtatDefaut" } },
+        { "BEH_Mot_AffecterVariablesDEtat", { "done_BEH_Mot_AffecterVariablesDEtat" } },
+        { "BEH_Mot_Pion_Embarquer", { "done_BEH_Mot_Pion_Embarquer" } },
+        { "BEH_ROE", { "done_BEH_ROE" } },
+        { "BEH_Ambiance", { "done_BEH_Ambiance" } },
+        { "BEH_Nbc", { "done_BEH_Nbc" } },
+        { "BEH_Rens", { "done_BEH_Rens" } },
+        { "BEH_Ordre_Pion_CIRCU_OrdresInopines", { "done_BEH_Ordre_Pion_CIRCU_OrdresInopines" } },
     },
 
     create = function( self )
@@ -125,6 +127,8 @@ include "Appui/Circulation/Pions/Missions/Missions.bms"
 
 node "BEH_Mot_AffecterVariablesDEtat"
 {
+    feedbacks = { { { "done_BEH_Mot_AffecterVariablesDEtat" }, "BEH_Mot_AffecterVariablesDEtat" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mot_AffecterVariablesDEtat, {value} ) end,
     create = function( self )
     end,
 
@@ -142,9 +146,11 @@ node "BEH_Mot_AffecterVariablesDEtat"
 
 node "BEH_LOG_Pion_FaireDesMesures"
 {
+    feedbacks = { { { "done_BEH_LOG_Pion_FaireDesMesures" }, "BEH_LOG_Pion_FaireDesMesures" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_LOG_Pion_FaireDesMesures, {value} ) end,
     activations =
     {
-        { "BEH_LOG_Pion_FaireUneMesureDans", {} },
+        { "BEH_LOG_Pion_FaireUneMesureDans", { "done_BEH_LOG_Pion_FaireUneMesureDans" } },
     },
 
     create = function( self )
@@ -176,10 +182,12 @@ node "BEH_LOG_Pion_FaireDesMesures"
 
 node "BEH_LOG_Pion_FaireUneMesureDans"
 {
+    feedbacks = { { { "done_BEH_LOG_Pion_FaireUneMesureDans" }, "BEH_LOG_Pion_FaireUneMesureDans" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_LOG_Pion_FaireUneMesureDans, {value} ) end,
     activations =
     {
-        { "ACT_LOG_FaireMesure", {} },
-        { "ACT_Dep_SePoster", {} },
+        { "ACT_LOG_FaireMesure", { "done_ACT_LOG_FaireMesure" } },
+        { "ACT_Dep_SePoster", { "done_ACT_Dep_SePoster" } },
     },
 
     create = function( self )
@@ -226,11 +234,13 @@ node "BEH_LOG_Pion_FaireUneMesureDans"
 
 node "BEH_Ordre_Pion_CIRCU_OrdresInopines"
 {
+    feedbacks = { { { "done_BEH_Ordre_Pion_CIRCU_OrdresInopines" }, "BEH_Ordre_Pion_CIRCU_OrdresInopines" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Ordre_Pion_CIRCU_OrdresInopines, {value} ) end,
     activations =
     {
-        { "ACT_Misc_Pion_Circu_PreterRemorqueurs", {} },
-        { "ACT_Misc_Pion_Circu_RecupererRemorqueurs", {} },
-        { "ACT_Ordre_Suppression", {} },
+        { "ACT_Misc_Pion_Circu_PreterRemorqueurs", { "done_ACT_Misc_Pion_Circu_PreterRemorqueurs" } },
+        { "ACT_Misc_Pion_Circu_RecupererRemorqueurs", { "done_ACT_Misc_Pion_Circu_RecupererRemorqueurs" } },
+        { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
     },
 
     create = function( self )
@@ -282,9 +292,11 @@ elseif switch_1 == "Rep_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs" then
 
 node "BEH_Dep_Virtuel_ProgressionVers"
 {
+    feedbacks = { { { "done_BEH_Dep_Virtuel_ProgressionVers" }, "BEH_Dep_Virtuel_ProgressionVers" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Virtuel_ProgressionVers, {value} ) end,
     activations =
     {
-        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
     },
 
     create = function( self )
@@ -308,11 +320,13 @@ node "BEH_Dep_Virtuel_ProgressionVers"
 
 node "BEH_Dep_Virtuel_PreparationAction"
 {
+    feedbacks = { { { "done_BEH_Dep_Virtuel_PreparationAction" }, "BEH_Dep_Virtuel_PreparationAction" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Virtuel_PreparationAction, {value} ) end,
     create = function( self )
     end,
 
     activate = function( self )
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         do return end
 
     end,
@@ -327,9 +341,11 @@ node "BEH_Dep_Virtuel_PreparationAction"
 
 node "BEH_Pion_Circu_InstallerDispositif"
 {
+    feedbacks = { { { "done_BEH_Pion_Circu_InstallerDispositif" }, "BEH_Pion_Circu_InstallerDispositif" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pion_Circu_InstallerDispositif, {value} ) end,
     activations =
     {
-        { "ACT_Pion_Circu_InstallerDisposifif", {} },
+        { "ACT_Pion_Circu_InstallerDisposifif", { "done_ACT_Pion_Circu_InstallerDisposifif" } },
     },
 
     create = function( self )
@@ -352,6 +368,8 @@ node "BEH_Pion_Circu_InstallerDispositif"
 
 node "ACT_Pion_Circu_InstallerDisposifif"
 {
+    feedbacks = { { { "done_ACT_Pion_Circu_InstallerDisposifif" }, "ACT_Pion_Circu_InstallerDisposifif" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Pion_Circu_InstallerDisposifif, {value} ) end,
     create = function( self )
     end,
 

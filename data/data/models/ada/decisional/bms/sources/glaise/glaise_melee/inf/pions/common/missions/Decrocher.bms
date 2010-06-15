@@ -12,16 +12,18 @@ includedFiles["sources/glaise/glaise_melee/inf/pions/common/missions/Decrocher.b
 ]]--[[// *****************************************************************************
 ]]node "MIS_Pion_Decrocher"
 {
+    feedbacks = { { { "done_MIS_Pion_Decrocher" }, "MIS_Pion_Decrocher" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_Decrocher, {value} ) end,
     activations =
     {
-        { "BEH_MOT_DesactiveSauvegarde", {} },
-        { "ACT_Misc_Pion_INF_MAJ_PositionRegroupement", {} },
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_RC", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Lima_GererLR", {} },
-        { "BEH_Lima_Pion_INF_GererLIA", {} },
-        { "BEH_Manoeuvre_RompreContact", {} },
+        { "BEH_MOT_DesactiveSauvegarde", { "done_BEH_MOT_DesactiveSauvegarde" } },
+        { "ACT_Misc_Pion_INF_MAJ_PositionRegroupement", { "done_ACT_Misc_Pion_INF_MAJ_PositionRegroupement" } },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Lima_GererLR", { "done_BEH_Lima_GererLR" } },
+        { "BEH_Lima_Pion_INF_GererLIA", { "done_BEH_Lima_Pion_INF_GererLIA" } },
+        { "BEH_Manoeuvre_RompreContact", { "done_BEH_Manoeuvre_RompreContact" } },
     },
 
     create = function( self )
@@ -81,7 +83,8 @@ elseif switch_1 == eDecrocher then
 
                     Activate( self.activations.BEH_Lima_GererLR, 1, {} )
                     Activate( self.activations.BEH_Lima_Pion_INF_GererLIA, 1, {} )
-                    Activate( self.activations.BEH_Manoeuvre_RompreContact, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Manoeuvre_RompreContact, 1, {} )
+self.done_BEH_Manoeuvre_RompreContact = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// Fin de la mission

@@ -6,9 +6,11 @@ includedFiles["sources/appui/artdsa/automates/sgpt samp hawk/missions/defendre s
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "MIS_Automate_CDT_ASA_HAWK_DefendreSite"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ASA_HAWK_DefendreSite" }, "MIS_Automate_CDT_ASA_HAWK_DefendreSite" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ASA_HAWK_DefendreSite, {value} ) end,
     activations =
     {
-        { "BEH_Eni_ASA_HAWK_GererTirsDefendreSite", {} },
+        { "BEH_Eni_ASA_HAWK_GererTirsDefendreSite", { "done_BEH_Eni_ASA_HAWK_GererTirsDefendreSite" } },
     },
 
     create = function( self )

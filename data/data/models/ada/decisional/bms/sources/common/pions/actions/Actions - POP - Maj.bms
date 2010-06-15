@@ -10,6 +10,8 @@ includedFiles["sources/common/pions/actions/Actions - POP - Maj.bms"] = true
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_Maj_Pion_PasserEnEmploiForceInterdit"
 {
+    feedbacks = { { { "done_ACT_Maj_Pion_PasserEnEmploiForceInterdit" }, "ACT_Maj_Pion_PasserEnEmploiForceInterdit" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Maj_Pion_PasserEnEmploiForceInterdit, {value} ) end,
     create = function( self )
     end,
 
@@ -31,6 +33,8 @@ includedFiles["sources/common/pions/actions/Actions - POP - Maj.bms"] = true
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_Maj_Pion_PasserEnMaintienADistanceParMoyensNonLetaux"
 {
+    feedbacks = { { { "done_ACT_Maj_Pion_PasserEnMaintienADistanceParMoyensNonLetaux" }, "ACT_Maj_Pion_PasserEnMaintienADistanceParMoyensNonLetaux" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Maj_Pion_PasserEnMaintienADistanceParMoyensNonLetaux, {value} ) end,
     create = function( self )
     end,
 
@@ -52,6 +56,8 @@ includedFiles["sources/common/pions/actions/Actions - POP - Maj.bms"] = true
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_Maj_Pion_PasserEnDispersionParMoyensDeDefenseActifs"
 {
+    feedbacks = { { { "done_ACT_Maj_Pion_PasserEnDispersionParMoyensDeDefenseActifs" }, "ACT_Maj_Pion_PasserEnDispersionParMoyensDeDefenseActifs" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Maj_Pion_PasserEnDispersionParMoyensDeDefenseActifs, {value} ) end,
     create = function( self )
     end,
 
@@ -73,6 +79,8 @@ includedFiles["sources/common/pions/actions/Actions - POP - Maj.bms"] = true
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_Maj_Pion_PasserEnArmesLetalesAutorisees"
 {
+    feedbacks = { { { "done_ACT_Maj_Pion_PasserEnArmesLetalesAutorisees" }, "ACT_Maj_Pion_PasserEnArmesLetalesAutorisees" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Maj_Pion_PasserEnArmesLetalesAutorisees, {value} ) end,
     create = function( self )
     end,
 

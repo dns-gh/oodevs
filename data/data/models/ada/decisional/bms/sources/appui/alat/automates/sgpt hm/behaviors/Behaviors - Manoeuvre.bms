@@ -15,10 +15,12 @@ includedFiles["sources/appui/alat/automates/sgpt hm/behaviors/Behaviors - Manoeu
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "BEH_Medo_Automate_ALAT_HM_SynchroniserTransport"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_ALAT_HM_SynchroniserTransport" }, "BEH_Medo_Automate_ALAT_HM_SynchroniserTransport" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_ALAT_HM_SynchroniserTransport, {value} ) end,
     activations =
     {
-        { "ACT_Ordre_Automate_Pause", {} },
-        { "ACT_Ordre_Automate_Continue", {} },
+        { "ACT_Ordre_Automate_Pause", { "done_ACT_Ordre_Automate_Pause" } },
+        { "ACT_Ordre_Automate_Continue", { "done_ACT_Ordre_Automate_Continue" } },
     },
 
     create = function( self )

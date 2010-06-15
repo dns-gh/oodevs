@@ -21,18 +21,20 @@ includedFiles["sources/melee/abc/pions/common/missions/AppuyerSurPosition.bms"] 
 ]]--[[// *****************************************************************************
 ]]node "BEH_Mission_Pion_ABC_AppuyerSurPosition"
 {
+    feedbacks = { { { "done_BEH_Mission_Pion_ABC_AppuyerSurPosition" }, "BEH_Mission_Pion_ABC_AppuyerSurPosition" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Pion_ABC_AppuyerSurPosition, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "BEH_MAJ_Pion_ABC_AgressiviteTir", {} },
-        { "ACT_Info_Trace", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_ProgressionVers", {} },
-        { "ACT_Dep_ModulationVitesse", {} },
-        { "BEH_MAJ_Pion_ABC_EnvieTenir", {} },
-        { "BEH_Obj_RejoindreEmbossements", {} },
-        { "BEH_Pion_ABC_InstallerDispositif", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "BEH_MAJ_Pion_ABC_AgressiviteTir", { "done_BEH_MAJ_Pion_ABC_AgressiviteTir" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
+        { "ACT_Dep_ModulationVitesse", { "done_ACT_Dep_ModulationVitesse" } },
+        { "BEH_MAJ_Pion_ABC_EnvieTenir", { "done_BEH_MAJ_Pion_ABC_EnvieTenir" } },
+        { "BEH_Obj_RejoindreEmbossements", { "done_BEH_Obj_RejoindreEmbossements" } },
+        { "BEH_Pion_ABC_InstallerDispositif", { "done_BEH_Pion_ABC_InstallerDispositif" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "done_BEH_Dep_SePosterFaceADirectionDangereuse" } },
     },
 
     create = function( self )
@@ -46,7 +48,8 @@ includedFiles["sources/melee/abc/pions/common/missions/AppuyerSurPosition.bms"] 
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
                 self.ePhaseMission = eFinMission
@@ -59,7 +62,7 @@ includedFiles["sources/melee/abc/pions/common/missions/AppuyerSurPosition.bms"] 
 ]]        end
 
         if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -101,7 +104,8 @@ elseif switch_1 == eProgresser then
                         end
                     end
 
-                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.position_, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.mission.position_, eProgressionDirect, eTypeItiMouvement, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                     Activate( self.activations.ACT_Dep_ModulationVitesse, 1.5, { 1, } )
                     _continue = false
                 --[[// 3) couvrir face a la direction dangereuse

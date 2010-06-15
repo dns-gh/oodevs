@@ -10,9 +10,11 @@ includedFiles["sources/glaise/glaise_common/automates/behaviors/Behaviors - Ordr
 ]]--[[// *****************************************************************************
 ]]node "BEH_Automate_DonnerOrdrePause"
 {
+    feedbacks = { { { "done_BEH_Automate_DonnerOrdrePause" }, "BEH_Automate_DonnerOrdrePause" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Automate_DonnerOrdrePause, {value} ) end,
     activations =
     {
-        { "ACT_Ordre_Automate_Pause", {} },
+        { "ACT_Ordre_Automate_Pause", { "done_ACT_Ordre_Automate_Pause" } },
     },
 
     create = function( self )
@@ -34,14 +36,16 @@ includedFiles["sources/glaise/glaise_common/automates/behaviors/Behaviors - Ordr
 
 node "BEH_Ordre_Automate_RecevoirOrdreInopine"
 {
+    feedbacks = { { { "done_BEH_Ordre_Automate_RecevoirOrdreInopine" }, "BEH_Ordre_Automate_RecevoirOrdreInopine" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Ordre_Automate_RecevoirOrdreInopine, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Automate_Interrompre_", {} },
-        { "ACT_Ordre_Suppression", {} },
-        { "BEH_Ordre_Automate_Attendre_", {} },
-        { "BEH_Ordre_Automate_Poursuivre_", {} },
-        { "BEH_Ordre_Automate_AmbianceSurete_", {} },
-        { "BEH_Ordre_Automate_AmbianceVitesse_", {} },
+        { "BEH_Ordre_Automate_Interrompre_", { "done_BEH_Ordre_Automate_Interrompre_" } },
+        { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
+        { "BEH_Ordre_Automate_Attendre_", { "done_BEH_Ordre_Automate_Attendre_" } },
+        { "BEH_Ordre_Automate_Poursuivre_", { "done_BEH_Ordre_Automate_Poursuivre_" } },
+        { "BEH_Ordre_Automate_AmbianceSurete_", { "done_BEH_Ordre_Automate_AmbianceSurete_" } },
+        { "BEH_Ordre_Automate_AmbianceVitesse_", { "done_BEH_Ordre_Automate_AmbianceVitesse_" } },
     },
 
     create = function( self )
@@ -69,7 +73,7 @@ do
 ]]DEC_Trace( "$ --- ORDRE Interruption mission ---$" )
                             Activate( self.activations.BEH_Ordre_Automate_Interrompre_, 1, {} )
                             Activate( self.activations.ACT_Ordre_Suppression, 1, { ordre, } )
-                                                        self.params.__returnValue = eActionHalt
+                                                        self:SendFeedback( eActionHalt )
                             do return end
 
                             _continue = false
@@ -145,9 +149,11 @@ elseif switch_1 == "Rep_OrderConduite_ChangerAmbiance" then
 
 node "BEH_Ordre_Automate_Interrompre_"
 {
+    feedbacks = { { { "done_BEH_Ordre_Automate_Interrompre_" }, "BEH_Ordre_Automate_Interrompre_" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Ordre_Automate_Interrompre_, {value} ) end,
     activations =
     {
-        { "ACT_Ordre_Automate_Interrompre", {} },
+        { "ACT_Ordre_Automate_Interrompre", { "done_ACT_Ordre_Automate_Interrompre" } },
     },
 
     create = function( self )
@@ -178,9 +184,11 @@ do
 
 node "BEH_Ordre_Automate_Attendre_"
 {
+    feedbacks = { { { "done_BEH_Ordre_Automate_Attendre_" }, "BEH_Ordre_Automate_Attendre_" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Ordre_Automate_Attendre_, {value} ) end,
     activations =
     {
-        { "ACT_Ordre_Automate_Pause", {} },
+        { "ACT_Ordre_Automate_Pause", { "done_ACT_Ordre_Automate_Pause" } },
     },
 
     create = function( self )
@@ -227,9 +235,11 @@ do
 
 node "BEH_Ordre_Automate_Poursuivre_"
 {
+    feedbacks = { { { "done_BEH_Ordre_Automate_Poursuivre_" }, "BEH_Ordre_Automate_Poursuivre_" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Ordre_Automate_Poursuivre_, {value} ) end,
     activations =
     {
-        { "ACT_Ordre_Automate_Continue", {} },
+        { "ACT_Ordre_Automate_Continue", { "done_ACT_Ordre_Automate_Continue" } },
     },
 
     create = function( self )
@@ -261,9 +271,11 @@ do
 
 node "BEH_Ordre_Automate_AmbianceSurete_"
 {
+    feedbacks = { { { "done_BEH_Ordre_Automate_AmbianceSurete_" }, "BEH_Ordre_Automate_AmbianceSurete_" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Ordre_Automate_AmbianceSurete_, {value} ) end,
     activations =
     {
-        { "ACT_Ordre_Automate_PasserEnAmbianceSurete", {} },
+        { "ACT_Ordre_Automate_PasserEnAmbianceSurete", { "done_ACT_Ordre_Automate_PasserEnAmbianceSurete" } },
     },
 
     create = function( self )
@@ -295,9 +307,11 @@ do
 
 node "BEH_Ordre_Automate_AmbianceVitesse_"
 {
+    feedbacks = { { { "done_BEH_Ordre_Automate_AmbianceVitesse_" }, "BEH_Ordre_Automate_AmbianceVitesse_" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Ordre_Automate_AmbianceVitesse_, {value} ) end,
     activations =
     {
-        { "ACT_Ordre_Automate_PasserEnAmbianceVitesse", {} },
+        { "ACT_Ordre_Automate_PasserEnAmbianceVitesse", { "done_ACT_Ordre_Automate_PasserEnAmbianceVitesse" } },
     },
 
     create = function( self )
@@ -330,9 +344,11 @@ do
 
 node "BEH_Ordre_Automate_ArretSauvegardeSur"
 {
+    feedbacks = { { { "done_BEH_Ordre_Automate_ArretSauvegardeSur" }, "BEH_Ordre_Automate_ArretSauvegardeSur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Ordre_Automate_ArretSauvegardeSur, {value} ) end,
     activations =
     {
-        { "ACT_Misc_Delai", {} },
+        { "ACT_Misc_Delai", { "done_ACT_Misc_Delai" } },
     },
 
     create = function( self )
@@ -344,7 +360,7 @@ node "BEH_Ordre_Automate_ArretSauvegardeSur"
     activate = function( self )
                 self.eEtat = self.eEtat or eActionEnCours
         if( ( self._namedParams.rTime == 0 or self._namedParams.rTime == nil ) ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -363,14 +379,15 @@ node "BEH_Ordre_Automate_ArretSauvegardeSur"
             do
                 self.eEtat = eActionEnCours
                 self._namedParams.pion:S_Mot_EtatDesactiveSauvegarde( false )
-                                self.params.__returnValue = eActionEffectuee
+                                self:SendFeedback( eActionEffectuee )
                 Halt( self )
                 do return end
 
             end
         end
 
-        Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, self._namedParams.rTime, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Misc_Delai, 1, { 1, self._namedParams.rTime, } )
+self.done_ACT_Misc_Delai = function( self, _, v ) self.eEtat = v[1] end
     end,
 
     destroy = function( self )

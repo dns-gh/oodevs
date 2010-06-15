@@ -9,6 +9,8 @@ includedFiles["sources/appui/trans/pions/actions/Actions - Obs.bms"] = true
 ]]--[[// ******************************************************************************
 ]]node "ACT_Obs_EtablirVisionCur"
 {
+    feedbacks = { { { "done_ACT_Obs_EtablirVisionCur" }, "ACT_Obs_EtablirVisionCur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obs_EtablirVisionCur, {value} ) end,
     actuators =
     {
         observation = 1,
@@ -42,6 +44,8 @@ includedFiles["sources/appui/trans/pions/actions/Actions - Obs.bms"] = true
 ]]--[[// ******************************************************************************
 ]]node "ACT_Obs_EtablirVisionFaceADir"
 {
+    feedbacks = { { { "done_ACT_Obs_EtablirVisionFaceADir" }, "ACT_Obs_EtablirVisionFaceADir" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obs_EtablirVisionFaceADir, {value} ) end,
     actuators =
     {
         observation = 1,

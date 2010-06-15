@@ -9,6 +9,8 @@ includedFiles["sources/appui/circulation/pions/Actions.bms"] = true
 ]]--[[// ****************************************************************************
 ]]node "ACT_Misc_Pion_LOG_EquiperItineraire"
 {
+    feedbacks = { { { "done_ACT_Misc_Pion_LOG_EquiperItineraire" }, "ACT_Misc_Pion_LOG_EquiperItineraire" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Misc_Pion_LOG_EquiperItineraire, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.Iti = self.params[1]
@@ -23,11 +25,11 @@ includedFiles["sources/appui/circulation/pions/Actions.bms"] = true
                 DEC_Trace( "Itinéraire équipé" )
                 local eValid = DEC_Circulation_EquiperItineraireLogistique( self._namedParams.Iti )
                 if( eValid == eRequeteValide ) then
-                    self.params.__returnValue = eActionEffectuee
+                    self:SendFeedback( eActionEffectuee )
                     do return end
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 do return end
 
             end
@@ -45,6 +47,8 @@ includedFiles["sources/appui/circulation/pions/Actions.bms"] = true
 ]]--[[// ****************************************************************************
 ]]node "ACT_Obj_Pion_LOG_RealiserTravaux"
 {
+    feedbacks = { { { "done_ACT_Obj_Pion_LOG_RealiserTravaux" }, "ACT_Obj_Pion_LOG_RealiserTravaux" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obj_Pion_LOG_RealiserTravaux, {value} ) end,
     actuators =
     {
         deplacement = 1,
@@ -86,7 +90,7 @@ includedFiles["sources/appui/circulation/pions/Actions.bms"] = true
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionObjetTerminee then
                     DEC_RC( eRC_FinTravaux )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     do return end
 
                     _continue = false
@@ -95,12 +99,12 @@ elseif switch_1 == eActionObjetTerminee then
 
                     _continue = false
                 elseif switch_1 == eActionObjetPasDeCapacite then
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     do return end
 
                                 end
                 if cases_switch_1[4] or switch_1 == eActionObjetImpossible then
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     do return end
 
                     _continue = false
@@ -135,6 +139,8 @@ elseif switch_1 == eActionObjetTerminee then
 ]]--[[// ******************************************************************************
 ]]node "ACT_LOG_FaireMesure"
 {
+    feedbacks = { { { "done_ACT_LOG_FaireMesure" }, "ACT_LOG_FaireMesure" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_LOG_FaireMesure, {value} ) end,
     create = function( self )
     end,
 
@@ -184,6 +190,8 @@ elseif switch_1 == eActionObjetTerminee then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Misc_Pion_Circu_PreterRemorqueurs"
 {
+    feedbacks = { { { "done_ACT_Misc_Pion_Circu_PreterRemorqueurs" }, "ACT_Misc_Pion_Circu_PreterRemorqueurs" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Misc_Pion_Circu_PreterRemorqueurs, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionA = self.params[1]
@@ -194,7 +202,7 @@ elseif switch_1 == eActionObjetTerminee then
                 self.actionPreterRemorqueurs = self.actionPreterRemorqueurs or 0
         self.bFinManoeuvre = self.bFinManoeuvre or false
         if( self.bFinManoeuvre ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -228,6 +236,8 @@ elseif switch_1 == eActionObjetTerminee then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Misc_Pion_Circu_RecupererRemorqueurs"
 {
+    feedbacks = { { { "done_ACT_Misc_Pion_Circu_RecupererRemorqueurs" }, "ACT_Misc_Pion_Circu_RecupererRemorqueurs" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Misc_Pion_Circu_RecupererRemorqueurs, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionDe = self.params[1]
@@ -236,7 +246,7 @@ elseif switch_1 == eActionObjetTerminee then
 
     select = function( self )
         DEC_RecupererRemorqueurs( self._namedParams.pionDe, self._namedParams.fAmb )
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         Halt( self )
         do return end
 

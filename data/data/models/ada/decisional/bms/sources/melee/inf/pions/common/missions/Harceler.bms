@@ -23,19 +23,21 @@ include "bit.lua"
 ]]
 node "BEH_Mission_Pion_INF_Harceler"
 {
+    feedbacks = { { { "done_BEH_Mission_Pion_INF_Harceler" }, "BEH_Mission_Pion_INF_Harceler" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Pion_INF_Harceler, {value} ) end,
     activations =
     {
-        { "BEH_Lima_Pion_RejoindreFuseau_EnAttente", {} },
-        { "BEH_Mot_Pion_Embarquer", {} },
-        { "BEH_Dep_Pion_INF_MiseEnPlace_Mission", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_ProgressionVers", {} },
-        { "ACT_RC", {} },
-        { "BEH_Obs_Pion_INF_SurveillerSecteur", {} },
-        { "BEH_Dispositif_Pion_VAB_InstallationDefensive", {} },
-        { "ACT_Dep_PasserEnModeFurtif", {} },
-        { "ACT_Misc_Pion_DelaiInstallation", {} },
-        { "BEH_Pion_INF_Detruire_Harceler", {} },
+        { "BEH_Lima_Pion_RejoindreFuseau_EnAttente", { "done_BEH_Lima_Pion_RejoindreFuseau_EnAttente" } },
+        { "BEH_Mot_Pion_Embarquer", { "done_BEH_Mot_Pion_Embarquer" } },
+        { "BEH_Dep_Pion_INF_MiseEnPlace_Mission", { "done_BEH_Dep_Pion_INF_MiseEnPlace_Mission" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "BEH_Obs_Pion_INF_SurveillerSecteur", { "done_BEH_Obs_Pion_INF_SurveillerSecteur" } },
+        { "BEH_Dispositif_Pion_VAB_InstallationDefensive", { "done_BEH_Dispositif_Pion_VAB_InstallationDefensive" } },
+        { "ACT_Dep_PasserEnModeFurtif", { "done_ACT_Dep_PasserEnModeFurtif" } },
+        { "ACT_Misc_Pion_DelaiInstallation", { "done_ACT_Misc_Pion_DelaiInstallation" } },
+        { "BEH_Pion_INF_Detruire_Harceler", { "done_BEH_Pion_INF_Detruire_Harceler" } },
     },
 
     create = function( self )
@@ -64,13 +66,13 @@ node "BEH_Mission_Pion_INF_Harceler"
             do
                                 do
                     DEC_Warning( eRC_MissionImpossible )
-                                        self.params.__returnValue = eFinMission
+                                        self:SendFeedback( eFinMission )
                     Halt( self )
                     do return end
 
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -92,7 +94,7 @@ node "BEH_Mission_Pion_INF_Harceler"
                             self.eAction = eActionEnCours
                                                         do
                                 self.ePhase = eAborderObjectif
-                                                                self.params.__returnValue = self.ePhase
+                                                                self:SendFeedback( self.ePhase )
                                 do return end
 
                             end
@@ -100,7 +102,8 @@ node "BEH_Mission_Pion_INF_Harceler"
                         end
                     end
 
-                    Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, setmetatable( { M_TEMPS_PREPARATION_MISSION(), self.mission.pointRegroupement_, false, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, { M_TEMPS_PREPARATION_MISSION(), self.mission.pointRegroupement_, false, } )
+self.done_BEH_Dep_Pion_INF_MiseEnPlace_Mission = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eAborderObjectif then
@@ -117,7 +120,8 @@ elseif switch_1 == eAborderObjectif then
                         end
                     else
 do
-                            Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.mission.pointRegroupement_, eProgressionDirect, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                            Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.mission.pointRegroupement_, eProgressionDirect, eTypeItiInfiltration, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] end
                                                         do return end
 
                         end
@@ -137,7 +141,7 @@ do
                             self.eAction = eActionEnCours
                                                         do
                                 self.ePhase = eSurveiller
-                                                                self.params.__returnValue = self.ePhase
+                                                                self:SendFeedback( self.ePhase )
                                 do return end
 
                             end
@@ -146,8 +150,9 @@ do
 --[[// Temps de mise en place du dispositif
 ]]                    end
 
-                    Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, setmetatable( { eNiveauInstallation_PosteAmenage, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                                        self.params.__returnValue = self.ePhase
+                    Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, { eNiveauInstallation_PosteAmenage, } )
+self.done_ACT_Misc_Pion_DelaiInstallation = function( self, _, v ) self.eAction = v[1] end
+                                        self:SendFeedback( self.ePhase )
                     do return end
 
                 --[[// L'ensemble du dispositif est installe, on surveiller la zone
@@ -165,7 +170,7 @@ do
                                 end
             end
 
-                self.params.__returnValue = self.ePhase
+                self:SendFeedback( self.ePhase )
         do return end
 
     end,
@@ -177,10 +182,12 @@ do
 
 node "BEH_Pion_INF_Detruire_Harceler"
 {
+    feedbacks = { { { "done_BEH_Pion_INF_Detruire_Harceler" }, "BEH_Pion_INF_Detruire_Harceler" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pion_INF_Detruire_Harceler, {value} ) end,
     activations =
     {
-        { "BEH_Dep_ProgressionVers", {} },
-        { "BEH_Pion_INF_Detruire_CoupDeMain", {} },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
+        { "BEH_Pion_INF_Detruire_CoupDeMain", { "done_BEH_Pion_INF_Detruire_CoupDeMain" } },
     },
 
     create = function( self )
@@ -210,7 +217,7 @@ node "BEH_Pion_INF_Detruire_Harceler"
                         or switch_1 == eError_LocalisationPasDansFuseau then
                                                     DEC_Trace( "Erreur MRT : Decoupage de la zone " .. EnumToString( eCodeLocRgpt, E_LocalisationFunctionsReturnCode ) )
                                                         do
-                                                                self.params.__returnValue = eActionImpossible
+                                                                self:SendFeedback( eActionImpossible )
                                 Halt( self )
                                 do return end
 

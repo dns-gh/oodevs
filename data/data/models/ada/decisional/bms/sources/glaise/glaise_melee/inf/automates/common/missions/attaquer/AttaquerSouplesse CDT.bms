@@ -24,9 +24,11 @@ include "bit.lua"
 ]]--[[// ******************************************************************************
 ]]node "BEH_Situation_Automate_INF_Attaquer"
 {
+    feedbacks = { { { "done_BEH_Situation_Automate_INF_Attaquer" }, "BEH_Situation_Automate_INF_Attaquer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Situation_Automate_INF_Attaquer, {value} ) end,
     activations =
     {
-        { "BEH_Situation_Automate_INF_Attaquer_SurLD", {} },
+        { "BEH_Situation_Automate_INF_Attaquer_SurLD", { "done_BEH_Situation_Automate_INF_Attaquer_SurLD" } },
     },
 
     create = function( self )
@@ -44,9 +46,11 @@ include "bit.lua"
 
 node "BEH_Situation_Automate_INF_Attaquer_SurLD"
 {
+    feedbacks = { { { "done_BEH_Situation_Automate_INF_Attaquer_SurLD" }, "BEH_Situation_Automate_INF_Attaquer_SurLD" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Situation_Automate_INF_Attaquer_SurLD, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_AssignerSemparerA", {} },
+        { "BEH_Conduite_Automate_AssignerSemparerA", { "done_BEH_Conduite_Automate_AssignerSemparerA" } },
     },
 
     create = function( self )
@@ -67,9 +71,11 @@ node "BEH_Situation_Automate_INF_Attaquer_SurLD"
 
 node "BEH_Conduite_Automate_AssignerSemparerA"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_AssignerSemparerA" }, "BEH_Conduite_Automate_AssignerSemparerA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_AssignerSemparerA, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_INF_AssignerA_Semparer", {} },
+        { "BEH_Mission_Automate_INF_AssignerA_Semparer", { "done_BEH_Mission_Automate_INF_AssignerA_Semparer" } },
     },
 
     create = function( self )

@@ -9,9 +9,11 @@ includedFiles["sources/common/pions/behaviors/Behaviors - Ordre.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "BEH_Ordre_Inopine"
 {
+    feedbacks = { { { "done_BEH_Ordre_Inopine" }, "BEH_Ordre_Inopine" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Ordre_Inopine, {value} ) end,
     activations =
     {
-        { "ACT_Ordre_Suppression", {} },
+        { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
     },
 
     create = function( self )
@@ -28,7 +30,7 @@ includedFiles["sources/common/pions/behaviors/Behaviors - Ordre.bms"] = true
 ]]--[[// poursuivre si en poste
 ]]SetStateVariable( "VE_SePoster", 0 )
                 DEC_Trace( " --------- Stop mission frag order ---------" )
-                                self.params.__returnValue = eActionHalt
+                                self:SendFeedback( eActionHalt )
                 Halt( self )
                 do return end
 
@@ -51,7 +53,7 @@ do
                             DEC_Trace( "======= Frag order --> Stop mission =====" )
                             --[[// poursuivre si en poste
 ]]SetStateVariable( "VE_SePoster", 0 )
-                                                        self.params.__returnValue = eActionHalt
+                                                        self:SendFeedback( eActionHalt )
                             do return end
 
                                                 end
@@ -90,9 +92,11 @@ elseif switch_1 == "Rep_OrderConduite_Deboucher"
 
 node "BEH_Ordre_SePoster_EnAttente"
 {
+    feedbacks = { { { "done_BEH_Ordre_SePoster_EnAttente" }, "BEH_Ordre_SePoster_EnAttente" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Ordre_SePoster_EnAttente, {value} ) end,
     activations =
     {
-        { "ACT_Dep_SePoster", {} },
+        { "ACT_Dep_SePoster", { "done_ACT_Dep_SePoster" } },
     },
 
     create = function( self )
@@ -105,7 +109,7 @@ node "BEH_Ordre_SePoster_EnAttente"
                 SetStateVariable( "VE_SePoster", 2 )
                 Activate( self.activations.ACT_Dep_SePoster, 1, {} )--[[// On force le poste au premier tour
 ]]
-                                self.params.__returnValue = eActionEnCours
+                                self:SendFeedback( eActionEnCours )
                 do return end
 
             end
@@ -114,7 +118,7 @@ node "BEH_Ordre_SePoster_EnAttente"
         if( ( GetStateVariable( "VE_SePoster" ) == 0 or GetStateVariable( "VE_SePoster" ) == nil ) ) then
             do
                 DEC_Trace( "Conduite 'poursuivre' recu." )
-                                self.params.__returnValue = eActionEffectuee
+                                self:SendFeedback( eActionEffectuee )
                 do return end
 
             end
@@ -125,7 +129,7 @@ node "BEH_Ordre_SePoster_EnAttente"
     destroy = function( self )
                 DEC_Trace( "Conduite 'poursuivre' recu." )
         SetStateVariable( "VE_SePoster", 0 )
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         do return end
 
     end,

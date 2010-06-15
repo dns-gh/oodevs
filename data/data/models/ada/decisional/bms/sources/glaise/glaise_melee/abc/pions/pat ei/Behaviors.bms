@@ -83,9 +83,11 @@ include "Glaise/Glaise_Melee/Abc/Pions/Common/Missions/Escorter.bms"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Pion_ABC_Default"
 {
+    feedbacks = { { { "done_BEH_Pion_ABC_Default" }, "BEH_Pion_ABC_Default" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pion_ABC_Default, {value} ) end,
     activations =
     {
-        { "BEH_Mot_Pion_Embarquer", {} },
+        { "BEH_Mot_Pion_Embarquer", { "done_BEH_Mot_Pion_Embarquer" } },
     },
 
     create = function( self )
@@ -109,6 +111,8 @@ include "Glaise/Glaise_Melee/Abc/Pions/Common/Missions/Escorter.bms"
 
 node "BEH_MAJ_Pion_ABC_EnvieDeSInfiltrer"
 {
+    feedbacks = { { { "done_BEH_MAJ_Pion_ABC_EnvieDeSInfiltrer" }, "BEH_MAJ_Pion_ABC_EnvieDeSInfiltrer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MAJ_Pion_ABC_EnvieDeSInfiltrer, {value} ) end,
     create = function( self )
     end,
 
@@ -133,9 +137,11 @@ node "BEH_MAJ_Pion_ABC_EnvieDeSInfiltrer"
 
 node "BEH_Pion_ABC_GarderSesDistancesPourSInfiltrer"
 {
+    feedbacks = { { { "done_BEH_Pion_ABC_GarderSesDistancesPourSInfiltrer" }, "BEH_Pion_ABC_GarderSesDistancesPourSInfiltrer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pion_ABC_GarderSesDistancesPourSInfiltrer, {value} ) end,
     activations =
     {
-        { "BEH_Pion_ABC_GarderSesDistancesPourSInfiltrerFaceA", {} },
+        { "BEH_Pion_ABC_GarderSesDistancesPourSInfiltrerFaceA", { "done_BEH_Pion_ABC_GarderSesDistancesPourSInfiltrerFaceA" } },
     },
 
     create = function( self )
@@ -162,6 +168,8 @@ node "BEH_Pion_ABC_GarderSesDistancesPourSInfiltrer"
 
 node "BEH_Pion_ABC_GarderSesDistancesPourSInfiltrerFaceA"
 {
+    feedbacks = { { { "done_BEH_Pion_ABC_GarderSesDistancesPourSInfiltrerFaceA" }, "BEH_Pion_ABC_GarderSesDistancesPourSInfiltrerFaceA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pion_ABC_GarderSesDistancesPourSInfiltrerFaceA, {value} ) end,
     instances =
     {
         boost = 1.01,
@@ -170,7 +178,7 @@ node "BEH_Pion_ABC_GarderSesDistancesPourSInfiltrerFaceA"
 --[[//, max_instances( 1 )
 ]]    activations =
     {
-        { "BEH_Pion_ABC_Eni_SInfiltrerFaceA", {} },
+        { "BEH_Pion_ABC_Eni_SInfiltrerFaceA", { "done_BEH_Pion_ABC_Eni_SInfiltrerFaceA" } },
     },
 
     create = function( self )
@@ -199,6 +207,8 @@ node "BEH_Pion_ABC_GarderSesDistancesPourSInfiltrerFaceA"
 
 node "BEH_Pion_ABC_Eni_SInfiltrerFaceA"
 {
+    feedbacks = { { { "done_BEH_Pion_ABC_Eni_SInfiltrerFaceA" }, "BEH_Pion_ABC_Eni_SInfiltrerFaceA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pion_ABC_Eni_SInfiltrerFaceA, {value} ) end,
     instances =
     {
         max = 1,
@@ -207,7 +217,7 @@ node "BEH_Pion_ABC_Eni_SInfiltrerFaceA"
 
     activations =
     {
-        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
     },
 
     create = function( self )
@@ -225,7 +235,7 @@ node "BEH_Pion_ABC_Eni_SInfiltrerFaceA"
 ]]--[[// Connaissance invalide
 ]]--[[//----------------------------------------------------------------------
 ]]if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.repUnite ) ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             Halt( self )
             do return end
         end
@@ -235,7 +245,7 @@ node "BEH_Pion_ABC_Eni_SInfiltrerFaceA"
 ]]--[[// la peine de decrocher
 ]]--[[//----------------------------------------------------------------------
 ]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( self._namedParams.repUnite ) ) >= self.rDistanceEffective ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -269,7 +279,7 @@ node "BEH_Pion_ABC_Eni_SInfiltrerFaceA"
             do
                 self.eEtat = eActionEnCours
                                 do
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -278,7 +288,8 @@ node "BEH_Pion_ABC_Eni_SInfiltrerFaceA"
             end
         end
 
-        Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.positionSurete, eProgressionDirect, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.positionSurete, eProgressionDirect, eTypeItiInfiltration, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
     end,
 
 }

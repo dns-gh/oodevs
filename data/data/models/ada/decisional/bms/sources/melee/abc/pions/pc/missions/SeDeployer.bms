@@ -9,11 +9,13 @@ includedFiles["sources/melee/abc/pions/pc/missions/SeDeployer.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "MIS_Pion_ABC_PC_SeDeployer"
 {
+    feedbacks = { { { "done_MIS_Pion_ABC_PC_SeDeployer" }, "MIS_Pion_ABC_PC_SeDeployer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_ABC_PC_SeDeployer, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "done_BEH_Dep_SePosterFaceADirectionDangereuse" } },
     },
 
     create = function( self )
@@ -25,7 +27,8 @@ includedFiles["sources/melee/abc/pions/pc/missions/SeDeployer.bms"] = true
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
                 self.ePhaseMission = eFinMission

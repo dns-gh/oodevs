@@ -12,12 +12,14 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "BEH_GTIA_RendreCompte"
 {
+    feedbacks = { { { "done_BEH_GTIA_RendreCompte" }, "BEH_GTIA_RendreCompte" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_RendreCompte, {value} ) end,
     activations =
     {
-        { "BEH_GTIA_RendreCompteDebutFinMission", {} },
-        { "BEH_GTIA_RendreCompteSurOrdreDeConduite", {} },
-        { "BEH_GTIA_RendreCompteSurLima", {} },
-        { "BEH_GTIA_AFFICHE_temp", {} },
+        { "BEH_GTIA_RendreCompteDebutFinMission", { "done_BEH_GTIA_RendreCompteDebutFinMission" } },
+        { "BEH_GTIA_RendreCompteSurOrdreDeConduite", { "done_BEH_GTIA_RendreCompteSurOrdreDeConduite" } },
+        { "BEH_GTIA_RendreCompteSurLima", { "done_BEH_GTIA_RendreCompteSurLima" } },
+        { "BEH_GTIA_AFFICHE_temp", { "done_BEH_GTIA_AFFICHE_temp" } },
     },
 
     create = function( self )
@@ -41,9 +43,11 @@ include "bit.lua"
 
 node "BEH_GTIA_RendreCompteDebutFinMission"
 {
+    feedbacks = { { { "done_BEH_GTIA_RendreCompteDebutFinMission" }, "BEH_GTIA_RendreCompteDebutFinMission" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_RendreCompteDebutFinMission, {value} ) end,
     activations =
     {
-        { "ACT_RC_Automate", {} },
+        { "ACT_RC_Automate", { "done_ACT_RC_Automate" } },
     },
 
     create = function( self )
@@ -75,10 +79,12 @@ node "BEH_GTIA_RendreCompteDebutFinMission"
 
 node "BEH_GTIA_RendreCompteSurOrdreDeConduite"
 {
+    feedbacks = { { { "done_BEH_GTIA_RendreCompteSurOrdreDeConduite" }, "BEH_GTIA_RendreCompteSurOrdreDeConduite" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_RendreCompteSurOrdreDeConduite, {value} ) end,
     activations =
     {
-        { "ACT_RC_Automate", {} },
-        { "ACT_Ordre_Suppression", {} },
+        { "ACT_RC_Automate", { "done_ACT_RC_Automate" } },
+        { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
     },
 
     create = function( self )
@@ -119,9 +125,11 @@ do
 
 node "BEH_GTIA_RendreCompteSurLima"
 {
+    feedbacks = { { { "done_BEH_GTIA_RendreCompteSurLima" }, "BEH_GTIA_RendreCompteSurLima" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_RendreCompteSurLima, {value} ) end,
     activations =
     {
-        { "ACT_RC_Automate", {} },
+        { "ACT_RC_Automate", { "done_ACT_RC_Automate" } },
     },
 
     create = function( self )

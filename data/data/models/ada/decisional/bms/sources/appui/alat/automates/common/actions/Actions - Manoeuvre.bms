@@ -8,6 +8,8 @@ includedFiles["sources/appui/alat/automates/common/actions/Actions - Manoeuvre.b
 ]]--[[//------------------------------------------------------------------------------
 ]]node "ACT_Conduite_Automate_ALAT_ReleverUnite"
 {
+    feedbacks = { { { "done_ACT_Conduite_Automate_ALAT_ReleverUnite" }, "ACT_Conduite_Automate_ALAT_ReleverUnite" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Conduite_Automate_ALAT_ReleverUnite, {value} ) end,
     instances =
     {
         max = 1,
@@ -33,12 +35,12 @@ includedFiles["sources/appui/alat/automates/common/actions/Actions - Manoeuvre.b
         end
 
         if( not self.bRelevePossible ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             do return end
         end
 
         F_Pion_SeteEtatEchelon( self._namedParams.pionReleve, F_Pion_GeteEtatEchelon( self._namedParams.pionARelever ) )
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         do return end
 
     end,

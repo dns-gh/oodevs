@@ -10,6 +10,8 @@ includedFiles["sources/common/automates/missions/serendre/CDT - SeRendre.bms"] =
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_SeRendre"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_SeRendre" }, "MIS_Automate_CDT_SeRendre" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_SeRendre, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission

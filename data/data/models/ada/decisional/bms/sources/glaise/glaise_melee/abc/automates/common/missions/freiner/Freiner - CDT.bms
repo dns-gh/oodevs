@@ -20,10 +20,12 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/freiner
 ]]--[[// *****************************************************************************
 ]]node "BEH_Conduite_Automate_ABC_Freiner"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_ABC_Freiner" }, "BEH_Conduite_Automate_ABC_Freiner" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_ABC_Freiner, {value} ) end,
     activations =
     {
-        { "BEH_Dispositif_Automate_ABC_GererLeDispositifRetrograde_", {} },
-        { "BEH_CoordDep_Automate_ABC_CoordinationRetrograde_", {} },
+        { "BEH_Dispositif_Automate_ABC_GererLeDispositifRetrograde_", { "done_BEH_Dispositif_Automate_ABC_GererLeDispositifRetrograde_" } },
+        { "BEH_CoordDep_Automate_ABC_CoordinationRetrograde_", { "done_BEH_CoordDep_Automate_ABC_CoordinationRetrograde_" } },
     },
 
     create = function( self )

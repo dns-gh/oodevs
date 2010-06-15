@@ -9,6 +9,8 @@ include "bit.lua"
 ]]--[[//------------------------------------------------------------------------------
 ]]node "BEH_Eni_Pion_ALAT_DecrocherFaceA"
 {
+    feedbacks = { { { "done_BEH_Eni_Pion_ALAT_DecrocherFaceA" }, "BEH_Eni_Pion_ALAT_DecrocherFaceA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Pion_ALAT_DecrocherFaceA, {value} ) end,
     instances =
     {
         max = 1,
@@ -17,8 +19,8 @@ include "bit.lua"
 
     activations =
     {
-        { "ACT_Dep_ModulationVitesse", {} },
-        { "BEH_Dep_Pion_ALAT_RejoindrePoint", {} },
+        { "ACT_Dep_ModulationVitesse", { "done_ACT_Dep_ModulationVitesse" } },
+        { "BEH_Dep_Pion_ALAT_RejoindrePoint", { "done_BEH_Dep_Pion_ALAT_RejoindrePoint" } },
     },
 
     create = function( self )
@@ -36,13 +38,13 @@ include "bit.lua"
 ]]--[[// Connaissance invalide
 ]]--[[//----------------------------------------------------------------------
 ]]if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.repUnite ) ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             Halt( self )
             do return end
         end
 
         if( DEC_ConnaissanceAgent_EstMort( self._namedParams.repUnite ) ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             Halt( self )
             do return end
         end
@@ -50,7 +52,7 @@ include "bit.lua"
         --[[//si je suis a une distance supérieure a rDistance, alors, ce n'est pas
 ]]--[[//la peine de decrocher
 ]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( self._namedParams.repUnite ) ) >= self.rDistanceEffective ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -82,7 +84,7 @@ if( ( myself.ptRegroupement_ ~= 0 and myself.ptRegroupement_ ~= nil ) ) then
             do
                 self.eEtat = eActionEnCours
                                 do
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -92,7 +94,8 @@ if( ( myself.ptRegroupement_ ~= 0 and myself.ptRegroupement_ ~= nil ) ) then
         end
 
         Activate( self.activations.ACT_Dep_ModulationVitesse, 1, { 1, } )
-        Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, setmetatable( { self.positionSurete, eProgressionDefaut, eTypeItiRepli, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, { self.positionSurete, eProgressionDefaut, eTypeItiRepli, } )
+self.done_BEH_Dep_Pion_ALAT_RejoindrePoint = function( self, _, v ) self.eEtat = v[1] end
     end,
 
 --[[//------------------------------------------------------------------------------
@@ -130,6 +133,8 @@ if( ( myself.ptRegroupement_ ~= 0 and myself.ptRegroupement_ ~= nil ) ) then
 
 node "BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire"
 {
+    feedbacks = { { { "done_BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire" }, "BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire, {value} ) end,
     instances =
     {
         boost = 1.01,
@@ -137,11 +142,11 @@ node "BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire"
 
     activations =
     {
-        { "ACT_Dep_SePosterFaceA", {} },
-        { "ACT_Obs_ObserverPoint", {} },
-        { "ACT_Misc_Delai", {} },
-        { "ACT_MAJ_EnnemiEnCours", {} },
-        { "BEH_Eni_Pion_ALAT_AllerDetruireEnnemi", {} },
+        { "ACT_Dep_SePosterFaceA", { "done_ACT_Dep_SePosterFaceA" } },
+        { "ACT_Obs_ObserverPoint", { "done_ACT_Obs_ObserverPoint" } },
+        { "ACT_Misc_Delai", { "done_ACT_Misc_Delai" } },
+        { "ACT_MAJ_EnnemiEnCours", { "done_ACT_MAJ_EnnemiEnCours" } },
+        { "BEH_Eni_Pion_ALAT_AllerDetruireEnnemi", { "done_BEH_Eni_Pion_ALAT_AllerDetruireEnnemi" } },
     },
 
     create = function( self )
@@ -180,7 +185,8 @@ node "BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire"
                 end
 
                 Activate( self.activations.ACT_Obs_ObserverPoint, 1, { myself:DEC_Agent_Position(), } )
-                Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, self._namedParams.delai, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                Activate( self.activations.ACT_Misc_Delai, 1, { 1, self._namedParams.delai, } )
+self.done_ACT_Misc_Delai = function( self, _, v ) self.eEtat = v[1] end
                                 do return end
 
             end
@@ -223,6 +229,8 @@ node "BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire"
 
 node "BEH_Eni_Pion_ALAT_AllerDetruireEnnemi"
 {
+    feedbacks = { { { "done_BEH_Eni_Pion_ALAT_AllerDetruireEnnemi" }, "BEH_Eni_Pion_ALAT_AllerDetruireEnnemi" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Pion_ALAT_AllerDetruireEnnemi, {value} ) end,
     instances =
     {
         max = 1,
@@ -231,12 +239,12 @@ node "BEH_Eni_Pion_ALAT_AllerDetruireEnnemi"
 
     activations =
     {
-        { "ACT_Misc_VerouillerConnaissance", {} },
-        { "ACT_Tir_DirectSur", {} },
-        { "ACT_Dep_SePoster", {} },
-        { "BEH_Eni_SePosterFaceA", {} },
-        { "BEH_Dep_Pion_ALAT_RejoindrePoint", {} },
-        { "BEH_Eni_Pion_ALAT_DecrocherFaceA", {} },
+        { "ACT_Misc_VerouillerConnaissance", { "done_ACT_Misc_VerouillerConnaissance" } },
+        { "ACT_Tir_DirectSur", { "done_ACT_Tir_DirectSur" } },
+        { "ACT_Dep_SePoster", { "done_ACT_Dep_SePoster" } },
+        { "BEH_Eni_SePosterFaceA", { "done_BEH_Eni_SePosterFaceA" } },
+        { "BEH_Dep_Pion_ALAT_RejoindrePoint", { "done_BEH_Dep_Pion_ALAT_RejoindrePoint" } },
+        { "BEH_Eni_Pion_ALAT_DecrocherFaceA", { "done_BEH_Eni_Pion_ALAT_DecrocherFaceA" } },
     },
 
     create = function( self )
@@ -308,7 +316,7 @@ node "BEH_Eni_Pion_ALAT_AllerDetruireEnnemi"
                     do
                         self.eEtatAttaque = eActionEnCours
                                                 do
-                                                        self.params.__returnValue = eActionEffectuee
+                                                        self:SendFeedback( eActionEffectuee )
                             Halt( self )
                             do return end
 
@@ -317,7 +325,8 @@ node "BEH_Eni_Pion_ALAT_AllerDetruireEnnemi"
                     end
                 end
 
-                Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, setmetatable( { DEC_ConnaissanceAgent_Position( self._namedParams.ennemi ), eProgressionDefaut, eTypeItiAttaque, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatAttaque = v else rawset( t, k, v ) end end } ) )
+                Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, { DEC_ConnaissanceAgent_Position( self._namedParams.ennemi ), eProgressionDefaut, eTypeItiAttaque, } )
+self.done_BEH_Dep_Pion_ALAT_RejoindrePoint = function( self, _, v ) self.eEtatAttaque = v[1] end
             end
         else
 do
@@ -358,6 +367,8 @@ if( DEC_ConnaissanceAgent_EstMort( self._namedParams.ennemi ) ) then
 
 node "BEH_Eni_Pion_ALAT_Jalonner"
 {
+    feedbacks = { { { "done_BEH_Eni_Pion_ALAT_Jalonner" }, "BEH_Eni_Pion_ALAT_Jalonner" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Pion_ALAT_Jalonner, {value} ) end,
     instances =
     {
         max = 1,
@@ -366,11 +377,11 @@ node "BEH_Eni_Pion_ALAT_Jalonner"
 
     activations =
     {
-        { "ACT_RC", {} },
-        { "BEH_Eni_SePosterFaceA", {} },
-        { "ACT_Misc_VerouillerConnaissance", {} },
-        { "BEH_Obs_Pion_ALAT_ProgressionTactiqueVers", {} },
-        { "BEH_Eni_Pion_ALAT_DecrocherFaceA", {} },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "BEH_Eni_SePosterFaceA", { "done_BEH_Eni_SePosterFaceA" } },
+        { "ACT_Misc_VerouillerConnaissance", { "done_ACT_Misc_VerouillerConnaissance" } },
+        { "BEH_Obs_Pion_ALAT_ProgressionTactiqueVers", { "done_BEH_Obs_Pion_ALAT_ProgressionTactiqueVers" } },
+        { "BEH_Eni_Pion_ALAT_DecrocherFaceA", { "done_BEH_Eni_Pion_ALAT_DecrocherFaceA" } },
     },
 
     create = function( self )
@@ -430,6 +441,8 @@ do
 
 node "BEH_Eni_Pion_ALAT_EviterContactsAvecEnnemisConnus"
 {
+    feedbacks = { { { "done_BEH_Eni_Pion_ALAT_EviterContactsAvecEnnemisConnus" }, "BEH_Eni_Pion_ALAT_EviterContactsAvecEnnemisConnus" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Pion_ALAT_EviterContactsAvecEnnemisConnus, {value} ) end,
     create = function( self )
     end,
 

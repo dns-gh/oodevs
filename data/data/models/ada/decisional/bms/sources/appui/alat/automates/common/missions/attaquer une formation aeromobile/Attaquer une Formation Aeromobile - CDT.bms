@@ -3,13 +3,15 @@ includedFiles["sources/appui/alat/automates/common/missions/attaquer une formati
 
 node "MIS_Automate_CDT_ALAT_AttaquerFormationAeromobile"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ALAT_AttaquerFormationAeromobile" }, "MIS_Automate_CDT_ALAT_AttaquerFormationAeromobile" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ALAT_AttaquerFormationAeromobile, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
-        { "BEH_Automate_ALAT_CoordonnerFeux", {} },
-        { "BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX", {} },
-        { "BEH_ROE_Automate_TirRestreint", {} },
-        { "BEH_Mission_Automate_AssignerStationnerAListe", {} },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "done_BEH_Ordre_Automate_RecevoirOrdreInopine" } },
+        { "BEH_Automate_ALAT_CoordonnerFeux", { "done_BEH_Automate_ALAT_CoordonnerFeux" } },
+        { "BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX", { "done_BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX" } },
+        { "BEH_ROE_Automate_TirRestreint", { "done_BEH_ROE_Automate_TirRestreint" } },
+        { "BEH_Mission_Automate_AssignerStationnerAListe", { "done_BEH_Mission_Automate_AssignerStationnerAListe" } },
     },
 
     create = function( self )
@@ -31,7 +33,8 @@ node "MIS_Automate_CDT_ALAT_AttaquerFormationAeromobile"
             end
         end
 
-        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatODC = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )
+self.done_BEH_Ordre_Automate_RecevoirOrdreInopine = function( self, _, v ) self.eEtatODC = v[1] end
         --[[// ---------------------------------------------------------------------
 ]]--[[// 1. Mise à Jour des selections de pions ( à tous les tics )
 ]]--[[// ---------------------------------------------------------------------

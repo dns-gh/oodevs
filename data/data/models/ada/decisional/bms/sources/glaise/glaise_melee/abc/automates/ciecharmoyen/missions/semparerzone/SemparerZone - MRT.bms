@@ -18,9 +18,11 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/ciecharmoyen/missions/s
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_MRT_ABC_Semparer"
 {
+    feedbacks = { { { "done_MIS_Automate_MRT_ABC_Semparer" }, "MIS_Automate_MRT_ABC_Semparer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_MRT_ABC_Semparer, {value} ) end,
     activations =
     {
-        { "BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionStatique", {} },
+        { "BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionStatique", { "done_BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionStatique" } },
     },
 
     create = function( self )

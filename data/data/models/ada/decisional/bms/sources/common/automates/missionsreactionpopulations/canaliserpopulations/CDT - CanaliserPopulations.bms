@@ -9,10 +9,12 @@ includedFiles["sources/common/automates/missionsreactionpopulations/canaliserpop
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_CanaliserPopulations"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_CanaliserPopulations" }, "MIS_Automate_CDT_CanaliserPopulations" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_CanaliserPopulations, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
-        { "BEH_Mission_Automate_AssignerSuivreAListe", {} },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "done_BEH_Ordre_Automate_RecevoirOrdreInopine" } },
+        { "BEH_Mission_Automate_AssignerSuivreAListe", { "done_BEH_Mission_Automate_AssignerSuivreAListe" } },
     },
 
     create = function( self )
@@ -26,7 +28,7 @@ includedFiles["sources/common/automates/missionsreactionpopulations/canaliserpop
         self.eEtatODC = self.eEtatODC or eActionEnCours
         if( self.eEtatODC == eActionHalt ) then
             do
-                                self.params.__returnValue = eActionEffectuee
+                                self:SendFeedback( eActionEffectuee )
                 Halt( self )
                 do return end
 
@@ -34,7 +36,8 @@ includedFiles["sources/common/automates/missionsreactionpopulations/canaliserpop
             end
         end
 
-        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatODC = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )
+self.done_BEH_Ordre_Automate_RecevoirOrdreInopine = function( self, _, v ) self.eEtatODC = v[1] end
         self.listePionsCanaliserPopulation = {}
         self.listePionsSuivre = {}
         self.listePionsCanaliserPopulation = S_Cherche_Automate_Filtre_TypeMission( DEC_Automate_PionsSansPC(), "T_Mission_Pion_CanaliserPopulations" )

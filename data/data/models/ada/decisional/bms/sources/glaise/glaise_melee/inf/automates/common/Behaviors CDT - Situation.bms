@@ -19,9 +19,11 @@ include "bit.lua"
 
 node "BEH_Situation_Automate_INF_Defaut"
 {
+    feedbacks = { { { "done_BEH_Situation_Automate_INF_Defaut" }, "BEH_Situation_Automate_INF_Defaut" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Situation_Automate_INF_Defaut, {value} ) end,
     activations =
     {
-        { "BEH_Situation_Automate_INF_FinDeMission_Sur", {} },
+        { "BEH_Situation_Automate_INF_FinDeMission_Sur", { "done_BEH_Situation_Automate_INF_FinDeMission_Sur" } },
     },
 
     create = function( self )
@@ -79,11 +81,13 @@ do
 
 node "BEH_Situation_Automate_INF_CadreOffensif"
 {
+    feedbacks = { { { "done_BEH_Situation_Automate_INF_CadreOffensif" }, "BEH_Situation_Automate_INF_CadreOffensif" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Situation_Automate_INF_CadreOffensif, {value} ) end,
     activations =
     {
-        { "BEH_Situation_Automate_INF_FinDeMission_Sur", {} },
-        { "BEH_Conduite_Automate_INF_AssignerSemparerA", {} },
-        { "BEH_Conduite_Automate_INF_Reconnaitre_AssignerReco", {} },
+        { "BEH_Situation_Automate_INF_FinDeMission_Sur", { "done_BEH_Situation_Automate_INF_FinDeMission_Sur" } },
+        { "BEH_Conduite_Automate_INF_AssignerSemparerA", { "done_BEH_Conduite_Automate_INF_AssignerSemparerA" } },
+        { "BEH_Conduite_Automate_INF_Reconnaitre_AssignerReco", { "done_BEH_Conduite_Automate_INF_Reconnaitre_AssignerReco" } },
     },
 
     create = function( self )
@@ -154,9 +158,11 @@ end
 
 node "BEH_Conduite_Automate_INF_AssignerSemparerA"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_INF_AssignerSemparerA" }, "BEH_Conduite_Automate_INF_AssignerSemparerA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_INF_AssignerSemparerA, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_INF_AssignerA_Semparer", {} },
+        { "BEH_Mission_Automate_INF_AssignerA_Semparer", { "done_BEH_Mission_Automate_INF_AssignerA_Semparer" } },
     },
 
     create = function( self )
@@ -168,7 +174,7 @@ node "BEH_Conduite_Automate_INF_AssignerSemparerA"
     activate = function( self )
                 self.ptZone = self.ptZone or S_Geometrie_BarycentreZone( self._namedParams.locZone )
         if( ( self.ptZone == 0 or self.ptZone == nil ) ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             Halt( self )
             do return end
         end

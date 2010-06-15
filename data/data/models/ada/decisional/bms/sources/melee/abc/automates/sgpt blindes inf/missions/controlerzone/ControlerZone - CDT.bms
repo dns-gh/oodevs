@@ -20,9 +20,11 @@ includedFiles["sources/melee/abc/automates/sgpt blindes inf/missions/controlerzo
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_ABC_Controler"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ABC_Controler" }, "MIS_Automate_CDT_ABC_Controler" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ABC_Controler, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_ControlerZone", {} },
+        { "BEH_Conduite_Automate_ABC_ControlerZone", { "done_BEH_Conduite_Automate_ABC_ControlerZone" } },
     },
 
     create = function( self )

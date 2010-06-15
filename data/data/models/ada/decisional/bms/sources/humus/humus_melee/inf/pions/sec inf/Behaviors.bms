@@ -119,9 +119,11 @@ include "Humus/Humus_Melee/Inf/Pions/Sec Inf/Missions/SEmparerObjectif.bms"
 
 node "BEH_Misc_Pion_INF_Default"
 {
+    feedbacks = { { { "done_BEH_Misc_Pion_INF_Default" }, "BEH_Misc_Pion_INF_Default" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Misc_Pion_INF_Default, {value} ) end,
     activations =
     {
-        { "BEH_Mot_Pion_Embarquer", {} },
+        { "BEH_Mot_Pion_Embarquer", { "done_BEH_Mot_Pion_Embarquer" } },
     },
 
     create = function( self )
@@ -143,9 +145,11 @@ node "BEH_Misc_Pion_INF_Default"
 
 node "BEH_Tir_Pion_INF_TirDebarque"
 {
+    feedbacks = { { { "done_BEH_Tir_Pion_INF_TirDebarque" }, "BEH_Tir_Pion_INF_TirDebarque" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Tir_Pion_INF_TirDebarque, {value} ) end,
     activations =
     {
-        { "ACT_Tir_Pion_INF_TirDebarque", {} },
+        { "ACT_Tir_Pion_INF_TirDebarque", { "done_ACT_Tir_Pion_INF_TirDebarque" } },
     },
 
     create = function( self )
@@ -156,8 +160,9 @@ node "BEH_Tir_Pion_INF_TirDebarque"
     activate = function( self )
         self.eAction = self.eAction or eActionEnCours
         local eActionReturn = self.eAction
-        Activate( self.activations.ACT_Tir_Pion_INF_TirDebarque, 1, setmetatable( { self._namedParams.ksEni, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                self.params.__returnValue = eActionReturn
+        Activate( self.activations.ACT_Tir_Pion_INF_TirDebarque, 1, { self._namedParams.ksEni, } )
+self.done_ACT_Tir_Pion_INF_TirDebarque = function( self, _, v ) self.eAction = v[1] end
+                self:SendFeedback( eActionReturn )
         do return end
 
     end,

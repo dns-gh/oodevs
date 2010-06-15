@@ -35,18 +35,20 @@ include "Appui/ArtDsa/Pions/Common/Behaviors/Behaviors - Mot.bms"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Defaut"
 {
+    feedbacks = { { { "done_BEH_Defaut" }, "BEH_Defaut" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Defaut, {value} ) end,
     activations =
     {
-        { "BEH_ASA_Defaut", {} },
-        { "BEH_Pion_ASA_GererInstallation", {} },
-        { "BEH_Mot_Pion_ASA_AffecterVariablesDEtat", {} },
-        { "BEH_MAJ_EtatDefaut", {} },
-        { "BEH_Mot_Pion_Embarquer", {} },
-        { "BEH_Ambiance", {} },
-        { "BEH_Nbc", {} },
-        { "BEH_Rens", {} },
-        { "BEH_ROE", {} },
-        { "BEH_Info_Pion_RendreCompte", {} },
+        { "BEH_ASA_Defaut", { "done_BEH_ASA_Defaut" } },
+        { "BEH_Pion_ASA_GererInstallation", { "done_BEH_Pion_ASA_GererInstallation" } },
+        { "BEH_Mot_Pion_ASA_AffecterVariablesDEtat", { "done_BEH_Mot_Pion_ASA_AffecterVariablesDEtat" } },
+        { "BEH_MAJ_EtatDefaut", { "done_BEH_MAJ_EtatDefaut" } },
+        { "BEH_Mot_Pion_Embarquer", { "done_BEH_Mot_Pion_Embarquer" } },
+        { "BEH_Ambiance", { "done_BEH_Ambiance" } },
+        { "BEH_Nbc", { "done_BEH_Nbc" } },
+        { "BEH_Rens", { "done_BEH_Rens" } },
+        { "BEH_ROE", { "done_BEH_ROE" } },
+        { "BEH_Info_Pion_RendreCompte", { "done_BEH_Info_Pion_RendreCompte" } },
     },
 
     create = function( self )
@@ -104,6 +106,8 @@ include "Appui/ArtDsa/Pions/Common/Behaviors/Behaviors - Mot.bms"
 
 node "BEH_Pion_ASA_GererInstallation"
 {
+    feedbacks = { { { "done_BEH_Pion_ASA_GererInstallation" }, "BEH_Pion_ASA_GererInstallation" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pion_ASA_GererInstallation, {value} ) end,
     create = function( self )
     end,
 
@@ -127,9 +131,11 @@ node "BEH_Pion_ASA_GererInstallation"
 
 node "BEH_Dep_Virtuel_ProgressionVers"
 {
+    feedbacks = { { { "done_BEH_Dep_Virtuel_ProgressionVers" }, "BEH_Dep_Virtuel_ProgressionVers" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Virtuel_ProgressionVers, {value} ) end,
     activations =
     {
-        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
     },
 
     create = function( self )
@@ -151,11 +157,13 @@ node "BEH_Dep_Virtuel_ProgressionVers"
 
 node "BEH_Dep_Virtuel_PreparationAction"
 {
+    feedbacks = { { { "done_BEH_Dep_Virtuel_PreparationAction" }, "BEH_Dep_Virtuel_PreparationAction" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Virtuel_PreparationAction, {value} ) end,
     create = function( self )
     end,
 
     activate = function( self )
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         do return end
 
     end,

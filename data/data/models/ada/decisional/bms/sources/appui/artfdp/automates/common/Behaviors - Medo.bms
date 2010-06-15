@@ -14,11 +14,13 @@ includedFiles["sources/appui/artfdp/automates/common/Behaviors - Medo.bms"] = tr
 ]]
 node "BEH_Medo_Automate_PreparerMission_RecoEtDeploiement"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_PreparerMission_RecoEtDeploiement" }, "BEH_Medo_Automate_PreparerMission_RecoEtDeploiement" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_PreparerMission_RecoEtDeploiement, {value} ) end,
     activations =
     {
-        { "ACT_Medo_Automate_AffecterFuseaux", {} },
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
-        { "BEH_Medo_Automate_ASS_AssignerMission_PC", {} },
+        { "ACT_Medo_Automate_AffecterFuseaux", { "done_ACT_Medo_Automate_AffecterFuseaux" } },
+        { "BEH_Medo_Automate_ControleCreationMission", { "done_BEH_Medo_Automate_ControleCreationMission" } },
+        { "BEH_Medo_Automate_ASS_AssignerMission_PC", { "done_BEH_Medo_Automate_ASS_AssignerMission_PC" } },
     },
 
     create = function( self )
@@ -54,7 +56,7 @@ node "BEH_Medo_Automate_PreparerMission_RecoEtDeploiement"
                     if( ( #( self.selPions_ASS_Reco ) == 0 or #( self.selPions_ASS_Reco ) == nil ) ) then
                         do
                             DEC_Trace( "Pas de 1er echelon" )
-                                                        self.params.__returnValue = eActionImpossible
+                                                        self:SendFeedback( eActionImpossible )
                             Halt( self )
                             do return end
 
@@ -96,7 +98,8 @@ do
                                 DIA_PushBack( sFuseau, x )
                             else
 do
-                                    Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux, 1, setmetatable( { sFuseau, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMRT = v else rawset( t, k, v ) end end } ) )
+                                    Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux, 1, { sFuseau, } )
+self.done_ACT_Medo_Automate_AffecterFuseaux = function( self, _, v ) self.eActionMRT = v[1] end
                                     sFuseau = sVide
                                     DIA_PushBack( sFuseau, x )
                                 end
@@ -107,7 +110,8 @@ do
                     end
 
                     if( #( sFuseau ) > 0 ) then
-                        Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux, 1, setmetatable( { sFuseau, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMRT = v else rawset( t, k, v ) end end } ) )
+                        Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux, 1, { sFuseau, } )
+self.done_ACT_Medo_Automate_AffecterFuseaux = function( self, _, v ) self.eActionMRT = v[1] end
                     end
 
                     _continue = false--[[// action ACT_Medo_Automate_AffecterFuseaux( lstPionsAttaque ) return in eActionMRT;				
@@ -119,7 +123,7 @@ elseif switch_1 == eMRT_AssignerMissions then
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// On verifie juste que la batterie peut effectuer la mission
 ]]--[[// if(  eActionMRT == eActionImpossible)    {         {}         halt(eActionImpossible);    }
-]]                    self.params.__returnValue = eActionEffectuee
+]]                    self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -129,7 +133,7 @@ elseif switch_1 == eMRT_AssignerMissions then
                                 DEC_Trace( "eValidationMRT == eActionImpossible" )
                             end
 
-                                                        self.params.__returnValue = eActionImpossible
+                                                        self:SendFeedback( eActionImpossible )
                             Halt( self )
                             do return end
 
@@ -140,7 +144,7 @@ elseif switch_1 == eMRT_AssignerMissions then
                         do
                             self.eValidationMRT = eActionEnCours
                                                         do
-                                                                self.params.__returnValue = eActionEffectuee
+                                                                self:SendFeedback( eActionEffectuee )
                                 Halt( self )
                                 do return end
 
@@ -149,7 +153,8 @@ elseif switch_1 == eMRT_AssignerMissions then
                         end
                     end
 
-                    Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { 1, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { 1, } )
+self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eValidationMRT = v[1] end
                     --[[// behavior BEH_Medo_Automate_ASS_ReconnaitreZonesDeploiement( selPions_ASS_Reco, mission.positionsAReconnaitre_ ) return in eActionMRT;
 ]]--[[// Assigne la mission au pc
 ]]Activate( self.activations.BEH_Medo_Automate_ASS_AssignerMission_PC, 1, { self.selPions_ASS_Reco, } )
@@ -164,11 +169,13 @@ elseif switch_1 == eMRT_AssignerMissions then
 
 node "BEH_Medo_Automate_PreparerMission_ReconnaitreZonesDeploiement"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_PreparerMission_ReconnaitreZonesDeploiement" }, "BEH_Medo_Automate_PreparerMission_ReconnaitreZonesDeploiement" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_PreparerMission_ReconnaitreZonesDeploiement, {value} ) end,
     activations =
     {
-        { "ACT_Medo_Automate_AffecterFuseaux", {} },
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
-        { "BEH_Medo_Automate_ASS_AssignerMission_PC", {} },
+        { "ACT_Medo_Automate_AffecterFuseaux", { "done_ACT_Medo_Automate_AffecterFuseaux" } },
+        { "BEH_Medo_Automate_ControleCreationMission", { "done_BEH_Medo_Automate_ControleCreationMission" } },
+        { "BEH_Medo_Automate_ASS_AssignerMission_PC", { "done_BEH_Medo_Automate_ASS_AssignerMission_PC" } },
     },
 
     create = function( self )
@@ -203,7 +210,7 @@ node "BEH_Medo_Automate_PreparerMission_ReconnaitreZonesDeploiement"
                     if( ( #( self.selPions_ASS_Reco ) == 0 or #( self.selPions_ASS_Reco ) == nil ) ) then
                         do
                             DEC_Trace( "First echelon units is empty" )
-                                                        self.params.__returnValue = eActionImpossible
+                                                        self:SendFeedback( eActionImpossible )
                             Halt( self )
                             do return end
 
@@ -244,7 +251,8 @@ do
                                 DIA_PushBack( sFuseau, x )
                             else
 do
-                                    Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux, 1, setmetatable( { sFuseau, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMRT = v else rawset( t, k, v ) end end } ) )
+                                    Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux, 1, { sFuseau, } )
+self.done_ACT_Medo_Automate_AffecterFuseaux = function( self, _, v ) self.eActionMRT = v[1] end
                                     sFuseau = sVide
                                     DIA_PushBack( sFuseau, x )
                                 end
@@ -255,7 +263,8 @@ do
                     end
 
                     if( #( sFuseau ) > 0 ) then
-                        Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux, 1, setmetatable( { sFuseau, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMRT = v else rawset( t, k, v ) end end } ) )
+                        Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux, 1, { sFuseau, } )
+self.done_ACT_Medo_Automate_AffecterFuseaux = function( self, _, v ) self.eActionMRT = v[1] end
                     end
 
                     _continue = false--[[// action ACT_Medo_Automate_AffecterFuseaux( lstPionsAttaque ) return in eActionMRT;				
@@ -267,7 +276,7 @@ elseif switch_1 == eMRT_AssignerMissions then
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// On verifie juste que la batterie peut effectuer la mission
 ]]--[[// if(  eActionMRT == eActionImpossible)    {         {}         halt(eActionImpossible);    }
-]]                    self.params.__returnValue = eActionEffectuee
+]]                    self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -277,7 +286,7 @@ elseif switch_1 == eMRT_AssignerMissions then
                                 DEC_Trace( "eValidationMRT == eActionImpossible" )
                             end
 
-                                                        self.params.__returnValue = eActionImpossible
+                                                        self:SendFeedback( eActionImpossible )
                             Halt( self )
                             do return end
 
@@ -288,7 +297,7 @@ elseif switch_1 == eMRT_AssignerMissions then
                         do
                             self.eValidationMRT = eActionEnCours
                                                         do
-                                                                self.params.__returnValue = eActionEffectuee
+                                                                self:SendFeedback( eActionEffectuee )
                                 Halt( self )
                                 do return end
 
@@ -297,7 +306,8 @@ elseif switch_1 == eMRT_AssignerMissions then
                         end
                     end
 
-                    Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { 1, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { 1, } )
+self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eValidationMRT = v[1] end
                     --[[// behavior BEH_Medo_Automate_ASS_ReconnaitreZonesDeploiement( selPions_ASS_Reco, mission.positionsAReconnaitre_ ) return in eActionMRT;
 ]]--[[// Assigne la mission au pc
 ]]Activate( self.activations.BEH_Medo_Automate_ASS_AssignerMission_PC, 1, { self.selPions_ASS_Reco, } )
@@ -312,9 +322,11 @@ elseif switch_1 == eMRT_AssignerMissions then
 
 node "BEH_Medo_Automate_ASS_AssignerMission_PC"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_ASS_AssignerMission_PC" }, "BEH_Medo_Automate_ASS_AssignerMission_PC" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_ASS_AssignerMission_PC, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_AssignerSuivreA", {} },
+        { "BEH_Mission_Automate_AssignerSuivreA", { "done_BEH_Mission_Automate_AssignerSuivreA" } },
     },
 
     create = function( self )

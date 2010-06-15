@@ -13,9 +13,11 @@ includedFiles["sources/common/automates/behaviors/Behaviors - Misc.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "BEH_Misc_Automate_GererLesMoyens"
 {
+    feedbacks = { { { "done_BEH_Misc_Automate_GererLesMoyens" }, "BEH_Misc_Automate_GererLesMoyens" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Misc_Automate_GererLesMoyens, {value} ) end,
     activations =
     {
-        { "ACT_Misc_Automate_Gerer", {} },
+        { "ACT_Misc_Automate_Gerer", { "done_ACT_Misc_Automate_Gerer" } },
     },
 
     create = function( self )
@@ -43,6 +45,8 @@ includedFiles["sources/common/automates/behaviors/Behaviors - Misc.bms"] = true
 
 node "ACT_Misc_Automate_Gerer"
 {
+    feedbacks = { { { "done_ACT_Misc_Automate_Gerer" }, "ACT_Misc_Automate_Gerer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Misc_Automate_Gerer, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -72,9 +76,11 @@ node "ACT_Misc_Automate_Gerer"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Automate_CreerPosteControle"
 {
+    feedbacks = { { { "done_BEH_Automate_CreerPosteControle" }, "BEH_Automate_CreerPosteControle" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Automate_CreerPosteControle, {value} ) end,
     activations =
     {
-        { "ACT_Automate_CreerObjetSur", {} },
+        { "ACT_Automate_CreerObjetSur", { "done_ACT_Automate_CreerObjetSur" } },
     },
 
     create = function( self )
@@ -107,9 +113,11 @@ node "ACT_Misc_Automate_Gerer"
 
 node "BEH_Automate_CreerZoneSecurisee"
 {
+    feedbacks = { { { "done_BEH_Automate_CreerZoneSecurisee" }, "BEH_Automate_CreerZoneSecurisee" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Automate_CreerZoneSecurisee, {value} ) end,
     activations =
     {
-        { "ACT_Automate_CreerObjetSur", {} },
+        { "ACT_Automate_CreerObjetSur", { "done_ACT_Automate_CreerObjetSur" } },
     },
 
     create = function( self )

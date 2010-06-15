@@ -24,18 +24,20 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionDynamique"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionDynamique" }, "BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionDynamique" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionDynamique, {value} ) end,
     activations =
     {
-        { "ACT_Info_Automate_Trace", {} },
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
-        { "BEH_Medo_Automate_ABC_AssignerMissionAttaquerA", {} },
-        { "BEH_Medo_Automate_ABC_AssignerMissionEclairerA", {} },
-        { "BEH_Medo_Automate_ABC_AssignerMissionReconnaitreAxeA", {} },
-        { "BEH_Medo_Automate_ABC_AssignerMissionEscorterA", {} },
-        { "BEH_Medo_Automate_ABC_AssignerMissionEscorterEclA", {} },
-        { "BEH_Medo_Automate_ABC_AssignerMissionEscorterAutomateA", {} },
-        { "BEH_Medo_Automate_ABC_AssignerMissionEscorterAutomateEclA", {} },
-        { "ACT_Warning", {} },
+        { "ACT_Info_Automate_Trace", { "done_ACT_Info_Automate_Trace" } },
+        { "BEH_Medo_Automate_ControleCreationMission", { "done_BEH_Medo_Automate_ControleCreationMission" } },
+        { "BEH_Medo_Automate_ABC_AssignerMissionAttaquerA", { "done_BEH_Medo_Automate_ABC_AssignerMissionAttaquerA" } },
+        { "BEH_Medo_Automate_ABC_AssignerMissionEclairerA", { "done_BEH_Medo_Automate_ABC_AssignerMissionEclairerA" } },
+        { "BEH_Medo_Automate_ABC_AssignerMissionReconnaitreAxeA", { "done_BEH_Medo_Automate_ABC_AssignerMissionReconnaitreAxeA" } },
+        { "BEH_Medo_Automate_ABC_AssignerMissionEscorterA", { "done_BEH_Medo_Automate_ABC_AssignerMissionEscorterA" } },
+        { "BEH_Medo_Automate_ABC_AssignerMissionEscorterEclA", { "done_BEH_Medo_Automate_ABC_AssignerMissionEscorterEclA" } },
+        { "BEH_Medo_Automate_ABC_AssignerMissionEscorterAutomateA", { "done_BEH_Medo_Automate_ABC_AssignerMissionEscorterAutomateA" } },
+        { "BEH_Medo_Automate_ABC_AssignerMissionEscorterAutomateEclA", { "done_BEH_Medo_Automate_ABC_AssignerMissionEscorterAutomateEclA" } },
+        { "ACT_Warning", { "done_ACT_Warning" } },
     },
 
     create = function( self )
@@ -239,7 +241,8 @@ elseif switch_1 == eMRT_AssignerMissions then
                                     self.ePhase = eMRT_MissionImpossible
                                 end
 
-                                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.selABC_PE ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( self.selABC_PE ), } )
+self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eEtat = v[1] end
                                 Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionAttaquerA, 1, { self.selABC_PE, eEtatEchelon_Premier, } )
                                 _continue = false
                             --[[//-----------------------------------------------------------------------------
@@ -250,7 +253,8 @@ elseif switch_2 == "T_Mission_Automate_ABC_Eclairer"
                             or switch_2 == "T_Mission_Automate_ABC_Reconnaitre"
                             or switch_2 == "T_Mission_Automate_ABC_PrendrePreciserContact"
                             or switch_2 == "T_Mission_Automate_ABC_Fixer" then
-                                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.selABC_PE ) + #( self.selABC_Ecl ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( self.selABC_PE ) + #( self.selABC_Ecl ), } )
+self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eEtat = v[1] end
                                 Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionEclairerA, 1, { self.selABC_Ecl, eEtatEchelon_Eclairage, } )
                                 Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionReconnaitreAxeA, 1, { self.selABC_PE, eEtatEchelon_Premier, } )
                                 _continue = false
@@ -259,7 +263,8 @@ elseif switch_2 == "T_Mission_Automate_ABC_Eclairer"
 ]]--[[//-----------------------------------------------------------------------------
 ]]                            cases_switch_2[2] = true
 elseif switch_2 == "T_Mission_Automate_ABC_FlancGarder" then
-                                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.selABC_PE ) + #( self.selABC_Ecl ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( self.selABC_PE ) + #( self.selABC_Ecl ), } )
+self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eEtat = v[1] end
                                 Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionEclairerA, 1, { self.selABC_Ecl, eEtatEchelon_Eclairage, } )
                                 Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionAttaquerA, 1, { self.selABC_PE, eEtatEchelon_Premier, } )
                                 _continue = false
@@ -270,7 +275,8 @@ elseif switch_2 == "T_Mission_Automate_ABC_FlancGarder" then
 elseif switch_2 == "T_Mission_Automate_ABC_EscorterUnite" then
                                 local mission = DEC_GetMission( myself )
                                 --[[// 1 pions au moins suffit pour l'escorte
-]]Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { 1, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+]]Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { 1, } )
+self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eEtat = v[1] end
                                 Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionEscorterA, 1, { self.selABC_PE, mission.uniteAEscorter_, eEtatEchelon_Premier, } )
                                 Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionEscorterEclA, 1, { self.selABC_Ecl, mission.uniteAEscorter_, eEtatEchelon_Eclairage, } )
                                 _continue = false
@@ -281,7 +287,8 @@ elseif switch_2 == "T_Mission_Automate_ABC_EscorterUnite" then
 elseif switch_2 == "T_Mission_Automate_ABC_EscorterUnites" then
                                 local mission = DEC_GetMission( myself )
                                 --[[// 1 pions au moins suffit pour l'escorte
-]]Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { 1, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+]]Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { 1, } )
+self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eEtat = v[1] end
                                 Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionEscorterAutomateA, 1, { self.selABC_PE, mission.automateAEscorter_, eEtatEchelon_Premier, } )
                                 Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionEscorterAutomateEclA, 1, { self.selABC_Ecl, mission.automateAEscorter_, eEtatEchelon_Eclairage, } )
                                 _continue = false
@@ -303,7 +310,7 @@ elseif switch_1 == eMRT_MissionImpossible then
 ]]                cases_switch_1[4] = true
 elseif switch_1 == eMRT_Valider then
                     DEC_MRT_Valide()
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 

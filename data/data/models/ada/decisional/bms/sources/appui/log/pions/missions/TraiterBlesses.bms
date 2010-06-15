@@ -11,13 +11,15 @@ includedFiles["sources/appui/log/pions/missions/TraiterBlesses.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "MIS_Pion_LOG_TraiterBlesses"
 {
+    feedbacks = { { { "done_MIS_Pion_LOG_TraiterBlesses" }, "MIS_Pion_LOG_TraiterBlesses" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_LOG_TraiterBlesses, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_ProgressionVers", {} },
-        { "BEH_Pion_Log_Traiter", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
+        { "BEH_Pion_Log_Traiter", { "done_BEH_Pion_Log_Traiter" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "done_BEH_Dep_SePosterFaceADirectionDangereuse" } },
     },
 
     create = function( self )
@@ -40,7 +42,8 @@ includedFiles["sources/appui/log/pions/missions/TraiterBlesses.bms"] = true
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
                 self.ePhaseMission = eFinMission
@@ -80,7 +83,8 @@ elseif switch_1 == eProgresser then
                         end
                     end
 
-                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.positionDeploiement_, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.mission.positionDeploiement_, eProgressionDirect, eTypeItiMouvement, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                 --[[// Deploiement
 ]]                cases_switch_1[2] = true
@@ -112,11 +116,13 @@ elseif switch_1 == eFinMission then
 
 node "BEH_Pion_Log_Traiter"
 {
+    feedbacks = { { { "done_BEH_Pion_Log_Traiter" }, "BEH_Pion_Log_Traiter" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pion_Log_Traiter, {value} ) end,
     activations =
     {
-        { "ACT_Pions_SInstaller", {} },
-        { "ACT_Pion_Log_ActiverFonctionSoin", {} },
-        { "ACT_Pion_Log_DispositifInstalle", {} },
+        { "ACT_Pions_SInstaller", { "done_ACT_Pions_SInstaller" } },
+        { "ACT_Pion_Log_ActiverFonctionSoin", { "done_ACT_Pion_Log_ActiverFonctionSoin" } },
+        { "ACT_Pion_Log_DispositifInstalle", { "done_ACT_Pion_Log_DispositifInstalle" } },
     },
 
     create = function( self )
@@ -143,6 +149,8 @@ node "BEH_Pion_Log_Traiter"
 
 node "ACT_Pion_Log_ActiverFonctionSoin"
 {
+    feedbacks = { { { "done_ACT_Pion_Log_ActiverFonctionSoin" }, "ACT_Pion_Log_ActiverFonctionSoin" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Pion_Log_ActiverFonctionSoin, {value} ) end,
     create = function( self )
     end,
 

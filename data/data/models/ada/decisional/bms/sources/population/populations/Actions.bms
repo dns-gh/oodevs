@@ -14,6 +14,8 @@ includedFiles["sources/population/populations/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Pop_RalentissementPions"
 {
+    feedbacks = { { { "done_ACT_Pop_RalentissementPions" }, "ACT_Pop_RalentissementPions" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Pop_RalentissementPions, {value} ) end,
     create = function( self )
     end,
 
@@ -39,6 +41,8 @@ includedFiles["sources/population/populations/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Pop_PAPPions"
 {
+    feedbacks = { { { "done_ACT_Pop_PAPPions" }, "ACT_Pop_PAPPions" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Pop_PAPPions, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.rIntensite = self.params[1]
@@ -101,6 +105,8 @@ includedFiles["sources/population/populations/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Pop_PAPPion"
 {
+    feedbacks = { { { "done_ACT_Pop_PAPPion" }, "ACT_Pop_PAPPion" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Pop_PAPPion, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -164,6 +170,8 @@ includedFiles["sources/population/populations/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Pop_DegraderInstallations"
 {
+    feedbacks = { { { "done_ACT_Pop_DegraderInstallations" }, "ACT_Pop_DegraderInstallations" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Pop_DegraderInstallations, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.zone = self.params[1]
@@ -204,6 +212,8 @@ includedFiles["sources/population/populations/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Pop_Stationner"
 {
+    feedbacks = { { { "done_ACT_Pop_Stationner" }, "ACT_Pop_Stationner" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Pop_Stationner, {value} ) end,
     actuators =
     {
         deplacement = 1,
@@ -236,6 +246,8 @@ includedFiles["sources/population/populations/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Pop_RejoindrePoint"
 {
+    feedbacks = { { { "done_ACT_Pop_RejoindrePoint" }, "ACT_Pop_RejoindrePoint" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Pop_RejoindrePoint, {value} ) end,
     actuators =
     {
         deplacement = 1,

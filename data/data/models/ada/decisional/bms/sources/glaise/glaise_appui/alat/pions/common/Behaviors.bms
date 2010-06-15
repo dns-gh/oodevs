@@ -43,24 +43,26 @@ include "glaise/glaise_Appui/Alat/Pions/Common/Behaviors/Behaviors - Ambiance.bm
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "BEH_Defaut"
 {
+    feedbacks = { { { "done_BEH_Defaut" }, "BEH_Defaut" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Defaut, {value} ) end,
     activations =
     {
-        { "BEH_MAJ_EtatDefaut", {} },
-        { "BEH_Mot_Pion_ALAT_AffecterVariablesDEtat", {} },
-        { "BEH_ALAT_Ambiance", {} },
-        { "BEH_Nbc", {} },
-        { "BEH_ROE", {} },
-        { "BEH_Rens", {} },
-        { "BEH_Ordre_Pion_ALAT_ChangerParametresRecompletement", {} },
-        { "BEH_Info_Pion_RendreCompte", {} },
-        { "BEH_Dep_Pion_ALAT_SePoser", {} },
-        { "BEH_Log_Pion_ALAT_Recompletement", {} },
-        { "BEH_Lima_GererLimas", {} },
-        { "BEH_Manoeuvre_Pion_SeCoordonner", {} },
-        { "BEH_Manoeuvre_Pion_GestionDestruction", {} },
-        { "BEH_Log_Pion_ALAT_AjoutNouveauPlotsDansFuseau", {} },
-        { "BEH_Log_Pion_ALAT_GererPlotsRavitaillement", {} },
-        { "BEH_Eni_Pion_ALAT_EviterContactsAvecEnnemisConnus", {} },
+        { "BEH_MAJ_EtatDefaut", { "done_BEH_MAJ_EtatDefaut" } },
+        { "BEH_Mot_Pion_ALAT_AffecterVariablesDEtat", { "done_BEH_Mot_Pion_ALAT_AffecterVariablesDEtat" } },
+        { "BEH_ALAT_Ambiance", { "done_BEH_ALAT_Ambiance" } },
+        { "BEH_Nbc", { "done_BEH_Nbc" } },
+        { "BEH_ROE", { "done_BEH_ROE" } },
+        { "BEH_Rens", { "done_BEH_Rens" } },
+        { "BEH_Ordre_Pion_ALAT_ChangerParametresRecompletement", { "done_BEH_Ordre_Pion_ALAT_ChangerParametresRecompletement" } },
+        { "BEH_Info_Pion_RendreCompte", { "done_BEH_Info_Pion_RendreCompte" } },
+        { "BEH_Dep_Pion_ALAT_SePoser", { "done_BEH_Dep_Pion_ALAT_SePoser" } },
+        { "BEH_Log_Pion_ALAT_Recompletement", { "done_BEH_Log_Pion_ALAT_Recompletement" } },
+        { "BEH_Lima_GererLimas", { "done_BEH_Lima_GererLimas" } },
+        { "BEH_Manoeuvre_Pion_SeCoordonner", { "done_BEH_Manoeuvre_Pion_SeCoordonner" } },
+        { "BEH_Manoeuvre_Pion_GestionDestruction", { "done_BEH_Manoeuvre_Pion_GestionDestruction" } },
+        { "BEH_Log_Pion_ALAT_AjoutNouveauPlotsDansFuseau", { "done_BEH_Log_Pion_ALAT_AjoutNouveauPlotsDansFuseau" } },
+        { "BEH_Log_Pion_ALAT_GererPlotsRavitaillement", { "done_BEH_Log_Pion_ALAT_GererPlotsRavitaillement" } },
+        { "BEH_Eni_Pion_ALAT_EviterContactsAvecEnnemisConnus", { "done_BEH_Eni_Pion_ALAT_EviterContactsAvecEnnemisConnus" } },
     },
 
     create = function( self )
@@ -147,9 +149,11 @@ include "glaise/glaise_Appui/Alat/Pions/Common/Behaviors/Behaviors - Ambiance.bm
 
 node "BEH_Dep_Virtuel_ProgressionVers"
 {
+    feedbacks = { { { "done_BEH_Dep_Virtuel_ProgressionVers" }, "BEH_Dep_Virtuel_ProgressionVers" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Virtuel_ProgressionVers, {value} ) end,
     activations =
     {
-        { "BEH_Dep_Pion_ALAT_RejoindrePoint", {} },
+        { "BEH_Dep_Pion_ALAT_RejoindrePoint", { "done_BEH_Dep_Pion_ALAT_RejoindrePoint" } },
     },
 
     create = function( self )
@@ -170,9 +174,11 @@ node "BEH_Dep_Virtuel_ProgressionVers"
 
 node "BEH_Dep_Virtuel_PreparationAction"
 {
+    feedbacks = { { { "done_BEH_Dep_Virtuel_PreparationAction" }, "BEH_Dep_Virtuel_PreparationAction" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Virtuel_PreparationAction, {value} ) end,
     activations =
     {
-        { "BEH_Dep_Pion_ALAT_Voler", {} },
+        { "BEH_Dep_Pion_ALAT_Voler", { "done_BEH_Dep_Pion_ALAT_Voler" } },
     },
 
     create = function( self )
@@ -181,7 +187,7 @@ node "BEH_Dep_Virtuel_PreparationAction"
     activate = function( self )
         Activate( self.activations.BEH_Dep_Pion_ALAT_Voler, 1, {} )--[[//Gestion du vol pour les hélicopteres
 ]]
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         do return end
 
     end,

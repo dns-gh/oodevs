@@ -21,6 +21,8 @@ includedFiles["sources/humus/humus_melee/inf/pions/common/Actions.bms"] = true
 ]]--[[// ******************************************************************************
 ]]node "ACT_MAJ_EtatSituationEni"
 {
+    feedbacks = { { { "done_ACT_MAJ_EtatSituationEni" }, "ACT_MAJ_EtatSituationEni" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_MAJ_EtatSituationEni, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.eEtatSituationEnnemi = self.params[1]
@@ -52,6 +54,8 @@ includedFiles["sources/humus/humus_melee/inf/pions/common/Actions.bms"] = true
 ]]--[[// ============================================================================
 ]]node "ACT_Dep_Pion_INF_Arret"
 {
+    feedbacks = { { { "done_ACT_Dep_Pion_INF_Arret" }, "ACT_Dep_Pion_INF_Arret" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Dep_Pion_INF_Arret, {value} ) end,
     actuators =
     {
         deplacement = 1,
@@ -79,7 +83,7 @@ includedFiles["sources/humus/humus_melee/inf/pions/common/Actions.bms"] = true
                     do
                         --[[// bloc fin
 ]]DEC_Trace( "fin" )
-                                                self.params.__returnValue = eActionEffectuee
+                                                self:SendFeedback( eActionEffectuee )
                         Halt( self )
                         do return end
 
@@ -103,6 +107,8 @@ includedFiles["sources/humus/humus_melee/inf/pions/common/Actions.bms"] = true
 ]]--[[// ============================================================================
 ]]node "ACT_Tir_Pion_INF_Neutraliser"
 {
+    feedbacks = { { { "done_ACT_Tir_Pion_INF_Neutraliser" }, "ACT_Tir_Pion_INF_Neutraliser" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Tir_Pion_INF_Neutraliser, {value} ) end,
     instances =
     {
         max = 1,
@@ -124,6 +130,8 @@ includedFiles["sources/humus/humus_melee/inf/pions/common/Actions.bms"] = true
 ]]--[[// ============================================================================
 ]]node "ACT_Ordre_Pion_INF_AC_FaireRalentir"
 {
+    feedbacks = { { { "done_ACT_Ordre_Pion_INF_AC_FaireRalentir" }, "ACT_Ordre_Pion_INF_AC_FaireRalentir" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Ordre_Pion_INF_AC_FaireRalentir, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.tAmi = self.params[1]
@@ -156,6 +164,8 @@ includedFiles["sources/humus/humus_melee/inf/pions/common/Actions.bms"] = true
 ]]--[[// ============================================================================
 ]]node "ACT_Tir_INF_FumigeneVersEni"
 {
+    feedbacks = { { { "done_ACT_Tir_INF_FumigeneVersEni" }, "ACT_Tir_INF_FumigeneVersEni" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Tir_INF_FumigeneVersEni, {value} ) end,
     actuators =
     {
         tir = 1,
@@ -189,6 +199,8 @@ includedFiles["sources/humus/humus_melee/inf/pions/common/Actions.bms"] = true
 ]]--[[// ============================================================================
 ]]node "ACT_Misc_Pion_INF_MAJ_PositionRegroupement"
 {
+    feedbacks = { { { "done_ACT_Misc_Pion_INF_MAJ_PositionRegroupement" }, "ACT_Misc_Pion_INF_MAJ_PositionRegroupement" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Misc_Pion_INF_MAJ_PositionRegroupement, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.ptRegroupement = self.params[1]
@@ -222,6 +234,8 @@ includedFiles["sources/humus/humus_melee/inf/pions/common/Actions.bms"] = true
 ]]--[[// ============================================================================
 ]]node "ACT_Misc_Pion_Ambiance"
 {
+    feedbacks = { { { "done_ACT_Misc_Pion_Ambiance" }, "ACT_Misc_Pion_Ambiance" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Misc_Pion_Ambiance, {value} ) end,
     actuators =
     {
         etat_Ambiance = 1,
@@ -244,6 +258,8 @@ includedFiles["sources/humus/humus_melee/inf/pions/common/Actions.bms"] = true
 ]]--[[// ============================================================================
 ]]node "ACT_Dep_Pion_INF_ActiverFurtivite"
 {
+    feedbacks = { { { "done_ACT_Dep_Pion_INF_ActiverFurtivite" }, "ACT_Dep_Pion_INF_ActiverFurtivite" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Dep_Pion_INF_ActiverFurtivite, {value} ) end,
     actuators =
     {
         furtivite = 1,
@@ -272,6 +288,8 @@ includedFiles["sources/humus/humus_melee/inf/pions/common/Actions.bms"] = true
 
 node "ACT_Obj_Pion_INF_RealiserBouchonMines"
 {
+    feedbacks = { { { "done_ACT_Obj_Pion_INF_RealiserBouchonMines" }, "ACT_Obj_Pion_INF_RealiserBouchonMines" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obj_Pion_INF_RealiserBouchonMines, {value} ) end,
     actuators =
     {
         deplacement = 2,
@@ -294,7 +312,7 @@ node "ACT_Obj_Pion_INF_RealiserBouchonMines"
         if( ModuleBegins() ) then
             do
                 if( not DEC_Agent_PeutConstruireObjet( S_TypeObject_ToString( eTypeObjectBouchonMines ) ) ) then
-                    self.params.__returnValue = eActionImpossible
+                    self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
                 end
@@ -335,14 +353,14 @@ elseif switch_1 == eActionObjetTerminee then
                     end
 
                     DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
                     _continue = false
                 elseif switch_1 == eActionObjetImpossible then
                     DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -383,6 +401,8 @@ elseif switch_1 == eActionObjetTerminee then
 
 node "ACT_Obj_Pion_INF_RealiserObjet"
 {
+    feedbacks = { { { "done_ACT_Obj_Pion_INF_RealiserObjet" }, "ACT_Obj_Pion_INF_RealiserObjet" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obj_Pion_INF_RealiserObjet, {value} ) end,
     actuators =
     {
         deplacement = 2,
@@ -408,7 +428,7 @@ node "ACT_Obj_Pion_INF_RealiserObjet"
                 if( not DEC_Agent_PeutConstruireObjet( S_TypeObject_ToString( self._namedParams.eTypeObjet ) ) ) then
                     do
                         DEC_Trace( "realisation objet : impossible" )
-                                                self.params.__returnValue = eActionImpossible
+                                                self:SendFeedback( eActionImpossible )
                         Halt( self )
                         do return end
 
@@ -451,7 +471,7 @@ elseif switch_1 == eActionObjetTerminee then
                     end
 
                     DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -459,7 +479,7 @@ elseif switch_1 == eActionObjetTerminee then
                 elseif switch_1 == eActionObjetPasDeCapacite then
                     DEC_Trace( "realisation objet : pas de capacites" )
                     DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -471,7 +491,7 @@ elseif switch_1 == eActionObjetTerminee then
                 end
                 if cases_switch_1[4] or switch_1 == eActionObjetImpossible then
                     DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -515,6 +535,8 @@ elseif switch_1 == eActionObjetTerminee then
 ]]--[[//-----------------------------------------------------------------------------
 ]]node "ACT_Obj_Pion_INF_Detruire"
 {
+    feedbacks = { { { "done_ACT_Obj_Pion_INF_Detruire" }, "ACT_Obj_Pion_INF_Detruire" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obj_Pion_INF_Detruire, {value} ) end,
     actuators =
     {
         deplacement = 2,
@@ -552,7 +574,7 @@ elseif switch_1 == eActionObjetTerminee then
 elseif switch_1 == eActionObjetTerminee then
                     DEC_Trace( "destruction : fin" )
                     DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -560,7 +582,7 @@ elseif switch_1 == eActionObjetTerminee then
                 elseif switch_1 == eActionObjetImpossible
                 or switch_1 == eActionObjetManqueDotation then
                     DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 

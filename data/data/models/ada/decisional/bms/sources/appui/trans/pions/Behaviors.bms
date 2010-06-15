@@ -66,11 +66,13 @@ include "Appui/Trans/Pions/Missions/FaireMouvement.bms"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Defaut"
 {
+    feedbacks = { { { "done_BEH_Defaut" }, "BEH_Defaut" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Defaut, {value} ) end,
     activations =
     {
-        { "BEH_MAJ_EtatDefaut", {} },
-        { "BEH_Info_Pion_RendreCompte", {} },
-        { "BEH_Mot_Pion_Embarquer", {} },
+        { "BEH_MAJ_EtatDefaut", { "done_BEH_MAJ_EtatDefaut" } },
+        { "BEH_Info_Pion_RendreCompte", { "done_BEH_Info_Pion_RendreCompte" } },
+        { "BEH_Mot_Pion_Embarquer", { "done_BEH_Mot_Pion_Embarquer" } },
     },
 
     create = function( self )

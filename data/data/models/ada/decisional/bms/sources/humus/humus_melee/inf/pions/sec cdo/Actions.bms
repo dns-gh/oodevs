@@ -18,6 +18,8 @@ includedFiles["sources/humus/humus_melee/inf/pions/sec cdo/Actions.bms"] = true
 ]]
 node "ACT_Transport_Pion_INF_Debarquer"
 {
+    feedbacks = { { { "done_ACT_Transport_Pion_INF_Debarquer" }, "ACT_Transport_Pion_INF_Debarquer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Transport_Pion_INF_Debarquer, {value} ) end,
     actuators =
     {
         deplacement = 1,
@@ -51,7 +53,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                 or switch_1 == eActionEmbDeb_PasDeTransporteurs then
                     DEC_Trace( "Debarquement : ignore transporteur" )
                     DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -59,7 +61,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                 if cases_switch_1[2] or switch_1 == eActionEmbDeb_Termine then
                     DEC_Message( eRC_DisembarkmentFinished )
                     DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -100,6 +102,8 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
 ]]--[[//-----------------------------------------------------------------------------
 ]]node "ACT_Tir_Pion_INF_TirDebarque"
 {
+    feedbacks = { { { "done_ACT_Tir_Pion_INF_TirDebarque" }, "ACT_Tir_Pion_INF_TirDebarque" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Tir_Pion_INF_TirDebarque, {value} ) end,
     actuators =
     {
         tir_debarque = 1,
@@ -144,7 +148,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                     end
 
                     DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -155,7 +159,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                     end
 
                     DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -167,7 +171,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
 
                     DEC_StopAction( self.actionID )
                     --[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMunition );
-]]                    self.params.__returnValue = eActionEffectuee
+]]                    self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -178,7 +182,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                     end
 
                     DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -189,7 +193,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                     end
 
                     DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -204,7 +208,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                 end
             end
 
-                self.params.__returnValue = eActionEnCours
+                self:SendFeedback( eActionEnCours )
         do return end
 
 --[[//-----------------------------------------------------------------------------
@@ -236,6 +240,8 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
 ]]--[[//-----------------------------------------------------------------------------
 ]]node "ACT_Tir_Pion_INF_TirCouverture"
 {
+    feedbacks = { { { "done_ACT_Tir_Pion_INF_TirCouverture" }, "ACT_Tir_Pion_INF_TirCouverture" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Tir_Pion_INF_TirCouverture, {value} ) end,
     actuators =
     {
         tir_couverture = 1,
@@ -280,7 +286,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                     end
 
                     DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -291,7 +297,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                     end
 
                     DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -303,7 +309,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
 
                     DEC_StopAction( self.actionID )
                     --[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMunition );
-]]                    self.params.__returnValue = eActionEffectuee
+]]                    self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -314,7 +320,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                     end
 
                     DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -325,7 +331,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                     end
 
                     DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -340,7 +346,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                 end
             end
 
-                self.params.__returnValue = eActionEnCours
+                self:SendFeedback( eActionEnCours )
         do return end
 
     end,
@@ -368,6 +374,8 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
 
 node "ACT_Pion_VAB_ControleZone"
 {
+    feedbacks = { { { "done_ACT_Pion_VAB_ControleZone" }, "ACT_Pion_VAB_ControleZone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Pion_VAB_ControleZone, {value} ) end,
     actuators =
     {
         controle_zone = 1,
@@ -441,6 +449,8 @@ node "ACT_Pion_VAB_ControleZone"
 --[[//booleens suspension reprise et terminaison
 ]]node "ACT_Obj_Pion_INF_PreparerAbattis"
 {
+    feedbacks = { { { "done_ACT_Obj_Pion_INF_PreparerAbattis" }, "ACT_Obj_Pion_INF_PreparerAbattis" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obj_Pion_INF_PreparerAbattis, {value} ) end,
     actuators =
     {
         deplacement = 2,
@@ -463,7 +473,7 @@ node "ACT_Pion_VAB_ControleZone"
             do
                 DEC_Trace( "preparation abatti ( l = " .. FloatToString( self._namedParams.rLongueur ) .. " ) : debut" )
                 if( not DEC_Agent_PeutConstruireObjet( S_TypeObject_ToString( eTypeObjectAbatti ) ) ) then
-                    self.params.__returnValue = eActionImpossible
+                    self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
                 end
@@ -503,7 +513,7 @@ elseif switch_1 == eActionObjetTerminee then
                     end
 
                     DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -514,7 +524,7 @@ elseif switch_1 == eActionObjetTerminee then
                 end
                 if cases_switch_1[3] or switch_1 == eActionObjetImpossible then
                     DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -559,6 +569,8 @@ elseif switch_1 == eActionObjetTerminee then
 --[[//booleens suspension reprise et terminaison
 ]]node "ACT_Obj_Pion_INF_Valoriser"
 {
+    feedbacks = { { { "done_ACT_Obj_Pion_INF_Valoriser" }, "ACT_Obj_Pion_INF_Valoriser" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obj_Pion_INF_Valoriser, {value} ) end,
     actuators =
     {
         deplacement = 2,
@@ -613,7 +625,7 @@ elseif switch_1 == eActionObjetTerminee then
                     end
 
                     DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -621,7 +633,7 @@ elseif switch_1 == eActionObjetTerminee then
                 elseif switch_1 == eActionObjetImpossible
                 or switch_1 == eActionObjetManqueDotation then
                     DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -665,6 +677,8 @@ elseif switch_1 == eActionObjetTerminee then
 
 node "ACT_Obj_Pion_INF_Activer"
 {
+    feedbacks = { { { "done_ACT_Obj_Pion_INF_Activer" }, "ACT_Obj_Pion_INF_Activer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obj_Pion_INF_Activer, {value} ) end,
     actuators =
     {
         deplacement = 1,
@@ -683,7 +697,7 @@ node "ACT_Obj_Pion_INF_Activer"
         if( DEC_ActiverObjet( self._namedParams.repObj ) ) then
             do
                 DEC_Trace( "activation : fin" )
-                                self.params.__returnValue = eActionEffectuee
+                                self:SendFeedback( eActionEffectuee )
                 Halt( self )
                 do return end
 
@@ -691,7 +705,7 @@ node "ACT_Obj_Pion_INF_Activer"
         else
 do
                 DEC_Trace( "activation : impossible" )
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 

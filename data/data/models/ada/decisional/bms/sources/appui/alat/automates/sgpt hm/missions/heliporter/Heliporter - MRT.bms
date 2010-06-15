@@ -13,6 +13,8 @@ includedFiles["sources/appui/alat/automates/sgpt hm/missions/heliporter/Heliport
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "MIS_Automate_MRT_ALAT_Heliporter"
 {
+    feedbacks = { { { "done_MIS_Automate_MRT_ALAT_Heliporter" }, "MIS_Automate_MRT_ALAT_Heliporter" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_MRT_ALAT_Heliporter, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission
@@ -27,7 +29,7 @@ includedFiles["sources/appui/alat/automates/sgpt hm/missions/heliporter/Heliport
                 if( DIA_IsListEmpty( self.listeHM ) ) then
                     do
                         DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
-                                                self.params.__returnValue = eActionImpossible
+                                                self:SendFeedback( eActionImpossible )
                         Halt( self )
                         do return end
 
@@ -41,7 +43,7 @@ includedFiles["sources/appui/alat/automates/sgpt hm/missions/heliporter/Heliport
 ]]if( DIA_IsListEmpty( self.listePionsAHeliporter ) ) then
                     do
                         DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
-                                                self.params.__returnValue = eActionImpossible
+                                                self:SendFeedback( eActionImpossible )
                         Halt( self )
                         do return end
 
@@ -53,7 +55,7 @@ includedFiles["sources/appui/alat/automates/sgpt hm/missions/heliporter/Heliport
         end
 
         DEC_MRT_Valide()
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         Halt( self )
         do return end
 

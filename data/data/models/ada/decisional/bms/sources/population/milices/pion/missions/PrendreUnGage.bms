@@ -17,12 +17,14 @@ includedFiles["sources/population/milices/pion/missions/PrendreUnGage.bms"] = tr
 
 node "MIS_Pion_MILICE_PrendreEtTenir"
 {
+    feedbacks = { { { "done_MIS_Pion_MILICE_PrendreEtTenir" }, "MIS_Pion_MILICE_PrendreEtTenir" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_MILICE_PrendreEtTenir, {value} ) end,
     activations =
     {
-        { "BEH_MAJ_AgressiviteMission", {} },
-        { "BEH_Misc_Pion_DefinirTypeMission", {} },
-        { "BEH_Mission_Pion_Milice_PrendreEtTenir", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_MAJ_AgressiviteMission", { "done_BEH_MAJ_AgressiviteMission" } },
+        { "BEH_Misc_Pion_DefinirTypeMission", { "done_BEH_Misc_Pion_DefinirTypeMission" } },
+        { "BEH_Mission_Pion_Milice_PrendreEtTenir", { "done_BEH_Mission_Pion_Milice_PrendreEtTenir" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
     },
 
     create = function( self )
@@ -68,7 +70,7 @@ elseif switch_1 == eFinMission then
                     if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
                         do
                             DEC_FinMission()
-                                                        self.params.__returnValue = eActionEffectuee
+                                                        self:SendFeedback( eActionEffectuee )
                             Halt( self )
                             do return end
 
@@ -90,9 +92,11 @@ elseif switch_1 == eFinMission then
 
 node "BEH_Mission_Pion_Milice_PrendreEtTenir"
 {
+    feedbacks = { { { "done_BEH_Mission_Pion_Milice_PrendreEtTenir" }, "BEH_Mission_Pion_Milice_PrendreEtTenir" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Pion_Milice_PrendreEtTenir, {value} ) end,
     activations =
     {
-        { "BEH_Dep_Pion_Milice_PrendreEtTenir", {} },
+        { "BEH_Dep_Pion_Milice_PrendreEtTenir", { "done_BEH_Dep_Pion_Milice_PrendreEtTenir" } },
     },
 
     create = function( self )
@@ -120,7 +124,8 @@ node "BEH_Mission_Pion_Milice_PrendreEtTenir"
                         end
                     end
 
-                    Activate( self.activations.BEH_Dep_Pion_Milice_PrendreEtTenir, 1, setmetatable( { self.mission.pointAPrendre_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_Pion_Milice_PrendreEtTenir, 1, { self.mission.pointAPrendre_, } )
+self.done_BEH_Dep_Pion_Milice_PrendreEtTenir = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eSurveiller then
@@ -135,11 +140,13 @@ elseif switch_1 == eSurveiller then
 
 node "BEH_Dep_Pion_Milice_PrendreEtTenir"
 {
+    feedbacks = { { { "done_BEH_Dep_Pion_Milice_PrendreEtTenir" }, "BEH_Dep_Pion_Milice_PrendreEtTenir" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Pion_Milice_PrendreEtTenir, {value} ) end,
     activations =
     {
-        { "BEH_Dep_ProgressionVers", {} },
-        { "ACT_Info_Trace", {} },
-        { "ACT_Obs_EtablirVisionVersPt", {} },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "ACT_Obs_EtablirVisionVersPt", { "done_ACT_Obs_EtablirVisionVersPt" } },
     },
 
     create = function( self )
@@ -156,13 +163,13 @@ node "BEH_Dep_Pion_Milice_PrendreEtTenir"
         if( self.eActionRejoindre == eActionImpossible ) then
             do
                                 do
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -173,7 +180,7 @@ node "BEH_Dep_Pion_Milice_PrendreEtTenir"
             do
                 self.eActionRejoindre = eActionEnCours
                                 do
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -182,7 +189,8 @@ node "BEH_Dep_Pion_Milice_PrendreEtTenir"
             end
         end
 
-        Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.ptObjectif, eProgressionReco, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionRejoindre = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.ptObjectif, eProgressionReco, eTypeItiMouvement, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eActionRejoindre = v[1] end
         do
         end
 --[[// S'il ya du monde, intimider ...				

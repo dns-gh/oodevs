@@ -9,13 +9,15 @@ includedFiles["sources/appui/trans/pions/missions/SeFaireTransporter.bms"] = tru
 ]]--[[// *****************************************************************************
 ]]node "MIS_Pion_SeFaireTransporter"
 {
+    feedbacks = { { { "done_MIS_Pion_SeFaireTransporter" }, "MIS_Pion_SeFaireTransporter" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_SeFaireTransporter, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "BEH_Dep_Trans_SeFaireTransporter", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_ProgressionVers", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "BEH_Dep_Trans_SeFaireTransporter", { "done_BEH_Dep_Trans_SeFaireTransporter" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "done_BEH_Dep_SePosterFaceADirectionDangereuse" } },
     },
 
     create = function( self )
@@ -27,7 +29,8 @@ includedFiles["sources/appui/trans/pions/missions/SeFaireTransporter.bms"] = tru
         self.ePhase = self.ePhase or ePreparerMission
         self.eEtat = self.eEtat or eActionEnCours
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
                 self.ePhase = eFinMission
@@ -80,7 +83,8 @@ elseif switch_1 == eProgresser then
                         end
                     end
 
-                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.pointEmbarquement_, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.mission.pointEmbarquement_, eProgressionDirect, eTypeItiMouvement, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                 --[[// Attendre le transport
 ]]                cases_switch_1[2] = true
@@ -113,9 +117,11 @@ elseif switch_1 == eFinMission then
 
 node "BEH_Dep_Trans_SeFaireTransporter"
 {
+    feedbacks = { { { "done_BEH_Dep_Trans_SeFaireTransporter" }, "BEH_Dep_Trans_SeFaireTransporter" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Trans_SeFaireTransporter, {value} ) end,
     activations =
     {
-        { "ACT_Dep_Trans_TransportEnCours", {} },
+        { "ACT_Dep_Trans_TransportEnCours", { "done_ACT_Dep_Trans_TransportEnCours" } },
     },
 
     create = function( self )
@@ -138,6 +144,8 @@ node "BEH_Dep_Trans_SeFaireTransporter"
 
 node "ACT_Dep_Trans_TransportEnCours"
 {
+    feedbacks = { { { "done_ACT_Dep_Trans_TransportEnCours" }, "ACT_Dep_Trans_TransportEnCours" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Dep_Trans_TransportEnCours, {value} ) end,
     create = function( self )
     end,
 

@@ -10,6 +10,8 @@ includedFiles["sources/common/pions/actions/Actions - Tir.bms"] = true
 ]]
 node "ACT_Tir_DirectSur"
 {
+    feedbacks = { { { "done_ACT_Tir_DirectSur" }, "ACT_Tir_DirectSur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Tir_DirectSur, {value} ) end,
     actuators = F_TIR_ACTUATEURS()
 ,
 
@@ -53,7 +55,7 @@ elseif switch_1 == eActionTirDirect_NoAmmo
                 or switch_1 == eActionTirDirect_Finished then
                     self.actionTir = DEC_StopAction( self.actionTir )
                     F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -72,7 +74,7 @@ elseif switch_1 == eActionTirDirect_NoAmmo
                 F_Pion_SeteEtatFeu( myself, eEtatFeu_aucun )
         self.actionTir = DEC_StopAction( self.actionTir )
         DEC_Trace( "Stop firing" )
-                self.params.__returnValue = eActionHalt
+                self:SendFeedback( eActionHalt )
         Halt( self )
         do return end
 
@@ -95,6 +97,8 @@ elseif switch_1 == eActionTirDirect_NoAmmo
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_Tir_DirectSurTypeMunition"
 {
+    feedbacks = { { { "done_ACT_Tir_DirectSurTypeMunition" }, "ACT_Tir_DirectSurTypeMunition" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Tir_DirectSurTypeMunition, {value} ) end,
     actuators = F_TIR_ACTUATEURS()
 ,
 
@@ -135,7 +139,7 @@ elseif switch_1 == eActionTirDirect_NoAmmo
                 or switch_1 == eActionTirDirect_EnemyDestroyed
                 or switch_1 == eActionTirDirect_Finished then
                     self.actionTir = DEC_StopAction( self.actionTir )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -153,7 +157,7 @@ elseif switch_1 == eActionTirDirect_NoAmmo
     deselect = function( self )
                 self.actionTir = DEC_StopAction( self.actionTir )
         DEC_Trace( "Stop firing" )
-                self.params.__returnValue = eActionHalt
+                self:SendFeedback( eActionHalt )
         Halt( self )
         do return end
 
@@ -174,6 +178,8 @@ elseif switch_1 == eActionTirDirect_NoAmmo
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_Tir_IndirectSur"
 {
+    feedbacks = { { { "done_ACT_Tir_IndirectSur" }, "ACT_Tir_IndirectSur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Tir_IndirectSur, {value} ) end,
     actuators = F_TIR_ACTUATEURS()
 ,
 
@@ -202,7 +208,7 @@ elseif switch_1 == eActionTirDirect_NoAmmo
     deselect = function( self )
                 self.actionTir = DEC_StopAction( self.actionTir )
         DEC_Trace( "Stop firing" )
-                self.params.__returnValue = eActionHalt
+                self:SendFeedback( eActionHalt )
         Halt( self )
         do return end
 
@@ -223,6 +229,8 @@ elseif switch_1 == eActionTirDirect_NoAmmo
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_Tir_IndirectSurPosition"
 {
+    feedbacks = { { { "done_ACT_Tir_IndirectSurPosition" }, "ACT_Tir_IndirectSurPosition" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Tir_IndirectSurPosition, {value} ) end,
     actuators = F_TIR_ACTUATEURS()
 ,
 
@@ -251,7 +259,7 @@ elseif switch_1 == eActionTirDirect_NoAmmo
     deselect = function( self )
                 self.actionTir = DEC_StopAction( self.actionTir )
         DEC_Trace( "Stop firing" )
-                self.params.__returnValue = eActionHalt
+                self:SendFeedback( eActionHalt )
         Halt( self )
         do return end
 
@@ -272,6 +280,8 @@ elseif switch_1 == eActionTirDirect_NoAmmo
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_Tir_FumigeneVersEni"
 {
+    feedbacks = { { { "done_ACT_Tir_FumigeneVersEni" }, "ACT_Tir_FumigeneVersEni" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Tir_FumigeneVersEni, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.connaissanceEni = self.params[1]
@@ -294,6 +304,8 @@ elseif switch_1 == eActionTirDirect_NoAmmo
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_Tir_ChangerConsigne"
 {
+    feedbacks = { { { "done_ACT_Tir_ChangerConsigne" }, "ACT_Tir_ChangerConsigne" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Tir_ChangerConsigne, {value} ) end,
     actuators =
     {
         etat_ROE = 1,

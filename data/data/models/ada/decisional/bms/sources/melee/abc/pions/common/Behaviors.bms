@@ -34,16 +34,18 @@ includedFiles["sources/melee/abc/pions/common/Behaviors.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "BEH_Defaut"
 {
+    feedbacks = { { { "done_BEH_Defaut" }, "BEH_Defaut" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Defaut, {value} ) end,
     activations =
     {
-        { "BEH_Mot_Pion_ABC_AffecterVariablesDEtat", {} },
-        { "BEH_MAJ_EtatDefaut", {} },
-        { "BEH_ROE", {} },
-        { "BEH_Ambiance", {} },
-        { "BEH_Nbc", {} },
-        { "BEH_Rens", {} },
-        { "BEH_Pion_ABC_Default", {} },
-        { "BEH_MAJ_Pion_ABC_EniDangereux", {} },
+        { "BEH_Mot_Pion_ABC_AffecterVariablesDEtat", { "done_BEH_Mot_Pion_ABC_AffecterVariablesDEtat" } },
+        { "BEH_MAJ_EtatDefaut", { "done_BEH_MAJ_EtatDefaut" } },
+        { "BEH_ROE", { "done_BEH_ROE" } },
+        { "BEH_Ambiance", { "done_BEH_Ambiance" } },
+        { "BEH_Nbc", { "done_BEH_Nbc" } },
+        { "BEH_Rens", { "done_BEH_Rens" } },
+        { "BEH_Pion_ABC_Default", { "done_BEH_Pion_ABC_Default" } },
+        { "BEH_MAJ_Pion_ABC_EniDangereux", { "done_BEH_MAJ_Pion_ABC_EniDangereux" } },
     },
 
     create = function( self )
@@ -90,9 +92,11 @@ includedFiles["sources/melee/abc/pions/common/Behaviors.bms"] = true
 
 node "BEH_MAJ_Pion_ABC_EniDangereux"
 {
+    feedbacks = { { { "done_BEH_MAJ_Pion_ABC_EniDangereux" }, "BEH_MAJ_Pion_ABC_EniDangereux" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MAJ_Pion_ABC_EniDangereux, {value} ) end,
     activations =
     {
-        { "ACT_MAJ_EnnemiEnCours", {} },
+        { "ACT_MAJ_EnnemiEnCours", { "done_ACT_MAJ_EnnemiEnCours" } },
     },
 
     create = function( self )
@@ -119,11 +123,13 @@ node "BEH_MAJ_Pion_ABC_EniDangereux"
 
 node "BEH_Dep_Pion_ABC_SeCoordonnerAvec"
 {
+    feedbacks = { { { "done_BEH_Dep_Pion_ABC_SeCoordonnerAvec" }, "BEH_Dep_Pion_ABC_SeCoordonnerAvec" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Pion_ABC_SeCoordonnerAvec, {value} ) end,
     activations =
     {
-        { "ACT_Dep_ModulationVitesse", {} },
-        { "ACT_Dep_SePoster", {} },
-        { "ACT_Info_Trace", {} },
+        { "ACT_Dep_ModulationVitesse", { "done_ACT_Dep_ModulationVitesse" } },
+        { "ACT_Dep_SePoster", { "done_ACT_Dep_SePoster" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
     },
 
     create = function( self )
@@ -180,11 +186,13 @@ node "BEH_Dep_Pion_ABC_SeCoordonnerAvec"
 
 node "BEH_Lima_Pion_ABC_SePosterSurLCA"
 {
+    feedbacks = { { { "done_BEH_Lima_Pion_ABC_SePosterSurLCA" }, "BEH_Lima_Pion_ABC_SePosterSurLCA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Lima_Pion_ABC_SePosterSurLCA, {value} ) end,
     activations =
     {
-        { "ACT_Dep_PasserSurLima", {} },
-        { "BEH_Dep_SePoster", {} },
-        { "ACT_Obs_EtablirVisionCur", {} },
+        { "ACT_Dep_PasserSurLima", { "done_ACT_Dep_PasserSurLima" } },
+        { "BEH_Dep_SePoster", { "done_BEH_Dep_SePoster" } },
+        { "ACT_Obs_EtablirVisionCur", { "done_ACT_Obs_EtablirVisionCur" } },
     },
 
     create = function( self )
@@ -197,7 +205,7 @@ node "BEH_Lima_Pion_ABC_SePosterSurLCA"
 ]]--[[// Terminaison
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( DEC_Agent_NiveauInstallation() == eNiveauInstallation_PosteReflexe ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -223,10 +231,12 @@ node "BEH_Lima_Pion_ABC_SePosterSurLCA"
 
 node "BEH_Lima_Pion_ABC_SePosterSurLCAR"
 {
+    feedbacks = { { { "done_BEH_Lima_Pion_ABC_SePosterSurLCAR" }, "BEH_Lima_Pion_ABC_SePosterSurLCAR" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Lima_Pion_ABC_SePosterSurLCAR, {value} ) end,
     activations =
     {
-        { "ACT_Dep_SePoster", {} },
-        { "ACT_Dep_PasserSurLima", {} },
+        { "ACT_Dep_SePoster", { "done_ACT_Dep_SePoster" } },
+        { "ACT_Dep_PasserSurLima", { "done_ACT_Dep_PasserSurLima" } },
     },
 
     create = function( self )
@@ -274,10 +284,12 @@ node "BEH_Lima_Pion_ABC_SePosterSurLCAR"
 
 node "BEH_Obs_Pion_ABC_ReconnaitrePoint"
 {
+    feedbacks = { { { "done_BEH_Obs_Pion_ABC_ReconnaitrePoint" }, "BEH_Obs_Pion_ABC_ReconnaitrePoint" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Obs_Pion_ABC_ReconnaitrePoint, {value} ) end,
     activations =
     {
-        { "ACT_Obs_ReconnaitrePoint", {} },
-        { "ACT_Obs_EtablirVisionVersPt", {} },
+        { "ACT_Obs_ReconnaitrePoint", { "done_ACT_Obs_ReconnaitrePoint" } },
+        { "ACT_Obs_EtablirVisionVersPt", { "done_ACT_Obs_EtablirVisionVersPt" } },
     },
 
     create = function( self )
@@ -304,7 +316,7 @@ node "BEH_Obs_Pion_ABC_ReconnaitrePoint"
                 self.eEtat = eActionEnCours
                                 do
                     DEC_Trace( "Fin reconnaissance point" )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -316,7 +328,8 @@ node "BEH_Obs_Pion_ABC_ReconnaitrePoint"
 ]]--[[//-----------------------------------------------------------------------------
 ]]        end
 
-        Activate( self.activations.ACT_Obs_ReconnaitrePoint, 1, setmetatable( { self.point, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Obs_ReconnaitrePoint, 1, { self.point, } )
+self.done_ACT_Obs_ReconnaitrePoint = function( self, _, v ) self.eEtat = v[1] end
         Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1, { self.point, } )
     end,
 
@@ -331,10 +344,12 @@ node "BEH_Obs_Pion_ABC_ReconnaitrePoint"
 
 node "BEH_Obs_Pion_ABC_SePosterSurBond"
 {
+    feedbacks = { { { "done_BEH_Obs_Pion_ABC_SePosterSurBond" }, "BEH_Obs_Pion_ABC_SePosterSurBond" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Obs_Pion_ABC_SePosterSurBond, {value} ) end,
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "ACT_Dep_SePoster", {} },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "ACT_Dep_SePoster", { "done_ACT_Dep_SePoster" } },
     },
 
     create = function( self )
@@ -361,7 +376,7 @@ node "BEH_Obs_Pion_ABC_SePosterSurBond"
         if( F_Pion_GeteEtatAmbiance( myself ) == eEtatAmbiance_Vitesse ) then
             do
                 if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Arret ) then
-                    self.params.__returnValue = eActionEffectuee
+                    self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
                 end
@@ -371,7 +386,7 @@ node "BEH_Obs_Pion_ABC_SePosterSurBond"
 ]]        else
 do
                 if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_PosteReflexe ) then
-                    self.params.__returnValue = eActionEffectuee
+                    self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
                 end
@@ -396,10 +411,12 @@ do
 
 node "BEH_Dep_Pion_ABC_RejoindrePositionAppuiPour"
 {
+    feedbacks = { { { "done_BEH_Dep_Pion_ABC_RejoindrePositionAppuiPour" }, "BEH_Dep_Pion_ABC_RejoindrePositionAppuiPour" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Pion_ABC_RejoindrePositionAppuiPour, {value} ) end,
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
     },
 
     create = function( self )
@@ -417,7 +434,7 @@ node "BEH_Dep_Pion_ABC_RejoindrePositionAppuiPour"
             do
                 self.eEtat = eActionEnCours
                                 do
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -427,7 +444,8 @@ node "BEH_Dep_Pion_ABC_RejoindrePositionAppuiPour"
         end
 
         Activate( self.activations.ACT_Info_Trace, 1, { "Going on support position...", } )
-        Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.positionAppui, eProgressionDirect, eTypeItiAppui, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.positionAppui, eProgressionDirect, eTypeItiAppui, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
     end,
 
 --[[// *****************************************************************************
@@ -440,9 +458,11 @@ node "BEH_Dep_Pion_ABC_RejoindrePositionAppuiPour"
 
 node "BEH_Pion_ABC_InstallerDispositif"
 {
+    feedbacks = { { { "done_BEH_Pion_ABC_InstallerDispositif" }, "BEH_Pion_ABC_InstallerDispositif" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pion_ABC_InstallerDispositif, {value} ) end,
     activations =
     {
-        { "ACT_Pion_ABC_InstallerDisposifif", {} },
+        { "ACT_Pion_ABC_InstallerDisposifif", { "done_ACT_Pion_ABC_InstallerDisposifif" } },
     },
 
     create = function( self )
@@ -465,6 +485,8 @@ node "BEH_Pion_ABC_InstallerDispositif"
 
 node "ACT_Pion_ABC_InstallerDisposifif"
 {
+    feedbacks = { { { "done_ACT_Pion_ABC_InstallerDisposifif" }, "ACT_Pion_ABC_InstallerDisposifif" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Pion_ABC_InstallerDisposifif, {value} ) end,
     create = function( self )
     end,
 
@@ -486,6 +508,8 @@ node "ACT_Pion_ABC_InstallerDisposifif"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Feu_Pion_ABC_ConduireLesFeuxSur"
 {
+    feedbacks = { { { "done_BEH_Feu_Pion_ABC_ConduireLesFeuxSur" }, "BEH_Feu_Pion_ABC_ConduireLesFeuxSur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Feu_Pion_ABC_ConduireLesFeuxSur, {value} ) end,
     instances =
     {
         max = 1,
@@ -493,8 +517,8 @@ node "ACT_Pion_ABC_InstallerDisposifif"
 
     activations =
     {
-        { "ACT_Dep_SePosterFaceA", {} },
-        { "ACT_Tir_Pion_ABC_FaireFeuSur", {} },
+        { "ACT_Dep_SePosterFaceA", { "done_ACT_Dep_SePosterFaceA" } },
+        { "ACT_Tir_Pion_ABC_FaireFeuSur", { "done_ACT_Tir_Pion_ABC_FaireFeuSur" } },
     },
 
     create = function( self )
@@ -519,6 +543,8 @@ node "ACT_Pion_ABC_InstallerDisposifif"
 
 node "BEH_MAJ_Pion_ABC_AgressiviteTir"
 {
+    feedbacks = { { { "done_BEH_MAJ_Pion_ABC_AgressiviteTir" }, "BEH_MAJ_Pion_ABC_AgressiviteTir" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MAJ_Pion_ABC_AgressiviteTir, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.rPH = self.params[1]
@@ -548,6 +574,8 @@ node "BEH_MAJ_Pion_ABC_AgressiviteTir"
 
 node "BEH_MAJ_Pion_ABC_AgressiviteManoeuvre"
 {
+    feedbacks = { { { "done_BEH_MAJ_Pion_ABC_AgressiviteManoeuvre" }, "BEH_MAJ_Pion_ABC_AgressiviteManoeuvre" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MAJ_Pion_ABC_AgressiviteManoeuvre, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.rValeur = self.params[1]
@@ -578,6 +606,8 @@ node "BEH_MAJ_Pion_ABC_AgressiviteManoeuvre"
 
 node "BEH_MAJ_Pion_ABC_EnvieTenir"
 {
+    feedbacks = { { { "done_BEH_MAJ_Pion_ABC_EnvieTenir" }, "BEH_MAJ_Pion_ABC_EnvieTenir" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MAJ_Pion_ABC_EnvieTenir, {value} ) end,
     create = function( self )
     end,
 
@@ -606,6 +636,8 @@ node "BEH_MAJ_Pion_ABC_EnvieTenir"
 
 node "BEH_Mot_Pion_ABC_AffecterVariablesDEtat"
 {
+    feedbacks = { { { "done_BEH_Mot_Pion_ABC_AffecterVariablesDEtat" }, "BEH_Mot_Pion_ABC_AffecterVariablesDEtat" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mot_Pion_ABC_AffecterVariablesDEtat, {value} ) end,
     create = function( self )
     end,
 
@@ -683,10 +715,12 @@ elseif switch_1 == eMoral_Mauvais then
 
 node "BEH_Dep_Pion_ABC_GererDeboucher"
 {
+    feedbacks = { { { "done_BEH_Dep_Pion_ABC_GererDeboucher" }, "BEH_Dep_Pion_ABC_GererDeboucher" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Pion_ABC_GererDeboucher, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_SePosterPourDeboucher", {} },
-        { "ACT_Points_Suppression", {} },
+        { "BEH_Ordre_SePosterPourDeboucher", { "done_BEH_Ordre_SePosterPourDeboucher" } },
+        { "ACT_Points_Suppression", { "done_ACT_Points_Suppression" } },
     },
 
     create = function( self )
@@ -744,10 +778,12 @@ do
 
 node "BEH_Ordre_SePosterPourDeboucher"
 {
+    feedbacks = { { { "done_BEH_Ordre_SePosterPourDeboucher" }, "BEH_Ordre_SePosterPourDeboucher" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Ordre_SePosterPourDeboucher, {value} ) end,
     activations =
     {
-        { "ACT_Dep_SePoster", {} },
-        { "ACT_Dep_PasserSurLima", {} },
+        { "ACT_Dep_SePoster", { "done_ACT_Dep_SePoster" } },
+        { "ACT_Dep_PasserSurLima", { "done_ACT_Dep_PasserSurLima" } },
     },
 
     create = function( self )
@@ -792,10 +828,12 @@ node "BEH_Ordre_SePosterPourDeboucher"
 
 node "BEH_Dep_Pion_ABC_GererDeboucherEclairage"
 {
+    feedbacks = { { { "done_BEH_Dep_Pion_ABC_GererDeboucherEclairage" }, "BEH_Dep_Pion_ABC_GererDeboucherEclairage" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Pion_ABC_GererDeboucherEclairage, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_LivrerLigneDeboucher", {} },
-        { "ACT_Points_Suppression", {} },
+        { "BEH_Ordre_LivrerLigneDeboucher", { "done_BEH_Ordre_LivrerLigneDeboucher" } },
+        { "ACT_Points_Suppression", { "done_ACT_Points_Suppression" } },
     },
 
     create = function( self )
@@ -853,10 +891,12 @@ do
 
 node "BEH_Ordre_LivrerLigneDeboucher"
 {
+    feedbacks = { { { "done_BEH_Ordre_LivrerLigneDeboucher" }, "BEH_Ordre_LivrerLigneDeboucher" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Ordre_LivrerLigneDeboucher, {value} ) end,
     activations =
     {
-        { "ACT_Dep_SePoster", {} },
-        { "ACT_Dep_PasserSurLima", {} },
+        { "ACT_Dep_SePoster", { "done_ACT_Dep_SePoster" } },
+        { "ACT_Dep_PasserSurLima", { "done_ACT_Dep_PasserSurLima" } },
     },
 
     create = function( self )
@@ -900,9 +940,11 @@ node "BEH_Ordre_LivrerLigneDeboucher"
 
 node "BEH_Dep_Virtuel_ProgressionVers"
 {
+    feedbacks = { { { "done_BEH_Dep_Virtuel_ProgressionVers" }, "BEH_Dep_Virtuel_ProgressionVers" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Virtuel_ProgressionVers, {value} ) end,
     activations =
     {
-        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
     },
 
     create = function( self )
@@ -924,11 +966,13 @@ node "BEH_Dep_Virtuel_ProgressionVers"
 
 node "BEH_Dep_Virtuel_PreparationAction"
 {
+    feedbacks = { { { "done_BEH_Dep_Virtuel_PreparationAction" }, "BEH_Dep_Virtuel_PreparationAction" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Virtuel_PreparationAction, {value} ) end,
     create = function( self )
     end,
 
     activate = function( self )
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         do return end
 
     end,

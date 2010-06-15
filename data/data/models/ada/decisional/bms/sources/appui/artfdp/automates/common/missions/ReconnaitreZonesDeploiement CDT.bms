@@ -15,10 +15,12 @@ include "bit.lua"
 ]]
 node "BEH_Conduite_Automate_ASS_ReconnaitreZonesDeploiement"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_ASS_ReconnaitreZonesDeploiement" }, "BEH_Conduite_Automate_ASS_ReconnaitreZonesDeploiement" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_ASS_ReconnaitreZonesDeploiement, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_ASS_AssignerReconnaitreZoneDeploiementA", {} },
-        { "BEH_Conduite_Automate_ASS_FaireSuivreDispositif", {} },
+        { "BEH_Conduite_Automate_ASS_AssignerReconnaitreZoneDeploiementA", { "done_BEH_Conduite_Automate_ASS_AssignerReconnaitreZoneDeploiementA" } },
+        { "BEH_Conduite_Automate_ASS_FaireSuivreDispositif", { "done_BEH_Conduite_Automate_ASS_FaireSuivreDispositif" } },
     },
 
     create = function( self )
@@ -68,9 +70,11 @@ do
 
 node "BEH_Conduite_Automate_ASS_FaireSuivreDispositif"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_ASS_FaireSuivreDispositif" }, "BEH_Conduite_Automate_ASS_FaireSuivreDispositif" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_ASS_FaireSuivreDispositif, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_ASS_SuivreA", {} },
+        { "BEH_Conduite_Automate_ASS_SuivreA", { "done_BEH_Conduite_Automate_ASS_SuivreA" } },
     },
 
     create = function( self )

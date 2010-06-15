@@ -13,9 +13,11 @@ includedFiles["sources/common/pions/behaviors/Behaviors - Misc.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "BEH_Misc_Defini_AppuisMobile"
 {
+    feedbacks = { { { "done_BEH_Misc_Defini_AppuisMobile" }, "BEH_Misc_Defini_AppuisMobile" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Misc_Defini_AppuisMobile, {value} ) end,
     activations =
     {
-        { "ACT_MAJ_EnAppuiPionMobile", {} },
+        { "ACT_MAJ_EnAppuiPionMobile", { "done_ACT_MAJ_EnAppuiPionMobile" } },
     },
 
     create = function( self )
@@ -43,6 +45,8 @@ includedFiles["sources/common/pions/behaviors/Behaviors - Misc.bms"] = true
 
 node "BEH_Misc_Pion_DefinirTypeMission"
 {
+    feedbacks = { { { "done_BEH_Misc_Pion_DefinirTypeMission" }, "BEH_Misc_Pion_DefinirTypeMission" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Misc_Pion_DefinirTypeMission, {value} ) end,
     instances =
     {
         max = 1,

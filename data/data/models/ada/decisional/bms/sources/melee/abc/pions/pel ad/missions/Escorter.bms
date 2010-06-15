@@ -20,9 +20,11 @@ includedFiles["sources/melee/abc/pions/pel ad/missions/Escorter.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "MIS_Pion_ABC_EscorterUnite"
 {
+    feedbacks = { { { "done_MIS_Pion_ABC_EscorterUnite" }, "MIS_Pion_ABC_EscorterUnite" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_ABC_EscorterUnite, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Pion_ABC_Escorter", {} },
+        { "BEH_Mission_Pion_ABC_Escorter", { "done_BEH_Mission_Pion_ABC_Escorter" } },
     },
 
     create = function( self )
@@ -36,13 +38,13 @@ includedFiles["sources/melee/abc/pions/pel ad/missions/Escorter.bms"] = true
 ]]--[[// Terminaison
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eEtat == eActionImpossible ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             Halt( self )
             do return end
         end
 
         if( self.eEtat == eActionEffectuee ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -50,7 +52,8 @@ includedFiles["sources/melee/abc/pions/pel ad/missions/Escorter.bms"] = true
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Comportement de la mission
 ]]--[[//-----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_Mission_Pion_ABC_Escorter, 1, setmetatable( { self._namedParams.mission.uniteAEscorter_, M_MODELE_PION_ABC_ESCORTER_PH(), M_MODELE_PION_ABC_ESCORTER_ID(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+]]Activate( self.activations.BEH_Mission_Pion_ABC_Escorter, 1, { self._namedParams.mission.uniteAEscorter_, M_MODELE_PION_ABC_ESCORTER_PH(), M_MODELE_PION_ABC_ESCORTER_ID(), } )
+self.done_BEH_Mission_Pion_ABC_Escorter = function( self, _, v ) self.eEtat = v[1] end
     end,
 
 --[[// *****************************************************************************
@@ -63,9 +66,11 @@ includedFiles["sources/melee/abc/pions/pel ad/missions/Escorter.bms"] = true
 
 node "MIS_Pion_ABC_EscorterUnites"
 {
+    feedbacks = { { { "done_MIS_Pion_ABC_EscorterUnites" }, "MIS_Pion_ABC_EscorterUnites" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_ABC_EscorterUnites, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Pion_ABC_EscorterAutomate", {} },
+        { "BEH_Mission_Pion_ABC_EscorterAutomate", { "done_BEH_Mission_Pion_ABC_EscorterAutomate" } },
     },
 
     create = function( self )
@@ -79,13 +84,13 @@ node "MIS_Pion_ABC_EscorterUnites"
 ]]--[[// Terminaison
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eEtat == eActionImpossible ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             Halt( self )
             do return end
         end
 
         if( self.eEtat == eActionEffectuee ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -93,7 +98,8 @@ node "MIS_Pion_ABC_EscorterUnites"
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Comportement de la mission
 ]]--[[//-----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_Mission_Pion_ABC_EscorterAutomate, 1, setmetatable( { self._namedParams.mission.automateAEscorter_, M_MODELE_PION_ABC_ESCORTER_PH(), M_MODELE_PION_ABC_ESCORTER_ID(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+]]Activate( self.activations.BEH_Mission_Pion_ABC_EscorterAutomate, 1, { self._namedParams.mission.automateAEscorter_, M_MODELE_PION_ABC_ESCORTER_PH(), M_MODELE_PION_ABC_ESCORTER_ID(), } )
+self.done_BEH_Mission_Pion_ABC_EscorterAutomate = function( self, _, v ) self.eEtat = v[1] end
     end,
 
 }

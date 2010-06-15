@@ -6,6 +6,8 @@ includedFiles["sources/marine/pions/common/behaviors/Behaviors - Eni.bms"] = tru
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "BEH_Eni_Pion_MARINE_DecrocherFaceA"
 {
+    feedbacks = { { { "done_BEH_Eni_Pion_MARINE_DecrocherFaceA" }, "BEH_Eni_Pion_MARINE_DecrocherFaceA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Pion_MARINE_DecrocherFaceA, {value} ) end,
     instances =
     {
         max = 1,
@@ -14,8 +16,8 @@ includedFiles["sources/marine/pions/common/behaviors/Behaviors - Eni.bms"] = tru
 
     activations =
     {
-        { "ACT_Dep_ModulationVitesse", {} },
-        { "BEH_Dep_Pion_MARINE_RejoindrePoint", {} },
+        { "ACT_Dep_ModulationVitesse", { "done_ACT_Dep_ModulationVitesse" } },
+        { "BEH_Dep_Pion_MARINE_RejoindrePoint", { "done_BEH_Dep_Pion_MARINE_RejoindrePoint" } },
     },
 
     create = function( self )
@@ -32,7 +34,7 @@ includedFiles["sources/marine/pions/common/behaviors/Behaviors - Eni.bms"] = tru
         self.positionSurete = self.positionSurete or nil
         if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.repUnite ) ) then
             do
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -40,7 +42,7 @@ includedFiles["sources/marine/pions/common/behaviors/Behaviors - Eni.bms"] = tru
         end
 
         if( DEC_Geometrie_Distance( DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( self._namedParams.repUnite ) ) >= self.rDistanceEffective ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -72,7 +74,7 @@ if( ( myself.ptRegroupement_ ~= 0 and myself.ptRegroupement_ ~= nil ) ) then
             do
                 self.eEtat = eActionEnCours
                                 do
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -82,7 +84,8 @@ if( ( myself.ptRegroupement_ ~= 0 and myself.ptRegroupement_ ~= nil ) ) then
         end
 
         Activate( self.activations.ACT_Dep_ModulationVitesse, 1, { 1, } )
-        Activate( self.activations.BEH_Dep_Pion_MARINE_RejoindrePoint, 1, setmetatable( { self.positionSurete, eProgressionDefaut, eTypeItiRepli, 0, 0, 0, 0, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Dep_Pion_MARINE_RejoindrePoint, 1, { self.positionSurete, eProgressionDefaut, eTypeItiRepli, 0, 0, 0, 0, } )
+self.done_BEH_Dep_Pion_MARINE_RejoindrePoint = function( self, _, v ) self.eEtat = v[1] end
     end,
 
 --[[// -----------------------------------------------------------------------------
@@ -93,9 +96,11 @@ if( ( myself.ptRegroupement_ ~= 0 and myself.ptRegroupement_ ~= nil ) ) then
 
 node "BEH_Eni_Pion_MARINE_EviterContactsAvecEnnemisConnus"
 {
+    feedbacks = { { { "done_BEH_Eni_Pion_MARINE_EviterContactsAvecEnnemisConnus" }, "BEH_Eni_Pion_MARINE_EviterContactsAvecEnnemisConnus" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Pion_MARINE_EviterContactsAvecEnnemisConnus, {value} ) end,
     activations =
     {
-        { "BEH_Eni_Pion_MARINE_DecrocherFaceA", {} },
+        { "BEH_Eni_Pion_MARINE_DecrocherFaceA", { "done_BEH_Eni_Pion_MARINE_DecrocherFaceA" } },
     },
 
     create = function( self )

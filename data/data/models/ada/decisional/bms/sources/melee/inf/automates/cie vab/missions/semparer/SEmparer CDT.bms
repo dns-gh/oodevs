@@ -13,11 +13,13 @@ includedFiles["sources/melee/inf/automates/cie vab/missions/semparer/SEmparer CD
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_INF_Semparer"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_INF_Semparer" }, "MIS_Automate_CDT_INF_Semparer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_INF_Semparer, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_INF_Defaut", {} },
-        { "BEH_Conduite_Automate_INF_CadreOffensif", {} },
-        { "BEH_Situation_Automate_INF_Assaut", {} },
+        { "BEH_Conduite_Automate_INF_Defaut", { "done_BEH_Conduite_Automate_INF_Defaut" } },
+        { "BEH_Conduite_Automate_INF_CadreOffensif", { "done_BEH_Conduite_Automate_INF_CadreOffensif" } },
+        { "BEH_Situation_Automate_INF_Assaut", { "done_BEH_Situation_Automate_INF_Assaut" } },
     },
 
     create = function( self )

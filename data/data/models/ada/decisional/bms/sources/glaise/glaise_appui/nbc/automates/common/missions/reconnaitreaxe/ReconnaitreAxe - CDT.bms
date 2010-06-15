@@ -9,11 +9,13 @@ includedFiles["sources/glaise/glaise_appui/nbc/automates/common/missions/reconna
 ]]--[[// *****************************************************************************
 ]]node "BEH_Conduite_Automate_NBC_ReconnaitreUnAxe"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_NBC_ReconnaitreUnAxe" }, "BEH_Conduite_Automate_NBC_ReconnaitreUnAxe" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_NBC_ReconnaitreUnAxe, {value} ) end,
     activations =
     {
-        { "BEH_Dispositif_Automate_NBC_FaireSuivreLeSE_", {} },
-        { "BEH_CoordDep_Automate_NBC_AssurerLaCoordinationInterne_", {} },
-        { "BEH_Dispositif_Automate_NBC_GererPionsDetruits_", {} },
+        { "BEH_Dispositif_Automate_NBC_FaireSuivreLeSE_", { "done_BEH_Dispositif_Automate_NBC_FaireSuivreLeSE_" } },
+        { "BEH_CoordDep_Automate_NBC_AssurerLaCoordinationInterne_", { "done_BEH_CoordDep_Automate_NBC_AssurerLaCoordinationInterne_" } },
+        { "BEH_Dispositif_Automate_NBC_GererPionsDetruits_", { "done_BEH_Dispositif_Automate_NBC_GererPionsDetruits_" } },
     },
 
     create = function( self )

@@ -12,10 +12,12 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "BEH_GTIA_RepartirDansZone"
 {
+    feedbacks = { { { "done_BEH_GTIA_RepartirDansZone" }, "BEH_GTIA_RepartirDansZone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_RepartirDansZone, {value} ) end,
     activations =
     {
-        { "BEH_GTIA_RepartirPionsMeleeDansZones", {} },
-        { "BEH_GTIA_RepartirPionsDansZones", {} },
+        { "BEH_GTIA_RepartirPionsMeleeDansZones", { "done_BEH_GTIA_RepartirPionsMeleeDansZones" } },
+        { "BEH_GTIA_RepartirPionsDansZones", { "done_BEH_GTIA_RepartirPionsDansZones" } },
     },
 
     create = function( self )
@@ -64,9 +66,11 @@ include "bit.lua"
 
 node "BEH_GTIA_RepartirPionsDansZones"
 {
+    feedbacks = { { { "done_BEH_GTIA_RepartirPionsDansZones" }, "BEH_GTIA_RepartirPionsDansZones" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_RepartirPionsDansZones, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_AssignerZone", {} },
+        { "ACT_GTIA_AssignerZone", { "done_ACT_GTIA_AssignerZone" } },
     },
 
     create = function( self )
@@ -103,11 +107,13 @@ do
 
 node "BEH_GTIA_RepartirPionsMeleeDansZones"
 {
+    feedbacks = { { { "done_BEH_GTIA_RepartirPionsMeleeDansZones" }, "BEH_GTIA_RepartirPionsMeleeDansZones" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_RepartirPionsMeleeDansZones, {value} ) end,
     activations =
     {
-        { "BEH_GTIA_AssignerZoneMeleeSuivantTerrain", {} },
-        { "BEH_GTIA_AssignerZoneMeleeSuivantEnisEmbarques", {} },
-        { "BEH_GTIA_AssignerZoneMeleeSuivantEnisDebarques", {} },
+        { "BEH_GTIA_AssignerZoneMeleeSuivantTerrain", { "done_BEH_GTIA_AssignerZoneMeleeSuivantTerrain" } },
+        { "BEH_GTIA_AssignerZoneMeleeSuivantEnisEmbarques", { "done_BEH_GTIA_AssignerZoneMeleeSuivantEnisEmbarques" } },
+        { "BEH_GTIA_AssignerZoneMeleeSuivantEnisDebarques", { "done_BEH_GTIA_AssignerZoneMeleeSuivantEnisDebarques" } },
     },
 
     create = function( self )
@@ -138,9 +144,11 @@ node "BEH_GTIA_RepartirPionsMeleeDansZones"
 
 node "BEH_GTIA_AssignerZoneMeleeSuivantTerrain"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerZoneMeleeSuivantTerrain" }, "BEH_GTIA_AssignerZoneMeleeSuivantTerrain" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerZoneMeleeSuivantTerrain, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_AssignerZone", {} },
+        { "ACT_GTIA_AssignerZone", { "done_ACT_GTIA_AssignerZone" } },
     },
 
     create = function( self )
@@ -187,9 +195,11 @@ do
 
 node "BEH_GTIA_AssignerZoneMeleeSuivantEnisDebarques"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerZoneMeleeSuivantEnisDebarques" }, "BEH_GTIA_AssignerZoneMeleeSuivantEnisDebarques" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerZoneMeleeSuivantEnisDebarques, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_AssignerZone", {} },
+        { "ACT_GTIA_AssignerZone", { "done_ACT_GTIA_AssignerZone" } },
     },
 
     create = function( self )
@@ -240,9 +250,11 @@ do
 
 node "BEH_GTIA_AssignerZoneMeleeSuivantEnisEmbarques"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerZoneMeleeSuivantEnisEmbarques" }, "BEH_GTIA_AssignerZoneMeleeSuivantEnisEmbarques" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerZoneMeleeSuivantEnisEmbarques, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_AssignerFuseau", {} },
+        { "ACT_GTIA_AssignerFuseau", { "done_ACT_GTIA_AssignerFuseau" } },
     },
 
     create = function( self )
@@ -293,6 +305,8 @@ do
 
 node "ACT_GTIA_AssignerZone"
 {
+    feedbacks = { { { "done_ACT_GTIA_AssignerZone" }, "ACT_GTIA_AssignerZone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_GTIA_AssignerZone, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]

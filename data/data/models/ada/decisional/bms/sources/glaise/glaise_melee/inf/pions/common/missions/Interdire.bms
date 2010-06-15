@@ -18,16 +18,18 @@ includedFiles["sources/glaise/glaise_melee/inf/pions/common/missions/Interdire.b
 ]]--[[//=============================================================================
 ]]node "BEH_Mission_Pion_INF_Interdire"
 {
+    feedbacks = { { { "done_BEH_Mission_Pion_INF_Interdire" }, "BEH_Mission_Pion_INF_Interdire" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Pion_INF_Interdire, {value} ) end,
     activations =
     {
-        { "BEH_Lima_Pion_RejoindreFuseau_EnAttente", {} },
-        { "BEH_Mot_Pion_Embarquer", {} },
-        { "BEH_Dep_Pion_INF_MiseEnPlace_Mission", {} },
-        { "ACT_RC", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dispositif_Pion_VAB_InstallationDefensive", {} },
-        { "ACT_Misc_Pion_DelaiInstallation", {} },
-        { "BEH_Eni_Pion_INF_Tenir", {} },
+        { "BEH_Lima_Pion_RejoindreFuseau_EnAttente", { "done_BEH_Lima_Pion_RejoindreFuseau_EnAttente" } },
+        { "BEH_Mot_Pion_Embarquer", { "done_BEH_Mot_Pion_Embarquer" } },
+        { "BEH_Dep_Pion_INF_MiseEnPlace_Mission", { "done_BEH_Dep_Pion_INF_MiseEnPlace_Mission" } },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Dispositif_Pion_VAB_InstallationDefensive", { "done_BEH_Dispositif_Pion_VAB_InstallationDefensive" } },
+        { "ACT_Misc_Pion_DelaiInstallation", { "done_ACT_Misc_Pion_DelaiInstallation" } },
+        { "BEH_Eni_Pion_INF_Tenir", { "done_BEH_Eni_Pion_INF_Tenir" } },
     },
 
     create = function( self )
@@ -70,7 +72,7 @@ includedFiles["sources/glaise/glaise_melee/inf/pions/common/missions/Interdire.b
                             self.eAction = eActionEnCours
                                                         do
                                 self.ePhase = eInstallerDispositif
-                                                                self.params.__returnValue = self.ePhase
+                                                                self:SendFeedback( self.ePhase )
                                 do return end
 
                             end
@@ -80,7 +82,8 @@ includedFiles["sources/glaise/glaise_melee/inf/pions/common/missions/Interdire.b
 
                     Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
                     --[[// Rejoins une position d'observation de la position a Barrer
-]]Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, setmetatable( { M_TEMPS_PREPARATION_MISSION(), self.mission.pointAInterdire_, false, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+]]Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, { M_TEMPS_PREPARATION_MISSION(), self.mission.pointAInterdire_, false, } )
+self.done_BEH_Dep_Pion_INF_MiseEnPlace_Mission = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                 --[[//------------------------------------------------------------------
 ]]--[[//  On verifie les alentours, et on attend de debusquer un ennemi
@@ -101,7 +104,7 @@ elseif switch_1 == eInstallerDispositif then
                             self.eAction = eActionEnCours
                                                         do
                                 self.ePhase = eSurveiller
-                                                                self.params.__returnValue = self.ePhase
+                                                                self:SendFeedback( self.ePhase )
                                 do return end
 
                             end
@@ -109,7 +112,8 @@ elseif switch_1 == eInstallerDispositif then
                         end
                     end
 
-                    Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, setmetatable( { eNiveauInstallation_PosteAmenage, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, { eNiveauInstallation_PosteAmenage, } )
+self.done_ACT_Misc_Pion_DelaiInstallation = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                 --[[//------------------------------------------------------------------
 ]]--[[//  On se met en position de tir 
@@ -127,7 +131,7 @@ elseif switch_1 == eSurveiller then
                                 end
             end
 
-                self.params.__returnValue = self.ePhase
+                self:SendFeedback( self.ePhase )
         do return end
 
     end,

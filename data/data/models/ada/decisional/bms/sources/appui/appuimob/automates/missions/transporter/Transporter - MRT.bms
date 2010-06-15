@@ -3,10 +3,12 @@ includedFiles["sources/appui/appuimob/automates/missions/transporter/Transporter
 
 node "MIS_Automate_MRT_LOG_TransporterUnites"
 {
+    feedbacks = { { { "done_MIS_Automate_MRT_LOG_TransporterUnites" }, "MIS_Automate_MRT_LOG_TransporterUnites" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_MRT_LOG_TransporterUnites, {value} ) end,
     activations =
     {
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
-        { "BEH_Medo_Automate_LOG_AssignerMissionsTransporterAListe", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", { "done_BEH_Medo_Automate_ControleCreationMission" } },
+        { "BEH_Medo_Automate_LOG_AssignerMissionsTransporterAListe", { "done_BEH_Medo_Automate_LOG_AssignerMissionsTransporterAListe" } },
     },
 
     create = function( self )
@@ -24,14 +26,14 @@ node "MIS_Automate_MRT_LOG_TransporterUnites"
         if( ModuleBegins() ) then
             do
                 if( ( #( self.listeUnitesPeuventTransporter ) == 0 or #( self.listeUnitesPeuventTransporter ) == nil ) ) then
-                    self.params.__returnValue = eActionImpossible
+                    self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
                 end
 
                 self.listePionsATransporter = S_SelectionnePCEtSubordonnes( self._namedParams.mission.unitesATransporter_ )
                 if( ( #( self.listePionsATransporter ) == 0 or #( self.listePionsATransporter ) == nil ) ) then
-                    self.params.__returnValue = eActionImpossible
+                    self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
                 end
@@ -78,7 +80,8 @@ node "MIS_Automate_MRT_LOG_TransporterUnites"
 --[[// Transporter : controle de creation mission
 ]]                    end
 
-                    Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.listePourTransport ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatMissionsTransporter = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( self.listePourTransport ), } )
+self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eEtatMissionsTransporter = v[1] end
                     --[[// Transporter : ordre de creation des missions
 ]]Activate( self.activations.BEH_Medo_Automate_LOG_AssignerMissionsTransporterAListe, 1, { ePhase_MRT, self.listePourTransport, self._namedParams.mission.pointRendezVous_, self._namedParams.mission.pointDestination_, self.listePionsATransporter, } )
                     _continue = false
@@ -86,14 +89,14 @@ node "MIS_Automate_MRT_LOG_TransporterUnites"
 elseif switch_1 == eMRT_MissionImpossible then
                     DEC_Trace( "MISSION IMPOSSIBLE" )
                     DEC_RC( eRC_MissionImpossible )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
                     _continue = false
                 elseif switch_1 == eMRT_Valider then
                     DEC_MRT_Valide()
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 

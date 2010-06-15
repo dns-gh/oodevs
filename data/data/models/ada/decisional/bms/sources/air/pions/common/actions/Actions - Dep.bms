@@ -6,6 +6,8 @@ includedFiles["sources/air/pions/common/actions/Actions - Dep.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Dep_Pions_AIR_Voler"
 {
+    feedbacks = { { { "done_ACT_Dep_Pions_AIR_Voler" }, "ACT_Dep_Pions_AIR_Voler" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Dep_Pions_AIR_Voler, {value} ) end,
     actuators =
     {
         hauteur = 1,

@@ -11,11 +11,13 @@ includedFiles["sources/humus/humus_common/automates/behaviors/Behaviors - CoordD
 ]]--[[// *****************************************************************************
 ]]node "BEH_CoordDep_Automate_ActiverCoordinationSur"
 {
+    feedbacks = { { { "done_BEH_CoordDep_Automate_ActiverCoordinationSur" }, "BEH_CoordDep_Automate_ActiverCoordinationSur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_CoordDep_Automate_ActiverCoordinationSur, {value} ) end,
     activations =
     {
-        { "ACT_Info_Automate_Trace", {} },
-        { "ACT_Info_Trace", {} },
-        { "ACT_Ordre_Automate_Ralentir", {} },
+        { "ACT_Info_Automate_Trace", { "done_ACT_Info_Automate_Trace" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "ACT_Ordre_Automate_Ralentir", { "done_ACT_Ordre_Automate_Ralentir" } },
     },
 
     create = function( self )

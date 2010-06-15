@@ -18,6 +18,8 @@ includedFiles["sources/glaise/glaise_common/automates/missions/sefairetransporte
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_SeFaireTransporter"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_SeFaireTransporter" }, "MIS_Automate_CDT_SeFaireTransporter" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_SeFaireTransporter, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission

@@ -12,11 +12,13 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_GEN_RealiserTravaux"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_GEN_RealiserTravaux" }, "MIS_Automate_CDT_GEN_RealiserTravaux" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_GEN_RealiserTravaux, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
-        { "ACT_Warning", {} },
-        { "BEH_Mission_Automate_GEN_CDT_RealiserPlanObjets", {} },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "done_BEH_Ordre_Automate_RecevoirOrdreInopine" } },
+        { "ACT_Warning", { "done_ACT_Warning" } },
+        { "BEH_Mission_Automate_GEN_CDT_RealiserPlanObjets", { "done_BEH_Mission_Automate_GEN_CDT_RealiserPlanObjets" } },
     },
 
     create = function( self )
@@ -74,11 +76,13 @@ include "bit.lua"
 
 node "BEH_Mission_Automate_GEN_CDT_RealiserPlanObjets"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_GEN_CDT_RealiserPlanObjets" }, "BEH_Mission_Automate_GEN_CDT_RealiserPlanObjets" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_GEN_CDT_RealiserPlanObjets, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_AssignerFaireMouvementA", {} },
-        { "BEH_Misc_Automate_GEN_GererTravaux", {} },
-        { "BEH_Misc_Automate_GEN_GererRenforcementsPourTravaux", {} },
+        { "BEH_Mission_Automate_AssignerFaireMouvementA", { "done_BEH_Mission_Automate_AssignerFaireMouvementA" } },
+        { "BEH_Misc_Automate_GEN_GererTravaux", { "done_BEH_Misc_Automate_GEN_GererTravaux" } },
+        { "BEH_Misc_Automate_GEN_GererRenforcementsPourTravaux", { "done_BEH_Misc_Automate_GEN_GererRenforcementsPourTravaux" } },
     },
 
     create = function( self )
@@ -122,11 +126,13 @@ node "BEH_Mission_Automate_GEN_CDT_RealiserPlanObjets"
 
 node "BEH_Misc_Automate_GEN_GererTravaux"
 {
+    feedbacks = { { { "done_BEH_Misc_Automate_GEN_GererTravaux" }, "BEH_Misc_Automate_GEN_GererTravaux" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Misc_Automate_GEN_GererTravaux, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_Gen_AssignerConstruireObjetA", {} },
-        { "ACT_Info_Trace", {} },
-        { "BEH_Mission_Automate_AssignerDecrocherA", {} },
+        { "BEH_Mission_Automate_Gen_AssignerConstruireObjetA", { "done_BEH_Mission_Automate_Gen_AssignerConstruireObjetA" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "BEH_Mission_Automate_AssignerDecrocherA", { "done_BEH_Mission_Automate_AssignerDecrocherA" } },
     },
 
     create = function( self )
@@ -179,9 +185,11 @@ do
 
 node "BEH_Mission_Automate_Gen_AssignerConstruireObjetA"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_Gen_AssignerConstruireObjetA" }, "BEH_Mission_Automate_Gen_AssignerConstruireObjetA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_Gen_AssignerConstruireObjetA, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_GEN_AssignerMissionConstruireA", {} },
+        { "BEH_Mission_Automate_GEN_AssignerMissionConstruireA", { "done_BEH_Mission_Automate_GEN_AssignerMissionConstruireA" } },
     },
 
     create = function( self )
@@ -204,13 +212,15 @@ node "BEH_Mission_Automate_Gen_AssignerConstruireObjetA"
 
 node "BEH_Misc_Automate_GEN_GererRenforcementsPourTravaux"
 {
+    feedbacks = { { { "done_BEH_Misc_Automate_GEN_GererRenforcementsPourTravaux" }, "BEH_Misc_Automate_GEN_GererRenforcementsPourTravaux" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Misc_Automate_GEN_GererRenforcementsPourTravaux, {value} ) end,
     activations =
     {
-        { "BEH_Objet_Automate_GEN_VerifierRenfortPourConstruireObjets", {} },
-        { "BEH_Misc_Automate_GEN_GererRenforcement", {} },
-        { "BEH_Misc_Automate_GEN_GererFinRenforcementTravaux", {} },
-        { "ACT_Info_Trace", {} },
-        { "BEH_Mission_Automate_AssignerDecrocherA", {} },
+        { "BEH_Objet_Automate_GEN_VerifierRenfortPourConstruireObjets", { "done_BEH_Objet_Automate_GEN_VerifierRenfortPourConstruireObjets" } },
+        { "BEH_Misc_Automate_GEN_GererRenforcement", { "done_BEH_Misc_Automate_GEN_GererRenforcement" } },
+        { "BEH_Misc_Automate_GEN_GererFinRenforcementTravaux", { "done_BEH_Misc_Automate_GEN_GererFinRenforcementTravaux" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "BEH_Mission_Automate_AssignerDecrocherA", { "done_BEH_Mission_Automate_AssignerDecrocherA" } },
     },
 
     create = function( self )
@@ -291,9 +301,11 @@ do
 
 node "BEH_Misc_Automate_GEN_GererFinRenforcementTravaux"
 {
+    feedbacks = { { { "done_BEH_Misc_Automate_GEN_GererFinRenforcementTravaux" }, "BEH_Misc_Automate_GEN_GererFinRenforcementTravaux" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Misc_Automate_GEN_GererFinRenforcementTravaux, {value} ) end,
     activations =
     {
-        { "BEH_Misc_Automate_GEN_GererFinRenforcementPour", {} },
+        { "BEH_Misc_Automate_GEN_GererFinRenforcementPour", { "done_BEH_Misc_Automate_GEN_GererFinRenforcementPour" } },
     },
 
     create = function( self )
@@ -326,9 +338,11 @@ node "BEH_Misc_Automate_GEN_GererFinRenforcementTravaux"
 
 node "BEH_Misc_Automate_GEN_GererFinRenforcementPour"
 {
+    feedbacks = { { { "done_BEH_Misc_Automate_GEN_GererFinRenforcementPour" }, "BEH_Misc_Automate_GEN_GererFinRenforcementPour" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Misc_Automate_GEN_GererFinRenforcementPour, {value} ) end,
     activations =
     {
-        { "ACT_Ordre_Automate_Interrompre", {} },
+        { "ACT_Ordre_Automate_Interrompre", { "done_ACT_Ordre_Automate_Interrompre" } },
     },
 
     create = function( self )
@@ -360,9 +374,11 @@ node "BEH_Misc_Automate_GEN_GererFinRenforcementPour"
 
 node "BEH_Misc_Automate_GEN_GererRenforcement"
 {
+    feedbacks = { { { "done_BEH_Misc_Automate_GEN_GererRenforcement" }, "BEH_Misc_Automate_GEN_GererRenforcement" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Misc_Automate_GEN_GererRenforcement, {value} ) end,
     activations =
     {
-        { "BEH_Misc_Automate_GEN_GererRenforcementDe", {} },
+        { "BEH_Misc_Automate_GEN_GererRenforcementDe", { "done_BEH_Misc_Automate_GEN_GererRenforcementDe" } },
     },
 
     create = function( self )
@@ -436,9 +452,11 @@ node "BEH_Misc_Automate_GEN_GererRenforcement"
 
 node "BEH_Misc_Automate_GEN_GererRenforcementDe"
 {
+    feedbacks = { { { "done_BEH_Misc_Automate_GEN_GererRenforcementDe" }, "BEH_Misc_Automate_GEN_GererRenforcementDe" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Misc_Automate_GEN_GererRenforcementDe, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_GEN_RenforcerGenObjet", {} },
+        { "BEH_Mission_Automate_GEN_RenforcerGenObjet", { "done_BEH_Mission_Automate_GEN_RenforcerGenObjet" } },
     },
 
     create = function( self )
@@ -475,6 +493,8 @@ do
 
 node "BEH_Mission_Automate_GEN_RenforcerGenObjet"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_GEN_RenforcerGenObjet" }, "BEH_Mission_Automate_GEN_RenforcerGenObjet" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_GEN_RenforcerGenObjet, {value} ) end,
     instances =
     {
         max = 1--[[// tres important
@@ -485,7 +505,7 @@ node "BEH_Mission_Automate_GEN_RenforcerGenObjet"
 
     activations =
     {
-        { "BEH_Mission_Automate_GEN_AssignerRenforcerA", {} },
+        { "BEH_Mission_Automate_GEN_AssignerRenforcerA", { "done_BEH_Mission_Automate_GEN_AssignerRenforcerA" } },
     },
 
     create = function( self )

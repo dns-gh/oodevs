@@ -9,9 +9,11 @@ includedFiles["sources/appui/rens/pions/roem/stations lynx/missions/RenseignerSu
 ]]--[[// *****************************************************************************
 ]]node "MIS_Pion_RENS_ROEM_RenseignerSur"
 {
+    feedbacks = { { { "done_MIS_Pion_RENS_ROEM_RenseignerSur" }, "MIS_Pion_RENS_ROEM_RenseignerSur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_RENS_ROEM_RenseignerSur, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Pion_RENS_ROEM_RenseignerSur", {} },
+        { "BEH_Mission_Pion_RENS_ROEM_RenseignerSur", { "done_BEH_Mission_Pion_RENS_ROEM_RenseignerSur" } },
     },
 
     create = function( self )
@@ -25,13 +27,13 @@ includedFiles["sources/appui/rens/pions/roem/stations lynx/missions/RenseignerSu
 ]]--[[// Terminaison
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eEtat == eActionImpossible ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             Halt( self )
             do return end
         end
 
         if( self.eEtat == eActionEffectuee ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -39,7 +41,8 @@ includedFiles["sources/appui/rens/pions/roem/stations lynx/missions/RenseignerSu
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Comportement de la mission
 ]]--[[//-----------------------------------------------------------------------------
-]]--[[/* ecoute radar*/]]Activate( self.activations.BEH_Mission_Pion_RENS_ROEM_RenseignerSur, 1, setmetatable( { self._namedParams.mission, false, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+]]--[[/* ecoute radar*/]]Activate( self.activations.BEH_Mission_Pion_RENS_ROEM_RenseignerSur, 1, { self._namedParams.mission, false, } )
+self.done_BEH_Mission_Pion_RENS_ROEM_RenseignerSur = function( self, _, v ) self.eEtat = v[1] end
     end,
 
 }

@@ -9,11 +9,13 @@ includedFiles["sources/appui/trans/pions/behaviors/Behaviors - Maj.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "BEH_MAJ_EtatDefaut"
 {
+    feedbacks = { { { "done_BEH_MAJ_EtatDefaut" }, "BEH_MAJ_EtatDefaut" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MAJ_EtatDefaut, {value} ) end,
     activations =
     {
-        { "BEH_MAJ_EtatOperationnel", {} },
-        { "ACT_MAJ_EtatDec", {} },
-        { "ACT_MAJ_EtatOrdreCoordination", {} },
+        { "BEH_MAJ_EtatOperationnel", { "done_BEH_MAJ_EtatOperationnel" } },
+        { "ACT_MAJ_EtatDec", { "done_ACT_MAJ_EtatDec" } },
+        { "ACT_MAJ_EtatOrdreCoordination", { "done_ACT_MAJ_EtatOrdreCoordination" } },
     },
 
     create = function( self )
@@ -38,9 +40,11 @@ includedFiles["sources/appui/trans/pions/behaviors/Behaviors - Maj.bms"] = true
 
 node "BEH_MAJ_EtatOperationnel"
 {
+    feedbacks = { { { "done_BEH_MAJ_EtatOperationnel" }, "BEH_MAJ_EtatOperationnel" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MAJ_EtatOperationnel, {value} ) end,
     activations =
     {
-        { "ACT_MAJ_EtatDestruction", {} },
+        { "ACT_MAJ_EtatDestruction", { "done_ACT_MAJ_EtatDestruction" } },
     },
 
     create = function( self )

@@ -20,11 +20,13 @@ includedFiles["sources/humus/humus_melee/abc/pions/common/Behaviors - Lima.bms"]
 ]]--[[// ******************************************************************************
 ]]node "BEH_Dep_Pion_ABC_SeCoordonnerAvec"
 {
+    feedbacks = { { { "done_BEH_Dep_Pion_ABC_SeCoordonnerAvec" }, "BEH_Dep_Pion_ABC_SeCoordonnerAvec" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Pion_ABC_SeCoordonnerAvec, {value} ) end,
     activations =
     {
-        { "ACT_Dep_ModulationVitesse", {} },
-        { "ACT_Dep_SePoster", {} },
-        { "ACT_Info_Trace", {} },
+        { "ACT_Dep_ModulationVitesse", { "done_ACT_Dep_ModulationVitesse" } },
+        { "ACT_Dep_SePoster", { "done_ACT_Dep_SePoster" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
     },
 
     create = function( self )
@@ -81,11 +83,13 @@ includedFiles["sources/humus/humus_melee/abc/pions/common/Behaviors - Lima.bms"]
 
 node "BEH_Lima_Pion_ABC_SePosterSurLCA"
 {
+    feedbacks = { { { "done_BEH_Lima_Pion_ABC_SePosterSurLCA" }, "BEH_Lima_Pion_ABC_SePosterSurLCA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Lima_Pion_ABC_SePosterSurLCA, {value} ) end,
     activations =
     {
-        { "ACT_Dep_PasserSurLima", {} },
-        { "BEH_Dep_SePoster", {} },
-        { "ACT_Obs_EtablirVisionCur", {} },
+        { "ACT_Dep_PasserSurLima", { "done_ACT_Dep_PasserSurLima" } },
+        { "BEH_Dep_SePoster", { "done_BEH_Dep_SePoster" } },
+        { "ACT_Obs_EtablirVisionCur", { "done_ACT_Obs_EtablirVisionCur" } },
     },
 
     create = function( self )
@@ -98,7 +102,7 @@ node "BEH_Lima_Pion_ABC_SePosterSurLCA"
 ]]--[[// Terminaison
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( DEC_Agent_NiveauInstallation() == eNiveauInstallation_PosteReflexe ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -131,6 +135,8 @@ node "BEH_Lima_Pion_ABC_SePosterSurLCA"
 
 node "BEH_Lima_Pion_ABC_PasserSurLD"
 {
+    feedbacks = { { { "done_BEH_Lima_Pion_ABC_PasserSurLD" }, "BEH_Lima_Pion_ABC_PasserSurLD" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Lima_Pion_ABC_PasserSurLD, {value} ) end,
     create = function( self )
     end,
 
@@ -204,10 +210,12 @@ behavior BEH_Lima_Pion_ABC_PasserSurLD()
 
 node "BEH_Lima_Pion_ABC_SePosterSurLCAR"
 {
+    feedbacks = { { { "done_BEH_Lima_Pion_ABC_SePosterSurLCAR" }, "BEH_Lima_Pion_ABC_SePosterSurLCAR" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Lima_Pion_ABC_SePosterSurLCAR, {value} ) end,
     activations =
     {
-        { "ACT_Dep_SePoster", {} },
-        { "ACT_Dep_PasserSurLima", {} },
+        { "ACT_Dep_SePoster", { "done_ACT_Dep_SePoster" } },
+        { "ACT_Dep_PasserSurLima", { "done_ACT_Dep_PasserSurLima" } },
     },
 
     create = function( self )

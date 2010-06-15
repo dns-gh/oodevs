@@ -9,9 +9,11 @@ includedFiles["sources/melee/abc/automates/ge40/missions/fairemouvement/FaireMou
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_ABC_GTIA_FaireMouvement"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ABC_GTIA_FaireMouvement" }, "MIS_Automate_CDT_ABC_GTIA_FaireMouvement" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ABC_GTIA_FaireMouvement, {value} ) end,
     activations =
     {
-        { "BEH_GTIA_AssignerLesOrdresPourFaireMouvement", {} },
+        { "BEH_GTIA_AssignerLesOrdresPourFaireMouvement", { "done_BEH_GTIA_AssignerLesOrdresPourFaireMouvement" } },
     },
 
     create = function( self )
@@ -57,10 +59,12 @@ includedFiles["sources/melee/abc/automates/ge40/missions/fairemouvement/FaireMou
 
 node "BEH_GTIA_AssignerLesOrdresPourFaireMouvement"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerLesOrdresPourFaireMouvement" }, "BEH_GTIA_AssignerLesOrdresPourFaireMouvement" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerLesOrdresPourFaireMouvement, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_AssignerMissionFaireMouvementA", {} },
-        { "BEH_GTIA_AssignerMissionsFaireMouvementPC", {} },
+        { "ACT_GTIA_AssignerMissionFaireMouvementA", { "done_ACT_GTIA_AssignerMissionFaireMouvementA" } },
+        { "BEH_GTIA_AssignerMissionsFaireMouvementPC", { "done_BEH_GTIA_AssignerMissionsFaireMouvementPC" } },
     },
 
     create = function( self )
@@ -88,9 +92,11 @@ node "BEH_GTIA_AssignerLesOrdresPourFaireMouvement"
 
 node "BEH_GTIA_AssignerMissionsFaireMouvementPC"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerMissionsFaireMouvementPC" }, "BEH_GTIA_AssignerMissionsFaireMouvementPC" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerMissionsFaireMouvementPC, {value} ) end,
     activations =
     {
-        { "ACT_Mission_Automate_AssignerFaireMouvementA", {} },
+        { "ACT_Mission_Automate_AssignerFaireMouvementA", { "done_ACT_Mission_Automate_AssignerFaireMouvementA" } },
     },
 
     create = function( self )
@@ -114,6 +120,8 @@ node "BEH_GTIA_AssignerMissionsFaireMouvementPC"
 
 node "ACT_GTIA_AssignerMissionFaireMouvementA"
 {
+    feedbacks = { { { "done_ACT_GTIA_AssignerMissionFaireMouvementA" }, "ACT_GTIA_AssignerMissionFaireMouvementA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_GTIA_AssignerMissionFaireMouvementA, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]

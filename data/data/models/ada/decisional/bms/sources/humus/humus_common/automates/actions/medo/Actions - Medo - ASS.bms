@@ -12,6 +12,8 @@ includedFiles["sources/humus/humus_common/automates/actions/medo/Actions - Medo 
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_ASS_AssignerReconnaitreZoneDeploiementA"
 {
+    feedbacks = { { { "done_ACT_Mission_Automate_ASS_AssignerReconnaitreZoneDeploiementA" }, "ACT_Mission_Automate_ASS_AssignerReconnaitreZoneDeploiementA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Mission_Automate_ASS_AssignerReconnaitreZoneDeploiementA, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -50,7 +52,7 @@ elseif switch_1 == ePhase_CDT then
         end
 
         if( self.missionPion == nil ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             do return end
         end
 
@@ -59,7 +61,7 @@ elseif switch_1 == ePhase_CDT then
             do
             end
         else
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             do return end
         end
 
@@ -76,7 +78,7 @@ elseif switch_1 == ePhase_CDT then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
 
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         do return end
 
     end,
@@ -86,6 +88,8 @@ elseif switch_1 == ePhase_CDT then
 --[[//-----------------------------------------------------------------------------
 ]]node "ACT_Mission_Automate_ASS_AcquerirObjectifsA"
 {
+    feedbacks = { { { "done_ACT_Mission_Automate_ASS_AcquerirObjectifsA" }, "ACT_Mission_Automate_ASS_AcquerirObjectifsA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Mission_Automate_ASS_AcquerirObjectifsA, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -125,7 +129,7 @@ elseif switch_1 == ePhase_CDT then
         end
 
         if( self.missionPion == nil ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             do return end
         end
 
@@ -134,7 +138,7 @@ elseif switch_1 == ePhase_CDT then
             do
             end
         else
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             do return end
         end
 
@@ -153,7 +157,7 @@ elseif switch_1 == ePhase_CDT then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
 
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         do return end
 
     end,

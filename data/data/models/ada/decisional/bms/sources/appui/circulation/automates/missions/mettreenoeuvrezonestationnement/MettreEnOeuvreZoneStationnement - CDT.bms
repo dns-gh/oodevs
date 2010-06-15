@@ -9,6 +9,8 @@ includedFiles["sources/appui/circulation/automates/missions/mettreenoeuvrezonest
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_LOG_MettreEnOeuvreZoneStationnement"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_LOG_MettreEnOeuvreZoneStationnement" }, "MIS_Automate_CDT_LOG_MettreEnOeuvreZoneStationnement" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_LOG_MettreEnOeuvreZoneStationnement, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission

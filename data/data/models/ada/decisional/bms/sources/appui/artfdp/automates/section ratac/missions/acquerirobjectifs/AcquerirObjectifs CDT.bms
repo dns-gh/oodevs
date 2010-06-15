@@ -17,6 +17,8 @@ includedFiles["sources/appui/artfdp/automates/section ratac/missions/acquerirobj
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_ASS_AcquerirObjectifs"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ASS_AcquerirObjectifs" }, "MIS_Automate_CDT_ASS_AcquerirObjectifs" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ASS_AcquerirObjectifs, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission

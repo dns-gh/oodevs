@@ -45,12 +45,14 @@ include "Glaise/Glaise_Melee/Inf/Automates/Cie AC/Missions/Behaviors.bms"
 
 node "BEH_Conduite_Automate_HOT_Defaut"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_HOT_Defaut" }, "BEH_Conduite_Automate_HOT_Defaut" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_HOT_Defaut, {value} ) end,
     activations =
     {
-        { "BEH_Dispositif_Automate_INF_GererLesPionsDetruits", {} },
-        { "BEH_Dispositif_Automate_INF_GererReleve", {} },
-        { "BEH_Conduite_Automate_INF_GererAppuis_INF", {} },
-        { "BEH_Conduite_Automate_INF_GererAppuis_ABC", {} },
+        { "BEH_Dispositif_Automate_INF_GererLesPionsDetruits", { "done_BEH_Dispositif_Automate_INF_GererLesPionsDetruits" } },
+        { "BEH_Dispositif_Automate_INF_GererReleve", { "done_BEH_Dispositif_Automate_INF_GererReleve" } },
+        { "BEH_Conduite_Automate_INF_GererAppuis_INF", { "done_BEH_Conduite_Automate_INF_GererAppuis_INF" } },
+        { "BEH_Conduite_Automate_INF_GererAppuis_ABC", { "done_BEH_Conduite_Automate_INF_GererAppuis_ABC" } },
     },
 
     create = function( self )

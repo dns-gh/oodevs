@@ -9,9 +9,11 @@ includedFiles["sources/melee/abc/automates/sgpt blindes inf/missions/fixer/Fixer
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_MRT_ABC_Fixer"
 {
+    feedbacks = { { { "done_MIS_Automate_MRT_ABC_Fixer" }, "MIS_Automate_MRT_ABC_Fixer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_MRT_ABC_Fixer, {value} ) end,
     activations =
     {
-        { "BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionDynamique", {} },
+        { "BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionDynamique", { "done_BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionDynamique" } },
     },
 
     create = function( self )

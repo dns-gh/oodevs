@@ -9,9 +9,11 @@ includedFiles["sources/appui/circulation/pions/missions/aide a mobilite dans zon
 ]]--[[// *****************************************************************************
 ]]node "MIS_Pion_LOG_MettreEnOeuvreZoneStationnement"
 {
+    feedbacks = { { { "done_MIS_Pion_LOG_MettreEnOeuvreZoneStationnement" }, "MIS_Pion_LOG_MettreEnOeuvreZoneStationnement" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_LOG_MettreEnOeuvreZoneStationnement, {value} ) end,
     activations =
     {
-        { "BEH_Pion_CIRCU_RealiserObjetDansZone", {} },
+        { "BEH_Pion_CIRCU_RealiserObjetDansZone", { "done_BEH_Pion_CIRCU_RealiserObjetDansZone" } },
     },
 
     create = function( self )

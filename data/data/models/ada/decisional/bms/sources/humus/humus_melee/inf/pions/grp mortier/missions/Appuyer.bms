@@ -24,19 +24,21 @@ includedFiles["sources/humus/humus_melee/inf/pions/grp mortier/missions/Appuyer.
 ]]
 node "MIS_Pion_INF_Appuyer"
 {
+    feedbacks = { { { "done_MIS_Pion_INF_Appuyer" }, "MIS_Pion_INF_Appuyer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_INF_Appuyer, {value} ) end,
     activations =
     {
-        { "BEH_Misc_Pion_DefinirTypeMission", {} },
-        { "BEH_MAJ_AgressiviteMission", {} },
-        { "BEH_MOT_DesactiveSauvegarde", {} },
-        { "BEH_Ordre_Inopine", {} },
-        { "BEH_Ordre_Pion_Mortier_AppliquerLesFeux", {} },
-        { "ACT_Ordre_Suppression", {} },
-        { "BEH_Delai_Pion_INF_PreparerMission", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_Pion_INF_Appuyer", {} },
-        { "BEH_Poste_Pion_INF_TomberEnGarde", {} },
-        { "ACT_Info_Trace", {} },
+        { "BEH_Misc_Pion_DefinirTypeMission", { "done_BEH_Misc_Pion_DefinirTypeMission" } },
+        { "BEH_MAJ_AgressiviteMission", { "done_BEH_MAJ_AgressiviteMission" } },
+        { "BEH_MOT_DesactiveSauvegarde", { "done_BEH_MOT_DesactiveSauvegarde" } },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "BEH_Ordre_Pion_Mortier_AppliquerLesFeux", { "done_BEH_Ordre_Pion_Mortier_AppliquerLesFeux" } },
+        { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
+        { "BEH_Delai_Pion_INF_PreparerMission", { "done_BEH_Delai_Pion_INF_PreparerMission" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Dep_Pion_INF_Appuyer", { "done_BEH_Dep_Pion_INF_Appuyer" } },
+        { "BEH_Poste_Pion_INF_TomberEnGarde", { "done_BEH_Poste_Pion_INF_TomberEnGarde" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
     },
 
     create = function( self )
@@ -59,7 +61,7 @@ node "MIS_Pion_INF_Appuyer"
 ]]if( ( self.repAmi == 0 or self.repAmi == nil ) ) then
                             do
                                 DEC_Warning( eRC_MissionImpossible )
-                                                                self.params.__returnValue = eActionImpossible
+                                                                self:SendFeedback( eActionImpossible )
                                 Halt( self )
                                 do return end
 
@@ -75,7 +77,8 @@ node "MIS_Pion_INF_Appuyer"
                 Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )--[[// ajout ADA mia
 ]]
                 self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-                Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+                Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
                 if( self.eEtatOrdreFinMission == eActionHalt ) then
                     do
                         self.ePhase = eFinMission
@@ -138,7 +141,7 @@ elseif switch_1 == eFinMission then
                                         end
 
                                         DEC_FinMission()
-                                                                                self.params.__returnValue = eActionEffectuee
+                                                                                self:SendFeedback( eActionEffectuee )
                                         Halt( self )
                                         do return end
 
@@ -148,7 +151,8 @@ elseif switch_1 == eFinMission then
                             end
 
                             Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                            Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { false, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                            Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, { false, } )
+self.done_BEH_Poste_Pion_INF_TomberEnGarde = function( self, _, v ) self.eAction = v[1] end
                             _continue = false
                                                 cases_switch_1[3] = true
 

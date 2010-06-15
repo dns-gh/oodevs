@@ -14,11 +14,13 @@ includedFiles["sources/melee/inf/automates/sgpt inf abc/missions/flancgarder/Fla
 ]]
 node "MIS_Automate_CDT_INF_FlancGarder"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_INF_FlancGarder" }, "MIS_Automate_CDT_INF_FlancGarder" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_INF_FlancGarder, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_INF_Defaut", {} },
-        { "BEH_Conduite_Automate_INF_CadreOffensif", {} },
-        { "BEH_Conduite_Automate_INF_FlancGarder", {} },
+        { "BEH_Conduite_Automate_INF_Defaut", { "done_BEH_Conduite_Automate_INF_Defaut" } },
+        { "BEH_Conduite_Automate_INF_CadreOffensif", { "done_BEH_Conduite_Automate_INF_CadreOffensif" } },
+        { "BEH_Conduite_Automate_INF_FlancGarder", { "done_BEH_Conduite_Automate_INF_FlancGarder" } },
     },
 
     create = function( self )
@@ -44,7 +46,7 @@ node "MIS_Automate_CDT_INF_FlancGarder"
             do
                 self.eActionMission = eActionEnCours
                                 do
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -53,7 +55,8 @@ node "MIS_Automate_CDT_INF_FlancGarder"
             end
         end
 
-        Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, setmetatable( { false, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, { false, } )
+self.done_BEH_Conduite_Automate_INF_Defaut = function( self, _, v ) self.eActionMission = v[1] end
         Activate( self.activations.BEH_Conduite_Automate_INF_CadreOffensif, 1, {} )
         Activate( self.activations.BEH_Conduite_Automate_INF_FlancGarder, 1, { self._namedParams.mission.compagnie_, } )
     end,

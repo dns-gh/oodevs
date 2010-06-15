@@ -18,15 +18,17 @@ include "bit.lua"
 
 node "MIS_Pion_INF_Fixer"
 {
+    feedbacks = { { { "done_MIS_Pion_INF_Fixer" }, "MIS_Pion_INF_Fixer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_INF_Fixer, {value} ) end,
     activations =
     {
-        { "ACT_RC", {} },
-        { "BEH_Misc_Pion_DefinirTypeMission", {} },
-        { "BEH_MAJ_AgressiviteMission", {} },
-        { "BEH_Ordre_Inopine", {} },
-        { "BEH_Mission_Pion_VAB_Fixer", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Poste_Pion_INF_TomberEnGarde", {} },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "BEH_Misc_Pion_DefinirTypeMission", { "done_BEH_Misc_Pion_DefinirTypeMission" } },
+        { "BEH_MAJ_AgressiviteMission", { "done_BEH_MAJ_AgressiviteMission" } },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "BEH_Mission_Pion_VAB_Fixer", { "done_BEH_Mission_Pion_VAB_Fixer" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Poste_Pion_INF_TomberEnGarde", { "done_BEH_Poste_Pion_INF_TomberEnGarde" } },
     },
 
     create = function( self )
@@ -53,7 +55,7 @@ node "MIS_Pion_INF_Fixer"
                         end
 
                         Activate( self.activations.ACT_RC, 1, { eRC_MissionImpossible, } )
-                                                self.params.__returnValue = eActionImpossible
+                                                self:SendFeedback( eActionImpossible )
                         Halt( self )
                         do return end
 
@@ -67,7 +69,8 @@ node "MIS_Pion_INF_Fixer"
         Activate( self.activations.BEH_Misc_Pion_DefinirTypeMission, 1, { eTypeContact_Offensif, } )
         Activate( self.activations.BEH_MAJ_AgressiviteMission, 1, { eReconnu, M_TIR_PH_MISSION_MANOEUVRE(), } )
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
                 self.ePhase = eFinMission
@@ -82,7 +85,7 @@ node "MIS_Pion_INF_Fixer"
         if( self.eAction == eActionImpossible ) then
             do
                 Activate( self.activations.ACT_RC, 1, { eRC_MissionImpossible, } )
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -103,7 +106,8 @@ node "MIS_Pion_INF_Fixer"
 
                     if( self.eCurrentPhase ~= eFinMission ) then
                         do
-                            Activate( self.activations.BEH_Mission_Pion_VAB_Fixer, GetMotivation( "MOT_Mission" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCurrentPhase = v else rawset( t, k, v ) end end } ) )
+                            Activate( self.activations.BEH_Mission_Pion_VAB_Fixer, GetMotivation( "MOT_Mission" ), {} )
+self.done_BEH_Mission_Pion_VAB_Fixer = function( self, _, v ) self.eCurrentPhase = v[1] end
                                                         do return end
 
                         end
@@ -129,7 +133,8 @@ node "MIS_Pion_INF_Fixer"
                     end
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                    Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, { true, } )
+self.done_BEH_Poste_Pion_INF_TomberEnGarde = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                                 cases_switch_1[2] = true
 
@@ -143,13 +148,15 @@ node "MIS_Pion_INF_Fixer"
 
 node "BEH_Mission_Pion_VAB_Fixer"
 {
+    feedbacks = { { { "done_BEH_Mission_Pion_VAB_Fixer" }, "BEH_Mission_Pion_VAB_Fixer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Pion_VAB_Fixer, {value} ) end,
     activations =
     {
-        { "BEH_Lima_Pion_RejoindreFuseau_EnAttente", {} },
-        { "BEH_Dep_Pion_INF_PreciserMaintenirContact", {} },
-        { "ACT_Obs_EtablirVisionVersPt", {} },
-        { "BEH_Eni_Pion_VAB_Fixer", {} },
-        { "BEH_Obs_Pion_INF_EnReconnaissance", {} },
+        { "BEH_Lima_Pion_RejoindreFuseau_EnAttente", { "done_BEH_Lima_Pion_RejoindreFuseau_EnAttente" } },
+        { "BEH_Dep_Pion_INF_PreciserMaintenirContact", { "done_BEH_Dep_Pion_INF_PreciserMaintenirContact" } },
+        { "ACT_Obs_EtablirVisionVersPt", { "done_ACT_Obs_EtablirVisionVersPt" } },
+        { "BEH_Eni_Pion_VAB_Fixer", { "done_BEH_Eni_Pion_VAB_Fixer" } },
+        { "BEH_Obs_Pion_INF_EnReconnaissance", { "done_BEH_Obs_Pion_INF_EnReconnaissance" } },
     },
 
     create = function( self )
@@ -174,7 +181,7 @@ node "BEH_Mission_Pion_VAB_Fixer"
                     do return end
                 end
 
-                                self.params.__returnValue = eFinMission
+                                self:SendFeedback( eFinMission )
                 Halt( self )
                 do return end
 
@@ -188,7 +195,7 @@ node "BEH_Mission_Pion_VAB_Fixer"
                                         do
                     end
 
-                                        self.params.__returnValue = eFinMission
+                                        self:SendFeedback( eFinMission )
                     Halt( self )
                     do return end
 
@@ -198,7 +205,8 @@ node "BEH_Mission_Pion_VAB_Fixer"
 --[[// Si le niveau d'identification s'acroit, on garde ce niveau		
 ]]        end
 
-        Activate( self.activations.BEH_Dep_Pion_INF_PreciserMaintenirContact, 1, setmetatable( { self.ksMission, false, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionPreciser = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Dep_Pion_INF_PreciserMaintenirContact, 1, { self.ksMission, false, } )
+self.done_BEH_Dep_Pion_INF_PreciserMaintenirContact = function( self, _, v ) self.eActionPreciser = v[1] end
          do
             local _continue = true
             local switch_1 = DEC_ConnaissanceAgent_NiveauPerceptionMax( self.ksMission )
@@ -206,7 +214,8 @@ node "BEH_Mission_Pion_VAB_Fixer"
                 if switch_1 == eReconnu
                 or switch_1 == eIdentifie then
                     Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1, { DEC_ConnaissanceAgent_Position( self.ksMission ), } )
-                    Activate( self.activations.BEH_Eni_Pion_VAB_Fixer, 2 * S_Force_DangerSur( self.ksMission ), setmetatable( { self.ksMission, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Eni_Pion_VAB_Fixer, 2 * S_Force_DangerSur( self.ksMission ), { self.ksMission, } )
+self.done_BEH_Eni_Pion_VAB_Fixer = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                                 cases_switch_1[1] = true
 

@@ -12,9 +12,11 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/ciecharmoyen/missions/s
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_ABC_Surveiller"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ABC_Surveiller" }, "MIS_Automate_CDT_ABC_Surveiller" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ABC_Surveiller, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_Surveiller", {} },
+        { "BEH_Conduite_Automate_ABC_Surveiller", { "done_BEH_Conduite_Automate_ABC_Surveiller" } },
     },
 
     create = function( self )

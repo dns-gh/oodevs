@@ -68,9 +68,11 @@ etat_ROE = 1,
 ]]--[[//
 ]]node "BEH_Misc_Pion_INF_Default"
 {
+    feedbacks = { { { "done_BEH_Misc_Pion_INF_Default" }, "BEH_Misc_Pion_INF_Default" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Misc_Pion_INF_Default, {value} ) end,
     activations =
     {
-        { "BEH_Mot_Pion_Embarquer", {} },
+        { "BEH_Mot_Pion_Embarquer", { "done_BEH_Mot_Pion_Embarquer" } },
     },
 
     create = function( self )
@@ -84,9 +86,11 @@ etat_ROE = 1,
 
 node "BEH_Tir_Pion_INF_TirDebarque"
 {
+    feedbacks = { { { "done_BEH_Tir_Pion_INF_TirDebarque" }, "BEH_Tir_Pion_INF_TirDebarque" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Tir_Pion_INF_TirDebarque, {value} ) end,
     activations =
     {
-        { "ACT_Tir_DirectSur", {} },
+        { "ACT_Tir_DirectSur", { "done_ACT_Tir_DirectSur" } },
     },
 
     create = function( self )
@@ -97,8 +101,9 @@ node "BEH_Tir_Pion_INF_TirDebarque"
     activate = function( self )
         self.eAction = self.eAction or eActionEnCours
         local eActionReturn = self.eAction
-        Activate( self.activations.ACT_Tir_DirectSur, 1, setmetatable( { self._namedParams.ksEni, 1, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                self.params.__returnValue = eActionReturn
+        Activate( self.activations.ACT_Tir_DirectSur, 1, { self._namedParams.ksEni, 1, } )
+self.done_ACT_Tir_DirectSur = function( self, _, v ) self.eAction = v[1] end
+                self:SendFeedback( eActionReturn )
         do return end
 
     end,
@@ -107,9 +112,11 @@ node "BEH_Tir_Pion_INF_TirDebarque"
 
 node "BEH_Eni_Pion_INF_GererContactEni"
 {
+    feedbacks = { { { "done_BEH_Eni_Pion_INF_GererContactEni" }, "BEH_Eni_Pion_INF_GererContactEni" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Pion_INF_GererContactEni, {value} ) end,
     activations =
     {
-        { "BEH_Eni_Pion_INF_DetruitEtFixe", {} },
+        { "BEH_Eni_Pion_INF_DetruitEtFixe", { "done_BEH_Eni_Pion_INF_DetruitEtFixe" } },
     },
 
     create = function( self )

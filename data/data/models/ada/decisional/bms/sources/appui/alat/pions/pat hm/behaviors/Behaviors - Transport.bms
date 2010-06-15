@@ -17,15 +17,17 @@ include "bit.lua"
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "BEH_Transport_Pion_ALAT_HM_Helitransporter"
 {
+    feedbacks = { { { "done_BEH_Transport_Pion_ALAT_HM_Helitransporter" }, "BEH_Transport_Pion_ALAT_HM_Helitransporter" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Transport_Pion_ALAT_HM_Helitransporter, {value} ) end,
     activations =
     {
-        { "ACT_RC_SurPion", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Maj_Pions_ObjectifEsquive", {} },
-        { "BEH_Dep_Pion_ALAT_RejoindrePoint", {} },
-        { "BEH_Dep_Pion_ALAT_SePoser", {} },
-        { "ACT_Transport_Pion_ALAT_HM_HelitransportEmbarquer", {} },
-        { "ACT_Transport_Pion_ALAT_HM_HelitransportDebarquer", {} },
+        { "ACT_RC_SurPion", { "done_ACT_RC_SurPion" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "ACT_Maj_Pions_ObjectifEsquive", { "done_ACT_Maj_Pions_ObjectifEsquive" } },
+        { "BEH_Dep_Pion_ALAT_RejoindrePoint", { "done_BEH_Dep_Pion_ALAT_RejoindrePoint" } },
+        { "BEH_Dep_Pion_ALAT_SePoser", { "done_BEH_Dep_Pion_ALAT_SePoser" } },
+        { "ACT_Transport_Pion_ALAT_HM_HelitransportEmbarquer", { "done_ACT_Transport_Pion_ALAT_HM_HelitransportEmbarquer" } },
+        { "ACT_Transport_Pion_ALAT_HM_HelitransportDebarquer", { "done_ACT_Transport_Pion_ALAT_HM_HelitransportDebarquer" } },
     },
 
     create = function( self )
@@ -70,7 +72,7 @@ do
         end
 
         if( not bUnitesEnAttenteSurPtEmbarquement and DEC_Transport_EstTermine() ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -160,13 +162,13 @@ do
                         do
                                                         do
                                 DEC_Transport_Annuler()
-                                                                self.params.__returnValue = eActionImpossible
+                                                                self:SendFeedback( eActionImpossible )
                                 Halt( self )
                                 do return end
 
                             end
 
-                                                        self.params.__returnValue = eActionImpossible
+                                                        self:SendFeedback( eActionImpossible )
                             Halt( self )
                             do return end
 
@@ -175,7 +177,8 @@ do
 
                     Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.posEmbarquement, } )
                     --[[//on s'infiltre jusqu'au point d'embarquement spécifié par la mission
-]]Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, setmetatable( { self._namedParams.posEmbarquement, eProgressionDefaut, self._namedParams.ePathType, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+]]Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, { self._namedParams.posEmbarquement, eProgressionDefaut, self._namedParams.ePathType, } )
+self.done_BEH_Dep_Pion_ALAT_RejoindrePoint = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eAttendre then
@@ -237,13 +240,13 @@ do
                         do
                                                         do
                                 DEC_Transport_Annuler()
-                                                                self.params.__returnValue = eActionImpossible
+                                                                self:SendFeedback( eActionImpossible )
                                 Halt( self )
                                 do return end
 
                             end
 
-                                                        self.params.__returnValue = eActionImpossible
+                                                        self:SendFeedback( eActionImpossible )
                             Halt( self )
                             do return end
 
@@ -254,7 +257,8 @@ do
                         do return end
                     end
 
-                    Activate( self.activations.ACT_Transport_Pion_ALAT_HM_HelitransportEmbarquer, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.ACT_Transport_Pion_ALAT_HM_HelitransportEmbarquer, 1, {} )
+self.done_ACT_Transport_Pion_ALAT_HM_HelitransportEmbarquer = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                                 cases_switch_1[3] = true
 elseif switch_1 == eTransporterAllerDebarquer then
@@ -275,13 +279,13 @@ elseif switch_1 == eTransporterAllerDebarquer then
                         do
                                                         do
                                 DEC_Transport_Annuler()
-                                                                self.params.__returnValue = eActionImpossible
+                                                                self:SendFeedback( eActionImpossible )
                                 Halt( self )
                                 do return end
 
                             end
 
-                                                        self.params.__returnValue = eActionImpossible
+                                                        self:SendFeedback( eActionImpossible )
                             Halt( self )
                             do return end
 
@@ -290,7 +294,8 @@ elseif switch_1 == eTransporterAllerDebarquer then
 
                     Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.posDebarquement, } )
                     --[[//on s'infiltre jusqu'au point d'embarquement spécifié par la mission
-]]Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, setmetatable( { self._namedParams.posDebarquement, eProgressionDefaut, self._namedParams.ePathType, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+]]Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, { self._namedParams.posDebarquement, eProgressionDefaut, self._namedParams.ePathType, } )
+self.done_BEH_Dep_Pion_ALAT_RejoindrePoint = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                                 cases_switch_1[4] = true
 elseif switch_1 == eTransporterDebarquer then
@@ -313,20 +318,21 @@ elseif switch_1 == eTransporterDebarquer then
                         do
                                                         do
                                 DEC_Transport_Annuler()
-                                                                self.params.__returnValue = eActionImpossible
+                                                                self:SendFeedback( eActionImpossible )
                                 Halt( self )
                                 do return end
 
                             end
 
-                                                        self.params.__returnValue = eActionImpossible
+                                                        self:SendFeedback( eActionImpossible )
                             Halt( self )
                             do return end
 
                         end
                     end
 
-                    Activate( self.activations.ACT_Transport_Pion_ALAT_HM_HelitransportDebarquer, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.ACT_Transport_Pion_ALAT_HM_HelitransportDebarquer, 1, {} )
+self.done_ACT_Transport_Pion_ALAT_HM_HelitransportDebarquer = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                                 cases_switch_1[5] = true
                 end
@@ -348,6 +354,8 @@ elseif switch_1 == eTransporterDebarquer then
 
 node "BEH_Transport_Pion_ALAT_HM_Extraire"
 {
+    feedbacks = { { { "done_BEH_Transport_Pion_ALAT_HM_Extraire" }, "BEH_Transport_Pion_ALAT_HM_Extraire" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Transport_Pion_ALAT_HM_Extraire, {value} ) end,
     instances =
     {
         max = 1,
@@ -355,9 +363,9 @@ node "BEH_Transport_Pion_ALAT_HM_Extraire"
 
     activations =
     {
-        { "ACT_Maj_Pions_ObjectifEsquive", {} },
-        { "BEH_Dep_Pion_ALAT_RejoindrePoint", {} },
-        { "BEH_Dep_Pion_ALAT_RejoindrePion", {} },
+        { "ACT_Maj_Pions_ObjectifEsquive", { "done_ACT_Maj_Pions_ObjectifEsquive" } },
+        { "BEH_Dep_Pion_ALAT_RejoindrePoint", { "done_BEH_Dep_Pion_ALAT_RejoindrePoint" } },
+        { "BEH_Dep_Pion_ALAT_RejoindrePion", { "done_BEH_Dep_Pion_ALAT_RejoindrePion" } },
     },
 
     create = function( self )
@@ -387,7 +395,7 @@ node "BEH_Transport_Pion_ALAT_HM_Extraire"
 ]]if( not DEC_NecessiteEvacuationBlesses( self._namedParams.pion ) ) then
                         do
                             myself.bEnCoursExtractionPersonnel_ = false
-                                                        self.params.__returnValue = eActionEffectuee
+                                                        self:SendFeedback( eActionEffectuee )
                             Halt( self )
                             do return end
 
@@ -407,7 +415,8 @@ node "BEH_Transport_Pion_ALAT_HM_Extraire"
                     end
 
                     Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self.pointEmbarquement, } )
-                    Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, setmetatable( { self.pointEmbarquement, eProgressionDefaut, self._namedParams.ePathType, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, { self.pointEmbarquement, eProgressionDefaut, self._namedParams.ePathType, } )
+self.done_BEH_Dep_Pion_ALAT_RejoindrePoint = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                 --[[//aller au tc2 et y déposer les humains blessés
 ]]                cases_switch_1[1] = true
@@ -419,7 +428,7 @@ elseif switch_1 == eExtraire then
                                 DEC_EvacuerBlessesVersTC2( self._namedParams.pion, DEC_GetAutomate( self._namedParams.TC2 ) )
                                 myself.bEnPhaseRavitaillement_ = true
                                 myself.bEnCoursExtractionPersonnel_ = false
-                                                                self.params.__returnValue = eActionEffectuee
+                                                                self:SendFeedback( eActionEffectuee )
                                 Halt( self )
                                 do return end
 
@@ -429,7 +438,8 @@ elseif switch_1 == eExtraire then
                     end
 
                     Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.TC2:DEC_Agent_Position(), } )
-                    Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePion, 1, setmetatable( { self._namedParams.TC2, eProgressionDefaut, self._namedParams.ePathType, 6000, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePion, 1, { self._namedParams.TC2, eProgressionDefaut, self._namedParams.ePathType, 6000, } )
+self.done_BEH_Dep_Pion_ALAT_RejoindrePion = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                                 cases_switch_1[2] = true
                 end

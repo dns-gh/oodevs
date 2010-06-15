@@ -15,9 +15,11 @@ includedFiles["sources/emergency/automates/common/missions/evacuate area/Evacuat
 ]]--[[//------------------------------------------------------------------------------
 ]]node "MIS_Automate_MRT_Emergency_EvacuateArea"
 {
+    feedbacks = { { { "done_MIS_Automate_MRT_Emergency_EvacuateArea" }, "MIS_Automate_MRT_Emergency_EvacuateArea" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_MRT_Emergency_EvacuateArea, {value} ) end,
     activations =
     {
-        { "BEH_Medo_Automate_Emergency_PreparerMission_EvacuateArea", {} },
+        { "BEH_Medo_Automate_Emergency_PreparerMission_EvacuateArea", { "done_BEH_Medo_Automate_Emergency_PreparerMission_EvacuateArea" } },
     },
 
     create = function( self )
@@ -46,7 +48,7 @@ includedFiles["sources/emergency/automates/common/missions/evacuate area/Evacuat
                     DEC_RC( eRC_MissionImpossible )
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -59,7 +61,7 @@ includedFiles["sources/emergency/automates/common/missions/evacuate area/Evacuat
                                 do
                     DEC_Trace( "Emergency_EvacuateArea : end MRT" )
                     DEC_MRT_Valide()
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -71,17 +73,20 @@ includedFiles["sources/emergency/automates/common/missions/evacuate area/Evacuat
 ]]--[[//-----------------------------------------------------------------------------
 ]]        end
 
-        Activate( self.activations.BEH_Medo_Automate_Emergency_PreparerMission_EvacuateArea, 1, setmetatable( { "T_Mission_Automate_INF_Controler", }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCreationMRT = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Medo_Automate_Emergency_PreparerMission_EvacuateArea, 1, { "T_Mission_Automate_INF_Controler", } )
+self.done_BEH_Medo_Automate_Emergency_PreparerMission_EvacuateArea = function( self, _, v ) self.eCreationMRT = v[1] end
     end,
 
 }
 
 node "BEH_Medo_Automate_Emergency_PreparerMission_EvacuateArea"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_Emergency_PreparerMission_EvacuateArea" }, "BEH_Medo_Automate_Emergency_PreparerMission_EvacuateArea" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_Emergency_PreparerMission_EvacuateArea, {value} ) end,
     activations =
     {
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
-        { "BEH_Medo_Automate_Emergency_EvacuateArea", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", { "done_BEH_Medo_Automate_ControleCreationMission" } },
+        { "BEH_Medo_Automate_Emergency_EvacuateArea", { "done_BEH_Medo_Automate_Emergency_EvacuateArea" } },
     },
 
     create = function( self )
@@ -130,7 +135,7 @@ elseif switch_1 == eMRT_AssignerMissions then
                                                         do
                             end
 
-                                                        self.params.__returnValue = eActionImpossible
+                                                        self:SendFeedback( eActionImpossible )
                             Halt( self )
                             do return end
 
@@ -143,7 +148,7 @@ elseif switch_1 == eMRT_AssignerMissions then
                                 DEC_Trace( "eValidationMRT == eActionImpossible" )
                             end
 
-                                                        self.params.__returnValue = eActionImpossible
+                                                        self:SendFeedback( eActionImpossible )
                             Halt( self )
                             do return end
 
@@ -153,14 +158,15 @@ elseif switch_1 == eMRT_AssignerMissions then
                     if( self.eValidationMRT == eActionEffectuee ) then
                         do
                             self.eValidationMRT = eActionEnCours
-                                                        self.params.__returnValue = eActionEffectuee
+                                                        self:SendFeedback( eActionEffectuee )
                             Halt( self )
                             do return end
 
                         end
                     end
 
-                    Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.pions ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( self.pions ), } )
+self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eValidationMRT = v[1] end
                      do
                         local _continue = true
                         local switch_2 = self._namedParams.eTypeMission
@@ -172,7 +178,7 @@ elseif switch_1 == eMRT_AssignerMissions then
 
                             else
                                 DEC_Trace( "Mission Inconnue" )
-                                                                self.params.__returnValue = eActionImpossible
+                                                                self:SendFeedback( eActionImpossible )
                                 Halt( self )
                                 do return end
 
@@ -193,10 +199,12 @@ elseif switch_1 == eMRT_AssignerMissions then
 
 node "BEH_Medo_Automate_Emergency_EvacuateArea"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_Emergency_EvacuateArea" }, "BEH_Medo_Automate_Emergency_EvacuateArea" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_Emergency_EvacuateArea, {value} ) end,
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "BEH_Mission_Automate_Emergency_AssignerA_EvacuateArea", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
+        { "BEH_Mission_Automate_Emergency_AssignerA_EvacuateArea", { "done_BEH_Mission_Automate_Emergency_AssignerA_EvacuateArea" } },
     },
 
     create = function( self )
@@ -229,7 +237,7 @@ node "BEH_Medo_Automate_Emergency_EvacuateArea"
                                                         do
                                 DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
                                 Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
-                                                                self.params.__returnValue = eActionImpossible
+                                                                self:SendFeedback( eActionImpossible )
                                 do return end
 
                             end

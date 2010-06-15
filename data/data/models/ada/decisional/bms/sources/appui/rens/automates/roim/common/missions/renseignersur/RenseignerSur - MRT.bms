@@ -9,10 +9,12 @@ includedFiles["sources/appui/rens/automates/roim/common/missions/renseignersur/R
 ]]--[[// *****************************************************************************
 ]]node "BEH_Medo_Automate_RENS_ROIM_AssignerMettreEnOeuvreA"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_RENS_ROIM_AssignerMettreEnOeuvreA" }, "BEH_Medo_Automate_RENS_ROIM_AssignerMettreEnOeuvreA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_RENS_ROIM_AssignerMettreEnOeuvreA, {value} ) end,
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "BEH_Mission_Automate_RENS_ROIM_AssignerMettreEnOeuvreA", {} },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "BEH_Mission_Automate_RENS_ROIM_AssignerMettreEnOeuvreA", { "done_BEH_Mission_Automate_RENS_ROIM_AssignerMettreEnOeuvreA" } },
     },
 
     create = function( self )

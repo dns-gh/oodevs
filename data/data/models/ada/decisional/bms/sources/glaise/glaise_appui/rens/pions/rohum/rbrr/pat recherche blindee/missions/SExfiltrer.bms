@@ -9,10 +9,12 @@ includedFiles["sources/glaise/glaise_appui/rens/pions/rohum/rbrr/pat recherche b
 ]]--[[// *****************************************************************************
 ]]node "MIS_Pion_RENS_ROHUM_SExfiltrer"
 {
+    feedbacks = { { { "done_MIS_Pion_RENS_ROHUM_SExfiltrer" }, "MIS_Pion_RENS_ROHUM_SExfiltrer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_RENS_ROHUM_SExfiltrer, {value} ) end,
     activations =
     {
-        { "BEH_Dep_Pion_GererFurtivite", {} },
-        { "BEH_Mission_Pion_RENS_SExfiltrer", {} },
+        { "BEH_Dep_Pion_GererFurtivite", { "done_BEH_Dep_Pion_GererFurtivite" } },
+        { "BEH_Mission_Pion_RENS_SExfiltrer", { "done_BEH_Mission_Pion_RENS_SExfiltrer" } },
     },
 
     create = function( self )
@@ -26,13 +28,13 @@ includedFiles["sources/glaise/glaise_appui/rens/pions/rohum/rbrr/pat recherche b
 ]]--[[// Terminaison
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eEtat == eActionImpossible ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             Halt( self )
             do return end
         end
 
         if( self.eEtat == eActionEffectuee ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -44,7 +46,8 @@ includedFiles["sources/glaise/glaise_appui/rens/pions/rohum/rbrr/pat recherche b
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Comportement de la mission
 ]]--[[//-----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_Mission_Pion_RENS_SExfiltrer, 1, setmetatable( { self._namedParams.mission, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+]]Activate( self.activations.BEH_Mission_Pion_RENS_SExfiltrer, 1, { self._namedParams.mission, } )
+self.done_BEH_Mission_Pion_RENS_SExfiltrer = function( self, _, v ) self.eEtat = v[1] end
     end,
 
 }

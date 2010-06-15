@@ -9,15 +9,17 @@ includedFiles["sources/melee/abc/automates/ge40/missions/Echelonner dispositif.b
 ]]--[[// *****************************************************************************
 ]]node "BEH_GTIA_EchelonnerDispositif"
 {
+    feedbacks = { { { "done_BEH_GTIA_EchelonnerDispositif" }, "BEH_GTIA_EchelonnerDispositif" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_EchelonnerDispositif, {value} ) end,
     activations =
     {
-        { "BEH_GTIA_EchelonnerLesAppuis", {} },
-        { "BEH_GTIA_EchelonnerDispositifSuivantEtatOperationnel", {} },
-        { "BEH_GTIA_EchelonnerDispositifSuivantEnisDebarques", {} },
-        { "BEH_GTIA_EchelonnerDispositifSuivantEnisEmbarques", {} },
-        { "BEH_GTIA_EchelonnerDispositifSuivantTerrainFerme", {} },
-        { "BEH_GTIA_EchelonnerDispositifSuivantTerrainOuvert", {} },
-        { "BEH_GTIA_EchelonnerDispositifSuivantDelais", {} },
+        { "BEH_GTIA_EchelonnerLesAppuis", { "done_BEH_GTIA_EchelonnerLesAppuis" } },
+        { "BEH_GTIA_EchelonnerDispositifSuivantEtatOperationnel", { "done_BEH_GTIA_EchelonnerDispositifSuivantEtatOperationnel" } },
+        { "BEH_GTIA_EchelonnerDispositifSuivantEnisDebarques", { "done_BEH_GTIA_EchelonnerDispositifSuivantEnisDebarques" } },
+        { "BEH_GTIA_EchelonnerDispositifSuivantEnisEmbarques", { "done_BEH_GTIA_EchelonnerDispositifSuivantEnisEmbarques" } },
+        { "BEH_GTIA_EchelonnerDispositifSuivantTerrainFerme", { "done_BEH_GTIA_EchelonnerDispositifSuivantTerrainFerme" } },
+        { "BEH_GTIA_EchelonnerDispositifSuivantTerrainOuvert", { "done_BEH_GTIA_EchelonnerDispositifSuivantTerrainOuvert" } },
+        { "BEH_GTIA_EchelonnerDispositifSuivantDelais", { "done_BEH_GTIA_EchelonnerDispositifSuivantDelais" } },
     },
 
     create = function( self )
@@ -43,9 +45,11 @@ includedFiles["sources/melee/abc/automates/ge40/missions/Echelonner dispositif.b
 
 node "BEH_GTIA_EchelonnerLesAppuis"
 {
+    feedbacks = { { { "done_BEH_GTIA_EchelonnerLesAppuis" }, "BEH_GTIA_EchelonnerLesAppuis" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_EchelonnerLesAppuis, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_AssignerEchelonA", {} },
+        { "ACT_GTIA_AssignerEchelonA", { "done_ACT_GTIA_AssignerEchelonA" } },
     },
 
     create = function( self )
@@ -89,9 +93,11 @@ node "BEH_GTIA_EchelonnerLesAppuis"
 
 node "BEH_GTIA_EchelonnerDispositifSuivantDelais"
 {
+    feedbacks = { { { "done_BEH_GTIA_EchelonnerDispositifSuivantDelais" }, "BEH_GTIA_EchelonnerDispositifSuivantDelais" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_EchelonnerDispositifSuivantDelais, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_AssignerEchelonA", {} },
+        { "ACT_GTIA_AssignerEchelonA", { "done_ACT_GTIA_AssignerEchelonA" } },
     },
 
     create = function( self )
@@ -149,9 +155,11 @@ if( rNbrePionPECourant < rNbrePionsPE ) then
 
 node "BEH_GTIA_EchelonnerDispositifSuivantTerrainFerme"
 {
+    feedbacks = { { { "done_BEH_GTIA_EchelonnerDispositifSuivantTerrainFerme" }, "BEH_GTIA_EchelonnerDispositifSuivantTerrainFerme" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_EchelonnerDispositifSuivantTerrainFerme, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_AssignerEchelonA", {} },
+        { "ACT_GTIA_AssignerEchelonA", { "done_ACT_GTIA_AssignerEchelonA" } },
     },
 
     create = function( self )
@@ -209,9 +217,11 @@ if( rNbrePionPECourant < rNbrePionsPE ) then
 
 node "BEH_GTIA_EchelonnerDispositifSuivantTerrainOuvert"
 {
+    feedbacks = { { { "done_BEH_GTIA_EchelonnerDispositifSuivantTerrainOuvert" }, "BEH_GTIA_EchelonnerDispositifSuivantTerrainOuvert" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_EchelonnerDispositifSuivantTerrainOuvert, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_AssignerEchelonA", {} },
+        { "ACT_GTIA_AssignerEchelonA", { "done_ACT_GTIA_AssignerEchelonA" } },
     },
 
     create = function( self )
@@ -266,9 +276,11 @@ if( rNbrePionPECourant < rNbrePionsPE ) then
 
 node "BEH_GTIA_EchelonnerDispositifSuivantEnisDebarques"
 {
+    feedbacks = { { { "done_BEH_GTIA_EchelonnerDispositifSuivantEnisDebarques" }, "BEH_GTIA_EchelonnerDispositifSuivantEnisDebarques" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_EchelonnerDispositifSuivantEnisDebarques, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_AssignerEchelonA", {} },
+        { "ACT_GTIA_AssignerEchelonA", { "done_ACT_GTIA_AssignerEchelonA" } },
     },
 
     create = function( self )
@@ -323,9 +335,11 @@ if( rNbrePionPECourant < rNbrePionsPE ) then
 
 node "BEH_GTIA_EchelonnerDispositifSuivantEnisEmbarques"
 {
+    feedbacks = { { { "done_BEH_GTIA_EchelonnerDispositifSuivantEnisEmbarques" }, "BEH_GTIA_EchelonnerDispositifSuivantEnisEmbarques" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_EchelonnerDispositifSuivantEnisEmbarques, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_AssignerEchelonA", {} },
+        { "ACT_GTIA_AssignerEchelonA", { "done_ACT_GTIA_AssignerEchelonA" } },
     },
 
     create = function( self )
@@ -380,9 +394,11 @@ if( rNbrePionPECourant < rNbrePionsPE ) then
 
 node "BEH_GTIA_EchelonnerDispositifSuivantEtatOperationnel"
 {
+    feedbacks = { { { "done_BEH_GTIA_EchelonnerDispositifSuivantEtatOperationnel" }, "BEH_GTIA_EchelonnerDispositifSuivantEtatOperationnel" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_EchelonnerDispositifSuivantEtatOperationnel, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_AssignerEchelonA", {} },
+        { "ACT_GTIA_AssignerEchelonA", { "done_ACT_GTIA_AssignerEchelonA" } },
     },
 
     create = function( self )
@@ -408,6 +424,8 @@ node "BEH_GTIA_EchelonnerDispositifSuivantEtatOperationnel"
 
 node "ACT_GTIA_AssignerEchelonA"
 {
+    feedbacks = { { { "done_ACT_GTIA_AssignerEchelonA" }, "ACT_GTIA_AssignerEchelonA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_GTIA_AssignerEchelonA, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.automat = self.params[1]

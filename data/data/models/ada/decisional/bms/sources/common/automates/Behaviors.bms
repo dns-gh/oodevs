@@ -46,14 +46,16 @@ include "Common/Automates/Missions/Behaviors.bms"
 ]]--[[// *****************************************************************************
 ]]node "DefaultBehavior"
 {
+    feedbacks = { { { "done_Default" }, "Default" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_Default, {value} ) end,
     activations =
     {
-        { "BEH_MAJ_Automate_EtatDefaut", {} },
-        { "BEH_MAJ_Automate_RecevoirOrdreGE", {} },
-        { "BEH_RC_Automate_Situation", {} },
-        { "BEH_Default_Automate_ReactionPopulations", {} },
-        { "ACT_AFFICHE_EtatDecisionnel", {} },
-        { "ACT_Info_Trace", {} },
+        { "BEH_MAJ_Automate_EtatDefaut", { "done_BEH_MAJ_Automate_EtatDefaut" } },
+        { "BEH_MAJ_Automate_RecevoirOrdreGE", { "done_BEH_MAJ_Automate_RecevoirOrdreGE" } },
+        { "BEH_RC_Automate_Situation", { "done_BEH_RC_Automate_Situation" } },
+        { "BEH_Default_Automate_ReactionPopulations", { "done_BEH_Default_Automate_ReactionPopulations" } },
+        { "ACT_AFFICHE_EtatDecisionnel", { "done_ACT_AFFICHE_EtatDecisionnel" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
     },
 
     create = function( self )
@@ -92,12 +94,14 @@ connections = connections or {}
 connections[ #connections + 1 ] = { nodes.Default, "Default", nodes.DefaultBehavior }
 node "BEH_MAJ_Automate_EtatDefaut"
 {
+    feedbacks = { { { "done_BEH_MAJ_Automate_EtatDefaut" }, "BEH_MAJ_Automate_EtatDefaut" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MAJ_Automate_EtatDefaut, {value} ) end,
     activations =
     {
-        { "BEH_MAJ_Automate_EtatOperationnel", {} },
-        { "BEH_MAJ_Automate_EtatMission", {} },
-        { "BEH_MAJ_Automate_EtatLima", {} },
-        { "BEH_MAJ_Automate_EtatRapFor", {} },
+        { "BEH_MAJ_Automate_EtatOperationnel", { "done_BEH_MAJ_Automate_EtatOperationnel" } },
+        { "BEH_MAJ_Automate_EtatMission", { "done_BEH_MAJ_Automate_EtatMission" } },
+        { "BEH_MAJ_Automate_EtatLima", { "done_BEH_MAJ_Automate_EtatLima" } },
+        { "BEH_MAJ_Automate_EtatRapFor", { "done_BEH_MAJ_Automate_EtatRapFor" } },
     },
 
     create = function( self )
@@ -123,9 +127,11 @@ node "BEH_MAJ_Automate_EtatDefaut"
 
 node "BEH_MAJ_Automate_EtatRapFor"
 {
+    feedbacks = { { { "done_BEH_MAJ_Automate_EtatRapFor" }, "BEH_MAJ_Automate_EtatRapFor" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MAJ_Automate_EtatRapFor, {value} ) end,
     activations =
     {
-        { "ACT_MAJ_Automate_EtatRapFor", {} },
+        { "ACT_MAJ_Automate_EtatRapFor", { "done_ACT_MAJ_Automate_EtatRapFor" } },
     },
 
     create = function( self )
@@ -152,6 +158,8 @@ node "BEH_MAJ_Automate_EtatRapFor"
 
 node "ACT_MAJ_Automate_EtatRapFor"
 {
+    feedbacks = { { { "done_ACT_MAJ_Automate_EtatRapFor" }, "ACT_MAJ_Automate_EtatRapFor" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_MAJ_Automate_EtatRapFor, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.eEtatDec = self.params[1]
@@ -178,10 +186,12 @@ node "ACT_MAJ_Automate_EtatRapFor"
 ]]--[[// *****************************************************************************
 ]]node "BEH_MAJ_Automate_EtatOperationnel"
 {
+    feedbacks = { { { "done_BEH_MAJ_Automate_EtatOperationnel" }, "BEH_MAJ_Automate_EtatOperationnel" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MAJ_Automate_EtatOperationnel, {value} ) end,
     activations =
     {
-        { "ACT_MAJ_Automate_EtatDestruction", {} },
-        { "ACT_AFFICHE_EtatDecisionnel", {} },
+        { "ACT_MAJ_Automate_EtatDestruction", { "done_ACT_MAJ_Automate_EtatDestruction" } },
+        { "ACT_AFFICHE_EtatDecisionnel", { "done_ACT_AFFICHE_EtatDecisionnel" } },
     },
 
     create = function( self )
@@ -211,6 +221,8 @@ node "ACT_MAJ_Automate_EtatRapFor"
 
 node "ACT_MAJ_Automate_EtatDestruction"
 {
+    feedbacks = { { { "done_ACT_MAJ_Automate_EtatDestruction" }, "ACT_MAJ_Automate_EtatDestruction" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_MAJ_Automate_EtatDestruction, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.rDestruction = self.params[1]
@@ -230,9 +242,11 @@ node "ACT_MAJ_Automate_EtatDestruction"
 ]]--[[// *****************************************************************************
 ]]node "BEH_MAJ_Automate_EtatMission"
 {
+    feedbacks = { { { "done_BEH_MAJ_Automate_EtatMission" }, "BEH_MAJ_Automate_EtatMission" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MAJ_Automate_EtatMission, {value} ) end,
     activations =
     {
-        { "ACT_MAJ_Automate_EtatMission", {} },
+        { "ACT_MAJ_Automate_EtatMission", { "done_ACT_MAJ_Automate_EtatMission" } },
     },
 
     create = function( self )
@@ -298,6 +312,8 @@ do
 
 node "ACT_MAJ_Automate_EtatMission"
 {
+    feedbacks = { { { "done_ACT_MAJ_Automate_EtatMission" }, "ACT_MAJ_Automate_EtatMission" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_MAJ_Automate_EtatMission, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhaseMission = self.params[1]
@@ -324,10 +340,12 @@ node "ACT_MAJ_Automate_EtatMission"
 ]]--[[// *****************************************************************************
 ]]node "BEH_MAJ_Automate_EtatLima"
 {
+    feedbacks = { { { "done_BEH_MAJ_Automate_EtatLima" }, "BEH_MAJ_Automate_EtatLima" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MAJ_Automate_EtatLima, {value} ) end,
     activations =
     {
-        { "ACT_MAJ_Automate_EtatLima", {} },
-        { "BEH_MAJ_Automate_SurLima", {} },
+        { "ACT_MAJ_Automate_EtatLima", { "done_ACT_MAJ_Automate_EtatLima" } },
+        { "BEH_MAJ_Automate_SurLima", { "done_BEH_MAJ_Automate_SurLima" } },
     },
 
     create = function( self )
@@ -364,9 +382,11 @@ node "ACT_MAJ_Automate_EtatMission"
 
 node "BEH_MAJ_Automate_SurLima"
 {
+    feedbacks = { { { "done_BEH_MAJ_Automate_SurLima" }, "BEH_MAJ_Automate_SurLima" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MAJ_Automate_SurLima, {value} ) end,
     activations =
     {
-        { "ACT_MAJ_Automate_EtatLima", {} },
+        { "ACT_MAJ_Automate_EtatLima", { "done_ACT_MAJ_Automate_EtatLima" } },
     },
 
     create = function( self )
@@ -394,6 +414,8 @@ node "BEH_MAJ_Automate_SurLima"
 
 node "ACT_MAJ_Automate_EtatLima"
 {
+    feedbacks = { { { "done_ACT_MAJ_Automate_EtatLima" }, "ACT_MAJ_Automate_EtatLima" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_MAJ_Automate_EtatLima, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.eEtatLima = self.params[1]

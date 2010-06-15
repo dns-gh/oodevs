@@ -11,6 +11,8 @@ includedFiles["sources/glaise/glaise_common/pions/actions/Actions - RC.bms"] = t
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_RC"
 {
+    feedbacks = { { { "done_ACT_RC" }, "ACT_RC" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_RC, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.eTypeRC = self.params[1]
@@ -40,6 +42,8 @@ includedFiles["sources/glaise/glaise_common/pions/actions/Actions - RC.bms"] = t
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_RC_SurObjet"
 {
+    feedbacks = { { { "done_ACT_RC_SurObjet" }, "ACT_RC_SurObjet" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_RC_SurObjet, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.eTypeRC = self.params[1]
@@ -63,6 +67,8 @@ includedFiles["sources/glaise/glaise_common/pions/actions/Actions - RC.bms"] = t
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_RC_SurEni"
 {
+    feedbacks = { { { "done_ACT_RC_SurEni" }, "ACT_RC_SurEni" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_RC_SurEni, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.eTypeRC = self.params[1]
@@ -93,6 +99,8 @@ includedFiles["sources/glaise/glaise_common/pions/actions/Actions - RC.bms"] = t
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_RC_SurPion"
 {
+    feedbacks = { { { "done_ACT_RC_SurPion" }, "ACT_RC_SurPion" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_RC_SurPion, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.eTypeRC = self.params[1]
@@ -116,6 +124,8 @@ includedFiles["sources/glaise/glaise_common/pions/actions/Actions - RC.bms"] = t
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_RC_SurLima"
 {
+    feedbacks = { { { "done_ACT_RC_SurLima" }, "ACT_RC_SurLima" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_RC_SurLima, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.eTypeLima = self.params[1]
@@ -145,6 +155,8 @@ includedFiles["sources/glaise/glaise_common/pions/actions/Actions - RC.bms"] = t
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_RC_PreparationMission"
 {
+    feedbacks = { { { "done_ACT_RC_PreparationMission" }, "ACT_RC_PreparationMission" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_RC_PreparationMission, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.temps = self.params[1]

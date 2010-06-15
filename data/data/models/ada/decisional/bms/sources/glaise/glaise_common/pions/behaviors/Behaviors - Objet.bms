@@ -9,9 +9,11 @@ includedFiles["sources/glaise/glaise_common/pions/behaviors/Behaviors - Objet.bm
 ]]--[[// *****************************************************************************
 ]]node "BEH_Obj_RejoindreEmbossements"
 {
+    feedbacks = { { { "done_BEH_Obj_RejoindreEmbossements" }, "BEH_Obj_RejoindreEmbossements" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Obj_RejoindreEmbossements, {value} ) end,
     activations =
     {
-        { "BEH_Obj_RejoindreEmbossementLibre", {} },
+        { "BEH_Obj_RejoindreEmbossementLibre", { "done_BEH_Obj_RejoindreEmbossementLibre" } },
     },
 
     create = function( self )
@@ -53,6 +55,8 @@ do
 
 node "BEH_Obj_RejoindreEmbossementLibre"
 {
+    feedbacks = { { { "done_BEH_Obj_RejoindreEmbossementLibre" }, "BEH_Obj_RejoindreEmbossementLibre" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Obj_RejoindreEmbossementLibre, {value} ) end,
     instances =
     {
         max = 1,
@@ -60,10 +64,10 @@ node "BEH_Obj_RejoindreEmbossementLibre"
 
     activations =
     {
-        { "ACT_Obj_OccuperEmbossement", {} },
-        { "ACT_Dep_SePoster", {} },
-        { "ACT_Info_Trace", {} },
-        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_Obj_OccuperEmbossement", { "done_ACT_Obj_OccuperEmbossement" } },
+        { "ACT_Dep_SePoster", { "done_ACT_Dep_SePoster" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
     },
 
     create = function( self )
@@ -111,7 +115,8 @@ node "BEH_Obj_RejoindreEmbossementLibre"
         if( ( self.positionEmbossement ~= 0 and self.positionEmbossement ~= nil ) ) then
             do
                 Activate( self.activations.ACT_Info_Trace, 1, { "%% L'unite va rejoindre la position préparée %%", } )
-                Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.positionEmbossement, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.positionEmbossement, eProgressionDirect, eTypeItiMouvement, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
             end
         else
             Activate( self.activations.ACT_Info_Trace, 1, { "%% Embossement impossible à rejoindre %%", } )

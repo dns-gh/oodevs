@@ -6,10 +6,12 @@ includedFiles["sources/glaise/glaise_appui/artdsa/automates/section asa tcp/miss
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "MIS_Automate_CDT_ASA_MISTRAL_DefendreSite"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ASA_MISTRAL_DefendreSite" }, "MIS_Automate_CDT_ASA_MISTRAL_DefendreSite" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ASA_MISTRAL_DefendreSite, {value} ) end,
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionsDefendreSiteAListe", {} },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionsDefendreSiteAListe", { "done_BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionsDefendreSiteAListe" } },
     },
 
     create = function( self )

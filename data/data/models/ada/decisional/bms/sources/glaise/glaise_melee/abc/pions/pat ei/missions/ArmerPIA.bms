@@ -22,10 +22,12 @@ includedFiles["sources/glaise/glaise_melee/abc/pions/pat ei/missions/ArmerPIA.bm
 ]]--[[// *****************************************************************************
 ]]node "MIS_Pion_ABC_ArmerPIA"
 {
+    feedbacks = { { { "done_MIS_Pion_ABC_ArmerPIA" }, "MIS_Pion_ABC_ArmerPIA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_ABC_ArmerPIA, {value} ) end,
     activations =
     {
-        { "ACT_Dep_PasserEnModeFurtif", {} },
-        { "BEH_Mission_Pion_ABC_ArmerUnPIA", {} },
+        { "ACT_Dep_PasserEnModeFurtif", { "done_ACT_Dep_PasserEnModeFurtif" } },
+        { "BEH_Mission_Pion_ABC_ArmerUnPIA", { "done_BEH_Mission_Pion_ABC_ArmerUnPIA" } },
     },
 
     create = function( self )
@@ -39,13 +41,13 @@ includedFiles["sources/glaise/glaise_melee/abc/pions/pat ei/missions/ArmerPIA.bm
 ]]--[[// Terminaison
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eEtat == eActionImpossible ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             Halt( self )
             do return end
         end
 
         if( self.eEtat == eActionEffectuee ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -57,7 +59,8 @@ includedFiles["sources/glaise/glaise_melee/abc/pions/pat ei/missions/ArmerPIA.bm
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Comportement de la mission
 ]]--[[//-----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_Mission_Pion_ABC_ArmerUnPIA, 1, setmetatable( { self._namedParams.mission, M_MODELE_PION_ABC_ARMER_UN_PIA_PH(), M_MODELE_PION_ABC_ARMER_UN_PIA_ID(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+]]Activate( self.activations.BEH_Mission_Pion_ABC_ArmerUnPIA, 1, { self._namedParams.mission, M_MODELE_PION_ABC_ARMER_UN_PIA_PH(), M_MODELE_PION_ABC_ARMER_UN_PIA_ID(), } )
+self.done_BEH_Mission_Pion_ABC_ArmerUnPIA = function( self, _, v ) self.eEtat = v[1] end
     end,
 
 }

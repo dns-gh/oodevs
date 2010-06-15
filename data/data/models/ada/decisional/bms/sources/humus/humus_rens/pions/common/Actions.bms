@@ -12,6 +12,8 @@ includedFiles["sources/humus/humus_rens/pions/common/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Dep_Pion_Rens_ActiverFurtivite"
 {
+    feedbacks = { { { "done_ACT_Dep_Pion_Rens_ActiverFurtivite" }, "ACT_Dep_Pion_Rens_ActiverFurtivite" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Dep_Pion_Rens_ActiverFurtivite, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.rFurtivite = self.params[1]
@@ -41,6 +43,8 @@ includedFiles["sources/humus/humus_rens/pions/common/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Pion_Rens_AssurerLaLiaisonAvec"
 {
+    feedbacks = { { { "done_ACT_Pion_Rens_AssurerLaLiaisonAvec" }, "ACT_Pion_Rens_AssurerLaLiaisonAvec" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Pion_Rens_AssurerLaLiaisonAvec, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionAmi = self.params[1]
@@ -107,6 +111,8 @@ includedFiles["sources/humus/humus_rens/pions/common/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Obs_Pion_RENS_ActiverRadarDans"
 {
+    feedbacks = { { { "done_ACT_Obs_Pion_RENS_ActiverRadarDans" }, "ACT_Obs_Pion_RENS_ActiverRadarDans" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obs_Pion_RENS_ActiverRadarDans, {value} ) end,
     actuators =
     {
         deplacement = 1,
@@ -168,6 +174,8 @@ includedFiles["sources/humus/humus_rens/pions/common/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Obs_Pion_RENS_ActiverEcouteDans"
 {
+    feedbacks = { { { "done_ACT_Obs_Pion_RENS_ActiverEcouteDans" }, "ACT_Obs_Pion_RENS_ActiverEcouteDans" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obs_Pion_RENS_ActiverEcouteDans, {value} ) end,
     actuators =
     {
         deplacement = 1,
@@ -229,6 +237,8 @@ includedFiles["sources/humus/humus_rens/pions/common/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Obs_Pion_RENS_ActiverEcouteRadarDans"
 {
+    feedbacks = { { { "done_ACT_Obs_Pion_RENS_ActiverEcouteRadarDans" }, "ACT_Obs_Pion_RENS_ActiverEcouteRadarDans" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obs_Pion_RENS_ActiverEcouteRadarDans, {value} ) end,
     actuators =
     {
         deplacement = 1,
@@ -290,6 +300,8 @@ includedFiles["sources/humus/humus_rens/pions/common/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Obs_Pion_RENS_ActiverBrouillage"
 {
+    feedbacks = { { { "done_ACT_Obs_Pion_RENS_ActiverBrouillage" }, "ACT_Obs_Pion_RENS_ActiverBrouillage" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obs_Pion_RENS_ActiverBrouillage, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.eTypeObjectZoneBrouillage = self.params[1]
@@ -345,6 +357,8 @@ includedFiles["sources/humus/humus_rens/pions/common/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Dep_Pion_RENS_VolerA"
 {
+    feedbacks = { { { "done_ACT_Dep_Pion_RENS_VolerA" }, "ACT_Dep_Pion_RENS_VolerA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Dep_Pion_RENS_VolerA, {value} ) end,
     actuators =
     {
         hauteur = 1,
@@ -395,6 +409,8 @@ includedFiles["sources/humus/humus_rens/pions/common/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Connaissance_Rens_EnregistrerDonnees"
 {
+    feedbacks = { { { "done_ACT_Connaissance_Rens_EnregistrerDonnees" }, "ACT_Connaissance_Rens_EnregistrerDonnees" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Connaissance_Rens_EnregistrerDonnees, {value} ) end,
     create = function( self )
     end,
 
@@ -430,6 +446,8 @@ includedFiles["sources/humus/humus_rens/pions/common/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Connaissance_Rens_ExploiterDonnees"
 {
+    feedbacks = { { { "done_ACT_Connaissance_Rens_ExploiterDonnees" }, "ACT_Connaissance_Rens_ExploiterDonnees" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Connaissance_Rens_ExploiterDonnees, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.rDelai = self.params[1]
@@ -463,7 +481,7 @@ includedFiles["sources/humus/humus_rens/pions/common/Actions.bms"] = true
 
                 if( self._namedParams.rDelai * 60 <= DEC_TempsSim() - self.rTempsDebut ) then
                     do
-                                                self.params.__returnValue = eActionEffectuee
+                                                self:SendFeedback( eActionEffectuee )
                         Halt( self )
                         do return end
 
@@ -486,6 +504,8 @@ includedFiles["sources/humus/humus_rens/pions/common/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Connaissance_Rens_ExtraireDonnees"
 {
+    feedbacks = { { { "done_ACT_Connaissance_Rens_ExtraireDonnees" }, "ACT_Connaissance_Rens_ExtraireDonnees" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Connaissance_Rens_ExtraireDonnees, {value} ) end,
     create = function( self )
     end,
 
@@ -520,6 +540,8 @@ includedFiles["sources/humus/humus_rens/pions/common/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Pion_Rens_InstallerDisposifif"
 {
+    feedbacks = { { { "done_ACT_Pion_Rens_InstallerDisposifif" }, "ACT_Pion_Rens_InstallerDisposifif" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Pion_Rens_InstallerDisposifif, {value} ) end,
     create = function( self )
     end,
 

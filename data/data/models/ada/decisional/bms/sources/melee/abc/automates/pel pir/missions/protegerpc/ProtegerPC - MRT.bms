@@ -18,10 +18,12 @@ includedFiles["sources/melee/abc/automates/pel pir/missions/protegerpc/ProtegerP
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_MRT_ABC_ProtegerPC"
 {
+    feedbacks = { { { "done_MIS_Automate_MRT_ABC_ProtegerPC" }, "MIS_Automate_MRT_ABC_ProtegerPC" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_MRT_ABC_ProtegerPC, {value} ) end,
     activations =
     {
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
-        { "BEH_Medo_Automate_ABC_AssignerProtegerPCA", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", { "done_BEH_Medo_Automate_ControleCreationMission" } },
+        { "BEH_Medo_Automate_ABC_AssignerProtegerPCA", { "done_BEH_Medo_Automate_ABC_AssignerProtegerPCA" } },
     },
 
     create = function( self )
@@ -65,7 +67,7 @@ includedFiles["sources/melee/abc/automates/pel pir/missions/protegerpc/ProtegerP
                     DEC_Trace( "!!!!Attention toutes les missions n'ont pas été données au PE!!!" )
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -77,7 +79,7 @@ includedFiles["sources/melee/abc/automates/pel pir/missions/protegerpc/ProtegerP
                 self.eValidationMRT = eActionEnCours
                                 do
                     DEC_MRT_Valide()
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -86,7 +88,8 @@ includedFiles["sources/melee/abc/automates/pel pir/missions/protegerpc/ProtegerP
             end
         end
 
-        Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { 1, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { 1, } )
+self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eValidationMRT = v[1] end
         Activate( self.activations.BEH_Medo_Automate_ABC_AssignerProtegerPCA, 1, { DEC_Automate_PionPC(), } )
     end,
 
@@ -100,9 +103,11 @@ includedFiles["sources/melee/abc/automates/pel pir/missions/protegerpc/ProtegerP
 
 node "BEH_Medo_Automate_ABC_AssignerProtegerPCA"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_ABC_AssignerProtegerPCA" }, "BEH_Medo_Automate_ABC_AssignerProtegerPCA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_ABC_AssignerProtegerPCA, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_ABC_AssignerSoutenirA", {} },
+        { "BEH_Mission_Automate_ABC_AssignerSoutenirA", { "done_BEH_Mission_Automate_ABC_AssignerSoutenirA" } },
     },
 
     create = function( self )

@@ -13,16 +13,18 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_ABC_GTIA_Controler"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ABC_GTIA_Controler" }, "MIS_Automate_CDT_ABC_GTIA_Controler" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ABC_GTIA_Controler, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_AnalyserSituationPourControler", {} },
-        { "BEH_GTIA_OrganiserLesMoyensPourControler", {} },
-        { "BEH_GTIA_RendreCompte", {} },
-        { "BEH_GTIA_EchelonnerDispositif", {} },
-        { "BEH_GTIA_RepartirDansZone", {} },
-        { "BEH_GTIA_RepartirPionsDansFuseauPourControler", {} },
-        { "BEH_GTIA_GererAppuisInternesPourSurete", {} },
-        { "BEH_GTIA_AssignerLesOrdresPourSurete", {} },
+        { "ACT_GTIA_AnalyserSituationPourControler", { "done_ACT_GTIA_AnalyserSituationPourControler" } },
+        { "BEH_GTIA_OrganiserLesMoyensPourControler", { "done_BEH_GTIA_OrganiserLesMoyensPourControler" } },
+        { "BEH_GTIA_RendreCompte", { "done_BEH_GTIA_RendreCompte" } },
+        { "BEH_GTIA_EchelonnerDispositif", { "done_BEH_GTIA_EchelonnerDispositif" } },
+        { "BEH_GTIA_RepartirDansZone", { "done_BEH_GTIA_RepartirDansZone" } },
+        { "BEH_GTIA_RepartirPionsDansFuseauPourControler", { "done_BEH_GTIA_RepartirPionsDansFuseauPourControler" } },
+        { "BEH_GTIA_GererAppuisInternesPourSurete", { "done_BEH_GTIA_GererAppuisInternesPourSurete" } },
+        { "BEH_GTIA_AssignerLesOrdresPourSurete", { "done_BEH_GTIA_AssignerLesOrdresPourSurete" } },
     },
 
     create = function( self )
@@ -84,9 +86,11 @@ include "bit.lua"
 
 node "BEH_GTIA_RepartirPionsDansFuseauPourControler"
 {
+    feedbacks = { { { "done_BEH_GTIA_RepartirPionsDansFuseauPourControler" }, "BEH_GTIA_RepartirPionsDansFuseauPourControler" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_RepartirPionsDansFuseauPourControler, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_AssignerFuseau", {} },
+        { "ACT_GTIA_AssignerFuseau", { "done_ACT_GTIA_AssignerFuseau" } },
     },
 
     create = function( self )
@@ -123,9 +127,11 @@ do
 
 node "BEH_GTIA_OrganiserLesMoyensPourControler"
 {
+    feedbacks = { { { "done_BEH_GTIA_OrganiserLesMoyensPourControler" }, "BEH_GTIA_OrganiserLesMoyensPourControler" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_OrganiserLesMoyensPourControler, {value} ) end,
     activations =
     {
-        { "BEH_GTIA_OrganiserMoyensVersPionsOp", {} },
+        { "BEH_GTIA_OrganiserMoyensVersPionsOp", { "done_BEH_GTIA_OrganiserMoyensVersPionsOp" } },
     },
 
     create = function( self )
@@ -146,6 +152,8 @@ node "BEH_GTIA_OrganiserLesMoyensPourControler"
 
 node "ACT_GTIA_AnalyserSituationPourControler"
 {
+    feedbacks = { { { "done_ACT_GTIA_AnalyserSituationPourControler" }, "ACT_GTIA_AnalyserSituationPourControler" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_GTIA_AnalyserSituationPourControler, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.zone = self.params[1]
@@ -175,9 +183,11 @@ node "ACT_GTIA_AnalyserSituationPourControler"
 ]]--[[// *****************************************************************************
 ]]node "BEH_GTIA_AssignerLesOrdresPourSurete"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerLesOrdresPourSurete" }, "BEH_GTIA_AssignerLesOrdresPourSurete" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerLesOrdresPourSurete, {value} ) end,
     activations =
     {
-        { "BEH_GTIA_AssignerLesMissionsSurete", {} },
+        { "BEH_GTIA_AssignerLesMissionsSurete", { "done_BEH_GTIA_AssignerLesMissionsSurete" } },
     },
 
     create = function( self )
@@ -200,12 +210,14 @@ node "ACT_GTIA_AnalyserSituationPourControler"
 
 node "BEH_GTIA_AssignerLesMissionsSurete"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerLesMissionsSurete" }, "BEH_GTIA_AssignerLesMissionsSurete" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerLesMissionsSurete, {value} ) end,
     activations =
     {
-        { "BEH_GTIA_AssignerMissionsSuretePEcl", {} },
-        { "BEH_GTIA_AssignerMissionsSuretePE", {} },
-        { "BEH_GTIA_AssignerMissionsSureteSE", {} },
-        { "BEH_GTIA_AssignerMissionsSureteSEAppui", {} },
+        { "BEH_GTIA_AssignerMissionsSuretePEcl", { "done_BEH_GTIA_AssignerMissionsSuretePEcl" } },
+        { "BEH_GTIA_AssignerMissionsSuretePE", { "done_BEH_GTIA_AssignerMissionsSuretePE" } },
+        { "BEH_GTIA_AssignerMissionsSureteSE", { "done_BEH_GTIA_AssignerMissionsSureteSE" } },
+        { "BEH_GTIA_AssignerMissionsSureteSEAppui", { "done_BEH_GTIA_AssignerMissionsSureteSEAppui" } },
     },
 
     create = function( self )
@@ -232,9 +244,11 @@ node "BEH_GTIA_AssignerLesMissionsSurete"
 
 node "BEH_GTIA_AssignerMissionsSuretePEcl"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerMissionsSuretePEcl" }, "BEH_GTIA_AssignerMissionsSuretePEcl" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerMissionsSuretePEcl, {value} ) end,
     activations =
     {
-        { "BEH_GTIA_AssignerMissionSureteMeleeA", {} },
+        { "BEH_GTIA_AssignerMissionSureteMeleeA", { "done_BEH_GTIA_AssignerMissionSureteMeleeA" } },
     },
 
     create = function( self )
@@ -261,9 +275,11 @@ node "BEH_GTIA_AssignerMissionsSuretePEcl"
 
 node "BEH_GTIA_AssignerMissionsSuretePE"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerMissionsSuretePE" }, "BEH_GTIA_AssignerMissionsSuretePE" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerMissionsSuretePE, {value} ) end,
     activations =
     {
-        { "BEH_GTIA_AssignerMissionSureteMeleeA", {} },
+        { "BEH_GTIA_AssignerMissionSureteMeleeA", { "done_BEH_GTIA_AssignerMissionSureteMeleeA" } },
     },
 
     create = function( self )
@@ -298,10 +314,12 @@ node "BEH_GTIA_AssignerMissionsSuretePE"
 
 node "BEH_GTIA_AssignerMissionsSureteSE"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerMissionsSureteSE" }, "BEH_GTIA_AssignerMissionsSureteSE" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerMissionsSureteSE, {value} ) end,
     activations =
     {
-        { "BEH_GTIA_AssignerMissionSureteMeleeA", {} },
-        { "BEH_GTIA_AssignerMissionsFaireMouvementPC", {} },
+        { "BEH_GTIA_AssignerMissionSureteMeleeA", { "done_BEH_GTIA_AssignerMissionSureteMeleeA" } },
+        { "BEH_GTIA_AssignerMissionsFaireMouvementPC", { "done_BEH_GTIA_AssignerMissionsFaireMouvementPC" } },
     },
 
     create = function( self )
@@ -339,9 +357,11 @@ node "BEH_GTIA_AssignerMissionsSureteSE"
 
 node "BEH_GTIA_AssignerMissionSureteMeleeA"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerMissionSureteMeleeA" }, "BEH_GTIA_AssignerMissionSureteMeleeA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerMissionSureteMeleeA, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_AssignerMissionSurete", {} },
+        { "ACT_GTIA_AssignerMissionSurete", { "done_ACT_GTIA_AssignerMissionSurete" } },
     },
 
     create = function( self )
@@ -364,11 +384,13 @@ node "BEH_GTIA_AssignerMissionSureteMeleeA"
 
 node "BEH_GTIA_AssignerMissionsSureteSEAppui"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerMissionsSureteSEAppui" }, "BEH_GTIA_AssignerMissionsSureteSEAppui" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerMissionsSureteSEAppui, {value} ) end,
     activations =
     {
-        { "BEH_GTIA_AssignerMissionSureteLogA", {} },
-        { "BEH_GTIA_AssignerMissionSureteGenieA", {} },
-        { "BEH_GTIA_AssignerMissionART", {} },
+        { "BEH_GTIA_AssignerMissionSureteLogA", { "done_BEH_GTIA_AssignerMissionSureteLogA" } },
+        { "BEH_GTIA_AssignerMissionSureteGenieA", { "done_BEH_GTIA_AssignerMissionSureteGenieA" } },
+        { "BEH_GTIA_AssignerMissionART", { "done_BEH_GTIA_AssignerMissionART" } },
     },
 
     create = function( self )
@@ -412,9 +434,11 @@ node "BEH_GTIA_AssignerMissionsSureteSEAppui"
 
 node "BEH_GTIA_AssignerMissionSureteLogA"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerMissionSureteLogA" }, "BEH_GTIA_AssignerMissionSureteLogA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerMissionSureteLogA, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_AssignerMissionSureteDeployerTC2", {} },
+        { "ACT_GTIA_AssignerMissionSureteDeployerTC2", { "done_ACT_GTIA_AssignerMissionSureteDeployerTC2" } },
     },
 
     create = function( self )
@@ -439,10 +463,12 @@ node "BEH_GTIA_AssignerMissionSureteLogA"
 
 node "BEH_GTIA_AssignerMissionSureteGenieA"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerMissionSureteGenieA" }, "BEH_GTIA_AssignerMissionSureteGenieA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerMissionSureteGenieA, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_AssignerMissionSureteRealiserTravauxA", {} },
-        { "ACT_GTIA_AssignerMissionSurete", {} },
+        { "ACT_GTIA_AssignerMissionSureteRealiserTravauxA", { "done_ACT_GTIA_AssignerMissionSureteRealiserTravauxA" } },
+        { "ACT_GTIA_AssignerMissionSurete", { "done_ACT_GTIA_AssignerMissionSurete" } },
     },
 
     create = function( self )
@@ -471,6 +497,8 @@ node "BEH_GTIA_AssignerMissionSureteGenieA"
 
 node "ACT_GTIA_AssignerMissionSurete"
 {
+    feedbacks = { { { "done_ACT_GTIA_AssignerMissionSurete" }, "ACT_GTIA_AssignerMissionSurete" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_GTIA_AssignerMissionSurete, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -552,6 +580,8 @@ elseif switch_1 == "T_Mission_Automate_INF_Controler" then
 ]]--[[// *****************************************************************************
 ]]node "ACT_GTIA_AssignerMissionSureteRealiserTravauxA"
 {
+    feedbacks = { { { "done_ACT_GTIA_AssignerMissionSureteRealiserTravauxA" }, "ACT_GTIA_AssignerMissionSureteRealiserTravauxA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_GTIA_AssignerMissionSureteRealiserTravauxA, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionGenie = self.params[1]
@@ -585,6 +615,8 @@ elseif switch_1 == "T_Mission_Automate_INF_Controler" then
 ]]--[[// *****************************************************************************
 ]]node "ACT_GTIA_AssignerMissionSureteDeployerTC2"
 {
+    feedbacks = { { { "done_ACT_GTIA_AssignerMissionSureteDeployerTC2" }, "ACT_GTIA_AssignerMissionSureteDeployerTC2" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_GTIA_AssignerMissionSureteDeployerTC2, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]

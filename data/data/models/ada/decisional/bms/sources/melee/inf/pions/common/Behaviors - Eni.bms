@@ -22,11 +22,13 @@ include "bit.lua"
 ]]--[[//=============================================================================
 ]]node "BEH_Eni_Pion_INF_DetruitEtFixe"
 {
+    feedbacks = { { { "done_BEH_Eni_Pion_INF_DetruitEtFixe" }, "BEH_Eni_Pion_INF_DetruitEtFixe" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Pion_INF_DetruitEtFixe, {value} ) end,
     activations =
     {
-        { "ACT_MAJ_EnnemiEnCours", {} },
-        { "BEH_Feu_Pion_INF_TirFixer", {} },
-        { "BEH_Feu_Pion_INF_ConduireLesFeux_Sur", {} },
+        { "ACT_MAJ_EnnemiEnCours", { "done_ACT_MAJ_EnnemiEnCours" } },
+        { "BEH_Feu_Pion_INF_TirFixer", { "done_BEH_Feu_Pion_INF_TirFixer" } },
+        { "BEH_Feu_Pion_INF_ConduireLesFeux_Sur", { "done_BEH_Feu_Pion_INF_ConduireLesFeux_Sur" } },
     },
 
     create = function( self )
@@ -46,7 +48,7 @@ include "bit.lua"
                                 do
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -54,7 +56,7 @@ include "bit.lua"
         end
 
         if( self.eAction == eActionEffectuee or DEC_ConnaissanceAgent_EstDetruitTactique( self._namedParams.repEni ) ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -64,7 +66,8 @@ include "bit.lua"
 ]]Activate( self.activations.ACT_MAJ_EnnemiEnCours, 1, { self._namedParams.repEni, } )
         --[[// Fixe l'eni si l'on est a distance de tir
 ]]if( self._namedParams.bFixer and self.eActionFixer == eActionEnCours ) then
-            Activate( self.activations.BEH_Feu_Pion_INF_TirFixer, 1, setmetatable( { self._namedParams.repEni, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionFixer = v else rawset( t, k, v ) end end } ) )
+            Activate( self.activations.BEH_Feu_Pion_INF_TirFixer, 1, { self._namedParams.repEni, } )
+self.done_BEH_Feu_Pion_INF_TirFixer = function( self, _, v ) self.eActionFixer = v[1] end
         end
 
         --[[//-----------------------------------------------------------------------------
@@ -73,7 +76,7 @@ include "bit.lua"
 ]]if( self.eAction == eActionEnPause ) then
             do
                 self.eActionFixer = eActionEnCours
-                                self.params.__returnValue = eActionEnPause
+                                self:SendFeedback( eActionEnPause )
                 do return end
 
             end
@@ -81,7 +84,8 @@ include "bit.lua"
 ]]        end
 
         if( DEC_ConnaissanceAgent_PercoitUnite( self._namedParams.repEni ) ) then
-            Activate( self.activations.BEH_Feu_Pion_INF_ConduireLesFeux_Sur, 1, setmetatable( { self._namedParams.repEni, eFormationTir_Embarque, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+            Activate( self.activations.BEH_Feu_Pion_INF_ConduireLesFeux_Sur, 1, { self._namedParams.repEni, eFormationTir_Embarque, } )
+self.done_BEH_Feu_Pion_INF_ConduireLesFeux_Sur = function( self, _, v ) self.eAction = v[1] end
         end
 
         if( S_Tir_EstAPortee_Debarque( self._namedParams.repEni, GetStateVariable( "VE_Agressivite_Tir" ) ) ) then

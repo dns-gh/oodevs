@@ -9,6 +9,8 @@ includedFiles["sources/appui/alat/automates/common/behaviors/Behaviors - Ordre.b
 ]]--[[// *****************************************************************************
 ]]node "ACT_Ordre_Automate_ALAT_ChangerParametresRecompletement"
 {
+    feedbacks = { { { "done_ACT_Ordre_Automate_ALAT_ChangerParametresRecompletement" }, "ACT_Ordre_Automate_ALAT_ChangerParametresRecompletement" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Ordre_Automate_ALAT_ChangerParametresRecompletement, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -31,10 +33,12 @@ includedFiles["sources/appui/alat/automates/common/behaviors/Behaviors - Ordre.b
 
 node "BEH_Ordre_Automate_ALAT_ChangerParametresRecompletement"
 {
+    feedbacks = { { { "done_BEH_Ordre_Automate_ALAT_ChangerParametresRecompletement" }, "BEH_Ordre_Automate_ALAT_ChangerParametresRecompletement" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Ordre_Automate_ALAT_ChangerParametresRecompletement, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Automate_ALAT_ChangerParametresRecompletementPions", {} },
-        { "ACT_Ordre_Suppression", {} },
+        { "BEH_Ordre_Automate_ALAT_ChangerParametresRecompletementPions", { "done_BEH_Ordre_Automate_ALAT_ChangerParametresRecompletementPions" } },
+        { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
     },
 
     create = function( self )
@@ -64,9 +68,11 @@ do
 
 node "BEH_Ordre_Automate_ALAT_ChangerParametresRecompletementPions"
 {
+    feedbacks = { { { "done_BEH_Ordre_Automate_ALAT_ChangerParametresRecompletementPions" }, "BEH_Ordre_Automate_ALAT_ChangerParametresRecompletementPions" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Ordre_Automate_ALAT_ChangerParametresRecompletementPions, {value} ) end,
     activations =
     {
-        { "ACT_Ordre_Automate_ALAT_ChangerParametresRecompletement", {} },
+        { "ACT_Ordre_Automate_ALAT_ChangerParametresRecompletement", { "done_ACT_Ordre_Automate_ALAT_ChangerParametresRecompletement" } },
     },
 
     create = function( self )

@@ -20,10 +20,12 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/escorte
 ]]--[[// *****************************************************************************
 ]]node "BEH_Medo_Automate_ABC_AssignerMissionEscorterA"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_ABC_AssignerMissionEscorterA" }, "BEH_Medo_Automate_ABC_AssignerMissionEscorterA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_ABC_AssignerMissionEscorterA, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_ABC_AssignerEscorterA", {} },
-        { "BEH_Mission_Automate_ABC_AssignerSoutenirA", {} },
+        { "BEH_Mission_Automate_ABC_AssignerEscorterA", { "done_BEH_Mission_Automate_ABC_AssignerEscorterA" } },
+        { "BEH_Mission_Automate_ABC_AssignerSoutenirA", { "done_BEH_Mission_Automate_ABC_AssignerSoutenirA" } },
     },
 
     create = function( self )
@@ -75,9 +77,11 @@ if( rIterateurPion == 1 ) then
 
 node "BEH_Medo_Automate_ABC_AssignerMissionEscorterEclA"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_ABC_AssignerMissionEscorterEclA" }, "BEH_Medo_Automate_ABC_AssignerMissionEscorterEclA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_ABC_AssignerMissionEscorterEclA, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_ABC_AssignerEscorterA", {} },
+        { "BEH_Mission_Automate_ABC_AssignerEscorterA", { "done_BEH_Mission_Automate_ABC_AssignerEscorterA" } },
     },
 
     create = function( self )
@@ -125,10 +129,12 @@ node "BEH_Medo_Automate_ABC_AssignerMissionEscorterEclA"
 
 node "BEH_Medo_Automate_ABC_AssignerMissionEscorterAutomateA"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_ABC_AssignerMissionEscorterAutomateA" }, "BEH_Medo_Automate_ABC_AssignerMissionEscorterAutomateA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_ABC_AssignerMissionEscorterAutomateA, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_ABC_AssignerEscorterAutomateA", {} },
-        { "BEH_Mission_Automate_ABC_AssignerSoutenirA", {} },
+        { "BEH_Mission_Automate_ABC_AssignerEscorterAutomateA", { "done_BEH_Mission_Automate_ABC_AssignerEscorterAutomateA" } },
+        { "BEH_Mission_Automate_ABC_AssignerSoutenirA", { "done_BEH_Mission_Automate_ABC_AssignerSoutenirA" } },
     },
 
     create = function( self )
@@ -181,9 +187,11 @@ if( rIterateurPion == 1 ) then
 
 node "BEH_Medo_Automate_ABC_AssignerMissionEscorterAutomateEclA"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_ABC_AssignerMissionEscorterAutomateEclA" }, "BEH_Medo_Automate_ABC_AssignerMissionEscorterAutomateEclA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_ABC_AssignerMissionEscorterAutomateEclA, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_ABC_AssignerEscorterAutomateA", {} },
+        { "BEH_Mission_Automate_ABC_AssignerEscorterAutomateA", { "done_BEH_Mission_Automate_ABC_AssignerEscorterAutomateA" } },
     },
 
     create = function( self )

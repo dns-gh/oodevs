@@ -9,9 +9,11 @@ includedFiles["sources/melee/abc/automates/pel eei/missions/eclairer/Eclairer - 
 ]]--[[// ******************************************************************************
 ]]node "MIS_Automate_MRT_ABC_Eclairer"
 {
+    feedbacks = { { { "done_MIS_Automate_MRT_ABC_Eclairer" }, "MIS_Automate_MRT_ABC_Eclairer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_MRT_ABC_Eclairer, {value} ) end,
     activations =
     {
-        { "BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionDynamique", {} },
+        { "BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionDynamique", { "done_BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionDynamique" } },
     },
 
     create = function( self )

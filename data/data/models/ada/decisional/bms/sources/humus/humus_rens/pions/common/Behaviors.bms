@@ -16,9 +16,11 @@ includedFiles["sources/humus/humus_rens/pions/common/Behaviors.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "BEH_MOT_Rens_ActiverFurtivite"
 {
+    feedbacks = { { { "done_BEH_MOT_Rens_ActiverFurtivite" }, "BEH_MOT_Rens_ActiverFurtivite" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MOT_Rens_ActiverFurtivite, {value} ) end,
     activations =
     {
-        { "ACT_Dep_Pion_Rens_ActiverFurtivite", {} },
+        { "ACT_Dep_Pion_Rens_ActiverFurtivite", { "done_ACT_Dep_Pion_Rens_ActiverFurtivite" } },
     },
 
     create = function( self )
@@ -39,9 +41,11 @@ includedFiles["sources/humus/humus_rens/pions/common/Behaviors.bms"] = true
 
 node "BEH_Dep_Pion_GererFurtivite"
 {
+    feedbacks = { { { "done_BEH_Dep_Pion_GererFurtivite" }, "BEH_Dep_Pion_GererFurtivite" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Pion_GererFurtivite, {value} ) end,
     activations =
     {
-        { "BEH_MAJ_Pion_Rens_Furtivite", {} },
+        { "BEH_MAJ_Pion_Rens_Furtivite", { "done_BEH_MAJ_Pion_Rens_Furtivite" } },
     },
 
     create = function( self )
@@ -64,6 +68,8 @@ node "BEH_Dep_Pion_GererFurtivite"
 
 node "BEH_MAJ_Pion_Rens_Furtivite"
 {
+    feedbacks = { { { "done_BEH_MAJ_Pion_Rens_Furtivite" }, "BEH_MAJ_Pion_Rens_Furtivite" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MAJ_Pion_Rens_Furtivite, {value} ) end,
     create = function( self )
     end,
 
@@ -91,9 +97,11 @@ node "BEH_MAJ_Pion_Rens_Furtivite"
 
 node "BEH_Rens_EnSurveillanceDe"
 {
+    feedbacks = { { { "done_BEH_Rens_EnSurveillanceDe" }, "BEH_Rens_EnSurveillanceDe" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Rens_EnSurveillanceDe, {value} ) end,
     activations =
     {
-        { "ACT_Obs_SurveillerZone", {} },
+        { "ACT_Obs_SurveillerZone", { "done_ACT_Obs_SurveillerZone" } },
     },
 
     create = function( self )
@@ -118,9 +126,11 @@ node "BEH_Rens_EnSurveillanceDe"
 
 node "BEH_Rens_EnSurveillanceRadarDe"
 {
+    feedbacks = { { { "done_BEH_Rens_EnSurveillanceRadarDe" }, "BEH_Rens_EnSurveillanceRadarDe" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Rens_EnSurveillanceRadarDe, {value} ) end,
     activations =
     {
-        { "ACT_Obs_Pion_RENS_ActiverRadarDans", {} },
+        { "ACT_Obs_Pion_RENS_ActiverRadarDans", { "done_ACT_Obs_Pion_RENS_ActiverRadarDans" } },
     },
 
     create = function( self )
@@ -145,9 +155,11 @@ node "BEH_Rens_EnSurveillanceRadarDe"
 
 node "BEH_Rens_EnEcouteSur"
 {
+    feedbacks = { { { "done_BEH_Rens_EnEcouteSur" }, "BEH_Rens_EnEcouteSur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Rens_EnEcouteSur, {value} ) end,
     activations =
     {
-        { "ACT_Obs_Pion_RENS_ActiverEcouteDans", {} },
+        { "ACT_Obs_Pion_RENS_ActiverEcouteDans", { "done_ACT_Obs_Pion_RENS_ActiverEcouteDans" } },
     },
 
     create = function( self )
@@ -172,9 +184,11 @@ node "BEH_Rens_EnEcouteSur"
 
 node "BEH_Rens_EnEcouteRadarSur"
 {
+    feedbacks = { { { "done_BEH_Rens_EnEcouteRadarSur" }, "BEH_Rens_EnEcouteRadarSur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Rens_EnEcouteRadarSur, {value} ) end,
     activations =
     {
-        { "ACT_Obs_Pion_RENS_ActiverEcouteRadarDans", {} },
+        { "ACT_Obs_Pion_RENS_ActiverEcouteRadarDans", { "done_ACT_Obs_Pion_RENS_ActiverEcouteRadarDans" } },
     },
 
     create = function( self )
@@ -199,9 +213,11 @@ node "BEH_Rens_EnEcouteRadarSur"
 
 node "BEH_Rens_ActiverBrouillage"
 {
+    feedbacks = { { { "done_BEH_Rens_ActiverBrouillage" }, "BEH_Rens_ActiverBrouillage" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Rens_ActiverBrouillage, {value} ) end,
     activations =
     {
-        { "ACT_Obs_Pion_RENS_ActiverBrouillage", {} },
+        { "ACT_Obs_Pion_RENS_ActiverBrouillage", { "done_ACT_Obs_Pion_RENS_ActiverBrouillage" } },
     },
 
     create = function( self )
@@ -225,9 +241,11 @@ node "BEH_Rens_ActiverBrouillage"
 
 node "BEH_Dep_Virtuel_ProgressionVers"
 {
+    feedbacks = { { { "done_BEH_Dep_Virtuel_ProgressionVers" }, "BEH_Dep_Virtuel_ProgressionVers" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Virtuel_ProgressionVers, {value} ) end,
     activations =
     {
-        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
     },
 
     create = function( self )
@@ -249,11 +267,13 @@ node "BEH_Dep_Virtuel_ProgressionVers"
 
 node "BEH_Dep_Virtuel_PreparationAction"
 {
+    feedbacks = { { { "done_BEH_Dep_Virtuel_PreparationAction" }, "BEH_Dep_Virtuel_PreparationAction" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Virtuel_PreparationAction, {value} ) end,
     create = function( self )
     end,
 
     activate = function( self )
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         do return end
 
     end,

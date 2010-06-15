@@ -19,9 +19,11 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/ciecharlourd/missions/p
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_ABC_PrendrePreciserContact"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ABC_PrendrePreciserContact" }, "MIS_Automate_CDT_ABC_PrendrePreciserContact" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ABC_PrendrePreciserContact, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_ReconnaitreUnAxe", {} },
+        { "BEH_Conduite_Automate_ABC_ReconnaitreUnAxe", { "done_BEH_Conduite_Automate_ABC_ReconnaitreUnAxe" } },
     },
 
     create = function( self )

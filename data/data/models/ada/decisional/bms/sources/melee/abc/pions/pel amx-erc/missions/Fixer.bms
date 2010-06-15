@@ -21,9 +21,11 @@ includedFiles["sources/melee/abc/pions/pel amx-erc/missions/Fixer.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "MIS_Pion_ABC_Fixer"
 {
+    feedbacks = { { { "done_MIS_Pion_ABC_Fixer" }, "MIS_Pion_ABC_Fixer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_ABC_Fixer, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Pion_ABC_Fixer", {} },
+        { "BEH_Mission_Pion_ABC_Fixer", { "done_BEH_Mission_Pion_ABC_Fixer" } },
     },
 
     create = function( self )
@@ -37,13 +39,13 @@ includedFiles["sources/melee/abc/pions/pel amx-erc/missions/Fixer.bms"] = true
 ]]--[[// Terminaison
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eEtat == eActionImpossible ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             Halt( self )
             do return end
         end
 
         if( self.eEtat == eActionEffectuee ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -51,7 +53,8 @@ includedFiles["sources/melee/abc/pions/pel amx-erc/missions/Fixer.bms"] = true
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Comportement de la mission
 ]]--[[//-----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_Mission_Pion_ABC_Fixer, 1, setmetatable( { self._namedParams.mission, M_MODELE_PION_ABC_FIXER_PH(), M_MODELE_PION_ABC_FIXER_ID(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+]]Activate( self.activations.BEH_Mission_Pion_ABC_Fixer, 1, { self._namedParams.mission, M_MODELE_PION_ABC_FIXER_PH(), M_MODELE_PION_ABC_FIXER_ID(), } )
+self.done_BEH_Mission_Pion_ABC_Fixer = function( self, _, v ) self.eEtat = v[1] end
     end,
 
 }

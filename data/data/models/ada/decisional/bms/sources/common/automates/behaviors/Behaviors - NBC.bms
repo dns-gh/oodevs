@@ -23,10 +23,12 @@ includedFiles["sources/common/automates/behaviors/Behaviors - NBC.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "BEH_Nbc_Automate_GererAlerteNiv4"
 {
+    feedbacks = { { { "done_BEH_Nbc_Automate_GererAlerteNiv4" }, "BEH_Nbc_Automate_GererAlerteNiv4" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Nbc_Automate_GererAlerteNiv4, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Automate_ConduiteSurAlerteNBC", {} },
-        { "BEH_Ordre_Automate_RecevoirOrdreSurAlerteNBC", {} },
+        { "BEH_Ordre_Automate_ConduiteSurAlerteNBC", { "done_BEH_Ordre_Automate_ConduiteSurAlerteNBC" } },
+        { "BEH_Ordre_Automate_RecevoirOrdreSurAlerteNBC", { "done_BEH_Ordre_Automate_RecevoirOrdreSurAlerteNBC" } },
     },
 
     create = function( self )
@@ -66,11 +68,13 @@ includedFiles["sources/common/automates/behaviors/Behaviors - NBC.bms"] = true
 
 node "BEH_Ordre_Automate_RecevoirOrdreSurAlerteNBC"
 {
+    feedbacks = { { { "done_BEH_Ordre_Automate_RecevoirOrdreSurAlerteNBC" }, "BEH_Ordre_Automate_RecevoirOrdreSurAlerteNBC" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Ordre_Automate_RecevoirOrdreSurAlerteNBC, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Automate_ConduiteSurAlerteNBC", {} },
-        { "BEH_Ordre_Automate_ConduiteSurFinAlerteNBC", {} },
-        { "ACT_Ordre_Suppression", {} },
+        { "BEH_Ordre_Automate_ConduiteSurAlerteNBC", { "done_BEH_Ordre_Automate_ConduiteSurAlerteNBC" } },
+        { "BEH_Ordre_Automate_ConduiteSurFinAlerteNBC", { "done_BEH_Ordre_Automate_ConduiteSurFinAlerteNBC" } },
+        { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
     },
 
     create = function( self )
@@ -121,10 +125,12 @@ elseif switch_1 == "Rep_OrderConduite_EnleverTenueNBC" then
 
 node "BEH_Ordre_Automate_ConduiteSurAlerteNBC"
 {
+    feedbacks = { { { "done_BEH_Ordre_Automate_ConduiteSurAlerteNBC" }, "BEH_Ordre_Automate_ConduiteSurAlerteNBC" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Ordre_Automate_ConduiteSurAlerteNBC, {value} ) end,
     activations =
     {
-        { "ACT_RC_Automate", {} },
-        { "ACT_Ordre_MettreTenueNBC", {} },
+        { "ACT_RC_Automate", { "done_ACT_RC_Automate" } },
+        { "ACT_Ordre_MettreTenueNBC", { "done_ACT_Ordre_MettreTenueNBC" } },
     },
 
     create = function( self )
@@ -160,10 +166,12 @@ do
 
 node "BEH_Ordre_Automate_ConduiteSurFinAlerteNBC"
 {
+    feedbacks = { { { "done_BEH_Ordre_Automate_ConduiteSurFinAlerteNBC" }, "BEH_Ordre_Automate_ConduiteSurFinAlerteNBC" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Ordre_Automate_ConduiteSurFinAlerteNBC, {value} ) end,
     activations =
     {
-        { "ACT_RC_Automate", {} },
-        { "ACT_Ordre_EnleverTenueNBC", {} },
+        { "ACT_RC_Automate", { "done_ACT_RC_Automate" } },
+        { "ACT_Ordre_EnleverTenueNBC", { "done_ACT_Ordre_EnleverTenueNBC" } },
     },
 
     create = function( self )
@@ -199,6 +207,8 @@ do
 
 node "ACT_Ordre_MettreTenueNBC"
 {
+    feedbacks = { { { "done_ACT_Ordre_MettreTenueNBC" }, "ACT_Ordre_MettreTenueNBC" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Ordre_MettreTenueNBC, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -224,6 +234,8 @@ node "ACT_Ordre_MettreTenueNBC"
 ]]--[[// *****************************************************************************
 ]]node "ACT_Ordre_EnleverTenueNBC"
 {
+    feedbacks = { { { "done_ACT_Ordre_EnleverTenueNBC" }, "ACT_Ordre_EnleverTenueNBC" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Ordre_EnleverTenueNBC, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]

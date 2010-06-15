@@ -9,6 +9,8 @@ includedFiles["sources/humus/humus_common/automates/actions/Actions - Rens.bms"]
 ]]--[[// *****************************************************************************
 ]]node "ACT_Automate_Rens_PartageConnaissancesDansZoneAvec"
 {
+    feedbacks = { { { "done_ACT_Automate_Rens_PartageConnaissancesDansZoneAvec" }, "ACT_Automate_Rens_PartageConnaissancesDansZoneAvec" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Automate_Rens_PartageConnaissancesDansZoneAvec, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.automate = self.params[1]
@@ -42,6 +44,8 @@ includedFiles["sources/humus/humus_common/automates/actions/Actions - Rens.bms"]
 ]]--[[// *****************************************************************************
 ]]node "ACT_Automate_Rens_PartageConnaissancesAvec"
 {
+    feedbacks = { { { "done_ACT_Automate_Rens_PartageConnaissancesAvec" }, "ACT_Automate_Rens_PartageConnaissancesAvec" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Automate_Rens_PartageConnaissancesAvec, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.automate = self.params[1]

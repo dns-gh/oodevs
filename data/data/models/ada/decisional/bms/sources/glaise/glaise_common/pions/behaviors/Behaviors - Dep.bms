@@ -12,6 +12,8 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Dep_ProgressionSur"
 {
+    feedbacks = { { { "done_BEH_Dep_ProgressionSur" }, "BEH_Dep_ProgressionSur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_ProgressionSur, {value} ) end,
     instances =
     {
         max = 1,
@@ -19,9 +21,9 @@ include "bit.lua"
 
     activations =
     {
-        { "BEH_Dep_GererProgression", {} },
-        { "BEH_Dep_SeDeplacer", {} },
-        { "ACT_Obs_EtablirVisionCur", {} },
+        { "BEH_Dep_GererProgression", { "done_BEH_Dep_GererProgression" } },
+        { "BEH_Dep_SeDeplacer", { "done_BEH_Dep_SeDeplacer" } },
+        { "ACT_Obs_EtablirVisionCur", { "done_ACT_Obs_EtablirVisionCur" } },
     },
 
     create = function( self )
@@ -46,7 +48,7 @@ include "bit.lua"
                 self.eEtat = eActionEnCours
                                 do
                     self.it = S_Misc_DetruireItineraire( self.it, "BEH_Dep_ProgressionSur" )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -55,7 +57,8 @@ include "bit.lua"
             end
         end
 
-        Activate( self.activations.BEH_Dep_SeDeplacer, 1, setmetatable( { self.it, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Dep_SeDeplacer, 1, { self.it, } )
+self.done_BEH_Dep_SeDeplacer = function( self, _, v ) self.eEtat = v[1] end
         Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )--[[//-----------------------------------------------------------------------------
 ]]--[[// Observation
 ]]--[[//-----------------------------------------------------------------------------
@@ -76,6 +79,8 @@ include "bit.lua"
 
 node "BEH_Dep_ProgressionVers"
 {
+    feedbacks = { { { "done_BEH_Dep_ProgressionVers" }, "BEH_Dep_ProgressionVers" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_ProgressionVers, {value} ) end,
     instances =
     {
         max = 1,
@@ -83,9 +88,9 @@ node "BEH_Dep_ProgressionVers"
 
     activations =
     {
-        { "BEH_Dep_GererProgression", {} },
-        { "BEH_Dep_SeDeplacer", {} },
-        { "ACT_Obs_EtablirVisionCur", {} },
+        { "BEH_Dep_GererProgression", { "done_BEH_Dep_GererProgression" } },
+        { "BEH_Dep_SeDeplacer", { "done_BEH_Dep_SeDeplacer" } },
+        { "ACT_Obs_EtablirVisionCur", { "done_ACT_Obs_EtablirVisionCur" } },
     },
 
     create = function( self )
@@ -110,7 +115,7 @@ node "BEH_Dep_ProgressionVers"
                 self.eEtat = eActionEnCours
                                 do
                     self.it = S_Misc_DetruireItineraire( self.it, "BEH_Dep_ProgressionVers" )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -119,7 +124,8 @@ node "BEH_Dep_ProgressionVers"
             end
         end
 
-        Activate( self.activations.BEH_Dep_SeDeplacer, 1, setmetatable( { self.it, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Dep_SeDeplacer, 1, { self.it, } )
+self.done_BEH_Dep_SeDeplacer = function( self, _, v ) self.eEtat = v[1] end
         Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )--[[//-----------------------------------------------------------------------------
 ]]--[[// Observation
 ]]--[[//-----------------------------------------------------------------------------
@@ -140,10 +146,12 @@ node "BEH_Dep_ProgressionVers"
 
 node "BEH_Dep_SeDeplacer"
 {
+    feedbacks = { { { "done_BEH_Dep_SeDeplacer" }, "BEH_Dep_SeDeplacer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_SeDeplacer, {value} ) end,
     activations =
     {
-        { "ACT_Pions_SeDesinstaller", {} },
-        { "ACT_Dep_SeDeplacer", {} },
+        { "ACT_Pions_SeDesinstaller", { "done_ACT_Pions_SeDesinstaller" } },
+        { "ACT_Dep_SeDeplacer", { "done_ACT_Dep_SeDeplacer" } },
     },
 
     create = function( self )
@@ -157,7 +165,7 @@ node "BEH_Dep_SeDeplacer"
             do
                 self.eEtat = eActionEnCours
                                 do
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -171,7 +179,8 @@ node "BEH_Dep_SeDeplacer"
             do return end
         end
 
-        Activate( self.activations.ACT_Dep_SeDeplacer, 1, setmetatable( { self._namedParams.it, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Dep_SeDeplacer, 1, { self._namedParams.it, } )
+self.done_ACT_Dep_SeDeplacer = function( self, _, v ) self.eEtat = v[1] end
     end,
 
 --[[// *****************************************************************************
@@ -184,15 +193,17 @@ node "BEH_Dep_SeDeplacer"
 
 node "BEH_Dep_GererAvantPoint"
 {
+    feedbacks = { { { "done_BEH_Dep_GererAvantPoint" }, "BEH_Dep_GererAvantPoint" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_GererAvantPoint, {value} ) end,
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "BEH_Progression_Pion_INF_Aborder", {} },
-        { "BEH_Obs_Pion_Gen_ReconnaitrePoint", {} },
-        { "BEH_Obs_Pion_NBC_ReconnaitrePoint", {} },
-        { "BEH_Obs_Pion_ABC_ReconnaitrePoint", {} },
-        { "BEH_Obs_Pion_INF_RecoPoint_Copie", {} },
-        { "ACT_Points_Suppression", {} },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "BEH_Progression_Pion_INF_Aborder", { "done_BEH_Progression_Pion_INF_Aborder" } },
+        { "BEH_Obs_Pion_Gen_ReconnaitrePoint", { "done_BEH_Obs_Pion_Gen_ReconnaitrePoint" } },
+        { "BEH_Obs_Pion_NBC_ReconnaitrePoint", { "done_BEH_Obs_Pion_NBC_ReconnaitrePoint" } },
+        { "BEH_Obs_Pion_ABC_ReconnaitrePoint", { "done_BEH_Obs_Pion_ABC_ReconnaitrePoint" } },
+        { "BEH_Obs_Pion_INF_RecoPoint_Copie", { "done_BEH_Obs_Pion_INF_RecoPoint_Copie" } },
+        { "ACT_Points_Suppression", { "done_ACT_Points_Suppression" } },
     },
 
     create = function( self )
@@ -304,14 +315,16 @@ if( F_Pion_GeteEtatAmbiance( myself ) ~= eEtatAmbiance_Vitesse ) then
 
 node "BEH_Dep_GererPoint"
 {
+    feedbacks = { { { "done_BEH_Dep_GererPoint" }, "BEH_Dep_GererPoint" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_GererPoint, {value} ) end,
     activations =
     {
-        { "BEH_Obs_Pion_NBC_SePosterSurBond", {} },
-        { "BEH_Obs_Pion_ABC_SePosterSurBond", {} },
-        { "BEH_Misc_Pion_INF_MAJ_Repli", {} },
-        { "ACT_Info_Trace", {} },
-        { "BEH_Poste_Pion_INF_ArretCourt", {} },
-        { "ACT_Points_Suppression", {} },
+        { "BEH_Obs_Pion_NBC_SePosterSurBond", { "done_BEH_Obs_Pion_NBC_SePosterSurBond" } },
+        { "BEH_Obs_Pion_ABC_SePosterSurBond", { "done_BEH_Obs_Pion_ABC_SePosterSurBond" } },
+        { "BEH_Misc_Pion_INF_MAJ_Repli", { "done_BEH_Misc_Pion_INF_MAJ_Repli" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "BEH_Poste_Pion_INF_ArretCourt", { "done_BEH_Poste_Pion_INF_ArretCourt" } },
+        { "ACT_Points_Suppression", { "done_ACT_Points_Suppression" } },
     },
 
     create = function( self )
@@ -380,6 +393,8 @@ if( meleeInfPionsCommon() ) then
 
 node "BEH_Dep_GererProgression"
 {
+    feedbacks = { { { "done_BEH_Dep_GererProgression" }, "BEH_Dep_GererProgression" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_GererProgression, {value} ) end,
     instances =
     {
         max = 1,
@@ -387,11 +402,11 @@ node "BEH_Dep_GererProgression"
 
     activations =
     {
-        { "BEH_Lima_GererLimas", {} },
-        { "BEH_Dep_GererPoint", {} },
-        { "BEH_Dep_GererAvantPoint", {} },
-        { "ACT_Obs_ElargirObservation", {} },
-        { "BEH_Dep_ReagirFaceAObstacle", {} },
+        { "BEH_Lima_GererLimas", { "done_BEH_Lima_GererLimas" } },
+        { "BEH_Dep_GererPoint", { "done_BEH_Dep_GererPoint" } },
+        { "BEH_Dep_GererAvantPoint", { "done_BEH_Dep_GererAvantPoint" } },
+        { "ACT_Obs_ElargirObservation", { "done_ACT_Obs_ElargirObservation" } },
+        { "BEH_Dep_ReagirFaceAObstacle", { "done_BEH_Dep_ReagirFaceAObstacle" } },
     },
 
     create = function( self )
@@ -439,11 +454,13 @@ node "BEH_Dep_GererProgression"
 
 node "BEH_Dep_Progresser"
 {
+    feedbacks = { { { "done_BEH_Dep_Progresser" }, "BEH_Dep_Progresser" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Progresser, {value} ) end,
     activations =
     {
-        { "BEH_Dep_GererProgression", {} },
-        { "ACT_Pions_SeDesinstaller", {} },
-        { "ACT_Dep_SeDeplacer", {} },
+        { "BEH_Dep_GererProgression", { "done_BEH_Dep_GererProgression" } },
+        { "ACT_Pions_SeDesinstaller", { "done_ACT_Pions_SeDesinstaller" } },
+        { "ACT_Dep_SeDeplacer", { "done_ACT_Dep_SeDeplacer" } },
     },
 
     create = function( self )
@@ -461,7 +478,7 @@ node "BEH_Dep_Progresser"
             do
                 self.eEtat = eActionEnCours
                                 do
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -476,7 +493,8 @@ node "BEH_Dep_Progresser"
             do return end
         end
 
-        Activate( self.activations.ACT_Dep_SeDeplacer, 1, setmetatable( { self._namedParams.it, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Dep_SeDeplacer, 1, { self._namedParams.it, } )
+self.done_ACT_Dep_SeDeplacer = function( self, _, v ) self.eEtat = v[1] end
     end,
 
 --[[// *****************************************************************************
@@ -490,11 +508,13 @@ node "BEH_Dep_Progresser"
 
 node "BEH_Dep_ReagirFaceAObstacle"
 {
+    feedbacks = { { { "done_BEH_Dep_ReagirFaceAObstacle" }, "BEH_Dep_ReagirFaceAObstacle" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_ReagirFaceAObstacle, {value} ) end,
     activations =
     {
-        { "ACT_RC_SurObjet", {} },
-        { "ACT_Dep_SePosterFaceAObstacle", {} },
-        { "BEH_Objet_Pion_INF_ReagirFaceAObstacle", {} },
+        { "ACT_RC_SurObjet", { "done_ACT_RC_SurObjet" } },
+        { "ACT_Dep_SePosterFaceAObstacle", { "done_ACT_Dep_SePosterFaceAObstacle" } },
+        { "BEH_Objet_Pion_INF_ReagirFaceAObstacle", { "done_BEH_Objet_Pion_INF_ReagirFaceAObstacle" } },
     },
 
     create = function( self )
@@ -551,12 +571,12 @@ if( meleeInfPionsCommon() ) then
 
                 end
 
-                                self.params.__returnValue = eActionEffectuee
+                                self:SendFeedback( eActionEffectuee )
                 do return end
 
             end
         else
-            self.params.__returnValue = eActionEnCours
+            self:SendFeedback( eActionEnCours )
             do return end
         end
 
@@ -572,9 +592,11 @@ if( meleeInfPionsCommon() ) then
 
 node "BEH_Dep_SePoster"
 {
+    feedbacks = { { { "done_BEH_Dep_SePoster" }, "BEH_Dep_SePoster" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_SePoster, {value} ) end,
     activations =
     {
-        { "ACT_Dep_SePoster", {} },
+        { "ACT_Dep_SePoster", { "done_ACT_Dep_SePoster" } },
     },
 
     create = function( self )
@@ -594,10 +616,12 @@ node "BEH_Dep_SePoster"
 
 node "BEH_SePosterFaceAEni"
 {
+    feedbacks = { { { "done_BEH_SePosterFaceAEni" }, "BEH_SePosterFaceAEni" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_SePosterFaceAEni, {value} ) end,
     activations =
     {
-        { "ACT_Dep_SePosterFaceA", {} },
-        { "ACT_Obs_EtablirVisionVersPt", {} },
+        { "ACT_Dep_SePosterFaceA", { "done_ACT_Dep_SePosterFaceA" } },
+        { "ACT_Obs_EtablirVisionVersPt", { "done_ACT_Obs_EtablirVisionVersPt" } },
     },
 
     create = function( self )
@@ -630,10 +654,12 @@ node "BEH_SePosterFaceAEni"
 
 node "BEH_Dep_SePosterFaceADirectionDangereuse"
 {
+    feedbacks = { { { "done_BEH_Dep_SePosterFaceADirectionDangereuse" }, "BEH_Dep_SePosterFaceADirectionDangereuse" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_SePosterFaceADirectionDangereuse, {value} ) end,
     activations =
     {
-        { "ACT_Dep_SePosterFaceADir", {} },
-        { "ACT_Obs_EtablirVisionFaceADir", {} },
+        { "ACT_Dep_SePosterFaceADir", { "done_ACT_Dep_SePosterFaceADir" } },
+        { "ACT_Obs_EtablirVisionFaceADir", { "done_ACT_Obs_EtablirVisionFaceADir" } },
     },
 
     create = function( self )
@@ -669,12 +695,14 @@ node "BEH_Dep_SePosterFaceADirectionDangereuse"
 
 node "BEH_Dep_Suivre"
 {
+    feedbacks = { { { "done_BEH_Dep_Suivre" }, "BEH_Dep_Suivre" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Suivre, {value} ) end,
     activations =
     {
-        { "BEH_Dep_Progresser", {} },
-        { "ACT_Dep_ModulationVitesse", {} },
-        { "ACT_Dep_SePoster", {} },
-        { "ACT_Obs_EtablirVisionVersPt", {} },
+        { "BEH_Dep_Progresser", { "done_BEH_Dep_Progresser" } },
+        { "ACT_Dep_ModulationVitesse", { "done_ACT_Dep_ModulationVitesse" } },
+        { "ACT_Dep_SePoster", { "done_ACT_Dep_SePoster" } },
+        { "ACT_Obs_EtablirVisionVersPt", { "done_ACT_Obs_EtablirVisionVersPt" } },
     },
 
     create = function( self )
@@ -736,7 +764,8 @@ node "BEH_Dep_Suivre"
 ]]--[[//-----------------------------------------------------------------------------
 ]]                    end
 
-                    Activate( self.activations.BEH_Dep_Progresser, 1, setmetatable( { self.itVersAmi, eProgressionDirect, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_Progresser, 1, { self.itVersAmi, eProgressionDirect, } )
+self.done_BEH_Dep_Progresser = function( self, _, v ) self.eEtat = v[1] end
                     --[[// Aller au plus vite
 ]]Activate( self.activations.ACT_Dep_ModulationVitesse, 1.5, { 1, } )
                     --[[//-----------------------------------------------------------------------------
@@ -781,13 +810,15 @@ node "BEH_Dep_Suivre"
 
 node "BEH_Dep_Suivre_Elastique"
 {
+    feedbacks = { { { "done_BEH_Dep_Suivre_Elastique" }, "BEH_Dep_Suivre_Elastique" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Suivre_Elastique, {value} ) end,
     activations =
     {
-        { "BEH_Dep_Progresser", {} },
-        { "ACT_Dep_ModulationVitesse", {} },
-        { "ACT_Dep_SePoster", {} },
-        { "ACT_Obs_EtablirVisionVersPt", {} },
-        { "BEH_Dep_ReagirFaceAObstacle", {} },
+        { "BEH_Dep_Progresser", { "done_BEH_Dep_Progresser" } },
+        { "ACT_Dep_ModulationVitesse", { "done_ACT_Dep_ModulationVitesse" } },
+        { "ACT_Dep_SePoster", { "done_ACT_Dep_SePoster" } },
+        { "ACT_Obs_EtablirVisionVersPt", { "done_ACT_Obs_EtablirVisionVersPt" } },
+        { "BEH_Dep_ReagirFaceAObstacle", { "done_BEH_Dep_ReagirFaceAObstacle" } },
     },
 
     create = function( self )
@@ -857,7 +888,8 @@ node "BEH_Dep_Suivre_Elastique"
                     --[[//-----------------------------------------------------------------------------
 ]]--[[// Deplacement vers l'unite
 ]]--[[//-----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_Dep_Progresser, 1, setmetatable( { self.itVersAmi, eProgressionDirect, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+]]Activate( self.activations.BEH_Dep_Progresser, 1, { self.itVersAmi, eProgressionDirect, } )
+self.done_BEH_Dep_Progresser = function( self, _, v ) self.eEtat = v[1] end
                     --[[// Aller au plus vite
 ]]Activate( self.activations.ACT_Dep_ModulationVitesse, 1.5, { 1, } )
                     --[[// L'unite suivit se rapproche
@@ -888,7 +920,8 @@ node "BEH_Dep_Suivre_Elastique"
                         end
                     end
 
-                    StartActivateOverride( self, self.activations.BEH_Dep_ReagirFaceAObstacle, 1.1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatObstacle = v else rawset( t, k, v ) end end } ) )
+                    StartActivateOverride( self, self.activations.BEH_Dep_ReagirFaceAObstacle, 1.1, {} )
+self.done_BEH_Dep_ReagirFaceAObstacle = function( self, _, v ) self.eEtatObstacle = v[1] end
                     _continue = false
                                 cases_switch_1[2] = true
 

@@ -20,9 +20,11 @@ includedFiles["sources/melee/abc/automates/common/missions/reconnaitreaxe/Reconn
 ]]--[[// *****************************************************************************
 ]]node "BEH_Medo_Automate_ABC_AssignerMissionReconnaitreAxeA"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_ABC_AssignerMissionReconnaitreAxeA" }, "BEH_Medo_Automate_ABC_AssignerMissionReconnaitreAxeA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_ABC_AssignerMissionReconnaitreAxeA, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_ABC_AssignerReconnaitreA", {} },
+        { "BEH_Mission_Automate_ABC_AssignerReconnaitreA", { "done_BEH_Mission_Automate_ABC_AssignerReconnaitreA" } },
     },
 
     create = function( self )

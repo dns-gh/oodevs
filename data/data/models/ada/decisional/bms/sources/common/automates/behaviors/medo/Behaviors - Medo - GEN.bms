@@ -23,12 +23,14 @@ include "Common/Automates/Actions/Medo/Actions - Medo - GEN.bms"
 ]]--[[// ****************************************************************************
 ]]node "BEH_Mission_Automate_GEN_AssignerRenforcerA"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_GEN_AssignerRenforcerA" }, "BEH_Mission_Automate_GEN_AssignerRenforcerA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_GEN_AssignerRenforcerA, {value} ) end,
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_GEN_AssignerRenforcerA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "done_ACT_Mission_Automate_ControleCreation_EnCours" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "done_ACT_Mission_Automate_ControleCreation_OK" } },
+        { "ACT_Mission_Automate_GEN_AssignerRenforcerA", { "done_ACT_Mission_Automate_GEN_AssignerRenforcerA" } },
     },
 
     create = function( self )
@@ -64,7 +66,8 @@ elseif switch_1 == eActionHalt
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_GEN_AssignerRenforcerA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pionEnRenfort, self._namedParams.pionARenforcer, self._namedParams.PosObs, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Mission_Automate_GEN_AssignerRenforcerA, rForce, { self._namedParams.ePhase, self._namedParams.pionEnRenfort, self._namedParams.pionARenforcer, self._namedParams.PosObs, self._namedParams.eEtatEchelon, } )
+self.done_ACT_Mission_Automate_GEN_AssignerRenforcerA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
 --[[// ****************************************************************************
@@ -77,12 +80,14 @@ elseif switch_1 == eActionHalt
 
 node "BEH_Mission_Automate_GEN_AssignerDegagerA"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_GEN_AssignerDegagerA" }, "BEH_Mission_Automate_GEN_AssignerDegagerA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_GEN_AssignerDegagerA, {value} ) end,
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_GEN_AssignerDegagerObstacleA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "done_ACT_Mission_Automate_ControleCreation_EnCours" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "done_ACT_Mission_Automate_ControleCreation_OK" } },
+        { "ACT_Mission_Automate_GEN_AssignerDegagerObstacleA", { "done_ACT_Mission_Automate_GEN_AssignerDegagerObstacleA" } },
     },
 
     create = function( self )
@@ -117,7 +122,8 @@ elseif switch_1 == eActionHalt
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_GEN_AssignerDegagerObstacleA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.obstacle, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Mission_Automate_GEN_AssignerDegagerObstacleA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.obstacle, self._namedParams.eEtatEchelon, } )
+self.done_ACT_Mission_Automate_GEN_AssignerDegagerObstacleA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
 --[[// ****************************************************************************
@@ -130,12 +136,14 @@ elseif switch_1 == eActionHalt
 
 node "BEH_Mission_Automate_GEN_AssignerContournerA"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_GEN_AssignerContournerA" }, "BEH_Mission_Automate_GEN_AssignerContournerA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_GEN_AssignerContournerA, {value} ) end,
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_GEN_AssignerContournerObstacleA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "done_ACT_Mission_Automate_ControleCreation_EnCours" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "done_ACT_Mission_Automate_ControleCreation_OK" } },
+        { "ACT_Mission_Automate_GEN_AssignerContournerObstacleA", { "done_ACT_Mission_Automate_GEN_AssignerContournerObstacleA" } },
     },
 
     create = function( self )
@@ -170,7 +178,8 @@ elseif switch_1 == eActionHalt
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_GEN_AssignerContournerObstacleA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.obstacle, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Mission_Automate_GEN_AssignerContournerObstacleA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.obstacle, self._namedParams.eEtatEchelon, } )
+self.done_ACT_Mission_Automate_GEN_AssignerContournerObstacleA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
 --[[// ****************************************************************************
@@ -183,12 +192,14 @@ elseif switch_1 == eActionHalt
 
 node "BEH_Mission_Automate_GEN_AssignerReconnaitreZoneA"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_GEN_AssignerReconnaitreZoneA" }, "BEH_Mission_Automate_GEN_AssignerReconnaitreZoneA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_GEN_AssignerReconnaitreZoneA, {value} ) end,
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_GEN_AssignerReconnaitreZoneA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "done_ACT_Mission_Automate_ControleCreation_EnCours" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "done_ACT_Mission_Automate_ControleCreation_OK" } },
+        { "ACT_Mission_Automate_GEN_AssignerReconnaitreZoneA", { "done_ACT_Mission_Automate_GEN_AssignerReconnaitreZoneA" } },
     },
 
     create = function( self )
@@ -223,7 +234,8 @@ elseif switch_1 == eActionHalt
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_GEN_AssignerReconnaitreZoneA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.zone, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Mission_Automate_GEN_AssignerReconnaitreZoneA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.zone, self._namedParams.eEtatEchelon, } )
+self.done_ACT_Mission_Automate_GEN_AssignerReconnaitreZoneA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
 --[[// ****************************************************************************
@@ -236,12 +248,14 @@ elseif switch_1 == eActionHalt
 
 node "BEH_Mission_Automate_GEN_AssignerOuvrirItineraireA"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_GEN_AssignerOuvrirItineraireA" }, "BEH_Mission_Automate_GEN_AssignerOuvrirItineraireA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_GEN_AssignerOuvrirItineraireA, {value} ) end,
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_GEN_AssignerOuvrirItineraireA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "done_ACT_Mission_Automate_ControleCreation_EnCours" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "done_ACT_Mission_Automate_ControleCreation_OK" } },
+        { "ACT_Mission_Automate_GEN_AssignerOuvrirItineraireA", { "done_ACT_Mission_Automate_GEN_AssignerOuvrirItineraireA" } },
     },
 
     create = function( self )
@@ -276,7 +290,8 @@ elseif switch_1 == eActionHalt
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_GEN_AssignerOuvrirItineraireA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.iti, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Mission_Automate_GEN_AssignerOuvrirItineraireA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.iti, self._namedParams.eEtatEchelon, } )
+self.done_ACT_Mission_Automate_GEN_AssignerOuvrirItineraireA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
 --[[// ****************************************************************************
@@ -289,12 +304,14 @@ elseif switch_1 == eActionHalt
 
 node "BEH_Mission_Automate_GEN_AssignerRetablirItineraireA"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_GEN_AssignerRetablirItineraireA" }, "BEH_Mission_Automate_GEN_AssignerRetablirItineraireA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_GEN_AssignerRetablirItineraireA, {value} ) end,
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_GEN_AssignerRetablirItineraireA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "done_ACT_Mission_Automate_ControleCreation_EnCours" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "done_ACT_Mission_Automate_ControleCreation_OK" } },
+        { "ACT_Mission_Automate_GEN_AssignerRetablirItineraireA", { "done_ACT_Mission_Automate_GEN_AssignerRetablirItineraireA" } },
     },
 
     create = function( self )
@@ -329,7 +346,8 @@ elseif switch_1 == eActionHalt
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_GEN_AssignerRetablirItineraireA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.iti, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Mission_Automate_GEN_AssignerRetablirItineraireA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.iti, self._namedParams.eEtatEchelon, } )
+self.done_ACT_Mission_Automate_GEN_AssignerRetablirItineraireA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
 --[[// ****************************************************************************
@@ -342,12 +360,14 @@ elseif switch_1 == eActionHalt
 
 node "BEH_Mission_Automate_GEN_AssignerReconnaitreSiteA"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_GEN_AssignerReconnaitreSiteA" }, "BEH_Mission_Automate_GEN_AssignerReconnaitreSiteA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_GEN_AssignerReconnaitreSiteA, {value} ) end,
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_GEN_AssignerReconnaitreSiteA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "done_ACT_Mission_Automate_ControleCreation_EnCours" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "done_ACT_Mission_Automate_ControleCreation_OK" } },
+        { "ACT_Mission_Automate_GEN_AssignerReconnaitreSiteA", { "done_ACT_Mission_Automate_GEN_AssignerReconnaitreSiteA" } },
     },
 
     create = function( self )
@@ -382,7 +402,8 @@ elseif switch_1 == eActionHalt
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_GEN_AssignerReconnaitreSiteA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.site, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Mission_Automate_GEN_AssignerReconnaitreSiteA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.site, self._namedParams.eEtatEchelon, } )
+self.done_ACT_Mission_Automate_GEN_AssignerReconnaitreSiteA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
 --[[// ****************************************************************************
@@ -395,12 +416,14 @@ elseif switch_1 == eActionHalt
 
 node "BEH_Mission_Automate_GEN_AssignerEquiperExploiterA"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_GEN_AssignerEquiperExploiterA" }, "BEH_Mission_Automate_GEN_AssignerEquiperExploiterA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_GEN_AssignerEquiperExploiterA, {value} ) end,
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_GEN_AssignerEquiperExploiterA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "done_ACT_Mission_Automate_ControleCreation_EnCours" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "done_ACT_Mission_Automate_ControleCreation_OK" } },
+        { "ACT_Mission_Automate_GEN_AssignerEquiperExploiterA", { "done_ACT_Mission_Automate_GEN_AssignerEquiperExploiterA" } },
     },
 
     create = function( self )
@@ -437,7 +460,8 @@ elseif switch_1 == eActionHalt
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_GEN_AssignerEquiperExploiterA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.site, self._namedParams.ptRegroupement, self._namedParams.eType, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Mission_Automate_GEN_AssignerEquiperExploiterA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.site, self._namedParams.ptRegroupement, self._namedParams.eType, self._namedParams.eEtatEchelon, } )
+self.done_ACT_Mission_Automate_GEN_AssignerEquiperExploiterA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
 --[[// ****************************************************************************
@@ -450,12 +474,14 @@ elseif switch_1 == eActionHalt
 
 node "BEH_Mission_Automate_GEN_AssignerMissionConstruireA"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_GEN_AssignerMissionConstruireA" }, "BEH_Mission_Automate_GEN_AssignerMissionConstruireA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_GEN_AssignerMissionConstruireA, {value} ) end,
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_GEN_AssignerRealiserTravauxA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "done_ACT_Mission_Automate_ControleCreation_EnCours" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "done_ACT_Mission_Automate_ControleCreation_OK" } },
+        { "ACT_Mission_Automate_GEN_AssignerRealiserTravauxA", { "done_ACT_Mission_Automate_GEN_AssignerRealiserTravauxA" } },
     },
 
     create = function( self )
@@ -490,7 +516,8 @@ elseif switch_1 == eActionHalt
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_GEN_AssignerRealiserTravauxA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pionGenie, self._namedParams.obstacle, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Mission_Automate_GEN_AssignerRealiserTravauxA, rForce, { self._namedParams.ePhase, self._namedParams.pionGenie, self._namedParams.obstacle, self._namedParams.eEtatEchelon, } )
+self.done_ACT_Mission_Automate_GEN_AssignerRealiserTravauxA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
 }

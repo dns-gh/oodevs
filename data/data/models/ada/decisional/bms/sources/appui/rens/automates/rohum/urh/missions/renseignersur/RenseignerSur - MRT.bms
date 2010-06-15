@@ -9,9 +9,11 @@ includedFiles["sources/appui/rens/automates/rohum/urh/missions/renseignersur/Ren
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_MRT_RENS_ROHUM_RenseignerSur"
 {
+    feedbacks = { { { "done_MIS_Automate_MRT_RENS_ROHUM_RenseignerSur" }, "MIS_Automate_MRT_RENS_ROHUM_RenseignerSur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_MRT_RENS_ROHUM_RenseignerSur, {value} ) end,
     activations =
     {
-        { "BEH_Medo_Automate_RENS_ROHUM_AssignerMissions", {} },
+        { "BEH_Medo_Automate_RENS_ROHUM_AssignerMissions", { "done_BEH_Medo_Automate_RENS_ROHUM_AssignerMissions" } },
     },
 
     create = function( self )

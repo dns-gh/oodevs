@@ -13,9 +13,11 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "BEH_GTIA_GererAppuisInternesEnDefense"
 {
+    feedbacks = { { { "done_BEH_GTIA_GererAppuisInternesEnDefense" }, "BEH_GTIA_GererAppuisInternesEnDefense" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_GererAppuisInternesEnDefense, {value} ) end,
     activations =
     {
-        { "BEH_GTIA_GererAppuiEnDefensePour", {} },
+        { "BEH_GTIA_GererAppuiEnDefensePour", { "done_BEH_GTIA_GererAppuiEnDefensePour" } },
     },
 
     create = function( self )
@@ -42,9 +44,11 @@ include "bit.lua"
 
 node "BEH_GTIA_GererAppuiEnDefensePour"
 {
+    feedbacks = { { { "done_BEH_GTIA_GererAppuiEnDefensePour" }, "BEH_GTIA_GererAppuiEnDefensePour" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_GererAppuiEnDefensePour, {value} ) end,
     activations =
     {
-        { "BEH_GTIA_AssignerMissionsPourAppuyerEnDefense", {} },
+        { "BEH_GTIA_AssignerMissionsPourAppuyerEnDefense", { "done_BEH_GTIA_AssignerMissionsPourAppuyerEnDefense" } },
     },
 
     create = function( self )
@@ -71,9 +75,11 @@ node "BEH_GTIA_GererAppuiEnDefensePour"
 
 node "BEH_GTIA_AssignerMissionsPourAppuyerEnDefense"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerMissionsPourAppuyerEnDefense" }, "BEH_GTIA_AssignerMissionsPourAppuyerEnDefense" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerMissionsPourAppuyerEnDefense, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_AssignerMissionAppuyerPourDefense", {} },
+        { "ACT_GTIA_AssignerMissionAppuyerPourDefense", { "done_ACT_GTIA_AssignerMissionAppuyerPourDefense" } },
     },
 
     create = function( self )
@@ -117,6 +123,8 @@ do
 
 node "ACT_GTIA_AssignerMissionAppuyerPourDefense"
 {
+    feedbacks = { { { "done_ACT_GTIA_AssignerMissionAppuyerPourDefense" }, "ACT_GTIA_AssignerMissionAppuyerPourDefense" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_GTIA_AssignerMissionAppuyerPourDefense, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]

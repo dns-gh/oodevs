@@ -15,10 +15,12 @@ includedFiles["sources/emergency/pions/common/missions/EscortDemonstration.bms"]
 ]]--[[//------------------------------------------------------------------------------
 ]]node "MIS_Pion_Emergency_EscortDemonstration"
 {
+    feedbacks = { { { "done_MIS_Pion_Emergency_EscortDemonstration" }, "MIS_Pion_Emergency_EscortDemonstration" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_Emergency_EscortDemonstration, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
     },
 
     create = function( self )
@@ -38,7 +40,8 @@ includedFiles["sources/emergency/pions/common/missions/EscortDemonstration.bms"]
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
                 self.ePhase = eFinMission
@@ -62,7 +65,7 @@ elseif switch_1 == eFinMission then
                     if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
                         do
                             DEC_FinMission()
-                                                        self.params.__returnValue = eActionEffectuee
+                                                        self:SendFeedback( eActionEffectuee )
                             Halt( self )
                             do return end
 

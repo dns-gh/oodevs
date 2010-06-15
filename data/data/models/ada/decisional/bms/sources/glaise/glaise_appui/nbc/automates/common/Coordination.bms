@@ -28,10 +28,12 @@ includedFiles["sources/glaise/glaise_appui/nbc/automates/common/Coordination.bms
 ]]--[[// *****************************************************************************
 ]]node "BEH_CoordDep_Automate_NBC_AssurerLaCoordinationInterne_"
 {
+    feedbacks = { { { "done_BEH_CoordDep_Automate_NBC_AssurerLaCoordinationInterne_" }, "BEH_CoordDep_Automate_NBC_AssurerLaCoordinationInterne_" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_CoordDep_Automate_NBC_AssurerLaCoordinationInterne_, {value} ) end,
     activations =
     {
-        { "ACT_Info_Automate_Trace", {} },
-        { "BEH_CoordDep_Automate_NBC_CoordonnerPEAvecSE_", {} },
+        { "ACT_Info_Automate_Trace", { "done_ACT_Info_Automate_Trace" } },
+        { "BEH_CoordDep_Automate_NBC_CoordonnerPEAvecSE_", { "done_BEH_CoordDep_Automate_NBC_CoordonnerPEAvecSE_" } },
     },
 
     create = function( self )
@@ -55,9 +57,11 @@ includedFiles["sources/glaise/glaise_appui/nbc/automates/common/Coordination.bms
 
 node "BEH_CoordDep_Automate_NBC_CoordonnerPEAvecSE_"
 {
+    feedbacks = { { { "done_BEH_CoordDep_Automate_NBC_CoordonnerPEAvecSE_" }, "BEH_CoordDep_Automate_NBC_CoordonnerPEAvecSE_" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_CoordDep_Automate_NBC_CoordonnerPEAvecSE_, {value} ) end,
     activations =
     {
-        { "BEH_CoordDep_Automate_NBC_ActiverCoordinnationSur", {} },
+        { "BEH_CoordDep_Automate_NBC_ActiverCoordinnationSur", { "done_BEH_CoordDep_Automate_NBC_ActiverCoordinnationSur" } },
     },
 
     create = function( self )
@@ -93,10 +97,12 @@ node "BEH_CoordDep_Automate_NBC_CoordonnerPEAvecSE_"
 
 node "BEH_CoordDep_Automate_NBC_ActiverCoordinnationSur"
 {
+    feedbacks = { { { "done_BEH_CoordDep_Automate_NBC_ActiverCoordinnationSur" }, "BEH_CoordDep_Automate_NBC_ActiverCoordinnationSur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_CoordDep_Automate_NBC_ActiverCoordinnationSur, {value} ) end,
     activations =
     {
-        { "ACT_Info_Automate_Trace", {} },
-        { "ACT_Ordre_Automate_Ralentir", {} },
+        { "ACT_Info_Automate_Trace", { "done_ACT_Info_Automate_Trace" } },
+        { "ACT_Ordre_Automate_Ralentir", { "done_ACT_Ordre_Automate_Ralentir" } },
     },
 
     create = function( self )

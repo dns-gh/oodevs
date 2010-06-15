@@ -25,13 +25,15 @@ include "bit.lua"
 ]]--[[// ----------------------------------------------------------------------------
 ]]node "BEH_Obj_Pion_INF_GererInstallationObstacle"
 {
+    feedbacks = { { { "done_BEH_Obj_Pion_INF_GererInstallationObstacle" }, "BEH_Obj_Pion_INF_GererInstallationObstacle" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Obj_Pion_INF_GererInstallationObstacle, {value} ) end,
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "ACT_Obj_Pion_INF_RealiserBouchonMines", {} },
-        { "ACT_Obj_Pion_INF_PreparerAbattis", {} },
-        { "ACT_Misc_Pion_DelaiInstallation", {} },
-        { "ACT_Obj_Pion_INF_Activer", {} },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "ACT_Obj_Pion_INF_RealiserBouchonMines", { "done_ACT_Obj_Pion_INF_RealiserBouchonMines" } },
+        { "ACT_Obj_Pion_INF_PreparerAbattis", { "done_ACT_Obj_Pion_INF_PreparerAbattis" } },
+        { "ACT_Misc_Pion_DelaiInstallation", { "done_ACT_Misc_Pion_DelaiInstallation" } },
+        { "ACT_Obj_Pion_INF_Activer", { "done_ACT_Obj_Pion_INF_Activer" } },
     },
 
     create = function( self )
@@ -81,7 +83,7 @@ include "bit.lua"
                             Activate( self.activations.ACT_Info_Trace, 1, { "preparation echouee, on attend", } )
                                                         do return end
 
-                                                        self.params.__returnValue = eActionImpossible
+                                                        self:SendFeedback( eActionImpossible )
                             Halt( self )
                             do return end
 
@@ -106,11 +108,13 @@ include "bit.lua"
 ]]self._namedParams.eTypeObjet
                                 local cases_switch_2 = {}
                                     if switch_2 == eTypeObjectBouchonMines then
-                                                                            Activate( self.activations.ACT_Obj_Pion_INF_RealiserBouchonMines, 1, setmetatable( { self.locEmbuscade, M_NOMBRE_MINES(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionAbattis = v else rawset( t, k, v ) end end } ) )
+                                                                            Activate( self.activations.ACT_Obj_Pion_INF_RealiserBouchonMines, 1, { self.locEmbuscade, M_NOMBRE_MINES(), } )
+self.done_ACT_Obj_Pion_INF_RealiserBouchonMines = function( self, _, v ) self.eActionAbattis = v[1] end
                                         _continue = false
                                                                         cases_switch_2[1] = true
 elseif switch_2 == eTypeObjectAbatti then
-                                                                            Activate( self.activations.ACT_Obj_Pion_INF_PreparerAbattis, 1, setmetatable( { self.locEmbuscade, M_LONGUEUR_ABATTIS(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionAbattis = v else rawset( t, k, v ) end end } ) )
+                                                                            Activate( self.activations.ACT_Obj_Pion_INF_PreparerAbattis, 1, { self.locEmbuscade, M_LONGUEUR_ABATTIS(), } )
+self.done_ACT_Obj_Pion_INF_PreparerAbattis = function( self, _, v ) self.eActionAbattis = v[1] end
                                         _continue = false
                                                                         cases_switch_2[2] = true
 
@@ -125,7 +129,8 @@ elseif switch_2 == eTypeObjectAbatti then
 
                     if( self.eAction == eActionEnCours ) then
                         --[[// Temps de mise en place du dispositif
-]]Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, setmetatable( { eNiveauInstallation_Poste, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+]]Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, { eNiveauInstallation_Poste, } )
+self.done_ACT_Misc_Pion_DelaiInstallation = function( self, _, v ) self.eAction = v[1] end
                     end
 
                     _continue = false
@@ -135,7 +140,7 @@ elseif switch_1 == eActiverObstacle then
                         do
                             DEC_Trace( "objet cree non recupere" )
                             self.ePhase = ePrendreContact
-                                                        self.params.__returnValue = eActionEffectuee
+                                                        self:SendFeedback( eActionEffectuee )
                             do return end
 
                         end
@@ -149,7 +154,7 @@ elseif switch_1 == eActiverObstacle then
                                 do
                                     StartActivateOverride( self, self.activations.ACT_Obj_Pion_INF_Activer, 1, { self.repObj, } )
                                     self.ePhase = ePrendreContact
-                                                                        self.params.__returnValue = eActionEffectuee
+                                                                        self:SendFeedback( eActionEffectuee )
                                     do return end
 
                                 end
@@ -180,9 +185,11 @@ elseif switch_1 == ePrendreContact
 
 node "BEH_Dep_Pion_INF_RejoindrePositionTir_Embusc"
 {
+    feedbacks = { { { "done_BEH_Dep_Pion_INF_RejoindrePositionTir_Embusc" }, "BEH_Dep_Pion_INF_RejoindrePositionTir_Embusc" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Pion_INF_RejoindrePositionTir_Embusc, {value} ) end,
     activations =
     {
-        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
     },
 
     create = function( self )
@@ -207,7 +214,7 @@ node "BEH_Dep_Pion_INF_RejoindrePositionTir_Embusc"
                                 do
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -219,7 +226,7 @@ node "BEH_Dep_Pion_INF_RejoindrePositionTir_Embusc"
             do
                 self.eAction = eActionEnCours
                                 do
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -228,7 +235,8 @@ node "BEH_Dep_Pion_INF_RejoindrePositionTir_Embusc"
             end
         end
 
-        Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.ptEmbuscade, eProgressionDefaut, eTypeItiAttaque, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.ptEmbuscade, eProgressionDefaut, eTypeItiAttaque, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] end
     end,
 
 --[[// ============================================================================
@@ -239,13 +247,15 @@ node "BEH_Dep_Pion_INF_RejoindrePositionTir_Embusc"
 
 node "BEH_Eni_Pion_INF_DetruireEmbuscade"
 {
+    feedbacks = { { { "done_BEH_Eni_Pion_INF_DetruireEmbuscade" }, "BEH_Eni_Pion_INF_DetruireEmbuscade" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Pion_INF_DetruireEmbuscade, {value} ) end,
     activations =
     {
-        { "ACT_Maj_Pion_PasserEnTirLibre", {} },
-        { "BEH_MOT_DesactiveSauvegarde", {} },
-        { "BEH_Obj_Pion_INF_GererInstallationObstacle", {} },
-        { "ACT_Misc_Delai", {} },
-        { "ACT_MAJ_EnnemiEnCours", {} },
+        { "ACT_Maj_Pion_PasserEnTirLibre", { "done_ACT_Maj_Pion_PasserEnTirLibre" } },
+        { "BEH_MOT_DesactiveSauvegarde", { "done_BEH_MOT_DesactiveSauvegarde" } },
+        { "BEH_Obj_Pion_INF_GererInstallationObstacle", { "done_BEH_Obj_Pion_INF_GererInstallationObstacle" } },
+        { "ACT_Misc_Delai", { "done_ACT_Misc_Delai" } },
+        { "ACT_MAJ_EnnemiEnCours", { "done_ACT_MAJ_EnnemiEnCours" } },
     },
 
     create = function( self )
@@ -260,7 +270,7 @@ node "BEH_Eni_Pion_INF_DetruireEmbuscade"
         if( self.eActionDelai == eActionEffectuee ) then
             do
                 self.eActionDelai = eActionEnCours
-                                self.params.__returnValue = eActionHalt
+                                self:SendFeedback( eActionHalt )
                 do return end
 
             end
@@ -282,10 +292,12 @@ do
                 --[[// On fait l'assaut
 ]]if( S_Tir_EstAPorteePosturesReelles( x, GetStateVariable( "VE_Agressivite_Tir" ) ) ) then
                     do
-                        StartActivateOverride( self, self.activations.BEH_Obj_Pion_INF_GererInstallationObstacle, 0.5, setmetatable( { self._namedParams.ptEmbuscade, self._namedParams.eTypeObj, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionObst = v else rawset( t, k, v ) end end } ) )
+                        StartActivateOverride( self, self.activations.BEH_Obj_Pion_INF_GererInstallationObstacle, 0.5, { self._namedParams.ptEmbuscade, self._namedParams.eTypeObj, } )
+self.done_BEH_Obj_Pion_INF_GererInstallationObstacle = function( self, _, v ) self.eActionObst = v[1] end
                         --[[// Au bout de 3 min, on retourne au point de regroupement
 ]]if( F_Pion_GeteEtatFeu( myself ) == eEtatFeu_Executer ) then
-                            StartActivateOverride( self, self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, 1, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionDelai = v else rawset( t, k, v ) end end } ) )
+                            StartActivateOverride( self, self.activations.ACT_Misc_Delai, 1, { 1, 1, } )
+self.done_ACT_Misc_Delai = function( self, _, v ) self.eActionDelai = v[1] end
                         end
 
                         Activate( self.activations.ACT_MAJ_EnnemiEnCours, 1, { x, } )

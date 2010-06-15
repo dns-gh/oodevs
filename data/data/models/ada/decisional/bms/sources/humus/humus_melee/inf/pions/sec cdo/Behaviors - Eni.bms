@@ -27,6 +27,8 @@ includedFiles["sources/humus/humus_melee/inf/pions/sec cdo/Behaviors - Eni.bms"]
 
 node "BEH_Eni_Pion_VAB_Fixer"
 {
+    feedbacks = { { { "done_BEH_Eni_Pion_VAB_Fixer" }, "BEH_Eni_Pion_VAB_Fixer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Pion_VAB_Fixer, {value} ) end,
     instances =
     {
         boost = 1.1,
@@ -35,13 +37,13 @@ node "BEH_Eni_Pion_VAB_Fixer"
 
     activations =
     {
-        { "ACT_MAJ_EnnemiEnCours", {} },
-        { "BEH_MOT_Pion_INF_Debarquer", {} },
-        { "BEH_Dep_ProgressionVers", {} },
-        { "ACT_RC", {} },
-        { "ACT_MAJ_EtatSituationEni", {} },
-        { "ACT_Dep_SePoster", {} },
-        { "BEH_Feu_Pion_INF_TirFixer", {} },
+        { "ACT_MAJ_EnnemiEnCours", { "done_ACT_MAJ_EnnemiEnCours" } },
+        { "BEH_MOT_Pion_INF_Debarquer", { "done_BEH_MOT_Pion_INF_Debarquer" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "ACT_MAJ_EtatSituationEni", { "done_ACT_MAJ_EtatSituationEni" } },
+        { "ACT_Dep_SePoster", { "done_ACT_Dep_SePoster" } },
+        { "BEH_Feu_Pion_INF_TirFixer", { "done_BEH_Feu_Pion_INF_TirFixer" } },
     },
 
     create = function( self )
@@ -70,7 +72,7 @@ node "BEH_Eni_Pion_VAB_Fixer"
                                 do
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -81,7 +83,7 @@ node "BEH_Eni_Pion_VAB_Fixer"
             do
                 self.eActionFixer = eActionEnCours
                                 do
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -114,7 +116,8 @@ do
 ]]--[[// Gestion du tir
 ]]
                 --[[// ----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_Feu_Pion_INF_TirFixer, 1, setmetatable( { self._namedParams.repEni, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionFixer = v else rawset( t, k, v ) end end } ) )
+]]Activate( self.activations.BEH_Feu_Pion_INF_TirFixer, 1, { self._namedParams.repEni, } )
+self.done_BEH_Feu_Pion_INF_TirFixer = function( self, _, v ) self.eActionFixer = v[1] end
             end
         end
 
@@ -124,12 +127,14 @@ do
 
 node "BEH_Eni_Pion_INF_GererContactEni"
 {
+    feedbacks = { { { "done_BEH_Eni_Pion_INF_GererContactEni" }, "BEH_Eni_Pion_INF_GererContactEni" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Pion_INF_GererContactEni, {value} ) end,
     activations =
     {
-        { "BEH_Feu_Pion_VAB_Detruire_SurEni", {} },
-        { "BEH_Eni_Pion_VAB_Fixer", {} },
-        { "BEH_Eni_Pion_INF_DetruitEtFixe", {} },
-        { "BEH_Feu_Pion_INF_TirAppui", {} },
+        { "BEH_Feu_Pion_VAB_Detruire_SurEni", { "done_BEH_Feu_Pion_VAB_Detruire_SurEni" } },
+        { "BEH_Eni_Pion_VAB_Fixer", { "done_BEH_Eni_Pion_VAB_Fixer" } },
+        { "BEH_Eni_Pion_INF_DetruitEtFixe", { "done_BEH_Eni_Pion_INF_DetruitEtFixe" } },
+        { "BEH_Feu_Pion_INF_TirAppui", { "done_BEH_Feu_Pion_INF_TirAppui" } },
     },
 
     create = function( self )

@@ -3,6 +3,8 @@ includedFiles["sources/glaise/glaise_appui/artdsa/pions/common/actions/Actions -
 
 node "ACT_Pions_ASA_SeDeployer"
 {
+    feedbacks = { { { "done_ACT_Pions_ASA_SeDeployer" }, "ACT_Pions_ASA_SeDeployer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Pions_ASA_SeDeployer, {value} ) end,
     create = function( self )
     end,
 

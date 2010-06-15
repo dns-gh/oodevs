@@ -9,13 +9,15 @@ includedFiles["sources/glaise/glaise_appui/rens/pions/rohum/rbrr/common/missions
 ]]--[[// *****************************************************************************
 ]]node "BEH_Mission_Pion_RENS_OrienterGuider"
 {
+    feedbacks = { { { "done_BEH_Mission_Pion_RENS_OrienterGuider" }, "BEH_Mission_Pion_RENS_OrienterGuider" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Pion_RENS_OrienterGuider, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Info_Trace", {} },
-        { "ACT_Pion_Rens_AssurerLaLiaisonAvec", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "ACT_Pion_Rens_AssurerLaLiaisonAvec", { "done_ACT_Pion_Rens_AssurerLaLiaisonAvec" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "done_BEH_Dep_SePosterFaceADirectionDangereuse" } },
     },
 
     create = function( self )
@@ -27,7 +29,8 @@ includedFiles["sources/glaise/glaise_appui/rens/pions/rohum/rbrr/common/missions
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or eAttendre
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
                 self.ePhaseMission = eFinMission
@@ -40,7 +43,7 @@ includedFiles["sources/glaise/glaise_appui/rens/pions/rohum/rbrr/common/missions
 ]]        end
 
         if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end

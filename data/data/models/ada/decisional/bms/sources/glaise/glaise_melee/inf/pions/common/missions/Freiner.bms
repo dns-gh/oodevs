@@ -19,16 +19,18 @@ includedFiles["sources/glaise/glaise_melee/inf/pions/common/missions/Freiner.bms
 ]]
 node "BEH_Mission_Pion_INF_Freiner"
 {
+    feedbacks = { { { "done_BEH_Mission_Pion_INF_Freiner" }, "BEH_Mission_Pion_INF_Freiner" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Pion_INF_Freiner, {value} ) end,
     activations =
     {
-        { "BEH_Mot_Pion_Embarquer", {} },
-        { "BEH_Delai_Pion_INF_PreparerMission", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_Pion_INF_Freiner_Decrocher", {} },
-        { "BEH_Lima_GererLCAR", {} },
-        { "BEH_Lima_GererLR", {} },
-        { "BEH_Lima_Pion_INF_GererLIA", {} },
-        { "BEH_Dep_ProgressionSur", {} },
+        { "BEH_Mot_Pion_Embarquer", { "done_BEH_Mot_Pion_Embarquer" } },
+        { "BEH_Delai_Pion_INF_PreparerMission", { "done_BEH_Delai_Pion_INF_PreparerMission" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Dep_Pion_INF_Freiner_Decrocher", { "done_BEH_Dep_Pion_INF_Freiner_Decrocher" } },
+        { "BEH_Lima_GererLCAR", { "done_BEH_Lima_GererLCAR" } },
+        { "BEH_Lima_GererLR", { "done_BEH_Lima_GererLR" } },
+        { "BEH_Lima_Pion_INF_GererLIA", { "done_BEH_Lima_Pion_INF_GererLIA" } },
+        { "BEH_Dep_ProgressionSur", { "done_BEH_Dep_ProgressionSur" } },
     },
 
     create = function( self )
@@ -47,13 +49,13 @@ node "BEH_Mission_Pion_INF_Freiner"
             do
                                 do
                     DEC_Warning( eRC_MissionImpossible )
-                                        self.params.__returnValue = eFinMission
+                                        self:SendFeedback( eFinMission )
                     Halt( self )
                     do return end
 
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -96,7 +98,7 @@ elseif switch_1 == eSurveiller then
                         do
                             self.eAction = eActionEnCours
                                                         do
-                                                                self.params.__returnValue = eFinMission
+                                                                self:SendFeedback( eFinMission )
                                 do return end
 
                             end
@@ -125,7 +127,8 @@ elseif switch_1 == eSurveiller then
 ]]Activate( self.activations.BEH_Lima_GererLCAR, 2, { not DEC_Agent_AutomateEstEmbraye(), myself.bFreiner_EnTete_, } )
                     Activate( self.activations.BEH_Lima_GererLR, 2, {} )
                     Activate( self.activations.BEH_Lima_Pion_INF_GererLIA, 2, {} )
-                    Activate( self.activations.BEH_Dep_ProgressionSur, 1, setmetatable( { self.mission.itineraire_, eProgressionDirect, eTypeItiRepli, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_ProgressionSur, 1, { self.mission.itineraire_, eProgressionDirect, eTypeItiRepli, } )
+self.done_BEH_Dep_ProgressionSur = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                                 cases_switch_1[3] = true
 
@@ -133,7 +136,7 @@ elseif switch_1 == eSurveiller then
                                 end
             end
 
-                self.params.__returnValue = self.ePhase
+                self:SendFeedback( self.ePhase )
         do return end
 
     end,
@@ -149,10 +152,12 @@ elseif switch_1 == eSurveiller then
 
 node "BEH_Dep_Pion_INF_Freiner_Decrocher"
 {
+    feedbacks = { { { "done_BEH_Dep_Pion_INF_Freiner_Decrocher" }, "BEH_Dep_Pion_INF_Freiner_Decrocher" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Pion_INF_Freiner_Decrocher, {value} ) end,
     activations =
     {
-        { "ACT_Tir_INF_FumigeneVersEni", {} },
-        { "BEH_MOT_Pion_INF_Debarquer", {} },
+        { "ACT_Tir_INF_FumigeneVersEni", { "done_ACT_Tir_INF_FumigeneVersEni" } },
+        { "BEH_MOT_Pion_INF_Debarquer", { "done_BEH_MOT_Pion_INF_Debarquer" } },
     },
 
     create = function( self )
@@ -186,7 +191,7 @@ node "BEH_Dep_Pion_INF_Freiner_Decrocher"
 ]]        end
 
         if( DEC_Agent_EstEmbarque() ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end

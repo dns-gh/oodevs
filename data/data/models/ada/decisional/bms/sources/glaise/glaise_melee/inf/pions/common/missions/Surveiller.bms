@@ -15,23 +15,25 @@ includedFiles["sources/glaise/glaise_melee/inf/pions/common/missions/Surveiller.
 
 node "BEH_Mission_Pion_INF_SurveillerSecteur"
 {
+    feedbacks = { { { "done_BEH_Mission_Pion_INF_SurveillerSecteur" }, "BEH_Mission_Pion_INF_SurveillerSecteur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Pion_INF_SurveillerSecteur, {value} ) end,
     activations =
     {
-        { "BEH_Lima_Pion_RejoindreFuseau_EnAttente", {} },
-        { "BEH_Mot_Pion_Embarquer", {} },
-        { "BEH_Dep_Pion_INF_MiseEnPlace_Mission", {} },
-        { "ACT_Dep_PasserEnModeFurtif", {} },
-        { "BEH_Progression_Pion_INF_AborderObjectif", {} },
-        { "ACT_RC", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Obj_RejoindreEmbossements", {} },
-        { "BEH_MOT_Pion_INF_Debarquer", {} },
-        { "ACT_Misc_Pion_Ambiance", {} },
-        { "ACT_Misc_Pion_DelaiInstallation", {} },
-        { "BEH_MOT_DesactiveSauvegarde", {} },
-        { "ACT_Obs_EtablirVisionFaceADir", {} },
-        { "ACT_Dep_Pion_INF_ActiverFurtivite", {} },
-        { "ACT_Obs_ObserverZone", {} },
+        { "BEH_Lima_Pion_RejoindreFuseau_EnAttente", { "done_BEH_Lima_Pion_RejoindreFuseau_EnAttente" } },
+        { "BEH_Mot_Pion_Embarquer", { "done_BEH_Mot_Pion_Embarquer" } },
+        { "BEH_Dep_Pion_INF_MiseEnPlace_Mission", { "done_BEH_Dep_Pion_INF_MiseEnPlace_Mission" } },
+        { "ACT_Dep_PasserEnModeFurtif", { "done_ACT_Dep_PasserEnModeFurtif" } },
+        { "BEH_Progression_Pion_INF_AborderObjectif", { "done_BEH_Progression_Pion_INF_AborderObjectif" } },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Obj_RejoindreEmbossements", { "done_BEH_Obj_RejoindreEmbossements" } },
+        { "BEH_MOT_Pion_INF_Debarquer", { "done_BEH_MOT_Pion_INF_Debarquer" } },
+        { "ACT_Misc_Pion_Ambiance", { "done_ACT_Misc_Pion_Ambiance" } },
+        { "ACT_Misc_Pion_DelaiInstallation", { "done_ACT_Misc_Pion_DelaiInstallation" } },
+        { "BEH_MOT_DesactiveSauvegarde", { "done_BEH_MOT_DesactiveSauvegarde" } },
+        { "ACT_Obs_EtablirVisionFaceADir", { "done_ACT_Obs_EtablirVisionFaceADir" } },
+        { "ACT_Dep_Pion_INF_ActiverFurtivite", { "done_ACT_Dep_Pion_INF_ActiverFurtivite" } },
+        { "ACT_Obs_ObserverZone", { "done_ACT_Obs_ObserverZone" } },
     },
 
     create = function( self )
@@ -66,7 +68,7 @@ node "BEH_Mission_Pion_INF_SurveillerSecteur"
                             self.eAction = eActionEnCours
                                                         do
                                 self.ePhase = eAborderObjectif
-                                                                self.params.__returnValue = self.ePhase
+                                                                self:SendFeedback( self.ePhase )
                                 do return end
 
                             end
@@ -76,7 +78,8 @@ node "BEH_Mission_Pion_INF_SurveillerSecteur"
 
                     Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
                     --[[// Rejoins une position d'observation de la position a Barrer
-]]Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, setmetatable( { M_TEMPS_PREPARATION_MISSION(), self.mission.positionInstallation_, false, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+]]Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, { M_TEMPS_PREPARATION_MISSION(), self.mission.positionInstallation_, false, } )
+self.done_BEH_Dep_Pion_INF_MiseEnPlace_Mission = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eAborderObjectif then
@@ -91,7 +94,8 @@ elseif switch_1 == eAborderObjectif then
                         end
                     else
 do
-                            Activate( self.activations.BEH_Progression_Pion_INF_AborderObjectif, 1, setmetatable( { self.ptMission, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                            Activate( self.activations.BEH_Progression_Pion_INF_AborderObjectif, 1, { self.ptMission, } )
+self.done_BEH_Progression_Pion_INF_AborderObjectif = function( self, _, v ) self.eAction = v[1] end
                                                         do return end
 
                         end
@@ -112,7 +116,7 @@ do
                                                         do
                                 Activate( self.activations.ACT_RC, 1, { eRC_FinInstallation, } )
                                 self.ePhase = eSurveiller
-                                                                self.params.__returnValue = self.ePhase
+                                                                self:SendFeedback( self.ePhase )
                                 do return end
 
                             end
@@ -120,7 +124,8 @@ do
                         end
                     end
 
-                    Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, setmetatable( { eNiveauInstallation_PosteAmenage, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, { eNiveauInstallation_PosteAmenage, } )
+self.done_ACT_Misc_Pion_DelaiInstallation = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                                 cases_switch_1[3] = true
 elseif switch_1 == eSurveiller then
@@ -146,7 +151,7 @@ elseif switch_1 == eSurveiller then
                                 end
             end
 
-                self.params.__returnValue = self.ePhase
+                self:SendFeedback( self.ePhase )
         do return end
 
     end,
@@ -155,10 +160,12 @@ elseif switch_1 == eSurveiller then
 
 node "BEH_Eni_Pion_INF_SurveillerSecteur"
 {
+    feedbacks = { { { "done_BEH_Eni_Pion_INF_SurveillerSecteur" }, "BEH_Eni_Pion_INF_SurveillerSecteur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Pion_INF_SurveillerSecteur, {value} ) end,
     activations =
     {
-        { "ACT_RC", {} },
-        { "BEH_Manoeuvre_RompreContact", {} },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "BEH_Manoeuvre_RompreContact", { "done_BEH_Manoeuvre_RompreContact" } },
     },
 
     create = function( self )

@@ -14,14 +14,16 @@ includedFiles["sources/melee/inf/automates/common/missions/controler/Controler C
 ]]
 node "BEH_Situation_Automate_INF_Controler"
 {
+    feedbacks = { { { "done_BEH_Situation_Automate_INF_Controler" }, "BEH_Situation_Automate_INF_Controler" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Situation_Automate_INF_Controler, {value} ) end,
     activations =
     {
-        { "BEH_Dispositif_Automate_INF_GererLesPionsDetruits", {} },
-        { "BEH_Dispositif_Automate_INF_GererReleve", {} },
-        { "BEH_Conduite_Automate_INF_GererAppuis_INF", {} },
-        { "BEH_Conduite_Automate_INF_GererAppui_Mortier", {} },
-        { "BEH_Conduite_Automate_INF_GererAppuis_ABC", {} },
-        { "BEH_Situation_Automate_INF_Controler_Reduire", {} },
+        { "BEH_Dispositif_Automate_INF_GererLesPionsDetruits", { "done_BEH_Dispositif_Automate_INF_GererLesPionsDetruits" } },
+        { "BEH_Dispositif_Automate_INF_GererReleve", { "done_BEH_Dispositif_Automate_INF_GererReleve" } },
+        { "BEH_Conduite_Automate_INF_GererAppuis_INF", { "done_BEH_Conduite_Automate_INF_GererAppuis_INF" } },
+        { "BEH_Conduite_Automate_INF_GererAppui_Mortier", { "done_BEH_Conduite_Automate_INF_GererAppui_Mortier" } },
+        { "BEH_Conduite_Automate_INF_GererAppuis_ABC", { "done_BEH_Conduite_Automate_INF_GererAppuis_ABC" } },
+        { "BEH_Situation_Automate_INF_Controler_Reduire", { "done_BEH_Situation_Automate_INF_Controler_Reduire" } },
     },
 
     create = function( self )
@@ -52,9 +54,11 @@ node "BEH_Situation_Automate_INF_Controler"
 
 node "BEH_Situation_Automate_INF_Controler_Reduire"
 {
+    feedbacks = { { { "done_BEH_Situation_Automate_INF_Controler_Reduire" }, "BEH_Situation_Automate_INF_Controler_Reduire" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Situation_Automate_INF_Controler_Reduire, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_INF_GererReductionSur", {} },
+        { "BEH_Conduite_Automate_INF_GererReductionSur", { "done_BEH_Conduite_Automate_INF_GererReductionSur" } },
     },
 
     create = function( self )
@@ -111,6 +115,8 @@ do
 
 node "BEH_Conduite_Automate_INF_GererReductionSur"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_INF_GererReductionSur" }, "BEH_Conduite_Automate_INF_GererReductionSur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_INF_GererReductionSur, {value} ) end,
     instances =
     {
         boost = 2,
@@ -119,7 +125,7 @@ node "BEH_Conduite_Automate_INF_GererReductionSur"
 
     activations =
     {
-        { "BEH_Mission_Automate_INF_AssignerA_Reduire", {} },
+        { "BEH_Mission_Automate_INF_AssignerA_Reduire", { "done_BEH_Mission_Automate_INF_AssignerA_Reduire" } },
     },
 
     create = function( self )

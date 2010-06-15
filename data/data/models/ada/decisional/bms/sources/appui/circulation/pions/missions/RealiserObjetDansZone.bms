@@ -9,13 +9,15 @@ includedFiles["sources/appui/circulation/pions/missions/RealiserObjetDansZone.bm
 ]]--[[// *****************************************************************************
 ]]node "BEH_Pion_CIRCU_RealiserObjetDansZone"
 {
+    feedbacks = { { { "done_BEH_Pion_CIRCU_RealiserObjetDansZone" }, "BEH_Pion_CIRCU_RealiserObjetDansZone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pion_CIRCU_RealiserObjetDansZone, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_ProgressionVers", {} },
-        { "ACT_Obj_Pion_LOG_RealiserTravaux", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
+        { "ACT_Obj_Pion_LOG_RealiserTravaux", { "done_ACT_Obj_Pion_LOG_RealiserTravaux" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "done_BEH_Dep_SePosterFaceADirectionDangereuse" } },
     },
 
     create = function( self )
@@ -30,7 +32,8 @@ includedFiles["sources/appui/circulation/pions/missions/RealiserObjetDansZone.bm
         self.ePhase = self.ePhase or ePreparerMission
         self.positionInstallation = self.positionInstallation or S_Geometrie_BarycentreZone( self._namedParams.zone )
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
                 self.ePhase = eFinMission
@@ -66,7 +69,8 @@ elseif switch_1 == eProgresser then
                         end
                     end
 
-                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.positionInstallation, eProgressionDefaut, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatDefaut = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.positionInstallation, eProgressionDefaut, eTypeItiMouvement, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtatDefaut = v[1] end
                     _continue = false
                 --[[// Realisation des travaux
 ]]                cases_switch_1[2] = true
@@ -90,13 +94,13 @@ elseif switch_1 == eRealiserTravaux then
                                     DEC_DetruireObjetSansDelais( myself.objMisEnCours_ )
                                 end
 
-                                                                self.params.__returnValue = eActionImpossible
+                                                                self:SendFeedback( eActionImpossible )
                                 Halt( self )
                                 do return end
 
                             end
 
-                                                        self.params.__returnValue = eActionImpossible
+                                                        self:SendFeedback( eActionImpossible )
                             Halt( self )
                             do return end
 
@@ -104,7 +108,8 @@ elseif switch_1 == eRealiserTravaux then
 --[[// using actuator deplacement
 ]]                    end
 
-                    Activate( self.activations.ACT_Obj_Pion_LOG_RealiserTravaux, 1, setmetatable( { self._namedParams.zone, self._namedParams.eTypeObjet, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.ACT_Obj_Pion_LOG_RealiserTravaux, 1, { self._namedParams.zone, self._namedParams.eTypeObjet, } )
+self.done_ACT_Obj_Pion_LOG_RealiserTravaux = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                 --[[// Fin mission sur ordre
 ]]                cases_switch_1[3] = true

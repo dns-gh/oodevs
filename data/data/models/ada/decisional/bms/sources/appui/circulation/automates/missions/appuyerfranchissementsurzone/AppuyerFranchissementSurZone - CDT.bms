@@ -9,6 +9,8 @@ includedFiles["sources/appui/circulation/automates/missions/appuyerfranchissemen
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_LOG_AppuyerFranchissementDansZone"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_LOG_AppuyerFranchissementDansZone" }, "MIS_Automate_CDT_LOG_AppuyerFranchissementDansZone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_LOG_AppuyerFranchissementDansZone, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission

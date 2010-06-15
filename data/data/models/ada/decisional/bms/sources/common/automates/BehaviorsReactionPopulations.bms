@@ -12,9 +12,11 @@ include "Common/Automates/Behaviors/Behaviors - POP - ROE.bms"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Default_Automate_ReactionPopulations"
 {
+    feedbacks = { { { "done_BEH_Default_Automate_ReactionPopulations" }, "BEH_Default_Automate_ReactionPopulations" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Default_Automate_ReactionPopulations, {value} ) end,
     activations =
     {
-        { "BEH_ROE_Automate_RecevoirOrdreInopinePopulation", {} },
+        { "BEH_ROE_Automate_RecevoirOrdreInopinePopulation", { "done_BEH_ROE_Automate_RecevoirOrdreInopinePopulation" } },
     },
 
     create = function( self )

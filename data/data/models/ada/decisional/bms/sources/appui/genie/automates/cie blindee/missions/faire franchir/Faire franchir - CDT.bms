@@ -12,14 +12,16 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_GEN_FaireFranchir"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_GEN_FaireFranchir" }, "MIS_Automate_CDT_GEN_FaireFranchir" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_GEN_FaireFranchir, {value} ) end,
     activations =
     {
-        { "BEH_Misc_Automate_GEN_CDT_GererFinMission", {} },
-        { "BEH_Conduite_Automate_GEN_FaireFranchir_OrdresDeConduite", {} },
-        { "BEH_Misc_Automate_GEN_CDT_GererReconnaissanceDesSites", {} },
-        { "BEH_Misc_Automate_GEN_CDT_GererExploitation", {} },
-        { "BEH_Misc_Automate_GEN_CDT_GererRenforcements", {} },
-        { "BEH_Misc_Automate_GEN_CDT_GererVariantement", {} },
+        { "BEH_Misc_Automate_GEN_CDT_GererFinMission", { "done_BEH_Misc_Automate_GEN_CDT_GererFinMission" } },
+        { "BEH_Conduite_Automate_GEN_FaireFranchir_OrdresDeConduite", { "done_BEH_Conduite_Automate_GEN_FaireFranchir_OrdresDeConduite" } },
+        { "BEH_Misc_Automate_GEN_CDT_GererReconnaissanceDesSites", { "done_BEH_Misc_Automate_GEN_CDT_GererReconnaissanceDesSites" } },
+        { "BEH_Misc_Automate_GEN_CDT_GererExploitation", { "done_BEH_Misc_Automate_GEN_CDT_GererExploitation" } },
+        { "BEH_Misc_Automate_GEN_CDT_GererRenforcements", { "done_BEH_Misc_Automate_GEN_CDT_GererRenforcements" } },
+        { "BEH_Misc_Automate_GEN_CDT_GererVariantement", { "done_BEH_Misc_Automate_GEN_CDT_GererVariantement" } },
     },
 
     create = function( self )
@@ -97,7 +99,8 @@ include "bit.lua"
             end
         end
 
-        Activate( self.activations.BEH_Conduite_Automate_GEN_FaireFranchir_OrdresDeConduite, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreConduite = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Conduite_Automate_GEN_FaireFranchir_OrdresDeConduite, 1, {} )
+self.done_BEH_Conduite_Automate_GEN_FaireFranchir_OrdresDeConduite = function( self, _, v ) self.eEtatOrdreConduite = v[1] end
         --[[//-------------------------------------------------------------------------
 ]]--[[// Gestion reconnaissance
 ]]--[[// Gestion exploitation
@@ -124,9 +127,11 @@ include "bit.lua"
 
 node "BEH_Misc_Automate_GEN_CDT_GererReconnaissanceDesSites"
 {
+    feedbacks = { { { "done_BEH_Misc_Automate_GEN_CDT_GererReconnaissanceDesSites" }, "BEH_Misc_Automate_GEN_CDT_GererReconnaissanceDesSites" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Misc_Automate_GEN_CDT_GererReconnaissanceDesSites, {value} ) end,
     activations =
     {
-        { "BEH_Misc_Automate_GEN_CDT_FaireReconnaitreSiteA", {} },
+        { "BEH_Misc_Automate_GEN_CDT_FaireReconnaitreSiteA", { "done_BEH_Misc_Automate_GEN_CDT_FaireReconnaitreSiteA" } },
     },
 
     create = function( self )
@@ -176,9 +181,11 @@ do
 
 node "BEH_Misc_Automate_GEN_CDT_FaireReconnaitreSiteA"
 {
+    feedbacks = { { { "done_BEH_Misc_Automate_GEN_CDT_FaireReconnaitreSiteA" }, "BEH_Misc_Automate_GEN_CDT_FaireReconnaitreSiteA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Misc_Automate_GEN_CDT_FaireReconnaitreSiteA, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_GEN_AssignerReconnaitreSiteA", {} },
+        { "BEH_Mission_Automate_GEN_AssignerReconnaitreSiteA", { "done_BEH_Mission_Automate_GEN_AssignerReconnaitreSiteA" } },
     },
 
     create = function( self )
@@ -217,9 +224,11 @@ node "BEH_Misc_Automate_GEN_CDT_FaireReconnaitreSiteA"
 
 node "BEH_Misc_Automate_GEN_CDT_GererExploitation"
 {
+    feedbacks = { { { "done_BEH_Misc_Automate_GEN_CDT_GererExploitation" }, "BEH_Misc_Automate_GEN_CDT_GererExploitation" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Misc_Automate_GEN_CDT_GererExploitation, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_GEN_AssignerEquiperExploiterA", {} },
+        { "BEH_Mission_Automate_GEN_AssignerEquiperExploiterA", { "done_BEH_Mission_Automate_GEN_AssignerEquiperExploiterA" } },
     },
 
     create = function( self )
@@ -268,10 +277,12 @@ do
 
 node "BEH_Misc_Automate_GEN_CDT_GererRenforcements"
 {
+    feedbacks = { { { "done_BEH_Misc_Automate_GEN_CDT_GererRenforcements" }, "BEH_Misc_Automate_GEN_CDT_GererRenforcements" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Misc_Automate_GEN_CDT_GererRenforcements, {value} ) end,
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "BEH_Misc_Automate_GEN_CDT_GererRenforcementsPour", {} },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "BEH_Misc_Automate_GEN_CDT_GererRenforcementsPour", { "done_BEH_Misc_Automate_GEN_CDT_GererRenforcementsPour" } },
     },
 
     create = function( self )
@@ -339,10 +350,12 @@ elseif switch_1 == eAttendre then
 
 node "BEH_Misc_Automate_GEN_CDT_GererRenforcementsPour"
 {
+    feedbacks = { { { "done_BEH_Misc_Automate_GEN_CDT_GererRenforcementsPour" }, "BEH_Misc_Automate_GEN_CDT_GererRenforcementsPour" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Misc_Automate_GEN_CDT_GererRenforcementsPour, {value} ) end,
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "BEH_Mission_Automate_GEN_AssignerRenforcer", {} },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "BEH_Mission_Automate_GEN_AssignerRenforcer", { "done_BEH_Mission_Automate_GEN_AssignerRenforcer" } },
     },
 
     create = function( self )
@@ -465,9 +478,11 @@ node "BEH_Misc_Automate_GEN_CDT_GererRenforcementsPour"
 
 node "BEH_Mission_Automate_GEN_AssignerRenforcer"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_GEN_AssignerRenforcer" }, "BEH_Mission_Automate_GEN_AssignerRenforcer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_GEN_AssignerRenforcer, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_GEN_AssignerRenforcerA", {} },
+        { "BEH_Mission_Automate_GEN_AssignerRenforcerA", { "done_BEH_Mission_Automate_GEN_AssignerRenforcerA" } },
     },
 
     create = function( self )
@@ -493,9 +508,11 @@ node "BEH_Mission_Automate_GEN_AssignerRenforcer"
 
 node "BEH_Misc_Automate_GEN_CDT_GererUnitesDeuxiemeEchelon"
 {
+    feedbacks = { { { "done_BEH_Misc_Automate_GEN_CDT_GererUnitesDeuxiemeEchelon" }, "BEH_Misc_Automate_GEN_CDT_GererUnitesDeuxiemeEchelon" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Misc_Automate_GEN_CDT_GererUnitesDeuxiemeEchelon, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_AssignerSuivreA", {} },
+        { "BEH_Mission_Automate_AssignerSuivreA", { "done_BEH_Mission_Automate_AssignerSuivreA" } },
     },
 
     create = function( self )
@@ -543,10 +560,12 @@ do
 
 node "BEH_Misc_Automate_GEN_CDT_GererFinMission"
 {
+    feedbacks = { { { "done_BEH_Misc_Automate_GEN_CDT_GererFinMission" }, "BEH_Misc_Automate_GEN_CDT_GererFinMission" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Misc_Automate_GEN_CDT_GererFinMission, {value} ) end,
     activations =
     {
-        { "ACT_Ordre_Automate_Interrompre", {} },
-        { "BEH_Mission_Automate_AssignerFaireMouvementA", {} },
+        { "ACT_Ordre_Automate_Interrompre", { "done_ACT_Ordre_Automate_Interrompre" } },
+        { "BEH_Mission_Automate_AssignerFaireMouvementA", { "done_BEH_Mission_Automate_AssignerFaireMouvementA" } },
     },
 
     create = function( self )
@@ -599,11 +618,13 @@ node "BEH_Misc_Automate_GEN_CDT_GererFinMission"
 
 node "BEH_Conduite_Automate_GEN_FaireFranchir_OrdresDeConduite"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_GEN_FaireFranchir_OrdresDeConduite" }, "BEH_Conduite_Automate_GEN_FaireFranchir_OrdresDeConduite" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_GEN_FaireFranchir_OrdresDeConduite, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Automate_Attendre_", {} },
-        { "BEH_Ordre_Automate_Poursuivre_", {} },
-        { "ACT_Ordre_Suppression", {} },
+        { "BEH_Ordre_Automate_Attendre_", { "done_BEH_Ordre_Automate_Attendre_" } },
+        { "BEH_Ordre_Automate_Poursuivre_", { "done_BEH_Ordre_Automate_Poursuivre_" } },
+        { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
     },
 
     create = function( self )
@@ -649,7 +670,7 @@ elseif switch_1 == "Rep_OrderConduite_Poursuivre" then
         end
 
         if( bOrdreConduiteInterrompre ) then
-            self.params.__returnValue = eActionHalt
+            self:SendFeedback( eActionHalt )
             do return end
         end
 
@@ -665,10 +686,12 @@ elseif switch_1 == "Rep_OrderConduite_Poursuivre" then
 
 node "BEH_Misc_Automate_GEN_CDT_GererVariantement"
 {
+    feedbacks = { { { "done_BEH_Misc_Automate_GEN_CDT_GererVariantement" }, "BEH_Misc_Automate_GEN_CDT_GererVariantement" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Misc_Automate_GEN_CDT_GererVariantement, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Automate_GEN_CDT_Varianter", {} },
-        { "ACT_Ordre_Suppression", {} },
+        { "BEH_Ordre_Automate_GEN_CDT_Varianter", { "done_BEH_Ordre_Automate_GEN_CDT_Varianter" } },
+        { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
     },
 
     create = function( self )
@@ -710,9 +733,11 @@ do
 
 node "BEH_Ordre_Automate_GEN_CDT_Varianter"
 {
+    feedbacks = { { { "done_BEH_Ordre_Automate_GEN_CDT_Varianter" }, "BEH_Ordre_Automate_GEN_CDT_Varianter" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Ordre_Automate_GEN_CDT_Varianter, {value} ) end,
     activations =
     {
-        { "BEH_Misc_Automate_GEN_CDT_FaireReconnaitreSiteA", {} },
+        { "BEH_Misc_Automate_GEN_CDT_FaireReconnaitreSiteA", { "done_BEH_Misc_Automate_GEN_CDT_FaireReconnaitreSiteA" } },
     },
 
     create = function( self )

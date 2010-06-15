@@ -16,6 +16,8 @@ includedFiles["sources/emergency/automates/common/missions/Actions - Medo.bms"] 
 ]]--[[//=============================================================================
 ]]node "ACT_Mission_Automate_Emergency_AssignerA_EvacuateArea"
 {
+    feedbacks = { { { "done_ACT_Mission_Automate_Emergency_AssignerA_EvacuateArea" }, "ACT_Mission_Automate_Emergency_AssignerA_EvacuateArea" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Mission_Automate_Emergency_AssignerA_EvacuateArea, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -54,7 +56,7 @@ elseif switch_1 == ePhase_CDT then
         end
 
         if( self.missionPion == nil ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             do return end
         end
 
@@ -64,7 +66,7 @@ elseif switch_1 == ePhase_CDT then
                 DEC_Trace( "Issue mission order 'EvacuateArea' to " .. DEC_GetSzName( self._namedParams.pPion ) )
             end
         else
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             do return end
         end
 
@@ -78,7 +80,7 @@ elseif switch_1 == ePhase_CDT then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
 
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         do return end
 
     end,
@@ -94,6 +96,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// ****************************************************************************
 ]]node "ACT_Mission_Automate_Emergency_AssignerA_Alert"
 {
+    feedbacks = { { { "done_ACT_Mission_Automate_Emergency_AssignerA_Alert" }, "ACT_Mission_Automate_Emergency_AssignerA_Alert" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Mission_Automate_Emergency_AssignerA_Alert, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -108,7 +112,7 @@ elseif switch_1 == ePhase_CDT then
 ]]if( ModuleBegins() ) then
             DEC_Trace( "Assigne mission 'Alert' a " .. DEC_GetSzName( self._namedParams.pion ) )
         else
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             do return end
         end
 
@@ -142,7 +146,7 @@ elseif switch_1 == ePhase_CDT then
         end
 
         if( self.missionPion == nil ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             do return end
         end
 
@@ -162,7 +166,7 @@ elseif switch_1 == ePhase_CDT then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
 
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         do return end
 
     end,

@@ -12,13 +12,15 @@ include "bit.lua"
 ]]--[[// ******************************************************************************
 ]]node "MIS_Pion_GEN_OuvrirItineraire"
 {
+    feedbacks = { { { "done_MIS_Pion_GEN_OuvrirItineraire" }, "MIS_Pion_GEN_OuvrirItineraire" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_GEN_OuvrirItineraire, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_ProgressionSur", {} },
-        { "BEH_Dep_GEN_Ouvrir_ReagirFaceAObstacles", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Dep_ProgressionSur", { "done_BEH_Dep_ProgressionSur" } },
+        { "BEH_Dep_GEN_Ouvrir_ReagirFaceAObstacles", { "done_BEH_Dep_GEN_Ouvrir_ReagirFaceAObstacles" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "done_BEH_Dep_SePosterFaceADirectionDangereuse" } },
     },
 
     create = function( self )
@@ -42,7 +44,8 @@ include "bit.lua"
 ]]        end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
                 self.ePhaseMission = eFinMission
@@ -71,7 +74,8 @@ include "bit.lua"
                     end
 
                         if _continue then
-                        Activate( self.activations.BEH_Dep_ProgressionSur, 1, setmetatable( { self._namedParams.mis.itineraire_, eProgressionReco, eTypeItiDeminage, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                        Activate( self.activations.BEH_Dep_ProgressionSur, 1, { self._namedParams.mis.itineraire_, eProgressionReco, eTypeItiDeminage, } )
+self.done_BEH_Dep_ProgressionSur = function( self, _, v ) self.eEtat = v[1] end
                         --[[// Nettoyage obstacle si possible
 ]]Activate( self.activations.BEH_Dep_GEN_Ouvrir_ReagirFaceAObstacles, 2, {} )
                         _continue = false
@@ -98,9 +102,11 @@ elseif switch_1 == eFinMission then
 
 node "BEH_Dep_GEN_Ouvrir_ReagirFaceAObstacles"
 {
+    feedbacks = { { { "done_BEH_Dep_GEN_Ouvrir_ReagirFaceAObstacles" }, "BEH_Dep_GEN_Ouvrir_ReagirFaceAObstacles" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_GEN_Ouvrir_ReagirFaceAObstacles, {value} ) end,
     activations =
     {
-        { "BEH_Objet_Pion_GEN_BrecherObstacle", {} },
+        { "BEH_Objet_Pion_GEN_BrecherObstacle", { "done_BEH_Objet_Pion_GEN_BrecherObstacle" } },
     },
 
     create = function( self )
@@ -130,10 +136,12 @@ node "BEH_Dep_GEN_Ouvrir_ReagirFaceAObstacles"
 
 node "BEH_Objet_Pion_GEN_BrecherObstacle"
 {
+    feedbacks = { { { "done_BEH_Objet_Pion_GEN_BrecherObstacle" }, "BEH_Objet_Pion_GEN_BrecherObstacle" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Objet_Pion_GEN_BrecherObstacle, {value} ) end,
     activations =
     {
-        { "BEH_Objet_Pion_GEN_ReduireObstacle", {} },
-        { "BEH_Objet_Pion_GEN_Brecher", {} },
+        { "BEH_Objet_Pion_GEN_ReduireObstacle", { "done_BEH_Objet_Pion_GEN_ReduireObstacle" } },
+        { "BEH_Objet_Pion_GEN_Brecher", { "done_BEH_Objet_Pion_GEN_Brecher" } },
     },
 
     create = function( self )
@@ -164,11 +172,13 @@ node "BEH_Objet_Pion_GEN_BrecherObstacle"
 
 node "BEH_Objet_Pion_GEN_Brecher"
 {
+    feedbacks = { { { "done_BEH_Objet_Pion_GEN_Brecher" }, "BEH_Objet_Pion_GEN_Brecher" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Objet_Pion_GEN_Brecher, {value} ) end,
     activations =
     {
-        { "ACT_Obj_Pion_GEN_CreerContournement", {} },
-        { "ACT_Dep_SePoster", {} },
-        { "ACT_Pion_GEN_AttendreRenforcementPour", {} },
+        { "ACT_Obj_Pion_GEN_CreerContournement", { "done_ACT_Obj_Pion_GEN_CreerContournement" } },
+        { "ACT_Dep_SePoster", { "done_ACT_Dep_SePoster" } },
+        { "ACT_Pion_GEN_AttendreRenforcementPour", { "done_ACT_Pion_GEN_AttendreRenforcementPour" } },
     },
 
     create = function( self )
@@ -220,6 +230,8 @@ do
 
 node "ACT_Pion_GEN_AttendreRenforcementPour"
 {
+    feedbacks = { { { "done_ACT_Pion_GEN_AttendreRenforcementPour" }, "ACT_Pion_GEN_AttendreRenforcementPour" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Pion_GEN_AttendreRenforcementPour, {value} ) end,
     instances =
     {
         max = 1--[[// tres important

@@ -9,9 +9,11 @@ includedFiles["sources/glaise/glaise_appui/nbc/automates/son reco/missions/recon
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_NBC_ReconnaitreUnAxe"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_NBC_ReconnaitreUnAxe" }, "MIS_Automate_CDT_NBC_ReconnaitreUnAxe" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_NBC_ReconnaitreUnAxe, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_NBC_ReconnaitreUnAxe", {} },
+        { "BEH_Conduite_Automate_NBC_ReconnaitreUnAxe", { "done_BEH_Conduite_Automate_NBC_ReconnaitreUnAxe" } },
     },
 
     create = function( self )

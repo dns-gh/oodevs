@@ -15,13 +15,15 @@ includedFiles["sources/melee/inf/automates/common/missions/romprecontact/RompreC
 
 node "BEH_Conduite_Automate_INF_RompreContact"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_INF_RompreContact" }, "BEH_Conduite_Automate_INF_RompreContact" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_INF_RompreContact, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_INF_DesactiveSauvegarde", {} },
-        { "BEH_CoordDep_Automate_INF_Retrograde", {} },
-        { "BEH_Conduite_Automate_INF_GererAppuis_INF", {} },
-        { "BEH_Conduite_Automate_INF_GererAppui_Mortier", {} },
-        { "BEH_Conduite_Automate_INF_GererAppuis_ABC", {} },
+        { "BEH_Conduite_Automate_INF_DesactiveSauvegarde", { "done_BEH_Conduite_Automate_INF_DesactiveSauvegarde" } },
+        { "BEH_CoordDep_Automate_INF_Retrograde", { "done_BEH_CoordDep_Automate_INF_Retrograde" } },
+        { "BEH_Conduite_Automate_INF_GererAppuis_INF", { "done_BEH_Conduite_Automate_INF_GererAppuis_INF" } },
+        { "BEH_Conduite_Automate_INF_GererAppui_Mortier", { "done_BEH_Conduite_Automate_INF_GererAppui_Mortier" } },
+        { "BEH_Conduite_Automate_INF_GererAppuis_ABC", { "done_BEH_Conduite_Automate_INF_GererAppuis_ABC" } },
     },
 
     create = function( self )

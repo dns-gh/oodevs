@@ -9,6 +9,8 @@ includedFiles["sources/glaise/glaise_common/pions/behaviors/Behaviors - POP - Fe
 ]]--[[// *****************************************************************************
 ]]node "BEH_AttaqueDePopulation"
 {
+    feedbacks = { { { "done_BEH_AttaqueDePopulation" }, "BEH_AttaqueDePopulation" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_AttaqueDePopulation, {value} ) end,
     instances =
     {
         max = 1,
@@ -16,8 +18,8 @@ includedFiles["sources/glaise/glaise_common/pions/behaviors/Behaviors - POP - Fe
 
     activations =
     {
-        { "ACT_Misc_Delai", {} },
-        { "ACT_RiposteSurPopulation", {} },
+        { "ACT_Misc_Delai", { "done_ACT_Misc_Delai" } },
+        { "ACT_RiposteSurPopulation", { "done_ACT_RiposteSurPopulation" } },
     },
 
     create = function( self )
@@ -42,7 +44,8 @@ includedFiles["sources/glaise/glaise_common/pions/behaviors/Behaviors - POP - Fe
         --[[//une altercation dure 2 minutes     rDelai  =  rDelai  + Randf( 0, ( rDelai  / 1.5) ); //Pour que les pions ne tirent pas tous ensemble
 ]]rDelai = 2.0
         if( self.eEtatDelai == eActionEnCours ) then
-            Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { BEH_AttaqueDePopulation, rDelai, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatDelai = v else rawset( t, k, v ) end end } ) )
+            Activate( self.activations.ACT_Misc_Delai, 1, { BEH_AttaqueDePopulation, rDelai, } )
+self.done_ACT_Misc_Delai = function( self, _, v ) self.eEtatDelai = v[1] end
         else
 do
                 --[[//DEC_Trace(  "--->>> Attaque de population ---"  );
@@ -63,6 +66,8 @@ do
 
 node "BEH_RiposteSurPopulation"
 {
+    feedbacks = { { { "done_BEH_RiposteSurPopulation" }, "BEH_RiposteSurPopulation" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_RiposteSurPopulation, {value} ) end,
     instances =
     {
         max = 1,
@@ -70,8 +75,8 @@ node "BEH_RiposteSurPopulation"
 
     activations =
     {
-        { "ACT_Misc_Delai", {} },
-        { "ACT_RiposteSurPopulation", {} },
+        { "ACT_Misc_Delai", { "done_ACT_Misc_Delai" } },
+        { "ACT_RiposteSurPopulation", { "done_ACT_RiposteSurPopulation" } },
     },
 
     create = function( self )
@@ -97,7 +102,8 @@ node "BEH_RiposteSurPopulation"
         --[[//une altercation dure 2 minutes     rDelai  =  rDelai  + Randf( 0, ( rDelai  / 1.5) ); //Pour que les pions ne tirent pas tous ensemble
 ]]rDelai = 2.0
         if( self.eEtatDelai == eActionEnCours ) then
-            Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { BEH_RiposteSurPopulation, rDelai, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatDelai = v else rawset( t, k, v ) end end } ) )
+            Activate( self.activations.ACT_Misc_Delai, 1, { BEH_RiposteSurPopulation, rDelai, } )
+self.done_ACT_Misc_Delai = function( self, _, v ) self.eEtatDelai = v[1] end
         else
 for _,popPrenantAPartie in pairs( lstPops or {} ) do
             local _continue = true

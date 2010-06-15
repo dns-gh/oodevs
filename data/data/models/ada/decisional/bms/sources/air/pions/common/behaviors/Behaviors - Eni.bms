@@ -12,6 +12,8 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Eni_Pion_AIR_FrappeIndirecteSur"
 {
+    feedbacks = { { { "done_BEH_Eni_Pion_AIR_FrappeIndirecteSur" }, "BEH_Eni_Pion_AIR_FrappeIndirecteSur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Pion_AIR_FrappeIndirecteSur, {value} ) end,
     instances =
     {
         max = 1,
@@ -19,7 +21,7 @@ include "bit.lua"
 
     activations =
     {
-        { "ACT_Tir_IndirectSurPosition", {} },
+        { "ACT_Tir_IndirectSurPosition", { "done_ACT_Tir_IndirectSurPosition" } },
     },
 
     create = function( self )
@@ -35,7 +37,7 @@ include "bit.lua"
         --[[// variables persistantes
 ]]        self.eEtatAttaque = self.eEtatAttaque or eActionEnCours
         if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.ennemi ) ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             Halt( self )
             do return end
         end

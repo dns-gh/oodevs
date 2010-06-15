@@ -107,8 +107,7 @@ function S_SelectionnePCEtSubordonnes( unites_ )
     local _continue = true
 do
             local automate = DEC_GetAutomate( x )
-            if( ( x == DEC_Automate_PionPCDeAutomate( automate ) ) 
-			and automate:DEC_Automate_EstEmbraye() ) then
+            if( ( x == DEC_Automate_PionPCDeAutomate( automate ) ) and automate:DEC_Automate_EstEmbraye() ) then
                 do
                     local listePionsAvecPC = DEC_Automate_PionsDeAutomateAvecPC( automate )
                     for _,y in pairs( listePionsAvecPC or {} ) do

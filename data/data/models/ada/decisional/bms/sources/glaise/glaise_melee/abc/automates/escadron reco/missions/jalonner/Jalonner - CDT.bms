@@ -20,9 +20,11 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/escadron reco/missions/
 ]]--[[// ******************************************************************************
 ]]node "MIS_Automate_CDT_ABC_Jalonner"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ABC_Jalonner" }, "MIS_Automate_CDT_ABC_Jalonner" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ABC_Jalonner, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_Jalonner", {} },
+        { "BEH_Conduite_Automate_ABC_Jalonner", { "done_BEH_Conduite_Automate_ABC_Jalonner" } },
     },
 
     create = function( self )

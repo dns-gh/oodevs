@@ -11,6 +11,8 @@ includedFiles["sources/glaise/glaise_common/pions/actions/Actions - Embarquement
 ]]--[[// ****************************************************************************
 ]]node "ACT_Transport_Pion_Embarquer"
 {
+    feedbacks = { { { "done_ACT_Transport_Pion_Embarquer" }, "ACT_Transport_Pion_Embarquer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Transport_Pion_Embarquer, {value} ) end,
     actuators =
     {
         deplacement = 1,
@@ -44,7 +46,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                 or switch_1 == eActionEmbDeb_PasDeTransporteurs then
                     DEC_Trace( "Embarquement : ignore transporteur" )
                     DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -52,7 +54,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                 if cases_switch_1[2] or switch_1 == eActionEmbDeb_Termine then
                     DEC_Message( eRC_EmbarkmentFinished )
                     DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -92,6 +94,8 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
 ]]--[[// ****************************************************************************
 ]]node "ACT_Transport_MaintenirEtat"
 {
+    feedbacks = { { { "done_ACT_Transport_MaintenirEtat" }, "ACT_Transport_MaintenirEtat" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Transport_MaintenirEtat, {value} ) end,
     actuators =
     {
         debarquement = 1,

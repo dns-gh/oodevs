@@ -3,6 +3,8 @@ includedFiles["sources/glaise/glaise_appui/alat/automates/common/missions/detrui
 
 node "MIS_Automate_MRT_ALAT_DetruireNeutraliserDansProfondeur"
 {
+    feedbacks = { { { "done_MIS_Automate_MRT_ALAT_DetruireNeutraliserDansProfondeur" }, "MIS_Automate_MRT_ALAT_DetruireNeutraliserDansProfondeur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_MRT_ALAT_DetruireNeutraliserDansProfondeur, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission
@@ -24,7 +26,7 @@ node "MIS_Automate_MRT_ALAT_DetruireNeutraliserDansProfondeur"
                 if( DIA_IsListEmpty( self.listeDetruire ) ) then
                     do
                         DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
-                                                self.params.__returnValue = eActionImpossible
+                                                self:SendFeedback( eActionImpossible )
                         Halt( self )
                         do return end
 
@@ -35,7 +37,7 @@ node "MIS_Automate_MRT_ALAT_DetruireNeutraliserDansProfondeur"
         end
 
         DEC_MRT_Valide()
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         Halt( self )
         do return end
 

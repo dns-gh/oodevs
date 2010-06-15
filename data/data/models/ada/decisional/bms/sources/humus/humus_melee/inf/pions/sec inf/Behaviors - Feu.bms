@@ -23,6 +23,8 @@ include "bit.lua"
 */]]
 node "BEH_Feu_Pion_VAB_Detruire_SurEni"
 {
+    feedbacks = { { { "done_BEH_Feu_Pion_VAB_Detruire_SurEni" }, "BEH_Feu_Pion_VAB_Detruire_SurEni" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Feu_Pion_VAB_Detruire_SurEni, {value} ) end,
     instances =
     {
         max = 1,
@@ -30,10 +32,10 @@ node "BEH_Feu_Pion_VAB_Detruire_SurEni"
 
     activations =
     {
-        { "ACT_MAJ_EnnemiEnCours", {} },
-        { "BEH_Feu_Pion_INF_TirTactique_Couverture", {} },
-        { "BEH_Feu_Pion_INF_TirCouverture_Fixe", {} },
-        { "BEH_Feu_Pion_INF_ConduireLesFeux_Sur", {} },
+        { "ACT_MAJ_EnnemiEnCours", { "done_ACT_MAJ_EnnemiEnCours" } },
+        { "BEH_Feu_Pion_INF_TirTactique_Couverture", { "done_BEH_Feu_Pion_INF_TirTactique_Couverture" } },
+        { "BEH_Feu_Pion_INF_TirCouverture_Fixe", { "done_BEH_Feu_Pion_INF_TirCouverture_Fixe" } },
+        { "BEH_Feu_Pion_INF_ConduireLesFeux_Sur", { "done_BEH_Feu_Pion_INF_ConduireLesFeux_Sur" } },
     },
 
     create = function( self )
@@ -48,7 +50,7 @@ node "BEH_Feu_Pion_VAB_Detruire_SurEni"
         if( ModuleBegins() ) then
             do
                 if( S_Eni_EstDetruitPhysique( self._namedParams.ksEni ) or ( self._namedParams.bDestructionTactique and DEC_ConnaissanceAgent_EstDetruitTactique( self._namedParams.ksEni ) ) ) then
-                    self.params.__returnValue = eActionEffectuee
+                    self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
                 end
@@ -63,7 +65,7 @@ node "BEH_Feu_Pion_VAB_Detruire_SurEni"
                                 do
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -76,7 +78,7 @@ node "BEH_Feu_Pion_VAB_Detruire_SurEni"
                                 do
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -97,7 +99,7 @@ node "BEH_Feu_Pion_VAB_Detruire_SurEni"
                 DEC_Trace( "Eni detruit" )
                 DEC_RC( eRC_EnnemiDetruit, self._namedParams.ksEni )
                 --[[//-----------------------------------------------------------------------------
-]]                self.params.__returnValue = eActionEffectuee
+]]                self:SendFeedback( eActionEffectuee )
                 Halt( self )
                 do return end
 
@@ -110,7 +112,7 @@ node "BEH_Feu_Pion_VAB_Detruire_SurEni"
             do
                 self.eActionDetruire = eActionEnCours
                 --[[// tir sur l'ennemi
-]]                self.params.__returnValue = eActionEnPause
+]]                self:SendFeedback( eActionEnPause )
                 do return end
 
             end
@@ -121,13 +123,15 @@ node "BEH_Feu_Pion_VAB_Detruire_SurEni"
 ]]if( S_Eni_SuisDetectePar( self._namedParams.ksEni ) and S_Tir_EstAPortee( self._namedParams.ksEni, GetStateVariable( "VE_Agressivite_Tir" ) / 2 ) and not S_Tir_EstAPortee_Debarque( self._namedParams.ksEni, GetStateVariable( "VE_Agressivite_Tir" ) ) ) then
             do
                 --[[// Couverture, si l'ennemi principale se deplace trop
-]]Activate( self.activations.BEH_Feu_Pion_INF_TirTactique_Couverture, 1, setmetatable( { self._namedParams.ksEni, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCouverture = v else rawset( t, k, v ) end end } ) )
+]]Activate( self.activations.BEH_Feu_Pion_INF_TirTactique_Couverture, 1, { self._namedParams.ksEni, } )
+self.done_BEH_Feu_Pion_INF_TirTactique_Couverture = function( self, _, v ) self.eActionCouverture = v[1] end
                 --[[// Si on est a porte des fantassins, on tire	    
 ]]Activate( self.activations.BEH_Feu_Pion_INF_TirCouverture_Fixe, 1, { self._namedParams.ksEni, } )
             end
         end
 
-        Activate( self.activations.BEH_Feu_Pion_INF_ConduireLesFeux_Sur, 1, setmetatable( { self._namedParams.ksEni, eFormationTir_Debarque, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionDetruire = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Feu_Pion_INF_ConduireLesFeux_Sur, 1, { self._namedParams.ksEni, eFormationTir_Debarque, } )
+self.done_BEH_Feu_Pion_INF_ConduireLesFeux_Sur = function( self, _, v ) self.eActionDetruire = v[1] end
     end,
 
     destroy = function( self )

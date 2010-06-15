@@ -10,6 +10,8 @@ includedFiles["sources/glaise/glaise_appui/genie/pions/Behaviors - Mot.bms"] = t
 ]]--[[// *****************************************************************************
 ]]node "BEH_Mot_Pion_GEN_AffecterVariablesDEtat"
 {
+    feedbacks = { { { "done_BEH_Mot_Pion_GEN_AffecterVariablesDEtat" }, "BEH_Mot_Pion_GEN_AffecterVariablesDEtat" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mot_Pion_GEN_AffecterVariablesDEtat, {value} ) end,
     create = function( self )
     end,
 

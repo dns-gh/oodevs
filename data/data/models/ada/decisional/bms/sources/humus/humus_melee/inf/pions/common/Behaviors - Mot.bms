@@ -21,9 +21,11 @@ include "bit.lua"
 ]]--[[// ------------------------------------------------------------------------
 ]]node "BEH_MOT_Pion_INF_GarderSesDistances"
 {
+    feedbacks = { { { "done_BEH_MOT_Pion_INF_GarderSesDistances" }, "BEH_MOT_Pion_INF_GarderSesDistances" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MOT_Pion_INF_GarderSesDistances, {value} ) end,
     activations =
     {
-        { "BEH_MOT_Pion_INF_GarderSesDistancesFaceA", {} },
+        { "BEH_MOT_Pion_INF_GarderSesDistancesFaceA", { "done_BEH_MOT_Pion_INF_GarderSesDistancesFaceA" } },
     },
 
     create = function( self )
@@ -46,10 +48,12 @@ include "bit.lua"
 
 node "BEH_MOT_Pion_INF_GarderSesDistancesFaceA"
 {
+    feedbacks = { { { "done_BEH_MOT_Pion_INF_GarderSesDistancesFaceA" }, "BEH_MOT_Pion_INF_GarderSesDistancesFaceA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MOT_Pion_INF_GarderSesDistancesFaceA, {value} ) end,
     activations =
     {
-        { "ACT_Tir_INF_FumigeneVersEni", {} },
-        { "ACT_MAJ_EnnemiEnCours", {} },
+        { "ACT_Tir_INF_FumigeneVersEni", { "done_ACT_Tir_INF_FumigeneVersEni" } },
+        { "ACT_MAJ_EnnemiEnCours", { "done_ACT_MAJ_EnnemiEnCours" } },
     },
 
     create = function( self )
@@ -83,9 +87,11 @@ node "BEH_MOT_Pion_INF_GarderSesDistancesFaceA"
 
 node "BEH_MOT_Pion_INF_GarderSesDistances_GererTransport"
 {
+    feedbacks = { { { "done_BEH_MOT_Pion_INF_GarderSesDistances_GererTransport" }, "BEH_MOT_Pion_INF_GarderSesDistances_GererTransport" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MOT_Pion_INF_GarderSesDistances_GererTransport, {value} ) end,
     activations =
     {
-        { "BEH_MOT_Pion_INF_Debarquer", {} },
+        { "BEH_MOT_Pion_INF_Debarquer", { "done_BEH_MOT_Pion_INF_Debarquer" } },
     },
 
     create = function( self )
@@ -116,9 +122,11 @@ node "BEH_MOT_Pion_INF_GarderSesDistances_GererTransport"
 
 node "BEH_MOT_Pion_INF_EtrePrudent_GererTransport"
 {
+    feedbacks = { { { "done_BEH_MOT_Pion_INF_EtrePrudent_GererTransport" }, "BEH_MOT_Pion_INF_EtrePrudent_GererTransport" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MOT_Pion_INF_EtrePrudent_GererTransport, {value} ) end,
     activations =
     {
-        { "BEH_MOT_Pion_INF_Debarquer", {} },
+        { "BEH_MOT_Pion_INF_Debarquer", { "done_BEH_MOT_Pion_INF_Debarquer" } },
     },
 
     create = function( self )
@@ -148,10 +156,12 @@ node "BEH_MOT_Pion_INF_EtrePrudent_GererTransport"
 
 node "BEH_Mot_Delai_Pion_INF_AugmenterAgression"
 {
+    feedbacks = { { { "done_BEH_Mot_Delai_Pion_INF_AugmenterAgression" }, "BEH_Mot_Delai_Pion_INF_AugmenterAgression" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mot_Delai_Pion_INF_AugmenterAgression, {value} ) end,
     activations =
     {
-        { "ACT_Misc_Delai", {} },
-        { "BEH_MOT_DesactiveSauvegarde", {} },
+        { "ACT_Misc_Delai", { "done_ACT_Misc_Delai" } },
+        { "BEH_MOT_DesactiveSauvegarde", { "done_BEH_MOT_DesactiveSauvegarde" } },
     },
 
     create = function( self )
@@ -169,7 +179,7 @@ node "BEH_Mot_Delai_Pion_INF_AugmenterAgression"
             do
                 self.eAction = eActionEnCours
                                 do
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -178,7 +188,8 @@ node "BEH_Mot_Delai_Pion_INF_AugmenterAgression"
             end
         end
 
-        Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, self._namedParams.rDelai, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Misc_Delai, 1, { 1, self._namedParams.rDelai, } )
+self.done_ACT_Misc_Delai = function( self, _, v ) self.eAction = v[1] end
         Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )
     end,
 
@@ -189,6 +200,8 @@ node "BEH_Mot_Delai_Pion_INF_AugmenterAgression"
 
 node "BEH_MOT_Pion_InitialisePreparationMission"
 {
+    feedbacks = { { { "done_BEH_MOT_Pion_InitialisePreparationMission" }, "BEH_MOT_Pion_InitialisePreparationMission" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MOT_Pion_InitialisePreparationMission, {value} ) end,
     create = function( self )
     end,
 
@@ -206,6 +219,8 @@ node "BEH_MOT_Pion_InitialisePreparationMission"
 
 node "BEH_MOT_Pion_INF_InitialisePoste"
 {
+    feedbacks = { { { "done_BEH_MOT_Pion_INF_InitialisePoste" }, "BEH_MOT_Pion_INF_InitialisePoste" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MOT_Pion_INF_InitialisePoste, {value} ) end,
     create = function( self )
     end,
 
@@ -225,10 +240,12 @@ node "BEH_MOT_Pion_INF_InitialisePoste"
 
 node "BEH_MOT_Pion_INF_Debarquer"
 {
+    feedbacks = { { { "done_BEH_MOT_Pion_INF_Debarquer" }, "BEH_MOT_Pion_INF_Debarquer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MOT_Pion_INF_Debarquer, {value} ) end,
     activations =
     {
-        { "ACT_Transport_Pion_INF_Debarquer", {} },
-        { "ACT_Transport_MaintenirEtat", {} },
+        { "ACT_Transport_Pion_INF_Debarquer", { "done_ACT_Transport_Pion_INF_Debarquer" } },
+        { "ACT_Transport_MaintenirEtat", { "done_ACT_Transport_MaintenirEtat" } },
     },
 
     create = function( self )

@@ -9,9 +9,11 @@ includedFiles["sources/appui/rens/pions/roim/son mise en oeuvre sdti/missions/Me
 ]]--[[// *****************************************************************************
 ]]node "MIS_Pion_RENS_ROIM_MettreEnOeuvre"
 {
+    feedbacks = { { { "done_MIS_Pion_RENS_ROIM_MettreEnOeuvre" }, "MIS_Pion_RENS_ROIM_MettreEnOeuvre" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_RENS_ROIM_MettreEnOeuvre, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Pion_RENS_MettreEnOeuvre", {} },
+        { "BEH_Mission_Pion_RENS_MettreEnOeuvre", { "done_BEH_Mission_Pion_RENS_MettreEnOeuvre" } },
     },
 
     create = function( self )
@@ -25,13 +27,13 @@ includedFiles["sources/appui/rens/pions/roim/son mise en oeuvre sdti/missions/Me
 ]]--[[// Terminaison
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eEtat == eActionImpossible ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             Halt( self )
             do return end
         end
 
         if( self.eEtat == eActionEffectuee ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -43,7 +45,8 @@ includedFiles["sources/appui/rens/pions/roim/son mise en oeuvre sdti/missions/Me
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Comportement de la mission
 ]]--[[//-----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_Mission_Pion_RENS_MettreEnOeuvre, 1, setmetatable( { self._namedParams.mission.positionDeploiement_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+]]Activate( self.activations.BEH_Mission_Pion_RENS_MettreEnOeuvre, 1, { self._namedParams.mission.positionDeploiement_, } )
+self.done_BEH_Mission_Pion_RENS_MettreEnOeuvre = function( self, _, v ) self.eEtat = v[1] end
     end,
 
 }

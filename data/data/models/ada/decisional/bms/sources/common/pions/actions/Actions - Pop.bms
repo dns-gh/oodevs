@@ -8,6 +8,8 @@ includedFiles["sources/common/pions/actions/Actions - Pop.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Pion_RenseignerSurPop"
 {
+    feedbacks = { { { "done_ACT_Pion_RenseignerSurPop" }, "ACT_Pion_RenseignerSurPop" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Pion_RenseignerSurPop, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pop = self.params[1]
@@ -44,6 +46,8 @@ includedFiles["sources/common/pions/actions/Actions - Pop.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Pion_Securiser"
 {
+    feedbacks = { { { "done_ACT_Pion_Securiser" }, "ACT_Pion_Securiser" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Pion_Securiser, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pop = self.params[1]
@@ -80,6 +84,8 @@ includedFiles["sources/common/pions/actions/Actions - Pop.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Pion_Animer"
 {
+    feedbacks = { { { "done_ACT_Pion_Animer" }, "ACT_Pion_Animer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Pion_Animer, {value} ) end,
     actuators =
     {
         controlePopulation = 1,
@@ -152,6 +158,8 @@ includedFiles["sources/common/pions/actions/Actions - Pop.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Pion_CreerObjetSur"
 {
+    feedbacks = { { { "done_ACT_Pion_CreerObjetSur" }, "ACT_Pion_CreerObjetSur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Pion_CreerObjetSur, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.localisation = self.params[1]
@@ -178,6 +186,8 @@ includedFiles["sources/common/pions/actions/Actions - Pop.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Pion_FuirPopulations"
 {
+    feedbacks = { { { "done_ACT_Pion_FuirPopulations" }, "ACT_Pion_FuirPopulations" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Pion_FuirPopulations, {value} ) end,
     actuators =
     {
         controlePopulation = 1,

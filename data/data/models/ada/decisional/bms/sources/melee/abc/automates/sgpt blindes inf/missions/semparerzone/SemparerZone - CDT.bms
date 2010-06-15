@@ -21,9 +21,11 @@ includedFiles["sources/melee/abc/automates/sgpt blindes inf/missions/semparerzon
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_ABC_Semparer"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ABC_Semparer" }, "MIS_Automate_CDT_ABC_Semparer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ABC_Semparer, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_SemparerDUneZone", {} },
+        { "BEH_Conduite_Automate_ABC_SemparerDUneZone", { "done_BEH_Conduite_Automate_ABC_SemparerDUneZone" } },
     },
 
     create = function( self )

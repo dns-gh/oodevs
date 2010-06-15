@@ -17,12 +17,14 @@ include "bit.lua"
 ]]
 node "BEH_Pion_ASS_GererOrdre_AppliquerFeux"
 {
+    feedbacks = { { { "done_BEH_Pion_ASS_GererOrdre_AppliquerFeux" }, "BEH_Pion_ASS_GererOrdre_AppliquerFeux" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pion_ASS_GererOrdre_AppliquerFeux, {value} ) end,
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "ACT_RC", {} },
-        { "BEH_Tir_Pion_ASS_AppliquerFeux", {} },
-        { "ACT_Ordre_Suppression", {} },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "BEH_Tir_Pion_ASS_AppliquerFeux", { "done_BEH_Tir_Pion_ASS_AppliquerFeux" } },
+        { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
     },
 
     create = function( self )
@@ -64,14 +66,16 @@ do
 
 node "BEH_Pion_ASS_GererOrdre_AppliquerFeux_SIC"
 {
+    feedbacks = { { { "done_BEH_Pion_ASS_GererOrdre_AppliquerFeux_SIC" }, "BEH_Pion_ASS_GererOrdre_AppliquerFeux_SIC" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pion_ASS_GererOrdre_AppliquerFeux_SIC, {value} ) end,
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "ACT_RC", {} },
-        { "BEH_Tir_Pion_ASS_AppliquerFeux", {} },
-        { "BEH_Dep_ProgressionVers", {} },
-        { "BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir_SIC", {} },
-        { "ACT_Ordre_Suppression", {} },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "BEH_Tir_Pion_ASS_AppliquerFeux", { "done_BEH_Tir_Pion_ASS_AppliquerFeux" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
+        { "BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir_SIC", { "done_BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir_SIC" } },
+        { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
     },
 
     create = function( self )
@@ -122,18 +126,20 @@ do
 
 node "BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission"
 {
+    feedbacks = { { { "done_BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission" }, "BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission, {value} ) end,
     activations =
     {
-        { "ACT_RC", {} },
-        { "ACT_RC_PreparationMission", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Misc_Delai", {} },
-        { "ACT_Info_Trace", {} },
-        { "BEH_Dep_ProgressionVers", {} },
-        { "BEH_Pion_ASS_InstallationSurZone", {} },
-        { "BEH_Pion_ASS_InstallationSurPosition", {} },
-        { "BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir", {} },
-        { "BEH_Dep_Pion_ASS_ChangerDePosition_Sauvegarde", {} },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "ACT_RC_PreparationMission", { "done_ACT_RC_PreparationMission" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "ACT_Misc_Delai", { "done_ACT_Misc_Delai" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
+        { "BEH_Pion_ASS_InstallationSurZone", { "done_BEH_Pion_ASS_InstallationSurZone" } },
+        { "BEH_Pion_ASS_InstallationSurPosition", { "done_BEH_Pion_ASS_InstallationSurPosition" } },
+        { "BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir", { "done_BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir" } },
+        { "BEH_Dep_Pion_ASS_ChangerDePosition_Sauvegarde", { "done_BEH_Dep_Pion_ASS_ChangerDePosition_Sauvegarde" } },
     },
 
     create = function( self )
@@ -200,7 +206,8 @@ elseif switch_1 == "T_Mission_Pion_ASS_AssurerMiseEnOeuvre" then
 
                     Activate( self.activations.ACT_RC_PreparationMission, 1, { self._namedParams.rDelaiPreparation, } )
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1.2, { eEtatPhaseMission_PreparationMission, } )
-                    Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, self._namedParams.rDelaiPreparation, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.ACT_Misc_Delai, 1, { 1, self._namedParams.rDelaiPreparation, } )
+self.done_ACT_Misc_Delai = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                 --[[// -----------------------------------------------------------------------------
 ]]--[[// Rejoindre la position du site
@@ -211,7 +218,8 @@ elseif switch_1 == eRejoindre then
                         do
                             Activate( self.activations.ACT_Info_Trace, 1, { "Rejoins position d'installation", } )
                             Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                            Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.ptObjImplantation, eProgressionDefaut, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                            Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.ptObjImplantation, eProgressionDefaut, eTypeItiMouvement, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] end
                                                         do return end
 
                         end
@@ -254,7 +262,7 @@ elseif switch_1 == eRejoindre then
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
-                        self.params.__returnValue = eActionEffectuee
+                        self:SendFeedback( eActionEffectuee )
                         Halt( self )
                         do return end
                     end
@@ -278,6 +286,8 @@ elseif switch_1 == eFinMission then
 
 node "ACT_Pion_ASS_DebarquerLanceur"
 {
+    feedbacks = { { { "done_ACT_Pion_ASS_DebarquerLanceur" }, "ACT_Pion_ASS_DebarquerLanceur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Pion_ASS_DebarquerLanceur, {value} ) end,
     create = function( self )
     end,
 
@@ -302,11 +312,13 @@ node "ACT_Pion_ASS_DebarquerLanceur"
 ]]--[[// ============================================================================
 ]]node "BEH_Pion_ASS_InstallationSurZone"
 {
+    feedbacks = { { { "done_BEH_Pion_ASS_InstallationSurZone" }, "BEH_Pion_ASS_InstallationSurZone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pion_ASS_InstallationSurZone, {value} ) end,
     activations =
     {
-        { "ACT_Obs_EtablirVisionFaceADir", {} },
-        { "ACT_Obj_Pion_AnimerSite", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Obs_EtablirVisionFaceADir", { "done_ACT_Obs_EtablirVisionFaceADir" } },
+        { "ACT_Obj_Pion_AnimerSite", { "done_ACT_Obj_Pion_AnimerSite" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
     },
 
     create = function( self )
@@ -346,10 +358,12 @@ node "ACT_Pion_ASS_DebarquerLanceur"
 
 node "BEH_Pion_ASS_InstallationSurPosition"
 {
+    feedbacks = { { { "done_BEH_Pion_ASS_InstallationSurPosition" }, "BEH_Pion_ASS_InstallationSurPosition" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pion_ASS_InstallationSurPosition, {value} ) end,
     activations =
     {
-        { "ACT_Obs_EtablirVisionFaceADir", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Obs_EtablirVisionFaceADir", { "done_ACT_Obs_EtablirVisionFaceADir" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
     },
 
     create = function( self )
@@ -388,12 +402,14 @@ node "BEH_Pion_ASS_InstallationSurPosition"
 
 node "BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir"
 {
+    feedbacks = { { { "done_BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir" }, "BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir, {value} ) end,
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "ACT_Misc_Delai", {} },
-        { "ACT_RC", {} },
-        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "ACT_Misc_Delai", { "done_ACT_Misc_Delai" } },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
     },
 
     create = function( self )
@@ -407,7 +423,8 @@ node "BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir"
         if( myself.eEtatTir_Indirect_ == eActionTirIndirect_EnCours ) then
             do
                 Activate( self.activations.ACT_Info_Trace, 1, { "Declenchement tir indirect : sauvegarde", } )
-                StartActivateOverride( self, self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, M_DELAI_SAUVEGARDE_TIR(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                StartActivateOverride( self, self.activations.ACT_Misc_Delai, 1, { 1, M_DELAI_SAUVEGARDE_TIR(), } )
+self.done_ACT_Misc_Delai = function( self, _, v ) self.eAction = v[1] end
             end
         end
 
@@ -431,9 +448,11 @@ node "BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir"
 
 node "BEH_Dep_Pion_ASS_SePosterPourTirer"
 {
+    feedbacks = { { { "done_BEH_Dep_Pion_ASS_SePosterPourTirer" }, "BEH_Dep_Pion_ASS_SePosterPourTirer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Pion_ASS_SePosterPourTirer, {value} ) end,
     activations =
     {
-        { "ACT_Dep_SePoster", {} },
+        { "ACT_Dep_SePoster", { "done_ACT_Dep_SePoster" } },
     },
 
     create = function( self )
@@ -455,9 +474,11 @@ node "BEH_Dep_Pion_ASS_SePosterPourTirer"
 
 node "BEH_Info_Pion_ASS_GererDisponibiliteAuTir"
 {
+    feedbacks = { { { "done_BEH_Info_Pion_ASS_GererDisponibiliteAuTir" }, "BEH_Info_Pion_ASS_GererDisponibiliteAuTir" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Info_Pion_ASS_GererDisponibiliteAuTir, {value} ) end,
     activations =
     {
-        { "ACT_Info_Pion_ASS_DisponibiliteAuTir", {} },
+        { "ACT_Info_Pion_ASS_DisponibiliteAuTir", { "done_ACT_Info_Pion_ASS_DisponibiliteAuTir" } },
     },
 
     create = function( self )
@@ -480,12 +501,14 @@ node "BEH_Info_Pion_ASS_GererDisponibiliteAuTir"
 
 node "BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir_SIC"
 {
+    feedbacks = { { { "done_BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir_SIC" }, "BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir_SIC" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir_SIC, {value} ) end,
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "ACT_Misc_Delai", {} },
-        { "ACT_RC", {} },
-        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "ACT_Misc_Delai", { "done_ACT_Misc_Delai" } },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
     },
 
     create = function( self )
@@ -499,7 +522,8 @@ node "BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir_SIC"
         if( myself.eEtatTir_Indirect_ == eActionTirIndirect_EnCours ) then
             do
                 Activate( self.activations.ACT_Info_Trace, 1, { "Declenchement tir indirect : sauvegarde SIC", } )
-                StartActivateOverride( self, self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, M_DELAI_SAUVEGARDE_TIR(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                StartActivateOverride( self, self.activations.ACT_Misc_Delai, 1, { 1, M_DELAI_SAUVEGARDE_TIR(), } )
+self.done_ACT_Misc_Delai = function( self, _, v ) self.eAction = v[1] end
             end
         end
 
@@ -524,6 +548,8 @@ node "BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir_SIC"
 
 node "BEH_Tir_Pion_ASS_AppliquerFeux"
 {
+    feedbacks = { { { "done_BEH_Tir_Pion_ASS_AppliquerFeux" }, "BEH_Tir_Pion_ASS_AppliquerFeux" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Tir_Pion_ASS_AppliquerFeux, {value} ) end,
     instances =
     {
         boost = 1.1,
@@ -531,9 +557,9 @@ node "BEH_Tir_Pion_ASS_AppliquerFeux"
 
     activations =
     {
-        { "BEH_Tir_Pion_ASS_PreparerTirSur", {} },
-        { "ACT_Dep_SePoster", {} },
-        { "ACT_Tir_Pion_ASS_SurPosition", {} },
+        { "BEH_Tir_Pion_ASS_PreparerTirSur", { "done_BEH_Tir_Pion_ASS_PreparerTirSur" } },
+        { "ACT_Dep_SePoster", { "done_ACT_Dep_SePoster" } },
+        { "ACT_Tir_Pion_ASS_SurPosition", { "done_ACT_Tir_Pion_ASS_SurPosition" } },
     },
 
     create = function( self )
@@ -598,7 +624,8 @@ node "BEH_Tir_Pion_ASS_AppliquerFeux"
         local eNiveauInstallation = DEC_Agent_NiveauInstallation()
         if( ( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_PretPourConduiteTir ) or ( eNiveauInstallation_Poste == eNiveauInstallation ) or ( eNiveauInstallation_PosteAmenage == eNiveauInstallation ) ) then
             do
-                Activate( self.activations.ACT_Tir_Pion_ASS_SurPosition, 1, setmetatable( { self._namedParams.dotation, self._namedParams.rNObus, self._namedParams.ptCible, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                Activate( self.activations.ACT_Tir_Pion_ASS_SurPosition, 1, { self._namedParams.dotation, self._namedParams.rNObus, self._namedParams.ptCible, } )
+self.done_ACT_Tir_Pion_ASS_SurPosition = function( self, _, v ) self.eAction = v[1] end
             end
         end
 
@@ -612,10 +639,12 @@ node "BEH_Tir_Pion_ASS_AppliquerFeux"
 
 node "BEH_Tir_Pion_ASS_PreparerTirSur"
 {
+    feedbacks = { { { "done_BEH_Tir_Pion_ASS_PreparerTirSur" }, "BEH_Tir_Pion_ASS_PreparerTirSur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Tir_Pion_ASS_PreparerTirSur, {value} ) end,
     activations =
     {
-        { "ACT_Tir_Pion_ASS_PreparerTirSur", {} },
-        { "ACT_Misc_Delai", {} },
+        { "ACT_Tir_Pion_ASS_PreparerTirSur", { "done_ACT_Tir_Pion_ASS_PreparerTirSur" } },
+        { "ACT_Misc_Delai", { "done_ACT_Misc_Delai" } },
     },
 
     create = function( self )
@@ -629,7 +658,8 @@ node "BEH_Tir_Pion_ASS_PreparerTirSur"
         if( self.eAction == eActionEnCours ) then
             do
                 Activate( self.activations.ACT_Tir_Pion_ASS_PreparerTirSur, 1, { self._namedParams.ptCible, } )
-                Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, self._namedParams.rDelai, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                Activate( self.activations.ACT_Misc_Delai, 1, { 1, self._namedParams.rDelai, } )
+self.done_ACT_Misc_Delai = function( self, _, v ) self.eAction = v[1] end
             end
         end
 

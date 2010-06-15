@@ -14,10 +14,12 @@ includedFiles["sources/melee/abc/automates/common/missions/recueillir/Recueillir
 ]]--[[// *****************************************************************************
 ]]node "BEH_Medo_Automate_ABC_Recueillir_AssignerMissionBarrerA"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_ABC_Recueillir_AssignerMissionBarrerA" }, "BEH_Medo_Automate_ABC_Recueillir_AssignerMissionBarrerA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_ABC_Recueillir_AssignerMissionBarrerA, {value} ) end,
     activations =
     {
-        { "ACT_Warning", {} },
-        { "BEH_Mission_Automate_ABC_AssignerBarrerA", {} },
+        { "ACT_Warning", { "done_ACT_Warning" } },
+        { "BEH_Mission_Automate_ABC_AssignerBarrerA", { "done_BEH_Mission_Automate_ABC_AssignerBarrerA" } },
     },
 
     create = function( self )
@@ -43,7 +45,7 @@ includedFiles["sources/melee/abc/automates/common/missions/recueillir/Recueillir
                 if( ( LR == 0 or LR == nil ) ) then
                     do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleLimaInvalide, } )
-                                                self.params.__returnValue = eActionImpossible
+                                                self:SendFeedback( eActionImpossible )
                         do return end
 
                     end
@@ -54,7 +56,7 @@ includedFiles["sources/melee/abc/automates/common/missions/recueillir/Recueillir
                 if( ( self.listePositions == 0 or self.listePositions == nil ) ) then
                     do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleLimaInvalide, } )
-                                                self.params.__returnValue = eActionImpossible
+                                                self:SendFeedback( eActionImpossible )
                         do return end
 
                     end
@@ -95,10 +97,12 @@ do
 
 node "BEH_Medo_Automate_ABC_Recueillir_AssignerMissionSurveillerA"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_ABC_Recueillir_AssignerMissionSurveillerA" }, "BEH_Medo_Automate_ABC_Recueillir_AssignerMissionSurveillerA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_ABC_Recueillir_AssignerMissionSurveillerA, {value} ) end,
     activations =
     {
-        { "ACT_Warning", {} },
-        { "BEH_Mission_Automate_ABC_AssignerSurveillerA", {} },
+        { "ACT_Warning", { "done_ACT_Warning" } },
+        { "BEH_Mission_Automate_ABC_AssignerSurveillerA", { "done_BEH_Mission_Automate_ABC_AssignerSurveillerA" } },
     },
 
     create = function( self )
@@ -124,7 +128,7 @@ node "BEH_Medo_Automate_ABC_Recueillir_AssignerMissionSurveillerA"
                 if( ( LIA == 0 or LIA == nil ) ) then
                     do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleLimaInvalide, } )
-                                                self.params.__returnValue = eActionImpossible
+                                                self:SendFeedback( eActionImpossible )
                         do return end
 
                     end
@@ -135,7 +139,7 @@ node "BEH_Medo_Automate_ABC_Recueillir_AssignerMissionSurveillerA"
                 if( ( self.listePositions == 0 or self.listePositions == nil ) ) then
                     do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleLimaInvalide, } )
-                                                self.params.__returnValue = eActionImpossible
+                                                self:SendFeedback( eActionImpossible )
                         do return end
 
                     end

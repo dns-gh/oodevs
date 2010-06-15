@@ -9,20 +9,22 @@ include "bit.lua"
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "MIS_Pion_ASA_Surveiller"
 {
+    feedbacks = { { { "done_MIS_Pion_ASA_Surveiller" }, "MIS_Pion_ASA_Surveiller" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_ASA_Surveiller, {value} ) end,
     activations =
     {
-        { "ACT_Maj_Pion_PasserEnTirSurRiposte", {} },
-        { "BEH_MAJ_AgressiviteMission", {} },
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Obs_EtablirVisionCur", {} },
-        { "ACT_Maj_Pions_ObjectifCourant", {} },
-        { "ACT_Maj_Pions_ObjectifEsquive", {} },
-        { "BEH_Dep_Pion_ASA_RejoindrePoint", {} },
-        { "ACT_Dep_SePosterFaceADir", {} },
-        { "BEH_Manoeuvre_Pion_ASA_SeDeployer", {} },
-        { "ACT_RC", {} },
-        { "BEH_Eni_Pion_ASA_RolandCarol_GererEniSurveiller", {} },
+        { "ACT_Maj_Pion_PasserEnTirSurRiposte", { "done_ACT_Maj_Pion_PasserEnTirSurRiposte" } },
+        { "BEH_MAJ_AgressiviteMission", { "done_BEH_MAJ_AgressiviteMission" } },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "ACT_Obs_EtablirVisionCur", { "done_ACT_Obs_EtablirVisionCur" } },
+        { "ACT_Maj_Pions_ObjectifCourant", { "done_ACT_Maj_Pions_ObjectifCourant" } },
+        { "ACT_Maj_Pions_ObjectifEsquive", { "done_ACT_Maj_Pions_ObjectifEsquive" } },
+        { "BEH_Dep_Pion_ASA_RejoindrePoint", { "done_BEH_Dep_Pion_ASA_RejoindrePoint" } },
+        { "ACT_Dep_SePosterFaceADir", { "done_ACT_Dep_SePosterFaceADir" } },
+        { "BEH_Manoeuvre_Pion_ASA_SeDeployer", { "done_BEH_Manoeuvre_Pion_ASA_SeDeployer" } },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "BEH_Eni_Pion_ASA_RolandCarol_GererEniSurveiller", { "done_BEH_Eni_Pion_ASA_RolandCarol_GererEniSurveiller" } },
     },
 
     create = function( self )
@@ -46,7 +48,8 @@ include "bit.lua"
         end
 
         Activate( self.activations.BEH_MAJ_AgressiviteMission, 1, { eIdentifie, M_DOCTRINE_PION_ASA_PH(), } )
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatODC = v else rawset( t, k, v ) end end } ) )--[[// Gestion de l'ordre de conduite "interrompre"
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatODC = v[1] end--[[// Gestion de l'ordre de conduite "interrompre"
 ]]--[[// --------------------------------------------
 ]]
         if( self.eEtatODC == eActionHalt or S_Misc_EstDetruitPhysique() ) then
@@ -83,7 +86,8 @@ elseif switch_1 == eRejoindre then
                     Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
                     Activate( self.activations.ACT_Maj_Pions_ObjectifCourant, 1, { self._namedParams.mission.pointDeDeploiement_, } )
                     Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.mission.pointDeDeploiement_, } )
-                    Activate( self.activations.BEH_Dep_Pion_ASA_RejoindrePoint, 1, setmetatable( { self._namedParams.mission.pointDeDeploiement_, eProgressionDefaut, eTypeItiMouvement, 0, 100, 0.05, 0.08, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_Pion_ASA_RejoindrePoint, 1, { self._namedParams.mission.pointDeDeploiement_, eProgressionDefaut, eTypeItiMouvement, 0, 100, 0.05, 0.08, } )
+self.done_BEH_Dep_Pion_ASA_RejoindrePoint = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eSurveiller then
@@ -111,7 +115,7 @@ elseif switch_1 == eFinMission then
                         do
                             F_Pion_SetobjectifEsquive( myself, nil )
                             DEC_FinMission()
-                                                        self.params.__returnValue = eActionEffectuee
+                                                        self:SendFeedback( eActionEffectuee )
                             Halt( self )
                             do return end
 

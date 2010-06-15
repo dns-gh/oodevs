@@ -9,16 +9,18 @@ includedFiles["sources/appui/log/automates/missions/SeDeployer - MRT.bms"] = tru
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_MRT_LOG_SeDeployer"
 {
+    feedbacks = { { { "done_MIS_Automate_MRT_LOG_SeDeployer" }, "MIS_Automate_MRT_LOG_SeDeployer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_MRT_LOG_SeDeployer, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_LOG_AssignerSeDeployerAListe", {} },
-        { "BEH_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesAListe", {} },
-        { "BEH_Mission_Automate_LOG_AssignerTraiterBlessesAListe", {} },
-        { "BEH_Mission_Automate_LOG_AssignerDecontaminerBlessesAListe", {} },
-        { "BEH_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalAListe", {} },
-        { "BEH_Mission_Automate_LOG_AssignerReparerAListe", {} },
-        { "BEH_Mission_Automate_AssignerFaireMouvementAListe", {} },
-        { "ACT_Warning", {} },
+        { "BEH_Mission_Automate_LOG_AssignerSeDeployerAListe", { "done_BEH_Mission_Automate_LOG_AssignerSeDeployerAListe" } },
+        { "BEH_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesAListe", { "done_BEH_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesAListe" } },
+        { "BEH_Mission_Automate_LOG_AssignerTraiterBlessesAListe", { "done_BEH_Mission_Automate_LOG_AssignerTraiterBlessesAListe" } },
+        { "BEH_Mission_Automate_LOG_AssignerDecontaminerBlessesAListe", { "done_BEH_Mission_Automate_LOG_AssignerDecontaminerBlessesAListe" } },
+        { "BEH_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalAListe", { "done_BEH_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalAListe" } },
+        { "BEH_Mission_Automate_LOG_AssignerReparerAListe", { "done_BEH_Mission_Automate_LOG_AssignerReparerAListe" } },
+        { "BEH_Mission_Automate_AssignerFaireMouvementAListe", { "done_BEH_Mission_Automate_AssignerFaireMouvementAListe" } },
+        { "ACT_Warning", { "done_ACT_Warning" } },
     },
 
     create = function( self )
@@ -169,7 +171,7 @@ elseif switch_1 == eMRT_MissionImpossible then
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eMRT_Valider then
                     DEC_MRT_Valide()
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 

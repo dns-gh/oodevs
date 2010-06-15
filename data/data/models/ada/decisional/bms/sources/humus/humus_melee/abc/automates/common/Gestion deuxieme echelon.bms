@@ -27,10 +27,12 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Dispositif_Automate_ABC_GererLesAppuis_"
 {
+    feedbacks = { { { "done_BEH_Dispositif_Automate_ABC_GererLesAppuis_" }, "BEH_Dispositif_Automate_ABC_GererLesAppuis_" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dispositif_Automate_ABC_GererLesAppuis_, {value} ) end,
     activations =
     {
-        { "BEH_Dispositif_Automate_ABC_AssignerSoutienAuPE", {} },
-        { "BEH_Dispositif_Automate_ABC_GererMortier", {} },
+        { "BEH_Dispositif_Automate_ABC_AssignerSoutienAuPE", { "done_BEH_Dispositif_Automate_ABC_AssignerSoutienAuPE" } },
+        { "BEH_Dispositif_Automate_ABC_GererMortier", { "done_BEH_Dispositif_Automate_ABC_GererMortier" } },
     },
 
     create = function( self )
@@ -56,9 +58,11 @@ include "bit.lua"
 
 node "BEH_Dispositif_Automate_ABC_GererMortier"
 {
+    feedbacks = { { { "done_BEH_Dispositif_Automate_ABC_GererMortier" }, "BEH_Dispositif_Automate_ABC_GererMortier" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dispositif_Automate_ABC_GererMortier, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_INF_AssignerAppuyerA", {} },
+        { "BEH_Mission_Automate_INF_AssignerAppuyerA", { "done_BEH_Mission_Automate_INF_AssignerAppuyerA" } },
     },
 
     create = function( self )
@@ -84,9 +88,11 @@ node "BEH_Dispositif_Automate_ABC_GererMortier"
 
 node "BEH_Dispositif_Automate_ABC_AssignerSoutienAuPE"
 {
+    feedbacks = { { { "done_BEH_Dispositif_Automate_ABC_AssignerSoutienAuPE" }, "BEH_Dispositif_Automate_ABC_AssignerSoutienAuPE" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dispositif_Automate_ABC_AssignerSoutienAuPE, {value} ) end,
     activations =
     {
-        { "BEH_Dispositif_Automate_ABC_AssignerSoutien", {} },
+        { "BEH_Dispositif_Automate_ABC_AssignerSoutien", { "done_BEH_Dispositif_Automate_ABC_AssignerSoutien" } },
     },
 
     create = function( self )
@@ -131,6 +137,8 @@ do
 
 node "BEH_Dispositif_Automate_ABC_AssignerSoutien"
 {
+    feedbacks = { { { "done_BEH_Dispositif_Automate_ABC_AssignerSoutien" }, "BEH_Dispositif_Automate_ABC_AssignerSoutien" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dispositif_Automate_ABC_AssignerSoutien, {value} ) end,
     instances =
     {
         max = 1,
@@ -138,7 +146,7 @@ node "BEH_Dispositif_Automate_ABC_AssignerSoutien"
 
     activations =
     {
-        { "BEH_Mission_Automate_ABC_AssignerSoutenirA", {} },
+        { "BEH_Mission_Automate_ABC_AssignerSoutenirA", { "done_BEH_Mission_Automate_ABC_AssignerSoutenirA" } },
     },
 
     create = function( self )
@@ -164,9 +172,11 @@ node "BEH_Dispositif_Automate_ABC_AssignerSoutien"
 
 node "BEH_Dispositif_Automate_ABC_RendreDisposnibleLeSE"
 {
+    feedbacks = { { { "done_BEH_Dispositif_Automate_ABC_RendreDisposnibleLeSE" }, "BEH_Dispositif_Automate_ABC_RendreDisposnibleLeSE" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dispositif_Automate_ABC_RendreDisposnibleLeSE, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_AssignerSuivreA", {} },
+        { "BEH_Mission_Automate_AssignerSuivreA", { "done_BEH_Mission_Automate_AssignerSuivreA" } },
     },
 
     create = function( self )
@@ -212,10 +222,12 @@ do
 
 node "BEH_Dispositif_Automate_ABC_GererLeDispositif_"
 {
+    feedbacks = { { { "done_BEH_Dispositif_Automate_ABC_GererLeDispositif_" }, "BEH_Dispositif_Automate_ABC_GererLeDispositif_" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dispositif_Automate_ABC_GererLeDispositif_, {value} ) end,
     activations =
     {
-        { "BEH_Dispositif_Automate_ABC_GererPionsDetruits_", {} },
-        { "BEH_Dispositif_Automate_ABC_GererLeSE_", {} },
+        { "BEH_Dispositif_Automate_ABC_GererPionsDetruits_", { "done_BEH_Dispositif_Automate_ABC_GererPionsDetruits_" } },
+        { "BEH_Dispositif_Automate_ABC_GererLeSE_", { "done_BEH_Dispositif_Automate_ABC_GererLeSE_" } },
     },
 
     create = function( self )
@@ -272,9 +284,11 @@ elseif switch_1 == eGererSecondEchelon then
 
 node "BEH_Dispositif_Automate_ABC_GererLeSE_"
 {
+    feedbacks = { { { "done_BEH_Dispositif_Automate_ABC_GererLeSE_" }, "BEH_Dispositif_Automate_ABC_GererLeSE_" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dispositif_Automate_ABC_GererLeSE_, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_AssignerMissionsSE", {} },
+        { "BEH_Mission_Automate_AssignerMissionsSE", { "done_BEH_Mission_Automate_AssignerMissionsSE" } },
     },
 
     create = function( self )
@@ -325,9 +339,11 @@ do
 
 node "BEH_Mission_Automate_AssignerMissionsSE"
 {
+    feedbacks = { { { "done_BEH_Mission_Automate_AssignerMissionsSE" }, "BEH_Mission_Automate_AssignerMissionsSE" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Automate_AssignerMissionsSE, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_AssignerSuivreA", {} },
+        { "BEH_Mission_Automate_AssignerSuivreA", { "done_BEH_Mission_Automate_AssignerSuivreA" } },
     },
 
     create = function( self )
@@ -368,9 +384,11 @@ node "BEH_Mission_Automate_AssignerMissionsSE"
 
 node "BEH_Dispositif_Automate_ABC_GererLeDispositifRetrograde_"
 {
+    feedbacks = { { { "done_BEH_Dispositif_Automate_ABC_GererLeDispositifRetrograde_" }, "BEH_Dispositif_Automate_ABC_GererLeDispositifRetrograde_" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dispositif_Automate_ABC_GererLeDispositifRetrograde_, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_AssignerDecrocherA", {} },
+        { "BEH_Mission_Automate_AssignerDecrocherA", { "done_BEH_Mission_Automate_AssignerDecrocherA" } },
     },
 
     create = function( self )
@@ -402,10 +420,12 @@ do
 
 node "BEH_Dispositif_Automate_ABC_GererLeDispositifStatique_"
 {
+    feedbacks = { { { "done_BEH_Dispositif_Automate_ABC_GererLeDispositifStatique_" }, "BEH_Dispositif_Automate_ABC_GererLeDispositifStatique_" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dispositif_Automate_ABC_GererLeDispositifStatique_, {value} ) end,
     activations =
     {
-        { "BEH_Dispositif_Automate_ABC_GererPionsDetruits_", {} },
-        { "BEH_Dispositif_Automate_ABC_GererLeSEStatique_", {} },
+        { "BEH_Dispositif_Automate_ABC_GererPionsDetruits_", { "done_BEH_Dispositif_Automate_ABC_GererPionsDetruits_" } },
+        { "BEH_Dispositif_Automate_ABC_GererLeSEStatique_", { "done_BEH_Dispositif_Automate_ABC_GererLeSEStatique_" } },
     },
 
     create = function( self )
@@ -460,9 +480,11 @@ elseif switch_1 == eGererSecondEchelon then
 
 node "BEH_Dispositif_Automate_ABC_GererLeSEStatique_"
 {
+    feedbacks = { { { "done_BEH_Dispositif_Automate_ABC_GererLeSEStatique_" }, "BEH_Dispositif_Automate_ABC_GererLeSEStatique_" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dispositif_Automate_ABC_GererLeSEStatique_, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_AssignerFaireMouvementA", {} },
+        { "BEH_Mission_Automate_AssignerFaireMouvementA", { "done_BEH_Mission_Automate_AssignerFaireMouvementA" } },
     },
 
     create = function( self )
@@ -533,10 +555,12 @@ do
 
 node "BEH_Dispositif_Automate_ABC_GererLeDispositifStatiqueSurLima_"
 {
+    feedbacks = { { { "done_BEH_Dispositif_Automate_ABC_GererLeDispositifStatiqueSurLima_" }, "BEH_Dispositif_Automate_ABC_GererLeDispositifStatiqueSurLima_" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dispositif_Automate_ABC_GererLeDispositifStatiqueSurLima_, {value} ) end,
     activations =
     {
-        { "BEH_Dispositif_Automate_ABC_GererPionsDetruits_", {} },
-        { "BEH_Dispositif_Automate_ABC_GererLeSEStatiqueSurLima_", {} },
+        { "BEH_Dispositif_Automate_ABC_GererPionsDetruits_", { "done_BEH_Dispositif_Automate_ABC_GererPionsDetruits_" } },
+        { "BEH_Dispositif_Automate_ABC_GererLeSEStatiqueSurLima_", { "done_BEH_Dispositif_Automate_ABC_GererLeSEStatiqueSurLima_" } },
     },
 
     create = function( self )
@@ -591,9 +615,11 @@ elseif switch_1 == eGererSecondEchelon then
 
 node "BEH_Dispositif_Automate_ABC_GererLeSEStatiqueSurLima_"
 {
+    feedbacks = { { { "done_BEH_Dispositif_Automate_ABC_GererLeSEStatiqueSurLima_" }, "BEH_Dispositif_Automate_ABC_GererLeSEStatiqueSurLima_" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dispositif_Automate_ABC_GererLeSEStatiqueSurLima_, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_AssignerFaireMouvementA", {} },
+        { "BEH_Mission_Automate_AssignerFaireMouvementA", { "done_BEH_Mission_Automate_AssignerFaireMouvementA" } },
     },
 
     create = function( self )

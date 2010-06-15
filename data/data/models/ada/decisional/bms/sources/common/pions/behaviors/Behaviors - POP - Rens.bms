@@ -12,9 +12,11 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Pop_RenseignerAuContact"
 {
+    feedbacks = { { { "done_BEH_Pop_RenseignerAuContact" }, "BEH_Pop_RenseignerAuContact" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pop_RenseignerAuContact, {value} ) end,
     activations =
     {
-        { "ACT_Pion_RenseignerSurPop", {} },
+        { "ACT_Pion_RenseignerSurPop", { "done_ACT_Pion_RenseignerSurPop" } },
     },
 
     create = function( self )
@@ -48,9 +50,11 @@ do
 
 node "BEH_Pion_RenseignerSurPops"
 {
+    feedbacks = { { { "done_BEH_Pion_RenseignerSurPops" }, "BEH_Pion_RenseignerSurPops" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pion_RenseignerSurPops, {value} ) end,
     activations =
     {
-        { "BEH_Pion_RenseignerSurPop", {} },
+        { "BEH_Pion_RenseignerSurPop", { "done_BEH_Pion_RenseignerSurPop" } },
     },
 
     create = function( self )
@@ -93,9 +97,11 @@ node "BEH_Pion_RenseignerSurPops"
 
 node "BEH_Pion_RenseignerSurPop"
 {
+    feedbacks = { { { "done_BEH_Pion_RenseignerSurPop" }, "BEH_Pion_RenseignerSurPop" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pion_RenseignerSurPop, {value} ) end,
     activations =
     {
-        { "ACT_Pion_RenseignerSurPop", {} },
+        { "ACT_Pion_RenseignerSurPop", { "done_ACT_Pion_RenseignerSurPop" } },
     },
 
     create = function( self )

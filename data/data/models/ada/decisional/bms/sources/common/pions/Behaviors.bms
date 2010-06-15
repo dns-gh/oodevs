@@ -49,11 +49,13 @@ include "Common/Pions/Behaviors/behaviors - Transport.bms"
 ]]--[[// *****************************************************************************
 ]]node "DefaultBehavior"
 {
+    feedbacks = { { { "done_Default" }, "Default" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_Default, {value} ) end,
     activations =
     {
-        { "BEH_Info_Mos", {} },
-        { "BEH_Info_Pion_RendreCompte", {} },
-        { "BEH_Default_ReactionPopulations", {} },
+        { "BEH_Info_Mos", { "done_BEH_Info_Mos" } },
+        { "BEH_Info_Pion_RendreCompte", { "done_BEH_Info_Pion_RendreCompte" } },
+        { "BEH_Default_ReactionPopulations", { "done_BEH_Default_ReactionPopulations" } },
     },
 
     create = function( self )

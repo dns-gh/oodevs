@@ -21,25 +21,27 @@ include "Glaise/glaise_Common/Automates/Actions/Actions - RC.bms"
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_ControleCreation_OK"
 {
+    feedbacks = { { { "done_ACT_Mission_Automate_ControleCreation_OK" }, "ACT_Mission_Automate_ControleCreation_OK" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Mission_Automate_ControleCreation_OK, {value} ) end,
     create = function( self )
     end,
 
     select = function( self )
                 if( GetActivity() >= 1 ) then
-            self.params.__returnValue = eActionEnCours
+            self:SendFeedback( eActionEnCours )
             do return end
         end
 
     end,
 
     deselect = function( self )
-                        self.params.__returnValue = eActionEffectuee
+                        self:SendFeedback( eActionEffectuee )
         do return end
 
     end,
 
     destroy = function( self )
-                        self.params.__returnValue = eActionEffectuee
+                        self:SendFeedback( eActionEffectuee )
         do return end
 
     end,
@@ -54,16 +56,18 @@ include "Glaise/glaise_Common/Automates/Actions/Actions - RC.bms"
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_ControleCreation_NOK"
 {
+    feedbacks = { { { "done_ACT_Mission_Automate_ControleCreation_NOK" }, "ACT_Mission_Automate_ControleCreation_NOK" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Mission_Automate_ControleCreation_NOK, {value} ) end,
     create = function( self )
     end,
 
     select = function( self )
         if( GetActivity() ~= 1 ) then
-            self.params.__returnValue = eActionHalt
+            self:SendFeedback( eActionHalt )
             do return end
         end
 
-                self.params.__returnValue = eActionEnCours
+                self:SendFeedback( eActionEnCours )
         do return end
 
     end,
@@ -78,6 +82,8 @@ include "Glaise/glaise_Common/Automates/Actions/Actions - RC.bms"
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_ControleCreation_EnCours"
 {
+    feedbacks = { { { "done_ACT_Mission_Automate_ControleCreation_EnCours" }, "ACT_Mission_Automate_ControleCreation_EnCours" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Mission_Automate_ControleCreation_EnCours, {value} ) end,
     create = function( self )
     end,
 
@@ -85,11 +91,11 @@ include "Glaise/glaise_Common/Automates/Actions/Actions - RC.bms"
         self.bActivite = self.bActivite or GetActivity() ~= 1
         self.bActivite = self.bActivite or GetActivity() ~= 1
         if( GetActivity() == 1 and self.bActivite ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             do return end
         end
 
-                self.params.__returnValue = eActionEnCours
+                self:SendFeedback( eActionEnCours )
         do return end
 
     end,
@@ -104,6 +110,8 @@ include "Glaise/glaise_Common/Automates/Actions/Actions - RC.bms"
 ]]--[[// *****************************************************************************
 ]]node "ACT_Info_Automate_Trace"
 {
+    feedbacks = { { { "done_ACT_Info_Automate_Trace" }, "ACT_Info_Automate_Trace" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Info_Automate_Trace, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.message = self.params[1]
@@ -127,6 +135,8 @@ include "Glaise/glaise_Common/Automates/Actions/Actions - RC.bms"
 ]]--[[// *****************************************************************************
 ]]node "ACT_Ordre_Suppression"
 {
+    feedbacks = { { { "done_ACT_Ordre_Suppression" }, "ACT_Ordre_Suppression" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Ordre_Suppression, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.ordre = self.params[1]

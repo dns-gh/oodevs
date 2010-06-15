@@ -26,9 +26,11 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "BEH_MOT_TenirFaceAuxEnis"
 {
+    feedbacks = { { { "done_BEH_MOT_TenirFaceAuxEnis" }, "BEH_MOT_TenirFaceAuxEnis" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MOT_TenirFaceAuxEnis, {value} ) end,
     activations =
     {
-        { "ACT_Dep_SePosterFaceA", {} },
+        { "ACT_Dep_SePosterFaceA", { "done_ACT_Dep_SePosterFaceA" } },
     },
 
     create = function( self )
@@ -54,10 +56,12 @@ include "bit.lua"
 
 node "BEH_MOT_GarderSesDistances"
 {
+    feedbacks = { { { "done_BEH_MOT_GarderSesDistances" }, "BEH_MOT_GarderSesDistances" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MOT_GarderSesDistances, {value} ) end,
     activations =
     {
-        { "ACT_MAJ_EtatDec", {} },
-        { "BEH_MOT_GarderSesDistancesFaceA", {} },
+        { "ACT_MAJ_EtatDec", { "done_ACT_MAJ_EtatDec" } },
+        { "BEH_MOT_GarderSesDistancesFaceA", { "done_BEH_MOT_GarderSesDistancesFaceA" } },
     },
 
     create = function( self )
@@ -89,9 +93,11 @@ node "BEH_MOT_GarderSesDistances"
 
 node "BEH_MOT_GarderSesDistancesFaceATirsIndirects"
 {
+    feedbacks = { { { "done_BEH_MOT_GarderSesDistancesFaceATirsIndirects" }, "BEH_MOT_GarderSesDistancesFaceATirsIndirects" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MOT_GarderSesDistancesFaceATirsIndirects, {value} ) end,
     activations =
     {
-        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
     },
 
     create = function( self )
@@ -139,6 +145,8 @@ node "BEH_MOT_GarderSesDistancesFaceATirsIndirects"
 
 node "BEH_MOT_GarderSesDistancesFaceA"
 {
+    feedbacks = { { { "done_BEH_MOT_GarderSesDistancesFaceA" }, "BEH_MOT_GarderSesDistancesFaceA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MOT_GarderSesDistancesFaceA, {value} ) end,
     instances =
     {
         boost = 1.01,
@@ -147,8 +155,8 @@ node "BEH_MOT_GarderSesDistancesFaceA"
 
     activations =
     {
-        { "BEH_SePosterFaceAEni", {} },
-        { "BEH_Eni_DecrocherFaceA", {} },
+        { "BEH_SePosterFaceAEni", { "done_BEH_SePosterFaceAEni" } },
+        { "BEH_Eni_DecrocherFaceA", { "done_BEH_Eni_DecrocherFaceA" } },
     },
 
     create = function( self )
@@ -196,9 +204,11 @@ node "BEH_MOT_GarderSesDistancesFaceA"
 
 node "BEH_MOT_TirerSurEnis"
 {
+    feedbacks = { { { "done_BEH_MOT_TirerSurEnis" }, "BEH_MOT_TirerSurEnis" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MOT_TirerSurEnis, {value} ) end,
     activations =
     {
-        { "BEH_MOT_GererLesFeuxSur", {} },
+        { "BEH_MOT_GererLesFeuxSur", { "done_BEH_MOT_GererLesFeuxSur" } },
     },
 
     create = function( self )
@@ -224,6 +234,8 @@ node "BEH_MOT_TirerSurEnis"
 
 node "BEH_MOT_GererLesFeuxSur"
 {
+    feedbacks = { { { "done_BEH_MOT_GererLesFeuxSur" }, "BEH_MOT_GererLesFeuxSur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MOT_GererLesFeuxSur, {value} ) end,
     instances =
     {
         boost = 1.01,
@@ -231,11 +243,11 @@ node "BEH_MOT_GererLesFeuxSur"
 
     activations =
     {
-        { "BEH_Feu_Pion_ABC_ConduireLesFeuxSur", {} },
-        { "ACT_Obs_EtablirVisionVersPt", {} },
-        { "ACT_Info_Trace", {} },
-        { "BEH_Eni_Pion_INF_GererContactEni", {} },
-        { "BEH_Eni_Pion_Milice_GererContactEni", {} },
+        { "BEH_Feu_Pion_ABC_ConduireLesFeuxSur", { "done_BEH_Feu_Pion_ABC_ConduireLesFeuxSur" } },
+        { "ACT_Obs_EtablirVisionVersPt", { "done_ACT_Obs_EtablirVisionVersPt" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "BEH_Eni_Pion_INF_GererContactEni", { "done_BEH_Eni_Pion_INF_GererContactEni" } },
+        { "BEH_Eni_Pion_Milice_GererContactEni", { "done_BEH_Eni_Pion_Milice_GererContactEni" } },
     },
 
     create = function( self )
@@ -259,7 +271,7 @@ if( S_Eni_EstNiveauPerceptionGTIA( self._namedParams.repEni, eReconnu ) ) then
             do
                 Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1, { DEC_ConnaissanceAgent_Position( self._namedParams.repEni ), } )
                 if( not DEC_ConnaissanceAgent_EstPercuParUnite( self._namedParams.repEni ) ) then
-                    self.params.__returnValue = eActionEnPause
+                    self:SendFeedback( eActionEnPause )
                     do return end
                 end
 
@@ -267,7 +279,7 @@ if( S_Eni_EstNiveauPerceptionGTIA( self._namedParams.repEni, eReconnu ) ) then
                 if( not S_Eni_EstNiveauPerceptionGTIA( self._namedParams.repEni, F_Pion_GeteNiveauAction( myself ) ) ) then
                     do
                         Activate( self.activations.ACT_Info_Trace, 1, { strMsg .. " : NOK", } )
-                                                self.params.__returnValue = eActionEnPause
+                                                self:SendFeedback( eActionEnPause )
                         do return end
 
                     end
@@ -284,7 +296,7 @@ if( S_Eni_EstNiveauPerceptionGTIA( self._namedParams.repEni, eReconnu ) ) then
                 if( not S_Eni_EstNiveauPerceptionGTIA( self._namedParams.repEni, F_Pion_GeteNiveauAction( myself ) ) ) then
                     do
                         Activate( self.activations.ACT_Info_Trace, 1, { strMsg .. " : NOK", } )
-                                                self.params.__returnValue = eActionEnPause
+                                                self:SendFeedback( eActionEnPause )
                         do return end
 
                     end
@@ -300,7 +312,7 @@ if( S_Eni_EstNiveauPerceptionGTIA( self._namedParams.repEni, eReconnu ) ) then
                 if( not S_Eni_EstNiveauPerceptionGTIA( self._namedParams.repEni, F_Pion_GeteNiveauAction( myself ) ) ) then
                     do
                         Activate( self.activations.ACT_Info_Trace, 1, { strMsg .. " : NOK", } )
-                                                self.params.__returnValue = eActionEnPause
+                                                self:SendFeedback( eActionEnPause )
                         do return end
 
                     end
@@ -323,11 +335,13 @@ if( S_Eni_EstNiveauPerceptionGTIA( self._namedParams.repEni, eReconnu ) ) then
 
 node "BEH_MOT_RiposterSurEnis"
 {
+    feedbacks = { { { "done_BEH_MOT_RiposterSurEnis" }, "BEH_MOT_RiposterSurEnis" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MOT_RiposterSurEnis, {value} ) end,
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "ACT_Tir_DirectSur", {} },
-        { "ACT_Obs_EtablirVisionVersPt", {} },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "ACT_Tir_DirectSur", { "done_ACT_Tir_DirectSur" } },
+        { "ACT_Obs_EtablirVisionVersPt", { "done_ACT_Obs_EtablirVisionVersPt" } },
     },
 
     create = function( self )
@@ -372,10 +386,12 @@ do
 
 node "BEH_MOT_SePoster"
 {
+    feedbacks = { { { "done_BEH_MOT_SePoster" }, "BEH_MOT_SePoster" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MOT_SePoster, {value} ) end,
     activations =
     {
-        { "ACT_MAJ_EtatOrdreCoordination", {} },
-        { "ACT_Dep_SePoster", {} },
+        { "ACT_MAJ_EtatOrdreCoordination", { "done_ACT_MAJ_EtatOrdreCoordination" } },
+        { "ACT_Dep_SePoster", { "done_ACT_Dep_SePoster" } },
     },
 
     create = function( self )
@@ -393,10 +409,12 @@ node "BEH_MOT_SePoster"
 
 node "BEH_MOT_EtrePrudent"
 {
+    feedbacks = { { { "done_BEH_MOT_EtrePrudent" }, "BEH_MOT_EtrePrudent" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MOT_EtrePrudent, {value} ) end,
     activations =
     {
-        { "ACT_MAJ_EtatPrudence", {} },
-        { "BEH_MOT_Ralentir", {} },
+        { "ACT_MAJ_EtatPrudence", { "done_ACT_MAJ_EtatPrudence" } },
+        { "BEH_MOT_Ralentir", { "done_BEH_MOT_Ralentir" } },
     },
 
     create = function( self )
@@ -417,9 +435,11 @@ node "BEH_MOT_EtrePrudent"
 
 node "BEH_MOT_Ralentir"
 {
+    feedbacks = { { { "done_BEH_MOT_Ralentir" }, "BEH_MOT_Ralentir" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MOT_Ralentir, {value} ) end,
     activations =
     {
-        { "ACT_Dep_ModulationVitesse", {} },
+        { "ACT_Dep_ModulationVitesse", { "done_ACT_Dep_ModulationVitesse" } },
     },
 
     create = function( self )
@@ -440,9 +460,11 @@ node "BEH_MOT_Ralentir"
 
 node "BEH_MOT_PasserEnAlerteDeNiveau4"
 {
+    feedbacks = { { { "done_BEH_MOT_PasserEnAlerteDeNiveau4" }, "BEH_MOT_PasserEnAlerteDeNiveau4" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MOT_PasserEnAlerteDeNiveau4, {value} ) end,
     activations =
     {
-        { "BEH_Nbc_GererAlerteNiv4", {} },
+        { "BEH_Nbc_GererAlerteNiv4", { "done_BEH_Nbc_GererAlerteNiv4" } },
     },
 
     create = function( self )
@@ -462,9 +484,11 @@ node "BEH_MOT_PasserEnAlerteDeNiveau4"
 
 node "BEH_MOT_PasserEnSilenceRadio"
 {
+    feedbacks = { { { "done_BEH_MOT_PasserEnSilenceRadio" }, "BEH_MOT_PasserEnSilenceRadio" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MOT_PasserEnSilenceRadio, {value} ) end,
     activations =
     {
-        { "BEH_Rens_PasserEnSilenceRadio", {} },
+        { "BEH_Rens_PasserEnSilenceRadio", { "done_BEH_Rens_PasserEnSilenceRadio" } },
     },
 
     create = function( self )
@@ -484,9 +508,11 @@ node "BEH_MOT_PasserEnSilenceRadio"
 
 node "BEH_MOT_SilenceRadars"
 {
+    feedbacks = { { { "done_BEH_MOT_SilenceRadars" }, "BEH_MOT_SilenceRadars" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MOT_SilenceRadars, {value} ) end,
     activations =
     {
-        { "BEH_Rens_PasserEnSilenceRadar", {} },
+        { "BEH_Rens_PasserEnSilenceRadar", { "done_BEH_Rens_PasserEnSilenceRadar" } },
     },
 
     create = function( self )
@@ -508,9 +534,11 @@ node "BEH_MOT_SilenceRadars"
 
 node "BEH_MOT_PasserEnTirRestreint"
 {
+    feedbacks = { { { "done_BEH_MOT_PasserEnTirRestreint" }, "BEH_MOT_PasserEnTirRestreint" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MOT_PasserEnTirRestreint, {value} ) end,
     activations =
     {
-        { "BEH_ROE_GererTirRestreint", {} },
+        { "BEH_ROE_GererTirRestreint", { "done_BEH_ROE_GererTirRestreint" } },
     },
 
     create = function( self )
@@ -530,9 +558,11 @@ node "BEH_MOT_PasserEnTirRestreint"
 
 node "BEH_MOT_PasserEnTirInterdit"
 {
+    feedbacks = { { { "done_BEH_MOT_PasserEnTirInterdit" }, "BEH_MOT_PasserEnTirInterdit" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MOT_PasserEnTirInterdit, {value} ) end,
     activations =
     {
-        { "BEH_ROE_GererTirInterdit", {} },
+        { "BEH_ROE_GererTirInterdit", { "done_BEH_ROE_GererTirInterdit" } },
     },
 
     create = function( self )
@@ -552,9 +582,11 @@ node "BEH_MOT_PasserEnTirInterdit"
 
 node "BEH_MOT_PasserEnTirLibre"
 {
+    feedbacks = { { { "done_BEH_MOT_PasserEnTirLibre" }, "BEH_MOT_PasserEnTirLibre" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MOT_PasserEnTirLibre, {value} ) end,
     activations =
     {
-        { "BEH_ROE_GererTirLibre", {} },
+        { "BEH_ROE_GererTirLibre", { "done_BEH_ROE_GererTirLibre" } },
     },
 
     create = function( self )
@@ -574,6 +606,8 @@ node "BEH_MOT_PasserEnTirLibre"
 
 node "BEH_MOT_DesactiveSauvegarde"
 {
+    feedbacks = { { { "done_BEH_MOT_DesactiveSauvegarde" }, "BEH_MOT_DesactiveSauvegarde" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MOT_DesactiveSauvegarde, {value} ) end,
     create = function( self )
     end,
 

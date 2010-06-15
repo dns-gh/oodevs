@@ -20,11 +20,13 @@ includedFiles["sources/melee/inf/pions/pc/Actions.bms"] = true
 
 node "ACT_Transport_Pion_INF_Debarquer"
 {
+    feedbacks = { { { "done_ACT_Transport_Pion_INF_Debarquer" }, "ACT_Transport_Pion_INF_Debarquer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Transport_Pion_INF_Debarquer, {value} ) end,
     create = function( self )
     end,
 
     select = function( self )
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         Halt( self )
         do return end
 
@@ -34,13 +36,15 @@ node "ACT_Transport_Pion_INF_Debarquer"
 
 node "ACT_Tir_Pion_INF_TirCouverture"
 {
+    feedbacks = { { { "done_ACT_Tir_Pion_INF_TirCouverture" }, "ACT_Tir_Pion_INF_TirCouverture" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Tir_Pion_INF_TirCouverture, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.repEni = self.params[1]
     end,
 
     select = function( self )
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         Halt( self )
         do return end
 

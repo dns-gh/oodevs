@@ -10,6 +10,8 @@ includedFiles["sources/glaise/glaise_appui/alat/automates/common/behaviors/Behav
 ]]--[[//------------------------------------------------------------------------------
 ]]node "BEH_Manoeuvre_Automate_ALAT_GererEtalementDispositif"
 {
+    feedbacks = { { { "done_BEH_Manoeuvre_Automate_ALAT_GererEtalementDispositif" }, "BEH_Manoeuvre_Automate_ALAT_GererEtalementDispositif" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Manoeuvre_Automate_ALAT_GererEtalementDispositif, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.listePions = self.params[1]
@@ -122,9 +124,11 @@ do
 
 node "BEH_Manoeuvre_Automate_ALAT_GererReleves"
 {
+    feedbacks = { { { "done_BEH_Manoeuvre_Automate_ALAT_GererReleves" }, "BEH_Manoeuvre_Automate_ALAT_GererReleves" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Manoeuvre_Automate_ALAT_GererReleves, {value} ) end,
     activations =
     {
-        { "BEH_Dispositif_Automate_ALAT_AssignerReleve", {} },
+        { "BEH_Dispositif_Automate_ALAT_AssignerReleve", { "done_BEH_Dispositif_Automate_ALAT_AssignerReleve" } },
     },
 
     create = function( self )
@@ -231,9 +235,11 @@ do
 
 node "BEH_Dispositif_Automate_ALAT_AssignerReleve"
 {
+    feedbacks = { { { "done_BEH_Dispositif_Automate_ALAT_AssignerReleve" }, "BEH_Dispositif_Automate_ALAT_AssignerReleve" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dispositif_Automate_ALAT_AssignerReleve, {value} ) end,
     activations =
     {
-        { "ACT_Conduite_Automate_ALAT_ReleverUnite", {} },
+        { "ACT_Conduite_Automate_ALAT_ReleverUnite", { "done_ACT_Conduite_Automate_ALAT_ReleverUnite" } },
     },
 
     create = function( self )

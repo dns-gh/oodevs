@@ -21,11 +21,13 @@ includedFiles["sources/humus/humus_melee/inf/automates/cie inf/missions/reconnai
 ]]--[[// ******************************************************************************
 ]]node "MIS_Automate_CDT_INF_ReconnaissanceOffensive"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_INF_ReconnaissanceOffensive" }, "MIS_Automate_CDT_INF_ReconnaissanceOffensive" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_INF_ReconnaissanceOffensive, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_GererFuseau", {} },
-        { "BEH_Conduite_Automate_INF_Defaut", {} },
-        { "BEH_Conduite_Automate_INF_CadreOffensif", {} },
+        { "BEH_Conduite_Automate_GererFuseau", { "done_BEH_Conduite_Automate_GererFuseau" } },
+        { "BEH_Conduite_Automate_INF_Defaut", { "done_BEH_Conduite_Automate_INF_Defaut" } },
+        { "BEH_Conduite_Automate_INF_CadreOffensif", { "done_BEH_Conduite_Automate_INF_CadreOffensif" } },
     },
 
     create = function( self )
@@ -52,7 +54,7 @@ includedFiles["sources/humus/humus_melee/inf/automates/cie inf/missions/reconnai
             do
                 self.eActionMission = eActionEnCours
                                 do
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -61,7 +63,8 @@ includedFiles["sources/humus/humus_melee/inf/automates/cie inf/missions/reconnai
             end
         end
 
-        Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, setmetatable( { false, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, { false, } )
+self.done_BEH_Conduite_Automate_INF_Defaut = function( self, _, v ) self.eActionMission = v[1] end
         Activate( self.activations.BEH_Conduite_Automate_INF_CadreOffensif, 1, {} )
     end,
 

@@ -12,13 +12,15 @@ includedFiles["sources/appui/rens/pions/radint/common/missions/Decrocher.bms"] =
 ]]--[[// *****************************************************************************
 ]]node "MIS_Pion_Decrocher"
 {
+    feedbacks = { { { "done_MIS_Pion_Decrocher" }, "MIS_Pion_Decrocher" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_Decrocher, {value} ) end,
     activations =
     {
-        { "BEH_MOT_DesactiveSauvegarde", {} },
-        { "ACT_Dep_Pion_RENS_VolerA", {} },
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_MOT_DesactiveSauvegarde", { "done_BEH_MOT_DesactiveSauvegarde" } },
+        { "ACT_Dep_Pion_RENS_VolerA", { "done_ACT_Dep_Pion_RENS_VolerA" } },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
     },
 
     create = function( self )
@@ -40,7 +42,8 @@ includedFiles["sources/appui/rens/pions/radint/common/missions/Decrocher.bms"] =
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
                 self.ePhaseMission = eFinMission
@@ -74,7 +77,8 @@ elseif switch_1 == eDecrocher then
                         end
                     end
 
-                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.pointRegroupement_, eProgressionDirect, eTypeItiRepli, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.mission.pointRegroupement_, eProgressionDirect, eTypeItiRepli, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                 --[[// 4) Fin de la mission
 ]]                cases_switch_1[2] = true

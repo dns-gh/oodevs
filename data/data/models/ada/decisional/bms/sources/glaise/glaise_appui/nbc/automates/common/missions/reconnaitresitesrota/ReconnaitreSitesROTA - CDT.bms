@@ -10,10 +10,12 @@ includedFiles["sources/glaise/glaise_appui/nbc/automates/common/missions/reconna
 ]]--[[// *****************************************************************************
 ]]node "BEH_Conduite_Automate_NBC_ReconnaitreSitesROTA"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_NBC_ReconnaitreSitesROTA" }, "BEH_Conduite_Automate_NBC_ReconnaitreSitesROTA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_NBC_ReconnaitreSitesROTA, {value} ) end,
     activations =
     {
-        { "BEH_Dispositif_Automate_NBC_GererPionsDetruits_", {} },
-        { "BEH_Conduite_Automate_NBC_FaireReconnaitreLesSitesROTA", {} },
+        { "BEH_Dispositif_Automate_NBC_GererPionsDetruits_", { "done_BEH_Dispositif_Automate_NBC_GererPionsDetruits_" } },
+        { "BEH_Conduite_Automate_NBC_FaireReconnaitreLesSitesROTA", { "done_BEH_Conduite_Automate_NBC_FaireReconnaitreLesSitesROTA" } },
     },
 
     create = function( self )
@@ -42,11 +44,13 @@ includedFiles["sources/glaise/glaise_appui/nbc/automates/common/missions/reconna
 
 node "BEH_Conduite_Automate_NBC_FaireReconnaitreLesSitesROTA"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_NBC_FaireReconnaitreLesSitesROTA" }, "BEH_Conduite_Automate_NBC_FaireReconnaitreLesSitesROTA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_NBC_FaireReconnaitreLesSitesROTA, {value} ) end,
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "BEH_Obj_Automate_NBC_AssignerReconnaitreSiteA", {} },
-        { "BEH_Mission_Automate_AssignerSuivreA", {} },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "BEH_Obj_Automate_NBC_AssignerReconnaitreSiteA", { "done_BEH_Obj_Automate_NBC_AssignerReconnaitreSiteA" } },
+        { "BEH_Mission_Automate_AssignerSuivreA", { "done_BEH_Mission_Automate_AssignerSuivreA" } },
     },
 
     create = function( self )
@@ -112,9 +116,11 @@ do
 
 node "BEH_Obj_Automate_NBC_AssignerReconnaitreSiteA"
 {
+    feedbacks = { { { "done_BEH_Obj_Automate_NBC_AssignerReconnaitreSiteA" }, "BEH_Obj_Automate_NBC_AssignerReconnaitreSiteA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Obj_Automate_NBC_AssignerReconnaitreSiteA, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_NBC_AssignerReconnaitreSiteA", {} },
+        { "BEH_Mission_Automate_NBC_AssignerReconnaitreSiteA", { "done_BEH_Mission_Automate_NBC_AssignerReconnaitreSiteA" } },
     },
 
     create = function( self )

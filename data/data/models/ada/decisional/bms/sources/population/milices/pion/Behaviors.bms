@@ -117,16 +117,18 @@ include "Population/Asymetriques/Common/Pion/Missions/Renseigner.bms"
 
 node "BEH_Defaut"
 {
+    feedbacks = { { { "done_BEH_Defaut" }, "BEH_Defaut" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Defaut, {value} ) end,
     activations =
     {
-        { "ACT_Maj_Pion_PasserEnTirLibre", {} },
-        { "BEH_MAJ_EtatDefaut", {} },
-        { "BEH_Mot_AffecterVariablesDEtat", {} },
-        { "BEH_Ambiance", {} },
-        { "BEH_ROE", {} },
-        { "BEH_Nbc", {} },
-        { "BEH_Rens", {} },
-        { "ACT_MAJ_EnnemiEnCours", {} },
+        { "ACT_Maj_Pion_PasserEnTirLibre", { "done_ACT_Maj_Pion_PasserEnTirLibre" } },
+        { "BEH_MAJ_EtatDefaut", { "done_BEH_MAJ_EtatDefaut" } },
+        { "BEH_Mot_AffecterVariablesDEtat", { "done_BEH_Mot_AffecterVariablesDEtat" } },
+        { "BEH_Ambiance", { "done_BEH_Ambiance" } },
+        { "BEH_ROE", { "done_BEH_ROE" } },
+        { "BEH_Nbc", { "done_BEH_Nbc" } },
+        { "BEH_Rens", { "done_BEH_Rens" } },
+        { "ACT_MAJ_EnnemiEnCours", { "done_ACT_MAJ_EnnemiEnCours" } },
     },
 
     create = function( self )
@@ -183,11 +185,13 @@ node "BEH_Defaut"
 
 node "BEH_Obs_Pion_INF_SurveillerSecteur"
 {
+    feedbacks = { { { "done_BEH_Obs_Pion_INF_SurveillerSecteur" }, "BEH_Obs_Pion_INF_SurveillerSecteur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Obs_Pion_INF_SurveillerSecteur, {value} ) end,
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "ACT_Obs_SurveillerZone", {} },
-        { "ACT_Obs_ObserverZone", {} },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "ACT_Obs_SurveillerZone", { "done_ACT_Obs_SurveillerZone" } },
+        { "ACT_Obs_ObserverZone", { "done_ACT_Obs_ObserverZone" } },
     },
 
     create = function( self )
@@ -203,7 +207,8 @@ node "BEH_Obs_Pion_INF_SurveillerSecteur"
         end
 
         Activate( self.activations.ACT_Obs_SurveillerZone, 1, { self._namedParams.locSecteur, } )
-        Activate( self.activations.ACT_Obs_ObserverZone, 1, setmetatable( { DEC_Agent_Position(), M_CAPACITE_SURVEILLANCE(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Obs_ObserverZone, 1, { DEC_Agent_Position(), M_CAPACITE_SURVEILLANCE(), } )
+self.done_ACT_Obs_ObserverZone = function( self, _, v ) self.eAction = v[1] end
     end,
 
 }

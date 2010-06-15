@@ -9,15 +9,17 @@ includedFiles["sources/melee/abc/automates/ge40/missions/offensives/marcheennemi
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_ABC_GTIA_MarcheEnnemi"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ABC_GTIA_MarcheEnnemi" }, "MIS_Automate_CDT_ABC_GTIA_MarcheEnnemi" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ABC_GTIA_MarcheEnnemi, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_AnalyserSituationPourReconnaitre", {} },
-        { "BEH_GTIA_OrganiserLesMoyensPourAttaquer", {} },
-        { "BEH_GTIA_RendreCompte", {} },
-        { "BEH_GTIA_GererAppuisInternes", {} },
-        { "BEH_GTIA_EchelonnerDispositif", {} },
-        { "BEH_GTIA_RepartirDansFuseaux", {} },
-        { "BEH_GTIA_AssignerLesOrdresPourReconnaitre", {} },
+        { "ACT_GTIA_AnalyserSituationPourReconnaitre", { "done_ACT_GTIA_AnalyserSituationPourReconnaitre" } },
+        { "BEH_GTIA_OrganiserLesMoyensPourAttaquer", { "done_BEH_GTIA_OrganiserLesMoyensPourAttaquer" } },
+        { "BEH_GTIA_RendreCompte", { "done_BEH_GTIA_RendreCompte" } },
+        { "BEH_GTIA_GererAppuisInternes", { "done_BEH_GTIA_GererAppuisInternes" } },
+        { "BEH_GTIA_EchelonnerDispositif", { "done_BEH_GTIA_EchelonnerDispositif" } },
+        { "BEH_GTIA_RepartirDansFuseaux", { "done_BEH_GTIA_RepartirDansFuseaux" } },
+        { "BEH_GTIA_AssignerLesOrdresPourReconnaitre", { "done_BEH_GTIA_AssignerLesOrdresPourReconnaitre" } },
     },
 
     create = function( self )
@@ -79,6 +81,8 @@ includedFiles["sources/melee/abc/automates/ge40/missions/offensives/marcheennemi
 
 node "ACT_GTIA_AnalyserSituationPourReconnaitre"
 {
+    feedbacks = { { { "done_ACT_GTIA_AnalyserSituationPourReconnaitre" }, "ACT_GTIA_AnalyserSituationPourReconnaitre" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_GTIA_AnalyserSituationPourReconnaitre, {value} ) end,
     create = function( self )
     end,
 
@@ -107,10 +111,12 @@ node "ACT_GTIA_AnalyserSituationPourReconnaitre"
 ]]--[[// *****************************************************************************
 ]]node "BEH_GTIA_AssignerLesOrdresPourReconnaitre"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerLesOrdresPourReconnaitre" }, "BEH_GTIA_AssignerLesOrdresPourReconnaitre" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerLesOrdresPourReconnaitre, {value} ) end,
     activations =
     {
-        { "BEH_GTIA_AssignerLesMissionsReconnaissance", {} },
-        { "BEH_GTIA_AssurerLaCoordination", {} },
+        { "BEH_GTIA_AssignerLesMissionsReconnaissance", { "done_BEH_GTIA_AssignerLesMissionsReconnaissance" } },
+        { "BEH_GTIA_AssurerLaCoordination", { "done_BEH_GTIA_AssurerLaCoordination" } },
     },
 
     create = function( self )
@@ -132,13 +138,15 @@ node "ACT_GTIA_AnalyserSituationPourReconnaitre"
 
 node "BEH_GTIA_AssignerLesMissionsReconnaissance"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerLesMissionsReconnaissance" }, "BEH_GTIA_AssignerLesMissionsReconnaissance" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerLesMissionsReconnaissance, {value} ) end,
     activations =
     {
-        { "BEH_GTIA_AssignerMissionsEcl", {} },
-        { "BEH_GTIA_AssignerMissionsRecoPE", {} },
-        { "BEH_GTIA_AssignerMissionsSE", {} },
-        { "BEH_GTIA_AssignerMissionsSEAppui", {} },
-        { "BEH_GTIA_AssignerMissionsPC", {} },
+        { "BEH_GTIA_AssignerMissionsEcl", { "done_BEH_GTIA_AssignerMissionsEcl" } },
+        { "BEH_GTIA_AssignerMissionsRecoPE", { "done_BEH_GTIA_AssignerMissionsRecoPE" } },
+        { "BEH_GTIA_AssignerMissionsSE", { "done_BEH_GTIA_AssignerMissionsSE" } },
+        { "BEH_GTIA_AssignerMissionsSEAppui", { "done_BEH_GTIA_AssignerMissionsSEAppui" } },
+        { "BEH_GTIA_AssignerMissionsPC", { "done_BEH_GTIA_AssignerMissionsPC" } },
     },
 
     create = function( self )
@@ -167,9 +175,11 @@ node "BEH_GTIA_AssignerLesMissionsReconnaissance"
 
 node "BEH_GTIA_AssignerMissionsRecoPE"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerMissionsRecoPE" }, "BEH_GTIA_AssignerMissionsRecoPE" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerMissionsRecoPE, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_AssignerMission", {} },
+        { "ACT_GTIA_AssignerMission", { "done_ACT_GTIA_AssignerMission" } },
     },
 
     create = function( self )

@@ -10,9 +10,11 @@ includedFiles["sources/melee/abc/pions/grp rasit/missions/RenseignerSur.bms"] = 
 ]]--[[// *****************************************************************************
 ]]node "MIS_Pion_ABC_RASIT_RenseignerSur"
 {
+    feedbacks = { { { "done_MIS_Pion_ABC_RASIT_RenseignerSur" }, "MIS_Pion_ABC_RASIT_RenseignerSur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_ABC_RASIT_RenseignerSur, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Pion_ABC_RASIT_RenseignerSur", {} },
+        { "BEH_Mission_Pion_ABC_RASIT_RenseignerSur", { "done_BEH_Mission_Pion_ABC_RASIT_RenseignerSur" } },
     },
 
     create = function( self )
@@ -26,13 +28,13 @@ includedFiles["sources/melee/abc/pions/grp rasit/missions/RenseignerSur.bms"] = 
 ]]--[[// Terminaison
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eEtat == eActionImpossible ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             Halt( self )
             do return end
         end
 
         if( self.eEtat == eActionEffectuee ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -40,7 +42,8 @@ includedFiles["sources/melee/abc/pions/grp rasit/missions/RenseignerSur.bms"] = 
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Comportement de la mission
 ]]--[[//-----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_Mission_Pion_ABC_RASIT_RenseignerSur, 1, setmetatable( { self._namedParams.mission, M_MODELE_PION_ABC_SURVEIILER_PH(), M_MODELE_PION_ABC_SURVEIILER_ID(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+]]Activate( self.activations.BEH_Mission_Pion_ABC_RASIT_RenseignerSur, 1, { self._namedParams.mission, M_MODELE_PION_ABC_SURVEIILER_PH(), M_MODELE_PION_ABC_SURVEIILER_ID(), } )
+self.done_BEH_Mission_Pion_ABC_RASIT_RenseignerSur = function( self, _, v ) self.eEtat = v[1] end
     end,
 
 --[[// ******************************************************************************
@@ -53,14 +56,16 @@ includedFiles["sources/melee/abc/pions/grp rasit/missions/RenseignerSur.bms"] = 
 
 node "BEH_Mission_Pion_ABC_RASIT_RenseignerSur"
 {
+    feedbacks = { { { "done_BEH_Mission_Pion_ABC_RASIT_RenseignerSur" }, "BEH_Mission_Pion_ABC_RASIT_RenseignerSur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Pion_ABC_RASIT_RenseignerSur, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Info_Trace", {} },
-        { "BEH_Dep_ProgressionVers", {} },
-        { "BEH_Pion_ABC_RASIT_EnSurveillanceRadarDe", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
+        { "BEH_Pion_ABC_RASIT_EnSurveillanceRadarDe", { "done_BEH_Pion_ABC_RASIT_EnSurveillanceRadarDe" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "done_BEH_Dep_SePosterFaceADirectionDangereuse" } },
     },
 
     create = function( self )
@@ -75,7 +80,8 @@ node "BEH_Mission_Pion_ABC_RASIT_RenseignerSur"
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.pointARenseigner = self.pointARenseigner or S_Geometrie_BarycentreZone( self._namedParams.mission.zone_ )
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
                 self.ePhaseMission = eFinMission
@@ -88,7 +94,7 @@ node "BEH_Mission_Pion_ABC_RASIT_RenseignerSur"
 ]]        end
 
         if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -151,9 +157,11 @@ elseif switch_1 == eFinMission then
 
 node "BEH_Pion_ABC_RASIT_EnSurveillanceRadarDe"
 {
+    feedbacks = { { { "done_BEH_Pion_ABC_RASIT_EnSurveillanceRadarDe" }, "BEH_Pion_ABC_RASIT_EnSurveillanceRadarDe" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pion_ABC_RASIT_EnSurveillanceRadarDe, {value} ) end,
     activations =
     {
-        { "ACT_Obs_Pion_ABC_ActiverRadarDans", {} },
+        { "ACT_Obs_Pion_ABC_ActiverRadarDans", { "done_ACT_Obs_Pion_ABC_ActiverRadarDans" } },
     },
 
     create = function( self )
@@ -178,6 +186,8 @@ node "BEH_Pion_ABC_RASIT_EnSurveillanceRadarDe"
 
 node "ACT_Obs_Pion_ABC_ActiverRadarDans"
 {
+    feedbacks = { { { "done_ACT_Obs_Pion_ABC_ActiverRadarDans" }, "ACT_Obs_Pion_ABC_ActiverRadarDans" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obs_Pion_ABC_ActiverRadarDans, {value} ) end,
     actuators =
     {
         deplacement = 1,

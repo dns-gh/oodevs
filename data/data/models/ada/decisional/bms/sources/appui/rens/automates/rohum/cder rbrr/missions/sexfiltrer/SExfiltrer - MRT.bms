@@ -9,9 +9,11 @@ includedFiles["sources/appui/rens/automates/rohum/cder rbrr/missions/sexfiltrer/
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_MRT_RENS_ROHUM_SExfiltrer"
 {
+    feedbacks = { { { "done_MIS_Automate_MRT_RENS_ROHUM_SExfiltrer" }, "MIS_Automate_MRT_RENS_ROHUM_SExfiltrer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_MRT_RENS_ROHUM_SExfiltrer, {value} ) end,
     activations =
     {
-        { "BEH_Medo_Automate_RENS_ROHUM_AssignerMissions", {} },
+        { "BEH_Medo_Automate_RENS_ROHUM_AssignerMissions", { "done_BEH_Medo_Automate_RENS_ROHUM_AssignerMissions" } },
     },
 
     create = function( self )

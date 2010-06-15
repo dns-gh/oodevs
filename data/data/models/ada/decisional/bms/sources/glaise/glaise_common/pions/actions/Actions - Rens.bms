@@ -10,6 +10,8 @@ includedFiles["sources/glaise/glaise_common/pions/actions/Actions - Rens.bms"] =
 ]]--[[// *****************************************************************************
 ]]node "ACT_Rens_CommuterRadio"
 {
+    feedbacks = { { { "done_ACT_Rens_CommuterRadio" }, "ACT_Rens_CommuterRadio" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Rens_CommuterRadio, {value} ) end,
     create = function( self )
     end,
 
@@ -38,6 +40,8 @@ includedFiles["sources/glaise/glaise_common/pions/actions/Actions - Rens.bms"] =
 ]]--[[// *****************************************************************************
 ]]node "ACT_Pion_Rens_PasserEnSilenceRadar"
 {
+    feedbacks = { { { "done_ACT_Pion_Rens_PasserEnSilenceRadar" }, "ACT_Pion_Rens_PasserEnSilenceRadar" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Pion_Rens_PasserEnSilenceRadar, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.typeRadar = self.params[1]
@@ -68,6 +72,8 @@ includedFiles["sources/glaise/glaise_common/pions/actions/Actions - Rens.bms"] =
 ]]--[[// *****************************************************************************
 ]]node "ACT_Pion_Rens_PartageConnaissancesDansZoneAvec"
 {
+    feedbacks = { { { "done_ACT_Pion_Rens_PartageConnaissancesDansZoneAvec" }, "ACT_Pion_Rens_PartageConnaissancesDansZoneAvec" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Pion_Rens_PartageConnaissancesDansZoneAvec, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.automate = self.params[1]
@@ -124,6 +130,8 @@ includedFiles["sources/glaise/glaise_common/pions/actions/Actions - Rens.bms"] =
 ]]--[[// *****************************************************************************
 ]]node "ACT_Pion_Rens_PartageConnaissancesAvec"
 {
+    feedbacks = { { { "done_ACT_Pion_Rens_PartageConnaissancesAvec" }, "ACT_Pion_Rens_PartageConnaissancesAvec" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Pion_Rens_PartageConnaissancesAvec, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.automate = self.params[1]

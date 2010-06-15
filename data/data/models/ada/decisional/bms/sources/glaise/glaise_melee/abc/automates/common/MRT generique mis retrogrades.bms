@@ -24,13 +24,15 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionRetrograde"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionRetrograde" }, "BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionRetrograde" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionRetrograde, {value} ) end,
     activations =
     {
-        { "ACT_Info_Automate_Trace", {} },
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
-        { "BEH_Medo_Automate_ABC_AssignerMissionFreinerA", {} },
-        { "BEH_Medo_Automate_ABC_AssignerMissionJalonerA", {} },
-        { "ACT_Warning", {} },
+        { "ACT_Info_Automate_Trace", { "done_ACT_Info_Automate_Trace" } },
+        { "BEH_Medo_Automate_ControleCreationMission", { "done_BEH_Medo_Automate_ControleCreationMission" } },
+        { "BEH_Medo_Automate_ABC_AssignerMissionFreinerA", { "done_BEH_Medo_Automate_ABC_AssignerMissionFreinerA" } },
+        { "BEH_Medo_Automate_ABC_AssignerMissionJalonerA", { "done_BEH_Medo_Automate_ABC_AssignerMissionJalonerA" } },
+        { "ACT_Warning", { "done_ACT_Warning" } },
     },
 
     create = function( self )
@@ -216,7 +218,8 @@ elseif switch_1 == eMRT_AssignerMissions then
                                 --[[//-----------------------------------------------------------------------------
 ]]--[[// Freiner
 ]]--[[//-----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.selABC_Blinde ) + #( self.selABC_Ecl ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+]]Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( self.selABC_Blinde ) + #( self.selABC_Ecl ), } )
+self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eEtat = v[1] end
                                 Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionFreinerA, 1, { self.selABC_SE, eEtatEchelon_Second, } )
                                 Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionFreinerA, 1, { self.selABC_PE, eEtatEchelon_Premier, } )
                                 Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionJalonerA, 1, { self.selABC_Ecl, eEtatEchelon_Eclairage, } )
@@ -226,7 +229,8 @@ elseif switch_1 == eMRT_AssignerMissions then
 ]]--[[//-----------------------------------------------------------------------------
 ]]                            cases_switch_2[1] = true
 elseif switch_2 == "T_Mission_Automate_ABC_Jalonner" then
-                                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.selABC_Blinde ) + #( self.selABC_Ecl ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                                Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( self.selABC_Blinde ) + #( self.selABC_Ecl ), } )
+self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eEtat = v[1] end
                                 Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionJalonerA, 1, { self.selABC_Ecl, eEtatEchelon_Eclairage, } )
                                 Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionJalonerA, 1, { self.selABC_Blinde, eEtatEchelon_Premier, } )
                                 _continue = false
@@ -248,7 +252,7 @@ elseif switch_1 == eMRT_MissionImpossible then
 ]]                cases_switch_1[4] = true
 elseif switch_1 == eMRT_Valider then
                     DEC_MRT_Valide()
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 

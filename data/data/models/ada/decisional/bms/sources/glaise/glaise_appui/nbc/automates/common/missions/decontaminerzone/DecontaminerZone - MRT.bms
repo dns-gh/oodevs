@@ -10,11 +10,13 @@ includedFiles["sources/glaise/glaise_appui/nbc/automates/common/missions/deconta
 ]]--[[// *****************************************************************************
 ]]node "BEH_Medo_Automate_NBC_AssignerDecontaminerZoneA"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_NBC_AssignerDecontaminerZoneA" }, "BEH_Medo_Automate_NBC_AssignerDecontaminerZoneA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_NBC_AssignerDecontaminerZoneA, {value} ) end,
     activations =
     {
-        { "ACT_Warning", {} },
-        { "ACT_Info_Trace", {} },
-        { "BEH_Mission_Automate_NBC_AssignerDecontaminerZoneA", {} },
+        { "ACT_Warning", { "done_ACT_Warning" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "BEH_Mission_Automate_NBC_AssignerDecontaminerZoneA", { "done_BEH_Mission_Automate_NBC_AssignerDecontaminerZoneA" } },
     },
 
     create = function( self )

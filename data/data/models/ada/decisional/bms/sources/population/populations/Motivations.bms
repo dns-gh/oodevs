@@ -32,6 +32,8 @@ motivation_plugin.motivations[ "MOT_Mission" ] =
 
 node "ActivatedByMOT_Mission"
 {
+    feedbacks = { { { "done_ActivatedByMOT_Mission" }, "ActivatedByMOT_Mission" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_Mission, {value} ) end,
     create = function( self )
     end,
 
@@ -82,9 +84,11 @@ node "ActivatedByMOT_Mission"
 
 node "ActivatedByMOT_Riposte"
 {
+    feedbacks = { { { "done_ActivatedByMOT_Riposte" }, "ActivatedByMOT_Riposte" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_Riposte, {value} ) end,
     activations =
     {
-        { "BEH_Pop_RepondreALaPriseAPartie", {} },
+        { "BEH_Pop_RepondreALaPriseAPartie", { "done_BEH_Pop_RepondreALaPriseAPartie" } },
     },
 
     create = function( self )
@@ -138,9 +142,11 @@ node "ActivatedByMOT_Riposte"
 
 node "ActivatedByMOT_Stationner"
 {
+    feedbacks = { { { "done_ActivatedByMOT_Stationner" }, "ActivatedByMOT_Stationner" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_Stationner, {value} ) end,
     activations =
     {
-        { "BEH_Pop_Stationner", {} },
+        { "BEH_Pop_Stationner", { "done_BEH_Pop_Stationner" } },
     },
 
     create = function( self )

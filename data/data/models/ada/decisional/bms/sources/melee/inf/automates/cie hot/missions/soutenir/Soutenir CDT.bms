@@ -14,11 +14,13 @@ includedFiles["sources/melee/inf/automates/cie hot/missions/soutenir/Soutenir CD
 ]]
 node "MIS_Automate_CDT_INF_Soutenir"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_INF_Soutenir" }, "MIS_Automate_CDT_INF_Soutenir" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_INF_Soutenir, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_GererFuseau", {} },
-        { "BEH_Conduite_Automate_INF_Defaut", {} },
-        { "BEH_Conduite_Automate_HOT_Defaut", {} },
+        { "BEH_Conduite_Automate_GererFuseau", { "done_BEH_Conduite_Automate_GererFuseau" } },
+        { "BEH_Conduite_Automate_INF_Defaut", { "done_BEH_Conduite_Automate_INF_Defaut" } },
+        { "BEH_Conduite_Automate_HOT_Defaut", { "done_BEH_Conduite_Automate_HOT_Defaut" } },
     },
 
     create = function( self )
@@ -35,7 +37,8 @@ node "MIS_Automate_CDT_INF_Soutenir"
 ]]if( ModuleBegins() ) then
             do
                 DEC_SetMission( myself, self._namedParams.mission )
-                StartActivateOverride( self, self.activations.BEH_Conduite_Automate_GererFuseau, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionHorsFuseau = v else rawset( t, k, v ) end end } ) )
+                StartActivateOverride( self, self.activations.BEH_Conduite_Automate_GererFuseau, 1, {} )
+self.done_BEH_Conduite_Automate_GererFuseau = function( self, _, v ) self.eActionHorsFuseau = v[1] end
             end
 --[[// Conduite des pions au niveau section
 ]]--[[//-----------------------------------------------------------------------------				
@@ -45,7 +48,7 @@ node "MIS_Automate_CDT_INF_Soutenir"
             do
                 self.eActionMission = eActionEnCours
                                 do
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -54,7 +57,8 @@ node "MIS_Automate_CDT_INF_Soutenir"
             end
         end
 
-        Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, { true, } )
+self.done_BEH_Conduite_Automate_INF_Defaut = function( self, _, v ) self.eActionMission = v[1] end
         Activate( self.activations.BEH_Conduite_Automate_HOT_Defaut, 1, {} )
 --[[// behavior BEH_Conduite_Automate_INF_Appuyer( mission.compagnie_ );		
 ]]    end,

@@ -6,9 +6,11 @@ includedFiles["sources/appui/artdsa/automates/sgpt samp hawk/missions/surveiller
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "MIS_Automate_CDT_ASA_HAWK_Surveiller"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ASA_HAWK_Surveiller" }, "MIS_Automate_CDT_ASA_HAWK_Surveiller" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ASA_HAWK_Surveiller, {value} ) end,
     activations =
     {
-        { "BEH_Eni_ASA_HAWK_GererTirsSurveiller", {} },
+        { "BEH_Eni_ASA_HAWK_GererTirsSurveiller", { "done_BEH_Eni_ASA_HAWK_GererTirsSurveiller" } },
     },
 
     create = function( self )

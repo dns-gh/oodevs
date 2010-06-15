@@ -23,17 +23,19 @@ includedFiles["sources/melee/abc/pions/common/missions/Appuyer.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "BEH_Mission_Pion_ABC_Appuyer"
 {
+    feedbacks = { { { "done_BEH_Mission_Pion_ABC_Appuyer" }, "BEH_Mission_Pion_ABC_Appuyer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Pion_ABC_Appuyer, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "BEH_MAJ_Pion_ABC_AgressiviteTir", {} },
-        { "ACT_Info_Trace", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Dep_ModulationVitesse", {} },
-        { "BEH_Dep_ProgressionVers", {} },
-        { "BEH_Dep_Pion_ABC_RejoindrePositionAppuiPour", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
-        { "BEH_Obj_RejoindreEmbossements", {} },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "BEH_MAJ_Pion_ABC_AgressiviteTir", { "done_BEH_MAJ_Pion_ABC_AgressiviteTir" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "ACT_Dep_ModulationVitesse", { "done_ACT_Dep_ModulationVitesse" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
+        { "BEH_Dep_Pion_ABC_RejoindrePositionAppuiPour", { "done_BEH_Dep_Pion_ABC_RejoindrePositionAppuiPour" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "done_BEH_Dep_SePosterFaceADirectionDangereuse" } },
+        { "BEH_Obj_RejoindreEmbossements", { "done_BEH_Obj_RejoindreEmbossements" } },
     },
 
     create = function( self )
@@ -48,7 +50,8 @@ includedFiles["sources/melee/abc/pions/common/missions/Appuyer.bms"] = true
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.positionAmie = self.positionAmie or nil
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
                 self.ePhaseMission = eFinMission
@@ -61,7 +64,7 @@ includedFiles["sources/melee/abc/pions/common/missions/Appuyer.bms"] = true
 ]]        end
 
         if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -119,7 +122,8 @@ elseif switch_1 == eProgresser then
 
                     Activate( self.activations.ACT_Dep_ModulationVitesse, 1.5, { 1, } )
                     --[[// force de 1.
-]]Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.positionAmie, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+]]Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.positionAmie, eProgressionDirect, eTypeItiMouvement, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                 --[[// Passer en appui
 ]]                cases_switch_1[2] = true
@@ -136,7 +140,8 @@ elseif switch_1 == ePasserEnAppui then
                         end
                     end
 
-                    Activate( self.activations.BEH_Dep_Pion_ABC_RejoindrePositionAppuiPour, 1, setmetatable( { self._namedParams.mission.uniteAAppuyer_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_Pion_ABC_RejoindrePositionAppuiPour, 1, { self._namedParams.mission.uniteAAppuyer_, } )
+self.done_BEH_Dep_Pion_ABC_RejoindrePositionAppuiPour = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                 --[[// On se poste sur la position d'appui
 ]]                cases_switch_1[3] = true

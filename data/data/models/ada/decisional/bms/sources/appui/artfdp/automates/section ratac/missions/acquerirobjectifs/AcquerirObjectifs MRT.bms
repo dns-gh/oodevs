@@ -18,10 +18,12 @@ includedFiles["sources/appui/artfdp/automates/section ratac/missions/acquerirobj
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_MRT_ASS_AcquerirObjectifs"
 {
+    feedbacks = { { { "done_MIS_Automate_MRT_ASS_AcquerirObjectifs" }, "MIS_Automate_MRT_ASS_AcquerirObjectifs" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_MRT_ASS_AcquerirObjectifs, {value} ) end,
     activations =
     {
-        { "ACT_RC_Automate", {} },
-        { "BEH_Medo_Automate_PreparerMission_AcquerirObjectifs", {} },
+        { "ACT_RC_Automate", { "done_ACT_RC_Automate" } },
+        { "BEH_Medo_Automate_PreparerMission_AcquerirObjectifs", { "done_BEH_Medo_Automate_PreparerMission_AcquerirObjectifs" } },
     },
 
     create = function( self )
@@ -53,7 +55,7 @@ includedFiles["sources/appui/artfdp/automates/section ratac/missions/acquerirobj
                     DEC_Trace( "!!!!Mind out some first line units didn't receive mission!!!!" )
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -65,7 +67,7 @@ includedFiles["sources/appui/artfdp/automates/section ratac/missions/acquerirobj
                 self.eValidationMRT = eActionEnCours
                                 do
                     DEC_MRT_Valide()
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -74,18 +76,21 @@ includedFiles["sources/appui/artfdp/automates/section ratac/missions/acquerirobj
             end
         end
 
-        Activate( self.activations.BEH_Medo_Automate_PreparerMission_AcquerirObjectifs, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Medo_Automate_PreparerMission_AcquerirObjectifs, 1, {} )
+self.done_BEH_Medo_Automate_PreparerMission_AcquerirObjectifs = function( self, _, v ) self.eValidationMRT = v[1] end
     end,
 
 }
 
 node "BEH_Medo_Automate_PreparerMission_AcquerirObjectifs"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_PreparerMission_AcquerirObjectifs" }, "BEH_Medo_Automate_PreparerMission_AcquerirObjectifs" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_PreparerMission_AcquerirObjectifs, {value} ) end,
     activations =
     {
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
-        { "BEH_Medo_Automate_ASS_AcquerirObjectifs", {} },
-        { "BEH_Medo_Automate_ASS_AssignerMission_PC", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", { "done_BEH_Medo_Automate_ControleCreationMission" } },
+        { "BEH_Medo_Automate_ASS_AcquerirObjectifs", { "done_BEH_Medo_Automate_ASS_AcquerirObjectifs" } },
+        { "BEH_Medo_Automate_ASS_AssignerMission_PC", { "done_BEH_Medo_Automate_ASS_AssignerMission_PC" } },
     },
 
     create = function( self )
@@ -120,7 +125,7 @@ node "BEH_Medo_Automate_PreparerMission_AcquerirObjectifs"
                     if( ( #( self.selPions_ASS_RATAC ) == 0 or #( self.selPions_ASS_RATAC ) == nil ) ) then
                         do
                             DEC_Trace( "First echelon is empty" )
-                                                        self.params.__returnValue = eActionImpossible
+                                                        self:SendFeedback( eActionImpossible )
                             Halt( self )
                             do return end
 
@@ -142,7 +147,7 @@ elseif switch_1 == eMRT_AssignerMissions then
                                 DEC_Trace( "eValidationMRT == eActionImpossible" )
                             end
 
-                                                        self.params.__returnValue = eActionImpossible
+                                                        self:SendFeedback( eActionImpossible )
                             Halt( self )
                             do return end
 
@@ -153,7 +158,7 @@ elseif switch_1 == eMRT_AssignerMissions then
                         do
                             self.eValidationMRT = eActionEnCours
                                                         do
-                                                                self.params.__returnValue = eActionEffectuee
+                                                                self:SendFeedback( eActionEffectuee )
                                 Halt( self )
                                 do return end
 
@@ -162,8 +167,10 @@ elseif switch_1 == eMRT_AssignerMissions then
                         end
                     end
 
-                    Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.selPions_ASS_RATAC ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
-                    Activate( self.activations.BEH_Medo_Automate_ASS_AcquerirObjectifs, 1, setmetatable( { self.selPions_ASS_RATAC, self.mission.zonesAObserver_, self.mission.positionsDeploiement_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMRT = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( self.selPions_ASS_RATAC ), } )
+self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eValidationMRT = v[1] end
+                    Activate( self.activations.BEH_Medo_Automate_ASS_AcquerirObjectifs, 1, { self.selPions_ASS_RATAC, self.mission.zonesAObserver_, self.mission.positionsDeploiement_, } )
+self.done_BEH_Medo_Automate_ASS_AcquerirObjectifs = function( self, _, v ) self.eActionMRT = v[1] end
                     --[[// Assigne la mission au pc
 ]]Activate( self.activations.BEH_Medo_Automate_ASS_AssignerMission_PC, 1, { self.selPions_ASS_RATAC, } )
                     _continue = false
@@ -177,9 +184,11 @@ elseif switch_1 == eMRT_AssignerMissions then
 
 node "BEH_Medo_Automate_ASS_AcquerirObjectifs"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_ASS_AcquerirObjectifs" }, "BEH_Medo_Automate_ASS_AcquerirObjectifs" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_ASS_AcquerirObjectifs, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_ASS_AcquerirObjectifsA", {} },
+        { "BEH_Mission_Automate_ASS_AcquerirObjectifsA", { "done_BEH_Mission_Automate_ASS_AcquerirObjectifsA" } },
     },
 
     create = function( self )

@@ -11,6 +11,8 @@ includedFiles["sources/appui/trans/pions/actions/Actions - RC.bms"] = true
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_RC"
 {
+    feedbacks = { { { "done_ACT_RC" }, "ACT_RC" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_RC, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.eTypeRC = self.params[1]
@@ -34,6 +36,8 @@ includedFiles["sources/appui/trans/pions/actions/Actions - RC.bms"] = true
 
 node "ACT_Warning"
 {
+    feedbacks = { { { "done_ACT_Warning" }, "ACT_Warning" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Warning, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.typeRC = self.params[1]
@@ -56,6 +60,8 @@ node "ACT_Warning"
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_RC_SurObjet"
 {
+    feedbacks = { { { "done_ACT_RC_SurObjet" }, "ACT_RC_SurObjet" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_RC_SurObjet, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.eTypeRC = self.params[1]
@@ -79,6 +85,8 @@ node "ACT_Warning"
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_RC_SurEni"
 {
+    feedbacks = { { { "done_ACT_RC_SurEni" }, "ACT_RC_SurEni" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_RC_SurEni, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.eTypeRC = self.params[1]
@@ -109,6 +117,8 @@ node "ACT_Warning"
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_RC_SurPion"
 {
+    feedbacks = { { { "done_ACT_RC_SurPion" }, "ACT_RC_SurPion" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_RC_SurPion, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.eTypeRC = self.params[1]
@@ -132,6 +142,8 @@ node "ACT_Warning"
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_RC_SurLima"
 {
+    feedbacks = { { { "done_ACT_RC_SurLima" }, "ACT_RC_SurLima" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_RC_SurLima, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.eTypeLima = self.params[1]
@@ -161,6 +173,8 @@ node "ACT_Warning"
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_RC_PreparationMission"
 {
+    feedbacks = { { { "done_ACT_RC_PreparationMission" }, "ACT_RC_PreparationMission" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_RC_PreparationMission, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.temps = self.params[1]

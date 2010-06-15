@@ -12,14 +12,16 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "MIS_Pion_PrendreEnComptePrisonniers"
 {
+    feedbacks = { { { "done_MIS_Pion_PrendreEnComptePrisonniers" }, "MIS_Pion_PrendreEnComptePrisonniers" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_PrendreEnComptePrisonniers, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_Pion_AllerRecupererPrisonniers", {} },
-        { "BEH_Dep_Pion_AllerDebarquerPrisonniers", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
-        { "ACT_Info_Trace", {} },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Dep_Pion_AllerRecupererPrisonniers", { "done_BEH_Dep_Pion_AllerRecupererPrisonniers" } },
+        { "BEH_Dep_Pion_AllerDebarquerPrisonniers", { "done_BEH_Dep_Pion_AllerDebarquerPrisonniers" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "done_BEH_Dep_SePosterFaceADirectionDangereuse" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
     },
 
     create = function( self )
@@ -45,7 +47,8 @@ include "bit.lua"
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
                 self.ePhase = eFinMission
@@ -92,7 +95,8 @@ elseif switch_1 == eDebarquer then
                                 end
                             end
 
-                            Activate( self.activations.BEH_Dep_Pion_AllerDebarquerPrisonniers, 1, setmetatable( { self._namedParams.mission.unitesRendues_, self._namedParams.mission.campPrisonniers_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                            Activate( self.activations.BEH_Dep_Pion_AllerDebarquerPrisonniers, 1, { self._namedParams.mission.unitesRendues_, self._namedParams.mission.campPrisonniers_, } )
+self.done_BEH_Dep_Pion_AllerDebarquerPrisonniers = function( self, _, v ) self.eEtat = v[1] end
                             _continue = false
                         --[[// Fin mission
 ]]                        cases_switch_1[3] = true
@@ -132,9 +136,11 @@ do
 
 node "BEH_Dep_Pion_AllerRecupererPrisonniers"
 {
+    feedbacks = { { { "done_BEH_Dep_Pion_AllerRecupererPrisonniers" }, "BEH_Dep_Pion_AllerRecupererPrisonniers" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Pion_AllerRecupererPrisonniers, {value} ) end,
     activations =
     {
-        { "BEH_Dep_Pion_GererEmbarquementPrisonnier", {} },
+        { "BEH_Dep_Pion_GererEmbarquementPrisonnier", { "done_BEH_Dep_Pion_GererEmbarquementPrisonnier" } },
     },
 
     create = function( self )
@@ -167,10 +173,12 @@ if( DEC_ConnaissanceAgent_EstValide( prisonnier ) and not DEC_Prisonniers_EstEmb
 
 node "BEH_Dep_Pion_GererEmbarquementPrisonnier"
 {
+    feedbacks = { { { "done_BEH_Dep_Pion_GererEmbarquementPrisonnier" }, "BEH_Dep_Pion_GererEmbarquementPrisonnier" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Pion_GererEmbarquementPrisonnier, {value} ) end,
     activations =
     {
-        { "ACT_Transport_Pion_EmbarquerPrisonnier", {} },
-        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_Transport_Pion_EmbarquerPrisonnier", { "done_ACT_Transport_Pion_EmbarquerPrisonnier" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
     },
 
     create = function( self )
@@ -197,10 +205,12 @@ node "BEH_Dep_Pion_GererEmbarquementPrisonnier"
 
 node "BEH_Dep_Pion_AllerDebarquerPrisonniers"
 {
+    feedbacks = { { { "done_BEH_Dep_Pion_AllerDebarquerPrisonniers" }, "BEH_Dep_Pion_AllerDebarquerPrisonniers" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Pion_AllerDebarquerPrisonniers, {value} ) end,
     activations =
     {
-        { "ACT_Transport_Pion_DebarquerPrisonnierDansCamp", {} },
-        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_Transport_Pion_DebarquerPrisonnierDansCamp", { "done_ACT_Transport_Pion_DebarquerPrisonnierDansCamp" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
     },
 
     create = function( self )
@@ -214,7 +224,7 @@ node "BEH_Dep_Pion_AllerDebarquerPrisonniers"
         self.localisation = self.localisation or DEC_ConnaissanceObjet_Localisation( self._namedParams.campPrisonnier )
         --[[// Gestion erreur
 ]]if( ( self.localisation == 0 or self.localisation == nil ) ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -227,7 +237,7 @@ node "BEH_Dep_Pion_AllerDebarquerPrisonniers"
                 if( eReturnCode == eError_PionsPasDansMemeFuseau or eReturnCode == eError_LocalisationPasDansFuseau ) then
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
-                                                self.params.__returnValue = eActionEffectuee
+                                                self:SendFeedback( eActionEffectuee )
                         Halt( self )
                         do return end
 
@@ -263,6 +273,8 @@ node "BEH_Dep_Pion_AllerDebarquerPrisonniers"
 
 node "ACT_Transport_Pion_EmbarquerPrisonnier"
 {
+    feedbacks = { { { "done_ACT_Transport_Pion_EmbarquerPrisonnier" }, "ACT_Transport_Pion_EmbarquerPrisonnier" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Transport_Pion_EmbarquerPrisonnier, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.prisonnier = self.params[1]
@@ -285,6 +297,8 @@ node "ACT_Transport_Pion_EmbarquerPrisonnier"
 ]]--[[// *****************************************************************************
 ]]node "ACT_Transport_Pion_DebarquerPrisonnierDansCamp"
 {
+    feedbacks = { { { "done_ACT_Transport_Pion_DebarquerPrisonnierDansCamp" }, "ACT_Transport_Pion_DebarquerPrisonnierDansCamp" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Transport_Pion_DebarquerPrisonnierDansCamp, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.prisonnier = self.params[1]

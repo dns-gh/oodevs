@@ -48,13 +48,15 @@ include "bit.lua"
 --[[//-----------------------------------------------------------------------------
 ]]node "BEH_Dispositif_Pion_VAB_InstallationDefensive"
 {
+    feedbacks = { { { "done_BEH_Dispositif_Pion_VAB_InstallationDefensive" }, "BEH_Dispositif_Pion_VAB_InstallationDefensive" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dispositif_Pion_VAB_InstallationDefensive, {value} ) end,
     activations =
     {
-        { "BEH_Obj_Pion_VAB_InstallerPlanObstacle", {} },
-        { "BEH_MOT_Pion_INF_Debarquer", {} },
-        { "BEH_Obj_RejoindreEmbossements", {} },
-        { "ACT_Misc_Pion_Ambiance", {} },
-        { "ACT_Obs_EtablirVisionFaceADir", {} },
+        { "BEH_Obj_Pion_VAB_InstallerPlanObstacle", { "done_BEH_Obj_Pion_VAB_InstallerPlanObstacle" } },
+        { "BEH_MOT_Pion_INF_Debarquer", { "done_BEH_MOT_Pion_INF_Debarquer" } },
+        { "BEH_Obj_RejoindreEmbossements", { "done_BEH_Obj_RejoindreEmbossements" } },
+        { "ACT_Misc_Pion_Ambiance", { "done_ACT_Misc_Pion_Ambiance" } },
+        { "ACT_Obs_EtablirVisionFaceADir", { "done_ACT_Obs_EtablirVisionFaceADir" } },
     },
 
     create = function( self )

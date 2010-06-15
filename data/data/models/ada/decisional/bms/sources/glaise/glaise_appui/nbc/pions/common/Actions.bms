@@ -20,6 +20,8 @@ includedFiles["sources/glaise/glaise_appui/nbc/pions/common/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Pion_Nbc_CreerSiteSur"
 {
+    feedbacks = { { { "done_ACT_Pion_Nbc_CreerSiteSur" }, "ACT_Pion_Nbc_CreerSiteSur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Pion_Nbc_CreerSiteSur, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.position = self.params[1]
@@ -49,6 +51,8 @@ includedFiles["sources/glaise/glaise_appui/nbc/pions/common/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Pion_Nbc_AnimerSite"
 {
+    feedbacks = { { { "done_ACT_Pion_Nbc_AnimerSite" }, "ACT_Pion_Nbc_AnimerSite" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Pion_Nbc_AnimerSite, {value} ) end,
     actuators =
     {
         deplacement = 1,
@@ -116,6 +120,8 @@ includedFiles["sources/glaise/glaise_appui/nbc/pions/common/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Pion_Nbc_ReconnaitreSiteROTA"
 {
+    feedbacks = { { { "done_ACT_Pion_Nbc_ReconnaitreSiteROTA" }, "ACT_Pion_Nbc_ReconnaitreSiteROTA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Pion_Nbc_ReconnaitreSiteROTA, {value} ) end,
     actuators =
     {
         deplacement = 1,
@@ -146,7 +152,7 @@ includedFiles["sources/glaise/glaise_appui/nbc/pions/common/Actions.bms"] = true
 
         local eValidite = nil
         DEC_ConnaissanceObjet_Reconnaitre( self._namedParams.siteROTA, eValidite )
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         do return end
 
     end,

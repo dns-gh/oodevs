@@ -44,13 +44,15 @@ include "Appui/Circulation/Automates/Missions/Missions.bms"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Defaut"
 {
+    feedbacks = { { { "done_BEH_Defaut" }, "BEH_Defaut" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Defaut, {value} ) end,
     activations =
     {
-        { "BEH_Nbc_Automate_GererAlerteNiv4", {} },
-        { "BEH_ROE_Automate_GererOrdre", {} },
-        { "BEH_Misc_Automate_GererLesMoyens", {} },
-        { "BEH_Rens_Automate_GererSilenceRadio", {} },
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
+        { "BEH_Nbc_Automate_GererAlerteNiv4", { "done_BEH_Nbc_Automate_GererAlerteNiv4" } },
+        { "BEH_ROE_Automate_GererOrdre", { "done_BEH_ROE_Automate_GererOrdre" } },
+        { "BEH_Misc_Automate_GererLesMoyens", { "done_BEH_Misc_Automate_GererLesMoyens" } },
+        { "BEH_Rens_Automate_GererSilenceRadio", { "done_BEH_Rens_Automate_GererSilenceRadio" } },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "done_BEH_Ordre_Automate_RecevoirOrdreInopine" } },
     },
 
     create = function( self )

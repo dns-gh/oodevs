@@ -20,10 +20,12 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/sempare
 ]]--[[// *****************************************************************************
 ]]node "BEH_Medo_Automate_ABC_AssignerMissionSemparerZoneA"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_ABC_AssignerMissionSemparerZoneA" }, "BEH_Medo_Automate_ABC_AssignerMissionSemparerZoneA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_ABC_AssignerMissionSemparerZoneA, {value} ) end,
     activations =
     {
-        { "ACT_Warning", {} },
-        { "BEH_Mission_Automate_ABC_AssignerSemparerZoneA", {} },
+        { "ACT_Warning", { "done_ACT_Warning" } },
+        { "BEH_Mission_Automate_ABC_AssignerSemparerZoneA", { "done_BEH_Mission_Automate_ABC_AssignerSemparerZoneA" } },
     },
 
     create = function( self )
@@ -56,7 +58,7 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/sempare
                     do
                         DEC_Trace( "$$$ impossible de trouver des positions dans la localisation" )
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleZoneHorsFuseau, } )
-                                                self.params.__returnValue = eActionImpossible
+                                                self:SendFeedback( eActionImpossible )
                         do return end
 
                     end

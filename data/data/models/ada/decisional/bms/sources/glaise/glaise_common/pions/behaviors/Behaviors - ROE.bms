@@ -9,9 +9,11 @@ includedFiles["sources/glaise/glaise_common/pions/behaviors/Behaviors - ROE.bms"
 ]]--[[// *****************************************************************************
 ]]node "BEH_ROE"
 {
+    feedbacks = { { { "done_BEH_ROE" }, "BEH_ROE" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_ROE, {value} ) end,
     activations =
     {
-        { "BEH_ROE_Recevoir_OrdreInopine", {} },
+        { "BEH_ROE_Recevoir_OrdreInopine", { "done_BEH_ROE_Recevoir_OrdreInopine" } },
     },
 
     create = function( self )
@@ -33,12 +35,14 @@ includedFiles["sources/glaise/glaise_common/pions/behaviors/Behaviors - ROE.bms"
 
 node "BEH_ROE_Recevoir_OrdreInopine"
 {
+    feedbacks = { { { "done_BEH_ROE_Recevoir_OrdreInopine" }, "BEH_ROE_Recevoir_OrdreInopine" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_ROE_Recevoir_OrdreInopine, {value} ) end,
     activations =
     {
-        { "ACT_Maj_Pion_PasserEnTirLibre", {} },
-        { "ACT_Maj_Pion_PasserEnTirSurRiposte", {} },
-        { "ACT_Maj_Pion_PasserEnTirInterdit", {} },
-        { "ACT_Ordre_Suppression", {} },
+        { "ACT_Maj_Pion_PasserEnTirLibre", { "done_ACT_Maj_Pion_PasserEnTirLibre" } },
+        { "ACT_Maj_Pion_PasserEnTirSurRiposte", { "done_ACT_Maj_Pion_PasserEnTirSurRiposte" } },
+        { "ACT_Maj_Pion_PasserEnTirInterdit", { "done_ACT_Maj_Pion_PasserEnTirInterdit" } },
+        { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
     },
 
     create = function( self )
@@ -128,9 +132,11 @@ elseif switch_2 == eEtatROE_TirInterdit then
 
 node "BEH_ROE_GererTirInterdit"
 {
+    feedbacks = { { { "done_BEH_ROE_GererTirInterdit" }, "BEH_ROE_GererTirInterdit" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_ROE_GererTirInterdit, {value} ) end,
     activations =
     {
-        { "ACT_Tir_ChangerConsigne", {} },
+        { "ACT_Tir_ChangerConsigne", { "done_ACT_Tir_ChangerConsigne" } },
     },
 
     create = function( self )
@@ -151,9 +157,11 @@ node "BEH_ROE_GererTirInterdit"
 
 node "BEH_ROE_GererTirRestreint"
 {
+    feedbacks = { { { "done_BEH_ROE_GererTirRestreint" }, "BEH_ROE_GererTirRestreint" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_ROE_GererTirRestreint, {value} ) end,
     activations =
     {
-        { "ACT_Tir_ChangerConsigne", {} },
+        { "ACT_Tir_ChangerConsigne", { "done_ACT_Tir_ChangerConsigne" } },
     },
 
     create = function( self )
@@ -174,9 +182,11 @@ node "BEH_ROE_GererTirRestreint"
 
 node "BEH_ROE_GererTirLibre"
 {
+    feedbacks = { { { "done_BEH_ROE_GererTirLibre" }, "BEH_ROE_GererTirLibre" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_ROE_GererTirLibre, {value} ) end,
     activations =
     {
-        { "ACT_Tir_ChangerConsigne", {} },
+        { "ACT_Tir_ChangerConsigne", { "done_ACT_Tir_ChangerConsigne" } },
     },
 
     create = function( self )

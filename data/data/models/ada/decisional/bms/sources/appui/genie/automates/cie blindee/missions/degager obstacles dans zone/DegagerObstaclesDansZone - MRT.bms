@@ -9,9 +9,11 @@ includedFiles["sources/appui/genie/automates/cie blindee/missions/degager obstac
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_MRT_GEN_DegagerObstaclesDansZone"
 {
+    feedbacks = { { { "done_MIS_Automate_MRT_GEN_DegagerObstaclesDansZone" }, "MIS_Automate_MRT_GEN_DegagerObstaclesDansZone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_MRT_GEN_DegagerObstaclesDansZone, {value} ) end,
     activations =
     {
-        { "ACT_Warning", {} },
+        { "ACT_Warning", { "done_ACT_Warning" } },
     },
 
     create = function( self )

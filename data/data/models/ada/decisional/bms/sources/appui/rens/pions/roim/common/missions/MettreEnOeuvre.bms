@@ -9,15 +9,17 @@ includedFiles["sources/appui/rens/pions/roim/common/missions/MettreEnOeuvre.bms"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Mission_Pion_RENS_MettreEnOeuvre"
 {
+    feedbacks = { { { "done_BEH_Mission_Pion_RENS_MettreEnOeuvre" }, "BEH_Mission_Pion_RENS_MettreEnOeuvre" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Pion_RENS_MettreEnOeuvre, {value} ) end,
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "ACT_RC", {} },
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_ProgressionVers", {} },
-        { "BEH_Dispositif_Pion_Rens_MettreEnOeuvreDrone", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
+        { "BEH_Dispositif_Pion_Rens_MettreEnOeuvreDrone", { "done_BEH_Dispositif_Pion_Rens_MettreEnOeuvreDrone" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "done_BEH_Dep_SePosterFaceADirectionDangereuse" } },
     },
 
     create = function( self )
@@ -47,7 +49,8 @@ do
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
                 self.ePhaseMission = eFinMission
@@ -89,7 +92,8 @@ elseif switch_1 == eProgresser then
                         end
                     end
 
-                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.positionDeploiement, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.positionDeploiement, eProgressionDirect, eTypeItiMouvement, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                 --[[// Mettre en oeuvre
 ]]                cases_switch_1[2] = true
@@ -107,7 +111,8 @@ elseif switch_1 == eSurveiller then
                         end
                     end
 
-                    Activate( self.activations.BEH_Dispositif_Pion_Rens_MettreEnOeuvreDrone, 1, setmetatable( { self.pionDrone, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dispositif_Pion_Rens_MettreEnOeuvreDrone, 1, { self.pionDrone, } )
+self.done_BEH_Dispositif_Pion_Rens_MettreEnOeuvreDrone = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                 --[[// Fin de la mission de reconnaissance
 ]]                cases_switch_1[3] = true
@@ -133,11 +138,13 @@ elseif switch_1 == eFinMission then
 
 node "BEH_Dispositif_Pion_Rens_MettreEnOeuvreDrone"
 {
+    feedbacks = { { { "done_BEH_Dispositif_Pion_Rens_MettreEnOeuvreDrone" }, "BEH_Dispositif_Pion_Rens_MettreEnOeuvreDrone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dispositif_Pion_Rens_MettreEnOeuvreDrone, {value} ) end,
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "ACT_Transport_Pion_Rens_DebarquerDrone", {} },
-        { "ACT_Misc_ProgrammerDrone", {} },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "ACT_Transport_Pion_Rens_DebarquerDrone", { "done_ACT_Transport_Pion_Rens_DebarquerDrone" } },
+        { "ACT_Misc_ProgrammerDrone", { "done_ACT_Misc_ProgrammerDrone" } },
     },
 
     create = function( self )
@@ -154,13 +161,14 @@ node "BEH_Dispositif_Pion_Rens_MettreEnOeuvreDrone"
             do
                 Activate( self.activations.ACT_Info_Trace, 1, { "DRONE OPERATED", } )
                 Activate( self.activations.ACT_Transport_Pion_Rens_DebarquerDrone, 1, { self._namedParams.pionDrone, } )
-                                self.params.__returnValue = eActionEffectuee
+                                self:SendFeedback( eActionEffectuee )
                 do return end
 
             end
         end
 
-        Activate( self.activations.ACT_Misc_ProgrammerDrone, 1, setmetatable( { self._namedParams.pionDrone, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Misc_ProgrammerDrone, 1, { self._namedParams.pionDrone, } )
+self.done_ACT_Misc_ProgrammerDrone = function( self, _, v ) self.eEtat = v[1] end
     end,
 
 --[[// *****************************************************************************
@@ -173,6 +181,8 @@ node "BEH_Dispositif_Pion_Rens_MettreEnOeuvreDrone"
 
 node "ACT_Misc_ProgrammerDrone"
 {
+    feedbacks = { { { "done_ACT_Misc_ProgrammerDrone" }, "ACT_Misc_ProgrammerDrone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Misc_ProgrammerDrone, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionDrone = self.params[1]
@@ -219,7 +229,7 @@ node "ACT_Misc_ProgrammerDrone"
 
                         end
 
-                                                self.params.__returnValue = eActionEffectuee
+                                                self:SendFeedback( eActionEffectuee )
                         Halt( self )
                         do return end
 
@@ -242,6 +252,8 @@ node "ACT_Misc_ProgrammerDrone"
 ]]--[[// *****************************************************************************
 ]]node "ACT_Transport_Pion_Rens_DebarquerDrone"
 {
+    feedbacks = { { { "done_ACT_Transport_Pion_Rens_DebarquerDrone" }, "ACT_Transport_Pion_Rens_DebarquerDrone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Transport_Pion_Rens_DebarquerDrone, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionDrone = self.params[1]

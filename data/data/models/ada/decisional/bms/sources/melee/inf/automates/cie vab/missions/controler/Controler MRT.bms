@@ -16,9 +16,11 @@ includedFiles["sources/melee/inf/automates/cie vab/missions/controler/Controler 
 
 node "MIS_Automate_MRT_INF_Controler"
 {
+    feedbacks = { { { "done_MIS_Automate_MRT_INF_Controler" }, "MIS_Automate_MRT_INF_Controler" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_MRT_INF_Controler, {value} ) end,
     activations =
     {
-        { "BEH_Medo_Automate_INF_PreparerMission_Zone", {} },
+        { "BEH_Medo_Automate_INF_PreparerMission_Zone", { "done_BEH_Medo_Automate_INF_PreparerMission_Zone" } },
     },
 
     create = function( self )
@@ -48,7 +50,7 @@ node "MIS_Automate_MRT_INF_Controler"
                     DEC_RC( eRC_MissionImpossible )
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -61,7 +63,7 @@ node "MIS_Automate_MRT_INF_Controler"
                                 do
                     DEC_Trace( "T_Mission_Automate_INF_Controler : fin MRT" )
                     DEC_MRT_Valide()
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -73,7 +75,8 @@ node "MIS_Automate_MRT_INF_Controler"
 ]]--[[//-----------------------------------------------------------------------------
 ]]        end
 
-        Activate( self.activations.BEH_Medo_Automate_INF_PreparerMission_Zone, 1, setmetatable( { "T_Mission_Automate_INF_Controler", 0, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCreationMRT = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Medo_Automate_INF_PreparerMission_Zone, 1, { "T_Mission_Automate_INF_Controler", 0, } )
+self.done_BEH_Medo_Automate_INF_PreparerMission_Zone = function( self, _, v ) self.eCreationMRT = v[1] end
     end,
 
     destroy = function( self )

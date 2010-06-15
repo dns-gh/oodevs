@@ -9,6 +9,8 @@ includedFiles["sources/humus/humus_common/automates/actions/Actions - Ordre.bms"
 ]]--[[// *****************************************************************************
 ]]node "ACT_Ordre_Automate_Pause"
 {
+    feedbacks = { { { "done_ACT_Ordre_Automate_Pause" }, "ACT_Ordre_Automate_Pause" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Ordre_Automate_Pause, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -40,6 +42,8 @@ includedFiles["sources/humus/humus_common/automates/actions/Actions - Ordre.bms"
 ]]--[[// *****************************************************************************
 ]]node "ACT_Ordre_Automate_Continue"
 {
+    feedbacks = { { { "done_ACT_Ordre_Automate_Continue" }, "ACT_Ordre_Automate_Continue" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Ordre_Automate_Continue, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -63,6 +67,8 @@ includedFiles["sources/humus/humus_common/automates/actions/Actions - Ordre.bms"
 ]]--[[// *****************************************************************************
 ]]node "ACT_Ordre_Automate_Ralentir"
 {
+    feedbacks = { { { "done_ACT_Ordre_Automate_Ralentir" }, "ACT_Ordre_Automate_Ralentir" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Ordre_Automate_Ralentir, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -94,6 +100,8 @@ includedFiles["sources/humus/humus_common/automates/actions/Actions - Ordre.bms"
 ]]--[[// *****************************************************************************
 ]]node "ACT_Ordre_Automate_Interrompre"
 {
+    feedbacks = { { { "done_ACT_Ordre_Automate_Interrompre" }, "ACT_Ordre_Automate_Interrompre" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Ordre_Automate_Interrompre, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -124,6 +132,8 @@ includedFiles["sources/humus/humus_common/automates/actions/Actions - Ordre.bms"
 ]]--[[// *****************************************************************************
 ]]node "ACT_Ordre_Automate_PasserEnAmbianceVitesse"
 {
+    feedbacks = { { { "done_ACT_Ordre_Automate_PasserEnAmbianceVitesse" }, "ACT_Ordre_Automate_PasserEnAmbianceVitesse" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Ordre_Automate_PasserEnAmbianceVitesse, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -148,6 +158,8 @@ includedFiles["sources/humus/humus_common/automates/actions/Actions - Ordre.bms"
 ]]--[[// *****************************************************************************
 ]]node "ACT_Ordre_Automate_PasserEnAmbianceSurete"
 {
+    feedbacks = { { { "done_ACT_Ordre_Automate_PasserEnAmbianceSurete" }, "ACT_Ordre_Automate_PasserEnAmbianceSurete" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Ordre_Automate_PasserEnAmbianceSurete, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]

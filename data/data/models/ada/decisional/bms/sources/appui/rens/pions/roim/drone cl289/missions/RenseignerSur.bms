@@ -12,15 +12,17 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "MIS_Pion_RENS_ROIM_CL289_RenseignerSur"
 {
+    feedbacks = { { { "done_MIS_Pion_RENS_ROIM_CL289_RenseignerSur" }, "MIS_Pion_RENS_ROIM_CL289_RenseignerSur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_RENS_ROIM_CL289_RenseignerSur, {value} ) end,
     activations =
     {
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Info_Trace", {} },
-        { "BEH_Obs_Pion_Rens_GererObservationDans", {} },
-        { "ACT_Connaissance_Rens_EnregistrerDonnees", {} },
-        { "BEH_Dep_ProgressionSur", {} },
-        { "ACT_Dep_Pion_RENS_VolerA", {} },
-        { "ACT_Connaissance_Rens_ExtraireDonnees", {} },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "BEH_Obs_Pion_Rens_GererObservationDans", { "done_BEH_Obs_Pion_Rens_GererObservationDans" } },
+        { "ACT_Connaissance_Rens_EnregistrerDonnees", { "done_ACT_Connaissance_Rens_EnregistrerDonnees" } },
+        { "BEH_Dep_ProgressionSur", { "done_BEH_Dep_ProgressionSur" } },
+        { "ACT_Dep_Pion_RENS_VolerA", { "done_ACT_Dep_Pion_RENS_VolerA" } },
+        { "ACT_Connaissance_Rens_ExtraireDonnees", { "done_ACT_Connaissance_Rens_ExtraireDonnees" } },
     },
 
     create = function( self )
@@ -107,7 +109,8 @@ include "bit.lua"
                         end
                     end
 
-        Activate( self.activations.BEH_Dep_ProgressionSur, 1, setmetatable( { self.ficelleDeVol, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_ProgressionSur, 1, { self.ficelleDeVol, eProgressionDirect, eTypeItiMouvement, } )
+self.done_BEH_Dep_ProgressionSur = function( self, _, v ) self.eEtat = v[1] end
                     --[[// données doctrine 
 ]]Activate( self.activations.ACT_Dep_Pion_RENS_VolerA, 1, { 350, } )
                     
@@ -121,7 +124,7 @@ include "bit.lua"
                         Activate( self.activations.ACT_Connaissance_Rens_ExtraireDonnees, 1, {} )
                     end
 
-                    
+
 
                 else
                                 end
@@ -138,9 +141,11 @@ include "bit.lua"
 
 node "BEH_Obs_Pion_Rens_GererObservationDans"
 {
+    feedbacks = { { { "done_BEH_Obs_Pion_Rens_GererObservationDans" }, "BEH_Obs_Pion_Rens_GererObservationDans" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Obs_Pion_Rens_GererObservationDans, {value} ) end,
     activations =
     {
-        { "BEH_Obs_Pion_Rens_ActiverObservationDans", {} },
+        { "BEH_Obs_Pion_Rens_ActiverObservationDans", { "done_BEH_Obs_Pion_Rens_ActiverObservationDans" } },
     },
 
     create = function( self )
@@ -175,9 +180,11 @@ node "BEH_Obs_Pion_Rens_GererObservationDans"
 
 node "BEH_Obs_Pion_Rens_ActiverObservationDans"
 {
+    feedbacks = { { { "done_BEH_Obs_Pion_Rens_ActiverObservationDans" }, "BEH_Obs_Pion_Rens_ActiverObservationDans" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Obs_Pion_Rens_ActiverObservationDans, {value} ) end,
     activations =
     {
-        { "ACT_Obs_Rens_ActiverObservationDans", {} },
+        { "ACT_Obs_Rens_ActiverObservationDans", { "done_ACT_Obs_Rens_ActiverObservationDans" } },
     },
 
     create = function( self )
@@ -202,6 +209,8 @@ node "BEH_Obs_Pion_Rens_ActiverObservationDans"
 
 node "ACT_Obs_Rens_ActiverObservationDans"
 {
+    feedbacks = { { { "done_ACT_Obs_Rens_ActiverObservationDans" }, "ACT_Obs_Rens_ActiverObservationDans" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obs_Rens_ActiverObservationDans, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.zone = self.params[1]
@@ -238,6 +247,8 @@ node "ACT_Obs_Rens_ActiverObservationDans"
 ]]--[[// *****************************************************************************
 ]]node "ACT_Connaissance_Rens_EnregistrerDonnees"
 {
+    feedbacks = { { { "done_ACT_Connaissance_Rens_EnregistrerDonnees" }, "ACT_Connaissance_Rens_EnregistrerDonnees" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Connaissance_Rens_EnregistrerDonnees, {value} ) end,
     create = function( self )
     end,
 
@@ -264,6 +275,8 @@ node "ACT_Obs_Rens_ActiverObservationDans"
 ]]--[[// *****************************************************************************
 ]]node "ACT_Connaissance_Rens_ExtraireDonnees"
 {
+    feedbacks = { { { "done_ACT_Connaissance_Rens_ExtraireDonnees" }, "ACT_Connaissance_Rens_ExtraireDonnees" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Connaissance_Rens_ExtraireDonnees, {value} ) end,
     create = function( self )
     end,
 

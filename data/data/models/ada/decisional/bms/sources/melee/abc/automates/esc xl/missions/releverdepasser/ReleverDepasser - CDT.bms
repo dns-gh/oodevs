@@ -22,9 +22,11 @@ includedFiles["sources/melee/abc/automates/esc xl/missions/releverdepasser/Relev
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_ABC_ReleverEnDepassant"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ABC_ReleverEnDepassant" }, "MIS_Automate_CDT_ABC_ReleverEnDepassant" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ABC_ReleverEnDepassant, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_ReleverEnDepassant", {} },
+        { "BEH_Conduite_Automate_ABC_ReleverEnDepassant", { "done_BEH_Conduite_Automate_ABC_ReleverEnDepassant" } },
     },
 
     create = function( self )

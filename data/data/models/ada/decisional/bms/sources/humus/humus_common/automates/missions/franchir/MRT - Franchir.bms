@@ -17,10 +17,12 @@ includedFiles["sources/humus/humus_common/automates/missions/franchir/MRT - Fran
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_MRT_Franchir"
 {
+    feedbacks = { { { "done_MIS_Automate_MRT_Franchir" }, "MIS_Automate_MRT_Franchir" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_MRT_Franchir, {value} ) end,
     activations =
     {
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
-        { "BEH_Medo_Automate_AssignerSeFaireFranchirA", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", { "done_BEH_Medo_Automate_ControleCreationMission" } },
+        { "BEH_Medo_Automate_AssignerSeFaireFranchirA", { "done_BEH_Medo_Automate_AssignerSeFaireFranchirA" } },
     },
 
     create = function( self )
@@ -50,7 +52,7 @@ includedFiles["sources/humus/humus_common/automates/missions/franchir/MRT - Fran
                     DEC_Trace( "!!!!Attention toutes les missions n'ont pas été données au PE!!!" )
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -62,7 +64,7 @@ includedFiles["sources/humus/humus_common/automates/missions/franchir/MRT - Fran
                 self.eValidationMRT = eActionEnCours
                                 do
                     DEC_MRT_Valide()
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -71,7 +73,8 @@ includedFiles["sources/humus/humus_common/automates/missions/franchir/MRT - Fran
             end
         end
 
-        Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( DEC_Automate_PionsAvecPC() ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( DEC_Automate_PionsAvecPC() ), } )
+self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eValidationMRT = v[1] end
         Activate( self.activations.BEH_Medo_Automate_AssignerSeFaireFranchirA, 1, { DEC_Automate_PionsAvecPC(), } )
     end,
 
@@ -85,9 +88,11 @@ includedFiles["sources/humus/humus_common/automates/missions/franchir/MRT - Fran
 
 node "BEH_Medo_Automate_AssignerSeFaireFranchirA"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_AssignerSeFaireFranchirA" }, "BEH_Medo_Automate_AssignerSeFaireFranchirA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_AssignerSeFaireFranchirA, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_AssignerFranchir", {} },
+        { "BEH_Mission_Automate_AssignerFranchir", { "done_BEH_Mission_Automate_AssignerFranchir" } },
     },
 
     create = function( self )

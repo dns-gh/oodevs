@@ -17,17 +17,19 @@ include "bit.lua"
 ]]
 node "MIS_Pion_INF_Barrer"
 {
+    feedbacks = { { { "done_MIS_Pion_INF_Barrer" }, "MIS_Pion_INF_Barrer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_INF_Barrer, {value} ) end,
     activations =
     {
-        { "BEH_Misc_Pion_DefinirTypeMission", {} },
-        { "BEH_MAJ_AgressiviteMission", {} },
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_Ordre_Suppression", {} },
-        { "BEH_Mission_Pion_INF_Barrer", {} },
-        { "BEH_Manoeuvre_RompreContact", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Poste_Pion_INF_TomberEnGarde", {} },
-        { "ACT_Info_Trace", {} },
+        { "BEH_Misc_Pion_DefinirTypeMission", { "done_BEH_Misc_Pion_DefinirTypeMission" } },
+        { "BEH_MAJ_AgressiviteMission", { "done_BEH_MAJ_AgressiviteMission" } },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
+        { "BEH_Mission_Pion_INF_Barrer", { "done_BEH_Mission_Pion_INF_Barrer" } },
+        { "BEH_Manoeuvre_RompreContact", { "done_BEH_Manoeuvre_RompreContact" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Poste_Pion_INF_TomberEnGarde", { "done_BEH_Poste_Pion_INF_TomberEnGarde" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
     },
 
     create = function( self )
@@ -58,7 +60,8 @@ node "MIS_Pion_INF_Barrer"
                 Activate( self.activations.BEH_Misc_Pion_DefinirTypeMission, 1, { eTypeContact_Defensif, } )
                 Activate( self.activations.BEH_MAJ_AgressiviteMission, 1, { eReconnu, M_TIR_PH_MISSION_STATIQUE(), } )
                 self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-                Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+                Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
                 if( self.eEtatOrdreFinMission == eActionHalt ) then
                     do
                         self.ePhase = eSeReplier
@@ -98,7 +101,7 @@ do
                             DEC_Warning( eRC_MissionImpossible )
                         end
 
-                                                self.params.__returnValue = eActionImpossible
+                                                self:SendFeedback( eActionImpossible )
                         Halt( self )
                         do return end
 
@@ -131,7 +134,8 @@ do
                                 end
                             end
 
-                            Activate( self.activations.BEH_Mission_Pion_INF_Barrer, GetMotivation( "MOT_Mission" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCurrentPhase = v else rawset( t, k, v ) end end } ) )
+                            Activate( self.activations.BEH_Mission_Pion_INF_Barrer, GetMotivation( "MOT_Mission" ), {} )
+self.done_BEH_Mission_Pion_INF_Barrer = function( self, _, v ) self.eCurrentPhase = v[1] end
                             _continue = false
                         --[[// Rejoins une position de replis
 ]]                        cases_switch_1[1] = true
@@ -146,7 +150,8 @@ elseif switch_1 == eSeReplier then
                                 end
                             else
 do
-                                    Activate( self.activations.BEH_Manoeuvre_RompreContact, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                                    Activate( self.activations.BEH_Manoeuvre_RompreContact, 1, {} )
+self.done_BEH_Manoeuvre_RompreContact = function( self, _, v ) self.eAction = v[1] end
                                                                         do return end
 
                                 end
@@ -164,7 +169,7 @@ do
 ]]--[[// On rend compte de la mission
 ]]--[[//-----------------------------------------------------------------------------					
 ]]DEC_FinMission()
-                                                                                self.params.__returnValue = eActionEffectuee
+                                                                                self:SendFeedback( eActionEffectuee )
                                         Halt( self )
                                         do return end
 
@@ -174,7 +179,8 @@ do
                             end
 
                             Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                            Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                            Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, { true, } )
+self.done_BEH_Poste_Pion_INF_TomberEnGarde = function( self, _, v ) self.eAction = v[1] end
                             _continue = false
                                                 cases_switch_1[3] = true
 
@@ -198,12 +204,14 @@ do
 
 node "BEH_Pion_INF_Barrer_DispositifArret"
 {
+    feedbacks = { { { "done_BEH_Pion_INF_Barrer_DispositifArret" }, "BEH_Pion_INF_Barrer_DispositifArret" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pion_INF_Barrer_DispositifArret, {value} ) end,
     activations =
     {
-        { "BEH_Obj_RejoindreEmbossements", {} },
-        { "ACT_Transport_Pion_INF_Debarquer", {} },
-        { "ACT_Obs_EtablirVisionFaceADir", {} },
-        { "ACT_Info_Trace", {} },
+        { "BEH_Obj_RejoindreEmbossements", { "done_BEH_Obj_RejoindreEmbossements" } },
+        { "ACT_Transport_Pion_INF_Debarquer", { "done_ACT_Transport_Pion_INF_Debarquer" } },
+        { "ACT_Obs_EtablirVisionFaceADir", { "done_ACT_Obs_EtablirVisionFaceADir" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
     },
 
     create = function( self )
@@ -224,7 +232,8 @@ node "BEH_Pion_INF_Barrer_DispositifArret"
 
                 Activate( self.activations.BEH_Obj_RejoindreEmbossements, 1.2, {} )
                 if( self.eActionDebarquer == eActionEnCours ) then
-                    Activate( self.activations.ACT_Transport_Pion_INF_Debarquer, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionDebarquer = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.ACT_Transport_Pion_INF_Debarquer, 1, {} )
+self.done_ACT_Transport_Pion_INF_Debarquer = function( self, _, v ) self.eActionDebarquer = v[1] end
                 end
 
                 --[[// detectabilite tres faible

@@ -20,9 +20,11 @@ includedFiles["sources/melee/inf/automates/sgpt inf abc/missions/reconnaissanceo
 ]]--[[// ******************************************************************************
 ]]node "MIS_Automate_MRT_INF_ReconnaissanceOffensive"
 {
+    feedbacks = { { { "done_MIS_Automate_MRT_INF_ReconnaissanceOffensive" }, "MIS_Automate_MRT_INF_ReconnaissanceOffensive" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_MRT_INF_ReconnaissanceOffensive, {value} ) end,
     activations =
     {
-        { "BEH_Medo_Automate_INF_PreparerMission_Manoeuvre", {} },
+        { "BEH_Medo_Automate_INF_PreparerMission_Manoeuvre", { "done_BEH_Medo_Automate_INF_PreparerMission_Manoeuvre" } },
     },
 
     create = function( self )
@@ -52,7 +54,7 @@ includedFiles["sources/melee/inf/automates/sgpt inf abc/missions/reconnaissanceo
                     DEC_RC( eRC_MissionImpossible )
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -65,7 +67,7 @@ includedFiles["sources/melee/inf/automates/sgpt inf abc/missions/reconnaissanceo
                                 do
                     DEC_Trace( "T_Mission_Automate_INF_ReconnaissanceOffensive : fin MRT" )
                     DEC_MRT_Valide()
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -74,7 +76,8 @@ includedFiles["sources/melee/inf/automates/sgpt inf abc/missions/reconnaissanceo
             end
         end
 
-        Activate( self.activations.BEH_Medo_Automate_INF_PreparerMission_Manoeuvre, 1, setmetatable( { "T_Mission_Automate_INF_ReconnaissanceOffensive", 0, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCreationMRT = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Medo_Automate_INF_PreparerMission_Manoeuvre, 1, { "T_Mission_Automate_INF_ReconnaissanceOffensive", 0, } )
+self.done_BEH_Medo_Automate_INF_PreparerMission_Manoeuvre = function( self, _, v ) self.eCreationMRT = v[1] end
     end,
 
     destroy = function( self )

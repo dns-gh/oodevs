@@ -29,9 +29,11 @@ motivation_plugin.motivations[ "MOT_Furtivite" ] =
 
 node "ActivatedByMOT_Furtivite"
 {
+    feedbacks = { { { "done_ActivatedByMOT_Furtivite" }, "ActivatedByMOT_Furtivite" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_Furtivite, {value} ) end,
     activations =
     {
-        { "BEH_MOT_Rens_ActiverFurtivite", {} },
+        { "BEH_MOT_Rens_ActiverFurtivite", { "done_BEH_MOT_Rens_ActiverFurtivite" } },
     },
 
     create = function( self )

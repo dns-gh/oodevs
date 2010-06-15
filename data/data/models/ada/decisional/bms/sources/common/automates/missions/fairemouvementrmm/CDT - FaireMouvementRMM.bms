@@ -18,6 +18,8 @@ includedFiles["sources/common/automates/missions/fairemouvementrmm/CDT - FaireMo
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_FaireMouvementRMM"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_FaireMouvementRMM" }, "MIS_Automate_CDT_FaireMouvementRMM" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_FaireMouvementRMM, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission

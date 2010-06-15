@@ -8,9 +8,11 @@ includedFiles["sources/appui/alat/pions/common/behaviors/Behaviors - Manoeuvre.b
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "BEH_Manoeuvre_Pion_SeCoordonner"
 {
+    feedbacks = { { { "done_BEH_Manoeuvre_Pion_SeCoordonner" }, "BEH_Manoeuvre_Pion_SeCoordonner" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Manoeuvre_Pion_SeCoordonner, {value} ) end,
     activations =
     {
-        { "BEH_Dep_Pion_ALAT_Suivre", {} },
+        { "BEH_Dep_Pion_ALAT_Suivre", { "done_BEH_Dep_Pion_ALAT_Suivre" } },
     },
 
     create = function( self )
@@ -41,10 +43,12 @@ do
 
 node "BEH_Manoeuvre_Pion_GestionDestruction"
 {
+    feedbacks = { { { "done_BEH_Manoeuvre_Pion_GestionDestruction" }, "BEH_Manoeuvre_Pion_GestionDestruction" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Manoeuvre_Pion_GestionDestruction, {value} ) end,
     activations =
     {
-        { "BEH_Dep_Pion_ALAT_SePoser", {} },
-        { "BEH_Dep_Pion_ALAT_RejoindrePoint", {} },
+        { "BEH_Dep_Pion_ALAT_SePoser", { "done_BEH_Dep_Pion_ALAT_SePoser" } },
+        { "BEH_Dep_Pion_ALAT_RejoindrePoint", { "done_BEH_Dep_Pion_ALAT_RejoindrePoint" } },
     },
 
     create = function( self )
@@ -57,7 +61,8 @@ node "BEH_Manoeuvre_Pion_GestionDestruction"
                 if( self.eEtat == eActionEffectuee ) then
                     Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, 1, {} )
                 else
-                    Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, setmetatable( { myself.pointRegroupement_, eProgressionDefaut, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, { myself.pointRegroupement_, eProgressionDefaut, eTypeItiInfiltration, } )
+self.done_BEH_Dep_Pion_ALAT_RejoindrePoint = function( self, _, v ) self.eEtat = v[1] end
                 end
 
             end
@@ -72,10 +77,12 @@ node "BEH_Manoeuvre_Pion_GestionDestruction"
 
 node "BEH_Manoeuvre_Pion_AllerStationner"
 {
+    feedbacks = { { { "done_BEH_Manoeuvre_Pion_AllerStationner" }, "BEH_Manoeuvre_Pion_AllerStationner" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Manoeuvre_Pion_AllerStationner, {value} ) end,
     activations =
     {
-        { "ACT_Maj_Pions_ObjectifEsquive", {} },
-        { "BEH_Dep_Pion_ALAT_RejoindrePoint", {} },
+        { "ACT_Maj_Pions_ObjectifEsquive", { "done_ACT_Maj_Pions_ObjectifEsquive" } },
+        { "BEH_Dep_Pion_ALAT_RejoindrePoint", { "done_BEH_Dep_Pion_ALAT_RejoindrePoint" } },
     },
 
     create = function( self )
@@ -86,14 +93,15 @@ node "BEH_Manoeuvre_Pion_AllerStationner"
     activate = function( self )
         self.eEtat = self.eEtat or eActionEnCours
         Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.objectif, } )
-        Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, setmetatable( { self._namedParams.objectif, eProgressionDefaut, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, { self._namedParams.objectif, eProgressionDefaut, eTypeItiInfiltration, } )
+self.done_BEH_Dep_Pion_ALAT_RejoindrePoint = function( self, _, v ) self.eEtat = v[1] end
         if( self.eEtat == eActionEffectuee ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
 
-                self.params.__returnValue = self.eEtat
+                self:SendFeedback( self.eEtat )
         do return end
 
     end,
@@ -105,10 +113,12 @@ node "BEH_Manoeuvre_Pion_AllerStationner"
 
 node "BEH_Manoeuvre_Pion_GererRecueil"
 {
+    feedbacks = { { { "done_BEH_Manoeuvre_Pion_GererRecueil" }, "BEH_Manoeuvre_Pion_GererRecueil" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Manoeuvre_Pion_GererRecueil, {value} ) end,
     activations =
     {
-        { "BEH_Lima_GererLIA", {} },
-        { "BEH_Lima_GererLR", {} },
+        { "BEH_Lima_GererLIA", { "done_BEH_Lima_GererLIA" } },
+        { "BEH_Lima_GererLR", { "done_BEH_Lima_GererLR" } },
     },
 
     create = function( self )

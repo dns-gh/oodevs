@@ -14,12 +14,14 @@ includedFiles["sources/humus/humus_melee/inf/automates/cie inf cdo/missions/redu
 ]]
 node "MIS_Automate_CDT_INF_Reduire"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_INF_Reduire" }, "MIS_Automate_CDT_INF_Reduire" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_INF_Reduire, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_GererFuseau", {} },
-        { "BEH_Conduite_Automate_INF_Defaut", {} },
-        { "BEH_Conduite_Automate_INF_CadreOffensif", {} },
-        { "BEH_Situation_Automate_INF_Assaut", {} },
+        { "BEH_Conduite_Automate_GererFuseau", { "done_BEH_Conduite_Automate_GererFuseau" } },
+        { "BEH_Conduite_Automate_INF_Defaut", { "done_BEH_Conduite_Automate_INF_Defaut" } },
+        { "BEH_Conduite_Automate_INF_CadreOffensif", { "done_BEH_Conduite_Automate_INF_CadreOffensif" } },
+        { "BEH_Situation_Automate_INF_Assaut", { "done_BEH_Situation_Automate_INF_Assaut" } },
     },
 
     create = function( self )
@@ -46,7 +48,7 @@ node "MIS_Automate_CDT_INF_Reduire"
             do
                 self.eActionMission = eActionEnCours
                                 do
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -55,7 +57,8 @@ node "MIS_Automate_CDT_INF_Reduire"
             end
         end
 
-        Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, { true, } )
+self.done_BEH_Conduite_Automate_INF_Defaut = function( self, _, v ) self.eActionMission = v[1] end
         Activate( self.activations.BEH_Conduite_Automate_INF_CadreOffensif, 1, {} )
         --[[/* bReduire */]]Activate( self.activations.BEH_Situation_Automate_INF_Assaut, 1, { true, } )
     end,
@@ -70,9 +73,11 @@ node "MIS_Automate_CDT_INF_Reduire"
 
 node "BEH_Situation_Automate_INF_ReduireDetruire"
 {
+    feedbacks = { { { "done_BEH_Situation_Automate_INF_ReduireDetruire" }, "BEH_Situation_Automate_INF_ReduireDetruire" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Situation_Automate_INF_ReduireDetruire, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_INF_Reduire_Manoeuvre", {} },
+        { "BEH_Conduite_Automate_INF_Reduire_Manoeuvre", { "done_BEH_Conduite_Automate_INF_Reduire_Manoeuvre" } },
     },
 
     create = function( self )

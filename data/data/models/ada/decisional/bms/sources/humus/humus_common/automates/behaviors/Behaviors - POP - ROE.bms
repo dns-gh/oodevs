@@ -11,13 +11,15 @@ includedFiles["sources/humus/humus_common/automates/behaviors/Behaviors - POP - 
 ]]--[[// *****************************************************************************
 ]]node "BEH_ROE_Automate_RecevoirOrdreInopinePopulation"
 {
+    feedbacks = { { { "done_BEH_ROE_Automate_RecevoirOrdreInopinePopulation" }, "BEH_ROE_Automate_RecevoirOrdreInopinePopulation" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_ROE_Automate_RecevoirOrdreInopinePopulation, {value} ) end,
     activations =
     {
-        { "BEH_ROE_Automate_EmploiForceInterdit", {} },
-        { "BEH_ROE_Automate_MaintienADistanceParMoyensNonLetaux", {} },
-        { "BEH_ROE_Automate_DispersionParMoyensDeDefenseActifs", {} },
-        { "BEH_ROE_Automate_ArmesLetalesAutorisees", {} },
-        { "ACT_Ordre_Suppression", {} },
+        { "BEH_ROE_Automate_EmploiForceInterdit", { "done_BEH_ROE_Automate_EmploiForceInterdit" } },
+        { "BEH_ROE_Automate_MaintienADistanceParMoyensNonLetaux", { "done_BEH_ROE_Automate_MaintienADistanceParMoyensNonLetaux" } },
+        { "BEH_ROE_Automate_DispersionParMoyensDeDefenseActifs", { "done_BEH_ROE_Automate_DispersionParMoyensDeDefenseActifs" } },
+        { "BEH_ROE_Automate_ArmesLetalesAutorisees", { "done_BEH_ROE_Automate_ArmesLetalesAutorisees" } },
+        { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
     },
 
     create = function( self )
@@ -90,9 +92,11 @@ elseif switch_2 == eEtatROEPopulation_ArmesLetalesAutorisees then
 
 node "BEH_ROE_Automate_EmploiForceInterdit"
 {
+    feedbacks = { { { "done_BEH_ROE_Automate_EmploiForceInterdit" }, "BEH_ROE_Automate_EmploiForceInterdit" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_ROE_Automate_EmploiForceInterdit, {value} ) end,
     activations =
     {
-        { "ACT_ROE_Automate_DonnerOrdreEmploiForceInterdit", {} },
+        { "ACT_ROE_Automate_DonnerOrdreEmploiForceInterdit", { "done_ACT_ROE_Automate_DonnerOrdreEmploiForceInterdit" } },
     },
 
     create = function( self )
@@ -117,9 +121,11 @@ node "BEH_ROE_Automate_EmploiForceInterdit"
 
 node "BEH_ROE_Automate_MaintienADistanceParMoyensNonLetaux"
 {
+    feedbacks = { { { "done_BEH_ROE_Automate_MaintienADistanceParMoyensNonLetaux" }, "BEH_ROE_Automate_MaintienADistanceParMoyensNonLetaux" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_ROE_Automate_MaintienADistanceParMoyensNonLetaux, {value} ) end,
     activations =
     {
-        { "ACT_ROE_Automate_DonnerOrdreMaintienADistanceParMoyensNonLetaux", {} },
+        { "ACT_ROE_Automate_DonnerOrdreMaintienADistanceParMoyensNonLetaux", { "done_ACT_ROE_Automate_DonnerOrdreMaintienADistanceParMoyensNonLetaux" } },
     },
 
     create = function( self )
@@ -144,9 +150,11 @@ node "BEH_ROE_Automate_MaintienADistanceParMoyensNonLetaux"
 
 node "BEH_ROE_Automate_DispersionParMoyensDeDefenseActifs"
 {
+    feedbacks = { { { "done_BEH_ROE_Automate_DispersionParMoyensDeDefenseActifs" }, "BEH_ROE_Automate_DispersionParMoyensDeDefenseActifs" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_ROE_Automate_DispersionParMoyensDeDefenseActifs, {value} ) end,
     activations =
     {
-        { "ACT_ROE_Automate_DonnerOrdreDispersionParMoyensDeDefenseActifs", {} },
+        { "ACT_ROE_Automate_DonnerOrdreDispersionParMoyensDeDefenseActifs", { "done_ACT_ROE_Automate_DonnerOrdreDispersionParMoyensDeDefenseActifs" } },
     },
 
     create = function( self )
@@ -171,9 +179,11 @@ node "BEH_ROE_Automate_DispersionParMoyensDeDefenseActifs"
 
 node "BEH_ROE_Automate_ArmesLetalesAutorisees"
 {
+    feedbacks = { { { "done_BEH_ROE_Automate_ArmesLetalesAutorisees" }, "BEH_ROE_Automate_ArmesLetalesAutorisees" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_ROE_Automate_ArmesLetalesAutorisees, {value} ) end,
     activations =
     {
-        { "ACT_ROE_Automate_DonnerOrdreArmesLetalesAutorisees", {} },
+        { "ACT_ROE_Automate_DonnerOrdreArmesLetalesAutorisees", { "done_ACT_ROE_Automate_DonnerOrdreArmesLetalesAutorisees" } },
     },
 
     create = function( self )
@@ -198,6 +208,8 @@ node "BEH_ROE_Automate_ArmesLetalesAutorisees"
 
 node "ACT_ROE_Automate_DonnerOrdreEmploiForceInterdit"
 {
+    feedbacks = { { { "done_ACT_ROE_Automate_DonnerOrdreEmploiForceInterdit" }, "ACT_ROE_Automate_DonnerOrdreEmploiForceInterdit" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_ROE_Automate_DonnerOrdreEmploiForceInterdit, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -225,6 +237,8 @@ node "ACT_ROE_Automate_DonnerOrdreEmploiForceInterdit"
 ]]--[[// *****************************************************************************
 ]]node "ACT_ROE_Automate_DonnerOrdreMaintienADistanceParMoyensNonLetaux"
 {
+    feedbacks = { { { "done_ACT_ROE_Automate_DonnerOrdreMaintienADistanceParMoyensNonLetaux" }, "ACT_ROE_Automate_DonnerOrdreMaintienADistanceParMoyensNonLetaux" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_ROE_Automate_DonnerOrdreMaintienADistanceParMoyensNonLetaux, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -252,6 +266,8 @@ node "ACT_ROE_Automate_DonnerOrdreEmploiForceInterdit"
 ]]--[[// *****************************************************************************
 ]]node "ACT_ROE_Automate_DonnerOrdreDispersionParMoyensDeDefenseActifs"
 {
+    feedbacks = { { { "done_ACT_ROE_Automate_DonnerOrdreDispersionParMoyensDeDefenseActifs" }, "ACT_ROE_Automate_DonnerOrdreDispersionParMoyensDeDefenseActifs" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_ROE_Automate_DonnerOrdreDispersionParMoyensDeDefenseActifs, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -279,6 +295,8 @@ node "ACT_ROE_Automate_DonnerOrdreEmploiForceInterdit"
 ]]--[[// *****************************************************************************
 ]]node "ACT_ROE_Automate_DonnerOrdreArmesLetalesAutorisees"
 {
+    feedbacks = { { { "done_ACT_ROE_Automate_DonnerOrdreArmesLetalesAutorisees" }, "ACT_ROE_Automate_DonnerOrdreArmesLetalesAutorisees" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_ROE_Automate_DonnerOrdreArmesLetalesAutorisees, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]

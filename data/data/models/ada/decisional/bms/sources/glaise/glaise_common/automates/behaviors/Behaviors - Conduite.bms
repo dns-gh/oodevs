@@ -16,10 +16,12 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Conduite_Automate_GererFuseau"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_GererFuseau" }, "BEH_Conduite_Automate_GererFuseau" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_GererFuseau, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_GererFuseau_Init", {} },
-        { "BEH_Conduite_Automate_GererFuseau_Valide", {} },
+        { "BEH_Conduite_Automate_GererFuseau_Init", { "done_BEH_Conduite_Automate_GererFuseau_Init" } },
+        { "BEH_Conduite_Automate_GererFuseau_Valide", { "done_BEH_Conduite_Automate_GererFuseau_Valide" } },
     },
 
     create = function( self )
@@ -28,7 +30,8 @@ include "bit.lua"
     activate = function( self )
         self.eActionInit = self.eActionInit or eActionEnCours
         if( self.eActionInit == eActionEnCours ) then
-            Activate( self.activations.BEH_Conduite_Automate_GererFuseau_Init, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionInit = v else rawset( t, k, v ) end end } ) )
+            Activate( self.activations.BEH_Conduite_Automate_GererFuseau_Init, 1, {} )
+self.done_BEH_Conduite_Automate_GererFuseau_Init = function( self, _, v ) self.eActionInit = v[1] end
         else
             Activate( self.activations.BEH_Conduite_Automate_GererFuseau_Valide, 1, {} )
         end
@@ -39,10 +42,12 @@ include "bit.lua"
 
 node "BEH_Conduite_Automate_GererFuseau_Init"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_GererFuseau_Init" }, "BEH_Conduite_Automate_GererFuseau_Init" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_GererFuseau_Init, {value} ) end,
     activations =
     {
-        { "ACT_Ordre_Automate_Pause", {} },
-        { "ACT_Ordre_Automate_Continue", {} },
+        { "ACT_Ordre_Automate_Pause", { "done_ACT_Ordre_Automate_Pause" } },
+        { "ACT_Ordre_Automate_Continue", { "done_ACT_Ordre_Automate_Continue" } },
     },
 
     create = function( self )
@@ -77,7 +82,7 @@ node "BEH_Conduite_Automate_GererFuseau_Init"
                 end
 
                 if( rPions_DansFuseau == #( sUnites_PE ) ) then
-                    self.params.__returnValue = eActionEffectuee
+                    self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
                 end
@@ -95,7 +100,7 @@ node "BEH_Conduite_Automate_GererFuseau_Init"
 ]]local rPion_Rejoins = S_Conduite_Pions_EtatMission( sUnites_PE, eEtatPhaseMission_RejointFuseau )
         local rPion_SurFuseau = S_Conduite_Pions_EtatLima( sUnites_PE, eEtatLima_Fuseau )
         if( self.bOrdre_Donne or ( #( sUnites_PE ) < self.rN_PE_Init ) ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -118,9 +123,11 @@ node "BEH_Conduite_Automate_GererFuseau_Init"
 
 node "BEH_Conduite_Automate_GererFuseau_Valide"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_GererFuseau_Valide" }, "BEH_Conduite_Automate_GererFuseau_Valide" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_GererFuseau_Valide, {value} ) end,
     activations =
     {
-        { "ACT_Ordre_Automate_Continue", {} },
+        { "ACT_Ordre_Automate_Continue", { "done_ACT_Ordre_Automate_Continue" } },
     },
 
     create = function( self )
@@ -146,9 +153,11 @@ do
 
 node "BEH_Conduite_Automate_GererFinMission"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_GererFinMission" }, "BEH_Conduite_Automate_GererFinMission" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_GererFinMission, {value} ) end,
     activations =
     {
-        { "BEH_Situation_Automate_FinDeMission", {} },
+        { "BEH_Situation_Automate_FinDeMission", { "done_BEH_Situation_Automate_FinDeMission" } },
     },
 
     create = function( self )
@@ -173,7 +182,7 @@ node "BEH_Conduite_Automate_GererFinMission"
                     --[[// DEC_RC( eRC_FinMission );
 ]]--[[// DEC_RC( eRC_MissionTerminee );
 ]]DEC_Trace( "$$ Mission terminee $$" )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -182,7 +191,8 @@ node "BEH_Conduite_Automate_GererFinMission"
             end
         end
 
-        Activate( self.activations.BEH_Situation_Automate_FinDeMission, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Situation_Automate_FinDeMission, 1, {} )
+self.done_BEH_Situation_Automate_FinDeMission = function( self, _, v ) self.eActionMission = v[1] end
     end,
 
 --[[//-----------------------------------------------------------------------------
@@ -192,9 +202,11 @@ node "BEH_Conduite_Automate_GererFinMission"
 
 node "BEH_Situation_Automate_FinDeMission_Sur"
 {
+    feedbacks = { { { "done_BEH_Situation_Automate_FinDeMission_Sur" }, "BEH_Situation_Automate_FinDeMission_Sur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Situation_Automate_FinDeMission_Sur, {value} ) end,
     activations =
     {
-        { "BEH_Situation_Automate_FinDeMission", {} },
+        { "BEH_Situation_Automate_FinDeMission", { "done_BEH_Situation_Automate_FinDeMission" } },
     },
 
     create = function( self )
@@ -214,6 +226,8 @@ node "BEH_Situation_Automate_FinDeMission_Sur"
 
 node "BEH_Situation_Automate_FinDeMission"
 {
+    feedbacks = { { { "done_BEH_Situation_Automate_FinDeMission" }, "BEH_Situation_Automate_FinDeMission" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Situation_Automate_FinDeMission, {value} ) end,
     create = function( self )
     end,
 
@@ -228,11 +242,11 @@ node "BEH_Situation_Automate_FinDeMission"
         end
 
         if( GetActivity() >= rFinDeMission ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             do return end
         end
 
-                self.params.__returnValue = eActionEnCours
+                self:SendFeedback( eActionEnCours )
         do return end
 
     end,

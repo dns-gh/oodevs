@@ -9,6 +9,8 @@ includedFiles["sources/appui/rens/automates/roem/common/missions/renseignersur/R
 ]]--[[// *****************************************************************************
 ]]node "BEH_Automate_CDT_RENS_ROEM_RenseignerSur"
 {
+    feedbacks = { { { "done_BEH_Automate_CDT_RENS_ROEM_RenseignerSur" }, "BEH_Automate_CDT_RENS_ROEM_RenseignerSur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Automate_CDT_RENS_ROEM_RenseignerSur, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params[1]

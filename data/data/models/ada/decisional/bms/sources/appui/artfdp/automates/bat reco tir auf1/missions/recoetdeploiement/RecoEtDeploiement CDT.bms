@@ -17,9 +17,11 @@ includedFiles["sources/appui/artfdp/automates/bat reco tir auf1/missions/recoetd
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_ASS_RecoEtDeploiement"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ASS_RecoEtDeploiement" }, "MIS_Automate_CDT_ASS_RecoEtDeploiement" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ASS_RecoEtDeploiement, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_ASS_RecoEtDeploiement", {} },
+        { "BEH_Conduite_Automate_ASS_RecoEtDeploiement", { "done_BEH_Conduite_Automate_ASS_RecoEtDeploiement" } },
     },
 
     create = function( self )

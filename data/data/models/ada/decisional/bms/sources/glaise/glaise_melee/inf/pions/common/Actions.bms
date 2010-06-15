@@ -21,6 +21,8 @@ includedFiles["sources/glaise/glaise_melee/inf/pions/common/Actions.bms"] = true
 ]]--[[// ******************************************************************************
 ]]node "ACT_MAJ_EtatSituationEni"
 {
+    feedbacks = { { { "done_ACT_MAJ_EtatSituationEni" }, "ACT_MAJ_EtatSituationEni" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_MAJ_EtatSituationEni, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.eEtatSituationEnnemi = self.params[1]
@@ -52,6 +54,8 @@ includedFiles["sources/glaise/glaise_melee/inf/pions/common/Actions.bms"] = true
 ]]--[[// ============================================================================
 ]]node "ACT_Dep_Pion_INF_Arret"
 {
+    feedbacks = { { { "done_ACT_Dep_Pion_INF_Arret" }, "ACT_Dep_Pion_INF_Arret" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Dep_Pion_INF_Arret, {value} ) end,
     actuators =
     {
         deplacement = 1,
@@ -79,7 +83,7 @@ includedFiles["sources/glaise/glaise_melee/inf/pions/common/Actions.bms"] = true
                     do
                         --[[// bloc fin
 ]]DEC_Trace( "fin " )
-                                                self.params.__returnValue = eActionEffectuee
+                                                self:SendFeedback( eActionEffectuee )
                         Halt( self )
                         do return end
 
@@ -103,6 +107,8 @@ includedFiles["sources/glaise/glaise_melee/inf/pions/common/Actions.bms"] = true
 ]]--[[// ============================================================================
 ]]node "ACT_Tir_Pion_INF_Neutraliser"
 {
+    feedbacks = { { { "done_ACT_Tir_Pion_INF_Neutraliser" }, "ACT_Tir_Pion_INF_Neutraliser" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Tir_Pion_INF_Neutraliser, {value} ) end,
     instances =
     {
         max = 1,
@@ -124,6 +130,8 @@ includedFiles["sources/glaise/glaise_melee/inf/pions/common/Actions.bms"] = true
 ]]--[[// ============================================================================
 ]]node "ACT_Ordre_Pion_INF_AC_FaireRalentir"
 {
+    feedbacks = { { { "done_ACT_Ordre_Pion_INF_AC_FaireRalentir" }, "ACT_Ordre_Pion_INF_AC_FaireRalentir" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Ordre_Pion_INF_AC_FaireRalentir, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.tAmi = self.params[1]
@@ -156,6 +164,8 @@ includedFiles["sources/glaise/glaise_melee/inf/pions/common/Actions.bms"] = true
 ]]--[[// ============================================================================
 ]]node "ACT_Tir_INF_FumigeneVersEni"
 {
+    feedbacks = { { { "done_ACT_Tir_INF_FumigeneVersEni" }, "ACT_Tir_INF_FumigeneVersEni" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Tir_INF_FumigeneVersEni, {value} ) end,
     actuators =
     {
         tir = 1,
@@ -189,6 +199,8 @@ includedFiles["sources/glaise/glaise_melee/inf/pions/common/Actions.bms"] = true
 ]]--[[// ============================================================================
 ]]node "ACT_Misc_Pion_INF_MAJ_PositionRegroupement"
 {
+    feedbacks = { { { "done_ACT_Misc_Pion_INF_MAJ_PositionRegroupement" }, "ACT_Misc_Pion_INF_MAJ_PositionRegroupement" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Misc_Pion_INF_MAJ_PositionRegroupement, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.ptRegroupement = self.params[1]
@@ -222,6 +234,8 @@ includedFiles["sources/glaise/glaise_melee/inf/pions/common/Actions.bms"] = true
 ]]--[[// ============================================================================
 ]]node "ACT_Misc_Pion_Ambiance"
 {
+    feedbacks = { { { "done_ACT_Misc_Pion_Ambiance" }, "ACT_Misc_Pion_Ambiance" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Misc_Pion_Ambiance, {value} ) end,
     actuators =
     {
         etat_Ambiance = 1,
@@ -244,6 +258,8 @@ includedFiles["sources/glaise/glaise_melee/inf/pions/common/Actions.bms"] = true
 ]]--[[// ============================================================================
 ]]node "ACT_Dep_Pion_INF_ActiverFurtivite"
 {
+    feedbacks = { { { "done_ACT_Dep_Pion_INF_ActiverFurtivite" }, "ACT_Dep_Pion_INF_ActiverFurtivite" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Dep_Pion_INF_ActiverFurtivite, {value} ) end,
     actuators =
     {
         furtivite = 1,

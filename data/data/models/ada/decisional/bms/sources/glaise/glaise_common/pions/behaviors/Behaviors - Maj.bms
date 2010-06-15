@@ -9,11 +9,13 @@ includedFiles["sources/glaise/glaise_common/pions/behaviors/Behaviors - Maj.bms"
 ]]--[[// *****************************************************************************
 ]]node "BEH_MAJ_EtatDefaut"
 {
+    feedbacks = { { { "done_BEH_MAJ_EtatDefaut" }, "BEH_MAJ_EtatDefaut" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MAJ_EtatDefaut, {value} ) end,
     activations =
     {
-        { "BEH_MAJ_EtatOperationnel", {} },
-        { "ACT_MAJ_EtatDec", {} },
-        { "ACT_MAJ_EtatOrdreCoordination", {} },
+        { "BEH_MAJ_EtatOperationnel", { "done_BEH_MAJ_EtatOperationnel" } },
+        { "ACT_MAJ_EtatDec", { "done_ACT_MAJ_EtatDec" } },
+        { "ACT_MAJ_EtatOrdreCoordination", { "done_ACT_MAJ_EtatOrdreCoordination" } },
     },
 
     create = function( self )
@@ -41,6 +43,8 @@ includedFiles["sources/glaise/glaise_common/pions/behaviors/Behaviors - Maj.bms"
 
 node "BEH_MAJ_AgressiviteMission"
 {
+    feedbacks = { { { "done_BEH_MAJ_AgressiviteMission" }, "BEH_MAJ_AgressiviteMission" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MAJ_AgressiviteMission, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.eNiveauAction = self.params[1]
@@ -74,10 +78,12 @@ node "BEH_MAJ_AgressiviteMission"
 
 node "BEH_MAJ_EtatOperationnel"
 {
+    feedbacks = { { { "done_BEH_MAJ_EtatOperationnel" }, "BEH_MAJ_EtatOperationnel" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MAJ_EtatOperationnel, {value} ) end,
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "ACT_MAJ_EtatDestruction", {} },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "ACT_MAJ_EtatDestruction", { "done_ACT_MAJ_EtatDestruction" } },
     },
 
     create = function( self )
@@ -119,6 +125,8 @@ node "BEH_MAJ_EtatOperationnel"
 
 node "BEH_MAJ_Pion_EnvieTenir"
 {
+    feedbacks = { { { "done_BEH_MAJ_Pion_EnvieTenir" }, "BEH_MAJ_Pion_EnvieTenir" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MAJ_Pion_EnvieTenir, {value} ) end,
     create = function( self )
     end,
 

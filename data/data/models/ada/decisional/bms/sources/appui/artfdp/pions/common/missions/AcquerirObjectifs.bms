@@ -19,11 +19,13 @@ includedFiles["sources/appui/artfdp/pions/common/missions/AcquerirObjectifs.bms"
 ]]--[[// ============================================================================
 ]]node "BEH_Pion_ASS_AcquerirObjectifs_Mission"
 {
+    feedbacks = { { { "done_BEH_Pion_ASS_AcquerirObjectifs_Mission" }, "BEH_Pion_ASS_AcquerirObjectifs_Mission" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pion_ASS_AcquerirObjectifs_Mission, {value} ) end,
     activations =
     {
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_Suivre_Elastique", {} },
-        { "BEH_Obs_Pion_ASS_ReconnaissanceZone", {} },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Dep_Suivre_Elastique", { "done_BEH_Dep_Suivre_Elastique" } },
+        { "BEH_Obs_Pion_ASS_ReconnaissanceZone", { "done_BEH_Obs_Pion_ASS_ReconnaissanceZone" } },
     },
 
     create = function( self )
@@ -56,10 +58,12 @@ includedFiles["sources/appui/artfdp/pions/common/missions/AcquerirObjectifs.bms"
 
 node "BEH_Obs_Pion_ASS_ReconnaissanceZone"
 {
+    feedbacks = { { { "done_BEH_Obs_Pion_ASS_ReconnaissanceZone" }, "BEH_Obs_Pion_ASS_ReconnaissanceZone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Obs_Pion_ASS_ReconnaissanceZone, {value} ) end,
     activations =
     {
-        { "ACT_Obs_SurveillerZone", {} },
-        { "ACT_Obs_EtablirVisionVersPt", {} },
+        { "ACT_Obs_SurveillerZone", { "done_ACT_Obs_SurveillerZone" } },
+        { "ACT_Obs_EtablirVisionVersPt", { "done_ACT_Obs_EtablirVisionVersPt" } },
     },
 
     create = function( self )

@@ -12,10 +12,12 @@ include "bit.lua"
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "BEH_MOT_Pion_MARINE_GarderSesDistances"
 {
+    feedbacks = { { { "done_BEH_MOT_Pion_MARINE_GarderSesDistances" }, "BEH_MOT_Pion_MARINE_GarderSesDistances" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MOT_Pion_MARINE_GarderSesDistances, {value} ) end,
     activations =
     {
-        { "ACT_MAJ_EtatDec", {} },
-        { "BEH_MOT_Pion_MARINE_GarderSesDistancesFaceA", {} },
+        { "ACT_MAJ_EtatDec", { "done_ACT_MAJ_EtatDec" } },
+        { "BEH_MOT_Pion_MARINE_GarderSesDistancesFaceA", { "done_BEH_MOT_Pion_MARINE_GarderSesDistancesFaceA" } },
     },
 
     create = function( self )
@@ -58,6 +60,8 @@ do
 
 node "BEH_MOT_Pion_MARINE_GarderSesDistancesFaceA"
 {
+    feedbacks = { { { "done_BEH_MOT_Pion_MARINE_GarderSesDistancesFaceA" }, "BEH_MOT_Pion_MARINE_GarderSesDistancesFaceA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MOT_Pion_MARINE_GarderSesDistancesFaceA, {value} ) end,
     instances =
     {
         boost = 1.01,
@@ -66,8 +70,8 @@ node "BEH_MOT_Pion_MARINE_GarderSesDistancesFaceA"
 
     activations =
     {
-        { "BEH_SePosterFaceAEni", {} },
-        { "BEH_Eni_Pion_MARINE_DecrocherFaceA", {} },
+        { "BEH_SePosterFaceAEni", { "done_BEH_SePosterFaceAEni" } },
+        { "BEH_Eni_Pion_MARINE_DecrocherFaceA", { "done_BEH_Eni_Pion_MARINE_DecrocherFaceA" } },
     },
 
     create = function( self )
@@ -111,6 +115,8 @@ node "BEH_MOT_Pion_MARINE_GarderSesDistancesFaceA"
 
 node "BEH_Mot_Pion_MARINE_AffecterVariablesDEtat"
 {
+    feedbacks = { { { "done_BEH_Mot_Pion_MARINE_AffecterVariablesDEtat" }, "BEH_Mot_Pion_MARINE_AffecterVariablesDEtat" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mot_Pion_MARINE_AffecterVariablesDEtat, {value} ) end,
     create = function( self )
     end,
 

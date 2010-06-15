@@ -18,9 +18,11 @@ includedFiles["sources/glaise/glaise_common/pions/missions/SuivreUnite.bms"] = t
 ]]--[[// *****************************************************************************
 ]]node "MIS_Pion_Suivre"
 {
+    feedbacks = { { { "done_MIS_Pion_Suivre" }, "MIS_Pion_Suivre" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_Suivre, {value} ) end,
     activations =
     {
-        { "BEH_Dep_Suivre", {} },
+        { "BEH_Dep_Suivre", { "done_BEH_Dep_Suivre" } },
     },
 
     create = function( self )

@@ -103,6 +103,8 @@ include "Glaise/Glaise_Melee/Abc/Pions/secCharMoyen/Missions/Missions.bms"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Pion_ABC_Default"
 {
+    feedbacks = { { { "done_BEH_Pion_ABC_Default" }, "BEH_Pion_ABC_Default" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pion_ABC_Default, {value} ) end,
     create = function( self )
     end,
 

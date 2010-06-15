@@ -20,11 +20,13 @@ includedFiles["sources/humus/humus_melee/abc/automates/common/missions/surveille
 ]]--[[// *****************************************************************************
 ]]node "BEH_Conduite_Automate_ABC_Surveiller"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_ABC_Surveiller" }, "BEH_Conduite_Automate_ABC_Surveiller" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_ABC_Surveiller, {value} ) end,
     activations =
     {
-        { "BEH_Dispositif_Automate_ABC_GererLesAppuis_", {} },
-        { "BEH_Dispositif_Automate_ABC_GererLeDispositifStatique_", {} },
-        { "BEH_RC_Automate_GererConditionOperationnelle", {} },
+        { "BEH_Dispositif_Automate_ABC_GererLesAppuis_", { "done_BEH_Dispositif_Automate_ABC_GererLesAppuis_" } },
+        { "BEH_Dispositif_Automate_ABC_GererLeDispositifStatique_", { "done_BEH_Dispositif_Automate_ABC_GererLeDispositifStatique_" } },
+        { "BEH_RC_Automate_GererConditionOperationnelle", { "done_BEH_RC_Automate_GererConditionOperationnelle" } },
     },
 
     create = function( self )

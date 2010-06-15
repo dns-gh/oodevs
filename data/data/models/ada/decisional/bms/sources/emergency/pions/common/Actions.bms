@@ -12,6 +12,8 @@ includedFiles["sources/emergency/pions/common/Actions.bms"] = true
 ]]
 node "ACT_Pion_Emergency_BlockRoad"
 {
+    feedbacks = { { { "done_ACT_Pion_Emergency_BlockRoad" }, "ACT_Pion_Emergency_BlockRoad" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Pion_Emergency_BlockRoad, {value} ) end,
     create = function( self )
     end,
 
@@ -39,7 +41,7 @@ node "ACT_Pion_Emergency_BlockRoad"
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionInfluence_Impossible then
                     self.actionID = DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -77,6 +79,8 @@ elseif switch_1 == eActionInfluence_Impossible then
 
 node "ACT_Pion_Emergency_Influence"
 {
+    feedbacks = { { { "done_ACT_Pion_Emergency_Influence" }, "ACT_Pion_Emergency_Influence" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Pion_Emergency_Influence, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.name = self.params[1]
@@ -116,7 +120,7 @@ node "ACT_Pion_Emergency_Influence"
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionInfluence_Impossible then
                     self.actionID = DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -154,6 +158,8 @@ elseif switch_1 == eActionInfluence_Impossible then
 
 node "ACT_Pion_Emergency_InfluenceInArea"
 {
+    feedbacks = { { { "done_ACT_Pion_Emergency_InfluenceInArea" }, "ACT_Pion_Emergency_InfluenceInArea" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Pion_Emergency_InfluenceInArea, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.name = self.params[1]
@@ -187,7 +193,7 @@ node "ACT_Pion_Emergency_InfluenceInArea"
 elseif switch_1 == eActionInfluence_Impossible then
                     self.actionID = DEC_StopAction( self.actionID )
                     DEC_Trace( "influence impossible." )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -225,6 +231,8 @@ elseif switch_1 == eActionInfluence_Impossible then
 
 node "ACT_Pion_Emergency_TriggerActivity"
 {
+    feedbacks = { { { "done_ACT_Pion_Emergency_TriggerActivity" }, "ACT_Pion_Emergency_TriggerActivity" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Pion_Emergency_TriggerActivity, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.name = self.params[1]
@@ -264,7 +272,7 @@ node "ACT_Pion_Emergency_TriggerActivity"
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionInfluence_Impossible then
                     self.actionID = DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -302,6 +310,8 @@ elseif switch_1 == eActionInfluence_Impossible then
 
 node "ACT_Pion_Emergency_TriggerActivityInArea"
 {
+    feedbacks = { { { "done_ACT_Pion_Emergency_TriggerActivityInArea" }, "ACT_Pion_Emergency_TriggerActivityInArea" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Pion_Emergency_TriggerActivityInArea, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.name = self.params[1]
@@ -333,7 +343,7 @@ node "ACT_Pion_Emergency_TriggerActivityInArea"
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionInfluence_Impossible then
                     self.actionID = DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -371,6 +381,8 @@ elseif switch_1 == eActionInfluence_Impossible then
 
 node "ACT_Pion_Emergency_UnloadActivity"
 {
+    feedbacks = { { { "done_ACT_Pion_Emergency_UnloadActivity" }, "ACT_Pion_Emergency_UnloadActivity" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Pion_Emergency_UnloadActivity, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.name = self.params[1]
@@ -410,7 +422,7 @@ node "ACT_Pion_Emergency_UnloadActivity"
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionInfluence_Impossible then
                     self.actionID = DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -448,6 +460,8 @@ elseif switch_1 == eActionInfluence_Impossible then
 
 node "ACT_Obj_Pion_Emergency_RealiserObjet"
 {
+    feedbacks = { { { "done_ACT_Obj_Pion_Emergency_RealiserObjet" }, "ACT_Obj_Pion_Emergency_RealiserObjet" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obj_Pion_Emergency_RealiserObjet, {value} ) end,
     actuators =
     {
         deplacement = 1,
@@ -470,13 +484,13 @@ node "ACT_Obj_Pion_Emergency_RealiserObjet"
         if( ModuleBegins() ) then
             do
                 if( ( self._namedParams.locObjet == 0 or self._namedParams.locObjet == nil ) ) then
-                    self.params.__returnValue = eActionImpossible
+                    self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
                 end
 
                 if( not DEC_Agent_PeutConstruireObjet( S_TypeObject_ToString( self._namedParams.eTypeObjet ) ) ) then
-                    self.params.__returnValue = eActionImpossible
+                    self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
                 end
@@ -517,7 +531,7 @@ elseif switch_1 == eActionObjetTerminee then
                     end
 
                     self.actionID = DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -525,7 +539,7 @@ elseif switch_1 == eActionObjetTerminee then
                 elseif switch_1 == eActionObjetPasDeCapacite then
                     DEC_Trace( "object construction: no capability" )
                     self.actionID = DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -537,7 +551,7 @@ elseif switch_1 == eActionObjetTerminee then
                 end
                 if cases_switch_1[4] or switch_1 == eActionObjetImpossible then
                     self.actionID = DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -578,6 +592,8 @@ elseif switch_1 == eActionObjetTerminee then
 
 node "ACT_Obj_Pion_Emergency_Supply"
 {
+    feedbacks = { { { "done_ACT_Obj_Pion_Emergency_Supply" }, "ACT_Obj_Pion_Emergency_Supply" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obj_Pion_Emergency_Supply, {value} ) end,
     actuators =
     {
         deplacement = 1,
@@ -613,7 +629,7 @@ node "ACT_Obj_Pion_Emergency_Supply"
                 end
 
                 DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionEffectuee
+                                self:SendFeedback( eActionEffectuee )
                 Halt( self )
                 do return end
 
@@ -639,7 +655,7 @@ elseif switch_1 == eActionObjetTerminee then
                     end
 
                     self.actionID = DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -648,7 +664,7 @@ elseif switch_1 == eActionObjetTerminee then
                 or switch_1 == eActionObjetManqueDotation
                 or switch_1 == eActionObjetImpossible then
                     self.actionID = DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -669,6 +685,8 @@ elseif switch_1 == eActionObjetTerminee then
 
 node "ACT_Obj_Pion_Emergency_Distribute"
 {
+    feedbacks = { { { "done_ACT_Obj_Pion_Emergency_Distribute" }, "ACT_Obj_Pion_Emergency_Distribute" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obj_Pion_Emergency_Distribute, {value} ) end,
     actuators =
     {
         deplacement = 1,
@@ -712,7 +730,7 @@ elseif switch_1 == eActionObjetTerminee then
                     end
 
                     self.actionID = DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -721,7 +739,7 @@ elseif switch_1 == eActionObjetTerminee then
                 or switch_1 == eActionObjetManqueDotation
                 or switch_1 == eActionObjetImpossible then
                     self.actionID = DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -742,6 +760,8 @@ elseif switch_1 == eActionObjetTerminee then
 
 node "ACT_Obj_Pion_Emergency_ExtinguishFire"
 {
+    feedbacks = { { { "done_ACT_Obj_Pion_Emergency_ExtinguishFire" }, "ACT_Obj_Pion_Emergency_ExtinguishFire" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obj_Pion_Emergency_ExtinguishFire, {value} ) end,
     actuators =
     {
         deplacement = 1,
@@ -769,7 +789,7 @@ node "ACT_Obj_Pion_Emergency_ExtinguishFire"
         if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.knFire ) ) then
             do
                 DEC_StopAction( self.actionID )
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -786,7 +806,7 @@ node "ACT_Obj_Pion_Emergency_ExtinguishFire"
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionInfluence_Impossible then
                     self.actionID = DEC_StopAction( self.actionID )
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 

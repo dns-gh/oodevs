@@ -9,9 +9,11 @@ includedFiles["sources/melee/abc/pions/pel xl/missions/SEmparerZone.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "MIS_Pion_ABC_SemparerZone"
 {
+    feedbacks = { { { "done_MIS_Pion_ABC_SemparerZone" }, "MIS_Pion_ABC_SemparerZone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_ABC_SemparerZone, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Pion_ABC_SEmparerZone", {} },
+        { "BEH_Mission_Pion_ABC_SEmparerZone", { "done_BEH_Mission_Pion_ABC_SEmparerZone" } },
     },
 
     create = function( self )
@@ -25,13 +27,13 @@ includedFiles["sources/melee/abc/pions/pel xl/missions/SEmparerZone.bms"] = true
 ]]--[[// Terminaison
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eEtat == eActionImpossible ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             Halt( self )
             do return end
         end
 
         if( self.eEtat == eActionEffectuee ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -39,7 +41,8 @@ includedFiles["sources/melee/abc/pions/pel xl/missions/SEmparerZone.bms"] = true
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Comportement de la mission
 ]]--[[//-----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_Mission_Pion_ABC_SEmparerZone, 1, setmetatable( { self._namedParams.mission, M_MODELE_PION_ABC_SEMPARER_PH(), M_MODELE_PION_ABC_SEMPARER_ID(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+]]Activate( self.activations.BEH_Mission_Pion_ABC_SEmparerZone, 1, { self._namedParams.mission, M_MODELE_PION_ABC_SEMPARER_PH(), M_MODELE_PION_ABC_SEMPARER_ID(), } )
+self.done_BEH_Mission_Pion_ABC_SEmparerZone = function( self, _, v ) self.eEtat = v[1] end
     end,
 
 }

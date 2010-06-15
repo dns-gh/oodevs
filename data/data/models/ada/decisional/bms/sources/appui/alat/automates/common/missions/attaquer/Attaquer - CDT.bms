@@ -6,16 +6,18 @@ includedFiles["sources/appui/alat/automates/common/missions/attaquer/Attaquer - 
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "MIS_Automate_CDT_ALAT_Attaquer"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ALAT_Attaquer" }, "MIS_Automate_CDT_ALAT_Attaquer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ALAT_Attaquer, {value} ) end,
     activations =
     {
-        { "BEH_ROE_Automate_TirLibre", {} },
-        { "BEH_Ordre_Automate_Poursuivre_", {} },
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
-        { "BEH_Medo_Automate_ALAT_AssignerMissionsAttaquerAListe", {} },
-        { "BEH_Automate_ALAT_CoordonnerFeux", {} },
-        { "BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX", {} },
-        { "BEH_ROE_Automate_TirRestreint", {} },
-        { "BEH_Mission_Automate_AssignerStationnerAListe", {} },
+        { "BEH_ROE_Automate_TirLibre", { "done_BEH_ROE_Automate_TirLibre" } },
+        { "BEH_Ordre_Automate_Poursuivre_", { "done_BEH_Ordre_Automate_Poursuivre_" } },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "done_BEH_Ordre_Automate_RecevoirOrdreInopine" } },
+        { "BEH_Medo_Automate_ALAT_AssignerMissionsAttaquerAListe", { "done_BEH_Medo_Automate_ALAT_AssignerMissionsAttaquerAListe" } },
+        { "BEH_Automate_ALAT_CoordonnerFeux", { "done_BEH_Automate_ALAT_CoordonnerFeux" } },
+        { "BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX", { "done_BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX" } },
+        { "BEH_ROE_Automate_TirRestreint", { "done_BEH_ROE_Automate_TirRestreint" } },
+        { "BEH_Mission_Automate_AssignerStationnerAListe", { "done_BEH_Mission_Automate_AssignerStationnerAListe" } },
     },
 
     create = function( self )
@@ -44,7 +46,8 @@ includedFiles["sources/appui/alat/automates/common/missions/attaquer/Attaquer - 
             end
         end
 
-        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatODC = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )
+self.done_BEH_Ordre_Automate_RecevoirOrdreInopine = function( self, _, v ) self.eEtatODC = v[1] end
         --[[// donner des missions aux pions qui sont opérationnels et qui ne sont pas en cours
 ]]--[[// de ravitaillement
 ]]self.listePionsSgpt = {}

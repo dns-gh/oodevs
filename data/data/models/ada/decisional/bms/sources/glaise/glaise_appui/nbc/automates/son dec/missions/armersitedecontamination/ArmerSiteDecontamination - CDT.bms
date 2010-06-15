@@ -9,9 +9,11 @@ includedFiles["sources/glaise/glaise_appui/nbc/automates/son dec/missions/armers
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_NBC_ArmerUnSiteDeDecontamination"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_NBC_ArmerUnSiteDeDecontamination" }, "MIS_Automate_CDT_NBC_ArmerUnSiteDeDecontamination" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_NBC_ArmerUnSiteDeDecontamination, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_NBC_ArmerUnSiteDeDecontamination", {} },
+        { "BEH_Conduite_Automate_NBC_ArmerUnSiteDeDecontamination", { "done_BEH_Conduite_Automate_NBC_ArmerUnSiteDeDecontamination" } },
     },
 
     create = function( self )

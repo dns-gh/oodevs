@@ -14,12 +14,14 @@ includedFiles["sources/glaise/glaise_melee/inf/automates/cie ac/missions/appuyer
 ]]
 node "MIS_Automate_CDT_INF_AppuyerUnFreinage"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_INF_AppuyerUnFreinage" }, "MIS_Automate_CDT_INF_AppuyerUnFreinage" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_INF_AppuyerUnFreinage, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_GererFuseau", {} },
-        { "BEH_Conduite_Automate_INF_Defaut", {} },
-        { "BEH_Conduite_Automate_INF_AppuyerFreinage", {} },
-        { "BEH_Conduite_Automate_INF_CadreRetrograde", {} },
+        { "BEH_Conduite_Automate_GererFuseau", { "done_BEH_Conduite_Automate_GererFuseau" } },
+        { "BEH_Conduite_Automate_INF_Defaut", { "done_BEH_Conduite_Automate_INF_Defaut" } },
+        { "BEH_Conduite_Automate_INF_AppuyerFreinage", { "done_BEH_Conduite_Automate_INF_AppuyerFreinage" } },
+        { "BEH_Conduite_Automate_INF_CadreRetrograde", { "done_BEH_Conduite_Automate_INF_CadreRetrograde" } },
     },
 
     create = function( self )
@@ -36,7 +38,8 @@ node "MIS_Automate_CDT_INF_AppuyerUnFreinage"
 ]]if( ModuleBegins() ) then
             do
                 DEC_SetMission( myself, self._namedParams.mission )
-                StartActivateOverride( self, self.activations.BEH_Conduite_Automate_GererFuseau, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionHorsFuseau = v else rawset( t, k, v ) end end } ) )
+                StartActivateOverride( self, self.activations.BEH_Conduite_Automate_GererFuseau, 1, {} )
+self.done_BEH_Conduite_Automate_GererFuseau = function( self, _, v ) self.eActionHorsFuseau = v[1] end
             end
 --[[// Conduite des pions au niveau section
 ]]--[[//-----------------------------------------------------------------------------				
@@ -46,7 +49,7 @@ node "MIS_Automate_CDT_INF_AppuyerUnFreinage"
             do
                 self.eActionMission = eActionEnCours
                                 do
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -55,7 +58,8 @@ node "MIS_Automate_CDT_INF_AppuyerUnFreinage"
             end
         end
 
-        Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, { true, } )
+self.done_BEH_Conduite_Automate_INF_Defaut = function( self, _, v ) self.eActionMission = v[1] end
         Activate( self.activations.BEH_Conduite_Automate_INF_AppuyerFreinage, 1, {} )
         Activate( self.activations.BEH_Conduite_Automate_INF_CadreRetrograde, 1, {} )--[[// behavior BEH_Conduite_Automate_INF_Appuyer( mission.compagnie_ );
 ]]
@@ -72,9 +76,11 @@ node "MIS_Automate_CDT_INF_AppuyerUnFreinage"
 
 node "BEH_Conduite_Automate_INF_AppuyerFreinage"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_INF_AppuyerFreinage" }, "BEH_Conduite_Automate_INF_AppuyerFreinage" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_INF_AppuyerFreinage, {value} ) end,
     activations =
     {
-        { "ACT_Conduite_Automate_HOT_AppuiFreinage", {} },
+        { "ACT_Conduite_Automate_HOT_AppuiFreinage", { "done_ACT_Conduite_Automate_HOT_AppuiFreinage" } },
     },
 
     create = function( self )

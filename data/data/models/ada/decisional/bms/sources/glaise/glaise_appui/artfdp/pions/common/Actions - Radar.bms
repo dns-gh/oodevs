@@ -18,6 +18,8 @@ includedFiles["sources/glaise/glaise_appui/artfdp/pions/common/Actions - Radar.b
 ]]--[[// ============================================================================
 ]]node "ACT_Obs_Pion_ASS_ActiverRadar_DansZone"
 {
+    feedbacks = { { { "done_ACT_Obs_Pion_ASS_ActiverRadar_DansZone" }, "ACT_Obs_Pion_ASS_ActiverRadar_DansZone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obs_Pion_ASS_ActiverRadar_DansZone, {value} ) end,
     actuators =
     {
         radar = 1,
@@ -78,6 +80,8 @@ includedFiles["sources/glaise/glaise_appui/artfdp/pions/common/Actions - Radar.b
 
 node "ACT_Obs_Pion_ASS_ActiverPerceptionTirIndirect_DansZone"
 {
+    feedbacks = { { { "done_ACT_Obs_Pion_ASS_ActiverPerceptionTirIndirect_DansZone" }, "ACT_Obs_Pion_ASS_ActiverPerceptionTirIndirect_DansZone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obs_Pion_ASS_ActiverPerceptionTirIndirect_DansZone, {value} ) end,
     actuators =
     {
         radar = 1,
@@ -139,6 +143,8 @@ node "ACT_Obs_Pion_ASS_ActiverPerceptionTirIndirect_DansZone"
 
 node "ACT_Obs_Pion_ASS_DelaiAllumageRadar"
 {
+    feedbacks = { { { "done_ACT_Obs_Pion_ASS_DelaiAllumageRadar" }, "ACT_Obs_Pion_ASS_DelaiAllumageRadar" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obs_Pion_ASS_DelaiAllumageRadar, {value} ) end,
     actuators = F_CAPTEURS_RADAR_ACTUATEURS()
 ,
 
@@ -162,7 +168,7 @@ node "ACT_Obs_Pion_ASS_DelaiAllumageRadar"
                     DEC_Trace( "Allumage radar : fin" )
                 end
 
-                                self.params.__returnValue = eActionEffectuee
+                                self:SendFeedback( eActionEffectuee )
                 Halt( self )
                 do return end
 

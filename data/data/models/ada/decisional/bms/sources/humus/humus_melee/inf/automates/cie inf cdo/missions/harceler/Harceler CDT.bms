@@ -161,12 +161,14 @@ behavior BEH_Conduite_Automate_INF_Harceler_FaireRejoindrePositionRegroupement()
 
 node "MIS_Automate_CDT_INF_Rezzou"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_INF_Rezzou" }, "MIS_Automate_CDT_INF_Rezzou" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_INF_Rezzou, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_GererFuseau", {} },
-        { "BEH_Conduite_Automate_INF_Defaut", {} },
-        { "BEH_Conduite_Automate_INF_CadreOffensif", {} },
-        { "BEH_Conduite_Automate_INF_Rezzou", {} },
+        { "BEH_Conduite_Automate_GererFuseau", { "done_BEH_Conduite_Automate_GererFuseau" } },
+        { "BEH_Conduite_Automate_INF_Defaut", { "done_BEH_Conduite_Automate_INF_Defaut" } },
+        { "BEH_Conduite_Automate_INF_CadreOffensif", { "done_BEH_Conduite_Automate_INF_CadreOffensif" } },
+        { "BEH_Conduite_Automate_INF_Rezzou", { "done_BEH_Conduite_Automate_INF_Rezzou" } },
     },
 
     create = function( self )
@@ -187,7 +189,7 @@ node "MIS_Automate_CDT_INF_Rezzou"
             do
                 self.eActionMission = eActionEnCours
                                 do
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -196,7 +198,8 @@ node "MIS_Automate_CDT_INF_Rezzou"
             end
         end
 
-        Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, setmetatable( { false, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, { false, } )
+self.done_BEH_Conduite_Automate_INF_Defaut = function( self, _, v ) self.eActionMission = v[1] end
         Activate( self.activations.BEH_Conduite_Automate_INF_CadreOffensif, 1, {} )
         Activate( self.activations.BEH_Conduite_Automate_INF_Rezzou, 1, {} )
     end,
@@ -208,11 +211,13 @@ node "MIS_Automate_CDT_INF_Rezzou"
 
 node "BEH_Conduite_Automate_INF_Rezzou"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_INF_Rezzou" }, "BEH_Conduite_Automate_INF_Rezzou" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_INF_Rezzou, {value} ) end,
     activations =
     {
-        { "BEH_Situation_Automate_INF_Rezzou_GestionSituation", {} },
-        { "BEH_Dispositif_Automate_INF_GererLesPionsDetruits", {} },
-        { "BEH_Dispositif_Automate_INF_GererReleve", {} },
+        { "BEH_Situation_Automate_INF_Rezzou_GestionSituation", { "done_BEH_Situation_Automate_INF_Rezzou_GestionSituation" } },
+        { "BEH_Dispositif_Automate_INF_GererLesPionsDetruits", { "done_BEH_Dispositif_Automate_INF_GererLesPionsDetruits" } },
+        { "BEH_Dispositif_Automate_INF_GererReleve", { "done_BEH_Dispositif_Automate_INF_GererReleve" } },
     },
 
     create = function( self )
@@ -237,14 +242,16 @@ node "BEH_Conduite_Automate_INF_Rezzou"
 
 node "BEH_Situation_Automate_INF_Rezzou_GestionSituation"
 {
+    feedbacks = { { { "done_BEH_Situation_Automate_INF_Rezzou_GestionSituation" }, "BEH_Situation_Automate_INF_Rezzou_GestionSituation" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Situation_Automate_INF_Rezzou_GestionSituation, {value} ) end,
     activations =
     {
-        { "BEH_Situation_Automate_INF_FinDeMission_Sur", {} },
-        { "BEH_Mission_Automate_ABC_AssignerSoutenirA", {} },
-        { "BEH_Mission_Automate_INF_AssignerAppuyerA", {} },
-        { "ACT_Ordre_Automate_Pause", {} },
-        { "ACT_Ordre_Automate_Continue", {} },
-        { "ACT_Ordre_Suppression", {} },
+        { "BEH_Situation_Automate_INF_FinDeMission_Sur", { "done_BEH_Situation_Automate_INF_FinDeMission_Sur" } },
+        { "BEH_Mission_Automate_ABC_AssignerSoutenirA", { "done_BEH_Mission_Automate_ABC_AssignerSoutenirA" } },
+        { "BEH_Mission_Automate_INF_AssignerAppuyerA", { "done_BEH_Mission_Automate_INF_AssignerAppuyerA" } },
+        { "ACT_Ordre_Automate_Pause", { "done_ACT_Ordre_Automate_Pause" } },
+        { "ACT_Ordre_Automate_Continue", { "done_ACT_Ordre_Automate_Continue" } },
+        { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
     },
 
     create = function( self )

@@ -6,9 +6,11 @@ includedFiles["sources/glaise/glaise_appui/alat/pions/common/behaviors/Behaviors
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "BEH_ALAT_Ambiance"
 {
+    feedbacks = { { { "done_BEH_ALAT_Ambiance" }, "BEH_ALAT_Ambiance" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_ALAT_Ambiance, {value} ) end,
     activations =
     {
-        { "ACT_Ordre_Suppression", {} },
+        { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
     },
 
     create = function( self )

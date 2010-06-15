@@ -72,9 +72,11 @@ include "Appui/Rens/Automates/Rohum/Common/Missions/RenseignerSur/RenseignerSur 
 ]]--[[// *****************************************************************************
 ]]node "BEH_Connaissance_Automate_RENS_ROHUM_AssurerLaLiaisonAvec"
 {
+    feedbacks = { { { "done_BEH_Connaissance_Automate_RENS_ROHUM_AssurerLaLiaisonAvec" }, "BEH_Connaissance_Automate_RENS_ROHUM_AssurerLaLiaisonAvec" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Connaissance_Automate_RENS_ROHUM_AssurerLaLiaisonAvec, {value} ) end,
     activations =
     {
-        { "ACT_Automate_Rens_PartageConnaissancesAvec", {} },
+        { "ACT_Automate_Rens_PartageConnaissancesAvec", { "done_ACT_Automate_Rens_PartageConnaissancesAvec" } },
     },
 
     create = function( self )

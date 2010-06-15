@@ -6,9 +6,11 @@ includedFiles["sources/appui/artdsa/automates/sgpt satcp mistral/missions/defend
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "MIS_Automate_CDT_ASA_MISTRAL_DefendreZone"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ASA_MISTRAL_DefendreZone" }, "MIS_Automate_CDT_ASA_MISTRAL_DefendreZone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ASA_MISTRAL_DefendreZone, {value} ) end,
     activations =
     {
-        { "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionsDefendreZoneAListe", {} },
+        { "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionsDefendreZoneAListe", { "done_BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionsDefendreZoneAListe" } },
     },
 
     create = function( self )

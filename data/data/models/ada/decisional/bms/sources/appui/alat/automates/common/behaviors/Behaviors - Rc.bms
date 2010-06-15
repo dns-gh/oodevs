@@ -6,9 +6,11 @@ includedFiles["sources/appui/alat/automates/common/behaviors/Behaviors - Rc.bms"
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "BEH_RC_Automate_ALAT_Situation"
 {
+    feedbacks = { { { "done_BEH_RC_Automate_ALAT_Situation" }, "BEH_RC_Automate_ALAT_Situation" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_RC_Automate_ALAT_Situation, {value} ) end,
     activations =
     {
-        { "ACT_RC_Automate", {} },
+        { "ACT_RC_Automate", { "done_ACT_RC_Automate" } },
     },
 
     create = function( self )

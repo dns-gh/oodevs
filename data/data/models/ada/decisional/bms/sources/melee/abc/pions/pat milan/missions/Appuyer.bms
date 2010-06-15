@@ -21,10 +21,12 @@ includedFiles["sources/melee/abc/pions/pat milan/missions/Appuyer.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "MIS_Pion_ABC_Appuyer"
 {
+    feedbacks = { { { "done_MIS_Pion_ABC_Appuyer" }, "MIS_Pion_ABC_Appuyer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_ABC_Appuyer, {value} ) end,
     activations =
     {
-        { "ACT_Dep_PasserEnModeFurtif", {} },
-        { "BEH_Mission_Pion_ABC_Appuyer", {} },
+        { "ACT_Dep_PasserEnModeFurtif", { "done_ACT_Dep_PasserEnModeFurtif" } },
+        { "BEH_Mission_Pion_ABC_Appuyer", { "done_BEH_Mission_Pion_ABC_Appuyer" } },
     },
 
     create = function( self )
@@ -38,13 +40,13 @@ includedFiles["sources/melee/abc/pions/pat milan/missions/Appuyer.bms"] = true
 ]]--[[// Terminaison
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eEtat == eActionImpossible ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             Halt( self )
             do return end
         end
 
         if( self.eEtat == eActionEffectuee ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -56,7 +58,8 @@ includedFiles["sources/melee/abc/pions/pat milan/missions/Appuyer.bms"] = true
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Comportement de la mission
 ]]--[[//-----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_Mission_Pion_ABC_Appuyer, 1, setmetatable( { self._namedParams.mission, M_MODELE_PION_ABC_APPUYER_PH(), M_MODELE_PION_ABC_APPUYER_ID(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+]]Activate( self.activations.BEH_Mission_Pion_ABC_Appuyer, 1, { self._namedParams.mission, M_MODELE_PION_ABC_APPUYER_PH(), M_MODELE_PION_ABC_APPUYER_ID(), } )
+self.done_BEH_Mission_Pion_ABC_Appuyer = function( self, _, v ) self.eEtat = v[1] end
     end,
 
 }

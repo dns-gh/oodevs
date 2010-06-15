@@ -25,11 +25,13 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Lima_Pion_RejoindreFuseau_EnAttente"
 {
+    feedbacks = { { { "done_BEH_Lima_Pion_RejoindreFuseau_EnAttente" }, "BEH_Lima_Pion_RejoindreFuseau_EnAttente" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Lima_Pion_RejoindreFuseau_EnAttente, {value} ) end,
     activations =
     {
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Dep_PasserSurLima", {} },
-        { "BEH_Ordre_SePoster_EnAttente", {} },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "ACT_Dep_PasserSurLima", { "done_ACT_Dep_PasserSurLima" } },
+        { "BEH_Ordre_SePoster_EnAttente", { "done_BEH_Ordre_SePoster_EnAttente" } },
     },
 
     create = function( self )
@@ -40,14 +42,14 @@ include "bit.lua"
         self.eOrdre = self.eOrdre or eActionEnCours
         if( ModuleBegins() ) then
 if( DEC_Geometrie_EstPointDansFuseau( DEC_Agent_Position() ) ) then
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
                 Halt( self )
                 do return end
             end
         end
 
         if( self.eOrdre == eActionEffectuee ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -70,7 +72,8 @@ if( DEC_Geometrie_EstPointDansFuseau( DEC_Agent_Position() ) ) then
                                 cases_switch_1[1] = true
                 end
                 if cases_switch_1[1] or switch_1 == eAttendre then
-                    Activate( self.activations.BEH_Ordre_SePoster_EnAttente, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eOrdre = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Ordre_SePoster_EnAttente, 1, {} )
+self.done_BEH_Ordre_SePoster_EnAttente = function( self, _, v ) self.eOrdre = v[1] end
                     _continue = false
                                 cases_switch_1[2] = true
                 end
@@ -85,10 +88,12 @@ if( DEC_Geometrie_EstPointDansFuseau( DEC_Agent_Position() ) ) then
 
 node "BEH_Objet_Pion_INF_ReagirFaceAObstacle"
 {
+    feedbacks = { { { "done_BEH_Objet_Pion_INF_ReagirFaceAObstacle" }, "BEH_Objet_Pion_INF_ReagirFaceAObstacle" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Objet_Pion_INF_ReagirFaceAObstacle, {value} ) end,
     activations =
     {
-        { "ACT_Misc_Delai", {} },
-        { "BEH_Dep_SePoster", {} },
+        { "ACT_Misc_Delai", { "done_ACT_Misc_Delai" } },
+        { "BEH_Dep_SePoster", { "done_BEH_Dep_SePoster" } },
     },
 
     create = function( self )
@@ -109,7 +114,7 @@ node "BEH_Objet_Pion_INF_ReagirFaceAObstacle"
         end
 
         if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.repObj ) ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -117,14 +122,15 @@ node "BEH_Objet_Pion_INF_ReagirFaceAObstacle"
         if( self.eAction == eActionEffectuee ) then
             do
                 self.eAction = eActionEnCours
-                                self.params.__returnValue = eActionEffectuee
+                                self:SendFeedback( eActionEffectuee )
                 Halt( self )
                 do return end
 
             end
         end
 
-        Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, self.rConst_DelaiMin, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Misc_Delai, 1, { 1, self.rConst_DelaiMin, } )
+self.done_ACT_Misc_Delai = function( self, _, v ) self.eAction = v[1] end
         --[[// 8 <=> Max de fixe .. 	
 ]]--[[// rForceDelai = S_Force_PDelaiSurMemePosition( rConst_Delai, DEC_Agent_Position(), rForceDelai );
 ]]local rTemps_Ecoule = DEC_TempsSim() - self.rTemps_Debut
@@ -140,10 +146,12 @@ node "BEH_Objet_Pion_INF_ReagirFaceAObstacle"
 
 node "BEH_Dep_Pion_INF_RejoindreObjectif"
 {
+    feedbacks = { { { "done_BEH_Dep_Pion_INF_RejoindreObjectif" }, "BEH_Dep_Pion_INF_RejoindreObjectif" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Pion_INF_RejoindreObjectif, {value} ) end,
     activations =
     {
-        { "ACT_RC", {} },
-        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
     },
 
     create = function( self )
@@ -167,7 +175,7 @@ node "BEH_Dep_Pion_INF_RejoindreObjectif"
                     DEC_Trace( "progression sur itineraire impossible" )
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -179,7 +187,7 @@ node "BEH_Dep_Pion_INF_RejoindreObjectif"
                 self.eAction = eActionEnCours
                                 do
                     DEC_Trace( "Arrivee sur objectif" )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -188,7 +196,8 @@ node "BEH_Dep_Pion_INF_RejoindreObjectif"
             end
         end
 
-        Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.ptMission, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.ptMission, eProgressionDirect, eTypeItiMouvement, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] end
     end,
 
 --[[// ----------------------------------------------------------------------------
@@ -200,6 +209,8 @@ node "BEH_Dep_Pion_INF_RejoindreObjectif"
 
 node "BEH_Dep_Pion_INF_PreciserContact"
 {
+    feedbacks = { { { "done_BEH_Dep_Pion_INF_PreciserContact" }, "BEH_Dep_Pion_INF_PreciserContact" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Pion_INF_PreciserContact, {value} ) end,
     instances =
     {
         boost = 1.1,
@@ -208,11 +219,11 @@ node "BEH_Dep_Pion_INF_PreciserContact"
 
     activations =
     {
-        { "ACT_MAJ_EnnemiEnCours", {} },
-        { "ACT_Dep_SePosterFaceA", {} },
-        { "ACT_Misc_Pion_Ambiance", {} },
-        { "ACT_Obs_EtablirVisionVersPt", {} },
-        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_MAJ_EnnemiEnCours", { "done_ACT_MAJ_EnnemiEnCours" } },
+        { "ACT_Dep_SePosterFaceA", { "done_ACT_Dep_SePosterFaceA" } },
+        { "ACT_Misc_Pion_Ambiance", { "done_ACT_Misc_Pion_Ambiance" } },
+        { "ACT_Obs_EtablirVisionVersPt", { "done_ACT_Obs_EtablirVisionVersPt" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
     },
 
     create = function( self )
@@ -261,7 +272,7 @@ node "BEH_Dep_Pion_INF_PreciserContact"
                     DEC_Trace( "impossible de rejoindre position d'observation" )
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -273,7 +284,7 @@ node "BEH_Dep_Pion_INF_PreciserContact"
                 self.eAction = eActionEnCours
                                 do
                     DEC_Copie_Point( DEC_ConnaissanceAgent_Position( self._namedParams.ksEni ), self.ptDest )
-                                        self.params.__returnValue = eActionHalt
+                                        self:SendFeedback( eActionHalt )
                     do return end
 
                 end
@@ -281,7 +292,8 @@ node "BEH_Dep_Pion_INF_PreciserContact"
             end
         end
 
-        Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.ptDest, eProgressionDirect, eTypeItiReconnaissance, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.ptDest, eProgressionDirect, eTypeItiReconnaissance, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] end
     end,
 
 --[[// ----------------------------------------------------------------------------
@@ -292,6 +304,8 @@ node "BEH_Dep_Pion_INF_PreciserContact"
 
 node "BEH_Dep_Pion_INF_PreciserMaintenirContact"
 {
+    feedbacks = { { { "done_BEH_Dep_Pion_INF_PreciserMaintenirContact" }, "BEH_Dep_Pion_INF_PreciserMaintenirContact" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Pion_INF_PreciserMaintenirContact, {value} ) end,
     instances =
     {
         max = 1,
@@ -299,12 +313,12 @@ node "BEH_Dep_Pion_INF_PreciserMaintenirContact"
 
     activations =
     {
-        { "ACT_MAJ_EnnemiEnCours", {} },
-        { "ACT_MAJ_EtatSituationEni", {} },
-        { "BEH_Mot_Pion_Embarquer", {} },
-        { "BEH_Dep_Pion_INF_PreciserContact", {} },
-        { "ACT_Obs_EtablirVisionVersPt", {} },
-        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_MAJ_EnnemiEnCours", { "done_ACT_MAJ_EnnemiEnCours" } },
+        { "ACT_MAJ_EtatSituationEni", { "done_ACT_MAJ_EtatSituationEni" } },
+        { "BEH_Mot_Pion_Embarquer", { "done_BEH_Mot_Pion_Embarquer" } },
+        { "BEH_Dep_Pion_INF_PreciserContact", { "done_BEH_Dep_Pion_INF_PreciserContact" } },
+        { "ACT_Obs_EtablirVisionVersPt", { "done_ACT_Obs_EtablirVisionVersPt" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
     },
 
     create = function( self )
@@ -364,7 +378,7 @@ elseif switch_1 == eRetrouver then
                     if( ( self.ptDest == 0 or self.ptDest == nil ) or self.eAction == eActionImpossible ) then
                         do
                             DEC_Trace( "impossible de retrouver l'ennemi" )
-                                                        self.params.__returnValue = eActionImpossible
+                                                        self:SendFeedback( eActionImpossible )
                             Halt( self )
                             do return end
 
@@ -377,7 +391,7 @@ elseif switch_1 == eRetrouver then
                                                         do
                                 --[[// On n'a pas repri connaissance de l'ennemi
 ]]DEC_Trace( "perte complete de contact sur ennemi" )
-                                                                self.params.__returnValue = eActionImpossible
+                                                                self:SendFeedback( eActionImpossible )
                                 Halt( self )
                                 do return end
 
@@ -390,7 +404,8 @@ elseif switch_1 == eRetrouver then
                     Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1, { self.ptDest, } )
                     --[[// On a perdu le contact sur l'unite ennemi !
 ]]--[[// On retourne vers la derniere position ennemi connue				
-]]Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.ptDest, eProgressionDirect, eTypeItiReconnaissance, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+]]Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.ptDest, eProgressionDirect, eTypeItiReconnaissance, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                                 cases_switch_1[2] = true
 
@@ -416,15 +431,17 @@ elseif switch_1 == eRetrouver then
 
 node "BEH_Dep_Pion_INF_MiseEnPlace_Mission"
 {
+    feedbacks = { { { "done_BEH_Dep_Pion_INF_MiseEnPlace_Mission" }, "BEH_Dep_Pion_INF_MiseEnPlace_Mission" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Pion_INF_MiseEnPlace_Mission, {value} ) end,
     activations =
     {
-        { "BEH_Delai_Pion_INF_PreparerMission", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Obs_EtablirVisionVersPt", {} },
-        { "BEH_Dep_ProgressionVers", {} },
-        { "BEH_MOT_Pion_INF_Debarquer", {} },
-        { "ACT_Dep_SePoster", {} },
-        { "ACT_Misc_Pion_DelaiInstallation", {} },
+        { "BEH_Delai_Pion_INF_PreparerMission", { "done_BEH_Delai_Pion_INF_PreparerMission" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "ACT_Obs_EtablirVisionVersPt", { "done_ACT_Obs_EtablirVisionVersPt" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
+        { "BEH_MOT_Pion_INF_Debarquer", { "done_BEH_MOT_Pion_INF_Debarquer" } },
+        { "ACT_Dep_SePoster", { "done_ACT_Dep_SePoster" } },
+        { "ACT_Misc_Pion_DelaiInstallation", { "done_ACT_Misc_Pion_DelaiInstallation" } },
     },
 
     create = function( self )
@@ -441,13 +458,13 @@ node "BEH_Dep_Pion_INF_MiseEnPlace_Mission"
         if( self.eActionRejoindre == eActionImpossible ) then
             do
                                 do
-                                        self.params.__returnValue = eActionImpossible
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -459,12 +476,12 @@ node "BEH_Dep_Pion_INF_MiseEnPlace_Mission"
                 self.eActionRejoindre = eActionEnCours
                                 do
                     if( not S_Geometrie_EstProchePosition( self._namedParams.ptObjectif, DEC_Agent_Position(), 1000 ) ) then
-                        self.params.__returnValue = eActionImpossible
+                        self:SendFeedback( eActionImpossible )
                         Halt( self )
                         do return end
                     end
 
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -511,7 +528,7 @@ node "BEH_Dep_Pion_INF_MiseEnPlace_Mission"
                             self.eAction = eActionEnCours
                                                         do
                                 if( not self._namedParams.bRejoindreObj ) then
-                                    self.params.__returnValue = eActionEffectuee
+                                    self:SendFeedback( eActionEffectuee )
                                     Halt( self )
                                     do return end
                                 end
@@ -523,7 +540,8 @@ node "BEH_Dep_Pion_INF_MiseEnPlace_Mission"
                     end
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                    StartActivateOverride( self, self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.ptObjectif, eProgressionDefaut, eTypeItiReconnaissance, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionRejoindre = v else rawset( t, k, v ) end end } ) )
+                    StartActivateOverride( self, self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.ptObjectif, eProgressionDefaut, eTypeItiReconnaissance, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eActionRejoindre = v[1] end
                     _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eSurveiller then
@@ -541,7 +559,8 @@ elseif switch_1 == eSurveiller then
                         end
                     end
 
-                    Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, setmetatable( { eNiveauInstallation_Poste, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, { eNiveauInstallation_Poste, } )
+self.done_ACT_Misc_Pion_DelaiInstallation = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                                 cases_switch_1[3] = true
 elseif switch_1 == eRejoindre then
@@ -564,12 +583,14 @@ elseif switch_1 == eRejoindre then
 
 node "BEH_Progression_Pion_INF_AborderObjectif"
 {
+    feedbacks = { { { "done_BEH_Progression_Pion_INF_AborderObjectif" }, "BEH_Progression_Pion_INF_AborderObjectif" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Progression_Pion_INF_AborderObjectif, {value} ) end,
     activations =
     {
-        { "BEH_Obs_Pion_INF_RecoPoint", {} },
-        { "BEH_Mot_Pion_Embarquer", {} },
-        { "ACT_Misc_Pion_Ambiance", {} },
-        { "BEH_Dep_Pion_INF_RejoindreObjectif", {} },
+        { "BEH_Obs_Pion_INF_RecoPoint", { "done_BEH_Obs_Pion_INF_RecoPoint" } },
+        { "BEH_Mot_Pion_Embarquer", { "done_BEH_Mot_Pion_Embarquer" } },
+        { "ACT_Misc_Pion_Ambiance", { "done_ACT_Misc_Pion_Ambiance" } },
+        { "BEH_Dep_Pion_INF_RejoindreObjectif", { "done_BEH_Dep_Pion_INF_RejoindreObjectif" } },
     },
 
     create = function( self )
@@ -585,7 +606,7 @@ node "BEH_Progression_Pion_INF_AborderObjectif"
                                 do
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -608,7 +629,8 @@ node "BEH_Progression_Pion_INF_AborderObjectif"
                         end
                     else
 do
-                            Activate( self.activations.BEH_Obs_Pion_INF_RecoPoint, 1, setmetatable( { self._namedParams.ptMission, M_TEMPS_RECO_POINT(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                            Activate( self.activations.BEH_Obs_Pion_INF_RecoPoint, 1, { self._namedParams.ptMission, M_TEMPS_RECO_POINT(), } )
+self.done_BEH_Obs_Pion_INF_RecoPoint = function( self, _, v ) self.eAction = v[1] end
                                                         do return end
 
                         end
@@ -623,7 +645,7 @@ do
                         do
                             self.eAction = eActionEnCours
                                                         do
-                                                                self.params.__returnValue = eActionEffectuee
+                                                                self:SendFeedback( eActionEffectuee )
                                 Halt( self )
                                 do return end
 
@@ -634,7 +656,8 @@ do
 
                     Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
                     Activate( self.activations.ACT_Misc_Pion_Ambiance, 1, { eEtatAmbiance_Surete, } )
-                    Activate( self.activations.BEH_Dep_Pion_INF_RejoindreObjectif, 1, setmetatable( { self._namedParams.ptMission, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_Pion_INF_RejoindreObjectif, 1, { self._namedParams.ptMission, } )
+self.done_BEH_Dep_Pion_INF_RejoindreObjectif = function( self, _, v ) self.eAction = v[1] end
                                 cases_switch_1[2] = true
                 end
             end
@@ -648,11 +671,13 @@ do
 
 node "BEH_Progression_Pion_INF_Aborder"
 {
+    feedbacks = { { { "done_BEH_Progression_Pion_INF_Aborder" }, "BEH_Progression_Pion_INF_Aborder" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Progression_Pion_INF_Aborder, {value} ) end,
     activations =
     {
-        { "ACT_Dep_ModulationVitesse", {} },
-        { "ACT_Obs_EtablirVisionVersPt", {} },
-        { "BEH_MOT_Pion_INF_Debarquer", {} },
+        { "ACT_Dep_ModulationVitesse", { "done_ACT_Dep_ModulationVitesse" } },
+        { "ACT_Obs_EtablirVisionVersPt", { "done_ACT_Obs_EtablirVisionVersPt" } },
+        { "BEH_MOT_Pion_INF_Debarquer", { "done_BEH_MOT_Pion_INF_Debarquer" } },
     },
 
     create = function( self )
@@ -679,7 +704,7 @@ node "BEH_Progression_Pion_INF_Aborder"
 ]]if( DEC_Geometrie_PositionsEgales( self.ptAborder_Copie, DEC_Agent_Position() ) ) then
             do
                 DEC_Trace( "fin abordement point particulier" )
-                                self.params.__returnValue = eActionEffectuee
+                                self:SendFeedback( eActionEffectuee )
                 Halt( self )
                 do return end
 

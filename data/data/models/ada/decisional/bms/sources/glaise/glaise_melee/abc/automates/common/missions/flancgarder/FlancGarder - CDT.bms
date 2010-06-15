@@ -22,16 +22,18 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/flancga
 ]]--[[// *****************************************************************************
 ]]node "BEH_Conduite_Automate_ABC_FlancGarder"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_ABC_FlancGarder" }, "BEH_Conduite_Automate_ABC_FlancGarder" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_ABC_FlancGarder, {value} ) end,
     activations =
     {
-        { "BEH_CoordDep_Automate_ABC_AssurerLaCoordinationInterne_", {} },
-        { "BEH_CoordDep_Automate_ABC_SeCoordonnerAvecAmi_", {} },
-        { "ACT_Info_Automate_Trace", {} },
-        { "BEH_Ordre_Automate_Attendre_", {} },
-        { "BEH_Dispositif_Automate_ABC_GererLesAppuis_", {} },
-        { "BEH_Dispositif_Automate_ABC_GererPionsDetruits_", {} },
-        { "BEH_Dispositif_Automate_ABC_GererLeSE_", {} },
-        { "BEH_RC_Automate_GererConditionOperationnelle", {} },
+        { "BEH_CoordDep_Automate_ABC_AssurerLaCoordinationInterne_", { "done_BEH_CoordDep_Automate_ABC_AssurerLaCoordinationInterne_" } },
+        { "BEH_CoordDep_Automate_ABC_SeCoordonnerAvecAmi_", { "done_BEH_CoordDep_Automate_ABC_SeCoordonnerAvecAmi_" } },
+        { "ACT_Info_Automate_Trace", { "done_ACT_Info_Automate_Trace" } },
+        { "BEH_Ordre_Automate_Attendre_", { "done_BEH_Ordre_Automate_Attendre_" } },
+        { "BEH_Dispositif_Automate_ABC_GererLesAppuis_", { "done_BEH_Dispositif_Automate_ABC_GererLesAppuis_" } },
+        { "BEH_Dispositif_Automate_ABC_GererPionsDetruits_", { "done_BEH_Dispositif_Automate_ABC_GererPionsDetruits_" } },
+        { "BEH_Dispositif_Automate_ABC_GererLeSE_", { "done_BEH_Dispositif_Automate_ABC_GererLeSE_" } },
+        { "BEH_RC_Automate_GererConditionOperationnelle", { "done_BEH_RC_Automate_GererConditionOperationnelle" } },
     },
 
     create = function( self )

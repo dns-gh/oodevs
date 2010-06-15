@@ -9,11 +9,13 @@ includedFiles["sources/appui/rens/automates/roim/cl289/missions/renseignersur/Re
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_RENS_ROIM_CL289_RenseignerSur"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_RENS_ROIM_CL289_RenseignerSur" }, "MIS_Automate_CDT_RENS_ROIM_CL289_RenseignerSur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_RENS_ROIM_CL289_RenseignerSur, {value} ) end,
     activations =
     {
-        { "BEH_Dispositif_Automate_RENS_GererPionsDetruits_", {} },
-        { "BEH_Dispositif_Automate_RENS_GererLeSE_", {} },
-        { "BEH_Conduite_Automate_RENS_ROIM_CL289_GererMiseEnOeuvre", {} },
+        { "BEH_Dispositif_Automate_RENS_GererPionsDetruits_", { "done_BEH_Dispositif_Automate_RENS_GererPionsDetruits_" } },
+        { "BEH_Dispositif_Automate_RENS_GererLeSE_", { "done_BEH_Dispositif_Automate_RENS_GererLeSE_" } },
+        { "BEH_Conduite_Automate_RENS_ROIM_CL289_GererMiseEnOeuvre", { "done_BEH_Conduite_Automate_RENS_ROIM_CL289_GererMiseEnOeuvre" } },
     },
 
     create = function( self )
@@ -50,10 +52,12 @@ includedFiles["sources/appui/rens/automates/roim/cl289/missions/renseignersur/Re
 
 node "BEH_Conduite_Automate_RENS_ROIM_CL289_GererMiseEnOeuvre"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_RENS_ROIM_CL289_GererMiseEnOeuvre" }, "BEH_Conduite_Automate_RENS_ROIM_CL289_GererMiseEnOeuvre" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_RENS_ROIM_CL289_GererMiseEnOeuvre, {value} ) end,
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "BEH_Conduite_Automate_RENS_ROIM_CL289_LancerDrone", {} },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "BEH_Conduite_Automate_RENS_ROIM_CL289_LancerDrone", { "done_BEH_Conduite_Automate_RENS_ROIM_CL289_LancerDrone" } },
     },
 
     create = function( self )
@@ -95,10 +99,12 @@ node "BEH_Conduite_Automate_RENS_ROIM_CL289_GererMiseEnOeuvre"
 
 node "BEH_Conduite_Automate_RENS_ROIM_CL289_LancerDrone"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_RENS_ROIM_CL289_LancerDrone" }, "BEH_Conduite_Automate_RENS_ROIM_CL289_LancerDrone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_RENS_ROIM_CL289_LancerDrone, {value} ) end,
     activations =
     {
-        { "ACT_RC_Automate", {} },
-        { "BEH_Mission_Automate_RENS_ROIM_CL289_AssignerRenseignerSur", {} },
+        { "ACT_RC_Automate", { "done_ACT_RC_Automate" } },
+        { "BEH_Mission_Automate_RENS_ROIM_CL289_AssignerRenseignerSur", { "done_BEH_Mission_Automate_RENS_ROIM_CL289_AssignerRenseignerSur" } },
     },
 
     create = function( self )

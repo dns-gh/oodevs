@@ -7,6 +7,8 @@ includedFiles["sources/glaise/glaise_appui/alat/pions/common/actions/Actions - O
 ]]--[[//------------------------------------------------------------------------------
 ]]node "ACT_Obs_Pions_ALAT_EnregistrerPuisAllerReconnaitreNonVus"
 {
+    feedbacks = { { { "done_ACT_Obs_Pions_ALAT_EnregistrerPuisAllerReconnaitreNonVus" }, "ACT_Obs_Pions_ALAT_EnregistrerPuisAllerReconnaitreNonVus" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obs_Pions_ALAT_EnregistrerPuisAllerReconnaitreNonVus, {value} ) end,
     actuators =
     {
         surveiller = 1,
@@ -48,6 +50,8 @@ includedFiles["sources/glaise/glaise_appui/alat/pions/common/actions/Actions - O
 ]]--[[//------------------------------------------------------------------------------
 ]]node "ACT_Obs_Pions_ALAT_Sonnette"
 {
+    feedbacks = { { { "done_ACT_Obs_Pions_ALAT_Sonnette" }, "ACT_Obs_Pions_ALAT_Sonnette" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Obs_Pions_ALAT_Sonnette, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.localisation = self.params[1]

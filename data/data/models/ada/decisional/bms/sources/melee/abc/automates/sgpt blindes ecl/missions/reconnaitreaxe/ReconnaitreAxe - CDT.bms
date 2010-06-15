@@ -20,9 +20,11 @@ includedFiles["sources/melee/abc/automates/sgpt blindes ecl/missions/reconnaitre
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_ABC_Reconnaitre"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ABC_Reconnaitre" }, "MIS_Automate_CDT_ABC_Reconnaitre" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ABC_Reconnaitre, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_ReconnaitreUnAxe", {} },
+        { "BEH_Conduite_Automate_ABC_ReconnaitreUnAxe", { "done_BEH_Conduite_Automate_ABC_ReconnaitreUnAxe" } },
     },
 
     create = function( self )

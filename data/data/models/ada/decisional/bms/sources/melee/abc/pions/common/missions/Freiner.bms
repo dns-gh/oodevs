@@ -12,17 +12,19 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Mission_Pion_ABC_Freiner"
 {
+    feedbacks = { { { "done_BEH_Mission_Pion_ABC_Freiner" }, "BEH_Mission_Pion_ABC_Freiner" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Pion_ABC_Freiner, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "BEH_MAJ_Pion_ABC_AgressiviteTir", {} },
-        { "BEH_MOT_DesactiveSauvegarde", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_Pion_ABC_RejoindreFuseau", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
-        { "BEH_Lima_Pion_ABC_Jalonner_GererLimas", {} },
-        { "BEH_Dep_ProgressionSur", {} },
-        { "BEH_Eni_Pion_ABC_Freiner", {} },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "BEH_MAJ_Pion_ABC_AgressiviteTir", { "done_BEH_MAJ_Pion_ABC_AgressiviteTir" } },
+        { "BEH_MOT_DesactiveSauvegarde", { "done_BEH_MOT_DesactiveSauvegarde" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Dep_Pion_ABC_RejoindreFuseau", { "done_BEH_Dep_Pion_ABC_RejoindreFuseau" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "done_BEH_Dep_SePosterFaceADirectionDangereuse" } },
+        { "BEH_Lima_Pion_ABC_Jalonner_GererLimas", { "done_BEH_Lima_Pion_ABC_Jalonner_GererLimas" } },
+        { "BEH_Dep_ProgressionSur", { "done_BEH_Dep_ProgressionSur" } },
+        { "BEH_Eni_Pion_ABC_Freiner", { "done_BEH_Eni_Pion_ABC_Freiner" } },
     },
 
     create = function( self )
@@ -38,7 +40,8 @@ include "bit.lua"
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.bLRPassee = self.bLRPassee or false
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
                 self.ePhaseMission = eFinMission
@@ -80,7 +83,8 @@ include "bit.lua"
                         end
                     end
 
-                    Activate( self.activations.BEH_Dep_Pion_ABC_RejoindreFuseau, 1, setmetatable( { eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_Pion_ABC_RejoindreFuseau, 1, { eProgressionDirect, eTypeItiMouvement, } )
+self.done_BEH_Dep_Pion_ABC_RejoindreFuseau = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eJalonner then
@@ -117,8 +121,10 @@ elseif switch_1 == eJalonner then
                         end
                     end
 
-                    Activate( self.activations.BEH_Lima_Pion_ABC_Jalonner_GererLimas, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatRecueil = v else rawset( t, k, v ) end end } ) )
-                    Activate( self.activations.BEH_Dep_ProgressionSur, 1, setmetatable( { self._namedParams.mission.itineraire_, eProgressionDirect, eTypeItiReconnaissance, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Lima_Pion_ABC_Jalonner_GererLimas, 1, {} )
+self.done_BEH_Lima_Pion_ABC_Jalonner_GererLimas = function( self, _, v ) self.eEtatRecueil = v[1] end
+                    Activate( self.activations.BEH_Dep_ProgressionSur, 1, { self._namedParams.mission.itineraire_, eProgressionDirect, eTypeItiReconnaissance, } )
+self.done_BEH_Dep_ProgressionSur = function( self, _, v ) self.eEtat = v[1] end
                     --[[// Si ordre automate
 ]]if( F_Pion_GetbOrdreDecrocher( myself ) or self.eEtatRecueil == eActionEffectuee ) then
                         do return end
@@ -158,10 +164,12 @@ elseif switch_1 == eFinMission then
 
 node "BEH_Eni_Pion_ABC_Freiner"
 {
+    feedbacks = { { { "done_BEH_Eni_Pion_ABC_Freiner" }, "BEH_Eni_Pion_ABC_Freiner" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Pion_ABC_Freiner, {value} ) end,
     activations =
     {
-        { "BEH_Eni_Pion_ABC_FreinerSur", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "BEH_Eni_Pion_ABC_FreinerSur", { "done_BEH_Eni_Pion_ABC_FreinerSur" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "done_BEH_Dep_SePosterFaceADirectionDangereuse" } },
     },
 
     create = function( self )
@@ -200,6 +208,8 @@ node "BEH_Eni_Pion_ABC_Freiner"
 
 node "BEH_Eni_Pion_ABC_FreinerSur"
 {
+    feedbacks = { { { "done_BEH_Eni_Pion_ABC_FreinerSur" }, "BEH_Eni_Pion_ABC_FreinerSur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Pion_ABC_FreinerSur, {value} ) end,
     instances =
     {
         max = 1--[[// tres important!
@@ -208,9 +218,9 @@ node "BEH_Eni_Pion_ABC_FreinerSur"
 
     activations =
     {
-        { "ACT_Obs_EtablirVisionVersPt", {} },
-        { "ACT_Dep_ModulationVitesse", {} },
-        { "BEH_Eni_SePosterFaceA", {} },
+        { "ACT_Obs_EtablirVisionVersPt", { "done_ACT_Obs_EtablirVisionVersPt" } },
+        { "ACT_Dep_ModulationVitesse", { "done_ACT_Dep_ModulationVitesse" } },
+        { "BEH_Eni_SePosterFaceA", { "done_BEH_Eni_SePosterFaceA" } },
     },
 
     create = function( self )

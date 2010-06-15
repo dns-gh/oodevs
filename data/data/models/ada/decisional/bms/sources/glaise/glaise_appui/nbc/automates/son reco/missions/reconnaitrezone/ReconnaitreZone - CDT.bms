@@ -9,9 +9,11 @@ includedFiles["sources/glaise/glaise_appui/nbc/automates/son reco/missions/recon
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_NBC_ReconnaitreUneZone"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_NBC_ReconnaitreUneZone" }, "MIS_Automate_CDT_NBC_ReconnaitreUneZone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_NBC_ReconnaitreUneZone, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_NBC_ReconnaitreUneZone", {} },
+        { "BEH_Conduite_Automate_NBC_ReconnaitreUneZone", { "done_BEH_Conduite_Automate_NBC_ReconnaitreUneZone" } },
     },
 
     create = function( self )

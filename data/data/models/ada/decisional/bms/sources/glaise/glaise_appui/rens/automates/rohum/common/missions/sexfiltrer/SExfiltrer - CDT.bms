@@ -9,10 +9,12 @@ includedFiles["sources/glaise/glaise_appui/rens/automates/rohum/common/missions/
 ]]--[[// *****************************************************************************
 ]]node "BEH_Auto_CDT_RENS_ROHUM_SExfiltrer"
 {
+    feedbacks = { { { "done_BEH_Auto_CDT_RENS_ROHUM_SExfiltrer" }, "BEH_Auto_CDT_RENS_ROHUM_SExfiltrer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Auto_CDT_RENS_ROHUM_SExfiltrer, {value} ) end,
     activations =
     {
-        { "BEH_Dispositif_Automate_RENS_GererPionsDetruits_", {} },
-        { "BEH_Dispositif_Automate_RENS_GererLeSE_", {} },
+        { "BEH_Dispositif_Automate_RENS_GererPionsDetruits_", { "done_BEH_Dispositif_Automate_RENS_GererPionsDetruits_" } },
+        { "BEH_Dispositif_Automate_RENS_GererLeSE_", { "done_BEH_Dispositif_Automate_RENS_GererLeSE_" } },
     },
 
     create = function( self )

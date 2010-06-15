@@ -43,10 +43,12 @@ include "Humus/Humus_Common/Automates/Missions/Behaviors.bms"
 ]]--[[// *****************************************************************************
 ]]node "DefaultBehavior"
 {
+    feedbacks = { { { "done_Default" }, "Default" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_Default, {value} ) end,
     activations =
     {
-        { "BEH_RC_Automate_Situation", {} },
-        { "BEH_Default_Automate_ReactionPopulations", {} },
+        { "BEH_RC_Automate_Situation", { "done_BEH_RC_Automate_Situation" } },
+        { "BEH_Default_Automate_ReactionPopulations", { "done_BEH_Default_Automate_ReactionPopulations" } },
     },
 
     create = function( self )

@@ -9,6 +9,8 @@ includedFiles["sources/glaise/glaise_common/automates/missions/serecompleter/CDT
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_SeRecompleter"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_SeRecompleter" }, "MIS_Automate_CDT_SeRecompleter" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_SeRecompleter, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission

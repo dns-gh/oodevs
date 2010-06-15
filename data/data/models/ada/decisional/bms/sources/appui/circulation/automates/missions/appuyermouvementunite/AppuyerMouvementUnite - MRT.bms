@@ -9,10 +9,12 @@ includedFiles["sources/appui/circulation/automates/missions/appuyermouvementunit
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_MRT_LOG_AppuyerMouvement"
 {
+    feedbacks = { { { "done_MIS_Automate_MRT_LOG_AppuyerMouvement" }, "MIS_Automate_MRT_LOG_AppuyerMouvement" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_MRT_LOG_AppuyerMouvement, {value} ) end,
     activations =
     {
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
-        { "BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementAListe", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", { "done_BEH_Medo_Automate_ControleCreationMission" } },
+        { "BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementAListe", { "done_BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementAListe" } },
     },
 
     create = function( self )
@@ -65,7 +67,8 @@ includedFiles["sources/appui/circulation/automates/missions/appuyermouvementunit
                         end
                     end
 
-                    Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( selPions ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatMissionAppuyer = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( selPions ), } )
+self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eEtatMissionAppuyer = v[1] end
                     --[[// ordre de missions
 ]]if( ( #( selPions ) ~= 0 and #( selPions ) ~= nil ) ) then
                         Activate( self.activations.BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementAListe, 1, { ePhase_MRT, selPions, self.listePC, } )
@@ -78,7 +81,7 @@ includedFiles["sources/appui/circulation/automates/missions/appuyermouvementunit
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eMRT_MissionImpossible then
                     --[[//DEC_RC( eRC_MissionImpossible );
-]]                    self.params.__returnValue = eActionImpossible
+]]                    self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
@@ -88,7 +91,7 @@ elseif switch_1 == eMRT_MissionImpossible then
 ]]--[[//---------------------------------------------------------------------
 ]]elseif switch_1 == eMRT_Valider then
                     DEC_MRT_Valide()
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 

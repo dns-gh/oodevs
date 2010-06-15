@@ -32,16 +32,18 @@ include "Glaise/glaise_Appui/ArtFdp/Pions/Common/Actions.bms"
 
 node "BEH_Defaut"
 {
+    feedbacks = { { { "done_BEH_Defaut" }, "BEH_Defaut" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Defaut, {value} ) end,
     activations =
     {
-        { "BEH_MAJ_EtatDefaut", {} },
-        { "BEH_MAJ_Pion_ASS_TirDefaut", {} },
-        { "BEH_Mot_AffecterVariablesDEtat", {} },
-        { "BEH_Mot_Pion_Embarquer", {} },
-        { "BEH_Ambiance", {} },
-        { "BEH_ROE", {} },
-        { "BEH_Nbc", {} },
-        { "BEH_Rens", {} },
+        { "BEH_MAJ_EtatDefaut", { "done_BEH_MAJ_EtatDefaut" } },
+        { "BEH_MAJ_Pion_ASS_TirDefaut", { "done_BEH_MAJ_Pion_ASS_TirDefaut" } },
+        { "BEH_Mot_AffecterVariablesDEtat", { "done_BEH_Mot_AffecterVariablesDEtat" } },
+        { "BEH_Mot_Pion_Embarquer", { "done_BEH_Mot_Pion_Embarquer" } },
+        { "BEH_Ambiance", { "done_BEH_Ambiance" } },
+        { "BEH_ROE", { "done_BEH_ROE" } },
+        { "BEH_Nbc", { "done_BEH_Nbc" } },
+        { "BEH_Rens", { "done_BEH_Rens" } },
     },
 
     create = function( self )
@@ -98,6 +100,8 @@ do
 
 node "BEH_Mot_AffecterVariablesDEtat"
 {
+    feedbacks = { { { "done_BEH_Mot_AffecterVariablesDEtat" }, "BEH_Mot_AffecterVariablesDEtat" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mot_AffecterVariablesDEtat, {value} ) end,
     create = function( self )
     end,
 
@@ -167,12 +171,14 @@ elseif switch_1 == eMoral_Mauvais then
 
 node "BEH_Dep_Pion_ASS_ChangerDePosition_Sauvegarde"
 {
+    feedbacks = { { { "done_BEH_Dep_Pion_ASS_ChangerDePosition_Sauvegarde" }, "BEH_Dep_Pion_ASS_ChangerDePosition_Sauvegarde" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Pion_ASS_ChangerDePosition_Sauvegarde, {value} ) end,
     activations =
     {
-        { "ACT_Misc_Delai", {} },
-        { "ACT_RC", {} },
-        { "ACT_Info_Trace", {} },
-        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_Misc_Delai", { "done_ACT_Misc_Delai" } },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
     },
 
     create = function( self )
@@ -185,7 +191,8 @@ node "BEH_Dep_Pion_ASS_ChangerDePosition_Sauvegarde"
         self.eAction = self.eAction or eActionEnCours
         if( self.eAction == eActionEnCours ) then
             do
-                Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, M_DELAI_SAUVEGARDE(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                Activate( self.activations.ACT_Misc_Delai, 1, { 1, M_DELAI_SAUVEGARDE(), } )
+self.done_ACT_Misc_Delai = function( self, _, v ) self.eAction = v[1] end
             end
 --[[// Pas de tir en cours
 ]]        end
@@ -206,13 +213,15 @@ node "BEH_Dep_Pion_ASS_ChangerDePosition_Sauvegarde"
 
 node "BEH_Obs_Pion_ASS_Reconnaissance_PositionDeploiement"
 {
+    feedbacks = { { { "done_BEH_Obs_Pion_ASS_Reconnaissance_PositionDeploiement" }, "BEH_Obs_Pion_ASS_Reconnaissance_PositionDeploiement" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Obs_Pion_ASS_Reconnaissance_PositionDeploiement, {value} ) end,
     activations =
     {
-        { "ACT_RC", {} },
-        { "ACT_Misc_Delai", {} },
-        { "ACT_Dep_SePoster", {} },
-        { "ACT_Obs_ReconnaitrePoint", {} },
-        { "ACT_Obs_EtablirVisionVersPt", {} },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "ACT_Misc_Delai", { "done_ACT_Misc_Delai" } },
+        { "ACT_Dep_SePoster", { "done_ACT_Dep_SePoster" } },
+        { "ACT_Obs_ReconnaitrePoint", { "done_ACT_Obs_ReconnaitrePoint" } },
+        { "ACT_Obs_EtablirVisionVersPt", { "done_ACT_Obs_EtablirVisionVersPt" } },
     },
 
     create = function( self )
@@ -223,13 +232,14 @@ node "BEH_Obs_Pion_ASS_Reconnaissance_PositionDeploiement"
     activate = function( self )
         self.eAction = self.eAction or eActionEnCours
         if( self.eAction == eActionEffectuee ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
 
         Activate( self.activations.ACT_RC, 1, { eRC_ReconnaissancePoint, } )
-        Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, 5, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Misc_Delai, 1, { 1, 5, } )
+self.done_ACT_Misc_Delai = function( self, _, v ) self.eAction = v[1] end
         Activate( self.activations.ACT_Dep_SePoster, 1, {} )
         Activate( self.activations.ACT_Obs_ReconnaitrePoint, 1, { self._namedParams.ptDeploiement, } )
         Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1, { self._namedParams.ptDeploiement, } )
@@ -239,9 +249,11 @@ node "BEH_Obs_Pion_ASS_Reconnaissance_PositionDeploiement"
 
 node "BEH_MAJ_Pion_ASS_TirDefaut"
 {
+    feedbacks = { { { "done_BEH_MAJ_Pion_ASS_TirDefaut" }, "BEH_MAJ_Pion_ASS_TirDefaut" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MAJ_Pion_ASS_TirDefaut, {value} ) end,
     activations =
     {
-        { "ACT_Info_Pion_ASS_DisponibiliteAuTir", {} },
+        { "ACT_Info_Pion_ASS_DisponibiliteAuTir", { "done_ACT_Info_Pion_ASS_DisponibiliteAuTir" } },
     },
 
     create = function( self )
@@ -281,9 +293,11 @@ node "BEH_MAJ_Pion_ASS_TirDefaut"
 
 node "BEH_Dep_Virtuel_ProgressionVers"
 {
+    feedbacks = { { { "done_BEH_Dep_Virtuel_ProgressionVers" }, "BEH_Dep_Virtuel_ProgressionVers" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Virtuel_ProgressionVers, {value} ) end,
     activations =
     {
-        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
     },
 
     create = function( self )
@@ -301,11 +315,13 @@ node "BEH_Dep_Virtuel_ProgressionVers"
 
 node "BEH_Dep_Virtuel_PreparationAction"
 {
+    feedbacks = { { { "done_BEH_Dep_Virtuel_PreparationAction" }, "BEH_Dep_Virtuel_PreparationAction" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Virtuel_PreparationAction, {value} ) end,
     create = function( self )
     end,
 
     activate = function( self )
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         do return end
 
     end,

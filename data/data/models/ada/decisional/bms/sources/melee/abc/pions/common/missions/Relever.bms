@@ -18,15 +18,17 @@ includedFiles["sources/melee/abc/pions/common/missions/Relever.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "BEH_Mission_Pion_ABC_ReleverUnite"
 {
+    feedbacks = { { { "done_BEH_Mission_Pion_ABC_ReleverUnite" }, "BEH_Mission_Pion_ABC_ReleverUnite" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Pion_ABC_ReleverUnite, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "BEH_MAJ_Pion_ABC_AgressiviteTir", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Info_Trace", {} },
-        { "BEH_Dep_ProgressionVers", {} },
-        { "ACT_Dep_ModulationVitesse", {} },
-        { "ACT_Misc_ReleverUnite", {} },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "BEH_MAJ_Pion_ABC_AgressiviteTir", { "done_BEH_MAJ_Pion_ABC_AgressiviteTir" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
+        { "ACT_Dep_ModulationVitesse", { "done_ACT_Dep_ModulationVitesse" } },
+        { "ACT_Misc_ReleverUnite", { "done_ACT_Misc_ReleverUnite" } },
     },
 
     create = function( self )
@@ -41,7 +43,8 @@ includedFiles["sources/melee/abc/pions/common/missions/Relever.bms"] = true
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.positionPionARelever = self.positionPionARelever or self._namedParams.mission.uniteARelever_:DEC_Agent_Position()
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
                 self.ePhaseMission = eFinMission
@@ -58,7 +61,7 @@ includedFiles["sources/melee/abc/pions/common/missions/Relever.bms"] = true
 ]]--[[// Pion detruit
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -68,7 +71,7 @@ includedFiles["sources/melee/abc/pions/common/missions/Relever.bms"] = true
                 if( not DEC_PeutReleverPion( self._namedParams.mission.uniteARelever_ ) ) then
                     do
                         DEC_Trace( "==> L'unité n'a pas les moyens d'effectuer la relever" )
-                                                self.params.__returnValue = eActionImpossible
+                                                self:SendFeedback( eActionImpossible )
                         Halt( self )
                         do return end
 
@@ -76,7 +79,7 @@ includedFiles["sources/melee/abc/pions/common/missions/Relever.bms"] = true
                 end
 
                 if( ( DEC_GetMission( self._namedParams.mission.uniteARelever_ ) == 0 or DEC_GetMission( self._namedParams.mission.uniteARelever_ ) == nil ) ) then
-                    self.params.__returnValue = eActionImpossible
+                    self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
                 end
@@ -142,6 +145,8 @@ elseif switch_1 == eRelever then
 
 node "ACT_Misc_ReleverUnite"
 {
+    feedbacks = { { { "done_ACT_Misc_ReleverUnite" }, "ACT_Misc_ReleverUnite" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Misc_ReleverUnite, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]

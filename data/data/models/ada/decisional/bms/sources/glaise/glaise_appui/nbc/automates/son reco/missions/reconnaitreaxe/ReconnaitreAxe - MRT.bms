@@ -11,9 +11,11 @@ includedFiles["sources/glaise/glaise_appui/nbc/automates/son reco/missions/recon
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_MRT_NBC_ReconnaitreUnAxe"
 {
+    feedbacks = { { { "done_MIS_Automate_MRT_NBC_ReconnaitreUnAxe" }, "MIS_Automate_MRT_NBC_ReconnaitreUnAxe" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_MRT_NBC_ReconnaitreUnAxe, {value} ) end,
     activations =
     {
-        { "BEH_Medo_Automate_NBC_DonnerLesOrdresPourMission", {} },
+        { "BEH_Medo_Automate_NBC_DonnerLesOrdresPourMission", { "done_BEH_Medo_Automate_NBC_DonnerLesOrdresPourMission" } },
     },
 
     create = function( self )

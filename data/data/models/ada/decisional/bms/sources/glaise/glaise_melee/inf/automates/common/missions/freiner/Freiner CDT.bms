@@ -14,11 +14,13 @@ includedFiles["sources/glaise/glaise_melee/inf/automates/common/missions/freiner
 ]]
 node "BEH_Conduite_Automate_INF_Freiner"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_INF_Freiner" }, "BEH_Conduite_Automate_INF_Freiner" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_INF_Freiner, {value} ) end,
     activations =
     {
-        { "BEH_Dispositif_Automate_INF_Freiner_Perroquet", {} },
-        { "BEH_Situation_Automate_INF_Freiner", {} },
-        { "BEH_Conduite_Automate_INF_OrdreConduite", {} },
+        { "BEH_Dispositif_Automate_INF_Freiner_Perroquet", { "done_BEH_Dispositif_Automate_INF_Freiner_Perroquet" } },
+        { "BEH_Situation_Automate_INF_Freiner", { "done_BEH_Situation_Automate_INF_Freiner" } },
+        { "BEH_Conduite_Automate_INF_OrdreConduite", { "done_BEH_Conduite_Automate_INF_OrdreConduite" } },
     },
 
     create = function( self )
@@ -44,10 +46,12 @@ node "BEH_Conduite_Automate_INF_Freiner"
 
 node "BEH_Conduite_Automate_INF_OrdreConduite"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_INF_OrdreConduite" }, "BEH_Conduite_Automate_INF_OrdreConduite" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_INF_OrdreConduite, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_INF_Freiner_RompreContact", {} },
-        { "ACT_Ordre_Suppression", {} },
+        { "BEH_Conduite_Automate_INF_Freiner_RompreContact", { "done_BEH_Conduite_Automate_INF_Freiner_RompreContact" } },
+        { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
     },
 
     create = function( self )
@@ -109,6 +113,8 @@ do
 
 node "BEH_Dispositif_Automate_INF_Freiner_Perroquet"
 {
+    feedbacks = { { { "done_BEH_Dispositif_Automate_INF_Freiner_Perroquet" }, "BEH_Dispositif_Automate_INF_Freiner_Perroquet" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dispositif_Automate_INF_Freiner_Perroquet, {value} ) end,
     create = function( self )
     end,
 
@@ -140,7 +146,7 @@ do
 
         end
 
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         Halt( self )
         do return end
 
@@ -150,9 +156,11 @@ do
 
 node "BEH_Conduite_Automate_INF_Freiner_Assigner_AppuiPionSE"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_INF_Freiner_Assigner_AppuiPionSE" }, "BEH_Conduite_Automate_INF_Freiner_Assigner_AppuiPionSE" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_INF_Freiner_Assigner_AppuiPionSE, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_INF_AppuyerCompromis", {} },
+        { "BEH_Conduite_Automate_INF_AppuyerCompromis", { "done_BEH_Conduite_Automate_INF_AppuyerCompromis" } },
     },
 
     create = function( self )
@@ -211,6 +219,8 @@ do
 
 node "BEH_Conduite_Automate_INF_AppuyerCompromis"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_INF_AppuyerCompromis" }, "BEH_Conduite_Automate_INF_AppuyerCompromis" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_INF_AppuyerCompromis, {value} ) end,
     instances =
     {
         max = 1,
@@ -218,8 +228,8 @@ node "BEH_Conduite_Automate_INF_AppuyerCompromis"
 
     activations =
     {
-        { "BEH_Mission_Automate_ABC_AssignerSoutenirA", {} },
-        { "BEH_Mission_Automate_INF_AssignerAppuyerA", {} },
+        { "BEH_Mission_Automate_ABC_AssignerSoutenirA", { "done_BEH_Mission_Automate_ABC_AssignerSoutenirA" } },
+        { "BEH_Mission_Automate_INF_AssignerAppuyerA", { "done_BEH_Mission_Automate_INF_AssignerAppuyerA" } },
     },
 
     create = function( self )
@@ -260,6 +270,8 @@ elseif switch_1 == "SectionInfanterie"
 
 node "BEH_Dispositif_Automate_INF_Gerer_RepliAppuis"
 {
+    feedbacks = { { { "done_BEH_Dispositif_Automate_INF_Gerer_RepliAppuis" }, "BEH_Dispositif_Automate_INF_Gerer_RepliAppuis" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dispositif_Automate_INF_Gerer_RepliAppuis, {value} ) end,
     create = function( self )
     end,
 
@@ -295,9 +307,11 @@ do
 
 node "BEH_Situation_Automate_INF_Freiner"
 {
+    feedbacks = { { { "done_BEH_Situation_Automate_INF_Freiner" }, "BEH_Situation_Automate_INF_Freiner" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Situation_Automate_INF_Freiner, {value} ) end,
     activations =
     {
-        { "BEH_Situation_Automate_INF_Freiner_SurLCAR", {} },
+        { "BEH_Situation_Automate_INF_Freiner_SurLCAR", { "done_BEH_Situation_Automate_INF_Freiner_SurLCAR" } },
     },
 
     create = function( self )
@@ -330,11 +344,13 @@ do
 
 node "BEH_Situation_Automate_INF_Freiner_SurLCAR"
 {
+    feedbacks = { { { "done_BEH_Situation_Automate_INF_Freiner_SurLCAR" }, "BEH_Situation_Automate_INF_Freiner_SurLCAR" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Situation_Automate_INF_Freiner_SurLCAR, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_INF_Freiner_Assigner_AppuiPionSE", {} },
-        { "ACT_Ordre_Automate_Continue", {} },
-        { "BEH_CoordTir_Automate_INF_Intervention_LCAR", {} },
+        { "BEH_Conduite_Automate_INF_Freiner_Assigner_AppuiPionSE", { "done_BEH_Conduite_Automate_INF_Freiner_Assigner_AppuiPionSE" } },
+        { "ACT_Ordre_Automate_Continue", { "done_ACT_Ordre_Automate_Continue" } },
+        { "BEH_CoordTir_Automate_INF_Intervention_LCAR", { "done_BEH_CoordTir_Automate_INF_Intervention_LCAR" } },
     },
 
     create = function( self )
@@ -360,7 +376,8 @@ node "BEH_Situation_Automate_INF_Freiner_SurLCAR"
 --[[// action ACT_Ordre_Automate_Pause( pPion );
 ]]        end
 
-        Activate( self.activations.BEH_CoordTir_Automate_INF_Intervention_LCAR, 1, setmetatable( { self._namedParams.pPion, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionSituation = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_CoordTir_Automate_INF_Intervention_LCAR, 1, { self._namedParams.pPion, } )
+self.done_BEH_CoordTir_Automate_INF_Intervention_LCAR = function( self, _, v ) self.eActionSituation = v[1] end
     end,
 
 }

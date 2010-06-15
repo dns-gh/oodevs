@@ -21,10 +21,12 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/tenir/T
 ]]--[[// *****************************************************************************
 ]]node "BEH_Medo_Automate_ABC_AssignerMissionBarrerA"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_ABC_AssignerMissionBarrerA" }, "BEH_Medo_Automate_ABC_AssignerMissionBarrerA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_ABC_AssignerMissionBarrerA, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_ABC_AssignerBarrerA", {} },
-        { "ACT_Warning", {} },
+        { "BEH_Mission_Automate_ABC_AssignerBarrerA", { "done_BEH_Mission_Automate_ABC_AssignerBarrerA" } },
+        { "ACT_Warning", { "done_ACT_Warning" } },
     },
 
     create = function( self )
@@ -74,7 +76,7 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/tenir/T
                 else
 do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleZoneHorsFuseau, } )
-                                                self.params.__returnValue = eActionImpossible
+                                                self:SendFeedback( eActionImpossible )
                         do return end
 
                     end

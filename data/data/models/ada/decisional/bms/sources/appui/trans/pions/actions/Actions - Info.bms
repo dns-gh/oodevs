@@ -17,6 +17,8 @@ includedFiles["sources/appui/trans/pions/actions/Actions - Info.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Info_EtatRapFor"
 {
+    feedbacks = { { { "done_ACT_Info_EtatRapFor" }, "ACT_Info_EtatRapFor" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Info_EtatRapFor, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.eEtatRapFor = self.params[1]
@@ -46,6 +48,8 @@ includedFiles["sources/appui/trans/pions/actions/Actions - Info.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Info_EtatROE"
 {
+    feedbacks = { { { "done_ACT_Info_EtatROE" }, "ACT_Info_EtatROE" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Info_EtatROE, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.eEtatROE = self.params[1]
@@ -68,6 +72,8 @@ includedFiles["sources/appui/trans/pions/actions/Actions - Info.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Info_EtatROEPopulation"
 {
+    feedbacks = { { { "done_ACT_Info_EtatROEPopulation" }, "ACT_Info_EtatROEPopulation" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Info_EtatROEPopulation, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.eEtatROE = self.params[1]
@@ -97,6 +103,8 @@ includedFiles["sources/appui/trans/pions/actions/Actions - Info.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Info_EtatDec"
 {
+    feedbacks = { { { "done_ACT_Info_EtatDec" }, "ACT_Info_EtatDec" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Info_EtatDec, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.eEtatDec = self.params[1]
@@ -125,6 +133,8 @@ includedFiles["sources/appui/trans/pions/actions/Actions - Info.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Info_EtatOperationnel"
 {
+    feedbacks = { { { "done_ACT_Info_EtatOperationnel" }, "ACT_Info_EtatOperationnel" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Info_EtatOperationnel, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.eEtatOperationnel = self.params[1]

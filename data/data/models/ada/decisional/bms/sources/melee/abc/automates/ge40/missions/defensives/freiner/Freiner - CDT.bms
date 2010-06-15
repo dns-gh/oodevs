@@ -12,14 +12,16 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_ABC_GTIA_Freiner"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ABC_GTIA_Freiner" }, "MIS_Automate_CDT_ABC_GTIA_Freiner" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ABC_GTIA_Freiner, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_AnalyserSituationPourMissionRetrograde", {} },
-        { "BEH_GTIA_OrganiserLesMoyensPourFreiner", {} },
-        { "BEH_GTIA_RendreCompte", {} },
-        { "BEH_GTIA_EchelonnerDispositif", {} },
-        { "BEH_GTIA_RepartirDansFuseaux", {} },
-        { "BEH_GTIA_AssignerLesOrdresPourFreiner", {} },
+        { "ACT_GTIA_AnalyserSituationPourMissionRetrograde", { "done_ACT_GTIA_AnalyserSituationPourMissionRetrograde" } },
+        { "BEH_GTIA_OrganiserLesMoyensPourFreiner", { "done_BEH_GTIA_OrganiserLesMoyensPourFreiner" } },
+        { "BEH_GTIA_RendreCompte", { "done_BEH_GTIA_RendreCompte" } },
+        { "BEH_GTIA_EchelonnerDispositif", { "done_BEH_GTIA_EchelonnerDispositif" } },
+        { "BEH_GTIA_RepartirDansFuseaux", { "done_BEH_GTIA_RepartirDansFuseaux" } },
+        { "BEH_GTIA_AssignerLesOrdresPourFreiner", { "done_BEH_GTIA_AssignerLesOrdresPourFreiner" } },
     },
 
     create = function( self )
@@ -81,9 +83,11 @@ include "bit.lua"
 
 node "BEH_GTIA_OrganiserLesMoyensPourFreiner"
 {
+    feedbacks = { { { "done_BEH_GTIA_OrganiserLesMoyensPourFreiner" }, "BEH_GTIA_OrganiserLesMoyensPourFreiner" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_OrganiserLesMoyensPourFreiner, {value} ) end,
     activations =
     {
-        { "BEH_GTIA_OrganiserMoyensVersPionsOp", {} },
+        { "BEH_GTIA_OrganiserMoyensVersPionsOp", { "done_BEH_GTIA_OrganiserMoyensVersPionsOp" } },
     },
 
     create = function( self )
@@ -105,6 +109,8 @@ node "BEH_GTIA_OrganiserLesMoyensPourFreiner"
 
 node "ACT_GTIA_AnalyserSituationPourMissionRetrograde"
 {
+    feedbacks = { { { "done_ACT_GTIA_AnalyserSituationPourMissionRetrograde" }, "ACT_GTIA_AnalyserSituationPourMissionRetrograde" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_GTIA_AnalyserSituationPourMissionRetrograde, {value} ) end,
     create = function( self )
     end,
 
@@ -134,10 +140,12 @@ node "ACT_GTIA_AnalyserSituationPourMissionRetrograde"
 ]]--[[// *****************************************************************************
 ]]node "BEH_GTIA_AssignerLesOrdresPourFreiner"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerLesOrdresPourFreiner" }, "BEH_GTIA_AssignerLesOrdresPourFreiner" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerLesOrdresPourFreiner, {value} ) end,
     activations =
     {
-        { "BEH_GTIA_AssignerLesMissionsRetrogrades", {} },
-        { "BEH_GTIA_AssurerLaCoordinationRetrograde", {} },
+        { "BEH_GTIA_AssignerLesMissionsRetrogrades", { "done_BEH_GTIA_AssignerLesMissionsRetrogrades" } },
+        { "BEH_GTIA_AssurerLaCoordinationRetrograde", { "done_BEH_GTIA_AssurerLaCoordinationRetrograde" } },
     },
 
     create = function( self )
@@ -161,13 +169,15 @@ node "ACT_GTIA_AnalyserSituationPourMissionRetrograde"
 
 node "BEH_GTIA_AssignerLesMissionsRetrogrades"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerLesMissionsRetrogrades" }, "BEH_GTIA_AssignerLesMissionsRetrogrades" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerLesMissionsRetrogrades, {value} ) end,
     activations =
     {
-        { "BEH_GTIA_AssignerMissionsRetrogradesEcl", {} },
-        { "BEH_GTIA_AssignerMissionsRetrogradesPE", {} },
-        { "BEH_GTIA_AssignerMissionsRetrogradesSE", {} },
-        { "BEH_GTIA_AssignerMissionsRetrogradesSEAppui", {} },
-        { "BEH_GTIA_AssignerMissionRetrogradePC", {} },
+        { "BEH_GTIA_AssignerMissionsRetrogradesEcl", { "done_BEH_GTIA_AssignerMissionsRetrogradesEcl" } },
+        { "BEH_GTIA_AssignerMissionsRetrogradesPE", { "done_BEH_GTIA_AssignerMissionsRetrogradesPE" } },
+        { "BEH_GTIA_AssignerMissionsRetrogradesSE", { "done_BEH_GTIA_AssignerMissionsRetrogradesSE" } },
+        { "BEH_GTIA_AssignerMissionsRetrogradesSEAppui", { "done_BEH_GTIA_AssignerMissionsRetrogradesSEAppui" } },
+        { "BEH_GTIA_AssignerMissionRetrogradePC", { "done_BEH_GTIA_AssignerMissionRetrogradePC" } },
     },
 
     create = function( self )
@@ -193,9 +203,11 @@ node "BEH_GTIA_AssignerLesMissionsRetrogrades"
 
 node "BEH_GTIA_AssignerMissionsRetrogradesEcl"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerMissionsRetrogradesEcl" }, "BEH_GTIA_AssignerMissionsRetrogradesEcl" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerMissionsRetrogradesEcl, {value} ) end,
     activations =
     {
-        { "BEH_GTIA_AssignerMissionRetrogradeMelee", {} },
+        { "BEH_GTIA_AssignerMissionRetrogradeMelee", { "done_BEH_GTIA_AssignerMissionRetrogradeMelee" } },
     },
 
     create = function( self )
@@ -222,9 +234,11 @@ node "BEH_GTIA_AssignerMissionsRetrogradesEcl"
 
 node "BEH_GTIA_AssignerMissionsRetrogradesPE"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerMissionsRetrogradesPE" }, "BEH_GTIA_AssignerMissionsRetrogradesPE" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerMissionsRetrogradesPE, {value} ) end,
     activations =
     {
-        { "BEH_GTIA_AssignerMissionRetrogradeMelee", {} },
+        { "BEH_GTIA_AssignerMissionRetrogradeMelee", { "done_BEH_GTIA_AssignerMissionRetrogradeMelee" } },
     },
 
     create = function( self )
@@ -260,9 +274,11 @@ node "BEH_GTIA_AssignerMissionsRetrogradesPE"
 
 node "BEH_GTIA_AssignerMissionsRetrogradesSE"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerMissionsRetrogradesSE" }, "BEH_GTIA_AssignerMissionsRetrogradesSE" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerMissionsRetrogradesSE, {value} ) end,
     activations =
     {
-        { "BEH_GTIA_AssignerMissionRetrogradeMelee", {} },
+        { "BEH_GTIA_AssignerMissionRetrogradeMelee", { "done_BEH_GTIA_AssignerMissionRetrogradeMelee" } },
     },
 
     create = function( self )
@@ -297,9 +313,11 @@ node "BEH_GTIA_AssignerMissionsRetrogradesSE"
 
 node "BEH_GTIA_AssignerMissionRetrogradeMelee"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerMissionRetrogradeMelee" }, "BEH_GTIA_AssignerMissionRetrogradeMelee" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerMissionRetrogradeMelee, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_AssignerMissionRetrograde", {} },
+        { "ACT_GTIA_AssignerMissionRetrograde", { "done_ACT_GTIA_AssignerMissionRetrograde" } },
     },
 
     create = function( self )
@@ -323,11 +341,13 @@ node "BEH_GTIA_AssignerMissionRetrogradeMelee"
 
 node "BEH_GTIA_AssignerMissionsRetrogradesSEAppui"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerMissionsRetrogradesSEAppui" }, "BEH_GTIA_AssignerMissionsRetrogradesSEAppui" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerMissionsRetrogradesSEAppui, {value} ) end,
     activations =
     {
-        { "BEH_GTIA_AssignerMissionRetrogradeLogA", {} },
-        { "BEH_GTIA_AssignerMissionRetrogradeGenieA", {} },
-        { "BEH_GTIA_AssignerMissionRetrogradeART", {} },
+        { "BEH_GTIA_AssignerMissionRetrogradeLogA", { "done_BEH_GTIA_AssignerMissionRetrogradeLogA" } },
+        { "BEH_GTIA_AssignerMissionRetrogradeGenieA", { "done_BEH_GTIA_AssignerMissionRetrogradeGenieA" } },
+        { "BEH_GTIA_AssignerMissionRetrogradeART", { "done_BEH_GTIA_AssignerMissionRetrogradeART" } },
     },
 
     create = function( self )
@@ -371,9 +391,11 @@ node "BEH_GTIA_AssignerMissionsRetrogradesSEAppui"
 
 node "BEH_GTIA_AssignerMissionRetrogradeART"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerMissionRetrogradeART" }, "BEH_GTIA_AssignerMissionRetrogradeART" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerMissionRetrogradeART, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_AssignerMissionAcquerirObjectifA", {} },
+        { "ACT_GTIA_AssignerMissionAcquerirObjectifA", { "done_ACT_GTIA_AssignerMissionAcquerirObjectifA" } },
     },
 
     create = function( self )
@@ -398,9 +420,11 @@ node "BEH_GTIA_AssignerMissionRetrogradeART"
 
 node "BEH_GTIA_AssignerMissionRetrogradeLogA"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerMissionRetrogradeLogA" }, "BEH_GTIA_AssignerMissionRetrogradeLogA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerMissionRetrogradeLogA, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_AssignerMissionDeployerTC2", {} },
+        { "ACT_GTIA_AssignerMissionDeployerTC2", { "done_ACT_GTIA_AssignerMissionDeployerTC2" } },
     },
 
     create = function( self )
@@ -423,9 +447,11 @@ node "BEH_GTIA_AssignerMissionRetrogradeLogA"
 
 node "BEH_GTIA_AssignerMissionRetrogradePC"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerMissionRetrogradePC" }, "BEH_GTIA_AssignerMissionRetrogradePC" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerMissionRetrogradePC, {value} ) end,
     activations =
     {
-        { "ACT_Mission_Automate_AssignerFaireMouvementA", {} },
+        { "ACT_Mission_Automate_AssignerFaireMouvementA", { "done_ACT_Mission_Automate_AssignerFaireMouvementA" } },
     },
 
     create = function( self )
@@ -448,10 +474,12 @@ node "BEH_GTIA_AssignerMissionRetrogradePC"
 
 node "BEH_GTIA_AssignerMissionRetrogradeGenieA"
 {
+    feedbacks = { { { "done_BEH_GTIA_AssignerMissionRetrogradeGenieA" }, "BEH_GTIA_AssignerMissionRetrogradeGenieA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_GTIA_AssignerMissionRetrogradeGenieA, {value} ) end,
     activations =
     {
-        { "ACT_GTIA_AssignerMissionRealiserTravauxA", {} },
-        { "ACT_GTIA_AssignerMissionRetrograde", {} },
+        { "ACT_GTIA_AssignerMissionRealiserTravauxA", { "done_ACT_GTIA_AssignerMissionRealiserTravauxA" } },
+        { "ACT_GTIA_AssignerMissionRetrograde", { "done_ACT_GTIA_AssignerMissionRetrograde" } },
     },
 
     create = function( self )
@@ -480,6 +508,8 @@ node "BEH_GTIA_AssignerMissionRetrogradeGenieA"
 
 node "ACT_GTIA_AssignerMissionRetrograde"
 {
+    feedbacks = { { { "done_ACT_GTIA_AssignerMissionRetrograde" }, "ACT_GTIA_AssignerMissionRetrograde" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_GTIA_AssignerMissionRetrograde, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -547,6 +577,8 @@ elseif switch_1 == "T_Mission_Automate_INF_Freiner" then
 ]]--[[// *****************************************************************************
 ]]node "ACT_GTIA_AssignerMissionRealiserTravauxA"
 {
+    feedbacks = { { { "done_ACT_GTIA_AssignerMissionRealiserTravauxA" }, "ACT_GTIA_AssignerMissionRealiserTravauxA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_GTIA_AssignerMissionRealiserTravauxA, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionGenie = self.params[1]

@@ -20,9 +20,11 @@ includedFiles["sources/melee/inf/automates/son proterre/missions/escorter/Escort
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_MRT_INF_EscorterUnite"
 {
+    feedbacks = { { { "done_MIS_Automate_MRT_INF_EscorterUnite" }, "MIS_Automate_MRT_INF_EscorterUnite" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_MRT_INF_EscorterUnite, {value} ) end,
     activations =
     {
-        { "BEH_Medo_Automate_INF_DonnerLesOrdresPourMissionDynamique", {} },
+        { "BEH_Medo_Automate_INF_DonnerLesOrdresPourMissionDynamique", { "done_BEH_Medo_Automate_INF_DonnerLesOrdresPourMissionDynamique" } },
     },
 
     create = function( self )
@@ -71,9 +73,11 @@ includedFiles["sources/melee/inf/automates/son proterre/missions/escorter/Escort
 
 node "MIS_Automate_MRT_INF_EscorterUnites"
 {
+    feedbacks = { { { "done_MIS_Automate_MRT_INF_EscorterUnites" }, "MIS_Automate_MRT_INF_EscorterUnites" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_MRT_INF_EscorterUnites, {value} ) end,
     activations =
     {
-        { "BEH_Medo_Automate_INF_DonnerLesOrdresPourMissionDynamique", {} },
+        { "BEH_Medo_Automate_INF_DonnerLesOrdresPourMissionDynamique", { "done_BEH_Medo_Automate_INF_DonnerLesOrdresPourMissionDynamique" } },
     },
 
     create = function( self )

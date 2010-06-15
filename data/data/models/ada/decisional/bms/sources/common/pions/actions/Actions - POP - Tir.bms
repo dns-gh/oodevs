@@ -9,6 +9,8 @@ includedFiles["sources/common/pions/actions/Actions - POP - Tir.bms"] = true
 ]]--[[// ******************************************************************************
 ]]node "ACT_Tir_ChangerConsignePopulation"
 {
+    feedbacks = { { { "done_ACT_Tir_ChangerConsignePopulation" }, "ACT_Tir_ChangerConsignePopulation" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Tir_ChangerConsignePopulation, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.eConsigneTir = self.params[1]
@@ -28,6 +30,8 @@ includedFiles["sources/common/pions/actions/Actions - POP - Tir.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_RiposteSurPopulation"
 {
+    feedbacks = { { { "done_ACT_RiposteSurPopulation" }, "ACT_RiposteSurPopulation" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_RiposteSurPopulation, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.pop = self.params[1]

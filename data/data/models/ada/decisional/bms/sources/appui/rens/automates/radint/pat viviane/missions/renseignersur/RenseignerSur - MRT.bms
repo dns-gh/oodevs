@@ -9,11 +9,13 @@ includedFiles["sources/appui/rens/automates/radint/pat viviane/missions/renseign
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_MRT_RENS_RADINT_RenseignerSur"
 {
+    feedbacks = { { { "done_MIS_Automate_MRT_RENS_RADINT_RenseignerSur" }, "MIS_Automate_MRT_RENS_RADINT_RenseignerSur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_MRT_RENS_RADINT_RenseignerSur, {value} ) end,
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
-        { "BEH_Medo_Automate_RENS_RADINT_AssignerRenseignerA", {} },
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "BEH_Medo_Automate_ControleCreationMission", { "done_BEH_Medo_Automate_ControleCreationMission" } },
+        { "BEH_Medo_Automate_RENS_RADINT_AssignerRenseignerA", { "done_BEH_Medo_Automate_RENS_RADINT_AssignerRenseignerA" } },
     },
 
     create = function( self )
@@ -53,7 +55,7 @@ includedFiles["sources/appui/rens/automates/radint/pat viviane/missions/renseign
                 if( DIA_IsListEmpty( self.listeGazelleViviane ) ) then
                     do
                         Activate( self.activations.ACT_Info_Trace, 1, { "Unadapted units for the mission", } )
-                                                self.params.__returnValue = eActionImpossible
+                                                self:SendFeedback( eActionImpossible )
                         Halt( self )
                         do return end
 
@@ -73,7 +75,7 @@ includedFiles["sources/appui/rens/automates/radint/pat viviane/missions/renseign
                     DEC_Trace( "!!!!Mind out some first line units didn't receive mission!!!!" )
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -85,7 +87,7 @@ includedFiles["sources/appui/rens/automates/radint/pat viviane/missions/renseign
                 self.eValidationMRT = eActionEnCours
                                 do
                     DEC_MRT_Valide()
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -94,7 +96,8 @@ includedFiles["sources/appui/rens/automates/radint/pat viviane/missions/renseign
             end
         end
 
-        Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.listeGazelleViviane ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( self.listeGazelleViviane ), } )
+self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eValidationMRT = v[1] end
         Activate( self.activations.BEH_Medo_Automate_RENS_RADINT_AssignerRenseignerA, 1, { self.listeGazelleViviane, } )
     end,
 

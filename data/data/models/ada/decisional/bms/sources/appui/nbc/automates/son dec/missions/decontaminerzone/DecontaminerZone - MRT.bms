@@ -9,9 +9,11 @@ includedFiles["sources/appui/nbc/automates/son dec/missions/decontaminerzone/Dec
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_MRT_NBC_DecontaminerUneZone"
 {
+    feedbacks = { { { "done_MIS_Automate_MRT_NBC_DecontaminerUneZone" }, "MIS_Automate_MRT_NBC_DecontaminerUneZone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_MRT_NBC_DecontaminerUneZone, {value} ) end,
     activations =
     {
-        { "BEH_Medo_Automate_NBC_DonnerLesOrdresPourMission", {} },
+        { "BEH_Medo_Automate_NBC_DonnerLesOrdresPourMission", { "done_BEH_Medo_Automate_NBC_DonnerLesOrdresPourMission" } },
     },
 
     create = function( self )

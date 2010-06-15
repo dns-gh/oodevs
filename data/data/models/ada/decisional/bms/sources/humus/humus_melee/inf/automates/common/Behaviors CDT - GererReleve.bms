@@ -24,9 +24,11 @@ includedFiles["sources/humus/humus_melee/inf/automates/common/Behaviors CDT - Ge
 ]]--[[// ----------------------------------------------------------------------------
 ]]node "BEH_Dispositif_Automate_INF_GererReleve"
 {
+    feedbacks = { { { "done_BEH_Dispositif_Automate_INF_GererReleve" }, "BEH_Dispositif_Automate_INF_GererReleve" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dispositif_Automate_INF_GererReleve, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_INF_AssignerReleve", {} },
+        { "BEH_Conduite_Automate_INF_AssignerReleve", { "done_BEH_Conduite_Automate_INF_AssignerReleve" } },
     },
 
     create = function( self )
@@ -80,6 +82,8 @@ do
 
 node "BEH_Dispositif_Automate_INF_GererReleve_EnDepassant"
 {
+    feedbacks = { { { "done_BEH_Dispositif_Automate_INF_GererReleve_EnDepassant" }, "BEH_Dispositif_Automate_INF_GererReleve_EnDepassant" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dispositif_Automate_INF_GererReleve_EnDepassant, {value} ) end,
     create = function( self )
     end,
 
@@ -90,6 +94,8 @@ node "BEH_Dispositif_Automate_INF_GererReleve_EnDepassant"
 
 node "BEH_Dispositif_Automate_INF_GererReleve_SurPlace"
 {
+    feedbacks = { { { "done_BEH_Dispositif_Automate_INF_GererReleve_SurPlace" }, "BEH_Dispositif_Automate_INF_GererReleve_SurPlace" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dispositif_Automate_INF_GererReleve_SurPlace, {value} ) end,
     create = function( self )
     end,
 
@@ -108,6 +114,8 @@ node "BEH_Dispositif_Automate_INF_GererReleve_SurPlace"
 
 node "BEH_Conduite_Automate_INF_AssignerReleve"
 {
+    feedbacks = { { { "done_BEH_Conduite_Automate_INF_AssignerReleve" }, "BEH_Conduite_Automate_INF_AssignerReleve" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Conduite_Automate_INF_AssignerReleve, {value} ) end,
     instances =
     {
         max = 1,
@@ -115,7 +123,7 @@ node "BEH_Conduite_Automate_INF_AssignerReleve"
 
     activations =
     {
-        { "ACT_Conduite_Automate_ReleverUnite", {} },
+        { "ACT_Conduite_Automate_ReleverUnite", { "done_ACT_Conduite_Automate_ReleverUnite" } },
     },
 
     create = function( self )

@@ -32,14 +32,16 @@ include "glaise/glaise_appui/Genie/Automates/Cie Blindee/Missions/Missions.bms"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Defaut"
 {
+    feedbacks = { { { "done_BEH_Defaut" }, "BEH_Defaut" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Defaut, {value} ) end,
     activations =
     {
-        { "BEH_RC_Automate_Situation", {} },
-        { "BEH_Ordre_Automate_GEN_ActiverObstacle", {} },
-        { "BEH_Nbc_Automate_GererAlerteNiv4", {} },
-        { "BEH_ROE_Automate_GererOrdre", {} },
-        { "BEH_Misc_Automate_GererLesMoyens", {} },
-        { "BEH_Rens_Automate_GererSilenceRadio", {} },
+        { "BEH_RC_Automate_Situation", { "done_BEH_RC_Automate_Situation" } },
+        { "BEH_Ordre_Automate_GEN_ActiverObstacle", { "done_BEH_Ordre_Automate_GEN_ActiverObstacle" } },
+        { "BEH_Nbc_Automate_GererAlerteNiv4", { "done_BEH_Nbc_Automate_GererAlerteNiv4" } },
+        { "BEH_ROE_Automate_GererOrdre", { "done_BEH_ROE_Automate_GererOrdre" } },
+        { "BEH_Misc_Automate_GererLesMoyens", { "done_BEH_Misc_Automate_GererLesMoyens" } },
+        { "BEH_Rens_Automate_GererSilenceRadio", { "done_BEH_Rens_Automate_GererSilenceRadio" } },
     },
 
     create = function( self )
@@ -91,10 +93,12 @@ include "glaise/glaise_appui/Genie/Automates/Cie Blindee/Missions/Missions.bms"
 
 node "BEH_Ordre_Automate_GEN_ActiverObstacle"
 {
+    feedbacks = { { { "done_BEH_Ordre_Automate_GEN_ActiverObstacle" }, "BEH_Ordre_Automate_GEN_ActiverObstacle" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Ordre_Automate_GEN_ActiverObstacle, {value} ) end,
     activations =
     {
-        { "ACT_Ordre_Automate_GEN_Activer", {} },
-        { "ACT_Ordre_Suppression", {} },
+        { "ACT_Ordre_Automate_GEN_Activer", { "done_ACT_Ordre_Automate_GEN_Activer" } },
+        { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
     },
 
     create = function( self )
@@ -137,9 +141,11 @@ do
 
 node "BEH_Objet_Automate_GEN_VerifierRenfortPourConstruireObjets"
 {
+    feedbacks = { { { "done_BEH_Objet_Automate_GEN_VerifierRenfortPourConstruireObjets" }, "BEH_Objet_Automate_GEN_VerifierRenfortPourConstruireObjets" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Objet_Automate_GEN_VerifierRenfortPourConstruireObjets, {value} ) end,
     activations =
     {
-        { "BEH_Objet_Automate_GEN_VerifierRenfortPourConstruire", {} },
+        { "BEH_Objet_Automate_GEN_VerifierRenfortPourConstruire", { "done_BEH_Objet_Automate_GEN_VerifierRenfortPourConstruire" } },
     },
 
     create = function( self )
@@ -166,9 +172,11 @@ node "BEH_Objet_Automate_GEN_VerifierRenfortPourConstruireObjets"
 
 node "BEH_Objet_Automate_GEN_VerifierRenfortPourConstruire"
 {
+    feedbacks = { { { "done_BEH_Objet_Automate_GEN_VerifierRenfortPourConstruire" }, "BEH_Objet_Automate_GEN_VerifierRenfortPourConstruire" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Objet_Automate_GEN_VerifierRenfortPourConstruire, {value} ) end,
     activations =
     {
-        { "ACT_Info_Automate_GEN_RendreComptePourRenfort", {} },
+        { "ACT_Info_Automate_GEN_RendreComptePourRenfort", { "done_ACT_Info_Automate_GEN_RendreComptePourRenfort" } },
     },
 
     create = function( self )
@@ -204,9 +212,11 @@ do
 
 node "BEH_Ordre_Automate_GEN_VerifierRenfortPourDetruireObjets"
 {
+    feedbacks = { { { "done_BEH_Ordre_Automate_GEN_VerifierRenfortPourDetruireObjets" }, "BEH_Ordre_Automate_GEN_VerifierRenfortPourDetruireObjets" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Ordre_Automate_GEN_VerifierRenfortPourDetruireObjets, {value} ) end,
     activations =
     {
-        { "BEH_Objet_Automate_GEN_VerifierRenfortPourDetruireObjet", {} },
+        { "BEH_Objet_Automate_GEN_VerifierRenfortPourDetruireObjet", { "done_BEH_Objet_Automate_GEN_VerifierRenfortPourDetruireObjet" } },
     },
 
     create = function( self )
@@ -235,9 +245,11 @@ if( DEC_ConnaissanceObjet_EstValide( objet ) ) then
 
 node "BEH_Objet_Automate_GEN_VerifierRenfortPourDetruireObjet"
 {
+    feedbacks = { { { "done_BEH_Objet_Automate_GEN_VerifierRenfortPourDetruireObjet" }, "BEH_Objet_Automate_GEN_VerifierRenfortPourDetruireObjet" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Objet_Automate_GEN_VerifierRenfortPourDetruireObjet, {value} ) end,
     activations =
     {
-        { "ACT_Info_Automate_GEN_RendreComptePourRenfort", {} },
+        { "ACT_Info_Automate_GEN_RendreComptePourRenfort", { "done_ACT_Info_Automate_GEN_RendreComptePourRenfort" } },
     },
 
     create = function( self )
@@ -273,9 +285,11 @@ do
 
 node "BEH_Objet_Automate_GEN_VerifierRenfortPourContournerObjets"
 {
+    feedbacks = { { { "done_BEH_Objet_Automate_GEN_VerifierRenfortPourContournerObjets" }, "BEH_Objet_Automate_GEN_VerifierRenfortPourContournerObjets" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Objet_Automate_GEN_VerifierRenfortPourContournerObjets, {value} ) end,
     activations =
     {
-        { "BEH_Objet_Automate_GEN_VerifierRenfortPourContourner", {} },
+        { "BEH_Objet_Automate_GEN_VerifierRenfortPourContourner", { "done_BEH_Objet_Automate_GEN_VerifierRenfortPourContourner" } },
     },
 
     create = function( self )
@@ -304,9 +318,11 @@ if( DEC_ConnaissanceObjet_EstValide( objet ) ) then
 
 node "BEH_Objet_Automate_GEN_VerifierRenfortPourContourner"
 {
+    feedbacks = { { { "done_BEH_Objet_Automate_GEN_VerifierRenfortPourContourner" }, "BEH_Objet_Automate_GEN_VerifierRenfortPourContourner" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Objet_Automate_GEN_VerifierRenfortPourContourner, {value} ) end,
     activations =
     {
-        { "ACT_Info_Automate_GEN_RendreComptePourRenfort", {} },
+        { "ACT_Info_Automate_GEN_RendreComptePourRenfort", { "done_ACT_Info_Automate_GEN_RendreComptePourRenfort" } },
     },
 
     create = function( self )
@@ -347,6 +363,8 @@ do
 
 node "ACT_Info_Automate_GEN_RendreComptePourRenfort"
 {
+    feedbacks = { { { "done_ACT_Info_Automate_GEN_RendreComptePourRenfort" }, "ACT_Info_Automate_GEN_RendreComptePourRenfort" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Info_Automate_GEN_RendreComptePourRenfort, {value} ) end,
     create = function( self )
     end,
 
@@ -374,6 +392,8 @@ node "ACT_Info_Automate_GEN_RendreComptePourRenfort"
 ]]--[[// *****************************************************************************
 ]]node "ACT_Ordre_Automate_GEN_Activer"
 {
+    feedbacks = { { { "done_ACT_Ordre_Automate_GEN_Activer" }, "ACT_Ordre_Automate_GEN_Activer" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Ordre_Automate_GEN_Activer, {value} ) end,
     create = function( self )
         self._namedParams = {}
         self._namedParams.objetAActiver = self.params[1]

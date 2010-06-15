@@ -12,10 +12,12 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Eni_Pion_ASY_CommettreExactionDans"
 {
+    feedbacks = { { { "done_BEH_Eni_Pion_ASY_CommettreExactionDans" }, "BEH_Eni_Pion_ASY_CommettreExactionDans" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Pion_ASY_CommettreExactionDans, {value} ) end,
     activations =
     {
-        { "BEH_Eni_Pion_ASY_RejoindrePopulationDansZone", {} },
-        { "BEH_Eni_Pion_ASY_CommettreExactionsSurPopulation", {} },
+        { "BEH_Eni_Pion_ASY_RejoindrePopulationDansZone", { "done_BEH_Eni_Pion_ASY_RejoindrePopulationDansZone" } },
+        { "BEH_Eni_Pion_ASY_CommettreExactionsSurPopulation", { "done_BEH_Eni_Pion_ASY_CommettreExactionsSurPopulation" } },
     },
 
     create = function( self )
@@ -59,10 +61,12 @@ do
 
 node "BEH_Eni_Pion_ASY_CommettreExactionsSurPopulation"
 {
+    feedbacks = { { { "done_BEH_Eni_Pion_ASY_CommettreExactionsSurPopulation" }, "BEH_Eni_Pion_ASY_CommettreExactionsSurPopulation" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Pion_ASY_CommettreExactionsSurPopulation, {value} ) end,
     activations =
     {
-        { "ACT_Eni_Pion_ASY_CommettreExactions", {} },
-        { "ACT_Misc_Delai", {} },
+        { "ACT_Eni_Pion_ASY_CommettreExactions", { "done_ACT_Eni_Pion_ASY_CommettreExactions" } },
+        { "ACT_Misc_Delai", { "done_ACT_Misc_Delai" } },
     },
 
     create = function( self )
@@ -80,7 +84,8 @@ node "BEH_Eni_Pion_ASY_CommettreExactionsSurPopulation"
 ]]if( self.eEtatDelai == eActionEnCours ) then
             do
                 Activate( self.activations.ACT_Eni_Pion_ASY_CommettreExactions, 1, { self._namedParams.pop, } )
-                Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { BEH_Eni_Pion_ASY_CommettreExactionsSurPopulation, 2.0, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatDelai = v else rawset( t, k, v ) end end } ) )
+                Activate( self.activations.ACT_Misc_Delai, 1, { BEH_Eni_Pion_ASY_CommettreExactionsSurPopulation, 2.0, } )
+self.done_ACT_Misc_Delai = function( self, _, v ) self.eEtatDelai = v[1] end
             end
         else
             self.eEtatDelai = eActionEnCours
@@ -98,9 +103,11 @@ node "BEH_Eni_Pion_ASY_CommettreExactionsSurPopulation"
 
 node "BEH_Eni_Pion_ASY_RejoindrePopulationDansZone"
 {
+    feedbacks = { { { "done_BEH_Eni_Pion_ASY_RejoindrePopulationDansZone" }, "BEH_Eni_Pion_ASY_RejoindrePopulationDansZone" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Pion_ASY_RejoindrePopulationDansZone, {value} ) end,
     activations =
     {
-        { "BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers", {} },
+        { "BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers", { "done_BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers" } },
     },
 
     create = function( self )
@@ -135,6 +142,8 @@ node "BEH_Eni_Pion_ASY_RejoindrePopulationDansZone"
 
 node "BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers"
 {
+    feedbacks = { { { "done_BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers" }, "BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers, {value} ) end,
     instances =
     {
         max = 1,
@@ -142,7 +151,7 @@ node "BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers"
 
     activations =
     {
-        { "BEH_Dep_SeDeplacer", {} },
+        { "BEH_Dep_SeDeplacer", { "done_BEH_Dep_SeDeplacer" } },
     },
 
     create = function( self )
@@ -161,7 +170,7 @@ node "BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers"
                 self.eAction = eActionEnCours
                                 do
                     self.it = S_Misc_DetruireItineraire( self.it, "BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers" )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -170,7 +179,8 @@ node "BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers"
             end
         end
 
-        Activate( self.activations.BEH_Dep_SeDeplacer, 1, setmetatable( { self.it, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Dep_SeDeplacer, 1, { self.it, } )
+self.done_BEH_Dep_SeDeplacer = function( self, _, v ) self.eAction = v[1] end
     end,
 
     destroy = function( self )
@@ -187,6 +197,8 @@ node "BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers"
 
 node "BEH_Dep_Pion_ASY_ProgresserATraversPopulationSur"
 {
+    feedbacks = { { { "done_BEH_Dep_Pion_ASY_ProgresserATraversPopulationSur" }, "BEH_Dep_Pion_ASY_ProgresserATraversPopulationSur" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Pion_ASY_ProgresserATraversPopulationSur, {value} ) end,
     instances =
     {
         max = 1,
@@ -194,7 +206,7 @@ node "BEH_Dep_Pion_ASY_ProgresserATraversPopulationSur"
 
     activations =
     {
-        { "BEH_Dep_SeDeplacer", {} },
+        { "BEH_Dep_SeDeplacer", { "done_BEH_Dep_SeDeplacer" } },
     },
 
     create = function( self )
@@ -213,7 +225,7 @@ node "BEH_Dep_Pion_ASY_ProgresserATraversPopulationSur"
                 self.eAction = eActionEnCours
                                 do
                     self.it = S_Misc_DetruireItineraire( self.it, "BEH_Dep_Pion_ASY_ProgresserATraversPopulationSur" )
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -222,7 +234,8 @@ node "BEH_Dep_Pion_ASY_ProgresserATraversPopulationSur"
             end
         end
 
-        Activate( self.activations.BEH_Dep_SeDeplacer, 1, setmetatable( { self.it, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Dep_SeDeplacer, 1, { self.it, } )
+self.done_BEH_Dep_SeDeplacer = function( self, _, v ) self.eAction = v[1] end
     end,
 
     destroy = function( self )
@@ -238,9 +251,11 @@ node "BEH_Dep_Pion_ASY_ProgresserATraversPopulationSur"
 
 node "BEH_Dep_Virtuel_ProgressionVers"
 {
+    feedbacks = { { { "done_BEH_Dep_Virtuel_ProgressionVers" }, "BEH_Dep_Virtuel_ProgressionVers" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Virtuel_ProgressionVers, {value} ) end,
     activations =
     {
-        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
     },
 
     create = function( self )
@@ -262,11 +277,13 @@ node "BEH_Dep_Virtuel_ProgressionVers"
 
 node "BEH_Dep_Virtuel_PreparationAction"
 {
+    feedbacks = { { { "done_BEH_Dep_Virtuel_PreparationAction" }, "BEH_Dep_Virtuel_PreparationAction" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Virtuel_PreparationAction, {value} ) end,
     create = function( self )
     end,
 
     activate = function( self )
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         do return end
 
     end,
@@ -281,10 +298,12 @@ node "BEH_Dep_Virtuel_PreparationAction"
 
 node "BEH_Eni_Pion_ASY_CommettreAttentatContreForcesArmees"
 {
+    feedbacks = { { { "done_BEH_Eni_Pion_ASY_CommettreAttentatContreForcesArmees" }, "BEH_Eni_Pion_ASY_CommettreAttentatContreForcesArmees" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_Pion_ASY_CommettreAttentatContreForcesArmees, {value} ) end,
     activations =
     {
-        { "ACT_Eni_Pion_ASY_AssassinerOfficier", {} },
-        { "ACT_Eni_Pion_ASY_DetruireComposanteMajeure", {} },
+        { "ACT_Eni_Pion_ASY_AssassinerOfficier", { "done_ACT_Eni_Pion_ASY_AssassinerOfficier" } },
+        { "ACT_Eni_Pion_ASY_DetruireComposanteMajeure", { "done_ACT_Eni_Pion_ASY_DetruireComposanteMajeure" } },
     },
 
     create = function( self )
@@ -303,11 +322,13 @@ node "BEH_Eni_Pion_ASY_CommettreAttentatContreForcesArmees"
                     local switch_1 = self._namedParams.typeAttentat
                     local cases_switch_1 = {}
                         if switch_1 == etypeAttentat_assasinatOfficier then
-                                                    Activate( self.activations.ACT_Eni_Pion_ASY_AssassinerOfficier, 1, setmetatable( { self._namedParams.repEni, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                                                    Activate( self.activations.ACT_Eni_Pion_ASY_AssassinerOfficier, 1, { self._namedParams.repEni, } )
+self.done_ACT_Eni_Pion_ASY_AssassinerOfficier = function( self, _, v ) self.eAction = v[1] end
                             _continue = false
                                                 cases_switch_1[1] = true
 elseif switch_1 == etypeAttentat_destructionComposanteMajeure then
-                                                    Activate( self.activations.ACT_Eni_Pion_ASY_DetruireComposanteMajeure, 1, setmetatable( { self._namedParams.repEni, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                                                    Activate( self.activations.ACT_Eni_Pion_ASY_DetruireComposanteMajeure, 1, { self._namedParams.repEni, } )
+self.done_ACT_Eni_Pion_ASY_DetruireComposanteMajeure = function( self, _, v ) self.eAction = v[1] end
                             _continue = false
                                                 cases_switch_1[2] = true
                         end
@@ -317,12 +338,12 @@ elseif switch_1 == etypeAttentat_destructionComposanteMajeure then
                     DEC_Suicide()
                 end
 
-                                self.params.__returnValue = self.eAction
+                                self:SendFeedback( self.eAction )
                 do return end
 
             end
         else
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             do return end
         end
 

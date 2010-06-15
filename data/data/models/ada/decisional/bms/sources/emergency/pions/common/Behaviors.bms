@@ -23,15 +23,17 @@ include "Emergency/Pions/Common/Actions.bms"
 
 node "BEH_Defaut"
 {
+    feedbacks = { { { "done_BEH_Defaut" }, "BEH_Defaut" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Defaut, {value} ) end,
     activations =
     {
-        { "BEH_MAJ_EtatDefaut", {} },
-        { "BEH_Mot_AffecterVariablesDEtat", {} },
-        { "BEH_Mot_Pion_Embarquer", {} },
-        { "BEH_Ambiance", {} },
-        { "BEH_ROE", {} },
-        { "BEH_Nbc", {} },
-        { "BEH_Rens", {} },
+        { "BEH_MAJ_EtatDefaut", { "done_BEH_MAJ_EtatDefaut" } },
+        { "BEH_Mot_AffecterVariablesDEtat", { "done_BEH_Mot_AffecterVariablesDEtat" } },
+        { "BEH_Mot_Pion_Embarquer", { "done_BEH_Mot_Pion_Embarquer" } },
+        { "BEH_Ambiance", { "done_BEH_Ambiance" } },
+        { "BEH_ROE", { "done_BEH_ROE" } },
+        { "BEH_Nbc", { "done_BEH_Nbc" } },
+        { "BEH_Rens", { "done_BEH_Rens" } },
     },
 
     create = function( self )
@@ -80,6 +82,8 @@ node "BEH_Defaut"
 
 node "BEH_Mot_AffecterVariablesDEtat"
 {
+    feedbacks = { { { "done_BEH_Mot_AffecterVariablesDEtat" }, "BEH_Mot_AffecterVariablesDEtat" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mot_AffecterVariablesDEtat, {value} ) end,
     create = function( self )
     end,
 
@@ -150,9 +154,11 @@ elseif switch_1 == eMoral_Mauvais then
 
 node "BEH_Dep_Virtuel_ProgressionVers"
 {
+    feedbacks = { { { "done_BEH_Dep_Virtuel_ProgressionVers" }, "BEH_Dep_Virtuel_ProgressionVers" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Virtuel_ProgressionVers, {value} ) end,
     activations =
     {
-        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
     },
 
     create = function( self )
@@ -174,11 +180,13 @@ node "BEH_Dep_Virtuel_ProgressionVers"
 
 node "BEH_Dep_Virtuel_PreparationAction"
 {
+    feedbacks = { { { "done_BEH_Dep_Virtuel_PreparationAction" }, "BEH_Dep_Virtuel_PreparationAction" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Dep_Virtuel_PreparationAction, {value} ) end,
     create = function( self )
     end,
 
     activate = function( self )
-                self.params.__returnValue = eActionEffectuee
+                self:SendFeedback( eActionEffectuee )
         do return end
 
     end,

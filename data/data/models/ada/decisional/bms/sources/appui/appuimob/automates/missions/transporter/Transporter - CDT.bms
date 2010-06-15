@@ -3,9 +3,11 @@ includedFiles["sources/appui/appuimob/automates/missions/transporter/Transporter
 
 node "MIS_Automate_CDT_LOG_TransporterUnites"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_LOG_TransporterUnites" }, "MIS_Automate_CDT_LOG_TransporterUnites" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_LOG_TransporterUnites, {value} ) end,
     activations =
     {
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "done_BEH_Ordre_Automate_RecevoirOrdreInopine" } },
     },
 
     create = function( self )
@@ -26,7 +28,8 @@ node "MIS_Automate_CDT_LOG_TransporterUnites"
             end
         end
 
-        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatODC = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )
+self.done_BEH_Ordre_Automate_RecevoirOrdreInopine = function( self, _, v ) self.eEtatODC = v[1] end
         --[[// ---------------------------------------------------------------------
 ]]--[[// 1. Mise à Jour des selections de pions ( à tous les tics )
 ]]--[[// ---------------------------------------------------------------------
@@ -71,7 +74,7 @@ do
                     end
 
                     if( plusDeMissions ) then
-                        self.params.__returnValue = eActionEffectuee
+                        self:SendFeedback( eActionEffectuee )
                         Halt( self )
                         do return end
                     end

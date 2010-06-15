@@ -20,9 +20,11 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/ciecharmoyen/missions/d
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_ABC_DonnerCoupArret"
 {
+    feedbacks = { { { "done_MIS_Automate_CDT_ABC_DonnerCoupArret" }, "MIS_Automate_CDT_ABC_DonnerCoupArret" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_CDT_ABC_DonnerCoupArret, {value} ) end,
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_DonnerUnCoupDArret", {} },
+        { "BEH_Conduite_Automate_ABC_DonnerUnCoupDArret", { "done_BEH_Conduite_Automate_ABC_DonnerUnCoupDArret" } },
     },
 
     create = function( self )

@@ -9,6 +9,8 @@ includedFiles["sources/glaise/glaise_common/pions/behaviors/Behaviors - Eni.bms"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Eni_DecrocherFaceA"
 {
+    feedbacks = { { { "done_BEH_Eni_DecrocherFaceA" }, "BEH_Eni_DecrocherFaceA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_DecrocherFaceA, {value} ) end,
     instances =
     {
         max = 1,
@@ -17,9 +19,9 @@ includedFiles["sources/glaise/glaise_common/pions/behaviors/Behaviors - Eni.bms"
 
     activations =
     {
-        { "ACT_Tir_FumigeneVersEni", {} },
-        { "BEH_Dep_ProgressionVers", {} },
-        { "ACT_Dep_ModulationVitesse", {} },
+        { "ACT_Tir_FumigeneVersEni", { "done_ACT_Tir_FumigeneVersEni" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
+        { "ACT_Dep_ModulationVitesse", { "done_ACT_Dep_ModulationVitesse" } },
     },
 
     create = function( self )
@@ -37,7 +39,7 @@ includedFiles["sources/glaise/glaise_common/pions/behaviors/Behaviors - Eni.bms"
 ]]--[[// Connaissance invalide
 ]]--[[//----------------------------------------------------------------------
 ]]if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.repUnite ) ) then
-            self.params.__returnValue = eActionImpossible
+            self:SendFeedback( eActionImpossible )
             Halt( self )
             do return end
         end
@@ -45,7 +47,7 @@ includedFiles["sources/glaise/glaise_common/pions/behaviors/Behaviors - Eni.bms"
         --[[//si je suis a une distance supérieure a rDistance, alors, ce n'est pas
 ]]--[[//la peine de decrocher
 ]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( self._namedParams.repUnite ) ) >= self.rDistanceEffective ) then
-            self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
             Halt( self )
             do return end
         end
@@ -83,7 +85,7 @@ if( ( myself.ptRegroupement_ ~= 0 and myself.ptRegroupement_ ~= nil ) ) then
             do
                 self.eEtat = eActionEnCours
                                 do
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -92,7 +94,8 @@ if( ( myself.ptRegroupement_ ~= 0 and myself.ptRegroupement_ ~= nil ) ) then
             end
         end
 
-        Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.positionSurete, eProgressionDirect, eTypeItiRepli, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.positionSurete, eProgressionDirect, eTypeItiRepli, } )
+self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
         Activate( self.activations.ACT_Dep_ModulationVitesse, 1, { 1, } )
     end,
 
@@ -106,10 +109,12 @@ if( ( myself.ptRegroupement_ ~= 0 and myself.ptRegroupement_ ~= nil ) ) then
 
 node "BEH_Eni_SePosterFaceA"
 {
+    feedbacks = { { { "done_BEH_Eni_SePosterFaceA" }, "BEH_Eni_SePosterFaceA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Eni_SePosterFaceA, {value} ) end,
     activations =
     {
-        { "ACT_Dep_SePosterFaceA", {} },
-        { "ACT_Obs_EtablirVisionVersPt", {} },
+        { "ACT_Dep_SePosterFaceA", { "done_ACT_Dep_SePosterFaceA" } },
+        { "ACT_Obs_EtablirVisionVersPt", { "done_ACT_Obs_EtablirVisionVersPt" } },
     },
 
     create = function( self )

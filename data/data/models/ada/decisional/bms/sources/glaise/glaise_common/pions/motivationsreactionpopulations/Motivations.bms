@@ -30,9 +30,11 @@ motivation_plugin.motivations[ "MOT_RiposteSurPopulations" ] =
 
 node "ActivatedByMOT_RiposteSurPopulations"
 {
+    feedbacks = { { { "done_ActivatedByMOT_RiposteSurPopulations" }, "ActivatedByMOT_RiposteSurPopulations" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_RiposteSurPopulations, {value} ) end,
     activations =
     {
-        { "BEH_MOT_RiposteSurPopulations", {} },
+        { "BEH_MOT_RiposteSurPopulations", { "done_BEH_MOT_RiposteSurPopulations" } },
     },
 
     create = function( self )
@@ -89,9 +91,11 @@ node "ActivatedByMOT_RiposteSurPopulations"
 
 node "ActivatedByMOT_EsquivePopulations"
 {
+    feedbacks = { { { "done_ActivatedByMOT_EsquivePopulations" }, "ActivatedByMOT_EsquivePopulations" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_EsquivePopulations, {value} ) end,
     activations =
     {
-        { "BEH_MOT_DecrochageFaceAPopulations", {} },
+        { "BEH_MOT_DecrochageFaceAPopulations", { "done_BEH_MOT_DecrochageFaceAPopulations" } },
     },
 
     create = function( self )
@@ -150,9 +154,11 @@ node "ActivatedByMOT_EsquivePopulations"
 
 node "ActivatedByMOT_PasserEnEmploiForceInterdit"
 {
+    feedbacks = { { { "done_ActivatedByMOT_PasserEnEmploiForceInterdit" }, "ActivatedByMOT_PasserEnEmploiForceInterdit" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_PasserEnEmploiForceInterdit, {value} ) end,
     activations =
     {
-        { "BEH_MOT_PasserEnEmploiForceInterdit", {} },
+        { "BEH_MOT_PasserEnEmploiForceInterdit", { "done_BEH_MOT_PasserEnEmploiForceInterdit" } },
     },
 
     create = function( self )
@@ -210,9 +216,11 @@ node "ActivatedByMOT_PasserEnEmploiForceInterdit"
 
 node "ActivatedByMOT_PasserEnMaintienADistanceParMoyensNonLetaux"
 {
+    feedbacks = { { { "done_ActivatedByMOT_PasserEnMaintienADistanceParMoyensNonLetaux" }, "ActivatedByMOT_PasserEnMaintienADistanceParMoyensNonLetaux" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_PasserEnMaintienADistanceParMoyensNonLetaux, {value} ) end,
     activations =
     {
-        { "BEH_MOT_PasserEnMaintienADistanceParMoyensNonLetaux", {} },
+        { "BEH_MOT_PasserEnMaintienADistanceParMoyensNonLetaux", { "done_BEH_MOT_PasserEnMaintienADistanceParMoyensNonLetaux" } },
     },
 
     create = function( self )
@@ -270,9 +278,11 @@ node "ActivatedByMOT_PasserEnMaintienADistanceParMoyensNonLetaux"
 
 node "ActivatedByMOT_PasserEnDispersionParMoyensDeDefenseActifs"
 {
+    feedbacks = { { { "done_ActivatedByMOT_PasserEnDispersionParMoyensDeDefenseActifs" }, "ActivatedByMOT_PasserEnDispersionParMoyensDeDefenseActifs" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_PasserEnDispersionParMoyensDeDefenseActifs, {value} ) end,
     activations =
     {
-        { "BEH_MOT_PasserEnDispersionParMoyensDeDefenseActifs", {} },
+        { "BEH_MOT_PasserEnDispersionParMoyensDeDefenseActifs", { "done_BEH_MOT_PasserEnDispersionParMoyensDeDefenseActifs" } },
     },
 
     create = function( self )
@@ -330,9 +340,11 @@ node "ActivatedByMOT_PasserEnDispersionParMoyensDeDefenseActifs"
 
 node "ActivatedByMOT_PasserEnArmesLetalesAutorisees"
 {
+    feedbacks = { { { "done_ActivatedByMOT_PasserEnArmesLetalesAutorisees" }, "ActivatedByMOT_PasserEnArmesLetalesAutorisees" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_PasserEnArmesLetalesAutorisees, {value} ) end,
     activations =
     {
-        { "BEH_MOT_PasserEnArmesLetalesAutorisees", {} },
+        { "BEH_MOT_PasserEnArmesLetalesAutorisees", { "done_BEH_MOT_PasserEnArmesLetalesAutorisees" } },
     },
 
     create = function( self )

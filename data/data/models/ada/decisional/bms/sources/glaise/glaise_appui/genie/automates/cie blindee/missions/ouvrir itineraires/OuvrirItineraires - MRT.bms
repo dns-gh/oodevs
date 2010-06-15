@@ -9,10 +9,12 @@ includedFiles["sources/glaise/glaise_appui/genie/automates/cie blindee/missions/
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_MRT_GEN_OuvrirItineraires"
 {
+    feedbacks = { { { "done_MIS_Automate_MRT_GEN_OuvrirItineraires" }, "MIS_Automate_MRT_GEN_OuvrirItineraires" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_MRT_GEN_OuvrirItineraires, {value} ) end,
     activations =
     {
-        { "ACT_Warning", {} },
-        { "BEH_Medo_Automate_GEN_MRT_AssignerOuvrirItineraire", {} },
+        { "ACT_Warning", { "done_ACT_Warning" } },
+        { "BEH_Medo_Automate_GEN_MRT_AssignerOuvrirItineraire", { "done_BEH_Medo_Automate_GEN_MRT_AssignerOuvrirItineraire" } },
     },
 
     create = function( self )
@@ -56,10 +58,12 @@ includedFiles["sources/glaise/glaise_appui/genie/automates/cie blindee/missions/
 
 node "BEH_Medo_Automate_GEN_MRT_AssignerOuvrirItineraire"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_GEN_MRT_AssignerOuvrirItineraire" }, "BEH_Medo_Automate_GEN_MRT_AssignerOuvrirItineraire" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_GEN_MRT_AssignerOuvrirItineraire, {value} ) end,
     activations =
     {
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
-        { "BEH_Medo_Automate_GEN_MRT_FaireOuvrir", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", { "done_BEH_Medo_Automate_ControleCreationMission" } },
+        { "BEH_Medo_Automate_GEN_MRT_FaireOuvrir", { "done_BEH_Medo_Automate_GEN_MRT_FaireOuvrir" } },
     },
 
     create = function( self )
@@ -80,7 +84,7 @@ node "BEH_Medo_Automate_GEN_MRT_AssignerOuvrirItineraire"
                     DEC_Trace( "!!!!Attention toutes les missions n'ont pas été données au PE!!!" )
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -100,7 +104,8 @@ node "BEH_Medo_Automate_GEN_MRT_AssignerOuvrirItineraire"
             end
         end
 
-        Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self._namedParams.listePionsGenie ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( self._namedParams.listePionsGenie ), } )
+self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eValidationMRT = v[1] end
         Activate( self.activations.BEH_Medo_Automate_GEN_MRT_FaireOuvrir, 1, { self._namedParams.listePionsGenie, self._namedParams.itineraires, } )
     end,
 
@@ -114,9 +119,11 @@ node "BEH_Medo_Automate_GEN_MRT_AssignerOuvrirItineraire"
 
 node "BEH_Medo_Automate_GEN_MRT_FaireOuvrir"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_GEN_MRT_FaireOuvrir" }, "BEH_Medo_Automate_GEN_MRT_FaireOuvrir" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_GEN_MRT_FaireOuvrir, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_GEN_AssignerOuvrirItineraireA", {} },
+        { "BEH_Mission_Automate_GEN_AssignerOuvrirItineraireA", { "done_BEH_Mission_Automate_GEN_AssignerOuvrirItineraireA" } },
     },
 
     create = function( self )

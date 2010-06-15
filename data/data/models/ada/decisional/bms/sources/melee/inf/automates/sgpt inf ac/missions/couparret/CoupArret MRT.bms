@@ -45,9 +45,11 @@ includedFiles["sources/melee/inf/automates/sgpt inf ac/missions/couparret/CoupAr
 
 node "MIS_Automate_MRT_INF_DonnerCoupArret"
 {
+    feedbacks = { { { "done_MIS_Automate_MRT_INF_DonnerCoupArret" }, "MIS_Automate_MRT_INF_DonnerCoupArret" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_MRT_INF_DonnerCoupArret, {value} ) end,
     activations =
     {
-        { "BEH_Medo_Automate_INF_PreparerMission_Statique", {} },
+        { "BEH_Medo_Automate_INF_PreparerMission_Statique", { "done_BEH_Medo_Automate_INF_PreparerMission_Statique" } },
     },
 
     create = function( self )
@@ -76,7 +78,7 @@ node "MIS_Automate_MRT_INF_DonnerCoupArret"
                     DEC_RC( eRC_MissionImpossible )
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -89,7 +91,7 @@ node "MIS_Automate_MRT_INF_DonnerCoupArret"
                                 do
                     DEC_Trace( "MIS_Automate_MRT_INF_DonnerCoupArret : fin MRT" )
                     DEC_MRT_Valide()
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -101,7 +103,8 @@ node "MIS_Automate_MRT_INF_DonnerCoupArret"
 ]]--[[//-----------------------------------------------------------------------------
 ]]        end
 
-        Activate( self.activations.BEH_Medo_Automate_INF_PreparerMission_Statique, 1, setmetatable( { "T_Mission_Automate_INF_DonnerCoupArret", 0, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCreationMRT = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Medo_Automate_INF_PreparerMission_Statique, 1, { "T_Mission_Automate_INF_DonnerCoupArret", 0, } )
+self.done_BEH_Medo_Automate_INF_PreparerMission_Statique = function( self, _, v ) self.eCreationMRT = v[1] end
     end,
 
     destroy = function( self )

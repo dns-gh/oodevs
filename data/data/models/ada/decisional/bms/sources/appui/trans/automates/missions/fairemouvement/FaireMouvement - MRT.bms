@@ -18,10 +18,12 @@ includedFiles["sources/appui/trans/automates/missions/fairemouvement/FaireMouvem
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_MRT_FaireMouvement"
 {
+    feedbacks = { { { "done_MIS_Automate_MRT_FaireMouvement" }, "MIS_Automate_MRT_FaireMouvement" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Automate_MRT_FaireMouvement, {value} ) end,
     activations =
     {
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
-        { "BEH_Medo_Automate_AssignerFaireMouvementA", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", { "done_BEH_Medo_Automate_ControleCreationMission" } },
+        { "BEH_Medo_Automate_AssignerFaireMouvementA", { "done_BEH_Medo_Automate_AssignerFaireMouvementA" } },
     },
 
     create = function( self )
@@ -45,7 +47,7 @@ includedFiles["sources/appui/trans/automates/missions/fairemouvement/FaireMouvem
                     DEC_Trace( "!!!!Mind out some first line units didn't receive mission!!!!" )
                 end
 
-                                self.params.__returnValue = eActionImpossible
+                                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end
 
@@ -57,7 +59,7 @@ includedFiles["sources/appui/trans/automates/missions/fairemouvement/FaireMouvem
                 self.eValidationMRT = eActionEnCours
                                 do
                     DEC_MRT_Valide()
-                                        self.params.__returnValue = eActionEffectuee
+                                        self:SendFeedback( eActionEffectuee )
                     Halt( self )
                     do return end
 
@@ -66,7 +68,8 @@ includedFiles["sources/appui/trans/automates/missions/fairemouvement/FaireMouvem
             end
         end
 
-        Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( DEC_Automate_PionsAvecPC() ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, { #( DEC_Automate_PionsAvecPC() ), } )
+self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) self.eValidationMRT = v[1] end
         Activate( self.activations.BEH_Medo_Automate_AssignerFaireMouvementA, 1, { DEC_Automate_PionsAvecPC(), } )
     end,
 
@@ -80,9 +83,11 @@ includedFiles["sources/appui/trans/automates/missions/fairemouvement/FaireMouvem
 
 node "BEH_Medo_Automate_AssignerFaireMouvementA"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_AssignerFaireMouvementA" }, "BEH_Medo_Automate_AssignerFaireMouvementA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_AssignerFaireMouvementA, {value} ) end,
     activations =
     {
-        { "BEH_Mission_Automate_AssignerFaireMouvementSurItA", {} },
+        { "BEH_Mission_Automate_AssignerFaireMouvementSurItA", { "done_BEH_Mission_Automate_AssignerFaireMouvementSurItA" } },
     },
 
     create = function( self )

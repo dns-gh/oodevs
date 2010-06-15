@@ -10,9 +10,11 @@ include "Glaise/Glaise_Common/Automates/Actions/Medo/Actions - Medo - APPUIMOB.b
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "BEH_Medo_Automate_LOG_AssignerMissionsTransporterAListe"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_LOG_AssignerMissionsTransporterAListe" }, "BEH_Medo_Automate_LOG_AssignerMissionsTransporterAListe" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_LOG_AssignerMissionsTransporterAListe, {value} ) end,
     activations =
     {
-        { "BEH_Medo_Automate_LOG_AssignerMissionTransporterA", {} },
+        { "BEH_Medo_Automate_LOG_AssignerMissionTransporterA", { "done_BEH_Medo_Automate_LOG_AssignerMissionTransporterA" } },
     },
 
     create = function( self )
@@ -82,12 +84,14 @@ do
 
 node "BEH_Medo_Automate_LOG_AssignerMissionTransporterA"
 {
+    feedbacks = { { { "done_BEH_Medo_Automate_LOG_AssignerMissionTransporterA" }, "BEH_Medo_Automate_LOG_AssignerMissionTransporterA" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Medo_Automate_LOG_AssignerMissionTransporterA, {value} ) end,
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_LOG_AssignerTransporterUniteA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "done_ACT_Mission_Automate_ControleCreation_EnCours" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "done_ACT_Mission_Automate_ControleCreation_NOK" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "done_ACT_Mission_Automate_ControleCreation_OK" } },
+        { "ACT_Mission_Automate_LOG_AssignerTransporterUniteA", { "done_ACT_Mission_Automate_LOG_AssignerTransporterUniteA" } },
     },
 
     create = function( self )
@@ -123,7 +127,8 @@ elseif switch_1 == eActionHalt
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_LOG_AssignerTransporterUniteA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.pointEmbarquement, self._namedParams.pointDebarquement, self._namedParams.listeUnitesATransporter, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Mission_Automate_LOG_AssignerTransporterUniteA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.pointEmbarquement, self._namedParams.pointDebarquement, self._namedParams.listeUnitesATransporter, } )
+self.done_ACT_Mission_Automate_LOG_AssignerTransporterUniteA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
 }
