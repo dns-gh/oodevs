@@ -41,6 +41,7 @@ public:
     static const MT_Vector2D* GetDirection  ( const MIL_Agent_ABC& callerAgent );
 	static float GetIdentificationDistance	( MIL_Agent_ABC& callerAgent );
 	static float GetReconnoissanceDistance	( MIL_Agent_ABC& callerAgent );
+    static float GetDetectionDistance       ( MIL_Agent_ABC& callerAgent );
     static void ActivateBlackout            ( MIL_Agent_ABC& callerAgent );
     static void DeactivateBlackout          ( MIL_Agent_ABC& callerAgent );
     static int  GetPosture                  ( const MIL_Agent_ABC& callerAgent );

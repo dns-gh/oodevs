@@ -26,6 +26,7 @@
 #include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
 #include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
+#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
@@ -34,6 +35,7 @@
 #include "Entities/Agents/Units/HumanFactors/PHY_Experience.h"
 #include "Entities/Agents/Units/HumanFactors/PHY_Tiredness.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
+
 
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Effects/MIL_Effect_Suicide.h"
@@ -249,6 +251,15 @@ float DEC_AgentFunctions::GetIdentificationDistance( MIL_Agent_ABC& callerAgent 
 float DEC_AgentFunctions::GetReconnoissanceDistance( MIL_Agent_ABC& callerAgent )
 {
     return callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMajorComposante()->GetReconnoissanceMaxRange();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::GetDetectionDistance
+// Created: DDA 2010-06-09
+// -----------------------------------------------------------------------------
+float DEC_AgentFunctions::GetDetectionDistance( MIL_Agent_ABC& callerAgent )
+{
+    return (float)callerAgent.GetRole< PHY_RoleInterface_Perceiver >().GetMaxAgentPerceptionDistance();
 }
 
 // -----------------------------------------------------------------------------

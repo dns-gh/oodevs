@@ -118,6 +118,16 @@ double PHY_RoleAction_Moving::ApplySpeedModificators( double rSpeed ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Moving::Execute
+// Created: DDA 2010-06-14
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Moving::Execute( moving::SpeedComputer_ABC& algorithm ) const
+{
+    algorithm.AddModifier( rMaxSpeedModificator_, true );
+    algorithm.AddModifier( rSpeedModificator_, false );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Moving::GetMaxSpeed
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
