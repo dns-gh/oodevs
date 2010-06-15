@@ -82,7 +82,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
 ]]    end,
 
     deselect = function( self )
-        DEC_Message( eRC_DisembarkmentInterrupted )
+                DEC_Message( eRC_DisembarkmentInterrupted )
         DEC_PauseAction( self.actionID )
         self.bReprise = true
     end,

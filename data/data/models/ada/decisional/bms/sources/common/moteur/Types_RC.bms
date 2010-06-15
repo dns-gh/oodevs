@@ -313,7 +313,7 @@ eRC_DisembarkmentStarted = 3004
 eRC_DisembarkmentInterrupted = 3005
 eRC_DisembarkmentResumed = 3006
 eRC_DisembarkmentFinished = 3007
-
+eNbr = 3008
 --[[// Parametre : T_ConnaissanceObjet
 ]]--[[// Parametre : float
 ]]--[[// Parametre : T_Pion
