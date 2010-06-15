@@ -190,7 +190,7 @@ MIL_PionOrderManager& MIL_AgentHLA::GetOrderManager()
 // Name: MIL_AgentHLA::ChangeSuperior
 // Created: LDC 2010-04-16
 // -----------------------------------------------------------------------------
-void MIL_AgentHLA::ChangeSuperior( MIL_Automate& newAutomate )
+void MIL_AgentHLA::ChangeSuperior( MIL_Automate& /*newAutomate*/ )
 {
     throw std::runtime_error( __FUNCTION__ " not available for HLA Agents" );
 }

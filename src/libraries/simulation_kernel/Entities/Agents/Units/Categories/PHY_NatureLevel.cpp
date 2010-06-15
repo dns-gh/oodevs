@@ -21,18 +21,18 @@ PHY_NatureLevel::T_NatureLevelMap PHY_NatureLevel::natureLevels_;
 // -----------------------------------------------------------------------------
 void PHY_NatureLevel::Initialize()
 {
-    natureLevels_[ "none"  ] = new PHY_NatureLevel( "none" , eNatureLevel_none , Common::EnumNatureLevel::none_naturelevel  );
-    natureLevels_[ "o"     ] = new PHY_NatureLevel( "o"    , eNatureLevel_o    , Common::EnumNatureLevel::o     );
-    natureLevels_[ "oo"    ] = new PHY_NatureLevel( "oo"   , eNatureLevel_oo   , Common::EnumNatureLevel::oo    );
-    natureLevels_[ "ooo"   ] = new PHY_NatureLevel( "ooo"  , eNatureLevel_ooo  , Common::EnumNatureLevel::ooo   );
-    natureLevels_[ "i"     ] = new PHY_NatureLevel( "i"    , eNatureLevel_i    , Common::EnumNatureLevel::i     );
-    natureLevels_[ "ii"    ] = new PHY_NatureLevel( "ii"   , eNatureLevel_ii   , Common::EnumNatureLevel::ii    );
-    natureLevels_[ "iii"   ] = new PHY_NatureLevel( "iii"  , eNatureLevel_iii  , Common::EnumNatureLevel::iii   );
-    natureLevels_[ "x"     ] = new PHY_NatureLevel( "x"    , eNatureLevel_x    , Common::EnumNatureLevel::x     );
-    natureLevels_[ "xx"    ] = new PHY_NatureLevel( "xx"   , eNatureLevel_xx   , Common::EnumNatureLevel::xx    );
-    natureLevels_[ "xxx"   ] = new PHY_NatureLevel( "xxx"  , eNatureLevel_xxx  , Common::EnumNatureLevel::xxx   );
-    natureLevels_[ "xxxx"  ] = new PHY_NatureLevel( "xxxx" , eNatureLevel_xxxx , Common::EnumNatureLevel::xxxx  );
-    natureLevels_[ "xxxxx" ] = new PHY_NatureLevel( "xxxxx", eNatureLevel_xxxxx, Common::EnumNatureLevel::xxxxx );
+    natureLevels_[ "none"  ] = new PHY_NatureLevel( "none" , eNatureLevel_none , Common::none_naturelevel  );
+    natureLevels_[ "o"     ] = new PHY_NatureLevel( "o"    , eNatureLevel_o    , Common::o     );
+    natureLevels_[ "oo"    ] = new PHY_NatureLevel( "oo"   , eNatureLevel_oo   , Common::oo    );
+    natureLevels_[ "ooo"   ] = new PHY_NatureLevel( "ooo"  , eNatureLevel_ooo  , Common::ooo   );
+    natureLevels_[ "i"     ] = new PHY_NatureLevel( "i"    , eNatureLevel_i    , Common::i     );
+    natureLevels_[ "ii"    ] = new PHY_NatureLevel( "ii"   , eNatureLevel_ii   , Common::ii    );
+    natureLevels_[ "iii"   ] = new PHY_NatureLevel( "iii"  , eNatureLevel_iii  , Common::iii   );
+    natureLevels_[ "x"     ] = new PHY_NatureLevel( "x"    , eNatureLevel_x    , Common::x     );
+    natureLevels_[ "xx"    ] = new PHY_NatureLevel( "xx"   , eNatureLevel_xx   , Common::xx    );
+    natureLevels_[ "xxx"   ] = new PHY_NatureLevel( "xxx"  , eNatureLevel_xxx  , Common::xxx   );
+    natureLevels_[ "xxxx"  ] = new PHY_NatureLevel( "xxxx" , eNatureLevel_xxxx , Common::xxxx  );
+    natureLevels_[ "xxxxx" ] = new PHY_NatureLevel( "xxxxx", eNatureLevel_xxxxx, Common::xxxxx );
 }
 
 // -----------------------------------------------------------------------------

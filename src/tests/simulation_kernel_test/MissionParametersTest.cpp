@@ -493,7 +493,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_ObjectKnowledgeListParameter_ToASN )
     MsgObjectKnowledgeList asnOut;
     BOOST_CHECK_EQUAL( true, param.ToObjectKnowledgeList( asnOut ) );
     BOOST_CHECK_EQUAL( 1, asnOut.elem_size() );
-    BOOST_CHECK_EQUAL( 0, asnOut.elem(0).oid() ); // $$$$ LDC: = knowledge's id
+    BOOST_CHECK_EQUAL( 0u, asnOut.elem(0).oid() ); // $$$$ LDC: = knowledge's id
     asnOut.clear_elem();
 }
 
