@@ -17,6 +17,7 @@
         <mission name="MoveOnRoute"/>
         <mission name="MoveToPoint">
           <fragorder name="Illuminate"/>
+          <fragorder name="UseALR"/>
         </mission>
         <mission name="MoveToPolygon"/>
         <mission name="MoveToAutomate"/>
