@@ -17,10 +17,10 @@
 #include "protocol/Simulation.h"
 #include "protocol/Protocol.h"
 #include "UrbanBlockDetectionMap.h"
-#include "urban/BlockModel.h"
-#include "urban/Model.h"
-#include "urban/UrbanFactory.h"
-#include "urban/UrbanObjectDeserializer_ABC.h"
+#include <urban/Model.h>
+#include <urban/UrbanFactory.h>
+#include <urban/UrbanObjectDeserializer_ABC.h>
+#include <urban/TerrainObject_ABC.h>
 
 
 // -----------------------------------------------------------------------------
@@ -60,7 +60,7 @@ void UrbanModel::Create( const MsgsSimToClient::MsgUrbanCreation& message )
         const geometry::Point2f point( location.latitude(), location.longitude() );
         footPrint.Add( point );
     }
-    urban::TerrainObject_ABC* object = model_->GetFactory().CreateBlock( id, name, footPrint );
+    urban::TerrainObject_ABC* object = model_->GetFactory().CreateUrbanObject( id, name, footPrint );
     UrbanBlockDeserializer urbanBlockDeserializer( message );
     object->Accept( urbanBlockDeserializer );
     gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( message, controller_, *object ); 
@@ -97,7 +97,7 @@ void DrawingsModel::Delete( const ASN1T_MsgUrbanDestruction& message )
 void UrbanModel::Purge()
 {
     tools::Resolver< kernel::Entity_ABC >::DeleteAll();
-    model_->blocks_.Purge();
+    model_->Purge();
 }
 
 // -----------------------------------------------------------------------------

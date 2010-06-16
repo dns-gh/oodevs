@@ -18,9 +18,7 @@
 #include "UrbanModel.h"
 #include "StaticModel.h"
 #include "urban/TerrainObject_ABC.h"
-#include "urban/Block.h"
 #include "urban/Model.h"
-#include "urban/BlockModel.h"
 
 using namespace kernel;
 
@@ -51,7 +49,7 @@ UrbanKnowledgeFactory::~UrbanKnowledgeFactory()
 UrbanKnowledge_ABC* UrbanKnowledgeFactory::Create( const Team_ABC& owner, const MsgsSimToClient::MsgUrbanKnowledgeCreation& message )
 {
     // $$$ FDS 2009-01-11: remove public blocks, use knowledgeConverter if possible
-    UrbanKnowledge* knowledge = new UrbanKnowledge( owner, message, controllers_.controller_, model_.urbanObjects_.model_->blocks_ );
+    UrbanKnowledge* knowledge = new UrbanKnowledge( owner, message, controllers_.controller_, *model_.urbanObjects_.model_ );
     knowledge->Attach( *new UrbanPerceptions( controllers_.controller_, model_.agents_ ) );
     knowledge->Polish();
     return knowledge;

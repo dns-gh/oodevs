@@ -13,8 +13,6 @@
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "ColorAttribute.h"
 #include "Model.h"
-#include "SoilAttribute.h"
-#include "VegetationAttribute.h"
 #include "UrbanObject.h"
 #include "protocol/ClientSenders.h"
 
@@ -55,8 +53,6 @@ UrbanObject::~UrbanObject()
 void UrbanObject::Initialize( Model& model, const MsgsSimToClient::MsgUrbanAttributes& attributes )
 {
     MSG_ASN_CREATION( color         , ColorAttribute );
-    MSG_ASN_CREATION( vegetation    , VegetationAttribute );
-    MSG_ASN_CREATION( soil          , SoilAttribute );
     MSG_ASN_CREATION( architecture  , ArchitectureAttribute );
 }
 

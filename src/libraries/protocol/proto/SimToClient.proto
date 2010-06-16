@@ -1055,29 +1055,15 @@ message MsgControlCheckPointSaveEnd {
 message MsgControlSendCurrentStateBegin {}
 message MsgControlSendCurrentStateEnd   {}
 
-// Urban
-message MsgUrbanAttributeVegetation
-{
-    required string type    = 1;
-    required int32  height  = 2;
-    required float  density = 3;
-}
-message MsgUrbanAttributeSoil
-{
-   required float  occupation        = 1;
-   required float  trafficability    = 2;
-   required bool   multiple          = 3;
-   required string compound_clearing = 4;
-}   
+// Urban 
 message MsgUrbanAttributeArchitecture
 {
     required float  height                = 1;
     required int32  floor_number          = 2;
-    required int32  basement_level_number = 3;
     required string roof_shape            = 4;
     required string material              = 5;
-    required float  inner_cluttering      = 6;
-    required float  facade_opacity        = 7;
+    required float  occupation            = 6;
+    required float  trafficability        = 7;
 }
 message MsgColorRGBA
 {
@@ -1117,10 +1103,8 @@ message MsgUrbanMagicActionAck {
 }
 
 message MsgUrbanAttributes {
-   optional MsgUrbanAttributeVegetation   vegetation   = 1;
-   optional MsgUrbanAttributeSoil         soil         = 2;
-   optional MsgUrbanAttributeArchitecture architecture = 3;
-   optional MsgColorRGBA                  color        = 4;
+   optional MsgUrbanAttributeArchitecture architecture = 1;
+   optional MsgColorRGBA                  color        = 2;
 }
 message MsgUrbanCreation {
    required uint32             oid        = 1;

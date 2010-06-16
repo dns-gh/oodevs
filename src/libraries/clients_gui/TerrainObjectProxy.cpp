@@ -79,8 +79,6 @@ void TerrainObjectProxy::CreateDictionary( kernel::Controller& controller )
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "Info/Name" ), EntityImplementation< kernel::Entity_ABC >::name_ );
 
     AddDictionaryForArchitecture( dictionary );
-    AddDictionaryForVegetation( dictionary );
-    AddDictionaryForSoil( dictionary );
 }
 
 // -----------------------------------------------------------------------------
@@ -94,48 +92,16 @@ void TerrainObjectProxy::AddDictionaryForArchitecture( kernel::PropertiesDiction
     {
         dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Architecture/Height" )               , architecture->GetHeight() );
         dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Architecture/floorNumber" )          , architecture->GetFloorNumber() );
-        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Architecture/basementLevelNumber" )  , architecture->GetBasement() );
         dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Architecture/roofShape" )            , architecture->GetRoofShape() );
         dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Architecture/material" )             , architecture->GetMaterial() );
-        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Architecture/innerCluttering" )      , architecture->GetInnerCluttering() );
-        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Architecture/facadeOpacity" )        , architecture->GetFacadeOpacity() );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: TerrainObjectProxy::AddDictionaryForVegetation
-// Created: SLG 2009-12-09
-// -----------------------------------------------------------------------------
-void TerrainObjectProxy::AddDictionaryForVegetation( kernel::PropertiesDictionary& dictionary )
-{
-    urban::Vegetation* vegetation = object_->RetrievePhysicalFeature< urban::Vegetation >();
-    if ( vegetation )
-    {
-        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Vegetation/type" )   , vegetation->GetType() );
-        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Vegetation/height" ) , vegetation->GetHeight() );
-        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Vegetation/density" ), vegetation->GetDensity() );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: TerrainObjectProxy::AddDictionaryForSoil
-// Created: SLG 2009-12-09
-// -----------------------------------------------------------------------------
-void TerrainObjectProxy::AddDictionaryForSoil( kernel::PropertiesDictionary& dictionary )
-{
-    urban::Soil* soil = object_->RetrievePhysicalFeature< urban::Soil >();
-    if ( soil )
-    {
-        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Soil/occupation" )      , soil->GetOccupation() );
-        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Soil/trafficability" )  , soil->GetTrafficability() );
-        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Soil/isMultiple" )      , soil->GetMultiplicity() );
-        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Soil/compoundClearing" ), soil->GetCompoundClearing() );
+        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Architecture/occupation" )           , architecture->GetOccupation() );
+        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Architecture/trafficability" )       , architecture->GetTrafficability() );
     }
 }
 
 // -----------------------------------------------------------------------------
 // Name: TerrainObjectProxy::SetSelected
-///** @param  selected 
+//** @param  selected 
 //*/
 // Created: FDS 2010-01-15
 // -----------------------------------------------------------------------------
@@ -146,7 +112,7 @@ void TerrainObjectProxy::SetSelected( bool selected ) const
 
 // -----------------------------------------------------------------------------
 // Name: TerrainObjectProxy::Draw
-///** @param  drawer 
+//** @param  drawer 
 //*/
 // Created: FDS 2010-01-15
 // -----------------------------------------------------------------------------
@@ -157,7 +123,7 @@ void TerrainObjectProxy::Draw( urban::Drawer_ABC& drawer ) const
 
 // -----------------------------------------------------------------------------
 // Name: TerrainObjectProxy::IsInside
-///** @param  point 
+//** @param  point 
 //    @return 
 //*/
 // Created: FDS 2010-01-15

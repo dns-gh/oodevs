@@ -51,8 +51,8 @@ private:
     unsigned int    basementLevelNumber_;
     std::string     roofShape_;
     std::string     material_;
-    float           innerCluttering_;
-    float           facadeOpacity_;
+    float           occupation_;
+    float           trafficability_;
     //@}
 };
 

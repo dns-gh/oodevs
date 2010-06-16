@@ -137,77 +137,18 @@ void PHY_RolePion_UrbanLocation::CityMagicMove( const geometry::Point2f& point )
     isInCity_ = it != cities.end();
 }
 
-namespace
-{
-    class UrbanMovingInsideVisitor : public urban::TerrainObjectVisitor_ABC
-    {
-    public:
-        UrbanMovingInsideVisitor( bool &isInCity, const urban::TerrainObject_ABC*& urbanObject, std::auto_ptr< UrbanBlockPosition_ABC > delegator ) : isInCity_( isInCity ), currentUrbanObject_( urbanObject ), delegate_( delegator )
-        {}
-        ~UrbanMovingInsideVisitor()
-        {}
-        virtual void VisitBlock( const urban::TerrainObject_ABC& urbanObject )
-        {
-            currentUrbanObject_ = &urbanObject;
-            delegate_.reset( new InsideUrbanBlockPosition( &urbanObject ) ); 
-        }
-        virtual void VisitCity( const urban::TerrainObject_ABC& /*urbanObject*/ )
-        {
-            isInCity_ = true;
-        }
-        virtual void VisitDistrict( const urban::TerrainObject_ABC& /*urbanObject*/ )
-        {
-            //NOTHING
-        }
-        std::auto_ptr< UrbanBlockPosition_ABC > GetDelegator(){ return delegate_; }
-    private:
-        bool& isInCity_;
-        const urban::TerrainObject_ABC*& currentUrbanObject_;
-        std::auto_ptr< UrbanBlockPosition_ABC > delegate_;
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_UrbanLocation::NotifyMoveInside
 // Created: SLG 2010-04-08
 // -----------------------------------------------------------------------------
 void PHY_RolePion_UrbanLocation::NotifyMovingInsideUrbanBlock( const urban::TerrainObject_ABC& urbanObject )
 {
-    UrbanMovingInsideVisitor visitor( isInCity_, urbanObject_, delegate_ );
-    urbanObject.Accept( visitor );
-    delegate_ = visitor.GetDelegator();
-}
-
-namespace
-{
-    class UrbanMovingOutsideVisitor : public urban::TerrainObjectVisitor_ABC
+    if( !urbanObject.HasChild() ) 
     {
-    public:
-        UrbanMovingOutsideVisitor( bool& isInCity, const urban::TerrainObject_ABC*& urbanObject, std::auto_ptr< UrbanBlockPosition_ABC > delegator ) : isInCity_( isInCity ), currentUrbanObject_( urbanObject ), delegate_( delegator )
-        {}
-        ~UrbanMovingOutsideVisitor()
-        {}
-        void VisitBlock( const urban::TerrainObject_ABC& urbanObject )
-        {
-            if( currentUrbanObject_ != &urbanObject )
-                throw std::exception( "urbanObject in PHY_RolePion_UrbanLocation not defined" );
-            currentUrbanObject_ = 0;
-            delegate_.reset( new OutsideUrbanBlockPosition() );
-        }
-        void VisitCity( const urban::TerrainObject_ABC& /*urbanObject*/ )
-        {
-            isInCity_ = false;
-        }
-        void VisitDistrict( const urban::TerrainObject_ABC& /*urbanObject*/ )
-        {
-            //NOTHING
-        }
-        std::auto_ptr< UrbanBlockPosition_ABC > GetDelegator(){ return delegate_; }
-    private:
-        bool isInCity_;
-        const urban::TerrainObject_ABC*& currentUrbanObject_;
-        std::auto_ptr< UrbanBlockPosition_ABC > delegate_;
-    };
+        urbanObject_ = &urbanObject;
+        delegate_.reset( new InsideUrbanBlockPosition( &urbanObject ) );    
+    }
+    isInCity_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -216,9 +157,13 @@ namespace
 // -----------------------------------------------------------------------------
 void PHY_RolePion_UrbanLocation::NotifyMovingOutsideUrbanBlock( const urban::TerrainObject_ABC& urbanObject )
 {
-    UrbanMovingOutsideVisitor visitor( isInCity_, urbanObject_, delegate_ );
-    urbanObject.Accept( visitor );
-    delegate_ = visitor.GetDelegator();
+    if( !urbanObject.GetParent() )
+        isInCity_ = false;
+    if( !urbanObject.HasChild() )
+    {
+        urbanObject_ = 0;
+        delegate_.reset( new OutsideUrbanBlockPosition() );
+    }
 }
 
 // -----------------------------------------------------------------------------

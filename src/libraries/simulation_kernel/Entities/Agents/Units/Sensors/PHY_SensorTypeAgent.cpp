@@ -39,8 +39,6 @@
 
 #include "geometry/Types.h"
 #include <urban/Architecture.h>
-#include <urban/Block.h>
-#include <urban/BlockModel.h>
 #include <urban/TerrainObject_ABC.h>
 #include <urban/Model.h>
 #include <urban/StaticModel.h>

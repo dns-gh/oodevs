@@ -13,12 +13,6 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "urban/Location_ABC.h"
 
-#include "urban/Block.h"
-#include "urban/City.h"
-#include "urban/District.h"
-#include "urban/ResourceNetwork.h"
-#include "urban/UndergroundNetwork.h"
-
 using namespace gui;
 
 // -----------------------------------------------------------------------------
@@ -44,45 +38,9 @@ UrbanDrawer::~UrbanDrawer()
 // Name: UrbanDrawer::Draw
 // Created: SLG 2009-03-23
 // -----------------------------------------------------------------------------
-void UrbanDrawer::Draw( const urban::Block& object ) const
+void UrbanDrawer::Draw( const urban::TerrainObject_ABC& object ) const
 {
     toolbox_.DrawDecoratedPolygon( *object.GetFootprint(), object.GetDecoration() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanDrawer::Draw
-// Created: SLG 2009-03-23
-// -----------------------------------------------------------------------------
-void UrbanDrawer::Draw( const urban::City& /*object*/ ) const
-{
-    //TODO
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanDrawer::Draw
-// Created: SLG 2009-03-23
-// -----------------------------------------------------------------------------
-void UrbanDrawer::Draw( const urban::District& /*object*/ ) const
-{
-    //TODO
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanDrawer::Draw
-// Created: SLG 2009-03-23
-// -----------------------------------------------------------------------------
-void UrbanDrawer::Draw( const urban::ResourceNetwork& /*object*/ ) const
-{
-    //TODO
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanDrawer::Draw
-// Created: SLG 2009-03-23
-// -----------------------------------------------------------------------------
-void UrbanDrawer::Draw( const urban::UndergroundNetwork& /*object*/ ) const
-{
-    //TODO
 }
 
 // -----------------------------------------------------------------------------

@@ -14,8 +14,6 @@
 #include "MIL_AgentServer.h"
 #include "simulation_kernel/Entities/MIL_Army_ABC.h"
 #include "simulation_kernel/UrbanModel.h"
-#include <urban/Block.h>
-#include <urban/BlockModel.h>
 #include <urban/Model.h>
 #include <urban/TerrainObject_ABC.h>
 #include <urban/TerrainObjectVisitor_ABC.h>
@@ -35,14 +33,6 @@ namespace
         virtual void VisitBlock( const urban::TerrainObject_ABC& object )
         {
             elements_[ object.GetId() ] = boost::shared_ptr< DEC_Knowledge_Urban > ( new DEC_Knowledge_Urban( army_, object ) );
-        }
-        virtual void VisitCity( const urban::TerrainObject_ABC& object )
-        {
-            //NOTHING
-        }
-        virtual void VisitDistrict( const urban::TerrainObject_ABC& object )
-        {
-            //NOTHING
         }
 
     private:

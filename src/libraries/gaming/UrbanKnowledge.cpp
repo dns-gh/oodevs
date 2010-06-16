@@ -22,7 +22,6 @@
 #include "statusicons.h"
 #include "protocol/Simulation.h"
 #include "urban/TerrainObject_ABC.h"
-#include "urban/Block.h"
 
 using namespace kernel;
 
@@ -31,7 +30,7 @@ using namespace kernel;
 // Created: MGD 2009-12-10
 // -----------------------------------------------------------------------------
 UrbanKnowledge::UrbanKnowledge( const Team_ABC& owner, const MsgsSimToClient::MsgUrbanKnowledgeCreation& message, Controller& controller, 
-                               const tools::Resolver_ABC< urban::Block >& terrainObjectResolver )
+                               const tools::Resolver_ABC< urban::TerrainObject_ABC >& terrainObjectResolver )
     : EntityImplementation< UrbanKnowledge_ABC >( controller, message.oid(), "" )
     , owner_         ( owner )
     , terrainObjectResolver_( terrainObjectResolver )

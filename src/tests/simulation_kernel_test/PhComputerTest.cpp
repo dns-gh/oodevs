@@ -23,7 +23,7 @@
 #include "Fixture.h"
 #include "UrbanModel.h"
 #include <Urban/Model.h>
-#include <Urban/Block.h>
+#include <Urban/UrbanObject.h>
 #include <Urban/Drawer_ABC.h>
 
 #include "MockMIL_Time_ABC.h"
@@ -57,7 +57,7 @@ BOOST_AUTO_TEST_CASE( PhComputerFirerPositionTest )
     vertices.push_back( geometry::Point2f( 1, -1 ) );
     
     urban::Drawer_ABC* drawer = 0;
-    urban::Block urbanBlock( 0, "test", geometry::Polygon2f( vertices ), 0, drawer );
+    urban::UrbanObject urbanBlock( 0, "test", geometry::Polygon2f( vertices ), 0 );
 
     PHY_RolePion_UrbanLocation* urbanRole = new PHY_RolePion_UrbanLocation( *firerFixture.pPion_ );
     urbanRole->NotifyMovingInsideUrbanBlock( urbanBlock );
@@ -89,7 +89,7 @@ BOOST_AUTO_TEST_CASE( PhComputerTargetPositionTest )
     vertices.push_back( geometry::Point2f( 1, -1 ) );
 
     urban::Drawer_ABC* drawer = 0;
-    urban::Block urbanBlock( 0, "test", geometry::Polygon2f( vertices ), 0, drawer );
+    urban::UrbanObject urbanBlock( 0, "test", geometry::Polygon2f( vertices ), 0 );
     PHY_RolePion_UrbanLocation* urbanRole = new PHY_RolePion_UrbanLocation( *firerFixture.pPion_ );
     urbanRole->NotifyMovingInsideUrbanBlock( urbanBlock );
     firerFixture.pPion_->RegisterRole< PHY_RolePion_UrbanLocation >( *urbanRole );
@@ -127,7 +127,7 @@ BOOST_AUTO_TEST_CASE( PhComputerIndirectPhModifier )
     vertices.push_back( geometry::Point2f( 1, -1 ) );
 
     urban::Drawer_ABC* drawer = 0;
-    urban::Block urbanBlock( 0, "test", geometry::Polygon2f( vertices ), 0, drawer );
+    urban::UrbanObject urbanBlock( 0, "test", geometry::Polygon2f( vertices ), 0 );
 
     PHY_RolePion_UrbanLocation* urbanRole = new PHY_RolePion_UrbanLocation( *fixture.pPion_ );
     urbanRole->NotifyMovingInsideUrbanBlock( urbanBlock );

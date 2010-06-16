@@ -25,8 +25,8 @@ ArchitectureAttribute::ArchitectureAttribute( const Model& model, const MsgsSimT
 , basementLevelNumber_ ( 0 )
 , roofShape_ ( "" )
 , material_ ( "" )
-, innerCluttering_ ( 0. )
-, facadeOpacity_ ( 0. )
+, occupation_ ( 0. )
+, trafficability_ ( 0. )
 {
     Update( message );
 }
@@ -52,16 +52,14 @@ void ArchitectureAttribute::Update( const MsgsSimToClient::MsgUrbanAttributes& m
             height_ = message.architecture().height();
         if ( message.architecture().has_floor_number() )
             floorNumber_ = message.architecture().floor_number();
-        if ( message.architecture().has_basement_level_number() )
-            basementLevelNumber_ = message.architecture().basement_level_number();  
         if ( message.architecture().has_roof_shape() )
             roofShape_ = message.architecture().roof_shape(); 
         if ( message.architecture().has_material() )
             material_ = message.architecture().material(); 
-        if ( message.architecture().has_inner_cluttering() )
-            innerCluttering_ = message.architecture().inner_cluttering(); 
-        if ( message.architecture().has_facade_opacity() )
-            facadeOpacity_ = message.architecture().facade_opacity(); 
+        if ( message.architecture().has_occupation() )
+            occupation_ = message.architecture().occupation(); 
+        if ( message.architecture().has_trafficability() )
+            trafficability_ = message.architecture().trafficability(); 
     }
 }
 
@@ -73,11 +71,10 @@ void ArchitectureAttribute::Send( MsgsSimToClient::MsgUrbanAttributes& message )
 {
     message.mutable_architecture()->set_height( height_ );
     message.mutable_architecture()->set_floor_number( floorNumber_ );
-    message.mutable_architecture()->set_basement_level_number( basementLevelNumber_ );
     message.mutable_architecture()->set_roof_shape( roofShape_.c_str() );
     message.mutable_architecture()->set_material( material_.c_str() );
-    message.mutable_architecture()->set_inner_cluttering( innerCluttering_ );
-    message.mutable_architecture()->set_facade_opacity( facadeOpacity_ );
+    message.mutable_architecture()->set_occupation( occupation_ );
+    message.mutable_architecture()->set_trafficability( trafficability_ );
 }
 
 // -----------------------------------------------------------------------------

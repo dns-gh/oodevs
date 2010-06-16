@@ -28,7 +28,7 @@ namespace kernel
 
 namespace urban
 {
-    class Block;
+    class TerrainObject_ABC;
 }
 
 namespace MsgsSimToClient
@@ -53,7 +53,7 @@ public:
     //@{
              UrbanKnowledge( const kernel::Team_ABC& owner, const MsgsSimToClient::MsgUrbanKnowledgeCreation& message,
                               kernel::Controller& controller,
-                              const tools::Resolver_ABC< urban::Block >& terrainObjectResolver );
+                              const tools::Resolver_ABC< urban::TerrainObject_ABC >& terrainObjectResolver );
     virtual ~UrbanKnowledge();
     //@}
 
@@ -85,7 +85,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const tools::Resolver_ABC< urban::Block >& terrainObjectResolver_;
+    const tools::Resolver_ABC< urban::TerrainObject_ABC >& terrainObjectResolver_;
     const kernel::Team_ABC& owner_;
 
     urban::TerrainObject_ABC* pRealUrban_;

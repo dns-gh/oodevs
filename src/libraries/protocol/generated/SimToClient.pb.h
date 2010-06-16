@@ -182,8 +182,6 @@ class MsgControlCheckPointSaveBeginAck;
 class MsgControlCheckPointSaveEnd;
 class MsgControlSendCurrentStateBegin;
 class MsgControlSendCurrentStateEnd;
-class MsgUrbanAttributeVegetation;
-class MsgUrbanAttributeSoil;
 class MsgUrbanAttributeArchitecture;
 class MsgColorRGBA;
 class MagicActionCreateUrban;
@@ -17019,228 +17017,6 @@ class MsgControlSendCurrentStateEnd : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class MsgUrbanAttributeVegetation : public ::google::protobuf::Message {
- public:
-  MsgUrbanAttributeVegetation();
-  virtual ~MsgUrbanAttributeVegetation();
-  
-  MsgUrbanAttributeVegetation(const MsgUrbanAttributeVegetation& from);
-  
-  inline MsgUrbanAttributeVegetation& operator=(const MsgUrbanAttributeVegetation& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgUrbanAttributeVegetation& default_instance();
-  void Swap(MsgUrbanAttributeVegetation* other);
-  
-  // implements Message ----------------------------------------------
-  
-  MsgUrbanAttributeVegetation* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgUrbanAttributeVegetation& from);
-  void MergeFrom(const MsgUrbanAttributeVegetation& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // required string type = 1;
-  inline bool has_type() const;
-  inline void clear_type();
-  static const int kTypeFieldNumber = 1;
-  inline const ::std::string& type() const;
-  inline void set_type(const ::std::string& value);
-  inline void set_type(const char* value);
-  inline void set_type(const char* value, size_t size);
-  inline ::std::string* mutable_type();
-  
-  // required int32 height = 2;
-  inline bool has_height() const;
-  inline void clear_height();
-  static const int kHeightFieldNumber = 2;
-  inline ::google::protobuf::int32 height() const;
-  inline void set_height(::google::protobuf::int32 value);
-  
-  // required float density = 3;
-  inline bool has_density() const;
-  inline void clear_density();
-  static const int kDensityFieldNumber = 3;
-  inline float density() const;
-  inline void set_density(float value);
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  ::std::string* type_;
-  static const ::std::string _default_type_;
-  ::google::protobuf::int32 height_;
-  float density_;
-  friend void  protobuf_AddDesc_SimToClient_2eproto();
-  friend void protobuf_AssignDesc_SimToClient_2eproto();
-  friend void protobuf_ShutdownFile_SimToClient_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static MsgUrbanAttributeVegetation* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class MsgUrbanAttributeSoil : public ::google::protobuf::Message {
- public:
-  MsgUrbanAttributeSoil();
-  virtual ~MsgUrbanAttributeSoil();
-  
-  MsgUrbanAttributeSoil(const MsgUrbanAttributeSoil& from);
-  
-  inline MsgUrbanAttributeSoil& operator=(const MsgUrbanAttributeSoil& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgUrbanAttributeSoil& default_instance();
-  void Swap(MsgUrbanAttributeSoil* other);
-  
-  // implements Message ----------------------------------------------
-  
-  MsgUrbanAttributeSoil* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgUrbanAttributeSoil& from);
-  void MergeFrom(const MsgUrbanAttributeSoil& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // required float occupation = 1;
-  inline bool has_occupation() const;
-  inline void clear_occupation();
-  static const int kOccupationFieldNumber = 1;
-  inline float occupation() const;
-  inline void set_occupation(float value);
-  
-  // required float trafficability = 2;
-  inline bool has_trafficability() const;
-  inline void clear_trafficability();
-  static const int kTrafficabilityFieldNumber = 2;
-  inline float trafficability() const;
-  inline void set_trafficability(float value);
-  
-  // required bool multiple = 3;
-  inline bool has_multiple() const;
-  inline void clear_multiple();
-  static const int kMultipleFieldNumber = 3;
-  inline bool multiple() const;
-  inline void set_multiple(bool value);
-  
-  // required string compound_clearing = 4;
-  inline bool has_compound_clearing() const;
-  inline void clear_compound_clearing();
-  static const int kCompoundClearingFieldNumber = 4;
-  inline const ::std::string& compound_clearing() const;
-  inline void set_compound_clearing(const ::std::string& value);
-  inline void set_compound_clearing(const char* value);
-  inline void set_compound_clearing(const char* value, size_t size);
-  inline ::std::string* mutable_compound_clearing();
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  float occupation_;
-  float trafficability_;
-  bool multiple_;
-  ::std::string* compound_clearing_;
-  static const ::std::string _default_compound_clearing_;
-  friend void  protobuf_AddDesc_SimToClient_2eproto();
-  friend void protobuf_AssignDesc_SimToClient_2eproto();
-  friend void protobuf_ShutdownFile_SimToClient_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static MsgUrbanAttributeSoil* default_instance_;
-};
-// -------------------------------------------------------------------
-
 class MsgUrbanAttributeArchitecture : public ::google::protobuf::Message {
  public:
   MsgUrbanAttributeArchitecture();
@@ -17308,13 +17084,6 @@ class MsgUrbanAttributeArchitecture : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 floor_number() const;
   inline void set_floor_number(::google::protobuf::int32 value);
   
-  // required int32 basement_level_number = 3;
-  inline bool has_basement_level_number() const;
-  inline void clear_basement_level_number();
-  static const int kBasementLevelNumberFieldNumber = 3;
-  inline ::google::protobuf::int32 basement_level_number() const;
-  inline void set_basement_level_number(::google::protobuf::int32 value);
-  
   // required string roof_shape = 4;
   inline bool has_roof_shape() const;
   inline void clear_roof_shape();
@@ -17335,19 +17104,19 @@ class MsgUrbanAttributeArchitecture : public ::google::protobuf::Message {
   inline void set_material(const char* value, size_t size);
   inline ::std::string* mutable_material();
   
-  // required float inner_cluttering = 6;
-  inline bool has_inner_cluttering() const;
-  inline void clear_inner_cluttering();
-  static const int kInnerClutteringFieldNumber = 6;
-  inline float inner_cluttering() const;
-  inline void set_inner_cluttering(float value);
+  // required float occupation = 6;
+  inline bool has_occupation() const;
+  inline void clear_occupation();
+  static const int kOccupationFieldNumber = 6;
+  inline float occupation() const;
+  inline void set_occupation(float value);
   
-  // required float facade_opacity = 7;
-  inline bool has_facade_opacity() const;
-  inline void clear_facade_opacity();
-  static const int kFacadeOpacityFieldNumber = 7;
-  inline float facade_opacity() const;
-  inline void set_facade_opacity(float value);
+  // required float trafficability = 7;
+  inline bool has_trafficability() const;
+  inline void clear_trafficability();
+  static const int kTrafficabilityFieldNumber = 7;
+  inline float trafficability() const;
+  inline void set_trafficability(float value);
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
@@ -17355,18 +17124,17 @@ class MsgUrbanAttributeArchitecture : public ::google::protobuf::Message {
   
   float height_;
   ::google::protobuf::int32 floor_number_;
-  ::google::protobuf::int32 basement_level_number_;
   ::std::string* roof_shape_;
   static const ::std::string _default_roof_shape_;
   ::std::string* material_;
   static const ::std::string _default_material_;
-  float inner_cluttering_;
-  float facade_opacity_;
+  float occupation_;
+  float trafficability_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -18038,31 +17806,17 @@ class MsgUrbanAttributes : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // optional .MsgsSimToClient.MsgUrbanAttributeVegetation vegetation = 1;
-  inline bool has_vegetation() const;
-  inline void clear_vegetation();
-  static const int kVegetationFieldNumber = 1;
-  inline const ::MsgsSimToClient::MsgUrbanAttributeVegetation& vegetation() const;
-  inline ::MsgsSimToClient::MsgUrbanAttributeVegetation* mutable_vegetation();
-  
-  // optional .MsgsSimToClient.MsgUrbanAttributeSoil soil = 2;
-  inline bool has_soil() const;
-  inline void clear_soil();
-  static const int kSoilFieldNumber = 2;
-  inline const ::MsgsSimToClient::MsgUrbanAttributeSoil& soil() const;
-  inline ::MsgsSimToClient::MsgUrbanAttributeSoil* mutable_soil();
-  
-  // optional .MsgsSimToClient.MsgUrbanAttributeArchitecture architecture = 3;
+  // optional .MsgsSimToClient.MsgUrbanAttributeArchitecture architecture = 1;
   inline bool has_architecture() const;
   inline void clear_architecture();
-  static const int kArchitectureFieldNumber = 3;
+  static const int kArchitectureFieldNumber = 1;
   inline const ::MsgsSimToClient::MsgUrbanAttributeArchitecture& architecture() const;
   inline ::MsgsSimToClient::MsgUrbanAttributeArchitecture* mutable_architecture();
   
-  // optional .MsgsSimToClient.MsgColorRGBA color = 4;
+  // optional .MsgsSimToClient.MsgColorRGBA color = 2;
   inline bool has_color() const;
   inline void clear_color();
-  static const int kColorFieldNumber = 4;
+  static const int kColorFieldNumber = 2;
   inline const ::MsgsSimToClient::MsgColorRGBA& color() const;
   inline ::MsgsSimToClient::MsgColorRGBA* mutable_color();
   
@@ -18070,15 +17824,13 @@ class MsgUrbanAttributes : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::MsgsSimToClient::MsgUrbanAttributeVegetation* vegetation_;
-  ::MsgsSimToClient::MsgUrbanAttributeSoil* soil_;
   ::MsgsSimToClient::MsgUrbanAttributeArchitecture* architecture_;
   ::MsgsSimToClient::MsgColorRGBA* color_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -29680,178 +29432,6 @@ inline ::std::string* MsgControlCheckPointSaveEnd::mutable_name() {
 
 // -------------------------------------------------------------------
 
-// MsgUrbanAttributeVegetation
-
-// required string type = 1;
-inline bool MsgUrbanAttributeVegetation::has_type() const {
-  return _has_bit(0);
-}
-inline void MsgUrbanAttributeVegetation::clear_type() {
-  if (type_ != &_default_type_) {
-    type_->clear();
-  }
-  _clear_bit(0);
-}
-inline const ::std::string& MsgUrbanAttributeVegetation::type() const {
-  return *type_;
-}
-inline void MsgUrbanAttributeVegetation::set_type(const ::std::string& value) {
-  _set_bit(0);
-  if (type_ == &_default_type_) {
-    type_ = new ::std::string;
-  }
-  type_->assign(value);
-}
-inline void MsgUrbanAttributeVegetation::set_type(const char* value) {
-  _set_bit(0);
-  if (type_ == &_default_type_) {
-    type_ = new ::std::string;
-  }
-  type_->assign(value);
-}
-inline void MsgUrbanAttributeVegetation::set_type(const char* value, size_t size) {
-  _set_bit(0);
-  if (type_ == &_default_type_) {
-    type_ = new ::std::string;
-  }
-  type_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* MsgUrbanAttributeVegetation::mutable_type() {
-  _set_bit(0);
-  if (type_ == &_default_type_) {
-    type_ = new ::std::string;
-  }
-  return type_;
-}
-
-// required int32 height = 2;
-inline bool MsgUrbanAttributeVegetation::has_height() const {
-  return _has_bit(1);
-}
-inline void MsgUrbanAttributeVegetation::clear_height() {
-  height_ = 0;
-  _clear_bit(1);
-}
-inline ::google::protobuf::int32 MsgUrbanAttributeVegetation::height() const {
-  return height_;
-}
-inline void MsgUrbanAttributeVegetation::set_height(::google::protobuf::int32 value) {
-  _set_bit(1);
-  height_ = value;
-}
-
-// required float density = 3;
-inline bool MsgUrbanAttributeVegetation::has_density() const {
-  return _has_bit(2);
-}
-inline void MsgUrbanAttributeVegetation::clear_density() {
-  density_ = 0;
-  _clear_bit(2);
-}
-inline float MsgUrbanAttributeVegetation::density() const {
-  return density_;
-}
-inline void MsgUrbanAttributeVegetation::set_density(float value) {
-  _set_bit(2);
-  density_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// MsgUrbanAttributeSoil
-
-// required float occupation = 1;
-inline bool MsgUrbanAttributeSoil::has_occupation() const {
-  return _has_bit(0);
-}
-inline void MsgUrbanAttributeSoil::clear_occupation() {
-  occupation_ = 0;
-  _clear_bit(0);
-}
-inline float MsgUrbanAttributeSoil::occupation() const {
-  return occupation_;
-}
-inline void MsgUrbanAttributeSoil::set_occupation(float value) {
-  _set_bit(0);
-  occupation_ = value;
-}
-
-// required float trafficability = 2;
-inline bool MsgUrbanAttributeSoil::has_trafficability() const {
-  return _has_bit(1);
-}
-inline void MsgUrbanAttributeSoil::clear_trafficability() {
-  trafficability_ = 0;
-  _clear_bit(1);
-}
-inline float MsgUrbanAttributeSoil::trafficability() const {
-  return trafficability_;
-}
-inline void MsgUrbanAttributeSoil::set_trafficability(float value) {
-  _set_bit(1);
-  trafficability_ = value;
-}
-
-// required bool multiple = 3;
-inline bool MsgUrbanAttributeSoil::has_multiple() const {
-  return _has_bit(2);
-}
-inline void MsgUrbanAttributeSoil::clear_multiple() {
-  multiple_ = false;
-  _clear_bit(2);
-}
-inline bool MsgUrbanAttributeSoil::multiple() const {
-  return multiple_;
-}
-inline void MsgUrbanAttributeSoil::set_multiple(bool value) {
-  _set_bit(2);
-  multiple_ = value;
-}
-
-// required string compound_clearing = 4;
-inline bool MsgUrbanAttributeSoil::has_compound_clearing() const {
-  return _has_bit(3);
-}
-inline void MsgUrbanAttributeSoil::clear_compound_clearing() {
-  if (compound_clearing_ != &_default_compound_clearing_) {
-    compound_clearing_->clear();
-  }
-  _clear_bit(3);
-}
-inline const ::std::string& MsgUrbanAttributeSoil::compound_clearing() const {
-  return *compound_clearing_;
-}
-inline void MsgUrbanAttributeSoil::set_compound_clearing(const ::std::string& value) {
-  _set_bit(3);
-  if (compound_clearing_ == &_default_compound_clearing_) {
-    compound_clearing_ = new ::std::string;
-  }
-  compound_clearing_->assign(value);
-}
-inline void MsgUrbanAttributeSoil::set_compound_clearing(const char* value) {
-  _set_bit(3);
-  if (compound_clearing_ == &_default_compound_clearing_) {
-    compound_clearing_ = new ::std::string;
-  }
-  compound_clearing_->assign(value);
-}
-inline void MsgUrbanAttributeSoil::set_compound_clearing(const char* value, size_t size) {
-  _set_bit(3);
-  if (compound_clearing_ == &_default_compound_clearing_) {
-    compound_clearing_ = new ::std::string;
-  }
-  compound_clearing_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* MsgUrbanAttributeSoil::mutable_compound_clearing() {
-  _set_bit(3);
-  if (compound_clearing_ == &_default_compound_clearing_) {
-    compound_clearing_ = new ::std::string;
-  }
-  return compound_clearing_;
-}
-
-// -------------------------------------------------------------------
-
 // MsgUrbanAttributeArchitecture
 
 // required float height = 1;
@@ -29886,58 +29466,42 @@ inline void MsgUrbanAttributeArchitecture::set_floor_number(::google::protobuf::
   floor_number_ = value;
 }
 
-// required int32 basement_level_number = 3;
-inline bool MsgUrbanAttributeArchitecture::has_basement_level_number() const {
-  return _has_bit(2);
-}
-inline void MsgUrbanAttributeArchitecture::clear_basement_level_number() {
-  basement_level_number_ = 0;
-  _clear_bit(2);
-}
-inline ::google::protobuf::int32 MsgUrbanAttributeArchitecture::basement_level_number() const {
-  return basement_level_number_;
-}
-inline void MsgUrbanAttributeArchitecture::set_basement_level_number(::google::protobuf::int32 value) {
-  _set_bit(2);
-  basement_level_number_ = value;
-}
-
 // required string roof_shape = 4;
 inline bool MsgUrbanAttributeArchitecture::has_roof_shape() const {
-  return _has_bit(3);
+  return _has_bit(2);
 }
 inline void MsgUrbanAttributeArchitecture::clear_roof_shape() {
   if (roof_shape_ != &_default_roof_shape_) {
     roof_shape_->clear();
   }
-  _clear_bit(3);
+  _clear_bit(2);
 }
 inline const ::std::string& MsgUrbanAttributeArchitecture::roof_shape() const {
   return *roof_shape_;
 }
 inline void MsgUrbanAttributeArchitecture::set_roof_shape(const ::std::string& value) {
-  _set_bit(3);
+  _set_bit(2);
   if (roof_shape_ == &_default_roof_shape_) {
     roof_shape_ = new ::std::string;
   }
   roof_shape_->assign(value);
 }
 inline void MsgUrbanAttributeArchitecture::set_roof_shape(const char* value) {
-  _set_bit(3);
+  _set_bit(2);
   if (roof_shape_ == &_default_roof_shape_) {
     roof_shape_ = new ::std::string;
   }
   roof_shape_->assign(value);
 }
 inline void MsgUrbanAttributeArchitecture::set_roof_shape(const char* value, size_t size) {
-  _set_bit(3);
+  _set_bit(2);
   if (roof_shape_ == &_default_roof_shape_) {
     roof_shape_ = new ::std::string;
   }
   roof_shape_->assign(reinterpret_cast<const char*>(value), size);
 }
 inline ::std::string* MsgUrbanAttributeArchitecture::mutable_roof_shape() {
-  _set_bit(3);
+  _set_bit(2);
   if (roof_shape_ == &_default_roof_shape_) {
     roof_shape_ = new ::std::string;
   }
@@ -29946,76 +29510,76 @@ inline ::std::string* MsgUrbanAttributeArchitecture::mutable_roof_shape() {
 
 // required string material = 5;
 inline bool MsgUrbanAttributeArchitecture::has_material() const {
-  return _has_bit(4);
+  return _has_bit(3);
 }
 inline void MsgUrbanAttributeArchitecture::clear_material() {
   if (material_ != &_default_material_) {
     material_->clear();
   }
-  _clear_bit(4);
+  _clear_bit(3);
 }
 inline const ::std::string& MsgUrbanAttributeArchitecture::material() const {
   return *material_;
 }
 inline void MsgUrbanAttributeArchitecture::set_material(const ::std::string& value) {
-  _set_bit(4);
+  _set_bit(3);
   if (material_ == &_default_material_) {
     material_ = new ::std::string;
   }
   material_->assign(value);
 }
 inline void MsgUrbanAttributeArchitecture::set_material(const char* value) {
-  _set_bit(4);
+  _set_bit(3);
   if (material_ == &_default_material_) {
     material_ = new ::std::string;
   }
   material_->assign(value);
 }
 inline void MsgUrbanAttributeArchitecture::set_material(const char* value, size_t size) {
-  _set_bit(4);
+  _set_bit(3);
   if (material_ == &_default_material_) {
     material_ = new ::std::string;
   }
   material_->assign(reinterpret_cast<const char*>(value), size);
 }
 inline ::std::string* MsgUrbanAttributeArchitecture::mutable_material() {
-  _set_bit(4);
+  _set_bit(3);
   if (material_ == &_default_material_) {
     material_ = new ::std::string;
   }
   return material_;
 }
 
-// required float inner_cluttering = 6;
-inline bool MsgUrbanAttributeArchitecture::has_inner_cluttering() const {
-  return _has_bit(5);
+// required float occupation = 6;
+inline bool MsgUrbanAttributeArchitecture::has_occupation() const {
+  return _has_bit(4);
 }
-inline void MsgUrbanAttributeArchitecture::clear_inner_cluttering() {
-  inner_cluttering_ = 0;
-  _clear_bit(5);
+inline void MsgUrbanAttributeArchitecture::clear_occupation() {
+  occupation_ = 0;
+  _clear_bit(4);
 }
-inline float MsgUrbanAttributeArchitecture::inner_cluttering() const {
-  return inner_cluttering_;
+inline float MsgUrbanAttributeArchitecture::occupation() const {
+  return occupation_;
 }
-inline void MsgUrbanAttributeArchitecture::set_inner_cluttering(float value) {
-  _set_bit(5);
-  inner_cluttering_ = value;
+inline void MsgUrbanAttributeArchitecture::set_occupation(float value) {
+  _set_bit(4);
+  occupation_ = value;
 }
 
-// required float facade_opacity = 7;
-inline bool MsgUrbanAttributeArchitecture::has_facade_opacity() const {
-  return _has_bit(6);
+// required float trafficability = 7;
+inline bool MsgUrbanAttributeArchitecture::has_trafficability() const {
+  return _has_bit(5);
 }
-inline void MsgUrbanAttributeArchitecture::clear_facade_opacity() {
-  facade_opacity_ = 0;
-  _clear_bit(6);
+inline void MsgUrbanAttributeArchitecture::clear_trafficability() {
+  trafficability_ = 0;
+  _clear_bit(5);
 }
-inline float MsgUrbanAttributeArchitecture::facade_opacity() const {
-  return facade_opacity_;
+inline float MsgUrbanAttributeArchitecture::trafficability() const {
+  return trafficability_;
 }
-inline void MsgUrbanAttributeArchitecture::set_facade_opacity(float value) {
-  _set_bit(6);
-  facade_opacity_ = value;
+inline void MsgUrbanAttributeArchitecture::set_trafficability(float value) {
+  _set_bit(5);
+  trafficability_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -30269,70 +29833,36 @@ inline void MsgUrbanMagicActionAck::set_error_code(::MsgsSimToClient::MsgUrbanMa
 
 // MsgUrbanAttributes
 
-// optional .MsgsSimToClient.MsgUrbanAttributeVegetation vegetation = 1;
-inline bool MsgUrbanAttributes::has_vegetation() const {
-  return _has_bit(0);
-}
-inline void MsgUrbanAttributes::clear_vegetation() {
-  if (vegetation_ != NULL) vegetation_->::MsgsSimToClient::MsgUrbanAttributeVegetation::Clear();
-  _clear_bit(0);
-}
-inline const ::MsgsSimToClient::MsgUrbanAttributeVegetation& MsgUrbanAttributes::vegetation() const {
-  return vegetation_ != NULL ? *vegetation_ : *default_instance_->vegetation_;
-}
-inline ::MsgsSimToClient::MsgUrbanAttributeVegetation* MsgUrbanAttributes::mutable_vegetation() {
-  _set_bit(0);
-  if (vegetation_ == NULL) vegetation_ = new ::MsgsSimToClient::MsgUrbanAttributeVegetation;
-  return vegetation_;
-}
-
-// optional .MsgsSimToClient.MsgUrbanAttributeSoil soil = 2;
-inline bool MsgUrbanAttributes::has_soil() const {
-  return _has_bit(1);
-}
-inline void MsgUrbanAttributes::clear_soil() {
-  if (soil_ != NULL) soil_->::MsgsSimToClient::MsgUrbanAttributeSoil::Clear();
-  _clear_bit(1);
-}
-inline const ::MsgsSimToClient::MsgUrbanAttributeSoil& MsgUrbanAttributes::soil() const {
-  return soil_ != NULL ? *soil_ : *default_instance_->soil_;
-}
-inline ::MsgsSimToClient::MsgUrbanAttributeSoil* MsgUrbanAttributes::mutable_soil() {
-  _set_bit(1);
-  if (soil_ == NULL) soil_ = new ::MsgsSimToClient::MsgUrbanAttributeSoil;
-  return soil_;
-}
-
-// optional .MsgsSimToClient.MsgUrbanAttributeArchitecture architecture = 3;
+// optional .MsgsSimToClient.MsgUrbanAttributeArchitecture architecture = 1;
 inline bool MsgUrbanAttributes::has_architecture() const {
-  return _has_bit(2);
+  return _has_bit(0);
 }
 inline void MsgUrbanAttributes::clear_architecture() {
   if (architecture_ != NULL) architecture_->::MsgsSimToClient::MsgUrbanAttributeArchitecture::Clear();
-  _clear_bit(2);
+  _clear_bit(0);
 }
 inline const ::MsgsSimToClient::MsgUrbanAttributeArchitecture& MsgUrbanAttributes::architecture() const {
   return architecture_ != NULL ? *architecture_ : *default_instance_->architecture_;
 }
 inline ::MsgsSimToClient::MsgUrbanAttributeArchitecture* MsgUrbanAttributes::mutable_architecture() {
-  _set_bit(2);
+  _set_bit(0);
   if (architecture_ == NULL) architecture_ = new ::MsgsSimToClient::MsgUrbanAttributeArchitecture;
   return architecture_;
 }
 
-// optional .MsgsSimToClient.MsgColorRGBA color = 4;
+// optional .MsgsSimToClient.MsgColorRGBA color = 2;
 inline bool MsgUrbanAttributes::has_color() const {
-  return _has_bit(3);
+  return _has_bit(1);
 }
 inline void MsgUrbanAttributes::clear_color() {
   if (color_ != NULL) color_->::MsgsSimToClient::MsgColorRGBA::Clear();
-  _clear_bit(3);
+  _clear_bit(1);
 }
 inline const ::MsgsSimToClient::MsgColorRGBA& MsgUrbanAttributes::color() const {
   return color_ != NULL ? *color_ : *default_instance_->color_;
 }
 inline ::MsgsSimToClient::MsgColorRGBA* MsgUrbanAttributes::mutable_color() {
-  _set_bit(3);
+  _set_bit(1);
   if (color_ == NULL) color_ = new ::MsgsSimToClient::MsgColorRGBA;
   return color_;
 }

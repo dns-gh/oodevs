@@ -12,10 +12,10 @@
 #include "simulation_kernel/Knowledge/DEC_Knowledge_UrbanPerception.h"
 #include "Fixture.h"
 #include "MockMIL_Time_ABC.h"
-#include "urban/BlockModel.h"
-#include "urban/Block.h"
 #include "urban/model.h"
 #include "urban/StaticModel.h"
+#include <urban/CoordinateConverter.h>
+#include "urban/UrbanObject.h"
 #include "xeumeuleu/xml.h"
 #include <memory>
 
@@ -24,35 +24,48 @@ namespace
     xml::xistringstream flux( "<?xml version='1.0' encoding='UTF-8' standalone='no' ?>"
         "<urban>"
         "<model version='1.0'/>"
-        "<cities>"
-        "<city id='7' name='default'>"
+        "<urbanObjects>"
+        "<urbanObject id='7' name='default'>"
         "<footprint/>"
-        "<districts>"
-        "<district id='8' name='default'>"
+        "<urbanObjects>"
+        "<urbanObject id='8' name='default'>"
         "<footprint/>"
-        "<blocks>"
-        "<block id='9' name='Blokosolo'>"
+        "<urbanObjects>"
+        "<urbanObject id='9' name='Blokosolo'>"
         "<footprint>"
         "<point location='31TCM1272691661'/>"
         "<point location='31TCM1285291745'/>"
         "<point location='31TCM1291891650'/>"
         "<point location='31TCM1278691560'/>"
         "</footprint>"
+        "<urbanObjects/>"
         "<physical>"
-        "<architecture basement-level-number='2' facade-opacity='0.6' floor-number='10' height='20' inner-cluttering='0.25' material='concrete' roof-shape='flat'/>"
-        "<soil enclosure='open' is-multiple='true' occupation='0.8' trafficability='0.1'/>"
-        "<vegetation density='0.25' height='10' type='trees'/>"
+        "<architecture trafficability='2' floor-number='10' height='20' occupation='0.25' material='concrete' roof-shape='flat'/>"
         "</physical>"
         "<roles/>"
-        "</block>"
-        "</blocks>"
-        "</district>"
-        "</districts>"
-        "</city>"
-        "</cities>"
-        "<resource-networks/>"
-        "<underground-networks/>"
+        "</urbanObject>"
+        "</urbanObjects>"
+        "</urbanObject>"
+        "</urbanObjects>"
+        "</urbanObject>"
+        "</urbanObjects>"
         "</urban>" );
+
+    xml::xistringstream flux2( 
+        "<urbanObject id='9' name='Blokosolo'>"
+        "<footprint>"
+        "<point location='31TCM1272691661'/>"
+        "<point location='31TCM1285291745'/>"
+        "<point location='31TCM1291891650'/>"
+        "<point location='31TCM1278691560'/>"
+        "</footprint>"
+        "<urbanObjects/>"
+        "<physical>"
+        "<architecture trafficability='2' floor-number='10' height='20' occupation='0.25' material='concrete' roof-shape='flat'/>"
+        "</physical>"
+        "<roles/>"
+        "</urbanObject>"
+        );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,17 +74,18 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Knowledge_UrbanPerceptionTest_Update )
 {
-    std::auto_ptr< urban::StaticModel > staticModel( new urban::StaticModel() );
-    std::auto_ptr< urban::Model > model( new urban::Model() );
-    model->Load( flux );
-
     MIL_EffectManager effectManager;
     FixturePion pion( effectManager );
-    const urban::Block& object = model->blocks_.Get( 9 );
+    urban::CoordinateConverter_ABC* converter = new urban::CoordinateConverter();
+    flux2 >> xml::start( "urbanObject" );
+    const urban::TerrainObject_ABC* object = new urban::UrbanObject( flux2, 0, *converter );
+    flux2 >> xml::end();
 
     {
         MockMIL_Time_ABC time;
         MOCK_EXPECT( time, GetCurrentTick ).returns( 1u );
-        DEC_Knowledge_UrbanPerception kn( *pion.pPion_, object );
+        DEC_Knowledge_UrbanPerception kn( *pion.pPion_, *object );
     }
+    delete object;
+    delete converter;
 }

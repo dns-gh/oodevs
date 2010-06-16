@@ -58,7 +58,6 @@
 #include "clients_kernel/StaticModel.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/Protocol.h"
-#include <urban/blockmodel.h>
 #include <urban/model.h>
 #include <xeumeuleu/xml.h>
 #pragma warning( push, 1 )

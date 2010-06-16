@@ -70,8 +70,6 @@ public:
     //@{
     void CreateDictionary               ( kernel::Controller& controller );
     void AddDictionaryForArchitecture   ( kernel::PropertiesDictionary& dictionary );
-    void AddDictionaryForVegetation     ( kernel::PropertiesDictionary& dictionary );
-    void AddDictionaryForSoil           ( kernel::PropertiesDictionary& dictionary );
     //@}
 
 public:

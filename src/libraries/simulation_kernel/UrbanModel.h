@@ -20,9 +20,8 @@ namespace xml
 
 namespace urban
 {
+    class TerrainObject_ABC;
     class Model;
-    class Block;
-    class BlockModel;
 }
 
 class MIL_Config;
@@ -46,11 +45,11 @@ public:
 
     //! @name Operations
     //@{
-    void                ReadUrbanModel          ( const MIL_Config& config );
-    void                SendStateToNewClient    () const;
-    static void         SendCreation            ( urban::Block& UrbanBlock );
-    urban::Block*       FindUrbanBlock          ( unsigned id ) const;
-    MT_Float            GetUrbanBlockCost       ( MT_Float weight, const MT_Vector2D& from, const MT_Vector2D& to ) const;
+    void                        ReadUrbanModel          ( const MIL_Config& config );
+    void                        SendStateToNewClient    () const;
+    static void                 SendCreation            ( urban::TerrainObject_ABC& UrbanBlock );
+    urban::TerrainObject_ABC*   FindUrbanBlock          ( unsigned id ) const;
+    MT_Float                    GetUrbanBlockCost       ( MT_Float weight, const MT_Vector2D& from, const MT_Vector2D& to ) const;
     //@}
 
     //! @name Operations

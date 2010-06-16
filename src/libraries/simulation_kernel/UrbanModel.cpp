@@ -17,17 +17,12 @@
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/path.hpp>
 #include <Urban/Model.h>
-#include <Urban/BlockModel.h>
 #include <Urban/TerrainObject_ABC.h>
-#include <Urban/Block.h>
-#include <Urban/BlockModel.h>
-#include <Urban/BlockPhModifier_ABC.h>
 #include <Urban/ColorRGBA.h>
 #include <Urban/PhysicalFeature_ABC.h>
 #include <Urban/WorldParameters.h>
 #include <Urban/Architecture.h>
-#include <Urban/Soil.h>
-#include <Urban/Vegetation.h>
+#include <Urban/TerrainObjectVisitor_ABC.h>
 #include "Tools/MIL_Config.h"
 #include <xeumeuleu/xml.h>
 
@@ -80,14 +75,31 @@ void UrbanModel::ReadUrbanModel( const MIL_Config& config )
         MT_LOG_ERROR_MSG( "Exception in loading Urban Model caught : " << e.what() );
     }
 }
-
+namespace
+{
+    class UrbanSendingCreationVisitor : public urban::TerrainObjectVisitor_ABC
+    {
+    public:
+        UrbanSendingCreationVisitor( const UrbanModel& model ) : model_( model )
+        {}
+        ~UrbanSendingCreationVisitor()
+        {}
+        virtual void VisitBlock( const urban::TerrainObject_ABC& urbanObject )
+        {
+            model_.SendCreation( const_cast< urban::TerrainObject_ABC& >( urbanObject ) );
+        }
+    private:
+        const UrbanModel& model_;
+    };
+}
 // -----------------------------------------------------------------------------
 // Name: UrbanModel::SendStateToNewClient
 // Created: SLG 2009-10-18
 // -----------------------------------------------------------------------------
 void UrbanModel::SendStateToNewClient() const
 {
-    model_->blocks_.Apply( boost::bind( &UrbanModel::SendCreation, _1 ) );
+    UrbanSendingCreationVisitor visitor( *this );
+    model_->Accept( visitor );   // $$$$ _RC_ SLG 2010-06-04: seul les feuilles sont envoyées a gaming ie les blocs urbains
 }
 
 // -----------------------------------------------------------------------------
@@ -118,10 +130,10 @@ void UrbanModel::WriteUrbanModel( xml::xostream& /*xos*/ ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: UrbanModel::WriteUrbanModel
+// Name: UrbanModel::SendCreation
 // Created: SLG 2009-10-29
 // -----------------------------------------------------------------------------
-void UrbanModel::SendCreation( urban::Block& object )
+void UrbanModel::SendCreation( urban::TerrainObject_ABC& object )
 {
     client::UrbanCreation message;
     message().set_oid( object.GetId() );
@@ -150,39 +162,44 @@ void UrbanModel::SendCreation( urban::Block& object )
     {       
         message().mutable_attributes()->mutable_architecture()->set_height( architecture->GetHeight() );
         message().mutable_attributes()->mutable_architecture()->set_floor_number( architecture->GetFloorNumber() );
-        message().mutable_attributes()->mutable_architecture()->set_basement_level_number( architecture->GetBasement() );
         message().mutable_attributes()->mutable_architecture()->set_roof_shape( architecture->GetRoofShape().c_str() );
         message().mutable_attributes()->mutable_architecture()->set_material( architecture->GetMaterial().c_str() );
-        message().mutable_attributes()->mutable_architecture()->set_inner_cluttering( architecture->GetInnerCluttering() );
-        message().mutable_attributes()->mutable_architecture()->set_facade_opacity( architecture->GetFacadeOpacity() );
-    }
-
-    const urban::Soil* soil = object.RetrievePhysicalFeature< urban::Soil >();
-    if ( soil != 0 )
-    {
-        message().mutable_attributes()->mutable_soil()->set_occupation( soil->GetOccupation() );
-        message().mutable_attributes()->mutable_soil()->set_trafficability( soil->GetTrafficability() );
-        message().mutable_attributes()->mutable_soil()->set_multiple( soil->GetMultiplicity() );
-        message().mutable_attributes()->mutable_soil()->set_compound_clearing( soil->GetCompoundClearing().c_str() );
-    }
-
-    const urban::Vegetation* vegetation = object.RetrievePhysicalFeature< urban::Vegetation >();
-    if ( vegetation != 0 )
-    {
-        message().mutable_attributes()->mutable_vegetation()->set_type( vegetation->GetType().c_str() );
-        message().mutable_attributes()->mutable_vegetation()->set_height( vegetation->GetHeight() );
-        message().mutable_attributes()->mutable_vegetation()->set_density( vegetation->GetDensity() );
+        message().mutable_attributes()->mutable_architecture()->set_occupation( architecture->GetOccupation() );
+        message().mutable_attributes()->mutable_architecture()->set_trafficability( architecture->GetTrafficability() );
     }
     message.Send( NET_Publisher_ABC::Publisher() );
+}
+
+namespace
+{
+    class FindUrbanBlockVisitor : public urban::TerrainObjectVisitor_ABC
+    {
+    public:
+        FindUrbanBlockVisitor( unsigned id ) : id_( id ), foundObject_( 0 )
+        {}
+        ~FindUrbanBlockVisitor()
+        {}
+        virtual void VisitBlock( const urban::TerrainObject_ABC& object )
+        {
+            if ( object.GetId() == id_ )
+                foundObject_ = &const_cast< urban::TerrainObject_ABC& >( object );
+        }
+        urban::TerrainObject_ABC* GetObject(){ return foundObject_; }
+    private:
+        unsigned id_;
+        urban::TerrainObject_ABC* foundObject_;
+    };
 }
 
 // -----------------------------------------------------------------------------
 // Name: UrbanModel::FindUrbanBlock
 // Created: SLG 2009-10-29
 // -----------------------------------------------------------------------------
-urban::Block* UrbanModel::FindUrbanBlock( unsigned id ) const
+urban::TerrainObject_ABC* UrbanModel::FindUrbanBlock( unsigned id ) const
 {
-    return static_cast< urban::Block* >( model_->blocks_.Find( id ) );
+    FindUrbanBlockVisitor visitor( id );
+    model_->Accept( visitor );
+    return visitor.GetObject();
 }
 
 // -----------------------------------------------------------------------------

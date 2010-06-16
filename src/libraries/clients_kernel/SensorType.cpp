@@ -8,9 +8,8 @@
 #include "Agent_ABC.h"
 #include "gaming/UrbanBlockDetectionMap.h"
 #include <urban/Architecture.h>
-#include <urban/Block.h>
-#include <urban/BlockModel.h>
 #include <urban/Model.h>
+#include <urban/TerrainObject_ABC.h>
 #include <xeumeuleu/xml.h>
 
 using namespace kernel;

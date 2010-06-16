@@ -27,7 +27,6 @@
 #include "UrbanModel.h"
 #include <urban/Architecture.h>
 #include <urban/Model.h>
-#include <urban/Soil.h>
 #include <urban/TerrainObject_ABC.h>
 #pragma warning( push )
 #pragma warning( disable : 4127 4100 )
@@ -193,9 +192,9 @@ namespace
                                 float perceiverUrbanBlockHeight = 2; //2 = SensorHeight
                                 float objectHeight = 2; //2 = SensorHeight
                                 double urbanFactor = sensorTypeAgent->GetUrbanBlockFactor( object );
-                                const urban::Soil* soil = object.RetrievePhysicalFeature< urban::Soil >();
-                                if( soil )
-                                    urbanFactor *=  1. - soil->GetOccupation();
+                                const urban::Architecture* architecture = object.RetrievePhysicalFeature< urban::Architecture >();
+                                if( architecture )
+                                    urbanFactor *=  1. - architecture->GetOccupation();
                                 if ( perceiverUrbanBlock )
                                 {
                                     const urban::Architecture* perceiverUrbanBlockArchitecture = perceiverUrbanBlock->RetrievePhysicalFeature< urban::Architecture >();

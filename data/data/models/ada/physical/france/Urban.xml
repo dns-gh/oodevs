@@ -19,5 +19,20 @@
       <roof-shape-type name="Plat"/>
       <roof-shape-type name="Pentu"/>
     </roof-shape-types>
+	<infrastructure-types>
+      <infrastructure-type name="Inf1">
+	    <capacities>
+		  <capacity type="cap1"/>
+		  <capacity type="cap2"/>
+		  <capacity type="cap3"/>
+		</capacities>
+	  </infrastructure-type>
+      <infrastructure-type name="Inf2">
+	    <capacities>
+		  <capacity type="cap1"/>
+		  <capacity type="cap3"/>
+		</capacities>
+	  </infrastructure-type>
+	</infrastructure-types>
   </urban-block-types>
 </urban>

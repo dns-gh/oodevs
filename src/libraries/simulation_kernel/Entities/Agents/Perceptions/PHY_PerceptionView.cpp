@@ -20,8 +20,6 @@
 #include "simulation_kernel/DetectionComputer_ABC.h"
 #include "simulation_kernel/DetectionComputerFactory_ABC.h"
 
-#include "urban/Block.h"
-
 MT_Random PHY_PerceptionView::randomGenerator_;
 
 // -----------------------------------------------------------------------------
@@ -336,8 +334,8 @@ void PHY_PerceptionView::Execute( const std::vector< const urban::TerrainObject_
     {
         for( std::vector< const urban::TerrainObject_ABC* >::const_iterator itBlock = perceivables.begin(); itBlock != perceivables.end(); ++itBlock )
         {
-            const urban::Block& block = *static_cast< const urban::Block* >( *itBlock );            
-            perceiver_.NotifyPerception( block, Compute( block ) );
+            const urban::TerrainObject_ABC& object = **itBlock ;            
+            perceiver_.NotifyPerception( object, Compute( object ) );
         }
     }
 }
@@ -346,7 +344,7 @@ void PHY_PerceptionView::Execute( const std::vector< const urban::TerrainObject_
 // Name: PHY_PerceptionView::Compute
 // Created: MGD 2009-11-20
 // -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const urban::Block& block ) const
+const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const urban::TerrainObject_ABC& block ) const
 {
     if( !bIsEnabled_ )
         return PHY_PerceptionLevel::notSeen_;

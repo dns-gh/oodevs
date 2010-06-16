@@ -12,9 +12,6 @@
 #include "clients_gui/TerrainObjectProxy.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "urban/BlockModel.h"
-#include "urban/UrbanFactory.h"
-#include "urban/UrbanObjectDeserializer_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: UrbanModel constructor

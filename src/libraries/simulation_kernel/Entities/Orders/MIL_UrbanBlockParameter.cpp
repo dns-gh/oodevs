@@ -15,7 +15,6 @@
 #include "simulation_kernel/knowledge/DEC_Knowledge_Urban.h"
 #include "UrbanModel.h"
 #include <urban/Model.h>
-#include <urban/BlockModel.h>
 
 // -----------------------------------------------------------------------------
 // Name: MIL_UrbanBlockParameter constructor

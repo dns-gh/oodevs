@@ -10,7 +10,6 @@
 #include "gaming_pch.h"
 #include "protocol/Simulation.h"
 #include "UrbanBlockDeserializer.h"
-#include <urban/Block.h>
 #include <urban/ColorRGBA.h>
 #include <urban/TerrainObject_ABC.h>
 #include <urban/ColorRGBA.h>
@@ -55,15 +54,6 @@ unsigned int UrbanBlockDeserializer::GetArchitectureFloorNumber() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: UrbanBlockDeserializer::GetArchitectureBasementLevelNumber
-// Created: SLG 2009-12-07
-// -----------------------------------------------------------------------------
-unsigned int UrbanBlockDeserializer::GetArchitectureBasementLevelNumber() const
-{
-    return message_.attributes().architecture().basement_level_number();
-}
-
-// -----------------------------------------------------------------------------
 // Name: UrbanBlockDeserializer::GetArchitectureRoofShape
 // Created: SLG 2009-12-07
 // -----------------------------------------------------------------------------
@@ -81,85 +71,23 @@ std::string UrbanBlockDeserializer::GetArchitectureMaterial() const
     return message_.attributes().architecture().material();
 }
 
+
 // -----------------------------------------------------------------------------
-// Name: UrbanBlockDeserializer::GetArchitectureInnerCluttering
+// Name: UrbanBlockDeserializer::GetArchitectureOccupation
 // Created: SLG 2009-12-07
 // -----------------------------------------------------------------------------
-float UrbanBlockDeserializer::GetArchitectureInnerCluttering() const
+float UrbanBlockDeserializer::GetArchitectureOccupation() const
 {
-    return message_.attributes().architecture().inner_cluttering();
+    return message_.attributes().architecture().occupation();
 }
 
 // -----------------------------------------------------------------------------
-// Name: UrbanBlockDeserializer::GetArchitectureFacadeOpacity
+// Name: UrbanBlockDeserializer::GetArchitectureTrafficability
 // Created: SLG 2009-12-07
 // -----------------------------------------------------------------------------
-float UrbanBlockDeserializer::GetArchitectureFacadeOpacity() const
+float UrbanBlockDeserializer::GetArchitectureTrafficability() const
 {
-    return message_.attributes().architecture().facade_opacity();
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanBlockDeserializer::GetSoilOccupation
-// Created: SLG 2009-12-07
-// -----------------------------------------------------------------------------
-float UrbanBlockDeserializer::GetSoilOccupation() const
-{
-    return message_.attributes().soil().occupation();
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanBlockDeserializer::GetSoilTrafficability
-// Created: SLG 2009-12-07
-// -----------------------------------------------------------------------------
-float UrbanBlockDeserializer::GetSoilTrafficability() const
-{
-    return message_.attributes().soil().trafficability();
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanBlockDeserializer::GetSoilMulitplicity
-// Created: SLG 2009-12-07
-// -----------------------------------------------------------------------------
-bool UrbanBlockDeserializer::GetSoilMultiplicity() const
-{
-    return message_.attributes().soil().multiple();
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanBlockDeserializer::GetSoilCompoundClearing
-// Created: SLG 2009-12-07
-// -----------------------------------------------------------------------------
-std::string UrbanBlockDeserializer::GetSoilCompoundClearing() const
-{
-    return message_.attributes().soil().compound_clearing();
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanBlockDeserializer::GetVegetationType
-// Created: SLG 2009-12-07
-// -----------------------------------------------------------------------------
-std::string UrbanBlockDeserializer::GetVegetationType() const
-{
-    return message_.attributes().vegetation().type();
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanBlockDeserializer::GetVegetationHeight
-// Created: SLG 2009-12-07
-// -----------------------------------------------------------------------------
-unsigned int UrbanBlockDeserializer::GetVegetationHeight() const
-{
-    return message_.attributes().vegetation().height();
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanBlockDeserializer::GetVegetationDensity
-// Created: SLG 2009-12-07
-// -----------------------------------------------------------------------------
-float UrbanBlockDeserializer::GetVegetationDensity() const
-{
-    return message_.attributes().vegetation().density();
+    return message_.attributes().architecture().trafficability();
 }
 
 // -----------------------------------------------------------------------------
@@ -191,22 +119,4 @@ bool UrbanBlockDeserializer::HasColor() const
 bool UrbanBlockDeserializer::HasArchitecture() const
 {
     return message_.attributes().has_architecture();
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanBlockDeserializer::HasSoil
-// Created: SLG 2009-12-08
-// -----------------------------------------------------------------------------
-bool UrbanBlockDeserializer::HasSoil() const
-{
-    return message_.attributes().has_soil();
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanBlockDeserializer::HasVegetation
-// Created: SLG 2009-12-08
-// -----------------------------------------------------------------------------
-bool UrbanBlockDeserializer::HasVegetation() const
-{
-    return message_.attributes().has_vegetation();
 }

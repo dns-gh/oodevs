@@ -22,7 +22,6 @@
 #include "Knowledge/DEC_Knowledge_Urban.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "protocol/protocol.h"
-#include "Urban/Block.h"
 #include "geometry/Point2.h"
 
 #include <boost/bind.hpp>

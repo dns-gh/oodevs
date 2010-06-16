@@ -13,10 +13,6 @@
 #include <Urban/UrbanBlockDeserializer_ABC.h>
 
 class ColorRGBA;
-namespace urban
-{
-    class Block;
-}
 
 namespace MsgsSimToClient
 {
@@ -43,27 +39,16 @@ public:
     //@{
     virtual float        GetArchitectureHeight              () const;
     virtual unsigned int GetArchitectureFloorNumber         () const;
-    virtual unsigned int GetArchitectureBasementLevelNumber () const;
     virtual std::string  GetArchitectureRoofShape           () const;
     virtual std::string  GetArchitectureMaterial            () const;
-    virtual float        GetArchitectureInnerCluttering     () const;
-    virtual float        GetArchitectureFacadeOpacity       () const;
-
-    virtual float        GetSoilOccupation                  () const;
-    virtual float        GetSoilTrafficability              () const;
-    virtual bool         GetSoilMultiplicity                () const;
-    virtual std::string  GetSoilCompoundClearing            () const;
-
-    virtual std::string  GetVegetationType                  () const;
-    virtual unsigned int GetVegetationHeight                () const;
-    virtual float        GetVegetationDensity               () const;
+    virtual float        GetArchitectureOccupation                  () const;
+    virtual float        GetArchitectureTrafficability              () const;
+    
 
     std::auto_ptr< ColorRGBA >  GetColor                    () const;
 
     virtual bool HasColor()         const;
     virtual bool HasArchitecture()  const;
-    virtual bool HasSoil()          const;
-    virtual bool HasVegetation()    const;
     //@}
 
 private:

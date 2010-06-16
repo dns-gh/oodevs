@@ -474,6 +474,10 @@ void GlWidget::DrawConvexPolygon( const Polygon2f& polygon ) const
 // -----------------------------------------------------------------------------
 void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const urban::UrbanDecoration* decoration ) const
 {
+    //TEMP SLG
+    if ( polygon.Vertices().empty() )
+        return;
+    // TEMP SLG
     float color[ 4 ];
     color[ 0 ] = 0.8f;
     color[ 1 ] = 0.8f;

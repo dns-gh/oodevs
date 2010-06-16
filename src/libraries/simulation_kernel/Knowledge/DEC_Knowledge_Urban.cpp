@@ -18,9 +18,9 @@
 #include "simulation_kernel/Entities/Automates/MIL_Automate.h"
 #include "simulation_kernel/Entities/MIL_EntityManager.h"
 #include "simulation_kernel/MIL_AgentServer.h"
-#include "urban/TerrainObject_ABC.h"
+#include <urban/Architecture.h>
+#include <urban/TerrainObject_ABC.h>
 #include "protocol/ClientSenders.h"
-#include "urban/Soil.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_Urban )
 
@@ -506,8 +506,8 @@ bool DEC_Knowledge_Urban::IsValid() const
 // -----------------------------------------------------------------------------
 const float DEC_Knowledge_Urban::GetPathfindCost( float weight ) const
 {
-    const urban::Soil* soil = object_.RetrievePhysicalFeature< urban::Soil >();
-    if( soil )
-        return soil->GetPathfindCost( weight );
+    const urban::Architecture* architecture = object_.RetrievePhysicalFeature< urban::Architecture >();
+    if( architecture )
+        return architecture->GetPathfindCost( weight );
     return 0;
 }

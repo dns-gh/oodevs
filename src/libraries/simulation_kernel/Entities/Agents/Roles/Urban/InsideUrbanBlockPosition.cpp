@@ -22,7 +22,6 @@
 #include <urban/Model.h>
 #include <urban/Architecture.h>
 #include <urban/MaterialCompositionType.h>
-#include <urban/Soil.h>
 #include <urban/StaticModel.h>
 #pragma warning( push )
 #pragma warning( disable : 4127 4100 )
@@ -231,11 +230,10 @@ float InsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_AB
 MT_Float InsideUrbanBlockPosition::ComputeUrbanProtection( const PHY_DotationCategory& dotationCategory ) const
 {
     const urban::Architecture* architecture = urbanObject_->RetrievePhysicalFeature< urban::Architecture >();
-    const urban::Soil* soil = urbanObject_->RetrievePhysicalFeature< urban::Soil >();
-    if( architecture  && soil )
+    if( architecture )
     {
         unsigned materialID = UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( architecture->GetMaterial() )->GetId();
-        return ( 1 - dotationCategory.GetUrbanAttritionModifer( materialID ) ) * ( soil->GetOccupation() );
+        return ( 1 - dotationCategory.GetUrbanAttritionModifer( materialID ) ) * ( architecture->GetOccupation() );
     }
     return 0.;
 }
