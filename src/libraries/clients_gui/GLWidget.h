@@ -108,6 +108,12 @@ public:
     virtual void SetCurrentCursor( const QCursor& cursor );
     //@}
 
+protected:
+    //! @name Operations
+    //@{
+    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
+    //@}
+
 private:
     //! @name Copy/Assignement
     //@{
@@ -156,6 +162,8 @@ private:
     int windowHeight_;
     int windowWidth_;
     unsigned int circle_;
+    int minVisuScale_;
+    int maxVisuScale_;
  
     geometry::Rectangle2f viewport_;
     unsigned int frame_;

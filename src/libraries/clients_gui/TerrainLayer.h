@@ -88,6 +88,8 @@ private:
     GraphicPreferences& setup_;
     TerrainPicker& picker_;
     bool pickingEnabled_;
+    int minVisuScale_[ 13 ];
+    int maxVisuScale_[ 13 ];
 
     geometry::Rectangle2f world_;
     kernel::TristateOption smallNames_;

@@ -9,15 +9,16 @@
 
 #include "clients_gui_pch.h"
 #include "GlWidget.h"
+#include "GlRenderPass_ABC.h"
+#include "IconLayout.h"
+#include "clients_kernel/OptionVariant.h"
 #include "graphics/MapLayer_ABC.h"
 #include "graphics/Scale.h"
-#include "GlRenderPass_ABC.h"
 #include "graphics/extensions.h"
-#include "IconLayout.h"
-#include <qbitmap.h>
-#include <time.h>
 #include "urban/UrbanDecoration.h"
 #include "urban/ColorRGBA.h"
+#include <qbitmap.h>
+#include <time.h>
 #include <xeumeuleu/xml.h>
 
 using namespace geometry;
@@ -253,19 +254,17 @@ void GlWidget::UpdateStipple() const
 // Name: GlWidget::DrawTextLabel
 // Created: RPD 2010-01-01
 // -----------------------------------------------------------------------------
-void GlWidget::DrawTextLabel( const std::string& content, const geometry::Point2f& where, int baseSize /*= 12*/)
+void GlWidget::DrawTextLabel( const std::string& content, const geometry::Point2f& where, int /*baseSize = 12*/)
 {
-    if ( Zoom() < 0.00015f )
+    if( Pixels() < minVisuScale_ || Pixels() >= maxVisuScale_ )
         return;
-    float adaptiveSize ( ( float ) baseSize );
-    if ( Zoom() <= 0.00052f )
-        adaptiveSize = ( float ) baseSize * Zoom() * 1600 ;
 
-    float witdh = content.length() * adaptiveSize * 0.67f;
-    float height = 2.2f * adaptiveSize;
+    QFontMetrics fm( currentFont_ );
+    QRect rc = fm.boundingRect( content.c_str() );
+
     QPoint point = CoordinatesToClient( where );
-    geometry::Point2f leftBottom = RetrieveCoordinates( point.x()-adaptiveSize * 0.67f, point.y() + height * 0.25f );
-    geometry::Point2f rightTop = RetrieveCoordinates( point.x() + witdh, point.y() - height * 0.75f );
+    geometry::Point2f leftBottom = RetrieveCoordinates( point.x() - 4, int( point.y() + rc.height() * 0.25f ) );
+    geometry::Point2f rightTop = RetrieveCoordinates( point.x() + rc.width() + 4, int( point.y() - rc.height() * 0.75f ) );
 
     float color[ 4 ];
     color[ 0 ] = 1.f;
@@ -280,14 +279,18 @@ void GlWidget::DrawTextLabel( const std::string& content, const geometry::Point2
     glVertex3f( rightTop.X(), leftBottom.Y(), 0 );
     glEnd();
   
-    currentFont_.setPointSize( ( int ) adaptiveSize );
-    currentFont_.setItalic( true );
-    currentFont_.setStyleStrategy( QFont::PreferAntialias );
+    // $$$$ JSR 2010-06-14: Changing font attributes does not seem to work with this version of Qt:
+    // OpenGL display lists cannot be generated.
+    //currentFont_.setPointSize( ( int ) adaptiveSize );
+    //currentFont_.setPointSize( 14 );
+    //currentFont_.setItalic( true );
+    //currentFont_.setStyleStrategy( QFont::PreferAntialias );
     color[ 0 ] = 0.f;
     color[ 1 ] = 0.f;
     color[ 2 ] = 0.f;
     color[ 3 ] = __min( 1, Zoom() * 1000 );
     glColor4fv( color );
+
     renderText( where.X(), where.Y(), 2, content.c_str(), currentFont_ );
 }
 
@@ -510,8 +513,8 @@ void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const u
     for( unsigned int i = 0 ; i < roofPoints.size() ; ++i )
     {
         Point2f point = roofPoints[ i ];
-        double deltaX = ( point.X() - center_.X() ) * rZoom_ * height;
-        double deltaY = ( point.Y() - center_.Y() ) * rZoom_ * height;
+        float deltaX = ( point.X() - center_.X() ) * rZoom_ * height;
+        float deltaY = ( point.Y() - center_.Y() ) * rZoom_ * height;
         point.Set( point.X() + deltaX, point.Y() + deltaY );
         ( Point2f& ) roofPoints[ i ] = point;
     }
@@ -555,8 +558,8 @@ void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const u
     glDrawArrays( GL_LINE_LOOP, 0, roofPoints.size() );
     glDisable (GL_LINE_STIPPLE);
     glPopAttrib();
-    //if ( decoration->Name().length() > 0 )
-    //    ( ( GlWidget& ) ( *this ) ).DrawTextLabel( decoration->Name(), roofPolygon.BoundingBoxCenter(), 13 );
+    if ( decoration->Name().length() > 0 )
+        ( ( GlWidget& ) ( *this ) ).DrawTextLabel( decoration->Name(), roofPolygon.BoundingBoxCenter(), 13 );
 }
 
 // -----------------------------------------------------------------------------
@@ -923,4 +926,18 @@ void GlWidget::Zoom( float w )
 void GlWidget::SetCurrentCursor( const QCursor& cursor )
 {
     setCursor( cursor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlWidget::OptionChanged
+// Created: JSR 2010-06-14
+// -----------------------------------------------------------------------------
+void GlWidget::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
+{
+    if( name == "VisuScaleMin13" ) // see VisualisationScalesPanel.cpp
+        minVisuScale_ = value.To< int >();
+    else if( name == "VisuScaleMax13" ) // see VisualisationScalesPanel.cpp
+        maxVisuScale_ = value.To< int >();
+    else 
+        GlToolsBase::OptionChanged( name, value );
 }

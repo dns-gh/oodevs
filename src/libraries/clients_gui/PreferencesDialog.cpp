@@ -18,6 +18,7 @@
 #include "PreferencesList.h"
 #include "PreferencePanel_ABC.h"
 #include "CoordinateSystemsPanel.h"
+#include "VisualisationScalesPanel.h"
 #include "LightingPanel.h"
 #include "LayersPanel.h"
 #include "resources.h"
@@ -71,6 +72,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
     layersPanel_       = new LayersPanel( this, controllers );
     pCoordinateSystemsPanel_ = new CoordinateSystemsPanel( this, controllers, coordSystems );
     AddPage( tr( "Coordinate System" ), *pCoordinateSystemsPanel_ );
+    AddPage( tr( "Visualisation Scales" ), *new VisualisationScalesPanel( this, controllers ) );
     AddPage( tr( "3D" ), *new LightingPanel( this, lighting, controllers ) );
     AddPage( tr( "2D" )        , *layersPanel_ ); 
     AddPage( tr( "2D/Terrain" ), *pGraphicPrefPanel_ );

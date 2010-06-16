@@ -1090,7 +1090,11 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>Coordinate System</source>
-        <translation>Système de coordonnées</translation>
+        <translation>Système de Coordonnées</translation>
+    </message>
+    <message>
+        <source>Visualisation Scales</source>
+        <translation>Echelles de Visualisation</translation>
     </message>
 </context>
 <context>
@@ -1151,6 +1155,81 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>Use wheel click</source>
         <translation type="obsolete">Utiliser le clic du milieu (molette)</translation>
+    </message>
+</context>
+<context>
+    <name>gui::VisualisationScalesPanel</name>
+    <message>
+        <source>Cliffs</source>
+        <translation>Falaises</translation>
+    </message>
+    <message>
+        <source>Bridges</source>
+        <translation>Ponts</translation>
+    </message>
+    <message>
+        <source>Railroads</source>
+        <translation>Voies ferrées</translation>
+    </message>
+    <message>
+        <source>Large texts</source>
+        <translation>Gros noms</translation>
+    </message>
+    <message>
+        <source>Small texts</source>
+        <translation>Petits noms</translation>
+    </message>
+    <message>
+        <source>Edges</source>
+        <translation>Bords</translation>
+    </message>
+    <message>
+        <source>Highways</source>
+        <translation>Autoroutes</translation>
+    </message>
+    <message>
+        <source>Main roads</source>
+        <translation>Nationales</translation>
+    </message>
+    <message>
+        <source>Secondary roads</source>
+        <translation>Départementales</translation>
+    </message>
+    <message>
+        <source>Country roads</source>
+        <translation>Chemins</translation>
+    </message>
+    <message>
+        <source>Main rivers</source>
+        <translation>Grandes rivières</translation>
+    </message>
+    <message>
+        <source>Rivers</source>
+        <translation>Rivières</translation>
+    </message>
+    <message>
+        <source>Streams</source>
+        <translation>Ruisseaux</translation>
+    </message>
+    <message>
+        <source>Urban blocks</source>
+        <translation>Blocs urbains</translation>
+    </message>
+    <message>
+        <source>Visualisation scales</source>
+        <translation>Echelles de visualisation</translation>
+    </message>
+    <message>
+        <source>Min Scale</source>
+        <translation>Ech. min</translation>
+    </message>
+    <message>
+        <source>Max Scale</source>
+        <translation>Ech. max</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation>Par défaut</translation>
     </message>
 </context>
 </TS>

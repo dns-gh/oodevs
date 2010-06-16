@@ -109,6 +109,27 @@ void TerrainLayer::OptionChanged( const std::string& name, const OptionVariant& 
         bigNames_ = value.To< TristateOption >();
     if( name == "3D" )
         pickingEnabled_ = ! value.To< bool >();
+
+    const std::string strMinScale( "VisuScaleMin" );
+    const std::string strMaxScale( "VisuScaleMax" );
+
+    if( name.size() > strMinScale.size() && name.substr( 0, strMinScale.size() ) == strMinScale )
+    {
+        std::stringstream stream( name.substr( strMinScale.size() ) );
+        int index = -1;
+        stream >> index;
+        if( index >= 0 && index < 13 )
+            minVisuScale_[ index ] = value.To< int >();
+    }
+
+    if( name.size() > strMaxScale.size() && name.substr( 0, strMaxScale.size() ) == strMaxScale )
+    {
+        std::stringstream stream( name.substr( strMaxScale.size() ) );
+        int index = -1;
+        stream >> index;
+        if( index >= 0 && index < 13 )
+            maxVisuScale_[ index ] = value.To< int >();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -133,41 +154,51 @@ public:
         : Base( parent.setup_, filename )
         , parent_( parent ) {}
 
-    virtual bool ShouldDisplay( const TerrainData& data, const geometry::Rectangle2f& viewport )
+    virtual bool ShouldDisplay( const TerrainData& data, const geometry::Rectangle2f& /*viewport*/ )
     {
         if( data.Border() )
             return true;
-        const float width = std::max( viewport.Width(), viewport.Height() );
+
+        float pixels = parent_.tools_.Pixels();
+        
         switch( data.Linear() )
         {
         case 0:
         default:
             return false;
+        // see in VisualisationScalesPanel.cpp for indexes
         case TerrainData::cliff_:
-        case TerrainData::smallriver_:
-        case TerrainData::smallroad_:
-        case TerrainData::railroad_:
-            return width < 100000.f;
-        case TerrainData::mediumriver_:
-        case TerrainData::mediumroad_:
-        case TerrainData::bridge_:
-            return width < 150000.f;
-        case TerrainData::largeriver_:
-        case TerrainData::largeroad_:
+            return parent_.minVisuScale_[ 3 ] <= pixels && parent_.maxVisuScale_[ 3 ] > pixels;
         case TerrainData::motorway_:
-            return true;
+            return parent_.minVisuScale_[ 4 ] <= pixels && parent_.maxVisuScale_[ 4 ] > pixels;
+        case TerrainData::largeroad_:
+            return parent_.minVisuScale_[ 5 ] <= pixels && parent_.maxVisuScale_[ 5 ] > pixels;
+        case TerrainData::mediumroad_:
+            return parent_.minVisuScale_[ 6 ] <= pixels && parent_.maxVisuScale_[ 6 ] > pixels;
+        case TerrainData::smallroad_:
+            return parent_.minVisuScale_[ 7 ] <= pixels && parent_.maxVisuScale_[ 7 ] > pixels;
+        case TerrainData::bridge_:
+            return parent_.minVisuScale_[ 8 ] <= pixels && parent_.maxVisuScale_[ 8 ] > pixels;
+        case TerrainData::railroad_:
+            return parent_.minVisuScale_[ 9 ] <= pixels && parent_.maxVisuScale_[ 9 ] > pixels;
+        case TerrainData::largeriver_:
+            return parent_.minVisuScale_[ 10 ] <= pixels && parent_.maxVisuScale_[ 10 ] > pixels;
+        case TerrainData::mediumriver_:
+            return parent_.minVisuScale_[ 11 ] <= pixels && parent_.maxVisuScale_[ 11 ] > pixels;
+        case TerrainData::smallriver_:
+            return parent_.minVisuScale_[ 12 ] <= pixels && parent_.maxVisuScale_[ 12 ] > pixels;
         }
     }
-    virtual bool ShouldDisplayBorder( const TerrainData& data, const geometry::Rectangle2f& viewport )
+    virtual bool ShouldDisplayBorder( const TerrainData& data, const geometry::Rectangle2f& /*viewport*/ )
     {
-        const float width = std::max( viewport.Width(), viewport.Height() );
-        return data.Border() && width < 200000.f;
+        float pixels = parent_.tools_.Pixels();
+        return data.Border() && parent_.minVisuScale_[ 2 ] <= pixels && parent_.maxVisuScale_[ 2 ] > pixels;
     }
-    virtual bool ShouldDisplayNames( const TerrainData& data, const geometry::Rectangle2f& viewport )
+    virtual bool ShouldDisplayNames( const TerrainData& data, const geometry::Rectangle2f& /*viewport*/ )
     {
-        const float width = std::max( viewport.Width(), viewport.Height() );
-        return (  data.Linear() && parent_.smallNames_.IsSet( width < 10000.f ) )
-            || ( !data.Linear() && parent_.bigNames_.IsSet( width < 30000.f ) );
+        float pixels = parent_.tools_.Pixels();
+        return (  data.Linear() && parent_.smallNames_.IsSet( parent_.minVisuScale_[ 1 ] <= pixels && parent_.maxVisuScale_[ 1 ] > pixels ) )
+            || ( !data.Linear() && parent_.bigNames_.IsSet( parent_.minVisuScale_[ 0 ] <= pixels && parent_.maxVisuScale_[ 0 ] > pixels ) );
     }
     virtual void DrawName( const geometry::Point2f& at, const std::string& name )
     {

@@ -25,6 +25,7 @@ HierarchyListView_ABC.cpp \
 HighlightColorModifier.cpp \
 InputPropagationPrototype_ABC.cpp \
 IntelligencesPanel.cpp \
+VisualisationScalesPanel.cpp \
 LayersPanel.cpp \
 LightingPanel.cpp \
 LocationCreator.cpp \
