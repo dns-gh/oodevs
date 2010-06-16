@@ -60,7 +60,7 @@
         <mission name="Decrocher BM"/>
       </missions>
     </unit>
-    <unit dia-type="BMPion" file="BMPion.bms" name="net.masagroup.sword.military.roles.Artillery">
+    <unit dia-type="BMPion" file="BMPion.bms" name="net.masagroup.sword.military.platoon.combat.support.artillery.roles.Artillery">
       <missions>
         <mission name="DeployOnPosition">
           <fragorder name="ApplyFire"/>
@@ -2946,7 +2946,7 @@
         <mission name="ReconnaitreItineraire"/>
       </missions>
     </automat>
-    <automat dia-type="BMAutomat" file="BMAutomat.bms" name="net.masagroup.sword.military.roles.art.Company">
+    <automat dia-type="BMAutomat" file="BMAutomat.bms" name="net.masagroup.sword.military.company.combat.support.artillery.roles.Company">
       <missions>
         <mission name="FaireMouvementVersPosition"/>
         <mission name="FaireMouvementVersBU"/>

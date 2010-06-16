@@ -499,8 +499,8 @@ void GenObjectFunction( const directia::ScriptRef& refMission, const std::string
 }
 void GenObjectFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
-    std::vector< DEC_Decision_ABC* > value;
-    if( element.ToAgentList( value ) )
+    boost::shared_ptr< DEC_Gen_Object > value;
+    if( element.ToGenObject( value ) && value.get() )
         knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.EngineerObject" ), name, value, true );
 }
 void GenObjectListFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )

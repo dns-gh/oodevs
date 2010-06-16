@@ -849,11 +849,11 @@
       <parameter dia-name="entities" name="entities" optional="false" type="AgentKnowledgeListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.military.platoon.combat.support.artillery.tasks.Deploy" dia-type="T_Mission_Pion_MiseEnOeuvreSurPosition" id="2030" name="DeployOnPosition">
-      <parameter dia-name="firePositions" name="firePositions" optional="false" type="PointBM"/>
+      <parameter dia-name="firePositions" name="firePositions" optional="false" type="PointListBM"/>
       <parameter dia-name="safeguardPositions" name="safeguardPositions" optional="true" type="PointListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.military.platoon.combat.support.artillery.tasks.Deploy" dia-type="T_Mission_Pion_MiseEnOeuvre" id="2061" name="Deploy">
-      <parameter dia-name="firePositions" name="fireArea" optional="false" type="ObjectKnowledgeBM"/>
+      <parameter dia-name="firePositions" name="fireArea" optional="false" type="ObjectKnowledgeListBM"/>
       <parameter dia-name="safeguardPositions" name="safeguardPositions" optional="true" type="PointListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.TakeCover" dia-type="T_Mission_Pion_TakeCover" id="2031" name="TakeCover"/>
@@ -1575,7 +1575,7 @@
     <mission cdt-dia-behavior="net.masagroup.sword_france.military.tasks.commun.automat.SuivreBM" dia-type="T_Mission_Automate_SuivreBM" id="1006" mrt-dia-behavior="net.masagroup.sword_france.military.tasks.commun.automat.SuivreBM" name="SuivreBM">
       <parameter dia-name="objective" name="unite a suivre" optional="false" type="AgentBM"/>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.military.tasks.ass.automat.Deploy" dia-type="T_Mission_Automate_Deploy" id="1008" mrt-dia-behavior="net.masagroup.sword.military.tasks.ass.automat.Deploy" name="Deploy">
+    <mission cdt-dia-behavior="net.masagroup.sword.military.company.combat.support.artillery.tasks.Deploy" dia-type="T_Mission_Automate_Deploy" id="1008" mrt-dia-behavior="net.masagroup.sword.military.company.combat.support.artillery.tasks.Deploy" name="Deploy">
       <parameter dia-name="deploymentArea" name="zone de deploiement" optional="false" type="AreaBM"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword_france.military.tasks.commun.automat.SoutenirSurPositionEnMesureDeBM" dia-type="T_Mission_Automate_SoutenirSurPositionEnMesureDeBM" id="1007" mrt-dia-behavior="net.masagroup.sword_france.military.tasks.commun.automat.SoutenirSurPositionEnMesureDeBM" name="SoutenirSurPositionEnMesureDeBM">
