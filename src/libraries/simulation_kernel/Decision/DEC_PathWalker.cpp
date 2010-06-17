@@ -20,7 +20,7 @@
 #include "protocol/protocol.h"
 #include <urban/Model.h>
 #include <urban/TerrainObject_ABC.h>
-#include <urban/Soil.h>
+#include <urban/Architecture.h>
 
 //$$$ Refactorer gestion collisions objets
 
@@ -413,9 +413,9 @@ void DEC_PathWalker::TryToCrossUrbanBlocks( CIT_MoveStepSet itCurMoveStep, CIT_M
     {
         const urban::TerrainObject_ABC& urbanBlock = **itUrbanBlock;
         movingEntity_.NotifyMovingInsideUrbanBlock( urbanBlock );
-        const urban::Soil* soil = urbanBlock.RetrievePhysicalFeature< urban::Soil >();
-        if( soil )
-            urbanBlockFactor = std::min( urbanBlockFactor, 1. - soil->GetOccupation() );
+        const urban::Architecture* architecture = urbanBlock.RetrievePhysicalFeature< urban::Architecture >();
+        if( architecture )
+            urbanBlockFactor = std::min( urbanBlockFactor, 1. - architecture->GetOccupation() );
     }
     rCurrentSpeed_ *= urbanBlockFactor;
 
