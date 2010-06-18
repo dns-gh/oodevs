@@ -586,7 +586,6 @@ BOOST_AUTO_TEST_CASE( TestMIL_PlannedWorkParameter_ToASN )
     asnIn.set_activity_time( 2 );
     MockMIL_EntityManager_ABC entityManager;
     MockMIL_ObjectType_ABC objectType;
-    MOCK_EXPECT( objectType, GetName ).once().returns( typeName );
     MOCK_EXPECT( entityManager, FindObjectType ).once().returns( boost::cref( objectType ) );
     // $$$$ _RC_ SBO 2010-04-27: was not verify'ed
 //    FixtureAutomate fixture;
@@ -624,7 +623,6 @@ BOOST_AUTO_TEST_CASE( TestMIL_PlannedWorkListParameter_ToASN )
     asnIn.mutable_elem(0)->set_activity_time( 2 );
     MockMIL_EntityManager_ABC entityManager;
     MockMIL_ObjectType_ABC objectType;
-    MOCK_EXPECT( objectType, GetName ).once().returns( typeName );
     MOCK_EXPECT( entityManager, FindObjectType ).once().returns( boost::cref( objectType ) );
     // $$$$ _RC_ SBO 2010-04-27: was not verify'ed
 //    FixtureAutomate fixture; 
