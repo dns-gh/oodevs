@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <models xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Models.xsd">
   <units>
-    <unit dia-type="BMPion" file="BMPion.bms" name="net.masagroup.sword.military.roles.Platoon">
+    <unit dia-type="net.masagroup.sword.military.roles.Platoon" file="BMPion.bms" name="net.masagroup.sword.military.roles.Platoon">
       <missions>
         <mission name="Advance"/>
         <mission name="Animate"/>
@@ -60,7 +60,7 @@
         <mission name="Decrocher BM"/>
       </missions>
     </unit>
-    <unit dia-type="BMPion" file="BMPion.bms" name="net.masagroup.sword.military.platoon.combat.support.artillery.roles.Artillery">
+    <unit dia-type="net.masagroup.sword.military.platoon.combat.support.artillery.roles.Artillery" file="BMPion.bms" name="net.masagroup.sword.military.platoon.combat.support.artillery.roles.Artillery">
       <missions>
         <mission name="DeployOnPosition">
           <fragorder name="ApplyFire"/>
@@ -78,7 +78,7 @@
         <mission name="MoveToPoint"/>
       </missions>
     </unit>
-    <unit dia-type="BMPion" file="BMPion.bms" name="net.masagroup.sword.military.roles.Genie">
+    <unit dia-type="net.masagroup.sword.military.roles.Genie" file="BMPion.bms" name="net.masagroup.sword.military.roles.Genie">
       <missions>
         <mission name="GEN Realiser Travaux"/>
         <mission name="Build"/>
@@ -2936,7 +2936,7 @@
     </unit>
   </units>
   <automats>
-    <automat dia-type="BMAutomat" file="BMAutomat.bms" name="net.masagroup.sword.military.roles.Company">
+    <automat dia-type="net.masagroup.sword.military.roles.Company" file="BMAutomat.bms" name="net.masagroup.sword.military.roles.Company">
       <missions>
         <mission name="FaireMouvementVersPosition"/>
         <mission name="FaireMouvementVersBU"/>
@@ -2946,7 +2946,7 @@
         <mission name="ReconnaitreItineraire"/>
       </missions>
     </automat>
-    <automat dia-type="BMAutomat" file="BMAutomat.bms" name="net.masagroup.sword.military.company.combat.support.artillery.roles.Company">
+    <automat dia-type="net.masagroup.sword.military.company.combat.support.artillery.roles.Company" file="BMAutomat.bms" name="net.masagroup.sword.military.company.combat.support.artillery.roles.Company">
       <missions>
         <mission name="FaireMouvementVersPosition"/>
         <mission name="FaireMouvementVersBU"/>
