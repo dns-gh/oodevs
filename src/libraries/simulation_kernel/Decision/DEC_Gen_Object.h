@@ -40,12 +40,13 @@ public:
 
 public:
              DEC_Gen_Object( const Common::MsgPlannedWork& asn, const MIL_EntityManager_ABC& entityManager );
+             DEC_Gen_Object( std::string type, boost::shared_ptr< TER_Localisation > location, bool preliminary );
              DEC_Gen_Object( const DEC_Gen_Object& rhs );
     virtual ~DEC_Gen_Object();
 
     //! @name Accessors
     //@{
-    const MIL_ObjectType_ABC& GetType             () const;
+    const std::string&        GetTypeName         () const;
     const TER_Localisation&   GetLocalisation     () const;
     E_DemolitionTargetType    GetObstacleType     () const;
           MT_Float            GetDensity          () const;
@@ -62,7 +63,7 @@ public:
 private:
     //! @name Data members
     //@{
-    const MIL_ObjectType_ABC*       pType_;
+          std::string               type_;
           TER_Localisation          localisation_;
           E_DemolitionTargetType    pObstacleType_;
           MT_Float                  rDensity_;

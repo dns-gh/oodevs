@@ -12,10 +12,9 @@
 // Created: NLD 2006-10-26
 // -----------------------------------------------------------------------------
 inline
-const MIL_ObjectType_ABC& DEC_Gen_Object::GetType() const
+const std::string& DEC_Gen_Object::GetTypeName() const
 {
-    assert( pType_ );
-    return *pType_;
+    return type_;
 }
 
 // -----------------------------------------------------------------------------

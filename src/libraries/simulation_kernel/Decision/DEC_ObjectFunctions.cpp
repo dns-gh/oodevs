@@ -27,7 +27,7 @@
 // -----------------------------------------------------------------------------
 std::string DEC_ObjectFunctions::GetGenObjectType( const DEC_Gen_Object* object)
 {
-    return object->GetType().GetName();
+    return object->GetTypeName();
 }
 
 // -----------------------------------------------------------------------------
@@ -120,4 +120,13 @@ void DEC_ObjectFunctions::MagicDestroyObject( boost::shared_ptr< DEC_Knowledge_O
         if( pObject && ( *pObject )().CanBeDestroyed() )
             ( *pObject )().Destroy(); // AddObjectKnowledgeToForget done
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< DEC_Gen_Object > CreateDynamicGenObject
+// Created: MGD 2010-06-16
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DEC_Gen_Object > DEC_ObjectFunctions::CreateDynamicGenObject( std::string type, boost::shared_ptr< TER_Localisation > location, bool preliminary )
+{
+    return boost::shared_ptr< DEC_Gen_Object >( new DEC_Gen_Object( type, location, preliminary ) );
 }

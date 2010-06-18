@@ -320,6 +320,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_CreerObjetSansDelais",
         boost::function< void( const std::string&, const TER_Localisation* ) > (boost::bind( &DEC_ObjectFunctions::MagicCreateObject < MIL_AgentPion >, boost::ref( GetPion() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_DetruireObjetSansDelais" , &DEC_ObjectFunctions::MagicDestroyObject );
+    brain.RegisterFunction( "DEC_CreateDynamicGenObject", &DEC_ObjectFunctions::CreateDynamicGenObject );
 
     // Path
     brain.RegisterFunction( "DEC_CreerItineraire",

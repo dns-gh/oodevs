@@ -81,8 +81,8 @@ void DEC_Decision<T>::InitBrain( const std::string& brainFile, const std::string
 template <class T>
 void DEC_Decision<T>::SetModel( const DEC_Model_ABC& model )
 {
-    InitBrain( model.GetScriptFile(), model.GetName(), model.GetIncludePath(), GetAutomate().GetName() );
     diaType_ = model.GetDIAType();
+    InitBrain( model.GetScriptFile(), model.GetName(), model.GetIncludePath(), GetAutomate().GetName() );
 }
 
 // -----------------------------------------------------------------------------

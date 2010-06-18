@@ -34,6 +34,7 @@ public:
     static void MagicDestroyObject( boost::shared_ptr< DEC_Knowledge_Object > knowledgeId );
     static bool ActivateObject( boost::shared_ptr< DEC_Knowledge_Object > knowledgeId );
     static const TER_Localisation& GetGenObjectLocalisation     ( boost::shared_ptr< DEC_Gen_Object > knowledgeId );
+    static boost::shared_ptr< DEC_Gen_Object > CreateDynamicGenObject( std::string type, boost::shared_ptr< TER_Localisation > location, bool preliminary );
 
     // Gen object
     static std::string GetGenObjectType                       ( const DEC_Gen_Object* object );

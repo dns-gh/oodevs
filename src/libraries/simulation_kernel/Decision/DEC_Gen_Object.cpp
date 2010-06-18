@@ -24,14 +24,14 @@
 // Created: NLD 2007-05-14
 // -----------------------------------------------------------------------------
 DEC_Gen_Object::DEC_Gen_Object( const Common::MsgPlannedWork& asn, const MIL_EntityManager_ABC& entityManager )
-    : pType_             ( &entityManager.FindObjectType( asn.type() ) )
+    : type_             ( &entityManager.FindObjectType( asn.type() )? asn.type(): "" )
     , localisation_      ()
     , pObstacleType_     ( asn.type_obstacle() )
     , rDensity_          ( asn.densite() )
     , nMinesActivityTime_( asn.activity_time() )
     , pTC2_              ( 0 )    
 {
-    if( !pType_ )
+    if( type_ == "" )
         throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission_parameters );
 
     if( !NET_ASN_Tools::ReadLocation( asn.position(), localisation_ ) )
@@ -47,10 +47,26 @@ DEC_Gen_Object::DEC_Gen_Object( const Common::MsgPlannedWork& asn, const MIL_Ent
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Gen_Object constructor
+// Created: MGD 2010-06-16
+// -----------------------------------------------------------------------------
+DEC_Gen_Object::DEC_Gen_Object( std::string type, boost::shared_ptr< TER_Localisation > location, bool preliminary )
+    : type_              ( type )
+    , localisation_      ( *location )
+    , pObstacleType_     ( preliminary ? E_DemolitionTargetType::ObstacleType_DemolitionTargetType_preliminary : E_DemolitionTargetType::ObstacleType_DemolitionTargetType_reserved )
+    , rDensity_          ( 0 )
+    , nMinesActivityTime_( 0 )
+    , pTC2_              ( 0 )   
+{
+    if( type_ == "" )
+        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission_parameters );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Gen_Object constructor
 // Created: NLD 2006-10-26
 // -----------------------------------------------------------------------------
 DEC_Gen_Object::DEC_Gen_Object( const DEC_Gen_Object& rhs )
-    : pType_             ( rhs.pType_ )
+    : type_              ( rhs.type_ )
     , localisation_      ( rhs.localisation_ )
     , pObstacleType_     ( rhs.pObstacleType_ )
     , rDensity_          ( rhs.rDensity_ )
@@ -79,7 +95,7 @@ DEC_Gen_Object::~DEC_Gen_Object()
 // -----------------------------------------------------------------------------
 DEC_Gen_Object& DEC_Gen_Object::operator=( const DEC_Gen_Object& rhs )
 {
-    pType_              = rhs.pType_;
+    type_               = rhs.type_;
     localisation_       = rhs.localisation_;
     pObstacleType_      = rhs.pObstacleType_;
     rDensity_           = rhs.rDensity_;
@@ -94,7 +110,7 @@ DEC_Gen_Object& DEC_Gen_Object::operator=( const DEC_Gen_Object& rhs )
 // -----------------------------------------------------------------------------
 void DEC_Gen_Object::Serialize( Common::MsgPlannedWork& asn ) const
 {
-    asn.set_type( pType_->GetName().c_str() );
+    asn.set_type( type_.c_str() );
     asn.set_type_obstacle( pObstacleType_ );
     asn.set_tc2( pTC2_ ? pTC2_->GetID() : 0 );
     asn.set_densite( rDensity_ );
