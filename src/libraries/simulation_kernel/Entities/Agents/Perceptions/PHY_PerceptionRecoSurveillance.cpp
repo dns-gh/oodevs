@@ -52,7 +52,7 @@ PHY_PerceptionRecoSurveillanceReco::PHY_PerceptionRecoSurveillanceReco( const TE
 
     const_cast< unsigned int& >( nForestDetectionTimeStep_ ) += (unsigned int)( nForestSurface * rForestSurveillanceTime_ );
     const_cast< unsigned int& >( nEmptyDetectionTimeStep_  ) += (unsigned int)( nEmptySurface  * rEmptySurveillanceTime_  );
-    const_cast< unsigned int& >( nUrbanDetectionTimeStep_  ) += (unsigned int)( nUrbanSurface  * rForestSurveillanceTime_ );
+    const_cast< unsigned int& >( nUrbanDetectionTimeStep_  ) += (unsigned int)( nUrbanSurface  * rUrbanSurveillanceTime_ );
 }
 
 struct PHY_PerceptionRecoSurveillance::LoadingWrapper
