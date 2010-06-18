@@ -78,7 +78,7 @@
         <mission name="MoveToPoint"/>
       </missions>
     </unit>
-    <unit dia-type="net.masagroup.sword.military.roles.Genie" file="BMPion.bms" name="net.masagroup.sword.military.roles.Genie">
+    <unit dia-type="net.masagroup.sword.military.platoon.combat.support.engineer.roles.Engineer" file="BMPion.bms" name="net.masagroup.sword.military.platoon.combat.support.engineer.roles.Engineer">
       <missions>
         <mission name="GEN Realiser Travaux"/>
         <mission name="Build"/>
