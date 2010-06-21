@@ -60,9 +60,13 @@ DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_Config& config )
 
     xisPathfind >> xml::end();
 
+    bUseInSameThread_ = config.GetPathFinderThreads() == 0;
     MT_LOG_INFO_MSG( MT_FormatString( "Starting %d pathfind thread(s)", config.GetPathFinderThreads() ) );
-    for( uint i = 0; i < config.GetPathFinderThreads(); ++i )
-        pathFindThreads_.push_back( & TER_World::GetWorld().GetPathFindManager().CreatePathFinderThread( *this ) );
+    if( bUseInSameThread_ ) // juste one "thread" that will never start
+        pathFindThreads_.push_back( & TER_World::GetWorld().GetPathFindManager().CreatePathFinderThread( *this, true ) );
+    else
+        for( uint i = 0; i < config.GetPathFinderThreads(); ++i )
+            pathFindThreads_.push_back( & TER_World::GetWorld().GetPathFindManager().CreatePathFinderThread( *this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -270,3 +274,21 @@ void DEC_PathFind_Manager::Update()
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_PathFind_Manager::UpdateInSimulationThread
+// Created: JSR 2010-06-16
+// -----------------------------------------------------------------------------
+void DEC_PathFind_Manager::UpdateInSimulationThread()
+{
+    if( bUseInSameThread_ ) // Pathfind in same thread than simulation
+    {
+        while( ! shortRequests_.empty() || ! longRequests_.empty() )
+        {
+            T_Requests& requests = GetRequests();
+            boost::shared_ptr< TER_PathFindRequest_ABC > pRequest = requests.front();
+            requests.pop_front();
+            pathFindThreads_[ 0 ]->ProcessInSimulationThread( pRequest );
+            ++treatedRequests_;
+        }
+    }
+}

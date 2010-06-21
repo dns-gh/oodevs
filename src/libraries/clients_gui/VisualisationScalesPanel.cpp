@@ -54,7 +54,7 @@ VisualisationScalesPanel::VisualisationScalesPanel( QWidget* parent, kernel::Con
     scales.push_back( "1:1000" );
     scales.push_back( "1:2500" );
     scales.push_back( "1:5000" );
-    scales.push_back( "1:5000" );
+    scales.push_back( "1:10000" );
 
     new QWidget( box );
     new QLabel( tr( "Min Scale" ), box );

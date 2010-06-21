@@ -259,6 +259,7 @@ void MIL_AgentServer::MainSimLoop()
     pEntityManager_   ->Update();
     pFolk_            ->Update( nCurrentTimeStep_ * nTimeStepDuration_, nTimeStepDuration_ );
     pMeteoDataManager_->Update( nRealTime_ );
+    pPathFindManager_ ->UpdateInSimulationThread();
 
     if( pProcessMonitor_->MonitorProcess() )
     {

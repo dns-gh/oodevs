@@ -31,7 +31,7 @@ class TER_PathFinderThread : public tools::thread::RequestProcessor_ABC< boost::
 public:
     //! @name Constructors/Destructor
     //@{
-             TER_PathFinderThread( const std::string& strGraphArchive, const std::string& strNodeArchive, const std::string& strLinkArchive, tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >& queue );
+             TER_PathFinderThread( const std::string& strGraphArchive, const std::string& strNodeArchive, const std::string& strLinkArchive, tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >& queue, bool bUseSameThread );
     virtual ~TER_PathFinderThread();
     //@}
 
@@ -48,6 +48,11 @@ public:
     void ApplyOnNodesWithinCircle( const MT_Vector2D& vCenter, MT_Float rRadius, TER_NodeFunctor_ABC& bestNodeFunction ) const;
 
     std::vector< boost::shared_ptr< MT_Vector2D > > FindCrossroadsWithinCircle( const MT_Vector2D& center, float rRadius );
+    //@}
+
+    //! @name Operations
+    //@{
+    void ProcessInSimulationThread( const boost::shared_ptr< TER_PathFindRequest_ABC >& pRequest );
     //@}
 
     //! @name Debug
@@ -83,6 +88,7 @@ private:
     T_DynamicDataVector dynamicDataToRegister_;
     T_DynamicDataVector dynamicDataToUnregister_;
     boost::mutex        dynamicDataMutex_;
+    bool                bUseSameThread_;
     //@}
 };
 

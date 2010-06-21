@@ -44,6 +44,7 @@ public:
     //! @name Main
     //@{
     void Update                   ();
+    void UpdateInSimulationThread ();
     void StartCompute             ( boost::shared_ptr< DEC_Path_ABC > pPath );
     void CleanPathAfterComputation( const boost::shared_ptr< TER_PathFindRequest_ABC >& pPath );
     //@}
@@ -91,6 +92,7 @@ private:
 
     boost::mutex cleanAndDestroyMutex_;
     T_Requests   requestsToCleanAfterComputation_;
+    bool bUseInSameThread_;
 };
 
 #include "DEC_PathFind_Manager.inl"

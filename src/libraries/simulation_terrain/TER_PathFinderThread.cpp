@@ -40,13 +40,15 @@ using namespace pathfind;
 // Name: TER_PathFinderThread constructor
 // Created: AGE 2005-02-23
 // -----------------------------------------------------------------------------
-TER_PathFinderThread::TER_PathFinderThread( const std::string& strGraphArchive, const std::string& strNodeArchive, const std::string& strLinkArchive, tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >& queue )
+TER_PathFinderThread::TER_PathFinderThread( const std::string& strGraphArchive, const std::string& strNodeArchive, const std::string& strLinkArchive, tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >& queue, bool bUseSameThread )
     : tools::thread::RequestProcessor_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >( queue )
     , pPathfinder_( 0 )
+    , bUseSameThread_( bUseSameThread )
 {
     pPathfinder_ = new TerrainPathfinder( strGraphArchive, strNodeArchive, strLinkArchive );
     pPathfinder_->SetGraphConfiguration( 10, 1000, 10000 ); // precision, minpicking, maxpicking
-    Start();
+    if( !bUseSameThread )
+        Start();
 }
 
 // -----------------------------------------------------------------------------
@@ -226,6 +228,17 @@ std::vector< boost::shared_ptr< MT_Vector2D > > TER_PathFinderThread::FindCrossr
     for( std::vector< pathfind::Node< TerrainData >* >::const_iterator it = result.begin(); it != result.end(); ++it )
         points.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( ( MT_Float ) (*it)->X(), ( MT_Float ) (*it)->Y() ) ) );
     return points;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_PathFinderThread::ProcessInSimulationThread
+// Created: JSR 2010-06-16
+// -----------------------------------------------------------------------------
+void TER_PathFinderThread::ProcessInSimulationThread( const boost::shared_ptr< TER_PathFindRequest_ABC >& pRequest )
+{
+    if( !bUseSameThread_ )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Pathfind : Process in same thread than simulation not expected." );
+    Process( pRequest );
 }
 
 // -----------------------------------------------------------------------------
