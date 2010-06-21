@@ -668,7 +668,7 @@ public:
 
         virtual std::string GetNodeName();
         std::string GetItemName();
-
+        ObjectInfos* CreateCopy();
         void ReadArchive         ( xml::xistream& input );
         void ReadSensiblePosition( xml::xistream& input );
         void ReadDotation        ( const std::string& type, xml::xistream& input );

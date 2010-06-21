@@ -17,6 +17,7 @@
 #include "ADN_Objects_GUI.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_ObjectCreator_ABC.h"
+#include "ADN_Objects_Wizard.h"
 
 
 typedef ADN_Objects_Data::ObjectInfos ObjectInfos;
@@ -46,32 +47,6 @@ ADN_ListView_Objects::~ADN_ListView_Objects()
 {
     delete pConnector_; 
 }
-
-
-/*namespace
-{	
-	static int INDEX=0;
-	template<typename T1, typename T2> struct GuiConnector
-	{
-		static void Connect(T_ConnectorVector& connectors, ObjectInfos* pInfos, bool bConnect)
-		{
-			T2& temp = *static_cast<T2*>(pInfos->capacities_[T2::DISPLAY_NAME]);
-			connectors[INDEX]->Connect( &temp.bPresent_, bConnect );
-			++INDEX;
-			// forward
-			T1::Connect(connectors, pInfos, bConnect);
-		}
-	};
-	template<typename T2> struct GuiConnector<ADN_Objects_Data::NullType, T2>
-	{
-		static void Connect(T_ConnectorVector& connectors, ObjectInfos* pInfos, bool bConnect)
-		{
-			T2& temp = *static_cast<T2*>(pInfos->capacities_[T2::DISPLAY_NAME]);
-			connectors[INDEX]->Connect( &temp.bPresent_, bConnect );
-			INDEX=0;
-		}
-	};
-}*/
 
 namespace
 {
@@ -238,7 +213,7 @@ void ADN_ListView_Objects::OnContextMenu( const QPoint& pt )
     if( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin )
     {
         QPopupMenu          popupMenu( this );
-        ADN_DefaultObjectCreator< ADN_Objects_Data::ObjectInfos >   wizard;
+        ADN_Objects_Wizard  wizard;
 
         FillContextMenuWithDefault( popupMenu, wizard );
         popupMenu.exec( pt );

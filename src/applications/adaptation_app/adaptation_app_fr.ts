@@ -5657,6 +5657,25 @@ du tireur</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Objects_Wizard</name>
+    <message>
+        <source>New object creation</source>
+        <translation>Création d&apos;un nouvel objet</translation>
+    </message>
+    <message>
+        <source>Object</source>
+        <translation>Objet</translation>
+    </message>
+    <message>
+        <source>Creation finished</source>
+        <translation>Création terminée</translation>
+    </message>
+    <message>
+        <source>Click &quot;Done&quot; to create the new object.</source>
+        <translation>Cliquez sur &quot;Terminer&quot; pour créer le nouvel objet.</translation>
+    </message>
+</context>
+<context>
     <name>ADN_OpenFile_Exception</name>
     <message>
         <source>File error</source>

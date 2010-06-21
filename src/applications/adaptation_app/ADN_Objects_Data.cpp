@@ -289,7 +289,7 @@ ADN_Objects_Data::ADN_CapacityInfos_Constructor::ADN_CapacityInfos_Constructor()
     ptrBuildable_->SetParentNode( *this );
     ptrImprovable_->SetParentNode( *this );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data::ReadArchive
 // Created: JCR 2008-08-25
@@ -443,6 +443,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Mobility::WriteArchive( xml::xostream& 
 
 ADN_Objects_Data::ADN_CapacityInfos_Attrition::ADN_CapacityInfos_Attrition()
 : ammoCategory_( (ADN_Equipement_Data::T_AmmoCategoryInfo_Vector&)ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Munition ).categories_, 0, "" )
+, useAmmo_( false )
 {
     category_.SetParentNode( *this );
     ammoCategory_.SetParentNode( *this );
@@ -452,7 +453,7 @@ ADN_Objects_Data::ADN_CapacityInfos_Attrition::ADN_CapacityInfos_Attrition()
 void ADN_Objects_Data::ADN_CapacityInfos_Attrition::ReadArchive( xml::xistream& xis )
 {
 	ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
-    std::string dotation( xml::attribute< std::string >( xis, "category" ) );  	 
+    std::string dotation( xml::attribute< std::string >( xis, "category" ) );
 	if ( dotation != "" )
     {
         ADN_Equipement_Data::CategoryInfo* pCategory = ADN_Workspace::GetWorkspace().GetEquipements().GetData().FindEquipementCategory( dotation );
@@ -1352,4 +1353,19 @@ void ADN_Objects_Data::WriteArchive( xml::xostream& xos )
     for( IT_ObjectsInfos_Vector it = vObjectInfos_.begin(); it!= vObjectInfos_.end(); ++it)
         (*it)->WriteArchive( xos );
     xos << xml::end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::CreateCopy
+// Created: LDC 2010-06-21
+// -----------------------------------------------------------------------------
+ADN_Objects_Data::ObjectInfos* ADN_Objects_Data::ObjectInfos::CreateCopy()
+{
+    xml::xostringstream xos;
+    WriteArchive( xos );
+    ADN_Objects_Data::ObjectInfos* pCopy = new ADN_Objects_Data::ObjectInfos;
+    xml::xistringstream xis( xos.str() );
+    xis >> xml::start( "object" );
+    pCopy->ReadArchive( xis );
+    return pCopy;
 }
