@@ -197,6 +197,14 @@
         <source>Start single player or multiplayer training session</source>
         <translation>Démarrer une session d&apos;entraînement solo ou multi-joueur</translation>
     </message>
+    <message>
+        <source>Import</source>
+        <translation type="unfinished">Importer</translation>
+    </message>
+    <message>
+        <source>Importer depuis l&apos;editeur de scenario</source>
+        <translation type="unfinished">Importer depuis l&apos;editeur de scenario</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>

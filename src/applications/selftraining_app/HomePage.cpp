@@ -10,6 +10,7 @@
 #include "selftraining_app_pch.h"
 #include "HomePage.h"
 #include "AuthoringPage.h"
+#include "ImportPage.h" // LTO
 #include "ReplayPage.h"
 #include "ScenarioEditPage.h"
 #include "SelfTrainingPage.h"
@@ -26,6 +27,7 @@ HomePage::HomePage( QWidgetStack* pages, const Config& config, kernel::Controlle
     : MenuPage( pages, *this, eButtonOptions | eButtonQuit )
 {
     AddLink( tools::translate( "HomePage", "Adapt" ), *new AuthoringPage( pages, *this, config, controllers ), tools::translate( "HomePage", "Start authoring, terrain generation or terrain workshop" ) );
+    AddLink( tools::translate( "HomePage", "Import" ), *new ImportPage( pages, *this, config, controllers ), tools::translate( "HomePage", "Importer depuis l'editeur de scenario" ) ); // LTO
     AddLink( tools::translate( "HomePage", "Prepare" ), *new ScenarioEditPage( pages, *this, config, controllers ), tools::translate( "HomePage", "Edit scenario" ) );
     AddLink( tools::translate( "HomePage", "Play" ), *new SelfTrainingPage( pages, *this, config, controllers, lister ), tools::translate( "HomePage", "Start single player or multiplayer training session" ) );
     AddLink( tools::translate( "HomePage", "Replay" ), *new ReplayPage( pages, *this , controllers, config ), tools::translate( "HomePage", "Replay scenario" ) );

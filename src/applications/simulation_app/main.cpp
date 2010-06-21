@@ -95,7 +95,7 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
         FlexLmLicense license( "sword-dispatcher", 1.0f );
         maxConnections = license.GetAuthorisedUsers();
     }
-    catch( FlexLmLicense::LicenseError& error )
+    catch( FlexLmLicense::LicenseError& )
     {
         maxConnections = 1;
     }
@@ -128,7 +128,7 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
         MT_LOG_UNREGISTER_LOGGER( fileLogger );
         nResult = app.Execute();
     }
-    catch( SIM_App::QuitException& e ) 
+    catch( SIM_App::QuitException& ) 
     {
     } 
     catch( MT_ScipioException& exception )
