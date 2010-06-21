@@ -35,7 +35,6 @@
 #include "UrbanModel.h"
 #include <urban/Model.h>
 #include <urban/TerrainObject_ABC.h>
-#include <urban/Capacity_ABC.h>
 #include <xeumeuleu/xml.h>
 
 MT_Random PHY_DotationCategory_IndirectFire::random_;

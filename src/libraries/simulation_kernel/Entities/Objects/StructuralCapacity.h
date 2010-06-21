@@ -10,11 +10,15 @@
 #ifndef __StructuralCapacity_h_
 #define __StructuralCapacity_h_
 
-#include "InteractiveUrbanContainer_ABC.h"
 #include "ObjectCapacity_ABC.h"
 #include "MIL_InteractiveContainer_ABC.h"
 
 class PHY_DotationCategory;
+
+namespace urban
+{
+    class TerrainObject_ABC;
+}
 
 // =============================================================================
 /** @class  StructuralCapacity
