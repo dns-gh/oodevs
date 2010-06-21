@@ -11,7 +11,7 @@
 #define __MIL_InteractiveContainer_ABC_h_
 
 class MIL_Agent_ABC;
-class Object;
+class MIL_Object_ABC;
 class MIL_PopulationElement_ABC;
 
 // =============================================================================
@@ -37,16 +37,16 @@ public:
 
     //! @name Operations on agent
     //@{
-    virtual void CanInteractWith         ( const Object& /*object*/, const MIL_Agent_ABC& /*agent*/, bool& /*canInteract*/ ) {}
-    virtual void ProcessAgentEntering    ( Object& /*object*/, MIL_Agent_ABC& /*agent*/ ) { }
-    virtual void ProcessAgentExiting     ( Object& /*object*/, MIL_Agent_ABC& /*agent*/ ) { }
-    virtual void ProcessAgentMovingInside( Object& /*object*/, MIL_Agent_ABC& /*agent*/ ) { }
-    virtual void ProcessAgentInside      ( Object& /*object*/, MIL_Agent_ABC& /*agent*/ ) { }    
+    virtual void CanInteractWith         ( const MIL_Object_ABC& /*object*/, const MIL_Agent_ABC& /*agent*/, bool& /*canInteract*/ ) {}
+    virtual void ProcessAgentEntering    ( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& /*agent*/ ) { }
+    virtual void ProcessAgentExiting     ( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& /*agent*/ ) { }
+    virtual void ProcessAgentMovingInside( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& /*agent*/ ) { }
+    virtual void ProcessAgentInside      ( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& /*agent*/ ) { }    
     //@}
 
     //! @name Operations on population
     //@{
-    virtual void ProcessPopulationInside ( Object& /*object*/, MIL_PopulationElement_ABC& /*population*/ ) {}
+    virtual void ProcessPopulationInside ( MIL_Object_ABC& /*object*/, MIL_PopulationElement_ABC& /*population*/ ) {}
     //@}
 
 private:
