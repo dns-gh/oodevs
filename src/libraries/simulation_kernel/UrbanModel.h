@@ -27,6 +27,7 @@ namespace urban
 class MIL_Config;
 class MIL_CheckPointInArchive;
 class MIL_CheckPointOutArchive;
+class UrbanObjectWrapper;
 
 // =============================================================================
 // @class  UrbanModel
@@ -50,12 +51,15 @@ public:
     static void                 SendCreation            ( urban::TerrainObject_ABC& UrbanBlock );
     urban::TerrainObject_ABC*   FindUrbanBlock          ( unsigned id ) const;
     MT_Float                    GetUrbanBlockCost       ( MT_Float weight, const MT_Vector2D& from, const MT_Vector2D& to ) const;
+    void                        CreateObjectWrapper     ( urban::TerrainObject_ABC& object );
+
     //@}
 
     //! @name Operations
     //@{
     urban::Model& GetModel();
     static UrbanModel& GetSingleton();
+    UrbanObjectWrapper& FindWrapper( const urban::TerrainObject_ABC& terrain );
     //@}
 
     //! @name CheckPoints
@@ -70,6 +74,7 @@ public:
 
 private:
     std::auto_ptr< urban::Model                 > model_;
+    std::vector< UrbanObjectWrapper* > urbanWrappers_;
 
 };
 

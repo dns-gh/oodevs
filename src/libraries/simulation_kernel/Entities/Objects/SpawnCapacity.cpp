@@ -85,7 +85,7 @@ void SpawnCapacity::serialize( Archive& file, const uint )
 // Name: SpawnCapacity::Register
 // Created: MGD 2009-03-05
 // -----------------------------------------------------------------------------
-void SpawnCapacity::Register( Object& object )
+void SpawnCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
     object.Register( static_cast< MIL_InteractiveContainer_ABC *>( this ) );
@@ -95,13 +95,13 @@ void SpawnCapacity::Register( Object& object )
 // Name: SpawnCapacity::Instanciate
 // Created: MGD 2009-03-05
 // -----------------------------------------------------------------------------
-void SpawnCapacity::Instanciate( Object& object ) const
+void SpawnCapacity::Instanciate( MIL_Object_ABC& object ) const
 {    
     SpawnCapacity* capacity = new SpawnCapacity( *this );
     object.AddCapacity( capacity );
     TER_Localisation location = object.GetLocalisation();
     location.Scale( rActionRange_ );
-    Object* childObject= static_cast< Object* >( MIL_Singletons::GetEntityManager().CreateObject( childType_, object.GetArmy(), location ) );
+    Object* childObject= static_cast< Object* >( MIL_Singletons::GetEntityManager().CreateObject( childType_, *object.GetArmy(), location ) );
 
     object.GetAttribute< ChildObjectAttribute >().AddChildObject( *childObject );    
     object.Register( static_cast< MIL_InteractiveContainer_ABC *>( capacity ) );
@@ -111,7 +111,7 @@ void SpawnCapacity::Instanciate( Object& object ) const
 // Name: SpawnCapacity::AddCreator
 // Created: SLG 2010-02-16
 // -----------------------------------------------------------------------------
-void SpawnCapacity::AddCreator( Object& object, const MIL_Agent_ABC& agent )
+void SpawnCapacity::AddCreator( MIL_Object_ABC& object, const MIL_Agent_ABC& agent )
 {
     Object* childObject = object.RetrieveAttribute< ChildObjectAttribute >()->GetChildObject(); 
     childObject->operator ()().AddDetector( agent );

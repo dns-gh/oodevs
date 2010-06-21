@@ -15,7 +15,7 @@
 #include "MIL_InteractiveContainer_ABC.h"
 #include <boost/serialization/export.hpp>
 
-class Object;
+class MIL_Object_ABC;
 class PHY_DotationCategory;
 class PHY_Protection;
 class PHY_AttritionData;
@@ -49,11 +49,11 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Instanciate( Object& object ) const;
-    virtual void Register( Object& object );
+    virtual void Instanciate( MIL_Object_ABC& object ) const;
+    virtual void Register( MIL_Object_ABC& object );
 
-    virtual void ProcessAgentMovingInside( Object& object, MIL_Agent_ABC& agent );
-    virtual void ProcessPopulationMovingInside( Object& object, MIL_PopulationElement_ABC& agent );
+    virtual void ProcessAgentMovingInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent );
+    virtual void ProcessPopulationMovingInside( MIL_Object_ABC& object, MIL_PopulationElement_ABC& agent );
     //@}
 
     //! @name Accessors
@@ -66,7 +66,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    bool HasInteractionCapabilities( Object& object ) const;
+    bool HasInteractionCapabilities( MIL_Object_ABC& object ) const;
     //@}
 
     //! @name types

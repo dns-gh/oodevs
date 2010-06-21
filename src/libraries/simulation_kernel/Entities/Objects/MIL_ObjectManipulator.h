@@ -12,7 +12,7 @@
 
 #include "MIL_ObjectManipulator_ABC.h"
 
-class Object;
+class MIL_Object_ABC;
 
 // =============================================================================
 /** @class  MIL_ObjectManipulator
@@ -26,8 +26,8 @@ class MIL_ObjectManipulator : public MIL_ObjectManipulator_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_ObjectManipulator( Object& object );
-    explicit MIL_ObjectManipulator( const Object& object );    
+    explicit MIL_ObjectManipulator( MIL_Object_ABC& object );
+    explicit MIL_ObjectManipulator( const MIL_Object_ABC& object );    
     virtual ~MIL_ObjectManipulator();
     //@}
 
@@ -94,7 +94,7 @@ private:
 private:
     //! @name Member data
     //@{
-    Object& object_;
+    MIL_Object_ABC& object_;
     //@}
 };
 

@@ -49,9 +49,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Register( Object& object );
-    virtual void Instanciate( Object& object ) const;
-    void Mine( Object& object );
+    virtual void Register( MIL_Object_ABC& object );
+    virtual void Instanciate( MIL_Object_ABC& object ) const;
+    void Mine( MIL_Object_ABC& object );
     //@}
 
     //! @name Accessors

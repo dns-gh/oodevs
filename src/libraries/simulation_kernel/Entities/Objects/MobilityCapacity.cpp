@@ -106,7 +106,7 @@ void MobilityCapacity::serialize( Archive& file, const unsigned int )
 // Name: MobilityCapacity::Register
 // Created: JCR 2008-07-03
 // -----------------------------------------------------------------------------
-void MobilityCapacity::Register( Object& object )
+void MobilityCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
 }
@@ -115,7 +115,7 @@ void MobilityCapacity::Register( Object& object )
 // Name: MobilityCapacity::Instanciate
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-void MobilityCapacity::Instanciate( Object& object ) const
+void MobilityCapacity::Instanciate( MIL_Object_ABC& object ) const
 {
     object.AddCapacity( new MobilityCapacity( *this ) );
 }

@@ -38,9 +38,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Instanciate( Object& object ) const;
-    virtual void Register( Object& object );
-    virtual void Update( Object& object, unsigned int time );
+    virtual void Instanciate( MIL_Object_ABC& object ) const;
+    virtual void Register( MIL_Object_ABC& object );
+    virtual void Update( MIL_Object_ABC& object, unsigned int time );
     void QueueForDecontamination( MIL_Agent_ABC& agent );
     //@}
 
@@ -52,7 +52,7 @@ private:
 
     //! @name Helpers
     //@{
-    bool Decontaminate( Object& object, MIL_Agent_ABC& agent );
+    bool Decontaminate( MIL_Object_ABC& object, MIL_Agent_ABC& agent );
     //@}
 
     //! @name Types

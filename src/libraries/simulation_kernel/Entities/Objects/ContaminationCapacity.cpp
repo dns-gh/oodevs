@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "ContaminationCapacity.h"
-#include "Object.h"
+#include "MIL_Object_ABC.h"
 #include "MIL_NbcAgentType.h"
 #include "NBCAttribute.h"
 #include "ToxicAttribute_ABC.h"
@@ -77,7 +77,7 @@ void ContaminationCapacity::serialize( Archive& file, const unsigned int )
 // Name: ContaminationCapacity::Register
 // Created: JCR 2008-07-03
 // -----------------------------------------------------------------------------
-void ContaminationCapacity::Register( Object& object )
+void ContaminationCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
     object.Register( static_cast< MIL_InteractiveContainer_ABC *>( this ) );
@@ -87,7 +87,7 @@ void ContaminationCapacity::Register( Object& object )
 // Name: ContaminationCapacity::Instanciate
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-void ContaminationCapacity::Instanciate( Object& object ) const
+void ContaminationCapacity::Instanciate( MIL_Object_ABC& object ) const
 {    
     ContaminationCapacity* capacity = new ContaminationCapacity( *this );
     object.AddCapacity( capacity );
@@ -98,7 +98,7 @@ void ContaminationCapacity::Instanciate( Object& object ) const
 // Name: ContaminationCapacity::ProcessAgentInside
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
-void ContaminationCapacity::ProcessAgentInside( Object& object, MIL_Agent_ABC& agent )
+void ContaminationCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent )
 {
     const MT_Vector2D& position = agent.GetRole< PHY_RoleInterface_Location >().GetPosition();
     const NBCAttribute* pNBC = object.RetrieveAttribute< NBCAttribute >();

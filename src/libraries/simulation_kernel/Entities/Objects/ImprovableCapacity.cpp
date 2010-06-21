@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "ImprovableCapacity.h"
-#include "Object.h"
+#include "MIL_Object_ABC.h"
 #include "MineAttribute.h"
 #include "Entities\Agents\Units\Dotations\PHY_DotationType.h"
 #include "Entities\Agents\Units\Dotations\PHY_DotationCategory.h"
@@ -121,7 +121,7 @@ void ImprovableCapacity::save( MIL_CheckPointOutArchive& ar, const unsigned int 
 // Name: ImprovableCapacity::Register
 // Created: JCR 2008-07-03
 // -----------------------------------------------------------------------------
-void ImprovableCapacity::Register( Object& object )
+void ImprovableCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );    
 }
@@ -130,7 +130,7 @@ void ImprovableCapacity::Register( Object& object )
 // Name: ImprovableCapacity::Instanciate
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-void ImprovableCapacity::Instanciate( Object& object ) const
+void ImprovableCapacity::Instanciate( MIL_Object_ABC& object ) const
 {
     object.AddCapacity( new ImprovableCapacity( *this ) );
     if( unitType_ == ConstructionCapacity::eRaw )
@@ -180,7 +180,7 @@ unsigned int ImprovableCapacity::GetMaxDotation() const
 // Name: ImprovableCapacity::Mine
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
-void ImprovableCapacity::Mine( Object& object )
+void ImprovableCapacity::Mine( MIL_Object_ABC& object )
 {
     if( object.IsMarkedForDestruction() )
         return;

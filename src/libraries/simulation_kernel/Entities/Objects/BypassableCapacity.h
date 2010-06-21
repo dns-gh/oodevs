@@ -35,9 +35,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Instanciate( Object& object ) const;
-    virtual void Register( Object& object );
-    void Bypass( Object& object, MT_Float rDeltaPercentage );
+    virtual void Instanciate( MIL_Object_ABC& object ) const;
+    virtual void Register( MIL_Object_ABC& object );
+    void Bypass( MIL_Object_ABC& object, MT_Float rDeltaPercentage );
     //@}
 
 private:

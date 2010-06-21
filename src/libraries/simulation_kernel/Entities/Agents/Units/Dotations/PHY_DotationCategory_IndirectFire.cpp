@@ -19,6 +19,8 @@
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Roles/Protection/PHY_RoleInterface_ActiveProtection.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
+#include "Entities/Objects/StructuralCapacity.h"
+#include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/MIL_Army.h"
@@ -29,8 +31,11 @@
 #include "simulation_terrain/TER_PopulationFlow_ABC.h"
 #include "simulation_terrain/TER_PopulationManager.h"
 #include "simulation_terrain/TER_World.h"
+#include "tools/MIL_Geometry.h"
 #include "UrbanModel.h"
 #include <urban/Model.h>
+#include <urban/TerrainObject_ABC.h>
+#include <urban/Capacity_ABC.h>
 #include <xeumeuleu/xml.h>
 
 MT_Random PHY_DotationCategory_IndirectFire::random_;
@@ -120,13 +125,20 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC& firer,
         std::vector< const urban::TerrainObject_ABC* > urbanList;
         UrbanModel::GetSingleton().GetModel().GetListWithinCircle( geometry::Point2f( vTargetPosition.rX_, vTargetPosition.rX_ ), rInterventionTypeFired * rDispersionX_, urbanList );
         
+        for( std::vector< const urban::TerrainObject_ABC* >::iterator it = urbanList.begin(); it != urbanList.end(); ++it )
+        {
+            urban::TerrainObject_ABC* urbanObject = const_cast< urban::TerrainObject_ABC* >( *it );
+            UrbanObjectWrapper& wrapper = UrbanModel::GetSingleton().FindWrapper( *urbanObject );
+            StructuralCapacity* capacity = wrapper.Retrieve< StructuralCapacity >();
+            if ( capacity )
+                capacity->ApplyIndirectFire( *urbanObject, attritionSurface, dotationCategory_ );
+        }
         for( TER_Agent_ABC::CIT_AgentPtrVector itAllTarget = allTargets.begin(); itAllTarget != allTargets.end(); ++itAllTarget )
         {   
             MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **itAllTarget ).GetAgent();
             if( std::find( targets.begin(), targets.end(), *itAllTarget ) == targets.end() || std::find( urbanList.begin(), urbanList.end(), target.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock() ) != urbanList.end() )
                 targets.push_back( *itAllTarget );
         }
-        //SLG
 
         for( TER_Agent_ABC::CIT_AgentPtrVector itTarget = targets.begin(); itTarget != targets.end(); ++itTarget )
         {

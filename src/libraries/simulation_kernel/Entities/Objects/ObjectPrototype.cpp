@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "ObjectPrototype.h"
 #include "ObjectCapacity_ABC.h"
-#include "Object.h"
+#include "MIL_Object_ABC.h"
 #include <boost/bind.hpp>
 
 // -----------------------------------------------------------------------------
@@ -64,7 +64,7 @@ const MIL_ObjectType_ABC& ObjectPrototype::GetType() const
 // Name: ObjectPrototype::Build
 // Created: JCR 2008-05-26
 // -----------------------------------------------------------------------------
-void ObjectPrototype::Build( Object& object ) const
+void ObjectPrototype::Build( MIL_Object_ABC& object ) const
 {
     std::for_each( capacities_.begin(), capacities_.end(), boost::bind( &ObjectCapacity_ABC::Instanciate, _1, boost::ref( object ) ) );
 }

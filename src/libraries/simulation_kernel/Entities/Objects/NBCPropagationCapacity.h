@@ -28,13 +28,13 @@ public:
     //! @name CheckPoints
     //@{
     template< typename Archive > void serialize( Archive&, const uint );
-    virtual void Register( Object& /*object*/ );
+    virtual void Register( MIL_Object_ABC& /*object*/ );
     //@}
 
     //! @name virtual
     //@{
-    virtual void Instanciate( Object& object ) const;
-    virtual void Update( Object& object, float time );
+    virtual void Instanciate( MIL_Object_ABC& object ) const;
+    virtual void Update( MIL_Object_ABC& object, float time );
     //@}
 
 private:
@@ -45,9 +45,9 @@ private:
 
     //! @name Update
     //@{
-    void UpdateShape( Object& object , MT_Vector2D vNormalizedWind , MT_Vector2D vPerpendicularToWind , MT_Float windSpeed );
-    bool UpdateState( Object& object , MT_Vector2D vNormalizedWind , MT_Vector2D vPerpendicularToWind , MT_Float windSpeed );
-    void Propagate( const MT_Vector2D& vOrigin, Object& object );
+    void UpdateShape( MIL_Object_ABC& object , MT_Vector2D vNormalizedWind , MT_Vector2D vPerpendicularToWind , MT_Float windSpeed );
+    bool UpdateState( MIL_Object_ABC& object , MT_Vector2D vNormalizedWind , MT_Vector2D vPerpendicularToWind , MT_Float windSpeed );
+    void Propagate( const MT_Vector2D& vOrigin, MIL_Object_ABC& object );
     //@}
     
     //! @name Helpers

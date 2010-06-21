@@ -9,10 +9,11 @@
 
 #include "simulation_kernel_pch.h"
 #include "UrbanModel.h"
+#include "Entities/Objects/StructuralCapacity.h"
+#include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
-#include "Tools/MIL_Config.h"
 #include <boost/bind.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/path.hpp>
@@ -50,9 +51,29 @@ UrbanModel::UrbanModel()
 // -----------------------------------------------------------------------------
 UrbanModel::~UrbanModel()
 {
+    for( std::vector< UrbanObjectWrapper* >::iterator it = urbanWrappers_.begin(); it != urbanWrappers_.end(); ++it )
+    {
+        delete *it;
+    }
     singleton = 0;
 }
 
+namespace
+{
+    class UrbanWrapperVisitor : public urban::TerrainObjectVisitor_ABC
+    {
+    public:
+        UrbanWrapperVisitor( UrbanModel& model ) : model_( model ) 
+        {}
+        ~UrbanWrapperVisitor(){}
+        virtual void VisitBlock( urban::TerrainObject_ABC& object )
+        {
+             model_.CreateObjectWrapper( object );
+        }
+    private: 
+        UrbanModel& model_;
+    };
+}
 // -----------------------------------------------------------------------------
 // Name: UrbanModel::ReadODB
 // Created: SLG 2009-08-11
@@ -69,12 +90,26 @@ void UrbanModel::ReadUrbanModel( const MIL_Config& config )
          MT_LOG_INFO_MSG( MT_FormatString( "Loading Urban Model from path '%s'", directoryPath.c_str() ) )
          urban::WorldParameters world ( directoryPath );
          model_->Load( directoryPath, world );
+         UrbanWrapperVisitor visitor( *this );
+         model_->Accept( visitor );
     }
     catch( std::exception& e )
     {
         MT_LOG_ERROR_MSG( "Exception in loading Urban Model caught : " << e.what() );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: UrbanModel::CreateObjectWrapper
+// Created: SLG 2010-06-18
+// -----------------------------------------------------------------------------
+void UrbanModel::CreateObjectWrapper( urban::TerrainObject_ABC& object )
+{
+    UrbanObjectWrapper* wrapper = new UrbanObjectWrapper( object );
+    wrapper->AddCapacity( new StructuralCapacity() );
+    urbanWrappers_.push_back( wrapper );
+}
+
 namespace
 {
     class UrbanSendingCreationVisitor : public urban::TerrainObjectVisitor_ABC
@@ -84,9 +119,9 @@ namespace
         {}
         ~UrbanSendingCreationVisitor()
         {}
-        virtual void VisitBlock( const urban::TerrainObject_ABC& urbanObject )
+        virtual void VisitBlock( urban::TerrainObject_ABC& urbanObject )
         {
-            model_.SendCreation( const_cast< urban::TerrainObject_ABC& >( urbanObject ) );
+            model_.SendCreation( urbanObject );
         }
     private:
         const UrbanModel& model_;
@@ -179,10 +214,10 @@ namespace
         {}
         ~FindUrbanBlockVisitor()
         {}
-        virtual void VisitBlock( const urban::TerrainObject_ABC& object )
+        virtual void VisitBlock( urban::TerrainObject_ABC& object )
         {
             if ( object.GetId() == id_ )
-                foundObject_ = &const_cast< urban::TerrainObject_ABC& >( object );
+                foundObject_ = &object;
         }
         urban::TerrainObject_ABC* GetObject(){ return foundObject_; }
     private:
@@ -230,4 +265,16 @@ UrbanModel& UrbanModel::GetSingleton()
     if( !singleton )
         throw std::runtime_error( "urbanModel not defined" );
     return *singleton;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanModel::FindWrapper
+// Created: SLG 2010-06-21
+// -----------------------------------------------------------------------------
+UrbanObjectWrapper& UrbanModel::FindWrapper( const urban::TerrainObject_ABC& terrain )
+{
+    for( std::vector< UrbanObjectWrapper* >::const_iterator it = urbanWrappers_.begin(); it != urbanWrappers_.end(); ++it )
+        if( &( ( *it )->GetObject() ) == &terrain )
+            return **it;
+    throw std::exception( "UrbanObjectWrapper not found" );
 }

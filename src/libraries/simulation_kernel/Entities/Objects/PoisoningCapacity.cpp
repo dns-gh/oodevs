@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PoisoningCapacity.h"
-#include "Object.h"
+#include "MIL_Object_ABC.h"
 #include "NBCTypeAttribute.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
@@ -82,7 +82,7 @@ void PoisoningCapacity::serialize( Archive& file, const uint )
 // Name: BurnCapacity::Register
 // Created: RFT 2008-07-03
 // -----------------------------------------------------------------------------
-void PoisoningCapacity::Register( Object& object )
+void PoisoningCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
 }
@@ -91,7 +91,7 @@ void PoisoningCapacity::Register( Object& object )
 // Name: PoisoningCapacity::Instanciate
 // Created: RFT 2008-06-08
 // -----------------------------------------------------------------------------
-void PoisoningCapacity::Instanciate( Object& object ) const
+void PoisoningCapacity::Instanciate( MIL_Object_ABC& object ) const
 {
     object.AddCapacity( new PoisoningCapacity( *this ) );
 }
@@ -100,7 +100,7 @@ void PoisoningCapacity::Instanciate( Object& object ) const
 // Name: PoisoningCapacity::Update
 // Created: RFT 2008-06-02
 // -----------------------------------------------------------------------------
-void PoisoningCapacity::Update( Object& /*object*/, float /*time*/ )
+void PoisoningCapacity::Update( MIL_Object_ABC& /*object*/, float /*time*/ )
 {
     //NOTHING
 }
@@ -109,7 +109,7 @@ void PoisoningCapacity::Update( Object& /*object*/, float /*time*/ )
 // Name: AttritionCapacity::ProcessAgentMovingInside
 // Created: RFT 2008-05-30
 // -----------------------------------------------------------------------------
-void PoisoningCapacity::ProcessAgentMovingInside( Object& object, MIL_Agent_ABC& agent )
+void PoisoningCapacity::ProcessAgentMovingInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent )
 {
     NBCTypeAttribute* attr = object.RetrieveAttribute< NBCTypeAttribute >();
     if ( attr && attr->GetAgentType().IsPoisoning() )
@@ -123,7 +123,7 @@ void PoisoningCapacity::ProcessAgentMovingInside( Object& object, MIL_Agent_ABC&
 // Name: AttritionCapacity::ProcessPopulationMovingInside
 // Created: RFT 2008-06-06
 // -----------------------------------------------------------------------------
-void PoisoningCapacity::ProcessPopulationMovingInside( Object& object, MIL_PopulationElement_ABC& population )
+void PoisoningCapacity::ProcessPopulationMovingInside( MIL_Object_ABC& object, MIL_PopulationElement_ABC& population )
 {
     NBCTypeAttribute* attr = object.RetrieveAttribute< NBCTypeAttribute >();
     if( attr && attr->GetAgentType().IsPoisoning() )
@@ -137,7 +137,7 @@ void PoisoningCapacity::ProcessPopulationMovingInside( Object& object, MIL_Popul
 // Name: PoisoningCapacity::ProcessAgentInside
 // Created: RFT 2008-06-02
 // -----------------------------------------------------------------------------
-void PoisoningCapacity::ProcessAgentInside( Object& /*object*/, MIL_Agent_ABC& /*agent*/ )
+void PoisoningCapacity::ProcessAgentInside( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& /*agent*/ )
 {
     //NOTHING
 }
@@ -146,7 +146,7 @@ void PoisoningCapacity::ProcessAgentInside( Object& /*object*/, MIL_Agent_ABC& /
 // Name: PoisoningCapacity::ProcessAgentEntering
 // Created: RFT 2008-06-02
 // -----------------------------------------------------------------------------
-void PoisoningCapacity::ProcessAgentEntering( Object& /*object*/, MIL_Agent_ABC& /*agent*/ )
+void PoisoningCapacity::ProcessAgentEntering( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& /*agent*/ )
 {
     //NOTHING
 }

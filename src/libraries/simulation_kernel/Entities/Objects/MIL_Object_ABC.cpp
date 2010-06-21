@@ -30,8 +30,8 @@ using namespace hla;
 // Name: MIL_Object_ABC constructor
 // Created: NLD 2002-12-12
 //-----------------------------------------------------------------------------
-MIL_Object_ABC::MIL_Object_ABC( MIL_Army_ABC& army, const MIL_ObjectType_ABC& type )
-    : pArmy_                ( &army )
+MIL_Object_ABC::MIL_Object_ABC( MIL_Army_ABC* army, const MIL_ObjectType_ABC& type )
+    : pArmy_                ( army )
     , pType_                ( &type )
     , bMarkedForDestruction_( false )
     , bReadyForDeletion_    ( false )
@@ -68,7 +68,8 @@ MIL_Object_ABC::~MIL_Object_ABC()
 // -----------------------------------------------------------------------------
 void MIL_Object_ABC::Register()
 {
-    pArmy_->RegisterObject( *this );
+    if( pArmy_ )
+        pArmy_->RegisterObject( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,7 +78,8 @@ void MIL_Object_ABC::Register()
 // -----------------------------------------------------------------------------
 void MIL_Object_ABC::Unregister()
 {
-    pArmy_->UnregisterObject( *this );
+    if( pArmy_ )
+        pArmy_->UnregisterObject( *this );
 }
 
 // =============================================================================

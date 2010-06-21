@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "ExtinguishableCapacity.h"
 #include "FireAttribute.h"
-#include "Object.h"
+#include "MIL_Object_ABC.h"
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( ExtinguishableCapacity )
@@ -66,7 +66,7 @@ void ExtinguishableCapacity::serialize( Archive& file, const unsigned int )
 // Name: ExtinguishableCapacity::Register
 // Created: JCR 2008-07-03
 // -----------------------------------------------------------------------------
-void ExtinguishableCapacity::Register( Object& object )
+void ExtinguishableCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
 }
@@ -75,7 +75,7 @@ void ExtinguishableCapacity::Register( Object& object )
 // Name: ExtinguishableCapacity::Instanciate
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-void ExtinguishableCapacity::Instanciate( Object& object ) const
+void ExtinguishableCapacity::Instanciate( MIL_Object_ABC& object ) const
 {
     object.AddCapacity( new ExtinguishableCapacity( *this ) );
 }
@@ -84,7 +84,7 @@ void ExtinguishableCapacity::Instanciate( Object& object ) const
 // Name: ExtinguishableCapacity::Bypass
 // Created: JCR 2008-06-06
 // -----------------------------------------------------------------------------
-void ExtinguishableCapacity::Extinguish( Object& object, int extinguisherAgent, int numberOfFireHoses )
+void ExtinguishableCapacity::Extinguish( MIL_Object_ABC& object, int extinguisherAgent, int numberOfFireHoses )
 {
     object.GetAttribute< FireAttribute >().ComputeHeatWhenExtinguishing( (MIL_FireClass::E_FireExtinguisherAgent)extinguisherAgent, numberOfFireHoses );
 }

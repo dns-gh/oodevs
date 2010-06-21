@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "ScatteringCapacity.h"
-#include "Object.h"
+#include "MIL_Object_ABC.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
@@ -71,7 +71,7 @@ void ScatteringCapacity::serialize( Archive& file, const unsigned int )
 // Name: ScatteringCapacity::Register
 // Created: MGD 2010-03-12
 // -----------------------------------------------------------------------------
-void ScatteringCapacity::Register( Object& object )
+void ScatteringCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
     object.Register( static_cast< MIL_InteractiveContainer_ABC *>( this ) );
@@ -81,7 +81,7 @@ void ScatteringCapacity::Register( Object& object )
 // Name: ScatteringCapacity::Instanciate
 // Created: MGD 2010-03-12
 // -----------------------------------------------------------------------------
-void ScatteringCapacity::Instanciate( Object& object ) const
+void ScatteringCapacity::Instanciate( MIL_Object_ABC& object ) const
 {    
     ScatteringCapacity* capacity = new ScatteringCapacity( *this );
     object.AddCapacity( capacity );
@@ -92,7 +92,7 @@ void ScatteringCapacity::Instanciate( Object& object ) const
 // Name: AttitudeModifierCapacity::ProcessAgentInside
 // Created: MGD 2010-03-15
 // -----------------------------------------------------------------------------
-void ScatteringCapacity::ProcessPopulationInside( Object& object, MIL_PopulationElement_ABC& population )
+void ScatteringCapacity::ProcessPopulationInside( MIL_Object_ABC& object, MIL_PopulationElement_ABC& population )
 {
     population.PullHumans( humanByTimeStep_ );
 }

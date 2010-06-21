@@ -38,9 +38,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Instanciate( Object& object ) const;
-    virtual void Register( Object& object );
-    virtual void Update( Object& object, unsigned int time );
+    virtual void Instanciate( MIL_Object_ABC& object ) const;
+    virtual void Register( MIL_Object_ABC& object );
+    virtual void Update( MIL_Object_ABC& object, unsigned int time );
     //@}
 
 private:
@@ -51,10 +51,10 @@ private:
 
     //! @name Helpers
     //@{
-    void InitializeUpdate( Object& object, const FireAttribute& attr );
-    int  UpdateState( Object& object, const FireAttribute& attr, unsigned int time );
-    void Propagate( Object& object );
-    void CheckPropagation( const MT_Vector2D& vOrigin, Object& object );
+    void InitializeUpdate( MIL_Object_ABC& object, const FireAttribute& attr );
+    int  UpdateState( MIL_Object_ABC& object, const FireAttribute& attr, unsigned int time );
+    void Propagate( MIL_Object_ABC& object );
+    void CheckPropagation( const MT_Vector2D& vOrigin, MIL_Object_ABC& object );
     //@}
     
     //! @name Helpers

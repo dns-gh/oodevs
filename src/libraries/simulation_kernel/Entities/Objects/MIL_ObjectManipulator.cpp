@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_ObjectManipulator.h"
-#include "Object.h"
+#include "MIL_Object_ABC.h"
 
 #include "BuildableCapacity.h"
 #include "ImprovableCapacity.h"
@@ -45,7 +45,7 @@
 // Name: MIL_ObjectManipulator constructor
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
-MIL_ObjectManipulator::MIL_ObjectManipulator( Object& object )
+MIL_ObjectManipulator::MIL_ObjectManipulator( MIL_Object_ABC& object )
     : object_ ( object )
 {
     // NOTHING
@@ -55,8 +55,8 @@ MIL_ObjectManipulator::MIL_ObjectManipulator( Object& object )
 // Name: MIL_ObjectManipulator constructor
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
-MIL_ObjectManipulator::MIL_ObjectManipulator( const Object& object )
-    : object_ ( const_cast< Object& >( object ) )
+MIL_ObjectManipulator::MIL_ObjectManipulator( const MIL_Object_ABC& object )
+    : object_ ( const_cast< MIL_Object_ABC& >( object ) )
 {
     // NOTHING
 }

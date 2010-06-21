@@ -21,6 +21,7 @@ namespace xml
 }
 
 class Deserializer;
+class MIL_Object_ABC;
 class PHY_DotationCategory;
 class PHY_ConsumptionType;
 
@@ -49,13 +50,13 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Instanciate( Object& object ) const;
-    virtual void Register( Object& object );
+    virtual void Instanciate( MIL_Object_ABC& object ) const;
+    virtual void Register( MIL_Object_ABC& object );
 
-    void Construct( Object& object );
-    void Construct( Object& object, float rDeltaPercentage );
-    void Destroy( Object& object );
-    void Destroy( Object& object, float rDeltaPercentage );
+    void Construct( MIL_Object_ABC& object );
+    void Construct( MIL_Object_ABC& object, float rDeltaPercentage );
+    void Destroy( MIL_Object_ABC& object );
+    void Destroy( MIL_Object_ABC& object, float rDeltaPercentage );
     //@}
 
     //! @name Accessors
@@ -75,7 +76,7 @@ private:
     //! @name Helpers
     //@{
     void ReadDotation( xml::xistream& xis );
-    void ChangeConstructionPercentage( Object& object, float rNewConstructionPercentage );
+    void ChangeConstructionPercentage( MIL_Object_ABC& object, float rNewConstructionPercentage );
     //@}
 
 private:

@@ -181,7 +181,7 @@ int DEC_PopulationFunctions::IsEnemy(const MIL_Population& callerPopulation, int
     if( !( pObject && (*pObject)().CanBePerceived() ) )
         return 0;
     else
-        return (int)callerPopulation.GetArmy().IsAnEnemy( pObject->GetArmy() ) ;
+        return (int)callerPopulation.GetArmy().IsAnEnemy( *pObject->GetArmy() ) ;
 }
 
 // =============================================================================

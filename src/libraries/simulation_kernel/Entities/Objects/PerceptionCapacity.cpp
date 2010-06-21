@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PerceptionCapacity.h"
-#include "Object.h"
+#include "MIL_Object_ABC.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Populations/MIL_Population.h"
@@ -72,7 +72,7 @@ void PerceptionCapacity::serialize( Archive& file, const unsigned int )
 // Name: PerceptionCapacity::Register
 // Created: MGD 2010-03-12
 // -----------------------------------------------------------------------------
-void PerceptionCapacity::Register( Object& object )
+void PerceptionCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
     object.Register( static_cast< MIL_InteractiveContainer_ABC *>( this ) );
@@ -82,7 +82,7 @@ void PerceptionCapacity::Register( Object& object )
 // Name: PerceptionCapacity::Instanciate
 // Created: MGD 2010-03-12
 // -----------------------------------------------------------------------------
-void PerceptionCapacity::Instanciate( Object& object ) const
+void PerceptionCapacity::Instanciate( MIL_Object_ABC& object ) const
 {    
     PerceptionCapacity* capacity = new PerceptionCapacity( *this );
     object.AddCapacity( capacity );
@@ -93,7 +93,7 @@ void PerceptionCapacity::Instanciate( Object& object ) const
 // Name: AttitudeModifierCapacity::ProcessAgentInside
 // Created: MGD 2010-03-15
 // -----------------------------------------------------------------------------
-void PerceptionCapacity::ProcessPopulationInside( Object& object, MIL_PopulationElement_ABC& population )
+void PerceptionCapacity::ProcessPopulationInside( MIL_Object_ABC& object, MIL_PopulationElement_ABC& population )
 {
     population.GetPopulation().SetBlinded( modifier_ );
 }

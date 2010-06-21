@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "WorkableCapacity.h"
-#include "Object.h"
+#include "MIL_Object_ABC.h"
 #include "AnimatorAttribute.h"
 #include <xeumeuleu/xml.h>
 
@@ -69,7 +69,7 @@ void WorkableCapacity::serialize( Archive& file, const unsigned int )
 // Name: WorkableCapacity::Register
 // Created: JCR 2008-07-03
 // -----------------------------------------------------------------------------
-void WorkableCapacity::Register( Object& object )
+void WorkableCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
     object.GetAttribute< AnimatorAttribute >() = AnimatorAttribute( maxAnimators_ );
@@ -79,7 +79,7 @@ void WorkableCapacity::Register( Object& object )
 // Name: WorkableCapacity::Instanciate
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-void WorkableCapacity::Instanciate( Object& object ) const
+void WorkableCapacity::Instanciate( MIL_Object_ABC& object ) const
 {
     object.AddCapacity( new WorkableCapacity( *this ) );
     object.GetAttribute< AnimatorAttribute >() = AnimatorAttribute( maxAnimators_ );
@@ -89,7 +89,7 @@ void WorkableCapacity::Instanciate( Object& object ) const
 // Name: WorkableCapacity::AddAnimator
 // Created: JCR 2008-06-05
 // -----------------------------------------------------------------------------
-bool WorkableCapacity::AddAnimator( Object& object, const MIL_Agent_ABC& agent )
+bool WorkableCapacity::AddAnimator( MIL_Object_ABC& object, const MIL_Agent_ABC& agent )
 {
     return object.GetAttribute< AnimatorAttribute >().AddAnimator( agent );    
 }
@@ -98,7 +98,7 @@ bool WorkableCapacity::AddAnimator( Object& object, const MIL_Agent_ABC& agent )
 // Name: WorkableCapacity::ReleaseAnimator
 // Created: JCR 2008-06-05
 // -----------------------------------------------------------------------------
-void WorkableCapacity::ReleaseAnimator( Object& object, const MIL_Agent_ABC& agent )
+void WorkableCapacity::ReleaseAnimator( MIL_Object_ABC& object, const MIL_Agent_ABC& agent )
 {
     return object.GetAttribute< AnimatorAttribute >().ReleaseAnimator( agent );
 }

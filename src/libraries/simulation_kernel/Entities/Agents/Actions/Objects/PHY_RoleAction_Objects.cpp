@@ -215,7 +215,7 @@ int PHY_RoleAction_Objects::Destroy( boost::shared_ptr< DEC_Knowledge_Object >& 
 
         object().Destroy( rDeltaPercentage );
 
-        if( pDotationCategory && pion_.GetArmy() == pObject->GetArmy() )
+        if( pDotationCategory && pion_.GetArmy() == *pObject->GetArmy() )
             dataComputer.RecoverDotations( *pDotationCategory, nDotationRecovered );
 
         if( attribute.GetState() == 0. )

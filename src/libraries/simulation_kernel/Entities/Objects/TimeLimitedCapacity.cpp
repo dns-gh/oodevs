@@ -64,7 +64,7 @@ void TimeLimitedCapacity::serialize( Archive& file, const unsigned int )
 // Name: TimeLimitedCapacity::Register
 // Created: JCR 2008-07-03
 // -----------------------------------------------------------------------------
-void TimeLimitedCapacity::Register( Object& object )
+void TimeLimitedCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
 }
@@ -73,7 +73,7 @@ void TimeLimitedCapacity::Register( Object& object )
 // Name: TimeLimitedCapacity::Instanciate
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-void TimeLimitedCapacity::Instanciate( Object& object ) const
+void TimeLimitedCapacity::Instanciate( MIL_Object_ABC& object ) const
 {    
     object.AddCapacity( new TimeLimitedCapacity( *this ) );    
 }
@@ -82,7 +82,7 @@ void TimeLimitedCapacity::Instanciate( Object& object ) const
 // Name: TimeLimitedCapacity::Update
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
-void TimeLimitedCapacity::Update( Object& object, unsigned int time )
+void TimeLimitedCapacity::Update( MIL_Object_ABC& object, unsigned int time )
 {    
     if ( object.GetAttribute< TimeLimitedAttribute >().IsTimeOver( time ) )
         object.MarkForDestruction();

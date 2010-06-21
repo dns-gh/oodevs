@@ -13,7 +13,7 @@
 #include "MIL_ObjectType_ABC.h"
 #include "MIL_ObjectBuilder_ABC.h"
 
-class Object;
+class MIL_Object_ABC;
 
 // =============================================================================
 /** @class  ObjectPrototype
@@ -35,7 +35,7 @@ public:
     //@{
     template< typename Capacity >
     void AddCapacity( Capacity* capacity );
-    void Build( Object& object ) const;
+    void Build( MIL_Object_ABC& object ) const;
     //@}
 
     //! @name Accessors

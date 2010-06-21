@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "FirePropagationCapacity.h"
-#include "Object.h"
+#include "MIL_Object_ABC.h"
 #include "FireAttribute.h"
 #include "MIL_PropagationManager.h"
 #include "Entities/MIL_EntityManager.h"
@@ -88,7 +88,7 @@ void FirePropagationCapacity::serialize( Archive& file, const unsigned int )
 // Name: FirePropagationCapacity::Register
 // Created: RFT 2008-07-03
 // -----------------------------------------------------------------------------
-void FirePropagationCapacity::Register( Object& object )
+void FirePropagationCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
     object.Register( static_cast< MIL_InteractiveContainer_ABC *>( this ) );
@@ -98,7 +98,7 @@ void FirePropagationCapacity::Register( Object& object )
 // Name: FirePropagationCapacity::Instanciate
 // Created: RFT 2008-06-08
 // -----------------------------------------------------------------------------
-void FirePropagationCapacity::Instanciate( Object& object ) const
+void FirePropagationCapacity::Instanciate( MIL_Object_ABC& object ) const
 {
     FirePropagationCapacity* capacity = new FirePropagationCapacity( *this );
     object.AddCapacity< PropagationCapacity_ABC >( capacity );
@@ -109,7 +109,7 @@ void FirePropagationCapacity::Instanciate( Object& object ) const
 // Name: FirePropagationCapacity::Update
 // Created: RFT 2008-05-22
 // -----------------------------------------------------------------------------
-void FirePropagationCapacity::Update( Object& object, unsigned int time )
+void FirePropagationCapacity::Update( MIL_Object_ABC& object, unsigned int time )
 {
     FireAttribute& attr = object.GetAttribute< FireAttribute >();
     const unsigned int timeSinceCreation = time - timeOfCreation_;
@@ -122,7 +122,7 @@ void FirePropagationCapacity::Update( Object& object, unsigned int time )
         Propagate( object );
 }
 
-void FirePropagationCapacity::InitializeUpdate( Object& object, const FireAttribute& attr )
+void FirePropagationCapacity::InitializeUpdate( MIL_Object_ABC& object, const FireAttribute& attr )
 {
     // We get the coordinates of the fire and adjust them in order that they become divisible by length and width of the fire 
     MT_Vector2D vOrigin( object.GetLocalisation().ComputeBarycenter() );
@@ -140,7 +140,7 @@ void FirePropagationCapacity::InitializeUpdate( Object& object, const FireAttrib
 // Created: RFT 24/04/2008
 // Modified: RFT 15/05/2008
 // -----------------------------------------------------------------------------
-int FirePropagationCapacity::UpdateState( Object& object, const FireAttribute& attr, unsigned int time )
+int FirePropagationCapacity::UpdateState( MIL_Object_ABC& object, const FireAttribute& attr, unsigned int time )
 {
     //Set the time of death of the fire as soon as its temperature is below
     //Used to block the propagation of the fire on a fire which just died one tick ago
@@ -165,7 +165,7 @@ int FirePropagationCapacity::UpdateState( Object& object, const FireAttribute& a
 // Created: RFT 06/05/2008
 // Modified: RFT 15/05/2008
 // -----------------------------------------------------------------------------
-void FirePropagationCapacity::Propagate( Object& object )
+void FirePropagationCapacity::Propagate( MIL_Object_ABC& object )
 {
     FireAttribute& attr = object.GetAttribute< FireAttribute >();
     MT_Vector2D vOrigin( object.GetLocalisation().ComputeBarycenter() );
@@ -197,7 +197,7 @@ namespace
     class MIL_FireBuilder : public MIL_ObjectBuilder_ABC
     {
     public:
-        MIL_FireBuilder( const Object& object, const TER_Localisation& location ) 
+        MIL_FireBuilder( const MIL_Object_ABC& object, const TER_Localisation& location ) 
             : object_ ( object ) 
             , location_ ( location )
         {
@@ -208,7 +208,7 @@ namespace
             return object_.GetType();
         }
 
-        virtual void Build( Object& object ) const
+        virtual void Build( MIL_Object_ABC& object ) const
         {            
             object.Initialize( location_ );
             object.GetAttribute< FireAttribute >() = FireAttribute( object_.GetAttribute< FireAttribute >() );
@@ -216,7 +216,7 @@ namespace
         }
 
     private:
-        const Object&           object_;
+        const MIL_Object_ABC&           object_;
         const TER_Localisation&    location_;
     };
 }
@@ -226,7 +226,7 @@ namespace
 // Created: RFT 06/05/2008
 // Modified: RFT 15/05/2008
 // -----------------------------------------------------------------------------
-void FirePropagationCapacity::CheckPropagation( const MT_Vector2D& vOrigin, Object& object )
+void FirePropagationCapacity::CheckPropagation( const MT_Vector2D& vOrigin, MIL_Object_ABC& object )
 {
     FireAttribute& attr = object.GetAttribute< FireAttribute >();
     TER_Localisation location( GetLocalisation( vOrigin ) );
@@ -234,7 +234,7 @@ void FirePropagationCapacity::CheckPropagation( const MT_Vector2D& vOrigin, Obje
     if( !pManager_->IsFlagged( location , attr.GetLength() , attr.GetWidth() ) ) 
     {
         MIL_FireBuilder builder( object, location );
-        MIL_EntityManager::GetSingleton().CreateObject( object.GetArmy(), builder );
+        MIL_EntityManager::GetSingleton().CreateObject( *object.GetArmy(), builder );
         pManager_->Flag( vOrigin , attr.GetLength() , attr.GetWidth() );
     }
 }

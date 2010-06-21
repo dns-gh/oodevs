@@ -70,7 +70,7 @@ void InputPropagationCapacity::serialize( Archive& file, const unsigned int )
 // Name: InputPropagationCapacity::Register
 // Created: JCR 2008-07-03
 // -----------------------------------------------------------------------------
-void InputPropagationCapacity::Register( Object& object )
+void InputPropagationCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
     object.Register( static_cast< MIL_InteractiveContainer_ABC *>( this ) );
@@ -80,7 +80,7 @@ void InputPropagationCapacity::Register( Object& object )
 // Name: InputPropagationCapacity::Instanciate
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-void InputPropagationCapacity::Instanciate( Object& object ) const
+void InputPropagationCapacity::Instanciate( MIL_Object_ABC& object ) const
 {    
     InputPropagationCapacity* capacity = new InputPropagationCapacity( *this );
     object.AddCapacity< PropagationCapacity_ABC >( capacity );
@@ -102,7 +102,7 @@ namespace
 // Name: InputPropagationCapacity::Update
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
-void InputPropagationCapacity::Update( Object& object, unsigned int time )
+void InputPropagationCapacity::Update( MIL_Object_ABC& object, unsigned int time )
 {    
     ToxicAttribute_ABC* pAttr = object.RetrieveAttribute< ToxicAttribute_ABC >();
     if( pAttr )

@@ -67,7 +67,7 @@ void BridgingCapacity::serialize( Archive& file, const unsigned int )
 // Name: BridgingCapacity::Register
 // Created: JCR 2008-07-03
 // -----------------------------------------------------------------------------
-void BridgingCapacity::Register( Object& object )
+void BridgingCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
 }
@@ -76,7 +76,7 @@ void BridgingCapacity::Register( Object& object )
 // Name: BridgingCapacity::Instanciate
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-void BridgingCapacity::Instanciate( Object& object ) const
+void BridgingCapacity::Instanciate( MIL_Object_ABC& object ) const
 {
     object.AddCapacity( new BridgingCapacity( *this ) );    
 }
@@ -85,7 +85,7 @@ void BridgingCapacity::Instanciate( Object& object ) const
 // Name: BridgingCapacity::Finalize
 // Created: JCR 2008-08-19
 // -----------------------------------------------------------------------------
-void BridgingCapacity::Finalize( Object& object )
+void BridgingCapacity::Finalize( MIL_Object_ABC& object )
 {
     T_PointVector bridge; 
     CreateBridgeGeometry( object.GetLocalisation().GetPoints(), bridge );

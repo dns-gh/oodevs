@@ -42,14 +42,14 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Instanciate( Object& object ) const;
-    virtual void Register( Object& object );
-    void Activate( Object& object );
+    virtual void Instanciate( MIL_Object_ABC& object ) const;
+    virtual void Register( MIL_Object_ABC& object );
+    void Activate( MIL_Object_ABC& object );
     //@}   
 
     //! @name Accessors
     //@{
-    bool IsActivated( Object& object ) const;
+    bool IsActivated( MIL_Object_ABC& object ) const;
     //@}
 
 private:

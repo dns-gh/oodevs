@@ -42,9 +42,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Instanciate( Object& object ) const;
-    virtual void Register( Object& object );
-    virtual void ProcessAgentInside( Object& object, MIL_Agent_ABC& agent );
+    virtual void Instanciate( MIL_Object_ABC& object ) const;
+    virtual void Register( MIL_Object_ABC& object );
+    virtual void ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent );
     void DecontaminateZone( const TER_Localisation& zone );
     //@}
 

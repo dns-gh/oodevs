@@ -35,9 +35,9 @@ public:
     //! @name Operations
     //@{    
     template< typename Archive > void serialize( Archive&, const unsigned int );
-    virtual void Instanciate( Object& object ) const;
-    virtual void Register( Object& object );
-    virtual void Update( Object& object, unsigned int time );
+    virtual void Instanciate( MIL_Object_ABC& object ) const;
+    virtual void Register( MIL_Object_ABC& object );
+    virtual void Update( MIL_Object_ABC& object, unsigned int time );
     //@}
 
 private:

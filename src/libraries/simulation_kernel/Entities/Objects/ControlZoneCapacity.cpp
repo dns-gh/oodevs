@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "ControlZoneCapacity.h"
-#include "Object.h"
+#include "MIL_Object_ABC.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Humans/PHY_RoleInterface_Humans.h"
@@ -151,7 +151,7 @@ void ControlZoneCapacity::serialize( Archive& file, const unsigned int )
 // Name: ControlZoneCapacity::Register
 // Created: JCR 2008-07-03
 // -----------------------------------------------------------------------------
-void ControlZoneCapacity::Register( Object& object )
+void ControlZoneCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
 }
@@ -160,7 +160,7 @@ void ControlZoneCapacity::Register( Object& object )
 // Name: ControlZoneCapacity::Instanciate
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-void ControlZoneCapacity::Instanciate( Object& object ) const
+void ControlZoneCapacity::Instanciate( MIL_Object_ABC& object ) const
 {
     object.AddCapacity( new ControlZoneCapacity( *this ) );
 }
@@ -185,7 +185,7 @@ void ControlZoneCapacity::RetrieveTargets( const MIL_Object_ABC& object, T_Targe
                                 ? 0
                                 : controller_->GetRole< human::PHY_RoleInterface_Humans >().GetNbrUsableHumans() / area;
     targets.clear();
-    object.ProcessAgentsInside( boost::bind( &ControlZoneCapacity::ControlTarget, this, _1, boost::cref( object.GetArmy() ), rPHCoeff, boost::ref( targets ) ) );
+    object.ProcessAgentsInside( boost::bind( &ControlZoneCapacity::ControlTarget, this, _1, boost::cref( *object.GetArmy() ), rPHCoeff, boost::ref( targets ) ) );
 }
 
 // -----------------------------------------------------------------------------

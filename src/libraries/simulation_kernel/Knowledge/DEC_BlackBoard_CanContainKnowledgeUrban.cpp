@@ -30,7 +30,7 @@ namespace
             : elements_( elements ), army_( army ) {}
         virtual ~UrbanBlockKnowledgeCreator() {}
 
-        virtual void VisitBlock( const urban::TerrainObject_ABC& object )
+        virtual void VisitBlock( urban::TerrainObject_ABC& object )
         {
             elements_[ object.GetId() ] = boost::shared_ptr< DEC_Knowledge_Urban > ( new DEC_Knowledge_Urban( army_, object ) );
         }

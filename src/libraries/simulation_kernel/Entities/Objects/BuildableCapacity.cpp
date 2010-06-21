@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "BuildableCapacity.h"
-#include "Object.h"
+#include "MIL_Object_ABC.h"
 #include "ConstructionAttribute.h"
 #include "MIL_AgentServer.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
@@ -124,7 +124,7 @@ void BuildableCapacity::save( MIL_CheckPointOutArchive& ar, const unsigned int )
 // Name: BuildableCapacity::Register
 // Created: JCR 2008-07-03
 // -----------------------------------------------------------------------------
-void BuildableCapacity::Register( Object& object )
+void BuildableCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
 }
@@ -133,7 +133,7 @@ void BuildableCapacity::Register( Object& object )
 // Name: BuildableCapacity::Instanciate
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-void BuildableCapacity::Instanciate( Object& object ) const
+void BuildableCapacity::Instanciate( MIL_Object_ABC& object ) const
 {
     object.AddCapacity( new BuildableCapacity( *this ) );
     if ( unitType_ == ConstructionCapacity::eRaw && dotation_ )
@@ -186,7 +186,7 @@ unsigned int BuildableCapacity::GetMaxDotation() const
 // Name: BuildableCapacity::Construct
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
-void BuildableCapacity::Construct( Object& object )
+void BuildableCapacity::Construct( MIL_Object_ABC& object )
 {
     ChangeConstructionPercentage( object, 1. );
 }
@@ -195,7 +195,7 @@ void BuildableCapacity::Construct( Object& object )
 // Name: BuildableCapacity::Construct
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
-void BuildableCapacity::Construct( Object& object, float rDeltaPercentage )
+void BuildableCapacity::Construct( MIL_Object_ABC& object, float rDeltaPercentage )
 {    
     object.GetAttribute< ConstructionAttribute >().Build( rDeltaPercentage );
 }
@@ -204,7 +204,7 @@ void BuildableCapacity::Construct( Object& object, float rDeltaPercentage )
 // Name: BuildableCapacity::Destroy
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
-void BuildableCapacity::Destroy( Object& object, float rDeltaPercentage )
+void BuildableCapacity::Destroy( MIL_Object_ABC& object, float rDeltaPercentage )
 {    
     object.GetAttribute< ConstructionAttribute >().Build( -rDeltaPercentage );
 }
@@ -213,7 +213,7 @@ void BuildableCapacity::Destroy( Object& object, float rDeltaPercentage )
 // Name: BuildableCapacity::Destroy
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
-void BuildableCapacity::Destroy( Object& object )
+void BuildableCapacity::Destroy( MIL_Object_ABC& object )
 {
     ChangeConstructionPercentage( object, 0. );
 }
@@ -222,7 +222,7 @@ void BuildableCapacity::Destroy( Object& object )
 // Name: BuildableCapacity::ChangeConstructionPercentage
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
-void BuildableCapacity::ChangeConstructionPercentage( Object& object, float rNewConstructionPercentage )
+void BuildableCapacity::ChangeConstructionPercentage( MIL_Object_ABC& object, float rNewConstructionPercentage )
 {
     if( object.IsMarkedForDestruction() )
         return;

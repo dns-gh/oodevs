@@ -34,6 +34,7 @@ class DEC_Knowledge_Object;
 class MIL_Agent_ABC;
 class MIL_Army_ABC;
 class MIL_KnowledgeGroup;
+class MIL_InteractiveContainer_ABC;
 class MIL_ObjectManipulator_ABC;
 class MIL_ObjectType_ABC;
 class MIL_PopulationElement_ABC;
@@ -62,7 +63,7 @@ class MIL_Object_ABC : public TER_Object_ABC
    
 public:
              MIL_Object_ABC();
-             MIL_Object_ABC( MIL_Army_ABC& army, const MIL_ObjectType_ABC& type );
+             MIL_Object_ABC( MIL_Army_ABC* army, const MIL_ObjectType_ABC& type );
     virtual ~MIL_Object_ABC();
     
     //! @name Init
@@ -86,6 +87,7 @@ public:
     //! @name Operations
     //@{
     virtual void UpdateState       ();
+    virtual void UpdateLocalisation( const TER_Localisation& newLocalisation ); 
             void ProcessEvents     ();
             void MarkForDestruction();
     //@}
@@ -109,6 +111,7 @@ public:
 
     //! @name InteractiveContainer
     //@{
+    virtual void Register                ( MIL_InteractiveContainer_ABC* capacity ) = 0;
     virtual void ProcessAgentEntering    ( MIL_Agent_ABC& agent ) = 0;
     virtual void ProcessAgentExiting     ( MIL_Agent_ABC& agent ) = 0;
     virtual void ProcessAgentMovingInside( MIL_Agent_ABC& agent ) = 0;
@@ -159,8 +162,8 @@ public:
     //@{    
     virtual unsigned int              GetID() const = 0;
     const MIL_ObjectType_ABC& GetType() const;
-    const MIL_Army_ABC& GetArmy() const;
-          MIL_Army_ABC& GetArmy();
+    const MIL_Army_ABC* GetArmy() const;
+          MIL_Army_ABC* GetArmy();
     //@}
 
     //! @name Extensions
@@ -177,7 +180,6 @@ protected:
     //! @name Tools
     //@{
     virtual bool CanCollideWithEntity() const;
-    virtual void UpdateLocalisation( const TER_Localisation& newLocalisation ); 
     virtual void Update( unsigned int time ) = 0;
     void Register();
     void Unregister();

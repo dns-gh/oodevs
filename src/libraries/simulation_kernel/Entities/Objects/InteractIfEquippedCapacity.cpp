@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "InteractIfEquippedCapacity.h"
 #include "SupplyRouteAttribute.h"
-#include "Object.h"
+#include "MIL_Object_ABC.h"
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( InteractIfEquippedCapacity )
@@ -46,7 +46,7 @@ InteractIfEquippedCapacity::~InteractIfEquippedCapacity()
 // Name: InteractIfEquippedCapacity::CanInteractWith
 // Created: LDC 2009-03-03
 // -----------------------------------------------------------------------------
-void InteractIfEquippedCapacity::CanInteractWith( const Object& object, const MIL_Agent_ABC& , bool& canInteract )
+void InteractIfEquippedCapacity::CanInteractWith( const MIL_Object_ABC& object, const MIL_Agent_ABC& , bool& canInteract )
 {
     canInteract &= object.GetAttribute< SupplyRouteAttribute >().IsEquipped();
 }
@@ -65,7 +65,7 @@ template< typename Archive > void InteractIfEquippedCapacity::serialize( Archive
 // Name: InteractIfEquippedCapacity::Register
 // Created: LDC 2009-03-03
 // -----------------------------------------------------------------------------
-void InteractIfEquippedCapacity::Register( Object& object )
+void InteractIfEquippedCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
     object.Register( static_cast< MIL_InteractiveContainer_ABC *>( this ) );
@@ -75,7 +75,7 @@ void InteractIfEquippedCapacity::Register( Object& object )
 // Name: InteractIfEquippedCapacity::Instanciate
 // Created: LDC 2009-03-03
 // -----------------------------------------------------------------------------
-void InteractIfEquippedCapacity::Instanciate( Object& object ) const
+void InteractIfEquippedCapacity::Instanciate( MIL_Object_ABC& object ) const
 {
     InteractIfEquippedCapacity* capacity = new InteractIfEquippedCapacity( *this );
     object.AddCapacity( capacity );

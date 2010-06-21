@@ -39,10 +39,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Instanciate( Object& object ) const;
-    virtual void Register( Object& object );
+    virtual void Instanciate( MIL_Object_ABC& object ) const;
+    virtual void Register( MIL_Object_ABC& object );
     
-    void AddCreator( Object& object, const MIL_Agent_ABC& agent );
+    void AddCreator( MIL_Object_ABC& object, const MIL_Agent_ABC& agent );
     //@}
 
     //! @name Helpers

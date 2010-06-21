@@ -14,7 +14,7 @@
 #include "DetectionCapacity.h"
 #include "MIL_Singletons.h"
 #include "DetectorAttribute.h"
-#include "Object.h"
+#include "MIL_Object_ABC.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
@@ -157,7 +157,7 @@ void DetectionCapacity::serialize( Archive& file, const unsigned int )
 // Name: DetectionCapacity::Register
 // Created: MGD 2009-03-05
 // -----------------------------------------------------------------------------
-void DetectionCapacity::Register( Object& object )
+void DetectionCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
     object.Register( static_cast< MIL_InteractiveContainer_ABC *>( this ) );
@@ -167,7 +167,7 @@ void DetectionCapacity::Register( Object& object )
 // Name: DetectionCapacity::Instanciate
 // Created: MGD 2009-03-05
 // -----------------------------------------------------------------------------
-void DetectionCapacity::Instanciate( Object& object ) const
+void DetectionCapacity::Instanciate( MIL_Object_ABC& object ) const
 {    
     DetectionCapacity* capacity = new DetectionCapacity( *this );
     object.AddCapacity( capacity );
@@ -204,7 +204,7 @@ namespace
 // Name: DetectionCapacity::ProcessAgentInside
 // Created: SLG 2010-02-11
 // -----------------------------------------------------------------------------
-void DetectionCapacity::ProcessAgentInside( Object& object, MIL_Agent_ABC& agent )
+void DetectionCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent )
 {
     CIT_AgentMap it = agentInsideMap_.find( &agent );
     if ( it != agentInsideMap_.end() )
@@ -233,17 +233,17 @@ void DetectionCapacity::ProcessAgentInside( Object& object, MIL_Agent_ABC& agent
             if( it->second + rIdentificationTime_ < currentTime )
             {
                 KnowledgeCreation knowledgeCreation( agent, PHY_PerceptionLevel::identified_ );
-                object.GetArmy().ApplyOnKnowledgeGroup( knowledgeCreation );
+                object.GetArmy()->ApplyOnKnowledgeGroup( knowledgeCreation );
             }
             else if( it->second + rRecognitionTime_ < currentTime )
             {
                 KnowledgeCreation knowledgeCreation( agent, PHY_PerceptionLevel::recognized_ );
-                object.GetArmy().ApplyOnKnowledgeGroup( knowledgeCreation );
+                object.GetArmy()->ApplyOnKnowledgeGroup( knowledgeCreation );
             }
             else if( it->second + rDetectionTime_ < currentTime )
             {
                 KnowledgeCreation knowledgeCreation( agent, PHY_PerceptionLevel::detected_ );
-                object.GetArmy().ApplyOnKnowledgeGroup( knowledgeCreation );
+                object.GetArmy()->ApplyOnKnowledgeGroup( knowledgeCreation );
             }
         }
 
@@ -254,7 +254,7 @@ void DetectionCapacity::ProcessAgentInside( Object& object, MIL_Agent_ABC& agent
 // Name: DetectionCapacity::ProcessAgentEntering
 // Created: SLG 2010-02-11
 // -----------------------------------------------------------------------------
-void DetectionCapacity::ProcessAgentEntering( Object& /*object*/, MIL_Agent_ABC& agent )
+void DetectionCapacity::ProcessAgentEntering( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& agent )
 {
     agentInsideMap_.insert( std::make_pair( &agent, MIL_Singletons::GetTime().GetCurrentTick() ) );
 }
@@ -263,7 +263,7 @@ void DetectionCapacity::ProcessAgentEntering( Object& /*object*/, MIL_Agent_ABC&
 // Name: DetectionCapacity::ProcessAgentExiting
 // Created: SLG 2010-02-11
 // -----------------------------------------------------------------------------
-void DetectionCapacity::ProcessAgentExiting( Object& /*object*/, MIL_Agent_ABC& agent ) 
+void DetectionCapacity::ProcessAgentExiting( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& agent ) 
 {
     agentInsideMap_.erase( &agent );
 }
@@ -272,7 +272,7 @@ void DetectionCapacity::ProcessAgentExiting( Object& /*object*/, MIL_Agent_ABC& 
 // Name: WorkableCapacity::AddDetector
 // Created: SLG 2010-02-16
 // -----------------------------------------------------------------------------
-void DetectionCapacity::AddDetector( Object& object, const MIL_Agent_ABC& agent )
+void DetectionCapacity::AddDetector( MIL_Object_ABC& object, const MIL_Agent_ABC& agent )
 {
     object.GetAttribute< DetectorAttribute >().AddDetector( agent );    
 }

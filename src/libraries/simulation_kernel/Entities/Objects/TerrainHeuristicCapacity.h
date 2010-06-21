@@ -33,8 +33,8 @@ public:
      //! @name Operations
     //@{    
     template< typename Archive > void serialize( Archive&, const unsigned int );
-    virtual void Instanciate( Object& object ) const;
-    virtual void Register( Object& object );
+    virtual void Instanciate( MIL_Object_ABC& object ) const;
+    virtual void Register( MIL_Object_ABC& object );
     int ComputePlacementScore( const MT_Vector2D& pos, const TerrainData& nPassability ) const;
     //@}
 

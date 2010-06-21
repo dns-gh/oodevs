@@ -59,7 +59,7 @@ public:
     //@}
 
 public:
-             PHY_RoleAction_Moving( MIL_AgentPion& pion );
+    explicit PHY_RoleAction_Moving( MIL_AgentPion& pion );
     virtual ~PHY_RoleAction_Moving();
 
     //! @name CheckPoints

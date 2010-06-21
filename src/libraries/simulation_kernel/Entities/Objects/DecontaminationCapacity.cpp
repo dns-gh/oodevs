@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DecontaminationCapacity.h"
-#include "Object.h"
+#include "MIL_Object_ABC.h"
 #include "AnimatorAttribute.h"
 #include "ConstructionAttribute.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
@@ -67,7 +67,7 @@ void DecontaminationCapacity::serialize( Archive& file, const unsigned int )
 // Name: DecontaminationCapacity::Register
 // Created: JCR 2008-07-03
 // -----------------------------------------------------------------------------
-void DecontaminationCapacity::Register( Object& object )
+void DecontaminationCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
 }
@@ -76,7 +76,7 @@ void DecontaminationCapacity::Register( Object& object )
 // Name: DecontaminationCapacity::Instanciate
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-void DecontaminationCapacity::Instanciate( Object& object ) const
+void DecontaminationCapacity::Instanciate( MIL_Object_ABC& object ) const
 {    
     DecontaminationCapacity* capacity = new DecontaminationCapacity( *this );
     object.AddCapacity( capacity );
@@ -86,7 +86,7 @@ void DecontaminationCapacity::Instanciate( Object& object ) const
 // Name: DecontaminationCapacity::Update
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
-void DecontaminationCapacity::Update( Object& object, unsigned int /*time*/ )
+void DecontaminationCapacity::Update( MIL_Object_ABC& object, unsigned int /*time*/ )
 {
     if ( decontaminationQueue_.size() == 0 || object.IsMarkedForDestruction() || object.GetAttribute< ConstructionAttribute >().GetState() < 1. )
         return;
@@ -100,7 +100,7 @@ void DecontaminationCapacity::Update( Object& object, unsigned int /*time*/ )
 // Name: DecontaminationCapacity::Decontaminated
 // Created: JCR 2008-08-21
 // -----------------------------------------------------------------------------
-bool DecontaminationCapacity::Decontaminate( Object& object, MIL_Agent_ABC& agent )
+bool DecontaminationCapacity::Decontaminate( MIL_Object_ABC& object, MIL_Agent_ABC& agent )
 {
     nbc::PHY_RoleInterface_NBC& roleNBC = agent.GetRole< nbc::PHY_RoleInterface_NBC >();
     if ( !roleNBC.IsContaminated() )

@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "AttritionCapacity.h"
-#include "Object.h"
+#include "MIL_Object_ABC.h"
 #include "PHY_ObjectExplosionFireResult.h"
 #include "Entities\Agents\Units\Dotations\PHY_DotationType.h"
 #include "Entities\Agents\Units\Dotations\PHY_DotationCategory.h"
@@ -95,7 +95,7 @@ void AttritionCapacity::save( MIL_CheckPointOutArchive& ar, const unsigned int )
 // Name: AttritionCapacity::Register
 // Created: JCR 2008-07-03
 // -----------------------------------------------------------------------------
-void AttritionCapacity::Register( Object& object )
+void AttritionCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
     object.Register( static_cast< MIL_InteractiveContainer_ABC *>( this ) );
@@ -105,7 +105,7 @@ void AttritionCapacity::Register( Object& object )
 // Name: AttritionCapacity::Instanciate
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-void AttritionCapacity::Instanciate( Object& object ) const
+void AttritionCapacity::Instanciate( MIL_Object_ABC& object ) const
 {    
     AttritionCapacity* capacity = new AttritionCapacity( *this );
     object.AddCapacity( capacity );
@@ -116,7 +116,7 @@ void AttritionCapacity::Instanciate( Object& object ) const
 // Name: AttritionCapacity::HasInteractionCapabilities
 // Created: JCR 2008-08-11
 // -----------------------------------------------------------------------------
-bool AttritionCapacity::HasInteractionCapabilities( Object& object ) const
+bool AttritionCapacity::HasInteractionCapabilities( MIL_Object_ABC& object ) const
 {    
     // Is Bypassed
     const BypassAttribute* bypass = object.RetrieveAttribute< BypassAttribute >();
@@ -133,9 +133,9 @@ bool AttritionCapacity::HasInteractionCapabilities( Object& object ) const
 // Name: AttritionCapacity::ProcessAgentMovingInside
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
-void AttritionCapacity::ProcessAgentMovingInside( Object& object, MIL_Agent_ABC& agent )
+void AttritionCapacity::ProcessAgentMovingInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent )
 {
-    if( object.GetArmy().GetID() == agent.GetArmy().GetID() || !HasInteractionCapabilities( object ) )
+    if( !object.GetArmy() || object.GetArmy()->GetID() == agent.GetArmy().GetID() || !HasInteractionCapabilities( object ) )
         return;
     ConstructionAttribute* construction = object.RetrieveAttribute< ConstructionAttribute >();    
     if( ! ( construction && construction->HasDotation( *dotation_ ) && dotation_->HasAttritions() ) )
@@ -152,7 +152,7 @@ void AttritionCapacity::ProcessAgentMovingInside( Object& object, MIL_Agent_ABC&
 // Name: AttritionCapacity::ProcessPopulationMovingInside
 // Created: JCR 2008-06-06
 // -----------------------------------------------------------------------------
-void AttritionCapacity::ProcessPopulationMovingInside( Object& object, MIL_PopulationElement_ABC& population )
+void AttritionCapacity::ProcessPopulationMovingInside( MIL_Object_ABC& object, MIL_PopulationElement_ABC& population )
 {
     if( population_.surface_ > 0. ) 
     {

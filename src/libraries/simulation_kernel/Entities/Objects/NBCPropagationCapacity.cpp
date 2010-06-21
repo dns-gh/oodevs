@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "NBCPropagationCapacity.h"
-#include "Object.h"
+#include "MIL_Object_ABC.h"
 #include "NBCTypeAttribute.h"
 #include "MIL_ObjectBuilder_ABC.h"
 #include "ContaminationCapacity.h"
@@ -81,7 +81,7 @@ void NBCPropagationCapacity::serialize( Archive& file, const uint )
 // Name: NBCPropagationCapacity::Register
 // Created: RFT 2008-07-03
 // -----------------------------------------------------------------------------
-void NBCPropagationCapacity::Register( Object& object )
+void NBCPropagationCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
     object.Register( static_cast< MIL_InteractiveContainer_ABC *>( this ) );
@@ -91,7 +91,7 @@ void NBCPropagationCapacity::Register( Object& object )
 // Name: NBCPropagationCapacity::Instanciate
 // Created: RFT 2008-06-08
 // -----------------------------------------------------------------------------
-void NBCPropagationCapacity::Instanciate( Object& object ) const
+void NBCPropagationCapacity::Instanciate( MIL_Object_ABC& object ) const
 {
     NBCTypeAttribute& attr           = object.GetAttribute< NBCTypeAttribute >();
     NBCPropagationCapacity* capacity = new NBCPropagationCapacity( *this );
@@ -113,7 +113,7 @@ void NBCPropagationCapacity::Instanciate( Object& object ) const
 // Name: NBCPropagationCapacity::Update
 // Created: RFT 2008-05-22
 // -----------------------------------------------------------------------------
-void NBCPropagationCapacity::Update( Object& object, float time )
+void NBCPropagationCapacity::Update( MIL_Object_ABC& object, float time )
 {    
     NBCTypeAttribute& attr = object.GetAttribute< NBCTypeAttribute >();
     MT_Vector2D vOrigin( object.GetLocalisation().ComputeBarycenter() );
@@ -154,7 +154,7 @@ void NBCPropagationCapacity::Update( Object& object, float time )
 // Name: NBCPropagationCapacity::UpdateShape
 // Created: RFT 2008-05-22
 // -----------------------------------------------------------------------------
-void NBCPropagationCapacity::UpdateShape( Object& object , MT_Vector2D vNormalizedWind , MT_Vector2D vPerpendicularToWind , MT_Float windSpeed )
+void NBCPropagationCapacity::UpdateShape( MIL_Object_ABC& object , MT_Vector2D vNormalizedWind , MT_Vector2D vPerpendicularToWind , MT_Float windSpeed )
 {
     NBCTypeAttribute& attr = object.GetAttribute< NBCTypeAttribute >();
     MT_Vector2D vOrigin( object.GetLocalisation().ComputeBarycenter() );
@@ -173,7 +173,7 @@ void NBCPropagationCapacity::UpdateShape( Object& object , MT_Vector2D vNormaliz
 // Name: NBCPropagationCapacity::UpdateState
 // Created: RFT 2008-05-22
 // -----------------------------------------------------------------------------
-bool NBCPropagationCapacity::UpdateState( Object& object , MT_Vector2D vNormalizedWind , MT_Vector2D vPerpendicularToWind , MT_Float windSpeed )
+bool NBCPropagationCapacity::UpdateState( MIL_Object_ABC& object , MT_Vector2D vNormalizedWind , MT_Vector2D vPerpendicularToWind , MT_Float windSpeed )
 {
     NBCTypeAttribute& attr = object.GetAttribute< NBCTypeAttribute >();
     MT_Vector2D vOrigin( object.GetLocalisation().ComputeBarycenter() );
@@ -195,7 +195,7 @@ namespace
     class MIL_NBCBuilder : public MIL_ObjectBuilder_ABC
     {
     public:
-        MIL_NBCBuilder( const Object& object, const TER_Localisation& location ) 
+        MIL_NBCBuilder( const MIL_Object_ABC& object, const TER_Localisation& location ) 
             : object_ ( object ) 
             , location_ ( location )
         {
@@ -206,7 +206,7 @@ namespace
             return object_.GetType();
         }
 
-        virtual void Build( Object& object ) const
+        virtual void Build( MIL_Object_ABC& object ) const
         {            
             object.Initialize( location_ );
             object.GetAttribute< NBCTypeAttribute >() = NBCTypeAttribute( object_.GetAttribute< NBCTypeAttribute >() );
@@ -214,7 +214,7 @@ namespace
         }
 
     private:
-        const Object&           object_;
+        const MIL_Object_ABC&           object_;
         const TER_Localisation&    location_;
     };
 }
@@ -224,7 +224,7 @@ namespace
 // Created: RFT 06/05/2008
 // Modified: RFT 15/05/2008
 // -----------------------------------------------------------------------------
-void NBCPropagationCapacity::Propagate( const MT_Vector2D& vOrigin, Object& object )
+void NBCPropagationCapacity::Propagate( const MT_Vector2D& vOrigin, MIL_Object_ABC& object )
 {
     NBCTypeAttribute& attr = object.GetAttribute< NBCTypeAttribute >();
     TER_Localisation location( GetLocalisation( vOrigin ) );
@@ -232,7 +232,7 @@ void NBCPropagationCapacity::Propagate( const MT_Vector2D& vOrigin, Object& obje
     if( !pManager_->IsFlagged( location , attr.GetLength() , attr.GetWidth() ) ) 
     {
         MIL_NBCBuilder builder( object, location );
-        MIL_EntityManager::GetSingleton().CreateObject( object.GetArmy(), builder );
+        MIL_EntityManager::GetSingleton().CreateObject( *object.GetArmy(), builder );
         pManager_->Flag( vOrigin , attr.GetLength() , attr.GetWidth() );
         //Definir peut etre ici une concentration initiale
     }

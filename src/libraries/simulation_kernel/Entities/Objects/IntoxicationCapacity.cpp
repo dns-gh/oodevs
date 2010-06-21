@@ -11,7 +11,7 @@
 #include "IntoxicationCapacity.h"
 #include "MIL_NbcAgentType.h"
 #include "NBCAttribute.h"
-#include "Object.h"
+#include "MIL_Object_ABC.h"
 #include "ToxicAttribute_ABC.h"
 #include "MIL_ToxicEffectManipulator.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
@@ -76,7 +76,7 @@ void IntoxicationCapacity::serialize( Archive& file, const unsigned int )
 // Name: IntoxicationCapacity::Register
 // Created: JCR 2008-07-03
 // -----------------------------------------------------------------------------
-void IntoxicationCapacity::Register( Object& object )
+void IntoxicationCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
     object.Register( static_cast< MIL_InteractiveContainer_ABC *>( this ) );
@@ -86,7 +86,7 @@ void IntoxicationCapacity::Register( Object& object )
 // Name: IntoxicationCapacity::Instanciate
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-void IntoxicationCapacity::Instanciate( Object& object ) const
+void IntoxicationCapacity::Instanciate( MIL_Object_ABC& object ) const
 {    
     IntoxicationCapacity* capacity = new IntoxicationCapacity( *this );
     object.AddCapacity( capacity );
@@ -97,7 +97,7 @@ void IntoxicationCapacity::Instanciate( Object& object ) const
 // Name: IntoxicationCapacity::ProcessAgentInside
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
-void IntoxicationCapacity::ProcessAgentInside( Object& object, MIL_Agent_ABC& agent )
+void IntoxicationCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent )
 {
     const MT_Vector2D& position = agent.GetRole< PHY_RoleInterface_Location >().GetPosition();
     const NBCAttribute* pNBC = object.RetrieveAttribute< NBCAttribute >();

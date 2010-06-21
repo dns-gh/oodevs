@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "BypassableCapacity.h"
 #include "BypassAttribute.h"
-#include "Object.h"
+#include "MIL_Object_ABC.h"
 #include "HLA/Deserializer.h"
 #include <xeumeuleu/xml.h>
 
@@ -60,7 +60,7 @@ void BypassableCapacity::serialize( Archive& file, const unsigned int )
 // Name: BypassableCapacity::Register
 // Created: JCR 2008-07-03
 // -----------------------------------------------------------------------------
-void BypassableCapacity::Register( Object& object )
+void BypassableCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
 }
@@ -69,7 +69,7 @@ void BypassableCapacity::Register( Object& object )
 // Name: BypassableCapacity::Instanciate
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-void BypassableCapacity::Instanciate( Object& object ) const
+void BypassableCapacity::Instanciate( MIL_Object_ABC& object ) const
 {
     object.AddCapacity( new BypassableCapacity( *this ) );
     object.GetAttribute< BypassAttribute >();
@@ -79,7 +79,7 @@ void BypassableCapacity::Instanciate( Object& object ) const
 // Name: BypassableCapacity::Bypass
 // Created: JCR 2008-06-06
 // -----------------------------------------------------------------------------
-void BypassableCapacity::Bypass( Object& object, MT_Float rDeltaPercentage )
+void BypassableCapacity::Bypass( MIL_Object_ABC& object, MT_Float rDeltaPercentage )
 {
     object.GetAttribute< BypassAttribute >().Update( rDeltaPercentage );
 }

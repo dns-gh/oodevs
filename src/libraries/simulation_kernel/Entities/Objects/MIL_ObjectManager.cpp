@@ -120,7 +120,7 @@ void MIL_ObjectManager::RegisterObject( MIL_Object_ABC& object )
     if( ! objects_.insert( std::make_pair( object.GetID(), &object ) ).second )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
     object.SendCreation(); //$$$ a déplacer ...
-    object.GetArmy().GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddEphemeralObjectKnowledge( object ); //$$$ A CHANGER DE PLACE QUAND REFACTOR OBJETS -- NB : ne doit pas être fait dans RealObject::InitializeCommon <= crash dans connaissance, si initialisation objet failed
+    object.GetArmy()->GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddEphemeralObjectKnowledge( object ); //$$$ A CHANGER DE PLACE QUAND REFACTOR OBJETS -- NB : ne doit pas être fait dans RealObject::InitializeCommon <= crash dans connaissance, si initialisation objet failed
 }
 
 // -----------------------------------------------------------------------------

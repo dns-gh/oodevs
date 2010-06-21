@@ -14,7 +14,7 @@
 #include "ObjectCapacity_ABC.h"
 #include "MIL_DynamicPathDataHandler.h"
 
-class Object;
+class MIL_Object_ABC;
 class TER_DynamicData;
 
 // =============================================================================
@@ -40,9 +40,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Instanciate( Object& object ) const;
-    virtual void Register( Object& object );
-    virtual void Finalize( Object& object );
+    virtual void Instanciate( MIL_Object_ABC& object ) const;
+    virtual void Register( MIL_Object_ABC& object );
+    virtual void Finalize( MIL_Object_ABC& object );
     //@}
 
 private:

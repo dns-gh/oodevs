@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "InterferenceCapacity.h"
-#include "Object.h"
+#include "MIL_Object_ABC.h"
 #include "MIL_ObjectType_ABC.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
@@ -70,7 +70,7 @@ void InterferenceCapacity::serialize( Archive& file, const unsigned int )
 // Name: InterferenceCapacity::Register
 // Created: JCR 2008-07-03
 // -----------------------------------------------------------------------------
-void InterferenceCapacity::Register( Object& object )
+void InterferenceCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
     object.Register( static_cast< MIL_InteractiveContainer_ABC *>( this ) );
@@ -80,7 +80,7 @@ void InterferenceCapacity::Register( Object& object )
 // Name: InterferenceCapacity::Instanciate
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-void InterferenceCapacity::Instanciate( Object& object ) const
+void InterferenceCapacity::Instanciate( MIL_Object_ABC& object ) const
 {    
     InterferenceCapacity* capacity = new InterferenceCapacity( *this );
     object.AddCapacity( capacity );
@@ -91,9 +91,9 @@ void InterferenceCapacity::Instanciate( Object& object ) const
 // Name: InterferenceCapacity::ProcessAgentInside
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
-void InterferenceCapacity::ProcessAgentInside( Object& object, MIL_Agent_ABC& agent )
+void InterferenceCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent )
 {
-    if( object.GetType().GetCapacity< InteractWithEnemyCapacity >() == 0 || object.GetArmy().IsAnEnemy( agent.GetArmy() ) == eTristate_True )
+    if( object.GetType().GetCapacity< InteractWithEnemyCapacity >() == 0 || object.GetArmy()->IsAnEnemy( agent.GetArmy() ) == eTristate_True )
         agent.GetRole< PHY_RoleInterface_Communications >().Jam( object );
 }
 
@@ -101,7 +101,7 @@ void InterferenceCapacity::ProcessAgentInside( Object& object, MIL_Agent_ABC& ag
 // Name: InterferenceCapacity::ProcessAgentExiting
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
-void InterferenceCapacity::ProcessAgentExiting( Object& object, MIL_Agent_ABC& agent )
+void InterferenceCapacity::ProcessAgentExiting( MIL_Object_ABC& object, MIL_Agent_ABC& agent )
 {    
     agent.GetRole< PHY_RoleInterface_Communications >().Unjam( object );
 }

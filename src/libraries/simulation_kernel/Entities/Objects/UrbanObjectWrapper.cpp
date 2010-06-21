@@ -8,116 +8,250 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-#include "Object.h"
-#include "ObjectPrototype.h"
-#include "ObjectCapacity_ABC.h"
-#include "ObjectAttribute_ABC.h"
-#include "MIL_ObjectBuilder_ABC.h"
-#include "MIL_InteractiveContainer_ABC.h"
-#include "MIL_ObjectManipulator.h"
-#include "ConstructionAttribute.h"
-#include "MineAttribute.h"
-#include "BypassAttribute.h"
-#include "ObstacleAttribute.h"
-#include "CrossingSiteAttribute.h"
-#include "SupplyRouteAttribute.h"
-#include "SpawnCapacity.h"
-#include "Entities/MIL_Army.h"
-#include "Entities/Agents/MIL_Agent_ABC.h"
-
+#include "UrbanObjectWrapper.h"
+#include <urban/TerrainObject_ABC.h>
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "Network/NET_ASN_Tools.h"
-#include "Network/NET_Publisher_ABC.h"
-#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-
-// HLA
-#include "HLA/HLA_Object_ABC.h"
-#include "HLA/HLA_UpdateFunctor.h"
-
-#include <hla/Deserializer.h>
-#include <hla/AttributeIdentifier.h>
-#include <xeumeuleu/xml.h>
-#include <boost/bind.hpp>
+#include "MIL_ObjectManipulator.h"
 
 #include "protocol/clientsenders.h"
 
-BOOST_CLASS_EXPORT_IMPLEMENT( Object )
-
-
-using namespace hla;
-
-using namespace Common;
-using namespace MsgsClientToSim;
-
-MIL_IDManager Object::idManager_;
-
 // -----------------------------------------------------------------------------
-// Name: Object constructor
-// Created: JCR 2008-06-06
+// Name: UrbanObjectWrapper constructor
+// Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
-Object::Object( xml::xistream& xis, const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army, const TER_Localisation* pLocation, bool reserved )
-    : MIL_Object_ABC( &army, builder.GetType() )
-    , id_         ( xml::attribute< unsigned long >( xis, "id" ) )
-    , name_       ( xml::attribute< std::string >( xis, "name", "" ) )
-    , pView_      ( 0 )
-    , manipulator_( new MIL_ObjectManipulator( *this ) )
+UrbanObjectWrapper::UrbanObjectWrapper( urban::TerrainObject_ABC& object )
+    : object_( object )
+    , manipulator_( *new MIL_ObjectManipulator( *this ) )
 {
-    idManager_.Lock( id_ );
-    MIL_Object_ABC::Register();
-    if( pLocation )
-        Initialize( *pLocation );
-    builder.Build( *this );
-    ObstacleAttribute* pObstacle = RetrieveAttribute< ObstacleAttribute >();
-    if( pObstacle )
-        pObstacle->SetType( reserved ? Common::ObstacleType_DemolitionTargetType_reserved : Common::ObstacleType_DemolitionTargetType_preliminary );
+    
 }
 
 // -----------------------------------------------------------------------------
-// Name: Object constructor
-// Created: SBO 2009-12-14
+// Name: UrbanObjectWrapper destructor
+// Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
-Object::Object( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army, const TER_Localisation* pLocation, const std::string& name /*= std::string()*/, bool reserved /*= true*/ )
-    : MIL_Object_ABC( &army, builder.GetType() )
-    , id_       ( idManager_.GetFreeId() )
-    , name_     ( name )
-    , pView_    ( 0 )
-    , manipulator_ ( new MIL_ObjectManipulator( *this ) )
+UrbanObjectWrapper::~UrbanObjectWrapper() 
 {
-    if( GetType().GetCapacity< SpawnCapacity >() )
-        idManager_.GetFreeId(); // we need to skip one ID for dynamic created object.
-
-    MIL_Object_ABC::Register();
-    if( pLocation )
-        Initialize( *pLocation );
-    builder.Build( *this );
-    ObstacleAttribute* pObstacle = RetrieveAttribute< ObstacleAttribute >();
-    if( pObstacle )
-        pObstacle->SetType( reserved? Common::ObstacleType_DemolitionTargetType_reserved : Common::ObstacleType_DemolitionTargetType_preliminary );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Object constructor
-// Created: JCR 2008-06-06
+// Name: UrbanObjectWrapper::WriteODB
+// Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
-Object::Object()
-    : MIL_Object_ABC()
-    , id_       ( 0 )
-    , name_     ( )
-    , pView_    ( 0 )
-    , manipulator_ ( new MIL_ObjectManipulator( *this ) )
+void UrbanObjectWrapper::WriteODB( xml::xostream& xos ) const
 {
-    // NOTHING
+    //NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Object destructor
-// Created: JCR 2008-04-21
+// Name: UrbanObjectWrapper::Register
+// Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
-Object::~Object() 
+void UrbanObjectWrapper::Register( MIL_InteractiveContainer_ABC* capacity )
 {
-    MIL_Object_ABC::Unregister();
+
 }
 
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::ProcessAgentEntering
+// Created: SLG 2010-06-18
+// -----------------------------------------------------------------------------
+void UrbanObjectWrapper::ProcessAgentEntering( MIL_Agent_ABC& agent )
+{
+    //NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::ProcessAgentExiting
+// Created: SLG 2010-06-18
+// -----------------------------------------------------------------------------
+void UrbanObjectWrapper::ProcessAgentExiting( MIL_Agent_ABC& agent )
+{
+    //NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::ProcessAgentMovingInside
+// Created: SLG 2010-06-18
+// -----------------------------------------------------------------------------
+void UrbanObjectWrapper::ProcessAgentMovingInside( MIL_Agent_ABC& agent )
+{
+    //NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::ProcessAgentInside
+// Created: SLG 2010-06-18
+// -----------------------------------------------------------------------------
+void UrbanObjectWrapper::ProcessAgentInside( MIL_Agent_ABC& agent )
+{
+    //NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::ProcessPopulationInside
+// Created: SLG 2010-06-18
+// -----------------------------------------------------------------------------
+void UrbanObjectWrapper::ProcessPopulationInside( MIL_PopulationElement_ABC& population )
+{
+    //NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< DEC_Knowledge_Object > UrbanObjectWrapper::CreateKnowledge
+// Created: SLG 2010-06-18
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DEC_Knowledge_Object > UrbanObjectWrapper::CreateKnowledge( const MIL_Army_ABC& team )
+{
+    return boost::shared_ptr< DEC_Knowledge_Object >( new DEC_Knowledge_Object() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< DEC_Knowledge_Object > UrbanObjectWrapper::CreateKnowledge
+// Created: SLG 2010-06-18
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DEC_Knowledge_Object > UrbanObjectWrapper::CreateKnowledge( const MIL_KnowledgeGroup& group )
+{
+    return boost::shared_ptr< DEC_Knowledge_Object >( new DEC_Knowledge_Object() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::operator()
+// Created: SLG 2010-06-18
+// -----------------------------------------------------------------------------
+const MIL_ObjectManipulator_ABC& UrbanObjectWrapper::operator()() const
+{
+    return manipulator_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::operator()
+// Created: SLG 2010-06-18
+// -----------------------------------------------------------------------------
+MIL_ObjectManipulator_ABC& UrbanObjectWrapper::operator()()
+{
+    return manipulator_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::GetHLAView
+// Created: SLG 2010-06-18
+// -----------------------------------------------------------------------------
+HLA_Object_ABC* UrbanObjectWrapper::GetHLAView() const
+{
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::SetHLAView
+// Created: SLG 2010-06-18
+// -----------------------------------------------------------------------------
+void UrbanObjectWrapper::SetHLAView( HLA_Object_ABC& view )
+{
+    //NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::Deserialize
+// Created: SLG 2010-06-18
+// -----------------------------------------------------------------------------
+void UrbanObjectWrapper::Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer )
+{
+    //NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::Serialize
+// Created: SLG 2010-06-18
+// -----------------------------------------------------------------------------
+void UrbanObjectWrapper::Serialize( HLA_UpdateFunctor& functor ) const
+{
+    //NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::OnUpdate
+// Created: SLG 2010-06-18
+// -----------------------------------------------------------------------------
+MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode UrbanObjectWrapper::OnUpdate( const Common::MsgMissionParameter_Value& asn )
+{
+    return MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode_no_error;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::SendCreation
+// Created: SLG 2010-06-18
+// -----------------------------------------------------------------------------
+void UrbanObjectWrapper::SendCreation() const
+{
+    //NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::SendDestruction
+// Created: SLG 2010-06-18
+// -----------------------------------------------------------------------------
+void UrbanObjectWrapper::SendDestruction() const
+{
+    //NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::SendFullState
+// Created: SLG 2010-06-18
+// -----------------------------------------------------------------------------
+void UrbanObjectWrapper::SendFullState() const
+{
+    //NOTHING
+}
+  
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::GetID
+// Created: SLG 2010-06-18
+// -----------------------------------------------------------------------------
+unsigned int UrbanObjectWrapper::GetID() const
+{
+    return object_.GetId();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::GetObject
+// Created: SLG 2010-06-21
+// -----------------------------------------------------------------------------
+urban::TerrainObject_ABC& UrbanObjectWrapper::GetObject()
+{
+    return object_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::Update
+// Created: SLG 2010-06-18
+// -----------------------------------------------------------------------------
+void UrbanObjectWrapper::Update( unsigned int time )
+{
+
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::Register
+// Created: SLG 2010-06-18
+// -----------------------------------------------------------------------------
+void UrbanObjectWrapper::Register( ObjectAttribute_ABC* attribute )
+{
+
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::Register
+// Created: SLG 2010-06-18
+// -----------------------------------------------------------------------------
+void UrbanObjectWrapper::Register( ObjectCapacity_ABC* capacity )
+{
+
+}
+
+
+#if 0
 // -----------------------------------------------------------------------------
 // Name: Object::GetID
 // Created: JCR 2008-06-02
@@ -149,6 +283,7 @@ void Object::load( MIL_CheckPointInArchive& file, const unsigned int )
     //MIL_Object_ABC::Register();
 }
     
+
 // -----------------------------------------------------------------------------
 // Name: Object::save
 // Created: JCR 2008-06-09
@@ -544,3 +679,5 @@ void Object::UpdateLocalisation( const TER_Localisation& location )
     xAttrToUpdate_ |= eAttrUpdate_Localisation;    
     MIL_Object_ABC::UpdateLocalisation( location );
 }
+
+#endif

@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "ActivableCapacity.h"
-#include "Object.h"
+#include "MIL_Object_ABC.h"
 #include "ObstacleAttribute.h"
 #include <xeumeuleu/xml.h>
 
@@ -64,7 +64,7 @@ template< typename Archive > void ActivableCapacity::serialize( Archive& file, c
 // Name: ActivableCapacity::Register
 // Created: JCR 2008-07-03
 // -----------------------------------------------------------------------------
-void ActivableCapacity::Register( Object& object )
+void ActivableCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
 }
@@ -73,7 +73,7 @@ void ActivableCapacity::Register( Object& object )
 // Name: ActivableCapacity::Instanciate
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-void ActivableCapacity::Instanciate( Object& object ) const
+void ActivableCapacity::Instanciate( MIL_Object_ABC& object ) const
 {
     object.AddCapacity( new ActivableCapacity( *this ) );
     object.GetAttribute< ObstacleAttribute >() = ObstacleAttribute( true ); // reserved obstacle
@@ -83,7 +83,7 @@ void ActivableCapacity::Instanciate( Object& object ) const
 // Name: ActivableCapacity::Activate
 // Created: JCR 2008-07-04
 // -----------------------------------------------------------------------------
-void ActivableCapacity::Activate( Object& object )
+void ActivableCapacity::Activate( MIL_Object_ABC& object )
 {
     return object.GetAttribute< ObstacleAttribute >().Activate();
 }
@@ -92,7 +92,7 @@ void ActivableCapacity::Activate( Object& object )
 // Name: ActivableCapacity::IsActivate
 // Created: JCR 2008-07-04
 // -----------------------------------------------------------------------------
-bool ActivableCapacity::IsActivated( Object& object ) const
+bool ActivableCapacity::IsActivated( MIL_Object_ABC& object ) const
 {
     return object.GetAttribute< ObstacleAttribute >().IsActivated();
 }

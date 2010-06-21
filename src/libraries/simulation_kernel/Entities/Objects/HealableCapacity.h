@@ -44,9 +44,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Instanciate( Object& object ) const;
-    virtual void Register( Object& object );
-    virtual void Update( Object& object, float time );
+    virtual void Instanciate( MIL_Object_ABC& object ) const;
+    virtual void Register( MIL_Object_ABC& object );
+    virtual void Update( MIL_Object_ABC& object, float time );
 
     //! @name Operators
     //@{

@@ -34,10 +34,10 @@ public:
     //! @name Operations
     //@{
     template< typename Archive > void serialize( Archive&, const unsigned int );
-    virtual void Instanciate( Object& object ) const;
-    virtual void Register( Object& object );
-    bool AddAnimator( Object& object, const MIL_Agent_ABC& agent );
-    void ReleaseAnimator( Object& object, const MIL_Agent_ABC& agent );
+    virtual void Instanciate( MIL_Object_ABC& object ) const;
+    virtual void Register( MIL_Object_ABC& object );
+    bool AddAnimator( MIL_Object_ABC& object, const MIL_Agent_ABC& agent );
+    void ReleaseAnimator( MIL_Object_ABC& object, const MIL_Agent_ABC& agent );
     //@}
 
 private:

@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "InteractWithEnemyCapacity.h"
-#include "Object.h"
+#include "MIL_Object_ABC.h"
 #include "simulation_kernel/Entities/Agents/MIL_Agent_ABC.h"
 #include <xeumeuleu/xml.h>
 
@@ -46,9 +46,9 @@ InteractWithEnemyCapacity::~InteractWithEnemyCapacity()
 // Name: InteractWithEnemyCapacity::CanInteractWith
 // Created: LDC 2009-03-06
 // -----------------------------------------------------------------------------
-void InteractWithEnemyCapacity::CanInteractWith( const Object& object, const MIL_Agent_ABC& agent, bool& canInteract )
+void InteractWithEnemyCapacity::CanInteractWith( const MIL_Object_ABC& object, const MIL_Agent_ABC& agent, bool& canInteract )
 {
-    if( &agent.GetArmy() == &object.GetArmy() )
+    if( &agent.GetArmy() == object.GetArmy() )
         canInteract = false;
 }
 
@@ -66,7 +66,7 @@ template< typename Archive > void InteractWithEnemyCapacity::serialize( Archive&
 // Name: InteractWithEnemyCapacity::Register
 // Created: LDC 2009-03-06
 // -----------------------------------------------------------------------------
-void InteractWithEnemyCapacity::Register( Object& object )
+void InteractWithEnemyCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
     object.Register( static_cast< MIL_InteractiveContainer_ABC *>( this ) );
@@ -76,7 +76,7 @@ void InteractWithEnemyCapacity::Register( Object& object )
 // Name: InteractWithEnemyCapacity::Instanciate
 // Created: LDC 2009-03-06
 // -----------------------------------------------------------------------------
-void InteractWithEnemyCapacity::Instanciate( Object& object ) const
+void InteractWithEnemyCapacity::Instanciate( MIL_Object_ABC& object ) const
 {
     InteractWithEnemyCapacity* capacity = new InteractWithEnemyCapacity( *this );
     object.AddCapacity( capacity );

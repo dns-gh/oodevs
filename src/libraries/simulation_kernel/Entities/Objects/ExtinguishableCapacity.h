@@ -35,9 +35,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Instanciate( Object& object ) const;
-    virtual void Register( Object& object );
-    void Extinguish( Object& object, int extinguisherAgent, int numberOfFireHoses );
+    virtual void Instanciate( MIL_Object_ABC& object ) const;
+    virtual void Register( MIL_Object_ABC& object );
+    void Extinguish( MIL_Object_ABC& object, int extinguisherAgent, int numberOfFireHoses );
     //@}
 
 private:

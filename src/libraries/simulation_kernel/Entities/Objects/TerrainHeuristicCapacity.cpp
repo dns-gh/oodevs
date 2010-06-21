@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "TerrainHeuristicCapacity.h"
-#include "Object.h"
+#include "MIL_Object_ABC.h"
 #include "Tools/MIL_Tools.h"
 #include <xeumeuleu/xml.h>
 
@@ -82,7 +82,7 @@ template< typename Archive > void TerrainHeuristicCapacity::serialize( Archive& 
 // Name: TerrainHeuristicCapacity::Register
 // Created: JCR 2008-08-18
 // -----------------------------------------------------------------------------
-void TerrainHeuristicCapacity::Register( Object& object )
+void TerrainHeuristicCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
 }
@@ -91,7 +91,7 @@ void TerrainHeuristicCapacity::Register( Object& object )
 // Name: TerrainHeuristicCapacity::Instanciate
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-void TerrainHeuristicCapacity::Instanciate( Object& object ) const
+void TerrainHeuristicCapacity::Instanciate( MIL_Object_ABC& object ) const
 {
     object.AddCapacity( new TerrainHeuristicCapacity( *this ) );
 }

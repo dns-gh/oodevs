@@ -20,7 +20,7 @@ namespace xml
 }
 
 class MIL_Object_ABC;
-class Object;
+class MIL_Object_ABC;
 class MIL_Agent_ABC;
 class PHY_Composante_ABC;
 class MIL_Army_ABC;
@@ -58,8 +58,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Instanciate( Object& object ) const;
-    virtual void Register( Object& object );
+    virtual void Instanciate( MIL_Object_ABC& object ) const;
+    virtual void Register( MIL_Object_ABC& object );
     void RetrieveTargets( const MIL_Object_ABC& object, T_TargetVector& targets ) const;
     //@}
 

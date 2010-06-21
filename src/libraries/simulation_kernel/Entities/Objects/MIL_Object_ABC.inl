@@ -34,10 +34,9 @@ bool MIL_Object_ABC::IsReadyForDeletion() const
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 inline
-const MIL_Army_ABC& MIL_Object_ABC::GetArmy() const
+const MIL_Army_ABC* MIL_Object_ABC::GetArmy() const
 {
-    assert( pArmy_ );
-    return *pArmy_;
+    return pArmy_;
 }
 
 // -----------------------------------------------------------------------------
@@ -45,10 +44,9 @@ const MIL_Army_ABC& MIL_Object_ABC::GetArmy() const
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 inline
-MIL_Army_ABC& MIL_Object_ABC::GetArmy()
+MIL_Army_ABC* MIL_Object_ABC::GetArmy()
 {
-    assert( pArmy_ );
-    return *pArmy_;
+    return pArmy_;
 }
 
 // -----------------------------------------------------------------------------

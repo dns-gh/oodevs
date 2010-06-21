@@ -11,7 +11,7 @@
 #define __MIL_ObjectBuilder_ABC_h_
 
 class MIL_ObjectType_ABC;
-class Object;
+class MIL_Object_ABC;
 
 // =============================================================================
 /** @class  MIL_ObjectBuilder_ABC
@@ -31,7 +31,7 @@ public:
     //! @name Operations
     //@{
     virtual const MIL_ObjectType_ABC& GetType() const = 0;
-    virtual void Build( Object& object ) const = 0;
+    virtual void Build( MIL_Object_ABC& object ) const = 0;
     //@}
 
 private:

@@ -43,22 +43,22 @@ public:
     //! @name CheckPoints
     //@{
     template< typename Archive > void serialize( Archive&, const uint );
-    virtual void Register( Object& object );
+    virtual void Register( MIL_Object_ABC& object );
     //@}
 
     //! @name virtual
     //@{
-    virtual void Instanciate( Object& object ) const;
-    virtual void Update( Object& object, float time );
+    virtual void Instanciate( MIL_Object_ABC& object ) const;
+    virtual void Update( MIL_Object_ABC& object, float time );
     //@}
 
     //! @name MIL_InteractiveContainer_ABC
     //@{
     //Agent
-    virtual void ProcessAgentMovingInside( Object& object, MIL_Agent_ABC& agent );
-    virtual void ProcessAgentInside( Object& object, MIL_Agent_ABC& agent );
+    virtual void ProcessAgentMovingInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent );
+    virtual void ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent );
     //Population
-    virtual void ProcessPopulationMovingInside( Object& object, MIL_PopulationElement_ABC& agent );
+    virtual void ProcessPopulationMovingInside( MIL_Object_ABC& object, MIL_PopulationElement_ABC& agent );
     //@}
 
 

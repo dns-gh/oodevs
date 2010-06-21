@@ -12,7 +12,7 @@
 
 #include <boost/serialization/export.hpp>
 
-class Object;
+class MIL_Object_ABC;
 
 // =============================================================================
 /** @class  ObjectCapacity_ABC
@@ -32,18 +32,18 @@ public:
     //! @name CheckPoints / boost serialize/deserialize
     //@{
     template< typename Archive > void serialize( Archive&, const unsigned int ) {}
-    virtual void Register( Object& object ) = 0;
+    virtual void Register( MIL_Object_ABC& object ) = 0;
     //@}
 
     //! @name Capacity creation
     //@{
-    virtual void Instanciate( Object& object ) const = 0;
-    virtual void Finalize( Object& /*object*/ ) {};    
+    virtual void Instanciate( MIL_Object_ABC& object ) const = 0;
+    virtual void Finalize( MIL_Object_ABC& /*object*/ ) {};    
     //@}
 
     //! @name Update
     //@{
-    virtual void Update( Object& /*object*/, unsigned int /*time*/ ) {};
+    virtual void Update( MIL_Object_ABC& /*object*/, unsigned int /*time*/ ) {};
     //@}
 };
 

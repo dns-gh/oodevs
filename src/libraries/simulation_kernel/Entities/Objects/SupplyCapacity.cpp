@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "SupplyCapacity.h"
-#include "Object.h"
+#include "MIL_Object_ABC.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -75,7 +75,7 @@ void SupplyCapacity::serialize( Archive& file, const unsigned int )
 // Name: SupplyCapacity::Register
 // Created: MGD 2009-03-05
 // -----------------------------------------------------------------------------
-void SupplyCapacity::Register( Object& object )
+void SupplyCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
     object.Register( static_cast< MIL_InteractiveContainer_ABC *>( this ) );
@@ -85,7 +85,7 @@ void SupplyCapacity::Register( Object& object )
 // Name: SupplyCapacity::Instanciate
 // Created: MGD 2009-03-05
 // -----------------------------------------------------------------------------
-void SupplyCapacity::Instanciate( Object& object ) const
+void SupplyCapacity::Instanciate( MIL_Object_ABC& object ) const
 {    
     SupplyCapacity* capacity = new SupplyCapacity( *this );
     object.AddCapacity( capacity );
@@ -96,9 +96,9 @@ void SupplyCapacity::Instanciate( Object& object ) const
 // Name: SupplyCapacity::ProcessAgentInside
 // Created: MGD 2009-03-05
 // -----------------------------------------------------------------------------
-void SupplyCapacity::ProcessAgentEntering( Object& object, MIL_Agent_ABC& agent )
+void SupplyCapacity::ProcessAgentEntering( MIL_Object_ABC& object, MIL_Agent_ABC& agent )
 {
-    if( &agent.GetArmy() == &object.GetArmy() )
+    if( &agent.GetArmy() == object.GetArmy() )
     {
         MIL_AgentPion* pion = dynamic_cast< MIL_AgentPion* >( &agent );
         if( pion )

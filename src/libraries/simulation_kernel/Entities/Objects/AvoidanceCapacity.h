@@ -42,9 +42,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Instanciate( Object& object ) const;
-    virtual void Register( Object& object );
-    virtual void Finalize( Object& object );    
+    virtual void Instanciate( MIL_Object_ABC& object ) const;
+    virtual void Register( MIL_Object_ABC& object );
+    virtual void Finalize( MIL_Object_ABC& object );    
     //@}
 
     //! @name Accessors
@@ -60,8 +60,8 @@ private:
 
     //! @name Helpers
     //@{
-    void InitializeArea( Object& object );
-    void ResetDynamicData( Object& object );
+    void InitializeArea( MIL_Object_ABC& object );
+    void ResetDynamicData( MIL_Object_ABC& object );
     //@}
 
 private:

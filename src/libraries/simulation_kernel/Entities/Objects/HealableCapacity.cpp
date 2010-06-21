@@ -11,7 +11,7 @@
 #include "HealableCapacity.h"
 #include "MedicalTreatmentAttribute.h"
 #include "Entities/Agents/Units/Humans/PHY_InjuredHuman.h"
-#include "Object.h"
+#include "MIL_Object_ABC.h"
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( HealableCapacity )
@@ -95,7 +95,7 @@ void HealableCapacity::serialize( Archive& file, const unsigned int )
 // Name: HealableCapacity::Register
 // Created: RFT 2008-07-03
 // -----------------------------------------------------------------------------
-void HealableCapacity::Register( Object& object )
+void HealableCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
 }
@@ -104,7 +104,7 @@ void HealableCapacity::Register( Object& object )
 // Name: HealableCapacity::Instanciate
 // Created: RFT 2008-06-08
 // -----------------------------------------------------------------------------
-void HealableCapacity::Instanciate( Object& object ) const
+void HealableCapacity::Instanciate( MIL_Object_ABC& object ) const
 {
     object.AddCapacity( new HealableCapacity( *this ) );
 }
@@ -113,7 +113,7 @@ void HealableCapacity::Instanciate( Object& object ) const
 // Name: HealableCapacity::Update
 // Created: RFT 2008-05-22
 // -----------------------------------------------------------------------------
-void HealableCapacity::Update( Object& object, float time )
+void HealableCapacity::Update( MIL_Object_ABC& object, float time )
 {
     MedicalTreatmentAttribute attr = object.GetAttribute< MedicalTreatmentAttribute >();
     

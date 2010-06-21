@@ -19,5 +19,6 @@
       <roof-shape-type name="Plat"/>
       <roof-shape-type name="Pentu"/>
     </roof-shape-types>
+	<infrastructure-types/>
   </urban-block-types>
 </urban>

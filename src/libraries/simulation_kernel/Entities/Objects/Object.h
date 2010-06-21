@@ -65,7 +65,7 @@ public:
     //! @name 
     //@{
     virtual void Register( ObjectCapacity_ABC* capacity );
-                           void Register( MIL_InteractiveContainer_ABC* capacity );
+    virtual void Register( MIL_InteractiveContainer_ABC* capacity );
     template< typename T, typename I > void SetAttribute( const T& attribute );
     //@}
 

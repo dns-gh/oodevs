@@ -31,8 +31,8 @@ public:
     //! @name Operations
     //@{
     template< typename Archive > void serialize( Archive&, const unsigned int );
-    virtual void Register( Object& object );
-    virtual void Instanciate( Object& object ) const;
+    virtual void Register( MIL_Object_ABC& object );
+    virtual void Instanciate( MIL_Object_ABC& object ) const;
     MT_Float GetDefaultSpeed() const;
     MT_Float ApplySpeedPolicy( MT_Float rAgentSpeedWithinObject, MT_Float rAgentSpeedWithinEnvironment, MT_Float rAgentMaxSpeed ) const;
     //@}

@@ -52,7 +52,7 @@ public:
 protected:
     const PHY_IndirectFireDotationClass& category_;
     const PHY_DotationCategory&          dotationCategory_;
-          unsigned int                           nInterventionType_;
+          unsigned int                   nInterventionType_;
           MT_Float                       rDispersionX_;
           MT_Float                       rDispersionY_;
 };

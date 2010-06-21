@@ -76,7 +76,7 @@ void AttitudeModifierCapacity::serialize( Archive& file, const unsigned int )
 // Name: AttitudeModifierCapacity::Register
 // Created: MGD 2010-03-12
 // -----------------------------------------------------------------------------
-void AttitudeModifierCapacity::Register( Object& object )
+void AttitudeModifierCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
     object.Register( static_cast< MIL_InteractiveContainer_ABC *>( this ) );
@@ -86,7 +86,7 @@ void AttitudeModifierCapacity::Register( Object& object )
 // Name: AttitudeModifierCapacity::Instanciate
 // Created: MGD 2010-03-12
 // -----------------------------------------------------------------------------
-void AttitudeModifierCapacity::Instanciate( Object& object ) const
+void AttitudeModifierCapacity::Instanciate( MIL_Object_ABC& object ) const
 {    
     AttitudeModifierCapacity* capacity = new AttitudeModifierCapacity( *this );
     object.AddCapacity( capacity );
@@ -97,7 +97,7 @@ void AttitudeModifierCapacity::Instanciate( Object& object ) const
 // Name: AttitudeModifierCapacity::ProcessAgentInside
 // Created: MGD 2010-03-15
 // -----------------------------------------------------------------------------
-void AttitudeModifierCapacity::ProcessPopulationInside( Object& object, MIL_PopulationElement_ABC& population )
+void AttitudeModifierCapacity::ProcessPopulationInside( MIL_Object_ABC& object, MIL_PopulationElement_ABC& population )
 {
     population.SetAttitude( *attitude_ );
 }

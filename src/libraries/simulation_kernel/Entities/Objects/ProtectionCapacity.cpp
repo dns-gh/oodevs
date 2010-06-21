@@ -74,7 +74,7 @@ void ProtectionCapacity::serialize( Archive& file, const unsigned int )
 // Name: ProtectionCapacity::Register
 // Created: JCR 2008-07-03
 // -----------------------------------------------------------------------------
-void ProtectionCapacity::Register( Object& object )
+void ProtectionCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
     object.Register( static_cast< MIL_InteractiveContainer_ABC *>( this ) );
@@ -84,7 +84,7 @@ void ProtectionCapacity::Register( Object& object )
 // Name: ProtectionCapacity::Instanciate
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-void ProtectionCapacity::Instanciate( Object& object ) const
+void ProtectionCapacity::Instanciate( MIL_Object_ABC& object ) const
 {
     ProtectionCapacity* capacity = new ProtectionCapacity( *this );
     object.AddCapacity( capacity );
@@ -95,7 +95,7 @@ void ProtectionCapacity::Instanciate( Object& object ) const
 // Name: ProtectionCapacity::ProcessAgentExiting
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-void ProtectionCapacity::ProcessAgentExiting( Object& /*object*/, MIL_Agent_ABC& agent )
+void ProtectionCapacity::ProcessAgentExiting( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& agent )
 {
     IT_AgentContainer it = container_.find( &agent );
     if ( it != container_.end() )
@@ -113,7 +113,7 @@ void ProtectionCapacity::ProcessAgentExiting( Object& /*object*/, MIL_Agent_ABC&
 // Name: ProtectionCapacity::ProcessAgentInside
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-void ProtectionCapacity::ProcessAgentInside( Object& /*object*/, MIL_Agent_ABC& agent )
+void ProtectionCapacity::ProcessAgentInside( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& agent )
 {
     CIT_AgentContainer it = container_.find( &agent );
     if ( it != container_.end() )
@@ -129,7 +129,7 @@ void ProtectionCapacity::ProcessAgentInside( Object& /*object*/, MIL_Agent_ABC& 
 // Name: ProtectionCapacity::ProcessAgentEntering
 // Created: JCR 2008-08-19
 // -----------------------------------------------------------------------------
-void ProtectionCapacity::ProcessAgentEntering( Object& /*object*/, MIL_Agent_ABC& agent )
+void ProtectionCapacity::ProcessAgentEntering( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& agent )
 {
     CIT_AgentContainer it = container_.find( &agent );
     if( it == container_.end() && container_.size() < size_max_ )

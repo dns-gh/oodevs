@@ -12,7 +12,7 @@
 #include "simulation_terrain/TER_Localisation.h"
 #include "simulation_terrain/TER_PathFindManager.h"
 #include "simulation_terrain/TER_DynamicData.h"
-#include "Object.h"
+#include "MIL_Object_ABC.h"
 #include "Tools/MIL_Tools.h"
 #include <xeumeuleu/xml.h>
 
@@ -74,7 +74,7 @@ void AvoidanceCapacity::serialize( Archive& file, const unsigned int )
 // Name: AvoidanceCapacity::Register
 // Created: JCR 2008-07-03
 // -----------------------------------------------------------------------------
-void AvoidanceCapacity::Register( Object& object )
+void AvoidanceCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
 }
@@ -83,7 +83,7 @@ void AvoidanceCapacity::Register( Object& object )
 // Name: AvoidanceCapacity::Instanciate
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-void AvoidanceCapacity::Instanciate( Object& object ) const
+void AvoidanceCapacity::Instanciate( MIL_Object_ABC& object ) const
 {    
     object.AddCapacity( new AvoidanceCapacity( *this ) );        
 }
@@ -92,7 +92,7 @@ void AvoidanceCapacity::Instanciate( Object& object ) const
 // Name: AvoidanceCapacity::Finalize
 // Created: JCR 2008-08-11
 // -----------------------------------------------------------------------------
-void AvoidanceCapacity::Finalize( Object& object )
+void AvoidanceCapacity::Finalize( MIL_Object_ABC& object )
 {
     InitializeArea( object );
 }
@@ -110,7 +110,7 @@ const TER_Localisation& AvoidanceCapacity::GetLocalisation() const
 // Name: AvoidanceCapacity::Initialize
 // Created: JCR 2008-08-11
 // -----------------------------------------------------------------------------
-void AvoidanceCapacity::InitializeArea( Object& object )
+void AvoidanceCapacity::InitializeArea( MIL_Object_ABC& object )
 {
     if ( distance_ <= 0. )
         avoid_.Reset();
@@ -122,7 +122,7 @@ void AvoidanceCapacity::InitializeArea( Object& object )
 // Name: AvoidanceCapacity::ResetDynamicData
 // Created: JCR 2008-08-11
 // -----------------------------------------------------------------------------
-void AvoidanceCapacity::ResetDynamicData( Object& object )
+void AvoidanceCapacity::ResetDynamicData( MIL_Object_ABC& object )
 {
     avoid_.Reset( object.GetLocalisation() );
     avoid_.Scale( distance_ );

@@ -27,6 +27,7 @@
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Roles/Protection/PHY_RoleInterface_ActiveProtection.h"
+#include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Effects/MIL_Effect_DirectFirePion.h"
 #include "Entities/Effects/MIL_Effect_DirectFirePopulation.h"
 #include "Entities/Effects/MIL_EffectManager.h"
@@ -39,6 +40,8 @@
 #include "Entities/Agents/Units/Sensors/PHY_Sensor.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
+#include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Entities/Objects/StructuralCapacity.h"
 #include "simulation_terrain/TER_PopulationConcentration_ABC.h"
 #include "simulation_terrain/TER_PopulationFlow_ABC.h"
 #include "simulation_terrain/TER_PopulationManager.h"
@@ -48,6 +51,7 @@
 #include "OnComponentComputer_ABC.h"
 #include "OnComponentFunctorComputerFactory_ABC.h"
 #include "OnComponentFunctor_ABC.h"
+#include "UrbanModel.h"
 #include "Tools/MIL_Tools.h"
 #include <xeumeuleu/xml.h>
 
@@ -171,7 +175,6 @@ MT_Float PHY_WeaponDataType_DirectFire::GetPH( const MIL_Agent_ABC& firer, const
 {
     const PHY_RoleInterface_Posture&      firerPosture  = firer .GetRole< PHY_RoleInterface_Posture      >();
     const PHY_RoleInterface_Posture& targetPosture = target.GetRole< PHY_RoleInterface_Posture >();
-    MT_Float rDistanceTest = firerPosition.Distance( targetPosition );
     MT_Float rDistance = firer.Distance( target );
     assert( phs_.size() > targetVolume.GetID() );
 
@@ -318,8 +321,18 @@ void PHY_WeaponDataType_DirectFire::Fire( MIL_Agent_ABC& firer, MIL_Agent_ABC& t
 
         const MT_Float rPH = GetPH( firer, target, targetVolume, firerPosition, targetPosition );
         target.GetRole< PHY_RoleInterface_ActiveProtection >().UseAmmunition( weaponType_.GetDotationCategory() );
-        if ( !( randomGenerator_.rand_oi() <= rPH ) ) 
+        if ( !( randomGenerator_.rand_oi() <= rPH ) )
+        {
+            const urban::TerrainObject_ABC* urbanObject = target.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
+            if ( urbanObject )
+            {
+                UrbanObjectWrapper& wrapper = UrbanModel::GetSingleton().FindWrapper( *urbanObject );
+                StructuralCapacity* capacity = wrapper.Retrieve< StructuralCapacity >();
+                if ( capacity )
+                    capacity->ApplyDirectFire( *urbanObject, weaponType_.GetDotationCategory() );
+            }    
             return;
+        }
     }
 
     MIL_Effect_DirectFirePion* pEffect = new MIL_Effect_DirectFirePion( weaponType_.GetDotationCategory(), target, compTarget, fireResult );

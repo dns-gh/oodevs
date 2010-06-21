@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "BurnCapacity.h"
 #include "FireAttribute.h"
-#include "Object.h"
+#include "MIL_Object_ABC.h"
 #include "Entities\Agents\MIL_Agent_ABC.h"
 #include "Entities\Agents\Roles\Composantes\PHY_RoleInterface_Composantes.h"
 #include "Entities\Populations\MIL_PopulationElement_ABC.h"
@@ -79,7 +79,7 @@ void BurnCapacity::serialize( Archive& file, const uint )
 // Name: BurnCapacity::Register
 // Created: RFT 2008-07-03
 // -----------------------------------------------------------------------------
-void BurnCapacity::Register( Object& object )
+void BurnCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
 }
@@ -88,7 +88,7 @@ void BurnCapacity::Register( Object& object )
 // Name: BurnCapacity::Instanciate
 // Created: RFT 2008-06-08
 // -----------------------------------------------------------------------------
-void BurnCapacity::Instanciate( Object& object ) const
+void BurnCapacity::Instanciate( MIL_Object_ABC& object ) const
 {
     object.AddCapacity( new BurnCapacity( *this ) );
 }
@@ -97,7 +97,7 @@ void BurnCapacity::Instanciate( Object& object ) const
 // Name: BurnCapacity::Update
 // Created: RFT 2008-05-22
 // -----------------------------------------------------------------------------
-void BurnCapacity::Update( Object& /*object*/, float /*time*/ )
+void BurnCapacity::Update( MIL_Object_ABC& /*object*/, float /*time*/ )
 {
     // NOTHING
 }
@@ -106,7 +106,7 @@ void BurnCapacity::Update( Object& /*object*/, float /*time*/ )
 // Name: AttritionCapacity::ProcessAgentMovingInside
 // Created: RFT 2008-05-30
 // -----------------------------------------------------------------------------
-void BurnCapacity::ProcessAgentMovingInside( Object& object, MIL_Agent_ABC& agent )
+void BurnCapacity::ProcessAgentMovingInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent )
 {
     FireAttribute& attr = object.GetAttribute< FireAttribute >();
     MIL_Injury_Fire injury( attr.GetHeat() , attr.GetClass().GetName() , injuryID_ );
@@ -117,7 +117,7 @@ void BurnCapacity::ProcessAgentMovingInside( Object& object, MIL_Agent_ABC& agen
 // Name: AttritionCapacity::ProcessAgentMovingInside
 // Created: RFT 2008-05-30
 // -----------------------------------------------------------------------------
-void BurnCapacity::ProcessAgentInside( Object& object, MIL_Agent_ABC& agent )
+void BurnCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent )
 {
     FireAttribute& attr = object.GetAttribute< FireAttribute >();
     MIL_Injury_Fire injury( attr.GetHeat() , attr.GetClass().GetName() , injuryID_ );
@@ -128,7 +128,7 @@ void BurnCapacity::ProcessAgentInside( Object& object, MIL_Agent_ABC& agent )
 // Name: AttritionCapacity::ProcessPopulationMovingInside
 // Created: RFT 2008-06-06
 // -----------------------------------------------------------------------------
-void BurnCapacity::ProcessPopulationMovingInside( Object& object, MIL_PopulationElement_ABC& population )
+void BurnCapacity::ProcessPopulationMovingInside( MIL_Object_ABC& object, MIL_PopulationElement_ABC& population )
 {
     FireAttribute& attr = object.GetAttribute< FireAttribute >();
     MIL_Injury_Fire injury( attr.GetHeat() , attr.GetClass().GetName() , injuryID_ ); //Number 4

@@ -34,9 +34,9 @@ public:
     //! @name Operations
     //@{
     template< typename Archive > void serialize( Archive&, const unsigned int );
-    virtual void Instanciate( Object& object ) const;
-    virtual void Register( Object& object );
-    virtual void CanInteractWith( const Object& object, const MIL_Agent_ABC& agent, bool& canInteract );
+    virtual void Instanciate( MIL_Object_ABC& object ) const;
+    virtual void Register( MIL_Object_ABC& object );
+    virtual void CanInteractWith( const MIL_Object_ABC& object, const MIL_Agent_ABC& agent, bool& canInteract );
     //@}
 
 private:
