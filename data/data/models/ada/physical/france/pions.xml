@@ -10675,4 +10675,27 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
   </unit>
+  <unit decisional-model="net.masagroup.sword.military.platoon.terrorism.roles.Sniper" id="438" name="Tireur" type="Pion ASY">
+    <nature atlas-nature="Indefini" level="none" nature="combat"/>
+    <equipments>
+      <equipment count="1" crew="1" major="true" type="Tireur Elite"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+  </unit>
 </units>

@@ -51,7 +51,10 @@ bool DEC_PathFunctions::ShouldEmbark( MIL_AgentPion& callerAgent, boost::shared_
     if( MaxSpeedUnloaded == 0 )
             return true;
     double timeUnloaded = length / MaxSpeedUnloaded;
-    double timeLoaded = ( length / callerAgent.GetRole< moving::PHY_RoleAction_Moving >().GetTheoricMaxSpeed( true ) ) + DEC_AgentFunctions::GetLoadingTime( callerAgent ) * 60 + DEC_AgentFunctions::GetUnloadingTime( callerAgent ) * 60; //Conversion minutes into hours
+    double speed = callerAgent.GetRole< moving::PHY_RoleAction_Moving >().GetTheoricMaxSpeed( true );
+    if( !speed )
+        return false;
+    double timeLoaded = ( length / speed ) + DEC_AgentFunctions::GetLoadingTime( callerAgent ) * 60 + DEC_AgentFunctions::GetUnloadingTime( callerAgent ) * 60; //Conversion minutes into hours
     return ( timeLoaded < timeUnloaded );
 }
 

@@ -950,6 +950,9 @@
       <parameter dia-name="prisoners" name="objectifs" optional="false" type="AgentKnowledgeListBM"/>
       <parameter dia-name="camps" name="Camps de prisonniers" optional="false" type="ObjectKnowledgeListBM"/>
     </mission>
+    <mission dia-behavior="net.masagroup.sword.military.platoon.terrorism.tasks.Ambush" dia-type="T_Mission_Pion_Embuscade" id="2064" name="Embuscade">
+      <parameter dia-name="position" name="position" optional="false" type="PointBM"/>
+    </mission>
   </units>
   <automats>
     <context>
