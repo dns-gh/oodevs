@@ -6899,6 +6899,17 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Sensors_UrbanBlockMaterial_GUI</name>
+    <message>
+        <source>Material</source>
+        <translation>Matériau</translation>
+    </message>
+    <message>
+        <source>Modifiers</source>
+        <translation>Modificateurs</translation>
+    </message>
+</context>
+<context>
     <name>ADN_SupplyUnitSelector</name>
     <message>
         <source>Click here to select</source>

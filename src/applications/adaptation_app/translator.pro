@@ -134,7 +134,7 @@ ADN_Sensors_Postures_GUI.cpp \
 ADN_Sensors_Sizes_GUI.cpp \
 ADN_Sensors_TargetsListView.cpp \
 ADN_Sensors_Targets_GUI.cpp \
-ADN_Sensors_UrbanBlockMaterial_GUI \
+ADN_Sensors_UrbanBlockMaterial_GUI.cpp \
 ADN_SupplyUnitSelector.cpp \
 ADN_Supply_Data.cpp \
 ADN_Supply_GUI.cpp \
