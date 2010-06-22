@@ -62,7 +62,7 @@ void ADN_Wizard_FirstPage_Default< T >::Initialize()
     QVBox* pNameBox = new QVBox( pRightSide_ );
     pNameBox->setSpacing( 5 );
 
-    pNameLabel_ = new QLabel( tr( "Name" ), pNameBox );
+    pNameLabel_ = new QLabel( qApp->translate( "ADN_Wizard", "Name" ), pNameBox );
 
     pNameEdit_ = new QLineEdit( pNameBox );
     pNameEdit_->setFixedWidth( 350 );
@@ -75,8 +75,8 @@ void ADN_Wizard_FirstPage_Default< T >::Initialize()
     QButtonGroup* pButtonGroup = new QButtonGroup( 2, Qt::Vertical, pCopyBox );
     pButtonGroup->setMargin( 0 );
     pButtonGroup->setLineWidth( 0 );
-    pNewRadioButton_  = new QRadioButton( tr( "Create new" ), pButtonGroup );
-    pCopyRadioButton_ = new QRadioButton( tr( "Create a copy of:" ), pButtonGroup );
+    pNewRadioButton_  = new QRadioButton( qApp->translate( "ADN_Wizard", "Create new" ), pButtonGroup );
+    pCopyRadioButton_ = new QRadioButton( qApp->translate( "ADN_Wizard", "Create a copy of:" ), pButtonGroup );
 
     pExistingItemsListView_ = new QListView( pCopyBox );
     pExistingItemsListView_->addColumn( "" );
@@ -107,8 +107,8 @@ T* ADN_Wizard_FirstPage_Default< T >::CreateObject()
 {
     std::string strNewName = pNameEdit_->text().ascii();
     // Check if the name empty.
-    QString strErrorTitle( tr( "Creation impossible" ) );
-    QString strErrorMsg( tr( "The provided name is either empty or already in use, please pick another one." ) );
+    QString strErrorTitle( qApp->translate( "ADN_Wizard", "Creation impossible" ) );
+    QString strErrorMsg( qApp->translate( "ADN_Wizard", "The provided name is either empty or already in use, please pick another one." ) );
 
     if( strNewName.empty() )
     {

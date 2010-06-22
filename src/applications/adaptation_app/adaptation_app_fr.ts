@@ -3756,7 +3756,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>X Dispersion</source>
-        <translation>Dispersion X</translation>
+        <translation>Dispersion U</translation>
     </message>
     <message>
         <source>m</source>
@@ -3764,7 +3764,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Y Dispersion</source>
-        <translation>Dispersion Y</translation>
+        <translation>Dispersion V</translation>
     </message>
     <message>
         <source>Explosive ammo parameters</source>
@@ -3868,7 +3868,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>For indirect fire</source>
-        <translation>Tir indirect</translation>
+        <translation>Tranche D</translation>
     </message>
     <message>
         <source>Activation duration</source>
@@ -5409,7 +5409,7 @@ du tireur</translation>
     </message>
     <message>
         <source>Attrition</source>
-        <translation type="obsolete">Attrition</translation>
+        <translation>Attrition</translation>
     </message>
     <message>
         <source>Can be mined</source>
@@ -5425,7 +5425,7 @@ du tireur</translation>
     </message>
     <message>
         <source>Outgoing population density</source>
-        <translation type="obsolete">Outgoing population density</translation>
+        <translation type="obsolete">Densité de population sortante</translation>
     </message>
     <message>
         <source>people/m&#xb2;</source>
@@ -5505,35 +5505,35 @@ du tireur</translation>
     </message>
     <message>
         <source>Activable</source>
-        <translation type="obsolete">Activable</translation>
+        <translation>Activable</translation>
     </message>
     <message>
         <source>Avoidable</source>
-        <translation type="obsolete">Evitable</translation>
+        <translation>Evitable</translation>
     </message>
     <message>
         <source>Bridging</source>
-        <translation type="obsolete">Permet le franchissement</translation>
+        <translation>Permet le franchissement</translation>
     </message>
     <message>
         <source>Buildable</source>
-        <translation type="obsolete">Constructible</translation>
+        <translation>Constructible</translation>
     </message>
     <message>
         <source>Bypassable</source>
-        <translation type="obsolete">Contournable</translation>
+        <translation>Contournable</translation>
     </message>
     <message>
         <source>Constructor</source>
-        <translation type="obsolete">Construction</translation>
+        <translation>Construction</translation>
     </message>
     <message>
         <source>Contamination</source>
-        <translation type="obsolete">Contamination</translation>
+        <translation>Contamination</translation>
     </message>
     <message>
         <source>Decontamination</source>
-        <translation type="obsolete">Décontamination</translation>
+        <translation>Décontamination</translation>
     </message>
     <message>
         <source>Detection</source>
@@ -5541,11 +5541,11 @@ du tireur</translation>
     </message>
     <message>
         <source>Extinguishable</source>
-        <translation type="obsolete">Eteignable</translation>
+        <translation>Eteignable</translation>
     </message>
     <message>
         <source>Healable</source>
-        <translation type="obsolete">Soignable</translation>
+        <translation>Soignable</translation>
     </message>
     <message>
         <source>interaction-height</source>
@@ -5557,27 +5557,27 @@ du tireur</translation>
     </message>
     <message>
         <source>Interference</source>
-        <translation type="obsolete">Interférence</translation>
+        <translation>Interférence</translation>
     </message>
     <message>
         <source>Improvable</source>
-        <translation type="obsolete">Améliorable</translation>
+        <translation>Améliorable</translation>
     </message>
     <message>
         <source>Intoxication</source>
-        <translation type="obsolete">Intoxication</translation>
+        <translation>Intoxication</translation>
     </message>
     <message>
         <source>Logistic</source>
-        <translation type="obsolete">Logistique</translation>
+        <translation>Logistique</translation>
     </message>
     <message>
         <source>Mobility</source>
-        <translation type="obsolete">Mobilité</translation>
+        <translation>Mobilité</translation>
     </message>
     <message>
         <source>Occupable</source>
-        <translation type="obsolete">Occupable</translation>
+        <translation>Occupable</translation>
     </message>
     <message>
         <source>Population</source>
@@ -5585,35 +5585,35 @@ du tireur</translation>
     </message>
     <message>
         <source>Propagation</source>
-        <translation type="obsolete">Propagation</translation>
+        <translation>Propagation</translation>
     </message>
     <message>
         <source>Protection</source>
-        <translation type="obsolete">Protection</translation>
+        <translation>Protection</translation>
     </message>
     <message>
         <source>Supply</source>
-        <translation type="obsolete">Ravitaillement</translation>
+        <translation>Ravitaillement</translation>
     </message>
     <message>
         <source>Supply-Route</source>
-        <translation type="obsolete">Route de ravitaillement</translation>
+        <translation>Route de ravitaillement</translation>
     </message>
     <message>
         <source>Terrain Heuristic</source>
-        <translation type="obsolete">Heuristiques terrain</translation>
+        <translation>Heuristiques terrain</translation>
     </message>
     <message>
         <source>TimeLimited</source>
-        <translation type="obsolete">Limité dans le temps</translation>
+        <translation>Limité dans le temps</translation>
     </message>
     <message>
         <source>Workable</source>
-        <translation type="obsolete">Animable</translation>
+        <translation>Animable</translation>
     </message>
     <message>
         <source>Spawn</source>
-        <translation type="obsolete">Déposable</translation>
+        <translation>Engendre un autre objet</translation>
     </message>
     <message>
         <source>Action range</source>
@@ -5649,11 +5649,27 @@ du tireur</translation>
     </message>
     <message>
         <source>Dotation</source>
-        <translation type="unfinished">Dotation</translation>
+        <translation>Dotation</translation>
     </message>
     <message>
         <source>Use ammunition</source>
-        <translation type="unfinished">Utilise une munition</translation>
+        <translation>Utilise une munition</translation>
+    </message>
+    <message>
+        <source>InteractWithEnemy</source>
+        <translation>Interagit uniquement avec les ennemis</translation>
+    </message>
+    <message>
+        <source>AttitudeModifier</source>
+        <translation>Modificateur d&apos;attitude</translation>
+    </message>
+    <message>
+        <source>Perception</source>
+        <translation>Perception</translation>
+    </message>
+    <message>
+        <source>Scattering</source>
+        <translation>Dispersant</translation>
     </message>
 </context>
 <context>
@@ -6397,6 +6413,57 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     <message>
         <source>Sensors - Invalid object &apos;%1&apos;</source>
         <translation>Capteurs - Objet invalide &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Sensors_DetectionAlgorithmPrevision</name>
+    <message>
+        <source>Simulation</source>
+        <translation>Simulation</translation>
+    </message>
+    <message>
+        <source>Perception</source>
+        <translation>Perception</translation>
+    </message>
+    <message>
+        <source>Distance (m)</source>
+        <translation>Distance (m)</translation>
+    </message>
+    <message>
+        <source>Stance</source>
+        <translation>Posture</translation>
+    </message>
+    <message>
+        <source>Target Stance</source>
+        <translation>Posture cible</translation>
+    </message>
+    <message>
+        <source>Stance Target</source>
+        <translation>Posture cible</translation>
+    </message>
+    <message>
+        <source>Volume</source>
+        <translation>Volume</translation>
+    </message>
+    <message>
+        <source>Weather</source>
+        <translation>Météo</translation>
+    </message>
+    <message>
+        <source>Illumination</source>
+        <translation>Eclairement</translation>
+    </message>
+    <message>
+        <source>Environment</source>
+        <translation>Terrain</translation>
+    </message>
+    <message>
+        <source>Urban Material</source>
+        <translation>Matériau urbain</translation>
+    </message>
+    <message>
+        <source>Population Value</source>
+        <translation>Densité de population</translation>
     </message>
 </context>
 <context>
@@ -9649,6 +9716,29 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
 </context>
 <context>
+    <name>ADN_Wizard</name>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">Nom</translation>
+    </message>
+    <message>
+        <source>Create new</source>
+        <translation type="unfinished">Créer</translation>
+    </message>
+    <message>
+        <source>Create a copy of:</source>
+        <translation type="unfinished">Créer une copie de:</translation>
+    </message>
+    <message>
+        <source>Creation impossible</source>
+        <translation type="unfinished">Création impossible</translation>
+    </message>
+    <message>
+        <source>The provided name is either empty or already in use, please pick another one.</source>
+        <translation type="unfinished">Le nom fourni est soit vide, soit déjà utilisé. Veuillez en choisir un autre.</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Wizard_ABC</name>
     <message>
         <source>Next</source>
@@ -9962,23 +10052,23 @@ Erreur: %3</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>Nom</translation>
+        <translation type="obsolete">Nom</translation>
     </message>
     <message>
         <source>Create new</source>
-        <translation>Créer</translation>
+        <translation type="obsolete">Créer</translation>
     </message>
     <message>
         <source>Create a copy of:</source>
-        <translation>Créer une copie de:</translation>
+        <translation type="obsolete">Créer une copie de:</translation>
     </message>
     <message>
         <source>Creation impossible</source>
-        <translation>Création impossible</translation>
+        <translation type="obsolete">Création impossible</translation>
     </message>
     <message>
         <source>The provided name is either empty or already in use, please pick another one.</source>
-        <translation>Le nom fourni est soit vide, soit déjà utilisé. Veuillez en choisir un autre.</translation>
+        <translation type="obsolete">Le nom fourni est soit vide, soit déjà utilisé. Veuillez en choisir un autre.</translation>
     </message>
 </context>
 <context>

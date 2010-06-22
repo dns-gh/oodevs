@@ -40,6 +40,7 @@ ADN_ChangeValueCommand_Pointer.inl \
 ADN_ChangeValueCommand_String.cpp \
 ADN_Communications_GUI.cpp \
 ADN_Composante_Wizard.cpp \
+ADN_Composantes_ActiveProtectionsListView \
 ADN_Composantes_BreakdownsTable.cpp \
 ADN_Composantes_ConsumptionsTable.cpp \
 ADN_Composantes_Data.cpp \
@@ -124,6 +125,7 @@ ADN_RemoveElementCommand.inl \
 ADN_SaveFile_Exception.cpp \
 ADN_Sensor_Wizard.cpp \
 ADN_Sensors_Data.cpp \
+ADN_Sensors_DetectionAlgorithmPrevision.cpp \
 ADN_Sensors_Environments_GUI.cpp \
 ADN_Sensors_GUI.cpp \
 ADN_Sensors_Illumination_GUI.cpp \
@@ -132,6 +134,7 @@ ADN_Sensors_Postures_GUI.cpp \
 ADN_Sensors_Sizes_GUI.cpp \
 ADN_Sensors_TargetsListView.cpp \
 ADN_Sensors_Targets_GUI.cpp \
+ADN_Sensors_UrbanBlockMaterial_GUI \
 ADN_SupplyUnitSelector.cpp \
 ADN_Supply_Data.cpp \
 ADN_Supply_GUI.cpp \
