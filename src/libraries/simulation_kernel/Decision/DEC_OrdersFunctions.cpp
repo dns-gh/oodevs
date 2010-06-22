@@ -128,12 +128,38 @@ boost::shared_ptr< MIL_Mission_ABC > DEC_OrdersFunctions::CreatePionMissionBM( M
 }
 
 //-----------------------------------------------------------------------------
+// Name: DEC_OrdersFunctions::CreatePionMissionVersPionBM
+// Created: GGE 2010-06-11
+// Like CDT_CreatePionMission but no need of active MRT
+//-----------------------------------------------------------------------------
+boost::shared_ptr< MIL_Mission_ABC > DEC_OrdersFunctions::CreatePionMissionVersPionBM( MIL_Automate& callerAutomate, DEC_Decision_ABC* pPion, const std::string& mission )
+{
+    assert( pPion );
+
+    // Instanciate and check the new mission
+    const MIL_MissionType_ABC* pMissionType = MIL_PionMissionType::FindFromDiaID( mission );
+    assert( pMissionType );
+
+    boost::shared_ptr< MIL_Mission_ABC > pPionMission = callerAutomate.GetOrderManager().CreatePionMissionVersPionBM( pPion->GetPion(), *pMissionType );
+    return pPionMission;
+}
+
+//-----------------------------------------------------------------------------
 // Name: DEC_OrdersFunctions::CDT_GivePionMission
 // Created: NLD 2003-04-16
 //-----------------------------------------------------------------------------
 void DEC_OrdersFunctions::CDT_GivePionMission( MIL_Automate& callerAutomate, boost::shared_ptr< MIL_Mission_ABC > pMission )
 {
     callerAutomate.GetOrderManager().CDT_GivePionMission( pMission );
+}
+
+//-----------------------------------------------------------------------------
+// Name: DEC_OrdersFunctions::CDT_GivePionMission
+// Created: GGE 2010-06-14
+//-----------------------------------------------------------------------------
+void DEC_OrdersFunctions::CDT_GivePionMissionVersPion( MIL_Automate& callerAutomate, boost::shared_ptr< MIL_Mission_ABC > pMission )
+{
+    callerAutomate.GetOrderManager().CDT_GivePionMissionVersPion( pMission );
 }
 
 // =============================================================================
@@ -306,4 +332,3 @@ bool DEC_OrdersFunctions::IsMissionAvailable( DEC_Decision_ABC* agent, std::stri
         return agent->GetPion().GetOrderManager().IsMissionAvailable( *pMissionType );
     return false;
 }
-

@@ -62,8 +62,9 @@ public:
     void                    MRT_Validate         ();
     boost::shared_ptr< MIL_Mission_ABC > CDT_CreatePionMission( MIL_AgentPion& pion, const MIL_MissionType_ABC& missionType );
     boost::shared_ptr< MIL_Mission_ABC > CreatePionMissionBM( MIL_AgentPion& pion, const MIL_MissionType_ABC& missionType );
-    void                    CDT_GivePionMission  ( const boost::shared_ptr< MIL_Mission_ABC > mission );
-
+    boost::shared_ptr< MIL_Mission_ABC > CreatePionMissionVersPionBM( MIL_AgentPion& pion, const MIL_MissionType_ABC& missionType );
+	void                    CDT_GivePionMission  ( const boost::shared_ptr< MIL_Mission_ABC > mission );
+	void                    CDT_GivePionMissionVersPion  ( const boost::shared_ptr< MIL_Mission_ABC > mission );
     boost::shared_ptr< MIL_Mission_ABC > CreateAutomateMission( MIL_Automate& automate, const MIL_MissionType_ABC& missionType );
     void                    GiveAutomateMission  ( const boost::shared_ptr< MIL_Mission_ABC > mission );
     //@}

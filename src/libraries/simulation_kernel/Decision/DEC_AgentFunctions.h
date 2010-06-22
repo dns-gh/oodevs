@@ -84,6 +84,7 @@ public:
     static float TimeLeftForMoving ( const MIL_Agent_ABC& callerAgent );
     static float TimeToMoveDistance( const MIL_Agent_ABC& callerAgent, float distance );
     static void Suicide            ( MIL_Agent_ABC& callerAgent );
+    static bool CanIlluminate    ( DEC_Decision_ABC* pAgent );
 
     // Hiérarchie
     static std::vector< DEC_Decision_ABC* > GetPionsWithPC   ( const MIL_Agent_ABC& callerAgent );

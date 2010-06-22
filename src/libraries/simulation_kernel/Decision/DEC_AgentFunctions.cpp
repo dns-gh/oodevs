@@ -719,3 +719,17 @@ void DEC_AgentFunctions::Suicide( MIL_Agent_ABC& callerAgent )
     MIL_Effect_Suicide* pEffect = new MIL_Effect_Suicide( callerAgent );
     MIL_EffectManager::GetEffectManager().Register( *pEffect );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::CanBeIlluminate
+// Created: GGE 2010-06-17
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::CanIlluminate( DEC_Decision_ABC* pAgent )
+{
+	const dotation::PHY_RoleInterface_Dotations& roleDotations = pAgent->GetPion().GetRole< dotation::PHY_RoleInterface_Dotations >();
+    
+    if( roleDotations.GetIlluminationDotations( 0.0, true ) || roleDotations.GetIlluminationDotations( 0.0, false ) )
+        return true;
+    else
+        return false;
+}

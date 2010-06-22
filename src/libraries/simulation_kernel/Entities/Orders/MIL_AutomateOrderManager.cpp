@@ -293,6 +293,27 @@ boost::shared_ptr< MIL_Mission_ABC > MIL_AutomateOrderManager::CreatePionMission
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AutomateOrderManager::CreatePionMissionVersPionBM
+// Created: GGE 2010-06-11
+// Like CDT_CreatePionMission but no need of active MRT
+// -----------------------------------------------------------------------------
+boost::shared_ptr< MIL_Mission_ABC > MIL_AutomateOrderManager::CreatePionMissionVersPionBM( MIL_AgentPion& pion, const MIL_MissionType_ABC& missionType )
+{
+
+    if( !pion.GetOrderManager().IsMissionAvailable( missionType ) )
+    {
+        MT_LOG_ERROR( "Mission '" << missionType.GetName() << "' not available for pion '" << pion.GetName() << "' (ID " << pion.GetID() << ", Model '" << pion.GetType().GetModel().GetName() << "')", 4, "MIL_AutomateOrderManager::CreatePionMissionVersPionBM" );
+        return boost::shared_ptr< MIL_Mission_ABC >();
+    }
+
+	//GGE pCurrentMission enlevé
+    boost::shared_ptr< MIL_Mission_ABC > pPionMission ( new MIL_PionMission( missionType, pion ) );
+    if( ! preparedMissions_.insert( pPionMission ).second )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
+    return pPionMission;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AutomateOrderManager::CDT_GivePionMission
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
@@ -300,6 +321,17 @@ void MIL_AutomateOrderManager::CDT_GivePionMission( const boost::shared_ptr< MIL
 {
     assert( automate_.IsEngaged() );
 
+    if( preparedMissions_.erase( mission ) != 1 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
+    mission->GetPion().GetOrderManager().ReplaceMission( mission );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateOrderManager::CDT_GivePionMissionVersPion
+// Created: GGE 2010-06-14
+// -----------------------------------------------------------------------------
+void MIL_AutomateOrderManager::CDT_GivePionMissionVersPion( const boost::shared_ptr< MIL_Mission_ABC > mission )
+{
     if( preparedMissions_.erase( mission ) != 1 )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
     mission->GetPion().GetOrderManager().ReplaceMission( mission );

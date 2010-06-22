@@ -10,6 +10,7 @@
         <mission name="EngageAgents"/>
         <mission name="Flee"/>
         <mission name="IdentifyAgent"/>
+        <mission name="Illuminate"/>
         <mission name="Load"/>
         <mission name="Mount"/>
         <mission name="MoveAndObserve"/>
@@ -70,6 +71,7 @@
           <fragorder name="ApplyFire"/>
           <fragorder name="ApplyGuidedFire"/>
         </mission>
+        <mission name="Coordinate Illumination"/>
         <mission name="SuivreAgent"/>
         <mission name="StayClose"/>
         <mission name="StationnerBM"/>

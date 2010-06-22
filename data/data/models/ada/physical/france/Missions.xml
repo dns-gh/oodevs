@@ -953,6 +953,17 @@
     <mission dia-behavior="net.masagroup.sword.military.platoon.terrorism.tasks.Ambush" dia-type="T_Mission_Pion_Embuscade" id="2064" name="Embuscade">
       <parameter dia-name="position" name="position" optional="false" type="PointBM"/>
     </mission>
+    <mission dia-behavior="net.masagroup.sword.military.platoon.combat.support.artillery.tasks.CoordinateIllumination" dia-type="T_Mission_Pion_CoordinateIllumination" id="2065" name="Coordinate Illumination">
+      <parameter dia-name="entities" name="cible" optional="false" type="AgentKnowledgeBM"/>
+      <parameter dia-name="position" name="deploiement tireur" optional="false" type="PointBM"/>
+      <parameter dia-name="munition" name="munitions" optional="false" type="DotationType"/>
+      <parameter dia-name="interventionType" name="type intervention" optional="false" type="Numeric"/>
+      <parameter dia-name="allies" name="illuminateur allie" optional="true" type="AgentBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.military.tasks.Illuminate" dia-type="T_Mission_Pion_Illuminer" id="2066" name="Illuminate">
+      <parameter dia-name="entities" name="cible" optional="false" type="AgentKnowledgeListBM"/>
+      <parameter dia-name="allies" name="tireur allie" optional="false" type="AgentListBM"/>
+    </mission>
   </units>
   <automats>
     <context>
