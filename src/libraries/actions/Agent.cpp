@@ -74,9 +74,11 @@ Agent::~Agent()
 void Agent::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
-    message.mutable_value()->mutable_unit();    // enforce initialisation of parameter to force his type
     if( IsSet() )
+	{
+		message.mutable_value()->mutable_unit();    // enforce initialisation of parameter to force his type
         Entity< Agent_ABC >::CommitTo( *message.mutable_value()->mutable_unit() );
+	}
 }
 
 // -----------------------------------------------------------------------------
