@@ -78,13 +78,14 @@ public:
     static unsigned int GetHumanFactorMorale    ( const MIL_Agent_ABC& callerAgent );
 
     // Etats du pion
-    static bool IsFlying           ( const MIL_Agent_ABC& callerAgent );
-    static void SetFlyingHeight    ( MIL_Agent_ABC& callerAgent, MT_Float height );
-    static void SetElongationFactor( MIL_Agent_ABC& callerAgent, MT_Float factor );
-    static float TimeLeftForMoving ( const MIL_Agent_ABC& callerAgent );
-    static float TimeToMoveDistance( const MIL_Agent_ABC& callerAgent, float distance );
-    static void Suicide            ( MIL_Agent_ABC& callerAgent );
-    static bool CanIlluminate    ( DEC_Decision_ABC* pAgent );
+    static bool	IsFlying				( const MIL_Agent_ABC& callerAgent );
+    static void	SetFlyingHeight			( MIL_Agent_ABC& callerAgent, MT_Float height );
+    static void SetElongationFactor		( MIL_Agent_ABC& callerAgent, MT_Float factor );
+    static float TimeLeftForMoving		( const MIL_Agent_ABC& callerAgent );
+    static float TimeToMoveDistance		( const MIL_Agent_ABC& callerAgent, float distance );
+    static void Suicide					( MIL_Agent_ABC& callerAgent );
+    static bool CanIlluminate			( DEC_Decision_ABC* pAgent );
+	static float GetIlluminatingRange	( const MIL_Agent_ABC&  callerAgent );
 
     // Hiérarchie
     static std::vector< DEC_Decision_ABC* > GetPionsWithPC   ( const MIL_Agent_ABC& callerAgent );

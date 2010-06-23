@@ -733,3 +733,14 @@ bool DEC_AgentFunctions::CanIlluminate( DEC_Decision_ABC* pAgent )
     else
         return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::GetilluminatingRange
+// Created: GGE 2010-06-23
+// -----------------------------------------------------------------------------
+float DEC_AgentFunctions::GetIlluminatingRange( const MIL_Agent_ABC& callerAgent )
+{
+	const dotation::PHY_RoleInterface_Dotations& roleDotations = callerAgent.GetRole< dotation::PHY_RoleInterface_Dotations >();
+    
+    return roleDotations.GetIlluminatingRange( );
+}
