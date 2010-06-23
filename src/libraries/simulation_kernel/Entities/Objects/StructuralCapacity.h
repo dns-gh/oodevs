@@ -34,15 +34,15 @@ public:
     //! @name Constructors/Destructor
     //@{
              StructuralCapacity();
+    explicit StructuralCapacity( xml::xistream& xis );
     virtual ~StructuralCapacity();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Register( MIL_Object_ABC& /*object*/ ){};
-    virtual void Instanciate( MIL_Object_ABC& /*object*/ ) const{};
-    virtual void Finalize( MIL_Object_ABC& /*object*/ ){};
-    virtual void Update( MIL_Object_ABC& /*object*/, unsigned int /*time*/ ){};
+    template< typename Archive > void serialize( Archive& file, const unsigned int );
+    virtual void Register( MIL_Object_ABC& object );
+    virtual void Instanciate( MIL_Object_ABC& object ) const;
     virtual void CanInteractWith         ( const MIL_Object_ABC& /*object*/, const MIL_Agent_ABC& /*agent*/, bool& /*canInteract*/ ){};
     virtual void ProcessAgentEntering    ( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& /*agent*/ ){};
     virtual void ProcessAgentExiting     ( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& /*agent*/ ){};
@@ -74,5 +74,7 @@ private:
     float structuralState_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( StructuralCapacity )
 
 #endif // __StructuralCapacity_h_

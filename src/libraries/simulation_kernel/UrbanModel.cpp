@@ -29,6 +29,8 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( UrbanModel )
 
+using namespace xml;
+
 namespace
 {
     UrbanModel* singleton = 0;
@@ -92,6 +94,7 @@ void UrbanModel::ReadUrbanModel( const MIL_Config& config )
          model_->Load( directoryPath, world );
          UrbanWrapperVisitor visitor( *this );
          model_->Accept( visitor );
+         LoadCapacities( config );
     }
     catch( std::exception& e )
     {
@@ -105,9 +108,7 @@ void UrbanModel::ReadUrbanModel( const MIL_Config& config )
 // -----------------------------------------------------------------------------
 void UrbanModel::CreateObjectWrapper( urban::TerrainObject_ABC& object )
 {
-    UrbanObjectWrapper* wrapper = new UrbanObjectWrapper( object );
-    wrapper->AddCapacity( new StructuralCapacity() );
-    urbanWrappers_.push_back( wrapper );
+    urbanWrappers_.push_back( new UrbanObjectWrapper( object ) );
 }
 
 namespace
@@ -159,7 +160,7 @@ void UrbanModel::save( MIL_CheckPointOutArchive& /*file*/, const unsigned int ) 
 // Name: UrbanModel::WriteUrbanModel
 // Created: SLG 2009-10-29
 // -----------------------------------------------------------------------------
-void UrbanModel::WriteUrbanModel( xml::xostream& /*xos*/ ) const
+void UrbanModel::WriteUrbanModel( xostream& /*xos*/ ) const
 {
     //TODO
 }
@@ -277,4 +278,67 @@ UrbanObjectWrapper& UrbanModel::FindWrapper( const urban::TerrainObject_ABC& ter
         if( &( ( *it )->GetObject() ) == &terrain )
             return **it;
     throw std::exception( "UrbanObjectWrapper not found" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanModel::FindWrapper
+// Created: JSR 2010-06-21
+// -----------------------------------------------------------------------------
+UrbanObjectWrapper& UrbanModel::FindWrapper( unsigned int id )
+{
+    for( std::vector< UrbanObjectWrapper* >::const_iterator it = urbanWrappers_.begin(); it != urbanWrappers_.end(); ++it )
+        if( ( *it )->GetID() == id )
+            return **it;
+    throw std::exception( "UrbanObjectWrapper not found" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanModel::LoadCapacities
+// Created: JSR 2010-06-21
+// -----------------------------------------------------------------------------
+void UrbanModel::LoadCapacities( const MIL_Config& config )
+{
+    const std::string strUrbanState = config.GetUrbanStateFile();
+    if( strUrbanState.empty() )
+        return;
+
+    MT_LOG_INFO_MSG( MT_FormatString( "UrbanState file name : '%s'", strUrbanState.c_str() ) );
+
+    xifstream xis( strUrbanState );
+    xis >> start( "urban-state" )
+            >> start( "blocks" )
+                >> xml::list( "block", boost::bind( &UrbanModel::ReadBlock, boost::ref( *this ), _1 ) )
+            >> end()
+        >> end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanModel::ReadBlock
+// Created: JSR 2010-06-21
+// -----------------------------------------------------------------------------
+void UrbanModel::ReadBlock( xistream& xis )
+{
+    unsigned int id;
+    xis >> attribute( "id", id );
+    try
+    {
+        UrbanObjectWrapper& wrapper = FindWrapper( id );
+        xis >> optional() >> start( "capacities" )
+            >> xml::list( *this, &UrbanModel::ReadCapacity, wrapper )
+            >> end();
+    }
+    catch( std::exception& )
+    {
+        // NOTHING
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanModel::ReadAttribute
+// Created: JSR 2010-06-21
+// -----------------------------------------------------------------------------
+void UrbanModel::ReadCapacity( const std::string& capacity, xistream& xis, UrbanObjectWrapper& wrapper )
+{
+    if( capacity == "structural" )
+        wrapper.AddCapacity( new StructuralCapacity( xis ) );
 }

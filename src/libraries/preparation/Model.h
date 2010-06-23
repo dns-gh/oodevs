@@ -57,6 +57,7 @@ class ScoresModel;
 class ScoreFactory_ABC;
 class SuccessFactorsModel;
 class SuccessFactorFactory_ABC;
+class UrbanModel;
 
 // =============================================================================
 /** @class  Model
@@ -122,6 +123,7 @@ public:
     ScoresModel& scores_;
     SuccessFactorsModel& successFactors_;
     IntelligencesModel& intelligences_;
+    UrbanModel& urban_;
     gui::DrawerModel& drawings_;
     //@}
 

@@ -60,6 +60,7 @@ public:
     urban::Model& GetModel();
     static UrbanModel& GetSingleton();
     UrbanObjectWrapper& FindWrapper( const urban::TerrainObject_ABC& terrain );
+    UrbanObjectWrapper& FindWrapper( unsigned int id );
     //@}
 
     //! @name CheckPoints
@@ -70,6 +71,14 @@ public:
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
 
     void WriteUrbanModel( xml::xostream& xos ) const;
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void LoadCapacities( const MIL_Config& config );
+    void ReadBlock( xml::xistream& xis );
+    void ReadCapacity( const std::string& capacity, xml::xistream& xis, UrbanObjectWrapper& wrapper );
     //@}
 
 private:

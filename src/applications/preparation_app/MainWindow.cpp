@@ -79,6 +79,7 @@
 #include "clients_gui/TerrainPicker.h"
 #include "clients_gui/TerrainProfilerLayer.h"
 #include "clients_gui/TooltipsLayer.h"
+#include "clients_gui/UrbanLayer.h"
 #include "clients_gui/resources.h"
 #include "clients_gui/WatershedLayer.h"
 #include "clients_gui/resources.h"
@@ -283,6 +284,7 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
     Layer_ABC& raster               = *new RasterLayer( controllers_.controller_ );
     Layer_ABC& watershed            = *new WatershedLayer( controllers_, staticModel_.detection_ );
     Layer_ABC& elevation3d          = *new Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
+    Layer_ABC& urbanLayer           = *new UrbanLayer( controllers_, *glProxy_ );
     Layer_ABC& grid                 = *new GridLayer( controllers_, *glProxy_ );
     Layer_ABC& metrics              = *new MetricsLayer( staticModel_.detection_, *glProxy_ );
     Layer_ABC& intelligences        = *new ::IntelligencesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, model_.intelligences_ );
@@ -297,6 +299,7 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
     glProxy_->Register( elevation2d );             preferences.AddLayer( tr( "Elevation" ), elevation2d );          elevation2d         .SetPasses( "main" );
     glProxy_->Register( raster );                  preferences.AddLayer( tr( "Raster" ), raster );                  raster              .SetPasses( "main" );
     glProxy_->Register( terrain );                 preferences.AddLayer( tr( "Terrain" ), terrain );                terrain             .SetPasses( "main" );
+    glProxy_->Register( urbanLayer );               /*preferences.AddLayer( tr( "Urban" ), urbanLayer );*/          urbanLayer          .SetPasses( "main" );
     glProxy_->Register( watershed );               preferences.AddLayer( tr( "Watershed" ), watershed );            watershed           .SetPasses( "main" );
     glProxy_->Register( elevation3d );
     glProxy_->Register( grid );                                                                                     grid                .SetPasses( "main" );
@@ -325,6 +328,7 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
     forward_->Register( intelligences );
     forward_->Register( weather );
     forward_->Register( limits );
+    forward_->Register( urbanLayer );
     forward_->Register( drawerLayer );
     forward_->Register( metrics );
     forward_->Register( elevation3d );

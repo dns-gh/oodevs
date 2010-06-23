@@ -49,6 +49,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              TerrainObjectProxy( const MsgsSimToClient::MsgUrbanCreation& msg, kernel::Controller& controller, urban::TerrainObject_ABC& object ); 
+             TerrainObjectProxy( kernel::Controller& controller, urban::TerrainObject_ABC& object ); 
     virtual ~TerrainObjectProxy();
     //@}
 

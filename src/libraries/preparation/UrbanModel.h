@@ -16,7 +16,16 @@
 namespace kernel
 {
     class Controller;
-    class Entity_ABC;
+}
+
+namespace gui
+{
+    class TerrainObjectProxy;
+}
+
+namespace xml
+{
+    class xistream;
 }
 
 // =============================================================================
@@ -26,7 +35,7 @@ namespace kernel
 // Created: SLG 2009-02-10
 // =============================================================================
 class UrbanModel : public urban::Model
-                 , public tools::Resolver< kernel::Entity_ABC >
+                 , public tools::Resolver< gui::TerrainObjectProxy >
 {
 
 public:
@@ -39,10 +48,19 @@ public:
     //! @name Operations
     //@{
     bool Load( const std::string& directoryPath, urban::WorldParameters& world );
+    void Serialize( const std::string& filename ) const;
+    void LoadUrbanState( xml::xistream& xis );
     void Purge();
+    void SendCreation( urban::TerrainObject_ABC& urbanObject );
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    void ReadBlock( xml::xistream& xis );
+    void ReadCapacity( const std::string& capacity, xml::xistream& xis, gui::TerrainObjectProxy& proxy );
+    //@}
+
     //! @name Copy/Assignement
     //@{
     UrbanModel( const UrbanModel& );            //!< Copy constructor

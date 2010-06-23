@@ -32,6 +32,18 @@ TerrainObjectProxy::TerrainObjectProxy(const MsgsSimToClient::MsgUrbanCreation& 
 }
 
 // -----------------------------------------------------------------------------
+// Name: TerrainObjectProxy constructor
+// Created: JSR 2010-06-21
+// -----------------------------------------------------------------------------
+TerrainObjectProxy::TerrainObjectProxy( kernel::Controller& controller, urban::TerrainObject_ABC& object )
+    : EntityImplementation< kernel::Entity_ABC >( controller, object.GetId(), QString( object.GetName().c_str() ) )
+    , object_( &object )
+{
+    RegisterSelf( *this );
+    CreateDictionary( controller );
+}
+
+// -----------------------------------------------------------------------------
 // Name: TerrainObjectProxy destructor
 // Created: SLG 2009-10-20
 // -----------------------------------------------------------------------------

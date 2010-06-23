@@ -30,12 +30,14 @@
 #include "SuccessFactorFactory.h"
 #include "IntelligencesModel.h"
 #include "OrbatReIndexer.h"
+#include "UrbanModel.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
 #include "clients_gui/DrawerFactory.h"
 #include "clients_gui/DrawerModel.h"
 #include "indicators/GaugeTypes.h"
 #include "tools/ExerciseConfig.h"
+#include <urban/WorldParameters.h>
 #include <xeumeuleu/xml.h>
 
 #pragma warning( push )
@@ -77,6 +79,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
     , scores_( *new ScoresModel( scoreFactory_ ) )
     , successFactors_( *new SuccessFactorsModel( successFactorFactory_ ) )
     , intelligences_( *new IntelligencesModel( controllers.controller_, staticModel.coordinateConverter_, idManager_, staticModel.levels_ ) )
+    , urban_( *new UrbanModel( controllers.controller_ ) )
     , drawings_( *new gui::DrawerModel( controllers, drawingFactory_ ) )
 {
     // NOTHING
@@ -104,6 +107,7 @@ Model::~Model()
     delete &knowledgeGroups_;
     delete &teams_;
     delete &teamFactory_;
+    delete &urban_;
     delete &idManager_;
 }
 
@@ -114,6 +118,7 @@ Model::~Model()
 void Model::Purge()
 {
     UpdateName( "orbat" );
+    urban_.Purge();
     intelligences_.Purge();
     successFactors_.Purge();
     scores_.Purge();
@@ -163,6 +168,23 @@ void Model::Load( const tools::ExerciseConfig& config )
             teams_.Load( xis, *this );
         }
     }
+    {
+        std::string directoryPath = boost::filesystem::path( config.GetTerrainFile() ).branch_path().string();
+        try
+        {
+            urban::WorldParameters world( directoryPath );
+            urban_.Load( directoryPath, world );
+            const std::string urbanStateFile = config.GetUrbanStateFile() ; 
+            if( bfs::exists( bfs::path( urbanStateFile, bfs::native ) ) )
+            {
+                xml::xifstream xis( urbanStateFile );
+                urban_.LoadUrbanState( xis );
+            }
+        }
+        catch( std::exception& )
+        {
+        }
+    }
     if( ! LoadOptional( config.GetWeatherFile(), weather_ ) )
         controllers_.controller_.Update( weather_);
     LoadOptional( config.GetProfilesFile(), profiles_ );
@@ -204,6 +226,7 @@ bool Model::Save( const tools::ExerciseConfig& config, ModelChecker_ABC& checker
             teams_.Serialize( xos );
             xos << end();
         }
+        urban_.Serialize( config.GetUrbanStateFile() );
         weather_.Serialize( config.GetWeatherFile() );
         profiles_.Serialize( config.GetProfilesFile() );
         scores_.Serialize( config.GetScoresFile() );

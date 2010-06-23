@@ -84,6 +84,9 @@ void ExerciseConfig::LoadExercise( const std::string& file )
                 >> optional() >> start( "urban" )
                     >> attribute( "file", urban_ )
                 >> end()
+                >> optional() >> start( "urbanstate" )
+                    >> attribute( "file", urbanState_ )
+                >> end()
                 >> optional() >> start( "population" )
                     >> attribute( "name", population_ )
                 >> end()
@@ -231,6 +234,17 @@ std::string ExerciseConfig::GetUrbanFile() const
     if( urban_.empty() )
         return urban_;
     return BuildExerciseChildFile( urban_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetUrbanStateFile
+// Created: JSR 2010-06-21
+// -----------------------------------------------------------------------------
+std::string ExerciseConfig::GetUrbanStateFile() const
+{
+    if( urbanState_.empty() )
+        return urbanState_;
+    return BuildExerciseChildFile( urbanState_ );
 }
 
 // -----------------------------------------------------------------------------
