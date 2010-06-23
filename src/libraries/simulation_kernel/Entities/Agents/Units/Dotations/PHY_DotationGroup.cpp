@@ -240,6 +240,23 @@ const PHY_DotationCategory* PHY_DotationGroup::GetIlluminationDotations( float r
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_DotationGroup::GetilluminatingRange
+// Created: GGE 2010-06-23
+// -----------------------------------------------------------------------------
+float PHY_DotationGroup::GetIlluminatingRange( ) const
+{
+	float rangeMax = 0.0;
+    for( T_DotationMap::const_iterator it = dotations_.begin(); it != dotations_.end(); it++ )
+    {
+        if( it->first->GetIlluminatingRange( ) > rangeMax )
+        {
+            rangeMax = it->first->GetIlluminatingRange( );
+        }
+    }
+    return rangeMax;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_DotationGroup::Supply
 // Created: NLD 2005-05-11
 // -----------------------------------------------------------------------------

@@ -51,6 +51,7 @@ public:
           bool                      IsGuided            () const;
           float                     GetGuidanceRange    () const;
           bool                      IsIlluminating      ( float range, bool permanent ) const;
+		  float						GetIlluminatingRange() const;
           double                    GetAttrition        ( unsigned materialId ) const;
     //@}
 

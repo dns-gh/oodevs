@@ -474,6 +474,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_HasDotation",
         boost::function< bool ( const PHY_DotationCategory* ) >( boost::bind( &DEC_AgentFunctions::HasDotation, boost::cref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Agent_PeutIllumine",&DEC_AgentFunctions::CanIlluminate );
+    brain.RegisterFunction( "DEC_Agent_IlluminateRange", boost::bind( &DEC_AgentFunctions::GetIlluminatingRange, boost::cref( GetPion() ) ) );
  
     brain.RegisterFunction( "DEC_Agent_AutonomieEnDeplacement", boost::bind( &DEC_AgentFunctions::TimeLeftForMoving, boost::cref( GetPion() ) ) );
     brain.RegisterFunction( "DEC_Agent_TempsPourParcourirDistanceEnLigneDroite", 

@@ -84,6 +84,7 @@ public:
     void     Resupply( const PHY_AmmoDotationClass& ammoDotationClass, MT_Float rFactor );
     void     Resupply( const PHY_DotationType&     type              , MT_Float rFactor );
     const PHY_DotationCategory* GetIlluminationDotations( float range, bool permanent ) const;
+	float	 GetIlluminatingRange() const;
     //@}
 
     //! @name 

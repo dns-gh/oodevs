@@ -306,6 +306,22 @@ const PHY_DotationCategory* PHY_DotationGroupContainer::GetIlluminationDotations
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_DotationGroupContainer::GetilluminatingRange
+// Created: GGE 2010-06-23
+// -----------------------------------------------------------------------------
+float PHY_DotationGroupContainer::GetIlluminatingRange( ) const
+{
+	float rangeMax = 0.0;   
+	for( T_DotationGroupMap::const_iterator it = dotationGroups_.begin(); it != dotationGroups_.end(); it++ )
+    {
+        float range = it->second->GetIlluminatingRange( );
+        if( range > rangeMax )
+            rangeMax = range;
+    }
+    return rangeMax;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_DotationGroupContainer::AddConsumptionReservation
 // Created: NLD 2004-09-30
 // -----------------------------------------------------------------------------

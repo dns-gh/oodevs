@@ -473,6 +473,15 @@ bool PHY_DotationCategory::IsIlluminating( float range, bool permanent ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory::GetilluminatingRange
+// Created: GGE 2010-06-23
+// -----------------------------------------------------------------------------
+float PHY_DotationCategory::GetIlluminatingRange( ) const
+{
+    return fRange_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory::GetAttrition
 // Created: DDA 2010-04-22
 // -----------------------------------------------------------------------------
