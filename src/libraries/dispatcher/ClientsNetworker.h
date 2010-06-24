@@ -16,21 +16,6 @@
 #include "tools/ServerNetworker.h"
 #include "tools/MessageDispatcher_ABC.h"
 
-
-////using namespace Common;
-namespace MsgsSimToClient
-{
-    class MsgSimToClient;
-}
-//using namespace MsgsAuthenticationToClient;
-//using namespace MsgsReplayToClient;
-//using namespace MsgsAarToClient;
-//using namespace MsgsMessengerToClient;
-//using namespace MsgsDispatcherToClient;
-//using namespace MsgsPluginToClient;
-
-struct MsgsInClient;
-
 namespace dispatcher 
 {
     class Client;
@@ -64,7 +49,6 @@ public:
     virtual void Send( const MsgsAarToClient::MsgAarToClient& msg );
     virtual void Send( const MsgsMessengerToClient::MsgMessengerToClient& msg );
     virtual void Send( const MsgsDispatcherToClient::MsgDispatcherToClient& msg );
-    virtual void Send( const MsgsPluginToClient::MsgPluginToClient& msg );
 
     virtual Profile_ABC&         GetProfile  ( const std::string& link );
     virtual ClientPublisher_ABC& GetPublisher( const std::string& link );

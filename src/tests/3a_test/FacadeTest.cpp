@@ -22,13 +22,11 @@
 
 using namespace Common;
 using namespace MsgsSimToClient;
-using namespace MsgsPluginToClient;
 using namespace MsgsMessengerToClient;
 using namespace MsgsDispatcherToClient;
 using namespace MsgsAuthenticationToClient;
 using namespace MsgsReplayToClient;
 using namespace MsgsAarToClient;
-
 
 using namespace mockpp;
 
@@ -88,7 +86,6 @@ namespace
         };
         virtual void Send( const MsgMessengerToClient& msg ) { }
         virtual void Send( const MsgDispatcherToClient& msg ) { }
-        virtual void Send(const MsgPluginToClient & msg ) { }
         virtual std::string GetEndpoint() const { return "";}
 
         mockpp::ChainableMockMethod< void, double > Send_mocker;

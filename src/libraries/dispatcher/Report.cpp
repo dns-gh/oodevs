@@ -15,7 +15,6 @@
 #include "protocol/clientsenders.h"
 
 using namespace dispatcher;
-//using namespace MsgsSimToClient;
 
 // -----------------------------------------------------------------------------
 // Name: Report constructor

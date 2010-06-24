@@ -130,7 +130,6 @@ namespace
         virtual void Send( const MsgsAarToClient::MsgAarToClient& ) {}
         virtual void Send( const MsgsMessengerToClient::MsgMessengerToClient& ) {}
         virtual void Send( const MsgsDispatcherToClient::MsgDispatcherToClient& ) {}
-        virtual void Send( const MsgsPluginToClient::MsgPluginToClient& ) {}
         virtual std::string GetEndpoint() const { return ""; }
         Model* model_;
         tools::OutputBinaryWrapper* output_;

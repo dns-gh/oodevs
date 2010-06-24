@@ -10,9 +10,6 @@
 #ifndef __ClientPublisher_ABC_h_
 #define __ClientPublisher_ABC_h_
 
-
-
-////using namespace Common;
 namespace MsgsAarToClient
 {
     class MsgAarToClient;
@@ -48,11 +45,6 @@ namespace MsgsReplayToClient
     class MsgReplayToClient;
 }
 
-namespace MsgsPluginToClient
-{
-    class MsgPluginToClient;
-}
-
 namespace MsgsClientToAar
 {
     class MsgClientToAar;
@@ -72,7 +64,6 @@ namespace MsgsClientToAuthentication
 {
     class MsgClientToAuthentication;
 }
-
 
 namespace dispatcher
 {
@@ -95,21 +86,12 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Send( const MsgsSimToClient::MsgSimToClient&            msg ) = 0;
-    virtual void Send( const MsgsAuthenticationToClient::MsgAuthenticationToClient& msg ) = 0;
-    virtual void Send( const MsgsReplayToClient::MsgReplayToClient&         msg ) = 0;
-    virtual void Send( const MsgsAarToClient::MsgAarToClient&            msg ) = 0;
-    virtual void Send( const MsgsMessengerToClient::MsgMessengerToClient&      msg ) = 0;
-    virtual void Send( const MsgsDispatcherToClient::MsgDispatcherToClient&     msg ) = 0;
-    virtual void Send( const MsgsPluginToClient::MsgPluginToClient&         msg ) = 0;
-    
-    
-    
-//    virtual void Send( const MsgClientToAar&         msg ) = 0;
-//    virtual void Send( const MsgClientToSim&         msg ) = 0;
-//    virtual void Send( const MsgClientToReplay&      msg ) = 0;
-//    virtual void Send( const MsgClientToAuthentication& msg) = 0;
-
+    virtual void Send( const MsgsSimToClient::MsgSimToClient&                       message ) = 0;
+    virtual void Send( const MsgsAuthenticationToClient::MsgAuthenticationToClient& message ) = 0;
+    virtual void Send( const MsgsReplayToClient::MsgReplayToClient&                 message ) = 0;
+    virtual void Send( const MsgsAarToClient::MsgAarToClient&                       message ) = 0;
+    virtual void Send( const MsgsMessengerToClient::MsgMessengerToClient&           message ) = 0;
+    virtual void Send( const MsgsDispatcherToClient::MsgDispatcherToClient&         message ) = 0;
     //@}
 
     //! @name Accessors

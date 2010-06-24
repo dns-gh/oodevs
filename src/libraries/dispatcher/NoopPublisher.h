@@ -43,7 +43,6 @@ public:
     virtual void Send( const MsgsAarToClient::MsgAarToClient& ) {};
     virtual void Send( const MsgsMessengerToClient::MsgMessengerToClient& ) {};
     virtual void Send( const MsgsDispatcherToClient::MsgDispatcherToClient& ) {};
-    virtual void Send( const MsgsPluginToClient::MsgPluginToClient& ) {};
     //@}
 
     //! @name Accesors

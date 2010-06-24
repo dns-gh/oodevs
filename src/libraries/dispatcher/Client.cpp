@@ -8,15 +8,12 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "Client.h"
-
 #include "Profile.h"
-#include "tools/MessageSender_ABC.h"
 #include "protocol/protocol.h"
+#include "tools/MessageSender_ABC.h"
 
 using namespace dispatcher;
-using namespace tools;
 
 // -----------------------------------------------------------------------------
 // Name: Client constructor
@@ -91,16 +88,6 @@ void Client::Send( const MsgsDispatcherToClient::MsgDispatcherToClient& msg )
 {
     sender_.Send( endpoint_, msg );
 }
-
-// -----------------------------------------------------------------------------
-// Name: Client::Send
-// Created: RPD 2009-08-13
-// -----------------------------------------------------------------------------
-void Client::Send( const MsgsPluginToClient::MsgPluginToClient& msg )
-{
-    sender_.Send( endpoint_, msg );
-}
-
 
 // -----------------------------------------------------------------------------
 // Name: Client::GetEndpoint

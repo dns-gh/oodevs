@@ -26,7 +26,6 @@ MOCK_BASE_CLASS( MockClientPublisher, dispatcher::ClientPublisher_ABC )
     MOCK_METHOD_EXT( Send, 1, void ( const MsgsAarToClient::MsgAarToClient& ), SendAarToClient );
     MOCK_METHOD_EXT( Send, 1, void ( const MsgsMessengerToClient::MsgMessengerToClient& ), SendMessengerToClient );
     MOCK_METHOD_EXT( Send, 1, void ( const MsgsDispatcherToClient::MsgDispatcherToClient& ), SendDispatcherToClient );
-    MOCK_METHOD_EXT( Send, 1, void ( const MsgsPluginToClient::MsgPluginToClient& ), SendPluginToClient );
     MOCK_METHOD( GetEndpoint, 0 );
 };
 

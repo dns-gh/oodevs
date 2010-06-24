@@ -22,7 +22,6 @@
 #include "generated/DispatcherToClient.pb.cc"
 #include "generated/DispatcherToSim.pb.cc"
 #include "generated/MessengerToClient.pb.cc"
-#include "generated/PluginToClient.pb.cc"
 #include "generated/ReplayToClient.pb.cc"
 #include "generated/SimToClient.pb.cc"
 #include "generated/LauncherToAdmin.pb.cc"
