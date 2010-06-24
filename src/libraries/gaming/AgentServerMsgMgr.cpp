@@ -89,7 +89,6 @@ AgentServerMsgMgr::AgentServerMsgMgr( MessageDispatcher_ABC& dispatcher, Message
     dispatcher.RegisterMessage( *this, &AgentServerMsgMgr::OnReceiveMsgAarToClient );
     dispatcher.RegisterMessage( *this, &AgentServerMsgMgr::OnReceiveMsgMessengerToClient );
     dispatcher.RegisterMessage( *this, &AgentServerMsgMgr::OnReceiveMsgDispatcherToClient );
-    dispatcher.RegisterMessage( *this, &AgentServerMsgMgr::OnReceiveMsgPluginToClient );
 }
 
 //-----------------------------------------------------------------------------
@@ -2051,28 +2050,6 @@ void AgentServerMsgMgr::OnReceiveMsgDispatcherToClient( const std::string& , con
     else
         UnhandledMessage( &wrapper.message() );
 }
-//
-//
-//// -----------------------------------------------------------------------------
-//// Name: AgentServerMsgMgr::OnReceiveMsgPluginToClient
-// Created: RPD 2009-08-13
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPluginToClient( const std::string& , const MsgsPluginToClient::MsgPluginToClient& wrapper )
-{
-    if( wrapper.message().has_plugin_intelligence_creation() )
-        OnReceiveMsgIntelligenceCreation( wrapper.message().plugin_intelligence_creation() );
-    else if( wrapper.message().has_plugin_intelligence_update() )
-        OnReceiveMsgIntelligenceUpdate( wrapper.message().plugin_intelligence_update() );
-    else if( wrapper.message().has_plugin_intelligence_destruction() )
-        OnReceiveMsgIntelligenceDestruction( wrapper.message().plugin_intelligence_destruction() );
-    else if( wrapper.message().has_plugin_limit_creation() )
-        OnReceiveMsgLimitCreation( wrapper.message().plugin_limit_creation() );
-    else if( wrapper.message().has_plugin_limit_destruction() )
-        OnReceiveMsgLimitDestruction( wrapper.message().plugin_limit_destruction() ); 
-    else
-        UnhandledMessage( &wrapper.message() );
-}
-
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::SetModel

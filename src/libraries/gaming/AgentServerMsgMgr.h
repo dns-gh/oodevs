@@ -203,12 +203,6 @@ namespace MsgsAarToClient
     class MsgIndicator;
 }
 
-namespace MsgsPluginToClient
-{
-    class MsgPluginToClient;
-    class MsgPluginTextMessage;
-}
-
 namespace tools
 {
     class MessageDispatcher_ABC;
@@ -264,7 +258,6 @@ private:
     void OnReceiveMsgAarToClient           ( const std::string& from, const MsgsAarToClient::MsgAarToClient&                        wrapper );
     void OnReceiveMsgMessengerToClient     ( const std::string& from, const MsgsMessengerToClient::MsgMessengerToClient&            wrapper );
     void OnReceiveMsgDispatcherToClient    ( const std::string& from, const MsgsDispatcherToClient::MsgDispatcherToClient&          wrapper );
-    void OnReceiveMsgPluginToClient        ( const std::string& from, const MsgsPluginToClient::MsgPluginToClient&                  wrapper );
 
     void OnReceiveMsgUnitVisionCones                       ( const MsgsSimToClient::MsgUnitVisionCones&                  message );
     void OnReceiveMsgUnitInterVisibility                   ( const MsgsSimToClient::MsgUnitDetection&                    message );
