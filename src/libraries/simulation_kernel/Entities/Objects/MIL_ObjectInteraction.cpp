@@ -145,9 +145,7 @@ void MIL_ObjectInteraction::NotifyAgentMovingOutside( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void MIL_ObjectInteraction::NotifyAgentPutInside( MIL_Agent_ABC& agent )
 {
-    if( agentInsideSet_.insert( &agent ).second )
-        agentEnteringSet_.insert( &agent );
-    agentExitingSet_.erase ( &agent );
+    NotifyAgentMovingInside( agent );
 }
     
 // -----------------------------------------------------------------------------

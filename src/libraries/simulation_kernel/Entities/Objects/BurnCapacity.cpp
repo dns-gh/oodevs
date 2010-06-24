@@ -125,12 +125,12 @@ void BurnCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_ABC& ag
 }
 
 // -----------------------------------------------------------------------------
-// Name: AttritionCapacity::ProcessPopulationMovingInside
+// Name: AttritionCapacity::ProcessPopulationInside
 // Created: RFT 2008-06-06
 // -----------------------------------------------------------------------------
-void BurnCapacity::ProcessPopulationMovingInside( MIL_Object_ABC& object, MIL_PopulationElement_ABC& population )
+void BurnCapacity::ProcessPopulationInside( MIL_Object_ABC& object, MIL_PopulationElement_ABC& population )
 {
     FireAttribute& attr = object.GetAttribute< FireAttribute >();
-    MIL_Injury_Fire injury( attr.GetHeat() , attr.GetClass().GetName() , injuryID_ ); //Number 4
+    MIL_Injury_Fire injury( attr.GetHeat() , attr.GetClass().GetName() , injuryID_ );
     population.ApplyInjury( injury );
 }

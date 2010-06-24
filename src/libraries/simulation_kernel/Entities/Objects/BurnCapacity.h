@@ -58,7 +58,7 @@ public:
     virtual void ProcessAgentMovingInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent );
     virtual void ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent );
     //Population
-    virtual void ProcessPopulationMovingInside( MIL_Object_ABC& object, MIL_PopulationElement_ABC& agent );
+    virtual void ProcessPopulationInside( MIL_Object_ABC& object, MIL_PopulationElement_ABC& agent );
     //@}
 
 

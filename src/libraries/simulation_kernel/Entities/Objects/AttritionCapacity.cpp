@@ -149,16 +149,24 @@ void AttritionCapacity::ProcessAgentMovingInside( MIL_Object_ABC& object, MIL_Ag
 }
 
 // -----------------------------------------------------------------------------
-// Name: AttritionCapacity::ProcessPopulationMovingInside
+// Name: AttritionCapacity::ProcessPopulationInside
 // Created: JCR 2008-06-06
 // -----------------------------------------------------------------------------
-void AttritionCapacity::ProcessPopulationMovingInside( MIL_Object_ABC& object, MIL_PopulationElement_ABC& population )
+void AttritionCapacity::ProcessPopulationInside( MIL_Object_ABC& object, MIL_PopulationElement_ABC& population )
 {
     if( population_.surface_ > 0. ) 
     {
         PHY_ObjectExplosionFireResult fireResult( object );
         if ( dotation_->HasAttritions() )
+        {
+            ConstructionAttribute* construction = object.RetrieveAttribute< ConstructionAttribute >();    
+            if( ! ( construction && construction->HasDotation( *dotation_ ) ) )
+                return;
             population.ApplyExplosion( *this, fireResult );
+            unsigned int hits = fireResult.GetHits();
+            if ( hits > 0 )    
+                construction->Build( - MT_Float( hits ) / MT_Float( construction->GetMaxDotation() ) );
+        }
     }
 }
 

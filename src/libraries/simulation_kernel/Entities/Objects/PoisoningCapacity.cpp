@@ -120,15 +120,15 @@ void PoisoningCapacity::ProcessAgentMovingInside( MIL_Object_ABC& object, MIL_Ag
 }
 
 // -----------------------------------------------------------------------------
-// Name: AttritionCapacity::ProcessPopulationMovingInside
+// Name: AttritionCapacity::ProcessPopulationInside
 // Created: RFT 2008-06-06
 // -----------------------------------------------------------------------------
-void PoisoningCapacity::ProcessPopulationMovingInside( MIL_Object_ABC& object, MIL_PopulationElement_ABC& population )
+void PoisoningCapacity::ProcessPopulationInside( MIL_Object_ABC& object, MIL_PopulationElement_ABC& population )
 {
     NBCTypeAttribute* attr = object.RetrieveAttribute< NBCTypeAttribute >();
     if( attr && attr->GetAgentType().IsPoisoning() )
     {
-        MIL_Injury_Poison injury( attr->GetConcentration() , attr->GetAgentType().GetName() , injuryID_ ); //Number 4
+        MIL_Injury_Poison injury( attr->GetConcentration() , attr->GetAgentType().GetName() , injuryID_ );
         population.ApplyInjury( injury );
     }
 }
