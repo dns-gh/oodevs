@@ -39,6 +39,7 @@ MOCK_BASE_CLASS( MockRoleDotations, dotation::PHY_RoleInterface_Dotations )
     MOCK_METHOD( NotifySupplyNeeded, 2 );
     MOCK_METHOD( FillSupplyRequest, 1 );
     MOCK_METHOD( ChangeDotationsValueUsingTC2, 3 );
+    MOCK_METHOD( GetIlluminatingRange, 0 );
 };
 
 #endif // __MockRoleDotation_h_
