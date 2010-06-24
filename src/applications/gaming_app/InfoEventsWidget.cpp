@@ -103,13 +103,14 @@ InfoEventsWidget::~InfoEventsWidget()
 // -----------------------------------------------------------------------------
 void InfoEventsWidget::InitializeEvents( QWidget* parent )
 {
-    events_["jammed"]        = CreateEvent( parent, MAKE_PIXMAP( brouillage )     , tools::translate( "InfoEventsWidget", "Communication: jammed" ) );
-    events_["silence"]       = CreateEvent( parent, MAKE_PIXMAP( talkie_interdit ), tools::translate( "InfoEventsWidget", "Communication: radio silence" ) );
-    events_["radar"]         = CreateEvent( parent, MAKE_PIXMAP( radars_on )      , tools::translate( "InfoEventsWidget", "Communication: radar enabled" ) );
-    events_["stealth"]       = CreateEvent( parent, MAKE_PIXMAP( csword )         , tools::translate( "InfoEventsWidget", "Communication: stealth mode" ) );
-    events_["nbc suit"]      = CreateEvent( parent, MAKE_PIXMAP( nbc )            , tools::translate( "InfoEventsWidget", "NBC: suit on" ) );
-    events_["contamination"] = CreateEvent( parent, MAKE_PIXMAP( nbc )            , "" );
-    events_["refugees"]      = CreateEvent( parent, MAKE_PIXMAP( csword )         , tools::translate( "InfoEventsWidget", "Refugees handled" ) );
+    events_["jammed"]         = CreateEvent( parent, MAKE_PIXMAP( brouillage )     , tools::translate( "InfoEventsWidget", "Communication: jammed" ) );
+    events_["silenceEmitted"] = CreateEvent( parent, MAKE_PIXMAP( talkie_interdit ), tools::translate( "InfoEventsWidget", "Communication: radio emitter silence" ) );
+    events_["silenceReceived"]= CreateEvent( parent, MAKE_PIXMAP( talkie_interdit ), tools::translate( "InfoEventsWidget", "Communication: radio receiver silence" ) );
+    events_["radar"]          = CreateEvent( parent, MAKE_PIXMAP( radars_on )      , tools::translate( "InfoEventsWidget", "Communication: radar enabled" ) );
+    events_["stealth"]        = CreateEvent( parent, MAKE_PIXMAP( csword )         , tools::translate( "InfoEventsWidget", "Communication: stealth mode" ) );
+    events_["nbc suit"]       = CreateEvent( parent, MAKE_PIXMAP( nbc )            , tools::translate( "InfoEventsWidget", "NBC: suit on" ) );
+    events_["contamination"]  = CreateEvent( parent, MAKE_PIXMAP( nbc )            , "" );
+    events_["refugees"]       = CreateEvent( parent, MAKE_PIXMAP( csword )         , tools::translate( "InfoEventsWidget", "Refugees handled" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -137,7 +138,8 @@ void InfoEventsWidget::ToggleEvent( const std::string& event, bool toggle )
 void InfoEventsWidget::SetAttributes( const Attributes& attributes )
 {
     ToggleEvent( "jammed"  , attributes.bCommJammed_ );
-    ToggleEvent( "silence" , attributes.bRadioSilence_ );
+    ToggleEvent( "silenceEmitted" , attributes.bRadioEmitterSilence_ );
+    ToggleEvent( "silenceReceived" , attributes.bRadioReceiverSilence_ );
     ToggleEvent( "radar"   , attributes.bRadarEnabled_ );
     ToggleEvent( "stealth" , attributes.bStealthModeEnabled_ );
     ToggleEvent( "refugees", attributes.bRefugeesManaged_ );

@@ -366,7 +366,7 @@
     </message>
     <message>
         <source>Communications/Radio silence</source>
-        <translation>Communications/En silence radio</translation>
+        <translation type="obsolete">Communications/En silence radio</translation>
     </message>
     <message>
         <source>Decisional state/Operational state</source>
@@ -470,7 +470,7 @@
     </message>
     <message>
         <source>Radio silence:</source>
-        <translation>Silence radio:</translation>
+        <translation type="obsolete">Silence radio:</translation>
     </message>
     <message>
         <source>Decisional state</source>
@@ -523,6 +523,22 @@
     <message>
         <source>Stances/Setup state</source>
         <translation>Postures/Etat installation</translation>
+    </message>
+    <message>
+        <source>Communications/Radio Emitter silence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Communications/Radio Receiver silence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Radio Emitter silence:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Radio Receiver silence:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

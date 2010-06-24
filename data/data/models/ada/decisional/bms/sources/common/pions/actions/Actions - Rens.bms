@@ -12,12 +12,52 @@ includedFiles["sources/common/pions/actions/Actions - Rens.bms"] = true
 {
     feedbacks = { { { "done_ACT_Rens_CommuterRadio" }, "ACT_Rens_CommuterRadio" } },
     SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Rens_CommuterRadio, {value} ) end,
+    actuators =
+    {
+        silenceradio = 1,
+    },
+
     create = function( self )
     end,
 
     select = function( self )
                 F_Pion_SeteEtatRadio( myself, eEtatRadio_Silence )
         DEC_Agent_PasserEnSilenceRadio()
+    end,
+
+    deselect = function( self )
+                F_Pion_SeteEtatRadio( myself, eEtatRadio_Ouverte )
+        DEC_Agent_ArreterSilenceRadio()
+    end,
+
+    destroy = function( self )
+                F_Pion_SeteEtatRadio( myself, eEtatRadio_Ouverte )
+        DEC_Agent_ArreterSilenceRadio()
+    end,
+
+}
+
+--[[// *****************************************************************************
+]]--[[// ACT_Rens_CommuterRadioPartiel
+]]--[[//
+]]--[[// Commentaires :Quand appelé, on passe en silence radio.
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Rens_CommuterRadioPartiel"
+{
+    feedbacks = { { { "done_ACT_Rens_CommuterRadioPartiel" }, "ACT_Rens_CommuterRadioPartiel" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Rens_CommuterRadioPartiel, {value} ) end,
+    actuators =
+    {
+        silenceradio = 1,
+    },
+
+    create = function( self )
+    end,
+
+    select = function( self )
+                F_Pion_SeteEtatRadio( myself, eEtatRadio_SilencePartiel )
+        DEC_Agent_PasserEnSilenceRadioPartiel()
     end,
 
     deselect = function( self )

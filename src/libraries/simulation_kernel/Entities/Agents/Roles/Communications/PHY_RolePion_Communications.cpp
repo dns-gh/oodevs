@@ -13,6 +13,7 @@
 #include "PHY_RolePion_Communications.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "MIL_Singletons.h"
 #include "MIL_Time_ABC.h"
@@ -78,9 +79,10 @@ void PHY_RolePion_Communications::Initialize( xml::xistream& xis )
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RolePion_Communications::PHY_RolePion_Communications( MIL_Agent_ABC& entity, const bool bIsAutonomous )
-    : entity_                          ( entity )
+    : entity_                         ( entity )
     , bHasChanged_                    ( true )
-    , bBlackoutActivated_             ( false )
+    , bBlackoutReceivedActivated_     ( false )
+    , bBlackoutEmmittedActivated_     ( false )
     , bIsAutonomous_                  ( bIsAutonomous )
     , pJammingKnowledgeGroup_         ( 0 )
 {
@@ -143,7 +145,8 @@ void PHY_RolePion_Communications::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< PHY_RoleInterface_Communications >( *this )
          & jammers_
-         & bBlackoutActivated_
+         & bBlackoutReceivedActivated_
+         & bBlackoutEmmittedActivated_
          & bHasChanged_
          & pJammingKnowledgeGroup_;
 }
@@ -161,7 +164,7 @@ void PHY_RolePion_Communications::Jam( const MIL_Object_ABC& jammer )
 
     // $$$$ >>>> MODIF FDS 2010-03-17
     // Copie of Knowledge group for jamming use
-    if( CanCommunicate() )
+    if( CanEmit() )
         CopyKnowledgeGroup();
     // $$$$ <<<< MODIF FDS 2010-03-17
 
@@ -175,8 +178,22 @@ void PHY_RolePion_Communications::Jam( const MIL_Object_ABC& jammer )
 void PHY_RolePion_Communications::CopyKnowledgeGroup()
 {
     if( !pJammingKnowledgeGroup_ )
-        pJammingKnowledgeGroup_ = new MIL_KnowledgeGroup( entity_.GetKnowledgeGroup(), entity_ );
+        pJammingKnowledgeGroup_ = new MIL_KnowledgeGroup( entity_.GetKnowledgeGroup(), entity_, 0 );
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Communications::CopyKnowledgeGroupPartial
+// Created: HBD 2010-06-22
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Communications::CopyKnowledgeGroupPartial()
+{
+    if( !pJammingKnowledgeGroup_ )
+    {
+        MIL_KnowledgeGroup& parent = entity_.GetKnowledgeGroup();
+        pJammingKnowledgeGroup_ = new MIL_KnowledgeGroup( parent, entity_, &parent );
+    }
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Communications::Unjam
@@ -187,7 +204,7 @@ void PHY_RolePion_Communications::Unjam( const MIL_Object_ABC& jammer )
     bHasChanged_ = ( jammers_.erase( &jammer ) == 1 );
 
     // delete copy of knowledge group used in jamming
-    if( pJammingKnowledgeGroup_ && CanCommunicate() )
+    if( pJammingKnowledgeGroup_ && CanEmit() )
     {
         pJammingKnowledgeGroup_->Destroy();
         delete pJammingKnowledgeGroup_;
@@ -203,12 +220,13 @@ void PHY_RolePion_Communications::SendFullState( client::UnitAttributes& msg ) c
 {
     msg().mutable_communications()->set_jammed( !jammers_.empty() );
     
-    if( !jammers_.empty() )
+    if( !jammers_.empty() || bBlackoutEmmittedActivated_ )
         msg().mutable_communications()->set_knowledge_group( GetKnowledgeGroup().GetId() );
     else
         msg().mutable_communications()->set_knowledge_group( 0 );
 
-    msg().set_silence_radio( bBlackoutActivated_ );
+    msg().set_radio_emitter_disabled( bBlackoutEmmittedActivated_ );
+    msg().set_radio_receiver_disabled( bBlackoutReceivedActivated_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -257,12 +275,27 @@ bool PHY_RolePion_Communications::HasChanged() const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Communications::ActivateBlackout()
 {
-    if( bBlackoutActivated_ )
+    if( bBlackoutEmmittedActivated_ && bBlackoutReceivedActivated_ )
         return;
     CopyKnowledgeGroup();
-    bBlackoutActivated_ = true;
+    bBlackoutEmmittedActivated_ = true;
+    bBlackoutReceivedActivated_ = true;
     bHasChanged_        = true;
 }
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Communications::ActivatePartialBlackout
+// Created: HBD 2010-06-16
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Communications::ActivatePartialBlackout()
+{
+   if ( bBlackoutEmmittedActivated_  && !bBlackoutReceivedActivated_ )
+       return;
+    CopyKnowledgeGroupPartial();
+    bBlackoutEmmittedActivated_ = true;
+    bBlackoutReceivedActivated_ = false;
+    bHasChanged_        = true;
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Communications::DeactivateBlackout
@@ -270,9 +303,10 @@ void PHY_RolePion_Communications::ActivateBlackout()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Communications::DeactivateBlackout()
 {
-    if( !bBlackoutActivated_ )
+    if ( !bBlackoutEmmittedActivated_  && !bBlackoutReceivedActivated_ )
         return;
-    bBlackoutActivated_ = false;
+    bBlackoutEmmittedActivated_ = false;
+    bBlackoutReceivedActivated_ = false;
     if( pJammingKnowledgeGroup_ && jammers_.empty() )
     {
         pJammingKnowledgeGroup_->Destroy();
@@ -280,15 +314,6 @@ void PHY_RolePion_Communications::DeactivateBlackout()
         pJammingKnowledgeGroup_ = 0;
     }
     bHasChanged_ = true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Communications::CanCommunicate
-// Created: NLD 2004-11-08
-// -----------------------------------------------------------------------------
-bool PHY_RolePion_Communications::CanCommunicate() const
-{
-    return jammers_.empty() && !bBlackoutActivated_;
 }
 
 // -----------------------------------------------------------------------------
@@ -333,7 +358,7 @@ void PHY_RolePion_Communications::Execute( firing::WeaponReloadingComputer_ABC& 
 void PHY_RolePion_Communications::UpdateKnowledgesFromObjectPerception( const DEC_Knowledge_ObjectPerception& perception )
 {
     boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = pJammingKnowledgeGroup_->GetKnowledge().ResolveKnowledgeObject( perception.GetObjectPerceived() );
-
+    
     if( !pKnowledge || !pKnowledge->IsValid() )
         pKnowledge = pJammingKnowledgeGroup_->CreateKnowledgeObject( entity_.GetArmy(), perception.GetObjectPerceived() );
 
@@ -354,3 +379,20 @@ void PHY_RolePion_Communications::UpdateKnowledgesFromObjectCollision( const DEC
     pKnowledge->Update( collision );
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Communications::CanReceive
+// Created: HBD 2010-06-18
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Communications::CanReceive() const
+{
+    return jammers_.empty() && !bBlackoutReceivedActivated_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Communications::CanEmit
+// Created: HBD 2010-06-18
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Communications::CanEmit() const
+{
+    return jammers_.empty() && !bBlackoutEmmittedActivated_;
+}

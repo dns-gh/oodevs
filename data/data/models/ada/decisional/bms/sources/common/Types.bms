@@ -265,6 +265,7 @@ eEtatDeplacement_EnReco = 3
 
 eEtatRadio_Ouverte = 0
 eEtatRadio_Silence = 1
+eEtatRadio_SilencePartiel = 2
 
 
 eEtatRadar_Silence = 0

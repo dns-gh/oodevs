@@ -15,6 +15,7 @@
 #include "LogisticsModel.h"
 #include "LimitsModel.h"
 #include "AgentFactory.h"
+#include "KnowledgeGroupFactory.h"
 #include "ObjectFactory.h"
 #include "AgentKnowledgeFactory.h"
 #include "ObjectKnowledgeFactory.h"
@@ -69,6 +70,7 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , agentKnowledgeConverter_( *new AgentKnowledgeConverter( controllers ) )
     , objectKnowledgeConverter_( *new ObjectKnowledgeConverter( controllers ) )
     , teamFactory_( *new TeamFactory( controllers, *this ) )
+    , knowledgeGroupFactory_( *new KnowledgeGroupFactory( controllers, *this ) )
     , agentFactory_( *new AgentFactory( controllers, *this, staticModel, publisher, workers, rcResolver ) )
     , objectFactory_( *new ObjectFactory( controllers, *this, staticModel ) )
     , logisticFactory_( *new LogisticConsignFactory( controllers, *this, staticModel ) )
@@ -83,7 +85,7 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , agents_( *new AgentsModel( agentFactory_ ) )
     , objects_( *new ObjectsModel( objectFactory_ ) )
     , teams_( *new TeamsModel( teamFactory_ ) )
-    , knowledgeGroups_( *new KnowledgeGroupsModel() )
+    , knowledgeGroups_( *new KnowledgeGroupsModel( knowledgeGroupFactory_ ) )
     , logistics_( *new LogisticsModel( logisticFactory_ ) )
     , limits_( *new LimitsModel( tacticalLineFactory_  ) )
     , fires_( *new FiresModel( agents_, agents_ ) )

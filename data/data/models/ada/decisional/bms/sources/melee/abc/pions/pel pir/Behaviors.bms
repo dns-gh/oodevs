@@ -22,6 +22,7 @@ max_activations = 100000
 
 
 actuators = {
+silenceradio = 1,
 installation = 1,
 etat_OrdreCoordination = 1,
 deplacement = 1,

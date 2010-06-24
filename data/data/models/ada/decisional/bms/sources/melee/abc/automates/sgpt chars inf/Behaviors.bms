@@ -22,6 +22,7 @@ max_activations = 200
 
 
 actuators = {
+silenceradio = 1,
 etat_OrdreCoordination = 1,
 releve = 1,
 }
@@ -180,3 +181,4 @@ include "Melee/Abc/Automates/Common/Missions/ReconnaitrePoint Surete/Reconnaitre
 include "Melee/Abc/Automates/Common/MRT generique mis offensives.bms"
 
 include "Melee/Abc/Automates/Common/MRT generique mis retrogrades.bms"
+

@@ -993,7 +993,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Communication: radio silence</source>
-        <translation>Communication: silence radio</translation>
+        <translation type="obsolete">Communication: silence radio</translation>
     </message>
     <message>
         <source>Communication: radar enabled</source>
@@ -1014,6 +1014,14 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>NBC: contamination of type &apos;%1&apos; level &apos;%2&apos;</source>
         <translation>NBC: contamination de type &apos;%1&apos; de niveau &apos;%2&apos;</translation>
+    </message>
+    <message>
+        <source>Communication: radio emitter silence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Communication: radio receiver silence</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2057,6 +2065,13 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
+    <name>NoteDialog</name>
+    <message>
+        <source>Create note</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Notes</name>
     <message>
         <source>Notations</source>
@@ -2121,6 +2136,18 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>No</source>
         <translation type="unfinished">Non</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">Nom</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuler</translation>
     </message>
 </context>
 <context>

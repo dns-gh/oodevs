@@ -327,10 +327,14 @@ node "BEH_Info_Pion_RendreCompteSurSilenceRadio"
                     Activate( self.activations.ACT_RC, 1, { eRC_DebutSilenceRadio, } )
                     _continue = false
                                 cases_switch_1[1] = true
+elseif switch_1 == eEtatRadio_SilencePartiel then
+                    Activate( self.activations.ACT_RC, 1, { eRC_DebutSilenceRadioPartiel, } )
+                    _continue = false
+                                cases_switch_1[2] = true
 elseif switch_1 == eEtatRadio_Ouverte then
                     Activate( self.activations.ACT_RC, 1, { eRC_FinSilenceRadio, } )
                     _continue = false
-                                cases_switch_1[2] = true
+                                cases_switch_1[3] = true
                 end
             end
 

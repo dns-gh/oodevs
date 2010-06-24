@@ -6207,115 +6207,122 @@ class MsgUnitAttributes : public ::google::protobuf::Message {
   inline const ::MsgsSimToClient::Communication& communications() const;
   inline ::MsgsSimToClient::Communication* mutable_communications();
   
-  // optional bool silence_radio = 28 [default = false];
-  inline bool has_silence_radio() const;
-  inline void clear_silence_radio();
-  static const int kSilenceRadioFieldNumber = 28;
-  inline bool silence_radio() const;
-  inline void set_silence_radio(bool value);
+  // optional bool radio_emitter_disabled = 28 [default = true];
+  inline bool has_radio_emitter_disabled() const;
+  inline void clear_radio_emitter_disabled();
+  static const int kRadioEmitterDisabledFieldNumber = 28;
+  inline bool radio_emitter_disabled() const;
+  inline void set_radio_emitter_disabled(bool value);
   
-  // optional bool radar_actif = 29 [default = false];
+  // optional bool radio_receiver_disabled = 29 [default = true];
+  inline bool has_radio_receiver_disabled() const;
+  inline void clear_radio_receiver_disabled();
+  static const int kRadioReceiverDisabledFieldNumber = 29;
+  inline bool radio_receiver_disabled() const;
+  inline void set_radio_receiver_disabled(bool value);
+  
+  // optional bool radar_actif = 30 [default = false];
   inline bool has_radar_actif() const;
   inline void clear_radar_actif();
-  static const int kRadarActifFieldNumber = 29;
+  static const int kRadarActifFieldNumber = 30;
   inline bool radar_actif() const;
   inline void set_radar_actif(bool value);
   
-  // optional .Common.MsgUnitList pions_transportes = 30;
+  // optional .Common.MsgUnitList pions_transportes = 31;
   inline bool has_pions_transportes() const;
   inline void clear_pions_transportes();
-  static const int kPionsTransportesFieldNumber = 30;
+  static const int kPionsTransportesFieldNumber = 31;
   inline const ::Common::MsgUnitList& pions_transportes() const;
   inline ::Common::MsgUnitList* mutable_pions_transportes();
   
-  // optional int32 pion_transporteur = 31 [default = 0];
+  // optional int32 pion_transporteur = 32 [default = 0];
   inline bool has_pion_transporteur() const;
   inline void clear_pion_transporteur();
-  static const int kPionTransporteurFieldNumber = 31;
+  static const int kPionTransporteurFieldNumber = 32;
   inline ::google::protobuf::int32 pion_transporteur() const;
   inline void set_pion_transporteur(::google::protobuf::int32 value);
   
-  // optional .MsgsSimToClient.ForceRatio.Value rapport_de_force = 32;
+  // optional .MsgsSimToClient.ForceRatio.Value rapport_de_force = 33;
   inline bool has_rapport_de_force() const;
   inline void clear_rapport_de_force();
-  static const int kRapportDeForceFieldNumber = 32;
+  static const int kRapportDeForceFieldNumber = 33;
   inline ::MsgsSimToClient::ForceRatio_Value rapport_de_force() const;
   inline void set_rapport_de_force(::MsgsSimToClient::ForceRatio_Value value);
   
-  // optional .Common.EnumMeetingEngagementStatus combat_de_rencontre = 33;
+  // optional .Common.EnumMeetingEngagementStatus combat_de_rencontre = 34;
   inline bool has_combat_de_rencontre() const;
   inline void clear_combat_de_rencontre();
-  static const int kCombatDeRencontreFieldNumber = 33;
+  static const int kCombatDeRencontreFieldNumber = 34;
   inline Common::EnumMeetingEngagementStatus combat_de_rencontre() const;
   inline void set_combat_de_rencontre(Common::EnumMeetingEngagementStatus value);
   
-  // optional .Common.EnumOperationalStatus etat_operationnel = 34;
+  // optional .Common.EnumOperationalStatus etat_operationnel = 35;
   inline bool has_etat_operationnel() const;
   inline void clear_etat_operationnel();
-  static const int kEtatOperationnelFieldNumber = 34;
+  static const int kEtatOperationnelFieldNumber = 35;
   inline Common::EnumOperationalStatus etat_operationnel() const;
   inline void set_etat_operationnel(Common::EnumOperationalStatus value);
   
-  // optional .MsgsSimToClient.MsgUnitAttributes.FireAvailability disponibilite_au_tir_indirect = 35;
+  // optional .MsgsSimToClient.MsgUnitAttributes.FireAvailability disponibilite_au_tir_indirect = 36;
   inline bool has_disponibilite_au_tir_indirect() const;
   inline void clear_disponibilite_au_tir_indirect();
-  static const int kDisponibiliteAuTirIndirectFieldNumber = 35;
+  static const int kDisponibiliteAuTirIndirectFieldNumber = 36;
   inline ::MsgsSimToClient::MsgUnitAttributes_FireAvailability disponibilite_au_tir_indirect() const;
   inline void set_disponibilite_au_tir_indirect(::MsgsSimToClient::MsgUnitAttributes_FireAvailability value);
   
-  // optional .MsgsSimToClient.RulesOfEngagement.Value roe = 36;
+  // optional .MsgsSimToClient.RulesOfEngagement.Value roe = 37;
   inline bool has_roe() const;
   inline void clear_roe();
-  static const int kRoeFieldNumber = 36;
+  static const int kRoeFieldNumber = 37;
   inline ::MsgsSimToClient::RulesOfEngagement_Value roe() const;
   inline void set_roe(::MsgsSimToClient::RulesOfEngagement_Value value);
   
-  // optional .MsgsSimToClient.MsgUnitAttributes.PopulationRoe roe_population = 37;
+  // optional .MsgsSimToClient.MsgUnitAttributes.PopulationRoe roe_population = 38;
   inline bool has_roe_population() const;
   inline void clear_roe_population();
-  static const int kRoePopulationFieldNumber = 37;
+  static const int kRoePopulationFieldNumber = 38;
   inline ::MsgsSimToClient::MsgUnitAttributes_PopulationRoe roe_population() const;
   inline void set_roe_population(::MsgsSimToClient::MsgUnitAttributes_PopulationRoe value);
   
-  // optional .Common.EnumUnitTiredness fatigue = 38;
+  // optional .Common.EnumUnitTiredness fatigue = 39;
   inline bool has_fatigue() const;
   inline void clear_fatigue();
-  static const int kFatigueFieldNumber = 38;
+  static const int kFatigueFieldNumber = 39;
   inline Common::EnumUnitTiredness fatigue() const;
   inline void set_fatigue(Common::EnumUnitTiredness value);
   
-  // optional .Common.EnumUnitMorale moral = 39;
+  // optional .Common.EnumUnitMorale moral = 40;
   inline bool has_moral() const;
   inline void clear_moral();
-  static const int kMoralFieldNumber = 39;
+  static const int kMoralFieldNumber = 40;
   inline Common::EnumUnitMorale moral() const;
   inline void set_moral(Common::EnumUnitMorale value);
   
-  // optional .Common.EnumUnitExperience experience = 40;
+  // optional .Common.EnumUnitExperience experience = 41;
   inline bool has_experience() const;
   inline void clear_experience();
-  static const int kExperienceFieldNumber = 40;
+  static const int kExperienceFieldNumber = 41;
   inline Common::EnumUnitExperience experience() const;
   inline void set_experience(Common::EnumUnitExperience value);
   
-  // optional int32 rendu = 41;
+  // optional int32 rendu = 42;
   inline bool has_rendu() const;
   inline void clear_rendu();
-  static const int kRenduFieldNumber = 41;
+  static const int kRenduFieldNumber = 42;
   inline ::google::protobuf::int32 rendu() const;
   inline void set_rendu(::google::protobuf::int32 value);
   
-  // optional bool prisonnier = 42 [default = false];
+  // optional bool prisonnier = 43 [default = false];
   inline bool has_prisonnier() const;
   inline void clear_prisonnier();
-  static const int kPrisonnierFieldNumber = 42;
+  static const int kPrisonnierFieldNumber = 43;
   inline bool prisonnier() const;
   inline void set_prisonnier(bool value);
   
-  // optional bool refugie_pris_en_compte = 43 [default = false];
+  // optional bool refugie_pris_en_compte = 44 [default = false];
   inline bool has_refugie_pris_en_compte() const;
   inline void clear_refugie_pris_en_compte();
-  static const int kRefugiePrisEnCompteFieldNumber = 43;
+  static const int kRefugiePrisEnCompteFieldNumber = 44;
   inline bool refugie_pris_en_compte() const;
   inline void set_refugie_pris_en_compte(bool value);
   
@@ -6350,7 +6357,8 @@ class MsgUnitAttributes : public ::google::protobuf::Message {
   ::Common::MsgListOID* contamine_par_agents_nbc_;
   ::MsgsSimToClient::ContaminationState* etat_contamination_;
   ::MsgsSimToClient::Communication* communications_;
-  bool silence_radio_;
+  bool radio_emitter_disabled_;
+  bool radio_receiver_disabled_;
   bool radar_actif_;
   ::Common::MsgUnitList* pions_transportes_;
   ::google::protobuf::int32 pion_transporteur_;
@@ -6370,7 +6378,7 @@ class MsgUnitAttributes : public ::google::protobuf::Message {
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(43 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(44 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -23006,269 +23014,285 @@ inline ::MsgsSimToClient::Communication* MsgUnitAttributes::mutable_communicatio
   return communications_;
 }
 
-// optional bool silence_radio = 28 [default = false];
-inline bool MsgUnitAttributes::has_silence_radio() const {
+// optional bool radio_emitter_disabled = 28 [default = true];
+inline bool MsgUnitAttributes::has_radio_emitter_disabled() const {
   return _has_bit(27);
 }
-inline void MsgUnitAttributes::clear_silence_radio() {
-  silence_radio_ = false;
+inline void MsgUnitAttributes::clear_radio_emitter_disabled() {
+  radio_emitter_disabled_ = true;
   _clear_bit(27);
 }
-inline bool MsgUnitAttributes::silence_radio() const {
-  return silence_radio_;
+inline bool MsgUnitAttributes::radio_emitter_disabled() const {
+  return radio_emitter_disabled_;
 }
-inline void MsgUnitAttributes::set_silence_radio(bool value) {
+inline void MsgUnitAttributes::set_radio_emitter_disabled(bool value) {
   _set_bit(27);
-  silence_radio_ = value;
+  radio_emitter_disabled_ = value;
 }
 
-// optional bool radar_actif = 29 [default = false];
-inline bool MsgUnitAttributes::has_radar_actif() const {
+// optional bool radio_receiver_disabled = 29 [default = true];
+inline bool MsgUnitAttributes::has_radio_receiver_disabled() const {
   return _has_bit(28);
+}
+inline void MsgUnitAttributes::clear_radio_receiver_disabled() {
+  radio_receiver_disabled_ = true;
+  _clear_bit(28);
+}
+inline bool MsgUnitAttributes::radio_receiver_disabled() const {
+  return radio_receiver_disabled_;
+}
+inline void MsgUnitAttributes::set_radio_receiver_disabled(bool value) {
+  _set_bit(28);
+  radio_receiver_disabled_ = value;
+}
+
+// optional bool radar_actif = 30 [default = false];
+inline bool MsgUnitAttributes::has_radar_actif() const {
+  return _has_bit(29);
 }
 inline void MsgUnitAttributes::clear_radar_actif() {
   radar_actif_ = false;
-  _clear_bit(28);
+  _clear_bit(29);
 }
 inline bool MsgUnitAttributes::radar_actif() const {
   return radar_actif_;
 }
 inline void MsgUnitAttributes::set_radar_actif(bool value) {
-  _set_bit(28);
+  _set_bit(29);
   radar_actif_ = value;
 }
 
-// optional .Common.MsgUnitList pions_transportes = 30;
+// optional .Common.MsgUnitList pions_transportes = 31;
 inline bool MsgUnitAttributes::has_pions_transportes() const {
-  return _has_bit(29);
+  return _has_bit(30);
 }
 inline void MsgUnitAttributes::clear_pions_transportes() {
   if (pions_transportes_ != NULL) pions_transportes_->::Common::MsgUnitList::Clear();
-  _clear_bit(29);
+  _clear_bit(30);
 }
 inline const ::Common::MsgUnitList& MsgUnitAttributes::pions_transportes() const {
   return pions_transportes_ != NULL ? *pions_transportes_ : *default_instance_->pions_transportes_;
 }
 inline ::Common::MsgUnitList* MsgUnitAttributes::mutable_pions_transportes() {
-  _set_bit(29);
+  _set_bit(30);
   if (pions_transportes_ == NULL) pions_transportes_ = new ::Common::MsgUnitList;
   return pions_transportes_;
 }
 
-// optional int32 pion_transporteur = 31 [default = 0];
+// optional int32 pion_transporteur = 32 [default = 0];
 inline bool MsgUnitAttributes::has_pion_transporteur() const {
-  return _has_bit(30);
+  return _has_bit(31);
 }
 inline void MsgUnitAttributes::clear_pion_transporteur() {
   pion_transporteur_ = 0;
-  _clear_bit(30);
+  _clear_bit(31);
 }
 inline ::google::protobuf::int32 MsgUnitAttributes::pion_transporteur() const {
   return pion_transporteur_;
 }
 inline void MsgUnitAttributes::set_pion_transporteur(::google::protobuf::int32 value) {
-  _set_bit(30);
+  _set_bit(31);
   pion_transporteur_ = value;
 }
 
-// optional .MsgsSimToClient.ForceRatio.Value rapport_de_force = 32;
+// optional .MsgsSimToClient.ForceRatio.Value rapport_de_force = 33;
 inline bool MsgUnitAttributes::has_rapport_de_force() const {
-  return _has_bit(31);
+  return _has_bit(32);
 }
 inline void MsgUnitAttributes::clear_rapport_de_force() {
   rapport_de_force_ = 0;
-  _clear_bit(31);
+  _clear_bit(32);
 }
 inline ::MsgsSimToClient::ForceRatio_Value MsgUnitAttributes::rapport_de_force() const {
   return static_cast< ::MsgsSimToClient::ForceRatio_Value >(rapport_de_force_);
 }
 inline void MsgUnitAttributes::set_rapport_de_force(::MsgsSimToClient::ForceRatio_Value value) {
   GOOGLE_DCHECK(::MsgsSimToClient::ForceRatio_Value_IsValid(value));
-  _set_bit(31);
+  _set_bit(32);
   rapport_de_force_ = value;
 }
 
-// optional .Common.EnumMeetingEngagementStatus combat_de_rencontre = 33;
+// optional .Common.EnumMeetingEngagementStatus combat_de_rencontre = 34;
 inline bool MsgUnitAttributes::has_combat_de_rencontre() const {
-  return _has_bit(32);
+  return _has_bit(33);
 }
 inline void MsgUnitAttributes::clear_combat_de_rencontre() {
   combat_de_rencontre_ = 0;
-  _clear_bit(32);
+  _clear_bit(33);
 }
 inline Common::EnumMeetingEngagementStatus MsgUnitAttributes::combat_de_rencontre() const {
   return static_cast< Common::EnumMeetingEngagementStatus >(combat_de_rencontre_);
 }
 inline void MsgUnitAttributes::set_combat_de_rencontre(Common::EnumMeetingEngagementStatus value) {
   GOOGLE_DCHECK(Common::EnumMeetingEngagementStatus_IsValid(value));
-  _set_bit(32);
+  _set_bit(33);
   combat_de_rencontre_ = value;
 }
 
-// optional .Common.EnumOperationalStatus etat_operationnel = 34;
+// optional .Common.EnumOperationalStatus etat_operationnel = 35;
 inline bool MsgUnitAttributes::has_etat_operationnel() const {
-  return _has_bit(33);
+  return _has_bit(34);
 }
 inline void MsgUnitAttributes::clear_etat_operationnel() {
   etat_operationnel_ = 0;
-  _clear_bit(33);
+  _clear_bit(34);
 }
 inline Common::EnumOperationalStatus MsgUnitAttributes::etat_operationnel() const {
   return static_cast< Common::EnumOperationalStatus >(etat_operationnel_);
 }
 inline void MsgUnitAttributes::set_etat_operationnel(Common::EnumOperationalStatus value) {
   GOOGLE_DCHECK(Common::EnumOperationalStatus_IsValid(value));
-  _set_bit(33);
+  _set_bit(34);
   etat_operationnel_ = value;
 }
 
-// optional .MsgsSimToClient.MsgUnitAttributes.FireAvailability disponibilite_au_tir_indirect = 35;
+// optional .MsgsSimToClient.MsgUnitAttributes.FireAvailability disponibilite_au_tir_indirect = 36;
 inline bool MsgUnitAttributes::has_disponibilite_au_tir_indirect() const {
-  return _has_bit(34);
+  return _has_bit(35);
 }
 inline void MsgUnitAttributes::clear_disponibilite_au_tir_indirect() {
   disponibilite_au_tir_indirect_ = 0;
-  _clear_bit(34);
+  _clear_bit(35);
 }
 inline ::MsgsSimToClient::MsgUnitAttributes_FireAvailability MsgUnitAttributes::disponibilite_au_tir_indirect() const {
   return static_cast< ::MsgsSimToClient::MsgUnitAttributes_FireAvailability >(disponibilite_au_tir_indirect_);
 }
 inline void MsgUnitAttributes::set_disponibilite_au_tir_indirect(::MsgsSimToClient::MsgUnitAttributes_FireAvailability value) {
   GOOGLE_DCHECK(::MsgsSimToClient::MsgUnitAttributes_FireAvailability_IsValid(value));
-  _set_bit(34);
+  _set_bit(35);
   disponibilite_au_tir_indirect_ = value;
 }
 
-// optional .MsgsSimToClient.RulesOfEngagement.Value roe = 36;
+// optional .MsgsSimToClient.RulesOfEngagement.Value roe = 37;
 inline bool MsgUnitAttributes::has_roe() const {
-  return _has_bit(35);
+  return _has_bit(36);
 }
 inline void MsgUnitAttributes::clear_roe() {
   roe_ = 0;
-  _clear_bit(35);
+  _clear_bit(36);
 }
 inline ::MsgsSimToClient::RulesOfEngagement_Value MsgUnitAttributes::roe() const {
   return static_cast< ::MsgsSimToClient::RulesOfEngagement_Value >(roe_);
 }
 inline void MsgUnitAttributes::set_roe(::MsgsSimToClient::RulesOfEngagement_Value value) {
   GOOGLE_DCHECK(::MsgsSimToClient::RulesOfEngagement_Value_IsValid(value));
-  _set_bit(35);
+  _set_bit(36);
   roe_ = value;
 }
 
-// optional .MsgsSimToClient.MsgUnitAttributes.PopulationRoe roe_population = 37;
+// optional .MsgsSimToClient.MsgUnitAttributes.PopulationRoe roe_population = 38;
 inline bool MsgUnitAttributes::has_roe_population() const {
-  return _has_bit(36);
+  return _has_bit(37);
 }
 inline void MsgUnitAttributes::clear_roe_population() {
   roe_population_ = 0;
-  _clear_bit(36);
+  _clear_bit(37);
 }
 inline ::MsgsSimToClient::MsgUnitAttributes_PopulationRoe MsgUnitAttributes::roe_population() const {
   return static_cast< ::MsgsSimToClient::MsgUnitAttributes_PopulationRoe >(roe_population_);
 }
 inline void MsgUnitAttributes::set_roe_population(::MsgsSimToClient::MsgUnitAttributes_PopulationRoe value) {
   GOOGLE_DCHECK(::MsgsSimToClient::MsgUnitAttributes_PopulationRoe_IsValid(value));
-  _set_bit(36);
+  _set_bit(37);
   roe_population_ = value;
 }
 
-// optional .Common.EnumUnitTiredness fatigue = 38;
+// optional .Common.EnumUnitTiredness fatigue = 39;
 inline bool MsgUnitAttributes::has_fatigue() const {
-  return _has_bit(37);
+  return _has_bit(38);
 }
 inline void MsgUnitAttributes::clear_fatigue() {
   fatigue_ = 0;
-  _clear_bit(37);
+  _clear_bit(38);
 }
 inline Common::EnumUnitTiredness MsgUnitAttributes::fatigue() const {
   return static_cast< Common::EnumUnitTiredness >(fatigue_);
 }
 inline void MsgUnitAttributes::set_fatigue(Common::EnumUnitTiredness value) {
   GOOGLE_DCHECK(Common::EnumUnitTiredness_IsValid(value));
-  _set_bit(37);
+  _set_bit(38);
   fatigue_ = value;
 }
 
-// optional .Common.EnumUnitMorale moral = 39;
+// optional .Common.EnumUnitMorale moral = 40;
 inline bool MsgUnitAttributes::has_moral() const {
-  return _has_bit(38);
+  return _has_bit(39);
 }
 inline void MsgUnitAttributes::clear_moral() {
   moral_ = 0;
-  _clear_bit(38);
+  _clear_bit(39);
 }
 inline Common::EnumUnitMorale MsgUnitAttributes::moral() const {
   return static_cast< Common::EnumUnitMorale >(moral_);
 }
 inline void MsgUnitAttributes::set_moral(Common::EnumUnitMorale value) {
   GOOGLE_DCHECK(Common::EnumUnitMorale_IsValid(value));
-  _set_bit(38);
+  _set_bit(39);
   moral_ = value;
 }
 
-// optional .Common.EnumUnitExperience experience = 40;
+// optional .Common.EnumUnitExperience experience = 41;
 inline bool MsgUnitAttributes::has_experience() const {
-  return _has_bit(39);
+  return _has_bit(40);
 }
 inline void MsgUnitAttributes::clear_experience() {
   experience_ = 0;
-  _clear_bit(39);
+  _clear_bit(40);
 }
 inline Common::EnumUnitExperience MsgUnitAttributes::experience() const {
   return static_cast< Common::EnumUnitExperience >(experience_);
 }
 inline void MsgUnitAttributes::set_experience(Common::EnumUnitExperience value) {
   GOOGLE_DCHECK(Common::EnumUnitExperience_IsValid(value));
-  _set_bit(39);
+  _set_bit(40);
   experience_ = value;
 }
 
-// optional int32 rendu = 41;
+// optional int32 rendu = 42;
 inline bool MsgUnitAttributes::has_rendu() const {
-  return _has_bit(40);
+  return _has_bit(41);
 }
 inline void MsgUnitAttributes::clear_rendu() {
   rendu_ = 0;
-  _clear_bit(40);
+  _clear_bit(41);
 }
 inline ::google::protobuf::int32 MsgUnitAttributes::rendu() const {
   return rendu_;
 }
 inline void MsgUnitAttributes::set_rendu(::google::protobuf::int32 value) {
-  _set_bit(40);
+  _set_bit(41);
   rendu_ = value;
 }
 
-// optional bool prisonnier = 42 [default = false];
+// optional bool prisonnier = 43 [default = false];
 inline bool MsgUnitAttributes::has_prisonnier() const {
-  return _has_bit(41);
+  return _has_bit(42);
 }
 inline void MsgUnitAttributes::clear_prisonnier() {
   prisonnier_ = false;
-  _clear_bit(41);
+  _clear_bit(42);
 }
 inline bool MsgUnitAttributes::prisonnier() const {
   return prisonnier_;
 }
 inline void MsgUnitAttributes::set_prisonnier(bool value) {
-  _set_bit(41);
+  _set_bit(42);
   prisonnier_ = value;
 }
 
-// optional bool refugie_pris_en_compte = 43 [default = false];
+// optional bool refugie_pris_en_compte = 44 [default = false];
 inline bool MsgUnitAttributes::has_refugie_pris_en_compte() const {
-  return _has_bit(42);
+  return _has_bit(43);
 }
 inline void MsgUnitAttributes::clear_refugie_pris_en_compte() {
   refugie_pris_en_compte_ = false;
-  _clear_bit(42);
+  _clear_bit(43);
 }
 inline bool MsgUnitAttributes::refugie_pris_en_compte() const {
   return refugie_pris_en_compte_;
 }
 inline void MsgUnitAttributes::set_refugie_pris_en_compte(bool value) {
-  _set_bit(42);
+  _set_bit(43);
   refugie_pris_en_compte_ = value;
 }
 

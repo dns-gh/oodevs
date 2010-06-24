@@ -466,6 +466,68 @@ node "ActivatedByMOT_PasserEnSilenceRadio"
 }
 
 --[[// *****************************************************************************
+]]--[[//  MOT_PasserEnSilenceRadioPartiel
+]]--[[//
+]]--[[//	Commentaires: INTERFACE AVEC AUTOMATES
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin.motivations[ "MOT_PasserEnSilenceRadioPartiel" ] =
+{
+    activation = {
+        VE_SilenceRadioPartiel = 10,
+    },
+    amplification = {
+    },
+    reduction = {
+    },
+    max_increase_rate = 1,
+    max_decrease_rate = 1,
+    max_output_value = 10,
+}
+
+node "ActivatedByMOT_PasserEnSilenceRadioPartiel"
+{
+    feedbacks = { { { "done_ActivatedByMOT_PasserEnSilenceRadioPartiel" }, "ActivatedByMOT_PasserEnSilenceRadioPartiel" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_PasserEnSilenceRadioPartiel, {value} ) end,
+    activations =
+    {
+        { "BEH_MOT_PasserEnSilenceRadioPartiel", { "done_BEH_MOT_PasserEnSilenceRadioPartiel" } },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[// -----------------------------------------------------------------------------
+]]--[[// Modules activateurs 
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la 
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour 
+]]--[[// laquelle la motivation va doubler.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la 
+]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour 
+]]--[[// laquelle la motivation sera nulle.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// + éventuellement d'autre stim
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Variation de la motivation
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Coef de croissance max par unite de temps
+]]--[[// Coef de decroissance max par unite de temps
+]]--[[// Valeur max de la motivation.
+]]--[[// -----------------------------------------------------------------------------
+]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
+]]--[[// -----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_MOT_PasserEnSilenceRadioPartiel, GetMotivation( "MOT_PasserEnSilenceRadioPartiel" ), {} )
+    end,
+
+}
+
+--[[// *****************************************************************************
 ]]--[[//  MOT_PasserEnAlerteDeNiveau4
 ]]--[[//
 ]]--[[//	Commentaires: INTERFACE AVEC AUTOMATES
@@ -1095,6 +1157,7 @@ connections[ #connections + 1 ] = { motivation( "MOT_TirerSurEnis", 1 ), nodes.A
 connections[ #connections + 1 ] = { motivation( "MOT_RiposterSurEnis", 1 ), nodes.ActivatedByMOT_RiposterSurEnis }
 connections[ #connections + 1 ] = { motivation( "MOT_SePoster", 1 ), nodes.ActivatedByMOT_SePoster }
 connections[ #connections + 1 ] = { motivation( "MOT_PasserEnSilenceRadio", 1 ), nodes.ActivatedByMOT_PasserEnSilenceRadio }
+connections[ #connections + 1 ] = { motivation( "MOT_PasserEnSilenceRadioPartiel", 1 ), nodes.ActivatedByMOT_PasserEnSilenceRadioPartiel }
 connections[ #connections + 1 ] = { motivation( "MOT_PasserEnAlerteDeNiveau4", 1 ), nodes.ActivatedByMOT_PasserEnAlerteDeNiveau4 }
 connections[ #connections + 1 ] = { motivation( "MOT_PasserEnTirRestreint", 1 ), nodes.ActivatedByMOT_PasserEnTirRestreint }
 connections[ #connections + 1 ] = { motivation( "MOT_PasserEnTirInterdit", 1 ), nodes.ActivatedByMOT_PasserEnTirInterdit }
@@ -1113,6 +1176,7 @@ connections[ #connections + 1 ] = { nodes.ActivatedByMOT_PasserEnDispersionParMo
 connections[ #connections + 1 ] = { nodes.ActivatedByMOT_PasserEnEmploiForceInterdit, "BEH_MOT_PasserEnEmploiForceInterdit", nodes.BEH_MOT_PasserEnEmploiForceInterdit }
 connections[ #connections + 1 ] = { nodes.ActivatedByMOT_PasserEnMaintienADistanceParMoyensNonLetaux, "BEH_MOT_PasserEnMaintienADistanceParMoyensNonLetaux", nodes.BEH_MOT_PasserEnMaintienADistanceParMoyensNonLetaux }
 connections[ #connections + 1 ] = { nodes.ActivatedByMOT_PasserEnSilenceRadio, "BEH_MOT_PasserEnSilenceRadio", nodes.BEH_MOT_PasserEnSilenceRadio }
+connections[ #connections + 1 ] = { nodes.ActivatedByMOT_PasserEnSilenceRadioPartiel, "BEH_MOT_PasserEnSilenceRadioPartiel", nodes.BEH_MOT_PasserEnSilenceRadioPartiel }
 connections[ #connections + 1 ] = { nodes.ActivatedByMOT_PasserEnTirInterdit, "BEH_MOT_PasserEnTirInterdit", nodes.BEH_MOT_PasserEnTirInterdit }
 connections[ #connections + 1 ] = { nodes.ActivatedByMOT_PasserEnTirLibre, "BEH_MOT_PasserEnTirLibre", nodes.BEH_MOT_PasserEnTirLibre }
 connections[ #connections + 1 ] = { nodes.ActivatedByMOT_PasserEnTirRestreint, "BEH_MOT_PasserEnTirRestreint", nodes.BEH_MOT_PasserEnTirRestreint }

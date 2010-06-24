@@ -305,6 +305,7 @@ eRC_DebutNeutralisationCible = 286
 eRC_FinNeutralisationCible = 287
 eRC_VisionVerrouilleeSur = 288
 eRC_DebutConstructionObjet = 289
+eRC_DebutSilenceRadioPartiel = 290
 eRC_EmbarkmentStarted = 3000
 eRC_EmbarkmentInterrupted = 3001
 eRC_EmbarkmentResumed = 3002

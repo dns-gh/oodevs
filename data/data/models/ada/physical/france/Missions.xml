@@ -1613,7 +1613,7 @@
   <fragorders>
     <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_MettreTenueNBC" id="335" name="Mettre Tenue NBC"/>
     <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_EnleverTenueNBC" id="336" name="Enlever Tenue NBC"/>
-    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_PasserEnSilenceRadio" id="337" name="Passer En Silence Radio"/>
+    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_PasserEnSilenceRadio" id="337" name="Passer En Silence Radio Total"/>
     <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_ArreterSilenceRadio" id="338" name="Arreter Silence Radio"/>
     <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_PasserEnSilenceRadar" id="339" name="Passer En Silence Radar"/>
     <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_ArreterSilenceRadar" id="340" name="Arreter Silence Radar"/>
@@ -1796,5 +1796,6 @@
       <parameter dia-name="nbIT_" name="Shells number" optional="false" type="Numeric"/>
       <parameter dia-name="pointCible_" name="target" optional="false" type="PointBM"/>
     </fragorder>
+    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_PasserEnSilenceRadioPartiel" id="2064" name="Passer En Silence Radio Partiel"/>
   </fragorders>
 </missions>

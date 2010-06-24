@@ -302,10 +302,17 @@ private:
     void OnReceiveMsgProfileUpdateRequestAck     ( const MsgsAuthenticationToClient::MsgProfileUpdateRequestAck&        message );
 
     // Side/Formation/Knowledge Group creation
-    void OnReveiveMsgKnowledgeGroupCreation   ( const MsgsSimToClient::MsgKnowledgeGroupCreation&    message );
-    void OnReveiveMsgKnowledgeGroupDestruction( const MsgsSimToClient::MsgKnowledgeGroupDestruction& message );
-    void OnReveiveMsgTeamCreation             ( const MsgsSimToClient::MsgTeamCreation&              message );
-    void OnReveiveMsgFormationCreation        ( const Common::MsgFormationCreation&                  message );
+    void OnReceiveMsgKnowledgeGroupCreation   ( const MsgsSimToClient::MsgKnowledgeGroupCreation&    message );
+    void OnReceiveMsgKnowledgeGroupDestruction( const MsgsSimToClient::MsgKnowledgeGroupDestruction& message );
+    void OnReceiveMsgTeamCreation             ( const MsgsSimToClient::MsgTeamCreation&              message );
+    void OnReceiveMsgFormationCreation        ( const Common::MsgFormationCreation&                  message );
+
+    // LTO begin
+    void OnReceiveMsgKnowledgeGroupMagicActionAck( const MsgsSimToClient::MsgKnowledgeGroupMagicActionAck&   message, unsigned long nCtx );
+    void OnReceiveMsgKnowledgeGroupUpdate        ( const MsgsSimToClient::MsgKnowledgeGroupUpdate&           message );
+    void OnReceiveMsgKnowledgeGroupUpdateAck     ( const MsgsSimToClient::MsgKnowledgeGroupUpdateAck&        message, unsigned long nCtx );
+    void OnReceiveMsgKnowledgeGroupCreationAck   ( const MsgsSimToClient::MsgKnowledgeGroupCreationAck&      message, unsigned long nCtx );
+    // LTO end
 
     // Attributes
     void OnReceiveMsgUnitAttributes     ( const MsgsSimToClient::MsgUnitAttributes&         message );
@@ -465,17 +472,6 @@ private:
     void OnReceiveMsgUrbanKnowledgeCreation   ( const MsgsSimToClient::MsgUrbanKnowledgeCreation&           message );
     void OnReceiveMsgUrbanKnowledgeUpdate     ( const MsgsSimToClient::MsgUrbanKnowledgeUpdate&             message );
     void OnReceiveMsgUrbanKnowledgeDestruction( const MsgsSimToClient::MsgUrbanKnowledgeDestruction&        message );
-
-    // LTO begin
-    //knowledgegroup
-    void OnReceiveMsgKnowledgeGroupMagicActionAck    ( const MsgsSimToClient::MsgKnowledgeGroupMagicActionAck&   message, unsigned long nCtx );
-    void OnReceiveMsgKnowledgeGroupUpdate            ( const MsgsSimToClient::MsgKnowledgeGroupUpdate&           message );
-    void OnReceiveMsgKnowledgeGroupUpdateAck         ( const MsgsSimToClient::MsgKnowledgeGroupUpdateAck&        message, unsigned long nCtx );
-    void OnReceiveMsgKnowledgeGroupCreation          ( const MsgsSimToClient::MsgKnowledgeGroupCreation&         message );
-    void OnReceiveMsgKnowledgeGroupCreationAck       ( const MsgsSimToClient::MsgKnowledgeGroupCreationAck&      message, unsigned long nCtx );
-    void OnReceiveMsgKnowledgeGroupDestruction       ( const MsgsSimToClient::MsgKnowledgeGroupDestruction&      message );
-
-    // LTO end
     //@}
 
     // LTO begin

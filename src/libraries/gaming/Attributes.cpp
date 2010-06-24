@@ -50,7 +50,8 @@ Attributes::Attributes( Controller& controller, const CoordinateConverter_ABC& c
     , bLoadingState_( false )
     , bHumanTransportersReady_( false )
     , bStealthModeEnabled_( false )
-    , bRadioSilence_( false )
+    , bRadioEmitterSilence_( false )
+    , bRadioReceiverSilence_( false )
     , bCommJammed_( false )
     , knowledgeGroupJammed_( 0 )
     , bRadarEnabled_( false )
@@ -84,7 +85,8 @@ void Attributes::CreateDictionary( PropertiesDictionary& dictionary ) const
     dictionary.Register( *this, tools::translate( "Attributes", "Stances/Current stance" ),               nCurrentPosture_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Stances/Setup state" ),                  nInstallationState_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Communications/Jammed" ),                bCommJammed_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Communications/Radio silence" ),         bRadioSilence_ );
+    dictionary.Register( *this, tools::translate( "Attributes", "Communications/Radio Emitter silence" ), bRadioEmitterSilence_ );
+    dictionary.Register( *this, tools::translate( "Attributes", "Communications/Radio Receiver silence" ),bRadioReceiverSilence_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Decisional state/Operational state" ),   nOpState_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Decisional state/Rules of engagement" ), nRulesOfEngagementState_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Decisional state/Intention" ),           nCloseCombatState_ );
@@ -166,8 +168,11 @@ void Attributes::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
     if( message.has_communications() && message.communications().has_knowledge_group()  )
         knowledgeGroupJammed_ = message.communications().knowledge_group();
 
-    if( message.has_silence_radio()  )
-        bRadioSilence_ = message.silence_radio() != 0;
+    if( message.has_radio_emitter_disabled()  )
+        bRadioEmitterSilence_ = message.radio_emitter_disabled() != 0;
+
+    if( message.has_radio_receiver_disabled()  )
+        bRadioReceiverSilence_ = message.radio_receiver_disabled() != 0;
 
     if( message.has_radar_actif()   )
         bRadarEnabled_ = message.radar_actif() != 0;
@@ -214,7 +219,8 @@ void Attributes::Display( Displayer_ABC& displayer ) const
 
     displayer.Group( tools::translate( "Attributes", "Communications" ) )
                 .Display( tools::translate( "Attributes", "Jammed:" ), bCommJammed_ )
-                .Display( tools::translate( "Attributes", "Radio silence:" ), bRadioSilence_ );
+                .Display( tools::translate( "Attributes", "Radio Emitter silence:" ), bRadioEmitterSilence_ )
+                .Display( tools::translate( "Attributes", "Radio Receiver silence:" ), bRadioReceiverSilence_ );
 
     displayer.Group( tools::translate( "Attributes", "Decisional state" ) )
                 .Display( tools::translate( "Attributes", "Operational state:" ), nOpState_ )
@@ -261,7 +267,7 @@ void Attributes::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
 void Attributes::Draw( const Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     if( aggregated_ 
-    || ! ( bDead_ || bRadioSilence_ || bRadarEnabled_ || bCommJammed_ )
+    || ! ( bDead_ || bRadioReceiverSilence_ || bRadioEmitterSilence_ || bRadarEnabled_ || bCommJammed_ )
     || ! viewport.IsHotpointVisible() )
         return;
 
@@ -269,7 +275,7 @@ void Attributes::Draw( const Point2f& where, const kernel::Viewport_ABC& viewpor
     glColor3f( 1, 1, 1 );
     if( bDead_ )
         tools.DrawIcon( xpm_skull, where, 150.f );
-    if( bRadioSilence_ )
+    if( bRadioEmitterSilence_ )
         tools.DrawIcon( xpm_talkie_interdit, where, 150.f );
     if( bRadarEnabled_ )
         tools.DrawIcon( xpm_radars_on, where, 150.f );

@@ -9,10 +9,7 @@
 
 #include "gaming_pch.h"
 #include "KnowledgeGroupsModel.h"
-#include "KnowledgeGroupHierarchies.h" // LTO
-#include "TeamsModel.h"
-#include "clients_kernel/CommunicationHierarchies.h" // LTO
-#include "clients_kernel/Controllers.h" // LTO
+#include "KnowledgeGroupFactory_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "protocol/simulationSenders.h"
 
@@ -20,7 +17,8 @@
 // Name: KnowledgeGroupsModel constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-KnowledgeGroupsModel::KnowledgeGroupsModel()
+KnowledgeGroupsModel::KnowledgeGroupsModel( KnowledgeGroupFactory_ABC& factory )
+    : factory_( factory )
 {
     // NOTHING
 }
@@ -32,6 +30,27 @@ KnowledgeGroupsModel::KnowledgeGroupsModel()
 KnowledgeGroupsModel::~KnowledgeGroupsModel()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroupsModel::Create
+// Created: HBD 2010-06-23
+// -----------------------------------------------------------------------------
+void KnowledgeGroupsModel::Create( const MsgsSimToClient::MsgKnowledgeGroupCreation& message )
+{
+    std::auto_ptr< kernel::KnowledgeGroup_ABC > group( factory_.CreateKnowledgeGroup( message ) );
+    Register( group->GetId(), *group );
+    group.release();
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroupsModel::Delete
+// Created: HBD 2010-06-23
+// -----------------------------------------------------------------------------
+void KnowledgeGroupsModel::Delete( unsigned int id )
+{
+    delete Find( id );
+    Remove( id );
 }
 
 // -----------------------------------------------------------------------------

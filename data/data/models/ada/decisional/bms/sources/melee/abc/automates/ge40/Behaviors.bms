@@ -9,6 +9,7 @@ max_activations = 200
 
 
 actuators = {
+silenceradio = 1,
 etat_OrdreCoordination = 1,
 releve = 1,
 }

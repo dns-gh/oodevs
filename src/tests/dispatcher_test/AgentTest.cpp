@@ -178,7 +178,8 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
             message.mutable_etat_contamination()->set_quantity( 2.f );
                 message.mutable_communications()->set_jammed( true );
                 message.mutable_communications()->set_knowledge_group( 0 );
-                message.set_silence_radio( true );
+                message.set_radio_emitter_disabled( true );
+                message.set_radio_receiver_disabled( true );
                 message.set_radar_actif( true );
 //            message.mutable_pions_transportes();
                 message.set_pion_transporteur( 0 );

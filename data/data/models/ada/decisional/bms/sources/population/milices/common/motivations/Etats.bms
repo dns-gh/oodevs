@@ -204,6 +204,27 @@ motivation_plugin.statevariables[ "VE_RapFor" ] =
 }
 
 --[[// *****************************************************************************
+]]--[[//  VE SilenceRadioPartiel INTERFACE AVEC EXTERIEUR 
+]]--[[//
+]]--[[//	Commentaires:gestion des ordres Automate en embrayé ou
+]]--[[//								    anibas en debrayé
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin.statevariables[ "VE_SilenceRadioPartiel" ] =
+{
+    min_confort = 0,
+    max_confort = 1,
+    tolerance_limit = 4,
+    viability_limit = 4,
+    init_value = 0,
+    natural_evolution = 0,
+    tolerance_min_output = 0,
+    tolerance_max_output = 10,
+    viability_max_output = 10,
+    emergency_increase_rate = 10,
+}
+
+--[[// *****************************************************************************
 ]]--[[//  VE_SilenceRadar INTERFACE AVEC EXTERIEUR 
 ]]--[[//
 ]]--[[//	Commentaires:gestion des ordres Automate en embrayé ou

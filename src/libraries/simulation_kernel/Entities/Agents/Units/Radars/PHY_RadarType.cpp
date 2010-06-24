@@ -311,7 +311,7 @@ bool PHY_RadarType::CanAcquire( const MIL_Agent_ABC& perceiver, const MIL_Agent_
     if( rTargetHeight > rMaxHeight_ || rTargetHeight < rMinHeight_ )
         return false;
 
-    if( class_ == PHY_RadarClass::tapping_ && !target.GetRole< PHY_RoleInterface_Communications >().CanCommunicate() )
+    if( class_ == PHY_RadarClass::tapping_ && !target.GetRole< PHY_RoleInterface_Communications >().CanEmit()  )
         return false;
 
     if( class_ == PHY_RadarClass::tappingRadar_ && !target.GetRole< PHY_RoleInterface_Perceiver >().IsUsingActiveRadar() )

@@ -65,7 +65,8 @@ public:
 
     //! @name Main
     //@{
-    virtual bool CanCommunicate() const;
+    virtual bool CanReceive() const;
+    virtual bool CanEmit() const;
     
     virtual void UpdateKnowledgesFromObjectPerception( const DEC_Knowledge_ObjectPerception& perception );
     virtual void UpdateKnowledgesFromObjectCollision ( const DEC_Knowledge_ObjectCollision& collision );
@@ -77,6 +78,7 @@ public:
     virtual void Unjam         ( const MIL_Object_ABC& jammer );
 
     virtual void ActivateBlackout  ();
+    virtual void ActivatePartialBlackout  ();
     virtual void DeactivateBlackout();
     //@}
 
@@ -109,11 +111,13 @@ private:
     //@{
     bool HasChanged() const;
     void CopyKnowledgeGroup();
+    void CopyKnowledgeGroupPartial();
     //@}
 
     MIL_Agent_ABC&  entity_;
     T_JammerSet     jammers_;
-    bool            bBlackoutActivated_;
+    bool            bBlackoutEmmittedActivated_;
+    bool            bBlackoutReceivedActivated_;
     bool            bHasChanged_;
 
     const bool      bIsAutonomous_;

@@ -62,7 +62,8 @@ Agent::Agent( Model_ABC& model, const MsgsSimToClient::MsgUnitCreation& msg, con
     , contaminationQuantity_        ( 0.f )
     , communicationJammed_          ( false )
     , knowledgeGroupJammed_         ( 0 )
-    , bBlackoutEnabled_             ( false )
+    , bRadioRecieverEnabled_        ( true )
+    , bRadioEmitterEnabled_        ( true )
     , bRadarEnabled_                ( false )
     , pTransporter_                 ( 0 )
     , nForceRatioState_             ( MsgsSimToClient::ForceRatio_Value_neutre )
@@ -193,7 +194,8 @@ void Agent::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& asnMsg )
             knowledgeGroupJammed_ = asnMsg.communications().knowledge_group();
     }
 
-    UPDATE_ASN_ATTRIBUTE( silence_radio, bBlackoutEnabled_ );
+    UPDATE_ASN_ATTRIBUTE( radio_emitter_disabled, bRadioEmitterEnabled_ );
+    UPDATE_ASN_ATTRIBUTE( radio_receiver_disabled, bRadioRecieverEnabled_ );
     UPDATE_ASN_ATTRIBUTE( radar_actif, bRadarEnabled_ );
 
     if( asnMsg.has_pions_transportes() )
@@ -420,7 +422,8 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         asn().mutable_communications()->set_jammed( communicationJammed_ );
         asn().mutable_communications()->set_knowledge_group( knowledgeGroupJammed_ );
 
-        asn().set_silence_radio( bBlackoutEnabled_ );
+        asn().set_radio_emitter_disabled( bRadioEmitterEnabled_ );
+        asn().set_radio_receiver_disabled( bRadioRecieverEnabled_ );
         asn().set_radar_actif( bRadarEnabled_ );
 
         {

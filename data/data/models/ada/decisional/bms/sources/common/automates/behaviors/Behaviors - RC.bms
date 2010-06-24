@@ -323,7 +323,11 @@ do
                 if( F_Pion_GeteEtatRadio( pion ) == eEtatRadio_Silence ) then
                     Activate( self.activations.BEH_RC_Automate_Sur, 1, { eRC_DebutSilenceRadio, pion, #( DEC_Automate_PionsAvecPC() ), } )
                 else
-                    Activate( self.activations.BEH_RC_Automate_Sur, 1, { eRC_FinSilenceRadio, pion, #( DEC_Automate_PionsAvecPC() ), } )
+if( F_Pion_GeteEtatRadio( pion ) == eEtatRadio_SilencePartiel ) then
+                        Activate( self.activations.BEH_RC_Automate_Sur, 1, { eRC_DebutSilenceRadioPartiel, pion, #( DEC_Automate_PionsAvecPC() ), } )
+                    else
+                        Activate( self.activations.BEH_RC_Automate_Sur, 1, { eRC_FinSilenceRadio, pion, #( DEC_Automate_PionsAvecPC() ), } )
+                    end
                 end
 
             end

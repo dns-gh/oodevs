@@ -46,7 +46,7 @@ private:
 private:
     //! @name Member data
     //@{
-    unsigned long last_;
+    static unsigned long last_;
     //@}
 };
 

@@ -120,7 +120,7 @@ BOOST_AUTO_TEST_CASE( TestPropagationInKnowledgeGroups )
 
     MockAgentWithPerceiver jammedAgent;
     MOCK_EXPECT( army, RegisterKnowledgeGroup ).once();
-    MIL_KnowledgeGroup groupJammed1( *group1, jammedAgent );
+    MIL_KnowledgeGroup groupJammed1( *group1, jammedAgent, 0 );
 
     MockAgentWithPerceiver mockAgent;
     MOCK_EXPECT( mockAgent, BelongsTo ).with( boost::cref( *group1 ) ).returns( true );

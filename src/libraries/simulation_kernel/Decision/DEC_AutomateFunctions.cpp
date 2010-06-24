@@ -65,7 +65,7 @@ std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetPionsWithoutPC( const
         if( callerAutomate.GetPionPC() != (**it) )
         {
             const PHY_RolePion_Communications& role = (*it)->GetRole< PHY_RolePion_Communications >(); // LTO
-            if( role.CanCommunicate() )   // LTO
+            if( role.CanReceive() )   // LTO
                 result.push_back( &(*it)->GetDecision() );
         }
     return result;
@@ -102,7 +102,7 @@ std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetPionsWithPC( const MI
     for( MIL_Automate::CIT_PionVector it = pions.begin(); it != pions.end(); ++it )
     {
         const PHY_RolePion_Communications& role = (*it)->GetRole< PHY_RolePion_Communications >(); // LTO
-        if( role.CanCommunicate() )   // LTO
+        if( role.CanReceive() )   // LTO
             result.push_back( &(**it).GetDecision() );
     }
     return result;

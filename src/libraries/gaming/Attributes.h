@@ -109,7 +109,8 @@ public:
     bool bHumanTransportersReady_;
     bool bStealthModeEnabled_;
 
-    bool bRadioSilence_;
+    bool bRadioEmitterSilence_;
+    bool bRadioReceiverSilence_;
     bool bCommJammed_;
     unsigned int knowledgeGroupJammed_;
 

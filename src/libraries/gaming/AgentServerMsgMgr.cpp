@@ -602,37 +602,37 @@ void AgentServerMsgMgr::OnReceiveMsgControlMeteoLocalAck()
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReveiveMsgKnowledgeGroupCreation
+// Name: AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupCreation
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReveiveMsgKnowledgeGroupCreation( const MsgsSimToClient::MsgKnowledgeGroupCreation& message )
+void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupCreation( const MsgsSimToClient::MsgKnowledgeGroupCreation& message )
 {
-    GetModel().teams_.GetTeam( message.oid_camp() ).Update( message );
+    GetModel().knowledgeGroups_.Create( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReveiveMsgKnowledgeGroupDestruction
+// Name: AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupDestruction
 // Created: FDS 2010-03-30
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReveiveMsgKnowledgeGroupDestruction( const MsgsSimToClient::MsgKnowledgeGroupDestruction& message )
+void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupDestruction( const MsgsSimToClient::MsgKnowledgeGroupDestruction& message )
 {
-    GetModel().teams_.GetTeam( message.oid_camp() ).Update( message );
+    GetModel().knowledgeGroups_.Delete( message.oid() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReveiveMsgTeamCreation
+// Name: AgentServerMsgMgr::OnReceiveMsgTeamCreation
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReveiveMsgTeamCreation( const MsgsSimToClient::MsgTeamCreation& message )
+void AgentServerMsgMgr::OnReceiveMsgTeamCreation( const MsgsSimToClient::MsgTeamCreation& message )
 {
     GetModel().teams_.CreateTeam( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReveiveMsgFormationCreation
+// Name: AgentServerMsgMgr::OnReceiveMsgFormationCreation
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReveiveMsgFormationCreation( const Common::MsgFormationCreation& message )
+void AgentServerMsgMgr::OnReceiveMsgFormationCreation( const Common::MsgFormationCreation& message )
 {
     GetModel().teams_.CreateFormation( message );
 }
@@ -1571,8 +1571,7 @@ void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupUpdateAck( const MsgsSimToClie
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupUpdate( const MsgsSimToClient::MsgKnowledgeGroupUpdate& message )
 {
-    if( GetModel().knowledgeGroups_.Find( message.oid() ) )
-        GetModel().knowledgeGroups_.Get( message.oid() ).Update( message );
+    GetModel().knowledgeGroups_.Get( message.oid() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1582,24 +1581,6 @@ void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupUpdate( const MsgsSimToClient:
 void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupCreationAck( const MsgsSimToClient::MsgKnowledgeGroupCreationAck& message, unsigned long /*nCtx*/ )
 {
     CheckAcknowledge( logger_, message, "KnowledgeGroupCreationAck" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupCreation
-// Created: FHD 2009-12-10
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupCreation( const MsgsSimToClient::MsgKnowledgeGroupCreation& message )
-{
-    GetModel().knowledgeGroups_.Get( message.oid() ).Update( message );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupDestruction
-// Created: FDS 2010-03-30
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupDestruction( const MsgsSimToClient::MsgKnowledgeGroupDestruction& message )
-{
-    GetModel().knowledgeGroups_.Get( message.oid() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1723,13 +1704,13 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& , const Msgs
     else if( wrapper.message().has_control_send_current_state_end() )
         OnReceiveMsgSendCurrentStateEnd( wrapper.message().control_send_current_state_end() );
     else if( wrapper.message().has_knowledge_group_creation() ) 
-        OnReveiveMsgKnowledgeGroupCreation( wrapper.message().knowledge_group_creation() ); 
+        OnReceiveMsgKnowledgeGroupCreation( wrapper.message().knowledge_group_creation() ); 
     else if( wrapper.message().has_knowledge_group_destruction() ) 
-        OnReveiveMsgKnowledgeGroupDestruction( wrapper.message().knowledge_group_destruction() ); 
+        OnReceiveMsgKnowledgeGroupDestruction( wrapper.message().knowledge_group_destruction() ); 
     else if( wrapper.message().has_side_creation() )
-        OnReveiveMsgTeamCreation              ( wrapper.message().side_creation() ); 
+        OnReceiveMsgTeamCreation              ( wrapper.message().side_creation() ); 
     else if( wrapper.message().has_formation_creation() )
-        OnReveiveMsgFormationCreation         ( wrapper.message().formation_creation() ); 
+        OnReceiveMsgFormationCreation         ( wrapper.message().formation_creation() ); 
     else if( wrapper.message().has_unit_knowledge_creation() )
         OnReceiveMsgUnitKnowledgeCreation     ( wrapper.message().unit_knowledge_creation() ); 
     else if( wrapper.message().has_unit_knowledge_update() )

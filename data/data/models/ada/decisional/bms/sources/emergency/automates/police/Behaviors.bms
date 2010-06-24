@@ -23,6 +23,7 @@ max_activations = 100
 ]]--[[// -------------------------
 ]]
 actuators = {
+silenceradio = 1,
 etat_OrdreCoordination = 1,
 ennemi = 1,
 releve = 1,
@@ -43,3 +44,4 @@ include "Emergency/Automates/Common/Missions/Evacuate Area/EvacuateArea - MRT.bm
 include "Emergency/Automates/Common/Missions/Alert/Alert - CDT.bms"
 
 include "Emergency/Automates/Common/Missions/Alert/Alert - MRT.bms"
+

@@ -498,6 +498,30 @@ node "BEH_MOT_PasserEnSilenceRadio"
         Activate( self.activations.BEH_Rens_PasserEnSilenceRadio, 1, {} )
     end,
 
+--[[// *****************************************************************************
+]]--[[// BEH_MOT_PasserEnSilenceRadioPartiel
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_MOT_PasserEnSilenceRadioPartiel"
+{
+    feedbacks = { { { "done_BEH_MOT_PasserEnSilenceRadioPartiel" }, "BEH_MOT_PasserEnSilenceRadioPartiel" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MOT_PasserEnSilenceRadioPartiel, {value} ) end,
+    activations =
+    {
+        { "BEH_Rens_PasserEnSilenceRadioPartiel", { "done_BEH_Rens_PasserEnSilenceRadioPartiel" } },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        Activate( self.activations.BEH_Rens_PasserEnSilenceRadioPartiel, 1, {} )
+    end,
+
 --[[// ****************************************************************************** 
 ]]--[[// BEH_Obs_ActiverRadars 
 ]]--[[// 
@@ -639,6 +663,7 @@ connections[ #connections + 1 ] = { nodes.BEH_MOT_GererLesFeuxSur, "BEH_Eni_Pion
 connections[ #connections + 1 ] = { nodes.BEH_MOT_GererLesFeuxSur, "BEH_Eni_Pion_Milice_GererContactEni", nodes.BEH_Eni_Pion_Milice_GererContactEni }
 connections[ #connections + 1 ] = { nodes.BEH_MOT_PasserEnAlerteDeNiveau4, "BEH_Nbc_GererAlerteNiv4", nodes.BEH_Nbc_GererAlerteNiv4 }
 connections[ #connections + 1 ] = { nodes.BEH_MOT_PasserEnSilenceRadio, "BEH_Rens_PasserEnSilenceRadio", nodes.BEH_Rens_PasserEnSilenceRadio }
+connections[ #connections + 1 ] = { nodes.BEH_MOT_PasserEnSilenceRadioPartiel, "BEH_Rens_PasserEnSilenceRadioPartiel", nodes.BEH_Rens_PasserEnSilenceRadioPartiel }
 connections[ #connections + 1 ] = { nodes.BEH_MOT_PasserEnTirInterdit, "BEH_ROE_GererTirInterdit", nodes.BEH_ROE_GererTirInterdit }
 connections[ #connections + 1 ] = { nodes.BEH_MOT_PasserEnTirLibre, "BEH_ROE_GererTirLibre", nodes.BEH_ROE_GererTirLibre }
 connections[ #connections + 1 ] = { nodes.BEH_MOT_PasserEnTirRestreint, "BEH_ROE_GererTirRestreint", nodes.BEH_ROE_GererTirRestreint }

@@ -7045,2685 +7045,1414 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     </message>
     <message>
         <source>Trucks qty</source>
-        <translation>Nombre de camions</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Max speed modifier</source>
-        <translation>Modificateur maximum</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Supply_TrucksTable</name>
-    <message>
-        <source>Nbr of trucks</source>
-        <translation type="obsolete">Nbr de camions</translation>
-    </message>
-    <message>
-        <source>Time required (s)</source>
-        <translation type="obsolete">Temps nécéssaire (s)</translation>
-    </message>
-    <message>
-        <source>New</source>
-        <translation type="obsolete">Nouveau</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="obsolete">Supprimer</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ADN_Supply_TrucksTimeTable</name>
     <message>
-        <source>Nbr of trucks</source>
-        <translation type="obsolete">Nbr de camions</translation>
-    </message>
-    <message>
-        <source>Time required (s)</source>
-        <translation type="obsolete">Temps nécéssaire (s)</translation>
-    </message>
-    <message>
-        <source>New</source>
-        <translation>Nouveau</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Supprimer</translation>
-    </message>
-    <message>
         <source>Trucks qty</source>
-        <translation>Nombre de camions</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Duration</source>
-        <translation>Durée</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ADN_TableDialog</name>
     <message>
         <source>Print</source>
-        <translation>Imprimer</translation>
+        <translation type="unfinished">Imprimer</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Fermer</translation>
+        <translation type="unfinished">Fermer</translation>
     </message>
 </context>
 <context>
     <name>ADN_Table_Objects_LocationScore</name>
     <message>
         <source>Ground Type</source>
-        <translation>Type de terrain</translation>
+        <translation type="unfinished">Type de terrain</translation>
     </message>
     <message>
         <source>Weight</source>
-        <translation>Pondération</translation>
+        <translation type="unfinished">Masse</translation>
     </message>
     <message>
         <source>Add terrain</source>
-        <translation>Ajouter un terrain</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Remove terrain</source>
-        <translation>Enlever ce terrain</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ADN_Tools</name>
     <message>
         <source>Multi references</source>
-        <translation>Références multiples</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>This item is referenced by at least one other item.
 Click &quot;Ok&quot; to destroy it and all its references.</source>
-        <translation>Cet élément est référencé par au moins un autre élément.
-Cliquez sur &quot;Ok&quot; pour l&apos;éffacer ainsi que ceux qui le référencent.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Delete?</source>
-        <translation>Effacer?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Really delete this item?
 Click &quot;Ok&quot; to delete it and all its references.</source>
-        <translation>Voulez vous effacer cet element? Cliquez sur &quot;Ok&quot; pour l&apos;effacer ainsi que tous ceux qui le référencent.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ADN_Tr</name>
     <message>
-        <source>inconnu</source>
-        <translation type="obsolete">inconnu</translation>
-    </message>
-    <message>
-        <source>foret</source>
-        <translation type="obsolete">forêt</translation>
-    </message>
-    <message>
-        <source>plantation</source>
-        <translation type="obsolete">plantation</translation>
-    </message>
-    <message>
-        <source>marais</source>
-        <translation type="obsolete">marais</translation>
-    </message>
-    <message>
-        <source>dune</source>
-        <translation>dune</translation>
-    </message>
-    <message>
-        <source>urbain</source>
-        <translation type="obsolete">urbain</translation>
-    </message>
-    <message>
-        <source>etendue eau</source>
-        <translation type="obsolete">etendue eau</translation>
-    </message>
-    <message>
-        <source>glace</source>
-        <translation type="obsolete">glace</translation>
-    </message>
-    <message>
-        <source>lisiere</source>
-        <translation type="obsolete">lisiere</translation>
-    </message>
-    <message>
-        <source>banlieue</source>
-        <translation type="obsolete">banlieue</translation>
-    </message>
-    <message>
-        <source>cote</source>
-        <translation type="obsolete">cote</translation>
-    </message>
-    <message>
-        <source>bord de plantation</source>
-        <translation type="obsolete">bord de plantation</translation>
-    </message>
-    <message>
-        <source>bord de marais</source>
-        <translation type="obsolete">bord de marais</translation>
-    </message>
-    <message>
-        <source>bord de dune</source>
-        <translation type="obsolete">bord de dune</translation>
-    </message>
-    <message>
-        <source>bord de glace</source>
-        <translation type="obsolete">bord de glace</translation>
-    </message>
-    <message>
-        <source>chemin</source>
-        <translation type="obsolete">chemin</translation>
-    </message>
-    <message>
-        <source>autoroute</source>
-        <translation type="obsolete">autoroute</translation>
-    </message>
-    <message>
-        <source>nationale</source>
-        <translation type="obsolete">nationale</translation>
-    </message>
-    <message>
-        <source>departementale</source>
-        <translation type="obsolete">departementale</translation>
-    </message>
-    <message>
-        <source>ruisseau</source>
-        <translation type="obsolete">ruisseau</translation>
-    </message>
-    <message>
-        <source>riviere</source>
-        <translation type="obsolete">riviere</translation>
-    </message>
-    <message>
-        <source>riviere importante</source>
-        <translation type="obsolete">riviere importante</translation>
-    </message>
-    <message>
-        <source>pont</source>
-        <translation type="obsolete">pont</translation>
-    </message>
-    <message>
-        <source>falaise</source>
-        <translation type="obsolete">falaise</translation>
-    </message>
-    <message>
-        <source>voie ferree</source>
-        <translation type="obsolete">voie ferree</translation>
-    </message>
-    <message>
-        <source>carrefour</source>
-        <translation type="obsolete">carrefour</translation>
-    </message>
-    <message>
-        <source></source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>ArretMoteurEteint</source>
-        <translation type="obsolete">Arret moteur éteint</translation>
-    </message>
-    <message>
-        <source>ArretMoteurAllume</source>
-        <translation type="obsolete">Arret moteur allumé</translation>
-    </message>
-    <message>
-        <source>Deplacement</source>
-        <translation type="obsolete">Déplacement</translation>
-    </message>
-    <message>
-        <source>EnTravaux</source>
-        <translation type="obsolete">En travaux</translation>
-    </message>
-    <message>
-        <source>clear day</source>
-        <translation type="obsolete">Jour sans nuages</translation>
-    </message>
-    <message>
-        <source>day with few clouds</source>
-        <translation type="obsolete">Jour peu nuageux</translation>
-    </message>
-    <message>
-        <source>day with some clouds</source>
-        <translation type="obsolete">Jour moyennement nuageux</translation>
-    </message>
-    <message>
-        <source>cloudy day</source>
-        <translation type="obsolete">Jour assez nuageux</translation>
-    </message>
-    <message>
-        <source>very cloudy day</source>
-        <translation type="obsolete">Jour très nuageux</translation>
-    </message>
-    <message>
-        <source>full moon night</source>
-        <translation type="obsolete">Nuit pleine lune</translation>
-    </message>
-    <message>
-        <source>three quarters moon night</source>
-        <translation type="obsolete">Nuit trois quart de lune</translation>
-    </message>
-    <message>
-        <source>half moon night</source>
-        <translation type="obsolete">Nuit demi lune</translation>
-    </message>
-    <message>
-        <source>quarter moon night</source>
-        <translation type="obsolete">Nuit quart de lune</translation>
-    </message>
-    <message>
-        <source>new moon night</source>
-        <translation type="obsolete">Nuit nouvelle lune</translation>
-    </message>
-    <message>
-        <source>lighting rocket</source>
-        <translation type="obsolete">Eclairant</translation>
-    </message>
-    <message>
-        <source>ground</source>
-        <translation type="obsolete">Sol</translation>
-    </message>
-    <message>
-        <source>empty</source>
-        <translation type="obsolete">Vide</translation>
-    </message>
-    <message>
-        <source>forest</source>
-        <translation>forêt</translation>
-    </message>
-    <message>
-        <source>urban</source>
-        <translation type="obsolete">Urbain</translation>
-    </message>
-    <message>
-        <source>Pion INF</source>
-        <translation type="obsolete">Pion INF</translation>
-    </message>
-    <message>
-        <source>Pion ASA</source>
-        <translation type="obsolete">Pion ASA</translation>
-    </message>
-    <message>
-        <source>Pion ALAT</source>
-        <translation type="obsolete">Pion ALAT</translation>
-    </message>
-    <message>
-        <source>Pion RENS</source>
-        <translation type="obsolete">Pion RENS</translation>
-    </message>
-    <message>
-        <source>Pion NBC</source>
-        <translation type="obsolete">Pion NBC</translation>
-    </message>
-    <message>
-        <source>Pion ABC</source>
-        <translation type="obsolete">Pion ABC</translation>
-    </message>
-    <message>
-        <source>Pion GEN</source>
-        <translation type="obsolete">Pion GEN</translation>
-    </message>
-    <message>
-        <source>Pion ASS</source>
-        <translation type="obsolete">Pion ASS</translation>
-    </message>
-    <message>
-        <source>Pion TRANS</source>
-        <translation type="obsolete">Pion TRANS</translation>
-    </message>
-    <message>
-        <source>Pion LOG TC2</source>
-        <translation type="obsolete">Pion LOG TC2</translation>
-    </message>
-    <message>
-        <source>Pion LOG BLD Sante</source>
-        <translation type="obsolete">Pion LOG BLD Sante</translation>
-    </message>
-    <message>
-        <source>Pion LOG BLD Maintenance</source>
-        <translation type="obsolete">Pion LOG BLD Maintenance</translation>
-    </message>
-    <message>
-        <source>Pion LOG BLD Ravitaillement</source>
-        <translation type="obsolete">Pion LOG BLD Ravitaillement</translation>
-    </message>
-    <message>
-        <source>Pion LOG BLT Sante</source>
-        <translation type="obsolete">Pion LOG BLT Sante</translation>
-    </message>
-    <message>
-        <source>Pion LOG BLT Maintenance</source>
-        <translation type="obsolete">Pion LOG BLT Maintenance</translation>
-    </message>
-    <message>
-        <source>Pion LOG BLT Ravitaillement</source>
-        <translation type="obsolete">Pion LOG BLT Ravitaillement</translation>
-    </message>
-    <message>
-        <source>Pion LOG Convoi</source>
-        <translation type="obsolete">Pion LOG Convoi</translation>
-    </message>
-    <message>
-        <source>Pion CIRCULATION</source>
-        <translation type="obsolete">Pion CIRCULATION</translation>
-    </message>
-    <message>
-        <source>Pion REFUGIE</source>
-        <translation type="obsolete">Pion REFUGIE</translation>
-    </message>
-    <message>
-        <source>Pion MILICE</source>
-        <translation type="obsolete">Pion MILICE</translation>
-    </message>
-    <message>
-        <source>Pion JOINT</source>
-        <translation type="obsolete">Pion JOINT</translation>
-    </message>
-    <message>
-        <source>Automate INF</source>
-        <translation type="obsolete">Automate INF</translation>
-    </message>
-    <message>
-        <source>Automate ASA</source>
-        <translation type="obsolete">Automate ASA</translation>
-    </message>
-    <message>
-        <source>Automate ALAT</source>
-        <translation type="obsolete">Automate ALAT</translation>
-    </message>
-    <message>
-        <source>Automate RENS</source>
-        <translation type="obsolete">Automate RENS</translation>
-    </message>
-    <message>
-        <source>Automate NBC</source>
-        <translation type="obsolete">Automate NBC</translation>
-    </message>
-    <message>
-        <source>Automate ABC</source>
-        <translation type="obsolete">Automate ABC</translation>
-    </message>
-    <message>
-        <source>Automate GEN</source>
-        <translation type="obsolete">Automate GEN</translation>
-    </message>
-    <message>
-        <source>Automate ASS</source>
-        <translation type="obsolete">Automate ASS</translation>
-    </message>
-    <message>
-        <source>Automate TRANS</source>
-        <translation type="obsolete">Automate TRANS</translation>
-    </message>
-    <message>
-        <source>Automate LOG TC2</source>
-        <translation type="obsolete">Automate LOG TC2</translation>
-    </message>
-    <message>
-        <source>Automate LOG BLD Sante</source>
-        <translation type="obsolete">Automate LOG BLD Sante</translation>
-    </message>
-    <message>
-        <source>Automate LOG BLD Maintenance</source>
-        <translation type="obsolete">Automate LOG BLD Maintenance</translation>
-    </message>
-    <message>
-        <source>Automate LOG BLD Ravitaillement</source>
-        <translation type="obsolete">Automate LOG BLD Ravitaillement</translation>
-    </message>
-    <message>
-        <source>Automate LOG BLT Sante</source>
-        <translation type="obsolete">Automate LOG BLT Sante</translation>
-    </message>
-    <message>
-        <source>Automate LOG BLT Maintenance</source>
-        <translation type="obsolete">Automate LOG BLT Maintenance</translation>
-    </message>
-    <message>
-        <source>Automate LOG BLT Ravitaillement</source>
-        <translation type="obsolete">Automate LOG BLT Ravitaillement</translation>
-    </message>
-    <message>
-        <source>Automate CIRCULATION</source>
-        <translation type="obsolete">Automate CIRCULATION</translation>
-    </message>
-    <message>
-        <source>Automate REFUGIE</source>
-        <translation type="obsolete">Automate REFUGIE</translation>
-    </message>
-    <message>
-        <source>Automate MILICE</source>
-        <translation type="obsolete">Automate MILICE</translation>
-    </message>
-    <message>
-        <source>Automate JOINT</source>
-        <translation type="obsolete">Automate JOINT</translation>
-    </message>
-    <message>
-        <source>pc</source>
-        <translation type="obsolete">pc</translation>
-    </message>
-    <message>
-        <source>ass</source>
-        <translation type="obsolete">ass</translation>
-    </message>
-    <message>
-        <source>log</source>
-        <translation type="obsolete">log</translation>
-    </message>
-    <message>
-        <source>none</source>
-        <translation type="obsolete">aucun</translation>
-    </message>
-    <message>
-        <source>armoured</source>
-        <translation type="obsolete">Blindé</translation>
-    </message>
-    <message>
-        <source>mortar</source>
-        <translation type="obsolete">Mortier</translation>
-    </message>
-    <message>
-        <source>rocket launcher</source>
-        <translation type="obsolete">Lance roquettes</translation>
-    </message>
-    <message>
-        <source>vehicle</source>
-        <translation type="obsolete">Véhicule</translation>
-    </message>
-    <message>
-        <source>footmen</source>
-        <translation type="obsolete">Infanterie</translation>
-    </message>
-    <message>
-        <source>helicopter</source>
-        <translation type="obsolete">Helicoptère</translation>
-    </message>
-    <message>
-        <source>ASA</source>
-        <translation type="obsolete">ASA</translation>
-    </message>
-    <message>
-        <source>undefined</source>
-        <translation type="obsolete">Non défini</translation>
-    </message>
-    <message>
-        <source>AuPlusLent</source>
-        <translation type="obsolete">Au plus lent</translation>
-    </message>
-    <message>
-        <source>VitesseMaxObjet</source>
-        <translation type="obsolete">Vitesse max objet</translation>
-    </message>
-    <message>
-        <source>VitesseMaxAgent</source>
-        <translation type="obsolete">Vitesse max agent</translation>
-    </message>
-    <message>
-        <source>PasDePrecipitation</source>
-        <translation type="obsolete">Pas de précipitation</translation>
-    </message>
-    <message>
-        <source>TempeteDeSable</source>
-        <translation type="obsolete">Tempête de sable</translation>
-    </message>
-    <message>
-        <source>Brouillard</source>
-        <translation type="obsolete">Brouillard</translation>
-    </message>
-    <message>
-        <source>Crachin</source>
-        <translation type="obsolete">Crachin</translation>
-    </message>
-    <message>
-        <source>Pluie</source>
-        <translation type="obsolete">Pluie</translation>
-    </message>
-    <message>
-        <source>Neige</source>
-        <translation type="obsolete">Neige</translation>
-    </message>
-    <message>
-        <source>Fumigene</source>
-        <translation type="obsolete">Fumigène</translation>
-    </message>
-    <message>
-        <source>U1</source>
-        <translation type="obsolete">U1</translation>
-    </message>
-    <message>
-        <source>U2</source>
-        <translation type="obsolete">U2</translation>
-    </message>
-    <message>
-        <source>U3</source>
-        <translation type="obsolete">U3</translation>
-    </message>
-    <message>
-        <source>UE</source>
-        <translation type="obsolete">UE</translation>
-    </message>
-    <message>
-        <source>materiel</source>
-        <translation type="obsolete">materiel</translation>
-    </message>
-    <message>
-        <source>humain</source>
-        <translation type="obsolete">humain</translation>
-    </message>
-    <message>
-        <source>EA</source>
-        <translation type="obsolete">EA</translation>
-    </message>
-    <message>
-        <source>M</source>
-        <translation type="obsolete">M</translation>
-    </message>
-    <message>
-        <source>Obus</source>
-        <translation type="obsolete">Obus</translation>
-    </message>
-    <message>
-        <source>MissileAirAir</source>
-        <translation type="obsolete">Missile air-air</translation>
-    </message>
-    <message>
-        <source>Missile</source>
-        <translation>Missile</translation>
-    </message>
-    <message>
-        <source>Mitraille</source>
-        <translation type="obsolete">Mitraille</translation>
-    </message>
-    <message>
-        <source>Civilian law enforcement</source>
-        <translation type="obsolete">Civilian law enforcement</translation>
-    </message>
-    <message>
-        <source>Command operations</source>
-        <translation type="obsolete">Command operations</translation>
-    </message>
-    <message>
-        <source>Couverture aerienne</source>
-        <translation type="obsolete">Couverture aerienne</translation>
-    </message>
-    <message>
-        <source>Joint intelligence</source>
-        <translation type="obsolete">Joint intelligence</translation>
-    </message>
-    <message>
-        <source>Morale, welfare recreation</source>
-        <translation type="obsolete">Morale, welfare recreation</translation>
-    </message>
-    <message>
-        <source>Reglage electronique</source>
-        <translation type="obsolete">Reglage electronique</translation>
-    </message>
-    <message>
-        <source>Remplacement</source>
-        <translation type="obsolete">Remplacement</translation>
-    </message>
-    <message>
-        <source>Service mortuaire</source>
-        <translation type="obsolete">Service mortuaire</translation>
-    </message>
-    <message>
-        <source>Signals intelligence (SIGINT)</source>
-        <translation type="obsolete">Signals intelligence (SIGINT)</translation>
-    </message>
-    <message>
-        <source>Theatre missile defence</source>
-        <translation type="obsolete">Theatre missile defence</translation>
-    </message>
-    <message>
-        <source>Utilitaire</source>
-        <translation type="obsolete">Utilitaire</translation>
-    </message>
-    <message>
-        <source>Aeroporte</source>
-        <translation type="obsolete">Aeroporte</translation>
-    </message>
-    <message>
-        <source>Affaires publiques</source>
-        <translation type="obsolete">Affaires publiques</translation>
-    </message>
-    <message>
-        <source>Affaires publiques, communication</source>
-        <translation type="obsolete">Affaires publiques, communication</translation>
-    </message>
-    <message>
-        <source>Affaires publiques, joint information</source>
-        <translation type="obsolete">Affaires publiques, joint information</translation>
-    </message>
-    <message>
-        <source>Alpin</source>
-        <translation type="obsolete">Alpin</translation>
-    </message>
-    <message>
-        <source>Amphibie</source>
-        <translation type="obsolete">Amphibie</translation>
-    </message>
-    <message>
-        <source>Arctique</source>
-        <translation type="obsolete">Arctique</translation>
-    </message>
-    <message>
-        <source>Artillerie - reconnaissance</source>
-        <translation type="obsolete">Artillerie - reconnaissance</translation>
-    </message>
-    <message>
-        <source>Attaque</source>
-        <translation type="obsolete">Attaque</translation>
-    </message>
-    <message>
-        <source>Attaque aerienne</source>
-        <translation type="obsolete">Attaque aerienne</translation>
-    </message>
-    <message>
-        <source>C2</source>
-        <translation type="obsolete">C2</translation>
-    </message>
-    <message>
-        <source>Chemin de fer</source>
-        <translation type="obsolete">Chemin de fer</translation>
-    </message>
-    <message>
-        <source>Ciblage</source>
-        <translation type="obsolete">Ciblage</translation>
-    </message>
-    <message>
-        <source>Contre espionnage</source>
-        <translation type="obsolete">Contre espionnage</translation>
-    </message>
-    <message>
-        <source>Eclairage</source>
-        <translation type="obsolete">Eclairage</translation>
-    </message>
-    <message>
-        <source>Entretien</source>
-        <translation type="obsolete">Entretien</translation>
-    </message>
-    <message>
-        <source>Entretien, materiel</source>
-        <translation type="obsolete">Entretien, materiel</translation>
-    </message>
-    <message>
-        <source>Entretien, missile</source>
-        <translation type="obsolete">Entretien, missile</translation>
-    </message>
-    <message>
-        <source>Entretien, opto-electronique</source>
-        <translation type="obsolete">Entretien, opto-electronique</translation>
-    </message>
-    <message>
-        <source>Espionnage</source>
-        <translation type="obsolete">Espionnage</translation>
-    </message>
-    <message>
-        <source>Espionnage militaire, aerial exploitation</source>
-        <translation type="obsolete">Espionnage militaire, aerial exploitation</translation>
-    </message>
-    <message>
-        <source>Espionnage militaire, operation</source>
-        <translation type="obsolete">Espionnage militaire, operation</translation>
-    </message>
-    <message>
-        <source>Espionnage militaire, tactical exploitation</source>
-        <translation type="obsolete">Espionnage militaire, tactical exploitation</translation>
-    </message>
-    <message>
-        <source>Evacuation sanitaire</source>
-        <translation type="obsolete">Evacuation sanitaire</translation>
-    </message>
-    <message>
-        <source>Finance</source>
-        <translation type="obsolete">Finance</translation>
-    </message>
-    <message>
-        <source>Genie, combat</source>
-        <translation type="obsolete">Genie, combat</translation>
-    </message>
-    <message>
-        <source>Genie, construction</source>
-        <translation type="obsolete">Genie, construction</translation>
-    </message>
-    <message>
-        <source>Genie, construction navale</source>
-        <translation type="obsolete">Genie, construction navale</translation>
-    </message>
-    <message>
-        <source>Guerre electronique</source>
-        <translation type="obsolete">Guerre electronique</translation>
-    </message>
-    <message>
-        <source>Guerre electronique, interception</source>
-        <translation type="obsolete">Guerre electronique, interception</translation>
-    </message>
-    <message>
-        <source>Guerre electronique, brouillage</source>
-        <translation type="obsolete">Guerre electronique, brouillage</translation>
-    </message>
-    <message>
-        <source>Guerre electronique, detection</source>
-        <translation type="obsolete">Guerre electronique, detection</translation>
-    </message>
-    <message>
-        <source>Interrogation</source>
-        <translation type="obsolete">Interrogation</translation>
-    </message>
-    <message>
-        <source>Main d&apos;oeuvre</source>
-        <translation type="obsolete">Main d&apos;oeuvre</translation>
-    </message>
-    <message>
-        <source>Maintien de la paix</source>
-        <translation type="obsolete">Maintien de la paix</translation>
-    </message>
-    <message>
-        <source>Marine</source>
-        <translation type="obsolete">Marine</translation>
-    </message>
-    <message>
-        <source>Mine de contre-mesure</source>
-        <translation type="obsolete">Mine de contre-mesure</translation>
-    </message>
-    <message>
-        <source>NBC, biologique</source>
-        <translation type="obsolete">NBC, biologique</translation>
-    </message>
-    <message>
-        <source>NBC, chimique</source>
-        <translation type="obsolete">NBC, chimique</translation>
-    </message>
-    <message>
-        <source>NBC, chimique, fumee</source>
-        <translation type="obsolete">NBC, chimique, fumee</translation>
-    </message>
-    <message>
-        <source>NBC, decontamination</source>
-        <translation type="obsolete">NBC, decontamination</translation>
-    </message>
-    <message>
-        <source>NBC, decontamination chimique</source>
-        <translation type="obsolete">NBC, decontamination chimique</translation>
-    </message>
-    <message>
-        <source>NBC, nucleaire</source>
-        <translation type="obsolete">NBC, nucleaire</translation>
-    </message>
-    <message>
-        <source>Non renseigne</source>
-        <translation type="obsolete">Non renseigne</translation>
-    </message>
-    <message>
-        <source>Observation</source>
-        <translation type="obsolete">Observation</translation>
-    </message>
-    <message>
-        <source>Observation, capteur</source>
-        <translation type="obsolete">Observation, capteur</translation>
-    </message>
-    <message>
-        <source>Observation, longue portee</source>
-        <translation type="obsolete">Observation, longue portee</translation>
-    </message>
-    <message>
-        <source>Observation, meteo</source>
-        <translation type="obsolete">Observation, meteo</translation>
-    </message>
-    <message>
-        <source>Observation, module terrestre</source>
-        <translation type="obsolete">Observation, module terrestre</translation>
-    </message>
-    <message>
-        <source>Purification de l&apos;eau</source>
-        <translation type="obsolete">Purification de l&apos;eau</translation>
-    </message>
-    <message>
-        <source>Ravitaillement (class I)</source>
-        <translation type="obsolete">Ravitaillement (class I)</translation>
-    </message>
-    <message>
-        <source>Ravitaillement (class II)</source>
-        <translation type="obsolete">Ravitaillement (class II)</translation>
-    </message>
-    <message>
-        <source>Ravitaillement (class III aviation)</source>
-        <translation type="obsolete">Ravitaillement (class III aviation)</translation>
-    </message>
-    <message>
-        <source>Ravitaillement (class III)</source>
-        <translation type="obsolete">Ravitaillement (class III)</translation>
-    </message>
-    <message>
-        <source>Ravitaillement (class IV)</source>
-        <translation type="obsolete">Ravitaillement (class IV)</translation>
-    </message>
-    <message>
-        <source>Ravitaillement (class V)</source>
-        <translation type="obsolete">Ravitaillement (class V)</translation>
-    </message>
-    <message>
-        <source>Ravitaillement (eau)</source>
-        <translation type="obsolete">Ravitaillement (eau)</translation>
-    </message>
-    <message>
-        <source>Ravitaillement, blanchisserie/bain</source>
-        <translation type="obsolete">Ravitaillement, blanchisserie/bain</translation>
-    </message>
-    <message>
-        <source>Recherche &amp; sauvetage</source>
-        <translation type="obsolete">Recherche &amp; sauvetage</translation>
-    </message>
-    <message>
-        <source>Reconnaissance</source>
-        <translation type="obsolete">Reconnaissance</translation>
-    </message>
-    <message>
-        <source>Reconnaissance aerienne tactique</source>
-        <translation type="obsolete">Reconnaissance aerienne tactique</translation>
-    </message>
-    <message>
-        <source>Recuperation</source>
-        <translation type="obsolete">Recuperation</translation>
-    </message>
-    <message>
-        <source>Service du personnel</source>
-        <translation type="obsolete">Service du personnel</translation>
-    </message>
-    <message>
-        <source>Service juridique</source>
-        <translation type="obsolete">Service juridique</translation>
-    </message>
-    <message>
-        <source>Support aerien rapproche</source>
-        <translation type="obsolete">Support aerien rapproche</translation>
-    </message>
-    <message>
-        <source>Transmissions, forward communications</source>
-        <translation type="obsolete">Transmissions, forward communications</translation>
-    </message>
-    <message>
-        <source>Transmissions, node centre</source>
-        <translation type="obsolete">Transmissions, node centre</translation>
-    </message>
-    <message>
-        <source>Transmissions, node, large extension</source>
-        <translation type="obsolete">Transmissions, node, large extension</translation>
-    </message>
-    <message>
-        <source>Transmissions, node, small extension</source>
-        <translation type="obsolete">Transmissions, node, small extension</translation>
-    </message>
-    <message>
-        <source>Transmissions, radio relay</source>
-        <translation type="obsolete">Transmissions, radio relay</translation>
-    </message>
-    <message>
-        <source>Transmissions, radio tactical satellite</source>
-        <translation type="obsolete">Transmissions, radio tactical satellite</translation>
-    </message>
-    <message>
-        <source>Transmissions, radio teletype</source>
-        <translation type="obsolete">Transmissions, radio teletype</translation>
-    </message>
-    <message>
-        <source>Transmissions, support</source>
-        <translation type="obsolete">Transmissions, support</translation>
-    </message>
-    <message>
-        <source>Transmissions, radio</source>
-        <translation type="obsolete">Transmissions, radio</translation>
-    </message>
-    <message>
-        <source>Transport, allocation des mouvements</source>
-        <translation type="obsolete">Transport, allocation des mouvements</translation>
-    </message>
-    <message>
-        <source>Transport, APOD/APOE</source>
-        <translation type="obsolete">Transport, APOD/APOE</translation>
-    </message>
-    <message>
-        <source>Transport, SPOD/SPOE</source>
-        <translation type="obsolete">Transport, SPOD/SPOE</translation>
-    </message>
-    <message>
-        <source>Transport, missile</source>
-        <translation type="obsolete">Transport, missile</translation>
-    </message>
-    <message>
-        <source>Verrouillage de cible</source>
-        <translation type="obsolete">Verrouillage de cible</translation>
-    </message>
-    <message>
-        <source>Verrouillage de cible, flash</source>
-        <translation type="obsolete">Verrouillage de cible, flash</translation>
-    </message>
-    <message>
-        <source>Verrouillage de cible, radar</source>
-        <translation type="obsolete">Verrouillage de cible, radar</translation>
-    </message>
-    <message>
-        <source>Verrouillage de cible, sonore</source>
-        <translation type="obsolete">Verrouillage de cible, sonore</translation>
-    </message>
-    <message>
-        <source>radar</source>
-        <translation>radar</translation>
-    </message>
-    <message>
-        <source>ecoute</source>
-        <translation type="obsolete">ecoute</translation>
-    </message>
-    <message>
-        <source>ecoute radar</source>
-        <translation type="obsolete">ecoute radar</translation>
-    </message>
-    <message>
-        <source>MissileAir</source>
-        <translation type="obsolete">MissileAir</translation>
-    </message>
-    <message>
-        <source>MissileSol</source>
-        <translation type="obsolete">MissileSol</translation>
-    </message>
-    <message>
-        <source>lima</source>
-        <translation type="obsolete">lima</translation>
-    </message>
-    <message>
-        <source>NTI1</source>
-        <translation type="obsolete">NTI1</translation>
-    </message>
-    <message>
-        <source>NTI2</source>
-        <translation type="obsolete">NTI2</translation>
-    </message>
-    <message>
-        <source>NTI3</source>
-        <translation type="obsolete">NTI3</translation>
-    </message>
-    <message>
-        <source>JourSansNuage</source>
-        <translation type="obsolete">Jour sans nuage</translation>
-    </message>
-    <message>
-        <source>JourPeuNuageux</source>
-        <translation type="obsolete">Jour peu nuageux</translation>
-    </message>
-    <message>
-        <source>JourMoyennementNuageux</source>
-        <translation type="obsolete">Jour moyennement nuageux</translation>
-    </message>
-    <message>
-        <source>JourAssezNuageux</source>
-        <translation type="obsolete">Jour assez nuageux</translation>
-    </message>
-    <message>
-        <source>JourTresNuageux</source>
-        <translation type="obsolete">Jour très nuageux</translation>
-    </message>
-    <message>
-        <source>NuitPleineLune</source>
-        <translation type="obsolete">Nuit de pleine lune</translation>
-    </message>
-    <message>
-        <source>NuitTroisQuartDeLune</source>
-        <translation type="obsolete">Nuit de trois-quarts de lune</translation>
-    </message>
-    <message>
-        <source>NuitDemiLune</source>
-        <translation type="obsolete">Nuit de demi-lune</translation>
-    </message>
-    <message>
-        <source>NuitQuartDeLune</source>
-        <translation type="obsolete">Nuit de quart de lune</translation>
-    </message>
-    <message>
-        <source>NuitNouvelleLune</source>
-        <translation type="obsolete">Nuit de nouvelle lune</translation>
-    </message>
-    <message>
-        <source>Eclairant</source>
-        <translation type="obsolete">Eclairage de roquette</translation>
-    </message>
-    <message>
-        <source>Sol</source>
-        <translation type="obsolete">Sol</translation>
-    </message>
-    <message>
-        <source>Vide</source>
-        <translation type="obsolete">Vide</translation>
-    </message>
-    <message>
-        <source>Foret</source>
-        <translation type="obsolete">Forêt</translation>
-    </message>
-    <message>
-        <source>Urbain</source>
-        <translation type="obsolete">Urbain</translation>
-    </message>
-    <message>
-        <source>PC</source>
-        <translation type="obsolete">PC</translation>
-    </message>
-    <message>
-        <source>ASS</source>
-        <translation type="obsolete">ASS</translation>
-    </message>
-    <message>
-        <source>Log</source>
-        <translation type="obsolete">Log</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="obsolete">Aucune</translation>
-    </message>
-    <message>
-        <source>Blinde</source>
-        <translation type="obsolete">Blindé</translation>
-    </message>
-    <message>
-        <source>Mortier</source>
-        <translation type="obsolete">Mortier</translation>
-    </message>
-    <message>
-        <source>Lance roquette</source>
-        <translation type="obsolete">Lance roquette</translation>
-    </message>
-    <message>
-        <source>Vehicule</source>
-        <translation type="obsolete">Véhicule</translation>
-    </message>
-    <message>
-        <source>Personnel a pied</source>
-        <translation type="obsolete">Personnel à pied</translation>
-    </message>
-    <message>
-        <source>Helicoptere</source>
-        <translation type="obsolete">Hélicoptère</translation>
-    </message>
-    <message>
-        <source>Indefini</source>
-        <translation type="obsolete">Indéfini</translation>
-    </message>
-    <message>
-        <source>Pion ASY</source>
-        <translation type="obsolete">Pion ASY</translation>
-    </message>
-    <message>
-        <source>Automate ASY</source>
-        <translation type="obsolete">Automate ASY</translation>
-    </message>
-    <message>
-        <source>VC1</source>
-        <translation type="obsolete">VC1</translation>
-    </message>
-    <message>
-        <source>Char</source>
-        <translation type="obsolete">Char</translation>
-    </message>
-    <message>
-        <source>Artillerie</source>
-        <translation type="obsolete">Artillerie</translation>
-    </message>
-    <message>
-        <source>Hommes</source>
-        <translation type="obsolete">Hommes</translation>
-    </message>
-    <message>
-        <source>Armes L&#xe9;g&#xe8;res</source>
-        <translation type="obsolete">Armes Légères</translation>
-    </message>
-    <message>
-        <source>Mat&#xe9;riel Franchissement</source>
-        <translation type="obsolete">Matériel Franchissement</translation>
-    </message>
-    <message>
-        <source>Autres</source>
-        <translation type="obsolete">Autres</translation>
-    </message>
-    <message>
-        <source>Unite essence</source>
-        <translation type="obsolete">Unite essence</translation>
-    </message>
-    <message>
-        <source>Unite feu TD</source>
-        <translation type="obsolete">Unite feu TD</translation>
-    </message>
-    <message>
-        <source>Unite feu -TD</source>
-        <translation type="obsolete">Unite feu -TD</translation>
-    </message>
-    <message>
-        <source>Unite vivre</source>
-        <translation type="obsolete">Unite vivre</translation>
-    </message>
-    <message>
-        <source>Pieces</source>
-        <translation type="obsolete">Pieces</translation>
-    </message>
-    <message>
-        <source>VCI</source>
-        <translation type="obsolete">VCI</translation>
-    </message>
-    <message>
-        <source>ReparableAvecEvacuation</source>
-        <translation type="obsolete">Réparable avec évacuation</translation>
-    </message>
-    <message>
-        <source>ReparableSurPlace</source>
-        <translation type="obsolete">Réparable sans évacuation</translation>
-    </message>
-    <message>
-        <source>Detruit</source>
-        <translation type="obsolete">Détruit</translation>
-    </message>
-    <message>
-        <source>explosif</source>
-        <translation type="obsolete">explosif</translation>
+        <source>explosive</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>grenade</source>
-        <translation>grenade</translation>
-    </message>
-    <message>
-        <source>aced</source>
-        <translation type="obsolete">aced</translation>
-    </message>
-    <message>
-        <source>fumigene</source>
-        <translation type="obsolete">fumigène</translation>
-    </message>
-    <message>
-        <source>eclairant</source>
-        <translation type="obsolete">éclairant</translation>
-    </message>
-    <message>
-        <source>mine</source>
-        <translation>mine</translation>
-    </message>
-    <message>
-        <source>montagne</source>
-        <translation type="obsolete">montagne</translation>
-    </message>
-    <message>
-        <source>bord de montagne</source>
-        <translation type="obsolete">bord de montagne</translation>
-    </message>
-    <message>
-        <source>Agent</source>
-        <translation>Agent</translation>
-    </message>
-    <message>
-        <source>AgentList</source>
-        <translation>Liste d&apos;agents</translation>
-    </message>
-    <message>
-        <source>Automate</source>
-        <translation>Automate</translation>
-    </message>
-    <message>
-        <source>AutomateList</source>
-        <translation>Liste d&apos;automates</translation>
-    </message>
-    <message>
-        <source>GenObject</source>
-        <translation>Objet</translation>
-    </message>
-    <message>
-        <source>GenObjectList</source>
-        <translation>Liste d&apos;objets</translation>
-    </message>
-    <message>
-        <source>NatureAtlas</source>
-        <translation>Nature</translation>
-    </message>
-    <message>
-        <source>Bool</source>
-        <translation>Booléen</translation>
-    </message>
-    <message>
-        <source>Direction</source>
-        <translation>Direction</translation>
-    </message>
-    <message>
-        <source>Numeric</source>
-        <translation>Numérique</translation>
-    </message>
-    <message>
-        <source>AgentKnowledge</source>
-        <translation>Connaissance agent</translation>
-    </message>
-    <message>
-        <source>AgentKnowledgeList</source>
-        <translation>Liste de connaissances agent</translation>
-    </message>
-    <message>
-        <source>ObjectKnowledge</source>
-        <translation>Connaissance objet</translation>
-    </message>
-    <message>
-        <source>ObjectKnowledgeList</source>
-        <translation>Liste de connaissances objet</translation>
-    </message>
-    <message>
-        <source>PopulationKnowledge</source>
-        <translation>Connaissance population</translation>
-    </message>
-    <message>
-        <source>Path</source>
-        <translation>Chemin</translation>
-    </message>
-    <message>
-        <source>PathList</source>
-        <translation>Liste de chemins</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation>Point</translation>
-    </message>
-    <message>
-        <source>PointList</source>
-        <translation>Liste de points</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation>Polygone</translation>
-    </message>
-    <message>
-        <source>PolygonList</source>
-        <translation>Liste de polygones</translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation>Localisation</translation>
-    </message>
-    <message>
-        <source>LocationList</source>
-        <translation>Liste de localisations</translation>
-    </message>
-    <message>
-        <source>MaintenancePriorities</source>
-        <translation>Priorités de maintenance</translation>
-    </message>
-    <message>
-        <source>MedicalPriorities</source>
-        <translation>Priorités médicales</translation>
-    </message>
-    <message>
-        <source>Enumeration</source>
-        <translation>Enumération</translation>
-    </message>
-    <message>
-        <source>IndirectFire</source>
-        <translation>Tir indirect</translation>
-    </message>
-    <message>
-        <source>String</source>
-        <translation>Chaîne</translation>
-    </message>
-    <message>
-        <source>EquipmentType</source>
-        <translation>Type de composante</translation>
-    </message>
-    <message>
-        <source>DotationType</source>
-        <translation>Type de dotation</translation>
-    </message>
-    <message>
-        <source>explosive</source>
-        <translation>explosif</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>anti tank</source>
-        <translation>anti char</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>smoke</source>
-        <translation>Fumigène</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>illumination shell</source>
-        <translation>obus éclairant</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>unknown</source>
-        <translation>inconnu</translation>
-    </message>
-    <message>
-        <source>orchard</source>
-        <translation>plantation</translation>
-    </message>
-    <message>
-        <source>swamp</source>
-        <translation>marais</translation>
-    </message>
-    <message>
-        <source>urban area</source>
-        <translation>zone urbaine</translation>
-    </message>
-    <message>
-        <source>lake</source>
-        <translation>étendue d&apos;eau</translation>
-    </message>
-    <message>
-        <source>glacier</source>
-        <translation>glacier</translation>
-    </message>
-    <message>
-        <source>forest edge</source>
-        <translation>forêt (lisière)</translation>
-    </message>
-    <message>
-        <source>suburb</source>
-        <translation>banlieue</translation>
-    </message>
-    <message>
-        <source>waterfront</source>
-        <translation>quai</translation>
-    </message>
-    <message>
-        <source>orchard edge</source>
-        <translation>plantation (lisière)</translation>
-    </message>
-    <message>
-        <source>swamp edge</source>
-        <translation>marais (lisière)</translation>
-    </message>
-    <message>
-        <source>dune edge</source>
-        <translation>dune (lisière)</translation>
-    </message>
-    <message>
-        <source>glacier edge</source>
-        <translation>glacier (lisière)</translation>
-    </message>
-    <message>
-        <source>country road</source>
-        <translation>chemin</translation>
-    </message>
-    <message>
-        <source>highway</source>
-        <translation>autoroute</translation>
-    </message>
-    <message>
-        <source>main road</source>
-        <translation>nationale</translation>
-    </message>
-    <message>
-        <source>secondary road</source>
-        <translation>départementale</translation>
-    </message>
-    <message>
-        <source>stream</source>
-        <translation>ruisseau</translation>
-    </message>
-    <message>
-        <source>river</source>
-        <translation>rivière</translation>
-    </message>
-    <message>
-        <source>main river</source>
-        <translation>rivière importante</translation>
-    </message>
-    <message>
-        <source>bridge</source>
-        <translation>pont</translation>
-    </message>
-    <message>
-        <source>cliff</source>
-        <translation>falaise</translation>
-    </message>
-    <message>
-        <source>railroad</source>
-        <translation>voie ferrée</translation>
-    </message>
-    <message>
-        <source>crossroad</source>
-        <translation>carrefour</translation>
-    </message>
-    <message>
-        <source>mountain</source>
-        <translation>montagne</translation>
-    </message>
-    <message>
-        <source>mountain edge</source>
-        <translation>montagne (lisière)</translation>
-    </message>
-    <message>
-        <source>Parked, engine stopped</source>
-        <translation>Arrêt moteur éteint</translation>
-    </message>
-    <message>
-        <source>Parked, engine running</source>
-        <translation>Arrêt moteur allumé</translation>
-    </message>
-    <message>
-        <source>Moving</source>
-        <translation>Déplacement</translation>
-    </message>
-    <message>
-        <source>Working</source>
-        <translation>En travaux</translation>
-    </message>
-    <message>
-        <source>Very sunny day</source>
-        <translation>Journée trés ensoleillée</translation>
-    </message>
-    <message>
-        <source>Sunny day</source>
-        <translation>Journée ensoleillée</translation>
-    </message>
-    <message>
-        <source>Partly cloudy day</source>
-        <translation>Journée partiellement nuageuse</translation>
-    </message>
-    <message>
-        <source>Cloudy day</source>
-        <translation>Journée nuageuse</translation>
-    </message>
-    <message>
-        <source>Very cloudy day</source>
-        <translation>Journée trés nuageuse</translation>
-    </message>
-    <message>
-        <source>Full moon night</source>
-        <translation>Pleine lune</translation>
-    </message>
-    <message>
-        <source>Waning moon night</source>
-        <translation>Premier croissant de lune</translation>
-    </message>
-    <message>
-        <source>Quarter moon night</source>
-        <translation>Quartier de lune</translation>
-    </message>
-    <message>
-        <source>Crescent moon night</source>
-        <translation>Dernier croissant de lune</translation>
-    </message>
-    <message>
-        <source>New moon night</source>
-        <translation>Nouvelle lune</translation>
-    </message>
-    <message>
-        <source>Illumination shell</source>
-        <translation>Obus éclairant</translation>
-    </message>
-    <message>
-        <source>Ground</source>
-        <translation>Sol</translation>
-    </message>
-    <message>
-        <source>Empty</source>
-        <translation>Vide</translation>
-    </message>
-    <message>
-        <source>Forest</source>
-        <translation>Forêt</translation>
-    </message>
-    <message>
-        <source>Urban area</source>
-        <translation>Zone urbaine</translation>
-    </message>
-    <message>
-        <source>phase line</source>
-        <translation>lima</translation>
-    </message>
-    <message>
-        <source>Infantry</source>
-        <translation>Infanterie</translation>
-    </message>
-    <message>
-        <source>Anti air</source>
-        <translation>Anti aérien</translation>
-    </message>
-    <message>
-        <source>Army aviation</source>
-        <translation>Unités aériennes</translation>
-    </message>
-    <message>
-        <source>Intelligence</source>
-        <translation>Intelligence</translation>
-    </message>
-    <message>
-        <source>NBC</source>
-        <translation>NBC</translation>
-    </message>
-    <message>
-        <source>Armor</source>
-        <translation>Blindé</translation>
-    </message>
-    <message>
-        <source>Engineer</source>
-        <translation>Génie</translation>
-    </message>
-    <message>
-        <source>Ground artillery</source>
-        <translation>Artillerie</translation>
-    </message>
-    <message>
-        <source>Communication</source>
-        <translation>Communication</translation>
-    </message>
-    <message>
-        <source>Logistic close support</source>
-        <translation>Soutien logistique</translation>
-    </message>
-    <message>
-        <source>Medical system, brigade level</source>
-        <translation>Chaîne médicale de brigade</translation>
-    </message>
-    <message>
-        <source>Maintenance system, brigade level</source>
-        <translation>Chaîne maintenance de brigade</translation>
-    </message>
-    <message>
-        <source>Supply system, brigade level</source>
-        <translation>Chaîne ravitaillement de brigade</translation>
-    </message>
-    <message>
-        <source>Medical system, division level</source>
-        <translation>Chaîne médicale de division</translation>
-    </message>
-    <message>
-        <source>Maintenance system, division level</source>
-        <translation>Chaîne maintenance de division</translation>
-    </message>
-    <message>
-        <source>Supply system, division level</source>
-        <translation>Chaîne ravitaillement de division</translation>
-    </message>
-    <message>
-        <source>Convoy</source>
-        <translation>Convoi</translation>
-    </message>
-    <message>
-        <source>Movement support</source>
-        <translation>Soutien à la mobilité</translation>
-    </message>
-    <message>
-        <source>Refugee</source>
-        <translation>Réfugié</translation>
-    </message>
-    <message>
-        <source>Militia</source>
-        <translation>Milice</translation>
-    </message>
-    <message>
-        <source>Joint</source>
-        <translation>Inter-arme</translation>
-    </message>
-    <message>
-        <source>Asymetric threat</source>
-        <translation>Menace asymétrique</translation>
-    </message>
-    <message>
-        <source>Emergency management</source>
-        <translation>Sécurité</translation>
-    </message>
-    <message>
-        <source>Commander, Infantry</source>
-        <translation>Commandant, Infanterie</translation>
-    </message>
-    <message>
-        <source>Commander, Anti air</source>
-        <translation>Commandant, Anti aérien</translation>
-    </message>
-    <message>
-        <source>Commander, Army aviation</source>
-        <translation>Commandant, Unités aériennes</translation>
-    </message>
-    <message>
-        <source>Commander, Intelligence</source>
-        <translation>Commandant, Intelligence</translation>
-    </message>
-    <message>
-        <source>Commander, NBC</source>
-        <translation>Commandant, NBC</translation>
-    </message>
-    <message>
-        <source>Commander, Armor</source>
-        <translation>Commandant, Blindé</translation>
-    </message>
-    <message>
-        <source>Commander, Engineer</source>
-        <translation>Commandant, Génie</translation>
-    </message>
-    <message>
-        <source>Commander, Ground artillery</source>
-        <translation>Commandant, Artillerie</translation>
-    </message>
-    <message>
-        <source>Commander, Communication</source>
-        <translation>Commandant, Communication</translation>
-    </message>
-    <message>
-        <source>Commander, Logistic close support</source>
-        <translation>Commandant, Soutien logistique</translation>
-    </message>
-    <message>
-        <source>Commander, Medical system, brigade level</source>
-        <translation>Commandant, Chaîne médicale de brigade</translation>
-    </message>
-    <message>
-        <source>Commander, Maintenance system, brigade level</source>
-        <translation>Commandant, Chaîne maintenance de brigade</translation>
-    </message>
-    <message>
-        <source>Commander, Supply system, brigade level</source>
-        <translation>Commandant, Chaîne ravitaillement de brigade</translation>
-    </message>
-    <message>
-        <source>Commander, Medical system, division level</source>
-        <translation>Commandant, Chaîne médicale de division</translation>
-    </message>
-    <message>
-        <source>Commander, Maintenance system, division level</source>
-        <translation>Commandant, Chaîne maintenance de division</translation>
-    </message>
-    <message>
-        <source>Commander, Supply system, division level</source>
-        <translation>Commandant, Chaîne ravitaillement de division</translation>
-    </message>
-    <message>
-        <source>Commander, Movement support</source>
-        <translation>Commandant, Soutien à la mobilité</translation>
-    </message>
-    <message>
-        <source>Commander, Refugee</source>
-        <translation>Commandant, Réfugié</translation>
-    </message>
-    <message>
-        <source>Commander, Militia</source>
-        <translation>Commandant, Milice</translation>
-    </message>
-    <message>
-        <source>Commander, Joint</source>
-        <translation>Commandant, Inter-arme</translation>
-    </message>
-    <message>
-        <source>Commander, Asymetric threat</source>
-        <translation>Commandant, Menace asymétrique</translation>
-    </message>
-    <message>
-        <source>Commander, Emergency management</source>
-        <translation>Commandant, Sécurité</translation>
-    </message>
-    <message>
-        <source>CP</source>
-        <translation>PC</translation>
-    </message>
-    <message>
-        <source>Logistic</source>
-        <translation>Logistique</translation>
-    </message>
-    <message>
-        <source>Other</source>
-        <translation>Autre</translation>
-    </message>
-    <message>
-        <source>Mortar</source>
-        <translation>Mortier</translation>
-    </message>
-    <message>
-        <source>Rocket launcher</source>
-        <translation>Lance-roquette</translation>
-    </message>
-    <message>
-        <source>Vehicle</source>
-        <translation>Véhicule</translation>
-    </message>
-    <message>
-        <source>Dismounted infantry</source>
-        <translation>Infanterie désembarquée</translation>
-    </message>
-    <message>
-        <source>Helicopter</source>
-        <translation>Hélicoptère</translation>
-    </message>
-    <message>
-        <source>Anti air artillery</source>
-        <translation>Artillerie anti aérienne</translation>
-    </message>
-    <message>
-        <source>Undefined</source>
-        <translation>Indéfini</translation>
-    </message>
-    <message>
-        <source>Slowest</source>
-        <translation>Lent</translation>
-    </message>
-    <message>
-        <source>Object, Max speed</source>
-        <translation>Objet, Vitesse max</translation>
-    </message>
-    <message>
-        <source>Unit, Max speed</source>
-        <translation>Pion, Vitesse max</translation>
-    </message>
-    <message>
-        <source>no rainfall</source>
-        <translation>Pas de précipitation</translation>
-    </message>
-    <message>
-        <source>sand storm</source>
-        <translation>Tempête de sable</translation>
-    </message>
-    <message>
-        <source>fog</source>
-        <translation>Brouillard</translation>
-    </message>
-    <message>
-        <source>drizzle</source>
-        <translation>Crachin</translation>
-    </message>
-    <message>
-        <source>rain</source>
-        <translation>Pluie</translation>
-    </message>
-    <message>
-        <source>snow</source>
-        <translation>Neige</translation>
-    </message>
-    <message>
-        <source>Wounded seriousness level 1</source>
-        <translation>Blessure gravité niveau 1</translation>
-    </message>
-    <message>
-        <source>Wounded seriousness level 2</source>
-        <translation>Blessure gravité niveau 2</translation>
-    </message>
-    <message>
-        <source>Wounded seriousness level 3</source>
-        <translation>Blessure gravité niveau 3</translation>
-    </message>
-    <message>
-        <source>Wounded extreme seriousness</source>
-        <translation>Blessure extrêmement grave</translation>
-    </message>
-    <message>
-        <source>equipment</source>
-        <translation>composante</translation>
-    </message>
-    <message>
-        <source>human</source>
-        <translation>humain</translation>
-    </message>
-    <message>
-        <source>Eletronic</source>
-        <translation>Electronique</translation>
-    </message>
-    <message>
-        <source>Mobility</source>
-        <translation>Mobilité</translation>
-    </message>
-    <message>
-        <source>Seriousness level 1</source>
-        <translation>Gravité niveau 1</translation>
-    </message>
-    <message>
-        <source>Seriousness level 2</source>
-        <translation>Gravité niveau 2</translation>
-    </message>
-    <message>
-        <source>Seriousness level 3</source>
-        <translation>Gravité niveau 3</translation>
-    </message>
-    <message>
-        <source>Shell</source>
-        <translation>Obus</translation>
-    </message>
-    <message>
-        <source>Air missile</source>
-        <translation>Missile air</translation>
-    </message>
-    <message>
-        <source>Bullet</source>
-        <translation>Balle</translation>
-    </message>
-    <message>
-        <source>listening</source>
-        <translation>écoute</translation>
-    </message>
-    <message>
-        <source>radar listening</source>
-        <translation>radar écoute</translation>
-    </message>
-    <message>
-        <source>Logistic - Fuel</source>
-        <translation>Logistique - Carburant</translation>
-    </message>
-    <message>
-        <source>Logistic - Ammos</source>
-        <translation>Logistique - Munitions</translation>
-    </message>
-    <message>
-        <source>Logistic - Shells</source>
-        <translation>Logistique - Obus</translation>
-    </message>
-    <message>
-        <source>Logistic - Water/food</source>
-        <translation>Logistique - Eau/Vivre</translation>
-    </message>
-    <message>
-        <source>Logistic - Parts</source>
-        <translation>Logistique - Pièces</translation>
-    </message>
-    <message>
-        <source>Maintenance support needed</source>
-        <translation>Réparable avec évacuation</translation>
-    </message>
-    <message>
-        <source>On site fixable</source>
-        <translation>Réparable sur place</translation>
-    </message>
-    <message>
-        <source>Destroyed</source>
-        <translation>Détruit</translation>
-    </message>
-    <message>
-        <source>Datetime</source>
-        <translation>Heure</translation>
-    </message>
-    <message>
-        <source>Objective</source>
-        <translation>Objectif</translation>
-    </message>
-    <message>
-        <source>ObjectiveList</source>
-        <translation>Liste d&apos;objectifs</translation>
-    </message>
-    <message>
-        <source>Limit</source>
-        <translation>Limite</translation>
-    </message>
-    <message>
-        <source>PhaseLineList</source>
-        <translation>Liste de limas</translation>
-    </message>
-    <message>
-        <source>IntelligenceList</source>
-        <translation>Liste d&apos;intelligences</translation>
+        <source>mine</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>effect</source>
-        <translation>Effet</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>forest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>orchard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>swamp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dune</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>urban area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>lake</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>glacier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>forest edge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>suburb</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>waterfront</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>orchard edge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>swamp edge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dune edge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>glacier edge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>country road</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>highway</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>main road</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>secondary road</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>stream</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>river</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>main river</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bridge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cliff</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>railroad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>crossroad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mountain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mountain edge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source></source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parked, engine stopped</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parked, engine running</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Moving</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Working</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Very sunny day</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sunny day</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Partly cloudy day</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cloudy day</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Very cloudy day</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Full moon night</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Waning moon night</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quarter moon night</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crescent moon night</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New moon night</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Illumination shell</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ground</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Forest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Urban area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>phase line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Infantry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Anti air</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Army aviation</source>
+        <translation type="unfinished">Surveillance aérienne</translation>
+    </message>
+    <message>
+        <source>Intelligence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NBC</source>
+        <translation type="unfinished">NBC</translation>
+    </message>
+    <message>
+        <source>Armor</source>
+        <translation type="unfinished">Blindé</translation>
+    </message>
+    <message>
+        <source>Engineer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ground artillery</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Communication</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic close support</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Medical system, brigade level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Maintenance system, brigade level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Supply system, brigade level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Medical system, division level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Maintenance system, division level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Supply system, division level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convoy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Movement support</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Refugee</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Militia</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Joint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Asymetric threat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Emergency management</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Commander, Combined Arms</source>
-        <translation>Commandant, Armes Combinées</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Infantry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Anti air</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Army aviation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Intelligence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, NBC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Armor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Engineer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Ground artillery</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Communication</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Logistic close support</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Medical system, brigade level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Maintenance system, brigade level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Supply system, brigade level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Medical system, division level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Maintenance system, division level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Supply system, division level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Movement support</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Refugee</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Militia</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Joint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Asymetric threat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Emergency management</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic</source>
+        <translation type="unfinished">Logistique</translation>
+    </message>
+    <message>
+        <source>Other</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mortar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rocket launcher</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vehicle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dismounted infantry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Helicopter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Anti air artillery</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Undefined</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Slowest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Object, Max speed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit, Max speed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>no rainfall</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sand storm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>fog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>drizzle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>snow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wounded seriousness level 1</source>
+        <translation type="unfinished">Blessure gravité niveau 1</translation>
+    </message>
+    <message>
+        <source>Wounded seriousness level 2</source>
+        <translation type="unfinished">Blessure gravité niveau 2</translation>
+    </message>
+    <message>
+        <source>Wounded seriousness level 3</source>
+        <translation type="unfinished">Blessure gravité niveau 3</translation>
+    </message>
+    <message>
+        <source>Wounded extreme seriousness</source>
+        <translation type="unfinished">Blessure extrêmement grave</translation>
+    </message>
+    <message>
+        <source>equipment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>human</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Eletronic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mobility</source>
+        <translation type="unfinished">Mobilité</translation>
+    </message>
+    <message>
+        <source>Seriousness level 1</source>
+        <translation type="unfinished">Gravité niveau 1</translation>
+    </message>
+    <message>
+        <source>Seriousness level 2</source>
+        <translation type="unfinished">Gravité niveau 2</translation>
+    </message>
+    <message>
+        <source>Seriousness level 3</source>
+        <translation type="unfinished">Gravité niveau 3</translation>
+    </message>
+    <message>
+        <source>Shell</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Missile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Air missile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bullet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>radar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>listening</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>radar listening</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic - Fuel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic - Ammos</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic - Shells</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic - Water/food</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic - Parts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Maintenance support needed</source>
+        <translation type="unfinished">Réparable avec évacuation</translation>
+    </message>
+    <message>
+        <source>On site fixable</source>
+        <translation type="unfinished">Réparable sur place</translation>
+    </message>
+    <message>
+        <source>Destroyed</source>
+        <translation type="unfinished">Détruit</translation>
+    </message>
+    <message>
+        <source>Agent</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>AgentBM</source>
-        <translation>AgentBM</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AgentList</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>AgentListBM</source>
-        <translation>AgentListBM</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automate</source>
+        <translation type="unfinished">Automate</translation>
     </message>
     <message>
         <source>AutomateBM</source>
-        <translation>AutomateBM</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AutomateList</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>AutomateListBM</source>
-        <translation>AutomateListBM</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>AgentKnowledgeBM</source>
-        <translation>AgentKnowledgeBM</translation>
+        <source>Bool</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>AgentKnowledgeListBM</source>
-        <translation>AgentKnowledgeListBM</translation>
+        <source>Numeric</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>ObjectKnowledgeBM</source>
-        <translation>ObjectKnowledgeBM</translation>
+        <source>String</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>ObjectKnowledgeListBM</source>
-        <translation>ObjectKnowledgeListBM</translation>
-    </message>
-    <message>
-        <source>PopulationKnowledgeBM</source>
-        <translation>PopulationKnowledgeBM</translation>
-    </message>
-    <message>
-        <source>GenObjectBM</source>
-        <translation>GenObjectBM</translation>
-    </message>
-    <message>
-        <source>GenObjectListBM</source>
-        <translation>GenObjectListBM</translation>
-    </message>
-    <message>
-        <source>PointBM</source>
-        <translation>PointBM</translation>
-    </message>
-    <message>
-        <source>PointListBM</source>
-        <translation>PointListBM</translation>
-    </message>
-    <message>
-        <source>AreaBM</source>
-        <translation>AreaBM</translation>
-    </message>
-    <message>
-        <source>AreaListBM</source>
-        <translation>AreaListBM</translation>
-    </message>
-    <message>
-        <source>UrbanBlockBM</source>
-        <translation>UrbanBlockBM</translation>
-    </message>
-    <message>
-        <source>PathBM</source>
-        <translation>PathBM</translation>
+        <source>Direction</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>DirectionBM</source>
-        <translation>DirectionBM</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Datetime</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enumeration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NatureAtlas</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AgentKnowledge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AgentKnowledgeBM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AgentKnowledgeList</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AgentKnowledgeListBM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ObjectKnowledge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ObjectKnowledgeBM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ObjectKnowledgeList</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ObjectKnowledgeListBM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PopulationKnowledge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PopulationKnowledgeBM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>GenObject</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>GenObjectBM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>GenObjectList</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>GenObjectListBM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Objective</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ObjectiveList</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PathBM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PathList</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PointBM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PointList</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PointListBM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polygon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AreaBM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PolygonList</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AreaListBM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LocationList</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>EquipmentType</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DotationType</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MaintenancePriorities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MedicalPriorities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IndirectFire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Limit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PhaseLineList</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IntelligenceList</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>UrbanBlockBM</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ADN_Unit_Wizard</name>
     <message>
         <source>New unit creation</source>
-        <translation>Création d&apos;une nouvelle unité</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Units</source>
-        <translation>Pions</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Creation completed</source>
-        <translation>Création terminée</translation>
+        <translation type="unfinished">Création terminée</translation>
     </message>
     <message>
         <source>Click &quot;Done&quot; to create the new unit.</source>
-        <translation>Cliquez sur &quot;Terminer&quot; pour créer la nouvelle unité.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ADN_Units_Composantes_GUI</name>
     <message>
-        <source>Composantes</source>
-        <translation type="obsolete">Composantes</translation>
-    </message>
-    <message>
-        <source>Nbr</source>
-        <translation type="obsolete">Nbr</translation>
-    </message>
-    <message>
-        <source>Loadable</source>
-        <translation>Embarquable</translation>
-    </message>
-    <message>
-        <source>Add composante</source>
-        <translation type="obsolete">Ajouter une composante</translation>
-    </message>
-    <message>
-        <source>Remove composante</source>
-        <translation type="obsolete">Enlever cette composante</translation>
-    </message>
-    <message>
-        <source>Major</source>
-        <translation>Majeure</translation>
-    </message>
-    <message>
-        <source>Conveyor</source>
-        <translation>Convoyeur</translation>
-    </message>
-    <message>
-        <source>Nbr humans</source>
-        <translation type="obsolete">Nbr humains</translation>
-    </message>
-    <message>
         <source>Equipments</source>
-        <translation>Composantes</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Qty</source>
-        <translation>Qté</translation>
+        <translation type="unfinished">Qté</translation>
+    </message>
+    <message>
+        <source>Major</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loadable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Conveyor</source>
+        <translation type="unfinished">Convoyeur</translation>
     </message>
     <message>
         <source>Crew size</source>
-        <translation>Taille de l&apos;équipage</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Add equipment</source>
-        <translation>Ajouter une composante</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Remove equipment</source>
-        <translation>Enlever cette composante</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Units_Data</name>
-    <message>
-        <source>New unit creation</source>
-        <translation type="obsolete">Création d&apos;une nouvelle unité</translation>
-    </message>
-    <message>
-        <source>Units</source>
-        <translation type="obsolete">Unités</translation>
-    </message>
-    <message>
-        <source>Creation completed</source>
-        <translation type="obsolete">Création terminée</translation>
-    </message>
-    <message>
-        <source>Click &quot;Done&quot; to create the new unit.</source>
-        <translation type="obsolete">Cliquez sur &quot;Terminer&quot; pour créer la nouvelle unité.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ADN_Units_Data::ComposanteInfos</name>
     <message>
-        <source>Composante %1 does not exist.</source>
-        <translation type="obsolete">La composante %1 n&apos;existe pas.</translation>
-    </message>
-    <message>
         <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
+        <translation type="unfinished">Donnée invalide</translation>
     </message>
     <message>
         <source>Unit types - Invalid equipment &apos;%1&apos;</source>
-        <translation>Types de pion - Composante invalide &apos;%1&apos;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Unit has no crew in equipment &apos;%1&apos;</source>
-        <translation>Le pion n&apos;a pas d&apos;équipage dans la composante &apos;%1&apos;</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ADN_Units_Data::StockLogThresholdInfos</name>
     <message>
         <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
+        <translation type="unfinished">Donnée invalide</translation>
     </message>
     <message>
         <source>Unit types - Invalid resource &apos;%1&apos;</source>
-        <translation>Types de pion - Ressource invalide &apos;%1&apos;</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ADN_Units_Data::UnitInfos</name>
     <message>
         <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
+        <translation type="unfinished">Donnée invalide</translation>
     </message>
     <message>
         <source>Unit types - Invalid stance &apos;%1&apos;</source>
-        <translation>Types de pion - Posture invalide &apos;%1&apos;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Unit types - Invalid unit type &apos;%1&apos;</source>
-        <translation>Types de pion - Type de pion invalide &apos;%1&apos;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Unit types - Invalid doctrine model &apos;%1&apos;</source>
-        <translation>Types de pion - Modèle invalide &apos;%1&apos;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Unit types - Invalid hierarchical level &apos;%1&apos;</source>
-        <translation>Types de pion - Niveau hiérarchique invalide &apos;%1&apos;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Unit types - Invalid &apos;Atlas&apos; attribute &apos;%1&apos;</source>
-        <translation>Types de pion - Atlas invalide &apos;%1&apos;</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ADN_Units_GUI</name>
     <message>
         <source>Unit</source>
-        <translation>Unité</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>Nom</translation>
-    </message>
-    <message>
-        <source>MosID</source>
-        <translation type="obsolete">ID Mos</translation>
+        <translation type="unfinished">Nom</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation>Type</translation>
-    </message>
-    <message>
-        <source>Model</source>
-        <translation type="obsolete">Modèle</translation>
-    </message>
-    <message>
-        <source>Sensors reach</source>
-        <translation type="obsolete">Portée des capteurs</translation>
-    </message>
-    <message>
-        <source>Weapons reach</source>
-        <translation type="obsolete">Portée des armements</translation>
-    </message>
-    <message>
-        <source>Force ratio feedback time</source>
-        <translation>Temps de remontée du rapport de force</translation>
-    </message>
-    <message>
-        <source>Can fly</source>
-        <translation>Peut voler</translation>
-    </message>
-    <message>
-        <source>Scan</source>
-        <translation>Coup de sonde</translation>
-    </message>
-    <message>
-        <source>Width</source>
-        <translation>Largeur</translation>
-    </message>
-    <message>
-        <source>m</source>
-        <translation>m</translation>
-    </message>
-    <message>
-        <source>Depth</source>
-        <translation>Profondeur</translation>
-    </message>
-    <message>
-        <source>Nature</source>
-        <translation>Nature</translation>
-    </message>
-    <message>
-        <source>Level</source>
-        <translation>Niveau</translation>
-    </message>
-    <message>
-        <source>Weapon</source>
-        <translation type="obsolete">Arme</translation>
-    </message>
-    <message>
-        <source>Specialization</source>
-        <translation type="obsolete">Spécialisation</translation>
-    </message>
-    <message>
-        <source>Qualifier</source>
-        <translation type="obsolete">Qualificatif</translation>
-    </message>
-    <message>
-        <source>Category</source>
-        <translation type="obsolete">Catégorie</translation>
-    </message>
-    <message>
-        <source>Mobility</source>
-        <translation type="obsolete">Mobilité</translation>
-    </message>
-    <message>
-        <source>Atlas</source>
-        <translation>Atlas</translation>
-    </message>
-    <message>
-        <source>Mission capacity</source>
-        <translation type="obsolete">Capacité mission</translation>
-    </message>
-    <message>
-        <source>Command</source>
-        <translation>Commandement</translation>
-    </message>
-    <message>
-        <source>Nbr of officer(s)</source>
-        <translation>Nbr d&apos;officiers</translation>
-    </message>
-    <message>
-        <source>Nbr of NC officer(s)</source>
-        <translation type="obsolete">Nbr de sous-officiers</translation>
-    </message>
-    <message>
-        <source>Stances</source>
-        <translation>Postures</translation>
-    </message>
-    <message>
-        <source>Distances before point</source>
-        <translation type="obsolete">Distance avant point</translation>
-    </message>
-    <message>
-        <source>Composantes</source>
-        <translation type="obsolete">Composantes</translation>
-    </message>
-    <message>
-        <source>Complementary Dotations</source>
-        <translation type="obsolete">Dotations TC1</translation>
-    </message>
-    <message>
-        <source>Stock</source>
-        <translation>Stock</translation>
-    </message>
-    <message>
-        <source>Decontamination delay</source>
-        <translation>Délai de décontamination</translation>
-    </message>
-    <message>
-        <source>s</source>
-        <translation type="obsolete">s</translation>
-    </message>
-    <message>
-        <source>Is autonomous (UAV)</source>
-        <translation>Pion autonome (Drones ...)</translation>
-    </message>
-    <message>
-        <source>Installation</source>
-        <translation type="obsolete">Installation</translation>
-    </message>
-    <message>
-        <source>Installation delay</source>
-        <translation type="obsolete">Délai installation</translation>
-    </message>
-    <message>
-        <source>Uninstallation delay</source>
-        <translation type="obsolete">Délai désinstallation</translation>
+        <translation type="unfinished">Type</translation>
     </message>
     <message>
         <source>Doctrine model</source>
-        <translation>Modèle</translation>
+        <translation type="unfinished">Modèle</translation>
+    </message>
+    <message>
+        <source>Decontamination delay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Force ratio feedback time</source>
+        <translation type="unfinished">Temps de remontée du rapport de force</translation>
+    </message>
+    <message>
+        <source>Can fly</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Is autonomous (UAV)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scan</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>m</source>
+        <translation type="unfinished">m</translation>
+    </message>
+    <message>
+        <source>Depth</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nature</source>
+        <translation type="unfinished">Nature</translation>
+    </message>
+    <message>
+        <source>Level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Atlas</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Command</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nbr of officer(s)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Nbr of warrant officer(s)</source>
-        <translation>Nbr de sous-officier(s)</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stances</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Deployment</source>
-        <translation>Déploiement</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Deployment duration</source>
-        <translation>Durée de déploiement</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Un-deployment duration</source>
-        <translation>Durée de remballage</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Key terrain features range</source>
-        <translation>Distances clefs liées au terrain</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Equipments</source>
-        <translation>Composantes</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Complementary resources</source>
-        <translation>Ressources complémentaires</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stock</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ADN_Units_LogThreshold_GUI</name>
     <message>
         <source>Category</source>
-        <translation>Catégorie</translation>
+        <translation type="unfinished">Catégorie</translation>
     </message>
     <message>
         <source>Log threshold (%)</source>
-        <translation>Seuil logistique (%)</translation>
+        <translation type="unfinished">Seuil logistique (%)</translation>
     </message>
 </context>
 <context>
     <name>ADN_Units_Postures_GUI</name>
     <message>
         <source>Stance</source>
-        <translation>Posture</translation>
-    </message>
-    <message>
-        <source>Time to activate (s)</source>
-        <translation type="obsolete">Temps de mise en place (s)</translation>
+        <translation type="unfinished">Posture</translation>
     </message>
     <message>
         <source>Time to activate</source>
-        <translation>Temps de mise en place</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ADN_Urban_Data</name>
     <message>
         <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
+        <translation type="unfinished">Donnée invalide</translation>
     </message>
     <message>
         <source>Material - Duplicated material type name &apos;%1&apos;</source>
-        <translation>Materiel - Nom du type de matériel en double &apos;%1&apos;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Material - Duplicated volume type names</source>
-        <translation>Materiel - Nom du type de volume en double</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Material - Invalid volume type name</source>
-        <translation>Materiel - Nom du type de volume invalide</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Facade - Duplicated material type name &apos;%1&apos;</source>
-        <translation>Façade : Nom du type de matériel en double &apos;%1&apos;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Facade - Invalid volume type name</source>
-        <translation>Façade - Nom du type de volume invalide</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>RoofShape - Invalid volume type name</source>
-        <translation>Forme de toit - Nom du type de volume invalide</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ADN_Urban_GUI</name>
     <message>
         <source>Materials</source>
-        <translation>Matériels</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Material</source>
-        <translation>Matériel</translation>
+        <translation type="unfinished">Matériau</translation>
     </message>
     <message>
         <source>Facades</source>
-        <translation>Façades</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Facade</source>
-        <translation>Façade</translation>
+        <translation type="unfinished">Façade</translation>
     </message>
     <message>
         <source>RoofShapes</source>
-        <translation>Formes de toit</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>RoofShape</source>
-        <translation>Forme de toit</translation>
+        <translation type="unfinished">Forme de toît</translation>
     </message>
 </context>
 <context>
     <name>ADN_Weapon_Wizard</name>
     <message>
         <source>New weapon creation</source>
-        <translation>Création d&apos;un nouvel armement</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Creation completed</source>
-        <translation>Création terminée</translation>
+        <translation type="unfinished">Création terminée</translation>
     </message>
     <message>
         <source>Click &quot;Done&quot; to create the new weapon.</source>
-        <translation>Cliquez sur &quot;Terminer&quot; pour créer le nouvel armement.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ADN_Weapon_Wizard_Page0</name>
     <message>
         <source>Warning</source>
-        <translation>Avertissement</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>A weapon using the same launcher and ammunition already exists. Please modify your choices.</source>
-        <translation>Un armement utilisant le même lanceur et le même type de munition existe déjà. Veuillez modifier vos choix.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ADN_Weapons_Data</name>
     <message>
-        <source>New weapon creation</source>
-        <translation>Création d&apos;un nouvel armement</translation>
-    </message>
-    <message>
-        <source>Creation completed</source>
-        <translation type="obsolete">Création terminée</translation>
-    </message>
-    <message>
-        <source>Click &quot;Done&quot; to create the new weapon.</source>
-        <translation type="obsolete">Cliquez sur &quot;Terminer&quot; pour créer le nouvel armement.</translation>
-    </message>
-    <message>
-        <source>Weapons</source>
-        <translation type="obsolete">Armements</translation>
-    </message>
-    <message>
         <source>Create new</source>
-        <translation>Créer</translation>
+        <translation type="unfinished">Créer</translation>
     </message>
     <message>
         <source>Create a copy of:</source>
-        <translation>Créer une copie de:</translation>
+        <translation type="unfinished">Créer une copie de:</translation>
     </message>
     <message>
         <source>Weapon systems</source>
-        <translation>Systèmes d&apos;armes</translation>
+        <translation type="unfinished">Systèmes d&apos;armes</translation>
+    </message>
+    <message>
+        <source>New weapon creation</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ADN_Weapons_Data::WeaponInfos</name>
     <message>
-        <source>Data errror</source>
-        <translation type="obsolete">Erreur dans les données</translation>
-    </message>
-    <message>
-        <source>In the indirect fire parameters of weapon %1, the max range is inferior to min range.</source>
-        <translation type="obsolete">Dans les parametres de tir indirect de l&apos;arme %1, la portée max. est inférieure à la portée min.</translation>
-    </message>
-    <message>
         <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
+        <translation type="unfinished">Donnée invalide</translation>
     </message>
     <message>
         <source>Weapon systems &apos;%1&apos;/&apos;%2&apos; - Invalid launcher type</source>
-        <translation>Système d&apos;armes &apos;%1/%2&apos; - Type de lanceur invalide</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Weapon systems &apos;%1&apos;/&apos;%2&apos; - Invalid ammunition type</source>
-        <translation>Système d&apos;armes &apos;%1/%2&apos; - Type de munitions invalide</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Weapon %1 - Indirect fire - max range &lt; min range</source>
-        <translation>Système d&apos;armes %1 - Tir indirect - Portée max &lt; Portée min</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ADN_Weapons_GUI</name>
     <message>
-        <source>Weapon</source>
-        <translation type="obsolete">Armement</translation>
+        <source>Weapon system</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>Nom</translation>
+        <translation type="unfinished">Nom</translation>
     </message>
     <message>
         <source>Launcher</source>
-        <translation>Lanceur</translation>
+        <translation type="unfinished">Lanceur</translation>
     </message>
     <message>
         <source>Ammo</source>
-        <translation>Munition</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Rounds per burst</source>
-        <translation>Munitions par rafale</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Burst duration</source>
-        <translation>Durée d&apos;une rafale</translation>
-    </message>
-    <message>
-        <source>s</source>
-        <translation type="obsolete">s</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Rounds per reload</source>
-        <translation>Munitions par rechargement</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Reload duration</source>
-        <translation>Durée de rechargement</translation>
-    </message>
-    <message>
-        <source>Direct</source>
-        <translation type="obsolete">Direct</translation>
-    </message>
-    <message>
-        <source>Ph (%)</source>
-        <translation>PH (%)</translation>
-    </message>
-    <message>
-        <source>Distance (m)</source>
-        <translation>Distance (m)</translation>
-    </message>
-    <message>
-        <source>Indirect</source>
-        <translation type="obsolete">Indirect</translation>
-    </message>
-    <message>
-        <source>Average speed</source>
-        <translation>Vitesse moyenne</translation>
-    </message>
-    <message>
-        <source>km/h</source>
-        <translation>km/h</translation>
-    </message>
-    <message>
-        <source>Rnd per burst</source>
-        <translation>M. par rafale</translation>
-    </message>
-    <message>
-        <source>Burst duration (s)</source>
-        <translation>Durée rafale (s)</translation>
-    </message>
-    <message>
-        <source>Rnd per reload</source>
-        <translation>M. par recharge</translation>
-    </message>
-    <message>
-        <source>Reload duration (s)</source>
-        <translation>Durée recharge (s)</translation>
-    </message>
-    <message>
-        <source>Target size</source>
-        <translation>Volume de la cible</translation>
-    </message>
-    <message>
-        <source>Weapons</source>
-        <translation type="obsolete">Armements</translation>
-    </message>
-    <message>
-        <source>PHs</source>
-        <translation>PHs</translation>
-    </message>
-    <message>
-        <source>Weapons/</source>
-        <translation type="obsolete">Armements/</translation>
-    </message>
-    <message>
-        <source>Weapon_%1.htm</source>
-        <translation type="obsolete">Arme_%1.htm</translation>
-    </message>
-    <message>
-        <source>Min range</source>
-        <translation>Portée min.</translation>
-    </message>
-    <message>
-        <source>m</source>
-        <translation>m</translation>
-    </message>
-    <message>
-        <source>Max range</source>
-        <translation>Portée max.</translation>
-    </message>
-    <message>
-        <source>Weapon system</source>
-        <translation>Système d&apos;armes</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Direct fire</source>
-        <translation>Tir direct</translation>
+        <translation type="unfinished">Tir direct</translation>
     </message>
     <message>
-        <source>Indirect fire</source>
-        <translation>Tir indirect</translation>
+        <source>Ph (%)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Weapon systems</source>
-        <translation>Systèmes d&apos;armes</translation>
-    </message>
-    <message>
-        <source>WeaponSystems/</source>
-        <translation>Systèmes d&apos;armes/</translation>
-    </message>
-    <message>
-        <source>Weapon Systems</source>
-        <translation>Systèmes d&apos;armes</translation>
-    </message>
-    <message>
-        <source>WeaponSystem_%1.htm</source>
-        <translation>Systèmes d&apos;armes_%1.htm</translation>
-    </message>
-    <message>
-        <source>Fire posture</source>
-        <translation>Posture du tireur</translation>
-    </message>
-    <message>
-        <source>Target posture</source>
-        <translation>Posture de la cible</translation>
-    </message>
-    <message>
-        <source>Experience</source>
-        <translation>Expérience</translation>
-    </message>
-    <message>
-        <source>Tiredness</source>
-        <translation>Fatigue</translation>
+        <source>Distance (m)</source>
+        <translation type="unfinished">Distance (m)</translation>
     </message>
     <message>
         <source>Simulation</source>
-        <translation>Simulation</translation>
+        <translation type="unfinished">Simulation</translation>
+    </message>
+    <message>
+        <source>Fire posture</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Target posture</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Experience</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tiredness</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Indirect fire</source>
+        <translation type="unfinished">Tir indirect</translation>
+    </message>
+    <message>
+        <source>Average speed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>km/h</source>
+        <translation type="unfinished">km/h</translation>
+    </message>
+    <message>
+        <source>Min range</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>m</source>
+        <translation type="unfinished">m</translation>
+    </message>
+    <message>
+        <source>Max range</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rnd per burst</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Burst duration (s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rnd per reload</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload duration (s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Target size</source>
+        <translation type="unfinished">Volume de la cible</translation>
+    </message>
+    <message>
+        <source>Weapon systems</source>
+        <translation type="unfinished">Systèmes d&apos;armes</translation>
+    </message>
+    <message>
+        <source>PHs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>WeaponSystems/</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weapon Systems</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>WeaponSystem_%1.htm</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ADN_Weapons_ListView</name>
     <message>
-        <source>Weapon</source>
-        <translation type="obsolete">Armement</translation>
+        <source>Weapon system</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&lt;b&gt;Used by:&lt;/b&gt;&lt;br&gt;</source>
-        <translation>&lt;b&gt;Utilisé par:&lt;/b&gt;&lt;br&gt;</translation>
-    </message>
-    <message>
-        <source>Weapon system</source>
-        <translation>Système d&apos;armes</translation>
+        <translation type="unfinished">&lt;b&gt;Utilisé par:&lt;/b&gt;&lt;br&gt;</translation>
     </message>
 </context>
 <context>
     <name>ADN_Weapons_PhSizeListView</name>
     <message>
         <source>Target size</source>
-        <translation>Taille de la cible</translation>
+        <translation type="unfinished">Volume de la cible</translation>
     </message>
 </context>
 <context>
     <name>ADN_Weapons_PhTable</name>
     <message>
         <source>Distance</source>
-        <translation>Distance</translation>
-    </message>
-    <message>
-        <source>New Ph</source>
-        <translation>Nouveau PH</translation>
-    </message>
-    <message>
-        <source>Delete Ph</source>
-        <translation>Effacer ce PH</translation>
+        <translation type="unfinished">Distance</translation>
     </message>
     <message>
         <source>Percentage (PH)</source>
-        <translation>Pourcentage (PH)</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New Ph</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete Ph</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9753,271 +8482,177 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     <name>ADN_Wizard_ABC</name>
     <message>
         <source>Next</source>
-        <translation>Suivant</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Previous</source>
-        <translation>Précédent</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuler</translation>
+        <translation type="unfinished">Annuler</translation>
     </message>
     <message>
         <source>Done</source>
-        <translation>Terminé</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ADN_Workspace</name>
     <message>
-        <source>Project</source>
-        <translation type="obsolete">Projet</translation>
-    </message>
-    <message>
         <source>Categories</source>
-        <translation>Catégories</translation>
-    </message>
-    <message>
-        <source>NBC</source>
-        <translation>NBC</translation>
-    </message>
-    <message>
-        <source>Launchers</source>
-        <translation>Lanceurs</translation>
-    </message>
-    <message>
-        <source>Equipements</source>
-        <translation type="obsolete">Dotations</translation>
-    </message>
-    <message>
-        <source>Objects</source>
-        <translation>Objets</translation>
-    </message>
-    <message>
-        <source>Weapons</source>
-        <translation type="obsolete">Armements</translation>
-    </message>
-    <message>
-        <source>Sensors</source>
-        <translation>Capteurs</translation>
-    </message>
-    <message>
-        <source>Composantes</source>
-        <translation type="obsolete">Composantes</translation>
-    </message>
-    <message>
-        <source>Ai</source>
-        <translation type="obsolete">IA</translation>
-    </message>
-    <message>
-        <source>Models</source>
-        <translation type="obsolete">Modèles</translation>
-    </message>
-    <message>
-        <source>Units</source>
-        <translation>Pions</translation>
-    </message>
-    <message>
-        <source>Automata</source>
-        <translation>Automates</translation>
-    </message>
-    <message>
-        <source>Breakdowns</source>
-        <translation>Pannes</translation>
-    </message>
-    <message>
-        <source>Communications</source>
-        <translation type="obsolete">Communications</translation>
-    </message>
-    <message>
-        <source>Human factors</source>
-        <translation>Facteurs humains</translation>
-    </message>
-    <message>
-        <source>Log</source>
-        <translation>Log</translation>
-    </message>
-    <message>
-        <source>Missions</source>
-        <translation>Missions</translation>
-    </message>
-    <message>
-        <source>Knowledge groups</source>
-        <translation>Groupes de connaissance</translation>
-    </message>
-    <message>
-        <source>HLA</source>
-        <translation type="obsolete">HLA</translation>
-    </message>
-    <message>
-        <source>Health</source>
-        <translation>Santé</translation>
-    </message>
-    <message>
-        <source>Supply</source>
-        <translation>Ravitaillement</translation>
-    </message>
-    <message>
-        <source>Loading GUI...</source>
-        <translation>Chargement de l&apos;interface...</translation>
-    </message>
-    <message>
-        <source>GUI loaded</source>
-        <translation>Interface chargée</translation>
-    </message>
-    <message>
-        <source>Reseting project...</source>
-        <translation>Réinitialisation du projet...</translation>
-    </message>
-    <message>
-        <source>Project reseted</source>
-        <translation>Projet réinitialisé</translation>
-    </message>
-    <message>
-        <source>Loading project...</source>
-        <translation>Chargement du projet...</translation>
-    </message>
-    <message>
-        <source>Scipio Adaptation Tool - Saving Errors</source>
-        <translation type="obsolete">Outil d&apos;adaptation Scipio - Erreur d&apos;enregistrement</translation>
-    </message>
-    <message>
-        <source>Error(s) have been encountered during saving of project </source>
-        <translation>Des erreurs ont survenu lors de la sauvegarde du projet</translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;- Unable to save %s : file is write protected&lt;/p&gt;</source>
-        <translation>&lt;p&gt;- Impossible de sauvegarder %s : Le fichier est protégé en écriture.&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <source>Saving project...</source>
-        <translation>Enregistrement du projet...</translation>
-    </message>
-    <message>
-        <source>ADN - Data export</source>
-        <translation>ADN - Données</translation>
-    </message>
-    <message>
-        <source>Population</source>
-        <translation type="obsolete">Population</translation>
-    </message>
-    <message>
-        <source>Populations</source>
-        <translation>Populations</translation>
-    </message>
-    <message>
-        <source>Maintenance</source>
-        <translation>Maintenance</translation>
-    </message>
-    <message>
-        <source>Reports</source>
-        <translation>Comptes-rendus</translation>
-    </message>
-    <message>
-        <source>Resources</source>
-        <translation>Ressources</translation>
-    </message>
-    <message>
-        <source>Weapon systems</source>
-        <translation>Systèmes d&apos;armes</translation>
-    </message>
-    <message>
-        <source>Equipments</source>
-        <translation>Composantes</translation>
-    </message>
-    <message>
-        <source>Op. indicators</source>
-        <translation>Facteurs Opérationnels</translation>
-    </message>
-    <message>
-        <source>Doctrine models</source>
-        <translation>Modèles</translation>
-    </message>
-    <message>
-        <source>Jamming</source>
-        <translation>Brouillage</translation>
-    </message>
-    <message>
-        <source>Unloading: %1...</source>
-        <translation>Déchargement: %1...</translation>
-    </message>
-    <message>
-        <source>Loading: %1...</source>
-        <translation>Chargement: %1...</translation>
-    </message>
-    <message>
-        <source>Sword Adaptation Tool - Saving Errors</source>
-        <translation>Sword Adaptation - Erreurs</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Urban</source>
-        <translation>Zones urbaines</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NBC</source>
+        <translation type="unfinished">NBC</translation>
+    </message>
+    <message>
+        <source>Launchers</source>
+        <translation type="unfinished">Lanceurs</translation>
+    </message>
+    <message>
+        <source>Resources</source>
+        <translation type="unfinished">Ressources</translation>
     </message>
     <message>
         <source>Active Protections</source>
-        <translation>Protections actives</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Xml_Exception</name>
-    <message>
-        <source>XML error</source>
-        <translation type="obsolete">Erreur XML</translation>
+        <translation type="unfinished">Protections Actives</translation>
     </message>
     <message>
-        <source>An error occured.
-Context:
-%1
-Error: %2</source>
-        <translation type="obsolete">Une erreur s&apos;est produite
-Contexte:
-%1
-Erreur: %2</translation>
+        <source>Objects</source>
+        <translation type="unfinished">Objets</translation>
     </message>
     <message>
-        <source>An error occured in file &apos;%1&apos;.
-Context:
-%2
-Error: %3</source>
-        <translation type="obsolete">Une erreur s&apos;est produite dans le fichier &apos;%1&apos;.
-Contexte:
-%2
-Erreur: %3</translation>
+        <source>Weapon systems</source>
+        <translation type="unfinished">Systèmes d&apos;armes</translation>
+    </message>
+    <message>
+        <source>Sensors</source>
+        <translation type="unfinished">Capteurs</translation>
+    </message>
+    <message>
+        <source>Equipments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Op. indicators</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Doctrine models</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Units</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automata</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Breakdowns</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Jamming</source>
+        <translation type="unfinished">Brouillage</translation>
+    </message>
+    <message>
+        <source>Human factors</source>
+        <translation type="unfinished">Facteurs humains</translation>
+    </message>
+    <message>
+        <source>Maintenance</source>
+        <translation type="unfinished">Maintenance</translation>
+    </message>
+    <message>
+        <source>Missions</source>
+        <translation type="unfinished">Missions</translation>
+    </message>
+    <message>
+        <source>Knowledge groups</source>
+        <translation type="unfinished">Groupes de connaissance</translation>
+    </message>
+    <message>
+        <source>Health</source>
+        <translation type="unfinished">Santé</translation>
+    </message>
+    <message>
+        <source>Supply</source>
+        <translation type="unfinished">Ravitaillement</translation>
+    </message>
+    <message>
+        <source>Populations</source>
+        <translation type="unfinished">Populations</translation>
+    </message>
+    <message>
+        <source>Reports</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading GUI...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Log</source>
+        <translation type="unfinished">Log</translation>
+    </message>
+    <message>
+        <source>GUI loaded</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reseting project...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unloading: %1...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Project reseted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading project...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading: %1...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sword Adaptation Tool - Saving Errors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error(s) have been encountered during saving of project </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;- Unable to save %s : file is write protected&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saving project...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ADN - Data export</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Application</name>
     <message>
         <source>SWORD</source>
-        <translation>Sword</translation>
-    </message>
-</context>
-<context>
-    <name>ENT_Tr</name>
-    <message>
-        <source>explosif</source>
-        <translation type="obsolete">explosif</translation>
-    </message>
-    <message>
-        <source>grenade</source>
-        <translation type="obsolete">grenade</translation>
-    </message>
-    <message>
-        <source>aced</source>
-        <translation type="obsolete">aced</translation>
-    </message>
-    <message>
-        <source>fumigene</source>
-        <translation type="obsolete">fumigène</translation>
-    </message>
-    <message>
-        <source>eclairant</source>
-        <translation type="obsolete">éclairant</translation>
-    </message>
-    <message>
-        <source>mine</source>
-        <translation type="obsolete">mine</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10025,42 +8660,26 @@ Erreur: %3</translation>
     <message>
         <source>d</source>
         <comment>ADN_Rich_ListViewItem</comment>
-        <translation>j</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>h</source>
         <comment>ADN_Rich_ListViewItem</comment>
-        <translation>h</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>m</source>
         <comment>ADN_Rich_ListViewItem</comment>
-        <translation>m</translation>
+        <translation type="unfinished">m</translation>
     </message>
     <message>
         <source>s</source>
         <comment>ADN_Rich_ListViewItem</comment>
-        <translation>s</translation>
+        <translation type="unfinished">s</translation>
     </message>
 </context>
 <context>
     <name>T</name>
-    <message>
-        <source>Next</source>
-        <translation type="obsolete">Suivant</translation>
-    </message>
-    <message>
-        <source>Previous</source>
-        <translation type="obsolete">Précédent</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Annuler</translation>
-    </message>
-    <message>
-        <source>Done</source>
-        <translation type="obsolete">Terminé</translation>
-    </message>
     <message>
         <source>Name</source>
         <translation type="obsolete">Nom</translation>
@@ -10086,22 +8705,22 @@ Erreur: %3</translation>
     <name>double</name>
     <message>
         <source>Add new </source>
-        <translation>Créer</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source> to </source>
-        <translation> à </translation>
+        <translation type="unfinished"> à </translation>
     </message>
 </context>
 <context>
     <name>std::string</name>
     <message>
         <source>Add </source>
-        <translation>Ajouter </translation>
+        <translation type="unfinished">Ajouter </translation>
     </message>
     <message>
         <source> to </source>
-        <translation> à </translation>
+        <translation type="unfinished"> à </translation>
     </message>
 </context>
 </TS>

@@ -24,7 +24,6 @@
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/CommandPostAttributes.h"
 #include "gaming/AutomatDecisions.h"
-#include "gaming/KnowledgeGroupHierarchies.h" // LTO
 #include "gaming/StaticModel.h"
 #include "icons.h"
 #include "protocol/SimulationSenders.h"

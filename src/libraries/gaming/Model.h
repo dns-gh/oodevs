@@ -39,6 +39,7 @@ class FiresModel;
 class FolkModel;
 class IntelligenceFactory;
 class IntelligencesModel;
+class KnowledgeGroupFactory_ABC;
 class KnowledgeGroupsModel;
 class LimitsModel;
 class LogisticConsignFactory_ABC;
@@ -98,6 +99,7 @@ public:
     kernel::ObjectKnowledgeConverter_ABC& objectKnowledgeConverter_;
 
     TeamFactory_ABC&                teamFactory_;
+    KnowledgeGroupFactory_ABC&      knowledgeGroupFactory_;
     AgentFactory_ABC&               agentFactory_;
     ObjectFactory_ABC&              objectFactory_;
     LogisticConsignFactory_ABC&     logisticFactory_;

@@ -410,22 +410,23 @@ message MsgUnitAttributes {
     optional Common.MsgListOID                  contamine_par_agents_nbc      = 25;
     optional ContaminationState                 etat_contamination            = 26;
     optional Communication                      communications                = 27;
-    optional bool                               silence_radio                 = 28 [default = false];
-    optional bool                               radar_actif                   = 29 [default = false];
-    optional Common.MsgUnitList                 pions_transportes             = 30;
-    optional int32                              pion_transporteur             = 31 [default = 0];
-    optional ForceRatio.Value                   rapport_de_force              = 32;
-    optional Common.EnumMeetingEngagementStatus combat_de_rencontre           = 33;
-    optional Common.EnumOperationalStatus       etat_operationnel             = 34;
-    optional FireAvailability                   disponibilite_au_tir_indirect = 35;
-    optional RulesOfEngagement.Value            roe                           = 36;
-    optional PopulationRoe                      roe_population                = 37;
-    optional Common.EnumUnitTiredness           fatigue                       = 38;
-    optional Common.EnumUnitMorale              moral                         = 39;
-    optional Common.EnumUnitExperience          experience                    = 40;
-    optional int32                              rendu                         = 41;
-    optional bool                               prisonnier                    = 42 [default = false];
-    optional bool                               refugie_pris_en_compte        = 43 [default = false];
+    optional bool                               radio_emitter_disabled        = 28 [default = true];
+    optional bool                               radio_receiver_disabled       = 29 [default = true];
+    optional bool                               radar_actif                   = 30 [default = false];
+    optional Common.MsgUnitList                 pions_transportes             = 31;
+    optional int32                              pion_transporteur             = 32 [default = 0];
+    optional ForceRatio.Value                   rapport_de_force              = 33;
+    optional Common.EnumMeetingEngagementStatus combat_de_rencontre           = 34;
+    optional Common.EnumOperationalStatus       etat_operationnel             = 35;
+    optional FireAvailability                   disponibilite_au_tir_indirect = 36;
+    optional RulesOfEngagement.Value            roe                           = 37;
+    optional PopulationRoe                      roe_population                = 38;
+    optional Common.EnumUnitTiredness           fatigue                       = 39;
+    optional Common.EnumUnitMorale              moral                         = 40;
+    optional Common.EnumUnitExperience          experience                    = 41;
+    optional int32                              rendu                         = 42;
+    optional bool                               prisonnier                    = 43 [default = false];
+    optional bool                               refugie_pris_en_compte        = 44 [default = false];
 }
 
 message MsgUnitPathFind {

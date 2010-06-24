@@ -41,8 +41,7 @@ public:
 
     //! @name Operations 
     //@{
-    virtual kernel::KnowledgeGroup_ABC* CreateKnowledgeGroup( const MsgsSimToClient::MsgKnowledgeGroupCreation& message, kernel::Team_ABC& team ) = 0; // LTO
-    virtual void DeleteKnowledgeGroup( const MsgsSimToClient::MsgKnowledgeGroupDestruction& message) = 0; // LTO
+    virtual kernel::KnowledgeGroup_ABC* CreateKnowledgeGroup( const MsgsSimToClient::MsgKnowledgeGroupCreation& message ) = 0; // LTO
     //@}
 };
 

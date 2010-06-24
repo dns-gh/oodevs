@@ -150,7 +150,8 @@ private:
     bool                                                    communicationJammed_;
     unsigned int                                            knowledgeGroupJammed_;
 
-    bool                                                    bBlackoutEnabled_;
+    bool                                                    bRadioEmitterEnabled_;
+    bool                                                    bRadioRecieverEnabled_;
     bool                                                    bRadarEnabled_;
     tools::Resolver< const kernel::Agent_ABC >              transportedAgents_;
     kernel::Agent_ABC*                                      pTransporter_;

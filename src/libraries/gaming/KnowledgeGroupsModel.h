@@ -12,13 +12,17 @@
 
 #include "tools/Resolver.h"
 
-
 namespace kernel
 {
     class KnowledgeGroup_ABC;
 }
 
-class TeamsModel;
+namespace MsgsSimToClient
+{
+    class MsgKnowledgeGroupCreation;
+}
+
+class KnowledgeGroupFactory_ABC;
 
 // =============================================================================
 /** @class  KnowledgeGroupsModel
@@ -32,12 +36,14 @@ class KnowledgeGroupsModel : public tools::Resolver< kernel::KnowledgeGroup_ABC 
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroupsModel();
+    explicit KnowledgeGroupsModel( KnowledgeGroupFactory_ABC& factory);
     virtual ~KnowledgeGroupsModel();
     //@}
 
     //! @name Operations
     //@{
+    void Create( const MsgsSimToClient::MsgKnowledgeGroupCreation& message );
+    void Delete( unsigned int id );
     void Purge();
     //@}
 
@@ -46,6 +52,12 @@ private:
     //@{
     KnowledgeGroupsModel( const KnowledgeGroupsModel& );            //!< Copy constructor
     KnowledgeGroupsModel& operator=( const KnowledgeGroupsModel& ); //!< Assignement operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    KnowledgeGroupFactory_ABC& factory_;
     //@}
 };
 

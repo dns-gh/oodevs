@@ -205,7 +205,8 @@ bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgUnitAttributes& messag
         || message.has_rendu()
         || message.has_roe()
         || message.has_roe_population()
-        || message.has_silence_radio()
+        || message.has_radio_receiver_disabled()
+        || message.has_radio_emitter_disabled()
         || message.has_transporteurs_disponibles()
         || message.has_vitesse()
     ;

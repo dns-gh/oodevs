@@ -23,6 +23,7 @@ max_activations = 50
 
 
 actuators = {
+silenceradio = 1,
 etat_OrdreCoordination = 1,
 deplacement = 1,
 observation = 1,

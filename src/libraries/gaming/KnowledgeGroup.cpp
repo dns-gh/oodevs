@@ -71,6 +71,10 @@ void KnowledgeGroup::DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupUpdate& m
 }
 // LTO end
 
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::CreateDictionary
+// Created: FHD 2009-12-21
+// -----------------------------------------------------------------------------
 void KnowledgeGroup::CreateDictionary( kernel::Controller& controller )
 {
     kernel::PropertiesDictionary* dictionary = new kernel::PropertiesDictionary( controller );

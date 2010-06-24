@@ -41,10 +41,12 @@ public:
     
     //! @name Operations
     //@{
-    virtual bool CanCommunicate() const = 0;
+    virtual bool CanEmit() const = 0;
+    virtual bool CanReceive() const = 0;
     virtual void Jam           ( const MIL_Object_ABC& jammer ) = 0;
     virtual void Unjam         ( const MIL_Object_ABC& jammer ) = 0;
     virtual void ActivateBlackout  () = 0;
+    virtual void ActivatePartialBlackout  () = 0;
     virtual void DeactivateBlackout() = 0;
     virtual void UpdateKnowledgesFromObjectPerception( const DEC_Knowledge_ObjectPerception& perception ) = 0;
     virtual void UpdateKnowledgesFromObjectCollision ( const DEC_Knowledge_ObjectCollision& collision ) = 0;

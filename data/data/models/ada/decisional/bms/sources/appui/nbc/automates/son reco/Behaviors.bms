@@ -23,6 +23,7 @@ max_activations = 200
 
 
 actuators = {
+silenceradio = 1,
 etat_OrdreCoordination = 1,
 releve = 1,
 }
@@ -67,3 +68,4 @@ include "Appui/Nbc/Automates/Common/Missions/DecontaminerZone/DecontaminerZone -
 
 --[[// MRT GEN Mis 
 ]]include "Appui/Nbc/Automates/Common/MRT generique.bms"
+

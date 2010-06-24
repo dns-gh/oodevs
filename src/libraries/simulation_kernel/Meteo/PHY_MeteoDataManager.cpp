@@ -134,8 +134,6 @@ void PHY_MeteoDataManager::RegisterWeatherEffect( const MT_Ellipse& surface, con
 {
     assert( pRawData_ );
     pRawData_->RegisterWeatherEffect( surface, ammoCategory );
-    //TODO HBD: Envoi d'un message pour la creation d'un weatherEffect.
-
 }
 
 // -----------------------------------------------------------------------------
@@ -146,7 +144,6 @@ void PHY_MeteoDataManager::UnregisterWeatherEffect( const MT_Ellipse& surface, c
 {
     assert( pRawData_ );
     pRawData_->UnregisterWeatherEffect( surface, ammoCategory );
-    //TODO HBD: Envoi d'un message pour la destruction d'un weatherEffect.
 }
 
 //-----------------------------------------------------------------------------

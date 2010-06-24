@@ -11,21 +11,10 @@
 #define __TeamFactory_h_
 
 #include "TeamFactory_ABC.h"
-#include "KnowledgeGroupFactory_ABC.h"
 
 namespace kernel
 {
     class Controllers;
-}
-
-namespace MsgsSimToClient
-{
-    class MsgTeamCreation;
-    class MsgKnowledgeGroupCreation;
-}
-namespace Common
-{
-    class MsgFormationCreation;
 }
 
 class Model;
@@ -37,7 +26,6 @@ class Model;
 // Created: AGE 2006-02-15
 // =============================================================================
 class TeamFactory : public TeamFactory_ABC
-                  , public KnowledgeGroupFactory_ABC
 {
 
 public:
@@ -51,8 +39,6 @@ public:
     //@{
     virtual kernel::Team_ABC* CreateTeam( const MsgsSimToClient::MsgTeamCreation& message );
     virtual kernel::Formation_ABC* CreateFormation( const Common::MsgFormationCreation& message );
-    virtual kernel::KnowledgeGroup_ABC* CreateKnowledgeGroup( const MsgsSimToClient::MsgKnowledgeGroupCreation& message, kernel::Team_ABC& team ); // LTO
-    virtual void DeleteKnowledgeGroup( const MsgsSimToClient::MsgKnowledgeGroupDestruction& message ); // LTO
 
     //@}
 

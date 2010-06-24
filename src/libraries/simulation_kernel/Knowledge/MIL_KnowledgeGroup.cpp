@@ -118,11 +118,11 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup()
 // Name: KnowledgeGroupFactory::Create
 // Created: FDS 2010-03-17
 // -----------------------------------------------------------------------------
-MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source, const MIL_Agent_ABC& pion )
+MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source, const MIL_Agent_ABC& pion, MIL_KnowledgeGroup* parent )
     : type_                   ( source.type_ )
     , id_                     ( idManager_.GetFreeId() )
     , army_                   ( source.army_ )
-    , parent_                 ( 0 ) // LTO
+    , parent_                 ( parent ) // LTO
     , knowledgeBlackBoard_    ( new DEC_KnowledgeBlackBoard_KnowledgeGroup( *this ) )
     , automates_           ()
     , timeToDiffuse_        ( 0 ) // LTO
@@ -131,7 +131,13 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source, const 
     , isJammed_               ( true )
     , jammedPion_             ( &pion )
 {
-    army_->RegisterKnowledgeGroup( *this );
+    if( parent )
+    {
+        parent->RegisterKnowledgeGroup( *this );
+        timeToDiffuse_ = parent_->GetType().GetKnowledgeCommunicationDelay();
+    }
+    else
+        army_->RegisterKnowledgeGroup( *this );
     SendCreation();
 
     source.ApplyOnKnowledgesAgent( boost::bind( &MIL_KnowledgeGroup::CreateKnowledgeFromAgentPerception, this, _1 ) ); 
@@ -799,7 +805,7 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesPopulationPerception( int currentTimeS
             for( MIL_Automate::CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
             {
                 MIL_AgentPion& pion = **itPion;
-                if( pion.GetRole< PHY_RolePion_Communications >().CanCommunicate() )
+                if( pion.GetRole< PHY_RolePion_Communications >().CanReceive() )
                 {
                     pion.GetKnowledge().GetKnowledgePopulationPerceptionContainer().ApplyOnKnowledgesPopulationPerception( boost::bind( & MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromPerception, this, _1, boost::ref(currentTimeStep) ) );
                     pion.GetKnowledge().GetKnowledgePopulationCollisionContainer ().ApplyOnKnowledgesPopulationCollision ( boost::bind( & MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromCollision, this, _1, boost::ref(currentTimeStep) )  );
@@ -837,7 +843,7 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
             {
                 MIL_AgentPion& pion = **itPion;
                  // Les perceptions des subordonnées sont envoyées uniquement dans le cas ou celui ci peut communiquer.
-                if ( pion.GetRole< PHY_RolePion_Communications >().CanCommunicate() )
+                if ( pion.GetRole< PHY_RolePion_Communications >().CanEmit() )
                 {
                         pion.GetKnowledge().GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( boost::bind( & MIL_KnowledgeGroup::UpdateAgentKnowledgeFromAgentPerception, this, _1, boost::ref(currentTimeStep) ) );
                 }

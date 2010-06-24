@@ -8,10 +8,8 @@
 // *****************************************************************************
 
 #include "gaming_pch.h"
-#include "KnowledgeGroupFactory_ABC.h"
 #include "TeamHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "protocol/Protocol.h"
 
@@ -21,11 +19,10 @@ using namespace kernel;
 // Name: TeamHierarchies constructor
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-TeamHierarchies::TeamHierarchies( Controller& controller, kernel::Team_ABC& holder, KnowledgeGroupFactory_ABC& factory )
+TeamHierarchies::TeamHierarchies( Controller& controller, kernel::Team_ABC& holder )
     : EntityHierarchies< CommunicationHierarchies >( controller, holder, 0 )
     , controller_( controller )
     , holder_( holder )
-    , factory_( factory )
 {
     // NOTHING
 }
@@ -43,29 +40,9 @@ TeamHierarchies::~TeamHierarchies()
 // Name: TeamHierarchies::DoUpdate
 // Created: AGE 2006-10-09
 // -----------------------------------------------------------------------------
-void TeamHierarchies::DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupCreation& message )
-{
-    if( ! Find( message.oid() ) )
-        factory_.CreateKnowledgeGroup( message, holder_ ); // LTO
-}
-
-// -----------------------------------------------------------------------------
-// Name: TeamHierarchies::DoUpdate
-// Created: AGE 2006-10-09
-// -----------------------------------------------------------------------------
 void TeamHierarchies::DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupUpdate& message )
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: TeamHierarchies::DoUpdate
-// Created: FDS 2010-03-30
-// -----------------------------------------------------------------------------
-void TeamHierarchies::DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupDestruction& message )
-{
-    if( Find( message.oid() ) )
-        factory_.DeleteKnowledgeGroup( message ); // LTO
 }
 
 // -----------------------------------------------------------------------------

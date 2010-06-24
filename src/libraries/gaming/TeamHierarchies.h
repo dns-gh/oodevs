@@ -22,11 +22,8 @@ namespace kernel
 
 namespace MsgsSimToClient
 {
-    class MsgKnowledgeGroupCreation;
     class MsgKnowledgeGroupUpdate;
 }
-
-class KnowledgeGroupFactory_ABC;
 
 // =============================================================================
 /** @class  TeamHierarchies
@@ -35,15 +32,13 @@ class KnowledgeGroupFactory_ABC;
 // Created: AGE 2006-09-20
 // =============================================================================
 class TeamHierarchies : public kernel::EntityHierarchies< kernel::CommunicationHierarchies >
-                      , public kernel::Updatable_ABC< MsgsSimToClient::MsgKnowledgeGroupCreation >
                       , public kernel::Updatable_ABC< MsgsSimToClient::MsgKnowledgeGroupUpdate > // LTO
-                      , public kernel::Updatable_ABC< MsgsSimToClient::MsgKnowledgeGroupDestruction > // LTO
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             TeamHierarchies( kernel::Controller& controller, kernel::Team_ABC& holder, KnowledgeGroupFactory_ABC& factory );
+             TeamHierarchies( kernel::Controller& controller, kernel::Team_ABC& holder );
     virtual ~TeamHierarchies();
     //@}
     
@@ -52,9 +47,7 @@ public:
 private:
     //! @name Operations
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupCreation& message );
     virtual void DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupUpdate& message ); // LTO
-    virtual void DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupDestruction& message );
     //@}
 
 private:
@@ -69,7 +62,6 @@ private:
     //@{
     kernel::Controller& controller_;
     kernel::Team_ABC& holder_;
-    KnowledgeGroupFactory_ABC& factory_;
     //@}
 };
 

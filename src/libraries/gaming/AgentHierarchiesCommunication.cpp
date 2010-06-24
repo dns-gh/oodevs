@@ -27,9 +27,11 @@ AgentHierarchiesCommunication::AgentHierarchiesCommunication( kernel::Controller
                                const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver,
                                const tools::Resolver_ABC< kernel::KnowledgeGroup_ABC >& groupResolver )
 :AgentHierarchies< kernel::CommunicationHierarchies >::AgentHierarchies(controller, holder, automatResolver)
-,jammed_ ( false ) 
-, superior_ ( 0 )
-,groupResolver_ ( groupResolver )
+    ,jammed_ ( false ) 
+    ,radioEmitterDisabled_ ( false ) 
+    ,radioReceiverDisabled_ ( false ) 
+    , superior_ ( 0 )
+    ,groupResolver_ ( groupResolver )
 {
     // NOTHING
 }
@@ -62,8 +64,9 @@ void AgentHierarchiesCommunication::DoUpdate( const MsgsSimToClient::MsgUnitAttr
     if(  message.has_communications() && message.communications().has_jammed() )
     {
         jammed_ = message.communications().jammed() ;
-
-        if ( jammed_ )
+        radioEmitterDisabled_ = message.has_radio_emitter_disabled() && message.radio_emitter_disabled();
+        radioReceiverDisabled_ = message.has_radio_receiver_disabled() && message.radio_receiver_disabled();
+        if ( jammed_ || radioReceiverDisabled_ || radioEmitterDisabled_ )
             UpdateSuperior( groupResolver_.Get( message.communications().knowledge_group() )  );
         else
             UpdateSuperior( *superior_ );
@@ -76,7 +79,7 @@ void AgentHierarchiesCommunication::DoUpdate( const MsgsSimToClient::MsgUnitAttr
 // -----------------------------------------------------------------------------
 void AgentHierarchiesCommunication::DoUpdate( const Common::MsgUnitChangeSuperior& message )
 {
-    if( jammed_ )
+    if( jammed_ || radioEmitterDisabled_ )
         superior_ = & GetAutomatResolver().Get( message.oid_automate() );
     else
         UpdateSuperior( GetAutomatResolver().Get( message.oid_automate() ) );
@@ -88,5 +91,5 @@ void AgentHierarchiesCommunication::DoUpdate( const Common::MsgUnitChangeSuperio
 // -----------------------------------------------------------------------------
 bool AgentHierarchiesCommunication::CanCommunicate() const
 {
-    return !jammed_;
+    return !jammed_ && !radioReceiverDisabled_;
 }

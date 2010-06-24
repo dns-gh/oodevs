@@ -10,12 +10,13 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_IDManager.h"
 
+unsigned long MIL_IDManager::last_ = 1;
+
 // -----------------------------------------------------------------------------
 // Name: MIL_IDManager constructor
 // Created: SBO 2009-12-14
 // -----------------------------------------------------------------------------
 MIL_IDManager::MIL_IDManager()
-    : last_( 1 )
 {
     // NOTHING
 }

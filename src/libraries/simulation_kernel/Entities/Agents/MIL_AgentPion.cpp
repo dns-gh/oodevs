@@ -561,7 +561,7 @@ MIL_Army_ABC& MIL_AgentPion::GetArmy() const
 // -----------------------------------------------------------------------------
 MIL_KnowledgeGroup& MIL_AgentPion::GetKnowledgeGroup() const
 {
-    if( GetRole< PHY_RolePion_Communications >().CanCommunicate() )
+    if( GetRole< PHY_RolePion_Communications >().CanEmit() )
     {
         if( pAutomate_ == 0 )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Automate is undefined for agent id %d ", GetID() ) );
@@ -1004,8 +1004,10 @@ void MIL_AgentPion::Serialize( HLA_UpdateFunctor& functor ) const
         statuses.push_back( "pc" );
     if( GetRole< PHY_RolePion_Composantes >().IsNeutralized() )
         statuses.push_back( "neutralise" );
-    if( ! GetRole< PHY_RolePion_Communications >().CanCommunicate() )
+    if( !GetRole< PHY_RolePion_Communications >().CanEmit() &&  ! GetRole< PHY_RolePion_Communications >().CanReceive() )
         statuses.push_back( "brouille" );
+    if( GetRole< PHY_RolePion_Communications >().CanReceive() && !GetRole< PHY_RolePion_Communications >().CanEmit() )
+        statuses.push_back( "silenceradiopartiel" );
     if( GetRole< nbc::PHY_RolePion_NBC >().IsContaminated() )
         statuses.push_back( "contamine" );
     if( GetRole< PHY_RolePion_Posture >().IsStealth() )

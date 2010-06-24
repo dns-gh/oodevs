@@ -31,14 +31,6 @@ PHY_RoleHLA_Communications::~PHY_RoleHLA_Communications()
     //NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleHLA_Communications::CanCommunicate
-// Created: AGE 2004-11-09
-// -----------------------------------------------------------------------------
-bool PHY_RoleHLA_Communications::CanCommunicate() const
-{
-    return ! bJammed_;
-}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleHLA_Communications::UpdateKnowledgesFromObjectPerception
@@ -86,6 +78,16 @@ void PHY_RoleHLA_Communications::ActivateBlackout( )
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RoleHLA_Communications::ActivatePartialBlackout
+// Created: HBD 2010-06-16
+// -----------------------------------------------------------------------------
+void PHY_RoleHLA_Communications::ActivatePartialBlackout()
+{
+    // NOTHING
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RoleHLA_Communications::DeactivateBlackout
 // Created: AHC 2009-08-18
 // -----------------------------------------------------------------------------
@@ -110,4 +112,22 @@ MT_Float PHY_RoleHLA_Communications::ModifySpeed            ( MT_Float rSpeed   
 void PHY_RoleHLA_Communications::ChangeStatus( const std::vector< std::string >& statuses )
 {//@TODO MGD USE NOTIFICATION
     bJammed_ = std::find( statuses.begin(), statuses.end(), "brouille" ) != statuses.end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleHLA_Communications::CanEmit
+// Created: HBD 2010-06-18
+// -----------------------------------------------------------------------------
+bool PHY_RoleHLA_Communications::CanEmit() const
+{
+   return ! bJammed_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleHLA_Communications::CanReceive
+// Created: HBD 2010-06-18
+// -----------------------------------------------------------------------------
+bool PHY_RoleHLA_Communications::CanReceive() const
+{
+   return ! bJammed_;
 }
