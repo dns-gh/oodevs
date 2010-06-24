@@ -54,11 +54,6 @@ class Population : public kernel::EntityImplementation< kernel::Population_ABC >
                  , public tools::Observer_ABC
                  , public tools::ElementObserver_ABC< Simulation::sEndTick >
 {
-public:
-    //! @name Static
-    //@{
-    static const QString typeName_;
-    //@}
 
 public:
     //! @name Constructor/Destructor

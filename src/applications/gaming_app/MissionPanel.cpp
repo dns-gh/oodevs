@@ -17,6 +17,7 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Mission.h"
 #include "clients_kernel/FragOrder.h"
+#include "clients_kernel/FragOrderType.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -177,12 +178,17 @@ namespace
         return "";
     }
 
-    QString GetMissionName( const QString& name, const QString& prefix )
+    QString FormatName( const Mission& mission, const QString& prefix )
     {
-        QString result( name.mid( prefix.length() ).stripWhiteSpace() );
+        QString result( QString( mission.GetName().c_str() ).mid( prefix.length() ).stripWhiteSpace() );
         if( result.startsWith( "-" ) )
             return result.mid( 1 ).stripWhiteSpace();
         return result;
+    }
+
+    QString FormatName( const FragOrder& order, const QString& /*prefix*/ )
+    {
+        return order.GetName().c_str();
     }
 
     struct MissionComparator
@@ -191,7 +197,10 @@ namespace
         {
             return lhs->GetName() < rhs->GetName();
         }
-
+        bool operator()( const FragOrder* lhs, const FragOrder* rhs )
+        {
+            return lhs->GetName() < rhs->GetName();
+        }
         bool operator()( const QString& lhs, const QString& rhs ) const
         {
             return ( lhs.isEmpty() && ! rhs.isEmpty() ) ? false : ( ( rhs.isEmpty() && !lhs.isEmpty() ) ? true : lhs < rhs );
@@ -203,24 +212,21 @@ namespace
 // Name: MissionPanel::AddMissionGroup
 // Created: SBO 2008-10-20
 // -----------------------------------------------------------------------------
-template< typename T >
+template< typename E, typename T >
 void MissionPanel::AddMissionGroup( QPopupMenu& menu, const QString& prefix, const T& list, const char* slot )
 {
     if( list.empty() )
         return;
     if( prefix.isEmpty() )
-    {
         if( menu.idAt( 0 ) != -1 )
             menu.insertItem( new MissionHeaderItem( tools::translate( "MissionPanel", "" ) ) );
-//            missions.insertItem( new MissionHeaderItem( tools::translate( "MissionPanel", "Elementary acts" ) ) );
-    }
     else
         menu.insertItem( new MissionHeaderItem( prefix ) );
     for( T::const_iterator it = list.begin(); it != list.end(); ++it )
     {
-        const Mission& mission = **it;
-        const int id = menu.insertItem( GetMissionName( mission.GetName().c_str(), prefix ), this, slot );
-        menu.setItemParameter( id, mission.GetId() );
+        const E& order = **it;
+        const int id = menu.insertItem( FormatName( order, prefix ), this, slot );
+        menu.setItemParameter( id, order.GetId() );
     }
 }
 
@@ -241,7 +247,7 @@ int MissionPanel::AddMissions( tools::Iterator< const Mission& > it, ContextMenu
         list[ prefix ].insert( &mission );
     }
     for( T_Missions::const_iterator itM = list.begin(); itM != list.end(); ++itM )
-        AddMissionGroup( missions, itM->first, itM->second, slot );
+        AddMissionGroup< Mission >( missions, itM->first, itM->second, slot );
     return menu.InsertItem( "Order", name, &missions );
 }
 
@@ -252,43 +258,29 @@ int MissionPanel::AddMissions( tools::Iterator< const Mission& > it, ContextMenu
 int MissionPanel::AddFragOrders( const Decisions_ABC& decisions, ContextMenu& menu, const QString& name, const char* slot )
 {
     QPopupMenu& orders = *new QPopupMenu( menu );
-    tools::Iterator< const FragOrder& > it = decisions.GetFragOrders();
-    AddFragOrders( it, orders, slot );
-
+    typedef std::map< QString, std::set< const FragOrder*, MissionComparator >, MissionComparator > T_FragOrders;
+    T_FragOrders list;
     if( const Mission* mission = decisions.GetCurrentMission() )
     {
-        it = static_cast< const tools::Resolver< FragOrder >& >( *mission ).CreateIterator();
-        AddFragOrders( it, orders, slot );
-    }
-    return menu.InsertItem( "Order", name, &orders );
-}
-
-namespace
-{
-    bool ItemExists( QPopupMenu& menu, int value )
-    {
-        for( unsigned int i = 0; i < menu.count(); ++i )
-            if( menu.itemParameter( menu.idAt( i ) ) == value )
-                return true;
-        return false;
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionPanel::AddFragOrders
-// Created: SBO 2007-06-26
-// -----------------------------------------------------------------------------
-void MissionPanel::AddFragOrders( tools::Iterator< const FragOrder& > it, QPopupMenu& menu, const char* slot )
-{
-    while( it.HasMoreElements() )
-    {
-        const FragOrder& fragOrder = it.NextElement();
-        if( ! ItemExists( menu, fragOrder.GetId() ) )
+        tools::Iterator< const FragOrder& > it = static_cast< const tools::Resolver< FragOrder >& >( *mission ).CreateIterator();
+        while( it.HasMoreElements() )
         {
-            const int id = menu.insertItem( fragOrder.GetName().c_str(), this, slot );
-            menu.setItemParameter( id, fragOrder.GetId() );
+            const FragOrder& element = it.NextElement();
+            list[ element.GetType().IsMissionRequired() ? mission->GetName().c_str() : "" ].insert( &element );
         }
     }
+    {
+        tools::Iterator< const FragOrder& > it = decisions.GetFragOrders();
+        while( it.HasMoreElements() )
+        {
+            const FragOrder& element = it.NextElement();
+            if( element.GetType().IsAvailableFor( *selectedEntity_ ) )
+                list[ "" ].insert( &element );
+        }
+    }
+    for( T_FragOrders::const_iterator itM = list.begin(); itM != list.end(); ++itM )
+        AddMissionGroup< FragOrder >( orders, itM->first, itM->second, slot );
+    return menu.InsertItem( "Order", name, &orders );
 }
 
 // -----------------------------------------------------------------------------
@@ -303,8 +295,7 @@ void MissionPanel::AddMissions( const Decisions_ABC& decisions, kernel::ContextM
     int id = AddMissions( decisions.GetMissions(), menu, name, slot );
     if( !pixmap.isNull() )
         menu.SetPixmap( id, pixmap );
-    //menu.SetItemEnabled( id, decisions.CanBeOrdered() );
-    AddFragOrders( decisions, menu, tr( "Fragmentary orders" ), SLOT( ActivateFragOrder( int ) ) );
+    id = AddFragOrders( decisions, menu, tr( "Fragmentary orders" ), SLOT( ActivateFragOrder( int ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -351,7 +342,10 @@ void MissionPanel::ActivateFragOrder( int id )
 {
     SetInterface( 0 );
     const FragOrderType& order = static_cast< tools::Resolver_ABC< FragOrderType >& >( static_.types_).Get( id );
-    SetInterface( new FragmentaryOrderInterface( this, *selectedEntity_.ConstCast(), order, controllers_.actions_, *interfaceBuilder_, actionsModel_ ) );
+    Entity_ABC* entity = selectedEntity_.ConstCast();
+    if( !entity->Retrieve< AutomatDecisions >() )
+        entity = const_cast< kernel::Entity_ABC* >( entity->Get< kernel::TacticalHierarchies >().GetSuperior() );
+    SetInterface( new FragmentaryOrderInterface( this, *entity, order, controllers_.actions_, *interfaceBuilder_, actionsModel_ ) );
 }
 
 // -----------------------------------------------------------------------------

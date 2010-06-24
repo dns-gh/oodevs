@@ -14,6 +14,7 @@
 
 namespace kernel
 {
+    class Entity_ABC;
 
 // =============================================================================
 /** @class  FragOrderType
@@ -35,6 +36,7 @@ public:
     //@{
     bool IsDefaultOrder   () const;
     bool IsMissionRequired() const;
+    bool IsAvailableFor   ( const kernel::Entity_ABC& entity ) const;
     //@}
 
 private:
@@ -48,6 +50,7 @@ private:
     //@{
     bool isDefaultOrder_;
     bool isWithoutMission_;
+    std::string diaType_;
     //@}
 };
 

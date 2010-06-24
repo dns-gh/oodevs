@@ -9,7 +9,9 @@
 
 #include "clients_kernel_pch.h"
 #include "FragOrderType.h"
+#include "Entity_ABC.h"
 #include "OrderParameter.h"
+#include <boost/algorithm/string.hpp>
 #include <xeumeuleu/xml.h>
 
 using namespace xml;
@@ -26,6 +28,7 @@ FragOrderType::FragOrderType( xml::xistream& xis )
 {
     xis >> optional() >> attribute( "available-for-all-mission", isDefaultOrder_ )
         >> optional() >> attribute( "available-without-mission", isWithoutMission_ )
+        >> optional() >> attribute( "dia-type", diaType_ )
         >> list( "parameter", *this, &FragOrderType::ReadParameter );
     ReadDescriptions( xis );
 }
@@ -65,4 +68,20 @@ void FragOrderType::ReadParameter( xml::xistream& xis )
 {
     OrderParameter* param = new OrderParameter( xis );
     Register( Count(), *param );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FragOrderType::IsAvailableFor
+// Created: SBO 2010-06-23
+// -----------------------------------------------------------------------------
+bool FragOrderType::IsAvailableFor( const kernel::Entity_ABC& entity ) const
+{
+    const QString typeName = entity.GetTypeName();
+    if( boost::starts_with( diaType_, "Rep_OrderConduite_Pion_" ) )
+        return typeName == "agent";
+    if( boost::starts_with( diaType_, "Rep_OrderConduite_Automate_" ) )
+        return typeName == "automat";
+    if( boost::starts_with( diaType_, "Rep_OrderConduite_Population_" ) )
+        return typeName == "population";
+    return true;
 }

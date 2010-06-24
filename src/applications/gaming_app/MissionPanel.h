@@ -115,11 +115,10 @@ private:
     int AddMissions( tools::Iterator< const kernel::Mission& > it, kernel::ContextMenu& menu, const QString& name, const char* slot );
     void AddMissions( const Decisions_ABC& decisions, kernel::ContextMenu& menu, const QString& name, const char* slot, const QPixmap& pixmap = QPixmap() );
     int AddFragOrders( const Decisions_ABC& decisions, kernel::ContextMenu& menu, const QString& name, const char* slot );
-    void AddFragOrders( tools::Iterator< const kernel::FragOrder& > it, QPopupMenu& menu, const char* slot );
     void SetInterface( actions::gui::MissionInterface_ABC* missionInterface );
     void NotifyMission();
 
-    template< typename T >
+    template< typename E, typename T >
     void AddMissionGroup( QPopupMenu& menu, const QString& prefix, const T& list, const char* slot );
     //@}
 
