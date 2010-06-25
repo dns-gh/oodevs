@@ -218,8 +218,10 @@ void MissionPanel::AddMissionGroup( QPopupMenu& menu, const QString& prefix, con
     if( list.empty() )
         return;
     if( prefix.isEmpty() )
+    {
         if( menu.idAt( 0 ) != -1 )
             menu.insertItem( new MissionHeaderItem( tools::translate( "MissionPanel", "" ) ) );
+    }
     else
         menu.insertItem( new MissionHeaderItem( prefix ) );
     for( T::const_iterator it = list.begin(); it != list.end(); ++it )
@@ -344,7 +346,12 @@ void MissionPanel::ActivateFragOrder( int id )
     const FragOrderType& order = static_cast< tools::Resolver_ABC< FragOrderType >& >( static_.types_).Get( id );
     Entity_ABC* entity = selectedEntity_.ConstCast();
     if( !entity->Retrieve< AutomatDecisions >() )
-        entity = const_cast< kernel::Entity_ABC* >( entity->Get< kernel::TacticalHierarchies >().GetSuperior() );
+    {
+        Entity_ABC* superior = const_cast< kernel::Entity_ABC* >( entity->Get< kernel::TacticalHierarchies >().GetSuperior() );
+        if( const AutomatDecisions* decisions = superior->Retrieve< AutomatDecisions >() )
+            if( decisions->IsEmbraye() )
+                entity = superior;
+    }
     SetInterface( new FragmentaryOrderInterface( this, *entity, order, controllers_.actions_, *interfaceBuilder_, actionsModel_ ) );
 }
 
