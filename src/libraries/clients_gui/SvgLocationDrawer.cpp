@@ -119,7 +119,7 @@ void SvgLocationDrawer::VisitPath( const geometry::Point2f& point, const T_Point
 // Name: SvgLocationDrawer::VisitCircle
 // Created: SBO 2008-05-30
 // -----------------------------------------------------------------------------
-void SvgLocationDrawer::VisitCircle( const geometry::Point2f& center, float radius )
+void SvgLocationDrawer::VisitCircle( const geometry::Point2f& /*center*/, float /*radius*/ )
 {
     // $$$$ SBO 2008-05-30: TODO
 }

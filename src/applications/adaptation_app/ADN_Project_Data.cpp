@@ -236,7 +236,9 @@ void ADN_Project_Data::WorkDirInfos::UseTempDirectory( bool bActivateTemp )
             pTempDir = ( char* )realloc( pTempDir, sizeof( char ) * len + 1 );
             assert( ( int )GetTempPath( len + 1, pTempDir ) <= len + 1 );
         }
-        szTempDir_ = ADN_Tools::Replace( pTempDir, '\\', '/' ) + "sword ot data.tmp/";
+        std::string res( pTempDir );
+        std::replace( res.begin(), res.end(), '\\', '/' );
+        szTempDir_ = res + "sword ot data.tmp/";
         free( pTempDir );
     }
 }
@@ -277,7 +279,7 @@ void ADN_Project_Data::SetFile( const std::string& strFile )
 // Name: ADN_Project_Data::FilesNeeded
 // Created: APE 2004-12-07
 // -----------------------------------------------------------------------------
-void ADN_Project_Data::FilesNeeded( T_StringList& vFiles ) const
+void ADN_Project_Data::FilesNeeded( T_StringList& /*vFiles*/ ) const
 {
     ADN_Project_Data* that = const_cast< ADN_Project_Data* >( this );
     assert( ! that->szFile_.GetFileName().GetData().empty() );

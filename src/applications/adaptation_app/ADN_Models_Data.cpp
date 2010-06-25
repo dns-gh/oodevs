@@ -298,7 +298,7 @@ void ADN_Models_Data::ModelInfos::ReadArchive( xml::xistream& input )
 void ADN_Models_Data::ModelInfos::WriteArchive( const std::string& type, xml::xostream& output )
 {
     std::string strFileName = strFile_.GetData();
-    strFileName = ADN_Tools::Replace( strFileName, '/', '\\' );
+    std::replace( strFileName.begin(), strFileName.end(), '/', '\\' );
 
     output << xml::start( type )
             <<  xml::attribute( "name", strName_ )

@@ -39,7 +39,7 @@ namespace
 {
     typedef ObjectAttributePrototypeFactory_ABC::T_AttributeContainer  T_AttributeContainer;
 
-    void ConstructorAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, Object_ABC*& object )
+    void ConstructorAttribute( xml::xistream& /*xis*/, T_AttributeContainer& /*container*/, QWidget* /*parent*/, Object_ABC*& /*object*/ )
     {
         // $$$$ SBO 2009-06-09: TODO...
 //        const bool density = xml::attribute< std::string >( xis, "unit-type" ) == "density";

@@ -198,7 +198,7 @@ void ReportListView::OnReadTimerOut()
 // Name: ReportListView::OnRequestPopup
 // Created: AGE 2006-09-18
 // -----------------------------------------------------------------------------
-void ReportListView::OnRequestPopup( QListViewItem* item, const QPoint& pos, int /*column*/ )
+void ReportListView::OnRequestPopup( QListViewItem* /*item*/, const QPoint& pos, int /*column*/ )
 {
     if( !selected_ )
         return;

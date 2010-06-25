@@ -63,7 +63,7 @@ AgentPositions::AgentPositions( const Agent_ABC& agent, const CoordinateConverte
     : agent_( agent )
     , converter_( converter )
     , controller_( controller )
-    , moveable_( new MoveableProxy( *this ) )
+    , moveable_( new MoveableProxy( *this ) ) // $$$$ _RC_ PHC 2010-06-25: code smell
     , position_( position )
     , height_( 0 )
     , aggregated_( false )
@@ -88,7 +88,7 @@ AgentPositions::AgentPositions( xml::xistream& xis, const Agent_ABC& agent, cons
     : agent_( agent )
     , converter_( converter )
     , controller_( controller )
-    , moveable_( new MoveableProxy( *this ) )
+    , moveable_( new MoveableProxy( *this ) ) // $$$$ _RC_ PHC 2010-06-25: code smell
     , position_( ReadPosition( xis, converter_ ) )
     , height_( 0 )
     , aggregated_( false )

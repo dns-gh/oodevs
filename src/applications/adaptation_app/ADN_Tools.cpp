@@ -20,26 +20,6 @@
 #include <xeumeuleu/xml.hpp>
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Tools::Replace
-// Created: AGN 03-07-30
-//-----------------------------------------------------------------------------
-std::string ADN_Tools::Replace( const std::string& str, char src, char dst )
-{
-    std::string szRes = str;
-    int nPos = 0;
-    do
-    {
-        int newPos = str.find_first_of( src, nPos );
-        if( newPos == (int)str.npos )
-            break;
-        szRes[newPos] = dst;
-        nPos = newPos + 1;
-    } while( 1 );
-    return szRes;
-}
-
-
-//-----------------------------------------------------------------------------
 // Name: ADN_Tools::CreatePathToFile
 // Created: AGN 03-07-30
 //-----------------------------------------------------------------------------

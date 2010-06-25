@@ -145,8 +145,6 @@ namespace
     void DrawHorizontalGradientBox( QPainter& painter, const QRect& rect, const QColor& leftColor, const QColor& rightColor )
     {
         const int range = 12; //item2->GetPercentage() - item1->GetPercentage();
-        if( range < 1 )
-            return;
         const int rStep = ( rightColor.red()   - leftColor.red()   ) / range;
         const int gStep = ( rightColor.green() - leftColor.green() ) / range;
         const int bStep = ( rightColor.blue()  - leftColor.blue()  ) / range;

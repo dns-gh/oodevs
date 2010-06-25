@@ -258,7 +258,9 @@ void ADN_MainWindow::SetMenuEnabled( bool bEnabled )
 // -----------------------------------------------------------------------------
 void ADN_MainWindow::SaveProjectAs( const std::string& filename )
 {
-    workspace_.SaveAs( ADN_Tools::Replace( filename, '\\', '/' ) ); 
+    std::string res( filename );
+    std::replace( res.begin(), res.end(), '\\', '/' );
+    workspace_.SaveAs( res );
 }
 
 //-----------------------------------------------------------------------------
@@ -308,7 +310,9 @@ void ADN_MainWindow::SaveAsProject()
 
     try
     {
-        workspace_.SaveAs( ADN_Tools::Replace(strFileName.ascii(),'\\','/') ); 
+        std::string res( strFileName );
+        std::replace( res.begin(), res.end(), '\\', '/' );
+        workspace_.SaveAs( res ); 
     }
     catch( ADN_Exception_ABC& exception )
     {
@@ -343,7 +347,9 @@ void ADN_MainWindow::NewProject()
     SetMenuEnabled(false);
     pTab_->hide();
 
-    workspace_.Reset(ADN_Tools::Replace(qfilename.ascii(),'\\','/'));
+    std::string res( qfilename );
+    std::replace( res.begin(), res.end(), '\\', '/' );
+    workspace_.Reset( res );
 
     SetMenuEnabled(true);
     pTab_->show();
@@ -402,7 +408,11 @@ void ADN_MainWindow::OpenProject( const std::string& szFilename, const bool isNo
 
     QApplication::setOverrideCursor( waitCursor ); // this might take time
     if( QString( szFilename.c_str() ).startsWith( "//" ) )
-        workspace_.Load( ADN_Tools::Replace( szFilename, '/', '\\' ) );
+    {
+        std::string res( szFilename );
+        std::replace( res.begin(), res.end(), '/', '\\' );
+        workspace_.Load( res );
+    }
     else
         workspace_.Load( szFilename );
     QApplication::restoreOverrideCursor();	// restore original cursor

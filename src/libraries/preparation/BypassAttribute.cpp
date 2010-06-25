@@ -82,7 +82,7 @@ void BypassAttribute::SerializeAttributes( xml::xostream& xos ) const
 // Name: BypassAttribute::CreateDictionary
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void BypassAttribute::CreateDictionary( kernel::PropertiesDictionary& dico )
+void BypassAttribute::CreateDictionary( kernel::PropertiesDictionary& /*dico*/ )
 {
     // NOTHING
 }

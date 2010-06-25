@@ -67,11 +67,11 @@ void ParamUrbanBlock::BuildInterface( QWidget* parent )
 // -----------------------------------------------------------------------------
 bool ParamUrbanBlock::CheckValidity()
 {
-    if( ! parameter_.IsOptional() && false )//@TODO Add urban check
-    {
-        pLabel_->Warn( 3000 );
-        return false;
-    }
+//    if( ! parameter_.IsOptional() && false )//@TODO Add urban check
+//    {
+//        pLabel_->Warn( 3000 );
+//        return false;
+//    }
     return true;
 }
 

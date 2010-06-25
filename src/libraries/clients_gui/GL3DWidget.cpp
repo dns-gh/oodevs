@@ -200,7 +200,7 @@ void Gl3dWidget::DrawLines( const T_PointVector& points ) const
 // Name: Gl3dWidget::DrawRectangle
 // Created: SLG 2010-03-25
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawRectangle( const T_PointVector& points ) const
+void Gl3dWidget::DrawRectangle( const T_PointVector& /*points*/ ) const
 {
     //SLG TODO
 }
@@ -231,7 +231,7 @@ void Gl3dWidget::DrawConvexPolygon( const Polygon2f& polygon ) const
 // Name: Gl3dWidget::DrawConvexPolygon
 // Created: SBO 2010-06-09
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawConvexPolygon( const T_PointVector& points, bool selected ) const
+void Gl3dWidget::DrawConvexPolygon( const T_PointVector& /*points*/, bool /*selected*/ ) const
 {
     //SLG TODO
 }
@@ -240,7 +240,7 @@ void Gl3dWidget::DrawConvexPolygon( const T_PointVector& points, bool selected )
 // Name: Gl3dWidget::DrawDecoratedPolygon
 // Created: SBO 2010-06-09
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const urban::UrbanDecoration* decoration ) const
+void Gl3dWidget::DrawDecoratedPolygon( const geometry::Polygon2f& /*polygon*/, const urban::UrbanDecoration* /*decoration*/ ) const
 {
     //SLG TODO
 }

@@ -736,8 +736,9 @@ void ADN_Objects_Data::ADN_CapacityInfos_SupplyRoute::ReadArchive( xml::xistream
 {
 	ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
 }
-void ADN_Objects_Data::ADN_CapacityInfos_SupplyRoute::WriteArchive( xml::xostream& xos )
+void ADN_Objects_Data::ADN_CapacityInfos_SupplyRoute::WriteArchive( xml::xostream& /*xos*/ )
 {
+    // NOTHING
 }
 //@}
 
@@ -763,8 +764,9 @@ void ADN_Objects_Data::ADN_CapacityInfos_Bridging::ReadArchive( xml::xistream& x
 {
 	ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
 }
-void ADN_Objects_Data::ADN_CapacityInfos_Bridging::WriteArchive( xml::xostream& xos )
+void ADN_Objects_Data::ADN_CapacityInfos_Bridging::WriteArchive( xml::xostream& /*xos*/ )
 {
+    // NOTHING
 }
 
 /*
@@ -1159,7 +1161,7 @@ std::string ADN_Objects_Data::ObjectInfos::GetNodeName()
 // Name: ADN_Objects_Data::ObjectInfos::ReadSensiblePosition
 // Created: AGE 2007-08-20
 // -----------------------------------------------------------------------------
-void ADN_Objects_Data::ObjectInfos::ReadSensiblePosition( xml::xistream& input )
+void ADN_Objects_Data::ObjectInfos::ReadSensiblePosition( xml::xistream& /*input*/ )
 {
 //    std::auto_ptr<ScoreLocationInfos> spNew( new ScoreLocationInfos() );
 //    spNew->ReadArchive( input );
@@ -1170,7 +1172,7 @@ void ADN_Objects_Data::ObjectInfos::ReadSensiblePosition( xml::xistream& input )
 // Name: ADN_Objects_Data::ObjectInfos::ReadDotation
 // Created: AGE 2007-08-20
 // -----------------------------------------------------------------------------
-void ADN_Objects_Data::ObjectInfos::ReadDotation( const std::string& type, xml::xistream& input )
+void ADN_Objects_Data::ObjectInfos::ReadDotation( const std::string& /*type*/, xml::xistream& /*input*/ )
 {
 //    std::string dotation, category;
 //    unsigned count;
@@ -1198,7 +1200,7 @@ void ADN_Objects_Data::ObjectInfos::ReadDotation( const std::string& type, xml::
 // Name: ADN_Objects_Data::ObjectInfos::ReadUnitAttrition
 // Created: AGE 2007-08-20
 // -----------------------------------------------------------------------------
-void ADN_Objects_Data::ObjectInfos::ReadUnitAttrition( xml::xistream& input )
+void ADN_Objects_Data::ObjectInfos::ReadUnitAttrition( xml::xistream& /*input*/ )
 {
 //    bAttritions_ = true;
 //    std::string protection;
@@ -1324,7 +1326,7 @@ void ADN_Objects_Data::ReadObject( xml::xistream& xis )
 // Name: ADN_Objects_Data::ReadShotPercentage
 // Created: AGE 2007-08-20
 // -----------------------------------------------------------------------------
-void ADN_Objects_Data::ReadShotPercentage( xml::xistream& input )
+void ADN_Objects_Data::ReadShotPercentage( xml::xistream& /*input*/ )
 {
 //    std::auto_ptr<AreaControlInformations> spNew( new AreaControlInformations() );
 //    spNew->ReadArchive( input );

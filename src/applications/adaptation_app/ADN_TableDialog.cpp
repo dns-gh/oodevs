@@ -71,6 +71,7 @@ ADN_TableDialog::ADN_TableDialog( QWidget* pParent, const QString& strCaption, A
 // -----------------------------------------------------------------------------
 ADN_TableDialog::~ADN_TableDialog()
 {
+    // NOTHING
 }
 
 

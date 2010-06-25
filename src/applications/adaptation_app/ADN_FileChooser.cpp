@@ -148,8 +148,9 @@ void ADN_FileChooser::ChooseFile()
 
     if (qfilename==QString::null)
         return;
-
-    std::string szPartialPath=GetPartPath(szDirectory_.ascii(),ADN_Tools::Replace(qfilename.ascii(),'\\','/'));
+    std::string res( qfilename.ascii() );
+    std::replace( res.begin(), res.end(), '\\','/' );
+    std::string szPartialPath=GetPartPath( szDirectory_.ascii(), res );
     if (szPartialPath.empty())
     {
         QMessageBox::information( this, "ADN",

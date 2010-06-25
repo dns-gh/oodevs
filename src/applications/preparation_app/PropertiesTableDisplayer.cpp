@@ -58,7 +58,7 @@ void PropertiesTableDisplayer::Call( const Enum_DemolitionTargetType& value )
 // Name: PropertiesTableDisplayer::Call
 // Created: SBO 2006-11-10
 // -----------------------------------------------------------------------------
-void PropertiesTableDisplayer::Call( const DotationsItem& value )
+void PropertiesTableDisplayer::Call( const DotationsItem& /*value*/ )
 {
     AddToDisplay( tools::translate( "PropertiesTableDisplayer", "<Edit Property Group...>" ) );
 //    tools::Iterator< const Dotation& > it = value.CreateIterator();

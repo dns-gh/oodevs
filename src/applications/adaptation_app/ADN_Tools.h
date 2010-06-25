@@ -60,7 +60,6 @@ public:
 
 
 public:
-    static std::string Replace( const std::string& str, char cSrc, char cDst );
     static bool CaselessCompare( const std::string& str1, const std::string& str2 );
 
     static void CreatePathToFile( const std::string& strFilePath );

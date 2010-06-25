@@ -161,7 +161,7 @@ void TerrainProfiler::SetToUnitPosition()
 void TerrainProfiler::SetFromPosition( const geometry::Point2f& point, float height /*= 2.f*/ )
 {
     from_ = point;
-    height_->setValue( height );
+    height_->setValue( ( int )height );
     layer_.SetFromPosition( from_ );
     UpdateView();
 }

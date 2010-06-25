@@ -133,7 +133,7 @@ void UrbanModel::ReadBlock( xistream& xis )
 // Name: UrbanModel::ReadCapacity
 // Created: JSR 2010-06-22
 // -----------------------------------------------------------------------------
-void UrbanModel::ReadCapacity( const std::string& capacity, xistream& xis, gui::TerrainObjectProxy& proxy )
+void UrbanModel::ReadCapacity( const std::string& capacity, xistream& xis, gui::TerrainObjectProxy& /*proxy*/ )
 {
     if( capacity == "structural" )
     {

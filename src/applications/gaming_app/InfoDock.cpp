@@ -43,7 +43,7 @@ InfoDock::~InfoDock()
 // Name: InfoDock::NotifySelected
 // Created: SBO 2007-02-05
 // -----------------------------------------------------------------------------
-void InfoDock::NotifySelected( const kernel::Entity_ABC* entity )
+void InfoDock::NotifySelected( const kernel::Entity_ABC* /*entity*/ )
 {
 //    setShown( entity ); // $$$$ SBO 2007-02-08: à voir
 }

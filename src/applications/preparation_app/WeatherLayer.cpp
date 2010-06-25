@@ -41,7 +41,7 @@ WeatherLayer::~WeatherLayer()
 // Name: WeatherLayer::Paint
 // Created: SBO 2006-12-21
 // -----------------------------------------------------------------------------
-void WeatherLayer::Paint( const geometry::Rectangle2f& viewport )
+void WeatherLayer::Paint( const geometry::Rectangle2f& /*viewport*/ )
 {
     if( !ShouldDrawPass() )
         return;
@@ -122,7 +122,7 @@ void WeatherLayer::StartEdition( LocalWeather& weather )
 // Name: WeatherLayer::Pick
 // Created: HBD 2010-04-06
 // -----------------------------------------------------------------------------
-const weather::PHY_Meteo* WeatherLayer::Pick( const geometry::Point2f& terrainCoordinates ) const
+const weather::PHY_Meteo* WeatherLayer::Pick( const geometry::Point2f& /*terrainCoordinates*/ ) const
 {
     return 0;
 }
