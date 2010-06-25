@@ -24,6 +24,11 @@ namespace MsgsSimToClient
     enum MsgObjectMagicActionAck_ErrorCode;
 }
 
+namespace urban
+{
+    class TerrainObject_ABC;
+}
+
 namespace xml
 {
     class xistream;
@@ -60,6 +65,7 @@ public:
     MIL_Object_ABC* CreateObject( const Common::MsgMissionParameters& asn, MIL_Army_ABC& army, MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode& value ) const;
     MIL_Object_ABC* CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& location, bool reserved ) const;
     MIL_Object_ABC* CreateObject( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army ) const;
+    MIL_Object_ABC* CreateUrbanObject( const urban::TerrainObject_ABC& object ) const;
     //@}
 
     //! @name Accessors

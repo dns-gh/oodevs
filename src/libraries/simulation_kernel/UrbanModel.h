@@ -22,6 +22,8 @@ namespace urban
 {
     class TerrainObject_ABC;
     class Model;
+    class ObjectVisitor_ABC;
+    class TerrainObjectVisitor_ABC;
 }
 
 class MIL_Config;
@@ -48,18 +50,20 @@ public:
     //@{
     void                        ReadUrbanModel          ( const MIL_Config& config );
     void                        SendStateToNewClient    () const;
-    static void                 SendCreation            ( urban::TerrainObject_ABC& UrbanBlock );
+    void                        SendCreation            ( urban::TerrainObject_ABC& UrbanBlock ) const;
+    void                        Update                  () const;
     urban::TerrainObject_ABC*   FindUrbanBlock          ( unsigned id ) const;
     MT_Float                    GetUrbanBlockCost       ( MT_Float weight, const MT_Vector2D& from, const MT_Vector2D& to ) const;
     void                        CreateObjectWrapper     ( urban::TerrainObject_ABC& object );
-
     //@}
 
     //! @name Operations
     //@{
     urban::Model& GetModel();
     static UrbanModel& GetSingleton();
-    UrbanObjectWrapper& FindWrapper( const urban::TerrainObject_ABC& terrain );
+    void Accept( urban::ObjectVisitor_ABC& visitor );
+    void Accept( urban::TerrainObjectVisitor_ABC& visitor );
+    UrbanObjectWrapper& FindWrapper( const urban::TerrainObject_ABC& terrain ) const;
     UrbanObjectWrapper& FindWrapper( unsigned int id );
     //@}
 
@@ -73,6 +77,13 @@ public:
     void WriteUrbanModel( xml::xostream& xos ) const;
     //@}
 
+    //! @name Types
+    //@{
+    typedef std::vector< UrbanObjectWrapper* > T_Wrappers; 
+    typedef T_Wrappers::iterator              IT_Wrappers;
+    typedef T_Wrappers::const_iterator       CIT_Wrappers;
+    //@}
+
 private:
     //! @name Helpers
     //@{
@@ -83,7 +94,7 @@ private:
 
 private:
     std::auto_ptr< urban::Model                 > model_;
-    std::vector< UrbanObjectWrapper* > urbanWrappers_;
+    std::vector< UrbanObjectWrapper* >            urbanWrappers_;
 
 };
 

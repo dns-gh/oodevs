@@ -14,6 +14,7 @@
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
+#include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Urban.h"
@@ -104,8 +105,8 @@ float DEC_KnowledgeUrbanFunctions::GetRapForLocal( const MIL_AgentPion& callerAg
         rRapForValue = rTotalFightScoreFriend / rTotalFightScoreEnemy;
 
     // Add bonus if the pion is posted in this urbanbloc
-    const urban::TerrainObject_ABC* urbanBlock = callerAgent.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
-    if( &pKnowledge->GetTerrainObjectKnown() == urbanBlock && callerAgent.GetRole< PHY_RoleInterface_Posture >().IsInstalled() )
+    const UrbanObjectWrapper* urbanBlock = callerAgent.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
+    if( urbanBlock && &pKnowledge->GetTerrainObjectKnown() == &urbanBlock->GetObject() && callerAgent.GetRole< PHY_RoleInterface_Posture >().IsInstalled() )
         rRapForValue *= 1.20;
 
     if( rRapForValue < 0.2 )

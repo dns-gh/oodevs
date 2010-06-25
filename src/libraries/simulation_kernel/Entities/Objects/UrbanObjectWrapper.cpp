@@ -9,21 +9,49 @@
 
 #include "simulation_kernel_pch.h"
 #include "UrbanObjectWrapper.h"
-#include <urban/TerrainObject_ABC.h>
+#include "StructuralCapacity.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "MIL_ObjectManipulator.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Objects/MIL_ObjectLoader.h"
+#include "Entities/Objects/MIL_ObjectBuilder_ABC.h"
+#include "Network/NET_ASN_Tools.h"
+#include "Network/NET_Publisher_ABC.h"
+#include "protocol/ClientSenders.h"
+#include "simulation_terrain/TER_Localisation.h"
+#include "geometry/Types.h"
+#include "UrbanType.h"
+#include <Urban/ColorRGBA.h>
+#include <Urban/PhysicalFeature_ABC.h>
+#include <Urban/Architecture.h>
+#include <urban/TerrainObject_ABC.h>
+#include <urban/StaticModel.h>
+#include <urban/MaterialCompositionType.h>
+#include <boost/bind.hpp>
 
-#include "protocol/clientsenders.h"
+// HLA
+#include "HLA/HLA_Object_ABC.h"
+#include "HLA/HLA_UpdateFunctor.h"
 
 // -----------------------------------------------------------------------------
 // Name: UrbanObjectWrapper constructor
 // Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
-UrbanObjectWrapper::UrbanObjectWrapper( urban::TerrainObject_ABC& object )
-    : object_( object )
+UrbanObjectWrapper::UrbanObjectWrapper( const MIL_ObjectBuilder_ABC& builder, const urban::TerrainObject_ABC& object )
+    : MIL_Object_ABC( 0, builder.GetType() )
+    , object_( object )
+    , id_( idManager_.GetFreeId() )
     , manipulator_( *new MIL_ObjectManipulator( *this ) )
 {
-    
+    std::string name = object.GetName(); 
+    int id = object.GetId(); 
+    geometry::Polygon2f::T_Vertices vertices = object.GetFootprint()->Vertices();
+    std::vector< MT_Vector2D > vector; 
+    for( geometry::Polygon2f::CIT_Vertices it = vertices.begin(); it != vertices.end(); ++it )
+        vector.push_back( MT_Vector2D( it->X(), it->Y() ) );
+    Initialize( TER_Localisation( TER_Localisation::ePolygon , vector ) );
+    builder.Build( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -49,7 +77,7 @@ void UrbanObjectWrapper::WriteODB( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void UrbanObjectWrapper::Register( MIL_InteractiveContainer_ABC* capacity )
 {
-
+    interactives_.push_back( capacity );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,7 +86,8 @@ void UrbanObjectWrapper::Register( MIL_InteractiveContainer_ABC* capacity )
 // -----------------------------------------------------------------------------
 void UrbanObjectWrapper::ProcessAgentEntering( MIL_Agent_ABC& agent )
 {
-    //NOTHING
+    std::for_each( interactives_.begin(), interactives_.end(), 
+        boost::bind( &MIL_InteractiveContainer_ABC::ProcessAgentEntering, _1, boost::ref( *this ), boost::ref( agent ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,7 +96,8 @@ void UrbanObjectWrapper::ProcessAgentEntering( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void UrbanObjectWrapper::ProcessAgentExiting( MIL_Agent_ABC& agent )
 {
-    //NOTHING
+    std::for_each( interactives_.begin(), interactives_.end(), 
+        boost::bind( &MIL_InteractiveContainer_ABC::ProcessAgentExiting, _1, boost::ref( *this ), boost::ref( agent ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -76,7 +106,9 @@ void UrbanObjectWrapper::ProcessAgentExiting( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void UrbanObjectWrapper::ProcessAgentMovingInside( MIL_Agent_ABC& agent )
 {
-    //NOTHING
+    agent.GetRole< PHY_RoleInterface_Location >().NotifyTerrainObjectCollision( *this );
+    std::for_each( interactives_.begin(), interactives_.end(), 
+        boost::bind( &MIL_InteractiveContainer_ABC::ProcessAgentMovingInside, _1, boost::ref( *this ), boost::ref( agent ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,7 +117,9 @@ void UrbanObjectWrapper::ProcessAgentMovingInside( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void UrbanObjectWrapper::ProcessAgentInside( MIL_Agent_ABC& agent )
 {
-    //NOTHING
+    agent.GetRole< PHY_RoleInterface_Location >().NotifyTerrainObjectCollision( *this );
+    std::for_each( interactives_.begin(), interactives_.end(), 
+        boost::bind( &MIL_InteractiveContainer_ABC::ProcessAgentInside, _1, boost::ref( *this ), boost::ref( agent ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -94,7 +128,27 @@ void UrbanObjectWrapper::ProcessAgentInside( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void UrbanObjectWrapper::ProcessPopulationInside( MIL_PopulationElement_ABC& population )
 {
-    //NOTHING
+    std::for_each( interactives_.begin(), interactives_.end(), 
+        boost::bind( &MIL_InteractiveContainer_ABC::ProcessPopulationInside, _1, boost::ref( *this ), boost::ref( population ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::Instanciate
+// Created: SLG 2010-06-23
+// -----------------------------------------------------------------------------
+void UrbanObjectWrapper::Instanciate( MIL_Object_ABC& object ) const
+{
+    std::for_each( capacities_.begin(), capacities_.end(), 
+        boost::bind( &ObjectCapacity_ABC::Instanciate, _1, boost::ref( object ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::Finalize
+// Created: SLG 2010-06-23
+// -----------------------------------------------------------------------------
+void UrbanObjectWrapper::Finalize()
+{
+    std::for_each( capacities_.begin(), capacities_.end(), boost::bind( &ObjectCapacity_ABC::Finalize, _1, boost::ref( *this ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -103,7 +157,7 @@ void UrbanObjectWrapper::ProcessPopulationInside( MIL_PopulationElement_ABC& pop
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > UrbanObjectWrapper::CreateKnowledge( const MIL_Army_ABC& team )
 {
-    return boost::shared_ptr< DEC_Knowledge_Object >( new DEC_Knowledge_Object() );
+    return boost::shared_ptr< DEC_Knowledge_Object >( new DEC_Knowledge_Object( team, *this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -112,7 +166,7 @@ boost::shared_ptr< DEC_Knowledge_Object > UrbanObjectWrapper::CreateKnowledge( c
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > UrbanObjectWrapper::CreateKnowledge( const MIL_KnowledgeGroup& group )
 {
-    return boost::shared_ptr< DEC_Knowledge_Object >( new DEC_Knowledge_Object() );
+    return boost::shared_ptr< DEC_Knowledge_Object >( new DEC_Knowledge_Object( group, *this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -139,7 +193,7 @@ MIL_ObjectManipulator_ABC& UrbanObjectWrapper::operator()()
 // -----------------------------------------------------------------------------
 HLA_Object_ABC* UrbanObjectWrapper::GetHLAView() const
 {
-    return 0;
+    return pView_;
 }
 
 // -----------------------------------------------------------------------------
@@ -148,7 +202,8 @@ HLA_Object_ABC* UrbanObjectWrapper::GetHLAView() const
 // -----------------------------------------------------------------------------
 void UrbanObjectWrapper::SetHLAView( HLA_Object_ABC& view )
 {
-    //NOTHING
+    delete pView_;
+    pView_ = &view;
 }
 
 // -----------------------------------------------------------------------------
@@ -184,7 +239,45 @@ MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode UrbanObjectWrapper::OnUpdate(
 // -----------------------------------------------------------------------------
 void UrbanObjectWrapper::SendCreation() const
 {
-    //NOTHING
+    if( object_.HasChild() )
+        return;
+    client::UrbanCreation message;
+    message().set_oid( object_.GetId() );
+    message().set_name( object_.GetName() );
+    message().mutable_location()->set_type( Common::MsgLocation_Geometry_polygon );
+    const geometry::Polygon2f::T_Vertices& points = object_.GetFootprint()->Vertices();
+    for( geometry::Polygon2f::CIT_Vertices it = points.begin(); it != points.end(); ++it )
+    {
+        Common::MsgCoordLatLong* point = message().mutable_location()->mutable_coordinates()->add_elem();
+        point->set_latitude( it->X() );
+        point->set_longitude( it->Y() );
+
+    }
+
+    const ColorRGBA* color = object_.GetColor();
+    if ( color != 0 )
+    {
+        message().mutable_attributes()->mutable_color()->set_red( color->Red() );
+        message().mutable_attributes()->mutable_color()->set_green( color->Green() );
+        message().mutable_attributes()->mutable_color()->set_blue( color->Blue() );
+        message().mutable_attributes()->mutable_color()->set_alpha( color->Alpha() );
+    }
+
+    const urban::Architecture* architecture = object_.RetrievePhysicalFeature< urban::Architecture >();
+    if ( architecture != 0 )
+    {       
+        message().mutable_attributes()->mutable_architecture()->set_height( architecture->GetHeight() );
+        message().mutable_attributes()->mutable_architecture()->set_floor_number( architecture->GetFloorNumber() );
+        message().mutable_attributes()->mutable_architecture()->set_roof_shape( architecture->GetRoofShape().c_str() );
+        message().mutable_attributes()->mutable_architecture()->set_material( architecture->GetMaterial().c_str() );
+        message().mutable_attributes()->mutable_architecture()->set_occupation( architecture->GetOccupation() );
+        message().mutable_attributes()->mutable_architecture()->set_trafficability( architecture->GetTrafficability() );
+    }
+    //TODO : faire une boucle sur toutes les capacités
+    const StructuralCapacity* structural = Retrieve< StructuralCapacity >();
+    if( structural )
+        structural->SendState( *message().mutable_attributes() );
+    message.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -204,6 +297,20 @@ void UrbanObjectWrapper::SendFullState() const
 {
     //NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: Object::UpdateState
+// Created: SLG 2010-06-22
+// -----------------------------------------------------------------------------
+void UrbanObjectWrapper::UpdateState()
+{
+    if( object_.HasChild() )
+        return;
+    client::UrbanUpdate message;
+    message().set_oid( object_.GetId() );
+    Retrieve< StructuralCapacity >()->SendState( *message().mutable_attributes() );
+    message.Send( NET_Publisher_ABC::Publisher() );
+}
   
 // -----------------------------------------------------------------------------
 // Name: UrbanObjectWrapper::GetID
@@ -211,14 +318,23 @@ void UrbanObjectWrapper::SendFullState() const
 // -----------------------------------------------------------------------------
 unsigned int UrbanObjectWrapper::GetID() const
 {
-    return object_.GetId();
+    return id_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: UrbanObjectWrapper::GetObject
 // Created: SLG 2010-06-21
 // -----------------------------------------------------------------------------
-urban::TerrainObject_ABC& UrbanObjectWrapper::GetObject()
+const urban::TerrainObject_ABC& UrbanObjectWrapper::GetObject()
+{
+    return object_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::GetObject
+// Created: SLG 2010-06-24
+// -----------------------------------------------------------------------------
+const urban::TerrainObject_ABC& UrbanObjectWrapper::GetObject() const
 {
     return object_;
 }
@@ -229,7 +345,7 @@ urban::TerrainObject_ABC& UrbanObjectWrapper::GetObject()
 // -----------------------------------------------------------------------------
 void UrbanObjectWrapper::Update( unsigned int time )
 {
-
+    std::for_each( capacities_.begin(), capacities_.end(), boost::bind( &ObjectCapacity_ABC::Update, _1, boost::ref( *this ), time ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -247,437 +363,17 @@ void UrbanObjectWrapper::Register( ObjectAttribute_ABC* attribute )
 // -----------------------------------------------------------------------------
 void UrbanObjectWrapper::Register( ObjectCapacity_ABC* capacity )
 {
-
-}
-
-
-#if 0
-// -----------------------------------------------------------------------------
-// Name: Object::GetID
-// Created: JCR 2008-06-02
-// -----------------------------------------------------------------------------
-unsigned int Object::GetID() const
-{
-    return id_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::load
-// Created: JCR 2008-06-09
-// -----------------------------------------------------------------------------
-void Object::load( MIL_CheckPointInArchive& file, const unsigned int )
-{
-    file >> boost::serialization::base_object< MIL_Object_ABC >( *this );
-    file >> name_
-         >> id_;
-    
-    T_Capacities capacities;
-    file >> capacities;
-    std::for_each( capacities.begin(), capacities.end(), boost::bind( &ObjectCapacity_ABC::Register, _1, boost::ref( *this ) ) );
-
-    T_Attributes attributes;
-    file >> attributes;
-    std::for_each( attributes.begin(), attributes.end(), boost::bind( &ObjectAttribute_ABC::Register, _1, boost::ref( *this ) ) );
-
-    idManager_.Lock( id_ );
-    //MIL_Object_ABC::Register();
-}
-    
-
-// -----------------------------------------------------------------------------
-// Name: Object::save
-// Created: JCR 2008-06-09
-// -----------------------------------------------------------------------------
-void Object::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
-{
-    file << boost::serialization::base_object< MIL_Object_ABC >( *this );
-    file << name_;
-    file << id_;
-    file << capacities_;
-    file << attributes_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::WriteODB
-// Created: JCR 2008-06-03
-// -----------------------------------------------------------------------------
-void Object::WriteODB( xml::xostream& xos ) const
-{
-    xos << xml::start( "object" )
-            << xml::attribute( "id"  , id_ )
-            << xml::attribute( "name", name_ )
-            << xml::attribute( "type", GetType().GetName() );
-    
-    GetLocalisation().Write( xos );
-
-    xos << xml::start( "attributes" );
-    {
-        std::for_each( attributes_.begin(), attributes_.end(), 
-            boost::bind( &ObjectAttribute_ABC::WriteODB, _1, boost::ref( xos ) ) );
-    }
-    xos << xml::end();
-    xos << xml::end(); // object
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::AddAttribute
-// Created: JCR 2008-06-03
-// -----------------------------------------------------------------------------
-void Object::Register( ObjectAttribute_ABC* attribute )
-{    
-    attributes_.push_back( attribute );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::Register
-// Created: JCR 2008-06-09
-// -----------------------------------------------------------------------------
-void Object::Register( ObjectCapacity_ABC* capacity )
-{
     capacities_.push_back( capacity );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Object::RegisterInteractive
-// Created: JCR 2008-06-09
+// Name: UrbanObjectWrapper::GetMaterial
+// Created: SLG 2010-06-24
 // -----------------------------------------------------------------------------
-void Object::Register( MIL_InteractiveContainer_ABC* capacity )
+unsigned int UrbanObjectWrapper::GetMaterial() const
 {
-    interactives_.push_back( capacity );
+    const urban::Architecture* architecture = object_.RetrievePhysicalFeature< urban::Architecture >();
+    if( architecture )
+        return UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( architecture->GetMaterial() )->GetId();
+    return std::numeric_limits< unsigned int >::max();
 }
-
-// -----------------------------------------------------------------------------
-// Name: Object::Instanciate
-// Created: JCR 2008-07-21
-// -----------------------------------------------------------------------------
-void Object::Instanciate( Object& object ) const
-{    
-    std::for_each( capacities_.begin(), capacities_.end(), 
-                   boost::bind( &ObjectCapacity_ABC::Instanciate, _1, boost::ref( object ) ) );
-//    std::for_each( object.capacities_.begin(), object.capacities_.end(), 
-//                   boost::bind( &ObjectCapacity_ABC::Register, _1, boost::ref( object ) ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::Finalize
-// Created: JCR 2008-07-21
-// -----------------------------------------------------------------------------
-void Object::Finalize()
-{    
-    std::for_each( capacities_.begin(), capacities_.end(), boost::bind( &ObjectCapacity_ABC::Finalize, _1, boost::ref( *this ) ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::Update
-// Created: JCR 2008-04-21
-// -----------------------------------------------------------------------------
-void Object::Update( unsigned int time )
-{
-    // TODO can be updated
-    std::for_each( capacities_.begin(), capacities_.end(), boost::bind( &ObjectCapacity_ABC::Update, _1, boost::ref( *this ), time ) );
-    const ConstructionAttribute* attribute = RetrieveAttribute< ConstructionAttribute >();
-    if( attribute && attribute->NeedDestruction() )
-        MarkForDestruction();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::CanInteractWith
-// Created: LDC 2009-03-03
-// -----------------------------------------------------------------------------
-bool Object::CanInteractWith( const MIL_Agent_ABC& agent ) const
-{
-    bool canInteract = true;
-    std::for_each( interactives_.begin(), interactives_.end(), boost::bind( &MIL_InteractiveContainer_ABC::CanInteractWith, _1, boost::ref( *this ), boost::ref( agent ), boost::ref( canInteract ) ) );
-    return canInteract && MIL_Object_ABC::CanInteractWith( agent );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::ProcessAgentEntering
-// Created: JCR 2008-05-30
-// -----------------------------------------------------------------------------
-void Object::ProcessAgentEntering( MIL_Agent_ABC& agent )
-{
-    std::for_each( interactives_.begin(), interactives_.end(), 
-                   boost::bind( &MIL_InteractiveContainer_ABC::ProcessAgentEntering, _1, boost::ref( *this ), boost::ref( agent ) ) );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: Object::ProcessAgentExiting
-// Created: JCR 2008-05-30
-// -----------------------------------------------------------------------------
-void Object::ProcessAgentExiting( MIL_Agent_ABC& agent )
-{
-    std::for_each( interactives_.begin(), interactives_.end(), 
-                   boost::bind( &MIL_InteractiveContainer_ABC::ProcessAgentExiting, _1, boost::ref( *this ), boost::ref( agent ) ) );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: Object::ProcessAgentMovingInside
-// Created: JCR 2008-05-30
-// -----------------------------------------------------------------------------
-void Object::ProcessAgentMovingInside( MIL_Agent_ABC& agent )
-{
-    agent.GetRole< PHY_RoleInterface_Location >().NotifyTerrainObjectCollision( *this );
-    std::for_each( interactives_.begin(), interactives_.end(), 
-                   boost::bind( &MIL_InteractiveContainer_ABC::ProcessAgentMovingInside, _1, boost::ref( *this ), boost::ref( agent ) ) );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: Object::ProcessAgentInside
-// Created: JCR 2008-05-30
-// -----------------------------------------------------------------------------
-void Object::ProcessAgentInside( MIL_Agent_ABC& agent )
-{
-    agent.GetRole< PHY_RoleInterface_Location >().NotifyTerrainObjectCollision( *this );
-    std::for_each( interactives_.begin(), interactives_.end(), 
-                   boost::bind( &MIL_InteractiveContainer_ABC::ProcessAgentInside, _1, boost::ref( *this ), boost::ref( agent ) ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::ProcessPopulationInside
-// Created: JCR 2008-06-06
-// -----------------------------------------------------------------------------
-void Object::ProcessPopulationInside( MIL_PopulationElement_ABC& population )
-{
-    std::for_each( interactives_.begin(), interactives_.end(), 
-                   boost::bind( &MIL_InteractiveContainer_ABC::ProcessPopulationInside, _1, boost::ref( *this ), boost::ref( population ) ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::operator()
-// Created: JCR 2008-06-02
-// -----------------------------------------------------------------------------
-MIL_ObjectManipulator_ABC& Object::operator()()
-{
-    return *manipulator_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::operator()
-// Created: JCR 2008-06-02
-// -----------------------------------------------------------------------------
-const MIL_ObjectManipulator_ABC& Object::operator()() const
-{
-    return *manipulator_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::OnUpdate
-// Created: JCR 2008-06-18
-// -----------------------------------------------------------------------------
-MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode Object::OnUpdate( const MsgMissionParameter_Value& attributes )
-{
-    for( int i = 0; i < attributes.list_size(); ++i )
-    {
-        const MsgMissionParameter_Value& attribute = attributes.list( i );
-        if( attribute.list_size() == 0 ) // it should be a list of lists
-            return MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode_error_invalid_specific_attributes;
-
-        unsigned int actionId = attribute.list( 0 ).identifier(); // first element is the type
-
-        switch( actionId )
-        {
-        case MsgObjectMagicAction_Attribute_mine:
-            GetAttribute< MineAttribute >().OnUpdate( attribute );
-            break;
-        case MsgObjectMagicAction_Attribute_bypass:
-            GetAttribute< BypassAttribute >().OnUpdate( attribute );
-            break;
-        case MsgObjectMagicAction_Attribute_construction:
-            GetAttribute< ConstructionAttribute >().OnUpdate( attribute );
-            break;
-        case MsgObjectMagicAction_Attribute_obstacle:
-            GetAttribute< ObstacleAttribute >().OnUpdate( attribute );
-            break;
-        case MsgObjectMagicAction_Attribute_crossing_site:
-            GetAttribute< CrossingSiteAttribute >().OnUpdate( attribute );
-            break;
-        case MsgObjectMagicAction_Attribute_supply_route:
-            GetAttribute< SupplyRouteAttribute >().OnUpdate( attribute );
-            break;
-        default:
-            break;
-        }
-    }
-
-    return MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode_no_error;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::SendCreation
-// Created: JCR 2008-06-03
-// -----------------------------------------------------------------------------
-void Object::SendCreation() const
-{
-    if( pView_ && pView_->HideObject() )
-        return;
-
-    client::ObjectCreation asn;
-
-    asn().set_oid( GetID() );
-    asn().set_name( name_ );
-    asn().set_type( GetType().GetName() );
-    asn().set_team( GetArmy()->GetID() );
-
-    NET_ASN_Tools::WriteLocation( GetLocalisation(), *asn().mutable_location() );
-    std::for_each( attributes_.begin(), attributes_.end(), 
-                    boost::bind( &ObjectAttribute_ABC::SendFullState, _1, boost::ref( *asn().mutable_attributes() ) ) );
-    asn.Send( NET_Publisher_ABC::Publisher() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::SendDestruction
-// Created: JCR 2008-06-03
-// -----------------------------------------------------------------------------
-void Object::SendDestruction() const
-{
-    if( pView_ && pView_->HideObject() )
-        return;
-
-    client::ObjectDestruction asn;
-    asn().set_oid( GetID() );
-    asn.Send( NET_Publisher_ABC::Publisher() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::UpdateState
-// Created: JCR 2008-06-13
-// -----------------------------------------------------------------------------
-void Object::UpdateState()
-{
-    SendMsgUpdate();
-    MIL_Object_ABC::UpdateState();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::SendFullState
-// Created: JCR 2008-06-03
-// -----------------------------------------------------------------------------
-void Object::SendFullState() const
-{
-//    NotifyAttributeUpdated( eAttrUpdate_All );
-    xAttrToUpdate_ |= eAttrUpdate_Localisation;
-    SendMsgUpdate();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::Object::SendMsgUpdate
-// Created: JCR 2008-06-09
-// -----------------------------------------------------------------------------
-void Object::SendMsgUpdate() const
-{
-    if( pView_ && pView_->HideObject() )
-        return;
-
-    client::ObjectUpdate asn;
-    asn().set_oid( id_ );
-
-    std::for_each( attributes_.begin(), attributes_.end(),
-                   boost::bind( &ObjectAttribute_ABC::SendUpdate, _1, boost::ref( *asn().mutable_attributes() ) ) );
-
-    if( xAttrToUpdate_ & eAttrUpdate_Localisation )
-        NET_ASN_Tools::WriteLocation( GetLocalisation(), *asn().mutable_location() );
-    
-    Common::MsgObjectAttributes& attr = *asn().mutable_attributes();
-
-    if ( asn().has_location() || attr.has_construction() || attr.has_obstacle() 
-        || attr.has_mine() || attr.has_activity_time() || attr.has_bypass() 
-        || attr.has_logistic() || attr.has_nbc() || attr.has_crossing_site()
-        || attr.has_supply_route() || attr.has_toxic_cloud() || attr.has_fire()
-        || attr.has_medical_treatment() || attr.has_interaction_height() || attr.has_stock()
-        || attr.has_nbc_agent() )
-        asn.Send( NET_Publisher_ABC::Publisher() );
-    
-    xAttrToUpdate_ = 0;
-
-    if( asn().has_location() )
-        asn().mutable_location()->Clear();
-    asn().mutable_attributes()->Clear();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::GetHLAView
-// Created: AGE 2004-11-30
-// -----------------------------------------------------------------------------
-HLA_Object_ABC* Object::GetHLAView() const
-{
-    return pView_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::SetView
-// Created: AGE 2004-11-30
-// -----------------------------------------------------------------------------
-void Object::SetHLAView( HLA_Object_ABC& view )
-{
-    delete pView_;
-    pView_ = &view;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::Deserialize
-// Created: AGE 2004-11-30
-// -----------------------------------------------------------------------------
-void Object::Deserialize( const AttributeIdentifier& attributeID, Deserializer deserializer )
-{
-    if( attributeID == "coordonnees" )
-    {
-        TER_Localisation newLocalisation;
-        deserializer >> newLocalisation;
-        UpdateLocalisation( newLocalisation );
-    }
-    std::for_each( attributes_.begin(), attributes_.end(),
-                   boost::bind( &ObjectAttribute_ABC::Deserialize, _1, boost::cref( attributeID ), deserializer ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::Serialize
-// Created: AGE 2004-11-30
-// -----------------------------------------------------------------------------
-void Object::Serialize( HLA_UpdateFunctor& functor ) const
-{
-    functor.Serialize( "armee", false, GetArmy()->GetName() );
-    functor.Serialize( "type",  false, GetType().GetName() );
-    functor.Serialize( "coordonnees",   ( xAttrToUpdateForHLA_ & eAttrUpdate_Localisation ) != 0,           GetLocalisation() );
-    
-    std::for_each( attributes_.begin(), attributes_.end(),
-                   boost::bind( &ObjectAttribute_ABC::Serialize, _1, boost::ref( functor ) ) );
-
-    xAttrToUpdateForHLA_ = 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::CreateKnowledge
-// Created: JCR 2008-06-04
-// -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Object > Object::CreateKnowledge( const MIL_Army_ABC& team )
-{
-    boost::shared_ptr< DEC_Knowledge_Object > pKnowledge( new DEC_Knowledge_Object( team, *this ) );
-    std::for_each( attributes_.begin(), attributes_.end(),
-                   boost::bind( &ObjectAttribute_ABC::Instanciate, _1, boost::ref( *pKnowledge ) ) );
-    return pKnowledge;
-}
-
-// -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< DEC_Knowledge_Object > Object::CreateKnowledge
-// Created: LDC 2010-04-15
-// -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Object > Object::CreateKnowledge( const MIL_KnowledgeGroup& group )
-{
-    boost::shared_ptr< DEC_Knowledge_Object > pKnowledge( new DEC_Knowledge_Object( group, *this ) );
-    std::for_each( attributes_.begin(), attributes_.end(),
-                   boost::bind( &ObjectAttribute_ABC::Instanciate, _1, boost::ref( *pKnowledge ) ) );
-    return pKnowledge;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::UpdateLocatisation
-// Created: JCR 2008-06-12
-// -----------------------------------------------------------------------------
-void Object::UpdateLocalisation( const TER_Localisation& location )
-{
-    xAttrToUpdate_ |= eAttrUpdate_Localisation;    
-    MIL_Object_ABC::UpdateLocalisation( location );
-}
-
-#endif

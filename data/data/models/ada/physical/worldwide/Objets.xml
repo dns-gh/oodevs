@@ -312,4 +312,7 @@
     </constructor>
     <spawn action-range="1000" object="sensorsDetectionZone"/>
   </object>
+  <object geometry="polygon" name="Urban Block" symbol="" type="urban block">
+    <structural value="100"/>
+  </object>
 </objects>

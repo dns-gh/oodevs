@@ -17,6 +17,7 @@
 namespace MsgsSimToClient
 {
     class MsgUrbanCreation;
+    class MsgUrbanUpdate;
     class MsgUrbanAttributes;
 }
 
@@ -52,7 +53,8 @@ public:
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
     void Accept         ( kernel::ModelVisitor_ABC& visitor ) const;
-    void Update         ( const MsgsSimToClient::MsgUrbanCreation& msg  );
+    void Update         ( const MsgsSimToClient::MsgUrbanCreation& msg );
+    void Update         ( const MsgsSimToClient::MsgUrbanUpdate& msg  );
     //@}
 
 private:

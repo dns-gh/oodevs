@@ -21,6 +21,11 @@ namespace MsgsSimToClient
     enum MsgObjectMagicActionAck_ErrorCode;
 }
 
+namespace urban
+{
+    class TerrainObject_ABC;
+}
+
 class MIL_Army_ABC;
 class MIL_Object_ABC;
 class MIL_ObjectBuilder_ABC;
@@ -55,6 +60,7 @@ public:
     MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode  BuildObject( const Common::MsgMissionParameters& asn, MIL_Army_ABC& army );
     MIL_Object_ABC*                                     BuildObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation, Common::ObstacleType_DemolitionTargetType obstacleType );
     MIL_Object_ABC*                                     BuildObject( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army );
+    MIL_Object_ABC*                                     BuildUrbanObject( const urban::TerrainObject_ABC& object );
     //@}
 
     //! @name Accessors

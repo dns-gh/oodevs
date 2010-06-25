@@ -29,8 +29,8 @@ namespace urban
 namespace MsgsSimToClient
 {    
     class MsgUrbanCreation;
+    class MsgUrbanUpdate;
 }
-
 
 namespace gui
 {
@@ -43,6 +43,7 @@ namespace gui
 // =============================================================================
 class TerrainObjectProxy : public kernel::Extension_ABC                         
                          , public kernel::EntityImplementation< kernel::Entity_ABC > 
+                         , public kernel::Updatable_ABC< MsgsSimToClient::MsgUrbanUpdate >
 {
 
 public:
@@ -55,6 +56,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void DoUpdate( const MsgsSimToClient::MsgUrbanUpdate& message );
     virtual QString GetName() const;
     virtual unsigned long GetId() const;
     virtual void Select     ( kernel::ActionController& /*controller*/ ) const {};
@@ -77,6 +79,7 @@ public:
     //! @name Member data
     //@{
     urban::TerrainObject_ABC* object_;  // $$$$ _RC_ FDS 2010-01-15: Must be encapsulated -> private
+    float structuralState_;
 
     //@}
 

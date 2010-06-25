@@ -114,3 +114,15 @@ MIL_Object_ABC* MIL_ObjectFactory::BuildObject( const MIL_ObjectBuilder_ABC& bui
         manager_.RegisterObject( *pObject );
     return pObject;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ObjectFactory::BuildUrbanObject
+// Created: SLG 2010-06-23
+// -----------------------------------------------------------------------------
+MIL_Object_ABC* MIL_ObjectFactory::BuildUrbanObject( const urban::TerrainObject_ABC& object )
+{
+    MIL_Object_ABC* pObject = MIL_ObjectLoader::GetLoader().CreateUrbanObject( object );
+    if ( pObject )
+        manager_.RegisterObject( *pObject );
+    return pObject;
+}

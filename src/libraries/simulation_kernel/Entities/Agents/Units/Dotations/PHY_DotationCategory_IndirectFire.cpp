@@ -121,22 +121,27 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC& firer,
         TER_Agent_ABC::T_AgentPtrVector allTargets;
         TER_World::GetWorld().GetAgentManager().GetListWithinCircle(vTargetPosition, 500., allTargets );
 
+        std::vector< TER_Object_ABC* > objects;
+        TER_World::GetWorld().GetObjectManager().GetListWithinCircle( vTargetPosition, rInterventionTypeFired * rDispersionX_ , objects ); 
+
         std::vector< const urban::TerrainObject_ABC* > urbanList;
-        UrbanModel::GetSingleton().GetModel().GetListWithinCircle( geometry::Point2f( vTargetPosition.rX_, vTargetPosition.rX_ ), rInterventionTypeFired * rDispersionX_, urbanList );
-        
-        for( std::vector< const urban::TerrainObject_ABC* >::iterator it = urbanList.begin(); it != urbanList.end(); ++it )
+        UrbanModel::GetSingleton().GetModel().GetListWithinCircle( geometry::Point2f( vTargetPosition.rX_, vTargetPosition.rY_ ) , rInterventionTypeFired * rDispersionX_, urbanList ); 
+
+        for( std::vector< TER_Object_ABC* >::iterator it = objects.begin(); it != objects.end(); ++it )
         {
-            urban::TerrainObject_ABC* urbanObject = const_cast< urban::TerrainObject_ABC* >( *it );
-            UrbanObjectWrapper& wrapper = UrbanModel::GetSingleton().FindWrapper( *urbanObject );
-            StructuralCapacity* capacity = wrapper.Retrieve< StructuralCapacity >();
+            MIL_Object_ABC& object = *static_cast< MIL_Object_ABC* >( *it );
+            StructuralCapacity* capacity = object.Retrieve< StructuralCapacity >();
             if ( capacity )
-                capacity->ApplyIndirectFire( *urbanObject, attritionSurface, dotationCategory_ );
+                capacity->ApplyIndirectFire( object, attritionSurface, dotationCategory_ );
         }
+
         for( TER_Agent_ABC::CIT_AgentPtrVector itAllTarget = allTargets.begin(); itAllTarget != allTargets.end(); ++itAllTarget )
         {   
             MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **itAllTarget ).GetAgent();
-            if( std::find( targets.begin(), targets.end(), *itAllTarget ) == targets.end() || std::find( urbanList.begin(), urbanList.end(), target.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock() ) != urbanList.end() )
-                targets.push_back( *itAllTarget );
+            const UrbanObjectWrapper* wrapper = target.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
+            if( wrapper )
+                if( std::find( targets.begin(), targets.end(), *itAllTarget ) == targets.end() || std::find( urbanList.begin(), urbanList.end(), &wrapper->GetObject() ) != urbanList.end() )
+                    targets.push_back( *itAllTarget );
         }
 
         for( TER_Agent_ABC::CIT_AgentPtrVector itTarget = targets.begin(); itTarget != targets.end(); ++itTarget )

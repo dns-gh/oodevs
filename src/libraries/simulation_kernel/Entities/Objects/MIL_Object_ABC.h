@@ -19,6 +19,7 @@
 #include "ObjectCapacity_ABC.h"
 #include "ObjectAttribute_ABC.h"
 #include "tools/Extendable.h"
+#include "tools/MIL_IDManager.h"
 
 namespace MsgsSimToClient
 {
@@ -124,6 +125,12 @@ public:
     template< typename T> void ProcessAgentsInside( T functor ) const;
     //@}
 
+    //! @name Instanciate / Build / Copy object
+    //@{
+    virtual void Instanciate( MIL_Object_ABC& object ) const = 0; //<! create and register every prototyped capacity
+    virtual void Finalize() = 0; //<! finalize capacity instanciation : for instance once the object location has been defined
+    //@}
+
     //! @name Knowledge
     //@{
     virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( const MIL_Army_ABC& team ) = 0;
@@ -164,6 +171,7 @@ public:
     const MIL_ObjectType_ABC& GetType() const;
     const MIL_Army_ABC* GetArmy() const;
           MIL_Army_ABC* GetArmy();
+    virtual unsigned int  GetMaterial() const = 0;
     //@}
 
     //! @name Extensions
@@ -186,6 +194,9 @@ protected:
     virtual void Register( ObjectAttribute_ABC* attribute ) = 0;
     virtual void Register( ObjectCapacity_ABC* capacity ) = 0;
     //@}
+
+protected:
+    static MIL_IDManager idManager_;
 
 private:
     //! @name Members

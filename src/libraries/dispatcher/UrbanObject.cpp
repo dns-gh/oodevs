@@ -9,6 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "ArchitectureAttribute.h"
+#include "CapacityAttribute.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "ColorAttribute.h"
@@ -54,6 +55,7 @@ void UrbanObject::Initialize( Model& model, const MsgsSimToClient::MsgUrbanAttri
 {
     MSG_ASN_CREATION( color         , ColorAttribute );
     MSG_ASN_CREATION( architecture  , ArchitectureAttribute );
+    MSG_ASN_CREATION( capacity  , CapacityAttribute );
 }
 
 // -----------------------------------------------------------------------------
@@ -87,9 +89,16 @@ void UrbanObject::SendCreation( ClientPublisher_ABC& publisher ) const
 // Name: UrbanObject::SendCreation
 // Created: SLG 2009-09-27
 // -----------------------------------------------------------------------------
-void UrbanObject::SendFullUpdate( ClientPublisher_ABC& /*publisher*/ ) const
+void UrbanObject::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
-    //TODO
+    client::UrbanUpdate asn;
+
+    asn().set_oid( GetId() );
+
+    std::for_each( attributes_.begin(), attributes_.end(),
+        boost::bind( &UrbanObjectAttribute_ABC::Send, _1, boost::ref( *asn().mutable_attributes() ) ) );
+
+    asn.Send( publisher );
 }
 
 // -----------------------------------------------------------------------------
@@ -107,7 +116,17 @@ void UrbanObject::SendDestruction( ClientPublisher_ABC& /*publisher*/ ) const
 // -----------------------------------------------------------------------------
 void UrbanObject::Update( const MsgsSimToClient::MsgUrbanCreation& msg )
 {
-    //ApplyUpdate( msg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::Update
+// Created: AGE 2007-04-12
+// -----------------------------------------------------------------------------
+void UrbanObject::Update( const MsgsSimToClient::MsgUrbanUpdate& msg )
+{
+    if( msg.has_attributes() )
+        std::for_each( attributes_.begin(), attributes_.end(),
+            boost::bind( &UrbanObjectAttribute_ABC::Update, _1, boost::cref( msg.attributes() ) ) );
 }
 
 // -----------------------------------------------------------------------------

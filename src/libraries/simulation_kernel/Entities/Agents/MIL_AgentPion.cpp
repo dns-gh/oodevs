@@ -337,15 +337,6 @@ bool MIL_AgentPion::IsNeutralized() const
     return GetRole< PHY_RolePion_Composantes >().IsNeutralized();
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::GetMajorWeight
-// Created: RPD 2009-08-19
-// -----------------------------------------------------------------------------
-MT_Float MIL_AgentPion::GetMajorComponentWeight() const
-{
-    return GetRole< PHY_RolePion_Composantes >().GetMajorComponentWeight();
-}
-
 // =============================================================================
 // UPDATES
 // =============================================================================
@@ -503,16 +494,6 @@ void MIL_AgentPion::Clean()
 // =============================================================================
 // ACCESSORS
 // =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::CanFly
-// Created: NLD 2005-08-08
-// -----------------------------------------------------------------------------
-bool MIL_AgentPion::CanFly() const
-{
-    assert( pType_ );
-    return pType_->GetUnitType().CanFly();
-}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::IsAutonomous

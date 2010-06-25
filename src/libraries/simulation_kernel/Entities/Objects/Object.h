@@ -14,7 +14,6 @@
 #include "MIL_Object_ABC.h"
 #include "CapacityContainer_ABC.h"
 #include "tools/Extendable.h"
-#include "Tools/MIL_IDManager.h"
 
 namespace Common
 {
@@ -77,8 +76,8 @@ public:
 
     //! @name Instanciate / Build / Copy object
     //@{
-    void Instanciate( Object& object ) const; //<! create and register every prototyped capacity
-    void Finalize(); //<! finalize capacity instanciation : for instance once the object location has been defined
+    virtual void Instanciate( MIL_Object_ABC& object ) const; //<! create and register every prototyped capacity
+    virtual void Finalize(); //<! finalize capacity instanciation : for instance once the object location has been defined
     //@}
 
     //! @name Knowledge
@@ -123,7 +122,9 @@ public:
 
     //! @name 
     //@{
-    unsigned int  GetID() const;    
+    unsigned int  GetID() const;
+    virtual unsigned int  GetMaterial() const{ return std::numeric_limits< unsigned int >::max(); };   // $$$$ _TODO_ SLG 2010-06-24: mettre en place un système de material pour les objets
+
     //@}
 
 private:
@@ -193,8 +194,6 @@ private:
     mutable unsigned char xAttrToUpdate_;
     mutable unsigned char xAttrToUpdateForHLA_;
     //@}
-
-    static MIL_IDManager idManager_;
 };
 
 BOOST_CLASS_EXPORT_KEY( Object )

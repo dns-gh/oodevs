@@ -120,7 +120,8 @@ void MIL_ObjectManager::RegisterObject( MIL_Object_ABC& object )
     if( ! objects_.insert( std::make_pair( object.GetID(), &object ) ).second )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
     object.SendCreation(); //$$$ a déplacer ...
-    object.GetArmy()->GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddEphemeralObjectKnowledge( object ); //$$$ A CHANGER DE PLACE QUAND REFACTOR OBJETS -- NB : ne doit pas être fait dans RealObject::InitializeCommon <= crash dans connaissance, si initialisation objet failed
+    if( object.GetArmy() )
+        object.GetArmy()->GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddEphemeralObjectKnowledge( object ); //$$$ A CHANGER DE PLACE QUAND REFACTOR OBJETS -- NB : ne doit pas être fait dans RealObject::InitializeCommon <= crash dans connaissance, si initialisation objet failed
 }
 
 // -----------------------------------------------------------------------------
@@ -187,9 +188,44 @@ MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC& army, const MIL_O
     return builder_->BuildObject( builder, army );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_ObjectManager::CreateUrbanObject
+// Created: SLG 2010-06-23
+// -----------------------------------------------------------------------------
+MIL_Object_ABC* MIL_ObjectManager::CreateUrbanObject( const urban::TerrainObject_ABC& object )
+{
+    return builder_->BuildUrbanObject( object );
+}
+
 // =============================================================================
 // NETWORK
 // =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ObjectManager::SendCreation
+// Created: SLG 2010-06-23
+// -----------------------------------------------------------------------------
+void MIL_ObjectManager::SendCreation()
+{
+    for( IT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
+    {
+        MIL_Object_ABC& object = *it->second;
+        object.SendCreation();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ObjectManager::SendFullState
+// Created: SLG 2010-06-23
+// -----------------------------------------------------------------------------
+void MIL_ObjectManager::SendFullState()
+{
+    for( IT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
+    {
+        MIL_Object_ABC& object = *it->second;
+        object.SendFullState();
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectManager::OnReceiveMsgObjectMagicAction

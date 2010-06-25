@@ -12,7 +12,7 @@
 
 #include "MIL.h"
 #include "PHY_RoleInterface_UrbanLocation.h"
-#include "UrbanBlockCollisionNotificationHandler_ABC.h"
+#include "ObjectCollisionNotificationHandler_ABC.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 #include "MT_Tools/MT_Random.h"
 
@@ -21,6 +21,12 @@ namespace posture
     class PostureComputer_ABC;
 }
 
+namespace moving
+{
+    class SpeedComputer_ABC;
+}
+
+class MIL_Object_ABC;
 class UrbanBlockPosition_ABC;
 
 // =============================================================================
@@ -30,8 +36,9 @@ class UrbanBlockPosition_ABC;
 // Created: SLG 2010-04-08
 // =============================================================================
 class PHY_RolePion_UrbanLocation : public PHY_RoleInterface_UrbanLocation
-                                 , public terrain::UrbanBlockCollisionNotificationHandler_ABC
+                                 , public terrain::ObjectCollisionNotificationHandler_ABC
                                  , public tools::AlgorithmModifier_ABC< posture::PostureComputer_ABC >
+                                 , public tools::AlgorithmModifier_ABC< moving::SpeedComputer_ABC >
 {
 
 public:
@@ -59,17 +66,20 @@ public:
     virtual float               ComputeRatioPionInside( const MT_Ellipse& attritionSurface ) const;
     virtual float               ComputeRatioPionInside( const geometry::Polygon2f& polygon, float modificator ) const;
     void                        Execute( posture::PostureComputer_ABC& algorithm ) const;
+    void                        Execute( moving::SpeedComputer_ABC& algorithm ) const;
     //@}
 
     //! @name Event handlers
     //@{
-    virtual void NotifyMovingInsideUrbanBlock( const urban::TerrainObject_ABC& urbanObject );
-    virtual void NotifyMovingOutsideUrbanBlock( const urban::TerrainObject_ABC& urbanObject );
+    virtual void NotifyMovingInsideObject( MIL_Object_ABC& urbanObject );
+    virtual void NotifyMovingOutsideObject( MIL_Object_ABC& urbanObject );
+    virtual void NotifyPutInsideObject( MIL_Object_ABC& object ) {};
+    virtual void NotifyPutOutsideObject( MIL_Object_ABC& object ) {};
     //@}
 
     //! @name Accessors
     //@{
-    virtual const urban::TerrainObject_ABC* GetCurrentUrbanBlock() const;
+    virtual const UrbanObjectWrapper* GetCurrentUrbanBlock() const;
     virtual bool IsInCity() const;
     //@}
 
@@ -84,12 +94,6 @@ private:
     PHY_RolePion_UrbanLocation& operator=( const PHY_RolePion_UrbanLocation& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    void CityMagicMove( const geometry::Point2f& point );
-    void UrbanBlockMagicMove( const geometry::Point2f& point );
-    //@}
-
     //! @name Types
     //@{
     typedef std::vector< const urban::TerrainObject_ABC* > T_Cities;
@@ -100,7 +104,7 @@ private:
     //! @name Member data
     //@{
     MIL_Agent_ABC& pion_;
-    const urban::TerrainObject_ABC* urbanObject_;
+    const UrbanObjectWrapper* urbanObject_;
     std::auto_ptr< UrbanBlockPosition_ABC > delegate_;
     bool isInCity_; 
     //@}

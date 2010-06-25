@@ -18,9 +18,9 @@
 #include "Entities/Orders/MIL_Report.h"
 #include "UrbanModel.h"
 #include "protocol/protocol.h"
+#include <urban/Architecture.h>
 #include <urban/Model.h>
 #include <urban/TerrainObject_ABC.h>
-#include <urban/Architecture.h>
 
 //$$$ Refactorer gestion collisions objets
 
@@ -261,90 +261,19 @@ void DEC_PathWalker::ComputeObjectsCollision( const MT_Vector2D& vStart, const M
     }
 }
 
-//-----------------------------------------------------------------------------
-// Name: DEC_PathWalker::ComputeObjectsCollision
-// Created: NLD 2002-12-17
-//-----------------------------------------------------------------------------
-void DEC_PathWalker::ComputeUrbanBlocksCollision( const MT_Vector2D& vStart, const MT_Vector2D& vEnd, T_MoveStepSet& moveStepSet, const std::vector< const urban::TerrainObject_ABC* > urbanBlocks )
-{   
-    geometry::Point2f start( static_cast< float >( vStart.rX_ ), static_cast< float >( vStart.rY_ ) );
-    geometry::Point2f end( static_cast< float >( vEnd.rX_ ), static_cast< float >( vEnd.rY_ ) );
-    
-    geometry::Segment2f lineTmp( start, end );
-    moveStepSet.insert( T_MoveStep( vStart ) );
-    moveStepSet.insert( T_MoveStep( vEnd   ) );
-
-    geometry::Polygon2f::T_Vertices collisions;
-
-    for( std::vector< const urban::TerrainObject_ABC* >::const_iterator itUrbanBlock = urbanBlocks.begin(); itUrbanBlock != urbanBlocks.end(); ++itUrbanBlock )
-    {
-        const urban::TerrainObject_ABC& urbanBlock = **itUrbanBlock;
-        const geometry::Polygon2f* urbanBlockPolygon = (*itUrbanBlock)->GetFootprint();
-        collisions = urbanBlockPolygon->Intersect( lineTmp ); 
-        // Ajout des points de collision dans moveStepSet
-        if( !collisions.empty() )
-        {           
-            for( geometry::Polygon2f::IT_Vertices itPoint = collisions.begin(); itPoint != collisions.end(); ++itPoint )
-            {
-                geometry::Point2f& vPoint = *itPoint;
-                //assert( urbanBlockPolygon->IsInside( vPoint ) );
-
-                IT_MoveStepSet itMoveStep = moveStepSet.insert( T_MoveStep( MT_Vector2D( vPoint.X(), vPoint.Y() ) ) ).first;
-                itMoveStep->ponctualUrbanBlocksOnSet_.insert( &urbanBlock );
-
-                // A - C - B ( Le point C ajouté entre A et B contient les mêmes objets que de A -> B)
-                if( itMoveStep != moveStepSet.begin() )
-                {
-                    IT_MoveStepSet itPrevMoveStep = itMoveStep;
-                    itMoveStep->urbanBlocksToNextPointSet_ = (--itPrevMoveStep)->urbanBlocksToNextPointSet_;
-                }
-            }
-            collisions.clear();
-        }
-
-        // Détermination si objet courant se trouve sur le trajet entre chaque point 
-        IT_MoveStepSet itPrevMoveStep = moveStepSet.begin();
-        bool bInsideObjectOnPrevPoint = false;
-        for( IT_MoveStepSet itMoveStep = ++(moveStepSet.begin()); itMoveStep != moveStepSet.end(); ++itMoveStep )
-        {           
-            // Picking au milieu de la ligne reliant les 2 points
-            MT_Vector2D vTmp = ( itMoveStep->vPos_ + itPrevMoveStep->vPos_ ) / 2;
-            geometry::Point2f tmp( static_cast< float >( vTmp.rX_ ), static_cast< float >( vTmp.rY_ ) );
-            if( urbanBlockPolygon->IsInside( tmp ) )
-            {
-                itPrevMoveStep->urbanBlocksToNextPointSet_.insert( &urbanBlock );
-                bInsideObjectOnPrevPoint = true;
-                itPrevMoveStep->ponctualUrbanBlocksOnSet_.erase( &urbanBlock ); // This is not yet a ponctual object
-            }
-            else
-            {
-                // Stockage des objets desquels on sort
-                if( bInsideObjectOnPrevPoint )
-                {
-                    itMoveStep->urbanBlocksOutSet_.insert( &urbanBlock );
-                    bInsideObjectOnPrevPoint = false;
-                }
-            }
-            itPrevMoveStep = itMoveStep;
-        }
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: DEC_PathWalker::TryToMoveToNextStep
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
 bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_MoveStepSet itNextMoveStep, MT_Float& rTimeRemaining, bool bFirstMove )
-{
-    TryToCrossUrbanBlocks( itCurMoveStep, itNextMoveStep );
-    
+{  
     static int nDistanceBeforeBlockingObject = -10;
     CIT_ObjectSet itObject;
 
     // Prise en compte des objets ponctuels se trouvant sur le 'move step'
     for( itObject = itCurMoveStep->ponctualObjectsOnSet_.begin(); itObject != itCurMoveStep->ponctualObjectsOnSet_.end(); ++itObject )
     {
-        MIL_Object_ABC& object = **itObject;
+        MIL_Object_ABC& object = const_cast< MIL_Object_ABC& >( **itObject );
 
         MT_Float rSpeedWithinObject = movingEntity_.GetSpeedWithReinforcement( environment_, object );
    
@@ -353,7 +282,7 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
             movingEntity_.NotifyMovingInsideObject( object );            
             if( rSpeedWithinObject == 0. )
             {
-                rSpeedWithinObject = 0;
+                rCurrentSpeed_ = 0;
                 vNewPos_           = ( itCurMoveStep->vPos_ + ( vNewDir_ * nDistanceBeforeBlockingObject ) );
                 movingEntity_.NotifyMovingOutsideObject( object );  // $$$$ NLD 2007-05-07: 
                 return false;
@@ -365,7 +294,7 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
     MT_Float rMaxSpeedForStep = std::numeric_limits< MT_Float >::max();
     for( itObject = itCurMoveStep->objectsToNextPointSet_.begin(); itObject != itCurMoveStep->objectsToNextPointSet_.end(); ++itObject )
     {
-        MIL_Object_ABC& object = **itObject;
+        MIL_Object_ABC& object = const_cast< MIL_Object_ABC& >( **itObject );
         movingEntity_.NotifyMovingInsideObject( object );
 
         rMaxSpeedForStep = std::min( rMaxSpeedForStep, movingEntity_.GetSpeedWithReinforcement( environment_, object) );        
@@ -380,7 +309,7 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
 
     // itCurMoveStep a pu être dépassé => notification des objets dont on sort
     for( itObject = itNextMoveStep->objectsOutSet_.begin(); itObject != itNextMoveStep->objectsOutSet_.end(); ++itObject )
-        movingEntity_.NotifyMovingOutsideObject( **itObject );
+        movingEntity_.NotifyMovingOutsideObject( const_cast< MIL_Object_ABC& >( **itObject ) );
 
     if( rMaxSpeedForStep != std::numeric_limits< MT_Float >::max() )
         rCurrentSpeed_ = rMaxSpeedForStep;
@@ -401,28 +330,6 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: DEC_PathWalker::TryToCrossUrbanBlocks
-// Created: SLG 2010-04-09
-// -----------------------------------------------------------------------------
-void DEC_PathWalker::TryToCrossUrbanBlocks( CIT_MoveStepSet itCurMoveStep, CIT_MoveStepSet itNextMoveStep )
-{
-    CIT_UrbanBlockSet itUrbanBlock;
-    double urbanBlockFactor = 1.;
-    for( itUrbanBlock = itCurMoveStep->urbanBlocksToNextPointSet_.begin(); itUrbanBlock != itCurMoveStep->urbanBlocksToNextPointSet_.end(); ++itUrbanBlock )
-    {
-        const urban::TerrainObject_ABC& urbanBlock = **itUrbanBlock;
-        movingEntity_.NotifyMovingInsideUrbanBlock( urbanBlock );
-        const urban::Architecture* architecture = urbanBlock.RetrievePhysicalFeature< urban::Architecture >();
-        if( architecture )
-            urbanBlockFactor = std::min( urbanBlockFactor, 1. - architecture->GetOccupation() );
-    }
-    rCurrentSpeed_ *= urbanBlockFactor;
-
-    for( itUrbanBlock = itNextMoveStep->urbanBlocksOutSet_.begin(); itUrbanBlock != itNextMoveStep->urbanBlocksOutSet_.end(); ++itUrbanBlock )
-        movingEntity_.NotifyMovingOutsideUrbanBlock( **itUrbanBlock );
-}
-
 //-----------------------------------------------------------------------------
 // Name: DEC_PathWalker::TryToMoveTo
 // Created: NLD 2002-12-17
@@ -438,21 +345,9 @@ bool DEC_PathWalker::TryToMoveTo( const DEC_PathResult& path, const MT_Vector2D&
     bool bFirstMove = ( (float)vNewPos_.rX_ == (float)(*path.GetResult().begin())->GetPos().rX_ && (float)vNewPos_.rY_ == (float)(*path.GetResult().begin())->GetPos().rY_ );
 
     sMoveStepCmp  cmp( vNewPos_ );
-    T_MoveStepSet moveStepSet( cmp ); 
-   
-    moveStepSet.clear();
+    T_MoveStepSet moveStepSet( cmp );
+
     ComputeObjectsCollision( vNewPos_, vNewPosTmp, moveStepSet );
-
-    // Récupération de la liste des bloc urbain dynamiques contenus dans le rayon vEnd - vStart
-    geometry::Point2f start( vNewPos_.rX_, vNewPos_.rY_ );
-    geometry::Point2f end( vNewPosTmp.rX_, vNewPosTmp.rY_ );
-    std::vector< const urban::TerrainObject_ABC* > urbanBlocks;
-    UrbanModel::GetSingleton().GetModel().GetListWithinCircle( geometry::Point2f( vNewPos_.rX_, vNewPos_.rY_ ), 500/*start.Distance( end )*/, urbanBlocks ); // $$$$ _RC_ SLG 2010-05-12: 500 devrait être remplacé par la taille du plus grand bloc urbain 
-    ComputeUrbanBlocksCollision( vNewPos_, vNewPosTmp, moveStepSet, urbanBlocks );
-
-    // Récupération des villes
-    std::vector< const urban::TerrainObject_ABC* > cities = UrbanModel::GetSingleton().GetModel().GetCities();
-    ComputeUrbanBlocksCollision( vNewPos_, vNewPosTmp, moveStepSet, cities );
 
     assert( moveStepSet.size() >= 2 );
 
@@ -618,6 +513,3 @@ bool DEC_PathWalker::SerializeCurrentPath( Common::MsgPath& asn ) const
     pCurrentPath_->Serialize( asn );
     return true;
 }
-
-
-

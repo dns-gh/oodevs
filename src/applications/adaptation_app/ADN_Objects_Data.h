@@ -159,6 +159,7 @@ public:
         eTimeLimitedCapacity,
         eWorkableCapacity,
         eSpawnCapacity,
+        eStructuralCapacity,
         eAttitudeModifierCapacity,
         ePerceptionCapacity,
         eScatteringCapacity
@@ -580,6 +581,30 @@ public:
     public:
         ADN_Type_String strObjectType_;
         ADN_Type_Double rActionRange_;
+    };
+
+    class ADN_CapacityInfos_Structural
+        : public ADN_CapacityInfos_Default< eStructuralCapacity >
+    {
+    public:
+        static const std::string TAG;
+        static const std::string DISPLAY_NAME;
+        ADN_CapacityInfos_Structural();
+
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
+
+        const std::string& displayName() const
+        {
+            return DISPLAY_NAME;
+        }
+        const std::string& tag() const
+        {
+            return TAG;
+        }
+
+    public:
+        ADN_Type_Int rStructuralState_;
     };
 
     class ADN_CapacityInfos_AttitudeModifier

@@ -1538,6 +1538,15 @@ void AgentServerMsgMgr::OnReceiveMsgUrbanCreation( const MsgsSimToClient::MsgUrb
     GetModel().urbanObjects_.Create( message );
 }
 
+//-----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgUrbanObjectUpdate
+// Created: SLG 2010-06-22
+//-----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgUrbanUpdate( const MsgsSimToClient::MsgUrbanUpdate& message )
+{
+    GetModel().urbanObjects_.GetObject( message.oid() ).Update( message );
+}
+
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgUrbanDetection
 // Created: MGD 2009-12-10
@@ -1858,6 +1867,8 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& , const Msgs
         OnReceiveMsgFolkGraphUpdate( wrapper.message().folk_graph_update() ); 
     else if( wrapper.message().has_urban_creation() )
         OnReceiveMsgUrbanCreation( wrapper.message().urban_creation() );
+    else if( wrapper.message().has_urban_update() )
+        OnReceiveMsgUrbanUpdate( wrapper.message().urban_update() );
     else if( wrapper.message().has_urban_detection() )
         OnReceiveMsgUrbanDetection( wrapper.message().urban_detection() );
     else if( wrapper.message().has_urban_knowledge_creation() )

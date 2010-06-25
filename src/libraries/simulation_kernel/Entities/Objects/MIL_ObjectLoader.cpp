@@ -13,6 +13,7 @@
 #include "CapacityFactory.h"
 #include "Object.h"
 #include "ObjectPrototype.h"
+#include "UrbanObjectWrapper.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Network/NET_ASN_Tools.h"
 #include "protocol/protocol.h"
@@ -181,6 +182,20 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const MIL_ObjectBuilder_ABC& bui
     Object* pObject = new Object( *it->second, army, 0 );
     builder.Build( *pObject );
     pObject->Finalize();
+    return pObject;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ObjectLoader::CreateUrbanObject
+// Created: SLG 2010-06-23
+// -----------------------------------------------------------------------------
+MIL_Object_ABC* MIL_ObjectLoader::CreateUrbanObject( const urban::TerrainObject_ABC& object ) const
+{
+    CIT_Prototypes it = prototypes_.find( "urban block" );
+    if ( it == prototypes_.end() )
+        return 0;
+    UrbanObjectWrapper* pObject = new UrbanObjectWrapper( *it->second, object );
+    // pObject->Finalize();
     return pObject;
 }
 

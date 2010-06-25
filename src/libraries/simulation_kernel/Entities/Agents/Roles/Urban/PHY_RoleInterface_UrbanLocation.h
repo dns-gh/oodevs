@@ -23,6 +23,7 @@ namespace urban
     class TerrainObject_ABC;
 }
 
+class UrbanObjectWrapper;
 class PHY_DotationCategory;
 class MIL_Agent_ABC;
 
@@ -61,7 +62,7 @@ public:
 
     //! @name Accessors
     //@{
-    virtual const urban::TerrainObject_ABC* GetCurrentUrbanBlock() const = 0;
+    virtual const UrbanObjectWrapper* GetCurrentUrbanBlock() const = 0;
     virtual bool IsInCity() const = 0;
     //@}
 

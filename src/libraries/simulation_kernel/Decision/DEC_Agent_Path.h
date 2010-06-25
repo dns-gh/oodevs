@@ -52,10 +52,10 @@ public:
     //@}
 
 public:
-     DEC_Agent_Path( const MIL_AgentPion& queryMaker, const MT_Vector2D&   vPosEnd, const DEC_PathType& pathType );
-     DEC_Agent_Path( const MIL_AgentPion& queryMaker, const MT_Vector2D&   vPosEnd, const DEC_PathType& pathType, bool loaded  );
-     DEC_Agent_Path( const MIL_AgentPion& queryMaker, std::vector< boost::shared_ptr< MT_Vector2D > >& points , const DEC_PathType& pathType );
-     DEC_Agent_Path( const MIL_AgentPion& queryMaker, const T_PointVector& points , const DEC_PathType& pathType );
+     DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const MT_Vector2D&   vPosEnd, const DEC_PathType& pathType );
+     DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const MT_Vector2D&   vPosEnd, const DEC_PathType& pathType, bool loaded  );
+     DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, std::vector< boost::shared_ptr< MT_Vector2D > >& points , const DEC_PathType& pathType );
+     DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const T_PointVector& points , const DEC_PathType& pathType );
      DEC_Agent_Path( const DEC_Agent_Path& rhs ); // Copy only query parameters, not the result !
     virtual ~DEC_Agent_Path();
 
@@ -115,7 +115,7 @@ private:
     //@}
  
 private:   
-    const MIL_AgentPion& queryMaker_;   
+    const MIL_Agent_ABC& queryMaker_;   
     
     // Path calculation parameters
     const DEC_PathType&                      pathType_; //$$$ A VIRER

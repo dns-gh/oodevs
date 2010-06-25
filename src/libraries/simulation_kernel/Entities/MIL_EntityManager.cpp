@@ -84,10 +84,12 @@
 #include "simulation_kernel/FormationFactory.h"
 #include "simulation_kernel/PopulationFactory.h"
 #include "simulation_kernel/Knowledge/KnowledgeGroupFactory.h"
+#include "simulation_kernel/UrbanModel.h"
 #include "simulation_kernel/UrbanType.h"
 #include "Tools/MIL_IDManager.h"
 #include "Tools/MIL_ProfilerMgr.h"
 #include "Tools/MIL_Tools.h"
+#include <urban/ObjectVisitor_ABC.h>
 #include <xeumeuleu/xml.h>
 
 #include "protocol/ClientSenders.h"
@@ -244,6 +246,40 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
         automateFactory_->Apply( boost::bind( &MIL_Automate::Disengage, _1 ) );
     }
     UpdateStates();
+}
+
+class MIL_EntityManager::UrbanWrapperVisitor : public urban::ObjectVisitor_ABC
+{
+public:
+    UrbanWrapperVisitor( MIL_EntityManager& manager ) : manager_( manager ) 
+    {}
+    ~UrbanWrapperVisitor(){}
+    virtual void Visit( const urban::TerrainObject_ABC& object )
+    {
+        manager_.CreateUrbanObject( object );
+    }
+private: 
+    MIL_EntityManager& manager_;
+};
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::CreateUrbanObjects
+// Created: SLG 2010-06-23
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::CreateUrbanObjects( UrbanModel& urbanModel )
+{
+    UrbanWrapperVisitor visitor( *this );
+    urbanModel.Accept( visitor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::CreateUrbanObjectWrapper
+// Created: SLG 2010-06-23
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::CreateUrbanObject( const urban::TerrainObject_ABC& object )
+{
+    assert( pObjectManager_ );
+    pObjectManager_->CreateUrbanObject( object );
 }
 
 // -----------------------------------------------------------------------------
@@ -634,6 +670,8 @@ void MIL_EntityManager::SendStateToNewClient() const
     armyFactory_->Apply( boost::bind( &MIL_Army_ABC::SendCreation, _1 ) );
     armyFactory_->Apply( boost::bind( &MIL_Army_ABC::SendFullState, _1 ) );
     armyFactory_->Apply( boost::bind( &MIL_Army_ABC::SendKnowledge, _1 ) );
+    pObjectManager_->SendCreation();
+    pObjectManager_->SendFullState();
 }
 
 // -----------------------------------------------------------------------------

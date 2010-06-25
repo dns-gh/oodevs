@@ -69,7 +69,7 @@ void TER_ObjectManager::GetListWithinCircle( const MT_Vector2D& vCenter, MT_Floa
     while( view.HasMoreElements() )
     {
         TER_Object_ABC* pObject = view.NextElement();
-        if( pObject && pObject->Intersect2DWithCircle( vCenter, rRadius ) )
+        if( pObject && pObject->GetLocalisation().GetArea() && pObject->Intersect2DWithCircle( vCenter, rRadius ) )
             objects.push_back( pObject );
     };
 }
@@ -86,7 +86,7 @@ void TER_ObjectManager::GetListWithinCircle2( const MT_Vector2D& vCenter, MT_Flo
     while( view.HasMoreElements() )
     {
         TER_Object_ABC* pObject = view.NextElement();
-        if( pObject && pObject->Intersect2DWithCircle( vCenter, rRadius ) )
+        if( pObject && pObject->GetLocalisation().GetArea() && pObject->Intersect2DWithCircle( vCenter, rRadius ) )
             objects.push_back( pObject );
     };
 }

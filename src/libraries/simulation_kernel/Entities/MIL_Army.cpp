@@ -599,7 +599,6 @@ void MIL_Army::SendCreation() const
         it->second->SendCreation();
 
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::SendCreation, _1 ) );
-    tools::Resolver< MIL_Object_ABC >::Apply( boost::bind( &MIL_Object_ABC::SendCreation, _1 ) ); 
     tools::Resolver< MIL_Population >::Apply( boost::bind( &MIL_Population::SendCreation, _1 ) );
 }
 
@@ -622,7 +621,6 @@ void MIL_Army::SendFullState() const
         it->second->SendFullState();
 
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::SendFullState, _1 ) );
-    tools::Resolver< MIL_Object_ABC >::Apply( boost::bind( &MIL_Object_ABC::SendFullState, _1 ) );
     tools::Resolver< MIL_Population >::Apply( boost::bind( &MIL_Population::SendFullState, _1 ) );
 }
 

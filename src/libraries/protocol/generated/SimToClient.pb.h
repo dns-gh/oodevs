@@ -183,6 +183,7 @@ class MsgControlCheckPointSaveEnd;
 class MsgControlSendCurrentStateBegin;
 class MsgControlSendCurrentStateEnd;
 class MsgUrbanAttributeArchitecture;
+class MsgUrbanAttributeCapacity;
 class MsgColorRGBA;
 class MagicActionCreateUrban;
 class MagicActionUpdateUrban;
@@ -17160,6 +17161,93 @@ class MsgUrbanAttributeArchitecture : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
+class MsgUrbanAttributeCapacity : public ::google::protobuf::Message {
+ public:
+  MsgUrbanAttributeCapacity();
+  virtual ~MsgUrbanAttributeCapacity();
+  
+  MsgUrbanAttributeCapacity(const MsgUrbanAttributeCapacity& from);
+  
+  inline MsgUrbanAttributeCapacity& operator=(const MsgUrbanAttributeCapacity& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgUrbanAttributeCapacity& default_instance();
+  void Swap(MsgUrbanAttributeCapacity* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgUrbanAttributeCapacity* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgUrbanAttributeCapacity& from);
+  void MergeFrom(const MsgUrbanAttributeCapacity& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required float structuralState = 1;
+  inline bool has_structuralstate() const;
+  inline void clear_structuralstate();
+  static const int kStructuralStateFieldNumber = 1;
+  inline float structuralstate() const;
+  inline void set_structuralstate(float value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  float structuralstate_;
+  friend void  protobuf_AddDesc_SimToClient_2eproto();
+  friend void protobuf_AssignDesc_SimToClient_2eproto();
+  friend void protobuf_ShutdownFile_SimToClient_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgUrbanAttributeCapacity* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class MsgColorRGBA : public ::google::protobuf::Message {
  public:
   MsgColorRGBA();
@@ -17821,10 +17909,17 @@ class MsgUrbanAttributes : public ::google::protobuf::Message {
   inline const ::MsgsSimToClient::MsgUrbanAttributeArchitecture& architecture() const;
   inline ::MsgsSimToClient::MsgUrbanAttributeArchitecture* mutable_architecture();
   
-  // optional .MsgsSimToClient.MsgColorRGBA color = 2;
+  // optional .MsgsSimToClient.MsgUrbanAttributeCapacity capacity = 2;
+  inline bool has_capacity() const;
+  inline void clear_capacity();
+  static const int kCapacityFieldNumber = 2;
+  inline const ::MsgsSimToClient::MsgUrbanAttributeCapacity& capacity() const;
+  inline ::MsgsSimToClient::MsgUrbanAttributeCapacity* mutable_capacity();
+  
+  // optional .MsgsSimToClient.MsgColorRGBA color = 3;
   inline bool has_color() const;
   inline void clear_color();
-  static const int kColorFieldNumber = 2;
+  static const int kColorFieldNumber = 3;
   inline const ::MsgsSimToClient::MsgColorRGBA& color() const;
   inline ::MsgsSimToClient::MsgColorRGBA* mutable_color();
   
@@ -17833,12 +17928,13 @@ class MsgUrbanAttributes : public ::google::protobuf::Message {
   mutable int _cached_size_;
   
   ::MsgsSimToClient::MsgUrbanAttributeArchitecture* architecture_;
+  ::MsgsSimToClient::MsgUrbanAttributeCapacity* capacity_;
   ::MsgsSimToClient::MsgColorRGBA* color_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -18141,17 +18237,25 @@ class MsgUrbanUpdate : public ::google::protobuf::Message {
   inline const ::Common::MsgLocation& location() const;
   inline ::Common::MsgLocation* mutable_location();
   
+  // optional .MsgsSimToClient.MsgUrbanAttributes attributes = 3;
+  inline bool has_attributes() const;
+  inline void clear_attributes();
+  static const int kAttributesFieldNumber = 3;
+  inline const ::MsgsSimToClient::MsgUrbanAttributes& attributes() const;
+  inline ::MsgsSimToClient::MsgUrbanAttributes* mutable_attributes();
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
   ::google::protobuf::uint32 oid_;
   ::Common::MsgLocation* location_;
+  ::MsgsSimToClient::MsgUrbanAttributes* attributes_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -20103,108 +20207,115 @@ class MsgSimToClient_Content : public ::google::protobuf::Message {
   inline const ::MsgsSimToClient::MsgUrbanCreation& urban_creation() const;
   inline ::MsgsSimToClient::MsgUrbanCreation* mutable_urban_creation();
   
-  // optional .MsgsSimToClient.MsgUrbanKnowledgeCreation urban_knowledge_creation = 111;
+  // optional .MsgsSimToClient.MsgUrbanUpdate urban_update = 111;
+  inline bool has_urban_update() const;
+  inline void clear_urban_update();
+  static const int kUrbanUpdateFieldNumber = 111;
+  inline const ::MsgsSimToClient::MsgUrbanUpdate& urban_update() const;
+  inline ::MsgsSimToClient::MsgUrbanUpdate* mutable_urban_update();
+  
+  // optional .MsgsSimToClient.MsgUrbanKnowledgeCreation urban_knowledge_creation = 112;
   inline bool has_urban_knowledge_creation() const;
   inline void clear_urban_knowledge_creation();
-  static const int kUrbanKnowledgeCreationFieldNumber = 111;
+  static const int kUrbanKnowledgeCreationFieldNumber = 112;
   inline const ::MsgsSimToClient::MsgUrbanKnowledgeCreation& urban_knowledge_creation() const;
   inline ::MsgsSimToClient::MsgUrbanKnowledgeCreation* mutable_urban_knowledge_creation();
   
-  // optional .MsgsSimToClient.MsgUrbanKnowledgeUpdate urban_knowledge_update = 112;
+  // optional .MsgsSimToClient.MsgUrbanKnowledgeUpdate urban_knowledge_update = 113;
   inline bool has_urban_knowledge_update() const;
   inline void clear_urban_knowledge_update();
-  static const int kUrbanKnowledgeUpdateFieldNumber = 112;
+  static const int kUrbanKnowledgeUpdateFieldNumber = 113;
   inline const ::MsgsSimToClient::MsgUrbanKnowledgeUpdate& urban_knowledge_update() const;
   inline ::MsgsSimToClient::MsgUrbanKnowledgeUpdate* mutable_urban_knowledge_update();
   
-  // optional .MsgsSimToClient.MsgUrbanKnowledgeDestruction urban_knowledge_destruction = 113;
+  // optional .MsgsSimToClient.MsgUrbanKnowledgeDestruction urban_knowledge_destruction = 114;
   inline bool has_urban_knowledge_destruction() const;
   inline void clear_urban_knowledge_destruction();
-  static const int kUrbanKnowledgeDestructionFieldNumber = 113;
+  static const int kUrbanKnowledgeDestructionFieldNumber = 114;
   inline const ::MsgsSimToClient::MsgUrbanKnowledgeDestruction& urban_knowledge_destruction() const;
   inline ::MsgsSimToClient::MsgUrbanKnowledgeDestruction* mutable_urban_knowledge_destruction();
   
-  // optional .Common.StockResource stock_resource = 114;
+  // optional .Common.StockResource stock_resource = 115;
   inline bool has_stock_resource() const;
   inline void clear_stock_resource();
-  static const int kStockResourceFieldNumber = 114;
+  static const int kStockResourceFieldNumber = 115;
   inline const ::Common::StockResource& stock_resource() const;
   inline ::Common::StockResource* mutable_stock_resource();
   
-  // optional .MsgsSimToClient.MsgUrbanDetection urban_detection = 115;
+  // optional .MsgsSimToClient.MsgUrbanDetection urban_detection = 116;
   inline bool has_urban_detection() const;
   inline void clear_urban_detection();
-  static const int kUrbanDetectionFieldNumber = 115;
+  static const int kUrbanDetectionFieldNumber = 116;
   inline const ::MsgsSimToClient::MsgUrbanDetection& urban_detection() const;
   inline ::MsgsSimToClient::MsgUrbanDetection* mutable_urban_detection();
   
-  // optional .MsgsSimToClient.MsgKnowledgeGroupMagicActionAck knowledge_group_magic_action_ack = 116;
+  // optional .MsgsSimToClient.MsgKnowledgeGroupMagicActionAck knowledge_group_magic_action_ack = 117;
   inline bool has_knowledge_group_magic_action_ack() const;
   inline void clear_knowledge_group_magic_action_ack();
-  static const int kKnowledgeGroupMagicActionAckFieldNumber = 116;
+  static const int kKnowledgeGroupMagicActionAckFieldNumber = 117;
   inline const ::MsgsSimToClient::MsgKnowledgeGroupMagicActionAck& knowledge_group_magic_action_ack() const;
   inline ::MsgsSimToClient::MsgKnowledgeGroupMagicActionAck* mutable_knowledge_group_magic_action_ack();
   
-  // optional .MsgsSimToClient.MsgKnowledgeGroupCreation knowledge_group_creation = 117;
+  // optional .MsgsSimToClient.MsgKnowledgeGroupCreation knowledge_group_creation = 118;
   inline bool has_knowledge_group_creation() const;
   inline void clear_knowledge_group_creation();
-  static const int kKnowledgeGroupCreationFieldNumber = 117;
+  static const int kKnowledgeGroupCreationFieldNumber = 118;
   inline const ::MsgsSimToClient::MsgKnowledgeGroupCreation& knowledge_group_creation() const;
   inline ::MsgsSimToClient::MsgKnowledgeGroupCreation* mutable_knowledge_group_creation();
   
-  // optional .MsgsSimToClient.MsgKnowledgeGroupUpdate knowledge_group_update = 118;
+  // optional .MsgsSimToClient.MsgKnowledgeGroupUpdate knowledge_group_update = 119;
   inline bool has_knowledge_group_update() const;
   inline void clear_knowledge_group_update();
-  static const int kKnowledgeGroupUpdateFieldNumber = 118;
+  static const int kKnowledgeGroupUpdateFieldNumber = 119;
   inline const ::MsgsSimToClient::MsgKnowledgeGroupUpdate& knowledge_group_update() const;
   inline ::MsgsSimToClient::MsgKnowledgeGroupUpdate* mutable_knowledge_group_update();
   
-  // optional .MsgsSimToClient.MsgKnowledgeGroupCreationAck knowledge_group_creation_ack = 119;
+  // optional .MsgsSimToClient.MsgKnowledgeGroupCreationAck knowledge_group_creation_ack = 120;
   inline bool has_knowledge_group_creation_ack() const;
   inline void clear_knowledge_group_creation_ack();
-  static const int kKnowledgeGroupCreationAckFieldNumber = 119;
+  static const int kKnowledgeGroupCreationAckFieldNumber = 120;
   inline const ::MsgsSimToClient::MsgKnowledgeGroupCreationAck& knowledge_group_creation_ack() const;
   inline ::MsgsSimToClient::MsgKnowledgeGroupCreationAck* mutable_knowledge_group_creation_ack();
   
-  // optional .MsgsSimToClient.MsgKnowledgeGroupUpdateAck knowledge_group_update_ack = 120;
+  // optional .MsgsSimToClient.MsgKnowledgeGroupUpdateAck knowledge_group_update_ack = 121;
   inline bool has_knowledge_group_update_ack() const;
   inline void clear_knowledge_group_update_ack();
-  static const int kKnowledgeGroupUpdateAckFieldNumber = 120;
+  static const int kKnowledgeGroupUpdateAckFieldNumber = 121;
   inline const ::MsgsSimToClient::MsgKnowledgeGroupUpdateAck& knowledge_group_update_ack() const;
   inline ::MsgsSimToClient::MsgKnowledgeGroupUpdateAck* mutable_knowledge_group_update_ack();
   
-  // optional .MsgsSimToClient.MsgKnowledgeGroupDestruction knowledge_group_destruction = 121;
+  // optional .MsgsSimToClient.MsgKnowledgeGroupDestruction knowledge_group_destruction = 122;
   inline bool has_knowledge_group_destruction() const;
   inline void clear_knowledge_group_destruction();
-  static const int kKnowledgeGroupDestructionFieldNumber = 121;
+  static const int kKnowledgeGroupDestructionFieldNumber = 122;
   inline const ::MsgsSimToClient::MsgKnowledgeGroupDestruction& knowledge_group_destruction() const;
   inline ::MsgsSimToClient::MsgKnowledgeGroupDestruction* mutable_knowledge_group_destruction();
   
-  // optional .MsgsSimToClient.MsgActionCreateFireOrderAck action_create_fire_order_ack = 122;
+  // optional .MsgsSimToClient.MsgActionCreateFireOrderAck action_create_fire_order_ack = 123;
   inline bool has_action_create_fire_order_ack() const;
   inline void clear_action_create_fire_order_ack();
-  static const int kActionCreateFireOrderAckFieldNumber = 122;
+  static const int kActionCreateFireOrderAckFieldNumber = 123;
   inline const ::MsgsSimToClient::MsgActionCreateFireOrderAck& action_create_fire_order_ack() const;
   inline ::MsgsSimToClient::MsgActionCreateFireOrderAck* mutable_action_create_fire_order_ack();
   
-  // optional .MsgsSimToClient.MsgControlGlobalMeteo control_global_meteo = 123;
+  // optional .MsgsSimToClient.MsgControlGlobalMeteo control_global_meteo = 124;
   inline bool has_control_global_meteo() const;
   inline void clear_control_global_meteo();
-  static const int kControlGlobalMeteoFieldNumber = 123;
+  static const int kControlGlobalMeteoFieldNumber = 124;
   inline const ::MsgsSimToClient::MsgControlGlobalMeteo& control_global_meteo() const;
   inline ::MsgsSimToClient::MsgControlGlobalMeteo* mutable_control_global_meteo();
   
-  // optional .MsgsSimToClient.MsgControlLocalMeteoCreation control_local_meteo_creation = 124;
+  // optional .MsgsSimToClient.MsgControlLocalMeteoCreation control_local_meteo_creation = 125;
   inline bool has_control_local_meteo_creation() const;
   inline void clear_control_local_meteo_creation();
-  static const int kControlLocalMeteoCreationFieldNumber = 124;
+  static const int kControlLocalMeteoCreationFieldNumber = 125;
   inline const ::MsgsSimToClient::MsgControlLocalMeteoCreation& control_local_meteo_creation() const;
   inline ::MsgsSimToClient::MsgControlLocalMeteoCreation* mutable_control_local_meteo_creation();
   
-  // optional .MsgsSimToClient.MsgControlLocalMeteoDestruction control_local_meteo_destruction = 125;
+  // optional .MsgsSimToClient.MsgControlLocalMeteoDestruction control_local_meteo_destruction = 126;
   inline bool has_control_local_meteo_destruction() const;
   inline void clear_control_local_meteo_destruction();
-  static const int kControlLocalMeteoDestructionFieldNumber = 125;
+  static const int kControlLocalMeteoDestructionFieldNumber = 126;
   inline const ::MsgsSimToClient::MsgControlLocalMeteoDestruction& control_local_meteo_destruction() const;
   inline ::MsgsSimToClient::MsgControlLocalMeteoDestruction* mutable_control_local_meteo_destruction();
   
@@ -20322,6 +20433,7 @@ class MsgSimToClient_Content : public ::google::protobuf::Message {
   ::MsgsSimToClient::MsgControlSendCurrentStateBegin* control_send_current_state_begin_;
   ::MsgsSimToClient::MsgControlSendCurrentStateEnd* control_send_current_state_end_;
   ::MsgsSimToClient::MsgUrbanCreation* urban_creation_;
+  ::MsgsSimToClient::MsgUrbanUpdate* urban_update_;
   ::MsgsSimToClient::MsgUrbanKnowledgeCreation* urban_knowledge_creation_;
   ::MsgsSimToClient::MsgUrbanKnowledgeUpdate* urban_knowledge_update_;
   ::MsgsSimToClient::MsgUrbanKnowledgeDestruction* urban_knowledge_destruction_;
@@ -20341,7 +20453,7 @@ class MsgSimToClient_Content : public ::google::protobuf::Message {
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(125 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(126 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -29608,6 +29720,26 @@ inline void MsgUrbanAttributeArchitecture::set_trafficability(float value) {
 
 // -------------------------------------------------------------------
 
+// MsgUrbanAttributeCapacity
+
+// required float structuralState = 1;
+inline bool MsgUrbanAttributeCapacity::has_structuralstate() const {
+  return _has_bit(0);
+}
+inline void MsgUrbanAttributeCapacity::clear_structuralstate() {
+  structuralstate_ = 0;
+  _clear_bit(0);
+}
+inline float MsgUrbanAttributeCapacity::structuralstate() const {
+  return structuralstate_;
+}
+inline void MsgUrbanAttributeCapacity::set_structuralstate(float value) {
+  _set_bit(0);
+  structuralstate_ = value;
+}
+
+// -------------------------------------------------------------------
+
 // MsgColorRGBA
 
 // required int32 red = 1;
@@ -29874,19 +30006,36 @@ inline ::MsgsSimToClient::MsgUrbanAttributeArchitecture* MsgUrbanAttributes::mut
   return architecture_;
 }
 
-// optional .MsgsSimToClient.MsgColorRGBA color = 2;
-inline bool MsgUrbanAttributes::has_color() const {
+// optional .MsgsSimToClient.MsgUrbanAttributeCapacity capacity = 2;
+inline bool MsgUrbanAttributes::has_capacity() const {
   return _has_bit(1);
+}
+inline void MsgUrbanAttributes::clear_capacity() {
+  if (capacity_ != NULL) capacity_->::MsgsSimToClient::MsgUrbanAttributeCapacity::Clear();
+  _clear_bit(1);
+}
+inline const ::MsgsSimToClient::MsgUrbanAttributeCapacity& MsgUrbanAttributes::capacity() const {
+  return capacity_ != NULL ? *capacity_ : *default_instance_->capacity_;
+}
+inline ::MsgsSimToClient::MsgUrbanAttributeCapacity* MsgUrbanAttributes::mutable_capacity() {
+  _set_bit(1);
+  if (capacity_ == NULL) capacity_ = new ::MsgsSimToClient::MsgUrbanAttributeCapacity;
+  return capacity_;
+}
+
+// optional .MsgsSimToClient.MsgColorRGBA color = 3;
+inline bool MsgUrbanAttributes::has_color() const {
+  return _has_bit(2);
 }
 inline void MsgUrbanAttributes::clear_color() {
   if (color_ != NULL) color_->::MsgsSimToClient::MsgColorRGBA::Clear();
-  _clear_bit(1);
+  _clear_bit(2);
 }
 inline const ::MsgsSimToClient::MsgColorRGBA& MsgUrbanAttributes::color() const {
   return color_ != NULL ? *color_ : *default_instance_->color_;
 }
 inline ::MsgsSimToClient::MsgColorRGBA* MsgUrbanAttributes::mutable_color() {
-  _set_bit(1);
+  _set_bit(2);
   if (color_ == NULL) color_ = new ::MsgsSimToClient::MsgColorRGBA;
   return color_;
 }
@@ -30075,6 +30224,23 @@ inline ::Common::MsgLocation* MsgUrbanUpdate::mutable_location() {
   _set_bit(1);
   if (location_ == NULL) location_ = new ::Common::MsgLocation;
   return location_;
+}
+
+// optional .MsgsSimToClient.MsgUrbanAttributes attributes = 3;
+inline bool MsgUrbanUpdate::has_attributes() const {
+  return _has_bit(2);
+}
+inline void MsgUrbanUpdate::clear_attributes() {
+  if (attributes_ != NULL) attributes_->::MsgsSimToClient::MsgUrbanAttributes::Clear();
+  _clear_bit(2);
+}
+inline const ::MsgsSimToClient::MsgUrbanAttributes& MsgUrbanUpdate::attributes() const {
+  return attributes_ != NULL ? *attributes_ : *default_instance_->attributes_;
+}
+inline ::MsgsSimToClient::MsgUrbanAttributes* MsgUrbanUpdate::mutable_attributes() {
+  _set_bit(2);
+  if (attributes_ == NULL) attributes_ = new ::MsgsSimToClient::MsgUrbanAttributes;
+  return attributes_;
 }
 
 // -------------------------------------------------------------------
@@ -32470,257 +32636,274 @@ inline ::MsgsSimToClient::MsgUrbanCreation* MsgSimToClient_Content::mutable_urba
   return urban_creation_;
 }
 
-// optional .MsgsSimToClient.MsgUrbanKnowledgeCreation urban_knowledge_creation = 111;
-inline bool MsgSimToClient_Content::has_urban_knowledge_creation() const {
+// optional .MsgsSimToClient.MsgUrbanUpdate urban_update = 111;
+inline bool MsgSimToClient_Content::has_urban_update() const {
   return _has_bit(110);
+}
+inline void MsgSimToClient_Content::clear_urban_update() {
+  if (urban_update_ != NULL) urban_update_->::MsgsSimToClient::MsgUrbanUpdate::Clear();
+  _clear_bit(110);
+}
+inline const ::MsgsSimToClient::MsgUrbanUpdate& MsgSimToClient_Content::urban_update() const {
+  return urban_update_ != NULL ? *urban_update_ : *default_instance_->urban_update_;
+}
+inline ::MsgsSimToClient::MsgUrbanUpdate* MsgSimToClient_Content::mutable_urban_update() {
+  _set_bit(110);
+  if (urban_update_ == NULL) urban_update_ = new ::MsgsSimToClient::MsgUrbanUpdate;
+  return urban_update_;
+}
+
+// optional .MsgsSimToClient.MsgUrbanKnowledgeCreation urban_knowledge_creation = 112;
+inline bool MsgSimToClient_Content::has_urban_knowledge_creation() const {
+  return _has_bit(111);
 }
 inline void MsgSimToClient_Content::clear_urban_knowledge_creation() {
   if (urban_knowledge_creation_ != NULL) urban_knowledge_creation_->::MsgsSimToClient::MsgUrbanKnowledgeCreation::Clear();
-  _clear_bit(110);
+  _clear_bit(111);
 }
 inline const ::MsgsSimToClient::MsgUrbanKnowledgeCreation& MsgSimToClient_Content::urban_knowledge_creation() const {
   return urban_knowledge_creation_ != NULL ? *urban_knowledge_creation_ : *default_instance_->urban_knowledge_creation_;
 }
 inline ::MsgsSimToClient::MsgUrbanKnowledgeCreation* MsgSimToClient_Content::mutable_urban_knowledge_creation() {
-  _set_bit(110);
+  _set_bit(111);
   if (urban_knowledge_creation_ == NULL) urban_knowledge_creation_ = new ::MsgsSimToClient::MsgUrbanKnowledgeCreation;
   return urban_knowledge_creation_;
 }
 
-// optional .MsgsSimToClient.MsgUrbanKnowledgeUpdate urban_knowledge_update = 112;
+// optional .MsgsSimToClient.MsgUrbanKnowledgeUpdate urban_knowledge_update = 113;
 inline bool MsgSimToClient_Content::has_urban_knowledge_update() const {
-  return _has_bit(111);
+  return _has_bit(112);
 }
 inline void MsgSimToClient_Content::clear_urban_knowledge_update() {
   if (urban_knowledge_update_ != NULL) urban_knowledge_update_->::MsgsSimToClient::MsgUrbanKnowledgeUpdate::Clear();
-  _clear_bit(111);
+  _clear_bit(112);
 }
 inline const ::MsgsSimToClient::MsgUrbanKnowledgeUpdate& MsgSimToClient_Content::urban_knowledge_update() const {
   return urban_knowledge_update_ != NULL ? *urban_knowledge_update_ : *default_instance_->urban_knowledge_update_;
 }
 inline ::MsgsSimToClient::MsgUrbanKnowledgeUpdate* MsgSimToClient_Content::mutable_urban_knowledge_update() {
-  _set_bit(111);
+  _set_bit(112);
   if (urban_knowledge_update_ == NULL) urban_knowledge_update_ = new ::MsgsSimToClient::MsgUrbanKnowledgeUpdate;
   return urban_knowledge_update_;
 }
 
-// optional .MsgsSimToClient.MsgUrbanKnowledgeDestruction urban_knowledge_destruction = 113;
+// optional .MsgsSimToClient.MsgUrbanKnowledgeDestruction urban_knowledge_destruction = 114;
 inline bool MsgSimToClient_Content::has_urban_knowledge_destruction() const {
-  return _has_bit(112);
+  return _has_bit(113);
 }
 inline void MsgSimToClient_Content::clear_urban_knowledge_destruction() {
   if (urban_knowledge_destruction_ != NULL) urban_knowledge_destruction_->::MsgsSimToClient::MsgUrbanKnowledgeDestruction::Clear();
-  _clear_bit(112);
+  _clear_bit(113);
 }
 inline const ::MsgsSimToClient::MsgUrbanKnowledgeDestruction& MsgSimToClient_Content::urban_knowledge_destruction() const {
   return urban_knowledge_destruction_ != NULL ? *urban_knowledge_destruction_ : *default_instance_->urban_knowledge_destruction_;
 }
 inline ::MsgsSimToClient::MsgUrbanKnowledgeDestruction* MsgSimToClient_Content::mutable_urban_knowledge_destruction() {
-  _set_bit(112);
+  _set_bit(113);
   if (urban_knowledge_destruction_ == NULL) urban_knowledge_destruction_ = new ::MsgsSimToClient::MsgUrbanKnowledgeDestruction;
   return urban_knowledge_destruction_;
 }
 
-// optional .Common.StockResource stock_resource = 114;
+// optional .Common.StockResource stock_resource = 115;
 inline bool MsgSimToClient_Content::has_stock_resource() const {
-  return _has_bit(113);
+  return _has_bit(114);
 }
 inline void MsgSimToClient_Content::clear_stock_resource() {
   if (stock_resource_ != NULL) stock_resource_->::Common::StockResource::Clear();
-  _clear_bit(113);
+  _clear_bit(114);
 }
 inline const ::Common::StockResource& MsgSimToClient_Content::stock_resource() const {
   return stock_resource_ != NULL ? *stock_resource_ : *default_instance_->stock_resource_;
 }
 inline ::Common::StockResource* MsgSimToClient_Content::mutable_stock_resource() {
-  _set_bit(113);
+  _set_bit(114);
   if (stock_resource_ == NULL) stock_resource_ = new ::Common::StockResource;
   return stock_resource_;
 }
 
-// optional .MsgsSimToClient.MsgUrbanDetection urban_detection = 115;
+// optional .MsgsSimToClient.MsgUrbanDetection urban_detection = 116;
 inline bool MsgSimToClient_Content::has_urban_detection() const {
-  return _has_bit(114);
+  return _has_bit(115);
 }
 inline void MsgSimToClient_Content::clear_urban_detection() {
   if (urban_detection_ != NULL) urban_detection_->::MsgsSimToClient::MsgUrbanDetection::Clear();
-  _clear_bit(114);
+  _clear_bit(115);
 }
 inline const ::MsgsSimToClient::MsgUrbanDetection& MsgSimToClient_Content::urban_detection() const {
   return urban_detection_ != NULL ? *urban_detection_ : *default_instance_->urban_detection_;
 }
 inline ::MsgsSimToClient::MsgUrbanDetection* MsgSimToClient_Content::mutable_urban_detection() {
-  _set_bit(114);
+  _set_bit(115);
   if (urban_detection_ == NULL) urban_detection_ = new ::MsgsSimToClient::MsgUrbanDetection;
   return urban_detection_;
 }
 
-// optional .MsgsSimToClient.MsgKnowledgeGroupMagicActionAck knowledge_group_magic_action_ack = 116;
+// optional .MsgsSimToClient.MsgKnowledgeGroupMagicActionAck knowledge_group_magic_action_ack = 117;
 inline bool MsgSimToClient_Content::has_knowledge_group_magic_action_ack() const {
-  return _has_bit(115);
+  return _has_bit(116);
 }
 inline void MsgSimToClient_Content::clear_knowledge_group_magic_action_ack() {
   if (knowledge_group_magic_action_ack_ != NULL) knowledge_group_magic_action_ack_->::MsgsSimToClient::MsgKnowledgeGroupMagicActionAck::Clear();
-  _clear_bit(115);
+  _clear_bit(116);
 }
 inline const ::MsgsSimToClient::MsgKnowledgeGroupMagicActionAck& MsgSimToClient_Content::knowledge_group_magic_action_ack() const {
   return knowledge_group_magic_action_ack_ != NULL ? *knowledge_group_magic_action_ack_ : *default_instance_->knowledge_group_magic_action_ack_;
 }
 inline ::MsgsSimToClient::MsgKnowledgeGroupMagicActionAck* MsgSimToClient_Content::mutable_knowledge_group_magic_action_ack() {
-  _set_bit(115);
+  _set_bit(116);
   if (knowledge_group_magic_action_ack_ == NULL) knowledge_group_magic_action_ack_ = new ::MsgsSimToClient::MsgKnowledgeGroupMagicActionAck;
   return knowledge_group_magic_action_ack_;
 }
 
-// optional .MsgsSimToClient.MsgKnowledgeGroupCreation knowledge_group_creation = 117;
+// optional .MsgsSimToClient.MsgKnowledgeGroupCreation knowledge_group_creation = 118;
 inline bool MsgSimToClient_Content::has_knowledge_group_creation() const {
-  return _has_bit(116);
+  return _has_bit(117);
 }
 inline void MsgSimToClient_Content::clear_knowledge_group_creation() {
   if (knowledge_group_creation_ != NULL) knowledge_group_creation_->::MsgsSimToClient::MsgKnowledgeGroupCreation::Clear();
-  _clear_bit(116);
+  _clear_bit(117);
 }
 inline const ::MsgsSimToClient::MsgKnowledgeGroupCreation& MsgSimToClient_Content::knowledge_group_creation() const {
   return knowledge_group_creation_ != NULL ? *knowledge_group_creation_ : *default_instance_->knowledge_group_creation_;
 }
 inline ::MsgsSimToClient::MsgKnowledgeGroupCreation* MsgSimToClient_Content::mutable_knowledge_group_creation() {
-  _set_bit(116);
+  _set_bit(117);
   if (knowledge_group_creation_ == NULL) knowledge_group_creation_ = new ::MsgsSimToClient::MsgKnowledgeGroupCreation;
   return knowledge_group_creation_;
 }
 
-// optional .MsgsSimToClient.MsgKnowledgeGroupUpdate knowledge_group_update = 118;
+// optional .MsgsSimToClient.MsgKnowledgeGroupUpdate knowledge_group_update = 119;
 inline bool MsgSimToClient_Content::has_knowledge_group_update() const {
-  return _has_bit(117);
+  return _has_bit(118);
 }
 inline void MsgSimToClient_Content::clear_knowledge_group_update() {
   if (knowledge_group_update_ != NULL) knowledge_group_update_->::MsgsSimToClient::MsgKnowledgeGroupUpdate::Clear();
-  _clear_bit(117);
+  _clear_bit(118);
 }
 inline const ::MsgsSimToClient::MsgKnowledgeGroupUpdate& MsgSimToClient_Content::knowledge_group_update() const {
   return knowledge_group_update_ != NULL ? *knowledge_group_update_ : *default_instance_->knowledge_group_update_;
 }
 inline ::MsgsSimToClient::MsgKnowledgeGroupUpdate* MsgSimToClient_Content::mutable_knowledge_group_update() {
-  _set_bit(117);
+  _set_bit(118);
   if (knowledge_group_update_ == NULL) knowledge_group_update_ = new ::MsgsSimToClient::MsgKnowledgeGroupUpdate;
   return knowledge_group_update_;
 }
 
-// optional .MsgsSimToClient.MsgKnowledgeGroupCreationAck knowledge_group_creation_ack = 119;
+// optional .MsgsSimToClient.MsgKnowledgeGroupCreationAck knowledge_group_creation_ack = 120;
 inline bool MsgSimToClient_Content::has_knowledge_group_creation_ack() const {
-  return _has_bit(118);
+  return _has_bit(119);
 }
 inline void MsgSimToClient_Content::clear_knowledge_group_creation_ack() {
   if (knowledge_group_creation_ack_ != NULL) knowledge_group_creation_ack_->::MsgsSimToClient::MsgKnowledgeGroupCreationAck::Clear();
-  _clear_bit(118);
+  _clear_bit(119);
 }
 inline const ::MsgsSimToClient::MsgKnowledgeGroupCreationAck& MsgSimToClient_Content::knowledge_group_creation_ack() const {
   return knowledge_group_creation_ack_ != NULL ? *knowledge_group_creation_ack_ : *default_instance_->knowledge_group_creation_ack_;
 }
 inline ::MsgsSimToClient::MsgKnowledgeGroupCreationAck* MsgSimToClient_Content::mutable_knowledge_group_creation_ack() {
-  _set_bit(118);
+  _set_bit(119);
   if (knowledge_group_creation_ack_ == NULL) knowledge_group_creation_ack_ = new ::MsgsSimToClient::MsgKnowledgeGroupCreationAck;
   return knowledge_group_creation_ack_;
 }
 
-// optional .MsgsSimToClient.MsgKnowledgeGroupUpdateAck knowledge_group_update_ack = 120;
+// optional .MsgsSimToClient.MsgKnowledgeGroupUpdateAck knowledge_group_update_ack = 121;
 inline bool MsgSimToClient_Content::has_knowledge_group_update_ack() const {
-  return _has_bit(119);
+  return _has_bit(120);
 }
 inline void MsgSimToClient_Content::clear_knowledge_group_update_ack() {
   if (knowledge_group_update_ack_ != NULL) knowledge_group_update_ack_->::MsgsSimToClient::MsgKnowledgeGroupUpdateAck::Clear();
-  _clear_bit(119);
+  _clear_bit(120);
 }
 inline const ::MsgsSimToClient::MsgKnowledgeGroupUpdateAck& MsgSimToClient_Content::knowledge_group_update_ack() const {
   return knowledge_group_update_ack_ != NULL ? *knowledge_group_update_ack_ : *default_instance_->knowledge_group_update_ack_;
 }
 inline ::MsgsSimToClient::MsgKnowledgeGroupUpdateAck* MsgSimToClient_Content::mutable_knowledge_group_update_ack() {
-  _set_bit(119);
+  _set_bit(120);
   if (knowledge_group_update_ack_ == NULL) knowledge_group_update_ack_ = new ::MsgsSimToClient::MsgKnowledgeGroupUpdateAck;
   return knowledge_group_update_ack_;
 }
 
-// optional .MsgsSimToClient.MsgKnowledgeGroupDestruction knowledge_group_destruction = 121;
+// optional .MsgsSimToClient.MsgKnowledgeGroupDestruction knowledge_group_destruction = 122;
 inline bool MsgSimToClient_Content::has_knowledge_group_destruction() const {
-  return _has_bit(120);
+  return _has_bit(121);
 }
 inline void MsgSimToClient_Content::clear_knowledge_group_destruction() {
   if (knowledge_group_destruction_ != NULL) knowledge_group_destruction_->::MsgsSimToClient::MsgKnowledgeGroupDestruction::Clear();
-  _clear_bit(120);
+  _clear_bit(121);
 }
 inline const ::MsgsSimToClient::MsgKnowledgeGroupDestruction& MsgSimToClient_Content::knowledge_group_destruction() const {
   return knowledge_group_destruction_ != NULL ? *knowledge_group_destruction_ : *default_instance_->knowledge_group_destruction_;
 }
 inline ::MsgsSimToClient::MsgKnowledgeGroupDestruction* MsgSimToClient_Content::mutable_knowledge_group_destruction() {
-  _set_bit(120);
+  _set_bit(121);
   if (knowledge_group_destruction_ == NULL) knowledge_group_destruction_ = new ::MsgsSimToClient::MsgKnowledgeGroupDestruction;
   return knowledge_group_destruction_;
 }
 
-// optional .MsgsSimToClient.MsgActionCreateFireOrderAck action_create_fire_order_ack = 122;
+// optional .MsgsSimToClient.MsgActionCreateFireOrderAck action_create_fire_order_ack = 123;
 inline bool MsgSimToClient_Content::has_action_create_fire_order_ack() const {
-  return _has_bit(121);
+  return _has_bit(122);
 }
 inline void MsgSimToClient_Content::clear_action_create_fire_order_ack() {
   if (action_create_fire_order_ack_ != NULL) action_create_fire_order_ack_->::MsgsSimToClient::MsgActionCreateFireOrderAck::Clear();
-  _clear_bit(121);
+  _clear_bit(122);
 }
 inline const ::MsgsSimToClient::MsgActionCreateFireOrderAck& MsgSimToClient_Content::action_create_fire_order_ack() const {
   return action_create_fire_order_ack_ != NULL ? *action_create_fire_order_ack_ : *default_instance_->action_create_fire_order_ack_;
 }
 inline ::MsgsSimToClient::MsgActionCreateFireOrderAck* MsgSimToClient_Content::mutable_action_create_fire_order_ack() {
-  _set_bit(121);
+  _set_bit(122);
   if (action_create_fire_order_ack_ == NULL) action_create_fire_order_ack_ = new ::MsgsSimToClient::MsgActionCreateFireOrderAck;
   return action_create_fire_order_ack_;
 }
 
-// optional .MsgsSimToClient.MsgControlGlobalMeteo control_global_meteo = 123;
+// optional .MsgsSimToClient.MsgControlGlobalMeteo control_global_meteo = 124;
 inline bool MsgSimToClient_Content::has_control_global_meteo() const {
-  return _has_bit(122);
+  return _has_bit(123);
 }
 inline void MsgSimToClient_Content::clear_control_global_meteo() {
   if (control_global_meteo_ != NULL) control_global_meteo_->::MsgsSimToClient::MsgControlGlobalMeteo::Clear();
-  _clear_bit(122);
+  _clear_bit(123);
 }
 inline const ::MsgsSimToClient::MsgControlGlobalMeteo& MsgSimToClient_Content::control_global_meteo() const {
   return control_global_meteo_ != NULL ? *control_global_meteo_ : *default_instance_->control_global_meteo_;
 }
 inline ::MsgsSimToClient::MsgControlGlobalMeteo* MsgSimToClient_Content::mutable_control_global_meteo() {
-  _set_bit(122);
+  _set_bit(123);
   if (control_global_meteo_ == NULL) control_global_meteo_ = new ::MsgsSimToClient::MsgControlGlobalMeteo;
   return control_global_meteo_;
 }
 
-// optional .MsgsSimToClient.MsgControlLocalMeteoCreation control_local_meteo_creation = 124;
+// optional .MsgsSimToClient.MsgControlLocalMeteoCreation control_local_meteo_creation = 125;
 inline bool MsgSimToClient_Content::has_control_local_meteo_creation() const {
-  return _has_bit(123);
+  return _has_bit(124);
 }
 inline void MsgSimToClient_Content::clear_control_local_meteo_creation() {
   if (control_local_meteo_creation_ != NULL) control_local_meteo_creation_->::MsgsSimToClient::MsgControlLocalMeteoCreation::Clear();
-  _clear_bit(123);
+  _clear_bit(124);
 }
 inline const ::MsgsSimToClient::MsgControlLocalMeteoCreation& MsgSimToClient_Content::control_local_meteo_creation() const {
   return control_local_meteo_creation_ != NULL ? *control_local_meteo_creation_ : *default_instance_->control_local_meteo_creation_;
 }
 inline ::MsgsSimToClient::MsgControlLocalMeteoCreation* MsgSimToClient_Content::mutable_control_local_meteo_creation() {
-  _set_bit(123);
+  _set_bit(124);
   if (control_local_meteo_creation_ == NULL) control_local_meteo_creation_ = new ::MsgsSimToClient::MsgControlLocalMeteoCreation;
   return control_local_meteo_creation_;
 }
 
-// optional .MsgsSimToClient.MsgControlLocalMeteoDestruction control_local_meteo_destruction = 125;
+// optional .MsgsSimToClient.MsgControlLocalMeteoDestruction control_local_meteo_destruction = 126;
 inline bool MsgSimToClient_Content::has_control_local_meteo_destruction() const {
-  return _has_bit(124);
+  return _has_bit(125);
 }
 inline void MsgSimToClient_Content::clear_control_local_meteo_destruction() {
   if (control_local_meteo_destruction_ != NULL) control_local_meteo_destruction_->::MsgsSimToClient::MsgControlLocalMeteoDestruction::Clear();
-  _clear_bit(124);
+  _clear_bit(125);
 }
 inline const ::MsgsSimToClient::MsgControlLocalMeteoDestruction& MsgSimToClient_Content::control_local_meteo_destruction() const {
   return control_local_meteo_destruction_ != NULL ? *control_local_meteo_destruction_ : *default_instance_->control_local_meteo_destruction_;
 }
 inline ::MsgsSimToClient::MsgControlLocalMeteoDestruction* MsgSimToClient_Content::mutable_control_local_meteo_destruction() {
-  _set_bit(124);
+  _set_bit(125);
   if (control_local_meteo_destruction_ == NULL) control_local_meteo_destruction_ = new ::MsgsSimToClient::MsgControlLocalMeteoDestruction;
   return control_local_meteo_destruction_;
 }

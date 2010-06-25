@@ -910,6 +910,38 @@ void ADN_Objects_Data::ADN_CapacityInfos_Spawn::WriteArchive( xml::xostream& out
 }
 //@}
 
+//! @name ADN_CapacityInfos_Structural
+//@{
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::ADN_CapacityInfos_Structural
+// Created: SLG 2010-06-25
+// -----------------------------------------------------------------------------
+ADN_Objects_Data::ADN_CapacityInfos_Structural::ADN_CapacityInfos_Structural()
+: rStructuralState_( 100 )
+{
+    rStructuralState_.SetParentNode( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::ReadArchive
+// Created: SLG 2010-06-25
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ADN_CapacityInfos_Structural::ReadArchive( xml::xistream& input )
+{
+    bPresent_ = true;
+    input >> xml::attribute( "value", rStructuralState_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::WriteArchive
+// Created: APE 2005-01-17
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ADN_CapacityInfos_Structural::WriteArchive( xml::xostream& output )
+{
+    output << xml::attribute( "value", rStructuralState_ ); 
+}
+//@}
+
 //! @name ADN_CapacityInfos_AttitudeModifier
 //@{
 // -----------------------------------------------------------------------------
@@ -1049,7 +1081,8 @@ INIT_DATA( ADN_CapacityInfos_SupplyRoute,      "Supply-Route",      "supply-rout
 INIT_DATA( ADN_CapacityInfos_TerrainHeuristic, "Terrain Heuristic", "heuristic" );
 INIT_DATA( ADN_CapacityInfos_TimeLimited,      "TimeLimited",       "time-limited" );
 INIT_DATA( ADN_CapacityInfos_Workable,         "Workable",          "workable" );
-INIT_DATA( ADN_CapacityInfos_Spawn,            "Spawn   ",          "spawn" );
+INIT_DATA( ADN_CapacityInfos_Spawn,            "Spawn",             "spawn" );
+INIT_DATA( ADN_CapacityInfos_Structural      , "Structural",        "structural" );
 INIT_DATA( ADN_CapacityInfos_AttitudeModifier, "AttitudeModifier",  "attitude-modifier" );
 INIT_DATA( ADN_CapacityInfos_Perception      , "Perception"      ,  "perception" );
 INIT_DATA( ADN_CapacityInfos_Scattering      , "Scattering"      ,  "scattering" );
@@ -1124,6 +1157,7 @@ void ADN_Objects_Data::ObjectInfos::InitializeCapacities()
     capacities_[ ADN_CapacityInfos_TimeLimited::TAG ].reset( new ADN_CapacityInfos_TimeLimited() );
     capacities_[ ADN_CapacityInfos_Workable::TAG ].reset( new ADN_CapacityInfos_Workable() );
     capacities_[ ADN_CapacityInfos_Spawn::TAG ].reset( new ADN_CapacityInfos_Spawn() );
+    capacities_[ ADN_CapacityInfos_Structural::TAG ].reset( new ADN_CapacityInfos_Structural() );
     capacities_[ ADN_CapacityInfos_AttitudeModifier::TAG ].reset( new ADN_CapacityInfos_AttitudeModifier() );
     capacities_[ ADN_CapacityInfos_Perception::TAG ].reset( new ADN_CapacityInfos_Perception() );
     capacities_[ ADN_CapacityInfos_Scattering::TAG ].reset( new ADN_CapacityInfos_Scattering() );

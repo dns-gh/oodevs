@@ -26,6 +26,8 @@
 
 using namespace hla;
 
+MIL_IDManager MIL_Object_ABC::idManager_;
+
 //-----------------------------------------------------------------------------
 // Name: MIL_Object_ABC constructor
 // Created: NLD 2002-12-12

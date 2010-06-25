@@ -358,7 +358,7 @@ void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion, DEC_DataBase& databa
     pion.RegisterRole( *new DEC_Representations() );
     pion.RegisterRole( *new PHY_RolePion_TerrainAnalysis( pion ) );
 
-    if( pion.CanFly() )
+    if( pion.GetType().GetUnitType().CanFly() )
         pion.RegisterRole( *new PHY_RoleAction_Flying( pion ) );
     else
         pion.RegisterRole( *new PHY_RoleAction_InterfaceFlying() );

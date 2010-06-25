@@ -12,6 +12,8 @@
 
 #include "MIL_Object_ABC.h"
 
+class MIL_ObjectBuilder_ABC;
+
 namespace urban
 {
     class TerrainObject_ABC;
@@ -28,7 +30,7 @@ class UrbanObjectWrapper : public MIL_Object_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit UrbanObjectWrapper( urban::TerrainObject_ABC& object );
+    explicit UrbanObjectWrapper( const MIL_ObjectBuilder_ABC& builder, const urban::TerrainObject_ABC& object );
     virtual ~UrbanObjectWrapper();
     //@}
 
@@ -53,6 +55,12 @@ public:
     void ProcessAgentMovingInside( MIL_Agent_ABC& agent );
     void ProcessAgentInside      ( MIL_Agent_ABC& agent );
     void ProcessPopulationInside ( MIL_PopulationElement_ABC& population );
+    //@}
+
+    //! @name Instanciate / Build / Copy object
+    //@{
+    virtual void Instanciate( MIL_Object_ABC& object ) const; //<! create and register every prototyped capacity
+    virtual void Finalize(); //<! finalize capacity instanciation : for instance once the object location has been defined
     //@}
 
     //! @name Knowledge
@@ -81,12 +89,15 @@ public:
     virtual void SendCreation() const;
     virtual void SendDestruction() const;
     virtual void SendFullState() const;
+    virtual void UpdateState();
     //@}
 
     //! @name Accessors
     //@{    
     virtual unsigned int              GetID() const;
-    urban::TerrainObject_ABC&         GetObject();
+    const urban::TerrainObject_ABC&   GetObject();
+    const urban::TerrainObject_ABC&   GetObject() const;
+    virtual unsigned int  GetMaterial() const; 
     //@}
 
 protected:
@@ -97,9 +108,27 @@ protected:
     virtual void Register( ObjectCapacity_ABC* capacity );
     //@}
 
+private:
+    //! @name Types containers
+    //@{
+    typedef std::vector< ObjectCapacity_ABC* >              T_Capacities;
+    typedef std::vector< MIL_InteractiveContainer_ABC* >    T_InteractiveCapacities;
+    //@}
+
 private: 
-    urban::TerrainObject_ABC& object_;
+    //! @name Member data
+    //@{
+    const urban::TerrainObject_ABC& object_;
+    unsigned int                    id_;
     MIL_ObjectManipulator_ABC& manipulator_;
+    T_Capacities            capacities_;
+    T_InteractiveCapacities interactives_;
+    //@}
+
+    //! @name HLA
+    //@{
+    HLA_Object_ABC* pView_;
+    //@}
 };
 
 /*

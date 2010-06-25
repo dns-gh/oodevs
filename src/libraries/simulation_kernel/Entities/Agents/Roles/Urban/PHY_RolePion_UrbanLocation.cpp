@@ -12,7 +12,11 @@
 #include "PostureComputer_ABC.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Entities/Objects/StructuralCapacity.h"
 #include "AlgorithmsFactories.h"
+#include "SpeedComputer_ABC.h"
 #include "UrbanLocationComputer_ABC.h"
 #include "UrbanBlockPosition_ABC.h"
 #include "InsideUrbanBlockPosition.h"
@@ -20,6 +24,7 @@
 #include "UrbanLocationComputerFactory_ABC.h"
 #include "UrbanType.h"
 #include "UrbanModel.h"
+#include <urban/Architecture.h>
 #include <urban/Model.h>
 #include <urban/TerrainObjectVisitor_ABC.h>
 #include <urban/TerrainObject_ABC.h>
@@ -91,78 +96,63 @@ void PHY_RolePion_UrbanLocation::save( MIL_CheckPointOutArchive& file, const uns
 // -----------------------------------------------------------------------------
 void PHY_RolePion_UrbanLocation::MagicMove( MT_Vector2D vPosition )
 { 
-    const geometry::Point2f point( static_cast< float >( vPosition.rX_ ), static_cast< float >( vPosition.rY_ ) ); 
-    UrbanBlockMagicMove( point );
-    CityMagicMove( point );    
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_UrbanLocation::UrbanBlockMagicMove
-// Created: SLG 2010-04-28
-// -----------------------------------------------------------------------------
-void PHY_RolePion_UrbanLocation::UrbanBlockMagicMove( const geometry::Point2f& point )
-{
-    std::vector< const urban::TerrainObject_ABC* > urbanBlocks;
-    UrbanModel::GetSingleton().GetModel().GetListWithinCircle( point, 500, urbanBlocks );
-    for (std::vector< const urban::TerrainObject_ABC* >::const_iterator it = urbanBlocks.begin(); it != urbanBlocks.end(); ++it )
+    urbanObject_ = 0;
+    isInCity_ = false;
+    std::vector< const TER_Object_ABC* > objects;
+    TER_World::GetWorld().GetObjectManager().GetListWithinCircle2( vPosition, 500, objects ); 
+    for (std::vector< const TER_Object_ABC* >::const_iterator it = objects.begin(); it != objects.end(); ++it )
     {
-        if( (**it).GetFootprint()->IsInside( point ) )
+        const UrbanObjectWrapper* urbanObject = dynamic_cast< const UrbanObjectWrapper* >( *it );
+        if( urbanObject && urbanObject->GetLocalisation().GetArea() && urbanObject->IsInside( vPosition ) )
         {
-            urbanObject_ = *it;
-            delegate_.reset( new InsideUrbanBlockPosition( urbanObject_ ) ); 
-            return;
+            isInCity_ = true;
+            if( !urbanObject->GetObject().HasChild() )
+            {
+                urbanObject_ = urbanObject;
+                delegate_.reset( new InsideUrbanBlockPosition( &urbanObject_->GetObject() ) );
+                return;
+            }
         }
     }
-    urbanObject_ = 0;
-    delegate_.reset( new OutsideUrbanBlockPosition() ); 
+    delegate_.reset( new OutsideUrbanBlockPosition() );
 
 }
 
-namespace
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_UrbanLocation::NotifyMovingInsideObject
+// Created: SLG 2010-04-08
+// -----------------------------------------------------------------------------
+void PHY_RolePion_UrbanLocation::NotifyMovingInsideObject( MIL_Object_ABC& object )
 {
-    bool IsInside( const urban::TerrainObject_ABC* object, const geometry::Point2f& point )
+    UrbanObjectWrapper* urbanObject = dynamic_cast< UrbanObjectWrapper* >( &object );
+    if( urbanObject )
     {
-        return object->GetFootprint()->IsInside( point );
+        if( !urbanObject->GetObject().HasChild() ) 
+        {
+            urbanObject_ = urbanObject;
+            delegate_.reset( new InsideUrbanBlockPosition( &urbanObject_->GetObject() ) );    
+        }
+        isInCity_ = true;
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_UrbanLocation::CityMagicMove
-// Created: SLG 2010-04-28
-// -----------------------------------------------------------------------------
-void PHY_RolePion_UrbanLocation::CityMagicMove( const geometry::Point2f& point )
-{
-    T_Cities cities = UrbanModel::GetSingleton().GetModel().GetCities();
-    CIT_Cities it = std::find_if( cities.begin(), cities.end(), boost::bind( &IsInside, _1, boost::cref( point ) ) );
-    isInCity_ = it != cities.end();
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_UrbanLocation::NotifyMoveInside
+// Name: PHY_RolePion_UrbanLocation::NotifyMovingOutsideObject
 // Created: SLG 2010-04-08
 // -----------------------------------------------------------------------------
-void PHY_RolePion_UrbanLocation::NotifyMovingInsideUrbanBlock( const urban::TerrainObject_ABC& urbanObject )
+void PHY_RolePion_UrbanLocation::NotifyMovingOutsideObject( MIL_Object_ABC& object )
 {
-    if( !urbanObject.HasChild() ) 
+    UrbanObjectWrapper* urbanObject = dynamic_cast< UrbanObjectWrapper* >( &object );
+    if( urbanObject )
     {
-        urbanObject_ = &urbanObject;
-        delegate_.reset( new InsideUrbanBlockPosition( &urbanObject ) );    
-    }
-    isInCity_ = true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_UrbanLocation::NotifyMoveOutside
-// Created: SLG 2010-04-08
-// -----------------------------------------------------------------------------
-void PHY_RolePion_UrbanLocation::NotifyMovingOutsideUrbanBlock( const urban::TerrainObject_ABC& urbanObject )
-{
-    if( !urbanObject.GetParent() )
-        isInCity_ = false;
-    if( !urbanObject.HasChild() )
-    {
-        urbanObject_ = 0;
-        delegate_.reset( new OutsideUrbanBlockPosition() );
+        if( !urbanObject->GetObject().GetParent() )
+            isInCity_ = false;
+        if( !urbanObject->GetObject().HasChild() )
+        {
+            urbanObject_ = 0;
+            delegate_.reset( new OutsideUrbanBlockPosition() );
+        }
     }
 }
 
@@ -170,7 +160,7 @@ void PHY_RolePion_UrbanLocation::NotifyMovingOutsideUrbanBlock( const urban::Ter
 // Name: PHY_RolePion_UrbanLocation::GetCurrentUrbanBlock
 // Created: SLG 2010-04-08
 // -----------------------------------------------------------------------------
-const urban::TerrainObject_ABC* PHY_RolePion_UrbanLocation::GetCurrentUrbanBlock() const
+const UrbanObjectWrapper* PHY_RolePion_UrbanLocation::GetCurrentUrbanBlock() const
 {
     return urbanObject_;
 }
@@ -276,7 +266,27 @@ void PHY_RolePion_UrbanLocation::Execute( posture::PostureComputer_ABC& algorith
 {
     if ( urbanObject_ )
     {
-        double timeModifier = urbanObject_->ComputeComplexity();
+        double timeModifier = urbanObject_->GetObject().ComputeComplexity();
         algorithm.AddUrbanCoefficientModifier( timeModifier );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_UrbanLocation::Execute
+// Created: SLG 2010-06-25
+// -----------------------------------------------------------------------------
+void PHY_RolePion_UrbanLocation::Execute( moving::SpeedComputer_ABC& algorithm ) const
+{
+   if( urbanObject_ )
+   {    
+       // Occupation Speed Modifier
+        const urban::Architecture* architecture = urbanObject_->GetObject().RetrievePhysicalFeature< urban::Architecture >();
+        if( architecture )
+            algorithm.AddModifier( 1. - architecture->GetOccupation() , true);
+        
+        //Structural Speed Modifier
+        const StructuralCapacity* capacity = urbanObject_->Retrieve< StructuralCapacity >();
+        if ( capacity )
+            algorithm.AddModifier( capacity->GetStructuralState() );
     }
 }

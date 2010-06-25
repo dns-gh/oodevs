@@ -329,6 +329,8 @@ void Model::Update( const MsgsSimToClient::MsgSimToClient& wrapper )
 
     if( wrapper.message().has_urban_creation() )
         CreateUpdate< UrbanObject >( urbanBlocks_, wrapper.message().urban_creation() );
+    if( wrapper.message().has_urban_update() )
+        urbanBlocks_.Get( wrapper.message().urban_update().oid() ).Update( wrapper.message().urban_update() );
 
 
     if( wrapper.message().has_urban_knowledge_creation() )
@@ -343,8 +345,6 @@ void Model::Update( const MsgsSimToClient::MsgSimToClient& wrapper )
         meteoModel_->OnReceiveMsgLocalMeteoCreation( wrapper.message().control_local_meteo_creation() );
     if( wrapper.message().has_control_local_meteo_destruction() )
         meteoModel_->OnReceiveMsgLocalMeteoDestruction( wrapper.message().control_local_meteo_destruction() );
-    if( wrapper.message().has_urban_creation() )
-        CreateUpdate< UrbanObject >( urbanBlocks_, wrapper.message().urban_creation() );
 
 //        default:
 //            assert( false );//@TODO restore an exception, some messages aren't linked

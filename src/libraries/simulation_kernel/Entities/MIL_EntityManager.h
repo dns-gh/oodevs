@@ -48,6 +48,11 @@ namespace MsgsClientToSim
     class MsgMagicAction;
 }
 
+namespace urban
+{
+    class TerrainObject_ABC;
+}
+
 namespace xml
 {
     class xostream;
@@ -80,7 +85,7 @@ class MIL_Time_ABC;
 class MIL_Intelligence;
 class MIL_IDManager;
 class PopulationFactory_ABC;
-
+class UrbanModel;
 
 class HLA_Federate;
 // =============================================================================
@@ -138,6 +143,7 @@ public:
     //! @name Operations
     //@{
     void ReadODB             ( const MIL_Config& config );
+    void CreateUrbanObjects  ( UrbanModel& urbanModel );
     void SendStateToNewClient() const;
     void Update              ();
     void Clean               ();
@@ -211,6 +217,11 @@ private:
     void ReadDiplomacy        ( xml::xistream& xis );
     //@}
 
+    //! @name Urban
+    //@{
+    void CreateUrbanObject( const urban::TerrainObject_ABC& object );
+    //@}
+
     //! @name Update
     //@{
     void UpdateKnowledges();
@@ -222,6 +233,9 @@ private:
 
     void PreprocessRandomBreakdowns();
     //@}
+
+private:
+    class UrbanWrapperVisitor;
 
 private:
     const MIL_Time_ABC& time_;

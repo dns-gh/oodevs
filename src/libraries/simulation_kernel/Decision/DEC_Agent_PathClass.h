@@ -27,7 +27,7 @@ namespace xml
 }
 
 class DEC_PathType;
-class MIL_AgentPion;
+class MIL_Agent_ABC;
 class MIL_ObjectType_ABC;
 class MIL_PopulationAttitude;
 
@@ -44,7 +44,7 @@ public:
     //@{
     static       void                 Initialize  ( xml::xistream& xis );
     static       void                 Terminate   ();
-    static const DEC_Agent_PathClass& GetPathClass( const DEC_PathType& pathType, const MIL_AgentPion& pion );
+    static const DEC_Agent_PathClass& GetPathClass( const DEC_PathType& pathType, const MIL_Agent_ABC& pion );
     //@}
 
 public:

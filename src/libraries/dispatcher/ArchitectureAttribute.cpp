@@ -83,5 +83,5 @@ void ArchitectureAttribute::Send( MsgsSimToClient::MsgUrbanAttributes& message )
 // -----------------------------------------------------------------------------
 void ArchitectureAttribute::AsnDelete( MsgsSimToClient::MsgUrbanAttributes& /*message*/ ) const
 {
-    //    delete asnMsg.u.mine_jam;
+    //NOTHING
 }

@@ -20,11 +20,12 @@
 #include "Entities/Agents/Roles/Urban/PHY_RolePion_UrbanLocation.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Posture/PHY_RolePion_Posture.h"
+#include "Entities/Objects/MIL_ObjectLoader.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
 #include "Fixture.h"
 #include "UrbanModel.h"
 #include <Urban/Model.h>
 #include <Urban/UrbanObject.h>
-#include <Urban/Drawer_ABC.h>
 
 #include "MockMIL_Time_ABC.h"
 #include "MockAgent.h"
@@ -56,11 +57,24 @@ BOOST_AUTO_TEST_CASE( PhComputerFirerPositionTest )
     vertices.push_back( geometry::Point2f( 1, 1 ) );
     vertices.push_back( geometry::Point2f( 1, -1 ) );
     
-    urban::Drawer_ABC* drawer = 0;
-    urban::UrbanObject urbanBlock( 0, "test", geometry::Polygon2f( vertices ), 0 );
+    std::auto_ptr< urban::UrbanObject > urbanBlock;
+    urbanBlock.reset( new urban::UrbanObject ( 0, "test", geometry::Polygon2f( vertices ), 0 ) );
+
+    MIL_ObjectLoader loader;
+    {
+        xml::xistringstream xis( "<objects>" 
+            "<object type='urban block'/>"
+            "</objects>"
+            ); 
+        BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
+    }
+    std::auto_ptr< MIL_Object_ABC > pObject;
+    {
+        BOOST_CHECK_NO_THROW( pObject.reset( loader.CreateUrbanObject( *urbanBlock ) ) );
+    }
 
     PHY_RolePion_UrbanLocation* urbanRole = new PHY_RolePion_UrbanLocation( *firerFixture.pPion_ );
-    urbanRole->NotifyMovingInsideUrbanBlock( urbanBlock );
+    urbanRole->NotifyMovingInsideObject( *pObject);
     firerFixture.pPion_->RegisterRole< PHY_RolePion_UrbanLocation >( *urbanRole );
 
     PHY_RolePion_Location* firerlocationRole = new PHY_RolePion_Location( *firerFixture.pPion_ );
@@ -73,6 +87,7 @@ BOOST_AUTO_TEST_CASE( PhComputerFirerPositionTest )
 
     geometry::Point2f result( 1, 0.5 );
     BOOST_CHECK_EQUAL( result, urbanRole->GetFirerPosition( *targetFixture.pPion_ ) );
+    pObject.reset();
     TER_World::DestroyWorld();  
 }
 
@@ -82,16 +97,28 @@ BOOST_AUTO_TEST_CASE( PhComputerTargetPositionTest )
     MIL_EffectManager effectManager;
     FixturePion firerFixture( effectManager );
     FixturePion targetFixture( effectManager );
+
     std::vector< geometry::Point2f > vertices;
     vertices.push_back( geometry::Point2f( -1, -1 ) );
     vertices.push_back( geometry::Point2f( -1, 1 ) );
     vertices.push_back( geometry::Point2f( 1, 1 ) );
     vertices.push_back( geometry::Point2f( 1, -1 ) );
 
-    urban::Drawer_ABC* drawer = 0;
-    urban::UrbanObject urbanBlock( 0, "test", geometry::Polygon2f( vertices ), 0 );
+    std::auto_ptr< urban::UrbanObject > urbanBlock;
+    urbanBlock.reset( new urban::UrbanObject ( 0, "test", geometry::Polygon2f( vertices ), 0 ) );
+
+    MIL_ObjectLoader loader;
+    {
+        xml::xistringstream xis( "<objects>" 
+            "<object type='urban block'/>"
+            "</objects>"
+            ); 
+        BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
+    }
+    MIL_Object_ABC* pObject = loader.CreateUrbanObject( *urbanBlock );
+
     PHY_RolePion_UrbanLocation* urbanRole = new PHY_RolePion_UrbanLocation( *firerFixture.pPion_ );
-    urbanRole->NotifyMovingInsideUrbanBlock( urbanBlock );
+    urbanRole->NotifyMovingInsideObject( *pObject );
     firerFixture.pPion_->RegisterRole< PHY_RolePion_UrbanLocation >( *urbanRole );
 
     PHY_RolePion_Location* targetLocationRole = new PHY_RolePion_Location( *targetFixture.pPion_ );
@@ -126,11 +153,21 @@ BOOST_AUTO_TEST_CASE( PhComputerIndirectPhModifier )
     vertices.push_back( geometry::Point2f( 1, 1 ) );
     vertices.push_back( geometry::Point2f( 1, -1 ) );
 
-    urban::Drawer_ABC* drawer = 0;
-    urban::UrbanObject urbanBlock( 0, "test", geometry::Polygon2f( vertices ), 0 );
+    std::auto_ptr< urban::UrbanObject > urbanBlock;
+    urbanBlock.reset( new urban::UrbanObject ( 0, "test", geometry::Polygon2f( vertices ), 0 ) );
+
+    MIL_ObjectLoader loader;
+    {
+        xml::xistringstream xis( "<objects>" 
+            "<object type='urban block'/>"
+            "</objects>"
+            ); 
+        BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
+    }
+    MIL_Object_ABC* pObject = loader.CreateUrbanObject( *urbanBlock );
 
     PHY_RolePion_UrbanLocation* urbanRole = new PHY_RolePion_UrbanLocation( *fixture.pPion_ );
-    urbanRole->NotifyMovingInsideUrbanBlock( urbanBlock );
+    urbanRole->NotifyMovingInsideObject( *pObject );
     fixture.pPion_->RegisterRole< PHY_RolePion_UrbanLocation >( *urbanRole );
 
     PHY_RolePion_Location* locationRole = new PHY_RolePion_Location( *fixture.pPion_ );

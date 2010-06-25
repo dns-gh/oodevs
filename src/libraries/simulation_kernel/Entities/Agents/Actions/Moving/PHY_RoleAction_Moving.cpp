@@ -373,24 +373,6 @@ void PHY_RoleAction_Moving::NotifyMovingOutsideObject( MIL_Object_ABC& object )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_Moving::NotifyMovingInsideUrbanBlock
-// Created: SLG 2010-04-09
-// -----------------------------------------------------------------------------
-void PHY_RoleAction_Moving::NotifyMovingInsideUrbanBlock( const urban::TerrainObject_ABC& urbanBlock )
-{
-    pion_.Apply(&terrain::UrbanBlockCollisionNotificationHandler_ABC::NotifyMovingInsideUrbanBlock, urbanBlock );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_Moving::NotifyMovingOutsideUrbanBlock
-// Created: SLG 2010-04-09
-// -----------------------------------------------------------------------------
-void PHY_RoleAction_Moving::NotifyMovingOutsideUrbanBlock( const urban::TerrainObject_ABC& urbanBlock )
-{
-    pion_.Apply(&terrain::UrbanBlockCollisionNotificationHandler_ABC::NotifyMovingOutsideUrbanBlock, urbanBlock );
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Moving::CanMove
 // Created: NLD 2005-09-30
 // -----------------------------------------------------------------------------

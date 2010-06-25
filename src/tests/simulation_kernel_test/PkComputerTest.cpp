@@ -14,6 +14,8 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationNature.h"
+#include "Entities/Objects/MIL_ObjectLoader.h"
+#include "simulation_terrain/TER_World.h"
 #include <Urban/Model.h>
 #include <Urban/UrbanObject.h>
 #include <Urban/CoordinateConverter_ABC.h>
@@ -29,6 +31,8 @@ BOOST_AUTO_TEST_CASE( PkComputerUrbanProtectionTest )
 {
     TestPK* test = new TestPK();
 
+    TER_World::Initialize( "../../data/data/terrains/Drosoville/Terrain.xml" );
+
     const PHY_DotationCategory* pCategory = PHY_DotationType::FindDotationCategory( "ammo" );
 
     xml::xistringstream xisModel( "<urbanObject id='3' name='School'>"
@@ -41,13 +45,27 @@ BOOST_AUTO_TEST_CASE( PkComputerUrbanProtectionTest )
     urban::Drawer_ABC* drawer = 0;
     urban::CoordinateConverter_ABC* coord = new urban::CoordinateConverter();
     xisModel >> xml::start( "urbanObject" );
-    urban::UrbanObject urbanBlock( xisModel, 0, *coord );
+    std::auto_ptr< urban::UrbanObject > urbanBlock;
+    urbanBlock.reset( new urban::UrbanObject ( xisModel, 0, *coord ) );
+    MIL_ObjectLoader loader;
+    {
+        xml::xistringstream xis( "<objects>" 
+            "<object type='urban block'/>"
+            "</objects>"
+            ); 
+        BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
+    }
+    MIL_Object_ABC* pObject = loader.CreateUrbanObject( *urbanBlock );
+    
     xisModel >> xml::end();
     PHY_RolePion_UrbanLocation* urbanRole = new PHY_RolePion_UrbanLocation( firer );
-    urbanRole->NotifyMovingInsideUrbanBlock( urbanBlock );
+
+    urbanRole->NotifyMovingInsideObject( *pObject );
     firer.RegisterRole< PHY_RolePion_UrbanLocation >( *urbanRole );
 
     BOOST_CHECK_CLOSE( 0.48, urbanRole->ComputeUrbanProtection( *pCategory ), 1. );
     delete coord;
     delete test;
+
+    TER_World::DestroyWorld();
 }

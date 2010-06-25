@@ -487,10 +487,10 @@ float PHY_DotationCategory::GetIlluminatingRange( ) const
 // -----------------------------------------------------------------------------
 double PHY_DotationCategory::GetAttrition( unsigned materialId ) const
 {
-    if (materialId >= 0)
+    if (materialId < urbanAttritionFactors_.size() )
         return urbanAttritionFactors_[ materialId ];
     else 
-        return -1.0;
+        return 0.;
 }
 
 // -----------------------------------------------------------------------------

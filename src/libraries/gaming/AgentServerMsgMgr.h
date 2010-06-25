@@ -119,6 +119,7 @@ namespace MsgsSimToClient
     class MsgKnowledgeGroupUpdateAck;
     class MsgKnowledgeGroupDestruction;
     class MsgUrbanCreation;
+    class MsgUrbanUpdate;
     class MsgUrbanDetection;
     class MsgControlGlobalMeteo;
     class MsgControlLocalMeteoCreation;
@@ -468,6 +469,7 @@ private:
 
     // Urban
     void OnReceiveMsgUrbanCreation            ( const MsgsSimToClient::MsgUrbanCreation&                    message );
+    void OnReceiveMsgUrbanUpdate              ( const MsgsSimToClient::MsgUrbanUpdate&                      message );
     void OnReceiveMsgUrbanDetection           ( const MsgsSimToClient::MsgUrbanDetection&                   message );
     void OnReceiveMsgUrbanKnowledgeCreation   ( const MsgsSimToClient::MsgUrbanKnowledgeCreation&           message );
     void OnReceiveMsgUrbanKnowledgeUpdate     ( const MsgsSimToClient::MsgUrbanKnowledgeUpdate&             message );

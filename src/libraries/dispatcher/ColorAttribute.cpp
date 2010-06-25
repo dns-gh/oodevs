@@ -20,9 +20,8 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 ColorAttribute::ColorAttribute( const Model& model, const MsgsSimToClient::MsgUrbanAttributes& message )
     : UrbanObjectAttribute_ABC( model, message )
-    , color_       ( 0 )
+    , color_ ( new ColorRGBA( message.color().red(), message.color().green(), message.color().blue(), message.color().alpha() ) )
 {
-    Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -40,18 +39,7 @@ ColorAttribute::~ColorAttribute()
 // -----------------------------------------------------------------------------
 void ColorAttribute::Update( const MsgsSimToClient::MsgUrbanAttributes& message )
 {
-    const MsgsSimToClient::MsgColorRGBA& color = message.color();
-    if ( color_ == 0 )
-    {
-        color_ = new ColorRGBA( color.red(), color.green(), color.blue(), color.alpha() );
-    }
-    else
-    {
-        color_->Red( color.red() );
-        color_->Green( color.green() );
-        color_->Blue( color.blue() );
-        color_->Alpha( color.alpha() );
-    }
+   // NOTHING
 }
 
 // -----------------------------------------------------------------------------

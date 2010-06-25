@@ -24,24 +24,24 @@
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( FactoriesTest_ArmyFactory )
 {
-    MockAutomateFactory automateFactory;
-    MockAgentFactory agentFactory;
-    MockFormationFactory formationFactory;
-    MockPopulationFactory populationFactory;
-    MockObjectManager objetFactory;
-    MockKnowledgeGroupFactory knowledgeGroupFactory; // LTO
-    std::auto_ptr< UrbanModel > urbanModel( new UrbanModel() );
-
-    ArmyFactory armyFactory( automateFactory, agentFactory, formationFactory, objetFactory, populationFactory, knowledgeGroupFactory /*LTO*/ ); 
-    xml::xistringstream xis( "<side id='1' name='Local militia' type='enemy'>"
-                                "<objects/>"
-                                "<tactical/>"
-                                "<communication/>"
-                                "<populations/>"
-                                "<logistic/>"
-                             "</side>");
-    xis >> xml::start( "side" );
-    armyFactory.Create( xis );
-    xis >> xml::end();
-    BOOST_TODO;
+     MockAutomateFactory automateFactory;
+     MockAgentFactory agentFactory;
+     MockFormationFactory formationFactory;
+     MockPopulationFactory populationFactory;
+     MockObjectManager objetFactory;
+     MockKnowledgeGroupFactory knowledgeGroupFactory; // LTO
+     std::auto_ptr< UrbanModel > urbanModel( new UrbanModel() );
+ 
+     ArmyFactory armyFactory( automateFactory, agentFactory, formationFactory, objetFactory, populationFactory, knowledgeGroupFactory /*LTO*/ ); 
+     xml::xistringstream xis( "<side id='1' name='Local militia' type='enemy'>"
+                                 "<objects/>"
+                                 "<tactical/>"
+                                 "<communication/>"
+                                 "<populations/>"
+                                 "<logistic/>"
+                              "</side>");
+     xis >> xml::start( "side" );
+     armyFactory.Create( xis );
+     xis >> xml::end();
+     BOOST_TODO;
 }

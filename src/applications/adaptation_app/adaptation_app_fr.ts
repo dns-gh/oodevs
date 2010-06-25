@@ -5621,7 +5621,7 @@ du tireur</translation>
     </message>
     <message>
         <source>Object type</source>
-        <translation>Type d&apos;objet</translation>
+        <translation type="unfinished">Type d&apos;objet</translation>
     </message>
     <message>
         <source>Detection duration</source>

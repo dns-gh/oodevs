@@ -323,11 +323,10 @@ void PHY_WeaponDataType_DirectFire::Fire( MIL_Agent_ABC& firer, MIL_Agent_ABC& t
         target.GetRole< PHY_RoleInterface_ActiveProtection >().UseAmmunition( weaponType_.GetDotationCategory() );
         if ( !( randomGenerator_.rand_oi() <= rPH ) )
         {
-            const urban::TerrainObject_ABC* urbanObject = target.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
+            const UrbanObjectWrapper* urbanObject = target.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
             if ( urbanObject )
             {
-                UrbanObjectWrapper& wrapper = UrbanModel::GetSingleton().FindWrapper( *urbanObject );
-                StructuralCapacity* capacity = wrapper.Retrieve< StructuralCapacity >();
+                StructuralCapacity* capacity = const_cast< StructuralCapacity* >( urbanObject->Retrieve< StructuralCapacity >() );
                 if ( capacity )
                     capacity->ApplyDirectFire( *urbanObject, weaponType_.GetDotationCategory() );
             }    

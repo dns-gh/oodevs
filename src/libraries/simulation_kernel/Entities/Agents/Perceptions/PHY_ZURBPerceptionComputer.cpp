@@ -19,6 +19,7 @@
 #include "Entities/Agents/Units/Sensors/PHY_Sensor.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
+#include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Tools/MIL_Geometry.h"
 #include "AlgorithmsFactories.h"
 #include "OnComponentComputer_ABC.h"
@@ -88,13 +89,13 @@ const PHY_ZURBPerceptionComputer::Polygons PHY_ZURBPerceptionComputer::ComputePe
     sensorPerception = ComputeParametersPerception( target );
     Distances distancePerception = sensorPerception .distances;
     const PHY_Posture& currentPerceiverPosture = perceiver_.GetRole< PHY_RoleInterface_Posture >().GetCurrentPosture();
-    const urban::TerrainObject_ABC* perceiverUrbanBlock = perceiver_.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
+    const UrbanObjectWrapper* perceiverUrbanBlock = perceiver_.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
     Polygons returnValue;
     if ( perceiverUrbanBlock && ( &currentPerceiverPosture == &PHY_Posture::poste_ || &currentPerceiverPosture == &PHY_Posture::posteAmenage_ ) )
     {
-        returnValue.identificationPolygon = MakePolygon( *perceiverUrbanBlock, distancePerception.identificationDist );
-        returnValue.recognitionPolygon = MakePolygon( *perceiverUrbanBlock, distancePerception.recognitionDist );
-        returnValue.detectionPolygon = MakePolygon( *perceiverUrbanBlock, distancePerception.detectionDist );
+        returnValue.identificationPolygon = MakePolygon( perceiverUrbanBlock->GetObject(), distancePerception.identificationDist );
+        returnValue.recognitionPolygon = MakePolygon( perceiverUrbanBlock->GetObject(), distancePerception.recognitionDist );
+        returnValue.detectionPolygon = MakePolygon( perceiverUrbanBlock->GetObject(), distancePerception.detectionDist );
     }
     else
     {
@@ -176,13 +177,13 @@ namespace
                 std::vector< const urban::TerrainObject_ABC* > list;
                 UrbanModel::GetSingleton().GetModel().GetListWithinCircle( center, radius, list );
                 double worstFactor = 1.f;
-                const urban::TerrainObject_ABC* perceiverUrbanBlock = perceiver_.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
+                const UrbanObjectWrapper* perceiverUrbanBlock = perceiver_.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
                 const PHY_Posture& currentPerceiverPosture = perceiver_.GetRole< PHY_RoleInterface_Posture >().GetCurrentPosture();
                 if( !list.empty() )
                 {
                     for( std::vector< const urban::TerrainObject_ABC* >::const_iterator it = list.begin(); it != list.end(); it++ )
                     {
-                        if( !( perceiverUrbanBlock == *it && ( &currentPerceiverPosture == &PHY_Posture::poste_ || &currentPerceiverPosture == &PHY_Posture::posteAmenage_ ) ) )
+                        if( perceiverUrbanBlock == 0 || !( &perceiverUrbanBlock->GetObject() == *it && ( &currentPerceiverPosture == &PHY_Posture::poste_ || &currentPerceiverPosture == &PHY_Posture::posteAmenage_ ) ) )
                         {
                             const urban::TerrainObject_ABC& object = **it;
                             const geometry::Polygon2f* footPrint = object.GetFootprint();
@@ -197,7 +198,7 @@ namespace
                                     urbanFactor *=  1. - architecture->GetOccupation();
                                 if ( perceiverUrbanBlock )
                                 {
-                                    const urban::Architecture* perceiverUrbanBlockArchitecture = perceiverUrbanBlock->RetrievePhysicalFeature< urban::Architecture >();
+                                    const urban::Architecture* perceiverUrbanBlockArchitecture = perceiverUrbanBlock->GetObject().RetrievePhysicalFeature< urban::Architecture >();
                                     if( perceiverUrbanBlockArchitecture )
                                         perceiverUrbanBlockHeight += perceiverUrbanBlockArchitecture->GetHeight();
                                 }

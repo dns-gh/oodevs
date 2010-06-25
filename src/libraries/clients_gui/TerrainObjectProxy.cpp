@@ -13,9 +13,7 @@
 #include "clients_kernel/PropertiesDictionary.h"
 #include "protocol/SimulationSenders.h"
 #include <urban/Architecture.h>
-#include <urban/Soil.h>
 #include <urban/TerrainObject_ABC.h>
-#include <urban/Vegetation.h>
 
 using namespace gui;
 
@@ -23,12 +21,13 @@ using namespace gui;
 // Name: TerrainObjectProxy constructor
 // Created: SLG 2009-10-20
 // -----------------------------------------------------------------------------
-TerrainObjectProxy::TerrainObjectProxy(const MsgsSimToClient::MsgUrbanCreation& message, kernel::Controller& controller, urban::TerrainObject_ABC& object )
+TerrainObjectProxy::TerrainObjectProxy( const MsgsSimToClient::MsgUrbanCreation& message, kernel::Controller& controller, urban::TerrainObject_ABC& object )
     : EntityImplementation< kernel::Entity_ABC >( controller, message.oid(), QString( message.name().c_str() ) )
     , object_( &object )
 {
     RegisterSelf( *this );
     CreateDictionary( controller );
+    structuralState_ = message.attributes().capacity().structuralstate();
 }
 
 // -----------------------------------------------------------------------------
@@ -62,6 +61,16 @@ bool TerrainObjectProxy::operator==( const TerrainObjectProxy& object ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: TerrainObjectProxy::Update
+// Created: SLG 2010-06-22
+// -----------------------------------------------------------------------------
+void TerrainObjectProxy::DoUpdate( const MsgsSimToClient::MsgUrbanUpdate& message )
+{
+    structuralState_ = message.attributes().capacity().structuralstate();
+    Touch();
+}
+
+// -----------------------------------------------------------------------------
 // Name: TerrainObjectProxy GetName
 // Created: SLG 2009-11-2
 // -----------------------------------------------------------------------------
@@ -89,6 +98,7 @@ void TerrainObjectProxy::CreateDictionary( kernel::Controller& controller )
     EntityImplementation< kernel::Entity_ABC >::Attach( dictionary );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "Info/Identifier" ), EntityImplementation< kernel::Entity_ABC >::id_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "Info/Name" ), EntityImplementation< kernel::Entity_ABC >::name_ );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "Info/StructuralState" ), structuralState_ );
 
     AddDictionaryForArchitecture( dictionary );
 }
@@ -140,7 +150,7 @@ void TerrainObjectProxy::Draw( urban::Drawer_ABC& drawer ) const
 //*/
 // Created: FDS 2010-01-15
 // -----------------------------------------------------------------------------
-bool TerrainObjectProxy::IsInside ( const geometry::Point2f& point ) const
+bool TerrainObjectProxy::IsInside( const geometry::Point2f& point ) const
 {
     return object_->GetFootprint()->IsInside( point );
 }

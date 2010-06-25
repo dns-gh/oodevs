@@ -34,6 +34,7 @@
 #include "ProtectionCapacity.h"
 #include "ScatteringCapacity.h"
 #include "SpawnCapacity.h"
+#include "StructuralCapacity.h"
 #include "TerrainHeuristicCapacity.h"
 #include "TimeLimitedCapacity.h"
 #include "WorkableCapacity.h"
@@ -103,6 +104,7 @@ CapacityFactory::CapacityFactory()
     Register( "perception", boost::bind( &AddBuilder< PerceptionCapacity >::Add, _1, _2 ) );
     Register( "attitude-modifier", boost::bind( &AddBuilder< AttitudeModifierCapacity >::Add, _1, _2 ) );
     Register( "scattering", boost::bind( &AddBuilder< ScatteringCapacity >::Add, _1, _2 ) );
+    Register( "structural", boost::bind( &AddBuilder< StructuralCapacity >::Add, _1, _2 ) );
 }
 
 // -----------------------------------------------------------------------------

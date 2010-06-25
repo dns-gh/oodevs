@@ -70,16 +70,8 @@ void UrbanModel::Create( const MsgsSimToClient::MsgUrbanCreation& message )
         tools::Resolver< kernel::Entity_ABC >::Register( id, *pTerrainObject );
     urbanBlockDetectionMap_.AddUrbanBlock( *object );
 }
-/*
-// -----------------------------------------------------------------------------
-// Name: DrawingsModel::Update
-// Created: SLG 2009-10-20
-// -----------------------------------------------------------------------------
-void DrawingsModel::Update( const ASN1T_MsgUrbanUpdate& message )
-{
-    //TODO
-}
 
+/*
 // -----------------------------------------------------------------------------
 // Name: DrawingsModel::Delete
 // Created: SLG 2009-10-20
@@ -116,4 +108,13 @@ const urban::Model& UrbanModel::GetModel() const
 const UrbanBlockDetectionMap& UrbanModel::GetUrbanBlockMap() const
 {
     return urbanBlockDetectionMap_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanModel::GetUrbanBlockMap
+// Created: SLG 2010-03-12
+// -----------------------------------------------------------------------------
+kernel::Entity_ABC& UrbanModel::GetObject( unsigned long id ) const
+{
+    return tools::Resolver< kernel::Entity_ABC >::Get( id );
 }

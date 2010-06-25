@@ -8,11 +8,10 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "DEC_Agent_PathClass.h"
-
 #include "Decision/DEC_PathType.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Objects/MIL_ObjectFactory.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Populations/MIL_PopulationAttitude.h"
@@ -339,9 +338,9 @@ void DEC_Agent_PathClass::ReadPopulation( xml::xistream& xis )
 // Name: DEC_Agent_PathClass::GetPathClass
 // Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
-const DEC_Agent_PathClass& DEC_Agent_PathClass::GetPathClass( const DEC_PathType& pathType, const MIL_AgentPion& pion )
+const DEC_Agent_PathClass& DEC_Agent_PathClass::GetPathClass( const DEC_PathType& pathType, const MIL_Agent_ABC& pion )
 {
-    const bool bCanFly     = pion.CanFly();
+    const bool bCanFly     = pion.GetType().GetUnitType().CanFly();
     const bool bAutonomous = pion.IsAutonomous();
 
     const DEC_Agent_PathClass* pClass = rules_[ T_RuleType( pathType.GetName(), T_BooleanPair( bCanFly, bAutonomous ) ) ];

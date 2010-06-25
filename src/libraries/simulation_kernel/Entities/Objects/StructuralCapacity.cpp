@@ -10,14 +10,10 @@
 #include "simulation_kernel_pch.h"
 #include "StructuralCapacity.h"
 #include "MIL_Object_ABC.h"
-#include "UrbanType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "geometry/Types.h"
 #include "tools/MIL_Geometry.h"
-#include "urban/Architecture.h"
-#include "urban/TerrainObject_ABC.h"
-#include "urban/StaticModel.h"
-#include "urban/MaterialCompositionType.h"
+#include "protocol/ClientSenders.h"
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( StructuralCapacity )
@@ -97,12 +93,13 @@ void StructuralCapacity::Instanciate( MIL_Object_ABC& object ) const
 // Name: StructuralCapacity::ApplyIndirectFire
 // Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
-void StructuralCapacity::ApplyIndirectFire( const urban::TerrainObject_ABC& object, const MT_Ellipse& attritionSurface, const PHY_DotationCategory& dotation )
+void StructuralCapacity::ApplyIndirectFire( const MIL_Object_ABC& object, const MT_Ellipse& attritionSurface, const PHY_DotationCategory& dotation )
 {
-    float urbanObjectArea = object.GetFootprint()->ComputeArea();
+    float urbanObjectArea = object.GetLocalisation().GetArea();
+
     if( !urbanObjectArea )
         return;
-    geometry::Polygon2f attritionPolygon; 
+    geometry::Polygon2f attritionPolygon;
     attritionPolygon.Add( geometry::Point2f( float( attritionSurface.GetMajorAxisHighPoint().rX_ + attritionSurface.GetMinorAxisHighPoint().rX_ - attritionSurface.GetCenter().rX_ ), 
         float( attritionSurface.GetMajorAxisHighPoint().rY_ + attritionSurface.GetMinorAxisHighPoint().rY_ - attritionSurface.GetCenter().rY_ ) ) );
     attritionPolygon.Add( geometry::Point2f( float( attritionSurface.GetMajorAxisHighPoint().rX_ - attritionSurface.GetMinorAxisHighPoint().rX_ + attritionSurface.GetCenter().rX_ ),
@@ -111,14 +108,16 @@ void StructuralCapacity::ApplyIndirectFire( const urban::TerrainObject_ABC& obje
         float( 3 * attritionSurface.GetCenter().rY_ - attritionSurface.GetMajorAxisHighPoint().rY_ - attritionSurface.GetMinorAxisHighPoint().rY_ ) ) );
     attritionPolygon.Add( geometry::Point2f( float( attritionSurface.GetCenter().rX_ - attritionSurface.GetMajorAxisHighPoint().rX_ + attritionSurface.GetMinorAxisHighPoint().rX_ ),
         float( attritionSurface.GetCenter().rY_ - attritionSurface.GetMajorAxisHighPoint().rY_ + attritionSurface.GetMinorAxisHighPoint().rY_ ) ) );
-    float ratio = MIL_Geometry::IntersectionArea( attritionPolygon, *object.GetFootprint() ) / urbanObjectArea;
 
-    float modifier = 0.;
-    const urban::Architecture* architecture = object.RetrievePhysicalFeature< urban::Architecture >();
-    if( architecture )
-        modifier = float( dotation.GetAttrition( UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( architecture->GetMaterial() )->GetId() ) );
+    geometry::Polygon2f p;
+    CT_PointVector points = object.GetLocalisation().GetPoints();
+    for( T_PointVector::const_iterator it = points.begin(); it != points.end(); ++it )
+        p.Add( geometry::Point2f( it->rX_, it->rY_ ) );
+    float ratio = MIL_Geometry::IntersectionArea( attritionPolygon, p ) / urbanObjectArea;
 
-    structuralState_-= ratio * modifier;
+    float modifier = float( dotation.GetAttrition( object.GetMaterial() ) );
+
+    structuralState_ -= ratio * modifier;
     if( structuralState_  < 0 ) 
         structuralState_ = 0;
 }
@@ -127,17 +126,31 @@ void StructuralCapacity::ApplyIndirectFire( const urban::TerrainObject_ABC& obje
 // Name: StructuralCapacity::ApplyDirectFire
 // Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
-void StructuralCapacity::ApplyDirectFire( const urban::TerrainObject_ABC& object, const PHY_DotationCategory& dotation )
+void StructuralCapacity::ApplyDirectFire( const MIL_Object_ABC& object, const PHY_DotationCategory& dotation )
 {
-    if( !object.GetFootprint() )
-        return;
-    float area = object.GetFootprint()->ComputeArea(); 
+
+    float area = object.GetLocalisation().GetArea();
     if( area )
     {
-        float modifier = 0.;
-        const urban::Architecture* architecture = object.RetrievePhysicalFeature< urban::Architecture >();
-        if( architecture )
-            modifier = float( dotation.GetAttrition( UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( architecture->GetMaterial() )->GetId() ) );
-        structuralState_-= modifier / object.GetFootprint()->ComputeArea();
+        float modifier = float( dotation.GetAttrition( object.GetMaterial() ) );
+        structuralState_-= modifier / area;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: StructuralCapacity::SendState
+// Created: SLG 2010-06-21
+// -----------------------------------------------------------------------------
+void StructuralCapacity::SendState( MsgsSimToClient::MsgUrbanAttributes& message ) const
+{
+    message.mutable_capacity()->set_structuralstate( structuralState_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: StructuralCapacity::GetStructuralState
+// Created: SLG 2010-06-25
+// -----------------------------------------------------------------------------
+float StructuralCapacity::GetStructuralState() const
+{
+    return structuralState_;
 }

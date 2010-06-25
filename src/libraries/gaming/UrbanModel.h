@@ -28,6 +28,7 @@ namespace kernel
     class DetectionMap;
 }
 
+class TerrainObjectProxy;
 class UrbanBlockDetectionMap;
 
 // =============================================================================
@@ -53,6 +54,7 @@ public:
     void Purge();
     const urban::Model& GetModel() const;
     const UrbanBlockDetectionMap& GetUrbanBlockMap() const;
+    kernel::Entity_ABC& GetObject( unsigned long id ) const;
     //@}
 
 private:

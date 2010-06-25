@@ -23,8 +23,10 @@
 #include "Decision/DEC_Rep_PathPoint_Lima.h"
 #include "Entities/Orders/MIL_LimaOrder.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
+#include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/MIL_Army.h"
@@ -39,10 +41,10 @@
 // Name: DEC_Agent_Path::Initialize
 // Created: JDY 03-04-10
 //-----------------------------------------------------------------------------
-DEC_Agent_Path::DEC_Agent_Path( const MIL_AgentPion& queryMaker, const T_PointVector& points, const DEC_PathType& pathType )
+DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const T_PointVector& points, const DEC_PathType& pathType )
     : DEC_PathResult           ()
     , queryMaker_              ( queryMaker )
-    , bRefine_                 ( queryMaker.CanFly() && !queryMaker.IsAutonomous() )
+    , bRefine_                 ( queryMaker.GetType().GetUnitType().CanFly() && !queryMaker.IsAutonomous() )
     , fuseau_                  () //$$$ Debile
     , automateFuseau_          () //$$$ Debile
     , vDirDanger_              ( queryMaker.GetOrderManager().GetDirDanger() )
@@ -70,10 +72,10 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_AgentPion& queryMaker, const T_PointVe
 // Name: DEC_Agent_Path constructor
 // Created: LDC 2009-06-18
 // -----------------------------------------------------------------------------
-DEC_Agent_Path::DEC_Agent_Path( const MIL_AgentPion& queryMaker, std::vector< boost::shared_ptr< MT_Vector2D > >& points , const DEC_PathType& pathType )
+DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, std::vector< boost::shared_ptr< MT_Vector2D > >& points , const DEC_PathType& pathType )
     : DEC_PathResult           ()
     , queryMaker_              ( queryMaker )
-    , bRefine_                 ( queryMaker.CanFly() && !queryMaker.IsAutonomous() )
+    , bRefine_                 ( queryMaker.GetType().GetUnitType().CanFly() && !queryMaker.IsAutonomous() )
     , fuseau_                  () //$$$ Debile
     , automateFuseau_          () //$$$ Debile
     , vDirDanger_              ( queryMaker.GetOrderManager().GetDirDanger() )
@@ -102,10 +104,10 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_AgentPion& queryMaker, std::vector< bo
 // Name: DEC_Agent_Path constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
-DEC_Agent_Path::DEC_Agent_Path( const MIL_AgentPion& queryMaker, const MT_Vector2D& vPosEnd, const DEC_PathType& pathType ) 
+DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const MT_Vector2D& vPosEnd, const DEC_PathType& pathType ) 
     : DEC_PathResult            ()
     , queryMaker_               ( queryMaker )
-    , bRefine_                  ( queryMaker.CanFly() && !queryMaker.IsAutonomous() )
+    , bRefine_                  ( queryMaker.GetType().GetUnitType().CanFly() && !queryMaker.IsAutonomous() )
     , fuseau_                   () //$$$ Debile
     , automateFuseau_           () //$$$ Debile
     , vDirDanger_               ( queryMaker.GetOrderManager().GetDirDanger() )
@@ -133,10 +135,10 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_AgentPion& queryMaker, const MT_Vector
 // Name: DEC_Agent_Path::DEC_Agent_Path
 // Created: LMT 2010-05-04
 // -----------------------------------------------------------------------------
-DEC_Agent_Path::DEC_Agent_Path( const MIL_AgentPion& queryMaker, const MT_Vector2D& vPosEnd, const DEC_PathType& pathType, bool loaded ) 
+DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const MT_Vector2D& vPosEnd, const DEC_PathType& pathType, bool loaded ) 
     : DEC_PathResult            ()
     , queryMaker_               ( queryMaker )
-    , bRefine_                  ( queryMaker.CanFly() && !queryMaker.IsAutonomous() )
+    , bRefine_                  ( queryMaker.GetType().GetUnitType().CanFly() && !queryMaker.IsAutonomous() )
     , fuseau_                   () //$$$ Debile
     , automateFuseau_           () //$$$ Debile
     , vDirDanger_               ( queryMaker.GetOrderManager().GetDirDanger() )
@@ -244,7 +246,7 @@ void DEC_Agent_Path::Initialize( const T_PointVector& points )
 // -----------------------------------------------------------------------------
 MT_Float DEC_Agent_Path::GetUnitMajorWeight() const
 {
-    return queryMaker_.GetMajorComponentWeight();
+    return queryMaker_.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight();
 }
 
 // -----------------------------------------------------------------------------

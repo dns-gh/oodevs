@@ -1066,6 +1066,12 @@ message MsgUrbanAttributeArchitecture
     required float  occupation            = 6;
     required float  trafficability        = 7;
 }
+
+message MsgUrbanAttributeCapacity
+{
+    required float  structuralState        = 1;
+}
+
 message MsgColorRGBA
 {
 	required int32 red   = 1;
@@ -1105,7 +1111,8 @@ message MsgUrbanMagicActionAck {
 
 message MsgUrbanAttributes {
    optional MsgUrbanAttributeArchitecture architecture = 1;
-   optional MsgColorRGBA                  color        = 2;
+   optional MsgUrbanAttributeCapacity     capacity     = 2;
+   optional MsgColorRGBA                  color        = 3;
 }
 message MsgUrbanCreation {
    required uint32             oid        = 1;
@@ -1119,8 +1126,9 @@ message MsgUrbanDetection {
     required Common.EnumUnitVisibility visibility = 3;
 }
 message MsgUrbanUpdate {
-   required uint32             oid      = 1;
-   optional Common.MsgLocation location = 2;
+   required uint32             oid        = 1;
+   optional Common.MsgLocation location   = 2;
+   optional MsgUrbanAttributes attributes = 3;
 }
 message MsgUrbanDestruction {
    required uint32 oid = 1;
@@ -1305,21 +1313,22 @@ message MsgSimToClient {
         optional MsgControlSendCurrentStateBegin                control_send_current_state_begin               = 108;
         optional MsgControlSendCurrentStateEnd                  control_send_current_state_end                 = 109;
         optional MsgUrbanCreation                               urban_creation                                 = 110;
-        optional MsgUrbanKnowledgeCreation                      urban_knowledge_creation                       = 111;
-        optional MsgUrbanKnowledgeUpdate                        urban_knowledge_update                         = 112;
-        optional MsgUrbanKnowledgeDestruction                   urban_knowledge_destruction                    = 113;
-        optional Common.StockResource                           stock_resource                                 = 114;
-        optional MsgUrbanDetection                              urban_detection                                = 115;
-        optional MsgKnowledgeGroupMagicActionAck                knowledge_group_magic_action_ack               = 116;
-        optional MsgKnowledgeGroupCreation                      knowledge_group_creation                       = 117;
-        optional MsgKnowledgeGroupUpdate                        knowledge_group_update                         = 118;
-        optional MsgKnowledgeGroupCreationAck                   knowledge_group_creation_ack                   = 119;
-        optional MsgKnowledgeGroupUpdateAck                     knowledge_group_update_ack                     = 120;
-        optional MsgKnowledgeGroupDestruction                   knowledge_group_destruction                    = 121;        
-        optional MsgActionCreateFireOrderAck                    action_create_fire_order_ack                   = 122;
-        optional MsgControlGlobalMeteo			                control_global_meteo						   = 123;
-        optional MsgControlLocalMeteoCreation		            control_local_meteo_creation				   = 124;
-        optional MsgControlLocalMeteoDestruction		        control_local_meteo_destruction 			   = 125;
+        optional MsgUrbanUpdate                                 urban_update                                   = 111;
+        optional MsgUrbanKnowledgeCreation                      urban_knowledge_creation                       = 112;
+        optional MsgUrbanKnowledgeUpdate                        urban_knowledge_update                         = 113;
+        optional MsgUrbanKnowledgeDestruction                   urban_knowledge_destruction                    = 114;
+        optional Common.StockResource                           stock_resource                                 = 115;
+        optional MsgUrbanDetection                              urban_detection                                = 116;
+        optional MsgKnowledgeGroupMagicActionAck                knowledge_group_magic_action_ack               = 117;
+        optional MsgKnowledgeGroupCreation                      knowledge_group_creation                       = 118;
+        optional MsgKnowledgeGroupUpdate                        knowledge_group_update                         = 119;
+        optional MsgKnowledgeGroupCreationAck                   knowledge_group_creation_ack                   = 120;
+        optional MsgKnowledgeGroupUpdateAck                     knowledge_group_update_ack                     = 121;
+        optional MsgKnowledgeGroupDestruction                   knowledge_group_destruction                    = 122;        
+        optional MsgActionCreateFireOrderAck                    action_create_fire_order_ack                   = 123;
+        optional MsgControlGlobalMeteo			                control_global_meteo						   = 124;
+        optional MsgControlLocalMeteoCreation		            control_local_meteo_creation				   = 125;
+        optional MsgControlLocalMeteoDestruction		        control_local_meteo_destruction 			   = 126;
     }
     optional int32   context = 1 [default = 0];
     required Content message = 2;

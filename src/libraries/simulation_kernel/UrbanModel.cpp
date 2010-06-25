@@ -60,7 +60,7 @@ UrbanModel::~UrbanModel()
     singleton = 0;
 }
 
-namespace
+/*namespace
 {
     class UrbanWrapperVisitor : public urban::TerrainObjectVisitor_ABC
     {
@@ -75,7 +75,8 @@ namespace
     private: 
         UrbanModel& model_;
     };
-}
+}*/
+
 // -----------------------------------------------------------------------------
 // Name: UrbanModel::ReadODB
 // Created: SLG 2009-08-11
@@ -92,8 +93,8 @@ void UrbanModel::ReadUrbanModel( const MIL_Config& config )
          MT_LOG_INFO_MSG( MT_FormatString( "Loading Urban Model from path '%s'", directoryPath.c_str() ) )
          urban::WorldParameters world ( directoryPath );
          model_->Load( directoryPath, world );
-         UrbanWrapperVisitor visitor( *this );
-         model_->Accept( visitor );
+         //UrbanWrapperVisitor visitor( *this );
+         //model_->Accept( visitor );
          LoadCapacities( config );
     }
     catch( std::exception& e )
@@ -106,10 +107,10 @@ void UrbanModel::ReadUrbanModel( const MIL_Config& config )
 // Name: UrbanModel::CreateObjectWrapper
 // Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
-void UrbanModel::CreateObjectWrapper( urban::TerrainObject_ABC& object )
+/*void UrbanModel::CreateObjectWrapper( urban::TerrainObject_ABC& object )
 {
     urbanWrappers_.push_back( new UrbanObjectWrapper( object ) );
-}
+}*/
 
 namespace
 {
@@ -134,8 +135,10 @@ namespace
 // -----------------------------------------------------------------------------
 void UrbanModel::SendStateToNewClient() const
 {
-    UrbanSendingCreationVisitor visitor( *this );
-    model_->Accept( visitor );   // $$$$ _RC_ SLG 2010-06-04: seul les feuilles sont envoyées a gaming ie les blocs urbains
+    for( CIT_Wrappers it = urbanWrappers_.begin(); it != urbanWrappers_.end(); ++it )
+         ( *it )->SendCreation();
+    //UrbanSendingCreationVisitor visitor( *this );
+    //model_->Accept( visitor );   // $$$$ _RC_ SLG 2010-06-04: seul les feuilles sont envoyées a gaming ie les blocs urbains
 }
 
 // -----------------------------------------------------------------------------
@@ -166,10 +169,20 @@ void UrbanModel::WriteUrbanModel( xostream& /*xos*/ ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: UrbanModel::Update
+// Created: SLG 2010-06-22
+// -----------------------------------------------------------------------------
+void UrbanModel::Update() const
+{
+    //for( CIT_Wrappers it = urbanWrappers_.begin(); it != urbanWrappers_.end(); ++it )
+     //   ( *it )->UpdateState();
+}
+/*
+// -----------------------------------------------------------------------------
 // Name: UrbanModel::SendCreation
 // Created: SLG 2009-10-29
 // -----------------------------------------------------------------------------
-void UrbanModel::SendCreation( urban::TerrainObject_ABC& object )
+void UrbanModel::SendCreation( urban::TerrainObject_ABC& object ) const
 {
     client::UrbanCreation message;
     message().set_oid( object.GetId() );
@@ -203,9 +216,11 @@ void UrbanModel::SendCreation( urban::TerrainObject_ABC& object )
         message().mutable_attributes()->mutable_architecture()->set_occupation( architecture->GetOccupation() );
         message().mutable_attributes()->mutable_architecture()->set_trafficability( architecture->GetTrafficability() );
     }
+    UrbanObjectWrapper& wrapper = FindWrapper( object );
+    wrapper.Retrieve< StructuralCapacity >()->SendState( message );
     message.Send( NET_Publisher_ABC::Publisher() );
 }
-
+*/
 namespace
 {
     class FindUrbanBlockVisitor : public urban::TerrainObjectVisitor_ABC
@@ -269,10 +284,28 @@ UrbanModel& UrbanModel::GetSingleton()
 }
 
 // -----------------------------------------------------------------------------
+// Name: UrbanModel::Accept
+// Created: SLG 2010-06-23
+// -----------------------------------------------------------------------------
+void UrbanModel::Accept( urban::ObjectVisitor_ABC& visitor )
+{
+    model_->Accept( visitor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanModel::Accept
+// Created: SLG 2010-06-23
+// -----------------------------------------------------------------------------
+void UrbanModel::Accept( urban::TerrainObjectVisitor_ABC& visitor )
+{
+    model_->Accept( visitor );
+}
+
+// -----------------------------------------------------------------------------
 // Name: UrbanModel::FindWrapper
 // Created: SLG 2010-06-21
 // -----------------------------------------------------------------------------
-UrbanObjectWrapper& UrbanModel::FindWrapper( const urban::TerrainObject_ABC& terrain )
+UrbanObjectWrapper& UrbanModel::FindWrapper( const urban::TerrainObject_ABC& terrain ) const
 {
     for( std::vector< UrbanObjectWrapper* >::const_iterator it = urbanWrappers_.begin(); it != urbanWrappers_.end(); ++it )
         if( &( ( *it )->GetObject() ) == &terrain )

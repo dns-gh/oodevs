@@ -49,8 +49,6 @@ using namespace hla;
 using namespace Common;
 using namespace MsgsClientToSim;
 
-MIL_IDManager Object::idManager_;
-
 // -----------------------------------------------------------------------------
 // Name: Object constructor
 // Created: JCR 2008-06-06
@@ -215,7 +213,7 @@ void Object::Register( MIL_InteractiveContainer_ABC* capacity )
 // Name: Object::Instanciate
 // Created: JCR 2008-07-21
 // -----------------------------------------------------------------------------
-void Object::Instanciate( Object& object ) const
+void Object::Instanciate( MIL_Object_ABC& object ) const
 {    
     std::for_each( capacities_.begin(), capacities_.end(), 
                    boost::bind( &ObjectCapacity_ABC::Instanciate, _1, boost::ref( object ) ) );
