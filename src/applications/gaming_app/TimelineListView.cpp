@@ -82,7 +82,8 @@ void TimelineListView::NotifyCreated( const Action_ABC& action )
     if( const ActionTasker* tasker = action.Retrieve< ActionTasker >() )
     {
         entity = tasker->GetTasker();
-        name = entity->GetName();
+        if( entity )
+            name = entity->GetName();
     }
 
     gui::ValuedListItem* item = gui::FindItem( entity, firstChild() );
