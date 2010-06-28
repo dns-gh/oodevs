@@ -964,6 +964,14 @@
       <parameter dia-name="entities" name="cible" optional="false" type="AgentKnowledgeListBM"/>
       <parameter dia-name="allies" name="tireur allie" optional="false" type="AgentListBM"/>
     </mission>
+	<mission dia-behavior="net.masagroup.sword.military.platoon.combat.tasks.Monitor" dia-type="T_Mission_Pion_Surveiller" id="2067" name="Monitor">
+      <parameter dia-name="objectives" name="objectives" optional="false" type="PointListBM"/>
+	  <parameter dia-name="positions" name="positions" optional="true" type="PointListBM"/>
+    </mission>
+	<mission dia-behavior="net.masagroup.sword.military.platoon.combat.tasks.Monitor" dia-type="T_Mission_Pion_SurveillerBU" id="2068" name="MonitorUB">
+      <parameter dia-name="objectives" name="objectives" optional="false" type="UrbanBlockBM"/>
+	  <parameter dia-name="positions" name="positions" optional="true" type="PointListBM"/>
+    </mission>
   </units>
   <automats>
     <context>
