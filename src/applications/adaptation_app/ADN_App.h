@@ -10,7 +10,7 @@
 #ifndef __ADN_App_h_
 #define __ADN_App_h_
 
-#include <qapplication.h>
+#include "clients_kernel/Application_ABC.h"
 
 class ADN_MainWindow;
 class ADN_Config;
@@ -21,7 +21,7 @@ class ADN_Config;
 // Created: APE 2004-12-02
 // =============================================================================
 class ADN_App 
-: public QApplication
+: public Application_ABC
 {
     MT_COPYNOTALLOWED( ADN_App );
 
@@ -33,7 +33,6 @@ public:
 
 public:
     ADN_MainWindow* GetMainWindow();
-    void AddTranslator( const char* name, const QString& locale );
 
 public:
     static ADN_App* pApplication_;

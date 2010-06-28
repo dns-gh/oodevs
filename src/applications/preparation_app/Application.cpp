@@ -37,7 +37,7 @@ namespace
 // Created: SBO 2006-07-05
 // -----------------------------------------------------------------------------
 Application::Application( int argc, char** argv, const QString& license )
-    : QApplication( argc, argv )
+    : Application_ABC( argc, argv )
     , mainWindow_( 0 )
     , license_( license )
 {
@@ -64,17 +64,6 @@ Application::~Application()
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: Application::AddTranslator
-// Created: AGE 2007-12-18
-// -----------------------------------------------------------------------------
-void Application::AddTranslator( const QString& locale, const char* t )
-{
-    std::auto_ptr< QTranslator > trans( new QTranslator( this ) );
-    const QString file = QString( "%1_%2" ).arg( t ).arg( locale );
-    if( trans->load( file, "." ) || trans->load( file, "resources/locales" ) )
-       installTranslator( trans.release() );
-}
 
 // -----------------------------------------------------------------------------
 // Name: Application::Initialize

@@ -10,7 +10,7 @@
 #ifndef __Application_h_
 #define __Application_h_
 
-#include <qapplication.h>
+#include "clients_kernel/Application_ABC.h"
 
 namespace kernel
 {
@@ -29,7 +29,7 @@ class Config;
 */
 // Created: SBO 2006-07-05
 // =============================================================================
-class Application : public QApplication
+class Application : public Application_ABC
 {
 
 public:
@@ -54,7 +54,6 @@ private:
     //! @name Helpers
     //@{
     void Initialize( int argc, char** argv );
-    void AddTranslator( const QString& locale, const char* t );
     //@}
 
 private:

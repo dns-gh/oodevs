@@ -27,7 +27,7 @@ ADN_App* ADN_App::pApplication_ = 0;
 // Created: JDY 03-06-19
 //-----------------------------------------------------------------------------
 ADN_App::ADN_App( int argc, char** argv )
-    : QApplication( argc, argv )
+    : Application_ABC( argc, argv )
     , pMainWindow_( 0 )
     , config_( new ADN_Config() )
 {
@@ -151,14 +151,4 @@ bool ADN_App::Initialize( const std::string& inputFile, const std::string& outpu
     return true;
 }
 
-// -----------------------------------------------------------------------------
-// Name: ADN_App::AddTranslator
-// Created: SBO 2008-08-08
-// -----------------------------------------------------------------------------
-void ADN_App::AddTranslator( const char* name, const QString& locale )
-{
-    std::auto_ptr< QTranslator > trans( new QTranslator( this ) );
-    const QString file = QString( "%1_%2" ).arg( name ).arg( locale );
-    if( trans->load( file, "." ) || trans->load( file, "resources/locales" ) )
-       installTranslator( trans.release() );
-}
+

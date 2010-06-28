@@ -17,7 +17,10 @@
 #include "PluginFactory.h"
 #include "Services.h"
 #include "StaticModel.h"
+#include "clients_kernel/Tools.h"
 #include <google/protobuf/Message.h>
+#include <qsettings.h>
+#include <qtextcodec.h>
 
 using namespace dispatcher;
 
@@ -41,6 +44,23 @@ Dispatcher::Dispatcher( const Config& config, int maxConnections )
 
     handler_->AddHandler( clientsNetworker_ );
     handler_->AddHandler( model_ );
+
+    int argc = 0;
+    qapp_.reset( new Application_ABC( argc, 0 ) );
+    AddTranslations();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Dispatcher::AddTranslations
+// Created: HBD 2010-06-28
+// -----------------------------------------------------------------------------
+void Dispatcher::AddTranslations()
+{
+    QSettings settings;
+    settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
+    QString locale = settings.readEntry( "/Common/Language", QTextCodec::locale() );
+    qapp_->AddTranslator( locale, "messenger" );
+
 }
 
 // $$$$ AGE 2008-07-16: Les plugins / MessageHandlers doivent être enregistrés dans un certain ordre

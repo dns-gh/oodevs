@@ -10,7 +10,7 @@
 #ifndef __Application_h_
 #define __Application_h_
 
-#include <qapplication.h>
+#include "clients_kernel/Application_ABC.h"
 
 // =============================================================================
 /** @class  Application
@@ -18,7 +18,7 @@
 */
 // Created: SBO 2007-01-26
 // =============================================================================
-class Application : public QApplication
+class Application : public Application_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -34,10 +34,6 @@ private:
     Application& operator=( const Application& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    void AddTranslator( const char* t, const QString& locale );
-    //@}
 };
 
 #endif // __Application_h_

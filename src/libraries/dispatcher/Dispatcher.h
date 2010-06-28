@@ -12,6 +12,7 @@
 
 #include "CompositePlugin.h"
 #include "CompositeRegistrable.h"
+#include "clients_kernel/Application_ABC.h"
 #include <boost/shared_ptr.hpp>
 
 namespace kernel
@@ -59,6 +60,11 @@ private:
     Dispatcher& operator=( const Dispatcher& ); //!< Assignement operator
     //@}
 
+    //! @name Operations
+    //@{
+     void AddTranslations();
+    //@}
+
 private:
     const Config&                             config_;
     boost::shared_ptr< kernel::StaticModel >  staticModel_;
@@ -70,6 +76,7 @@ private:
     boost::shared_ptr< SimulationNetworker >  simulationNetworker_;
     std::auto_ptr< PluginFactory >            factory_;
     std::auto_ptr< Logger >                   logger_;
+    std::auto_ptr< Application_ABC >          qapp_;                             
 };
 
 }

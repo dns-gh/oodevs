@@ -30,7 +30,7 @@ namespace
 // Created: SBO 2007-01-26
 // -----------------------------------------------------------------------------
 Application::Application( int argc, char** argv )
-    : QApplication ( argc, argv )
+    : Application_ABC ( argc, argv )
 {
     const QString locale = ReadLang();
     AddTranslator( "qt", locale );
@@ -55,14 +55,3 @@ Application::~Application()
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: Application::AddTranslator
-// Created: SBO 2008-04-09
-// -----------------------------------------------------------------------------
-void Application::AddTranslator( const char* t, const QString& locale )
-{
-    std::auto_ptr< QTranslator > trans( new QTranslator( this ) );
-    const QString file = QString( "%1_%2" ).arg( t ).arg( locale );
-    if( trans->load( file, "." ) || trans->load( file, "resources/locales" ) )
-       installTranslator( trans.release() );
-}

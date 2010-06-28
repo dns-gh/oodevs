@@ -18,6 +18,7 @@
 #include "dispatcher/Config.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
+#include "clients_kernel/Tools.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/bind.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
@@ -187,13 +188,11 @@ void NotesModel::SaveNotes(const std::string filename)
 {
     std::ofstream file( filename.c_str() );
     int linenum = 1;
-//    std::string str = tools::translate("NoteModel", "Note name") + ";";
-//    str += tools::translate("NoteModel", "Parent") + ";";
-//    str += tools::translate("NoteModel", "Value") + ";";
-//    str += tools::translate("NoteModel", "Comments");
-//    file << str << std::endl;
-    file << "\"Nom de la Note \";Parent; Valeur; Commentaires" << std::endl;
-
+    std::string str = tools::translate("NoteModel", "Note name") + ";";
+    str += tools::translate("NoteModel", "Parent") + ";";
+    str += tools::translate("NoteModel", "Value") + ";";
+    str += tools::translate("NoteModel", "Comments");
+    file << str << std::endl;
     tools::Iterator< const Note& > it = CreateIterator();
     while( it.HasMoreElements() )
     {
