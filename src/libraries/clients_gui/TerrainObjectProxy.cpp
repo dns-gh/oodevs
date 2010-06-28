@@ -11,7 +11,6 @@
 #include "TerrainObjectProxy.h"
 #include "Tools.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "protocol/SimulationSenders.h"
 #include <urban/Architecture.h>
 #include <urban/TerrainObject_ABC.h>
 
@@ -21,13 +20,13 @@ using namespace gui;
 // Name: TerrainObjectProxy constructor
 // Created: SLG 2009-10-20
 // -----------------------------------------------------------------------------
-TerrainObjectProxy::TerrainObjectProxy( const MsgsSimToClient::MsgUrbanCreation& message, kernel::Controller& controller, urban::TerrainObject_ABC& object )
-    : EntityImplementation< kernel::Entity_ABC >( controller, message.oid(), QString( message.name().c_str() ) )
+TerrainObjectProxy::TerrainObjectProxy( kernel::Controller& controller, urban::TerrainObject_ABC& object, unsigned int id, const QString& name, const InfrastructureParameters& infrastructure )
+    : EntityImplementation< kernel::Entity_ABC >( controller, id, name )
     , object_( &object )
+    , infrastructure_( infrastructure )
 {
     RegisterSelf( *this );
     CreateDictionary( controller );
-    structuralState_ = message.attributes().capacity().structuralstate();
 }
 
 // -----------------------------------------------------------------------------
@@ -64,9 +63,9 @@ bool TerrainObjectProxy::operator==( const TerrainObjectProxy& object ) const
 // Name: TerrainObjectProxy::Update
 // Created: SLG 2010-06-22
 // -----------------------------------------------------------------------------
-void TerrainObjectProxy::DoUpdate( const MsgsSimToClient::MsgUrbanUpdate& message )
+void TerrainObjectProxy::DoUpdate( const InfrastructureParameters& infrastructure )
 {
-    structuralState_ = message.attributes().capacity().structuralstate();
+    infrastructure_ = infrastructure;
     Touch();
 }
 
@@ -98,7 +97,7 @@ void TerrainObjectProxy::CreateDictionary( kernel::Controller& controller )
     EntityImplementation< kernel::Entity_ABC >::Attach( dictionary );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "Info/Identifier" ), EntityImplementation< kernel::Entity_ABC >::id_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "Info/Name" ), EntityImplementation< kernel::Entity_ABC >::name_ );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "Info/StructuralState" ), structuralState_ );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "Info/StructuralState" ), infrastructure_.structuralState_ );
 
     AddDictionaryForArchitecture( dictionary );
 }

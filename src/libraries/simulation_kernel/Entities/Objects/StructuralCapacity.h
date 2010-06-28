@@ -40,6 +40,7 @@ public:
 
     //! @name Operations
     //@{
+    void Load( xml::xistream& xis );
     template< typename Archive > void serialize( Archive& file, const unsigned int );
     virtual void Register( MIL_Object_ABC& object );
     virtual void Instanciate( MIL_Object_ABC& object ) const;
@@ -51,7 +52,7 @@ public:
     void ApplyIndirectFire( const MIL_Object_ABC& object, const MT_Ellipse& attritionSurface, const PHY_DotationCategory& dotation );
     void ApplyDirectFire( const MIL_Object_ABC& object, const PHY_DotationCategory& dotation );
     void SendState( MsgsSimToClient::MsgUrbanAttributes& message ) const;
-    float GetStructuralState() const; 
+    float GetStructuralState() const;
     //@}
 
     //! @name Operations on population

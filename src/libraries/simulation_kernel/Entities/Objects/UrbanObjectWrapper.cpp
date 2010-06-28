@@ -45,7 +45,6 @@ UrbanObjectWrapper::UrbanObjectWrapper( const MIL_ObjectBuilder_ABC& builder, co
     , manipulator_( *new MIL_ObjectManipulator( *this ) )
 {
     std::string name = object.GetName(); 
-    int id = object.GetId(); 
     geometry::Polygon2f::T_Vertices vertices = object.GetFootprint()->Vertices();
     std::vector< MT_Vector2D > vector; 
     for( geometry::Polygon2f::CIT_Vertices it = vertices.begin(); it != vertices.end(); ++it )
@@ -81,6 +80,20 @@ void UrbanObjectWrapper::Register( MIL_InteractiveContainer_ABC* capacity )
 }
 
 // -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::ReadBlockCapacity
+// Created: JSR 2010-06-28
+// -----------------------------------------------------------------------------
+void UrbanObjectWrapper::UpdateCapacities( const std::string& capacity, xml::xistream& xis )
+{
+    if( capacity == "structural" )
+    {
+        StructuralCapacity* structural = Retrieve< StructuralCapacity >();
+        if( structural )
+            structural->Load( xis );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: UrbanObjectWrapper::ProcessAgentEntering
 // Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
@@ -106,7 +119,6 @@ void UrbanObjectWrapper::ProcessAgentExiting( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void UrbanObjectWrapper::ProcessAgentMovingInside( MIL_Agent_ABC& agent )
 {
-    agent.GetRole< PHY_RoleInterface_Location >().NotifyTerrainObjectCollision( *this );
     std::for_each( interactives_.begin(), interactives_.end(), 
         boost::bind( &MIL_InteractiveContainer_ABC::ProcessAgentMovingInside, _1, boost::ref( *this ), boost::ref( agent ) ) );
 }
@@ -117,7 +129,6 @@ void UrbanObjectWrapper::ProcessAgentMovingInside( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void UrbanObjectWrapper::ProcessAgentInside( MIL_Agent_ABC& agent )
 {
-    agent.GetRole< PHY_RoleInterface_Location >().NotifyTerrainObjectCollision( *this );
     std::for_each( interactives_.begin(), interactives_.end(), 
         boost::bind( &MIL_InteractiveContainer_ABC::ProcessAgentInside, _1, boost::ref( *this ), boost::ref( agent ) ) );
 }
@@ -157,7 +168,7 @@ void UrbanObjectWrapper::Finalize()
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > UrbanObjectWrapper::CreateKnowledge( const MIL_Army_ABC& team )
 {
-    return boost::shared_ptr< DEC_Knowledge_Object >( new DEC_Knowledge_Object( team, *this ) );
+    return boost::shared_ptr< DEC_Knowledge_Object >();
 }
 
 // -----------------------------------------------------------------------------
@@ -166,7 +177,7 @@ boost::shared_ptr< DEC_Knowledge_Object > UrbanObjectWrapper::CreateKnowledge( c
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > UrbanObjectWrapper::CreateKnowledge( const MIL_KnowledgeGroup& group )
 {
-    return boost::shared_ptr< DEC_Knowledge_Object >( new DEC_Knowledge_Object( group, *this ) );
+    return boost::shared_ptr< DEC_Knowledge_Object >();
 }
 
 // -----------------------------------------------------------------------------

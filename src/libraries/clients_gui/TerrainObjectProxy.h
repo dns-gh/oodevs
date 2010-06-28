@@ -14,8 +14,7 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Extension_ABC.h"
-
-
+#include "InfrastructureParameters.h"
 
 namespace kernel
 {
@@ -26,15 +25,9 @@ namespace urban
     class Drawer_ABC;
     class TerrainObject_ABC;
 }
-namespace MsgsSimToClient
-{    
-    class MsgUrbanCreation;
-    class MsgUrbanUpdate;
-}
 
 namespace gui
 {
-
 // =============================================================================
 /** @class  UrbanModel
 @brief  UrbanModel
@@ -43,20 +36,20 @@ namespace gui
 // =============================================================================
 class TerrainObjectProxy : public kernel::Extension_ABC                         
                          , public kernel::EntityImplementation< kernel::Entity_ABC > 
-                         , public kernel::Updatable_ABC< MsgsSimToClient::MsgUrbanUpdate >
+                         , public kernel::Updatable_ABC< InfrastructureParameters >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             TerrainObjectProxy( const MsgsSimToClient::MsgUrbanCreation& msg, kernel::Controller& controller, urban::TerrainObject_ABC& object ); 
+             TerrainObjectProxy( kernel::Controller& controller, urban::TerrainObject_ABC& object, unsigned int id, const QString& name, const InfrastructureParameters& parameters ); 
              TerrainObjectProxy( kernel::Controller& controller, urban::TerrainObject_ABC& object ); 
     virtual ~TerrainObjectProxy();
     //@}
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgUrbanUpdate& message );
+    virtual void DoUpdate( const InfrastructureParameters& infrastructure );
     virtual QString GetName() const;
     virtual unsigned long GetId() const;
     virtual void Select     ( kernel::ActionController& /*controller*/ ) const {};
@@ -79,8 +72,7 @@ public:
     //! @name Member data
     //@{
     urban::TerrainObject_ABC* object_;  // $$$$ _RC_ FDS 2010-01-15: Must be encapsulated -> private
-    float structuralState_;
-
+    InfrastructureParameters infrastructure_;
     //@}
 
 public:
@@ -89,7 +81,6 @@ public:
     TerrainObjectProxy ( const TerrainObjectProxy& );            //!< Copy constructor
     TerrainObjectProxy& operator=( const TerrainObjectProxy& ); //!< Assignement operator
     bool operator==( const TerrainObjectProxy& ) const;
-
     //@}
 };
 

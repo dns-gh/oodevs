@@ -15,6 +15,7 @@
 namespace MsgsSimToClient
 {
     class MsgUrbanCreation;
+    class MsgUrbanUpdate;
 }
 
 namespace urban
@@ -51,6 +52,7 @@ public:
     //! @name Operations
     //@{
     void Create( const MsgsSimToClient::MsgUrbanCreation& message );
+    void Update( const MsgsSimToClient::MsgUrbanUpdate& message );
     void Purge();
     const urban::Model& GetModel() const;
     const UrbanBlockDetectionMap& GetUrbanBlockMap() const;

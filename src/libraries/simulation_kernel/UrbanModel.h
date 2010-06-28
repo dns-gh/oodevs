@@ -49,9 +49,7 @@ public:
     //! @name Operations
     //@{
     void                        ReadUrbanModel          ( const MIL_Config& config );
-    void                        SendStateToNewClient    () const;
     void                        SendCreation            ( urban::TerrainObject_ABC& UrbanBlock ) const;
-    void                        Update                  () const;
     urban::TerrainObject_ABC*   FindUrbanBlock          ( unsigned id ) const;
     MT_Float                    GetUrbanBlockCost       ( MT_Float weight, const MT_Vector2D& from, const MT_Vector2D& to ) const;
     void                        CreateObjectWrapper     ( urban::TerrainObject_ABC& object );
@@ -63,8 +61,6 @@ public:
     static UrbanModel& GetSingleton();
     void Accept( urban::ObjectVisitor_ABC& visitor );
     void Accept( urban::TerrainObjectVisitor_ABC& visitor );
-    UrbanObjectWrapper& FindWrapper( const urban::TerrainObject_ABC& terrain ) const;
-    UrbanObjectWrapper& FindWrapper( unsigned int id );
     //@}
 
     //! @name CheckPoints
@@ -77,25 +73,8 @@ public:
     void WriteUrbanModel( xml::xostream& xos ) const;
     //@}
 
-    //! @name Types
-    //@{
-    typedef std::vector< UrbanObjectWrapper* > T_Wrappers; 
-    typedef T_Wrappers::iterator              IT_Wrappers;
-    typedef T_Wrappers::const_iterator       CIT_Wrappers;
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    void LoadCapacities( const MIL_Config& config );
-    void ReadBlock( xml::xistream& xis );
-    void ReadCapacity( const std::string& capacity, xml::xistream& xis, UrbanObjectWrapper& wrapper );
-    //@}
-
 private:
     std::auto_ptr< urban::Model                 > model_;
-    std::vector< UrbanObjectWrapper* >            urbanWrappers_;
-
 };
 
 BOOST_CLASS_EXPORT_KEY( UrbanModel )

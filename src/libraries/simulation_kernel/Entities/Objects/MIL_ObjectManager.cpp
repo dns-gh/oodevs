@@ -19,11 +19,13 @@
 #include "Hla/HLA_Federate.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/MIL_EntityManager.h"
+#include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Network/NET_Publisher_ABC.h"
 #include <protocol/ClientSenders.h>
+#include <urban/TerrainObject_ABC.h>
 #include <xeumeuleu/xml.h>
 #include <boost/serialization/export.hpp>
 
@@ -194,7 +196,41 @@ MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC& army, const MIL_O
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectManager::CreateUrbanObject( const urban::TerrainObject_ABC& object )
 {
-    return builder_->BuildUrbanObject( object );
+    MIL_Object_ABC* obj = builder_->BuildUrbanObject( object );
+    urbanIds_.push_back( obj->GetID() );
+    return obj;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ObjectManager::ReadBlock
+// Created: JSR 2010-06-28
+// -----------------------------------------------------------------------------
+void MIL_ObjectManager::ReadUrbanState( xml::xistream& xis )
+{
+    unsigned int id;
+    xis >> xml::attribute( "id", id );
+    UrbanObjectWrapper* wrapper = FindUrbanWrapper( id );
+    if( wrapper )
+    {
+        xis >> xml::optional() >> xml::start( "capacities" )
+            >> xml::list( *wrapper, &UrbanObjectWrapper::UpdateCapacities )
+            >> xml::end();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ObjectManager::FindUrbanWrapper
+// Created: JSR 2010-06-28
+// -----------------------------------------------------------------------------
+UrbanObjectWrapper* MIL_ObjectManager::FindUrbanWrapper( unsigned int nId )
+{
+    for( std::vector< unsigned int >::const_iterator it = urbanIds_.begin(); it != urbanIds_.end(); ++it )
+    {
+        UrbanObjectWrapper* wrapper = static_cast< UrbanObjectWrapper* >( objects_[ *it ] );
+        if( wrapper->GetObject().GetId() == nId )
+            return wrapper;
+    }
+    return 0;
 }
 
 // =============================================================================

@@ -86,7 +86,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
         pEntityManager_     = new MIL_EntityManager    ( *this, *pEffectManager_, *pProfilerMgr_, pFederate_, pWorkspaceDIA_->GetDatabase() );
         pCheckPointManager_ = new MIL_CheckPointManager( config_ );
         pEntityManager_->ReadODB( config_ );
-        pEntityManager_->CreateUrbanObjects( *pUrbanModel_ );
+        pEntityManager_->CreateUrbanObjects( *pUrbanModel_, config_ );
         Resume();
     }
 
@@ -258,7 +258,6 @@ void MIL_AgentServer::MainSimLoop()
     SendMsgBeginTick();
     
     pEntityManager_   ->Update();
-    pUrbanModel_      ->Update();
     pFolk_            ->Update( nCurrentTimeStep_ * nTimeStepDuration_, nTimeStepDuration_ );
     pMeteoDataManager_->Update( nRealTime_ );
     pPathFindManager_ ->UpdateInSimulationThread();
@@ -330,7 +329,6 @@ void MIL_AgentServer::SendMsgEndTick() const
 // -----------------------------------------------------------------------------
 void MIL_AgentServer::SendStateToNewClient() const
 {    
-    pUrbanModel_->SendStateToNewClient();
     pEntityManager_->SendStateToNewClient();
     pFolk_->SendStateToNewClient();
     pMeteoDataManager_->SendStateToNewClient();

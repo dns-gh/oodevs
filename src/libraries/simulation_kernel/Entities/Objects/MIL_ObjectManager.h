@@ -48,6 +48,7 @@ class MIL_Object_ABC;
 class MIL_ObjectType_ABC;
 class MIL_ObjectBuilder_ABC;
 class MIL_ObjectFactory;
+class UrbanObjectWrapper;
 
 // =============================================================================
 // @class  MIL_ObjectManager
@@ -74,12 +75,14 @@ public:
     void UpdateStates ();
 
     //@TODO MGD return reference
-    MIL_Object_ABC&  CreateObject( xml::xistream& xis, MIL_Army_ABC& army ); 
-    MIL_Object_ABC*  CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation );
-    MIL_Object_ABC*  CreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation* pLocalisation, Common::ObstacleType_DemolitionTargetType obstacleType );
-    MIL_Object_ABC*  CreateObject( MIL_Army_ABC& army, const MIL_ObjectBuilder_ABC& builder );
-    MIL_Object_ABC*  CreateUrbanObject( const urban::TerrainObject_ABC& object );
-    MIL_Object_ABC*             Find( unsigned int nID ) const;
+    MIL_Object_ABC&     CreateObject( xml::xistream& xis, MIL_Army_ABC& army ); 
+    MIL_Object_ABC*     CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation );
+    MIL_Object_ABC*     CreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation* pLocalisation, Common::ObstacleType_DemolitionTargetType obstacleType );
+    MIL_Object_ABC*     CreateObject( MIL_Army_ABC& army, const MIL_ObjectBuilder_ABC& builder );
+    MIL_Object_ABC*     CreateUrbanObject( const urban::TerrainObject_ABC& object );
+    void                ReadUrbanState( xml::xistream& xis );
+    UrbanObjectWrapper* FindUrbanWrapper( unsigned int nID );
+    MIL_Object_ABC*     Find( unsigned int nID ) const;
     const MIL_ObjectType_ABC&   FindType( const std::string& type ) const;
     //@}
 
@@ -114,6 +117,7 @@ private:
     //@{
     T_ObjectMap                         objects_;
     std::auto_ptr< MIL_ObjectFactory >  builder_;
+    std::vector< unsigned int >         urbanIds_;
     //@}
 };
 

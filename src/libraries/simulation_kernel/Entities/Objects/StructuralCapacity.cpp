@@ -57,6 +57,15 @@ StructuralCapacity::~StructuralCapacity()
 }
 
 // -----------------------------------------------------------------------------
+// Name: StructuralCapacity::Load
+// Created: JSR 2010-06-28
+// -----------------------------------------------------------------------------
+void StructuralCapacity::Load( xml::xistream& xis )
+{
+    structuralState_ = 0.01f * xml::attribute< int >( xis, "value" );
+}
+
+// -----------------------------------------------------------------------------
 // Name: template< typename Archive > void StructuralCapacity::serialize
 // Created: JSR 2010-06-23
 // -----------------------------------------------------------------------------

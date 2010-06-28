@@ -57,13 +57,15 @@ void UrbanModel::Create( const MsgsSimToClient::MsgUrbanCreation& message )
     for( int i = 0; i < message.location().coordinates().elem_size(); ++i )
     {
         const Common::MsgCoordLatLong& location = message.location().coordinates().elem( i );
-        const geometry::Point2f point( location.latitude(), location.longitude() );
+        const geometry::Point2f point( float( location.latitude() ), float( location.longitude() ) );
         footPrint.Add( point );
     }
     urban::TerrainObject_ABC* object = model_->GetFactory().CreateUrbanObject( id, name, footPrint );
     UrbanBlockDeserializer urbanBlockDeserializer( message );
     object->Accept( urbanBlockDeserializer );
-    gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( message, controller_, *object ); 
+    gui::InfrastructureParameters infrastructure;
+    infrastructure.structuralState_ = message.attributes().capacity().structuralstate();
+    gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( controller_, *object, message.oid(), QString( message.name().c_str() ) , infrastructure );
     object->InstanciateDecoration();
     controller_.Create( *pTerrainObject );
     if( !Resolver< kernel::Entity_ABC >::Find( id ) )
@@ -71,16 +73,16 @@ void UrbanModel::Create( const MsgsSimToClient::MsgUrbanCreation& message )
     urbanBlockDetectionMap_.AddUrbanBlock( *object );
 }
 
-/*
 // -----------------------------------------------------------------------------
-// Name: DrawingsModel::Delete
-// Created: SLG 2009-10-20
+// Name: UrbanModel::Update
+// Created: JSR 2010-06-28
 // -----------------------------------------------------------------------------
-void DrawingsModel::Delete( const ASN1T_MsgUrbanDestruction& message )
+void UrbanModel::Update( const MsgsSimToClient::MsgUrbanUpdate& message )
 {
-    //TODO
+    gui::InfrastructureParameters infrastructure;
+    infrastructure.structuralState_ = message.attributes().capacity().structuralstate();
+    GetObject( message.oid() ).Update( infrastructure );
 }
-*/
 
 // -----------------------------------------------------------------------------
 // Name: UrbanModel::Purge

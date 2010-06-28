@@ -143,7 +143,7 @@ public:
     //! @name Operations
     //@{
     void ReadODB             ( const MIL_Config& config );
-    void CreateUrbanObjects  ( UrbanModel& urbanModel );
+    void CreateUrbanObjects  ( UrbanModel& urbanModel, const MIL_Config& config );
     void SendStateToNewClient() const;
     void Update              ();
     void Clean               ();
@@ -220,6 +220,7 @@ private:
     //! @name Urban
     //@{
     void CreateUrbanObject( const urban::TerrainObject_ABC& object );
+    void LoadUrbanStates( const MIL_Config& config );
     //@}
 
     //! @name Update

@@ -53,29 +53,8 @@ UrbanModel::UrbanModel()
 // -----------------------------------------------------------------------------
 UrbanModel::~UrbanModel()
 {
-    for( std::vector< UrbanObjectWrapper* >::iterator it = urbanWrappers_.begin(); it != urbanWrappers_.end(); ++it )
-    {
-        delete *it;
-    }
     singleton = 0;
 }
-
-/*namespace
-{
-    class UrbanWrapperVisitor : public urban::TerrainObjectVisitor_ABC
-    {
-    public:
-        UrbanWrapperVisitor( UrbanModel& model ) : model_( model ) 
-        {}
-        ~UrbanWrapperVisitor(){}
-        virtual void VisitBlock( urban::TerrainObject_ABC& object )
-        {
-             model_.CreateObjectWrapper( object );
-        }
-    private: 
-        UrbanModel& model_;
-    };
-}*/
 
 // -----------------------------------------------------------------------------
 // Name: UrbanModel::ReadODB
@@ -93,52 +72,11 @@ void UrbanModel::ReadUrbanModel( const MIL_Config& config )
          MT_LOG_INFO_MSG( MT_FormatString( "Loading Urban Model from path '%s'", directoryPath.c_str() ) )
          urban::WorldParameters world ( directoryPath );
          model_->Load( directoryPath, world );
-         //UrbanWrapperVisitor visitor( *this );
-         //model_->Accept( visitor );
-         LoadCapacities( config );
     }
     catch( std::exception& e )
     {
         MT_LOG_ERROR_MSG( "Exception in loading Urban Model caught : " << e.what() );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanModel::CreateObjectWrapper
-// Created: SLG 2010-06-18
-// -----------------------------------------------------------------------------
-/*void UrbanModel::CreateObjectWrapper( urban::TerrainObject_ABC& object )
-{
-    urbanWrappers_.push_back( new UrbanObjectWrapper( object ) );
-}*/
-
-namespace
-{
-    class UrbanSendingCreationVisitor : public urban::TerrainObjectVisitor_ABC
-    {
-    public:
-        UrbanSendingCreationVisitor( const UrbanModel& model ) : model_( model )
-        {}
-        ~UrbanSendingCreationVisitor()
-        {}
-        virtual void VisitBlock( urban::TerrainObject_ABC& urbanObject )
-        {
-            model_.SendCreation( urbanObject );
-        }
-    private:
-        const UrbanModel& model_;
-    };
-}
-// -----------------------------------------------------------------------------
-// Name: UrbanModel::SendStateToNewClient
-// Created: SLG 2009-10-18
-// -----------------------------------------------------------------------------
-void UrbanModel::SendStateToNewClient() const
-{
-    for( CIT_Wrappers it = urbanWrappers_.begin(); it != urbanWrappers_.end(); ++it )
-         ( *it )->SendCreation();
-    //UrbanSendingCreationVisitor visitor( *this );
-    //model_->Accept( visitor );   // $$$$ _RC_ SLG 2010-06-04: seul les feuilles sont envoyées a gaming ie les blocs urbains
 }
 
 // -----------------------------------------------------------------------------
@@ -168,59 +106,6 @@ void UrbanModel::WriteUrbanModel( xostream& /*xos*/ ) const
     //TODO
 }
 
-// -----------------------------------------------------------------------------
-// Name: UrbanModel::Update
-// Created: SLG 2010-06-22
-// -----------------------------------------------------------------------------
-void UrbanModel::Update() const
-{
-    //for( CIT_Wrappers it = urbanWrappers_.begin(); it != urbanWrappers_.end(); ++it )
-     //   ( *it )->UpdateState();
-}
-/*
-// -----------------------------------------------------------------------------
-// Name: UrbanModel::SendCreation
-// Created: SLG 2009-10-29
-// -----------------------------------------------------------------------------
-void UrbanModel::SendCreation( urban::TerrainObject_ABC& object ) const
-{
-    client::UrbanCreation message;
-    message().set_oid( object.GetId() );
-    message().set_name( object.GetName() );
-    message().mutable_location()->set_type( Common::MsgLocation_Geometry_polygon );
-    const geometry::Polygon2f::T_Vertices& points = object.GetFootprint()->Vertices();
-    for( geometry::Polygon2f::CIT_Vertices it = points.begin(); it != points.end(); ++it )
-    {
-        Common::MsgCoordLatLong* point = message().mutable_location()->mutable_coordinates()->add_elem();
-        point->set_latitude( it->X() );
-        point->set_longitude( it->Y() );
-            
-    }
-
-    const ColorRGBA* color = object.GetColor();
-    if ( color != 0 )
-    {
-        message().mutable_attributes()->mutable_color()->set_red( color->Red() );
-        message().mutable_attributes()->mutable_color()->set_green( color->Green() );
-        message().mutable_attributes()->mutable_color()->set_blue( color->Blue() );
-        message().mutable_attributes()->mutable_color()->set_alpha( color->Alpha() );
-    }
-
-    const urban::Architecture* architecture = object.RetrievePhysicalFeature< urban::Architecture >();
-    if ( architecture != 0 )
-    {       
-        message().mutable_attributes()->mutable_architecture()->set_height( architecture->GetHeight() );
-        message().mutable_attributes()->mutable_architecture()->set_floor_number( architecture->GetFloorNumber() );
-        message().mutable_attributes()->mutable_architecture()->set_roof_shape( architecture->GetRoofShape().c_str() );
-        message().mutable_attributes()->mutable_architecture()->set_material( architecture->GetMaterial().c_str() );
-        message().mutable_attributes()->mutable_architecture()->set_occupation( architecture->GetOccupation() );
-        message().mutable_attributes()->mutable_architecture()->set_trafficability( architecture->GetTrafficability() );
-    }
-    UrbanObjectWrapper& wrapper = FindWrapper( object );
-    wrapper.Retrieve< StructuralCapacity >()->SendState( message );
-    message.Send( NET_Publisher_ABC::Publisher() );
-}
-*/
 namespace
 {
     class FindUrbanBlockVisitor : public urban::TerrainObjectVisitor_ABC
@@ -299,79 +184,4 @@ void UrbanModel::Accept( urban::ObjectVisitor_ABC& visitor )
 void UrbanModel::Accept( urban::TerrainObjectVisitor_ABC& visitor )
 {
     model_->Accept( visitor );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanModel::FindWrapper
-// Created: SLG 2010-06-21
-// -----------------------------------------------------------------------------
-UrbanObjectWrapper& UrbanModel::FindWrapper( const urban::TerrainObject_ABC& terrain ) const
-{
-    for( std::vector< UrbanObjectWrapper* >::const_iterator it = urbanWrappers_.begin(); it != urbanWrappers_.end(); ++it )
-        if( &( ( *it )->GetObject() ) == &terrain )
-            return **it;
-    throw std::exception( "UrbanObjectWrapper not found" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanModel::FindWrapper
-// Created: JSR 2010-06-21
-// -----------------------------------------------------------------------------
-UrbanObjectWrapper& UrbanModel::FindWrapper( unsigned int id )
-{
-    for( std::vector< UrbanObjectWrapper* >::const_iterator it = urbanWrappers_.begin(); it != urbanWrappers_.end(); ++it )
-        if( ( *it )->GetID() == id )
-            return **it;
-    throw std::exception( "UrbanObjectWrapper not found" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanModel::LoadCapacities
-// Created: JSR 2010-06-21
-// -----------------------------------------------------------------------------
-void UrbanModel::LoadCapacities( const MIL_Config& config )
-{
-    const std::string strUrbanState = config.GetUrbanStateFile();
-    if( strUrbanState.empty() )
-        return;
-
-    MT_LOG_INFO_MSG( MT_FormatString( "UrbanState file name : '%s'", strUrbanState.c_str() ) );
-
-    xifstream xis( strUrbanState );
-    xis >> start( "urban-state" )
-            >> start( "blocks" )
-                >> xml::list( "block", boost::bind( &UrbanModel::ReadBlock, boost::ref( *this ), _1 ) )
-            >> end()
-        >> end();
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanModel::ReadBlock
-// Created: JSR 2010-06-21
-// -----------------------------------------------------------------------------
-void UrbanModel::ReadBlock( xistream& xis )
-{
-    unsigned int id;
-    xis >> attribute( "id", id );
-    try
-    {
-        UrbanObjectWrapper& wrapper = FindWrapper( id );
-        xis >> optional() >> start( "capacities" )
-            >> xml::list( *this, &UrbanModel::ReadCapacity, wrapper )
-            >> end();
-    }
-    catch( std::exception& )
-    {
-        // NOTHING
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanModel::ReadAttribute
-// Created: JSR 2010-06-21
-// -----------------------------------------------------------------------------
-void UrbanModel::ReadCapacity( const std::string& capacity, xistream& xis, UrbanObjectWrapper& wrapper )
-{
-    if( capacity == "structural" )
-        wrapper.AddCapacity( new StructuralCapacity( xis ) );
 }

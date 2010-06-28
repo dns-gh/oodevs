@@ -266,10 +266,11 @@ private:
 // Name: MIL_EntityManager::CreateUrbanObjects
 // Created: SLG 2010-06-23
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::CreateUrbanObjects( UrbanModel& urbanModel )
+void MIL_EntityManager::CreateUrbanObjects( UrbanModel& urbanModel, const MIL_Config& config )
 {
     UrbanWrapperVisitor visitor( *this );
     urbanModel.Accept( visitor );
+    LoadUrbanStates( config );
 }
 
 // -----------------------------------------------------------------------------
@@ -280,6 +281,26 @@ void MIL_EntityManager::CreateUrbanObject( const urban::TerrainObject_ABC& objec
 {
     assert( pObjectManager_ );
     pObjectManager_->CreateUrbanObject( object );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::LoadUrbanStates
+// Created: JSR 2010-06-28
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::LoadUrbanStates( const MIL_Config& config )
+{
+    const std::string strUrbanState = config.GetUrbanStateFile();
+    if( strUrbanState.empty() )
+        return;
+
+    MT_LOG_INFO_MSG( MT_FormatString( "UrbanState file name : '%s'", strUrbanState.c_str() ) );
+
+    xml::xifstream xis( strUrbanState );
+    xis >> xml::start( "urban-state" )
+            >> xml::start( "blocks" )
+                >> xml::list( "block", boost::bind( &MIL_ObjectManager::ReadUrbanState, boost::ref( *pObjectManager_ ), _1 ) )
+            >> xml::end()
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
