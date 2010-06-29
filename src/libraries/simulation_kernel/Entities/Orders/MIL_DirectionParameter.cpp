@@ -23,6 +23,18 @@ MIL_DirectionParameter::MIL_DirectionParameter( const Common::MsgHeading& headin
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_DirectionParameter constructor
+// Created: PSN
+// -----------------------------------------------------------------------------
+MIL_DirectionParameter::MIL_DirectionParameter( boost::shared_ptr< MT_Vector2D >& dir )
+{
+    double tan = dir->rY_ / dir->rX_;
+    double atan = std::atan(tan);
+
+    heading_ = (int)(atan * 360. / ( 2 * MT_PI ));
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_DirectionParameter destructor
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------

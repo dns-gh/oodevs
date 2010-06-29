@@ -355,6 +355,15 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateP
 }
 
 // -----------------------------------------------------------------------------
+// Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateDirection
+// Created: PSN 
+// -----------------------------------------------------------------------------
+boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateDirection( boost::shared_ptr< MT_Vector2D > direction )
+{
+    boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_DirectionParameter( direction ) );
+    return result; 
+}
+// -----------------------------------------------------------------------------
 // Name: MIL_MissionParameterFactory::SetPawnParameter
 // Created: LDC 2009-07-10
 // -----------------------------------------------------------------------------
@@ -551,4 +560,14 @@ void MIL_MissionParameterFactory::SetPolygonListParameter( boost::shared_ptr< MI
 void MIL_MissionParameterFactory::SetUrbanBlockParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, boost::shared_ptr< DEC_Knowledge_Urban > urbanblock )
 {
     pMission->SetParameter( parameter, Create( urbanblock ) );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: MIL_MissionParameterFactory::SetDirectionParameter
+// Created: PSN 2010-06-15
+// -----------------------------------------------------------------------------
+void MIL_MissionParameterFactory::SetDirectionParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, boost::shared_ptr< MT_Vector2D > direction )
+{
+    pMission->SetParameter( parameter, CreateDirection( direction ) );
 }
