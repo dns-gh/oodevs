@@ -24,7 +24,7 @@ ADN_Config::ADN_Config()
 {
     Load();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Config destructor
 // Created: SBO 2006-01-02
@@ -52,7 +52,7 @@ void ADN_Config::Save()
 {
     // $$$$ SBO 2006-01-02: todo: save to registry
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Config::Load
 // Created: SBO 2006-01-02
@@ -63,5 +63,3 @@ void ADN_Config::Load()
     strSimPath_      = "./simulation_app.exe";
     strSimArguments_ = "--testdata";
 }
-
-

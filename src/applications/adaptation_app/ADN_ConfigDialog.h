@@ -12,7 +12,6 @@
 #ifndef __ADN_ConfigDialog_h_
 #define __ADN_ConfigDialog_h_
 
-
 #include <qdialog.h>
 
 class ADN_Config;

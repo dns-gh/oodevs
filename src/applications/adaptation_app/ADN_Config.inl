@@ -18,7 +18,7 @@ void ADN_Config::SetSimPath( const std::string& strPath )
 {
     strSimPath_ = strPath;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Config::SetSimArguments
 // Created: SBO 2006-01-02
@@ -38,7 +38,7 @@ const std::string& ADN_Config::GetSimPath() const
 {
     return strSimPath_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Config::GetSimArguments
 // Created: SBO 2006-01-02

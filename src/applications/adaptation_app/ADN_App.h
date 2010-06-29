@@ -42,7 +42,6 @@ private:
     ADN_Config*     config_;
 };
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_App::GetMainWindow
 // Created: AGN 03-08-05
@@ -52,6 +51,5 @@ ADN_MainWindow* ADN_App::GetMainWindow()
 {
     return pMainWindow_;
 }
-
 
 #endif // __ADN_App_h_

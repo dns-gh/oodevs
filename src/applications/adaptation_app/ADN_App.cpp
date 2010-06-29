@@ -36,8 +36,6 @@ ADN_App::ADN_App( int argc, char** argv )
     pApplication_ = this;
 }
 
-
-
 //-----------------------------------------------------------------------------
 // Name: ADN_App destructor
 // Created: JDY 03-06-19
@@ -55,7 +53,6 @@ ADN_App::~ADN_App()
 
     pApplication_ = 0;
 }
-
 
 //$$$$ C DEGUEU !
 // -----------------------------------------------------------------------------
@@ -150,5 +147,3 @@ bool ADN_App::Initialize( const std::string& inputFile, const std::string& outpu
     }
     return true;
 }
-
-

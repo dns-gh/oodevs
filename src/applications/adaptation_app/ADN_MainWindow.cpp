@@ -206,7 +206,6 @@ void ADN_MainWindow::Build()
     connect( & workspace_.GetUndoStack(), SIGNAL( cleanChanged(bool) ), this, SLOT( ChangeSaveState(bool) ) );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_MainWindow::AddPage
 // Created: APE 2005-03-17
@@ -219,7 +218,6 @@ void ADN_MainWindow::AddPage( const QString& strPageName, QWidget& page )
     page.reparent( sv->viewport(), QPoint( 0, 0 ) );
     pTab_->addTab( sv, strPageName );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_MainWindow::AddTable
@@ -295,7 +293,6 @@ void ADN_MainWindow::SaveProject()
     setCaption( tr( "Sword Adaptation Tool - " ) + szProject.c_str() );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_MainWindow::SaveAsProject
 // Created: JDY 03-06-24
@@ -327,7 +324,6 @@ void ADN_MainWindow::SaveAsProject()
     setCaption( strCaption );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_MainWindow::NewProject
 // Created: JDY 03-06-19
@@ -356,7 +352,6 @@ void ADN_MainWindow::NewProject()
     QString strCaption = tr( "Sword Adaptation Tool - " ) + qfilename;
     setCaption( strCaption );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_MainWindow::OpenProject
@@ -421,7 +416,6 @@ void ADN_MainWindow::OpenProject( const std::string& szFilename, const bool isNo
     pTab_->show();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_MainWindow::ExportHtml
 // Created: APE 2005-04-19
@@ -437,7 +431,6 @@ void ADN_MainWindow::ExportHtml()
 
     workspace_.ExportHtml( strPath.ascii() );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_MainWindow::CloseProject
@@ -527,7 +520,6 @@ void ADN_MainWindow::closeEvent( QCloseEvent * e )
     */
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_MainWindow::ChangeSaveState
 // Created: AGN 2004-05-13
@@ -591,7 +583,6 @@ bool ADN_MainWindow::SelectOpenMode()
     return true;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_MainWindow::ShowCoheranceTable
 // Created: APE 2005-04-04
@@ -627,7 +618,6 @@ void ADN_MainWindow::ShowCoheranceTable( int nId )
         }
     }
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_MainWindow::OfferToSave

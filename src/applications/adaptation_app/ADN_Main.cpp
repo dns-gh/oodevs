@@ -77,7 +77,6 @@ void SetConsolePos( const int nPosX, const int nPosY )
     SetWindowPos( FindWindow( NULL, szADN_Version ), NULL, rcPos.Left, rcPos.Top, 0, 0, SWP_NOZORDER | SWP_NOACTIVATE | SWP_NOSIZE | SWP_FRAMECHANGED  );
 }
 
-
 int main( uint nArgc, char** ppArgv )
 {
     // Console

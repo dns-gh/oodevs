@@ -58,7 +58,6 @@ enum E_Location
     eNbrLocation
 };
 
-
 enum E_ConsumptionType
 {
     eEngineStopped  = 0,
@@ -67,7 +66,6 @@ enum E_ConsumptionType
     eWorking        = 3,
     eNbrConsumptionType
 };
-
 
 enum E_TimeCategory
 {
@@ -85,7 +83,6 @@ enum E_TimeCategory
     eNbrTimeCategory
 };
 
-
 enum E_VisionObject
 {
     eVisionGround = 0,
@@ -94,8 +91,6 @@ enum E_VisionObject
     eVisionUrban,
     eNbrVisionObjects
 };
-
-
 
 enum E_KeyPoint
 {
@@ -164,7 +159,6 @@ enum E_AgentTypeAutomate
     eNbrAgentTypeAutomate
 };
 
-
 enum E_NatureAtlasType
 {
     eNatureAtlas_PC,
@@ -182,12 +176,10 @@ enum E_NatureAtlasType
     eNbrNatureAtlas
 };
 
-
 enum 
 {
     ePostureNeedTimeStart = 3
 };
-
 
 enum E_SpeedImpact
 {
@@ -196,7 +188,6 @@ enum E_SpeedImpact
     eSpeedImpact_VitesseMaxAgent,
     eNbrSpeedImpact
 };
-
 
 enum E_SensorWeatherModifiers
 {
@@ -210,7 +201,6 @@ enum E_SensorWeatherModifiers
     eNbrSensorWeatherModifiers
 };
 
-
 enum E_DoctorSkills
 {
     eDoctorSkills_UE,
@@ -220,14 +210,12 @@ enum E_DoctorSkills
     eNbrDoctorSkills
 };
 
-
 enum E_ProtectionType
 {
     eProtectionType_Material,
     eProtectionType_Human,
     eNbrProtectionType
 };
-
 
 enum E_BreakdownType
 {
@@ -244,7 +232,6 @@ enum E_BreakdownNTI
     eNbrBreakdownNTI,
 };
 
-
 enum E_MunitionType
 {
     eMunitionType_Obus,
@@ -253,7 +240,6 @@ enum E_MunitionType
     eMunitionType_Mitraille,
     eNbrMunitionType
 };
-
 
 enum E_CapacityMission
 {

@@ -12,5 +12,4 @@
 #ifndef __ADN_H_
 #define __ADN_H_
 
-
 #endif // __ADN_H_

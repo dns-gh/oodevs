@@ -25,7 +25,6 @@
 #include "ADN_App.h"
 #include "ADN_MainWindow.h"
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_ListViewDialog constructor
 // Created: APE 2005-04-04
@@ -55,15 +54,14 @@ ADN_ListViewDialog::ADN_ListViewDialog( QWidget* pParent, const QString& strCapt
     this->move( pMainWindow->x() + pMainWindow->width() * 0.1, pMainWindow->y() + pMainWindow->height() * 0.1 );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_ListViewDialog destructor
 // Created: APE 2005-04-04
 // -----------------------------------------------------------------------------
 ADN_ListViewDialog::~ADN_ListViewDialog()
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListViewDialog::OnContextMenu
@@ -79,7 +77,6 @@ void ADN_ListViewDialog::OnContextMenu()
     if( nResult == 1 )
         this->PrintListView();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListViewDialog::PrintListView

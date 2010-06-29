@@ -34,7 +34,6 @@
 #include "ADN_App.h"
 #include "ADN_MainWindow.h"
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_TableDialog constructor
 // Created: APE 2005-04-04
@@ -64,7 +63,6 @@ ADN_TableDialog::ADN_TableDialog( QWidget* pParent, const QString& strCaption, A
     this->move( pMainWindow->x() + pMainWindow->width() * 0.1, pMainWindow->y() + pMainWindow->height() * 0.1 );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_TableDialog destructor
 // Created: APE 2005-04-04
@@ -73,7 +71,6 @@ ADN_TableDialog::~ADN_TableDialog()
 {
     // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_TableDialog::OnContextMenu
@@ -89,7 +86,6 @@ void ADN_TableDialog::OnContextMenu()
     if( nResult == 1 )
         this->PrintTable();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_TableDialog::PrintTable

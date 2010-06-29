@@ -19,7 +19,6 @@
 #include <qlayout.h>
 #include <qfiledialog.h>
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_ConfigDialog::ADN_ConfigDialog
 // Created: SBO 2006-01-02
@@ -60,7 +59,7 @@ ADN_ConfigDialog::ADN_ConfigDialog( ADN_Config& config )
 //-----------------------------------------------------------------------------
 ADN_ConfigDialog::~ADN_ConfigDialog()
 {
-    
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
