@@ -366,6 +366,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
                             boost::bind( &DEC_PerceptionFunctions::SetVisionModeNormal, boost::ref( GetPion() ) ) );   
     brain.RegisterFunction( "DEC_Perception_ActiverReconnaissanceLocalisation",
         boost::function< int( const TER_Localisation* ) >( boost::bind( &DEC_PerceptionFunctions::EnableRecognitionLocalisation, boost::ref( GetPion() ), _1 ) ) );
+    brain.RegisterFunction( "DEC_Perception_ActivateLocationProgressiveRecce",
+        boost::function< int( const TER_Localisation*, float ) >( boost::bind( &DEC_PerceptionFunctions::EnableRecognitionLocalisation, boost::ref( GetPion() ), _1, _2 ) ));
     brain.RegisterFunction( "DEC_Perception_DesactiverReconnaissanceLocalisation",
          boost::function< void( int ) >( boost::bind( &DEC_PerceptionFunctions::DisableRecognitionLocalisation, boost::ref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Perception_ActiverReconnaissanceDansBlocUrbain",
@@ -704,6 +706,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_SetMissionLimaFlagHoraire"     ,
             boost::function< void (unsigned int, bool)> ( boost::bind( &DEC_OrdersFunctions::PionSetMissionLimaScheduleFlag, boost::ref( GetPion() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_GetRawMission", &DEC_AgentFunctions::GetMission );
+    brain.RegisterFunction( "DEC_HasMission", &DEC_AgentFunctions::HasMission );
     brain.RegisterFunction( "DEC_SetMission",
         boost::function< void( DEC_Decision_ABC*, boost::shared_ptr< MIL_Mission_ABC > )>( boost::bind( &DEC_AgentFunctions::SetMission, _1, _2 ) ) );
 

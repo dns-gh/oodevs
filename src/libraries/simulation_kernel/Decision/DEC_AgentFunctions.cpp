@@ -688,6 +688,8 @@ void DEC_AgentFunctions::Install( MIL_Agent_ABC& callerAgent )
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_AgentFunctions::GetDirectionDanger( const boost::shared_ptr< MIL_Mission_ABC > pMission )
 {
+    if( !pMission.get() )
+        return boost::shared_ptr< MT_Vector2D >();
     boost::shared_ptr< MT_Vector2D > result( new MT_Vector2D( pMission->GetDirDanger() ) );
     return result;
 }
@@ -699,6 +701,15 @@ boost::shared_ptr< MT_Vector2D > DEC_AgentFunctions::GetDirectionDanger( const b
 boost::shared_ptr< MIL_Mission_ABC > DEC_AgentFunctions::GetMission( DEC_Decision_ABC* pAgent )
 {
     return pAgent->GetMission();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::HasMission
+// Created: LDC 2010-06-23
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::HasMission( DEC_Decision_ABC* pAgent )
+{
+    return ( 0 != pAgent->GetMission().get() );
 }
 
 // -----------------------------------------------------------------------------

@@ -16,21 +16,28 @@
 #include "PHY_PerceptionLocalisation.h"
 #include "simulation_terrain/TER_Localisation.h"
 
+class DEC_Decision_ABC;
+
 class PHY_PerceptionRecoLocalisationReco : public PHY_PerceptionLocalisation
 {
 public:
-    PHY_PerceptionRecoLocalisationReco( const TER_Localisation& localisation, MT_Float rRadius );
-    PHY_PerceptionRecoLocalisationReco( const TER_Localisation& localisation, bool bUseDefaultRadius );
+    PHY_PerceptionRecoLocalisationReco( const TER_Localisation& localisation, float rRadius, DEC_Decision_ABC& callerAgent );
+    PHY_PerceptionRecoLocalisationReco( const TER_Localisation& localisation, bool bUseDefaultRadius, DEC_Decision_ABC& callerAgent );
 
     bool IsInside        ( const PHY_RoleInterface_Perceiver& perceiver, const MT_Vector2D& vPoint )        const;
     void GetAgentsInside ( const PHY_RoleInterface_Perceiver& perceiver, TER_Agent_ABC::T_AgentPtrVector& ) const;
+    float GetRadius() const;
 
 private:
     PHY_PerceptionRecoLocalisationReco& operator = ( const PHY_PerceptionRecoLocalisationReco& );
 
+public:
+    float                  rRadius_;
+    float                  rCurrentRadius_;
+    float                  rGrowthSpeed_;
+    DEC_Decision_ABC&      callerAgent_;
 private:
     const TER_Localisation localisation_;
-    const MT_Float         rRadius_;
     const bool             bShouldUseRadius_;
 };
 
@@ -48,9 +55,8 @@ public:
 
     //! @name Add/Remove Points
     //@{
-    int AddLocalisationWithRadius        ( const TER_Localisation&, MT_Float rRadius );
-    int AddLocalisationWithDefaultRadius ( const TER_Localisation& );
-    int AddLocalisationWithoutRadius     ( const TER_Localisation& );
+    int AddLocalisationWithGrowthSpeed( const TER_Localisation&, float rGrowthSpeed, DEC_Decision_ABC& callerAgent );
+    int AddLocalisationWithDefaultGrowthSpeed ( const TER_Localisation&, DEC_Decision_ABC& callerAgent );
     void  RemoveLocalisation( int );
 
     bool  HasLocalisationToHandle() const;
@@ -63,6 +69,7 @@ public:
     virtual void                       Execute( const TER_Agent_ABC::T_AgentPtrVector& perceivableAgents, const detection::DetectionComputerFactory_ABC& detectionComputer );
     virtual const PHY_PerceptionLevel& Compute( const MIL_Agent_ABC& agent ) const;
     virtual const PHY_PerceptionLevel& Compute( const DEC_Knowledge_Agent & knowledge ) const;
+    void                               Update();
     //@}
 };
 

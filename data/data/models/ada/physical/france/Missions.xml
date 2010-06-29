@@ -903,10 +903,9 @@
     <mission dia-behavior="net.masagroup.testSword.military.tasks.Animate" dia-type="T_Mission_Pion_Animate" id="2048" name="Animate">
       <parameter dia-name="entities" name="entities" optional="false" type="ObjectKnowledgeListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.testSword.military.tasks.Interdict" dia-type="T_Mission_Pion_Interdict" id="2049" name="Interdict">
-      <parameter dia-name="position" name="position d'installation" optional="true" type="PointBM"/>
-      <parameter dia-name="objectives" name="objectif" optional="false" type="PointBM"/>
-      <parameter dia-name="direction" name="direction" optional="false" type="DirectionBM"/>
+    <mission dia-behavior="net.masagroup.testSword.military.tasks.Deny" dia-type="T_Mission_Pion_Deny" id="2049" name="Deny Position">
+      <parameter dia-name="objectives" name="objectifs" optional="false" type="PointListBM"/>
+      <parameter dia-name="obstacles" name="obstacles" optional="true" type="GenObjectListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.ObserveDirection" dia-type="T_Mission_Pion_ObserveDirection" id="2050" name="ObserveDirection">
       <parameter dia-name="objectives" name="direction" optional="false" type="DirectionBM"/>
@@ -950,25 +949,32 @@
       <parameter dia-name="prisoners" name="objectifs" optional="false" type="AgentKnowledgeListBM"/>
       <parameter dia-name="camps" name="Camps de prisonniers" optional="false" type="ObjectKnowledgeListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.military.platoon.terrorism.tasks.Ambush" dia-type="T_Mission_Pion_Embuscade" id="2064" name="Embuscade">
+    <mission dia-behavior="net.masagroup.testSword.military.tasks.SealOff" dia-type="T_Mission_Pion_SealOff" id="2064" name="Seal Off">
+      <parameter dia-name="objectives" name="objectifs" optional="false" type="AreaBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.military.tasks.Illuminate" dia-type="T_Mission_Pion_Illuminer" id="2065" name="Illuminate">
+      <parameter dia-name="entities" name="cible" optional="false" type="AgentKnowledgeListBM"/>
+      <parameter dia-name="allies" name="tireur allie" optional="false" type="AgentListBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.testSword.military.tasks.Deny" dia-type="T_Mission_Pion_DenyUB" id="2066" name="Deny Urban Block">
+      <parameter dia-name="objectives" name="objectifs" optional="false" type="UrbanBlockBM"/>
+      <parameter dia-name="obstacles" name="obstacles" optional="true" type="GenObjectListBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.military.platoon.terrorism.tasks.Ambush" dia-type="T_Mission_Pion_Embuscade" id="2067" name="Embuscade">
       <parameter dia-name="position" name="position" optional="false" type="PointBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.military.platoon.combat.support.artillery.tasks.CoordinateIllumination" dia-type="T_Mission_Pion_CoordinateIllumination" id="2065" name="Coordinate Illumination">
+    <mission dia-behavior="net.masagroup.sword.military.platoon.combat.support.artillery.tasks.CoordinateIllumination" dia-type="T_Mission_Pion_CoordinateIllumination" id="2068" name="Coordinate Illumination">
       <parameter dia-name="entities" name="cible" optional="false" type="AgentKnowledgeBM"/>
       <parameter dia-name="position" name="deploiement tireur" optional="false" type="PointBM"/>
       <parameter dia-name="munition" name="munitions" optional="false" type="DotationType"/>
       <parameter dia-name="interventionType" name="type intervention" optional="false" type="Numeric"/>
       <parameter dia-name="allies" name="illuminateur allie" optional="true" type="AgentBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.military.tasks.Illuminate" dia-type="T_Mission_Pion_Illuminer" id="2066" name="Illuminate">
-      <parameter dia-name="entities" name="cible" optional="false" type="AgentKnowledgeListBM"/>
-      <parameter dia-name="allies" name="tireur allie" optional="false" type="AgentListBM"/>
-    </mission>
-    <mission dia-behavior="net.masagroup.sword.military.platoon.combat.tasks.Monitor" dia-type="T_Mission_Pion_Surveiller" id="2067" name="Monitor">
+    <mission dia-behavior="net.masagroup.sword.military.platoon.combat.tasks.Monitor" dia-type="T_Mission_Pion_Surveiller" id="2069" name="Monitor">
       <parameter dia-name="objectives" name="objectives" optional="false" type="PointListBM"/>
       <parameter dia-name="positions" name="positions" optional="true" type="PointListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.military.platoon.combat.tasks.Monitor" dia-type="T_Mission_Pion_SurveillerBU" id="2068" name="MonitorUB">
+    <mission dia-behavior="net.masagroup.sword.military.platoon.combat.tasks.Monitor" dia-type="T_Mission_Pion_SurveillerBU" id="2070" name="MonitorUB">
       <parameter dia-name="objectives" name="objectives" optional="false" type="UrbanBlockBM"/>
       <parameter dia-name="positions" name="positions" optional="true" type="PointListBM"/>
     </mission>

@@ -11,6 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_PerceptionRecoLocalisation.h"
+#include "Decision/DEC_Decision_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -25,22 +26,27 @@
 // Name: PHY_PerceptionRecoLocalisationReco constructor
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-PHY_PerceptionRecoLocalisationReco::PHY_PerceptionRecoLocalisationReco( const TER_Localisation& localisation, MT_Float rRadius )
+PHY_PerceptionRecoLocalisationReco::PHY_PerceptionRecoLocalisationReco( const TER_Localisation& localisation, float rGrowthSpeed, DEC_Decision_ABC& callerAgent )
     : localisation_    ( localisation )
-    , rRadius_         ( rRadius )
-    , bShouldUseRadius_( true )
+    , bShouldUseRadius_( rGrowthSpeed > 0. ? true : false )
+    , rGrowthSpeed_( rGrowthSpeed )
+    , callerAgent_( callerAgent )
 {
-    // NOTHING
+    const MT_Rect& boundingBox = localisation_.GetBoundingBox();
+    rRadius_ = boundingBox.GetCenter().Distance( boundingBox.GetPointUpLeft() );
+    
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRecoLocalisationReco constructor
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-PHY_PerceptionRecoLocalisationReco::PHY_PerceptionRecoLocalisationReco( const TER_Localisation& localisation, bool bUseDefaultRadius )
+PHY_PerceptionRecoLocalisationReco::PHY_PerceptionRecoLocalisationReco( const TER_Localisation& localisation, bool bUseDefaultRadius, DEC_Decision_ABC& callerAgent )
     : localisation_    ( localisation )
+    , rGrowthSpeed_    ( -1. )
     , rRadius_         ( -1. )
     , bShouldUseRadius_( bUseDefaultRadius )
+    , callerAgent_     ( callerAgent )
 {
     // NOTHING
 }
@@ -53,7 +59,7 @@ bool PHY_PerceptionRecoLocalisationReco::IsInside( const PHY_RoleInterface_Perce
 {
     if ( bShouldUseRadius_ )
     {
-        const MT_Float rRadius = rRadius_ < 0. ? perceiver.GetMaxAgentPerceptionDistance() : rRadius_;
+        const float rRadius = rRadius_ < 0. ? perceiver.GetMaxAgentPerceptionDistance() : rRadius_;
         if ( perceiver.GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition().SquareDistance( vPoint ) > rRadius * rRadius )
             return false;
     }
@@ -69,7 +75,7 @@ void PHY_PerceptionRecoLocalisationReco::GetAgentsInside( const PHY_RoleInterfac
     result.clear();
     if( bShouldUseRadius_ )
     {
-        const MT_Float rRadius = rRadius_ < 0. ? perceiver.GetMaxAgentPerceptionDistance() : rRadius_;
+        const float rRadius = rRadius_ < 0. ? perceiver.GetMaxAgentPerceptionDistance() : rRadius_;
         TER_World::GetWorld().GetAgentManager().GetListWithinCircle( perceiver.GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition(), rRadius, result );
         
         for ( TER_Agent_ABC::IT_AgentPtrVector it = result.begin(); it != result.end(); )
@@ -80,6 +86,16 @@ void PHY_PerceptionRecoLocalisationReco::GetAgentsInside( const PHY_RoleInterfac
     }
     else
         TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( localisation_, result );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionRecoLocalisationReco::GetRadius
+// Created: MGD 2010-06-28
+// -----------------------------------------------------------------------------
+float PHY_PerceptionRecoLocalisationReco::GetRadius() const
+{
+    return rRadius_;
 }
 
 // -----------------------------------------------------------------------------
@@ -107,9 +123,9 @@ PHY_PerceptionRecoLocalisation::~PHY_PerceptionRecoLocalisation()
 // Name: PHY_PerceptionRecoLocalisation::AddLocalisation
 // Created: JVT 2004-10-22
 // -----------------------------------------------------------------------------
-int PHY_PerceptionRecoLocalisation::AddLocalisationWithRadius( const TER_Localisation& localisation, MT_Float rRadius )
+int PHY_PerceptionRecoLocalisation::AddLocalisationWithGrowthSpeed( const TER_Localisation& localisation, float rGrowthSpeed, DEC_Decision_ABC& callerAgent )
 {
-    PHY_PerceptionRecoLocalisationReco* pNewReco = new PHY_PerceptionRecoLocalisationReco( localisation, rRadius );
+    PHY_PerceptionRecoLocalisationReco* pNewReco = new PHY_PerceptionRecoLocalisationReco( localisation, rGrowthSpeed, callerAgent );
     assert( pNewReco );
     return Add( pNewReco );
 }
@@ -118,22 +134,11 @@ int PHY_PerceptionRecoLocalisation::AddLocalisationWithRadius( const TER_Localis
 // Name: PHY_PerceptionRecoLocalisation::AddLocalisation
 // Created: JVT 2004-10-22
 // -----------------------------------------------------------------------------
-int PHY_PerceptionRecoLocalisation::AddLocalisationWithDefaultRadius( const TER_Localisation& localisation )
+int PHY_PerceptionRecoLocalisation::AddLocalisationWithDefaultGrowthSpeed( const TER_Localisation& localisation, DEC_Decision_ABC& callerAgent  )
 {
-    PHY_PerceptionRecoLocalisationReco* pNewReco = new PHY_PerceptionRecoLocalisationReco( localisation, true );
+    PHY_PerceptionRecoLocalisationReco* pNewReco = new PHY_PerceptionRecoLocalisationReco( localisation, true, callerAgent );
     assert( pNewReco );
     return Add( pNewReco );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_PerceptionRecoLocalisation::AddLocalisationWithoutRadius
-// Created: JVT 2004-10-28
-// -----------------------------------------------------------------------------
-int PHY_PerceptionRecoLocalisation::AddLocalisationWithoutRadius( const TER_Localisation& localisation )
-{
-    PHY_PerceptionRecoLocalisationReco* pNewReco = new PHY_PerceptionRecoLocalisationReco( localisation, false );
-    assert( pNewReco );
-    return Add( pNewReco ); 
 }
 
 // -----------------------------------------------------------------------------
@@ -212,4 +217,25 @@ const PHY_PerceptionLevel& PHY_PerceptionRecoLocalisation::Compute( const DEC_Kn
 bool PHY_PerceptionRecoLocalisation::HasLocalisationToHandle() const
 {
     return !recos_.empty();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionRecoLocalisation::Update
+// Created: MGD 2010-06-28
+// -----------------------------------------------------------------------------
+void PHY_PerceptionRecoLocalisation::Update()
+{
+    for ( IT_RecoVector it = recos_.begin(); it != recos_.end(); ++it )
+    {
+        PHY_PerceptionRecoLocalisationReco& reco = **it;
+
+        // Agrandissement de la zone de reconnaissance
+        if ( reco.rCurrentRadius_ < reco.rRadius_ )
+            reco.rCurrentRadius_ += reco.rGrowthSpeed_;
+        if ( reco.rCurrentRadius_ >= reco.rRadius_ )
+        {
+            reco.rCurrentRadius_ = reco.rRadius_;
+            reco.callerAgent_.CallbackPerception( (*it)->Id() );
+        }
+    }  
 }

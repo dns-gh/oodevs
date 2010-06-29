@@ -49,7 +49,9 @@
         <mission name="StayClose"/>
         <mission name="Support"/>
         <mission name="TakeCover"/>
-        <mission name="Interdict"/>
+        <mission name="Deny Position"/>
+        <mission name="Deny Urban Block"/>
+        <mission name="Seal Off"/>
         <mission name="SuivreAgent"/>
         <mission name="StationnerBM"/>
         <mission name="SeRecompleter"/>

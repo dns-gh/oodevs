@@ -124,11 +124,11 @@ public:
     virtual void  DisableCoupDeSonde             () = 0;
     virtual int   EnableRecoPoint                ( const MT_Vector2D& center, MT_Float rSize, MT_Float rSpeed, DEC_Decision_ABC& callerAgent ) = 0;
     virtual void  DisableRecoPoint               ( int ) = 0;
-    virtual int   EnableRecoLocalisation         ( const TER_Localisation& localisation, MT_Float rRadius ) = 0;
-    virtual int   EnableRecoLocalisation         ( const TER_Localisation& localisation ) = 0;
+    virtual int   EnableRecoLocalisation         ( const TER_Localisation& localisation, float rGrowthSpeed, DEC_Decision_ABC& callerAgent ) = 0;
+    virtual int   EnableRecoLocalisation         ( const TER_Localisation& localisation, DEC_Decision_ABC& callerAgent ) = 0;
     virtual int   EnableRecoUrbanBlock           ( boost::shared_ptr< DEC_Knowledge_Urban > urbanBlock ) = 0;
     virtual void  DisableRecoUrbanBlock          ( int ) = 0;
-    virtual int   EnableControlLocalisation      ( const TER_Localisation& localisation ) = 0;
+    virtual int   EnableControlLocalisation      ( const TER_Localisation& localisation, DEC_Decision_ABC& callerAgent ) = 0;
     virtual void  DisableRecoLocalisation        ( int ) = 0;
     virtual int   EnableSurveillanceLocalisation ( const TER_Localisation& localisation ) = 0;
     virtual void  DisableSurveillanceLocalisation( int ) = 0;

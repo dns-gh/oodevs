@@ -40,6 +40,7 @@ public:
     static int  EnableObjectRecognitionLocalisation ( DEC_Decision_ABC& callerAgent, const TER_Localisation* pLocalisation, const MT_Vector2D* pCenter, MT_Float rGrowthSpeed );
     static void DisableObjectRecognitionLocalisation( MIL_Agent_ABC& callerAgent, int id );
     static int  EnableRecognitionLocalisation       ( MIL_Agent_ABC& callerAgent, const TER_Localisation* pLocalisation );
+    static int  EnableRecognitionLocalisation( MIL_Agent_ABC& callerAgent, const TER_Localisation* pLocalisation, float rGrowthSpeed );
     static int  EnableRecognitionUrbanBlock         ( MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Urban > urbanBlock );
     static void DisableRecognitionLocalisation      ( MIL_Agent_ABC& callerAgent, int id );
     static void DisableRecognitionUrbanBlock        ( MIL_Agent_ABC& callerAgent, int id );

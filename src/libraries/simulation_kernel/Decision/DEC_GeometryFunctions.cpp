@@ -951,6 +951,17 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeLocalisationBaryc
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::ComputeAreaSize
+// Created: PSN 2010-06-24
+// -----------------------------------------------------------------------------
+MT_Float DEC_GeometryFunctions::ComputeAreaSize( TER_Localisation* pLocalisation )
+{
+    if( !pLocalisation )
+        throw std::runtime_error( "invalid localisation" );
+    return MIL_Tools::ConvertSimToMeterSquare( pLocalisation->GetArea() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ComputeMeanDirection
 // Created: JVT 2005-01-25
 // -----------------------------------------------------------------------------

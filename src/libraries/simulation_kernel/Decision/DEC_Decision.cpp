@@ -85,7 +85,8 @@ void RegisterCommonUserFunctions( directia::Brain& brain, unsigned int id )
     brain.RegisterFunction( "DEC_Geometrie_TrierFuseauxSelonOuvertureTerrain",  &DEC_GeometryFunctions::SortFuseauxAccordingToTerrainOpening );
     brain.RegisterFunction( "DEC_Geometrie_ConvertirFuseauEnLocalisation",      &DEC_GeometryFunctions::ConvertFuseauToLocalisation );
     brain.RegisterFunction( "DEC_Geometrie_ProchainObjectifDansFuseau",         &DEC_GeometryFunctions::GetNextObjectiveInFuseau );
-    brain.RegisterFunction( "DEC_Geometrie_DistanceBetweenPoints",               &DEC_GeometryFunctions::ComputeDistance );
+    brain.RegisterFunction( "DEC_Geometrie_DistanceBetweenPoints",              &DEC_GeometryFunctions::ComputeDistance );
+    brain.RegisterFunction( "DEC_Geometrie_AreaSize",                           &DEC_GeometryFunctions::ComputeAreaSize );
     
     //BMArea
     brain.RegisterFunction( "DEC_BMArea_Barycenter", &DEC_GeometryFunctions::ComputeBarycenter );
@@ -168,6 +169,7 @@ void RegisterCommonUserFunctions( directia::Brain& brain, unsigned int id )
     brain.RegisterFunction( "DEC_AssignMissionLocationListParameter",        &MIL_MissionParameterFactory::SetLocationListParameter );
     brain.RegisterFunction( "DEC_AssignMissionPointListParameter",           &MIL_MissionParameterFactory::SetPointListParameter );
     brain.RegisterFunction( "DEC_AssignMissionUrbanBlockParameter",          &MIL_MissionParameterFactory::SetUrbanBlockParameter );
+    brain.RegisterFunction( "DEC_AssignMissionDirectionParameter",           &MIL_MissionParameterFactory::SetDirectionParameter );
     
     directia::ScriptRef initParameterFunction = brain.GetScriptFunction( "InitTaskParameter" );
     brain.RegisterFunction( "DEC_FillMissionParameters",

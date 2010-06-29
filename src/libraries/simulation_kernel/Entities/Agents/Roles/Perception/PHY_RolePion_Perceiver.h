@@ -130,11 +130,11 @@ public:
     void  DisableCoupDeSonde             ();
     int   EnableRecoPoint                ( const MT_Vector2D& center, MT_Float rSize, MT_Float rSpeed, DEC_Decision_ABC& callerAgent );
     void  DisableRecoPoint               ( int );
-    int   EnableRecoLocalisation         ( const TER_Localisation& localisation, MT_Float rRadius );
-    int   EnableRecoLocalisation         ( const TER_Localisation& localisation );
+    int   EnableRecoLocalisation         ( const TER_Localisation& localisation, float rGrowthSpeed, DEC_Decision_ABC& callerAgent );
+    int   EnableRecoLocalisation         ( const TER_Localisation& localisation, DEC_Decision_ABC& callerAgent );
     int   EnableRecoUrbanBlock           ( boost::shared_ptr< DEC_Knowledge_Urban > urbanBlock );
     void  DisableRecoUrbanBlock          ( int );
-    int   EnableControlLocalisation      ( const TER_Localisation& localisation );
+    int   EnableControlLocalisation      ( const TER_Localisation& localisation, DEC_Decision_ABC& callerAgent );
     void  DisableRecoLocalisation        ( int );
     int   EnableSurveillanceLocalisation ( const TER_Localisation& localisation );
     void  DisableSurveillanceLocalisation( int );

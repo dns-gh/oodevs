@@ -14,6 +14,7 @@
 #include "PHY_ActionControlZone.h"
 
 #include "PHY_RoleAction_DirectFiring.h"
+#include "Decision/DEC_Decision_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Objects/MIL_ObjectBuilder_ABC.h"
@@ -91,9 +92,9 @@ PHY_ActionControlZone::PHY_ActionControlZone( MIL_AgentPion& pion, const TER_Loc
     
     // Detection
     if ( pLocalisation->GetArea() <= rRadius * rRadius * MT_PI ) 
-        perceptionZoneID_ = rolePerceiver_.EnableControlLocalisation( *pLocalisation );
+        perceptionZoneID_ = rolePerceiver_.EnableControlLocalisation( *pLocalisation, pion.GetRole< DEC_Decision_ABC >() );
     else
-        perceptionZoneID_ = rolePerceiver_.EnableRecoLocalisation   ( *pLocalisation, rRadius );
+        perceptionZoneID_ = rolePerceiver_.EnableRecoLocalisation   ( *pLocalisation, rRadius, pion.GetRole< DEC_Decision_ABC >() );
 }
 
 // -----------------------------------------------------------------------------

@@ -426,20 +426,20 @@ void PHY_RolePion_Perceiver::EnsurePerceptionRecoLocalisation()
 // Name: PHY_RolePion_Perceiver::EnableRecoLocalisation
 // Created: JVT 2004-10-22
 // -----------------------------------------------------------------------------
-int PHY_RolePion_Perceiver::EnableRecoLocalisation( const TER_Localisation& localisation, MT_Float rRadius )
+int PHY_RolePion_Perceiver::EnableRecoLocalisation( const TER_Localisation& localisation, float rGrowthSpeed, DEC_Decision_ABC& callerAgent )
 {
     EnsurePerceptionRecoLocalisation();
-    return pPerceptionRecoLocalisation_->AddLocalisationWithRadius( localisation, rRadius );
+    return pPerceptionRecoLocalisation_->AddLocalisationWithGrowthSpeed( localisation, rGrowthSpeed, callerAgent );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver::EnableRecoLocalisation
 // Created: JVT 2004-10-22
 // -----------------------------------------------------------------------------
-int PHY_RolePion_Perceiver::EnableRecoLocalisation( const TER_Localisation& localisation )
+int PHY_RolePion_Perceiver::EnableRecoLocalisation( const TER_Localisation& localisation, DEC_Decision_ABC& callerAgent )
 {    
     EnsurePerceptionRecoLocalisation();
-    return pPerceptionRecoLocalisation_->AddLocalisationWithDefaultRadius( localisation );    
+    return pPerceptionRecoLocalisation_->AddLocalisationWithDefaultGrowthSpeed( localisation, callerAgent );    
 }
 
 // -----------------------------------------------------------------------------
@@ -460,10 +460,10 @@ int PHY_RolePion_Perceiver::EnableRecoUrbanBlock( boost::shared_ptr< DEC_Knowled
 // Name: PHY_RolePion_Perceiver::EnableControlLocalisation
 // Created: JVT 2004-10-28
 // -----------------------------------------------------------------------------
-int PHY_RolePion_Perceiver::EnableControlLocalisation( const TER_Localisation& localisation )
+int PHY_RolePion_Perceiver::EnableControlLocalisation( const TER_Localisation& localisation, DEC_Decision_ABC& callerAgent )
 {
     EnsurePerceptionRecoLocalisation();
-    return pPerceptionRecoLocalisation_->AddLocalisationWithoutRadius( localisation );
+    return pPerceptionRecoLocalisation_->AddLocalisationWithDefaultGrowthSpeed( localisation, callerAgent );
 }
 
 // -----------------------------------------------------------------------------
@@ -1094,6 +1094,9 @@ void PHY_RolePion_Perceiver::Update( bool /*bIsDead*/ )
 
     if ( pPerceptionRecoPoint_ )
         pPerceptionRecoPoint_->Update();
+
+   if ( pPerceptionRecoLocalisation_ )
+        pPerceptionRecoLocalisation_->Update();
         
     if ( pPerceptionRecoObjects_ )
         pPerceptionRecoObjects_->Update();

@@ -143,16 +143,27 @@ void DEC_PerceptionFunctions::DisableObjectRecognitionLocalisation( MIL_Agent_AB
     callerAgent.GetRole< PHY_RoleInterface_Perceiver >().DisableRecoObjects( id );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: DEC_PerceptionFunctions::EnableRecognitionLocalisation
-// Created: JVT 2004-10-22
+// Created: MGD 2010-06-28
 // -----------------------------------------------------------------------------
 int DEC_PerceptionFunctions::EnableRecognitionLocalisation( MIL_Agent_ABC& callerAgent, const TER_Localisation* pLocalisation )
 {
     assert( pLocalisation );
 
-    return callerAgent.GetRole< PHY_RoleInterface_Perceiver >().EnableRecoLocalisation( *pLocalisation );
+    return callerAgent.GetRole< PHY_RoleInterface_Perceiver >().EnableRecoLocalisation( *pLocalisation, callerAgent.GetRole< DEC_Decision_ABC >() );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PerceptionFunctions::EnableRecognitionLocalisation
+// Created: MGD 2010-06-28
+// -----------------------------------------------------------------------------
+int DEC_PerceptionFunctions::EnableRecognitionLocalisation( MIL_Agent_ABC& callerAgent, const TER_Localisation* pLocalisation, float rGrowthSpeed )
+{
+    assert( pLocalisation );
+
+    return callerAgent.GetRole< PHY_RoleInterface_Perceiver >().EnableRecoLocalisation( *pLocalisation, rGrowthSpeed, callerAgent.GetRole< DEC_Decision_ABC >() );
 }
 
 // -----------------------------------------------------------------------------
