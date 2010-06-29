@@ -232,7 +232,14 @@ void NBCPropagationCapacity::Propagate( const MT_Vector2D& vOrigin, MIL_Object_A
     if( !pManager_->IsFlagged( location , attr.GetLength() , attr.GetWidth() ) ) 
     {
         MIL_NBCBuilder builder( object, location );
-        MIL_EntityManager::GetSingleton().CreateObject( *object.GetArmy(), builder );
+        try
+        {
+            MIL_EntityManager::GetSingleton().CreateObject( *object.GetArmy(), builder );
+        }
+        catch( std::exception& e )
+        {
+            MT_LOG_ERROR_MSG( e.what() );
+        }
         pManager_->Flag( vOrigin , attr.GetLength() , attr.GetWidth() );
         //Definir peut etre ici une concentration initiale
     }

@@ -351,7 +351,14 @@ void MIL_Army::ReadFormation( xml::xistream& xis, FormationFactory_ABC& formatio
 // -----------------------------------------------------------------------------
 void MIL_Army::ReadObject( xml::xistream& xis, MIL_ObjectManager& objectFactory )
 {
-    objectFactory.CreateObject( xis, *this );
+    try
+    {
+        objectFactory.CreateObject( xis, *this );
+    }
+    catch( std::exception& e)
+    {
+        MT_LOG_ERROR_MSG( e.what() );
+    }
 }
 
 // -----------------------------------------------------------------------------

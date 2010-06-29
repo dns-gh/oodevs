@@ -41,14 +41,21 @@ void PHY_SensorTypeObject::ReadObject( xml::xistream& xis )
     std::string strType;
     xis >> xml::attribute( "type", strType );
 
-    const MIL_ObjectType_ABC& objectType = MIL_ObjectFactory::FindType( strType );
-    
-    if ( objectData_.size() <= objectType.GetID() )
-        objectData_.resize( objectType.GetID() + 1, 0 );
+    try
+    {
+        const MIL_ObjectType_ABC& objectType = MIL_ObjectFactory::FindType( strType );
+        
+        if ( objectData_.size() <= objectType.GetID() )
+            objectData_.resize( objectType.GetID() + 1, 0 );
 
-    const PHY_SensorTypeObjectData* pObjectData = new PHY_SensorTypeObjectData( xis );
-    objectData_[ objectType.GetID() ] = pObjectData;
-    rMaxDistance_ = std::max( rMaxDistance_, pObjectData->GetMaxDistance() );
+        const PHY_SensorTypeObjectData* pObjectData = new PHY_SensorTypeObjectData( xis );
+        objectData_[ objectType.GetID() ] = pObjectData;
+        rMaxDistance_ = std::max( rMaxDistance_, pObjectData->GetMaxDistance() );
+    }
+    catch( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( e.what() );
+    }
 }
 
 // -----------------------------------------------------------------------------

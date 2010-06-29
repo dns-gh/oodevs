@@ -101,10 +101,16 @@ void SpawnCapacity::Instanciate( MIL_Object_ABC& object ) const
     object.AddCapacity( capacity );
     TER_Localisation location = object.GetLocalisation();
     location.Scale( rActionRange_ );
-    Object* childObject= static_cast< Object* >( MIL_Singletons::GetEntityManager().CreateObject( childType_, *object.GetArmy(), location ) );
-
-    object.GetAttribute< ChildObjectAttribute >().AddChildObject( *childObject );    
-    object.Register( static_cast< MIL_InteractiveContainer_ABC *>( capacity ) );
+    try
+    {
+        Object* childObject= static_cast< Object* >( MIL_Singletons::GetEntityManager().CreateObject( childType_, *object.GetArmy(), location ) );
+        object.GetAttribute< ChildObjectAttribute >().AddChildObject( *childObject );    
+        object.Register( static_cast< MIL_InteractiveContainer_ABC *>( capacity ) );
+    }
+    catch( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( e.what() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -113,6 +119,7 @@ void SpawnCapacity::Instanciate( MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 void SpawnCapacity::AddCreator( MIL_Object_ABC& object, const MIL_Agent_ABC& agent )
 {
-    Object* childObject = object.RetrieveAttribute< ChildObjectAttribute >()->GetChildObject(); 
-    childObject->operator ()().AddDetector( agent );
+    Object* childObject = object.RetrieveAttribute< ChildObjectAttribute >()->GetChildObject();
+    if( childObject )
+        childObject->operator ()().AddDetector( agent );
 }

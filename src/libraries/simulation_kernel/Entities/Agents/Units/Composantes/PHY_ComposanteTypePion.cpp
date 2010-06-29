@@ -512,14 +512,21 @@ void PHY_ComposanteTypePion::ReadObject( xml::xistream& xis )
 {
     std::string strType( xml::attribute( xis, "type", std::string() ) );
     
-    const MIL_ObjectType_ABC& objectType = MIL_ObjectFactory::FindType( strType );
+    try
+    {
+        const MIL_ObjectType_ABC& objectType = MIL_ObjectFactory::FindType( strType );
 
-    if ( objectData_.size() <= objectType.GetID() )
-        objectData_.resize( objectType.GetID() + 1, 0 );
-    const PHY_ComposanteTypeObjectData*& pObject = objectData_[ objectType.GetID() ];
-    if( pObject )
-        xis.error( "Object type '" + strType + "' already instanciated" );
-    pObject = new PHY_ComposanteTypeObjectData( xis );
+        if ( objectData_.size() <= objectType.GetID() )
+            objectData_.resize( objectType.GetID() + 1, 0 );
+        const PHY_ComposanteTypeObjectData*& pObject = objectData_[ objectType.GetID() ];
+        if( pObject )
+            xis.error( "Object type '" + strType + "' already instanciated" );
+        pObject = new PHY_ComposanteTypeObjectData( xis );
+    }
+    catch( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( e.what() );
+    }
 }
 
 // -----------------------------------------------------------------------------

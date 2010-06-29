@@ -86,7 +86,14 @@ PHY_ActionControlZone::PHY_ActionControlZone( MIL_AgentPion& pion, const TER_Loc
     {    
         //{ TODO
         MIL_ObjectControlZoneBuilder builder( pion, *pLocalisation );
-        pZoneControlled_ = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( pion.GetArmy(), builder );
+        try
+        {
+            pZoneControlled_ = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( pion.GetArmy(), builder );
+        }
+        catch( std::exception& e )
+        {
+            MT_LOG_ERROR_MSG( e.what() );
+        }
         //@}
     }
     

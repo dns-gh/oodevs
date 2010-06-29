@@ -234,7 +234,14 @@ void FirePropagationCapacity::CheckPropagation( const MT_Vector2D& vOrigin, MIL_
     if( !pManager_->IsFlagged( location , attr.GetLength() , attr.GetWidth() ) ) 
     {
         MIL_FireBuilder builder( object, location );
-        MIL_EntityManager::GetSingleton().CreateObject( *object.GetArmy(), builder );
+        try
+        {
+            MIL_EntityManager::GetSingleton().CreateObject( *object.GetArmy(), builder );
+        }
+        catch( std::exception& e )
+        {
+            MT_LOG_ERROR_MSG( e.what() );
+        }
         pManager_->Flag( vOrigin , attr.GetLength() , attr.GetWidth() );
     }
 }
