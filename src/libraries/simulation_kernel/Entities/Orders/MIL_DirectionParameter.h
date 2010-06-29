@@ -25,6 +25,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit MIL_DirectionParameter( const Common::MsgHeading& heading );
+    explicit MIL_DirectionParameter( boost::shared_ptr< MT_Vector2D >& dir );
     virtual ~MIL_DirectionParameter();
     //@}
 

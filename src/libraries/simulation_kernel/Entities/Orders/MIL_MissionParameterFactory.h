@@ -71,6 +71,7 @@ public:
 
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreatePath( const std::vector< boost::shared_ptr< MT_Vector2D > >& pointList );
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreatePath( boost::shared_ptr< MT_Vector2D > point );
+    static boost::shared_ptr<MIL_MissionParameter_ABC> CreateDirection( boost::shared_ptr< MT_Vector2D > direction );
 
     static void SetPawnParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, DEC_Decision_ABC* pion );
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreatePawn( DEC_Decision_ABC* pion );
@@ -97,6 +98,7 @@ public:
     static void SetPointListParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< boost::shared_ptr< MT_Vector2D > >& pointList );    
     static void SetPolygonListParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< boost::shared_ptr< TER_Localisation > >& locationList );
     static void SetUrbanBlockParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, boost::shared_ptr< DEC_Knowledge_Urban > urbanblock );
+    static void SetDirectionParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, boost::shared_ptr< MT_Vector2D > direction );
 
     static void Copy( const Common::MsgMissionParameters& asn, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters, const DEC_KnowledgeResolver_ABC& resolver );
 
