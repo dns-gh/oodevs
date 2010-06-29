@@ -29,7 +29,7 @@ class PHY_ActionDirectFirePion_ABC : public PHY_DecisionCallbackAction_ABC
 {
 
 public:
-    typedef MIL_AgentPion ActorType;        
+    typedef MIL_AgentPion ActorType;
 
 public:
              PHY_ActionDirectFirePion_ABC( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Agent > pEnemy, MT_Float percentage, int firingMode, int ammoDotationClass, firing::PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, firing::PHY_DirectFireData::E_ComposanteFiredType nComposanteFiredType );
@@ -50,7 +50,7 @@ private:
     const firing::PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType_;
     const firing::PHY_DirectFireData::E_ComposanteFiredType  nComposanteFiredType_;
     const PHY_AmmoDotationClass*                     pAmmoDotationClass_;
-   
+
           PHY_FireResults_Pion*                      pFireResult_;
 };
 

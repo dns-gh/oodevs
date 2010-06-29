@@ -2,31 +2,31 @@
 
 model =
 {
-	-- Entities from ORBAT
-	entities =
-	{
-		-- Automats cannot be dynamically created, so we need to define one of each existing type
-		-- in order to be able to create subordinate units
-		-- TODO: see if each automat must have at least one subordinate (command post)
-		automats =
-		{
-			[ "ABC" ] = 7,
-		}
-	},
+    -- Entities from ORBAT
+    entities =
+    {
+        -- Automats cannot be dynamically created, so we need to define one of each existing type
+        -- in order to be able to create subordinate units
+        -- TODO: see if each automat must have at least one subordinate (command post)
+        automats =
+        {
+            [ "ABC" ] = 7,
+        }
+    },
 
-	-- Types from physical model
-	types =
-	{
-		-- Unit types
-		units =
-		{
-			[ "MBT platoon" ] = 34,
-		},
+    -- Types from physical model
+    types =
+    {
+        -- Unit types
+        units =
+        {
+            [ "MBT platoon" ] = 34,
+        },
 
-		-- Mission types
-		missions =
-		{
-			[ "move" ] = 131,
-		}
-	}
+        -- Mission types
+        missions =
+        {
+            [ "move" ] = 131,
+        }
+    }
 }

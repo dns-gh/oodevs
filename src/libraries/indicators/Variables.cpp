@@ -120,7 +120,7 @@ void Variables::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 tools::Iterator< const Element_ABC& > Variables::CreateIterator() const
 {
-    return new tools::AssociativeIterator< const Element_ABC&, T_Elements >( elements_ ); 
+    return new tools::AssociativeIterator< const Element_ABC&, T_Elements >( elements_ );
 }
 
 // -----------------------------------------------------------------------------

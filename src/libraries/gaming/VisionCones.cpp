@@ -40,7 +40,7 @@ struct VisionCones::Updater : public kernel::WorkerTask_ABC
             delete *it;
         delete map_;
     }
-    void Cancel() 
+    void Cancel()
     {
         cancelled_ = true;
     }
@@ -105,7 +105,7 @@ VisionCones::~VisionCones()
     for( CIT_Surfaces itSurface = surfaces_.begin(); itSurface != surfaces_.end(); ++itSurface )
         delete *itSurface;
     delete map_;
-    if ( current_ )
+    if( current_ )
       delete current_;
 }
 
@@ -118,11 +118,11 @@ void VisionCones::DoUpdate( const MsgsSimToClient::MsgUnitVisionCones& message )
     for( CIT_Surfaces itSurface = surfaces_.begin(); itSurface != surfaces_.end(); ++itSurface )
         delete *itSurface;
     elongationFactor_ = message.elongation();
-    
+
     surfaces_.resize( message.cones().elem_size() );
     for( int i = 0; i < message.cones().elem_size(); ++i )
         surfaces_[i] = factory_.CreateSurface( agent_, message.cones().elem( i ), elongationFactor_ );
-    
+
     Invalidate();
 }
 
@@ -132,8 +132,8 @@ void VisionCones::DoUpdate( const MsgsSimToClient::MsgUnitVisionCones& message )
 // -----------------------------------------------------------------------------
 void VisionCones::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
 {
-    if( message.has_position()  
-     || message.has_experience()  
+    if( message.has_position()
+     || message.has_experience()
      || message.has_fatigue()  )
         Invalidate();
 }

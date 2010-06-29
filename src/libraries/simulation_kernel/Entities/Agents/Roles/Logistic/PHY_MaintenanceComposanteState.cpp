@@ -141,7 +141,7 @@ unsigned int PHY_MaintenanceComposanteState::ApproximateTravelTime( const MT_Vec
 // Created: NLD 2004-12-24
 // -----------------------------------------------------------------------------
 void PHY_MaintenanceComposanteState::NotifyHandledByMaintenance()
-{   
+{
     assert( pComposante_ );
     pComposante_->NotifyHandledByMaintenance();
 }
@@ -204,7 +204,7 @@ void PHY_MaintenanceComposanteState::SendFullState() const
     else
     {
         asn().set_oid_pion_log_traitant( 0 );
-        asn().set_etat( Common::termine_maintenance );        
+        asn().set_etat( Common::termine_maintenance );
     }
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
@@ -265,7 +265,7 @@ void PHY_MaintenanceComposanteState::SendMsgCreation() const
     asn().set_type_panne( GetComposanteBreakdown().GetID() );
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceComposanteState::SendMsgDestruction
 // Created: NLD 2004-12-29
@@ -288,7 +288,7 @@ void PHY_MaintenanceComposanteState::SetConsign( PHY_MaintenanceConsign_ABC* pCo
 {
     if( pConsign == pConsign_ )
         return;
-        
+
     pConsign_    = pConsign;
     bHasChanged_ = true;
 }

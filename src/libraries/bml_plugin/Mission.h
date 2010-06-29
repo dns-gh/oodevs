@@ -86,7 +86,7 @@ private:
     void SerializeDummyParameters( MsgMissionParameters& asn ) const;
     void FillEmptyParameters( MsgMissionParameters& asn ) const;
     void CleanDummyParameters( MsgMissionParameters& asn ) const;
-    
+
     const kernel::MissionType& ResolveMission( xml::xistream& xis );
     void AddParameter( MissionParameter_ABC& parameter );
 

@@ -34,7 +34,7 @@ public:
              PHY_SupplyConsign_ABC();
     virtual ~PHY_SupplyConsign_ABC();
 
-    //! @name CheckPoints 
+    //! @name CheckPoints
     //@{
     template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
@@ -87,8 +87,8 @@ protected:
     //! @name
     //@{
     E_State GetState() const;
-    void    SetState( E_State nNewState );    
-    //@} 
+    void    SetState( E_State nNewState );
+    //@}
 
 private:
           MIL_AutomateLOG* pSupplyingAutomate_;

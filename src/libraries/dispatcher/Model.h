@@ -84,12 +84,12 @@ public:
     void AddExtensions( T& entity )
     {
         AddExtensions( entity, &entity );
-        
+
     }
     template< typename T >
     void AddExtensions( T& entity, kernel::Entity_ABC* )
     {
-        // $$$$ AGE 2008-06-20: 
+        // $$$$ AGE 2008-06-20:
         entity.Attach< EntityPublisher_ABC >( *new EntityPublisher< T >( entity ) );
         compositeFactory_->Apply( &ExtensionFactory_ABC< T >::Create, entity );
         compositeFactory_->Apply( &ExtensionFactory_ABC< kernel::Entity_ABC >::Create, entity );

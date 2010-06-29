@@ -32,10 +32,10 @@ MOCK_BASE_CLASS( MockAgent, MIL_Agent_ABC )
     MOCK_METHOD( IsNeutralized, 0 );
     MOCK_METHOD( IsPC, 0 );
     MOCK_METHOD( IsAutonomous, 0 );
-    
+
 //    MOCK_METHOD_EXT( GetAutomate, 0, const MIL_Automate&(), GetAutomatConstRef );
     MOCK_METHOD_EXT( GetAutomate, 0, MIL_Automate&(), GetAutomatRef );
-    
+
 //    MOCK_METHOD_EXT( GetDecision, 0, const DEC_Decision_ABC&(), GetDecisionConstRef );
     MOCK_METHOD_EXT( GetDecision, 0, DEC_Decision_ABC&(), GetDecisionRef );
 
@@ -47,13 +47,13 @@ MOCK_BASE_CLASS( MockAgent, MIL_Agent_ABC )
     MOCK_METHOD_EXT( GetOrderManager, 0, MIL_PionOrderManager&(), GetOrderManagerRef );
 
     MOCK_METHOD( ChangeSuperior, 1 );
-    
+
     MOCK_METHOD_EXT( NotifyAttackedBy, 1, void( MIL_AgentPion& ), NotifyAttackedByAgent );
     MOCK_METHOD_EXT( NotifyAttackedBy, 1, void( MIL_Population& ), NotifyAttackedByPopulation );
-    
+
     MOCK_METHOD( MagicMove, 1 );
     MOCK_METHOD( Distance, 1 );
-    
+
     MOCK_METHOD( CreateKnowledge, 1 );
     MOCK_METHOD( IsPerceived, 1 );
     MOCK_METHOD( GetKnowledge, 0 );

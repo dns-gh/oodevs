@@ -34,7 +34,7 @@
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotData constructor
-/** @param  GQ_Plot& 
+/** @param  GQ_Plot&
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
@@ -65,8 +65,8 @@ GQ_PlotData::GQ_PlotData( uint nUserID, GQ_Plot& plot )
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotData constructor
-/** @param  GQ_Plot& 
-    @param  T_Data& 
+/** @param  GQ_Plot&
+    @param  T_Data&
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
@@ -106,7 +106,7 @@ GQ_PlotData::~GQ_PlotData()
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotData::SetUserID
-/** @param  
+/** @param
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
@@ -117,7 +117,7 @@ void GQ_PlotData::SetUserID( uint nID )
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotData::SetName
-/** @param  QString& 
+/** @param  QString&
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
@@ -132,7 +132,7 @@ void GQ_PlotData::SetName( const QString& name )
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotData::SetVisible
-/** @param  bShow 
+/** @param  bShow
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
@@ -148,7 +148,7 @@ void GQ_PlotData::SetVisible( bool bShow )
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotData::SetPointPen
-/** @param  QPen& 
+/** @param  QPen&
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
@@ -158,12 +158,12 @@ void GQ_PlotData::SetPointPen( const QPen& pen )
         return;
 
     pointPen_ = pen;
-    TouchData(); 
+    TouchData();
 }
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotData::SetLinePen
-/** @param  QPen& 
+/** @param  QPen&
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
@@ -173,15 +173,15 @@ void GQ_PlotData::SetLinePen( const QPen& pen )
         return;
 
     linePen_ = pen;
-    TouchData();    
+    TouchData();
 }
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotData::SetBarStyle
-/** @param  pen 
-    @param  brush 
-    @param  bBarsEnabled 
-    @param  rWidth 
+/** @param  pen
+    @param  brush
+    @param  bBarsEnabled
+    @param  rWidth
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
@@ -201,7 +201,7 @@ void GQ_PlotData::SetBarStyle( const QPen& pen, const QBrush& brush, bool bDrawB
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotData::SetPointShape
-/** @param  nPredefinedShape 
+/** @param  nPredefinedShape
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
@@ -215,13 +215,13 @@ void GQ_PlotData::SetPointShape( E_PointShapeType nShapeType, uint nShapeSize )
     nPointShapeType_ = nShapeType;
     InitPointShape( nShapeSize );
 
-    TouchData();       
+    TouchData();
 }
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotData::SetPointShape
-/** @param  nUserShapeType 
-    @param  shape 
+/** @param  nUserShapeType
+    @param  shape
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
@@ -252,15 +252,15 @@ void GQ_PlotData::InitPointShape( uint nShapeSize )
     int w = nShapeSize;                          // Shape size (along axis)
     int d = ( int )( 1.414 * w + 0.5 ); // Shape size (along diagonal)
     int W = 2 * w + 1;
-    
+
     bPolylineShape_ = true;
 
     switch( nPointShapeType_ )
     {
-      case eCircle: 
+      case eCircle:
           pointShape_.makeEllipse( -w, -w, W, W );
           break;
-      case eSquare: 
+      case eSquare:
           pointShape_.resize( 5 );
           pointShape_.setPoint( 0, -w, -w );
           pointShape_.setPoint( 1,  w, -w );
@@ -268,7 +268,7 @@ void GQ_PlotData::InitPointShape( uint nShapeSize )
           pointShape_.setPoint( 3, -w,  w );
           pointShape_.setPoint( 4, -w,  -w );
           break;
-      case eDiagSquare: 
+      case eDiagSquare:
           pointShape_.resize( 5 );
           pointShape_.setPoint( 0,  0, -d );
           pointShape_.setPoint( 1,  d,  0 );
@@ -276,14 +276,14 @@ void GQ_PlotData::InitPointShape( uint nShapeSize )
           pointShape_.setPoint( 3, -d,  0 );
           pointShape_.setPoint( 4,  0, -d );
           break;
-      case eUTriangle: 
+      case eUTriangle:
           pointShape_.resize( 4 );
           pointShape_.setPoint( 0, -w, -d );
           pointShape_.setPoint( 1,  w, -d );
           pointShape_.setPoint( 2,  0,  w );
           pointShape_.setPoint( 3, -w, -d );
           break;
-      case eDTriangle: 
+      case eDTriangle:
           pointShape_.resize( 4 );
           pointShape_.setPoint( 0, -w,  d );
           pointShape_.setPoint( 1,  w,  d );
@@ -298,7 +298,7 @@ void GQ_PlotData::InitPointShape( uint nShapeSize )
           pointShape_.setPoint( 3,  0,  w );
           bPolylineShape_ = false;
           break;
-      case eDiagCross: 
+      case eDiagCross:
           pointShape_.resize( 4 );
           pointShape_.setPoint( 0, -w, -w );
           pointShape_.setPoint( 1,  w,  w );
@@ -306,19 +306,19 @@ void GQ_PlotData::InitPointShape( uint nShapeSize )
           pointShape_.setPoint( 3, -w,  w );
           bPolylineShape_ = false;
           break;
-      case eVLine: 
+      case eVLine:
           pointShape_.resize( 2 );
           pointShape_.setPoint( 1,  0, -w );
           pointShape_.setPoint( 2,  0,  w );
           bPolylineShape_ = false;
           break;
-      case eBDiag: 
+      case eBDiag:
           pointShape_.resize( 2 );
           pointShape_.setPoint( 1,  -w, -w );
           pointShape_.setPoint( 2,   w,  w );
           bPolylineShape_ = false;
           break;
-      case eFDiag: 
+      case eFDiag:
           pointShape_.resize( 2 );
           pointShape_.setPoint( 1,  w, -w );
           pointShape_.setPoint( 2, -w,  w );
@@ -351,9 +351,9 @@ void GQ_PlotData::ClearData()
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotData::SetSharedData
-/** @param  data 
-    @param  nFirstPoint 
-    @param  nNbrPoints 
+/** @param  data
+    @param  nFirstPoint
+    @param  nNbrPoints
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
@@ -379,9 +379,9 @@ void GQ_PlotData::SetSharedData( T_Data& data, uint nFirstPoint, int nNbrPoints 
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotData::SetData
-/** @param  data 
-    @param  nFirstPoint 
-    @param  nNbrPoints 
+/** @param  data
+    @param  nFirstPoint
+    @param  nNbrPoints
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
@@ -395,13 +395,13 @@ void GQ_PlotData::SetData( const T_Data& data, uint nFirstPoint, int nNbrPoints 
 
     TouchData();
 
-    SetDataRange( nFirstPoint, nNbrPoints ); 
+    SetDataRange( nFirstPoint, nNbrPoints );
 }
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotData::SetDataRange
-/** @param  nFirstPoint 
-    @param  nNbrPoints 
+/** @param  nFirstPoint
+    @param  nNbrPoints
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
@@ -413,12 +413,12 @@ void GQ_PlotData::SetDataRange( uint nFirstPoint, int nNbrPoints )
     nFirstPoint_  = nFirstPoint;
     nNbrPoints_ = nNbrPoints;
 
-    TouchData();  
+    TouchData();
 }
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotData::AddPoint
-/** @param  T_Point& 
+/** @param  T_Point&
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
@@ -432,20 +432,20 @@ void GQ_PlotData::AddPoint( const T_Point& point )
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotData::AddPoint
-/** @param  rX 
-    @param  rY 
+/** @param  rX
+    @param  rY
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
 void GQ_PlotData::AddPoint( double rX, double rY )
 {
-    AddPoint( T_Point( rX, rY ) );    
+    AddPoint( T_Point( rX, rY ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotData::ChangePoint
-/** @param  nIndex 
-    @param  point 
+/** @param  nIndex
+    @param  point
     */
 // Created: APE 2004-12-21
 // -----------------------------------------------------------------------------
@@ -460,7 +460,7 @@ void GQ_PlotData::ChangePoint( uint nIndex, const T_Point& point )
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotData::DeletePoint
-/** @param  nIndex 
+/** @param  nIndex
 */
 // Created: APE 2004-12-21
 // -----------------------------------------------------------------------------
@@ -499,7 +499,7 @@ void GQ_PlotData::DeletePoint( uint nIndex )
 // -----------------------------------------------------------------------------
 void GQ_PlotData::TouchRange()
 {
-    emit RangeTouched();      
+    emit RangeTouched();
 }
 
 // -----------------------------------------------------------------------------
@@ -516,7 +516,7 @@ void GQ_PlotData::TouchData()
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotData::Draw
-/** @param  
+/** @param
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
@@ -533,7 +533,7 @@ void GQ_PlotData::Draw( QPainter& painter )
         return;
 
     DrawPoints  ( painter, points );
-    DrawPolyline( painter, points );    
+    DrawPolyline( painter, points );
     DrawBars    ( painter, points );
 
 //    DrawSelection(); // / EraseSelection
@@ -562,17 +562,17 @@ void GQ_PlotData::DrawCaption( QPixmap& caption, int nSize )
     if( bDrawBars_ )
     {
         painter.setPen  ( barPen_   );
-        painter.setBrush( barBrush_ );    
+        painter.setBrush( barBrush_ );
 
-        QRect rect( 0, dy / 4, dx, y0 );        
-        painter.drawRect( rect );        
+        QRect rect( 0, dy / 4, dx, y0 );
+        painter.drawRect( rect );
     }
 
     QPointArray line( 2 );
     line.setPoint( 0, 0,      y0 );
     line.setPoint( 1, dx - 1, y0 );
     DrawPolyline( painter, line );
-    
+
     if( pointPen_.style() != NoPen )
     {
         painter.setPen( pointPen_ );
@@ -612,7 +612,7 @@ void GQ_PlotData::PreparePoints( QPointArray& points )
     for( uint i = nFirstPoint_; i < nLastPoint; ++i )
     {
         const T_Point& point = ( *pData_ )[i];
-    
+
         ppoint.setX( xAxis.MapToViewport( point.first  ) );
         ppoint.setY( yAxis.MapToViewport( point.second ) );
 
@@ -629,8 +629,8 @@ void GQ_PlotData::PreparePoints( QPointArray& points )
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotData::DrawPoints
-/** @param  painter 
-    @param  points 
+/** @param  painter
+    @param  points
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
@@ -651,27 +651,27 @@ void GQ_PlotData::DrawPoints( QPainter& painter, const QPointArray& points )
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotData::DrawPoint
-/** @param  painter 
-    @param  QPoint& 
+/** @param  painter
+    @param  QPoint&
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
 void GQ_PlotData::DrawPoint( QPainter& painter, const QPoint& point )
-{    
-    if( nPointShapeType_ == eDot )    
+{
+    if( nPointShapeType_ == eDot )
     {
         painter.drawPoint( point );
         return;
     }
 
-    painter.translate( point.x(), point.y() );  
+    painter.translate( point.x(), point.y() );
 
     QPointArray shape( pointShape_ );
     shape.detach();
 
     if( bPolylineShape_ )
         painter.drawPolyline( shape );
-    else 
+    else
         painter.drawLineSegments( shape );
 
     painter.translate( -point.x(), -point.y() );
@@ -679,8 +679,8 @@ void GQ_PlotData::DrawPoint( QPainter& painter, const QPoint& point )
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotData::DrawPolyline
-/** @param  painter 
-    @param  QPointArray& 
+/** @param  painter
+    @param  QPointArray&
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
@@ -695,8 +695,8 @@ void GQ_PlotData::DrawPolyline( QPainter& painter, const QPointArray& polyline )
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotData::DrawBars
-/** @param  painter 
-    @param  points 
+/** @param  painter
+    @param  points
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
@@ -709,7 +709,7 @@ void GQ_PlotData::DrawBars( QPainter& painter, const QPointArray& points )
 
     painter.setPen  ( barPen_   );
     painter.setBrush( barBrush_ );
-    
+
     const GQ_PlotAxis& xAxis = plot_.XAxis();
 
     bool bAutoWidth = ( rBarWidth_ < 0.0 );
@@ -720,13 +720,13 @@ void GQ_PlotData::DrawBars( QPainter& painter, const QPointArray& points )
 
         nWidth = ( int )( rBarWidth_ * rScale + 0.5 );
     }
-        
+
     int nPrevX = 0;
     int nNextX = 0;
 
     int nLeftWidth  = 0;
     int nRightWidth = 0;
-    
+
     if( nBarAlignment_ == eAlign_Center )
     {
         nRightWidth = nWidth / 2;
@@ -753,11 +753,11 @@ void GQ_PlotData::DrawBars( QPainter& painter, const QPointArray& points )
         int nX0 = point.x();
 
         if( bAutoWidth )
-        {            
+        {
             int nX1 = 0;
             if( i < nNbrPoints - 1 )
                 nX1 = points.point( i + 1 ).x();
-            
+
             if( i == 0 )
             {
                 if( nBarAlignment_ != eAlign_Left )
@@ -770,10 +770,10 @@ void GQ_PlotData::DrawBars( QPainter& painter, const QPointArray& points )
                     if( nBarAlignment_ == eAlign_Center )
                         nLeftWidth /= 2;
                 }
-                
-                nPrevX = nX0 - nLeftWidth;   
+
+                nPrevX = nX0 - nLeftWidth;
             }
-            
+
             if( i == nNbrPoints - 1 )
             {
                 if( nBarAlignment_ == eAlign_Center )
@@ -781,7 +781,7 @@ void GQ_PlotData::DrawBars( QPainter& painter, const QPointArray& points )
 //                else if( nBarAlignment_ == eAlign_Left )
 //                    nRightWidth = 10;
             }
-            else    
+            else
             {
                 if( nBarAlignment_ != eAlign_Right )
                 {
@@ -793,15 +793,15 @@ void GQ_PlotData::DrawBars( QPainter& painter, const QPointArray& points )
             }
         }
         else
-        {        
-            nPrevX = nX0 - nLeftWidth;        
+        {
+            nPrevX = nX0 - nLeftWidth;
         }
-        
+
         nNextX = nX0 + nRightWidth;
-        
+
         if( nNextX <= nPrevX )
             nNextX = nPrevX + 1;
-        
+
         int nY0 = GetBaseline( i );
         int nY1 = point.y();
         QRect rect( nPrevX, nY0, nNextX - nPrevX, nY1 - nY0 );
@@ -865,9 +865,9 @@ int GQ_PlotData::GetBaseline( uint )
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotData::GetToolTips
-/** @param  bbox 
-    @param  toolTipList 
-    @return 
+/** @param  bbox
+    @param  toolTipList
+    @return
 */
 // Created: CBX 2003-08-18
 // -----------------------------------------------------------------------------
@@ -886,12 +886,12 @@ bool GQ_PlotData::GetToolTips( const GQ_PlotDataBBox& bbox, QStringList& tipList
     bool bCheckBars = !barLimits_.empty();
     assert( !bCheckBars || barLimits_.size() == nLastPoint - nFirstPoint_ );
     T_Point bboxCenter = bbox.Center();
-     
+
     for( uint i = nFirstPoint_; i < nLastPoint; ++i )
     {
         const T_Point& point = ( *pData_ )[i];
 
-        if(     bbox.Includes( point )
+        if( bbox.Includes( point )
            || ( bCheckBars && IsOnBar( bboxCenter, point, barLimits_[ i - nFirstPoint_ ] ) ) )
         {
             QString tipStr( name_ );
@@ -902,17 +902,17 @@ bool GQ_PlotData::GetToolTips( const GQ_PlotDataBBox& bbox, QStringList& tipList
 
             tipList.append( tipStr );
             ++nNbrNewTips;
-        }    
-    }    
+        }
+    }
 
     return( nNbrNewTips > 0 );
 }
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotData::IsOnBar
-/** @param  barTopPoint 
-    @param  barLimits 
-    @return 
+/** @param  barTopPoint
+    @param  barLimits
+    @return
 */
 // Created: CBX 2004-03-08
 // -----------------------------------------------------------------------------
@@ -947,7 +947,7 @@ void GQ_PlotData::SetSelected( bool bSelected )
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotData::SetSelected
-/** @param  nIndex 
+/** @param  nIndex
 */
 // Created: APE 2004-12-17
 // -----------------------------------------------------------------------------
@@ -977,7 +977,7 @@ void GQ_PlotData::SetSelected( uint nIndex, bool bSelected )
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotData::SetSelection
-/** @param  selection 
+/** @param  selection
 */
 // Created: APE 2004-12-22
 // -----------------------------------------------------------------------------
@@ -997,7 +997,7 @@ void GQ_PlotData::SetSelection( T_DataItemVector& selection )
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotData::GetSelection
-/** @param  selection 
+/** @param  selection
 */
 // Created: APE 2004-12-17
 // -----------------------------------------------------------------------------
@@ -1015,7 +1015,7 @@ void GQ_PlotData::GetSelection( T_DataItemVector& selection )
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotData::DataAt
-/** @return 
+/** @return
 */
 // Created: APE 2004-12-17
 // -----------------------------------------------------------------------------

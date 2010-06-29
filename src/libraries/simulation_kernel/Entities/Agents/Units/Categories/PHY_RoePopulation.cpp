@@ -26,7 +26,7 @@ void PHY_RoePopulation::Initialize()
 {
     roePopulations_[ none_.GetName()  ] = &none_;
     roePopulations_[ "emploi force interdit"                       ] = new PHY_RoePopulation( "Emploi force interdit"                     , eEmploiForceInterdit                  , MsgUnitAttributes_PopulationRoe_emploi_force_interdit                     );
-    roePopulations_[ "maintien a distance par moyens non letaux"   ] = new PHY_RoePopulation( "Maintien à distance par moyens non létaux" , eMaintienADistanceParMoyensNonLetaux  , MsgUnitAttributes_PopulationRoe_maintien_a_distance_par_moyens_non_letaux ); 
+    roePopulations_[ "maintien a distance par moyens non letaux"   ] = new PHY_RoePopulation( "Maintien à distance par moyens non létaux" , eMaintienADistanceParMoyensNonLetaux  , MsgUnitAttributes_PopulationRoe_maintien_a_distance_par_moyens_non_letaux );
     roePopulations_[ "dispersion par moyens de defense actifs"     ] = new PHY_RoePopulation( "Dispersion par moyens de défense actifs"   , eDispersionParMoyensDeDefenseActifs   , MsgUnitAttributes_PopulationRoe_dispersion_par_moyens_de_defense_actifs   );
     roePopulations_[ "armes letales autorisees"                    ] = new PHY_RoePopulation( "Armes létales autorisées"                  , eArmesLetalesAutorisees               , MsgUnitAttributes_PopulationRoe_armes_letales_autorisees                  );
 }

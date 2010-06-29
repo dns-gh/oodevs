@@ -20,7 +20,7 @@ class PHY_ComposanteState : private boost::noncopyable
 {
 
 public:
-    //! @name 
+    //! @name
     //@{
     static const PHY_ComposanteState undamaged_;
     static const PHY_ComposanteState repairableWithEvacuation_;

@@ -20,7 +20,7 @@
 #include <qsettings.h>
 #include <qtextcodec.h>
 
-namespace 
+namespace
 {
     struct CatchMeIfYouCan {};
 

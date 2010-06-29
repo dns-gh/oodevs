@@ -17,7 +17,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RoleHLA_Communications )
 // Created: AGE 2004-11-09
 // -----------------------------------------------------------------------------
 PHY_RoleHLA_Communications::PHY_RoleHLA_Communications()
-    : bJammed_( false ) 
+    : bJammed_( false )
 {
     //NOTHING
 }

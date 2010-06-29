@@ -37,7 +37,7 @@ public:
     virtual void Send  ( Common::MsgObjectAttributes& message ) const;
     //@}
 private:
-    //! @name 
+    //! @name
     //@{
     void Clear();
     //@}

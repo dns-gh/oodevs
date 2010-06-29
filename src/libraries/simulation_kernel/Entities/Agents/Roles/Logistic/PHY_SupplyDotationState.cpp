@@ -82,7 +82,7 @@ namespace boost
         {
             split_free( file, map, nVersion );
         }
-        
+
         template< typename Archive >
         void save( Archive& file, const PHY_SupplyDotationState::T_RequestMap& map, const unsigned int )
         {
@@ -93,9 +93,9 @@ namespace boost
                 unsigned id = it->first->GetMosID();
                 file << id;
                 file << it->second;
-            }   
+            }
         }
-        
+
         template< typename Archive >
         void load( Archive& file, PHY_SupplyDotationState::T_RequestMap& map, const unsigned int )
         {
@@ -104,7 +104,7 @@ namespace boost
             while ( nNbr-- )
             {
                 unsigned int nCategoryID;
-                
+
                 file >> nCategoryID;
                 file >> map[ PHY_DotationType::FindDotationCategory( nCategoryID ) ];
             }
@@ -116,7 +116,7 @@ namespace boost
 // Name: PHY_SupplyDotationState::serialize
 // Created: JVT 2005-04-11
 // -----------------------------------------------------------------------------
-template< typename Archive > 
+template< typename Archive >
 void PHY_SupplyDotationState::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< PHY_SupplyState_ABC >( *this )
@@ -145,7 +145,7 @@ void PHY_SupplyDotationState::RemoveConvoyedMerchandise( const PHY_DotationCateg
     IT_RequestMap it = requests_.find( &dotationCategory );
     if( it == requests_.end() )
         return;
-    
+
     it->second.RemoveConvoyedMerchandise( rNbrDotations );
     bRequestsChanged_ = true;
 }
@@ -159,7 +159,7 @@ void PHY_SupplyDotationState::AddConvoyedMerchandise( const PHY_DotationCategory
     IT_RequestMap it = requests_.find( &dotationCategory );
     if( it == requests_.end() )
         return;
-    
+
     it->second.AddConvoyedMerchandise( rNbrDotations );
     bRequestsChanged_ = true;
 }
@@ -180,7 +180,7 @@ void PHY_SupplyDotationState::CancelMerchandiseOverheadReservation()
 // -----------------------------------------------------------------------------
 void PHY_SupplyDotationState::Supply() const
 {
-    assert( pSuppliedAutomate_ );   
+    assert( pSuppliedAutomate_ );
     pSuppliedAutomate_->NotifyDotationSupplied( *this );
     for( CIT_RequestMap it = requests_.begin(); it != requests_.end(); ++it )
         it->second.Supply();
@@ -268,7 +268,7 @@ void PHY_SupplyDotationState::SendChangedState() const
     if( asn().has_dotations() && asn().dotations().elem_size() > 0 )
         asn().mutable_dotations()->Clear();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyDotationState::SendMsgDestruction
 // Created: NLD 2004-12-29
@@ -291,7 +291,7 @@ void PHY_SupplyDotationState::SetConsign( PHY_SupplyConsign_ABC* pConsign )
 {
     if( pConsign == pConsign_ )
         return;
-        
+
     pConsign_        = pConsign;
     bConsignChanged_ = true;
 }
@@ -312,7 +312,7 @@ const MIL_Automate& PHY_SupplyDotationState::GetSuppliedAutomate() const
 // -----------------------------------------------------------------------------
 bool PHY_SupplyDotationState::IsSupplying( const PHY_DotationCategory& dotationCategory ) const
 {
-    return requests_.find( &dotationCategory ) != requests_.end();    
+    return requests_.find( &dotationCategory ) != requests_.end();
 }
 
 // -----------------------------------------------------------------------------

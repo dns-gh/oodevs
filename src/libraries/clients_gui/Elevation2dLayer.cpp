@@ -139,7 +139,7 @@ namespace
 {
     struct MyVisitor : public Visitor2d
     {
-        MyVisitor( ElevationShader& shader ) 
+        MyVisitor( ElevationShader& shader )
             : shader_( &shader )
             , previousWidth_( 0 )
             , previousHeight_( 0 ){}

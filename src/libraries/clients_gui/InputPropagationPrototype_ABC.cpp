@@ -23,7 +23,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 InputPropagationPrototype_ABC::InputPropagationPrototype_ABC( QWidget* parent )
     : ObjectAttributePrototype_ABC( parent, tools::translate( "InputPropagationPrototype_ABC", "Propagation" ) )
-{    
+{
     sourceLabel_ = new gui::RichLabel( tools::translate( "InputPropagationPrototype_ABC", "Input file:" ), this );
     pPathButton_ = new QPushButton( tools::translate( "InputPropagationPrototype_ABC", "Browse..." ), this );
     connect( pPathButton_, SIGNAL( clicked() ), this, SLOT( LoadPath() ) );
@@ -33,7 +33,7 @@ InputPropagationPrototype_ABC::InputPropagationPrototype_ABC( QWidget* parent )
     // TODO : %TMP%
     dataField_->AddItem( std::string( "Mesure C" ), std::string( "nom_var_shp_mesure_C" ) );
     dataField_->AddItem( std::string( "Mesure Ct" ), std::string( "nom_var_shp_mesure_Ct" ) );
-    
+
     new QLabel( tools::translate( "InputPropagationPrototype_ABC", "Send data:" ), this );
     exportData_ = new QCheckBox( this );
 }
@@ -68,7 +68,7 @@ void InputPropagationPrototype_ABC::LoadPath()
     static const int length = 22;
     QString fileName = QFileDialog::getOpenFileName( "./", tools::translate( "InputPropagationPrototype_ABC", "Propagation (propagation.xml)" ), 0, tools::translate( "InputPropagationPrototype_ABC", "Open File" ) );
     if( fileName.ascii() )
-    {        
+    {
         source_ = std::string( fileName.ascii() );
         if( source_.size() > length )
             pPathButton_->setText( std::string( "..." + std::string( source_.begin() + ( source_.size() - length ), source_.end() ) ).c_str() );

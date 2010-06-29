@@ -117,16 +117,16 @@ private:
     Localisation                   localisation_;
     bool                           bPerceived_;
     std::vector< const kernel::Automat_ABC* >  automatPerceptions_;
-        
+
 private:
     //! @name Types
-    //@{   
+    //@{
     typedef boost::ptr_vector< ObjectAttribute_ABC > T_ObjectAttributes;
     //@}
 
 private:
     T_ObjectAttributes           attributes_;
-    T_Optionals                  optionals_;    
+    T_Optionals                  optionals_;
 };
 
 }

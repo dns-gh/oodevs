@@ -37,7 +37,7 @@ SpeedComputerStrategy::SpeedComputerStrategy( bool isMaxSpeed, bool withReinforc
     if(env)
     {
         compFunctor_ = boost::bind( ::MaxSpeedEnvObj, _1, boost::cref( *env ), boost::cref( obj ) );
-        pionFunctor_ = isMaxSpeed ? 
+        pionFunctor_ = isMaxSpeed ?
             boost::mem_fn( &PHY_RoleAction_Moving::GetMaxSpeedWithReinforcement ) :
             ( boost::function< double( const PHY_RoleAction_Moving&)> )boost::bind( &PHY_MovingEntity_ABC::GetSpeedWithReinforcement, _1, boost::cref( *env ), boost::cref( obj ) );
     }
@@ -58,9 +58,9 @@ SpeedComputerStrategy::SpeedComputerStrategy( bool isMaxSpeed, bool withReinforc
     if(env)
     {
         compFunctor_ = boost::bind( boost::mem_fn<double,PHY_ComposantePion,const TerrainData&>( &PHY_ComposantePion::GetMaxSpeed ), _1, boost::cref( *env ) );
-        pionFunctor_ = isMaxSpeed ? 
+        pionFunctor_ = isMaxSpeed ?
             boost::mem_fn( &PHY_RoleAction_Moving::GetMaxSpeedWithReinforcement ):
-            ( boost::function< double( const PHY_RoleAction_Moving& )> )boost::bind( &PHY_RoleAction_Moving::GetSpeedWithReinforcement, _1, boost::cref( *env ) );            
+            ( boost::function< double( const PHY_RoleAction_Moving& )> )boost::bind( &PHY_RoleAction_Moving::GetSpeedWithReinforcement, _1, boost::cref( *env ) );
     }
     else
     {

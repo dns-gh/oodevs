@@ -163,7 +163,7 @@ ADN_GraphValue::T_Point ADN_GraphValue::GetPoint()
         point.first = nX_.GetData();
     else if( nTypes_ & eXDouble )
         point.first = rX_.GetData();
-    
+
     if( nTypes_ & eYInt )
         point.second = nY_.GetData();
     else if( nTypes_ & eYDouble )

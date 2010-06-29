@@ -109,7 +109,7 @@ void KnowledgeGroup::ChangeSuperior( dispatcher::KnowledgeGroup_ABC* superior )
 void KnowledgeGroup::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::KnowledgeGroupCreation message;
-    
+
     message().set_oid( GetId() );
     message().set_oid_camp( team_.GetId() );
     // LTO begin

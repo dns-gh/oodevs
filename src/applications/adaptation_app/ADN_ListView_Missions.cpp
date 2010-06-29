@@ -177,7 +177,7 @@ ADN_ListViewItem* ADN_ListView_Missions::FindItem( const std::string& strMission
         pItem = static_cast< ADN_ListViewItem* >( pItem->nextSibling() );
     }
 
-    return 0;    
+    return 0;
 }
 
 

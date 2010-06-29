@@ -1,12 +1,12 @@
 //*****************************************************************************
-// 
+//
 // $Created: NLD 2002-12-24 $
 // $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Functions/DEC_DIAFunctions.h $
 // $Author: Jvt $
 // $Modtime: 18/05/05 14:46 $
 // $Revision: 7 $
 // $Workfile: DEC_DIAFunctions.h $
-// 
+//
 //*****************************************************************************
 
 #ifndef __DEC_DIAFunctions_h_

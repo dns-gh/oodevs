@@ -105,9 +105,9 @@ void StockAttribute::DoUpdate( const MsgsSimToClient::MsgObjectCreation& message
 void StockAttribute::Display( Displayer_ABC& displayer ) const
 {
     typedef T_StockDotation::const_iterator CIT_StockDotation;
-    Displayer_ABC& local = 
+    Displayer_ABC& local =
         displayer.Group( tools::translate( "Stock", "Stock resource attribute" ) );
-    
+
     for ( CIT_StockDotation it = stock_.begin(); it != stock_.end(); ++it )
     {
         local.Start( it->first->GetName() )

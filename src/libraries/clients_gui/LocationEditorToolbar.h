@@ -25,13 +25,13 @@ namespace kernel
 }
 
 namespace gui
-{   
+{
     class ParametersLayer;
     class LocationEditorBox;
     class LocationsLayer;
     class LocationParsers;
     class View_ABC;
-   
+
 
 // =============================================================================
 /** @class  LocationEditorToolbar

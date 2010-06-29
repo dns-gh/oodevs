@@ -76,7 +76,7 @@ private:
 
 private:
     //! @name Types
-    //@{   
+    //@{
     typedef boost::ptr_vector< ObjectAttribute_ABC > T_ObjectAttributes;
     //@}
 
@@ -86,7 +86,7 @@ private:
     const std::string            strName_;
           Localisation           localisation_;
           dispatcher::Team_ABC&  side_;
-    
+
     T_ObjectAttributes           attributes_;
 };
 

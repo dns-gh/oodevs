@@ -10,7 +10,7 @@
 #include "frontend_app_pch.h"
 #include "Panel_ABC.h"
 #include "resources.h"
-#include "frontend/SpawnCommand.h" 
+#include "frontend/SpawnCommand.h"
 #include <qaction.h>
 #include <qhbox.h>
 #include <qlabel.h>
@@ -127,6 +127,6 @@ void Panel_ABC::Update()
 // -----------------------------------------------------------------------------
 void Panel_ABC::Start( frontend::SpawnCommand* command )
 {
-    commands_.push_back( command ) ; 
-    command->Start(); 
+    commands_.push_back( command ) ;
+    command->Start();
 }

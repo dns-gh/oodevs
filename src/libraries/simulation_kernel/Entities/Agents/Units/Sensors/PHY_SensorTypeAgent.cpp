@@ -482,7 +482,7 @@ MT_Float PHY_SensorTypeAgent::ComputeExtinction( const PHY_RawVisionDataIterator
     // Prise en compte des précipitations
     rDistanceModificator *= precipitationFactors_ [ env.GetPrecipitation().GetID() ];
     // Prise en compte des objets
-    if ( !bIsAroundBU ) 
+    if( !bIsAroundBU )
         rDistanceModificator *= ComputeEnvironementFactor( env.GetCurrentEnv() );
     return rDistanceModificator <= MT_Epsilon ? -1. : rVisionNRJ - env.Length() / rDistanceModificator ;
 }
@@ -517,21 +517,21 @@ bool PHY_SensorTypeAgent::ComputeUrbanExtinction( const MT_Vector2D& vSource, co
 
             const geometry::Polygon2f* footPrint = object.GetFootprint();
             std::vector< geometry::Point2f > intersectPoints = footPrint->Intersect( geometry::Segment2f( vSourcePoint, vTargetPoint ) );
-            if ( !intersectPoints.empty() || footPrint->IsInside( vSourcePoint ) || footPrint->IsInside( vTargetPoint ) )
+            if( !intersectPoints.empty() || footPrint->IsInside( vSourcePoint ) || footPrint->IsInside( vTargetPoint ) )
             {
                 bIsAroundBU = true;
                 if( architecture != 0 )
                 {
                     float intersectionDistance = 0;
                     std::sort( intersectPoints.begin(), intersectPoints.end() );
-                    if ( intersectPoints.size() == 1 )
+                    if( intersectPoints.size() == 1 )
                     {
                         if( footPrint->IsInside( vSourcePoint ) )
                             intersectionDistance = vSourcePoint.Distance( *intersectPoints.begin() );
                         else if( footPrint->IsInside( vTargetPoint ) )
                             intersectionDistance = vTargetPoint.Distance( *intersectPoints.begin() );
                     }
-                    else if ( intersectPoints.empty() )
+                    else if( intersectPoints.empty() )
                         intersectionDistance = vSourcePoint.Distance( vTargetPoint );
                     else
                         intersectionDistance = ( *intersectPoints.begin() ).Distance( *intersectPoints.rbegin() );
@@ -569,7 +569,7 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::InterpretExtinction( MT_Float rE
 //-----------------------------------------------------------------------------
 const MT_Float PHY_SensorTypeAgent::IdentificationDistance() const
 {
-	return rIdentificationDist_;
+    return rIdentificationDist_;
 }
 
 //-----------------------------------------------------------------------------
@@ -578,7 +578,7 @@ const MT_Float PHY_SensorTypeAgent::IdentificationDistance() const
 //-----------------------------------------------------------------------------
 const MT_Float PHY_SensorTypeAgent::ReconnoissanceDistance() const
 {
-	return rRecognitionDist_;
+    return rRecognitionDist_;
 }
 // -----------------------------------------------------------------------------
 // Name: PHY_SensorTypeAgent::RayTrace
@@ -596,7 +596,7 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::RayTrace( const MT_Vector2D& vSo
     bool bIsAroundBU = ComputeUrbanExtinction( vSource, vTarget, rVisionNRJ );
 
     PHY_RawVisionDataIterator it( vSource3D, vTarget3D );
-    if ( rVisionNRJ > 0 )
+    if( rVisionNRJ > 0 )
         rVisionNRJ = it.End() ? std::numeric_limits< MT_Float >::max() : ComputeExtinction( it, rDistanceMaxModificator, rVisionNRJ, bIsAroundBU );
 
     while ( rVisionNRJ > 0 && !(++it).End() )
@@ -857,7 +857,7 @@ bool PHY_SensorTypeAgent::CanDetectFirer( MT_Float distance ) const
 //-----------------------------------------------------------------------------
 unsigned int PHY_SensorTypeAgent::ConvertEnvironementToObjectIdx( PHY_RawVisionData::E_VisionObject obj )
 {
-    if ( obj == PHY_RawVisionData::eVisionEmpty )
+    if( obj == PHY_RawVisionData::eVisionEmpty )
         return 0;
 
     unsigned int res = 1;

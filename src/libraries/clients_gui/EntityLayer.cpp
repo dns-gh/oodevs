@@ -34,7 +34,7 @@ EntityLayerBase::EntityLayerBase( Controllers& controllers, const GlTools_ABC& t
     , strategy_   ( strategy )
     , view_       ( view )
     , profile_    ( profile )
-    , tooltiped_  ( std::numeric_limits< unsigned >::max() ) 
+    , tooltiped_  ( std::numeric_limits< unsigned >::max() )
     , tooltip_    ( 0 )
     , selected_   ( 0 )
 {
@@ -56,7 +56,7 @@ EntityLayerBase::~EntityLayerBase()
 // -----------------------------------------------------------------------------
 void EntityLayerBase::Paint( kernel::Viewport_ABC& viewport )
 {
-    strategy_.SetAlpha( GetAlpha() );       
+    strategy_.SetAlpha( GetAlpha() );
     for( unsigned i = 0; i < entities_.size(); ++i )
     {
         if( i != selected_ )
@@ -173,7 +173,7 @@ bool EntityLayerBase::HandleMouseMove( QMouseEvent* , const geometry::Point2f& p
         }
     }
     return false;
-}   
+}
 
 // -----------------------------------------------------------------------------
 // Name: EntityLayerBase::ShouldDisplayTooltip

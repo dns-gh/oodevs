@@ -84,7 +84,7 @@ private:
     geometry::Rectangle2f boundingBox_;
     int              nDirection_;
     int              nSpeed_;
-    
+
     int           nLivingHumans_;
     int           nDeadHumans_;
     float         rDensity_;

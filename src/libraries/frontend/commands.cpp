@@ -141,7 +141,7 @@ namespace frontend
 
         bool IsValidScript( const bfs::path& child )
         {
-            // std::string file( child.leaf().c_str() );   
+            // std::string file( child.leaf().c_str() );
             return bfs::is_regular_file( child ) && bfs::extension( child ).compare( ".lua" ) == 0;
         }
 
@@ -150,7 +150,7 @@ namespace frontend
             std::string  dir( ( bfs::path( config.GetExerciseDir( exercise ), bfs::native ) / "scripts" ).native_directory_string() );
             return ListDirectories( dir, &IsValidScript );
         }
-        
+
         bool IsValidOrder( const bfs::path& child )
         {
             return bfs::is_regular_file( child ) && bfs::extension( child ).compare( ".ord" ) == 0;
@@ -163,7 +163,7 @@ namespace frontend
             std::string  dir( ( bfs::path( config.GetExerciseDir( exercise ), bfs::native ) / "orders" ).native_directory_string() );
             return ListDirectories( dir, &IsValidOrder );
         }
-       
+
         QStringList ListPackageFiles( const std::string& filename )
         {
             QStringList list;

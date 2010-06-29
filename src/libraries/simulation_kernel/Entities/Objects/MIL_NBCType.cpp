@@ -40,7 +40,7 @@ void MIL_NBCType::Initialize( xml::xistream& xis )
 {
     std::set< uint > ids;
     MT_LOG_INFO_MSG( "Initializing nbc agents" );
-    
+
     xis >> xml::start( "nbc" )
             >> xml::start( "nbc-cell" )
                 >> xml::attribute( "length"                     , length_ )
@@ -71,7 +71,7 @@ void MIL_NBCType::Initialize( xml::xistream& xis )
 // Modified: none
 // -----------------------------------------------------------------------------
 void MIL_NBCType::ReadAgent( xml::xistream& xis )
-{    
+{
     std::string strName;
 
     xis >> xml::attribute( "name", strName );
@@ -79,7 +79,7 @@ void MIL_NBCType::ReadAgent( xml::xistream& xis )
     const MIL_NBCType*& pAgent = nbcAgentTypes_[ strName ];
     if( pAgent )
         throw std::runtime_error( "NBC agent " + strName + " already exists" );
-    pAgent = new MIL_NBCType( strName, xis );        
+    pAgent = new MIL_NBCType( strName, xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -110,7 +110,7 @@ MIL_NBCType::MIL_NBCType( const std::string& strName, xml::xistream& xis )
         >> xml::list( "effects", *this, &MIL_NBCType::ReadEffects );
 }
 
-namespace 
+namespace
 {
     MIL_NBCType::E_Form StringToE_Form( const std::string& type )
     {
@@ -170,7 +170,7 @@ const MIL_NBCType* MIL_NBCType::Find( const std::string& strName )
 const MIL_NBCType* MIL_NBCType::Find( uint nID )
 {
     for( CIT_NBCTypeMap it = nbcAgentTypes_.begin(); it != nbcAgentTypes_.end(); ++it )
-    {        
+    {
         if( it->second->GetID() == nID )
             return it->second;
     }

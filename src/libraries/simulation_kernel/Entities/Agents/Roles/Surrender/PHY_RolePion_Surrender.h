@@ -44,7 +44,7 @@ public:
     //@{
     template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
-    
+
     //! @name Operations
     //@{
     virtual void Update    ( bool bIsDead );
@@ -54,7 +54,7 @@ public:
 
     //! @name Main
     //@{
-    virtual void NotifySurrendered      ();    
+    virtual void NotifySurrendered      ();
     virtual void NotifySurrenderCanceled();
     virtual bool Capture                ( const MIL_AgentPion& pionTakingPrisoner );
     virtual bool Release                ();
@@ -67,7 +67,7 @@ public:
     virtual       bool          IsSurrendered       () const;
     virtual       bool          IsPrisoner          () const;
     virtual       bool          IsImprisoned        ( const MIL_Object_ABC& camp );
-    //@}    
+    //@}
 
     //! @name Network
     //@{

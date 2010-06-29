@@ -39,11 +39,11 @@ FireAttribute::~FireAttribute()
 // -----------------------------------------------------------------------------
 void FireAttribute::Update( const Common::MsgObjectAttributes& asnMsg )
 {
-    if ( asnMsg.has_fire() )
+    if( asnMsg.has_fire() )
     {
         heat_       = asnMsg.fire().heat();
         nFireClass_ = asnMsg.fire().class_id();
-    }  
+    }
 }
 
 // -----------------------------------------------------------------------------

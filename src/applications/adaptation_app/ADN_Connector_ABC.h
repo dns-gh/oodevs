@@ -22,7 +22,7 @@ class ADN_Connector_Vector_ABC;
 */
 // Created: APE 2004-12-02
 // =============================================================================
-class ADN_Connector_ABC 
+class ADN_Connector_ABC
 : public ADN_Ref_ABC
 {
     Q_OBJECT
@@ -30,7 +30,7 @@ class ADN_Connector_ABC
 public:
     explicit ADN_Connector_ABC( const char* szName = 0 );
     virtual ~ADN_Connector_ABC();
-    
+
     //! @name Connection
     //@{
     virtual void    Connect( ADN_Ref_ABC* pTarget, bool bConnect );

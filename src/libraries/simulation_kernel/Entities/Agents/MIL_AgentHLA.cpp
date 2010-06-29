@@ -103,7 +103,7 @@ bool MIL_AgentHLA::IsDead() const
 {
     return GetRole< PHY_RoleHLA_Composantes >().GetMajorComposante() == 0;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentHLA::IsNeutralized
 // Created: AGE 2004-11-09
@@ -149,7 +149,7 @@ boost::shared_ptr< DEC_Knowledge_Agent > MIL_AgentHLA::CreateKnowledge( const MI
     boost::shared_ptr< DEC_Knowledge_Agent > result( new DEC_Knowledge_Agent( knowledgeGroup, *this ) );
     return result;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentHLA::IsPerceived
 // Created: AGE 2004-11-09

@@ -38,7 +38,7 @@ public:
     {
         eFireUsingAllComposantes,
         eFireUsingOnlyComposantesLoadable,
-        eFireUsingOnlyComposantesCarrier        
+        eFireUsingOnlyComposantesCarrier
     };
 
     enum E_ComposanteFiredType

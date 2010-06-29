@@ -30,12 +30,12 @@ typedef ADN_Categories_Data::ArmorInfos ArmorInfos;
 ADN_ListView_Categories_Armor::ADN_ListView_Categories_Armor(QWidget * parent, const char * name, WFlags f)
     : ADN_ListView(parent,name,f)
 {
-    
+
     // add one column && disable sort
     addColumn( tr( "Armor-Plating" ) );
     setSorting( -1, true );
     setResizeMode( QListView::AllColumns );
-    
+
     // connector creation
     pConnector_ = new ADN_Connector_ListView<ArmorInfos>(*this);
     this->SetDeletionEnabled( true );
@@ -63,7 +63,7 @@ void ADN_ListView_Categories_Armor::ConnectItem( bool bConnect )
 
     ArmorInfos* pInfos = (ArmorInfos*)pCurData_;
     ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Categories_GUI::eNbrArmorGuiElements );
-    
+
     vItemConnectors_[ADN_Categories_GUI::eArmorName]->Connect( &pInfos->strName_, bConnect );
     vItemConnectors_[ADN_Categories_GUI::eArmorType]->Connect( &pInfos->nType_, bConnect );
     vItemConnectors_[ADN_Categories_GUI::eNeutralizationAverage]->Connect( &pInfos->neutralizationAverageTime_, bConnect );
@@ -91,10 +91,10 @@ void ADN_ListView_Categories_Armor::OnContextMenu( const QPoint& pt)
         {
             // create new sensor & add it to list
             ArmorInfos* pNewInfo=new ArmorInfos();
-           
+
             ADN_Connector_Vector_ABC* pCList = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
             pCList->AddItem( pNewInfo );
-            
+
             // Put the  new item at the top of the list (to be coherent with the application)
             int pos= FindNdx( pNewInfo );
             while( pos != 0 )
@@ -102,7 +102,7 @@ void ADN_ListView_Categories_Armor::OnContextMenu( const QPoint& pt)
                 static_cast<ADN_Connector_Vector_ABC*>(&GetConnector())->SwapItem( pos - 1, pos );
                 --pos;
             }
-            
+
             // set current item
             setCurrentItem(FindItem(pNewInfo));
             break;
@@ -112,7 +112,7 @@ void ADN_ListView_Categories_Armor::OnContextMenu( const QPoint& pt)
             ArmorInfos* pCurArmor=(ArmorInfos*)pCurData_;
             if( pCurArmor->IsMultiRef() && ! ADN_GuiTools::MultiRefWarning() )
                 return;
-                
+
             static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem(pCurArmor);
             break;
         }
@@ -126,10 +126,10 @@ void ADN_ListView_Categories_Armor::OnContextMenu( const QPoint& pt)
 // -----------------------------------------------------------------------------
 void ADN_ListView_Categories_Armor::CreateDefaultAttritionHumanEffect   ()
 {
-    if ( pCurData_ )
+    if( pCurData_ )
     {
         ArmorInfos* pCurArmor=(ArmorInfos*)pCurData_;
-        if ( !pCurArmor->vAttritionEffects_.size() )  
+        if( !pCurArmor->vAttritionEffects_.size() )
         {
             pCurArmor->CreateDefaultAttrition();
             void* pData = pCurData_;

@@ -23,7 +23,7 @@ PopulationFlow_ABC::PopulationFlow_ABC()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PopulationFlow_ABC destructor
 // Created: AGE 2006-08-29

@@ -22,7 +22,7 @@ public:                                                                         
 };
 
 namespace kernel
-{    
+{
     DECLARE_EXTENSION( ConstructionAttribute_ABC )
     DECLARE_EXTENSION( MineAttribute_ABC )
     DECLARE_EXTENSION( ActivityTimeAttribute_ABC )

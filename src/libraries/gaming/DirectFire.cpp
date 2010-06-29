@@ -33,7 +33,7 @@ DirectFire::DirectFire( const MsgsSimToClient::MsgStartUnitFire& message, const 
         throw std::runtime_error( "DirectFire on position..." );
 
 //    if( message.has_ammunition()  )
-//        ; // $$$$ AGE 2006-03-10: 
+//        ; // $$$$ AGE 2006-03-10:
     targetPosition_ = target_->Retrieve< Positions >();
 }
 

@@ -20,7 +20,7 @@
 #include <string>
 #include <memory>
 
-namespace boost { 
+namespace boost {
     namespace asio {
         class io_service;
     }
@@ -96,12 +96,12 @@ private:
     std::auto_ptr< SocketManager >              sockets_;
     std::auto_ptr< ObjectMessageService >       messageService_;
     std::auto_ptr< Connector >                  connector_;
-    std::string                                 host_; 
+    std::string                                 host_;
     bool                                        retry_;
     volatile bool                               stopped_;
     boost::thread                               thread_;
     //@}
-    
+
 };
 
 }

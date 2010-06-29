@@ -38,7 +38,7 @@ public:
     template< typename Archive > void serialize( Archive&, const unsigned int );
     virtual void Instanciate( MIL_Object_ABC& object ) const;
     virtual void Register( MIL_Object_ABC& object );
-    virtual void ProcessPopulationInside ( MIL_Object_ABC& object, MIL_PopulationElement_ABC& population ); 
+    virtual void ProcessPopulationInside ( MIL_Object_ABC& object, MIL_PopulationElement_ABC& population );
     //@}
 
 private:

@@ -44,7 +44,7 @@ void PHY_SupplyDotationRequest::AddDotation( PHY_Dotation& dotation )
     request.rRequestedValue_ = dotation.GetCapacity() - dotation.GetValue();
 
     assert( request.rRequestedValue_ > 0. );
-    rTotalRequestedValue_ += request.rRequestedValue_;   
+    rTotalRequestedValue_ += request.rRequestedValue_;
 
     requests_.push_back( request );
 }

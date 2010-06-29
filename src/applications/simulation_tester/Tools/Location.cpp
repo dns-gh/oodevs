@@ -57,7 +57,7 @@ Location& Location::GetTestParam_Location( const Position& pos, EnumLocationType
         loc.eType_ = ( EnumLocationType )nTypeLoc;
     }
     else
-        loc.eType_ = eType;        
+        loc.eType_ = eType;
 
     Position* pNode = new Position( pos.GetMgrsCoordinate() );
     // always same first point
@@ -120,7 +120,7 @@ Location& Location::GetTestParam_Location( const Position& pos, EnumLocationType
 // Name: Location::GetTestParam_LocationList
 // Created: SBO 2005-08-10
 // -----------------------------------------------------------------------------
-T_LocationVector& Location::GetTestParam_LocationList( const Position& pos, unsigned int nLocation, 
+T_LocationVector& Location::GetTestParam_LocationList( const Position& pos, unsigned int nLocation,
                                                        EnumLocationType eType /*= ( EnumLocationType )-1*/ )
 {
     T_LocationVector& locations = *new T_LocationVector();

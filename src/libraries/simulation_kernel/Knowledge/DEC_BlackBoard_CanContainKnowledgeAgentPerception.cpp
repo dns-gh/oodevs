@@ -33,7 +33,7 @@ DEC_BlackBoard_CanContainKnowledgeAgentPerception::DEC_BlackBoard_CanContainKnow
 DEC_BlackBoard_CanContainKnowledgeAgentPerception::~DEC_BlackBoard_CanContainKnowledgeAgentPerception()
 {
     while( !unitKnowledgePerceptionMap_.empty() )
-        DestroyKnowledgeAgentPerception( *unitKnowledgePerceptionMap_.begin()->second );    
+        DestroyKnowledgeAgentPerception( *unitKnowledgePerceptionMap_.begin()->second );
 }
 
 // =============================================================================
@@ -48,7 +48,7 @@ namespace boost
         {
             split_free( file, map, nVersion );
         }
-        
+
         template< typename Archive >
         void save( Archive& file, const DEC_BlackBoard_CanContainKnowledgeAgentPerception::T_KnowledgeAgentPerceptionMap& map, const unsigned int )
         {
@@ -60,7 +60,7 @@ namespace boost
                      << it->second;
             }
         }
-        
+
         template< typename Archive >
         void load( Archive& file, DEC_BlackBoard_CanContainKnowledgeAgentPerception::T_KnowledgeAgentPerceptionMap& map, const unsigned int )
         {
@@ -69,7 +69,7 @@ namespace boost
             while ( nNbr-- )
             {
                 MIL_Agent_ABC* pAgent;
-                
+
                 file >> pAgent;
                 file >> map[ pAgent ];
             }
@@ -105,7 +105,7 @@ void DEC_BlackBoard_CanContainKnowledgeAgentPerception::save( MIL_CheckPointOutA
 // -----------------------------------------------------------------------------
 DEC_Knowledge_AgentPerception& DEC_BlackBoard_CanContainKnowledgeAgentPerception::CreateKnowledgeAgentPerception( const MIL_Agent_ABC& agentPerceiving, MIL_Agent_ABC& agentPerceived )
 {
-    DEC_Knowledge_AgentPerception* pKnowledge = new DEC_Knowledge_AgentPerception( agentPerceiving, agentPerceived );//$$ RAM   
+    DEC_Knowledge_AgentPerception* pKnowledge = new DEC_Knowledge_AgentPerception( agentPerceiving, agentPerceived );//$$ RAM
     if( ! unitKnowledgePerceptionMap_.insert( std::make_pair( &agentPerceived, pKnowledge ) ).second )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
     return *pKnowledge;
@@ -129,7 +129,7 @@ void DEC_BlackBoard_CanContainKnowledgeAgentPerception::DestroyKnowledgeAgentPer
 DEC_Knowledge_AgentPerception* DEC_BlackBoard_CanContainKnowledgeAgentPerception::GetKnowledgeAgentPerception( const MIL_Agent_ABC& associatedAgent ) const
 {
     CIT_KnowledgeAgentPerceptionMap itKnowledge = unitKnowledgePerceptionMap_.find( &associatedAgent );
-    if ( itKnowledge != unitKnowledgePerceptionMap_.end() )
+    if( itKnowledge != unitKnowledgePerceptionMap_.end() )
         return itKnowledge->second;
     else
         return 0;

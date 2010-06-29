@@ -28,12 +28,12 @@ class ADN_FileChooser_Connector
 : public ADN_Connector_ABC
 {
 public:
-   
+
     typedef void (ADN_FileChooser::*T_OpSet)(const QString& file);
-    
+
     ADN_FileChooser_Connector(ADN_FileChooser& flc,T_OpSet op): ADN_Connector_ABC() , flc_(flc), op_(op)
     {}
-    
+
     virtual ~ADN_FileChooser_Connector()
     {}
 
@@ -91,12 +91,12 @@ ADN_FileChooser::ADN_FileChooser(QWidget *parent,const QString& filter,const cha
     // connectors
     vConnectors_[eFile]     =new ADN_FileChooser_Connector(*this,&ADN_FileChooser::SetFilename);
     vConnectors_[eDirectory]=new ADN_FileChooser_Connector(*this,&ADN_FileChooser::SetDirectory);
-    
-    
-    
+
+
+
     connect( pLineEdit_             , SIGNAL( textChanged( const QString & ) ),
              this                   , SLOT( FilenameChanged( const QString & ) ) );
-    
+
     connect( pButton_   , SIGNAL( clicked() ),
              this       , SLOT( ChooseFile() ) );
 
@@ -116,7 +116,7 @@ ADN_FileChooser::~ADN_FileChooser()
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 inline
 std::string GetPartPath(const std::string szWorking,const std::string& full)
@@ -179,7 +179,7 @@ void ADN_FileChooser::FilenameChanged(const QString& file)
 void ADN_FileChooser::SetFilename( const QString &fn )
 {
     int nPos = pLineEdit_->cursorPosition();
-    pLineEdit_->setText( fn );    
+    pLineEdit_->setText( fn );
     pLineEdit_->setCursorPosition( nPos );
 }
 

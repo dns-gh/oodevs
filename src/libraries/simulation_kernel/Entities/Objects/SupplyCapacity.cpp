@@ -64,7 +64,7 @@ SupplyCapacity::~SupplyCapacity()
 // Name: template< typename Archive > void SupplyCapacity::serialize
 // Created: MGD 2009-03-05
 // -----------------------------------------------------------------------------
-template< typename Archive > 
+template< typename Archive >
 void SupplyCapacity::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
@@ -86,7 +86,7 @@ void SupplyCapacity::Register( MIL_Object_ABC& object )
 // Created: MGD 2009-03-05
 // -----------------------------------------------------------------------------
 void SupplyCapacity::Instanciate( MIL_Object_ABC& object ) const
-{    
+{
     SupplyCapacity* capacity = new SupplyCapacity( *this );
     object.AddCapacity( capacity );
     object.Register( static_cast< MIL_InteractiveContainer_ABC *>( capacity ) );

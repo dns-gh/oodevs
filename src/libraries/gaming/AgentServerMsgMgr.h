@@ -227,12 +227,12 @@ class CommandHandler;
 //=============================================================================
 class AgentServerMsgMgr : public Publisher_ABC
 {
-   
+
 public:
     //! @name Constructor/Destructor
     //@{
-             AgentServerMsgMgr( tools::MessageDispatcher_ABC& dispatcher, tools::MessageSender_ABC& sender, 
-             Services& services, Simulation& simu, kernel::Logger_ABC& logger, CommandHandler& commands ); 
+             AgentServerMsgMgr( tools::MessageDispatcher_ABC& dispatcher, tools::MessageSender_ABC& sender,
+             Services& services, Simulation& simu, kernel::Logger_ABC& logger, CommandHandler& commands );
     virtual ~AgentServerMsgMgr();
     //@}
 
@@ -384,16 +384,16 @@ private:
     void OnReceiveMsgPopulationFlowKnowledgeDestruction         ( const MsgsSimToClient::MsgPopulationFlowKnowledgeDestruction&          message );
 
     // Orders
-    void OnReceiveMsgAutomatOrder          ( const Common::MsgAutomatOrder&                    message ); 
-    void OnReceiveMsgAutomatOrderAck       ( const MsgsSimToClient::MsgAutomatOrderAck&        message, unsigned long nCtx ); 
-    void OnReceiveMsgUnitOrder             ( const Common::MsgUnitOrder&                       message ); 
+    void OnReceiveMsgAutomatOrder          ( const Common::MsgAutomatOrder&                    message );
+    void OnReceiveMsgAutomatOrderAck       ( const MsgsSimToClient::MsgAutomatOrderAck&        message, unsigned long nCtx );
+    void OnReceiveMsgUnitOrder             ( const Common::MsgUnitOrder&                       message );
     void OnReceiveMsgUnitOrderAck          ( const MsgsSimToClient::MsgUnitOrderAck&           message, unsigned long nCtx );
-    void OnReceiveMsgFragOrderAck          ( const MsgsSimToClient::MsgFragOrderAck&           message, unsigned long nCtx ); 
+    void OnReceiveMsgFragOrderAck          ( const MsgsSimToClient::MsgFragOrderAck&           message, unsigned long nCtx );
     void OnReceiveMsgUnitCreationRequestAck( const MsgsSimToClient::MsgUnitCreationRequestAck& message );
 
     // Automate mode
     void OnReceiveMsgSetAutomatModeAck( const MsgsSimToClient::MsgSetAutomatModeAck& message, unsigned long nCtx );
-    
+
     // Hierachy changes
     void OnReceiveMsgUnitChangeSuperiorAck          ( const MsgsSimToClient::MsgUnitChangeSuperiorAck&          message, unsigned long nCtx );
     void OnReceiveMsgUnitChangeSuperior             ( const Common::MsgUnitChangeSuperior&                      message );
@@ -422,16 +422,16 @@ private:
 
     // Population
     void OnMsgPopulationCreation                ( const MsgsSimToClient::MsgPopulationCreation&                 message );
-    void OnMsgPopulationUpdate                  ( const MsgsSimToClient::MsgPopulationUpdate&                   message ); 
-    void OnMsgPopulationConcentrationCreation   ( const MsgsSimToClient::MsgPopulationConcentrationCreation&    message ); 
+    void OnMsgPopulationUpdate                  ( const MsgsSimToClient::MsgPopulationUpdate&                   message );
+    void OnMsgPopulationConcentrationCreation   ( const MsgsSimToClient::MsgPopulationConcentrationCreation&    message );
     void OnMsgPopulationConcentrationDestruction( const MsgsSimToClient::MsgPopulationConcentrationDestruction& message );
     void OnMsgPopulationConcentrationUpdate     ( const MsgsSimToClient::MsgPopulationConcentrationUpdate&      message );
     void OnMsgPopulationFlowCreation            ( const MsgsSimToClient::MsgPopulationFlowCreation&             message );
-    void OnMsgPopulationFlowDestruction         ( const MsgsSimToClient::MsgPopulationFlowDestruction&          message ); 
-    void OnMsgPopulationFlowUpdate              ( const MsgsSimToClient::MsgPopulationFlowUpdate&               message ); 
+    void OnMsgPopulationFlowDestruction         ( const MsgsSimToClient::MsgPopulationFlowDestruction&          message );
+    void OnMsgPopulationFlowUpdate              ( const MsgsSimToClient::MsgPopulationFlowUpdate&               message );
     void OnReceiveMsgPopulationMagicActionAck   ( const MsgsSimToClient::MsgPopulationMagicActionAck&           message, unsigned long nCtx );
     void OnReceiveMsgPopulationOrderAck         ( const MsgsSimToClient::MsgPopulationOrderAck&                 message, unsigned long nCtx );
-    void OnReceiveMsgPopulationOrder            ( const Common::MsgPopulationOrder&                             message ); 
+    void OnReceiveMsgPopulationOrder            ( const Common::MsgPopulationOrder&                             message );
 
     // Folk
     void OnReceiveMsgFolkCreation               ( const MsgsSimToClient::MsgFolkCreation&    message );

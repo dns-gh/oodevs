@@ -34,8 +34,8 @@ public:
     const MT_Vector2D& GetPos3  () const;
     MT_Vector2D        GetCenter() const;
     MT_Float           GetArea  () const;
-    //@}    
-    
+    //@}
+
     //-------------------------------------------------------------------------
     /** @name Geo */
     //-------------------------------------------------------------------------
@@ -67,7 +67,7 @@ typedef T_TrianglePtrVector::const_iterator     CIT_TrianglePtrVector;
 
 
 #ifndef  _DEBUG
-#   undef   INLINE                  
+#   undef   INLINE
 #   define  INLINE inline
 #   include "MT_Triangle.inl"
 #endif  // ! _DEBUG

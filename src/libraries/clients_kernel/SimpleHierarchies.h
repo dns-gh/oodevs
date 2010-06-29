@@ -23,7 +23,7 @@ namespace kernel
 // Created: AGE 2006-11-24
 // =============================================================================
 template< typename I >
-class SimpleHierarchies : public I 
+class SimpleHierarchies : public I
 {
 
 public:
@@ -37,9 +37,9 @@ public:
     //@{
     virtual const Entity_ABC* GetSuperior() const;
     virtual const Entity_ABC& GetEntity() const;
-    virtual tools::Iterator< const Entity_ABC& > CreateSubordinateIterator() const; 
+    virtual tools::Iterator< const Entity_ABC& > CreateSubordinateIterator() const;
     //@}
-    
+
     //! @name Modifiers
     //@{
     virtual void RegisterSubordinate  (       Entity_ABC& entity );

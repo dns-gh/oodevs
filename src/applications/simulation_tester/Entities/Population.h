@@ -53,7 +53,7 @@ private:
         //! @name Operations
         //@{
         void OnUpdate( const MsgPopulationConcentrationUpdate& asnMsg );
-        //@} 
+        //@}
 
     public:
         Position position_;
@@ -74,7 +74,7 @@ private:
         //! @name Operations
         //@{
         void OnUpdate( const MsgPopulationFlowUpdate& asnMsg );
-        //@} 
+        //@}
 
     public:
         T_PositionVector shape_;
@@ -94,13 +94,13 @@ public:
     //@{
     virtual       T_EntityId   GetId       () const;
     virtual const Position&    GetPosition () const;
-	        const std::string& GetName     () const;
+            const std::string& GetName     () const;
     //@}
 
     //! @name Messages handlers
     //@{
     void OnUpdate                ( const MsgPopulationUpdate&                   asnMsg );
-    
+
     void OnConcentrationCreated  ( const MsgPopulationConcentrationCreation&    asnMsg );
     void OnConcentrationUpdated  ( const MsgPopulationConcentrationUpdate&      asnMsg );
     void OnConcentrationDestroyed( const MsgPopulationConcentrationDestruction& asnMsg );
@@ -132,7 +132,7 @@ private:
     //! @name Member data
     //@{
     T_EntityId            nId_;
-	std::string           strName_;
+    std::string           strName_;
     const PopulationType* pType_;
 
     T_ConcentrationVector concentrations_;

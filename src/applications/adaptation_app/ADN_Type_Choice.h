@@ -56,7 +56,7 @@ public:
     bool          operator !=(const T& val) const;
     //@}
 
-    //! @name 
+    //! @name
     //@{
     void SetDataName( const std::string& strName );
     //@}
@@ -65,14 +65,14 @@ protected:
     virtual void SetDataPrivate( void *data );
             void SetDataPrivate( const T& value, bool bCanBeUndone );
 
-    
+
 private:
     //! @name Copy/Assignment
     //@{
-    ADN_Type_Choice( const ADN_Type_Choice& );            //!< Copy constructor    
+    ADN_Type_Choice( const ADN_Type_Choice& );            //!< Copy constructor
     //@}
 
-    //! @name 
+    //! @name
     //@{
     bool CheckData( const T& data ) const;
     //@}
@@ -84,7 +84,7 @@ private:
     T           data_;
     //@}
 
-    //! @name 
+    //! @name
     //@{
     T_ChoicesVector choices_;
     //@}

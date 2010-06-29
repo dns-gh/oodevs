@@ -47,7 +47,7 @@ public:
     //! @name Operations
     //@{
     bool HasFlag( const MsgUnitAttributes& attributes ) const
-    { 
+    {
         return attributes.has_dotation_eff_personnel();
     }
     int Extract( const MsgUnitAttributes& attributes );

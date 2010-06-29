@@ -20,7 +20,7 @@ namespace tools
 
 namespace kernel
 {
-    class Controllers; 
+    class Controllers;
 }
 
 class ExerciseList;
@@ -35,8 +35,8 @@ class ProgressPage;
 // =============================================================================
 class ScenarioEditPage : public ContentPage
 {
-    
-    Q_OBJECT; 
+
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor

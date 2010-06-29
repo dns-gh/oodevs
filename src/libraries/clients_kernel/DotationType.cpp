@@ -33,7 +33,7 @@ DotationType::DotationType( xistream& xis )
     gaz_        = ( xmlName == "carburant" );
     ammunition_ = ( xmlName == "munition" );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DotationType destructor
 // Created: AGE 2006-02-21
@@ -60,7 +60,7 @@ std::string DotationType::GetName() const
 {
     return name_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DotationType::GetCategory
 // Created: AGE 2006-02-21

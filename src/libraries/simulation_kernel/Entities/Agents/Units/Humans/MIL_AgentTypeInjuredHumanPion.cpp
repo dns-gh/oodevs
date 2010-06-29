@@ -26,7 +26,7 @@
 // -----------------------------------------------------------------------------
 MIL_AgentTypeInjuredHumanPion::MIL_AgentTypeInjuredHumanPion( const std::string& strName, xml::xistream& xis )
     : MIL_AgentTypePion( strName, xis )
-{ 
+{
 }
 
 // -----------------------------------------------------------------------------

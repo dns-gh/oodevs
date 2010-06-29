@@ -14,12 +14,12 @@
 
 #include <boost/serialization/split_free.hpp>
 
-namespace boost 
+namespace boost
 {
-    namespace serialization 
+    namespace serialization
     {
         template< typename Archive >
-        inline 
+        inline
         void serialize( Archive& file, MT_Vector2D& vect, const unsigned int )
         {
             file & vect.rX_;

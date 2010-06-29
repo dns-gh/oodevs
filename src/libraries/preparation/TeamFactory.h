@@ -22,7 +22,7 @@ namespace tools
 namespace kernel
 {
     class Controllers;
-    class PropertiesDictionary;    
+    class PropertiesDictionary;
     class Extension_ABC;
 }
 
@@ -48,7 +48,7 @@ public:
     virtual ~TeamFactory();
     //@}
 
-    //! @name 
+    //! @name
     //@{
     void Initialize();
     //@}
@@ -71,7 +71,7 @@ private:
 
     //! @name Helper
     //@{
-    void ReadAttributes( const std::string& attr, xml::xistream& xis, tools::SortedInterfaceContainer< kernel::Extension_ABC >& result, kernel::PropertiesDictionary& dico );    
+    void ReadAttributes( const std::string& attr, xml::xistream& xis, tools::SortedInterfaceContainer< kernel::Extension_ABC >& result, kernel::PropertiesDictionary& dico );
     //@}
 
 private:

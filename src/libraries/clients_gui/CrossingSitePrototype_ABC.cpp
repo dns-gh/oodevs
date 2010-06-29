@@ -36,7 +36,7 @@ CrossingSitePrototype_ABC::CrossingSitePrototype_ABC( QWidget* parent )
     new QLabel( tools::translate( "CrossingSitePrototype_ABC", "Build river banks:" ), this );
     needsConstruction_ = new QCheckBox( this );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: CrossingSitePrototype_ABC destructor
 // Created: SBO 2006-04-19

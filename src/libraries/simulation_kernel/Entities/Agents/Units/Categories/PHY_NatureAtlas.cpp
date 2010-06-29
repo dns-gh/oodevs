@@ -32,7 +32,7 @@ void PHY_NatureAtlas::Initialize()
     natureAtlas_[ "Helicoptere"         ] = new PHY_NatureAtlas( "Helicoptere"      , eNatureAtlas_Helicoptere   , 0x80   );
     natureAtlas_[ "Indefini"            ] = new PHY_NatureAtlas( "Indefini"         , eNatureAtlas_Indefini      , 0x40   );
     natureAtlas_[ "ASA"                 ] = new PHY_NatureAtlas( "ASA"              , eNatureAtlas_ASA           , 0x20   );
-    natureAtlas_[ notDefined_.GetName() ] = &notDefined_; 
+    natureAtlas_[ notDefined_.GetName() ] = &notDefined_;
 }
 
 // -----------------------------------------------------------------------------

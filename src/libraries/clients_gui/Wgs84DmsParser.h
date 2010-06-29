@@ -59,7 +59,7 @@ private:
 private:
     //! @name Member data
     //@{
-	const kernel::CoordinateConverter_ABC& converter_;
+    const kernel::CoordinateConverter_ABC& converter_;
     int numParameters_;
     //@}
 };

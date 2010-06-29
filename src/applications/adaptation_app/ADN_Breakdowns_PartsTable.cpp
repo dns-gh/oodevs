@@ -37,7 +37,7 @@ class ADN_Connector_PartsTable
     : public ADN_Connector_Table_ABC
 {
 public:
-    ADN_Connector_PartsTable( ADN_Breakdowns_PartsTable& tab ) 
+    ADN_Connector_PartsTable( ADN_Breakdowns_PartsTable& tab )
         : ADN_Connector_Table_ABC( tab, false, "ADN_Automata_PartsTable" )
     {}
 
@@ -49,7 +49,7 @@ public:
         ADN_TableItem_String* pItemName = new ADN_TableItem_String( &tab_, pObj, QTableItem::Never );
         ADN_TableItem_Int* pItemNbr = new ADN_TableItem_Int( &tab_, pObj );
         tab_.setItem( i, 0, pItemName );
-        tab_.setItem( i, 1, pItemNbr ); 
+        tab_.setItem( i, 1, pItemNbr );
         pItemNbr->GetValidator().setBottom( 1 );
 
         // Connect the items.
@@ -141,7 +141,7 @@ void ADN_Breakdowns_PartsTable::OnContextMenu( int /*nRow*/, int /*nCol*/, const
         pNewInfo->ptrPart_ = (ADN_Equipement_Data::CategoryInfo*)nMenuResult;
         ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
         pCTable->AddItem( pNewInfo );
-        pCTable->AddItem( 0 );  
+        pCTable->AddItem( 0 );
     }
 }
 

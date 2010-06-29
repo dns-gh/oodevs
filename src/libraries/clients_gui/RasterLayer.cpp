@@ -51,7 +51,7 @@ void RasterLayer::Paint( const geometry::Rectangle2f& viewport )
         }
         catch( ... )
         {
-            // $$$$ AGE 2007-01-04: 
+            // $$$$ AGE 2007-01-04:
             ignore_ = true;
         }
     if( textures_.get() )

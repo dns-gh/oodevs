@@ -45,7 +45,7 @@ public:
     //! @name Operations
     //@{
     bool HasValue( const MsgSimToClient& wrapper ) const
-    { 
+    {
         return wrapper.message().has_unit_detection();
     }
     float Extract( const MsgSimToClient& wrapper ) const;

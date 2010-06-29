@@ -16,7 +16,7 @@
 #include "gaming/Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/ValuedDragObject.h"
-#include "protocol/Protocol.h"    
+#include "protocol/Protocol.h"
 #include <boost/foreach.hpp>
 
 using namespace kernel;
@@ -202,7 +202,7 @@ void IndicatorPlot::contextMenuEvent( QContextMenuEvent* e )
 {
     QPopupMenu* menu = new QPopupMenu( this );
     menu->insertItem( tools::translate( "Indicators", "Export data..." ), this, SLOT( OnExportData() ) );
-    menu->exec( e->globalPos() );   
+    menu->exec( e->globalPos() );
 }
 
 // -----------------------------------------------------------------------------

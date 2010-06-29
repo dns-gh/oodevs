@@ -35,7 +35,7 @@ ValuedListItem::ValuedListItem( QListViewItem * parent )
 {
     // NOTHING
 }
-   
+
 // -----------------------------------------------------------------------------
 // Name: ValuedListItem constructor
 // Created: AGE 2006-02-15

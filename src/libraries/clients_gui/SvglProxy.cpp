@@ -46,7 +46,7 @@ void SvglProxy::Draw( const std::string& name, const geometry::Rectangle2f& view
     if( ! node )
     {
         xml::xifstream input( tools::GeneralConfig::BuildResourceChildFile( "images/" + name ) );
-        node = renderer_.Compile( input, 100 ); // $$$$ AGE 2007-05-31: 
+        node = renderer_.Compile( input, 100 ); // $$$$ AGE 2007-05-31:
     }
     if( node )
         renderer_.Render( node, SvglRenderer::DefaultStyle(), viewport, vWidth, vHeight );

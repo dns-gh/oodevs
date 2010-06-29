@@ -61,12 +61,12 @@ events =
     {
          MissionStarted          = function( self ) return condition( automat ) end,
     },
-    
+
     populations =
     {
          PopulationEnters        = function( self, zone ) return condition( population ) end,
     },
-    
+
     client =
     {
          UserChose      = function( self ) return condition( strId, strChoice ) end,
@@ -85,7 +85,7 @@ events =
         ClientConnected = function( self ) return condition( strClient, strProfile ) end,
         ClientLeft      = function( self ) return condition( strClient ) end
     },
-    
+
     indicators =
     {
         IndicatorChanged = function( self ) return condition( strName, nValue ) end
@@ -114,7 +114,7 @@ agent =
     GetPosition         = function( self ) return position end,
     GetOperationalState = function( self ) return nOp end,
     GetForceRatio       = function( self ) return strForceRatio end, -- force ratio string: "none", "neutral", "low" or "high"
-    GetMission		    = function( self ) return nMissionId end,
+    GetMission            = function( self ) return nMissionId end,
     Teleport            = function( self, position ) end, -- teleports unit to new position (type Position)
     RecoverAll          = function( self ) end, -- recovers unit (equipments, humans and resources)
 }
@@ -175,7 +175,7 @@ Indicator:With    = function( self, name, type, value ) return self end -- Add v
 Indicator:Compute = function( self ) end                                -- Start computation
 Indicator:Record  = function( self ) end                                -- Add indicator to recorder
 
-Recorder = 
+Recorder =
 {
     Start  = function() end,                    -- starts recorder (changes state)
     Reset  = function() end,                    -- resets recorder data

@@ -32,7 +32,7 @@
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/MagicActionType.h"
 #include "protocol/ClientSenders.h"
-#include "protocol/Protocol.h"       
+#include "protocol/Protocol.h"
 #include "protocol/SimulationSenders.h"
 
 using namespace kernel;
@@ -60,7 +60,7 @@ public:
     {
         QSpinBox* spinBox = new QSpinBox( minValue_, maxValue_, step_, table()->viewport(), "spintableitem" );
         QObject::connect( spinBox, SIGNAL( valueChanged( int ) ), table(), SLOT( doValueChanged() ) );
-    	
+
         if( !text().isNull() )
             spinBox->setValue( text().toInt() );
         else
@@ -80,7 +80,7 @@ public:
 private:
     //! @name Member data
     //@{
-	int minValue_;
+    int minValue_;
     int maxValue_;
     int step_;
     //@}
@@ -338,7 +338,7 @@ void LogisticSupplyRecompletionDialog::InitializeSupplies()
     {
         stockTable_->setNumRows( 0 );
         stockTable_->setMinimumHeight( stockTable_->rowHeight( 0 ) * 5 );
-        
+
         tools::Iterator< const Dotation& > it = supplies->CreateIterator();
         while( it.HasMoreElements() )
         {
@@ -393,7 +393,7 @@ void LogisticSupplyRecompletionDialog::FillPersonal( ParameterList& list )
     }
 
     if( nNbrPersonals > 0 )
-    {   
+    {
         int index = 1;
         for( int nRow = 0; nRow < personalsTable_->numRows(); ++nRow )
         {
@@ -442,7 +442,7 @@ void LogisticSupplyRecompletionDialog::FillDotations( actions::parameters::Param
             ++ nNbrDotations;
     }
     if( nNbrDotations > 0 )
-    {   
+    {
         int index = 1;
         for( int nRow = 0; nRow < dotationsTable_->numRows(); ++nRow )
         {
@@ -458,7 +458,7 @@ void LogisticSupplyRecompletionDialog::FillDotations( actions::parameters::Param
             personalList.AddIdentifier( "Dotation", tools::DotationFamilyFromString( pDotationItem->text() ) );
             personalList.AddQuantity( "Number", pPercentageItem->text().toInt() );
         }
-    } 
+    }
 }
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyRecompletionDialog::FillAmmunitions
@@ -475,7 +475,7 @@ void LogisticSupplyRecompletionDialog::FillAmmunitions( actions::parameters::Par
             ++ nNbrMunitions;
     }
     if( nNbrMunitions > 0 )
-    {   
+    {
         int index = 1;
         for( int nRow = 0; nRow < munitionsFamilyTable_->numRows(); ++nRow )
         {
@@ -507,7 +507,7 @@ void LogisticSupplyRecompletionDialog::FillSupplies( actions::parameters::Parame
             ++ nNbrResources;
     }
     if( nNbrResources > 0 )
-    {   
+    {
         int index = 1;
         for( int nRow = 0; nRow < stockTable_->numRows(); ++nRow )
         {
@@ -519,7 +519,7 @@ void LogisticSupplyRecompletionDialog::FillSupplies( actions::parameters::Parame
             if( !pItemCheckBox->isChecked() )
                 continue;
 
-            assert( pItem );            
+            assert( pItem );
             assert( pQttyItem );
 
             ParameterList& stockList = list.AddList( CreateName( "Stock", index ) );
@@ -537,18 +537,18 @@ void LogisticSupplyRecompletionDialog::Validate()
 {
     if( ! selected_ )
         return;
-    
+
     // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "partial_recovery" );
     UnitMagicAction* action = new UnitMagicAction( *selected_, actionType, controllers_.controller_, true );
-    
+
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
     parameters::ParameterList* equipments = new parameters::ParameterList( it.NextElement() );
     parameters::ParameterList* humans = new parameters::ParameterList( it.NextElement() );
     parameters::ParameterList* dotations = new parameters::ParameterList( it.NextElement() );
     parameters::ParameterList* ammo = new parameters::ParameterList( it.NextElement() );
     parameters::ParameterList* stocks = new parameters::ParameterList( it.NextElement() );
-    
+
     action->AddParameter( *equipments );
     action->AddParameter( *humans );
     action->AddParameter( *dotations );

@@ -53,7 +53,7 @@ public:
     //@}
 
 protected:
-    //! @name 
+    //! @name
     //@{
     void SetToolTip()
     {

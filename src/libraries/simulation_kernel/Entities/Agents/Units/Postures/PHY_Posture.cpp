@@ -35,7 +35,7 @@ void PHY_Posture::Initialize()
     postures_[ mouvementDiscret_ .GetName() ] = &mouvementDiscret_;
     postures_[ arret_            .GetName() ] = &arret_;
     postures_[ posteReflexe_     .GetName() ] = &posteReflexe_;
-    postures_[ poste_            .GetName() ] = &poste_;   
+    postures_[ poste_            .GetName() ] = &poste_;
     postures_[ posteAmenage_     .GetName() ] = &posteAmenage_;
     postures_[ postePrepareGenie_.GetName() ] = &postePrepareGenie_;
 }

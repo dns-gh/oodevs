@@ -39,7 +39,7 @@ public:
              DEC_KS_Fire();
     virtual ~DEC_KS_Fire();
     //@}
-    
+
     //! @name Operations
     //@{
     virtual void Prepare();
@@ -80,7 +80,7 @@ BOOST_CLASS_EXPORT_KEY( DEC_KS_Fire )
 // Name: template< typename Archive > void DEC_KnowledgeBlackBoard_AgentPion::serialize
 // Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
-template< typename Archive > 
+template< typename Archive >
 void DEC_KS_Fire::serialize( Archive& archive, const unsigned int )
 {
     archive & boost::serialization::base_object< DEC_KnowledgeSource_ABC >( *this )

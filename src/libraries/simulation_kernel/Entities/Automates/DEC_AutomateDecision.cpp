@@ -51,7 +51,7 @@ DEC_AutomateDecision::DEC_AutomateDecision( MIL_Automate& automate, DEC_DataBase
     , nRulesOfEngagementState_ ( eRoeStateNone         )
     , nCloseCombatState_       ( eCloseCombatStateNone )
     , nOperationalState_       ( eOpStateOperational   )
-    , bStateHasChanged_        ( true                  )    
+    , bStateHasChanged_        ( true                  )
     , ePhaseMission_           ( 0                     )
     , eEtatLima_               ( 0                     )
     , eEtatDec_                ( 0                     )
@@ -72,7 +72,7 @@ DEC_AutomateDecision::DEC_AutomateDecision( MIL_Automate& automate, DEC_DataBase
     catch( std::runtime_error& e )
     {
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, e.what() );
-    }   
+    }
 
     StartDefaultBehavior();
 }
@@ -100,17 +100,17 @@ void DEC_AutomateDecision::load( MIL_CheckPointInArchive& file, const unsigned i
          >> nRulesOfEngagementState_
          >> nCloseCombatState_
          >> nOperationalState_;
-    
+
     assert( pEntity_ );
-    
+
     unsigned int nID;
     file >> nID;
-    
+
     const MIL_AutomateType* pType = MIL_AutomateType::FindAutomateType( nID );
     assert( pType );
-    
+
     const DEC_Model_ABC& model = pType->GetModel();
-    
+
     try
     {
         SetModel( model );
@@ -119,7 +119,7 @@ void DEC_AutomateDecision::load( MIL_CheckPointInArchive& file, const unsigned i
     {
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, e.what() );
     }
-    
+
     StartDefaultBehavior();
 }
 
@@ -162,20 +162,20 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_Automate_PionsAvecPC", &DEC_Decision_ABC::GetPionsWithPC );
     brain.RegisterFunction( "DEC_Automate_PionsSansPC", boost::bind( &DEC_AutomateFunctions::GetPionsWithoutPC, boost::ref( GetAutomate() ) ) );
     brain.RegisterFunction( "DEC_Automate_PionPC", boost::bind( &DEC_AutomateFunctions::GetPionPC, boost::ref( GetAutomate() ) ) );
-    brain.RegisterFunction( "DEC_Automate_PionPCDeAutomate", 
+    brain.RegisterFunction( "DEC_Automate_PionPCDeAutomate",
         boost::function< DEC_Decision_ABC*( DEC_Decision_ABC* ) >( boost::bind( &DEC_AutomateFunctions::GetPionPCOfAutomate, _1 ) ) );
     brain.RegisterFunction( "DEC_Automate_AutomatesSubordonnes", boost::bind( &DEC_AutomateFunctions::GetAutomates, boost::cref( GetAutomate() ) ) );
     brain.RegisterFunction( "DEC_AutomateSuperieur_EstEmbraye", boost::bind( &DEC_AutomateFunctions::IsParentAutomateEngaged, boost::cref( GetAutomate() ) ) );
 
-    brain.RegisterFunction( "DEC_Automate_PionsDeAutomateSansPC", 
+    brain.RegisterFunction( "DEC_Automate_PionsDeAutomateSansPC",
         boost::function< std::vector< DEC_Decision_ABC* >( const DEC_Decision_ABC* ) >( boost::bind( &DEC_AutomateFunctions::GetPionsOfAutomateWithoutPC, _1 ) ) );
-    brain.RegisterFunction( "DEC_Automate_PionsDeAutomateAvecPC", 
+    brain.RegisterFunction( "DEC_Automate_PionsDeAutomateAvecPC",
         boost::function< std::vector< DEC_Decision_ABC* >( DEC_Decision_ABC* ) >( boost::bind( &DEC_AutomateFunctions::GetAutomatPionsWithPC, _1 ) ) );
 
     // State
     brain.RegisterFunction( "DEC_Automate_EstEmbraye", boost::bind( &DEC_AutomateFunctions::IsEngaged, this ) );
     brain.RegisterFunction( "DEC_Automate_EstEmbraye", &DEC_Decision_ABC::IsAutomateEngaged );
-    
+
     // Debug
     brain.RegisterFunction( "DEC_DecisionalState",
         boost::function< void ( const std::string&, const std::string& ) >( boost::bind( &DEC_AutomateFunctions::DecisionalState, boost::ref( GetAutomate() ), _1, _2 ) ) );
@@ -212,7 +212,7 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::Brain& brain )
         boost::function< float( boost::shared_ptr< DEC_Knowledge_Agent >, const DEC_Decision_ABC* ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetDangerosityOnPion, _1, _2 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_DangerositeSurConnaissance",
         boost::function< float( boost::shared_ptr< DEC_Knowledge_Agent >, boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetDangerosityOnKnowledge, _1, _2 ) ) );
-    brain.RegisterFunction( "DEC_ConnaissanceAgent_EtatOps", 
+    brain.RegisterFunction( "DEC_ConnaissanceAgent_EtatOps",
         boost::function< float( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions ::GetOperationalState, _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_EstDetruitTactique",
         boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetMajorOperationalState, _1 ) ) );
@@ -234,12 +234,12 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::Brain& brain )
         boost::function< std::vector< boost::shared_ptr< DEC_Knowledge_Object > >( const MT_Vector2D*, MT_Float, const std::vector< std::string >& ) >( boost::bind( &DEC_KnowledgeFunctions::GetObjectsInCircle< MIL_Automate >, boost::cref( GetAutomate() ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_ObjectKnowledgesInZone",
         boost::function< std::vector< boost::shared_ptr< DEC_Knowledge_Object > >( const TER_Localisation*, const std::vector< std::string >& ) >( boost::bind( &DEC_KnowledgeFunctions::GetObjectsInZone< MIL_Automate >, boost::cref( GetAutomate() ), _1, _2 ) ) );
-    brain.RegisterFunction( "DEC_Connaissances_ObjetsDansFuseau", 
+    brain.RegisterFunction( "DEC_Connaissances_ObjetsDansFuseau",
         boost::function< std::vector< boost::shared_ptr< DEC_Knowledge_Object > >( const std::string ) >( boost::bind( &DEC_KnowledgeFunctions::GetObjectsInFuseau< MIL_Automate >, boost::cref( GetAutomate() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion",
         boost::function< T_ConstKnowledgeAgentVector( const DEC_Decision_ABC* ) >( boost::bind( &DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedByPion< MIL_Automate >, boost::cref( GetAutomate() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Connaissances_Populations", boost::bind( &DEC_KnowledgeFunctions::GetPopulations< MIL_Automate >, boost::cref( GetAutomate() ) ) );
-    
+
     // Intelligence
     brain.RegisterFunction( "DEC_Rens_PourcentageEnnemisDebarquesDansZone",
         boost::function< float( const TER_Localisation* ) >( boost::bind( &DEC_IntelligenceFunctions::ComputeUnloadedEnemiesRatio, boost::cref( GetAutomate() ), _1 ) ) );
@@ -247,14 +247,14 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::Brain& brain )
         boost::function< float( const TER_Localisation* ) >( boost::bind( &DEC_IntelligenceFunctions::ComputeLoadedEnemiesRatio, boost::cref( GetAutomate() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Rens_PourcentageEnnemisDebarquesDansFuseau",
         boost::function< float( const MIL_Fuseau* ) >( boost::bind( &DEC_IntelligenceFunctions::ComputeFuseauUnloadedEnemiesRatio, boost::cref( GetAutomate() ), _1 ) ) );
-    brain.RegisterFunction( "DEC_Rens_PourcentageEnnemisEmbarquesDansFuseau", 
+    brain.RegisterFunction( "DEC_Rens_PourcentageEnnemisEmbarquesDansFuseau",
         boost::function< float( const MIL_Fuseau* ) >( boost::bind( &DEC_IntelligenceFunctions::ComputeFuseauLoadedEnemiesRatio, boost::cref( GetAutomate() ), _1 ) ) );
-    
+
     brain.RegisterFunction( "DEC_Rens_TrierZonesSelonPresenceEnnemisDebarques",
         boost::function< std::vector< boost::shared_ptr< TER_Localisation > >( const std::vector< boost::shared_ptr< TER_Localisation > >& ) >( boost::bind( &DEC_IntelligenceFunctions::SortZonesAccordingToUnloadedEnemies, boost::cref( GetAutomate() ), _1 ) ) );
-    brain.RegisterFunction( "DEC_Rens_TrierFuseauxSelonPresenceEnnemisDebarques", 
+    brain.RegisterFunction( "DEC_Rens_TrierFuseauxSelonPresenceEnnemisDebarques",
         boost::function< std::vector< boost::shared_ptr< MIL_Fuseau > >( const std::vector< boost::shared_ptr< MIL_Fuseau > >& ) >( boost::bind( &DEC_IntelligenceFunctions::SortAccordingToUnloadedEnemies, boost::cref( GetAutomate() ), _1 ) ) );
-    brain.RegisterFunction( "DEC_Rens_TrierFuseauxSelonPresenceEnnemisEmbarques", 
+    brain.RegisterFunction( "DEC_Rens_TrierFuseauxSelonPresenceEnnemisEmbarques",
         boost::function< std::vector< boost::shared_ptr< MIL_Fuseau > >( const std::vector< boost::shared_ptr< MIL_Fuseau > >& ) >( boost::bind( &DEC_IntelligenceFunctions::SortAccordingToLoadedEnemies, boost::cref( GetAutomate() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Rens_AmiSurFlanc",
         boost::function< bool( const MIL_Fuseau* ) >( boost::bind( &DEC_IntelligenceFunctions::IsFriendOnFlank, boost::cref( GetAutomate() ), _1 ) ) );
@@ -287,7 +287,7 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_RC_TirPion",
         boost::function< void ( int, int, int ) >( boost::bind( &DEC_MiscFunctions::ReportTirPion< MIL_Automate >, boost::ref( GetAutomate() ), _1, _2, _3 ) ) );
 
-    // Geometry       
+    // Geometry
     brain.RegisterFunction( "DEC_Geometrie_CalculerBarycentreLocalisationDansFuseau",
         boost::function< boost::shared_ptr< MT_Vector2D >( TER_Localisation* ) >( boost::bind( &DEC_GeometryFunctions::ComputeLocalisationBarycenterInFuseau< MIL_Automate >, boost::ref( GetAutomate() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Geometry_SplitLocalisation",
@@ -325,7 +325,7 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau",
         boost::function< boost::shared_ptr< MT_Vector2D >( const TER_Localisation* ) >( boost::bind( &DEC_GeometryFunctions::ComputeNearestLocalisationPointInFuseau< MIL_Automate >, boost::ref( GetAutomate() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Geometrie_CalculerPointProcheLocalisationNonClippeeDansFuseau",
-        boost::function< boost::shared_ptr< MT_Vector2D >( TER_Localisation* ) >( boost::bind( &DEC_GeometryFunctions::ComputeNearestUnclippedLocalisationPointInFuseau< MIL_Automate >, boost::ref( GetAutomate() ), _1 ) ) );  
+        boost::function< boost::shared_ptr< MT_Vector2D >( TER_Localisation* ) >( boost::bind( &DEC_GeometryFunctions::ComputeNearestUnclippedLocalisationPointInFuseau< MIL_Automate >, boost::ref( GetAutomate() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Geometrie_PionDevant",                                            &DEC_GeometryFunctions::GetFrontestPion );
     brain.RegisterFunction( "DEC_Geometrie_PionDerriere",                                          &DEC_GeometryFunctions::ComputeBackestAgent );
     brain.RegisterFunction( "DEC_Geometrie_CalculerRetard",                                        &DEC_GeometryFunctions::ComputeAutomatDelayFromSchedule                                  );
@@ -374,17 +374,17 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::Brain& brain )
             boost::function<std::list<MIL_Fuseau*> (unsigned int ) >( boost::bind( &DEC_OrdersFunctions::SplitFuseau  , boost::ref( GetAutomate() ), _1 ) ) );
 
     // Pion management
-    brain.RegisterFunction( "DEC_Pion_ChangeAutomate", 
+    brain.RegisterFunction( "DEC_Pion_ChangeAutomate",
         boost::function< bool( DEC_Decision_ABC*, const DEC_Decision_ABC* ) >( boost::bind( &DEC_AutomateFunctions::PionChangeAutomate, _1, _2 ) ) );
-    
-    // Accesseurs sur les pions   
+
+    // Accesseurs sur les pions
     brain.RegisterFunction( "DEC_Automate_PionEstContamine",
         boost::function< bool ( DEC_Decision_ABC* ) >( boost::bind( &DEC_AutomateFunctions::IsPionContaminated, this, _1 ) ) );
     brain.RegisterFunction( "DEC_Automate_PionEstNeutralise",
         boost::function< bool ( DEC_Decision_ABC* ) >( boost::bind( &DEC_AutomateFunctions::IsPionNeutralized, this, _1 ) ) );
     brain.RegisterFunction( "DEC_Automate_PionEstNeutralise",
         &DEC_AutomateDecision::IsPionNeutralized );
-    brain.RegisterFunction( "DEC_Automate_PionPosition", 
+    brain.RegisterFunction( "DEC_Automate_PionPosition",
         boost::function< boost::shared_ptr< MT_Vector2D >( const DEC_Decision_ABC* ) >( boost::bind( &DEC_AutomateFunctions::GetPionPosition, _1 ) ) );
     brain.RegisterFunction( "DEC_Automate_PionRelevePion",
         boost::function< bool( DEC_Decision_ABC*, DEC_Decision_ABC* ) >( boost::bind( &DEC_AutomateFunctions::MakePionRelievePion, boost::cref( GetAutomate() ), _1, _2 ) ) );
@@ -432,9 +432,9 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::Brain& brain )
         boost::function< void ( boost::shared_ptr< MIL_FragOrder > ) > ( boost::bind( &DEC_MiscFunctions::DeleteOrderRepresentation , boost::ref( GetAutomate() ), _1 ) ) );
     brain.RegisterFunction( "DEC_RemoveFromPointsCategory",
         boost::function< void( boost::shared_ptr< DEC_PathPoint > )>( boost::bind( &DEC_MiscFunctions::RemoveFromPointsCategory, boost::ref( GetAutomate() ), _1 ) ) );
-        
+
     // Former szName_, mission_, automate_:
-    brain.RegisterFunction( "DEC_GetRawMission", 
+    brain.RegisterFunction( "DEC_GetRawMission",
         boost::function< boost::shared_ptr< MIL_Mission_ABC >( DEC_Decision_ABC* ) >( boost::bind( &DEC_AutomateFunctions::GetMission, _1 ) ) );
     brain.RegisterFunction( "DEC_SetMission",
         boost::function< void( DEC_Decision_ABC*, boost::shared_ptr< MIL_Mission_ABC > )>( boost::bind( &DEC_AutomateFunctions::SetMission, _1, _2 ) ) );
@@ -462,7 +462,7 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::Brain& brain )
 // -----------------------------------------------------------------------------
 void DEC_AutomateDecision::StartMissionMrtBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission )
 {
-    const std::string& strBehavior = mission->GetType().GetDIABehavior( MIL_MissionType_ABC::ePhaseMRT );    
+    const std::string& strBehavior = mission->GetType().GetDIABehavior( MIL_MissionType_ABC::ePhaseMRT );
 
     ActivateOrder( strBehavior, mission );
 }
@@ -620,7 +620,7 @@ int DEC_AutomateDecision::GeteEtatLima() const
 {
     return eEtatLima_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision::SeteEtatLima
 // Created: LDC 2009-05-19
@@ -629,7 +629,7 @@ void DEC_AutomateDecision::SeteEtatLima( int value )
 {
     eEtatLima_ = value;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision::GeteEtatDec
 // Created: LDC 2009-05-19
@@ -638,7 +638,7 @@ int DEC_AutomateDecision::GeteEtatDec() const
 {
     return eEtatDec_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision::SeteEtatDec
 // Created: LDC 2009-05-19
@@ -647,7 +647,7 @@ void DEC_AutomateDecision::SeteEtatDec( int value )
 {
     eEtatDec_ = value;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision::GetrDestruction
 // Created: LDC 2009-05-19
@@ -656,7 +656,7 @@ float DEC_AutomateDecision::GetrDestruction() const
 {
     return rDestruction_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision::SetrDestruction
 // Created: LDC 2009-05-19
@@ -692,7 +692,7 @@ MIL_Fuseau* DEC_AutomateDecision::Getfuseau() const
 {
     throw;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision::Setfuseau
 // Created: LDC 2009-05-19
@@ -701,7 +701,7 @@ void DEC_AutomateDecision::Setfuseau( MIL_Fuseau* /*value*/ )
 {
     throw;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision::Getzone
 // Created: LDC 2009-05-19
@@ -710,7 +710,7 @@ TER_Localisation* DEC_AutomateDecision::Getzone() const
 {
     throw;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision::Setzone
 // Created: LDC 2009-05-19
@@ -719,7 +719,7 @@ void DEC_AutomateDecision::Setzone( TER_Localisation* /*value*/ )
 {
     throw;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision::GetbOrdreAttendre
 // Created: LDC 2009-05-19
@@ -728,7 +728,7 @@ bool DEC_AutomateDecision::GetbOrdreAttendre() const
 {
     return bOrdreAttendre_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision::SetbOrdreAttendre
 // Created: LDC 2009-05-19
@@ -737,7 +737,7 @@ void DEC_AutomateDecision::SetbOrdreAttendre( bool value )
 {
     bOrdreAttendre_ = value;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision::GetbOrdrePoursuivre
 // Created: LDC 2009-05-19
@@ -746,7 +746,7 @@ bool DEC_AutomateDecision::GetbOrdrePoursuivre() const
 {
     return bOrdrePoursuivre_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision::SetbOrdrePoursuivre
 // Created: LDC 2009-05-19
@@ -755,7 +755,7 @@ void DEC_AutomateDecision::SetbOrdrePoursuivre( bool value )
 {
     bOrdrePoursuivre_ = value;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision::GetbOrdreRalentir
 // Created: LDC 2009-05-19
@@ -764,7 +764,7 @@ bool DEC_AutomateDecision::GetbOrdreRalentir() const
 {
     return bOrdreRalentir_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision::SetbOrdreRalentir
 // Created: LDC 2009-05-19
@@ -773,7 +773,7 @@ void DEC_AutomateDecision::SetbOrdreRalentir( bool value )
 {
     bOrdreRalentir_ = value;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision::GetbOrdreDecrocher
 // Created: LDC 2009-05-19
@@ -782,7 +782,7 @@ bool DEC_AutomateDecision::GetbOrdreDecrocher() const
 {
     return bOrdreDecrocher_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision::SetbOrdreDecrocher
 // Created: LDC 2009-05-19
@@ -791,7 +791,7 @@ void DEC_AutomateDecision::SetbOrdreDecrocher( bool value )
 {
     bOrdreDecrocher_ = value;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision::GetbOrdreTenirSurLR
 // Created: LDC 2009-05-19
@@ -800,7 +800,7 @@ bool DEC_AutomateDecision::GetbOrdreTenirSurLR() const
 {
     return bOrdreTenirSurLR_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision::SetbOrdreTenirSurLR
 // Created: LDC 2009-05-19
@@ -809,7 +809,7 @@ void DEC_AutomateDecision::SetbOrdreTenirSurLR( bool value )
 {
     bOrdreTenirSurLR_ = value;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision::GetbOrdreTenir
 // Created: LDC 2009-05-19
@@ -818,7 +818,7 @@ bool DEC_AutomateDecision::GetbOrdreTenir() const
 {
     return bOrdreTenir_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision::SetbOrdreTenir
 // Created: LDC 2009-05-19

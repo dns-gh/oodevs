@@ -41,7 +41,7 @@ MedicalTreatmentAttribute::~MedicalTreatmentAttribute()
 // -----------------------------------------------------------------------------
 void MedicalTreatmentAttribute::Update( const Common::MsgObjectAttributes& message )
 {
-    if ( message.has_medical_treatment() )
+    if( message.has_medical_treatment() )
     {
         beds_               = message.medical_treatment().beds();
         availableBeds_      = message.medical_treatment().available_beds();

@@ -65,7 +65,7 @@ namespace boost
         {
             split_free( file, map, nVersion );
         }
-        
+
         template< typename Archive >
         void save( Archive& file, const PHY_DotationGroupContainer::T_DotationGroupMap& map, const unsigned int )
         {
@@ -87,19 +87,19 @@ namespace boost
             while ( nNbr-- )
             {
                 unsigned int nID;
-                
+
                 file >> nID;
                 file >> map[ PHY_DotationType::FindDotationType( nID ) ];
             }
         }
-        
+
         template< typename Archive >
         inline
         void serialize( Archive& file, PHY_DotationGroupContainer::T_DotationSet& set, const unsigned int nVersion )
         {
             split_free( file, set, nVersion );
         }
-        
+
         template< typename Archive >
         void save( Archive& file, const PHY_DotationGroupContainer::T_DotationSet& set, const unsigned int )
         {
@@ -108,7 +108,7 @@ namespace boost
             for ( PHY_DotationGroupContainer::CIT_DotationSet it = set.begin(); it != set.end(); ++it )
                 file << *it;
         }
-                
+
         template< typename Archive >
         void load( Archive& file, PHY_DotationGroupContainer::T_DotationSet& set, const unsigned int )
         {
@@ -311,8 +311,8 @@ const PHY_DotationCategory* PHY_DotationGroupContainer::GetIlluminationDotations
 // -----------------------------------------------------------------------------
 float PHY_DotationGroupContainer::GetIlluminatingRange( ) const
 {
-	float rangeMax = 0.0;   
-	for( T_DotationGroupMap::const_iterator it = dotationGroups_.begin(); it != dotationGroups_.end(); it++ )
+    float rangeMax = 0.0;
+    for( T_DotationGroupMap::const_iterator it = dotationGroups_.begin(); it != dotationGroups_.end(); it++ )
     {
         float range = it->second->GetIlluminatingRange( );
         if( range > rangeMax )
@@ -376,7 +376,7 @@ void PHY_DotationGroupContainer::ConsumeFireReservations()
 // Created: NLD 2005-01-21
 // -----------------------------------------------------------------------------
 void PHY_DotationGroupContainer::NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const
-{   
+{
     assert( pRoleDotation_ );
     pRoleDotation_->NotifySupplyNeeded( dotationCategory, bNewNeed );
 }
@@ -397,7 +397,7 @@ void PHY_DotationGroupContainer::FillSupplyRequest( PHY_SupplyDotationRequestCon
 // -----------------------------------------------------------------------------
 void PHY_DotationGroupContainer::ChangeDotationsValueUsingTC2( const PHY_DotationType& dotationType, const PHY_AmmoDotationClass* pAmmoDotationClass, MT_Float rCapacityFactor, MIL_AutomateLOG& tc2 ) const
 {
-    CIT_DotationGroupMap it = dotationGroups_.find( &dotationType );    
+    CIT_DotationGroupMap it = dotationGroups_.find( &dotationType );
     if( it == dotationGroups_.end() )
         return;
     it->second->ChangeDotationsValueUsingTC2( pAmmoDotationClass, rCapacityFactor, tc2 );
@@ -438,7 +438,7 @@ void PHY_DotationGroupContainer::SendChangedState( client::UnitAttributes& asn )
         MsgsSimToClient::ResourceDotations_ResourceDotation& asnRessource = *asn().mutable_dotation_eff_ressource()->add_elem();
         asnRessource.set_ressource_id( dotation.GetCategory().GetMosID() );
         asnRessource.set_quantite_disponible( (unsigned int)dotation.GetValue() );
-    }    
+    }
 }
 
 // -----------------------------------------------------------------------------

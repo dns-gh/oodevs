@@ -66,7 +66,7 @@ public:
 protected:
     //! @name Tools
     //@{
-    const MT_Vector2D& GetPerceiverPosition () const; 
+    const MT_Vector2D& GetPerceiverPosition () const;
     const MT_Vector2D& GetPerceiverDirection() const; // Direction de déplacement
     //@}
 

@@ -46,7 +46,7 @@ public:
     //@}
 
 private slots:
-    
+
     //! @name Operations
     //@{
     virtual void OnStart();

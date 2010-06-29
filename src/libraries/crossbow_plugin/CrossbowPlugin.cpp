@@ -89,15 +89,15 @@ namespace
 // Name: CrossbowPlugin constructor
 // Created: JCR 2007-08-29
 // -----------------------------------------------------------------------------
-CrossbowPlugin::CrossbowPlugin( const dispatcher::Config& config, xml::xistream& xis, dispatcher::Model& model, 
-                                dispatcher::SimulationPublisher_ABC& publisher, dispatcher::ClientPublisher_ABC& /*clients*/, tools::MessageDispatcher_ABC& dispatcher, 
+CrossbowPlugin::CrossbowPlugin( const dispatcher::Config& config, xml::xistream& xis, dispatcher::Model& model,
+                                dispatcher::SimulationPublisher_ABC& publisher, dispatcher::ClientPublisher_ABC& /*clients*/, tools::MessageDispatcher_ABC& dispatcher,
                                 dispatcher::LinkResolver_ABC& /*links*/, dispatcher::CompositeRegistrable& /*registrables*/ )
     : crossbowPublisher_( new CrossbowPublisher( config, model, publisher, xis ) )
     , clientNetworker_  ( new DummyClientNetworker() )
 {
     dispatcher.RegisterMessage( *this, &CrossbowPlugin::OnReceiveMessengerToClient );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: CrossbowPlugin destructor
 // Created: JCR 2007-08-29
@@ -114,7 +114,7 @@ CrossbowPlugin::~CrossbowPlugin()
 void CrossbowPlugin::Update()
 {
     static bool connect = false;
-    if ( !connect )
+    if( !connect )
     {
         // clientNetworker_->Connect( "localhost:10001", false );
         connect = true;

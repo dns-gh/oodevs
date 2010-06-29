@@ -22,7 +22,7 @@ PropertiesDictionary::PropertiesDictionary( Controller& controller )
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PropertiesDictionary destructor
 // Created: SBO 2006-10-17

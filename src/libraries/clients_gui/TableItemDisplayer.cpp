@@ -22,7 +22,7 @@ TableItemDisplayer::TableItemDisplayer()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: TableItemDisplayer destructor
 // Created: SBO 2006-10-18
@@ -50,7 +50,7 @@ kernel::Displayer_ABC& TableItemDisplayer::SubItem( const QString& )
     NotToBeCalled( __FUNCTION__ );
     return *this;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: TableItemDisplayer::StartDisplay
 // Created: SBO 2006-10-18
@@ -59,7 +59,7 @@ void TableItemDisplayer::StartDisplay()
 {
     message_ = "";
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: TableItemDisplayer::DisplayFormatted
 // Created: SBO 2006-10-18
@@ -68,7 +68,7 @@ void TableItemDisplayer::DisplayFormatted( const QString& formatted )
 {
     message_ += formatted;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: TableItemDisplayer::EndDisplay
 // Created: SBO 2006-10-18

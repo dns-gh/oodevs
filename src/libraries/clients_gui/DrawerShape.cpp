@@ -197,7 +197,7 @@ namespace
                     << xml::attribute( "y", point.Y() )
                   << xml::end();
         }
-        
+
         xml::xostream* xos_;
     };
 }

@@ -66,7 +66,7 @@ public:
     virtual MIL_Agent_ABC&      GetAgent            () const = 0;
     virtual MT_Float            GetCurrentSpeed     () const = 0;
     virtual bool                HasDoneMagicMove    () const = 0;
-    virtual bool                HasSpeedChanged     () const = 0; // Position or direction or height has changed 
+    virtual bool                HasSpeedChanged     () const = 0; // Position or direction or height has changed
     virtual bool                HasLocationChanged  () const = 0;
     //@}
 

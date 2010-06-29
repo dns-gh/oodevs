@@ -89,7 +89,7 @@ public:
     //@}
 
     //! @name Accessors
-    //@{    
+    //@{
     MIL_EntityManager&       GetEntityManager      () const;
     MIL_Folk&                GetFolkManager        () const;
     UrbanModel&              GetUrbanModel         () const;
@@ -132,7 +132,7 @@ private:
     //@{
     void ReadStaticData();
     void ReadTerData   ();
-    void ReadHLA       ();    
+    void ReadHLA       ();
     //@}
 
     //! @name Timer
@@ -163,7 +163,7 @@ private:
     MIL_EntityManager*           pEntityManager_;
     DEC_Workspace*               pWorkspaceDIA_;
     PHY_MeteoDataManager*        pMeteoDataManager_;
-      
+
     MT_TimerManager              timerManager_;
     MIL_TacticalLineManager*     pTacticalLineManager_;
     DEC_PathFind_Manager*        pPathFindManager_;
@@ -171,7 +171,7 @@ private:
     MIL_CheckPointManager*       pCheckPointManager_;
     NET_AgentServer*             pAgentServer_;
     HLA_Federate*                pFederate_;
-    
+
     MIL_Folk*                    pFolk_;
 
     UrbanModel*                  pUrbanModel_;

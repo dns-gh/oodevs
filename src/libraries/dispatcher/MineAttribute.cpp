@@ -32,7 +32,7 @@ MineAttribute::MineAttribute( const Common::MsgObjectAttributes& asnMsg )
 MineAttribute::~MineAttribute()
 {
     // NOTHING
-}  
+}
 
 // -----------------------------------------------------------------------------
 // Name: MineAttribute::Update
@@ -42,12 +42,12 @@ void MineAttribute::Update( const Common::MsgObjectAttributes& asnMsg )
 {
     if( asnMsg.has_mine()  )
     {
-        if ( asnMsg.mine().has_dotation_type()  )
+        if( asnMsg.mine().has_dotation_type()  )
             dotation_ = asnMsg.mine().dotation_type();
-        if ( asnMsg.mine().has_dotation_nbr()  )
+        if( asnMsg.mine().has_dotation_nbr()  )
             nNbrDotationForMining_ = asnMsg.mine().dotation_nbr();
-        if ( asnMsg.mine().has_percentage()  )
-            nPercentageMining_ = asnMsg.mine().percentage();        
+        if( asnMsg.mine().has_percentage()  )
+            nPercentageMining_ = asnMsg.mine().percentage();
     }
 }
 

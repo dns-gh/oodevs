@@ -18,7 +18,7 @@ public:
         SetModel( *model_ );
     }
     virtual ~StubDEC_Decision() {}
-    
+
     void SetModel( const DEC_Model_ABC& model )
     {
         InitBrain( model.GetScriptFile(), model.GetName(), model.GetIncludePath(), "stubAutomate" );

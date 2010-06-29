@@ -38,7 +38,7 @@ public:
     static T_ConstKnowledgeAgentVector GetDetectedAgentsInZone          ( const MIL_AgentPion& callerAgent, const TER_Localisation* area );
     static T_ConstKnowledgeAgentVector GetAgentsAttacking               ( const MIL_AgentPion& callerAgent );
     static T_ConstKnowledgeAgentVector GetAgentsAttackingAlly           ( const DEC_Decision_ABC* agentAlly);
-   
+
     static T_ConstKnowledgeAgentVector GetDangerousEnemies              ( const MIL_AgentPion& callerAgent );
     static T_ConstKnowledgeAgentVector GetLivingEnemiesPerceived        ( const MIL_AgentPion& callerAgent );
     static T_ConstKnowledgeAgentVector GetLivingEnemiesPerceivedInFuseau( const MIL_AgentPion& callerAgent );
@@ -47,11 +47,11 @@ public:
     static T_ConstKnowledgeAgentVector GetLivingEnemiesInCircle         ( const MIL_AgentPion& callerAgent, const MT_Vector2D* pCenter, float radius );
 
     static void GetObservableKnowledge( const directia::Brain& brain, const MIL_AgentPion& pion, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& table );
-	static void GetUrbanBlockKnowledge( const directia::Brain& brain, const MIL_AgentPion& pion, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& table );   
-	static void GetUrbanBlockKnowledgeInCercle( const directia::Brain& brain, const MIL_AgentPion& pion, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& table, boost::shared_ptr< MT_Vector2D > center, float radius );
-	static void GetDestroyableKnowledge( const directia::Brain& brain, const MIL_AgentPion& pion, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& table );
-	static void GetIdentifiableKnowledge( const directia::Brain& brain, const MIL_AgentPion& pion, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& table );
-    
+    static void GetUrbanBlockKnowledge( const directia::Brain& brain, const MIL_AgentPion& pion, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& table );
+    static void GetUrbanBlockKnowledgeInCercle( const directia::Brain& brain, const MIL_AgentPion& pion, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& table, boost::shared_ptr< MT_Vector2D > center, float radius );
+    static void GetDestroyableKnowledge( const directia::Brain& brain, const MIL_AgentPion& pion, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& table );
+    static void GetIdentifiableKnowledge( const directia::Brain& brain, const MIL_AgentPion& pion, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& table );
+
     template< typename T > static std::vector< boost::shared_ptr< TER_Localisation > > SortAccordingToUnloadedEnemies( const T& caller, const std::vector< boost::shared_ptr< TER_Localisation > >& locations );
     template< typename T > static std::vector< boost::shared_ptr< TER_Localisation > > SortAccordingToLoadedEnemies  ( const T& caller, const std::vector< boost::shared_ptr< TER_Localisation > >& locations );
 
@@ -63,7 +63,7 @@ public:
     template< typename T > static T_ConstKnowledgeAgentVector GetFriendsInZone( const T& caller, const TER_Localisation* location );
     template< typename T > static void ShareKnowledgesWith      ( const T& caller, DEC_Decision_ABC* receiver, float minutes );
     template< typename T > static void ShareKnowledgesInZoneWith( const T& caller, DEC_Decision_ABC* receiver, const MT_Vector2D* center, float radius );
-       
+
     static boost::shared_ptr< DEC_Knowledge_Object > GetClosestObject      ( const MIL_Agent_ABC& callerAgent, const std::string& type );
     static boost::shared_ptr< DEC_Knowledge_Object > GetClosestFriendObject( const MIL_Agent_ABC& callerAgent, const std::string& type );
     static T_KnowledgeObjectDiaIDVector GetObjectsColliding( const MIL_AgentPion& callerAgent );

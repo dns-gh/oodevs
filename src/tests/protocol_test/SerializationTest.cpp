@@ -101,7 +101,7 @@ namespace
         {
             client_.OnReceivePion_mocker.expects( exactly( count ) ).with( eq< const std::string >( endpoint_ ), eq< const MsgPion >( message ) );
         }
-        
+
         void AddClientExpectation( EmptyMessage& message, unsigned int count = 1 )
         {
             client_.OnReceiveEmpty_mocker.expects( exactly( count ) ).with( eq< const std::string >( endpoint_ ), eq< const EmptyMessage >( message ) );

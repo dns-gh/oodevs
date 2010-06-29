@@ -68,9 +68,9 @@ public:
     virtual ~QueryDatabaseUpdater();
     //@}
 
-    //! @name 
+    //! @name
     //@{
-    void Flush();    
+    void Flush();
     void Clean();
     //@}
 
@@ -115,7 +115,7 @@ private:
     //@{
     Database_ABC&               database_;
     const dispatcher::Model&    model_;
-    const ReportFactory&        reportFactory_;    
+    const ReportFactory&        reportFactory_;
     const WorkingSession&       session_;
     //@}
 };

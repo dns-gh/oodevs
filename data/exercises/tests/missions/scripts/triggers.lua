@@ -44,14 +44,14 @@ function Start()
             events.agents:AgentCreated(),
             { "trigger_test_creation" },
             function( entity )
-				Mission.create( entity:GetIdentifier(), model.types.missions["move"] )
-						:With( { name = "Danger direction", type = "Direction", value = 0 } )
-						:With( Path.create( "Route" ):AddPoint( "Destination", config.positions.destination[1] ) )
-						:Issue()
+                Mission.create( entity:GetIdentifier(), model.types.missions["move"] )
+                        :With( { name = "Danger direction", type = "Direction", value = 0 } )
+                        :With( Path.create( "Route" ):AddPoint( "Destination", config.positions.destination[1] ) )
+                        :Issue()
                 ChangeState( "trigger_test_position" )
             end
         },
-        
+
         {
             events.agents:AgentEnters( drawings:Create( "trigger_p1" ):GetCoordinates() ),
             { "trigger_test_position" },
@@ -61,7 +61,7 @@ function Start()
                 ChangeState( "trigger_test_detection" )
             end
         },
-	
+
         {
             events.agents:KnowledgeCreated(),
             { "trigger_test_detection" },
@@ -71,7 +71,7 @@ function Start()
                 ChangeState( "trigger_test_identification" )
             end
         },
-	
+
         {
             events.agents:PerceptionChanged(),
             { "trigger_test_identification" },
@@ -81,7 +81,7 @@ function Start()
                 ChangeState( "trigger_test_operational_state" )
             end
         },
-	
+
         {
             events.agents:OperationalStateChanged(),
             { "trigger_test_operational_state" },
@@ -93,8 +93,8 @@ function Start()
                 end
             end
         },
-	
-		AtState( "trigger_test_end",
+
+        AtState( "trigger_test_end",
             function()
                 Deactivate()
             end

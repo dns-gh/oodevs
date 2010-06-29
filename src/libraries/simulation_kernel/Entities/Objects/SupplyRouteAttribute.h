@@ -44,7 +44,7 @@ public:
 
     //! @name ODB
     //@{
-    virtual void WriteODB( xml::xostream& /*xos*/ ) const;    
+    virtual void WriteODB( xml::xostream& /*xos*/ ) const;
     //@}
 
     //! @name Network
@@ -78,7 +78,7 @@ private:
     //@}
 
 private:
-    //! @name 
+    //! @name
     //@{
     bool       bEquipped_;
     MT_Float   rWeightSupported_;

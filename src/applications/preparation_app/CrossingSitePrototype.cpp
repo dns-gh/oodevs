@@ -28,7 +28,7 @@ CrossingSitePrototype::CrossingSitePrototype( QWidget* parent, Object_ABC*& crea
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: CrossingSitePrototype destructor
 // Created: SBO 2006-04-19
@@ -37,7 +37,7 @@ CrossingSitePrototype::~CrossingSitePrototype()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: CrossingSitePrototype::Commit
 // Created: SBO 2006-04-19
@@ -51,7 +51,7 @@ void CrossingSitePrototype::Commit()
             attribute->SetWidth( width_->value() );
             attribute->SetDepth( depth_->value() );
             attribute->SetFlowSpeed( speed_->value() );
-            attribute->SetConstruction( needsConstruction_->isOn() );        
+            attribute->SetConstruction( needsConstruction_->isOn() );
         creation_->Get< ObjectAttributesContainer >().Register( *attribute );
     }
 }

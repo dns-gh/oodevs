@@ -116,7 +116,7 @@ QWidget* ADN_Models_GUI::BuildPage( QVGroupBox*& pGroup, QWidget* pParent, ADN_M
     vMissionConnector[eOrders] = &pListOrders->GetConnector();
 
     pListMissions->SetItemConnectors( vMissionConnector );
-    
+
     // Connect the gui to the data.
     pListModels->SetItemConnectors(vInfosConnectors);
 

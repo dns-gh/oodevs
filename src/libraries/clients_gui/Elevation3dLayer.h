@@ -27,7 +27,7 @@ namespace kernel
     class DetectionMap;
     class ModelLoaded;
 }
-namespace gl 
+namespace gl
 {
     class FragmentShader;
     class ShaderProgram;

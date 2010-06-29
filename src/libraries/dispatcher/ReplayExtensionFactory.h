@@ -19,7 +19,7 @@ namespace kernel
 
 namespace dispatcher
 {
-    
+
     class ReplayModel_ABC;
 
 // =============================================================================

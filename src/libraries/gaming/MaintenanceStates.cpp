@@ -61,14 +61,14 @@ void MaintenanceStates::DoUpdate( const MsgsSimToClient::MsgLogMaintenanceState&
     if( message.has_chaine_activee()  )
         bChainEnabled_ = message.chaine_activee() != 0;
     if( message.has_regime_travail()  )
-        nWorkRate_ = message.regime_travail() + 1; // $$$$ AGE 2006-06-27: 
+        nWorkRate_ = message.regime_travail() + 1; // $$$$ AGE 2006-06-27:
 
     if( message.has_priorites()  )
     {
         priorities_.resize( message.priorites().elem_size() );
         for( int i = 0; i < message.priorites().elem_size(); ++i )
             priorities_[i] = & resolver_.Get( message.priorites().elem( i ).equipment() );
-    }   
+    }
     if( message.has_priorites_tactiques()  )
     {
         tacticalPriorities_.resize( message.priorites_tactiques().elem_size() );

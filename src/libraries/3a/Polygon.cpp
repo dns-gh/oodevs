@@ -19,7 +19,7 @@ Polygon::Polygon( const std::vector< Position >& positions )
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Polygon destructor
 // Created: AGE 2007-10-09

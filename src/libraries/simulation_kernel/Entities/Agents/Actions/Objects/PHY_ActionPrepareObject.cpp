@@ -60,7 +60,7 @@ void PHY_ActionPrepareObject::StopAction()
 // Prepared: NLD 2004-08-18
 // -----------------------------------------------------------------------------
 void PHY_ActionPrepareObject::Execute()
-{   
+{
     if( pObject_ && pObject_->IsMarkedForDestruction() )
         pObject_ = 0;
 

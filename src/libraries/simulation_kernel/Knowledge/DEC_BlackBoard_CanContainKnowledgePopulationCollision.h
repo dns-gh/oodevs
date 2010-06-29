@@ -42,11 +42,11 @@ public:
              DEC_BlackBoard_CanContainKnowledgePopulationCollision();
     virtual ~DEC_BlackBoard_CanContainKnowledgePopulationCollision();
     //@}
-    
+
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}

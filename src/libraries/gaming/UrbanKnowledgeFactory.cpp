@@ -32,7 +32,7 @@ UrbanKnowledgeFactory::UrbanKnowledgeFactory( Controllers& controllers, Model& m
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: UrbanKnowledgeFactory destructor
 // Created: MGD 2009-12-10

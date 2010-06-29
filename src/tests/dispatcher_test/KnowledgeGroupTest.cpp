@@ -39,7 +39,7 @@ BOOST_AUTO_TEST_CASE( KnowledgeGroup_CanBeUnderATeam )
         message.set_oid_camp( side.GetId() );
         message.set_type( "Standard" );
         message.set_jam( true );
-        
+
         // creation
         MOCK_EXPECT( side, RegisterKnowledgeGroup ).once();
         result.reset( new dispatcher::KnowledgeGroup( model, message ) );

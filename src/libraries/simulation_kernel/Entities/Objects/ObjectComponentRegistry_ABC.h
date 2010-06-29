@@ -37,14 +37,14 @@ public:
     //@{
              ObjectComponentRegistry_ABC() {}
     virtual ~ObjectComponentRegistry_ABC() {}
-    //@}    
+    //@}
 
     //! @name Registrer
     //@{
     virtual void Register( const std::string& component, const T_CallBack& callback ) = 0;
     //@}
 
-protected:    
+protected:
     //! @name Type
     //@{
     typedef std::map< std::string, T_CallBack >     T_CallBacks;

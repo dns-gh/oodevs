@@ -32,7 +32,7 @@ NBCPrototype::NBCPrototype( QWidget* parent, const tools::Resolver_ABC< NBCAgent
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: NBCPrototype destructor
 // Created: SBO 2006-04-20
@@ -52,13 +52,13 @@ void NBCPrototype::Commit()
     {
         PropertiesDictionary& dico = creation_->Get< PropertiesDictionary >();
         NBCAttribute* attribute = new NBCAttribute( dico );
-		{
+        {
             attribute->SetState( nbcStates_->GetValue() );
             for( QListViewItem* item = nbcAgents_->firstChild(); item != 0; item = item->nextSibling() )
                 if( item->isSelected() )
                     attribute->AddAgent( *static_cast< ValuedListItem* >( item )->GetValue< const NBCAgent >() );
             attribute->SetDanger( danger_->text().toUInt() );
-		}
+        }
         creation_->Get< ObjectAttributesContainer >().Register( *attribute );
     }
 }

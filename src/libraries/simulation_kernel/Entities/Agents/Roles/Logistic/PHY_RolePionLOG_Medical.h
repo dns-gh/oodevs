@@ -51,7 +51,7 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
@@ -84,7 +84,7 @@ public:
     virtual int                    GetAvailabilityScoreForSorting   ( const PHY_MedicalCollectionAmbulance& ambulance ) const;
     virtual void                   ReserveForSorting                ( const PHY_MedicalCollectionAmbulance& ambulance );
     virtual void                   CancelReservationForSorting      ( const PHY_MedicalCollectionAmbulance& ambulance );
-    
+
     virtual int                    GetAvailabilityScoreForHealing   ( const PHY_MedicalHumanState& humanState );
     virtual bool                   HandleHumanForHealing            ( PHY_MedicalHumanState& humanState );
 
@@ -153,7 +153,7 @@ private:
 
     MT_Float GetAvailabilityRatio( PHY_ComposanteUsePredicate& predicate ) const;
     void ExecuteOnComponentsAndLendedComponents( ComposanteUsePredicate_ABC& predicate, PHY_Composante_ABC::T_ComposanteUseMap& result ) const;
-    //@}    
+    //@}
 
 private:
     MIL_AgentPionLOG_ABC&   pion_;

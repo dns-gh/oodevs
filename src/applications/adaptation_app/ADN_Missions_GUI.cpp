@@ -93,7 +93,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( QGroupBox*& pGroup, QWidget* parent, A
     QGroupBox* pEnum = new QGroupBox( 1, Qt::Horizontal, tr( "Enumeration values" ), pParameters );
     ADN_MissionParameterValues_Table* valueList = new ADN_MissionParameterValues_Table( pEnum, "" );
     vInfosConnectors[eParameterValues] = &valueList->GetConnector();
-    
+
     // Connect the gui to the data.
     paramList->SetItemConnectors( vInfosConnectors );
     listMissions->SetItemConnectors( vInfosConnectors );
@@ -130,7 +130,7 @@ QWidget* ADN_Missions_GUI::BuildAutomatMissions( QWidget* parent )
 // -----------------------------------------------------------------------------
 QWidget* ADN_Missions_GUI::BuildPopulationMissions( QWidget* parent )
 {
-    return BuildMissions( pPopulationMissionsGroup_, parent, data_.populationMissions_ );    
+    return BuildMissions( pPopulationMissionsGroup_, parent, data_.populationMissions_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -174,7 +174,7 @@ QWidget* ADN_Missions_GUI::BuildFragOrders( QWidget* parent )
     pLayout->addWidget( listFragOrders, 1 );
     pLayout->addWidget( pFragOrderGroup_, 5 );
 
-    return mainWidget;   
+    return mainWidget;
 }
 
 // -----------------------------------------------------------------------------

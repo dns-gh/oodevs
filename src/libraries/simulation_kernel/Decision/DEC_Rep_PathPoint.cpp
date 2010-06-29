@@ -1,12 +1,12 @@
 //*****************************************************************************
-// 
+//
 // $Created: JDY 03-05-05 $
 // $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Knowledge/DEC_Rep_PathPoint.cpp $
 // $Author: Nld $
 // $Modtime: 7/06/05 16:39 $
 // $Revision: 6 $
 // $Workfile: DEC_Rep_PathPoint.cpp $
-// 
+//
 //*****************************************************************************
 
 #include "simulation_kernel_pch.h"
@@ -42,7 +42,7 @@ void DEC_Rep_PathPoint::SendToDIA( DEC_Representations& agent, boost::shared_ptr
 {
     if( pSentToDiaAgent_ )
         return;
-        
+
     // ATTENTION, si cette fonction est appelée, alors l'agent physique s'est automatiquement arrêté sur la position du point...
     agent.AddToPointsCategory( point );
 
@@ -68,10 +68,10 @@ void DEC_Rep_PathPoint::RemoveFromDIA( boost::shared_ptr< DEC_PathPoint > self )
 // -----------------------------------------------------------------------------
 void DEC_Rep_PathPoint::Dump() const
 {
-    std::cout << "    Rep_PathPoint " << vPos_ 
-              << " - Type : " << nObjectTypes_.DumpToString() 
-              << " - TypeToNext " << nObjectTypesToNextPoint_.DumpToString() 
-              << " - Type terrain " << nTypeTerrain_.DumpToString() 
+    std::cout << "    Rep_PathPoint " << vPos_
+              << " - Type : " << nObjectTypes_.DumpToString()
+              << " - TypeToNext " << nObjectTypesToNextPoint_.DumpToString()
+              << " - Type terrain " << nTypeTerrain_.DumpToString()
               << " - nTypePoint_ " << (unsigned int)GetTypePoint()
               << std::endl;
 }

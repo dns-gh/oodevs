@@ -63,7 +63,7 @@ std::auto_ptr< SpeedComputer_ABC > MoveComputerFactory::CreateSpeedComputer( con
     std::auto_ptr< SpeedComputer_ABC > pSpeedComputer ;
     if( loaded )
         pSpeedComputer.reset( new LoadedSpeedComputer( strategy ) );
-    else    
+    else
         pSpeedComputer.reset( new UnloadedSpeedComputer( strategy ) );
     return pSpeedComputer;
 }

@@ -70,7 +70,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void RegisterIn( directia::Brain& brain ) 
+    virtual void RegisterIn( directia::Brain& brain )
     {
         forward_.RegisterIn( brain );
     }

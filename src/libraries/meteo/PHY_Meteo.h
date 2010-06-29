@@ -88,7 +88,7 @@ public:
     //@{
     const PHY_Precipitation& GetPrecipitation() const;
     const PHY_Lighting&      GetLighting     () const;
-    const sWindData&         GetWind         () const;       
+    const sWindData&         GetWind         () const;
     //@}
 
     //! @name Operations
@@ -109,7 +109,7 @@ public:
     virtual QString GetName() const;
     virtual unsigned long GetId() const;
     //@}
-   
+
 protected:
     //! @name Member data
     //@{

@@ -44,7 +44,7 @@ public:
     virtual void NotifyReleased() {};
     //@}
 
-    //! @name Operations 
+    //! @name Operations
     //@{
     virtual void Update    ( bool /*bIsDead*/ ) {}
     virtual void Clean     () {}

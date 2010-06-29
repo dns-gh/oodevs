@@ -29,7 +29,7 @@ class ADN_CT_Sensors_Sizes
 {
 public:
 
-    ADN_CT_Sensors_Sizes(ADN_Sensors_Sizes_GUI& tab) 
+    ADN_CT_Sensors_Sizes(ADN_Sensors_Sizes_GUI& tab)
     : ADN_Connector_Table_ABC(tab,false)
     {}
 
@@ -42,11 +42,11 @@ public:
         // add a new row & set new values
         tab_.setItem(i,0,pItemString=new ADN_TableItem_String(&tab_,obj));
         tab_.setItem(i,1,pItemDouble=new ADN_TableItem_Double(&tab_,obj));
-        
+
         // disable composante category name
         pItemString->setEnabled(false);
         pItemString->SetAutoEnabled(false);
-        
+
         // set table item properties
         pItemDouble->GetValidator().setRange( 0, 1, 2 );
 
@@ -54,7 +54,7 @@ public:
         pItemString->GetConnector().Connect(static_cast<ModificatorSizeInfos*>(obj)->ptrSize_.GetData());
         pItemDouble->GetConnector().Connect(&static_cast<ModificatorSizeInfos*>(obj)->rCoeff_);
     }
-    
+
 
 private:
     ADN_CT_Sensors_Sizes& operator=( const ADN_CT_Sensors_Sizes& );
@@ -77,21 +77,21 @@ ADN_Sensors_Sizes_GUI::ADN_Sensors_Sizes_GUI(QWidget * parent )
 
     // hide vertical header
     verticalHeader()->hide();
-    
+
     // tab with 2 columns
     setNumCols(2);
     setNumRows(0);
     setColumnStretchable(0,true);
     setColumnStretchable(1,true);
     setMaximumWidth( 300 );
-    
+
     horizontalHeader()->setLabel(0, tr( "Volumes" ) );
     horizontalHeader()->setLabel(1, tr( "Modifiers" ) );
 
     // connector creation
     pConnector_=new ADN_CT_Sensors_Sizes(*this);
     connect( this, SIGNAL( currentChanged( int, int ) ), SLOT( OnCurrentChanged() ) );
-    connect( this, SIGNAL( selectionChanged() ), SLOT( OnCurrentChanged() ) );  
+    connect( this, SIGNAL( selectionChanged() ), SLOT( OnCurrentChanged() ) );
 }
 
 

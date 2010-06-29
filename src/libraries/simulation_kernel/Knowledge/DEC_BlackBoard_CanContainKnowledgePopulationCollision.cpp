@@ -33,7 +33,7 @@ DEC_BlackBoard_CanContainKnowledgePopulationCollision::DEC_BlackBoard_CanContain
 DEC_BlackBoard_CanContainKnowledgePopulationCollision::~DEC_BlackBoard_CanContainKnowledgePopulationCollision()
 {
     while ( !knowledgePopulationCollisionMap_.empty() )
-        DestroyKnowledgePopulationCollision( *knowledgePopulationCollisionMap_.begin()->second );        
+        DestroyKnowledgePopulationCollision( *knowledgePopulationCollisionMap_.begin()->second );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,7 +73,7 @@ void DEC_BlackBoard_CanContainKnowledgePopulationCollision::save( MIL_CheckPoint
 // -----------------------------------------------------------------------------
 DEC_Knowledge_PopulationCollision& DEC_BlackBoard_CanContainKnowledgePopulationCollision::CreateKnowledgePopulationCollision( const MIL_Agent_ABC& agent, MIL_Population& population )
 {
-    DEC_Knowledge_PopulationCollision* pKnowledge = new DEC_Knowledge_PopulationCollision( agent, population );//$$ RAM   
+    DEC_Knowledge_PopulationCollision* pKnowledge = new DEC_Knowledge_PopulationCollision( agent, population );//$$ RAM
     if( ! knowledgePopulationCollisionMap_.insert( std::make_pair( &population, pKnowledge ) ).second )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
     return *pKnowledge;

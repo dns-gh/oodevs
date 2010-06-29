@@ -49,15 +49,15 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive& , const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
-    
+
     //! @name Operations
     //@{
     void Prepare();
-    
+
     void Update ( const DEC_Knowledge_PopulationPerception& perception );
     void Update ( const DEC_Knowledge_PopulationConcentrationPerception& perception ); // Called by DEC_Knowledge_PopulationPerception
     void Update ( const DEC_Knowledge_PopulationFlowPerception&          perception ); // Called by DEC_Knowledge_PopulationPerception
@@ -88,7 +88,7 @@ public:
           bool                    IsInZone          ( const TER_Localisation& loc           ) const;
           MT_Float                GetDominationState() const;
     const MIL_PopulationAttitude& GetAttitude       () const;
-          
+
           MT_Vector2D             GetClosestPoint   ( const MT_Vector2D&      refPos        ) const;
           MT_Vector2D             GetSecuringPoint  ( const MIL_Agent_ABC&    securingAgent ) const;
           MT_Vector2D             GetSafetyPosition ( const MIL_AgentPion&    agent        , MT_Float rMinDistance ) const;

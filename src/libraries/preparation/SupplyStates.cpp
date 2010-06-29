@@ -27,7 +27,7 @@ SupplyStates::SupplyStates( Controller& controller, Entity_ABC& entity, const to
 {
     CreateDictionary( dico, entity );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: SupplyStates destructor
 // Created: SBO 2006-10-24

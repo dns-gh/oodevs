@@ -39,7 +39,7 @@ PHY_ActionFly::~PHY_ActionFly()
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
 void PHY_ActionFly::Execute()
-{   
+{
     role_.Fly();
 }
 

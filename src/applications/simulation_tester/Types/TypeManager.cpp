@@ -90,7 +90,7 @@ void TypeManager::LoadAutomatTypes( const std::string& strConfigFile )
         MT_ChangeDir        ( strDir );
 
         XmlInputArchive    archive;
-        
+
         uint16             nAutomatTypesLoaded = 0;
 
         archive.Open       ( strFile );
@@ -140,7 +140,7 @@ void TypeManager::LoadPawnTypes( const std::string& strConfigFile )
         MT_ChangeDir        ( strDir );
 
         XmlInputArchive    archive;
-        
+
         uint16             nPawnTypesLoaded = 0;
 
         archive.Open       ( strFile );
@@ -190,7 +190,7 @@ void TypeManager::LoadPopulationTypes( const std::string& strConfigFile )
         MT_ChangeDir        ( strDir );
 
         XmlInputArchive    archive;
-        
+
         uint16             nPopulationTypesLoaded = 0;
 
         archive.Open       ( strFile );
@@ -240,7 +240,7 @@ void TypeManager::LoadModels( const std::string& strConfigFile )
         MT_ChangeDir      ( strDir );
 
         XmlInputArchive   archive;
-        
+
         archive.Open      ( strFile );
 
         archive.Section   ( "DirectIA" );
@@ -279,7 +279,7 @@ void TypeManager::LoadAutomatModels( const std::string& strConfigFile )
         MT_ChangeDir        ( strDir );
 
         XmlInputArchive    archive;
-        
+
         uint16             nAutomatModelsLoaded = 0;
 
         archive.Open       ( strFile );
@@ -329,7 +329,7 @@ void TypeManager::LoadPawnModels( const std::string& strConfigFile )
         MT_ChangeDir        ( strDir );
 
         XmlInputArchive    archive;
-        
+
         uint16             nPawnModelsLoaded = 0;
 
         archive.Open       ( strFile );
@@ -379,7 +379,7 @@ void TypeManager::LoadPopulationModels( const std::string& strConfigFile )
         MT_ChangeDir        ( strDir );
 
         XmlInputArchive    archive;
-        
+
         uint16             nPopulationModelsLoaded = 0;
 
         archive.Open       ( strFile );

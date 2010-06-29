@@ -71,7 +71,7 @@ private:
 
     //! @name types
     //@{
-    struct PopulationAttrition 
+    struct PopulationAttrition
     {
         PopulationAttrition() : surface_( 0. ), ph_( 0 ) {}
         MT_Float surface_;
@@ -80,7 +80,7 @@ private:
     //@}
 
 private:
-    //! @name 
+    //! @name
     //@{
     std::string category_;
     PopulationAttrition population_;

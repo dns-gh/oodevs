@@ -141,7 +141,7 @@ namespace boost
         {
             split_free( file, map, nVersion );
         }
-        
+
         template< typename Archive >
         void save( Archive& file, const DEC_Knowledge_PopulationFlow::T_FlowPartMap& map, const unsigned int )
         {
@@ -153,7 +153,7 @@ namespace boost
                      << it->second;
             }
         }
-        
+
         template< typename Archive >
         void load( Archive& file, DEC_Knowledge_PopulationFlow::T_FlowPartMap& map, const unsigned int )
         {
@@ -191,7 +191,7 @@ void DEC_Knowledge_PopulationFlow::load( MIL_CheckPointInArchive& file, const un
     file >> nTmpID;
     pAttitude_ = MIL_PopulationAttitude::Find( nTmpID );
     //assert( pAttitude_ ); // $$$$ SBO 2006-02-24: if popu not recognized, attitude is null (should be default "calme" ?)
-    
+
     file >> nTmpID;
     pPreviousPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nTmpID );
     assert( pPreviousPerceptionLevel_ );
@@ -235,7 +235,7 @@ void DEC_Knowledge_PopulationFlow::save( MIL_CheckPointOutArchive& file, const u
 void DEC_Knowledge_PopulationFlow::Prepare()
 {
     pPreviousPerceptionLevel_ = pCurrentPerceptionLevel_;
-    pCurrentPerceptionLevel_  = &PHY_PerceptionLevel::notSeen_; 
+    pCurrentPerceptionLevel_  = &PHY_PerceptionLevel::notSeen_;
     for( CIT_FlowPartMap it = flowParts_.begin(); it != flowParts_.end(); ++it )
         (*it->second).Prepare();
 }
@@ -314,9 +314,9 @@ void DEC_Knowledge_PopulationFlow::Update( const DEC_Knowledge_PopulationCollisi
 // Created: NLD 2005-10-13
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationFlow::UpdateRelevance()
-{      
+{
     MT_Float rMaxLifeTime = pPopulationKnowledge_->GetKnowledgeGroup().GetType().GetKnowledgePopulationMaxLifeTime();
-    if( pFlowKnown_ && pFlowKnown_->GetPopulation().HasDoneMagicMove() ) 
+    if( pFlowKnown_ && pFlowKnown_->GetPopulation().HasDoneMagicMove() )
         rMaxLifeTime = 0.;
 
     for( CIT_FlowPartMap it = flowParts_.begin(); it != flowParts_.end(); ++it )
@@ -340,12 +340,12 @@ void DEC_Knowledge_PopulationFlow::UpdateRelevance()
 bool DEC_Knowledge_PopulationFlow::Clean()
 {
     bHumansUpdated_    = false;
-    bAttitudeUpdated_  = false;  
+    bAttitudeUpdated_  = false;
     bRealFlowUpdated_  = false;
     bFlowPartsUpdated_ = false;
     bSpeedUpdated_     = false;
     bDirectionUpdated_ = false;
-    
+
     for( IT_FlowPartMap it = flowParts_.begin(); it != flowParts_.end(); )
     {
         if( (*it->second).Clean() )
@@ -353,7 +353,7 @@ bool DEC_Knowledge_PopulationFlow::Clean()
             delete it->second;
             it = flowParts_.erase( it );
         }
-        else 
+        else
             ++ it;
     }
     return flowParts_.empty();
@@ -376,7 +376,7 @@ void DEC_Knowledge_PopulationFlow::SendFullState() const
     asnMsg().set_oid_connaissance_flux( nID_ );
     asnMsg().set_oid_connaissance_population( pPopulationKnowledge_->GetID() );
     asnMsg().set_oid_groupe_possesseur      ( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
-   
+
 
     asnMsg().set_est_percu    (  ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );
     asnMsg().set_oid_flux_reel(  pFlowKnown_ ? pFlowKnown_->GetID() : 0 );
@@ -397,14 +397,14 @@ void DEC_Knowledge_PopulationFlow::SendFullState() const
         asnMsg().set_attitude          ( pAttitude_->GetAsnID() );
     }
 
-    asnMsg.Send( NET_Publisher_ABC::Publisher() );  
+    asnMsg.Send( NET_Publisher_ABC::Publisher() );
     if( asnMsg().has_portions_flux()  )
     {
         asnMsg().mutable_portions_flux()->Clear();
         asnMsg().Clear();
     }
 }
-   
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationFlow::UpdateOnNetwork
 // Created: NLD 2004-03-17
@@ -497,7 +497,7 @@ void DEC_Knowledge_PopulationFlow::SendMsgCreation() const
 
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationFlow::SendMsgDestruction
 // Created: NLD 2005-10-14

@@ -73,7 +73,7 @@ void UnitPreviewIcon::NotifySelected( const AgentType& type )
 void UnitPreviewIcon::NotifySelected( const AutomatType& type )
 {
     symbol_ = type.GetSymbol();
-    level_ = type.GetTypePC()->GetLevelSymbol(); // $$$$ SBO 2007-10-16: 
+    level_ = type.GetTypePC()->GetLevelSymbol(); // $$$$ SBO 2007-10-16:
     UpdateSymbol();
 }
 

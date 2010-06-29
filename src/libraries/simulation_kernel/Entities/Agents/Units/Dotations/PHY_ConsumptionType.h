@@ -65,7 +65,7 @@ private:
     {
         eEngineStopped  = 0,
         eEngineStarted  = 1,
-        eMoving         = 2,  
+        eMoving         = 2,
         eWorking        = 3
     };
     //@}

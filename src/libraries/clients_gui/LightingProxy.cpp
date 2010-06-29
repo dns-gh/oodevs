@@ -32,7 +32,7 @@ LightingProxy::LightingProxy( QObject* parent )
 {
     current_ = fixed_.get();
 }
- 
+
 // -----------------------------------------------------------------------------
 // Name: LightingProxy destructor
 // Created: AGE 2007-02-23

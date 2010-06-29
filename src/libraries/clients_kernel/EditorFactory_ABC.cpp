@@ -19,11 +19,11 @@ using namespace kernel;
 // Created: SBO 2006-10-18
 // -----------------------------------------------------------------------------
 EditorFactory_ABC::EditorFactory_ABC()
-    : tools::VirtualTemplate< EditorFactory_ABC >( this ) 
+    : tools::VirtualTemplate< EditorFactory_ABC >( this )
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: EditorFactory_ABC destructor
 // Created: SBO 2006-10-18

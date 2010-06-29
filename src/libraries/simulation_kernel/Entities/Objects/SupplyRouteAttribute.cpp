@@ -37,7 +37,7 @@ SupplyRouteAttribute::SupplyRouteAttribute( xml::xistream& xis )
         >> xml::content( "length", rLength_ )
         >> xml::content( "flow", rFlow_ )
         >> xml::content( "equipped", bEquipped_ );
-        
+
     if( rWeightSupported_ <= 0. )
         xis.error( "max-weight is not greater than 0" );
     if( rWidth_ <= 0. )
@@ -70,7 +70,7 @@ SupplyRouteAttribute::SupplyRouteAttribute( const Common::MsgMissionParameter_Va
     : bEquipped_        ( attributes.list( 1 ).abool() )
     , rWeightSupported_ ( attributes.list( 2 ).quantity() )
     , rWidth_           ( attributes.list( 3 ).quantity() )
-    , rLength_          ( attributes.list( 4 ).quantity() ) 
+    , rLength_          ( attributes.list( 4 ).quantity() )
     , rFlow_            ( attributes.list( 5 ).quantity() )
 {
     // NOTHING
@@ -120,7 +120,7 @@ void SupplyRouteAttribute::serialize( Archive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void SupplyRouteAttribute::WriteODB( xml::xostream& xos ) const
 {
-    xos << xml::start( "supply-route" )        
+    xos << xml::start( "supply-route" )
             << xml::content( "max-weight", rWeightSupported_ )
             << xml::content( "width"     , rWidth_ )
             << xml::content( "length"    , rLength_ )
@@ -152,11 +152,11 @@ void SupplyRouteAttribute::Register( Object& object ) const
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
 void SupplyRouteAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
-{    
+{
     asn.mutable_supply_route()->set_max_weight( (int)rWeightSupported_ );
     asn.mutable_supply_route()->set_width( (int)rWidth_ );
     asn.mutable_supply_route()->set_length( (int)rLength_ );
-    asn.mutable_supply_route()->set_flow_rate( (int)rFlow_ );        
+    asn.mutable_supply_route()->set_flow_rate( (int)rFlow_ );
     asn.mutable_supply_route()->set_equipped( bEquipped_ );
 }
 
@@ -166,7 +166,7 @@ void SupplyRouteAttribute::SendFullState( Common::MsgObjectAttributes& asn ) con
 // -----------------------------------------------------------------------------
 void SupplyRouteAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
 {
-    if ( NeedUpdate() )
+    if( NeedUpdate() )
     {
         asn.mutable_supply_route()->set_equipped( bEquipped_ );
         Reset( eOnUpdate );
@@ -188,7 +188,7 @@ void SupplyRouteAttribute::Deserialize( const AttributeIdentifier& attributeID, 
         else
             bEquipped_ = false;
         NotifyAttributeUpdated( eOnUpdate );
-    }    
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -197,7 +197,7 @@ void SupplyRouteAttribute::Deserialize( const AttributeIdentifier& attributeID, 
 // -----------------------------------------------------------------------------
 void SupplyRouteAttribute::Serialize( HLA_UpdateFunctor& functor ) const
 {
-    functor.Serialize( "option", NeedUpdate( eOnHLAUpdate ), bEquipped_ ? "equipped" : "not equipped" ); 
+    functor.Serialize( "option", NeedUpdate( eOnHLAUpdate ), bEquipped_ ? "equipped" : "not equipped" );
     Reset( eOnHLAUpdate );
 }
 
@@ -219,7 +219,7 @@ bool SupplyRouteAttribute::IsEquipped() const
 {
     return bEquipped_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: SupplyRouteAttribute::GetMaxWeight
 // Created: JCR 2008-06-19
@@ -228,7 +228,7 @@ MT_Float SupplyRouteAttribute::GetMaxWeight() const
 {
     return rWeightSupported_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: SupplyRouteAttribute::GetWidth
 // Created: JCR 2008-06-19
@@ -237,16 +237,16 @@ MT_Float SupplyRouteAttribute::GetWidth() const
 {
     return rWidth_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: SupplyRouteAttribute::GetLength
 // Created: JCR 2008-06-19
 // -----------------------------------------------------------------------------
 MT_Float SupplyRouteAttribute::GetLength() const
-{   
+{
     return rLength_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: SupplyRouteAttribute::GetFlow
 // Created: JCR 2008-06-19

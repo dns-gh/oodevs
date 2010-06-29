@@ -24,7 +24,7 @@ public:
              PHY_RoleHLA_Population();
     virtual ~PHY_RoleHLA_Population();
     //@}
-    
+
     //! @name Accessors
     //@{
     virtual bool IsInvulnerable() const;

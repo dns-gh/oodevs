@@ -61,7 +61,7 @@ protected:
     //! @name Types
     //@{
     enum E_State
-    {   
+    {
         eStateOk       = 0x00,
         eStateCreated  = 0x01,
         eStateModified = 0x02,

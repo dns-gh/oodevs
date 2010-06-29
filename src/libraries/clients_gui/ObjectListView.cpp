@@ -101,7 +101,7 @@ void ObjectListView::OnContextMenuRequested( QListViewItem* i, const QPoint& pos
 // -----------------------------------------------------------------------------
 void ObjectListView::NotifyCreated( const kernel::Object_ABC& object )
 {
-    // $$$$ AGE 2006-10-16: 
+    // $$$$ AGE 2006-10-16:
     const Team_ABC& team = static_cast< const Team_ABC& >( object.Get< TacticalHierarchies >().GetUp() );
     ValuedListItem* teamItem = FindSibling( &team, firstChild() );
     if( ! teamItem )
@@ -142,7 +142,7 @@ namespace
         delete item;
         if( parent && ! parent->childCount() )
             DeleteHierarchy( parent );
-    };  
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -153,7 +153,7 @@ void ObjectListView::NotifyDeleted( const kernel::Object_ABC& object )
 {
     DeleteHierarchy( FindItem( (const kernel::Entity_ABC*)&object, firstChild() ) );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ObjectListView::sizeHint
 // Created: AGE 2006-02-15
@@ -187,7 +187,7 @@ void ObjectListView::NotifySelected( const kernel::Entity_ABC* element )
 // -----------------------------------------------------------------------------
 void ObjectListView::NotifyActivated( const Entity_ABC& element )
 {
-    ValuedListItem* item = FindItem( &element, firstChild() );    
+    ValuedListItem* item = FindItem( &element, firstChild() );
     if( item )
         ensureItemVisible( item );
 }

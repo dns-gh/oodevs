@@ -36,7 +36,7 @@ bool MIL_BaseParameter::IsOfType( const MIL_ParameterType_ABC& ) const
 {
     return false;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_BaseParameter::ToBool
 // Created: LDC 2009-05-20

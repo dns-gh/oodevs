@@ -32,7 +32,7 @@ namespace actions
 // Created: AGE 2006-03-14
 // =============================================================================
 class ParamObjectKnowledgeList : public EntityListParameter< kernel::ObjectKnowledge_ABC >
-                               , public kernel::ContextMenuObserver_ABC< kernel::Object_ABC > 
+                               , public kernel::ContextMenuObserver_ABC< kernel::Object_ABC >
 {
 
 public:

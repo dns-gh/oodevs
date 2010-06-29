@@ -49,7 +49,7 @@ void Rectangle::PopPoint()
 // -----------------------------------------------------------------------------
 void Rectangle::AddPoint( const geometry::Point2f& point )
 {
-    if ( points_.size() < 2 )
+    if( points_.size() < 2 )
         points_.push_back( point );
 }
 

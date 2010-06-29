@@ -55,5 +55,5 @@ void SupplyRoutePrototype::Commit()
             attribute->SetEquipped( equipped_->isOn() );
         }
         creation_->Get< ObjectAttributesContainer >().Register( *attribute );
-    }    
+    }
 }

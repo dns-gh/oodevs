@@ -59,7 +59,7 @@ public:
     virtual void    Zoom( float width );
     virtual float   GetAdaptiveZoomFactor() const;
 
-    virtual std::pair< bool, bool > UnSelect() const; 
+    virtual std::pair< bool, bool > UnSelect() const;
     virtual void Select( bool, bool ) const;
 
     virtual bool ShouldDisplay( const std::string& name = std::string() ) const;
@@ -114,7 +114,7 @@ private:
     //@{
     View_ABC*    view_;
     kernel::GlTools_ABC* tools_;
-    
+
     T_Layers layers_;
     TooltipsLayer_ABC* tooltipLayer_;
     //@}

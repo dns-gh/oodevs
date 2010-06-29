@@ -54,7 +54,7 @@ private:
     //@{
     TeamsModel& model_;
     kernel::Object_ABC* creation_;
-    ObjectAttributesContainer* container_;   
+    ObjectAttributesContainer* container_;
     //@}
 };
 

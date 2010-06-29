@@ -21,7 +21,7 @@ MIL_ParameterType_Polygon::MIL_ParameterType_Polygon( const std::string& name )
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_Polygon destructor
 // Created: SBO 2006-11-27
@@ -30,7 +30,7 @@ MIL_ParameterType_Polygon::~MIL_ParameterType_Polygon()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_Polygon::Copy
 // Created: SBO 2006-11-27

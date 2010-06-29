@@ -92,8 +92,8 @@ PHY_SupplyStockRequestContainer::PHY_SupplyStockRequestContainer( MIL_AutomateLO
                     pNewStock = stockPion->AddStock( *pDotationCategory );
                 }
             }
-                
-            
+
+
             if( !pNewStock )
                 continue;
 
@@ -171,7 +171,7 @@ void PHY_SupplyStockRequestContainer::AddStock( PHY_DotationStock& stock )
 // Created: NLD 2005-01-26
 // -----------------------------------------------------------------------------
 void PHY_SupplyStockRequestContainer::AffectRequestsToAutomate( MIL_AutomateLOG& supplyingAutomate )
-{ 
+{
     bExplicitSupplyFullSatisfied_ = true;
     for( IT_RequestMap it = requests_.begin(); it != requests_.end(); ++it )
     {

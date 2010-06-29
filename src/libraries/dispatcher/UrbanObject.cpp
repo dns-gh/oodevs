@@ -44,7 +44,7 @@ UrbanObject::~UrbanObject()
 
 
 #define MSG_ASN_CREATION( ASN, CLASS ) \
-    if ( attributes.has_##ASN##() ) \
+    if( attributes.has_##ASN##() ) \
     AddAttribute( new CLASS( model, attributes ) )
 
 // -----------------------------------------------------------------------------

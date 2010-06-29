@@ -51,7 +51,7 @@ public:
     //@}
 
     //! @name Operations
-    //@{    
+    //@{
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     //@}

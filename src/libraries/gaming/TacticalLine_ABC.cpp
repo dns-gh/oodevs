@@ -131,7 +131,7 @@ void TacticalLine_ABC::DoUpdate( const MsgsMessengerToClient::MsgLimaUpdate& mes
 {
     name_ = message.tactical_line().name().c_str();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: TacticalLine_ABC::DoUpdate
 // Created: SBO 2006-11-17

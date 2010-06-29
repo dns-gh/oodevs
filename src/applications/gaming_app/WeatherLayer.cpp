@@ -34,7 +34,7 @@ WeatherLayer::WeatherLayer( Controllers& controllers, const GlTools_ABC& tools, 
 }
 
 // -----------------------------------------------------------------------------
-// Name: WeatherLayer destructor  
+// Name: WeatherLayer destructor
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
 WeatherLayer::~WeatherLayer()
@@ -63,7 +63,7 @@ void WeatherLayer::Paint( const geometry::Rectangle2f& )
 const weather::PHY_Meteo* WeatherLayer::Pick( const geometry::Point2f& terrainCoordinates ) const
 {
     for( CIT_Effects it = effects_.begin(); it != effects_.end(); ++it )
-        if ( (*it)->IsInside( terrainCoordinates ) )
+        if( (*it)->IsInside( terrainCoordinates ) )
             return &(*it)->GetMeteo();
     return meteoModel_.GetMeteo( terrainCoordinates );
 }

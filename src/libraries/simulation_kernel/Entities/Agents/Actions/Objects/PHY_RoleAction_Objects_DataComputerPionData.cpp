@@ -131,11 +131,11 @@ void PHY_RoleAction_Objects_DataComputerPionData::RollbackConsumptionsReservatio
 unsigned int PHY_RoleAction_Objects_DataComputerPionData::GetDotationValue( const PHY_DotationCategory& category ) const
 {
     assert( pPion_ );
- //   return ( unsigned int ) pPion_->GetRole< PHY_RoleInterface_Dotations >().GetDotationValue( category ); 
+ //   return ( unsigned int ) pPion_->GetRole< PHY_RoleInterface_Dotations >().GetDotationValue( category );
 
     std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( pPion_->GetAlgorithms().dotationComputerFactory_->Create() );
     pPion_->Execute( *dotationComputer );
-    return ( unsigned int ) dotationComputer->GetDotationValue( category ); 
+    return ( unsigned int ) dotationComputer->GetDotationValue( category );
 }
 
 // -----------------------------------------------------------------------------
@@ -144,7 +144,7 @@ unsigned int PHY_RoleAction_Objects_DataComputerPionData::GetDotationValue( cons
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Objects_DataComputerPionData::ConsumeDotations( const PHY_DotationCategory& category, unsigned int nNbr )
 {
-    pPion_->Apply( &dotation::ConsumeDotationNotificationHandler_ABC::NotifyConsumeDotation, category, nNbr );  
+    pPion_->Apply( &dotation::ConsumeDotationNotificationHandler_ABC::NotifyConsumeDotation, category, nNbr );
 }
 
 // -----------------------------------------------------------------------------
@@ -153,7 +153,7 @@ void PHY_RoleAction_Objects_DataComputerPionData::ConsumeDotations( const PHY_Do
 // -----------------------------------------------------------------------------
 unsigned int PHY_RoleAction_Objects_DataComputerPionData::RecoverDotations( const PHY_DotationCategory& category, unsigned int nNbr )
 {
-    return (unsigned int)pPion_->GetRole< dotation::PHY_RoleInterface_Dotations >().SupplyDotation( category, nNbr );    
+    return (unsigned int)pPion_->GetRole< dotation::PHY_RoleInterface_Dotations >().SupplyDotation( category, nNbr );
 }
 
 // -----------------------------------------------------------------------------
@@ -186,5 +186,5 @@ void PHY_RoleAction_Objects_DataComputerPionData::GetTotalOperationTime( MT_Floa
     {
         rOperationTime += it->second;
         ++ nNbrComposantes;
-    }    
+    }
 }

@@ -21,7 +21,7 @@ namespace
 {    
     void InitializeOGR( int argc, char* argv[] )
     {
-        if ( argc > 0 && GDALGeneralCmdLineProcessor( argc, &argv, 0 ) < 1 )
+        if( argc > 0 && GDALGeneralCmdLineProcessor( argc, &argv, 0 ) < 1 )
             throw std::runtime_error( "error while processing gdal commands." );
         OGRRegisterAll();
     }
@@ -67,7 +67,7 @@ void crossbow::OGR_Workspace::Initialize( xml::xistream& xis, const dispatcher::
     xis >> xml::optional() 
         >> xml::attribute( "default", reference );
 
-    if ( reference.empty() ) 
+    if( reference.empty() ) 
     {
         xis >> xml::list( "property", *this, &crossbow::OGR_Workspace::InitializeProperty, config );
     }
@@ -94,7 +94,7 @@ void crossbow::OGR_Workspace::InitializeProperty( xml::xistream& xis, const disp
 crossbow::Database_ABC& crossbow::OGR_Workspace::GetDatabase( const std::string& name )
 {
     T_DatabasesMap::iterator it = databases_.find( name );
-    if ( ! it->second )
+    if( ! it->second )
         throw std::runtime_error( "database reference " + name + " not initialized" );
     return *it->second;
 }
@@ -107,11 +107,11 @@ void crossbow::OGR_Workspace::InitializeConnectionReference( const std::string& 
 {
     T_Database& db = databases_[ name ];
     
-    if ( !db )
+    if( !db )
     {
         CIT_DatabasesReferenceMap it = references_.find( reference );
         // connection or db is already referenced under an other tag
-        if ( it != references_.end() )
+        if( it != references_.end() )
             db = databases_[ it->second ];
         else
         {

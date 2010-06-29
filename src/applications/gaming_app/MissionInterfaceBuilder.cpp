@@ -283,7 +283,7 @@ actions::gui::Param_ABC* MissionInterfaceBuilder::BuildAgentKnowledgeList( const
 {
     return new actions::gui::ParamAgentKnowledgeList( missionInterface_, parameter, controllers_.actions_, controllers_.controller_, knowledgeConverter_, *entity_ );
 }
- 
+
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildObjectKnowledge
 // Created: SBO 2006-11-23
@@ -346,7 +346,7 @@ actions::gui::Param_ABC* MissionInterfaceBuilder::BuildPointList( const OrderPar
 {
     return new actions::gui::ParamPointList( missionInterface_, parameter, layer_, converter_, controllers_.actions_ );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildPolygon
 // Created: SBO 2006-12-01
@@ -355,7 +355,7 @@ actions::gui::Param_ABC* MissionInterfaceBuilder::BuildPolygon( const OrderParam
 {
     return new actions::gui::ParamPolygon( parameter, layer_, converter_ );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildPolygonList
 // Created: SBO 2006-12-01
@@ -391,7 +391,7 @@ actions::gui::Param_ABC* MissionInterfaceBuilder::BuildGenObject( const OrderPar
 {
     return new actions::gui::ParamObstacle( missionInterface_, parameter, staticModel_.objectTypes_, layer_, converter_, controllers_.controller_ );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MissionInterfaceBuilder::BuildObstacleList
 // Created: SBO 2006-11-30

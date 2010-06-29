@@ -27,7 +27,7 @@ PopulationKnowledges::PopulationKnowledges( Controller& controller, const Knowle
     , controller_( controller )
     , factory_( factory )
 {
-    // NOTHING   
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -98,7 +98,7 @@ void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgPopulationKnowled
 void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeCreation& message )
 {
     UpdatePopulation( message );
-}   
+}
 
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledges::DoUpdate

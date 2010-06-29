@@ -1,12 +1,12 @@
 //*****************************************************************************
-// 
+//
 // $Created: JDY 03-07-02 $
 // $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Connector_ABC.cpp $
 // $Author: Ape $
 // $Modtime: 3/03/05 15:47 $
 // $Revision: 5 $
 // $Workfile: ADN_Connector_ABC.cpp $
-// 
+//
 //*****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_Connector_ABC.h"

@@ -28,7 +28,7 @@ class ADN_Type_Enum
 {
 public:
     typedef typename const std::string& (*T_Converter)( T, ENT_Tr_ABC::E_Conversion );
-    
+
     explicit ADN_Type_Enum();
     explicit ADN_Type_Enum( const T& value );
     virtual ~ADN_Type_Enum();
@@ -65,9 +65,9 @@ protected:
 
 private:
     explicit ADN_Type_Enum(const ADN_Type_Enum& e);
-    
+
 private:
-    
+
     std::string strDataName_;
     T           data_;
 

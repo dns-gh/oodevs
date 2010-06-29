@@ -45,7 +45,7 @@ void DEC_ActionFunctions::Prisoners_CaptureAndLoad( MIL_AgentPion& callerAgent, 
         callerAgent.Apply( &transport::TransportNotificationHandler_ABC::MagicLoadPion, pKnowledge->GetAgentKnown(), transportOnlyLoadable );
     }
 }
-   
+
 // -----------------------------------------------------------------------------
 // Name: DEC_ActionFunctions::Prisoners_Unload
 // Created: NLD 2007-02-14
@@ -91,9 +91,9 @@ bool DEC_ActionFunctions::Prisoners_IsUnloadedInCamp( boost::shared_ptr< DEC_Kno
 void DEC_ActionFunctions::Refugees_OrientateAndLoad( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
     if( pKnowledge && pKnowledge->IsValid() )
-        pKnowledge->GetAgentKnown().Apply( &refugee::RefugeeActionsNotificationHandler_ABC::Orientate, callerAgent );      
+        pKnowledge->GetAgentKnown().Apply( &refugee::RefugeeActionsNotificationHandler_ABC::Orientate, callerAgent );
 }
-   
+
 // -----------------------------------------------------------------------------
 // Name: DEC_ActionFunctions::Refugees_Unload
 // Created: NLD 2007-02-14
@@ -160,7 +160,7 @@ void DEC_ActionFunctions::Transport_AddPion( MIL_AgentPion& callerAgent, DEC_Dec
 void DEC_ActionFunctions::Transport_AddPions( MIL_AgentPion& callerAgent, const std::vector< DEC_Decision_ABC* >& pions, bool bTransportOnlyLoadable )
 {
     for( std::vector< DEC_Decision_ABC* >::const_iterator itPion = pions.begin(); itPion != pions.end(); ++itPion )
-    {   
+    {
         MIL_AgentPion& pion = ( *itPion )->GetPion();
         callerAgent.GetRole< transport::PHY_RoleAction_Transport >().AddPion( pion, bTransportOnlyLoadable );
     }
@@ -183,7 +183,7 @@ void DEC_ActionFunctions::Transport_MagicLoadPion( MIL_AgentPion& callerAgent, c
 void DEC_ActionFunctions::Transport_MagicLoadPions( MIL_AgentPion& callerAgent, const std::vector< DEC_Decision_ABC* >& pions, bool bTransportOnlyLoadable )
 {
     for( std::vector< DEC_Decision_ABC* >::const_iterator itPion = pions.begin(); itPion != pions.end(); ++itPion )
-    {   
+    {
         MIL_AgentPion& pion = ( *itPion )->GetPion();
         callerAgent.Apply( &transport::TransportNotificationHandler_ABC::MagicLoadPion, pion, bTransportOnlyLoadable );
     }

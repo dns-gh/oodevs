@@ -71,7 +71,7 @@ void MIL_PopulationMission::Stop( boost::shared_ptr< MIL_Mission_ABC > self )
     {
         population_.GetDecision().StopMissionBehavior( self );
         bDIABehaviorActivated_ = false;
-    }    
+    }
     SendNoMission( population_ );
 }
 

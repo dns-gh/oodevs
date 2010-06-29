@@ -78,7 +78,7 @@ void HumanFactors::Display( Displayer_ABC& displayer ) const
                 .Display( tools::translate( "Human factors", "Moral:" ), morale_ )
                 .Display( tools::translate( "Human factors", "Tiredness:" ), tiredness_ );
 }
-   
+
 // -----------------------------------------------------------------------------
 // Name: HumanFactors::GetExperience
 // Created: SBO 2006-06-27

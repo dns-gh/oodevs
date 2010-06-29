@@ -19,7 +19,7 @@ using namespace kernel;
 Loan::Loan( const EquipmentType& type, const Agent_ABC& agent, unsigned int quantity )
     : type_( & type )
     , agent_( & agent )
-    , quantity_( quantity ) 
+    , quantity_( quantity )
 {
     // NOTHING
 }

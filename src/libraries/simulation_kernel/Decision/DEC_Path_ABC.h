@@ -83,7 +83,7 @@ protected:
 private:
     //! @name Types
     //@{
-    typedef std::vector< DEC_PathSection_ABC* > T_PathSectionVector; 
+    typedef std::vector< DEC_PathSection_ABC* > T_PathSectionVector;
     typedef T_PathSectionVector::const_iterator CIT_PathSectionVector;
     //@}
 
@@ -92,7 +92,7 @@ private:
           T_PathSectionVector pathSections_;
           unsigned int                nNbrRefs_;              // nb of references on path
           unsigned int                nNbrDIARefs_;           // nb of references by DIA on path
-          E_State             nState_;            
+          E_State             nState_;
           bool                bJobCanceled_;
 
 private:

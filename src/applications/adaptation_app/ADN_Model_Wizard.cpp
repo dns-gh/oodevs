@@ -43,11 +43,11 @@ ADN_Model_Wizard::ADN_Model_Wizard( ADN_Models_Data::ModelInfos::E_ModelEntityTy
         pUnitsList = & ADN_Workspace::GetWorkspace().GetModels().GetData().GetPopulationModelsInfos();
 
     ADN_Wizard_FirstPage_Default<ModelInfos>* pFirstPage = new ADN_Wizard_FirstPage_Default<ModelInfos>( *pUnitsList, this );
-    pFirstPage->SetCaptions( qApp->translate( "ADN_Model_Wizard", "New model creation" ), qApp->translate( "ADN_Model_Wizard", 
+    pFirstPage->SetCaptions( qApp->translate( "ADN_Model_Wizard", "New model creation" ), qApp->translate( "ADN_Model_Wizard",
         "Models" ) );
     pFirstPage_ = pFirstPage;
 
-    new ADN_Wizard_LastPage( this, qApp->translate( "ADN_Model_Wizard", "Creation completed" ), 
+    new ADN_Wizard_LastPage( this, qApp->translate( "ADN_Model_Wizard", "Creation completed" ),
         qApp->translate( "ADN_Mission_Wizard", "Click \"Done\" to create the new model." ) );
 }
 

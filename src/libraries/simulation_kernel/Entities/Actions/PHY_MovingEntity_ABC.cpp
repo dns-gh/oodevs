@@ -19,7 +19,7 @@ PHY_MovingEntity_ABC::PHY_MovingEntity_ABC()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_MovingEntity_ABC destructor
 // Created: NLD 2005-09-30
@@ -46,7 +46,7 @@ int PHY_MovingEntity_ABC::Move( boost::shared_ptr< DEC_PathResult > pPath )
 {
     return pathWalker_.Move( pPath );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_MovingEntity_ABC::MoveSuspended
 // Created: NLD 2005-09-30
@@ -73,7 +73,7 @@ void PHY_MovingEntity_ABC::SerializeEnvironmentType( MsgsSimToClient::MsgUnitEnv
 {
     pathWalker_.SerializeEnvironmentType( msg );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_MovingEntity_ABC::SerializeCurrentPath
 // Created: NLD 2005-10-03

@@ -129,7 +129,7 @@ namespace dispatcher
             in.read( (char*)data_, size );
         }
         ~Buffer()
-        { 
+        {
             delete[] data_;
         }
         unsigned char* data_;

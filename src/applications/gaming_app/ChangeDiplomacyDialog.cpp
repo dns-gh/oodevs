@@ -33,7 +33,7 @@ ChangeDiplomacyDialog::ChangeDiplomacyDialog( QWidget* parent, kernel::Controlle
     : gui::DiplomacyDialog_ABC( parent, controllers, profile )
     , actionsModel_( actionsModel )
     , static_( staticModel )
-    , simulation_( simulation ) 
+    , simulation_( simulation )
 {
     // NOTHING
 }

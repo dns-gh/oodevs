@@ -41,9 +41,9 @@ public:
     //@{
     void StartSequence();
     void SetLights( char side, char front, char top, char brightness );
-    void SetSideColor( char value ); 
+    void SetSideColor( char value );
     void SetFrontColor( char value );
-    void SetTopColor( char value );  
+    void SetTopColor( char value );
     void SetBrightness( char value );
     void Pause( unsigned msec );
     void Repeat( short times );

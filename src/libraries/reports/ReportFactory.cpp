@@ -41,7 +41,7 @@ ReportFactory::ReportFactory( const RcEntityResolver_ABC& rcResolver
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ReportFactory destructor
 // Created: SBO 2006-12-07
@@ -67,7 +67,7 @@ void ReportFactory::Load( const tools::ExerciseConfig& config  )
             >> list( "report", *this, &ReportFactory::ReadReport )
         >> end();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ReportFactory::Purge
 // Created: SBO 2006-12-07
@@ -96,7 +96,7 @@ QDateTime ReportFactory::GetTime( const Common::MsgDateTime& d ) const
 {
     const std::string date( (const char*)d.data().c_str() );
     QString extended( date.c_str() );
-    extended.insert( 13, ':' ); extended.insert( 11, ':' ); 
+    extended.insert( 13, ':' ); extended.insert( 11, ':' );
     extended.insert(  6, '-' ); extended.insert(  4, '-' );
     return QDateTime::fromString( extended, Qt::ISODate );
 }

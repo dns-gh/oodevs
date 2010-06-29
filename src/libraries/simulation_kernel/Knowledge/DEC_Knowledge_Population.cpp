@@ -172,7 +172,7 @@ void DEC_Knowledge_Population::Update( const DEC_Knowledge_PopulationCollision& 
 {
     GetKnowledge( flow ).Update( collision );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Population::Update
 // Created: NLD 2005-10-28
@@ -220,7 +220,7 @@ void DEC_Knowledge_Population::UpdateRelevance()
         it->second->UpdateRelevance();
 
     for( CIT_FlowMap it = flows_.begin(); it != flows_.end(); ++it )
-        it->second->UpdateRelevance(); 
+        it->second->UpdateRelevance();
 }
 
 // -----------------------------------------------------------------------------
@@ -239,7 +239,7 @@ bool DEC_Knowledge_Population::Clean()
             delete pKnowledge;
             it = concentrations_.erase( it );
         }
-        else 
+        else
             ++ it;
     }
 
@@ -251,7 +251,7 @@ bool DEC_Knowledge_Population::Clean()
             delete pKnowledge;
             it = flows_.erase( it );
         }
-        else 
+        else
             ++ it;
     }
     return concentrations_.empty() && flows_.empty();
@@ -467,7 +467,7 @@ void DEC_Knowledge_Population::SendStateToNewClient() const
 // -----------------------------------------------------------------------------
 MT_Float DEC_Knowledge_Population::GetDominationState() const
 {
-    return rDominationState_;   
+    return rDominationState_;
 }
 
 // -----------------------------------------------------------------------------

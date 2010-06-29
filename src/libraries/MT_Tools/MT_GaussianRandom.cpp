@@ -22,7 +22,7 @@ MT_GaussianRandom::MT_GaussianRandom()
     , linearRandom_     ()
     , bAlreadyComputed_ ( false )
 {
-    
+
 }
 
 
@@ -103,7 +103,7 @@ MT_GaussianRandom& MT_GaussianRandom::operator = ( const MT_GaussianRandom& rhs 
 // Transformation de Box-Muller sous forme polaire
 double MT_GaussianRandom::rand()
 {
-    if ( bAlreadyComputed_ )
+    if( bAlreadyComputed_ )
     {
         bAlreadyComputed_ = false;
         return rAlreadyComputed_ + rMean_;

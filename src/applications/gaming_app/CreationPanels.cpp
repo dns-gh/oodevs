@@ -74,7 +74,7 @@ void CreationPanels::NotifyUpdated( const Services& services )
         Add( units_ );
         Add( objects_ );
         Add( intel_ );
-    } else 
+    } else
     {
         Remove( units_ );
         Remove( objects_ );

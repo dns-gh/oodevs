@@ -29,7 +29,7 @@ MT_Ellipse::MT_Ellipse( const MT_Vector2D& vOrigin, MT_Float rMajorAxeLength, MT
     , rF_             ( -rA_ * rC_ )
     , vCenter_        ( vOrigin )
 {
-    if ( rMajorAxeLength_ < rMinorAxeLength_ )
+    if( rMajorAxeLength_ < rMinorAxeLength_ )
     {
         std::swap( rMajorAxeLength_, rMinorAxeLength_ );
         std::swap( rA_, rC_ );
@@ -64,7 +64,7 @@ MT_Ellipse::MT_Ellipse( const MT_Vector2D& vOrigin, const MT_Vector2D& vMajorAxi
     , rF_             ( -rA_ * rC_ )
     , vCenter_        ( vOrigin )
 {
-    if ( rMajorAxeLength_ < rMinorAxeLength_ )
+    if( rMajorAxeLength_ < rMinorAxeLength_ )
     {
         std::swap( rMajorAxeLength_, rMinorAxeLength_ );
         std::swap( rA_, rC_ );
@@ -135,7 +135,7 @@ MT_Ellipse& MT_Ellipse::operator = ( const MT_Ellipse& ellipse )
 MT_Rect MT_Ellipse::GetBoundingBox() const
 {
     // $$$$ AGE 2005-01-31: Improve it if you dare !
-    return MT_Rect( vCenter_.rX_ - rMajorAxeLength_, vCenter_.rY_ - rMajorAxeLength_, 
+    return MT_Rect( vCenter_.rX_ - rMajorAxeLength_, vCenter_.rY_ - rMajorAxeLength_,
                     vCenter_.rX_ + rMajorAxeLength_, vCenter_.rY_ + rMajorAxeLength_ );
 }
 

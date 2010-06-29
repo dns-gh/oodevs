@@ -28,7 +28,7 @@ PHY_ActionDirectFirePopulation::PHY_ActionDirectFirePopulation( MIL_AgentPion& p
     : PHY_DecisionCallbackAction_ABC     ( pion )
     , role_              ( pion.GetRole< PHY_RoleAction_DirectFiring >() )
     , nTargetKnowledgeID_( nID )
-    , pFireResult_       ( 0 )  
+    , pFireResult_       ( 0 )
 {
     Callback( role_.GetInitialReturnCode() );
 }

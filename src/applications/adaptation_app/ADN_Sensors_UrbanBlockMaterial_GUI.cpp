@@ -29,7 +29,7 @@ class ADN_CT_Sensors_UrbanBlock
 {
 public:
 
-    ADN_CT_Sensors_UrbanBlock(ADN_Sensors_UrbanBlockMaterial_GUI& tab) 
+    ADN_CT_Sensors_UrbanBlock(ADN_Sensors_UrbanBlockMaterial_GUI& tab)
         : ADN_Connector_Table_ABC(tab,false)
     {}
 

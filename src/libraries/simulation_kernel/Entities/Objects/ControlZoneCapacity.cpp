@@ -27,18 +27,18 @@ MT_Random ControlZoneCapacity::randomGenerator_;
 
 BOOST_CLASS_EXPORT_IMPLEMENT( ControlZoneCapacity )
 
-namespace 
+namespace
 {
     class StaticLoader
     {
     public:
         typedef std::vector< MT_Float > T_FirePercentageVector;
     public:
-        StaticLoader( T_FirePercentageVector& vFirePercentages ) 
-            : vFirePercentages_ ( vFirePercentages ) 
+        StaticLoader( T_FirePercentageVector& vFirePercentages )
+            : vFirePercentages_ ( vFirePercentages )
         {
             vFirePercentages_.clear();
-            vFirePercentages_.resize( PHY_Volume::GetVolumes().size(), 0. );            
+            vFirePercentages_.resize( PHY_Volume::GetVolumes().size(), 0. );
         }
 
         //! @name Helpers
@@ -68,19 +68,19 @@ namespace
         {
             std::string volume;
             MT_Float rFirePercentage;
-            
-            xis >> xml::attribute( "volume", volume );    
+
+            xis >> xml::attribute( "volume", volume );
             const PHY_Volume* pVolume = PHY_Volume::FindVolume( volume );
-            if ( !pVolume )
+            if( !pVolume )
                 xis.error( "Unknown volume name - " + volume );
-            
+
             xis >> xml::attribute( "percentage", rFirePercentage );
             if( rFirePercentage < 0 || rFirePercentage > 100 )
                 xis.error( "percentage not in [0..100]" );
-            
+
             rFirePercentage *= 10000.;                                               // hectare => m2
             rFirePercentage = MIL_Tools::ConvertMeterSquareToSim( rFirePercentage ); // m2 => px2
-           
+
             vFirePercentages_[ pVolume->GetID() ] = rFirePercentage / 100.;
         }
         //@}
@@ -140,10 +140,10 @@ ControlZoneCapacity::~ControlZoneCapacity()
 // -----------------------------------------------------------------------------
 template< typename Archive >
 void ControlZoneCapacity::serialize( Archive& file, const unsigned int )
-{    
+{
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
     file & const_cast< MIL_Agent_ABC*& >( controller_ );
-    if ( controller_ )
+    if( controller_ )
         vFirerPosition_ = &controller_->GetRole< PHY_RoleInterface_Location >().GetPosition();
 }
 
@@ -201,7 +201,7 @@ void ControlZoneCapacity::ControlTarget( MIL_Agent_ABC* agent, const MIL_Army_AB
     for( PHY_Composante_ABC::CIT_ComposanteVector itCompTarget = compTargets.begin(); itCompTarget != compTargets.end(); ++itCompTarget )
     {
         PHY_Composante_ABC& compTarget = **itCompTarget;
-        if ( randomGenerator_.rand_oi( 0., 1. ) <= phCoef * GetUnitDensityFirePercentage( compTarget.GetType().GetVolume() ) )
+        if( randomGenerator_.rand_oi( 0., 1. ) <= phCoef * GetUnitDensityFirePercentage( compTarget.GetType().GetVolume() ) )
             targets.push_back( std::make_pair( agent, &compTarget ) );
     }
 }

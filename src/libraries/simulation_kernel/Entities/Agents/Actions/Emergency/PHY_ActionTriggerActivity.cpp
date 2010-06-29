@@ -29,15 +29,15 @@ PHY_ActionTriggerActivity::PHY_ActionTriggerActivity( MIL_AgentPion& pion, const
     const double connectivity = 1;
     const MT_Vector2D&  vPos = pion_.GetRole< PHY_RoleInterface_Location >().GetPosition();
     pObject_ = role_.InfluenceActivity( vPos, activity_, influence_, connectivity );
-    if ( pObject_ )
+    if( pObject_ )
     {
         pObject_->TriggerActivity( activity_, influence_ ); // population concerned
         Callback( static_cast< int >( PHY_RoleAction_FolkInfluence::eRunning ) );
-    }        
+    }
     else
-        Callback( static_cast< int >( PHY_RoleAction_FolkInfluence::eImpossible ) );    
+        Callback( static_cast< int >( PHY_RoleAction_FolkInfluence::eImpossible ) );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionTriggerActivity destructor
 // Created: JCR 2007-09-12
@@ -53,7 +53,7 @@ PHY_ActionTriggerActivity::~PHY_ActionTriggerActivity()
 // -----------------------------------------------------------------------------
 void PHY_ActionTriggerActivity::StopAction()
 {
-    if ( pObject_ )
+    if( pObject_ )
         role_.ReleaseInfluence( *pObject_ );
 }
 
@@ -63,20 +63,20 @@ void PHY_ActionTriggerActivity::StopAction()
 // -----------------------------------------------------------------------------
 void PHY_ActionTriggerActivity::Execute()
 {
-    if ( pObject_ && !pObject_->IsActivated() )
+    if( pObject_ && !pObject_->IsActivated() )
     {
         pObject_->Activate();
         Callback( static_cast< int >( PHY_RoleAction_FolkInfluence::eActivated ) );
     }
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionTriggerActivity::ExecuteSuspended
 // Created: JCR 2007-09-12
 // -----------------------------------------------------------------------------
 void PHY_ActionTriggerActivity::ExecuteSuspended()
 {
-    if ( pObject_ )
+    if( pObject_ )
     {
         pObject_->Deactivate();
         Callback( static_cast< int >( PHY_RoleAction_FolkInfluence::eDeactivated ) );

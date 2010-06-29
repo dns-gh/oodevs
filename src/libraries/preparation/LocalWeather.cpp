@@ -48,7 +48,7 @@ LocalWeather::LocalWeather( xml::xistream& xis, const kernel::CoordinateConverte
     , id_( localCounter_++ )
     , name_( tools::translate( "LocalWeather", "Local weather %1" ).arg( id_ ) )
 {
-    
+
     std::string topLeft, bottomRight, startTime, endTime ;
     xis >> xml::attribute( "start-time", startTime )
         >> xml::attribute( "end-time", endTime );
@@ -58,13 +58,13 @@ LocalWeather::LocalWeather( xml::xistream& xis, const kernel::CoordinateConverte
     bottomRight_ = converter_.ConvertToXY( bottomRight );
     {
         QString extended( startTime.c_str() );
-        extended.insert( 13, ':' ); extended.insert( 11, ':' ); 
+        extended.insert( 13, ':' ); extended.insert( 11, ':' );
         extended.insert(  6, '-' ); extended.insert(  4, '-' );
         startTime_ = QDateTime::fromString( extended, Qt::ISODate );
     }
     {
         QString extended( endTime.c_str() );
-        extended.insert( 13, ':' ); extended.insert( 11, ':' ); 
+        extended.insert( 13, ':' ); extended.insert( 11, ':' );
         extended.insert(  6, '-' ); extended.insert(  4, '-' );
         endTime_ = QDateTime::fromString( extended, Qt::ISODate );
     }
@@ -175,7 +175,7 @@ QDateTime LocalWeather::GetEndTime() const
 // -----------------------------------------------------------------------------
 bool LocalWeather::CheckValidity() const
 {
-    if ( ( startTime_ > endTime_ ) || !startTime_.isValid()  || !endTime_.isValid() ||  ( topLeft_ == geometry::Point2f( 0, 0 )  && bottomRight_ == geometry::Point2f( 0, 0 ) ) )
+    if( ( startTime_ > endTime_ ) || !startTime_.isValid()  || !endTime_.isValid() ||  ( topLeft_ == geometry::Point2f( 0, 0 )  && bottomRight_ == geometry::Point2f( 0, 0 ) ) )
         return false;
     return true;
 }

@@ -31,9 +31,9 @@ using namespace hla;
 NBCAttribute::NBCAttribute( xml::xistream& xis )
     : nForm_ ( eGas )
     , danger_( xml::attribute( xis, "danger", 0 ) )
-{   
+{
     std::string state( "gaseous" );
-    xis >> xml::optional() 
+    xis >> xml::optional()
         >> xml::attribute( "state", state );
     if( state == "liquid" )
         nForm_ = eLiquid;
@@ -82,11 +82,11 @@ NBCAttribute::~NBCAttribute()
 // Name: NBCAttribute::Insert
 // Created: JCR 2008-09-05
 // -----------------------------------------------------------------------------
-template< typename T > 
+template< typename T >
 bool NBCAttribute::Insert( const T& type )
 {
     const MIL_NbcAgentType* pType = MIL_NbcAgentType::Find( type );
-    if( pType )        
+    if( pType )
         agents_.push_back( pType );
     return pType != 0;
 }
@@ -98,7 +98,7 @@ bool NBCAttribute::Insert( const T& type )
 void NBCAttribute::ReadNBCAgent( xml::xistream& xis )
 {
     std::string type( xml::attribute( xis, "type", std::string() ) );
-    if ( ! Insert( type ) )
+    if( ! Insert( type ) )
         xis.error( "Unknown 'AgentNBC' '" + type + "' for NBC object" );
 }
 
@@ -109,7 +109,7 @@ void NBCAttribute::ReadNBCAgent( xml::xistream& xis )
 void NBCAttribute::load( MIL_CheckPointInArchive& file , const unsigned int )
 {
     file >> boost::serialization::base_object< ObjectAttribute_ABC >( *this );
-         
+
     unsigned int nNbrNbcAgents;
     file >> danger_;
     file >> nForm_;
@@ -118,7 +118,7 @@ void NBCAttribute::load( MIL_CheckPointInArchive& file , const unsigned int )
     {
         unsigned int nID;
         file >> nID;
-        if ( !Insert( nID ) )
+        if( !Insert( nID ) )
             throw std::runtime_error( "Unknown 'AgentNBC' '" + boost::lexical_cast<std::string>( nID ) + "' for NBC object" );
     }
 }
@@ -129,8 +129,8 @@ void NBCAttribute::load( MIL_CheckPointInArchive& file , const unsigned int )
 // -----------------------------------------------------------------------------
 void NBCAttribute::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << boost::serialization::base_object< ObjectAttribute_ABC >( *this );    
-    
+    file << boost::serialization::base_object< ObjectAttribute_ABC >( *this );
+
     file << danger_;
     file << nForm_;
     unsigned size = agents_.size();
@@ -178,7 +178,7 @@ void NBCAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
 // -----------------------------------------------------------------------------
 void NBCAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
 {
-    if ( NeedUpdate() )
+    if( NeedUpdate() )
     {
         SendFullState( asn );
         Reset();
@@ -190,7 +190,7 @@ void NBCAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
 void NBCAttribute::WriteODB( xml::xostream& xos ) const
-{    
+{
     xos << xml::start( "nbc-agents" );
     if( nForm_ == eLiquid )
         xos << xml::attribute( "state", "liquid" );
@@ -221,7 +221,7 @@ NBCAttribute& NBCAttribute::operator=( const NBCAttribute& rhs )
 // -----------------------------------------------------------------------------
 bool NBCAttribute::IsContaminating() const
 {
-    if ( agents_.size() == 0 )
+    if( agents_.size() == 0 )
         return false;
     if( nForm_ == eGas )
         return agents_.front()->IsGasContaminating();
@@ -234,10 +234,10 @@ bool NBCAttribute::IsContaminating() const
 // -----------------------------------------------------------------------------
 bool NBCAttribute::IsPoisonous() const
 {
-    if ( agents_.size() == 0 )
+    if( agents_.size() == 0 )
         return false;
     if( nForm_ == eGas )
-        return agents_.front()->IsGasPoisonous();    
+        return agents_.front()->IsGasPoisonous();
     return agents_.front()->IsLiquidPoisonous();
 }
 
@@ -270,7 +270,7 @@ void NBCAttribute::Deserialize( const AttributeIdentifier& attributeID, Deserial
         std::string strOption;
         deserializer >> strOption;
         ReadAgents( strOption );
-    }    
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -283,9 +283,9 @@ bool NBCAttribute::ReadAgents( const std::string& strAgents )
     std::string strAgent;
     while( std::getline( stream, strAgent ) )
     {
-        if ( !Insert( strAgent ) )
+        if( !Insert( strAgent ) )
             return false;
-    }    
+    }
     return true;
 }
 

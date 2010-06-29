@@ -85,7 +85,7 @@ PHY_WeaponDataType_DirectFire::~PHY_WeaponDataType_DirectFire()
 // -----------------------------------------------------------------------------
 void PHY_WeaponDataType_DirectFire::InitializePH( xml::xistream& xis )
 {
-    
+
     const PHY_Volume::T_VolumeMap& volumes = PHY_Volume::GetVolumes();
 
     std::string targetType;
@@ -199,7 +199,7 @@ inline
 MT_Float PHY_WeaponDataType_DirectFire::GetPH( const PHY_Posture& firerPosture, const PHY_Posture& targetPosture, const PHY_Volume& targetVolume, MT_Float rDistance ) const
 {
     assert( phs_.size() > targetVolume.GetID() );
-    
+
     const MT_Float rPHModificator = weaponType_.GetPHModificator( firerPosture, targetPosture );
     if( rPHModificator <= 0. )
         return 0.;
@@ -238,9 +238,9 @@ MT_Float PHY_WeaponDataType_DirectFire::GetMaxRangeToFireOnWithPosture( const PH
     const PHY_RoleInterface_Posture&      firerPosture  = firer .GetRole< PHY_RoleInterface_Posture      >();
     const PHY_RoleInterface_Posture& targetPosture = target.GetRole< PHY_RoleInterface_Posture >();
 
-    return GetMaxDistanceForPH( rWantedPH, firerPosture, targetPosture, targetComposanteType.GetVolume() );   
+    return GetMaxDistanceForPH( rWantedPH, firerPosture, targetPosture, targetComposanteType.GetVolume() );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_WeaponDataType_DirectFire::GetMinRangeToFireOnWithPosture
 // Created: SBO 2006-01-10
@@ -250,7 +250,7 @@ MT_Float PHY_WeaponDataType_DirectFire::GetMinRangeToFireOnWithPosture( const PH
     const PHY_RoleInterface_Posture&      firerPosture  = firer .GetRole< PHY_RoleInterface_Posture      >();
     const PHY_RoleInterface_Posture& targetPosture = target.GetRole< PHY_RoleInterface_Posture >();
 
-    return GetMinDistanceForPH( rWantedPH, firerPosture, targetPosture, targetComposanteType.GetVolume() );   
+    return GetMinDistanceForPH( rWantedPH, firerPosture, targetPosture, targetComposanteType.GetVolume() );
 }
 
 // -----------------------------------------------------------------------------
@@ -274,15 +274,15 @@ MT_Float PHY_WeaponDataType_DirectFire::GetMaxRangeToFire( MT_Float rWantedPH ) 
 // -----------------------------------------------------------------------------
 MT_Float PHY_WeaponDataType_DirectFire::GetDangerosity( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, bool bUsePH ) const
 {
-    const PHY_Volume&     targetVolume      = targetComposanteType.GetVolume    (); 
+    const PHY_Volume&     targetVolume      = targetComposanteType.GetVolume    ();
     const PHY_Protection& targetProtection  = targetComposanteType.GetProtection();
 
     const PHY_RoleInterface_Location& firerLocation = firer.GetRole< PHY_RoleInterface_Location >();
     const MT_Vector3D vFirerPosition( firerLocation.GetPosition().rX_, firerLocation.GetPosition().rY_, firerLocation.GetAltitude() );
-    
+
     const PHY_RoleInterface_Location& targetLocation = target.GetRole< PHY_RoleInterface_Location >();
     const MT_Vector3D vTargetPosition( targetLocation.GetPosition().rX_, targetLocation.GetPosition().rY_, targetLocation.GetAltitude() );
-    
+
     MT_Float rDangerosity  = bUsePH ? GetPH( firer, target, targetVolume, vFirerPosition, vTargetPosition ) : 1.;
              rDangerosity *= weaponType_.GetDotationCategory().GetAttritionScore( targetProtection );
     return rDangerosity;
@@ -294,7 +294,7 @@ MT_Float PHY_WeaponDataType_DirectFire::GetDangerosity( const MIL_Agent_ABC& fir
 // -----------------------------------------------------------------------------
 MT_Float PHY_WeaponDataType_DirectFire::GetDangerosity( const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rDistBtwFirerAndTarget ) const
 {
-    const PHY_Volume&     targetVolume      = targetComposanteType.GetVolume    (); 
+    const PHY_Volume&     targetVolume      = targetComposanteType.GetVolume    ();
     const PHY_Protection& targetProtection  = targetComposanteType.GetProtection();
 
     MT_Float rDangerosity  = GetPH( PHY_Posture::posteReflexe_, PHY_Posture::posteReflexe_, targetVolume, rDistBtwFirerAndTarget );
@@ -321,15 +321,15 @@ void PHY_WeaponDataType_DirectFire::Fire( MIL_Agent_ABC& firer, MIL_Agent_ABC& t
 
         const MT_Float rPH = GetPH( firer, target, targetVolume, firerPosition, targetPosition );
         target.GetRole< PHY_RoleInterface_ActiveProtection >().UseAmmunition( weaponType_.GetDotationCategory() );
-        if ( !( randomGenerator_.rand_oi() <= rPH ) )
+        if( !( randomGenerator_.rand_oi() <= rPH ) )
         {
             const UrbanObjectWrapper* urbanObject = target.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
-            if ( urbanObject )
+            if( urbanObject )
             {
                 StructuralCapacity* capacity = const_cast< StructuralCapacity* >( urbanObject->Retrieve< StructuralCapacity >() );
-                if ( capacity )
+                if( capacity )
                     capacity->ApplyDirectFire( *urbanObject, weaponType_.GetDotationCategory() );
-            }    
+            }
             return;
         }
     }

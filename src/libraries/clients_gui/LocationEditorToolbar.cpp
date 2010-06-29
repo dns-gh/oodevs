@@ -50,7 +50,7 @@ LocationEditorToolbar::LocationEditorToolbar( QMainWindow* parent, kernel::Contr
     setLabel( tr( "Location editor" ) );
     locBox_ = new LocationEditorBox( this, controllers, converter );
     locBox_->AddParser( featureNameParser_, tr( "Feature" ) );
-	gotoButton_ = new QToolButton( this );
+    gotoButton_ = new QToolButton( this );
     gotoButton_->setIconSet( MAKE_PIXMAP( goto ) );
     gotoButton_->setPopupDelay( 0 );
     bookmarksMenu_ = new QPopupMenu( gotoButton_ );

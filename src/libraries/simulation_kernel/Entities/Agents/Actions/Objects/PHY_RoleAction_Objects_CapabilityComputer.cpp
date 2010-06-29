@@ -52,7 +52,7 @@ void PHY_RoleAction_Objects_CapabilityComputer::CollectData( const MIL_AgentPion
     MIL_AgentPion& pionT = const_cast< MIL_AgentPion& >( pion );
     std::auto_ptr< OnComponentComputer_ABC > componentComputer( pionT.GetAlgorithms().onComponentFunctorComputerFactory_->Create( *this ) );
     pionT.Execute( *componentComputer );
-    
+
     if( bHasCapability_ )
         return;
 

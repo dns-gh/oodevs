@@ -25,7 +25,7 @@ using namespace gui;
 
 namespace
 {
-    // $$$$ AGE 2007-09-27: 
+    // $$$$ AGE 2007-09-27:
     class MyList : public ListDisplayer< AfterActionRequestList >
     {
     public:

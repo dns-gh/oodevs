@@ -45,7 +45,7 @@ DEC_Knowledge_ObjectAttributeLogistic::DEC_Knowledge_ObjectAttributeLogistic( co
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectAttributeLogistic::~DEC_Knowledge_ObjectAttributeLogistic()
-{   
+{
     // NOTHING
 }
 
@@ -59,7 +59,7 @@ DEC_Knowledge_ObjectAttributeLogistic::~DEC_Knowledge_ObjectAttributeLogistic()
 // -----------------------------------------------------------------------------
 template< typename Archive >
 void DEC_Knowledge_ObjectAttributeLogistic::serialize( Archive& file, const unsigned int )
-{   
+{
     file & boost::serialization::base_object< DEC_Knowledge_ObjectAttribute_ABC >( *this );
     file & const_cast< LogisticAttribute*& >( attr_ )
          & pTC2_;
@@ -84,7 +84,7 @@ void DEC_Knowledge_ObjectAttributeLogistic::Register( DEC_Knowledge_Object& knOb
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeLogistic::UpdateAttributes()
 {
-    if ( !attr_ )
+    if( !attr_ )
         return;
 
     pTC2_ = & attr_->GetTC2();

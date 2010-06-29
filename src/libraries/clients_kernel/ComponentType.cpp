@@ -26,7 +26,7 @@ ComponentType::ComponentType( xml::xistream& xis )
     xis >> attribute( "name", name_ )
         >> attribute( "id", id_ );
 
-    xis >> optional() 
+    xis >> optional()
         >> start( "logistic-functions" )
                 >> list( "maintenance-functions", *this, &ComponentType::ReadPresence, hasMaintenance_ )
                 >> list( "health-functions",      *this, &ComponentType::ReadPresence, hasMedical_ )

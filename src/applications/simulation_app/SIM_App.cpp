@@ -99,15 +99,15 @@ SIM_App::~SIM_App()
 // -----------------------------------------------------------------------------
 void SIM_App::Initialize()
 {
-    // start GUI 
+    // start GUI
     MT_LOG_INFO_MSG( "Starting simulation GUI" );
-    guiThread_.reset( new boost::thread( boost::bind( &SIM_App::RunGUI, this ) ) ); 
-    
-    // start dispatcher 
+    guiThread_.reset( new boost::thread( boost::bind( &SIM_App::RunGUI, this ) ) );
+
+    // start dispatcher
     if( startupConfig_.IsDispatcherEmbedded() )
     {
         MT_LOG_INFO_MSG( "Starting embedded dispatcher" );
-        dispatcherThread_.reset( new boost::thread( boost::bind( &SIM_App::RunDispatcher, this ) ) ); 
+        dispatcherThread_.reset( new boost::thread( boost::bind( &SIM_App::RunDispatcher, this ) ) );
     }
 
     MT_Profiler::Initialize();
@@ -145,7 +145,7 @@ LRESULT SIM_App::MainWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
                 PostQuitMessage(0);
             return 0;
         case WM_COMMAND:
-            if(LOWORD(wParam) == IDM_QUIT) 
+            if(LOWORD(wParam) == IDM_QUIT)
                 PostQuitMessage(0);
             return 0;
         case WM_TIMER:
@@ -195,7 +195,7 @@ void SIM_App::RunGUI()
 
     if(!RegisterClass(&wc)) return;
 
-    hWnd_ = CreateWindow("MaWinClass", "Simulation", WS_OVERLAPPEDWINDOW,    
+    hWnd_ = CreateWindow("MaWinClass", "Simulation", WS_OVERLAPPEDWINDOW,
                           CW_USEDEFAULT, CW_USEDEFAULT, 400, 300,
                           NULL, NULL, hInstance_, NULL);
 
@@ -221,7 +221,7 @@ void SIM_App::RunGUI()
         TranslateMessage(&msg);
         DispatchMessage(&msg);
     }
-    
+
     Shell_NotifyIcon(NIM_DELETE,&TrayIcon_);
 
     Stop();
@@ -284,8 +284,8 @@ void SIM_App::Cleanup()
 
     MIL_AgentServer::DestroyWorkspace();
 
-    // stop the GUI 
-    ::PostMessage( hWnd_ , WM_COMMAND, IDM_QUIT, NULL ) ; 
+    // stop the GUI
+    ::PostMessage( hWnd_ , WM_COMMAND, IDM_QUIT, NULL ) ;
     guiThread_->join();
 }
 

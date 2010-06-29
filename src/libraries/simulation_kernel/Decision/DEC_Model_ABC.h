@@ -42,7 +42,7 @@ public:
     bool IsMissionAvailable            ( const MIL_MissionType_ABC& missionType ) const;
     bool IsFragOrderAvailableForMission( const MIL_MissionType_ABC& missionType, const MIL_FragOrderType& fragOrderType ) const;
     //@}
-    
+
     //! @name Destructor
     //@{
     virtual ~DEC_Model_ABC();
@@ -75,7 +75,7 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::set< const MIL_MissionType_ABC* >                            T_MissionSet ; 
+    typedef std::set< const MIL_MissionType_ABC* >                            T_MissionSet ;
     typedef std::set< const MIL_FragOrderType* >                            T_FragOrderSet ;
     typedef std::map< const MIL_MissionType_ABC*, T_FragOrderSet > T_FragOrderPerMissionMap;
     typedef T_FragOrderPerMissionMap::const_iterator               CIT_FragOrderPerMissionMap;
@@ -86,7 +86,7 @@ private:
           std::string     strDIAType_;
           std::string     strScript_;
           std::string     strIncludePath_;
-          
+
           T_MissionSet                availableMissions_ ;
           T_FragOrderPerMissionMap  availableFragOrdersPerMission_;
 };

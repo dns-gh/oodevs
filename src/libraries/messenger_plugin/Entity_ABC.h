@@ -41,9 +41,9 @@ public:
     virtual ~Entity_ABC() {};
     //@}
 
-    //! @name xml read / write 
+    //! @name xml read / write
     //@{
-    virtual void Write( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter ) const = 0; 
+    virtual void Write( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter ) const = 0;
     //@}
 };
 

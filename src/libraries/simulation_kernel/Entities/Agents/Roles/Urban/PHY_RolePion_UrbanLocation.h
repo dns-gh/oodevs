@@ -106,7 +106,7 @@ private:
     MIL_Agent_ABC& pion_;
     const UrbanObjectWrapper* urbanObject_;
     std::auto_ptr< UrbanBlockPosition_ABC > delegate_;
-    bool isInCity_; 
+    bool isInCity_;
     //@}
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_UrbanLocation* role, const unsigned int /*version*/ );

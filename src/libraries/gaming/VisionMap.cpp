@@ -126,7 +126,7 @@ void VisionMap::Initialize()
 // -----------------------------------------------------------------------------
 char VisionMap::DataAt( const std::pair< unsigned, unsigned >& cell )
 {
-    if( vision_ 
+    if( vision_
      && int( cell.first  ) >= left_   && int( cell.first  ) <= right_
      && int( cell.second ) >= bottom_ && int( cell.second ) <= top_ )
     {
@@ -153,7 +153,7 @@ bool VisionMap::ShouldUpdate( const std::pair< unsigned, unsigned >& cell )
 // -----------------------------------------------------------------------------
 void VisionMap::Update( const std::pair< unsigned, unsigned >& cell, E_PerceptionResult perception )
 {
-    if( perception && int( cell.first  ) >= left_   && int( cell.first  ) <= right_ 
+    if( perception && int( cell.first  ) >= left_   && int( cell.first  ) <= right_
                    && int( cell.second ) >= bottom_ && int( cell.second ) <= top_ )
     {
         const unsigned x = cell.first  - left_;

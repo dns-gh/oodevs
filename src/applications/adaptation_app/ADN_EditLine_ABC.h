@@ -25,7 +25,7 @@ class ADN_EditLine_ABC
 , public ADN_Gfx_ABC
 {
     Q_OBJECT
-        
+
 public:
     explicit ADN_EditLine_ABC(QWidget* parent, const char * name = 0);
     virtual ~ADN_EditLine_ABC();

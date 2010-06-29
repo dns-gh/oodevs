@@ -1,12 +1,12 @@
 //*****************************************************************************
-// 
+//
 // $Created: AGN 02-11-25 $
 // $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Path/DEC_Population_Path.cpp $
 // $Author: Age $
 // $Modtime: 16/06/05 15:23 $
 // $Revision: 28 $
 // $Workfile: DEC_Population_Path.cpp $
-// 
+//
 //*****************************************************************************
 
 #include "simulation_kernel_pch.h"
@@ -25,7 +25,7 @@
 // Name: DEC_Population_Path constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
-DEC_Population_Path::DEC_Population_Path( const MIL_Population& population, const MT_Vector2D& start, const MT_Vector2D& destination ) 
+DEC_Population_Path::DEC_Population_Path( const MIL_Population& population, const MT_Vector2D& start, const MT_Vector2D& destination )
     : pathClass_ ( DEC_Population_PathClass::GetPathClass( "base" ) ) //$$$ n'importe quoi
     , population_( population )
     , profiler_  ()
@@ -58,7 +58,7 @@ void DEC_Population_Path::Initialize( const T_PointVector& points )
     // initialize channeling points
     const DEC_PopulationKnowledge::T_LocationVector& channelingLocations = population_.GetKnowledge().GetChannelingLocations();
     channelers_.reserve( channelingLocations.size() );
-    for( DEC_PopulationKnowledge::CIT_LocationVector itChanLocation = channelingLocations.begin(); 
+    for( DEC_PopulationKnowledge::CIT_LocationVector itChanLocation = channelingLocations.begin();
         itChanLocation != channelingLocations.end(); ++itChanLocation )
         channelers_.push_back( DEC_Population_Path_Channeler( pathClass_, *itChanLocation ) );
 
@@ -98,7 +98,7 @@ MT_Float DEC_Population_Path::GetCostOutsideOfChanneling() const
 // -----------------------------------------------------------------------------
 void DEC_Population_Path::CleanAfterComputation()
 {
-    DEC_Path_ABC::CleanAfterComputation(); 
+    DEC_Path_ABC::CleanAfterComputation();
     channelers_.clear();
 }
 
@@ -107,7 +107,7 @@ void DEC_Population_Path::CleanAfterComputation()
 // Created: AGE 2005-02-25
 // -----------------------------------------------------------------------------
 void DEC_Population_Path::Execute( TerrainPathfinder& pathfind )
-{    
+{
     if( MIL_AgentServer::GetWorkspace().GetConfig().UsePathDebug() )
     {
         MT_LOG_MESSAGE_MSG( "DEC_Population_Path::Compute: " << this << " : computation begin" );
@@ -128,9 +128,9 @@ void DEC_Population_Path::Execute( TerrainPathfinder& pathfind )
         std::stringstream stream;
         for( CIT_PathPointList it = resultList_.begin(); it != resultList_.end(); ++it )
             stream << "[" << (**it).GetPos() << "] ";
-        MT_LOG_MESSAGE_MSG( "DEC_Population_Path::Compute: " << this << 
+        MT_LOG_MESSAGE_MSG( "DEC_Population_Path::Compute: " << this <<
                             ", Thread : "  << MIL_AgentServer::GetWorkspace().GetPathFindManager().GetCurrentThread() <<
-                            ", Time : " << rComputationTime << 
+                            ", Time : " << rComputationTime <<
                             ", State : " << GetStateAsString() <<
                             ", Result : " << stream.str() );
     }

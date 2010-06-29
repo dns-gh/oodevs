@@ -55,7 +55,7 @@ bool MIL_LocationParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
         return pLocalisation_->GetType() == TER_Localisation::ePolygon;
     return false;
 }
- 
+
 // -----------------------------------------------------------------------------
 // Name: MIL_LocationParameter::ToLocation
 // Created: LDC 2009-05-25

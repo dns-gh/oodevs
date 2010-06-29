@@ -69,7 +69,7 @@ TER_LimitData::~TER_LimitData()
 {
     assert( nNbRefs_ == 0 );
     // Asynchronous deletion of TER_DynamicData
-    TER_PathFindManager::GetPathFindManager().RemoveDynamicData( *pPathFindData_ ); 
+    TER_PathFindManager::GetPathFindManager().RemoveDynamicData( *pPathFindData_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,7 +78,7 @@ TER_LimitData::~TER_LimitData()
 // -----------------------------------------------------------------------------
 void TER_LimitData::InitializeDistancesData()
 {
-    distancesData_.clear(); 
+    distancesData_.clear();
     distancesData_.reserve( points_.size() );
     CIT_PointVector itCur  = points_.begin();
     CIT_PointVector itNext = itCur;

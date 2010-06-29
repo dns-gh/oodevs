@@ -31,7 +31,7 @@ ParamHumanWoundList::ParamHumanWoundList( QObject* parent, const kernel::OrderPa
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ParamHumanWoundList destructor
 // Created: SBO 2005-09-27

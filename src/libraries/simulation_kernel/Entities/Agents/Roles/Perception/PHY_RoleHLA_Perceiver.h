@@ -29,7 +29,7 @@ public:
     virtual ~PHY_RoleHLA_Perceiver();
 
     //! @name Operations
-    //@{    
+    //@{
     virtual bool IsUsingActiveRadar() const;
     virtual bool IsUsingActiveRadar( const PHY_RadarClass& radarClass ) const; // LTO
     //@}
@@ -49,7 +49,7 @@ public:
     //@}
 
     //! @name Operations
-    //@{    
+    //@{
     virtual bool                       HasChanged        () const { return false; }
     virtual void                       Update            ( bool /*bIsDead*/ ) {}
     virtual void                       Clean             () {}
@@ -137,7 +137,7 @@ public:
     //@}
 
 private:
-    bool bIsUsingActiveRadar_; 
+    bool bIsUsingActiveRadar_;
     T_RadarsPerClassMap radars_;
     T_SurfaceAgentMap   surfacesAgent_;
     T_SurfaceObjectMap  surfacesObject_;

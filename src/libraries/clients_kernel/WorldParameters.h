@@ -20,7 +20,7 @@ namespace kernel
 
 // =============================================================================
 /** @class  WorldParameters
-    @brief  WorldParameters  
+    @brief  WorldParameters
 */
 // Created: AGE 2006-03-15
 // =============================================================================
@@ -31,7 +31,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              WorldParameters();
-    explicit WorldParameters( const tools::ExerciseConfig& config ); 
+    explicit WorldParameters( const tools::ExerciseConfig& config );
     virtual ~WorldParameters();
     //@}
 

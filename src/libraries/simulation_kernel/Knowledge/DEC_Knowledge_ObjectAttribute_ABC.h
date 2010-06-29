@@ -35,7 +35,7 @@ public:
 
     //! @name CheckPoints
     //@{
-    virtual void UpdateOnPerceptionLevel( const PHY_PerceptionLevel& currentPerceptionLevel )   = 0;    
+    virtual void UpdateOnPerceptionLevel( const PHY_PerceptionLevel& currentPerceptionLevel )   = 0;
     virtual void UpdateOnPerception     ( const DEC_Knowledge_ObjectPerception& perception )    = 0;
     virtual void UpdateOnCollision      ( const DEC_Knowledge_ObjectCollision& collision  )     = 0;
 

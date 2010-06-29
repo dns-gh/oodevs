@@ -39,7 +39,7 @@ public:
     //! @name Operations
     //@{
     template< typename Functor >
-    void Apply( const Functor& functor ) 
+    void Apply( const Functor& functor )
     {
         for( IT_Elements1 it = elements1_.begin(); it != elements1_.end(); ++it )
             functor( *it->second );
@@ -92,7 +92,7 @@ public:
         elements2_.erase( identifier );
     }
 
-    void DeleteAll() 
+    void DeleteAll()
     {
         while( ! elements1_.empty() )
         {
@@ -142,7 +142,7 @@ public:
         return elements1_.size();
     }
     //@}
-    // $$$$ AGE 2006-02-14: 
+    // $$$$ AGE 2006-02-14:
 protected:
     //! @name Copy/Assignement
     //@{

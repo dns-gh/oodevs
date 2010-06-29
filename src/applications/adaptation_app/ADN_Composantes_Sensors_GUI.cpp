@@ -31,7 +31,7 @@ class ADN_Composantes_Sensors_GUI_Connector
 {
 public:
 
-    ADN_Composantes_Sensors_GUI_Connector(ADN_Composantes_Sensors_GUI& tab) 
+    ADN_Composantes_Sensors_GUI_Connector(ADN_Composantes_Sensors_GUI& tab)
     : ADN_Connector_Table_ABC(tab,false)
     {}
 
@@ -46,20 +46,20 @@ public:
         tab_.setItem(i,0,pItemCombo=new ADN_TableItem_String(&tab_,obj, QTableItem::Never));
 //        tab_.setItem(i,0,pItemCombo=new ADN_TI_Composantes_Sensors(&tab_,obj));
         tab_.setItem(i,1,pItemInt=new ADN_TableItem_Double(&tab_,obj));
-        
+
         // disable composante category name
 //        pItemCombo->setEnabled(false);
 //        pItemCombo->SetAutoEnabled(false);
 
         // set table item properties
         pItemInt->GetValidator().setBottom(0);
-        
+
         // connect items & datas
 //        static_cast<ADN_Connector_Vector_ABC*>(&pItemCombo->GetConnector())->Connect(&static_cast<SensorInfos*>(obj)->ptrSensor_);
         pItemCombo->GetConnector().Connect(&static_cast<SensorInfos*>(obj)->ptrSensor_.GetData()->strName_);
         pItemInt->GetConnector().Connect(&static_cast<SensorInfos*>(obj)->rHeight_);
     }
-    
+
 private:
     ADN_Composantes_Sensors_GUI_Connector& operator=( const ADN_Composantes_Sensors_GUI_Connector& );
 };
@@ -84,13 +84,13 @@ ADN_Composantes_Sensors_GUI::ADN_Composantes_Sensors_GUI(QWidget * parent )
 
     // hide vertical header
     verticalHeader()->hide();
-    
+
     // tab with 2 columns
     setNumCols(2);
     setNumRows(0);
 //    setColumnStretchable( 0, true );
 //    setColumnStretchable( 1, false );
-    
+
     horizontalHeader()->setLabel(0, tr( "Sensor"));
     horizontalHeader()->setLabel(1, tr( "Height (m)"));
 
@@ -117,7 +117,7 @@ void ADN_Composantes_Sensors_GUI::OnContextMenu(int /*row*/,int /*col*/,const QP
 {
     std::auto_ptr< QPopupMenu > pTargetMenu( new QPopupMenu(this) );
 
-    
+
     // Get the list of the possible munitions
     bool bDisplayAdd = false;
     bool bDisplayRem = GetCurrentData()!=0;
@@ -133,18 +133,18 @@ void ADN_Composantes_Sensors_GUI::OnContextMenu(int /*row*/,int /*col*/,const QP
         return;
 
     QPopupMenu * pMenu=new QPopupMenu(this);
-    if ( bDisplayAdd )
+    if( bDisplayAdd )
         pMenu->insertItem( tr( "Add sensor"), pTargetMenu.get() ,0 );
-    if ( bDisplayRem )
+    if( bDisplayRem )
         pMenu->insertItem( tr( "Remove sensor"), 1 );
-    
+
     int nMenu=pMenu->exec(pt);
-    if ( nMenu == 1 )
+    if( nMenu == 1 )
     {
         // delete composante
         RemoveCurrentSensor();
     }
-    else if ( nMenu > 1 )
+    else if( nMenu > 1 )
     {
         assert( nMenu - 2 < (int)vAllSensors.size() );
         CreateNewSensor( nMenu - 2 );
@@ -154,7 +154,7 @@ void ADN_Composantes_Sensors_GUI::OnContextMenu(int /*row*/,int /*col*/,const QP
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Composantes_Sensors_GUI::CreateNewSensor
-/** @param  nSensor 
+/** @param  nSensor
 */
 // Created: AGN 2003-12-04
 // -----------------------------------------------------------------------------
@@ -165,7 +165,7 @@ void ADN_Composantes_Sensors_GUI::CreateNewSensor( int nSensor )
 
     ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
     pCTable->AddItem( pNewInfo );
-    pCTable->AddItem( 0 );    
+    pCTable->AddItem( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -175,10 +175,10 @@ void ADN_Composantes_Sensors_GUI::CreateNewSensor( int nSensor )
 void ADN_Composantes_Sensors_GUI::RemoveCurrentSensor()
 {
     SensorInfos* pCurSensor=(SensorInfos*)GetCurrentData();
-    if ( pCurSensor )
+    if( pCurSensor )
     {
         // remove current data from list
         // take care cause pCurData_ can change!!
         static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem(pCurSensor);
-    }    
+    }
 }

@@ -21,7 +21,7 @@
 
 namespace TEST
 {
-    
+
     class NetworkManager;
 
 // =============================================================================
@@ -36,7 +36,7 @@ namespace TEST
 // =============================================================================
 class ConnectionHandler
 {
-	MT_COPYNOTALLOWED( ConnectionHandler );
+    MT_COPYNOTALLOWED( ConnectionHandler );
 
 public:
     //! @name Constructors/Destructor
@@ -47,7 +47,7 @@ public:
 
     //! @name Operations
     //@{
-	bool ConnectToServer     ( const std::string& strHostName, unsigned int nPort );
+    bool ConnectToServer     ( const std::string& strHostName, unsigned int nPort );
     bool DisconnectFromServer();
     //@}
 
@@ -62,9 +62,9 @@ private:
 private:
     //! @name Member data
     //@{
-	DIN::DIN_ConnectionServiceClientUserCbk< ConnectionHandler >  connectionService_;
+    DIN::DIN_ConnectionServiceClientUserCbk< ConnectionHandler >  connectionService_;
     NetworkManager&                                               networkManager_;
-	//@}
+    //@}
 };
 
 } // end namespace TEST

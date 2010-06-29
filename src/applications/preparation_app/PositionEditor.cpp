@@ -19,20 +19,20 @@
 // Created: AME 2010-03-08
 // -----------------------------------------------------------------------------
 PositionEditor::PositionEditor( QDialog*& self, QWidget* parent, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter )
-	: QDialog( parent, 0, true )
-	, converter_( converter )
+    : QDialog( parent, 0, true )
+    , converter_( converter )
     , value_( 0 )
     , self_( self )
 {
     setCaption( tr( "Position Editor" ) );
     QVBoxLayout* pMainLayout = new QVBoxLayout( this );
     pMainLayout->setMargin( 10 );
-    
+
     locBox_ =  new gui::LocationEditorBox( this, controllers, converter );
     locBox_->SelectDefaultParser( converter.GetCoordSystem().defaultCoordinateSystem_ );
     pMainLayout->addWidget( locBox_ );
 
-	QHBox* pbuttonBox = new QHBox( this );
+    QHBox* pbuttonBox = new QHBox( this );
     QPushButton* okBtn     = new QPushButton( tr( "Ok" ), pbuttonBox );
     QPushButton* cancelBtn = new QPushButton( tr( "Cancel" ), pbuttonBox );
     okBtn->setDefault( true );
@@ -81,9 +81,9 @@ kernel::Moveable_ABC* PositionEditor::GetValue()
 void PositionEditor::OnAccept()
 {
     try
-	{
+    {
         geometry::Point2f point;
-        
+
         if( locBox_->GetPosition( point ) )
         {
             if( !converter_.IsInBoundaries( point ) )
@@ -99,7 +99,7 @@ void PositionEditor::OnAccept()
         }
     }
     catch( ... ){}
-    
+
 }
 // -----------------------------------------------------------------------------
 // Name: PositionEditor::OnReject

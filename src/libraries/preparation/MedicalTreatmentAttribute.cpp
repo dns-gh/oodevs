@@ -40,7 +40,7 @@ MedicalTreatmentAttribute::MedicalTreatmentAttribute( xml::xistream& xis, const 
     , availableBeds_        ( 0 )
     , doctors_              ( 0 )
     , availableDoctors_     ( 0 )
-{    
+{
     xis >> attribute( "beds", beds_ ) >> attribute( "availableBeds", availableBeds_ )
         >> attribute( "doctors", doctors_ ) >> attribute( "availableDoctors", availableDoctors_ );
     xis >> list( "type", *this, &MedicalTreatmentAttribute::ReadTreatment, treatmentTypes );
@@ -100,7 +100,7 @@ void MedicalTreatmentAttribute::DisplayInTooltip( Displayer_ABC& displayer ) con
 // -----------------------------------------------------------------------------
 void MedicalTreatmentAttribute::AddMedicalTreatment( const kernel::MedicalTreatmentType& type )
 {
-    if ( std::find( treatmentTypes_.begin(), treatmentTypes_.end(), &type ) == treatmentTypes_.end() )
+    if( std::find( treatmentTypes_.begin(), treatmentTypes_.end(), &type ) == treatmentTypes_.end() )
         treatmentTypes_.push_back( &type );
 }
 
@@ -115,7 +115,7 @@ void MedicalTreatmentAttribute::SerializeAttributes( xml::xostream& xos ) const
         << attribute( "availableBeds", availableBeds_ )
         << attribute( "doctors", doctors_ )
         << attribute( "availableDoctors", availableDoctors_ );
-    for( T_MedicalTreatments::const_iterator it = treatmentTypes_.begin(); it != treatmentTypes_.end(); ++it )    
+    for( T_MedicalTreatments::const_iterator it = treatmentTypes_.begin(); it != treatmentTypes_.end(); ++it )
         xos << content( "type", (*it)->GetName() );
     xos << end();
 }

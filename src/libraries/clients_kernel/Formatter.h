@@ -153,7 +153,7 @@ struct Formatter< OptionalValue< T > >
     {
         if( element.IsSet() )
             displayer.AddToDisplay( (const T&)( element ) );
-        else 
+        else
             displayer.AddToDisplay( ValueNotSet() );
     }
 };

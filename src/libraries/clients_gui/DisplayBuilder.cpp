@@ -24,7 +24,7 @@ DisplayBuilder::DisplayBuilder( QWidget* parent, ItemFactory_ABC& factory )
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DisplayBuilder destructor
 // Created: AGE 2006-02-09

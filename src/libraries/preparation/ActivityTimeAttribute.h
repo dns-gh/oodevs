@@ -52,7 +52,7 @@ public:
 
     //! @name Modifiers
     //@{
-    void SetActivityTime( unsigned int time );    
+    void SetActivityTime( unsigned int time );
     //@}
 
 private:

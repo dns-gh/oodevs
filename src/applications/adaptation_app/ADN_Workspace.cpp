@@ -127,7 +127,7 @@ ADN_Workspace::ADN_Workspace()
     elements_[eWeapons]           = new ADN_WorkspaceElement< ADN_Weapons_Data, ADN_Weapons_GUI >( tr( "Weapon systems" ) );
     elements_[eSensors]           = new ADN_WorkspaceElement< ADN_Sensors_Data, ADN_Sensors_GUI >( tr( "Sensors" ) );
     elements_[eComposantes]       = new ADN_WorkspaceElement< ADN_Composantes_Data, ADN_Composantes_GUI >( tr( "Equipments" ) );
-    elements_[eAiEngine]          = new ADN_WorkspaceElement< ADN_AiEngine_Data, ADN_AiEngine_GUI >( tr( "Op. indicators" ) );   
+    elements_[eAiEngine]          = new ADN_WorkspaceElement< ADN_AiEngine_Data, ADN_AiEngine_GUI >( tr( "Op. indicators" ) );
     elements_[eModels]            = new ADN_WorkspaceElement< ADN_Models_Data, ADN_Models_GUI >( tr( "Doctrine models" ) );
     elements_[eUnits]             = new ADN_WorkspaceElement< ADN_Units_Data, ADN_Units_GUI >( tr( "Units" ) );
     elements_[eAutomata]          = new ADN_WorkspaceElement< ADN_Automata_Data, ADN_Automata_GUI >( tr( "Automata" ) );
@@ -191,7 +191,7 @@ void ADN_Workspace::Build( ADN_MainWindow& mainWindow )
 
     QWidget* pLogPage = new QWidget();
     QVBoxLayout* pLayout = new QVBoxLayout( pLogPage );
-    
+
     elements_[eMaintenance]->GetGuiABC().GetMainWidget()->reparent( pLogPage, QPoint( 0, 0 ) );
     elements_[eSupply]->GetGuiABC().GetMainWidget()->reparent( pLogPage, QPoint( 0, 0 ) );
     elements_[eHealth]->GetGuiABC().GetMainWidget()->reparent( pLogPage, QPoint( 0, 0 ) );
@@ -273,10 +273,10 @@ void ADN_Workspace::Load( const std::string& filename )
 inline bool isWritable(const std::string& filename)
 {
     int fa=_access(filename.c_str(),2);
-    if ( fa == -1 && errno == EACCES)
+    if( fa == -1 && errno == EACCES)
         return false;
     return true;
-        
+
 }
 
 //-----------------------------------------------------------------------------
@@ -290,7 +290,7 @@ bool ADN_Workspace::SaveAs( const std::string& filename )
     // Set a temporary working directory
     std::string szOldWorkDir = dirInfos.GetWorkingDirectory().GetData();
     dirInfos.SetWorkingDirectory( filename );
-    
+
     // Retrieve list of needed files
     T_StringList files;
     files.push_back( dirInfos.GetRelativePath( filename ) );
@@ -300,7 +300,7 @@ bool ADN_Workspace::SaveAs( const std::string& filename )
 
     /////////////////////////////////////
     // Check Writability of files
-    
+
     // dialog log
     ADN_DialogLog dlgLog( 0 );
     dlgLog.setCaption( tr( "Sword Adaptation Tool - Saving Errors" ) );
@@ -316,7 +316,7 @@ bool ADN_Workspace::SaveAs( const std::string& filename )
     // set old working directory
     dirInfos.SetWorkingDirectory( szOldWorkDir );
     if( !dlgLog.empty() )
-    {    
+    {
         dlgLog.exec();
         ResetProgressIndicator();
         return false;
@@ -346,7 +346,7 @@ bool ADN_Workspace::SaveAs( const std::string& filename )
         ResetProgressIndicator();
         throw;
     }
-    
+
     /////////////////////////////////////
     // Copy Tmp Files To Real Files
     for( T_StringList::iterator it = files.begin(); it != files.end(); ++it )
@@ -356,7 +356,7 @@ bool ADN_Workspace::SaveAs( const std::string& filename )
             ResetProgressIndicator();
             throw ADN_SaveFile_Exception( *it );
         }
-        
+
     GetUndoStack().clear();
     // Save is ended
     ResetProgressIndicator();

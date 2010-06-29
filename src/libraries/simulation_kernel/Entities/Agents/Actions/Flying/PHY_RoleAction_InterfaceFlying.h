@@ -63,7 +63,7 @@ BOOST_CLASS_EXPORT_KEY( PHY_RoleAction_InterfaceFlying )
 // Name: PHY_RoleAction_InterfaceFlying::serialize
 // Created: RPD 2009-08-13
 // -----------------------------------------------------------------------------
-template< typename Archive > 
+template< typename Archive >
 void PHY_RoleAction_InterfaceFlying::serialize( Archive& archive , const unsigned int )
 {
     archive & boost::serialization::base_object< tools::Role_ABC >( *this );

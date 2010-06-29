@@ -58,7 +58,7 @@ Zone::~Zone()
     // NOTHING
 }
 
-namespace 
+namespace
 {
     Zone_ABC* CreateZone( const std::string& type, const std::string& coordinates )
     {

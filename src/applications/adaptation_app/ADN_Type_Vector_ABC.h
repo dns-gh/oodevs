@@ -18,8 +18,8 @@
 //*****************************************************************************
 // Created: JDY 03-06-26
 //*****************************************************************************
-template < class T > 
-class ADN_Type_Vector_ABC 
+template < class T >
+class ADN_Type_Vector_ABC
 : public ADN_Connector_Vector_ABC
 , public std::vector<T*>
 , public ADN_DataTreeNode_ABC

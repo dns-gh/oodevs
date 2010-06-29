@@ -30,7 +30,7 @@ PHY_MedicalSortingConsign::PHY_MedicalSortingConsign( PHY_RoleInterface_Medical&
 {
     if( humanState.NeedSorting() )
         EnterStateWaitingForSorting();
-    else 
+    else
         EnterStateSearchingForHealingArea();
 }
 
@@ -74,7 +74,7 @@ void PHY_MedicalSortingConsign::EnterStateWaitingForSorting()
     assert( pHumanState_ );
     assert( !pDoctor_ );
     SetState( eWaitingForSorting );
-    nTimer_ = 0; 
+    nTimer_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -85,11 +85,11 @@ bool PHY_MedicalSortingConsign::DoWaitingForSorting()
 {
     assert( pHumanState_ );
     assert( !pDoctor_ );
- 
+
     pDoctor_ = GetPionMedical().GetAvailableDoctorForSorting();
     if( !pDoctor_ ) // $$$ TODO if !HasUsable => changer de secteur de tri
         return false;
-    
+
     GetPionMedical().StartUsingForLogistic( *pDoctor_ );
     return true;
 }
@@ -105,7 +105,7 @@ void PHY_MedicalSortingConsign::EnterStateSorting()
     SetState( eSorting );
     nTimer_ = (unsigned int)( PHY_HumanWound::GetSortingTime() );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalSortingConsign::EnterStateSearchingForHealingArea
 // Created: NLD 2005-01-12
@@ -113,19 +113,19 @@ void PHY_MedicalSortingConsign::EnterStateSorting()
 void PHY_MedicalSortingConsign::EnterStateSearchingForHealingArea()
 {
     assert( pHumanState_ );
-    
+
     SetState( eSearchingForHealingArea );
     nTimer_ = 0;
 
     // Sorting
-    if( pDoctor_ ) 
+    if( pDoctor_ )
     {
         pHumanState_->NotifySorted();
         GetPionMedical().StopUsingForLogistic( *pDoctor_ );
         pDoctor_ = 0;
     }
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalSortingConsign::DoSearchForHealingArea
 // Created: NLD 2005-01-12
@@ -179,10 +179,10 @@ bool PHY_MedicalSortingConsign::DoWaitingForCollection()
 // -----------------------------------------------------------------------------
 bool PHY_MedicalSortingConsign::Update()
 {
-    if ( --nTimer_ > 0 )
+    if( --nTimer_ > 0 )
         return GetState() == eFinished;
 
-    switch( GetState() ) 
+    switch( GetState() )
     {
         case eWaitingForSorting      : if( DoWaitingForSorting() )    EnterStateSorting                (); break;
         case eSorting                :                                EnterStateSearchingForHealingArea(); break;
@@ -206,7 +206,7 @@ void PHY_MedicalSortingConsign::Cancel()
     {
         GetPionMedical().StopUsingForLogistic( *pDoctor_ );
         pDoctor_ = 0;
-    }    
+    }
     PHY_MedicalConsign_ABC::Cancel();
 }
 

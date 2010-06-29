@@ -131,7 +131,7 @@ MissionParameter_ABC* MissionParameterFactory::CreateParameter( xml::xistream& x
                     >> xml::end()
                 >> xml::end()
         >> xml::end();
-    
+
     const dispatcher::Agent_ABC* agent = 0;
     const dispatcher::Automat_ABC* automat = 0;
     if( !oid.empty() )
@@ -145,7 +145,7 @@ MissionParameter_ABC* MissionParameterFactory::CreateParameter( xml::xistream& x
     const kernel::OrderParameter* definition = GetParameterByType( type_, mission_, code );
     if( definition == 0 )
         throw std::runtime_error( __FUNCTION__ ": Unknown parameter" );
-    
+
     xis >> xml::optional()
             >> xml::start( NS( "C_BML_Where", "cbml" ) )
                 >> xml::start( NS( "WhereInstance", "cbml" ) );

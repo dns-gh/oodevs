@@ -21,7 +21,7 @@ void save_construct_data( Archive& archive, const MIL_AgentPionLOGMedical* pion,
 {
     unsigned int nTypeID = pion->GetType().GetID();
     const AlgorithmsFactories* const algorithmFactories = &pion->GetAlgorithms();
-    archive << nTypeID 
+    archive << nTypeID
             << algorithmFactories;
 }
 
@@ -43,7 +43,7 @@ void load_construct_data( Archive& archive, MIL_AgentPionLOGMedical* pion, const
 // -----------------------------------------------------------------------------
 MIL_AgentPionLOGMedical::MIL_AgentPionLOGMedical( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis )
     : MIL_AgentPionLOG_ABC( type, automate, algorithmFactories, xis )
-{ 
+{
     // NOTHING
 }
 
@@ -83,7 +83,7 @@ MIL_AgentPionLOGMedical::~MIL_AgentPionLOGMedical()
 void MIL_AgentPionLOGMedical::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< MIL_AgentPionLOG_ABC >( *this );
-    
+
     PHY_RolePionLOG_Medical* pRole;
     file >> pRole;
     RegisterRole( *pRole );

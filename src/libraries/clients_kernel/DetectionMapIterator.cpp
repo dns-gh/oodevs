@@ -40,15 +40,15 @@ DetectionMapIterator::DetectionMapIterator( const DetectionMap& map, const Point
     if( std::fabs( xDelta ) > std::fabs( yDelta ) )
     {
         if( xDelta > 0 )
-            xIncrease_ = cellSize_; 
+            xIncrease_ = cellSize_;
         else
-            xIncrease_ = - cellSize_; 
+            xIncrease_ = - cellSize_;
         yIncrease_ = yDelta / xDelta * xIncrease_;
     }
     else
     {
         if( yDelta > 0 )
-            yIncrease_ = cellSize_; 
+            yIncrease_ = cellSize_;
         else
             yIncrease_ = - cellSize_;
         xIncrease_ = xDelta / yDelta * yIncrease_;
@@ -83,7 +83,7 @@ void DetectionMapIterator::Increment()
     {
         --currentCell_.first;
         xOffset_ += cellSize_;
-    } 
+    }
 
     yCurrent_ += increment.Y();
     yOffset_  += increment.Y();
@@ -96,7 +96,7 @@ void DetectionMapIterator::Increment()
     {
         --currentCell_.second;
         yOffset_ += cellSize_;
-    } 
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -109,7 +109,7 @@ Vector2f DetectionMapIterator::ComputeIncrement()
     float yDelta = ( ( yIncrease_ > 0 ) ? cellSize_*.51f : -cellSize_*.51f ) - yOffset_;
     horizontalLine_ = ( xIncrease_ == 0 )
         || ( ( yIncrease_ != 0 ) && ( yDelta / yIncrease_ < xDelta / xIncrease_ ) );
-    return horizontalLine_ ? 
+    return horizontalLine_ ?
                 Vector2f( yDelta / yIncrease_ * xIncrease_, yDelta ) :
                 Vector2f( xDelta, xDelta / xIncrease_ * yIncrease_ );
 }
@@ -136,7 +136,7 @@ short DetectionMapIterator::Altitude() const
     {
         //assert( yOffset_ ~= cellSize_/2 );
         unsigned nextX = currentCell_.first;
-        if( currentCell_.first < map_.Width() - 1 ) 
+        if( currentCell_.first < map_.Width() - 1 )
             ++nextX;
         alpha = ( cellSize_ *.5f - xOffset_ ) / cellSize_;
         next = *map_.Data( nextX, currentCell_.second );
@@ -145,7 +145,7 @@ short DetectionMapIterator::Altitude() const
     {
         //assert( xOffset_ ~= cellSize_/2 );
         unsigned nextY = currentCell_.second;
-        if( currentCell_.first < map_.Height() - 1 ) 
+        if( currentCell_.first < map_.Height() - 1 )
             ++nextY;
         alpha = ( cellSize_ *.5f - yOffset_ ) / cellSize_;
         next = *map_.Data( currentCell_.first, nextY );
@@ -161,7 +161,7 @@ short DetectionMapIterator::Elevation() const
 {
     return Altitude() + map_.EnvironmentData( currentCell_.first, currentCell_.second )->ElevationDelta();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DetectionMapIterator::IsInTown
 // Created: AGE 2006-04-06
@@ -170,7 +170,7 @@ bool DetectionMapIterator::IsInTown() const
 {
     return map_.EnvironmentData( currentCell_.first, currentCell_.second )->IsInTown();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DetectionMapIterator::IsInForest
 // Created: AGE 2006-04-06

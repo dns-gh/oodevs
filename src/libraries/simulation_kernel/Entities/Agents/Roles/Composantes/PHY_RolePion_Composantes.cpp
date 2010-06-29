@@ -258,7 +258,7 @@ void PHY_RolePion_Composantes::DistributeCommanders()
             }
         }
         if( nNbr )
-            MT_LOG_WARNING_MSG( "Agent " << pion_.GetID() << " - Not enough humans in crew to distribute commanders : " << nNbr << " " << rank.GetName() << " remaining" );        
+            MT_LOG_WARNING_MSG( "Agent " << pion_.GetID() << " - Not enough humans in crew to distribute commanders : " << nNbr << " " << rank.GetName() << " remaining" );
     }
 }
 
@@ -846,7 +846,7 @@ void PHY_RolePion_Composantes::ApplyContamination( const MIL_ToxicEffectManipula
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::ApplyPoisonous   
+// Name: PHY_RolePion_Composantes::ApplyPoisonous
 // Created: NLD 2006-10-27
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::ApplyPoisonous( const MIL_ToxicEffectManipulator& contamination )
@@ -1545,7 +1545,7 @@ MT_Float PHY_RolePion_Composantes::GetMajorComponentWeight() const
 {
     MT_Float weight ( 0 );
     const PHY_ComposantePion* majorComponent = GetMajorComposante();
-    if ( majorComponent )
+    if( majorComponent )
     {
         weight = ( MT_Float ) majorComponent->GetWeight();
     }
@@ -1785,11 +1785,11 @@ double PHY_RolePion_Composantes::GetPHModifier( const PHY_DotationCategory& cate
 bool PHY_RolePion_Composantes::CounterIndirectFire( const PHY_DotationCategory& category ) const
 {
     for( PHY_ComposantePion::CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
-        if ( (*itComposante)->CounterIndirectFire( category, pion_ ) )
+        if( (*itComposante)->CounterIndirectFire( category, pion_ ) )
             return true;
     return false;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::DestroyIndirectFire
 // Created: LDC 2010-01-07

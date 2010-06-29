@@ -36,7 +36,7 @@ class ADN_Connector_PhTable
     : public ADN_Connector_Table_ABC
 {
 public:
-    ADN_Connector_PhTable( ADN_Weapons_PhTable& tab ) 
+    ADN_Connector_PhTable( ADN_Weapons_PhTable& tab )
         : ADN_Connector_Table_ABC( tab, true, "ADN_Connector_PhTable" )
     {}
 
@@ -50,7 +50,7 @@ public:
 
         // add a new row & set new values
         tab_.setItem( i, 0, pItemDistance );
-        tab_.setItem( i, 1, pItemPerc ); 
+        tab_.setItem( i, 1, pItemPerc );
 
         // set table item properties
         pItemDistance->GetValidator().setBottom( 0 );
@@ -153,7 +153,7 @@ void ADN_Weapons_PhTable::CreateNewElement()
     PhInfos* pNewInfo = new PhInfos();
     ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
     pCTable->AddItem( pNewInfo );
-    pCTable->AddItem( 0 );  
+    pCTable->AddItem( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -182,5 +182,5 @@ void ADN_Weapons_PhTable::DeleteCurrentElement()
         // remove current data from list
         // take care cause pCurData_ can change!!
         static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurPh );
-    } 
+    }
 }

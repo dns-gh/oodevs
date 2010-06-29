@@ -71,7 +71,7 @@ CreatePackagePanel::CreatePackagePanel( QWidgetStack* widget, QAction& action, c
         content_->addColumn( "exercise features" );
         content_->adjustSize();
     }
-    
+
     progress_ = new QProgressBar( box );
     progress_->hide();
 
@@ -105,14 +105,14 @@ CreatePackagePanel::~CreatePackagePanel()
 // -----------------------------------------------------------------------------
 bool CreatePackagePanel::BrowseClicked()
 {
-    const QString filename = QFileDialog::getSaveFileName( package_.second.c_str(), "SWORD packages (*.otpak)", this, "", tr( "Select a package" ) );    
+    const QString filename = QFileDialog::getSaveFileName( package_.second.c_str(), "SWORD packages (*.otpak)", this, "", tr( "Select a package" ) );
     if( filename.isEmpty() )
         return false;
     const bfs::path file = bfs::path( std::string( filename.ascii() ), bfs::native );
     package_.first = file.parent_path().directory_string();
     package_.second = file.leaf().c_str();
     if( bfs::exists( file ) )
-        return QMessageBox::question( this, tr( "Overwrite File?" ), 
+        return QMessageBox::question( this, tr( "Overwrite File?" ),
                             tr( "A file called %1 already exists. Do you want to overwrite it?" ).arg( filename ),
                             QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes;
     return true;
@@ -137,7 +137,7 @@ namespace
     struct Progress
     {
         Progress( QProgressBar* progress ) : progress_( progress ), count_( 0 ) {}
-        void operator()() 
+        void operator()()
         {
             progress_->setProgress( ++count_ );
             qApp->processEvents();
@@ -170,7 +170,7 @@ namespace
         std::ios_base::openmode openmode = std::ifstream::in;
         if( IsBinary( root ) )
             openmode |= std::ifstream::binary;
-        
+
         std::ifstream file( filename.c_str(), openmode );
         if( file.good() )
         {
@@ -192,7 +192,7 @@ namespace
             }
         }
     }
-    
+
     void Serialize( const std::string& base, const std::string& name, zip::ozipfile& zos )
     {
         const bfs::path root = bfs::path( base, bfs::native ) / name;
@@ -206,7 +206,7 @@ namespace
 
     void BrowseChildren( const std::string& base, QListViewItem* item, zip::ozipfile& zos, boost::function0<void> callback )
     {
-        while ( item != 0 && ! dynamic_cast< QCheckListItem* >( item ) ) 
+        while ( item != 0 && ! dynamic_cast< QCheckListItem* >( item ) )
         {
             std::string file( item->text( 0 ).ascii() );
             Serialize( base, file, zos );
@@ -217,14 +217,14 @@ namespace
 
     void BrowseFiles( const std::string& base, QListViewItemIterator iterator, zip::ozipfile& zos, boost::function0<void> callback )
     {
-        while ( iterator.current() ) 
+        while ( iterator.current() )
         {
             QCheckListItem* item = dynamic_cast< QCheckListItem* >( iterator.current() );
-            if ( item && item->isOn() )
+            if( item && item->isOn() )
             {
                 std::string file( iterator.current()->text( 0 ).ascii() );
                 Serialize( base, file, zos );
-                if( item->childCount() > 0 ) 
+                if( item->childCount() > 0 )
                     BrowseChildren( base, item->firstChild(), zos, callback );
             }
             callback();
@@ -235,7 +235,7 @@ namespace
     int ListViewSize( QListViewItemIterator iterator )
     {
         int i = 0;
-        for ( ; iterator.current(); ++iterator, ++i ) 
+        for ( ; iterator.current(); ++iterator, ++i )
             ;
         return i;
     }
@@ -304,7 +304,7 @@ void CreatePackagePanel::CreatePackage()
         progress_->setProgress( 0, ListViewSize( QListViewItemIterator( content_ ) ) );
         setCursor( QCursor::waitCursor );
         {
-            WriteContent( archive );            
+            WriteContent( archive );
             BrowseFiles( config_.GetRootDir(), QListViewItemIterator( content_ ), archive, Progress( progress_ ) );
         }
         setCursor( QCursor::arrowCursor );
@@ -346,7 +346,7 @@ void CreatePackagePanel::BuildCategory( QListViewItem* parent, const QStringList
 QListViewItem* CreatePackagePanel::BuildExerciseFeatures( const std::string& exercise )
 {
     QString base( std::string( "exercises/" + exercise ).c_str() );
-    
+
     QListViewItem* rootItem = new QListViewItem( content_, "exercises" );
     rootItem->setOpen( true );
 
@@ -359,7 +359,7 @@ QListViewItem* CreatePackagePanel::BuildExerciseFeatures( const std::string& exe
     {
         QCheckListItem* sessionItem = new QCheckListItem( exerciseItem, base + "/sessions/" + *it, QCheckListItem::CheckBox );
         sessionItem->setOpen( true );
-     
+
         std::string category( QString( "sessions/" + *it + "/checkpoints" ).ascii() );
         const QStringList checkpoints = frontend::commands::ListCheckpoints( config_, exercise, (*it).ascii() );
         BuildCategory( sessionItem, checkpoints, base, category );
@@ -378,7 +378,7 @@ QListViewItem* CreatePackagePanel::BuildExerciseFeatures( const std::string& exe
 namespace
 {
     QListViewItem* InsertValidatedEntry( QListViewItem* parent, const std::string& entry, const std::string& root )
-    {        
+    {
         QCheckListItem* item = new QCheckListItem( parent, entry.c_str(), QCheckListItem::CheckBox );
         if( ! bfs::exists( bfs::path( root + "/" + entry ) ) )
         {
@@ -398,7 +398,7 @@ QListViewItem* CreatePackagePanel::BuildExerciseData( const std::string& exercis
 {
     std::string terrain, population, dataset, physical;
     xml::xifstream xis( config_.GetExerciseFile( exercise ) );
-    xis >> xml::start( "exercise" ) 
+    xis >> xml::start( "exercise" )
             >> xml::start( "terrain" ) >> xml::attribute( "name", terrain ) >> xml::end()
             >> xml::optional() >> xml::start( "population" ) >> xml::attribute( "name", population ) >> xml::end()
             >> xml::start( "model" ) >> xml::attribute( "dataset", dataset ) >> xml::attribute( "physical", physical ) >> xml::end()
@@ -406,7 +406,7 @@ QListViewItem* CreatePackagePanel::BuildExerciseData( const std::string& exercis
 
     QListViewItem* dataItem = new QListViewItem( content_, "data" );
     dataItem->setOpen( true );
-        
+
     QListViewItem* terrainItem = InsertValidatedEntry( dataItem, "data/terrains/" + terrain, config_.GetRootDir() );
     if( terrainItem )
     {

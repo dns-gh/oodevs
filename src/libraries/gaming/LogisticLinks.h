@@ -17,7 +17,7 @@
 
 namespace Common
 {
-    class MsgAutomatChangeLogisticLinks;   
+    class MsgAutomatChangeLogisticLinks;
 }
 
 namespace kernel

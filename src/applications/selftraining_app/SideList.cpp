@@ -25,7 +25,7 @@ SideList::SideList( QWidget* parent, const tools::GeneralConfig& config )
     : QListBox( parent )
     , config_( config )
 {
-    setSelectionMode( QListBox::NoSelection ) ; 
+    setSelectionMode( QListBox::NoSelection ) ;
 }
 
 // -----------------------------------------------------------------------------
@@ -59,7 +59,7 @@ void SideList::Update( const QString& exercise )
     catch(...)
     {
         // something went wrong... don't crash, just clear
-        clear(); 
+        clear();
     }
 }
 

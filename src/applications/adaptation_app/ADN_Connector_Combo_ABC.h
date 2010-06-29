@@ -29,10 +29,10 @@ public:
 
 protected:
     virtual void  ClearPrivate(bool bInConnection=false)=0;
-    virtual void  SetDataPrivate(void *data)=0;    
+    virtual void  SetDataPrivate(void *data)=0;
 };
 
-class ADN_ComboBoxItem; 
+class ADN_ComboBoxItem;
 
 
 template < class T >
@@ -44,7 +44,7 @@ public:
     virtual ~ADN_Connector_Combo();
 
     bool IsConnected() const;
-           
+
 protected:
     virtual void ConnectPrivateSub( ADN_Connector_Vector_ABC* pTarget );
     virtual void DisconnectPrivateSub( ADN_Connector_Vector_ABC* pTarget );
@@ -53,9 +53,9 @@ protected:
     virtual bool  AddItemPrivate(void *obj,bool bCreateCommand=false);
     virtual bool  RemItemPrivate(void *item,bool bCreateCommand=false);
     virtual void  ClearPrivate(bool bInConnection=false);
-    virtual void  SetDataPrivate(void *data);    
+    virtual void  SetDataPrivate(void *data);
     virtual void* SetNdxChanged(int ndx);
-    
+
 protected:
     T*                 pCombo_;
     bool               bIsConnected_;

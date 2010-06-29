@@ -48,7 +48,7 @@ PHY_MedicalEvacuationConsign::PHY_MedicalEvacuationConsign( PHY_RoleInterface_Me
 PHY_MedicalEvacuationConsign::PHY_MedicalEvacuationConsign()
     : PHY_MedicalConsign_ABC()
     , pDoctor_              ( 0 )
-    , pEvacuationAmbulance_ ( 0 ) 
+    , pEvacuationAmbulance_ ( 0 )
 {
 }
 
@@ -88,7 +88,7 @@ void PHY_MedicalEvacuationConsign::EnterStateWaitingForEvacuation()
     assert( pHumanState_ );
     assert( !pDoctor_ );
     assert( !pEvacuationAmbulance_ );
-    
+
     SetState( eWaitingForEvacuation );
     nTimer_ = 0;
 }
@@ -101,7 +101,7 @@ void PHY_MedicalEvacuationConsign::CreateEvacuationAmbulance()
 {
     assert( pHumanState_ );
     assert( !pDoctor_ );
-    
+
     if( !pEvacuationAmbulance_ )
         pEvacuationAmbulance_ = GetPionMedical().GetAvailableEvacuationAmbulance( *this );
 }
@@ -204,7 +204,7 @@ void PHY_MedicalEvacuationConsign::ChooseStateAfterEvacuation()
     nTimer_ = 0;
     if( pHumanState_->NeedDiagnosis() )
         SetState( eWaitingForDiagnostic );
-    else        
+    else
         SetState( eWaitingForCollection );
 }
 
@@ -221,7 +221,7 @@ bool PHY_MedicalEvacuationConsign::DoWaitingForDiagnostic()
     pDoctor_ = GetPionMedical().GetAvailableDoctorForDiagnosing();
     if( !pDoctor_ )
         return false;
-    
+
     GetPionMedical().StartUsingForLogistic( *pDoctor_ );
     return true;
 }
@@ -237,7 +237,7 @@ void PHY_MedicalEvacuationConsign::EnterStateDiagnosing()
     assert( !pEvacuationAmbulance_ );
 
     SetState( eDiagnosing );
-    nTimer_ = PHY_HumanWound::GetDiagnosticTime();    
+    nTimer_ = PHY_HumanWound::GetDiagnosticTime();
 }
 
 
@@ -287,10 +287,10 @@ bool PHY_MedicalEvacuationConsign::DoWaitingForCollection()
 // -----------------------------------------------------------------------------
 bool PHY_MedicalEvacuationConsign::Update()
 {
-    if ( --nTimer_ > 0 )
+    if( --nTimer_ > 0 )
         return GetState() == eFinished;
 
-    switch( GetState() ) 
+    switch( GetState() )
     {
         case eWaitingForEvacuation             : CreateEvacuationAmbulance(); break;  // Géré par PHY_MedicalAmbulance
         case eEvacuationGoingTo                : break;                               // Géré par PHY_MedicalAmbulance

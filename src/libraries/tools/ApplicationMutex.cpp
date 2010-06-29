@@ -34,7 +34,7 @@ namespace
 
         virtual ~ApplicationMutexInternal()
         {
-            if ( handle_ )
+            if( handle_ )
                 ::ReleaseMutex( handle_ );
         }
         //@}

@@ -76,7 +76,7 @@ namespace
             pObject = loader.CreateObject( builder, army );
         );
         builder.verify();
-        
+
         BOOST_REQUIRE( pObject != 0 );
         return pObject;
     }
@@ -114,16 +114,16 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Contamination_NoNBC )
 {
     MIL_ObjectLoader loader;
     {
-        xml::xistringstream xis( "<objects>" 
+        xml::xistringstream xis( "<objects>"
                 "<object type='object'>"
-                    "<contamination type='nbc' max-toxic='1'/>"                    
-                "</object>" 
+                    "<contamination type='nbc' max-toxic='1'/>"
+                "</object>"
             "</objects>"
             );
         BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
     }
     const MIL_ObjectType_ABC& type = loader.GetType( "object" );
-    
+
     MockArmy army;
     MOCK_EXPECT( army, RegisterObject ).once();
     std::auto_ptr< MIL_Object_ABC > pObject( CreateObject( type, army, loader ) );
@@ -143,11 +143,11 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Contamination_NoNBC )
 }
 
 namespace
-{        
+{
     class MockToxicAttribute : public ChainableMockObject, public ToxicAttribute_ABC
     {
     public:
-        MockToxicAttribute() 
+        MockToxicAttribute()
             : ChainableMockObject( MOCKPP_PCHAR( "MockToxicAttribute" ) )
             , mocker ( MOCKPP_PCHAR( "GetContaminationEffect" ), this )
         {}
@@ -157,7 +157,7 @@ namespace
             mocker.forward( &nbc, &position );
             return MIL_ToxicEffectManipulator( stub_, 0 );
         }
-        
+
     public:
         ChainableMockMethod< void, const NBCAttribute*, const MT_Vector2D* > mocker;
     private:
@@ -176,18 +176,18 @@ namespace
 BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Contamination_NBC )
 {
     MIL_ObjectLoader loader;
-    
+
     {
-        xml::xistringstream xis( "<objects>" 
-                "<object type='object'>"                    
+        xml::xistringstream xis( "<objects>"
+                "<object type='object'>"
                     "<contamination type='nbc' max-toxic='1'/>"
-                "</object>" 
+                "</object>"
             "</objects>"
-            ); 
+            );
         BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
     }
     const MIL_ObjectType_ABC& type = loader.GetType( "object" );
-    
+
     MockArmy army;
     MOCK_EXPECT( army, RegisterObject ).once();
     std::auto_ptr< MIL_Object_ABC > pObject( CreateObject( type, army, loader ) );
@@ -223,12 +223,12 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Protection )
     MIL_ObjectLoader loader;
 
     {
-        xml::xistringstream xis( "<objects>" 
-                "<object type='implantationArea'>"                    
+        xml::xistringstream xis( "<objects>"
+                "<object type='implantationArea'>"
                     "<protection max-size='1' geniePrepared='false'/>"
-                "</object>" 
+                "</object>"
             "</objects>"
-            ); 
+            );
         BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
     }
     const MIL_ObjectType_ABC& type = loader.GetType( "implantationArea" );
@@ -270,12 +270,12 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_InteractIfEquipped )
 {
     MIL_ObjectLoader loader;
     {
-        xml::xistringstream xis( "<objects>" 
+        xml::xistringstream xis( "<objects>"
                 "<object geometry='line' type='itineraire logistique'>"
                     "<supply-route/>"
                 "</object>"
             "</objects>"
-            ); 
+            );
         BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
     }
     const MIL_ObjectType_ABC& type = loader.GetType( "itineraire logistique" );
@@ -305,12 +305,12 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Supply )
     //@TODO test à renforcer après le merge
     MIL_ObjectLoader loader;
     {
-        xml::xistringstream xis( "<objects>" 
+        xml::xistringstream xis( "<objects>"
                 "<object type='plot ravitaillement'>"
                     "<supply/>"
                 "</object>"
             "</objects>"
-            ); 
+            );
         BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
     }
     const MIL_ObjectType_ABC& type = loader.GetType( "plot ravitaillement" );
@@ -345,12 +345,12 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_InteractWithEnemy )
 {
     MIL_ObjectLoader loader;
     {
-        xml::xistringstream xis( "<objects>" 
+        xml::xistringstream xis( "<objects>"
                 "<object geometry='line' type='barricade'>"
                     "<interact-with-enemy/>"
                 "</object>"
             "</objects>"
-            ); 
+            );
         BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
     }
     const MIL_ObjectType_ABC& type = loader.GetType( "barricade" );
@@ -416,7 +416,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Detection2 )
 {
     MIL_ObjectLoader loader;
     {
-        xml::xistringstream xis( 
+        xml::xistringstream xis(
             "<objects>"
                 "<object geometry='point' type='sensors'>"
                     "<detection>"
@@ -457,7 +457,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Detection2 )
 
     MOCK_EXPECT( intruder.GetRole< MockRoleLocation >(), NotifyTerrainObjectCollision ).once();
     MOCK_EXPECT( detector.GetRole< MockRolePerceiver >(), NotifyExternalPerception ).with( mock::same( intruder ), mock::same( PHY_PerceptionLevel::identified_ ) );
-   
+
     BOOST_CHECK_NO_THROW( object->ProcessAgentInside( intruder ) );
     MOCK_EXPECT( army, UnregisterObject ).once();
 }
@@ -524,14 +524,14 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_InteractionAttitudeModifier )
     MockArmy army;
     MOCK_EXPECT( army, RegisterObject ).once();
     std::auto_ptr< MIL_Object_ABC > object( CreateObject( type, army, loader ) );
-    
+
     xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
     xis.start( "main" );
     std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
     DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes );
     StubMIL_PopulationType popuType( model );
     StubMIL_Population population( popuType );
-    
+
     xml::xistringstream xisConcentration( "<population attitude='calme' humans='10001' id='37' name='Population standard [37]' position='35RPQ9407811091' type='Population standard'/>");
     xisConcentration.start( "population" );
     MIL_PopulationConcentration concentration( population, xisConcentration );
@@ -567,7 +567,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_InteractionPerception )
     MockArmy army;
     MOCK_EXPECT( army, RegisterObject ).once();
     std::auto_ptr< MIL_Object_ABC > object( CreateObject( type, army, loader ) );
-    
+
     xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
     xis.start( "main" );
     std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;

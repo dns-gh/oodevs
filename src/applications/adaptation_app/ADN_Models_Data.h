@@ -36,7 +36,7 @@ public:
 
     public:
         OrderInfos();
-        
+
         std::string GetItemName();
 
         void ReadArchive( xml::xistream& input );
@@ -46,7 +46,7 @@ public:
         ADN_TypePtr_InVector_ABC< ADN_Missions_Data::FragOrder > fragOrder_;
         ADN_Type_String                                          strName_; // do not use directly !!!
     };
-    
+
     typedef ADN_Type_Vector_ABC<OrderInfos> T_OrderInfos_Vector;
     typedef T_OrderInfos_Vector::iterator   IT_OrderInfos_Vector;
 
@@ -57,7 +57,7 @@ public:
         , public ADN_DataTreeNode_ABC
     {
         MT_COPYNOTALLOWED( MissionInfos )
-            
+
     public:
         explicit MissionInfos( ADN_Missions_Data::T_Mission_Vector& missions );
         virtual ~MissionInfos();
@@ -145,7 +145,7 @@ private:
     void ReadAutomat( xml::xistream& input );
     void ReadPopulation( xml::xistream& input );
     void ReadUnit( xml::xistream& input );
-    
+
     void WriteArchive( xml::xostream& output );
 
 private:

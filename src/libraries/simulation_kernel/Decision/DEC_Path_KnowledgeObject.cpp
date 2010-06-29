@@ -24,7 +24,7 @@ DEC_Path_KnowledgeObject::DEC_Path_KnowledgeObject( const DEC_Agent_PathClass& p
     , rCostIn_                  ( 0 )
     , rCostOut_                 ( 0 )
     , rObstructionThreshold_    ( pathClass.GetThreshold() )
-{ 
+{
     const MT_Float rCost = pathClass.GetObjectCost( knowledge.GetType() );
 
     if( rCost > 0 )
@@ -81,11 +81,11 @@ MT_Float DEC_Path_KnowledgeObject::ComputeCost( const MT_Vector2D& from, const M
     const MT_Line line( from, to );
     if( localisation_.Intersect2D( line ) || localisation_.IsInside( to ) )
     {
-        if ( rCostIn_ >= rObstructionThreshold_ ) //$$$$ SLG put the value in pathfind xml
+        if( rCostIn_ >= rObstructionThreshold_ ) //$$$$ SLG put the value in pathfind xml
         {
-            return -1;  //$$$$ SLG in order to block the unit if there is an object 
+            return -1;  //$$$$ SLG in order to block the unit if there is an object
         }
         return rCostIn_;
-    }   
+    }
     return std::numeric_limits< MT_Float >::min();
 }

@@ -25,7 +25,7 @@ class DEC_PopulationFunctions
 {
 public:
     //! @name Functions
-    //@{  
+    //@{
     // Test / debug
     static void DecisionalState( const MIL_Population& callerPopulation, const std::string& key, const std::string& value );
 
@@ -49,10 +49,10 @@ public:
     static void NotifyDominationStateChanged( MIL_Population& callerPopulation, MT_Float dominationState );
 
     static std::string  GetSzName( MIL_Population& callerPopulation );
-    //@}    
-    
+    //@}
+
     static boost::shared_ptr< MIL_Mission_ABC > GetMission( DEC_Decision_ABC* pAgent );
-    static void SetMission            ( DEC_Decision_ABC* object, boost::shared_ptr< MIL_Mission_ABC > mission );  
+    static void SetMission            ( DEC_Decision_ABC* object, boost::shared_ptr< MIL_Mission_ABC > mission );
 
 };
 

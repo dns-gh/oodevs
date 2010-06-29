@@ -23,7 +23,7 @@ UnitDetection::UnitDetection()
 
 namespace
 {
-    const char* visibility[5] = 
+    const char* visibility[5] =
     {
         "invisible",
         "detected",

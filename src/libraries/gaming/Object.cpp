@@ -95,7 +95,7 @@ void Object::Display( Displayer_ABC& displayer ) const
              .Display( tools::translate( "Object", "Identifier:" ), id_ )
              .Display( tools::translate( "Object", "Name:" ), name_ )
              .Display( tools::translate( "Object", "Type:" ), type_ )
-             .Display( tools::translate( "Object", "Location:" ), converter_.ConvertToMgrs( Get< Positions >().GetPosition() ) ); // $$$$ AGE 2006-03-22: 
+             .Display( tools::translate( "Object", "Location:" ), converter_.ConvertToMgrs( Get< Positions >().GetPosition() ) ); // $$$$ AGE 2006-03-22:
 }
 
 // -----------------------------------------------------------------------------

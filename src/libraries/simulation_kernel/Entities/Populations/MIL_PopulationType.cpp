@@ -247,7 +247,7 @@ void MIL_PopulationType::ReadUnitFireEffect( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_PopulationType::InitializeDiaFunctions()
 {
-} 
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationType::InstanciatePopulation
@@ -369,7 +369,7 @@ MT_Float MIL_PopulationType::GetMaxSpeed() const
 // -----------------------------------------------------------------------------
 const PHY_AttritionData& MIL_PopulationType::GetAttritionData( const MIL_PopulationAttitude& attitude, const PHY_Protection& protection ) const
 {
-    return attritionData_.GetAttritionData( attitude, protection );    
+    return attritionData_.GetAttritionData( attitude, protection );
 }
 
 // -----------------------------------------------------------------------------
@@ -387,7 +387,7 @@ MT_Float MIL_PopulationType::GetPH( const MIL_PopulationAttitude& attitude, MT_F
 // -----------------------------------------------------------------------------
 const MIL_PopulationType* MIL_PopulationType::Find( const std::string& strName )
 {
-    CIT_PopulationMap it = populations_.find( strName );   
+    CIT_PopulationMap it = populations_.find( strName );
     return it == populations_.end() ? 0 :  it->second;
 }
 

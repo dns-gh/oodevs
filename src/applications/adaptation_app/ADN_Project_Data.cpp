@@ -32,7 +32,7 @@ ADN_Project_Data::DataInfos::DataInfos()
     // NOTHING
 }
 
-namespace 
+namespace
 {
     void ReadFile( xml::xistream& input, const std::string& file, ADN_Type_String& outfile )
     {

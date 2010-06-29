@@ -23,7 +23,7 @@ namespace i = boost::asio::ip;
 // -----------------------------------------------------------------------------
 UdpNetwork::UdpNetwork( const std::string& target, unsigned short port )
     : socket_    ( service_, boost::asio::ip::udp::v4() )
-    , terminated_( false ) 
+    , terminated_( false )
     , thread_    ( boost::bind( &UdpNetwork::Start, this ) )
 {
     try

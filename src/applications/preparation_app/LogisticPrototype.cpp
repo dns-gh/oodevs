@@ -28,7 +28,7 @@ LogisticPrototype::LogisticPrototype( QWidget* parent, Controllers& controllers,
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: LogisticPrototype::~LogisticPrototype
 // Created: SBO 2006-04-19

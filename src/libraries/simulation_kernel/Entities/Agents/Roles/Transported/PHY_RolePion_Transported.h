@@ -46,11 +46,11 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive& , const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
-   
+
     //! @name Operations
     //@{
     virtual void Update    ( bool bIsDead );
@@ -92,7 +92,7 @@ private:
           bool           bHasChanged_;
     const MIL_Agent_ABC* pTransporter_;
 
-    MT_Vector2D  vLoadingPosition_; 
+    MT_Vector2D  vLoadingPosition_;
     MT_Vector2D  vHumanTransporterPosition_; // position des 'VABs' quand seuls les humains sont héliportés
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Transported* role, const unsigned int /*version*/ );

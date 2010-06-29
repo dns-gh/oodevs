@@ -35,7 +35,7 @@ struct PHY_Experience::LoadingWrapper
 void PHY_Experience::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing experiences" );
-    
+
     LoadingWrapper loader;
     xis >> xml::start( "humans-factors" )
             >> xml::start( "experience-factor" )
@@ -227,7 +227,7 @@ bool PHY_Experience::operator==( const PHY_Experience& rhs ) const
 {
     return nType_ == rhs.nType_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_Experience::operator!=
 // Created: NLD 2004-11-29

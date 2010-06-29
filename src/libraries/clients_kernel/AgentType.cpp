@@ -112,7 +112,7 @@ const std::string& AgentType::GetSymbol() const
 {
     return symbol_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: AgentType::GetLevelSymbol
 // Created: AGE 2006-10-24

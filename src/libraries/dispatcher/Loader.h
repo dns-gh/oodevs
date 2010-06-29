@@ -41,7 +41,7 @@ public:
     //! @name Operations
     //@{
     void Start();
-    void SkipToFrame( unsigned count ); 
+    void SkipToFrame( unsigned count );
     bool Tick();
 
     unsigned GetCurrentTick() const;

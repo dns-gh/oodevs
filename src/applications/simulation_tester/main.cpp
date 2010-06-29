@@ -46,7 +46,7 @@ std::string strConfigFile = "./test.xml";
 void ctrl_c_handler( int /*nCtx*/ )
 {
     MT_LOG_INFO_MSG( "Exit request received..." );
-	bRun = false;
+    bRun = false;
 }
 //-----------------------------------------------------------------------------
 
@@ -95,7 +95,7 @@ void Run()
         MT_LOG_INFO_MSG( "Testing pawn missions" );
     }
 
-    MT_LOG_INFO_MSG( "Starting tests on '" << config.GetServer() << ":" << config.GetPort() << 
+    MT_LOG_INFO_MSG( "Starting tests on '" << config.GetServer() << ":" << config.GetPort() <<
                      "' with time factor '" << config.GetTimeFactor() << "'" );
 
     try
@@ -132,7 +132,7 @@ int main( int nArgc, char** ppArgv )
     {
         ProcessCommandLine( nArgc, ppArgv );
         Run();
-	}
+    }
     catch( std::exception& e )
     {
         MT_LOG_ERROR_MSG( e.what() );
@@ -144,5 +144,5 @@ int main( int nArgc, char** ppArgv )
     }
 
     MT_LOG_UNREGISTER_LOGGER( consoleLogger );
-	return 0;
+    return 0;
 }

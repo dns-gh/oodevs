@@ -45,7 +45,7 @@ public:
     //! @name Tools
     //@{
     static void     Initialize                              ( xml::xistream& xis );
-    static MT_Float ComputeRapForIncreasePerTimeStepValue   ( MT_Float rBaseTimeValue );    
+    static MT_Float ComputeRapForIncreasePerTimeStepValue   ( MT_Float rBaseTimeValue );
     static MT_Float GetRapForIncreasePerTimeStepDefaultValue();
     //@}
 
@@ -71,7 +71,7 @@ private:
 // Name: DEC_Knowledge_RapFor_ABC::serialize
 // Created: JVT 2005-03-25
 // -----------------------------------------------------------------------------
-template < typename Archive > 
+template < typename Archive >
 void DEC_Knowledge_RapFor_ABC::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< DEC_Knowledge_ABC >( *this )

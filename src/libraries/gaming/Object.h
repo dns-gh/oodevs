@@ -65,7 +65,7 @@ public:
     bool IsReservedObstacle() const;
     bool IsReservedObstacleActivated() const;
     //@}
-    
+
 private:
     //! @name Copy/Assignment
     //@{

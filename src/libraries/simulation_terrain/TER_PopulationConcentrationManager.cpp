@@ -30,7 +30,7 @@ TER_PopulationConcentrationManager::~TER_PopulationConcentrationManager()
 {
     //NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: TER_PopulationConcentrationManager::GetListWithinCircle
 // Created: NLD 2005-10-07

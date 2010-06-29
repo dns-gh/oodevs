@@ -33,7 +33,7 @@ PawnType::PawnType( const TypeManager& typeManager, const std::string& strName, 
     : strName_ ( strName )
     , pModel_  ( 0 )
 {
-    try   
+    try
     {
         std::string strValue;
 

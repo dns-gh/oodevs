@@ -24,7 +24,7 @@ class ADN_Type_Line_ABC
 public:
     ADN_Type_Line_ABC(int w=0);
     virtual ~ADN_Type_Line_ABC();
-    
+
     std::string GetItemName();
 };
 
@@ -33,7 +33,7 @@ public:
 
 
 template < class T >
-class ADN_Type_Tab_ABC 
+class ADN_Type_Tab_ABC
 : public ADN_Type_Vector_ABC< ADN_Type_Line_ABC< T > >
 {
     MT_COPYNOTALLOWED(ADN_Type_Tab_ABC);
@@ -42,9 +42,9 @@ public:
 
     ADN_Type_Tab_ABC(int w=0,int h=0);
     virtual ~ADN_Type_Tab_ABC();
-    
+
     T& Get(int i,int j);
-    
+
 };
 
 #include "ADN_Type_Tab_ABC.inl"

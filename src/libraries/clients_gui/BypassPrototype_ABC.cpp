@@ -22,7 +22,7 @@ BypassPrototype_ABC::BypassPrototype_ABC( QWidget* parent )
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: BypassPrototype_ABC destructor
 // Created: JCR 2008-06-30

@@ -120,7 +120,7 @@ void ASN_Tools::CopyAutomateList( const T_IdVector& ids, AutomatList& asn )
         CopyAutomate( *it, asn.elem( i++ ) );
 }
 
-   
+
 // -----------------------------------------------------------------------------
 // Name: ASN_Tools::CopyPopulationKnowledge
 // Created: SBO 2006-01-03
@@ -254,7 +254,7 @@ void ASN_Tools::CopyPath( const Path& path, Path& asn )
     const T_PositionVector& posVector = path.GetPath();
 
     asn.set_type( EnumLocationType::line );
-    asn.vecteur_point().set_n( posVector.size() ); 
+    asn.vecteur_point().set_n( posVector.size() );
     if( posVector.empty() )
         return;
 
@@ -266,8 +266,8 @@ void ASN_Tools::CopyPath( const Path& path, Path& asn )
 
 // -----------------------------------------------------------------------------
 // Name: ASN_Tools::CopyPathList
-/** @param  path 
-    @param  asn 
+/** @param  path
+    @param  asn
 */
 // Created: SBO 2005-08-11
 // -----------------------------------------------------------------------------
@@ -302,7 +302,7 @@ void ASN_Tools::CopyLocation( const Location& location, Location& asn )
     const T_PositionVector& posVector = location.GetPositionVector();
 
     asn.type = ( EnumLocationType )location.GetType();
-    asn.vecteur_point().set_n( posVector.size() ); 
+    asn.vecteur_point().set_n( posVector.size() );
     if( posVector.empty() )
         return;
 
@@ -337,7 +337,7 @@ void ASN_Tools::CopyPolygon( const Location& location, Polygon& asn )
     const T_PositionVector& posVector = location.GetPositionVector();
 
     asn.set_type( EnumLocationType::polygon );
-    asn.vecteur_point().set_n( posVector.size() ); 
+    asn.vecteur_point().set_n( posVector.size() );
     if( posVector.empty() )
         return;
 
@@ -371,7 +371,7 @@ void ASN_Tools::CopyNatureAtlas( unsigned int nValue, AtlasNature& asn )
 {
     asn.set_numbits( 11 ); //$$$ n'importe quoi ...
     asn.data[0] = (char)( nValue >> 8 );
-    asn.data[1] = (char)( nValue & 0x00FF );    
+    asn.data[1] = (char)( nValue & 0x00FF );
 }
 
 // -----------------------------------------------------------------------------

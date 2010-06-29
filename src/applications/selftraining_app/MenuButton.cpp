@@ -9,7 +9,7 @@
 
 #include "selftraining_app_pch.h"
 #include "MenuButton.h"
-#include "moc_MenuButton.cpp" 
+#include "moc_MenuButton.cpp"
 #include <qpainter.h>
 #include <qimage.h>
 
@@ -48,7 +48,7 @@ void MenuButton::enterEvent( QEvent* )
 {
     hasMouse_ = true;
     repaint( false );
-    emit ( Selected( this ) ) ; 
+    emit ( Selected( this ) ) ;
 }
 
 // -----------------------------------------------------------------------------
@@ -59,7 +59,7 @@ void MenuButton::leaveEvent( QEvent* )
 {
     hasMouse_ = false;
     repaint( false );
-    emit ( UnSelected( this ) ) ; 
+    emit ( UnSelected( this ) ) ;
 }
 
 // -----------------------------------------------------------------------------
@@ -68,8 +68,8 @@ void MenuButton::leaveEvent( QEvent* )
 // -----------------------------------------------------------------------------
 void MenuButton::drawButton( QPainter* painter )
 {
-    const QFont& font = isEnabled() ? ( hasMouse_ ? selectedFont_ : baseFont_ ) : disabledFont_  ; 
-    const QColorGroup::ColorRole& colorRole = isEnabled() ? ( hasMouse_ ? QColorGroup::BrightText : QColorGroup::ButtonText ) : QColorGroup::Light ; 
+    const QFont& font = isEnabled() ? ( hasMouse_ ? selectedFont_ : baseFont_ ) : disabledFont_  ;
+    const QColorGroup::ColorRole& colorRole = isEnabled() ? ( hasMouse_ ? QColorGroup::BrightText : QColorGroup::ButtonText ) : QColorGroup::Light ;
     painter->drawImage( rect(), mask_ );
     painter->setFont( font );
     painter->setPen( colorGroup().color( colorRole ) );

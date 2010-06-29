@@ -42,7 +42,7 @@ class StaticModel;
 // =============================================================================
 class ScoreList : public QVBox
                 , public tools::Observer_ABC
-                , public tools::ElementObserver_ABC< Score_ABC > 
+                , public tools::ElementObserver_ABC< Score_ABC >
 {
     Q_OBJECT;
 

@@ -47,7 +47,7 @@ typedef T_PositionVector::const_iterator         CIT_PositionVector;
 class Position
 {
 public:
-	//! @name Constructors/Destructor
+    //! @name Constructors/Destructor
     //@{
              Position();
              Position( const std::string& strMgrs );
@@ -81,13 +81,13 @@ public:
     //@}
 
 private:
-	//! @name Member data
+    //! @name Member data
     //@{
     double      rX_;
     double      rY_;
 
     static PositionManager* pPositionManager_; // TODO: find a way to remove this static
-	//@}
+    //@}
 };
 
 

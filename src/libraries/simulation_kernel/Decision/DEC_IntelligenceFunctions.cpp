@@ -102,7 +102,7 @@ namespace
         }
         const MIL_Automate* pCaller_;
         const bool loaded_;
-    };    
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -178,11 +178,11 @@ namespace
 
     struct ClosestIntelligenceHandler
     {
-        ClosestIntelligenceHandler( const MT_Vector2D& origin ) 
+        ClosestIntelligenceHandler( const MT_Vector2D& origin )
             : origin_  ( origin )
             , closest_ ( 0 )
             , distance_( std::numeric_limits< float >::max() ) {}
-        
+
         void operator()( const MIL_IntelligenceOrder& intelligence )
         {
             const MT_Float distance = intelligence.SquareDistance( origin_ );

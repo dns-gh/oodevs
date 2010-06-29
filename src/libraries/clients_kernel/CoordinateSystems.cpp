@@ -20,9 +20,9 @@ using namespace kernel;
 CoordinateSystems::CoordinateSystems()
 {
     systems_[ E_Mgrs ]      = tools::translate( "CoordinateSystems", "UTM MGRS" );
-	systems_[ E_Wgs84Dd ]   = tools::translate( "CoordinateSystems", "LatLong WGS84 DD" );
-	systems_[ E_Wgs84Dms ]  = tools::translate( "CoordinateSystems", "LatLong WGS84 DMS" );
-	systems_[ E_Local ]     = tools::translate( "CoordinateSystems", "Local coordinates" );
+    systems_[ E_Wgs84Dd ]   = tools::translate( "CoordinateSystems", "LatLong WGS84 DD" );
+    systems_[ E_Wgs84Dms ]  = tools::translate( "CoordinateSystems", "LatLong WGS84 DMS" );
+    systems_[ E_Local ]     = tools::translate( "CoordinateSystems", "Local coordinates" );
 
     defaultCoordinateSystem_ = E_Mgrs;
 }

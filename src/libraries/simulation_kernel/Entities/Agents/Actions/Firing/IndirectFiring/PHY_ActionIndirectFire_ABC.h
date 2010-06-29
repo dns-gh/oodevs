@@ -30,7 +30,7 @@ class PHY_ActionIndirectFire_ABC : public PHY_DecisionCallbackAction_ABC
 {
 
 public:
-    typedef MIL_AgentPion ActorType;        
+    typedef MIL_AgentPion ActorType;
 
 public:
              PHY_ActionIndirectFire_ABC( MIL_Agent_ABC& pion, const PHY_DotationCategory* pDotationCategory, float rNbInterventionType );

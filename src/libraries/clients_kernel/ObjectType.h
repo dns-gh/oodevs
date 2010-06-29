@@ -12,10 +12,10 @@
 
 #include <boost/shared_ptr.hpp>
 
-namespace xml 
-{ 
+namespace xml
+{
     class xibufferstream;
-    class xistream; 
+    class xistream;
 };
 
 namespace kernel
@@ -29,7 +29,7 @@ namespace kernel
 // =============================================================================
 class ObjectType
 {
-    
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -65,7 +65,7 @@ public:
     bool CanBeLine() const;
     bool CanBeRectangle() const;
     bool CanBePolygon() const;
-    bool CanBeCircle() const;    
+    bool CanBeCircle() const;
     //@}
 
 private:

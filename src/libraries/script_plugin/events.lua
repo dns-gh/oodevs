@@ -61,7 +61,7 @@ function DeclareEvents( table )
         for _, v in ipairs( table ) do
             DeclareEvents( v )
         end
-    end  
+    end
 end
 
 -- Phases

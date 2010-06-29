@@ -69,7 +69,7 @@ public:                                                                         
                                                                                     \
 private:                                                                            \
     Msg##ASNMSG asnMsg_;                                                      \
-};    
+};
 
 // ASN Message which isn't a pointer and take any context
 #define MOS_GENERATE_SEND_ASN_MSG_NOMSG( ASNMSG, ASNVAR )                       \
@@ -84,7 +84,7 @@ public:                                                                         
         globalAsnMsg.msg.t   = T_MsgsInSim_msg_msg_##ASNVAR;                        \
         Workspace::GetWorkspace().GetNetworkManager().GetMessageMgr().SendMsgInSim( globalAsnMsg ); \
     }                                                                               \
-};                                                 
+};
 
 //=============================================================================
 // GENERATE ASN MESSAGES

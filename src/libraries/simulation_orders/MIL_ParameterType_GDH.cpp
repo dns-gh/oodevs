@@ -21,7 +21,7 @@ MIL_ParameterType_GDH::MIL_ParameterType_GDH()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_GDH destructor
 // Created: SBO 2006-11-27

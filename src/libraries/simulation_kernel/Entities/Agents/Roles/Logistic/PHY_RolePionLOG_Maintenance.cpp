@@ -77,7 +77,7 @@ PHY_RolePionLOG_Maintenance::PHY_RolePionLOG_Maintenance( MIL_AgentPionLOG_ABC& 
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RolePionLOG_Maintenance::~PHY_RolePionLOG_Maintenance()
-{ 
+{
 }
 
 
@@ -91,13 +91,13 @@ namespace boost
         // =============================================================================
         // T_MaintenancePriorityVector
         // =============================================================================
-        template< typename Archive > 
+        template< typename Archive >
         inline
         void serialize( Archive& file, T_MaintenancePriorityVector& vector, const unsigned int nVersion )
         {
             split_free( file, vector, nVersion );
         }
-        
+
         template< typename Archive >
         void save( Archive& file, const T_MaintenancePriorityVector& vector, const unsigned int )
         {
@@ -110,7 +110,7 @@ namespace boost
                 file << equipment_type;
             }
         }
-        
+
         template< typename Archive >
         void load( Archive& file, T_MaintenancePriorityVector& vector, const unsigned int )
         {
@@ -121,12 +121,12 @@ namespace boost
             {
                 Common::MsgEquipmentType nID;
                 int equipment_type;
-                file >> equipment_type; 
+                file >> equipment_type;
                 nID.set_equipment( equipment_type );
                 vector.push_back( PHY_ComposanteTypePion::Find( nID ) );
             }
         }
-        
+
         // =============================================================================
         // T_AutomateVector
         // =============================================================================
@@ -136,7 +136,7 @@ namespace boost
         {
             split_free( file, vector, nVersion );
         }
-        
+
         template< typename Archive >
         void save( Archive& file, const T_AutomateVector& vector, const unsigned int )
         {
@@ -145,7 +145,7 @@ namespace boost
             for ( CIT_AutomateVector it = vector.begin(); it != vector.end(); ++it )
                 file << *it;
         }
-        
+
         template< typename Archive >
         void load( Archive& file, T_AutomateVector& vector, const unsigned int )
         {
@@ -172,7 +172,7 @@ void PHY_RolePionLOG_Maintenance::load( MIL_CheckPointInArchive& file, const uns
          >> bSystemEnabled_
          >> priorities_
          >> tacticalPriorities_;
-         
+
     Common::EnumLogMaintenanceRegimeTravail nID;
     file >> nID;
     pWorkRate_ = PHY_MaintenanceWorkRate::Find( nID );
@@ -213,7 +213,7 @@ void PHY_RolePionLOG_Maintenance::save( MIL_CheckPointOutArchive& file, const un
         file << it->first << it->second;
 
 }
-          
+
 // =============================================================================
 // TOOLS
 // =============================================================================
@@ -262,7 +262,7 @@ MT_Float PHY_RolePionLOG_Maintenance::GetAvailabilityRatio( PHY_ComposanteUsePre
 void PHY_RolePionLOG_Maintenance::StartUsingForLogistic( PHY_ComposantePion& composante )
 {
     PHY_ComposanteUsePredicate repairerUsePred( &PHY_ComposantePion::CanRepair, &PHY_ComposanteTypePion::CanRepair );
-    PHY_ComposanteUsePredicate haulerUsePred  ( &PHY_ComposantePion::CanHaul  , &PHY_ComposanteTypePion::CanHaul   );    
+    PHY_ComposanteUsePredicate haulerUsePred  ( &PHY_ComposantePion::CanHaul  , &PHY_ComposanteTypePion::CanHaul   );
 
     MT_Float rRepairerRatio = GetAvailabilityRatio( repairerUsePred, pWorkRate_ );
     MT_Float rHaulerRatio   = GetAvailabilityRatio( haulerUsePred   );
@@ -356,7 +356,7 @@ unsigned int PHY_RolePionLOG_Maintenance::GetNbrAvailableRepairersAllowedToWork(
     pion_.Execute( *componentComputer );
     GetComponentLendedUseFunctor functorOnLendedComponent( predicate, composanteUse );
     std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functorOnLendedComponent ) );
-    pion_.Execute( *lendedComputer );   
+    pion_.Execute( *lendedComputer );
 
     unsigned int nNbrAvailableAllowedToWork = 0;
     assert( pWorkRate_ );
@@ -434,7 +434,7 @@ MIL_AutomateLOG& PHY_RolePionLOG_Maintenance::GetAutomate() const
 
     return pion_.GetLogAutomate();
 }
-    
+
 // =============================================================================
 // CONSIGN MANAGEMENT
 // =============================================================================
@@ -449,7 +449,7 @@ void PHY_RolePionLOG_Maintenance::ChangeWorkRate( const PHY_MaintenanceWorkRate&
     bHasChanged_ = true;
 
     if( pWorkRate_->GetDelayBeforeWarningRC() == std::numeric_limits< unsigned int >::max() )
-        nWorkRateWarningRCTick_ = 0; 
+        nWorkRateWarningRCTick_ = 0;
     else
         nWorkRateWarningRCTick_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + pWorkRate_->GetDelayBeforeWarningRC();
 }
@@ -473,7 +473,7 @@ void PHY_RolePionLOG_Maintenance::InsertConsigns( const T_MaintenanceConsigns& o
 void PHY_RolePionLOG_Maintenance::ChangePriorities( const T_AutomateVector& priorities )
 {
     T_MaintenanceConsigns oldConsigns = consigns_;
-    
+
     consigns_.clear(); consigns_.reserve( priorities.size() + 1 );
     for ( CIT_AutomateVector it = priorities.begin(); it != priorities.end(); ++it )
         consigns_.push_back( std::make_pair( *it, T_MaintenanceConsignList() ) );
@@ -492,7 +492,7 @@ void PHY_RolePionLOG_Maintenance::ChangePriorities( const T_AutomateVector& prio
 void PHY_RolePionLOG_Maintenance::ChangePriorities( const T_MaintenancePriorityVector& priorities )
 {
     T_MaintenanceConsigns oldConsigns = consigns_;
-    
+
     for ( IT_MaintenanceConsigns it = consigns_.begin(); it != consigns_.end(); ++it )
         it->second.clear();
 
@@ -523,7 +523,7 @@ void PHY_RolePionLOG_Maintenance::InsertConsign( PHY_MaintenanceConsign_ABC& con
     for( const MIL_Automate* pAutomate = &consign.GetComposanteState().GetAutomate(); itTact != consigns_.end(); ++itTact )
         if( pAutomate == itTact->first || ( pAutomate->GetTC2() && pAutomate->GetTC2() == itTact->first ) )
             break;
-            
+
     if( itTact == consigns_.end() )
     {
         assert( !consigns_.empty() );
@@ -553,8 +553,8 @@ void PHY_RolePionLOG_Maintenance::InsertConsign( PHY_MaintenanceConsign_ABC& con
 PHY_MaintenanceComposanteState* PHY_RolePionLOG_Maintenance::HandleComposanteForTransport( MIL_Agent_ABC& pion, PHY_ComposantePion& composante )
 {
     assert( composante.GetBreakdown() );
-    
-    if ( !bSystemEnabled_ || ( composante.GetBreakdown()->AffectMobility() && !HasUsableHauler( composante.GetType() ) ) )
+
+    if( !bSystemEnabled_ || ( composante.GetBreakdown()->AffectMobility() && !HasUsableHauler( composante.GetType() ) ) )
         return 0;
 
     PHY_MaintenanceComposanteState* pComposanteState = new PHY_MaintenanceComposanteState( pion, composante );
@@ -568,8 +568,8 @@ PHY_MaintenanceComposanteState* PHY_RolePionLOG_Maintenance::HandleComposanteFor
 // Created: NLD 2004-12-28
 // -----------------------------------------------------------------------------
 bool PHY_RolePionLOG_Maintenance::HandleComposanteForTransport( PHY_MaintenanceComposanteState& composanteState )
-{    
-    if ( !bSystemEnabled_ || ( composanteState.GetComposanteBreakdown().AffectMobility() && !HasUsableHauler( composanteState.GetComposante().GetType() ) ) )
+{
+    if( !bSystemEnabled_ || ( composanteState.GetComposanteBreakdown().AffectMobility() && !HasUsableHauler( composanteState.GetComposante().GetType() ) ) )
         return false;
 
     PHY_MaintenanceTransportConsign* pConsign = new PHY_MaintenanceTransportConsign( pion_, composanteState );
@@ -666,7 +666,7 @@ void PHY_RolePionLOG_Maintenance::Update( bool /*bIsDead*/ )
     if( nWorkRateWarningRCTick_ != 0 && MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() > nWorkRateWarningRCTick_ )
     {
         nWorkRateWarningRCTick_ = 0;
-    
+
         MIL_Report::PostEvent( pion_, MIL_Report::eReport_MaintenanceWorkRateExceeded );
     }
 }
@@ -679,7 +679,7 @@ void PHY_RolePionLOG_Maintenance::UpdateLogistic( bool /*bIsDead*/ )
 {
     for ( IT_MaintenanceConsigns itConsigns = consigns_.begin(); itConsigns != consigns_.end(); ++itConsigns )
         for ( IT_MaintenanceConsignList itConsign = itConsigns->second.begin(); itConsign != itConsigns->second.end(); )
-            if ( (*itConsign)->Update() )
+            if( (*itConsign)->Update() )
             {
                 delete *itConsign;
                 itConsign = itConsigns->second.erase( itConsign );
@@ -750,7 +750,7 @@ void PHY_RolePionLOG_Maintenance::SendFullState( client::UnitAttributes& asnUnit
             asn().mutable_priorites()->add_elem()->set_equipment( (**itPriority).GetMosID().equipment() );
 
     if( !tacticalPriorities_.empty() )
-        for( CIT_AutomateVector itPriority = tacticalPriorities_.begin(); itPriority != tacticalPriorities_.end(); ++itPriority )            
+        for( CIT_AutomateVector itPriority = tacticalPriorities_.begin(); itPriority != tacticalPriorities_.end(); ++itPriority )
             asn().mutable_priorites_tactiques()->add_elem()->set_oid( (**itPriority).GetID() );
 
     {

@@ -31,12 +31,12 @@ PHY_ActionLendComposantes::PHY_ActionLendComposantes( MIL_AgentPion& pion, DEC_R
     , bLoanDone_        ( false )
 {
     assert( pAgent );
-    
+
     pTarget_ = &pAgent->GetPion().GetRole< PHY_RolePion_Composantes >();
-   
+
     nTimer_ = role_.GetLentComposantesTravelTime( *pTarget_, nNbrToLend_, std::mem_fun_ref( predicate_ ) );
     MIL_Report::PostEvent( pion, MIL_Report::eReport_EquipmentLoanInProgress );
-    
+
     Callback( false );
 }
 
@@ -65,7 +65,7 @@ void PHY_ActionLendComposantes::StopAction()
 // -----------------------------------------------------------------------------
 void PHY_ActionLendComposantes::Execute()
 {
-    if ( !bLoanDone_ && !nTimer_-- )
+    if( !bLoanDone_ && !nTimer_-- )
     {
         assert( pTarget_ );
         const unsigned int nNbrLent = role_.LendComposantes( *pTarget_, nNbrToLend_, std::mem_fun_ref( predicate_ ) );

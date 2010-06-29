@@ -68,7 +68,7 @@ PHY_DotationStock::~PHY_DotationStock()
 void PHY_DotationStock::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> pStockContainer_;
-    
+
     unsigned int nID;
     file >> nID;
     pCategory_ = PHY_DotationType::FindDotationCategory( nID );
@@ -101,20 +101,20 @@ void PHY_DotationStock::save( MIL_CheckPointOutArchive& file, const unsigned int
 void PHY_DotationStock::SetValue( MT_Float rValue )
 {
     assert( pStockContainer_ );
-   
+
     if( bInfiniteDotations_ && rValue < rSupplyThreshold_ )
         rValue = rCapacity_;
 
     rValue = std::min( rValue, maxCapacity_ );
 
-    if ( (unsigned int)rValue_ != (unsigned int)rValue )
+    if( (unsigned int)rValue_ != (unsigned int)rValue )
         pStockContainer_->NotifyDotationChanged( *this, rValue - rValue_ );
 
     const bool bSupplyThresholdAlreadyReached = HasReachedSupplyThreshold();
 
     rValue_ = rValue;
 
-    if ( HasReachedSupplyThreshold() )
+    if( HasReachedSupplyThreshold() )
     {
         assert( pCategory_ );
         pStockContainer_->NotifySupplyNeeded( *pCategory_, !bSupplyThresholdAlreadyReached );
@@ -127,7 +127,7 @@ void PHY_DotationStock::SetValue( MT_Float rValue )
 // -----------------------------------------------------------------------------
 MT_Float PHY_DotationStock::AddReservation( MT_Float rNbr )
 {
-    return Consume( rNbr );    
+    return Consume( rNbr );
 }
 
 // -----------------------------------------------------------------------------

@@ -20,7 +20,7 @@ ADN_Reports_GUI::ADN_Reports_GUI( ADN_Reports_Data& data )
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Reports_GUI destructor
 // Created: SBO 2006-12-14

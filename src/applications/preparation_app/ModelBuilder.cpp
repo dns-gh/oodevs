@@ -74,7 +74,7 @@ ModelBuilder::ModelBuilder( Controllers& controllers, Model& model )
 {
     controllers_.Register( *this );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ModelBuilder destructor
 // Created: SBO 2006-08-30
@@ -246,7 +246,7 @@ void ModelBuilder::Select( const Team_ABC& element )
     ClearSelection();
     selectedTeam_ = &element;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ModelBuilder::Select
 // Created: SBO 2006-09-04
@@ -256,7 +256,7 @@ void ModelBuilder::Select( const KnowledgeGroup_ABC& element )
     ClearSelection();
     selectedGroup_ = &element;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ModelBuilder::Select
 // Created: SBO 2006-09-04

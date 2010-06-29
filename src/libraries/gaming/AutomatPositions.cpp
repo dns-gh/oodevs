@@ -138,5 +138,5 @@ void AutomatPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
 void AutomatPositions::Draw( const Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     if( viewport.IsHotpointVisible() )
-        tools.DrawCross( where, GL_CROSSSIZE );   
+        tools.DrawCross( where, GL_CROSSSIZE );
 }

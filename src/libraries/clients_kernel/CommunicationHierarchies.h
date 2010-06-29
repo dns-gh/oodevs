@@ -38,9 +38,9 @@ public:
     // LTO begin
     virtual const Entity_ABC* GetSuperior() const = 0;
     virtual const Entity_ABC& GetEntity() const = 0;
-    virtual tools::Iterator< const Entity_ABC& > CreateSubordinateIterator() const = 0; 
+    virtual tools::Iterator< const Entity_ABC& > CreateSubordinateIterator() const = 0;
     //@}
-    
+
     //! @name Modifiers
     //@{
     virtual void RegisterSubordinate  (       Entity_ABC& entity ) = 0;
@@ -61,7 +61,7 @@ public:
     virtual const Hierarchies* RetrieveHierarchies( const Entity_ABC& entity ) const = 0;
     //@}
     // LTO end
-    
+
 };
 
 };

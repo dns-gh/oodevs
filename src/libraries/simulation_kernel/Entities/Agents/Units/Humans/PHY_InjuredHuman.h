@@ -28,13 +28,13 @@ private:
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_InjuredHuman();    
+             PHY_InjuredHuman();
              PHY_InjuredHuman( MIL_Injury_ABC& injury , const PHY_ComposantePion& composantePion );
     explicit PHY_InjuredHuman( MIL_Injury_ABC& injury );
     virtual ~PHY_InjuredHuman();
     //@}
 
-    //! @name 
+    //! @name
     //@{
     PHY_InjuredHuman( const PHY_InjuredHuman& rhs );
     //@}
@@ -43,7 +43,7 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive&, const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;
     //@}

@@ -23,7 +23,7 @@ class QMessageTextView : public QTextView
 {
 public:
     QMessageTextView( QWidget *parent, const char *name )
-	: QTextView( parent, name ) { }
+    : QTextView( parent, name ) { }
 
 };
 
@@ -59,7 +59,7 @@ ADN_DialogLog::ADN_DialogLog( QWidget * parent, const char * name)
 //-----------------------------------------------------------------------------
 ADN_DialogLog::~ADN_DialogLog()
 {
-    
+
 }
 
 
@@ -70,12 +70,12 @@ ADN_DialogLog::~ADN_DialogLog()
 void ADN_DialogLog::show()
 {
     pMsg_->setText(szMsg_.c_str() );
-    
+
     std::string rich;
     for ( std::list<std::string>::iterator it=lMsg_.begin();it!=lMsg_.end();++it )
         rich+=MT_FormatString(&szFormat_,(*it).c_str());
     pText_->setText(rich.c_str());
-    
+
     QDialog::show();
 }
 

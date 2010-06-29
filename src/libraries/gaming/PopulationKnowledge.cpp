@@ -99,7 +99,7 @@ void PopulationKnowledge::DoUpdate( const MsgsSimToClient::MsgPopulationConcentr
     tools::Resolver< PopulationConcentrationKnowledge >::Get( message.oid_connaissance_concentration() )
         .DoUpdate( message );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledge::DoUpdate
 // Created: SBO 2005-10-17
@@ -124,7 +124,7 @@ void PopulationKnowledge::DoUpdate( const MsgsSimToClient::MsgPopulationFlowKnow
         Touch();
     };
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledge::DoUpdate
 // Created: SBO 2005-10-21
@@ -134,7 +134,7 @@ void PopulationKnowledge::DoUpdate( const MsgsSimToClient::MsgPopulationFlowKnow
     tools::Resolver< PopulationFlowKnowledge >::Get( message.oid_connaissance_flux() )
         .DoUpdate( message );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledge::DoUpdate
 // Created: SBO 2005-10-21

@@ -68,7 +68,7 @@ geometry::Point2f TacticalLinePositions::GetPosition() const
 {
     return pointList_.front();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: TacticalLinePositions::GetHeight
 // Created: SBO 2006-11-06
@@ -77,7 +77,7 @@ float TacticalLinePositions::GetHeight() const
 {
     return 0.f;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: TacticalLinePositions::IsAt
 // Created: SBO 2006-11-06
@@ -100,7 +100,7 @@ bool TacticalLinePositions::IsAt( const geometry::Point2f& point, float precisio
     }
     return false;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: TacticalLinePositions::IsIn
 // Created: SBO 2006-11-06
@@ -109,7 +109,7 @@ bool TacticalLinePositions::IsIn( const geometry::Rectangle2f& rectangle ) const
 {
     return rectangle.IsInside( GetPosition() );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: TacticalLinePositions::GetBoundingBox
 // Created: SBO 2006-11-06

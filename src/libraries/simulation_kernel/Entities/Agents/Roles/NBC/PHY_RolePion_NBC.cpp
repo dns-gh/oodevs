@@ -140,12 +140,12 @@ void PHY_RolePion_NBC::Contaminate( const MIL_ToxicEffectManipulator& contaminat
 {
     if( contamination.GetQuantity() < 1e-15 ) // TODO
         return;
-    
+
     if( ! bNbcProtectionSuitWorn_ )
         pion_.Apply(& nbc::ToxicEffectHandler_ABC::ApplyContamination, contamination);
 
     nbcAgentTypesContaminating_.insert( &contamination.GetType() );
-    
+
     rContaminationQuantity_ += contamination.GetQuantity();
     rContaminationState_ = 1.;
 
@@ -163,7 +163,7 @@ void PHY_RolePion_NBC::Decontaminate()
         assert( nbcAgentTypesContaminating_.empty() );
         return;
     }
-    
+
     rContaminationState_ = 0.;
     rContaminationQuantity_ = 0.;
     bHasChanged_         = true;
@@ -188,7 +188,7 @@ void PHY_RolePion_NBC::Decontaminate( MT_Float rRatioAgentsWorking )
 
     if( (unsigned int)( rNewContaminationState * 100. ) != ( rContaminationState_ * 100. ) )
         bHasChanged_ = true;
-    
+
     rContaminationState_ = rNewContaminationState;
     rContaminationQuantity_ = std::max( 0., rContaminationQuantity_ * rContaminationState_ );
     if( rContaminationState_ == 0. )
@@ -250,7 +250,7 @@ void PHY_RolePion_NBC::SendChangedState( client::UnitAttributes& msg ) const
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_NBC::IsContaminated() const
 {
-    return !nbcAgentTypesContaminating_.empty();    
+    return !nbcAgentTypesContaminating_.empty();
 }
 
 // -----------------------------------------------------------------------------
@@ -261,7 +261,7 @@ void PHY_RolePion_NBC::WearNbcProtectionSuit()
 {
     if( bNbcProtectionSuitWorn_ )
         return;
-    bNbcProtectionSuitWorn_ = true;      
+    bNbcProtectionSuitWorn_ = true;
     bHasChanged_            = true;
 }
 
@@ -273,7 +273,7 @@ void PHY_RolePion_NBC::RemoveNbcProtectionSuit()
 {
     if( !bNbcProtectionSuitWorn_ )
         return;
-    bNbcProtectionSuitWorn_ = false;    
+    bNbcProtectionSuitWorn_ = false;
     bHasChanged_            = true;
 }
 
@@ -303,7 +303,7 @@ void PHY_RolePion_NBC::Clean()
 // Name: PHY_RolePion_NBC::HasChanged
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
-bool PHY_RolePion_NBC::HasChanged() const         
+bool PHY_RolePion_NBC::HasChanged() const
 {
     return bHasChanged_;
 }
@@ -313,18 +313,18 @@ bool PHY_RolePion_NBC::HasChanged() const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_NBC::ContaminateOtherUnits()
 {
-    std::vector<const MIL_NbcAgentType*> typeNbcContaminating = GetContaminating(); 
+    std::vector<const MIL_NbcAgentType*> typeNbcContaminating = GetContaminating();
     if( typeNbcContaminating.empty() || rContaminationState_ != 1. || rContaminationQuantity_ < 5 )
         return;
 
     TER_Agent_ABC::T_AgentPtrVector perceivableAgents;
-    TER_World::GetWorld().GetAgentManager().GetListWithinCircle( pion_.Get<PHY_RoleInterface_Location>().GetPosition() , 
+    TER_World::GetWorld().GetAgentManager().GetListWithinCircle( pion_.Get<PHY_RoleInterface_Location>().GetPosition() ,
          MIL_NbcAgentType::GetContaminationDistance() , perceivableAgents );
     MT_Float minQuantity = MIL_NbcAgentType::GetMinContaminationQuantity();
     for( TER_Agent_ABC::CIT_AgentPtrVector it  = perceivableAgents.begin(); it != perceivableAgents.end(); ++it )
     {
         MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent();
-        if ( target.GetID() != pion_.GetID() && 
+        if( target.GetID() != pion_.GetID() &&
             ( rContaminationQuantity_ - target.Get< PHY_RoleInterface_NBC >().GetContaminationQuantity()  >  minQuantity )  )
         {
             MIL_ToxicEffectManipulator* manipulator = new MIL_ToxicEffectManipulator( typeNbcContaminating, minQuantity );
@@ -343,7 +343,7 @@ std::vector<const MIL_NbcAgentType*> PHY_RolePion_NBC::GetContaminating() const
     std::vector<const MIL_NbcAgentType*> result;
     if( !nbcAgentTypesContaminating_.empty() )
         for( CIT_NbcAgentTypeSet itNbcAgent = nbcAgentTypesContaminating_.begin(); itNbcAgent != nbcAgentTypesContaminating_.end(); ++itNbcAgent )
-            if ( (*itNbcAgent)->IsLiquidContaminating() || (*itNbcAgent)->IsGasContaminating() )
+            if( (*itNbcAgent)->IsLiquidContaminating() || (*itNbcAgent)->IsGasContaminating() )
                 result.push_back( *itNbcAgent );
     return result;
 }

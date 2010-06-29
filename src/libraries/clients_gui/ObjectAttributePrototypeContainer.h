@@ -19,8 +19,8 @@ namespace boost
 }
 
 namespace kernel
-{    
-    class ObjectType;    
+{
+    class ObjectType;
 }
 
 class QWidget;
@@ -28,14 +28,14 @@ class QWidget;
 namespace gui
 {
     class ObjectAttributePrototype_ABC;
-    
+
 // =============================================================================
 /** @class  ObjectPrototypeFactory_ABC
     @brief  Object prototype base class
 */
 // Created: JCR 2008-04-18
 // =============================================================================
-class ObjectAttributePrototypeContainer 
+class ObjectAttributePrototypeContainer
 {
 
 public:
@@ -60,12 +60,12 @@ public:
     void Show();
 
     const T_AttributeContainer* Select( const kernel::ObjectType& type );
-    virtual void NotifyUpdated( /*const ModelLoaded& */); // $$$$ JCR 2009-04-03: Enregistrer aupres du controleur 
+    virtual void NotifyUpdated( /*const ModelLoaded& */); // $$$$ JCR 2009-04-03: Enregistrer aupres du controleur
     //@}
 
 private:
     //! @name Types
-    //@{    
+    //@{
     typedef std::map< std::string, boost::shared_ptr< T_AttributeContainer > > T_AttributesPrototypes;
     typedef T_AttributesPrototypes::iterator                                  IT_AttributesPrototypes;
     typedef T_AttributesPrototypes::const_iterator                           CIT_AttributesPrototypes;

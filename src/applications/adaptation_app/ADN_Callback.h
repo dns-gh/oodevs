@@ -43,7 +43,7 @@ public:
 // Created: APE 2005-04-04
 // =============================================================================
 template< typename Result, typename Class >
-class ADN_Callback 
+class ADN_Callback
     : public ADN_Callback_ABC< Result >
 {
 public:

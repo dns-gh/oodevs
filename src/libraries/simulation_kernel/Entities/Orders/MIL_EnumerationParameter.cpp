@@ -29,7 +29,7 @@ MIL_EnumerationParameter::~MIL_EnumerationParameter()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_EnumerationParameter::IsOfType
 // Created: LDC 2009-05-22

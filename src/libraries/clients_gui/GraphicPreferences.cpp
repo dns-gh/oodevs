@@ -44,7 +44,7 @@ GraphicPreferences::~GraphicPreferences()
 // -----------------------------------------------------------------------------
 void GraphicPreferences::InitializeTerrainPreferences()
 {
-    xml::xifstream xis( "preferences.xml" ); // $$$$ AGE 2006-04-05: 
+    xml::xifstream xis( "preferences.xml" ); // $$$$ AGE 2006-04-05:
     xis >> xml::start( "preferences" )
             >> xml::start( "terrains" )
                 >> xml::list( "terrain", *this, & GraphicPreferences::ReadTerrainPreference );

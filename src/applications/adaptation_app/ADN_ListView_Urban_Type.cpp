@@ -28,7 +28,7 @@ class ADN_CLV_Urban_Type
 {
 public:
 
-    ADN_CLV_Urban_Type(ADN_ListView_Urban_Type& list) 
+    ADN_CLV_Urban_Type(ADN_ListView_Urban_Type& list)
         : ADN_Connector_ListView_ABC(list)
     {}
 
@@ -133,7 +133,7 @@ void  ADN_ListView_Urban_Type::OnContextMenu( const QPoint& pt)
     case 1:
         {
             UrbanInfos* pCurSize=(UrbanInfos*)pCurData_;
-            if ( pCurSize )
+            if( pCurSize )
             {
                 if( pCurSize->IsMultiRef() && ! ADN_GuiTools::MultiRefWarning() )
                     return;

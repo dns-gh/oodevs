@@ -193,7 +193,7 @@ InfoStatusWidget::InfoStatusWidget( QWidget* parent, kernel::Controllers& contro
     font = QFont( "Arial", 10, QFont::Bold );
     lifeBar_->setFont( font );
     lifeBar_->setFixedSize( 150, 20 );
-    
+
     connect( gotoParent_, SIGNAL( clicked() ), SLOT( GotoParent() ) );
     SetDefault();
     controllers_.Register( *this );

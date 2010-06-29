@@ -27,8 +27,8 @@
 PHY_ActionConstructObject::PHY_ActionConstructObject( MIL_AgentPion& pion, const std::string& strType, const TER_Localisation* pLocalisation )
     : PHY_DecisionCallbackAction_ABC( pion )
     , role_( pion.GetRole< PHY_RoleAction_Objects >() )
-    , pObject_( MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( pion.GetArmy(), strType, pLocalisation, Common::ObstacleType_DemolitionTargetType_preliminary ) ) 
-{    
+    , pObject_( MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( pion.GetArmy(), strType, pLocalisation, Common::ObstacleType_DemolitionTargetType_preliminary ) )
+{
     role_.SetCreator( *pObject_ );
     ConstructionAttribute* attribute = pObject_->RetrieveAttribute< ConstructionAttribute >();
     if( attribute )
@@ -63,7 +63,7 @@ void PHY_ActionConstructObject::StopAction()
 // Constructd: NLD 2004-08-18
 // -----------------------------------------------------------------------------
 void PHY_ActionConstructObject::Execute()
-{   
+{
     if( pObject_ && pObject_->IsMarkedForDestruction() )
         pObject_ = 0;
 

@@ -31,7 +31,7 @@ class QueryBuilder : public QueryBuilder_ABC
 
 public:
     //! @name Constructors/Destructor
-    //@{    
+    //@{
     virtual ~QueryBuilder();
     //@}
 
@@ -42,7 +42,7 @@ public:
     void SetField( const std::string& field, int value );
     void SetField( const std::string& field, long value );
     void SetField( const std::string& field, double value );
-    void SetGeometry( const Shape_ABC& shape );    
+    void SetGeometry( const Shape_ABC& shape );
     //@}
 
     //! @name Accessor
@@ -53,12 +53,12 @@ public:
     //@}
 
 protected:
-    //! @name 
+    //! @name
     //@{
     explicit QueryBuilder( const std::string& table );
     //@}
 
-    //! @name 
+    //! @name
     //@{
     std::string BuildInsert() const;
     std::string BuildUpdate( const std::string& clause ) const;
@@ -76,7 +76,7 @@ private:
 private:
     typedef std::pair< std::string, std::string >   T_Parameter;
 
-    //! @name 
+    //! @name
     //@{
     void AddParameter( const T_Parameter& parameter );
     //@}
@@ -90,25 +90,25 @@ private:
     //@}
 };
 
-class InsertQueryBuilder : public QueryBuilder {    
+class InsertQueryBuilder : public QueryBuilder {
 public:
-    explicit InsertQueryBuilder( const std::string& table ) 
+    explicit InsertQueryBuilder( const std::string& table )
         : QueryBuilder( table ) {}
     virtual ~InsertQueryBuilder() {}
-    
+
     std::string Create() const
     {
         return BuildInsert();
     }
 };
 
-class UpdateQueryBuilder : public QueryBuilder {    
+class UpdateQueryBuilder : public QueryBuilder {
 public:
-    explicit UpdateQueryBuilder( const std::string& table ) 
+    explicit UpdateQueryBuilder( const std::string& table )
         : QueryBuilder( table ), clause_ () {}
     virtual ~UpdateQueryBuilder() {}
 
-    void SetClause( const std::string& clause ) 
+    void SetClause( const std::string& clause )
     {
         clause_ = clause;
     }
@@ -121,20 +121,20 @@ private:
     std::string clause_;
 };
 
-class DeleteQueryBuilder : public QueryBuilder {    
+class DeleteQueryBuilder : public QueryBuilder {
 public:
-    explicit DeleteQueryBuilder( const std::string& table ) 
+    explicit DeleteQueryBuilder( const std::string& table )
         : QueryBuilder( table ), clause_ () {}
-    DeleteQueryBuilder( const std::string& table, std::string clause ) 
+    DeleteQueryBuilder( const std::string& table, std::string clause )
         : QueryBuilder( table ), clause_ ( clause ) {}
     virtual ~DeleteQueryBuilder() {}
 
-    void SetClause( const std::string& clause ) 
+    void SetClause( const std::string& clause )
     {
         clause_ = clause;
     }
 
-    bool IsValid() const 
+    bool IsValid() const
     {
         return true;
     }

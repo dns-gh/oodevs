@@ -21,7 +21,7 @@ MIL_ParameterType_IndirectFire::MIL_ParameterType_IndirectFire()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_IndirectFire destructor
 // Created: SBO 2006-11-27
@@ -30,7 +30,7 @@ MIL_ParameterType_IndirectFire::~MIL_ParameterType_IndirectFire()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_IndirectFire::Copy
 // Created: SBO 2006-11-27

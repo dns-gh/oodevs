@@ -119,7 +119,7 @@ void TimelineListView::NotifyDeleted( const Action_ABC& action )
 void TimelineListView::NotifyDeleted( const kernel::Entity_ABC& entity )
 {
     if( gui::ValuedListItem* item = gui::FindItem( &entity, firstChild() ) )
-        delete item;    
+        delete item;
 }
 
 // -----------------------------------------------------------------------------

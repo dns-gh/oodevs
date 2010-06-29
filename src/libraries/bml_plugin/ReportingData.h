@@ -45,7 +45,7 @@ public:
 
     //! @name Operations
     //@{
-    friend xml::xostream& operator<<( xml::xostream& xos, const ReportingData& data );    
+    friend xml::xostream& operator<<( xml::xostream& xos, const ReportingData& data );
     //@}
 
 private:

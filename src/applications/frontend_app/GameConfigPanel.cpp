@@ -189,8 +189,8 @@ void GameConfigPanel::Commit( const std::string& exercise, const std::string& se
         action.SetOption( "session/config/simulation/debug/@diadebuggerport", diaDebugPort_->value() );
         action.SetOption( "session/config/simulation/debug/@networklogger", netConBox_->isChecked() );
         action.SetOption( "session/config/simulation/debug/@networkloggerport", netConPort_->value() );
-        action.SetOption( "session/config/simulation/decisional/@useonlybinaries", false ); // $$$$ AGE 2007-10-09: 
-        action.SetOption( "session/config/simulation/dispatcher/@embedded", true ); // $$$$ AGE 2007-10-09: 
+        action.SetOption( "session/config/simulation/decisional/@useonlybinaries", false ); // $$$$ AGE 2007-10-09:
+        action.SetOption( "session/config/simulation/dispatcher/@embedded", true ); // $$$$ AGE 2007-10-09:
         action.SetOption( "session/config/simulation/network/@port", frontend::SimulationPort( exerciseNumber ) );
         action.SetOption( "session/config/simulation/orbat/@checkcomposition", checkOdb_->isChecked() );
         action.SetOption( "session/config/simulation/profiling/@enabled", profile_->isChecked() );
@@ -202,13 +202,13 @@ void GameConfigPanel::Commit( const std::string& exercise, const std::string& se
         action.SetOption( "session/config/simulation/hla/@federate", "Sword OT Power" );
     }
     {
-        action.SetOption( "session/config/dispatcher/network/@client", "localhost:" +  // $$$$ AGE 2007-10-09: 
+        action.SetOption( "session/config/dispatcher/network/@client", "localhost:" +  // $$$$ AGE 2007-10-09:
                             boost::lexical_cast< std::string >( frontend::SimulationPort( exerciseNumber ) ) );
         action.SetOption( "session/config/dispatcher/network/@server", frontend::DispatcherPort( exerciseNumber ) );
-        action.SetOption( "session/config/dispatcher/plugins/recorder", "" ); // $$$$ AGE 2008-02-22: 
+        action.SetOption( "session/config/dispatcher/plugins/recorder", "" ); // $$$$ AGE 2008-02-22:
     }
     {
-        action.SetOption( "session/config/gaming/network/@server", "localhost:" +  // $$$$ AGE 2007-10-09: 
+        action.SetOption( "session/config/gaming/network/@server", "localhost:" +  // $$$$ AGE 2007-10-09:
                                     boost::lexical_cast< std::string >( frontend::DispatcherPort( exerciseNumber ) ) );
     }
 }

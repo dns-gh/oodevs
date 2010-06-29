@@ -84,7 +84,7 @@ protected:
     virtual void VisitCircle    ( const geometry::Point2f& , float ) {};
     virtual void VisitPoint     ( const geometry::Point2f& ) {};
     //@}
-    
+
 private slots:
     //! @name Slots
     //@{

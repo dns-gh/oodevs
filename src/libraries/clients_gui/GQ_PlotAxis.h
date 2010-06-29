@@ -48,7 +48,7 @@ namespace gui
 // Created: CBX 2003-08-07
 // =============================================================================
 class GQ_PlotAxis : public QObject
-{    
+{
     Q_OBJECT
 
 public:
@@ -88,7 +88,7 @@ public:
     void InitTickMultiplesForMinutes ();
 
     void SetValueToStringConvertor( const T_ValueToString* );
-    
+
     void SetCaptionFont  ( const QFont& );
     void SetTickValueFont( const QFont& );
     //@}
@@ -107,7 +107,7 @@ public:
 
     int MapToViewport ( double rValue ) const;
     int ClipToViewport( double rValue ) const;
-        
+
     double MapFromViewport ( int nPos ) const;
 
     int    AxisLength() const;
@@ -121,11 +121,11 @@ public:
     void SetDataRange  ( double rMinDataValue, double rMaxDataValue );
 
     void SetAxisRange  ( double rMinAxisValue, double rMaxAxisValue, bool bFixedRange );
-    
+
     void ClearVirtualRange();
     void AddVirtualValue  ( double rValue );
 
-    void SetAxisLength ( unsigned int nLength );  
+    void SetAxisLength ( unsigned int nLength );
 
     void Update();
     //@}
@@ -147,10 +147,10 @@ protected:
 
     virtual void UpdateTickPeriod();
     virtual void UpdateTicks();
-   
+
     virtual void DrawX   ( QPainter&, const QColorGroup&, const QPoint& refPoint );
     virtual void DrawY   ( QPainter&, const QColorGroup&, const QPoint& refPoint );
-        
+
     virtual void DrawVGrid( QPainter&, int nY0, int nY1 );
     virtual void DrawHGrid( QPainter&, int nX0, int nX1 );
     //@}
@@ -169,7 +169,7 @@ private:
 
     QString caption_;
     unsigned int    nCaptionMargin_;
-    
+
     bool   bShowAxis_;
     bool   bShowGrid_;
 
@@ -195,7 +195,7 @@ private:
     //@{
     double rMinDataValue_;
     double rMaxDataValue_;
-    
+
     double rMinVirtualValue_;
     double rMaxVirtualValue_;
 
@@ -204,7 +204,7 @@ private:
 
     unsigned int   nAxisLength_;
     //@}
-  
+
     //! @name Runtime parameters
     //@{
     bool   bUpdateNeeded_;
@@ -218,7 +218,7 @@ private:
     double rSubTickPeriod_;
 
     unsigned int nAxisWidth_; //!< Estimated perpendicular size needed to display the axis
-    
+
     T_TickList ticks_;
     //@}
 };

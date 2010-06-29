@@ -58,7 +58,7 @@ void VisionConesToggler::OptionChanged( const std::string& name, const OptionVar
         ToggleVisionCones();
     }
 
-    pDummy = 
+    pDummy =
           name == "FogOfWar" ? &displayFog_
         : 0;
     if( pDummy )

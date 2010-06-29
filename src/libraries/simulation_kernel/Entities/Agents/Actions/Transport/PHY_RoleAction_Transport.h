@@ -167,7 +167,7 @@ private:
     E_State               nState_;
     bool                  bLoadUnloadHasBeenUpdated_;
     T_TransportedPionMap  transportedPions_;
-    MT_Float              rWeightTransported_; 
+    MT_Float              rWeightTransported_;
     //@}
 };
 

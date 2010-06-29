@@ -17,11 +17,11 @@
 // Created: JCR 2008-05-30
 // =============================================================================
 class DEC_Knowledge_ObjectAttributeUpdatable_ABC
-{ 
-public:    
+{
+public:
     //! @name Type
     //@{
-    enum E_UpdateType {           
+    enum E_UpdateType {
         eOnCreation  = 0x01,
         eOnUpdate    = 0x02
     };
@@ -40,7 +40,7 @@ public:
     //@}
 
 protected:
-    //! @name 
+    //! @name
     //@{
     virtual void Reset() const
     {
@@ -64,8 +64,8 @@ protected:
     //@}
 
 private:
-    //! @name 
-    //@{    
+    //! @name
+    //@{
     mutable unsigned char xToUpdate_;
     //@}
 };

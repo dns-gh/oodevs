@@ -23,7 +23,7 @@ namespace dispatcher
 
 namespace plugins
 {
-    namespace messenger 
+    namespace messenger
     {
         class IdManager;
         class Note;
@@ -57,7 +57,7 @@ public:
     void SendStateToNewClient( dispatcher::ClientPublisher_ABC& publisher ) const;
 
     void Publish( const Note& note );
-    
+
     void LoadNotes(const std::string filename);
     void SaveNotes(const std::string filename);
 

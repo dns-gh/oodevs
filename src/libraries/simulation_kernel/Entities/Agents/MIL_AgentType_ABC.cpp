@@ -58,12 +58,12 @@ void MIL_AgentType_ABC::InitializeNature( xml::xistream& xis )
     xis >> xml::start( "nature" )
         >> xml::attribute( "level", strBuf );
     pNatureLevel_ = PHY_NatureLevel::Find( strBuf );
-    if ( !pNatureLevel_ )
+    if( !pNatureLevel_ )
         xis.error( "Unknown nature level type" );
 
     xis >> xml::attribute( "atlas-nature", strBuf );
     pNatureAtlas_ = PHY_NatureAtlas::Find( strBuf );
-    if ( !pNatureAtlas_ )
+    if( !pNatureAtlas_ )
         xis.error( "Unknown atlas qualificatif" );
     xis >> xml::end();
 }
@@ -123,7 +123,7 @@ bool MIL_AgentType_ABC::IsTerrorist() const
 {
     return false;
 }
-          
+
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentType_ABC::IsRefugee
 // Created: NLD 2005-03-10

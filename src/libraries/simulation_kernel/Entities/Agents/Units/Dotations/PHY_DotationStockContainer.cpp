@@ -35,7 +35,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_DotationStockContainer )
 // -----------------------------------------------------------------------------
 PHY_DotationStockContainer::PHY_DotationStockContainer( PHY_RoleInterface_Supply& roleSupply, bool bInfiniteDotations )
     : pRoleSupply_          ( &roleSupply )
-    , stocks_               ()   
+    , stocks_               ()
     , stocksChanged_        ()
     , bCheckStockCapacities_( false )
     , bInfiniteDotations_   ( bInfiniteDotations )
@@ -75,7 +75,7 @@ namespace boost
         {
             split_free( file, map, nVersion );
         }
-        
+
         template< typename Archive >
         void save( Archive& file, const PHY_DotationStockContainer::T_StockMap& map, const unsigned int )
         {
@@ -88,7 +88,7 @@ namespace boost
                 file << it->second;
             }
         }
-        
+
         template< typename Archive >
         void load( Archive& file, PHY_DotationStockContainer::T_StockMap& map, const unsigned int )
         {
@@ -97,23 +97,23 @@ namespace boost
             while ( nNbr-- )
             {
                 unsigned int nID;
-                
+
                 file >> nID;
                 const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( nID );
-                
+
                 PHY_DotationStock* pDotationStock;
                 file >> pDotationStock;
-                
+
                 map[ pDotationCategory ] = pDotationStock;
             }
         }
-        
+
         template< typename Archive >
         void serialize( Archive& file, PHY_DotationStockContainer::T_StockSet& set, const unsigned int nVersion )
         {
             split_free( file, set, nVersion );
         }
-        
+
         template< typename Archive >
         void save( Archive& file, const PHY_DotationStockContainer::T_StockSet& set, const unsigned int )
         {
@@ -122,7 +122,7 @@ namespace boost
             for ( PHY_DotationStockContainer::CIT_StockSet it = set.begin(); it != set.end(); ++it )
                 file << *it;
         }
-        
+
         template< typename Archive >
         void load( Archive& file, PHY_DotationStockContainer::T_StockSet& set, const unsigned int )
         {
@@ -356,7 +356,7 @@ void PHY_DotationStockContainer::CheckStockCapacities()
 
     assert( pRoleSupply_ );//@TODO MGD stock pion and not role
     MIL_AgentPionLOG_ABC& pion = const_cast< MIL_AgentPionLOG_ABC& >( pRoleSupply_->GetPion() );
-    
+
     std::auto_ptr< OnComponentComputer_ABC > componentComputer( pion.GetAlgorithms().onComponentFunctorComputerFactory_->Create( stockChecker ) );
     pion.Execute( *componentComputer );
 
@@ -379,7 +379,7 @@ void PHY_DotationStockContainer::CheckStockCapacities()
 // Created: NLD 2005-01-21
 // -----------------------------------------------------------------------------
 void PHY_DotationStockContainer::NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const
-{   
+{
     assert( pRoleSupply_ );
     pRoleSupply_->NotifySupplyNeeded( dotationCategory, bNewNeed );
 }

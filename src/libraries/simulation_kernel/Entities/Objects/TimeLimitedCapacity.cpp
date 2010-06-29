@@ -56,7 +56,7 @@ TimeLimitedCapacity::~TimeLimitedCapacity()
 // -----------------------------------------------------------------------------
 template< typename Archive >
 void TimeLimitedCapacity::serialize( Archive& file, const unsigned int )
-{    
+{
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
 }
 
@@ -74,8 +74,8 @@ void TimeLimitedCapacity::Register( MIL_Object_ABC& object )
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
 void TimeLimitedCapacity::Instanciate( MIL_Object_ABC& object ) const
-{    
-    object.AddCapacity( new TimeLimitedCapacity( *this ) );    
+{
+    object.AddCapacity( new TimeLimitedCapacity( *this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,7 +83,7 @@ void TimeLimitedCapacity::Instanciate( MIL_Object_ABC& object ) const
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 void TimeLimitedCapacity::Update( MIL_Object_ABC& object, unsigned int time )
-{    
-    if ( object.GetAttribute< TimeLimitedAttribute >().IsTimeOver( time ) )
+{
+    if( object.GetAttribute< TimeLimitedAttribute >().IsTimeOver( time ) )
         object.MarkForDestruction();
 }

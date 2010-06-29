@@ -14,9 +14,9 @@
 
 class QWidget;
 
-namespace xml 
-{ 
-    class xistream; 
+namespace xml
+{
+    class xistream;
 }
 
 namespace gui
@@ -30,22 +30,22 @@ namespace gui
 // Created: SBO 2006-04-18
 // =============================================================================
 class ObjectAttributePrototypeFactory_ABC
-{    
+{
 public:
-    //! @name 
+    //! @name
     //@{
     typedef std::vector< ObjectAttributePrototype_ABC* > T_AttributeContainer;
     //@}
 
-public:    
+public:
     //! @name Constructors/Destructor
     //@{
              ObjectAttributePrototypeFactory_ABC() {}
     virtual ~ObjectAttributePrototypeFactory_ABC() {}
-    //@}    
+    //@}
 
     //! @name Registrer
-    //@{    
+    //@{
     virtual void Create( const std::string& capacity, xml::xistream& xis, T_AttributeContainer& container, QWidget* parent ) const = 0;
     //@}
 

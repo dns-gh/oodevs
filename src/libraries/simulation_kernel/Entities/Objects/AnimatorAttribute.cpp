@@ -68,7 +68,7 @@ AnimatorAttribute& AnimatorAttribute::operator=( const AnimatorAttribute& rhs )
 // Name: template< typename Archive > void AnimatorAttribute::serialize
 // Created: JCR 2008-07-03
 // -----------------------------------------------------------------------------
-template< typename Archive > 
+template< typename Archive >
 void AnimatorAttribute::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectAttribute_ABC >( *this );
@@ -90,7 +90,7 @@ void AnimatorAttribute::Register( Object& object ) const
 // -----------------------------------------------------------------------------
 bool AnimatorAttribute::CanBeAnimatedBy( const MIL_Agent_ABC& agent ) const
 {
-    return animators_.size() < maxAnimators_ 
+    return animators_.size() < maxAnimators_
            || ( animators_.find( &agent ) != animators_.end() );
 }
 
@@ -100,7 +100,7 @@ bool AnimatorAttribute::CanBeAnimatedBy( const MIL_Agent_ABC& agent ) const
 // -----------------------------------------------------------------------------
 bool AnimatorAttribute::AddAnimator( const MIL_Agent_ABC& agent )
 {
-    if ( !CanBeAnimatedBy( agent ) )
+    if( !CanBeAnimatedBy( agent ) )
         return false;
     animators_.insert( &agent );
     return true;
@@ -123,7 +123,7 @@ unsigned int AnimatorAttribute::GetMaxAnimators() const
 {
     return maxAnimators_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: AnimatorAttribute::GetCurrent
 // Created: JCR 2008-08-20

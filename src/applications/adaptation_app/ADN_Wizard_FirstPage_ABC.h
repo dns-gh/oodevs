@@ -47,7 +47,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual T* CreateObject() = 0; 
+    virtual T* CreateObject() = 0;
     //@}
 };
 

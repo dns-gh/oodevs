@@ -118,8 +118,8 @@ void Automat::MoveAgents( dispatcher::Automat_ABC& superior )
 void Automat::DoUpdate( const MsgsSimToClient::MsgAutomatCreation& msg )
 {
     ChangeKnowledgeGroup( msg.oid_groupe_connaissance() );
-    if( parentFormation_ && 
-        ( msg.oid_parent().has_automate()  || 
+    if( parentFormation_ &&
+        ( msg.oid_parent().has_automate()  ||
         ( msg.oid_parent().has_formation() && msg.oid_parent().formation().oid() != parentFormation_->GetId() ) ) )
         ChangeSuperior( msg.oid_parent() );
     if( parentAutomat_ && ( msg.oid_parent().has_formation() || ( msg.oid_parent().has_automate()  && msg.oid_parent().automate().oid()  != parentAutomat_  ->GetId() ) ) )
@@ -405,7 +405,7 @@ void Automat::Accept( kernel::ModelVisitor_ABC& visitor ) const
 // -----------------------------------------------------------------------------
 const kernel::AutomatType& Automat::GetType() const
 {
-    throw std::runtime_error( __FUNCTION__ " not implemented" ); // $$$$ AGE 2008-06-20: 
+    throw std::runtime_error( __FUNCTION__ " not implemented" ); // $$$$ AGE 2008-06-20:
 }
 
 // -----------------------------------------------------------------------------

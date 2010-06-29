@@ -68,7 +68,7 @@ namespace
         {
             names_[ Cleanup( name ) ].push_back( at );
         }
-        
+
         virtual bool ShouldDisplay      ( const TerrainData& , const geometry::Rectangle2f& ) { return false; }
         virtual bool ShouldDisplayBorder( const TerrainData& , const geometry::Rectangle2f& ) { return false; }
         virtual bool ShouldDisplayNames ( const TerrainData& , const geometry::Rectangle2f& ) { return true; }
@@ -106,7 +106,7 @@ bool TerrainFeatureSearcher::Search( const QString& name, geometry::Point2f& poi
 // -----------------------------------------------------------------------------
 bool TerrainFeatureSearcher::FindNext( geometry::Point2f& point, QString& hint )
 {
-    if ( index_ == ( current_->second.size() - 1 ) )
+    if( index_ == ( current_->second.size() - 1 ) )
         index_ = 0;
     else
         ++index_;

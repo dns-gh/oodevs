@@ -17,7 +17,7 @@
 #include "ADN_Connector_ListView.h"
 #include "ADN_Composantes_Data.h"
 #include "ADN_Workspace.h"
- 
+
 typedef ADN_Composantes_Data::WeaponInfos WeaponInfos;
 
 
@@ -116,15 +116,15 @@ void ADN_Composantes_WeaponsListView::OnContextMenu( const QPoint& pt )
 bool ADN_Composantes_WeaponsListView::Contains( const ADN_Weapons_Data::WeaponInfos* pInfo )
 {
     QListViewItemIterator it( this );
-    while( it.current() != 0 ) 
+    while( it.current() != 0 )
     {
         ADN_ListViewItem* pCurr = (ADN_ListViewItem*)it.current();
         ADN_Composantes_Data::WeaponInfos* pData = static_cast< ADN_Composantes_Data::WeaponInfos* >( pCurr->GetData() );
-        if ( pData->ptrWeapon_.GetData() == pInfo )
+        if( pData->ptrWeapon_.GetData() == pInfo )
             return true;
         ++it;
     }
-    return false;    
+    return false;
 }
 
 

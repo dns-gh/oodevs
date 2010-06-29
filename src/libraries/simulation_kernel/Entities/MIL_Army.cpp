@@ -58,7 +58,7 @@ void load_construct_data( Archive& archive, MIL_Army* army, const unsigned int /
 {
     ArmyFactory_ABC* armyFactory = 0;
     MT_Converter< std::string, MIL_Army_ABC::E_Diplomacy >* diplomacyConverter = 0;
-    archive >> armyFactory 
+    archive >> armyFactory
             >> diplomacyConverter;
     ::new( army )MIL_Army( *armyFactory, *diplomacyConverter );
 }
@@ -107,7 +107,7 @@ MIL_Army::MIL_Army( ArmyFactory_ABC& armyFactory, const MT_Converter< std::strin
     , armyFactory_( armyFactory )
     , diplomacyConverter_( diplomacyConverter )
 {
-    // NOTHING    
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -137,7 +137,7 @@ namespace boost
         {
             split_free( file, map, nVersion );
         }
-        
+
         template< typename Archive >
         void save( Archive& file, const MIL_Army::T_DiplomacyMap& map, const unsigned int )
         {
@@ -149,7 +149,7 @@ namespace boost
                      << it->second;
             }
         }
-        
+
         template< typename Archive >
         void load( Archive& file, MIL_Army::T_DiplomacyMap& map, const unsigned int )
         {
@@ -285,7 +285,7 @@ void MIL_Army::WriteODB( xml::xostream& xos ) const
         if( !it->second->IsJammed() )
             it->second->WriteODB( xos );
     xos     << xml::end();
-    
+
     xos     << xml::start( "tactical" );
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::WriteODB, _1, boost::ref(xos) ) );
     xos     << xml::end();
@@ -295,7 +295,7 @@ void MIL_Army::WriteODB( xml::xostream& xos ) const
     xos     << xml::end();
 
     xos     << xml::start( "objects" );
-    tools::Resolver< MIL_Object_ABC >::Apply( boost::bind( &MIL_Object_ABC::WriteODB, _1, boost::ref(xos) ) );   
+    tools::Resolver< MIL_Object_ABC >::Apply( boost::bind( &MIL_Object_ABC::WriteODB, _1, boost::ref(xos) ) );
     xos     << xml::end();
 
     xos     << xml::start( "populations" );
@@ -492,7 +492,7 @@ void MIL_Army::CleanKnowledges()
     assert( pKnowledgeBlackBoard_ );
     pKnowledgeBlackBoard_->Clean();
     for( CIT_KnowledgeGroupMap itKnowledgeGroup = knowledgeGroups_.begin(); itKnowledgeGroup != knowledgeGroups_.end(); ++itKnowledgeGroup )
-        itKnowledgeGroup->second->CleanKnowledges();        
+        itKnowledgeGroup->second->CleanKnowledges();
 }
 
 // -----------------------------------------------------------------------------
@@ -580,9 +580,9 @@ E_Tristate MIL_Army::IsNeutral( const MIL_Army_ABC& army ) const
         case eFriend  : return eTristate_False;
         case eEnemy   : return eTristate_False;
         case eNeutral : return eTristate_True;
-        default: 
+        default:
             assert( false );
-    };        
+    };
     return eTristate_DontKnow;
 }
 

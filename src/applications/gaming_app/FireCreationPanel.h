@@ -52,7 +52,7 @@ class FireCreationPanel : public gui::InfoPanel_ABC
 
 public:
     //! @name Constructors/Destructor
-    //@{    
+    //@{
              FireCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers
                               , actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const StaticModel& staticModel );
     virtual ~FireCreationPanel();

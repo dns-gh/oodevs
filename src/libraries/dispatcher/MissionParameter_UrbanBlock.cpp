@@ -41,5 +41,5 @@ MissionParameter_UrbanBlock::~MissionParameter_UrbanBlock()
 void MissionParameter_UrbanBlock::Send( Common::MsgMissionParameter& asn ) const
 {
     MissionParameter_ABC::Send( asn );
-    asn.mutable_value()->mutable_urbanblock()->set_oid( block_ ); 
+    asn.mutable_value()->mutable_urbanblock()->set_oid( block_ );
 }

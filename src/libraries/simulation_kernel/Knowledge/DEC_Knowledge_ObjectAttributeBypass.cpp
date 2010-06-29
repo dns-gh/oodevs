@@ -94,7 +94,7 @@ void DEC_Knowledge_ObjectAttributeBypass::UpdateAttributes()
 {
     if( ! attr_ )
         return;
-    
+
     nBypassPercentage_ = (unsigned int)( attr_->GetState() * 100. );
 }
 
@@ -130,6 +130,6 @@ void DEC_Knowledge_ObjectAttributeBypass::UpdateOnCollision( const DEC_Knowledge
 // Created: JCR 2008-08-18
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeBypass::Send( Common::MsgObjectAttributes& asn ) const
-{    
+{
     asn.mutable_bypass()->set_percentage( nBypassPercentage_ );
 }

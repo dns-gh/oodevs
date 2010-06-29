@@ -85,7 +85,7 @@
 #include <qtooltip.h>
 #include <qtranslator.h>
 #include <qvalidator.h>
-#include <qvalidator.h> 
+#include <qvalidator.h>
 #include <qvaluelist.h>
 #include <qvbox.h>
 #include <qvgroupbox.h>
@@ -133,7 +133,7 @@ namespace xml
             return xos;
         }
         //@}
-        
+
     private:
         //! @name Copy/Assignment
         //@{

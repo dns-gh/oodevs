@@ -32,7 +32,7 @@ TER_PopulationManager::TER_PopulationManager( const MT_Rect& extent )
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: TER_PopulationManager destructor
 // Created: NLD 2005-10-07

@@ -25,7 +25,7 @@ TeamCommunications::TeamCommunications( kernel::Controller& controller, kernel::
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: TeamCommunications destructor
 // Created: SBO 2006-09-25

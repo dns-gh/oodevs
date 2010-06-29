@@ -29,7 +29,7 @@ class PHY_ActionTransportUnload : public PHY_DecisionCallbackAction_ABC
 {
 
 public:
-    typedef MIL_AgentPion ActorType;        
+    typedef MIL_AgentPion ActorType;
 
 public:
     explicit PHY_ActionTransportUnload( MIL_AgentPion& pion );

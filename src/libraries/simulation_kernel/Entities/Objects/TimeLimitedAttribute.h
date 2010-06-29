@@ -34,7 +34,7 @@ public:
     //@}
 
     //! @name CheckPoints
-    //@{    
+    //@{
     template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
@@ -45,7 +45,7 @@ public:
 
     //! @name ODB
     //@{
-    virtual void WriteODB( xml::xostream& /*xos*/ ) const;    
+    virtual void WriteODB( xml::xostream& /*xos*/ ) const;
     //@}
 
     //! @name Network updates
@@ -71,7 +71,7 @@ private:
     //@}
 
 private:
-    //! @name 
+    //! @name
     //@{
     unsigned int nActivityTime_;
     mutable unsigned int nDeathTimeStep_;

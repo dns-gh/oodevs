@@ -113,7 +113,7 @@ void ADN_Launchers_GUI::ExportPHModifiers( ADN_HtmlBuilder& builder, ADN_Launche
     if( ! infos.bDirect_.GetData() )
         return;
 
-    pLaunchers_->SetCurrentItem( &infos ); 
+    pLaunchers_->SetCurrentItem( &infos );
     builder.Section( tr( "Phs modificators" ) );
     builder.Stream() << tr( "Shooter's stance / Target's stance" ).ascii();
     builder.CreateTableFrom( *pModifPhs_ );

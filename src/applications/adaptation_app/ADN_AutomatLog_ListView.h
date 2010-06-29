@@ -75,7 +75,7 @@ private:
     //@{
     struct ADN_AutomatLog_Entry
     {
-        ADN_AutomatLog_Entry() 
+        ADN_AutomatLog_Entry()
             : rNbr_( 0. )
             , rNormalizedConsumption_ ( 0. )
             , rMoveQuantityUsedPerHour_( 0. )

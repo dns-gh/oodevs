@@ -44,7 +44,7 @@ void LogoLayer::Paint( kernel::Viewport_ABC& )
 {
     if( ! image_.bits() )
         return;
-    
+
     // Unproject
     double modelViewMatrix[16];
     glGetDoublev( GL_MODELVIEW_MATRIX, modelViewMatrix );

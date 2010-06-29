@@ -24,7 +24,7 @@
 #include <boost/function.hpp>
 #include <boost/filesystem/convenience.hpp>
 #include <boost/filesystem/operations.hpp>
- 
+
 namespace bfs = boost::filesystem;
 
 namespace
@@ -82,7 +82,7 @@ ActionsToolbar::ActionsToolbar( QWidget* parent, ActionsModel& actions, const to
     loadBtn_->setPixmap( MAKE_PIXMAP( open ) );
     loadBtn_->setDisabled( false );
     loadBtn_->setTextLabel( tr( "Load actions file" ) );
-    
+
     saveBtn_ = new QToolButton( this );
     saveBtn_->setAutoRaise( true );
     saveBtn_->setPixmap( MAKE_PIXMAP( save ) );
@@ -95,7 +95,7 @@ ActionsToolbar::ActionsToolbar( QWidget* parent, ActionsModel& actions, const to
     purgeBtn_->setAutoRaise( true );
     purgeBtn_->setPixmap( MAKE_PIXMAP( trash2 ) );
     purgeBtn_->setTextLabel( tr( "Delete recorded actions" ) );
-    
+
     confirmation_ = new ConfirmationBox( tr( "Actions recorder" ), boost::bind( &ActionsToolbar::PurgeConfirmed, this, _1 ) );
 
     controllers_.Register( *this );
@@ -203,7 +203,7 @@ namespace
             bfs::directory_iterator end;
             for( bfs::directory_iterator it( path ); it != end; ++it )
             {
-                const bfs::path child = *it;            
+                const bfs::path child = *it;
                 if( bfs::is_regular_file( child ) && bfs::extension( child ).compare( ".ord" ) == 0 )
                     list.push_back( child.string().c_str() );
             }

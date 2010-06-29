@@ -97,7 +97,7 @@ ADN_Composantes_Dotations_GUI::ADN_Composantes_Dotations_GUI( bool bIncludeNorma
 
     horizontalHeader()->setLabel( 0, tr( "Category" ) );
     horizontalHeader()->setLabel( 1, tr( "Qty" ) );
-    if ( bIncludeThreshold )
+    if( bIncludeThreshold )
         horizontalHeader()->setLabel( 2, tr( "Log threshold (%)" ) );
     if( bIncludeNormalizedConsumption )
         horizontalHeader()->setLabel( 3, tr( "Normalized consumption" ) );
@@ -127,8 +127,8 @@ void ADN_Composantes_Dotations_GUI::OnContextMenu( int /*row*/, int /*col*/, con
     QPopupMenu targetMenu( &menu );
 
     // Get the dotation list.
-    ADN_Equipement_Data::T_DotationInfos_Vector& dotations 
-        = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotations(); 
+    ADN_Equipement_Data::T_DotationInfos_Vector& dotations
+        = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotations();
 
     // Fill the popup menu with submenus, one for each dotation.
     for( ADN_Equipement_Data::IT_DotationInfos_Vector it = dotations.begin(); it != dotations.end(); ++it )

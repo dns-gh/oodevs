@@ -35,7 +35,7 @@ DatabaseFactory::DatabaseFactory()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DatabaseFactory destructor
 // Created: JCR 2009-02-10
@@ -46,7 +46,7 @@ DatabaseFactory::~DatabaseFactory()
 }
 
 
-namespace 
+namespace
 {
     bool IsFileDatabase( const bfs::path& p )
     {
@@ -64,7 +64,7 @@ namespace
         // boost::regexp_match( )
         return p.root_path() == "sde:";
     }
-    
+
     bool IsPostgreSQLDatabase( const bfs::path& p )
     {
         // boost::regexp_match( )
@@ -77,21 +77,21 @@ namespace
         // -----------------------------------------------------------------------------
         // Name: ConnectionProperty constructor
         // @brief: @type is either 'sde' or 'postgres' depending of the source type
-        //         @url parameter must have the follow format 
+        //         @url parameter must have the follow format
         //          sde://user:pass@server[:port]/database.schema
         // Created: JCR 2009-02-10
         // -----------------------------------------------------------------------------
-        explicit ConnectionProperty( const std::string& url, const std::string& type ) 
+        explicit ConnectionProperty( const std::string& url, const std::string& type )
         {
             boost::regex expression( "(" + type + "):\\/\\/(\\w+):(\\w+)@([\\w\\-\\.]+)(:(\\d+)){0,1}\\/(\\w*).(\\w*)" );
             boost::cmatch matches;
-            if ( boost::regex_match( url.c_str(), matches, expression ) )
+            if( boost::regex_match( url.c_str(), matches, expression ) )
             {
                 protocol_ = matches[ 1 ];
                 user_ = matches[ 2 ];
                 password_ = matches[ 3 ];
                 server_ = matches[ 4 ];
-                if ( matches[ 6 ] != "" )
+                if( matches[ 6 ] != "" )
                     port_ = matches[ 6 ];
                 database_ = matches[ 7 ];
                 schema_ = matches[ 8 ];
@@ -106,23 +106,23 @@ namespace
             }
         }
 
-        std::string toSDE() const 
+        std::string toSDE() const
         {
             // SDE:server,instance,database,username,password,layer,[version]
-            if ( protocol_ != "sde" && user_ == schema_ )
+            if( protocol_ != "sde" && user_ == schema_ )
                 throw std::runtime_error( "invalid SDE protocol : " + protocol_ );
-            return std::string( "SDE:" ) + 
-                server_ +  ":" + port_ + "," + 
-                protocol_ + ":postgresql:" + server_ + "," + 
+            return std::string( "SDE:" ) +
+                server_ +  ":" + port_ + "," +
+                protocol_ + ":postgresql:" + server_ + "," +
                 database_ + "," + user_ + "," + password_;
         }
 
-        std::string toPostgreSQL() const 
+        std::string toPostgreSQL() const
         {
             // PG:"dbname='databasename' host='addr' port='5432' user='x' password='y'"
-            if ( protocol_ != "postgres" )
+            if( protocol_ != "postgres" )
                 throw std::runtime_error( "invalid PG protocol : " + protocol_ );
-            return std::string( "PG:\"" ) + 
+            return std::string( "PG:\"" ) +
                     "dbname='" + database_ + "." + schema_ + "'" +
                     "host='" + server_ + "'" +
                     "port='" + port_ + "'" +
@@ -132,7 +132,7 @@ namespace
     public:
         std::string database_;
         std::string schema_;
-    
+
     private:
         std::string protocol_;
         std::string server_;
@@ -150,19 +150,19 @@ namespace
 std::auto_ptr< crossbow::Database_ABC > DatabaseFactory::Create( const dispatcher::Config& config, const std::string& name ) const
 {
     bfs::path p( name, bfs::native );
-    
-    if ( IsFileDatabase( p ) )
+
+    if( IsFileDatabase( p ) )
         return CreatePgeo( config, name );
-    if ( IsShapefileDatabase( p ) )
+    if( IsShapefileDatabase( p ) )
         return CreateShapefile( config, name );
-    if ( IsSDEDatabase( p ) )
+    if( IsSDEDatabase( p ) )
         return CreateSDE( name );
-    if ( IsPostgreSQLDatabase( p ) )
+    if( IsPostgreSQLDatabase( p ) )
         return CreatePostgreSQL( name );
     throw std::runtime_error( "Unknown geodatabase connection properties: " + name );
 }
 
-namespace 
+namespace
 {
     OGRSFDriver* GetDriver( const char* name )
     {
@@ -172,7 +172,7 @@ namespace
         return driver;
     }
 
-    std::auto_ptr< crossbow::Database_ABC > CreateDatabase( OGRDataSource* db, const std::string& name, const std::string& schema ) 
+    std::auto_ptr< crossbow::Database_ABC > CreateDatabase( OGRDataSource* db, const std::string& name, const std::string& schema )
     {
         if( !db )
             throw std::runtime_error( "Unknown geodatabase connection properties: " + name );
@@ -190,7 +190,7 @@ std::auto_ptr< crossbow::Database_ABC > DatabaseFactory::CreateShapefile( const 
     OGRDataSource* datasource = OGRSFDriverRegistrar::Open( config.BuildExerciseChildFile( name ).c_str(), TRUE, &driver );
     return CreateDatabase( datasource, "", "" );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: std::auto_ptr< crossbow::Database_ABC > DatabaseFactory::CreatePgeo
 // Created: JCR 2010-03-01
@@ -201,7 +201,7 @@ std::auto_ptr< crossbow::Database_ABC > DatabaseFactory::CreatePgeo( const dispa
     OGRDataSource* datasource = OGRSFDriverRegistrar::Open( config.BuildExerciseChildFile( name ).c_str(), TRUE, &driver );
     return CreateDatabase( datasource, "", "" );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: std::auto_ptr< crossbow::Database_ABC > DatabaseFactory::CreatePostgreSQL
 // Created: JCR 2010-03-01
@@ -215,7 +215,7 @@ std::auto_ptr< crossbow::Database_ABC > DatabaseFactory::CreateSDE( const std::s
     OGRDataSource* datasource = OGRSFDriverRegistrar::Open( connection.c_str(), TRUE, &driver );
     return CreateDatabase( datasource, properties.database_, properties.schema_ );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: std::auto_ptr< crossbow::Database_ABC > DatabaseFactory::CreateSDE
 // Created: JCR 2010-03-01

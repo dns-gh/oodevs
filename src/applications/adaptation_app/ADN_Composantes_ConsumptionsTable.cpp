@@ -39,7 +39,7 @@ class ADN_Connector_ConsumptionTable
     : public ADN_Connector_Table_ABC
 {
 public:
-    ADN_Connector_ConsumptionTable( ADN_Composantes_ConsumptionsTable& tab ) 
+    ADN_Connector_ConsumptionTable( ADN_Composantes_ConsumptionsTable& tab )
         : ADN_Connector_Table_ABC( tab, true, "ADN_Connector_ConsumptionTable" )
     {}
 
@@ -54,8 +54,8 @@ public:
 
         // Add a new row.
         tab_.setItem( n, 0, pItemType );
-        tab_.setItem( n, 1, pItemCategory ); 
-        tab_.setItem( n, 2, pItemQtyUsed ); 
+        tab_.setItem( n, 1, pItemCategory );
+        tab_.setItem( n, 2, pItemQtyUsed );
 
         // Set the item properties.
         pItemType->setEnabled( false );
@@ -155,7 +155,7 @@ void ADN_Composantes_ConsumptionsTable::OnContextMenu( int /*nRow*/, int /*nCol*
         {
             // Add the item.
             pConsumptionMenu->insertItem( (*it)->ptrCategory_.GetData()->strName_.GetData().c_str(), nItemId );
-            
+
             //Save its parameters.
             menuParametersList_.push_back( T_MenuItemParameters( (E_ConsumptionType)nConsumption, (*it)->ptrCategory_.GetData() ) );
             nItemId++;

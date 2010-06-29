@@ -31,7 +31,7 @@ class DEC_KS_ObjectInteraction : public DEC_KnowledgeSource_ABC
 
 public:
     //! @name Constructors/Destructor
-    //@{   
+    //@{
     explicit DEC_KS_ObjectInteraction( DEC_KnowledgeBlackBoard_AgentPion& blackBoard );
              DEC_KS_ObjectInteraction();
     virtual ~DEC_KS_ObjectInteraction();

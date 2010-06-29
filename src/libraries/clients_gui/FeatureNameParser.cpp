@@ -46,7 +46,7 @@ bool FeatureNameParser::Parse( QString content, geometry::Point2f& result, QStri
     bool found = false;
     if( next )
         found =  searcher_->FindNext( result, hintSearch );
-    else 
+    else
         found =  searcher_->Search( content, result, hintSearch );
     hint.append( hintSearch );
     return found;

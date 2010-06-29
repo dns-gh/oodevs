@@ -24,7 +24,7 @@ PHY_RoleHLA_Refugee::PHY_RoleHLA_Refugee()
 {
     // NOTHING
 }
-  
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleHLA_Refugee destructor
 // Created: NLD 2004-09-07

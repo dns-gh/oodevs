@@ -29,7 +29,7 @@ public:
     //@{
     template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
-    
+
     //! @name Operations
     //@{
     void     ApplyQuota               ( MT_Float rQuota );

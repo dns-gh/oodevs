@@ -47,8 +47,8 @@ void MinePrototype::Commit()
     if( creation_ )
     {
         PropertiesDictionary& dico = creation_->Get< PropertiesDictionary >();
-        MineAttribute* attribute = new MineAttribute( dico );                        
-                        attribute->SetDensity( density_->text().toFloat() );                        
+        MineAttribute* attribute = new MineAttribute( dico );
+                        attribute->SetDensity( density_->text().toFloat() );
         creation_->Get< ObjectAttributesContainer >().Register( *attribute );
     }
 }

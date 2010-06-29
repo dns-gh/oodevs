@@ -39,26 +39,26 @@ GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, LimitDe
 GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, LimitUpdateRequestAck              , limit_update_request_ack              )
 GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, LimitCreation                      , limit_creation                        )
 GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, LimitUpdate                        , limit_update                          )
-GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, LimitDestruction                   , limit_destruction                     )                                                        
+GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, LimitDestruction                   , limit_destruction                     )
 GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, LimaCreationRequestAck             , lima_creation_request_ack             )
 GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, LimaDestructionRequestAck          , lima_destruction_request_ack          )
 GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, LimaUpdateRequestAck               , lima_update_request_ack               )
 GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, LimaCreation                       , lima_creation                         )
 GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, LimaUpdate                         , lima_update                           )
 GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, LimaDestruction                    , lima_destruction                      )
-                                                        
+
 GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, IntelligenceCreationRequestAck     , intelligence_creation_request_ack     )
 GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, IntelligenceDestructionRequestAck  , intelligence_destruction_request_ack  )
 GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, IntelligenceUpdateRequestAck       , intelligence_update_request_ack       )
- 
+
 GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, IntelligenceCreation               , intelligence_creation                 )
 GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, IntelligenceUpdate                 , intelligence_update                   )
 GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, IntelligenceDestruction            , intelligence_destruction              )
-                                                        
+
 GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, ShapeCreationRequestAck            , shape_creation_request_ack            )
 GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, ShapeDestructionRequestAck         , shape_destruction_request_ack         )
 GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, ShapeUpdateRequestAck              , shape_update_request_ack              )
-                                                        
+
 GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, ShapeCreation                      , shape_creation                        )
 GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, ShapeUpdate                        , shape_update                          )
 GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, ShapeDestruction                   , shape_destruction                     )

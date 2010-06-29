@@ -232,7 +232,7 @@ void BaseDisplayer::Call( const kernel::AgentType& value )
 {
     AddToDisplay( value.GetName() );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: BaseDisplayer::Call
 // Created: SBO 2006-11-09
@@ -241,7 +241,7 @@ void BaseDisplayer::Call( const kernel::AutomatType& value )
 {
     AddToDisplay( value.GetName() );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: BaseDisplayer::Call
 // Created: SBO 2006-11-09

@@ -63,8 +63,8 @@ void ADN_SupplyUnitSelector::OnButtonPressed()
     QPopupMenu* pPopup = new QPopupMenu( this );
 
     // Get the unit list.
-    ADN_Units_Data::T_UnitInfos_Vector& units 
-        = ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos(); 
+    ADN_Units_Data::T_UnitInfos_Vector& units
+        = ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos();
 
     // Fill the popup menu with items, one for each log unit.
     for( ADN_Units_Data::IT_UnitInfos_Vector it = units.begin(); it != units.end(); ++it )
@@ -101,8 +101,8 @@ void ADN_SupplyUnitSelector::ItemRemoved( void* pItem )
         return;
 
     // Get the unit list.
-    ADN_Units_Data::T_UnitInfos_Vector& units 
-        = ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos(); 
+    ADN_Units_Data::T_UnitInfos_Vector& units
+        = ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos();
 
     disconnect( &units, 0, this, SLOT( ItemRemoved( void* ) ) );
     static_cast<ADN_SupplyUnitSelector_Connector*>(pConnector_)->NotifySelected( (void*)0 );
@@ -116,8 +116,8 @@ void ADN_SupplyUnitSelector::ItemRemoved( void* pItem )
 void ADN_SupplyUnitSelector::SetItem( void* pItem )
 {
     // Get the unit list.
-    ADN_Units_Data::T_UnitInfos_Vector& units 
-        = ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos(); 
+    ADN_Units_Data::T_UnitInfos_Vector& units
+        = ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos();
 
     disconnect( &units, 0, this, SLOT( ItemRemoved( void* ) ) );
 

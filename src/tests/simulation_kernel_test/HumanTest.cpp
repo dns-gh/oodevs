@@ -28,7 +28,7 @@ BOOST_AUTO_TEST_CASE( HumanMagicWound )
     PHY_Human human = PHY_Human( time, composante);
 
     BOOST_CHECK_EQUAL( &human.GetWound(), &PHY_HumanWound::notWounded_ );
-    
+
     //Return false if same level
     BOOST_CHECK( !human.SetWound( PHY_HumanWound::notWounded_ ) );
 
@@ -52,7 +52,7 @@ BOOST_AUTO_TEST_CASE( HumanMagicHeal )
     MOCK_EXPECT( composante, NotifyHumanChanged );
     human.Heal();
     BOOST_CHECK_EQUAL( &human.GetWound(), &PHY_HumanWound::notWounded_ );
-  
+
     //can resurrect
     MOCK_EXPECT( composante, NotifyHumanChanged );
     human.SetWound( PHY_HumanWound::killed_ );
@@ -200,7 +200,7 @@ BOOST_AUTO_TEST_CASE( HumanSetRank )
 BOOST_AUTO_TEST_CASE( HumanCancelLogisticRequest )
 {
   /*@TODO MGD
-  StubMIL_Time_ABC time; 
+  StubMIL_Time_ABC time;
   PHY_HumansComposante composante;
   PHY_Human human = PHY_Human( time, composante);
   PHY_MedicalHumanState medicalState;
@@ -277,7 +277,7 @@ BOOST_AUTO_TEST_CASE( HumanUpdate )
     //Add Notification need medical test
     //time.Add( time + delta mort );
     //human.Update();
-    //Add MIL_Report report send test   
+    //Add MIL_Report report send test
 }
 
 BOOST_AUTO_TEST_CASE( HumanNeedEvacuation )
@@ -336,7 +336,7 @@ BOOST_AUTO_TEST_CASE( HumanNotifyBackToWar )
     MOCK_EXPECT( composante, NotifyHumanRemoved );
     PHY_Human human = PHY_Human( time, composante);
 
-    
+
     //human.NotifyBackToWar(); //@TODO MGD need PHY_MedicalHumanState to be set
     //Check notification to component and event
 }
@@ -367,7 +367,7 @@ BOOST_AUTO_TEST_CASE( HumanSerialization )
     PHY_Human humanInitial = PHY_Human( time, composante);
     MOCK_EXPECT( composante, NotifyHumanChanged );
     humanInitial.SetWound( PHY_HumanWound::killed_ );
-    
+
     MockHumansComposante composante2;
     MOCK_EXPECT( composante2, NotifyHumanAdded );
     MOCK_EXPECT( composante2, NotifyHumanRemoved );

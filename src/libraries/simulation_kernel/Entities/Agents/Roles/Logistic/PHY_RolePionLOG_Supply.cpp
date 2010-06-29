@@ -110,7 +110,7 @@ void PHY_RolePionLOG_Supply::ReadOverloading( xml::xistream& xis )
 }
 
 // =============================================================================
-// 
+//
 // =============================================================================
 
 // =============================================================================
@@ -157,12 +157,12 @@ PHY_ComposantePion* PHY_RolePionLOG_Supply::GetAvailableConvoyTransporter( const
 MT_Float PHY_RolePionLOG_Supply::GetStockAvailablity( const PHY_DotationCategory& dotationCategory, MT_Float rRequestedValue ) const
 {
 
-    
+
     if( !bSystemEnabled_ && !pion_.IsDead() ) // <== Stock à terre quand pion mort = libre service
         return 0.;
     return std::min( GetStockValue( dotationCategory ), rRequestedValue );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Supply::AddStockReservation
 // Created: NLD 2005-02-01
@@ -300,7 +300,7 @@ void PHY_RolePionLOG_Supply::StopUsingForLogistic( PHY_ComposantePion& composant
 // Created: NLD 2005-01-21
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Supply::NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const
-{   
+{
     if( bNewNeed )
         MIL_Report::PostEvent( pion_, MIL_Report::eReport_LogisticStockThresholdExceeded, dotationCategory );
 
@@ -455,7 +455,7 @@ void PHY_RolePionLOG_Supply::SendFullState( client::UnitAttributes& asnUnit ) co
     client::LogSupplyState asn;
     asn().set_oid_pion( pion_.GetID() );
     asn().set_chaine_activee( bSystemEnabled_ );
-  
+
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
     ConvoyTransportersUseFunctor functor( composanteUse );
     std::auto_ptr< OnComponentComputer_ABC > componentComputer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
@@ -485,7 +485,7 @@ void PHY_RolePionLOG_Supply::SendChangedState( client::UnitAttributes& asnUnit )
 {
     UNREFERENCED_PARAMETER( asnUnit );
 
-    assert( pStocks_ );    
+    assert( pStocks_ );
     if( !( bHasChanged_ || bExternalMustChangeState_ || pStocks_->HasChanged() ) )
         return;
 
@@ -494,7 +494,7 @@ void PHY_RolePionLOG_Supply::SendChangedState( client::UnitAttributes& asnUnit )
     if( bHasChanged_ || bExternalMustChangeState_ )
     {
         asn().set_chaine_activee( bSystemEnabled_ );
-      
+
         PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
         ConvoyTransportersUseFunctor functor( composanteUse );
         std::auto_ptr< OnComponentComputer_ABC > transportedComputer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
@@ -506,7 +506,7 @@ void PHY_RolePionLOG_Supply::SendChangedState( client::UnitAttributes& asnUnit )
         SendComposanteUse( composanteUse, *asn().mutable_disponibilites_transporteurs_convois() );
     }
 
-    pStocks_->SendChangedState( asn );    
+    pStocks_->SendChangedState( asn );
 
     asn.Send( NET_Publisher_ABC::Publisher() );
 

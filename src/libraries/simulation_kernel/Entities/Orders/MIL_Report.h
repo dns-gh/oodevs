@@ -50,7 +50,7 @@ public:
         eReport_ReAvailableAfterRepairation,
         eReport_EquipementRepairedInPlace,
         eReport_EquipementBackFromMaintenance,
-        eReport_IndirectFireObservation,    
+        eReport_IndirectFireObservation,
         eReport_StockSupplyRequest,
         eReport_DotationSupplyRequest,
         eReport_MedicalEvacuationRequest,
@@ -60,7 +60,7 @@ public:
         eReport_DotationSupplyCanceled,
         eReport_StockSupplyCanceled,
         eReport_LogisticStockThresholdExceeded,
-        eReport_LogisticDotationThresholdExceeded, 
+        eReport_LogisticDotationThresholdExceeded,
         eReport_HumanBackFromMedical,
         eReport_WoundedManDeath,
         eReport_WoundedManDeathDuringTransport,
@@ -68,7 +68,7 @@ public:
         eReport_FireInForbiddenArea,
         eReport_FratricideIndirectFire,
         eReport_IndirectFireOnPopulation,
-        eReport_FireOnFriendSide, 
+        eReport_FireOnFriendSide,
         eReport_FiredByFriendSide,
         eReport_FireOnNeutralSide,
         eReport_FiredByNeutralSide,
@@ -118,7 +118,7 @@ public:
     };
 
     enum E_DecisionalReport
-    {   
+    {
         eRC_RAS,
         eRC_EnPosteFaceAObstacle, // Parametre : T_ConnaissanceObjet
         eRC_EnContournementObstacle,
@@ -208,8 +208,8 @@ public:
         eRC_AttenteRenforcement,
         eRC_DebutExploitationSiteFranchissement,
         eRC_FinExploitationSiteFranchissement,
-        eRC_ReussiteRenforcement, // Parametres : pion_renforcant (T_Pion), automate_renforce (T_Pion), 
-        eRC_EchecRenforcement, // Parametres : pion_renforcant (T_Pion), automate_renforce (T_Pion), 
+        eRC_ReussiteRenforcement, // Parametres : pion_renforcant (T_Pion), automate_renforce (T_Pion),
+        eRC_EchecRenforcement, // Parametres : pion_renforcant (T_Pion), automate_renforce (T_Pion),
         eRC_ObstacleEnAttenteActivation, // Parametre : T_ConnaissanceObjet
         eRC_DebutAmenagementBerges,
         eRC_FinAmenagementBerges,
@@ -361,7 +361,7 @@ public:
         eRC_UtilisationMoyensDefenseActifsFaceAPopulation,
         eRC_UtilisationArmementsFaceAPopulation,
         eRC_DebutInterventionFaceAPopulation, // Parametre : id
-        eRC_PopulationVictimeAffrontements, // Parametres : victimes (float), dont_blesses (float), 
+        eRC_PopulationVictimeAffrontements, // Parametres : victimes (float), dont_blesses (float),
         eRC_AttitudePopulation, // Parametre : id
         eRC_AggravationAttitude,
         eRC_AffrontementAvecForcesEnnemies,
@@ -376,7 +376,7 @@ public:
         eRC_Bloquee,
         eRC_Filtree,
         eRC_AttentatTerroristeDansPopulation,
-        eRC_PopulationVictimeExplosionMines, // Parametres : victimes (float), dont_blesses (float), 
+        eRC_PopulationVictimeExplosionMines, // Parametres : victimes (float), dont_blesses (float),
         eRC_ExecutionAttentat,
 
         eRC_EmbarkmentStarted = 3000,
@@ -422,7 +422,7 @@ private:
 
     //! @name Tools
     //@{
-    template< typename T > 
+    template< typename T >
     static void PostEvent( const T& receiver, E_EngineReport nReport, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& parameters );
 
     bool DoSend( unsigned int nSenderID, E_Type nType, const DEC_KnowledgeResolver_ABC& knowledgeResolver, int reportId, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& params ) const;
@@ -447,7 +447,7 @@ private:
 private:
     static T_ReportMap      reports_;
     static T_DiaEventVector diaEvents_;
-    static MT_IdentifierManager ids_; 
+    static MT_IdentifierManager ids_;
 
 private:
     //! @name Helpers

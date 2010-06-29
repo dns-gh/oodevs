@@ -16,7 +16,7 @@
 
 namespace kernel
 {
-    class Displayer_ABC;    
+    class Displayer_ABC;
     class PropertiesDictionary;
     class DotationType;
 }
@@ -52,7 +52,7 @@ public:
     //@}
 
     //! @name Modifiers
-    //@{    
+    //@{
     void SetDensity( float density );
     //@}
 
@@ -73,7 +73,7 @@ private:
     //@{
     float                               rValorizationPercentage_;
     unsigned int                        nDotationValorization_;
-    kernel::DotationType*               valorization_;    
+    kernel::DotationType*               valorization_;
     kernel::UnitedValue< double >       density_;
     //@}
 };

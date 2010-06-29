@@ -26,7 +26,7 @@ PropertiesTableDisplayer::PropertiesTableDisplayer( const kernel::CoordinateConv
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PropertiesTableDisplayer destructor
 // Created: SBO 2006-10-27
@@ -97,7 +97,7 @@ void PropertiesTableDisplayer::Call( const geometry::Point2f& value )
 void PropertiesTableDisplayer::Call( const kernel::Moveable_ABC& value )
 {
     try
-    { 
+    {
         AddToDisplay( converter_.GetStringPosition( value.GetPosition() ).c_str() );
     }
     catch( ... )

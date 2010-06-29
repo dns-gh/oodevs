@@ -53,7 +53,7 @@ namespace MsgsSimToClient
 }
 
 namespace MsgsClientToSim
-{ 
+{
     class MsgKnowledgeGroupCreationRequest;
     class MsgKnowledgeMagicAction;
 }
@@ -90,10 +90,10 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
-    
+
     void WriteODB( xml::xostream& xos ) const;
     //@}
 
@@ -158,7 +158,7 @@ public:
     boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledgeObject ( const MIL_Army_ABC& teamKnowing, MIL_Object_ABC& objectKnown );
     DEC_Knowledge_Agent& CreateKnowledgeAgent ( MIL_Agent_ABC& perceived );
     DEC_Knowledge_Population& CreateKnowledgePopulation( MIL_Population& perceived );
-    
+
     template < class UnaryFunction >
     void ApplyOnKnowledgesAgent( UnaryFunction fct ) const
     {
@@ -171,7 +171,7 @@ public:
         GetKnowledge().ApplyOnKnowledgesPopulation( fct );
     }
     //@}
-    
+
 private:
     bool OnReceiveMsgKnowledgeGroupEnable        ( const Common::MsgMissionParameters& message );
     bool OnReceiveMsgKnowledgeGroupChangeSuperior( const Common::MsgMissionParameters& message, const tools::Resolver< MIL_Army_ABC >& armies, bool hasParent );
@@ -189,7 +189,7 @@ private:
     void UpdateAgentKnowledgeFromAgentPerception( const DEC_Knowledge_AgentPerception& perception, int currentTimeStep );
     void UpdateAgentKnowledgeFromParentKnowledgeGroup( const DEC_Knowledge_Agent& agentKnowledge, int currentTimeStep );
         //@}
-    
+
 private:
     const MIL_KnowledgeGroupType* type_;
     uint                    id_;
@@ -201,7 +201,7 @@ private:
     T_KnowledgeGroupVector  knowledgeGroups_; // LTO
     MT_Float                timeToDiffuse_; // LTO
     bool                    isActivated_; // LTO
-    bool                    hasBeenUpdated_;  
+    bool                    hasBeenUpdated_;
     bool                    isJammed_;
     const MIL_Agent_ABC*    jammedPion_;
 

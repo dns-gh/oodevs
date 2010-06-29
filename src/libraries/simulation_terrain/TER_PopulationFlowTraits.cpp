@@ -18,7 +18,7 @@ namespace
 {
     pathfind::SegmentIntersecter< MT_Float > Intersector( const MT_Rect& boundingBox )
     {
-        return pathfind::SegmentIntersecter< MT_Float >( 
+        return pathfind::SegmentIntersecter< MT_Float >(
             geometry::Point2< MT_Float >( boundingBox.GetLeft(), boundingBox.GetBottom() ),
             geometry::Point2< MT_Float >( boundingBox.GetRight(), boundingBox.GetTop() ) );
     };

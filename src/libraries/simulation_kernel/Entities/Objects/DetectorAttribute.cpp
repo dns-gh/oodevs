@@ -48,7 +48,7 @@ DetectorAttribute::~DetectorAttribute()
 // Name: template< typename Archive > void DetectorAttribute::serialize
 // Created: SLG 2010-02-16
 // -----------------------------------------------------------------------------
-template< typename Archive > 
+template< typename Archive >
 void DetectorAttribute::serialize( Archive& /*file*/, const uint )
 {
     //TODO
@@ -69,7 +69,7 @@ void DetectorAttribute::Register( Object& object ) const
 // -----------------------------------------------------------------------------
 void DetectorAttribute::AddDetector( const MIL_Agent_ABC& agent )
 {
-    if ( detector_ )
+    if( detector_ )
         throw( std::exception( " Detector already registered" ) );
     detector_ = &agent;
 }

@@ -35,7 +35,7 @@ public:
     //@{
     virtual QSize sizeHint() const;
     virtual void hideEvent( QHideEvent* );
-    QWidget* RootWidget(); // $$$$ SBO 2007-02-19: 
+    QWidget* RootWidget(); // $$$$ SBO 2007-02-19:
     //@}
 
 public slots:

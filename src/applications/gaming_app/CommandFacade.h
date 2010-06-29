@@ -25,7 +25,7 @@ namespace gui
 
 namespace tools
 {
-    class ExerciseConfig; 
+    class ExerciseConfig;
 }
 
 class CommandHandler_ABC;

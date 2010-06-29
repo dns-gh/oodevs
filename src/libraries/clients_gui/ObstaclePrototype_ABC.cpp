@@ -31,8 +31,8 @@ namespace
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
 ObstaclePrototype_ABC::ObstaclePrototype_ABC( QWidget* parent )
-    : ObjectAttributePrototype_ABC( parent, tools::translate( "ObstaclePrototype_ABC", "Obstacle" ) )    
-{    
+    : ObjectAttributePrototype_ABC( parent, tools::translate( "ObstaclePrototype_ABC", "Obstacle" ) )
+{
     {
         new QLabel( tr( "Obstacle type:" ), this );
         types_ = new ValuedComboBox< E_DemolitionTargetType >( this );
@@ -82,7 +82,7 @@ bool ObstaclePrototype_ABC::CheckValidity() const
 // -----------------------------------------------------------------------------
 void ObstaclePrototype_ABC::OnObstacleTypeChanged()
 {
-    emit ToggleActivable( types_->GetValue() == eDemolitionTargetType_Reserved );    
+    emit ToggleActivable( types_->GetValue() == eDemolitionTargetType_Reserved );
 }
 
 // -----------------------------------------------------------------------------
@@ -91,9 +91,9 @@ void ObstaclePrototype_ABC::OnObstacleTypeChanged()
 // -----------------------------------------------------------------------------
 bool ObstaclePrototype_ABC::IsActivated() const
 {
-    if ( types_->GetValue() == eDemolitionTargetType_Reserved )
+    if( types_->GetValue() == eDemolitionTargetType_Reserved )
         return activation_->isChecked();
-    else if ( types_->GetValue() == eDemolitionTargetType_Preliminary )
+    else if( types_->GetValue() == eDemolitionTargetType_Preliminary )
         return true;
     return false;
 }

@@ -43,7 +43,7 @@ public:
     virtual std::string  GetArchitectureMaterial            () const;
     virtual float        GetArchitectureOccupation                  () const;
     virtual float        GetArchitectureTrafficability              () const;
-    
+
 
     std::auto_ptr< ColorRGBA >  GetColor                    () const;
 

@@ -18,7 +18,7 @@ namespace transport {
 */
 // Created: MGD 2009-09-24
 // =============================================================================
-class TransportChangeNotificationHandler_ABC 
+class TransportChangeNotificationHandler_ABC
 {
 
 public:

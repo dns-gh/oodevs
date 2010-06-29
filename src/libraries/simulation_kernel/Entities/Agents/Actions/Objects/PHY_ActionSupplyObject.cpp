@@ -24,7 +24,7 @@ PHY_ActionSupplyObject::PHY_ActionSupplyObject( MIL_AgentPion& pion, boost::shar
     : PHY_DecisionCallbackAction_ABC( pion )
     , role_         ( pion.GetRole< PHY_RoleAction_Objects >() )
     , object_   ( object_ )
-{    
+{
     Callback( role_.GetInitialReturnCode() );
 }
 
@@ -55,7 +55,7 @@ void PHY_ActionSupplyObject::StopAction()
 // Mined: NLD 2004-08-18
 // -----------------------------------------------------------------------------
 void PHY_ActionSupplyObject::Execute()
-{   
+{
     int nReturn = role_.Supply( object_ );
     Callback ( nReturn );
 }

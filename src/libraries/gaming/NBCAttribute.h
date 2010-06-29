@@ -61,7 +61,7 @@ private:
     NBCAttribute( const NBCAttribute& );            //!< Copy constructor
     NBCAttribute& operator=( const NBCAttribute& ); //!< Assignement operator
     //@}
-           
+
     //! @name Helpers
     //@{
     virtual void DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message );
@@ -75,7 +75,7 @@ public:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const tools::Resolver_ABC< kernel::NBCAgent >& resolver_;    
+    const tools::Resolver_ABC< kernel::NBCAgent >& resolver_;
     T_NBCAgents agents_;
     int danger_;
     //@}

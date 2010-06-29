@@ -22,7 +22,7 @@ class MIL_Agent_ABC;
 // Created: JCR 2008-05-30
 // =============================================================================
 class OccupantAttribute : public ObjectAttribute_ABC
-{ 
+{
 
 public:
     //! @name Constructors/Destructor
@@ -48,7 +48,7 @@ public:
     void ReleaseOccupant( const MIL_Agent_ABC& agent );
     //@}
 
-    //! @name 
+    //! @name
     //@{
     const MIL_Agent_ABC* GetOccupant() const;
     //@}

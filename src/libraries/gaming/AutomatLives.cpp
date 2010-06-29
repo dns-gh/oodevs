@@ -45,7 +45,7 @@ void AutomatLives::Draw( const geometry::Point2f& where, const kernel::Viewport_
     if( ! viewport.IsHotpointVisible() )
         return;
     tools.DrawLife( where, GetLife(), 2 );
-}   
+}
 
 // -----------------------------------------------------------------------------
 // Name: AutomatLives::GetLife

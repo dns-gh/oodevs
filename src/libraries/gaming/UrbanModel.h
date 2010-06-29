@@ -45,7 +45,7 @@ class UrbanModel : public tools::Resolver< kernel::Entity_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanModel( kernel::Controller& controller, const kernel::DetectionMap& map ); 
+             UrbanModel( kernel::Controller& controller, const kernel::DetectionMap& map );
     virtual ~UrbanModel();
     //@}
 

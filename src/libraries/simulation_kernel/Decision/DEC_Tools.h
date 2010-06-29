@@ -61,7 +61,7 @@ namespace directia
     void UsedByDIA( DEC_Knowledge_Population* );
     void ReleasedByDIA( DEC_Knowledge_Population* );
     void UsedByDIA( DEC_Objective* );
-    void ReleasedByDIA( DEC_Objective* );    
+    void ReleasedByDIA( DEC_Objective* );
     void UsedByDIA( DEC_Path_ABC* );
     void ReleasedByDIA( DEC_Path_ABC* );
     void UsedByDIA( DEC_PathPoint* );

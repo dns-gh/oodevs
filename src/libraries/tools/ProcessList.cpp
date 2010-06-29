@@ -13,7 +13,7 @@
 #include <tlhelp32.h>
 #include <boost/bind.hpp>
 
-using namespace tools ; 
+using namespace tools ;
 
 class ProcessList::ProcInfo : public boost::noncopyable
 {
@@ -47,7 +47,7 @@ ProcessList::ProcessList()
     DWORD currentProcessID = GetCurrentProcessId();
     do
     {
-        if ( pe32.th32ProcessID != currentProcessID )
+        if( pe32.th32ProcessID != currentProcessID )
             processes_.insert( pe32.szExeFile, new ProcInfo( pe32.th32ProcessID ) );
     }
     while( Process32Next( hProcessSnap, &pe32 ) );
@@ -80,7 +80,7 @@ unsigned int ProcessList::KillAll( const std::string& procName )
 {
     unsigned int killedProcesses = 0;
     for( T_ProcList::const_iterator it = processes_.begin(); it != processes_.end(); ++it )
-        if(  it->first == procName 
+        if( it->first == procName
          && !it->second->IsCurrentProcess()
          &&  it->second->Kill() )
             ++killedProcesses;
@@ -93,7 +93,7 @@ unsigned int ProcessList::KillAll( const std::string& procName )
 // -----------------------------------------------------------------------------
 bool ProcessList::ProcInfo::Kill() const
 {
-    // Retrieve the process handle 
+    // Retrieve the process handle
     HANDLE hProcess = OpenProcess( PROCESS_ALL_ACCESS, FALSE, pid_ );
     // Terminates the process
     if( hProcess == NULL )

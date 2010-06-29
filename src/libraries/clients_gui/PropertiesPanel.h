@@ -28,7 +28,7 @@ namespace gui
 
 // =============================================================================
 /** @class  PropertiesPanel
-    @brief  Panel to display Entity properties registered into 
+    @brief  Panel to display Entity properties registered into
             PropertiesDictionary extension
 */
 // Created: SBO 2008-04-08

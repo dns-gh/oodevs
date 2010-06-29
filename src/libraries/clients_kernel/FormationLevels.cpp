@@ -25,7 +25,7 @@ FormationLevels::FormationLevels()
     SymbolFactory factory;
     Initialize( factory );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: FormationLevels destructor
 // Created: SBO 2006-09-21

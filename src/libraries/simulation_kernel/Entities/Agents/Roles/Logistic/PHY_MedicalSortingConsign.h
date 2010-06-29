@@ -39,7 +39,7 @@ public:
     //! @name Operations
     //@{
     virtual void Cancel();
-    virtual bool Update(); 
+    virtual bool Update();
     //@}
 
     //! @name Accessors

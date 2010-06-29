@@ -11,7 +11,7 @@
           <profiling enabled="false"/>
           <time step="10" factor="10"/>
           <pathfinder threads="2"/>
-          <hla enabled="false" federation="MyFederation" federate="CSword power"/>          
+          <hla enabled="false" federation="MyFederation" federate="CSword power"/>
       </simulation>
       <dispatcher>
           <network client="localhost:10000" server="10001"/>

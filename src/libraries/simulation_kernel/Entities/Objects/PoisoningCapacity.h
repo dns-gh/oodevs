@@ -23,7 +23,7 @@ class MIL_Agent_ABC;
 */
 // Created: RFT 2008-06-02
 // =============================================================================
-class PoisoningCapacity  
+class PoisoningCapacity
     : public ObjectCapacity_ABC
     , public MIL_InteractiveContainer_ABC
 {
@@ -52,13 +52,13 @@ public:
     virtual void Update( MIL_Object_ABC& object, float time );
     //@}
 
-    //! @name 
+    //! @name
     //@{
     virtual void ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent );
     virtual void ProcessAgentEntering( MIL_Object_ABC& object, MIL_Agent_ABC& agent );
     virtual void ProcessAgentMovingInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent );
     virtual void ProcessPopulationInside( MIL_Object_ABC& object, MIL_PopulationElement_ABC& agent );
-    
+
     //@}
 
 private:
@@ -68,7 +68,7 @@ private:
     //@}
 
 private:
-    //! @name 
+    //! @name
     //@{
     int injuryID_;
     //@}

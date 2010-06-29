@@ -26,19 +26,19 @@ Humans::Humans()
 namespace
 {
     const unsigned nHumanStates = 8;
-    typedef int (HumanDotations_HumanDotation::*HumanDotationsMemberFn)()const;    
-    HumanDotationsMemberFn humanData[8] = 
+    typedef int (HumanDotations_HumanDotation::*HumanDotationsMemberFn)()const;
+    HumanDotationsMemberFn humanData[8] =
     {
         &HumanDotations_HumanDotation::nb_total,
-        &HumanDotations_HumanDotation::nb_operationnels, 
-        &HumanDotations_HumanDotation::nb_morts, 
-        &HumanDotations_HumanDotation::nb_blesses, 
+        &HumanDotations_HumanDotation::nb_operationnels,
+        &HumanDotations_HumanDotation::nb_morts,
+        &HumanDotations_HumanDotation::nb_blesses,
         &HumanDotations_HumanDotation::nb_blesses_mentaux,
         &HumanDotations_HumanDotation::nb_contamines_nbc,
         &HumanDotations_HumanDotation::nb_dans_chaine_sante,
         &HumanDotations_HumanDotation::nb_utilises_pour_maintenance,
     };
-    const char* humanStates[8] = 
+    const char* humanStates[8] =
     {
         "total",
         "operational",
@@ -65,7 +65,7 @@ namespace
         return ReadMask( xis, "states", humanStates, nHumanStates );
     }
 
-    const char* ranks[3] = 
+    const char* ranks[3] =
     {
         "officer",
         "sub-officer",

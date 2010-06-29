@@ -45,7 +45,7 @@ void FolkModel::Update( const MsgsSimToClient::MsgFolkCreation& message )
 {
     activities_.reserve( message.activities().elem_size() );
     for( int i = 0; i < message.activities().elem_size(); ++i )
-        activities_.push_back( message.activities().elem( i ).data() ); 
+        activities_.push_back( message.activities().elem( i ).data() );
 
     profiles_.reserve( message.profiles().elem_size() );
     for( int i = 0; i < message.profiles().elem_size(); ++i )

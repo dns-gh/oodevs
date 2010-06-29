@@ -5,7 +5,7 @@ local pointMetaTable =
     __add = function( l, r )
         return { (l[1] + r[1]), (l[2] + r[2]) }
     end,
-    
+
     __sub = function( l, r )
         return { l[1] - r[1], l[2] - r[2] }
     end,
@@ -21,7 +21,7 @@ local pointMetaTable =
         return { l[1] / rn, l[2] / rn }
     end
 }
-    
+
 function MakePoint( t )
     return setmetatable( t, pointMetaTable )
 end

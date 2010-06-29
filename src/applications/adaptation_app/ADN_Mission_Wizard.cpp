@@ -26,10 +26,10 @@ ADN_Mission_Wizard::ADN_Mission_Wizard( ADN_Missions_Data::T_Mission_Vector& mis
     ADN_Wizard_FirstPage_Default< Mission >* pFirstPage = new ADN_Wizard_FirstPage_Default< Mission >( missions, this );
     pFirstPage->SetCaptions( qApp->translate( "ADN_Mission_Wizard","New mission creation" ), qApp->translate( "ADN_Mission_Wizard", "Missions" ) );
     pFirstPage_ = pFirstPage;
-    new ADN_Wizard_LastPage( this, qApp->translate( "ADN_Mission_Wizard","Creation completed" ), 
+    new ADN_Wizard_LastPage( this, qApp->translate( "ADN_Mission_Wizard","Creation completed" ),
         qApp->translate( "ADN_Mission_Wizard","Click \"Done\" to create the new mission." ) );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Mission_Wizard destructor
 // Created: SBO 2006-12-04

@@ -33,7 +33,7 @@ ObjectCreationPanel::ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& 
     connect( ok, SIGNAL( clicked() ), this, SLOT( Commit() ) );
     controllers_.Register( *this );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ObjectCreationPanel destructor
 // Created: SBO 2006-04-18

@@ -39,7 +39,7 @@ InputToxicCloudAttribute::InputToxicCloudAttribute( xml::xistream& xis, kernel::
     xis >> attribute( "source", source );
     xis >> attribute( "data-field", dataField );
     xis >> xml::optional() >> attribute( "export", bExport_ );
-    
+
     source_ = source.c_str();
     dataField_ = dataField.c_str();
 
@@ -80,11 +80,11 @@ void InputToxicCloudAttribute::SetSource( const std::string& source, const std::
 // -----------------------------------------------------------------------------
 void InputToxicCloudAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << start( "input-toxic-cloud" )            
-            << attribute( "source", source_ )    
+    xos << start( "input-toxic-cloud" )
+            << attribute( "source", source_ )
             << attribute( "data-field", dataField_ );
-    if ( ! bExport_ )
-        xos << attribute( "export", bExport_ ); 
+    if( ! bExport_ )
+        xos << attribute( "export", bExport_ );
     xos << end();
 }
 

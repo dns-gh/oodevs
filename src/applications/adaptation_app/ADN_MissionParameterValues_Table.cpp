@@ -73,7 +73,7 @@ void ADN_MissionParameterValues_Table::AddNewElement()
 
     ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
     pCTable->AddItem( newElement );
-    pCTable->AddItem( 0 ); 
+    pCTable->AddItem( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,7 +83,7 @@ void ADN_MissionParameterValues_Table::AddNewElement()
 void ADN_MissionParameterValues_Table::RemoveCurrentElement()
 {
     ADN_Missions_Data::MissionParameterValue* param = (ADN_Missions_Data::MissionParameterValue*)GetCurrentData();
-    if ( param )
+    if( param )
         static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( param );
 }
 
@@ -96,9 +96,9 @@ void ADN_MissionParameterValues_Table::OnContextMenu( int /*row*/, int /*col*/, 
     QPopupMenu popup( this );
 
     popup.insertItem( tr( "Add value"), 0 );
-    if ( GetCurrentData() != 0 )
+    if( GetCurrentData() != 0 )
         popup.insertItem( tr( "Remove value"), 1 );
-    
+
     int result = popup.exec( pt );
     if( result == 1 )
         RemoveCurrentElement();

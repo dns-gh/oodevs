@@ -22,9 +22,9 @@ using namespace kernel;
 AutomatHierarchies::AutomatHierarchies( Controller& controller, Entity_ABC& holder, const tools::Resolver_ABC< KnowledgeGroup_ABC >& groupResolver, PropertiesDictionary& dictionary )
     : EntityHierarchies< CommunicationHierarchies >( controller, holder, 0 )
     , controller_   ( controller )
-    , groupResolver_( groupResolver ) 
+    , groupResolver_( groupResolver )
 {
-    CreateDictionary( dictionary ); 
+    CreateDictionary( dictionary );
 }
 
 // -----------------------------------------------------------------------------

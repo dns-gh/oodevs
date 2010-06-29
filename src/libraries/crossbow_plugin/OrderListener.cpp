@@ -102,7 +102,7 @@ void OrderListener::Listen()
 void OrderListener::ListenRow( const Row_ABC& row )
 {
     long orderid = -1;
-    try 
+    try
     {
         ref_ = row.GetID();
         orderid = GetField< long >( row, "id" );
@@ -125,10 +125,10 @@ void OrderListener::MarkProcessed( long orderid ) const
 {
     std::stringstream ss;
     ss << "id = " << orderid << " AND checked=-1" << " AND session_id=" << session_.GetId(); // OBJECTID
-    
+
     std::auto_ptr< Table_ABC > table( database_.OpenTable( "Orders" ) );
     Row_ABC* row = table->Find( ss.str() );
-    if ( row == 0 )
+    if( row == 0 )
         throw std::runtime_error( "unable to process requested order: " + ss.str() );
     row->SetField( "checked", FieldVariant( true ) );
 }

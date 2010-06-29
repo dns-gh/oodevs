@@ -26,7 +26,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( AutomateFactory )
 // Created: MGD 2009-08-17
 // -----------------------------------------------------------------------------
 AutomateFactory::AutomateFactory( MIL_IDManager& idManager, DEC_DataBase& database )
-    : idManager_( idManager ) 
+    : idManager_( idManager )
     , database_( database )
 {
     //NOTHING
@@ -89,7 +89,7 @@ MIL_Automate& AutomateFactory::Create( xml::xistream& xis, MIL_Formation& parent
 // Created: SLG 2010-02-10
 // -----------------------------------------------------------------------------
 void AutomateFactory::load( MIL_CheckPointInArchive& file, const unsigned int )
-{   
+{
     file >> boost::serialization::base_object < AutomateFactory_ABC >( *this );
 }
 

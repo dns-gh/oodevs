@@ -57,14 +57,14 @@ PHY_Speeds::PHY_Speeds( const moving::PHY_RoleAction_Moving& role )
     , nBorderImpassabilityMask_ ( 0 )
     , nLinearImpassabilityMask_ ( 0 )
 {
-    static const TerrainData areas[]   = { 
+    static const TerrainData areas[]   = {
         TerrainData::Forest(), TerrainData::Plantation(), TerrainData::Swamp(),
         TerrainData::Urban(), TerrainData::Water(), TerrainData::Dune(), TerrainData::Ice() };
-    static const TerrainData borders[] = { 
+    static const TerrainData borders[] = {
         TerrainData::ForestBorder(), TerrainData::PlantationBorder(), TerrainData::SwampBorder(),
         TerrainData::UrbanBorder(), TerrainData::WaterBorder(), TerrainData::DuneBorder(), TerrainData::IceBorder() };
-    static const TerrainData linears[] = { 
-        TerrainData::Cliff(), TerrainData::Motorway(), TerrainData::LargeRoad(), TerrainData::MediumRoad(), TerrainData::SmallRoad(), 
+    static const TerrainData linears[] = {
+        TerrainData::Cliff(), TerrainData::Motorway(), TerrainData::LargeRoad(), TerrainData::MediumRoad(), TerrainData::SmallRoad(),
         TerrainData::Bridge(), TerrainData::Railroad(), TerrainData::LargeRiver(), TerrainData::MediumRiver(), TerrainData::SmallRiver(), TerrainData::Crossroad() };
 
     for( unsigned int nOffset = 0; nOffset != 8; ++nOffset )
@@ -93,14 +93,14 @@ PHY_Speeds::PHY_Speeds( const moving::PHY_RoleAction_Moving& role, bool loaded )
     , nBorderImpassabilityMask_ ( 0 )
     , nLinearImpassabilityMask_ ( 0 )
 {
-    static const TerrainData areas[]   = { 
+    static const TerrainData areas[]   = {
         TerrainData::Forest(), TerrainData::Plantation(), TerrainData::Swamp(),
         TerrainData::Urban(), TerrainData::Water(), TerrainData::Dune(), TerrainData::Ice() };
-    static const TerrainData borders[] = { 
+    static const TerrainData borders[] = {
         TerrainData::ForestBorder(), TerrainData::PlantationBorder(), TerrainData::SwampBorder(),
         TerrainData::UrbanBorder(), TerrainData::WaterBorder(), TerrainData::DuneBorder(), TerrainData::IceBorder() };
-    static const TerrainData linears[] = { 
-        TerrainData::Cliff(), TerrainData::Motorway(), TerrainData::LargeRoad(), TerrainData::MediumRoad(), TerrainData::SmallRoad(), 
+    static const TerrainData linears[] = {
+        TerrainData::Cliff(), TerrainData::Motorway(), TerrainData::LargeRoad(), TerrainData::MediumRoad(), TerrainData::SmallRoad(),
         TerrainData::Bridge(), TerrainData::Railroad(), TerrainData::LargeRiver(), TerrainData::MediumRiver(), TerrainData::SmallRiver(), TerrainData::Crossroad() };
 
     for( unsigned int nOffset = 0; nOffset != 8; ++nOffset )
@@ -208,7 +208,7 @@ void PHY_Speeds::CheckInitialization( xml::xistream& xis, unsigned int timeStepD
     {
         *( rLinearSpeeds_ + 10 ) = SpeedFor( TerrainData::SmallRoad() );
         MT_LOG_WARNING_MSG( "Speed for " << MIL_Tools::GetLandTypeName( TerrainData( 0, 0, 0, (unsigned short)(1<<10) ) ) << " not initialized. Defaulted to " <<  ConvertSpeedToMOS( *( rLinearSpeeds_ + 10 ), timeStepDuration ) << " km/h." );
-        
+
     }
     if( rMaxSpeed_ == 0. )
         xis.error( "Composante's max speed is 0 km/h ..." );
@@ -350,5 +350,5 @@ MT_Float& PHY_Speeds::SpeedFor( const TerrainData& data )
 // -----------------------------------------------------------------------------
 void PHY_Speeds::DumpSpeeds( const TerrainData& ) const
 {
-   MT_LOG_INFO_MSG( "Speed dump not implemented..." ); // $$$$ AGE 2005-02-03: 
+   MT_LOG_INFO_MSG( "Speed dump not implemented..." ); // $$$$ AGE 2005-02-03:
 }

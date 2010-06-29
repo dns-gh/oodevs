@@ -21,7 +21,7 @@ namespace TEST {
     @brief  Mission_Pawn_ASA_MISTRAL_DefendreZone
 */
 // Created: SBO 2005-08-08
-// Generated: 
+// Generated:
 // =============================================================================
 class Mission_Pawn_ASA_MISTRAL_DefendreZone : public Mission_Pawn_ABC
 {

@@ -24,8 +24,8 @@
 
 // -----------------------------------------------------------------------------
 // Name: NoteDialog constructor
-/** @param  parent 
-    @param  model 
+/** @param  parent
+    @param  model
 */
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------
@@ -43,7 +43,7 @@ NoteDialog::NoteDialog( QDockWindow* parent, Publisher_ABC &publisher)
     textName_ = new QLineEdit( boxName_ );
     textId_  = new QLineEdit( boxId_ );
     textDesc_ = new QTextEdit( boxDesc_);
- 
+
     QHBox* box = new QHBox( this );
     buttonOk_ = new QPushButton( tools::translate( "Notes", "Ok" ), box );
     buttonOk_->setEnabled( false );
@@ -105,7 +105,7 @@ void NoteDialog::OnAccept()
         message().mutable_note()->set_parent( note_ );
         message.Send(publisher_);
     }
-    
+
     // $$$$ _RC_ HBD 2010-02-04: Add control for id in number
     textName_->clear();
     textId_->clear();
@@ -170,7 +170,7 @@ void NoteDialog::SetUpdate(const Note& note)
 // -----------------------------------------------------------------------------
 unsigned int NoteDialog::GetCurrentNoteEdited()
 {
-    if ( isShown() && update_ )
+    if( isShown() && update_ )
         return noteId_;
     return 0;
 }

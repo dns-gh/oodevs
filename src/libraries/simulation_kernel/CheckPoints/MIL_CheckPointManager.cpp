@@ -47,7 +47,7 @@ MIL_CheckPointManager::MIL_CheckPointManager( const MIL_Config& config )
 {
     boost::filesystem::create_directories( config.BuildSessionChildFile( "checkpoints" ) );
     MT_LOG_INFO_MSG( MT_FormatString( "Automatic checkpoint every %d seconds", nCheckPointsFrequency_ ) );
-    MT_LOG_INFO_MSG( MT_FormatString( "Automatic checkpoint max number is %d", nMaxCheckPointNbr_ ) );   
+    MT_LOG_INFO_MSG( MT_FormatString( "Automatic checkpoint max number is %d", nMaxCheckPointNbr_ ) );
     UpdateNextCheckPointTick();
 }
 
@@ -75,12 +75,12 @@ void MIL_CheckPointManager::LoadCheckPoint( const MIL_Config& config )
     MT_LOG_STARTUP_MESSAGE( "------------------------------" );
 
     MT_LOG_INFO_MSG( MT_FormatString( "Loading SIM state from checkpoint '%s'", config.BuildCheckpointChildFile( "" ).c_str() ) )
-    
+
     if( config.UseCheckPointCRC() )
         CheckCRC( config );
 
     std::ifstream file( config.BuildCheckpointChildFile( "data" ).c_str(), std::ios::in | std::ios::binary );
-    if ( !file || !file.is_open() )
+    if( !file || !file.is_open() )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Cannot open file '%s'", config.BuildCheckpointChildFile( "data" ).c_str() ) );
 
     MIL_CheckPointInArchive* pArchive = new MIL_CheckPointInArchive( file );
@@ -90,7 +90,7 @@ void MIL_CheckPointManager::LoadCheckPoint( const MIL_Config& config )
 #ifndef _DEBUG //$$$$ boost + nedmalloc + binary_ioarchive + std::locale = crash
     delete pArchive;
 #endif
- 
+
 }
 
 // -----------------------------------------------------------------------------
@@ -204,7 +204,7 @@ boost::crc_32_type::value_type MIL_CheckPointManager::CreateData( const std::str
 {
     std::ofstream file( strFileName.c_str(), std::ios::out | std::ios::binary );
 
-    if ( !file || !file.is_open() )
+    if( !file || !file.is_open() )
         throw MT_ScipioException( __FILE__, __FUNCTION__, __LINE__, MT_FormatString( "Cannot open file '%s'", strFileName.c_str() ) );
 
     MIL_CheckPointOutArchive* pArchive = new MIL_CheckPointOutArchive( file );
@@ -214,7 +214,7 @@ boost::crc_32_type::value_type MIL_CheckPointManager::CreateData( const std::str
 #ifndef _DEBUG //$$$$ boost + nedmalloc + binary_ioarchive + std::locale = crash
     delete pArchive;
 #endif
-    
+
     return MIL_Tools::ComputeCRC( strFileName );
 }
 
@@ -261,7 +261,7 @@ void MIL_CheckPointManager::CheckCRC( const MIL_Config& config )
         >> xml::start( "configuration" )
             >> xml::attribute( "crc", nCRC )
         >> xml::end();
-            
+
     if( MIL_Tools::ComputeCRC( config.BuildCheckpointChildFile( "CRCs.xml" ) ) != nCRC )
         throw MT_ScipioException( __FILE__, __FUNCTION__, __LINE__ , "Cannot load checkpoint - File 'CRCs.xml' has changed since the checkpoint creation" );
 
@@ -278,7 +278,7 @@ void MIL_CheckPointManager::CheckCRC( const MIL_Config& config )
 // Created: JVT 2005-04-13
 // -----------------------------------------------------------------------------
 void MIL_CheckPointManager::RotateCheckPoints( const std::string& newName )
-{         
+{
     if( currentCheckPoints_.size() == nMaxCheckPointNbr_ )
     {
         try
@@ -291,7 +291,7 @@ void MIL_CheckPointManager::RotateCheckPoints( const std::string& newName )
             MT_LOG_ERROR_MSG( MT_FormatString( "Error while removing old checkpoint ( '%s' )", exception.what() ) );
         }
         currentCheckPoints_.pop();
-    }    
+    }
     currentCheckPoints_.push( MIL_AgentServer::GetWorkspace().GetConfig().BuildCheckpointChildFile( "", newName ) );
 }
 
@@ -324,7 +324,7 @@ bool MIL_CheckPointManager::SaveOrbatCheckPoint( const std::string& name )
     }
     return true;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_CheckPointManager::SaveFullCheckPoint
 // Created: NLD 2007-01-11
@@ -333,10 +333,10 @@ bool MIL_CheckPointManager::SaveFullCheckPoint( const std::string& name, const s
 {
     const MIL_Config& config = MIL_AgentServer::GetWorkspace().GetConfig();
     try
-    {        
+    {
         const boost::crc_32_type::value_type nDataFileCRC = CreateData( config.BuildCheckpointChildFile( "data", name ) );
         const boost::crc_32_type::value_type nCRCFileCRC  = config.serialize( config.BuildCheckpointChildFile( "CRCs.xml" , name ) );
-        
+
         CreateMetaData( config.BuildCheckpointChildFile( "MetaData.xml", name ), userName, nDataFileCRC, nCRCFileCRC );
     }
     catch( MT_ScipioException& exception )
@@ -375,7 +375,7 @@ bool MIL_CheckPointManager::SaveCheckPoint( const std::string& name, const std::
 
     MT_LOG_INFO_MSG( "End save checkpoint" );
     client::ControlCheckPointSaveEnd asnSaveEndMsg;
-    asnSaveEndMsg().set_name(name); 
+    asnSaveEndMsg().set_name(name);
     asnSaveEndMsg.Send( NET_Publisher_ABC::Publisher() );
 
     return !bNotOk;
@@ -396,11 +396,11 @@ void MIL_CheckPointManager::OnReceiveMsgCheckPointSaveNow( const MsgsClientToSim
         strCheckPointName = asnMsg.name();
 
     SaveCheckPoint( BuildCheckPointName(), strCheckPointName );
-    
+
     client::ControlCheckPointSaveNowAck asnReplyMsg;
     asnReplyMsg.Send( NET_Publisher_ABC::Publisher() );
 }
-          
+
 // -----------------------------------------------------------------------------
 // Name: MIL_CheckPointManager::OnReceiveMsgCheckPointSetFrequency
 // Created: NLD 2003-08-05
@@ -408,7 +408,7 @@ void MIL_CheckPointManager::OnReceiveMsgCheckPointSaveNow( const MsgsClientToSim
 void MIL_CheckPointManager::OnReceiveMsgCheckPointSetFrequency( const MsgsClientToSim::MsgControlCheckPointSetFrequency& asnMsg )
 {
     nCheckPointsFrequency_ = asnMsg.frequency() * 60; // $$$$ NLD 2007-01-11: beeeeeeaaaaah
-     
+
     client::ControlCheckPointSetFrequencyAck asnReplyMsg;
     asnReplyMsg.Send( NET_Publisher_ABC::Publisher() );
 
@@ -423,7 +423,7 @@ void MIL_CheckPointManager::load( MIL_CheckPointInArchive& file, const unsigned 
 {
     file >> nCheckPointsFrequency_
          >> nMaxCheckPointNbr_;
-   
+
     MT_LOG_INFO_MSG( MT_FormatString( "Automatic checkpoint every %d seconds", nCheckPointsFrequency_ ) );
     MT_LOG_INFO_MSG( MT_FormatString( "Automatic checkpoint max number is %d", nMaxCheckPointNbr_ ) );
 

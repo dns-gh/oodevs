@@ -31,7 +31,7 @@ class RoleContainer : public tools::Extendable< Role_ABC >
 public:
              RoleContainer() {}
     virtual ~RoleContainer() {}
-    
+
     //! @name Serialization
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()

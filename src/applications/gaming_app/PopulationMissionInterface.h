@@ -38,7 +38,7 @@ public:
                  , MissionInterfaceBuilder& builder, actions::ActionsModel& model );
     virtual ~PopulationMissionInterface();
     //@}
-   
+
 private:
     //! @name Copy/Assignment
     //@{

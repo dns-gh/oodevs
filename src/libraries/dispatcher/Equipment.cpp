@@ -36,7 +36,7 @@ Equipment::~Equipment()
 {
     // NOTHING
 }
-      
+
 // -----------------------------------------------------------------------------
 // Name: Equipment::Update
 // Created: NLD 2006-09-26

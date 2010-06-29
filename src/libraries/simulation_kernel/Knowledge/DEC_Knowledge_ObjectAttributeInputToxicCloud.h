@@ -33,14 +33,14 @@ public:
     //@}
 
     //! @name CheckPoints
-    //@{    
+    //@{
     template< typename Archive > void serialize( Archive&, const unsigned int );
     void Register( DEC_Knowledge_Object& knObject );
     //@}
 
     //! @name Update
     //@{
-    virtual void UpdateOnPerceptionLevel( const PHY_PerceptionLevel& currentPerceptionLevel );    
+    virtual void UpdateOnPerceptionLevel( const PHY_PerceptionLevel& currentPerceptionLevel );
     virtual void UpdateOnPerception( const DEC_Knowledge_ObjectPerception& perception );
     virtual void UpdateOnCollision( const DEC_Knowledge_ObjectCollision& collision );
     virtual void Send( Common::MsgObjectAttributes& asnMsg ) const;

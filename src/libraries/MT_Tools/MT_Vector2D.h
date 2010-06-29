@@ -42,7 +42,7 @@ public:
     std::vector< MT_Float > ToStdVector() const;
     bool            IsZero() const;
     void            Reset();
-    
+
     //! @name Operators
     //@{
     MT_Vector2D&  operator = ( const MT_Vector2D& v )         { rX_ = v.rX_; rY_ = v.rY_; return *this; }
@@ -54,7 +54,7 @@ public:
     bool          operator ==( const MT_Vector2D& v ) const;
     bool          operator !=( const MT_Vector2D& v ) const;
     MT_Vector2D   operator - ( void ) const                   { return MT_Vector2D( -rX_, -rY_ ); }
-    //@}    
+    //@}
 
     MT_Float        rX_;
     MT_Float        rY_;

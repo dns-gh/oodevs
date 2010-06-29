@@ -25,7 +25,7 @@
 MIL_AgentTypePionNBC::MIL_AgentTypePionNBC( const std::string& strName, xml::xistream& xis )
     : MIL_AgentTypePion( strName, xis )
 {
-    
+
 }
 
 // -----------------------------------------------------------------------------

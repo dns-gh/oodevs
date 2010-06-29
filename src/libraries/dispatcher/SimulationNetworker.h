@@ -23,7 +23,7 @@ namespace MsgsSimToClient
 
 struct MsgsInSim;
 
-namespace dispatcher 
+namespace dispatcher
 {
     class Model;
     class ClientsNetworker;
@@ -69,7 +69,7 @@ private:
 
     //! @name Messages callbacks
     //@{
-    void OnReceiveMsgSimToClient( const std::string& linkFrom, const MsgsSimToClient::MsgSimToClient& message );    
+    void OnReceiveMsgSimToClient( const std::string& linkFrom, const MsgsSimToClient::MsgSimToClient& message );
     //@}
 
 private:

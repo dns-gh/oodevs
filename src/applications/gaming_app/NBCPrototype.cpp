@@ -15,7 +15,7 @@
 #include "protocol/ClientSenders.h"
 #include "actions/ParameterList.h"
 
-namespace MsgsClientToSim 
+namespace MsgsClientToSim
 {
     class MsgMagicActionCreateObject;
 }
@@ -33,7 +33,7 @@ NBCPrototype::NBCPrototype( QWidget* parent, const tools::Resolver_ABC< NBCAgent
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: NBCPrototype destructor
 // Created: SBO 2006-04-20

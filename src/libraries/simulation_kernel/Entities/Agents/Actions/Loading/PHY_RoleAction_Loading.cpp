@@ -73,7 +73,7 @@ PHY_RoleAction_Loading::~PHY_RoleAction_Loading()
 // Name: PHY_RoleAction_Loading::serialize
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
-template< typename Archive > 
+template< typename Archive >
 void PHY_RoleAction_Loading::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< tools::Role_ABC >( *this )

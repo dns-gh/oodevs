@@ -29,7 +29,7 @@ using namespace TEST;
 // -----------------------------------------------------------------------------
 ObjectKnowledge::ObjectKnowledge( const EntityManager& entityManager, const MsgObjectKnowledgeCreation& asnMsg, const Team& team )
     : owner_       ( team )
-    , nId_         ( asnMsg.oid_connaissance() ) 
+    , nId_         ( asnMsg.oid_connaissance() )
     , pRealObject_ ( asnMsg.oid_objet_reel() == 0 ? 0 : entityManager.FindObject( asnMsg.oid_objet_reel() ) )
 {
     // NOTHING

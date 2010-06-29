@@ -37,8 +37,8 @@ MIL_Object_ABC::MIL_Object_ABC( MIL_Army_ABC* army, const MIL_ObjectType_ABC& ty
     , pType_                ( &type )
     , bMarkedForDestruction_( false )
     , bReadyForDeletion_    ( false )
-{  
-    // NOTHING  
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -60,7 +60,7 @@ MIL_Object_ABC::MIL_Object_ABC()
 //-----------------------------------------------------------------------------
 MIL_Object_ABC::~MIL_Object_ABC()
 {
-    if ( !bMarkedForDestruction_ ) // Should already be done
+    if( !bMarkedForDestruction_ ) // Should already be done
         MarkForDestruction();
 }
 
@@ -94,14 +94,14 @@ void MIL_Object_ABC::Unregister()
 // -----------------------------------------------------------------------------
 void MIL_Object_ABC::Initialize( const TER_Localisation& localisation )
 {
-    TER_Object_ABC::Initialize( localisation );    
+    TER_Object_ABC::Initialize( localisation );
 
     // Notify the agent natively inside the object that they are inside it
     TER_Agent_ABC::T_AgentPtrVector agentsInsideObject;
     TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( GetLocalisation(), agentsInsideObject );
     for( TER_Agent_ABC::CIT_AgentPtrVector itAgent = agentsInsideObject.begin(); itAgent != agentsInsideObject.end(); ++itAgent )
         static_cast< PHY_RoleInterface_Location& >( **itAgent ).NotifyTerrainPutInsideObject( *this );
-    
+
     // Notify object when population natively inside the object
     TER_PopulationConcentration_ABC::T_PopulationConcentrationVector populationsInsideObject;
     TER_World::GetWorld().GetPopulationManager().GetConcentrationManager().GetListWithinLocalisation( GetLocalisation(), populationsInsideObject );
@@ -245,7 +245,7 @@ void MIL_Object_ABC::NotifyAgentPutInside( MIL_Agent_ABC& agent )
 {
     if( !CanCollideWithEntity() )
         return;
-    interaction_.NotifyAgentPutInside( agent );    
+    interaction_.NotifyAgentPutInside( agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -302,6 +302,6 @@ void MIL_Object_ABC::UpdateLocalisation( const TER_Localisation& newLocalisation
 void MIL_Object_ABC::MarkForDestruction()
 {
     bMarkedForDestruction_ = true;
-    interaction_.ClearInteraction( *this );    
+    interaction_.ClearInteraction( *this );
     TER_Object_ABC::Terminate(); // Degueu : vire l'objet du monde
 }

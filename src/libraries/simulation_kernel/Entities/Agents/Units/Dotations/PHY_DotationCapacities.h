@@ -43,7 +43,7 @@ private:
     //! @name Types
     //@{
     typedef std::map< const PHY_DotationCategory*, PHY_DotationCapacity* > T_DotationCapacityMap;
-    typedef T_DotationCapacityMap::const_iterator                          CIT_DotationCapacityMap;  
+    typedef T_DotationCapacityMap::const_iterator                          CIT_DotationCapacityMap;
     //@}
 
 private:

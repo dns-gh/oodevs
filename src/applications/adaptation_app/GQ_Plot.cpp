@@ -36,7 +36,7 @@
 
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot constructor
-/** @param  pParent 
+/** @param  pParent
 */
 // Created: CBX 2003-08-07
 // -----------------------------------------------------------------------------
@@ -61,7 +61,7 @@ GQ_Plot::GQ_Plot( QWidget* pParent )
     pToolTip_ = new GQ_PlotToolTip( *this );
 
     setEraseColor( palette().color( QPalette::Active, QColorGroup::Base ) );
-    
+
     // Register default layer
     layerMap_.insert( std::make_pair( 0, T_PlotLayer() ) );
 }
@@ -79,7 +79,7 @@ GQ_Plot::~GQ_Plot()
 
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot::SetPlotMargin
-/** @param  nMargin 
+/** @param  nMargin
 */
 // Created: CBX 2003-08-07
 // -----------------------------------------------------------------------------
@@ -94,7 +94,7 @@ void GQ_Plot::SetPlotMargin( uint nMargin )
 
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot::ShowPlotFrame
-/** @param  
+/** @param
 */
 // Created: CBX 2003-08-20
 // -----------------------------------------------------------------------------
@@ -109,7 +109,7 @@ void GQ_Plot::ShowPlotFrame( bool bShow )
 
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot::ShowToolTips
-/** @param  
+/** @param
 */
 // Created: CBX 2003-08-18
 // -----------------------------------------------------------------------------
@@ -120,7 +120,7 @@ void GQ_Plot::ShowToolTips( bool bShow )
 
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot::SetBackgroundColor
-/** @param  QColor& 
+/** @param  QColor&
 */
 // Created: CBX 2003-08-19
 // -----------------------------------------------------------------------------
@@ -133,7 +133,7 @@ void GQ_Plot::SetBackgroundColor( const QColor& color )
 
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot::SetAxisColor
-/** @param  QColor& 
+/** @param  QColor&
 */
 // Created: CBX 2003-08-19
 // -----------------------------------------------------------------------------
@@ -144,7 +144,7 @@ void GQ_Plot::SetAxisColor( const QColor& color )
 
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot::SetFrameColor
-/** @param  QColor& 
+/** @param  QColor&
 */
 // Created: CBX 2003-08-19
 // -----------------------------------------------------------------------------
@@ -155,7 +155,7 @@ void GQ_Plot::SetFrameColor( const QColor& color )
 
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot::SetGridColor
-/** @param  QColor& 
+/** @param  QColor&
 */
 // Created: CBX 2003-08-19
 // -----------------------------------------------------------------------------
@@ -166,7 +166,7 @@ void GQ_Plot::SetGridColor( const QColor& color )
 
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot::SetCaptionColor
-/** @param  QColor& 
+/** @param  QColor&
 */
 // Created: CBX 2003-08-19
 // -----------------------------------------------------------------------------
@@ -177,8 +177,8 @@ void GQ_Plot::SetCaptionColor( const QColor& color )
 
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot::SetColor
-/** @param  cg 
-    @param  QColor& 
+/** @param  cg
+    @param  QColor&
 */
 // Created: CBX 2003-08-19
 // -----------------------------------------------------------------------------
@@ -191,12 +191,12 @@ void GQ_Plot::SetColor( QColorGroup::ColorRole role, const QColor& color )
 
     setPalette( pal );
 
-    TouchFrame();     
+    TouchFrame();
 }
 
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot::SetCoordToStringConvertor
-/** @param  T_CoordToString* 
+/** @param  T_CoordToString*
 */
 // Created: CBX 2003-08-19
 // -----------------------------------------------------------------------------
@@ -217,7 +217,7 @@ void GQ_Plot::TouchFrame()
 {
     if( !bBgUpdateNeeded_ && !bPlotUpdateNeeded_ )
         update();
-    
+
     if( !bBgUpdateNeeded_ )
         emit FrameTouched();
 
@@ -245,7 +245,7 @@ void GQ_Plot::TouchData()
 
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot::Layers
-/** @return 
+/** @return
 */
 // Created: CBX 2003-11-25
 // -----------------------------------------------------------------------------
@@ -256,7 +256,7 @@ const GQ_Plot::T_LayerMap& GQ_Plot::LayerMap() const
 
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot::GetMinDepth
-/** @return 
+/** @return
 */
 // Created: CBX 2003-11-25
 // -----------------------------------------------------------------------------
@@ -271,7 +271,7 @@ int GQ_Plot::GetMinDepth() const
 
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot::GetMaxDepth
-/** @return 
+/** @return
 */
 // Created: CBX 2003-11-25
 // -----------------------------------------------------------------------------
@@ -286,7 +286,7 @@ int GQ_Plot::GetMaxDepth() const
 
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot::begin
-/** @return 
+/** @return
 */
 // Created: CBX 2003-11-25
 // -----------------------------------------------------------------------------
@@ -294,17 +294,17 @@ GQ_Plot::iterator GQ_Plot::begin() const
 {
     for( CIT_LayerMap it = layerMap_.begin(); it != layerMap_.end(); ++it )
     {
-        const T_PlotLayer& layer = it->second; 
+        const T_PlotLayer& layer = it->second;
         if( !layer.empty() )
             return iterator( *this, T_DataIndex( it->first, 0 ) );
     }
-    
+
     return iterator( *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot::end
-/** @return 
+/** @return
 */
 // Created: CBX 2003-11-25
 // -----------------------------------------------------------------------------
@@ -315,7 +315,7 @@ GQ_Plot::iterator  GQ_Plot::end() const
 
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot::GetNextDataIndex
-/** @return 
+/** @return
 */
 // Created: CBX 2003-11-25
 // -----------------------------------------------------------------------------
@@ -337,17 +337,17 @@ GQ_Plot::T_DataIndex GQ_Plot::GetNextDataIndex( T_DataIndex dataIndex ) const
     ++it;
     for( ; it != layerMap_.end(); ++it )
     {
-        const T_PlotLayer& layer = it->second; 
+        const T_PlotLayer& layer = it->second;
         if( !layer.empty() )
             return T_DataIndex( it->first, 0 );
-    }       
+    }
 
     return T_DataIndex( 0, -1 );
 }
 
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot::GetPlotData
-/** @return 
+/** @return
 */
 // Created: CBX 2003-11-25
 // -----------------------------------------------------------------------------
@@ -360,14 +360,14 @@ GQ_PlotData& GQ_Plot::GetPlotData( T_DataIndex dataIndex ) const
     if( it == layerMap_.end() || dataIndex.second >= ( int )it->second.size() )
         throw MT_Exception( "GQ_Plot", 0, "invalid iterator" );
 
-    const T_PlotLayer& layer = it->second; 
+    const T_PlotLayer& layer = it->second;
     GQ_PlotData* pData = layer[ dataIndex.second ];
     return *pData;
 }
 
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot::paintEvent
-/** @param  
+/** @param
 */
 // Created: CBX 2003-08-07
 // -----------------------------------------------------------------------------
@@ -380,16 +380,16 @@ void GQ_Plot::paintEvent( QPaintEvent* )
         pColors = &palette().disabled();
     else if( hasFocus() )
         pColors = &palette().active();
-    else 
-        pColors = &palette().inactive();        
+    else
+        pColors = &palette().inactive();
 
     Draw( painter, *pColors );
 }
 
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot::Draw
-/** @param  pPainter 
-    @param  clipRect 
+/** @param  pPainter
+    @param  clipRect
 */
 // Created: CBX 2003-08-07
 // -----------------------------------------------------------------------------
@@ -412,7 +412,7 @@ void GQ_Plot::UpdateDataRange()
         return;
 
     GQ_PlotDataBBox bbox;
-        
+
     for( CIT_LayerMap it = layerMap_.begin(); it != layerMap_.end(); ++it )
     {
         const T_PlotLayer& layer = it->second;
@@ -431,7 +431,7 @@ void GQ_Plot::UpdateDataRange()
 
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot::UpdateLayerBBox
-/** @param  
+/** @param
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
@@ -477,9 +477,9 @@ void GQ_Plot::UpdateBackground( const QColorGroup& colors )
 
     uint nPlotWidth  = plotSize.width() - nTotalXMargin;
     uint nPlotHeight = plotSize.height() - nTotalYMargin;
-    
+
     plotRect_ = QRect( nLeftMargin, nPlotMargin_, nPlotWidth, nPlotHeight );
-   
+
     x_.SetAxisLength( nPlotWidth );
     y_.SetAxisLength( nPlotHeight );
 
@@ -521,7 +521,7 @@ void GQ_Plot::UpdateBackground( const QColorGroup& colors )
         y_.SetAxisLength( nPlotHeight );
         y_.Update();
     }
-    
+
     // Reset background pixmap
     pBackground_->fill( colors.base() );
 
@@ -539,7 +539,7 @@ void GQ_Plot::UpdateBackground( const QColorGroup& colors )
         QRect rect( 0, 0, nYCaptionSize, plotRect_.height() );
         y_.DrawCaption( painter, colors, rect );
     }
-    
+
     if( nXCaptionSize > 0 )
     {
         QRect rect( plotRect_.x(), height() - nXCaptionSize, plotRect_.width(), nXCaptionSize );
@@ -555,7 +555,7 @@ void GQ_Plot::UpdateBackground( const QColorGroup& colors )
 
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot::UpdateDataPlot
-/** @param  QColorGroup& 
+/** @param  QColorGroup&
 */
 // Created: CBX 2003-08-07
 // -----------------------------------------------------------------------------
@@ -565,28 +565,28 @@ void GQ_Plot::UpdateDataPlot( const QColorGroup& colors )
         return;
 
     *pPlot_ = *pBackground_;
-    
+
     QPainter painter( pPlot_ );
-    
+
     painter.setClipRect( plotRect_ );
     CenterOnPlotRect( painter );
 
     int nLastDepth = -1;
-    
+
     for( IT_LayerMap it = layerMap_.begin(); it != layerMap_.end(); ++it )
     {
         int nDepth = it->first;
         T_PlotLayer& layer = it->second;
 
         if( nDepth >= 0 && nLastDepth < 0 )
-        {            
+        {
             // Draw axes before layer 0
 
             painter.setClipping( false );
-            
+
             x_.DrawAxis( painter, colors, QPoint( 0, y_.GetRefTickPos() ) );
             y_.DrawAxis( painter, colors, QPoint( x_.GetRefTickPos(), 0 ) );
-            
+
             painter.setClipping( true );
         }
 
@@ -607,7 +607,7 @@ void GQ_Plot::UpdateDataPlot( const QColorGroup& colors )
 
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot::CenterOnPlotRect
-/** @param  
+/** @param
 */
 // Created: CBX 2003-08-18
 // -----------------------------------------------------------------------------
@@ -618,8 +618,8 @@ void GQ_Plot::CenterOnPlotRect( QPainter& painter )
 
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot::RegisterPlotData
-/** @param  nDepth 
-    @param  GQ_PlotData& 
+/** @param  nDepth
+    @param  GQ_PlotData&
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
@@ -640,8 +640,8 @@ void GQ_Plot::RegisterPlotData( GQ_PlotData& data, int nDepth )
 
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot::UnregisterPlotData
-/** @param  data 
-    @param  bDestroy 
+/** @param  data
+    @param  bDestroy
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
@@ -668,7 +668,7 @@ bool GQ_Plot::UnregisterPlotData( GQ_PlotData& data, bool bDestroy )
 
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot::UnregisterAllPlotData
-/** @param  bDestroy 
+/** @param  bDestroy
 */
 // Created: APE 2005-01-13
 // -----------------------------------------------------------------------------
@@ -692,8 +692,8 @@ void GQ_Plot::UnregisterAllPlotData( bool bDestroy )
 
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot::SetLayerVisible
-/** @param  nDepth 
-    @param  bVisible 
+/** @param  nDepth
+    @param  bVisible
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
@@ -715,7 +715,7 @@ void GQ_Plot::SetLayerVisible( bool bVisible, int nDepth )
 
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot::SetAllVisible
-/** @param  bVisible 
+/** @param  bVisible
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
@@ -730,7 +730,7 @@ void GQ_Plot::SetAllVisible( bool bVisible )
 
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot::ClearLayerData
-/** @param  nDepth 
+/** @param  nDepth
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
@@ -784,8 +784,8 @@ GQ_PlotData* GQ_Plot::GetPlotData( uint nPlotIndex, int nDepth ) const
 
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot::GetNumberOfPlotData
-/** @param  nDepth 
-    @return 
+/** @param  nDepth
+    @return
 */
 // Created: AGN 2003-10-31
 // -----------------------------------------------------------------------------
@@ -800,8 +800,8 @@ uint GQ_Plot::GetNumberOfPlotData( int nDepth /*= 0*/ ) const
 
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot::FindPlotData
-/** @param  nUserID 
-    @return 
+/** @param  nUserID
+    @return
 */
 // Created: CBX 2003-08-18
 // -----------------------------------------------------------------------------
@@ -827,8 +827,8 @@ GQ_PlotData* GQ_Plot::FindPlotData( uint nUserID ) const
 
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot::FindPlotData
-/** @param  name 
-    @return 
+/** @param  name
+    @return
 */
 // Created: CBX 2003-08-18
 // -----------------------------------------------------------------------------
@@ -854,8 +854,8 @@ GQ_PlotData* GQ_Plot::FindPlotData( const QString& name ) const
 
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot::MapToViewport
-/** @param  T_Point& 
-    @return 
+/** @param  T_Point&
+    @return
 */
 // Created: CBX 2003-08-18
 // -----------------------------------------------------------------------------
@@ -866,9 +866,9 @@ QPoint GQ_Plot::MapToViewport( const T_Point& point ) const
 
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot::GQ_Plot::MapToViewport
-/** @param  rX 
-    @param  rY 
-    @return 
+/** @param  rX
+    @param  rY
+    @return
 */
 // Created: CBX 2003-08-18
 // -----------------------------------------------------------------------------
@@ -882,8 +882,8 @@ QPoint GQ_Plot::MapToViewport( double rX, double rY ) const
 
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot::MapFromViewport
-/** @param  point 
-    @return 
+/** @param  point
+    @return
 */
 // Created: APE 2004-12-17
 // -----------------------------------------------------------------------------
@@ -897,8 +897,8 @@ GQ_Plot::T_Point GQ_Plot::MapFromViewport( const QPoint& point ) const
 
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot::GetStrCoordinates
-/** @param  T_Point& 
-    @return 
+/** @param  T_Point&
+    @return
 */
 // Created: CBX 2003-08-19
 // -----------------------------------------------------------------------------
@@ -915,9 +915,9 @@ QString GQ_Plot::GetStrCoordinates( const T_Point& point ) const
 
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot::GetToolTips
-/** @param  QPoint& 
-    @param  QStringList& 
-    @return 
+/** @param  QPoint&
+    @param  QStringList&
+    @return
 */
 // Created: CBX 2003-08-18
 // -----------------------------------------------------------------------------
@@ -938,16 +938,16 @@ bool GQ_Plot::GetToolTips( const QPoint& refPoint, QRect& tipRect, QStringList& 
     double rdy = rRadius / y_.Scale();
 
     GQ_PlotDataBBox bbox;
-    T_Point blCorner( rX - rdx, rY - rdy );    
+    T_Point blCorner( rX - rdx, rY - rdy );
     T_Point urCorner( rX + rdx, rY + rdy );
     bbox.UpdateWithPoint( blCorner );
     bbox.UpdateWithPoint( urCorner );
-    
+
     tipRect = QRect( refPoint, QSize( 1 + ( int )( 2.0 * rRadius ), 1 + ( int )( 2.0 * rRadius ) ) );
     tipRect.moveBy( -tipRect.width() / 2, -tipRect.height() / 2 );
 
     bool bToolTipFound = false;
-    
+
     for( CIT_LayerMap it = layerMap_.begin(); it != layerMap_.end(); ++it )
     {
         const T_PlotLayer& layer = it->second;
@@ -979,7 +979,7 @@ void GQ_Plot::SetSelectionMode( E_SelectionMode nMode )
 
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot::GetSelection
-/** @param  selection 
+/** @param  selection
 */
 // Created: APE 2004-12-17
 // -----------------------------------------------------------------------------

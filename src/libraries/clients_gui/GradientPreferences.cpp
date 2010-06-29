@@ -53,7 +53,7 @@ void GradientPreferences::Commit( const std::vector< Gradient* >& presets )
 // -----------------------------------------------------------------------------
 void GradientPreferences::Reset()
 {
-    xml::xifstream xis( "gradients.xml" ); // $$$$ SBO 2007-07-03: 
+    xml::xifstream xis( "gradients.xml" ); // $$$$ SBO 2007-07-03:
     Load( xis );
 }
 

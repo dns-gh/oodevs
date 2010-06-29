@@ -54,7 +54,7 @@ private:
     ObjectFactory& operator=( const ObjectFactory& ); //!< Assignement operator
     //@}
 
-    //! @name 
+    //! @name
     //@{
     void Register( kernel::Object_ABC& result, const Common::MsgObjectAttributes& attributes ) const;
     //@}

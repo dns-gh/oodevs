@@ -32,7 +32,7 @@ PopulationFlowPart::~PopulationFlowPart()
 {
     // NOTHING
 }
-       
+
 // -----------------------------------------------------------------------------
 // Name: PopulationFlowPart::Send
 // Created: NLD 2006-09-28

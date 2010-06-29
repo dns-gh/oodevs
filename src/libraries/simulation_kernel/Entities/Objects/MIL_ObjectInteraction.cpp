@@ -44,7 +44,7 @@ void MIL_ObjectInteraction::load( MIL_CheckPointInArchive& file, const unsigned 
     file >> agentInsideSet_
          >> agentEnteringSet_
          >> agentExitingSet_
-         >> agentMovingInsideSet_;  
+         >> agentMovingInsideSet_;
 }
 
 // -----------------------------------------------------------------------------
@@ -85,15 +85,15 @@ void MIL_ObjectInteraction::UpdateInteraction( MIL_Object_ABC& object, const TER
     }
 
     T_AgentSet intersection;
-    std::set_difference( agentInsideSet_.begin(), agentInsideSet_.end(), 
-                         newInside      .begin(), newInside      .end(), 
+    std::set_difference( agentInsideSet_.begin(), agentInsideSet_.end(),
+                         newInside      .begin(), newInside      .end(),
                          std::insert_iterator< T_AgentSet >( intersection, intersection.end() ) );
     for( CIT_AgentSet it = intersection.begin(); it != intersection.end(); ++it )
         (**it).GetRole< PHY_RoleInterface_Location >().NotifyTerrainPutOutsideObject( object );
 
     intersection.clear();
-    std::set_difference( newInside      .begin(), newInside      .end(), 
-                         agentInsideSet_.begin(), agentInsideSet_.end(), 
+    std::set_difference( newInside      .begin(), newInside      .end(),
+                         agentInsideSet_.begin(), agentInsideSet_.end(),
                          std::insert_iterator< T_AgentSet >( intersection, intersection.end() ) );
     for( CIT_AgentSet it = intersection.begin(); it != intersection.end(); ++it )
         (**it).GetRole< PHY_RoleInterface_Location >().NotifyTerrainPutInsideObject( object );
@@ -104,10 +104,10 @@ void MIL_ObjectInteraction::UpdateInteraction( MIL_Object_ABC& object, const TER
 // Created: JCR 2008-06-06
 // -----------------------------------------------------------------------------
 void MIL_ObjectInteraction::NotifyAgentMovingInside( MIL_PopulationElement_ABC& population )
-{    
-    populationInsideSet_.insert( &population );    
+{
+    populationInsideSet_.insert( &population );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectInteraction::NotifyAgentMovingOutside
 // Created: JCR 2008-06-06
@@ -128,7 +128,7 @@ void MIL_ObjectInteraction::NotifyAgentMovingInside( MIL_Agent_ABC& agent )
     agentMovingInsideSet_.insert( &agent );
     agentExitingSet_.erase ( &agent );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectInteraction::NotifyAgentMovingOutside
 // Created: JCR 2008-05-29
@@ -136,9 +136,9 @@ void MIL_ObjectInteraction::NotifyAgentMovingInside( MIL_Agent_ABC& agent )
 void MIL_ObjectInteraction::NotifyAgentMovingOutside( MIL_Agent_ABC& agent )
 {
     if( agentInsideSet_.erase ( &agent ) == 1 )
-        agentExitingSet_.insert( &agent );   
+        agentExitingSet_.insert( &agent );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectInteraction::NotifyAgentPutInside
 // Created: JCR 2008-05-29
@@ -147,7 +147,7 @@ void MIL_ObjectInteraction::NotifyAgentPutInside( MIL_Agent_ABC& agent )
 {
     NotifyAgentMovingInside( agent );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectInteraction::NotifyAgentPutOutside
 // Created: JCR 2008-05-29
@@ -175,7 +175,7 @@ void MIL_ObjectInteraction::ClearInteraction( MIL_Object_ABC& object )
 void MIL_ObjectInteraction::ProcessInteractionEvents( MIL_Object_ABC& object )
 {
     CIT_AgentSet itAgent;
-   
+
     for( itAgent = agentEnteringSet_.begin(); itAgent != agentEnteringSet_.end(); ++itAgent )
         object.ProcessAgentEntering( **itAgent );
 

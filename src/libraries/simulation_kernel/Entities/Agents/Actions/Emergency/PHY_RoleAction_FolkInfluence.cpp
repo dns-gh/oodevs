@@ -26,7 +26,7 @@ PHY_RoleAction_FolkInfluence::PHY_RoleAction_FolkInfluence()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_FolkInfluence destructor
 // Created: JCR 2007-09-12
@@ -40,7 +40,7 @@ PHY_RoleAction_FolkInfluence::~PHY_RoleAction_FolkInfluence()
 // Name: PHY_RoleAction_FolkInfluence::serialize
 // Created: JCR 2007-09-14
 // -----------------------------------------------------------------------------
-//template< typename Archive > 
+//template< typename Archive >
 //void PHY_RoleAction_FolkInfluence::serialize( Archive&, const unsigned int )
 //{
 //     // $$$$ JCR 2007-09-14: TODO
@@ -72,20 +72,20 @@ void PHY_RoleAction_FolkInfluence::Clean()
 population::Object_ABC* PHY_RoleAction_FolkInfluence::InfluenceActivity( const MT_Vector2D& vPos, const std::string& activity, double influence, int connectivity )
 {
     population::Object_ABC*  pObject = 0;
-    if ( pManager_ )
+    if( pManager_ )
     {
-        geometry::Point3d   pos( vPos.rX_, vPos.rY_, 0. );        
+        geometry::Point3d   pos( vPos.rX_, vPos.rY_, 0. );
         pObject = pManager_->Create( pos );
-        if ( !pObject )
+        if( !pObject )
             return 0;
-        if ( connectivity == 0 )
-        {        
+        if( connectivity == 0 )
+        {
             population::Object_ABC::T_PositionArea area;
             area.push_back( pos );
             pObject->LoadInfluence( activity, influence, area );
         }
         else
-            pObject->LoadInfluence( activity, influence, pos, connectivity );        
+            pObject->LoadInfluence( activity, influence, pos, connectivity );
     }
     return pObject;
 }
@@ -97,11 +97,11 @@ population::Object_ABC* PHY_RoleAction_FolkInfluence::InfluenceActivity( const M
 population::Object_ABC* PHY_RoleAction_FolkInfluence::InfluenceActivityInArea( const MT_Vector2D& vPos, const std::string& activity, double influence, const TER_Localisation& area  )
 {
     population::Object_ABC*  pObject = 0;
-    if ( pManager_ )
+    if( pManager_ )
     {
         geometry::Point3d       pos( vPos.rX_, vPos.rY_, 0. );
         pObject = pManager_->Create( pos );
-        if ( !pObject )
+        if( !pObject )
             return pObject;
         switch ( area.GetType() )
         {
@@ -117,11 +117,11 @@ population::Object_ABC* PHY_RoleAction_FolkInfluence::InfluenceActivityInArea( c
                 const T_PointVector& points = area.GetPoints();
                 population::Object_ABC::T_PositionArea  to;
                 for ( T_PointVector::const_iterator it = points.begin(); it != points.end(); ++it )
-                    to.push_back( geometry::Point3d( it->rX_, it->rY_, 0. ) );                
+                    to.push_back( geometry::Point3d( it->rX_, it->rY_, 0. ) );
                 pObject->LoadInfluence( activity, influence, to );
                 break;
             }
-        }        
+        }
     }
     return pObject;
 }
@@ -132,6 +132,6 @@ population::Object_ABC* PHY_RoleAction_FolkInfluence::InfluenceActivityInArea( c
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_FolkInfluence::ReleaseInfluence( population::Object_ABC& object )
 {
-    if ( pManager_ )
+    if( pManager_ )
         pManager_->Release( object.GetID() );
 }

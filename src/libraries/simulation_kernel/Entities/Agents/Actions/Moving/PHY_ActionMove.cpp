@@ -46,7 +46,7 @@ PHY_ActionMove::PHY_ActionMove( MIL_AgentPion& pion, boost::shared_ptr< DEC_Path
     if( pMainPath_.get() )
         Callback( static_cast< int >( DEC_PathWalker::eRunning ) );
     else
-        Callback( static_cast< int >( DEC_PathWalker::eNotAllowed ) );        
+        Callback( static_cast< int >( DEC_PathWalker::eNotAllowed ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -65,7 +65,7 @@ PHY_ActionMove::~PHY_ActionMove()
 void PHY_ActionMove::StopAction()
 {
     Callback( static_cast< int >( DEC_PathWalker::eFinished ) );
-    
+
     DestroyJoiningPath();
     if( pMainPath_.get() )
         role_.MoveCanceled( pMainPath_ );
@@ -98,11 +98,11 @@ void PHY_ActionMove::DestroyJoiningPath()
     pJoiningPath_.reset();
 }
 
-namespace 
+namespace
 {
     class MIL_DangerousObjectFilter : public MIL_ObjectFilter
     {
-        virtual bool Test( const MIL_ObjectType_ABC& type ) const 
+        virtual bool Test( const MIL_ObjectType_ABC& type ) const
         {
             return type.GetCapacity< AttritionCapacity >() != 0 ||
                    type.GetCapacity< ContaminationCapacity >() != 0 ||
@@ -121,7 +121,7 @@ bool PHY_ActionMove::UpdateObjectsToAvoid()
     T_KnowledgeObjectVector knowledges;
 
     const MT_Float rHeight = pion_.GetRole< PHY_RoleInterface_Location >().GetHeight();
-    
+
     MIL_DangerousObjectFilter filter;
     pion_.GetArmy().GetKnowledge().GetObjectsAtInteractionHeight( knowledges, rHeight, filter );
     if( knowledges != objectsToAvoid_ )
@@ -142,7 +142,7 @@ void PHY_ActionMove::AvoidObstacles()
         return;
 
     boost::shared_ptr< DEC_Knowledge_Object > pObjectColliding;
-          
+
     MT_Float rDistanceCollision = 0.;
 
     if( !role_.ComputeFutureObjectCollision( pion_.GetRole< PHY_RoleInterface_Location >().GetPosition(), objectsToAvoid_, rDistanceCollision, pObjectColliding ) )
@@ -152,7 +152,7 @@ void PHY_ActionMove::AvoidObstacles()
     const unsigned int nObjectToAvoidDiaID = pObjectColliding->GetID();
     // Le pion à déjà tenté d'éviter l'obstacle
     if( objectAvoidAttempts_.find( nObjectToAvoidDiaID ) != objectAvoidAttempts_.end() )
-        return; 
+        return;
     objectAvoidAttempts_.insert( nObjectToAvoidDiaID );
 
     if( pJoiningPath_.get() )
@@ -168,7 +168,7 @@ void PHY_ActionMove::AvoidObstacles()
 
         role_.MoveCanceled( pMainPath_ );
         pMainPath_->Cancel();
-        
+
         pMainPath_ = pNewMainPath;
     }
 }
@@ -182,7 +182,7 @@ void PHY_ActionMove::AvoidObstacles()
 // Bypassd: NLD 2004-08-18
 // -----------------------------------------------------------------------------
 void PHY_ActionMove::Execute()
-{   
+{
     if( !pMainPath_.get() )
     {
         Callback( static_cast< int >( DEC_PathWalker::eNotAllowed ) );
@@ -190,7 +190,7 @@ void PHY_ActionMove::Execute()
     }
 
     AvoidObstacles();
-    
+
     boost::shared_ptr< DEC_PathResult > pCurrentPath( pJoiningPath_.get() ? pJoiningPath_ : pMainPath_ );
     int nReturn = role_.Move( pCurrentPath );
 

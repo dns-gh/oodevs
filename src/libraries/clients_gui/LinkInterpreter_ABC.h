@@ -29,7 +29,7 @@ namespace gui
 // Created: AGE 2006-05-11
 // =============================================================================
 class LinkInterpreter_ABC : public QObject
-{   
+{
     Q_OBJECT;
 
 public:

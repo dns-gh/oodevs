@@ -21,7 +21,7 @@ namespace TEST {
     @brief  Mission_Automat_ASA_DefendreItineraire
 */
 // Created: SBO 2005-08-08
-// Generated: 
+// Generated:
 // =============================================================================
 class Mission_Automat_ASA_DefendreItineraire : public Mission_Automat_ABC
 {

@@ -32,8 +32,8 @@ void PHY_ComposanteState::Initialize()
     composanteStates_[ repairableWithEvacuation_   .GetID() ] = &repairableWithEvacuation_;
     composanteStates_[ repairableWithoutEvacuation_.GetID() ] = &repairableWithoutEvacuation_;
     composanteStates_[ dead_                       .GetID() ] = &dead_;
-    composanteStates_[ maintenance_                .GetID() ] = &maintenance_;    
-    composanteStates_[ prisoner_                   .GetID() ] = &prisoner_;    
+    composanteStates_[ maintenance_                .GetID() ] = &maintenance_;
+    composanteStates_[ prisoner_                   .GetID() ] = &prisoner_;
 }
 
 // -----------------------------------------------------------------------------

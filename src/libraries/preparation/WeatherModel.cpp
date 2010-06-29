@@ -137,10 +137,10 @@ namespace
 // -----------------------------------------------------------------------------
 void WeatherModel::ReadExerciseDate( xml::xistream& xis )
 {
-    // $$$$ AGE 2007-10-12: 
+    // $$$$ AGE 2007-10-12:
     const std::string isoDate = attribute< std::string >( xis, "value" );
     QString extended( isoDate.c_str() );
-    extended.insert( 13, ':' ); extended.insert( 11, ':' ); 
+    extended.insert( 13, ':' ); extended.insert( 11, ':' );
     extended.insert(  6, '-' ); extended.insert(  4, '-' );
     time_ = QDateTime::fromString( extended, Qt::ISODate );
 }

@@ -88,7 +88,7 @@ private:
     QColor ApplyModifiers( const kernel::Entity_ABC& entity, const QColor& color );
     //@}
 
-    //! @name Types 
+    //! @name Types
     //@{
     typedef boost::ptr_vector< ColorModifier_ABC >                                T_Modifiers;
     typedef std::vector< QColor >                                                 T_Colors;

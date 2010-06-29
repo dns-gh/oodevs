@@ -12,7 +12,7 @@ class DEC_Knowledge_Population;
 // =============================================================================
 /** @class  DEC_KS_KnowledgeSynthetizer
     @brief  This knowledge source (KS) is an 'IN/OUT', which is used :
-                - To synthetize the subordinate's perceptions of the agents 
+                - To synthetize the subordinate's perceptions of the agents
                   into knowledges for a GTIA
 */
 // Created: NLD 2004-03-11
@@ -27,7 +27,7 @@ public:
              DEC_KS_KnowledgeSynthetizer();
     virtual ~DEC_KS_KnowledgeSynthetizer();
     //@}
-    
+
     //! @name Operations
     //@{
     virtual void Prepare();
@@ -58,7 +58,7 @@ BOOST_CLASS_EXPORT_KEY( DEC_KS_KnowledgeSynthetizer )
 // Name: template< typename Archive > void DEC_KS_AgentKnowledgeSynthetizer::serialize
 // Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
-template< typename Archive > 
+template< typename Archive >
 void DEC_KS_KnowledgeSynthetizer::serialize( Archive& archive, const unsigned int )
 {
     archive & boost::serialization::base_object< DEC_KnowledgeSource_ABC >( *this )

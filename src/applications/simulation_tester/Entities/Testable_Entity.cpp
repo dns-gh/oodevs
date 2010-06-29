@@ -32,7 +32,7 @@ Testable_Entity::Testable_Entity( const Workspace& workspace )
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Testable_Entity destructor
 // Created: SBO 2005-08-16
@@ -296,7 +296,7 @@ T_LocationVector& Testable_Entity::GetTestParam_PolygonList() const
 unsigned int Testable_Entity::GetTestParam_NatureAtlas() const
 {
     // 12 atlas natures
-    static int nAtlasNatures[ 12 ] = { 0x8000, 0x4000, 0x2000, 0x1000, 0x0800, 0x0400, 
+    static int nAtlasNatures[ 12 ] = { 0x8000, 0x4000, 0x2000, 0x1000, 0x0800, 0x0400,
                                        0x0200, 0x0100, 0x0080, 0x0040, 0x0020, 0x0010 };
     return nAtlasNatures[ GetTestParam_Numeric( 0, 11 ) ];
 }

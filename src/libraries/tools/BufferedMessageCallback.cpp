@@ -84,7 +84,7 @@ void BufferedMessageCallback::Commit( MessageCallback_ABC& callback )
         boost::mutex::scoped_lock locker( mutex_ );
         std::swap( events_, events );
     }
-    
+
     for( IT_Events it = events.begin(); it != events.end(); ++it )
     {
         if( ! it->error_.empty() )

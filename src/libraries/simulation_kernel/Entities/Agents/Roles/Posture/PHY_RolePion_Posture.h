@@ -57,11 +57,11 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
-    
+
     //! @name Operations
     //@{
     void Update    ( bool bIsDead );
@@ -77,7 +77,7 @@ public:
 
     void EnableDiscreteMode ();
     void DisableDiscreteMode();
-    
+
     void SetTimingFactor( MT_Float rFactor ); //$$$ A GICLER
     //@}
 
@@ -92,19 +92,19 @@ public:
     //@{
     void SetStealthFactor( MT_Float rValue );
     //@}
-    
+
     //! @name Elongation
     //@{
     void     SetElongationFactor( MT_Float );
     MT_Float GetElongationFactor() const;
     //@}
-                
+
     //! @name Accessors
     //@{
     virtual const PHY_Posture& GetLastPosture                () const;
     virtual const PHY_Posture& GetCurrentPosture             () const;
     virtual       MT_Float     GetPostureCompletionPercentage() const;
-    
+
     bool IsStealth() const;
     //@}
 

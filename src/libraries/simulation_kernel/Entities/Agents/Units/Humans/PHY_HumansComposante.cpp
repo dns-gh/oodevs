@@ -96,7 +96,7 @@ void PHY_HumansComposante::HealAllHumans()
     for( std::vector< Human_ABC* >::const_iterator it = humans_.begin(); it != humans_.end(); ++it )
         (**it).Heal();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_HumansComposante::HealHumans
 // Created: NLD 2005-07-28
@@ -142,7 +142,7 @@ unsigned int PHY_HumansComposante::WoundHumans( const PHY_HumanRank& rank, unsig
 
         human.SetWound( newWound );
         -- nNbrToChange;
-        ++ nNbrChanged; 
+        ++ nNbrChanged;
     }
     return nNbrChanged;
 }
@@ -227,13 +227,13 @@ void PHY_HumansComposante::ApplyPoisonous( const MIL_ToxicEffectManipulator& con
 void PHY_HumansComposante::ApplyInjury( MIL_Injury_ABC& injury )
 {
     assert( pComposante_ );
-    
+
     for( std::vector< Human_ABC* >::const_iterator it = humans_.begin(); it != humans_.end(); ++it )
     {
         if( injury.IsInjured( GetComposante() ) )
         {
             //on doit supprimer aussi le human du human vector et il va devenir un InjuredHuman
-            //qui doit avoir une existence propre (mise a jour, que les autres sachent qu ils existent, position, peut etre une faculte de deplacement, ...) 
+            //qui doit avoir une existence propre (mise a jour, que les autres sachent qu ils existent, position, peut etre une faculte de deplacement, ...)
         }
     }
 }
@@ -285,12 +285,12 @@ void PHY_HumansComposante::NotifyHumanAdded( Human_ABC& human )
     if( human.IsUsable() )
     {
         assert( pComposante_->GetState() != PHY_ComposanteState::dead_ );
-        ++ nNbrUsableHumans_;        
+        ++ nNbrUsableHumans_;
     }
     assert( pComposante_ );
     const_cast< MIL_Agent_ABC& >( pComposante_->GetRole().GetPion() ).Apply( &human::HumansActionsNotificationHandler_ABC::NotifyHumanAdded, human );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_HumansComposante::NotifyHumanRemoved
 // Created: NLD 2005-01-07
@@ -308,7 +308,7 @@ void PHY_HumansComposante::NotifyHumanRemoved( Human_ABC& human )
     if( !IsViable() )
         pComposante_->ReinitializeState( PHY_ComposanteState::dead_ );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_HumansComposante::NotifyHumanChanged
 // Created: NLD 2005-01-07
@@ -325,7 +325,7 @@ void PHY_HumansComposante::NotifyHumanChanged( Human_ABC& human, const Human_ABC
         assert( pComposante_->GetState() != PHY_ComposanteState::dead_ );
         ++ nNbrUsableHumans_;
     }
-  
+
     assert( pComposante_ );
     const_cast< MIL_Agent_ABC& >( pComposante_->GetRole().GetPion() ).Apply( &human::HumansActionsNotificationHandler_ABC::NotifyHumanChanged, human, copyOfOldHumanState );
     if( !IsViable() )

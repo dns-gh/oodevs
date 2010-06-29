@@ -31,7 +31,7 @@ void MIL_FragOrderType::Initialize( xml::xistream& xis )
     MT_LOG_INFO_MSG( "Initializing frag orders types" );
 
     LoadingWrapper loader;
-    
+
     xis >> xml::start( "missions" )
             >> xml::start( "fragorders" )
                 >> xml::list( "fragorder", loader, &LoadingWrapper::ReadFragorder )
@@ -64,7 +64,7 @@ void MIL_FragOrderType::ReadFragorder( xml::xistream& xis )
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
 MIL_FragOrderType::MIL_FragOrderType( unsigned int nID, xml::xistream& xis )
-    : MIL_OrderType_ABC        ( nID, xis )   
+    : MIL_OrderType_ABC        ( nID, xis )
     , bAvailableWithoutMission_( false )
     , bAvailableForAllMissions_( false )
 {

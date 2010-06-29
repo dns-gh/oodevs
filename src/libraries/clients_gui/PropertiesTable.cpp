@@ -42,7 +42,7 @@ PropertiesTable::PropertiesTable( QWidget* parent, kernel::EditorFactory_ABC& fa
 
     connect( this, SIGNAL( valueChanged( int, int ) ), this, SLOT( OnValueChanged( int, int ) ) );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PropertiesTable destructor
 // Created: SBO 2006-10-17
@@ -82,7 +82,7 @@ void PropertiesTable::Clear()
 // -----------------------------------------------------------------------------
 void PropertiesTable::Hide()
 {
-    hide(); // $$$$ SBO 2006-10-18: 
+    hide(); // $$$$ SBO 2006-10-18:
 }
 
 // -----------------------------------------------------------------------------
@@ -123,7 +123,7 @@ Displayer_ABC& PropertiesTable::SubItem( const QString& name )
         row_ = it->second;
     return *this;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PropertiesTable::StartDisplay
 // Created: SBO 2006-10-18
@@ -132,7 +132,7 @@ void PropertiesTable::StartDisplay()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PropertiesTable::DisplayFormatted
 // Created: SBO 2006-10-18
@@ -141,7 +141,7 @@ void PropertiesTable::DisplayFormatted( const QString& )
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PropertiesTable::EndDisplay
 // Created: SBO 2006-10-18

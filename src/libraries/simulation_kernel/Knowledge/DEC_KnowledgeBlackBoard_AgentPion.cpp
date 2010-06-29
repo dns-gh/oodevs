@@ -92,15 +92,15 @@ DEC_KnowledgeBlackBoard_AgentPion::DEC_KnowledgeBlackBoard_AgentPion()
 // -----------------------------------------------------------------------------
 DEC_KnowledgeBlackBoard_AgentPion::~DEC_KnowledgeBlackBoard_AgentPion()
 {
-    delete pKnowledgeAgentPerceptionContainer_;     
-    delete pKnowledgeObjectCollisionContainer_;     
-    delete pKnowledgeObjectPerceptionContainer_;    
+    delete pKnowledgeAgentPerceptionContainer_;
+    delete pKnowledgeObjectCollisionContainer_;
+    delete pKnowledgeObjectPerceptionContainer_;
     delete pKnowledgePopulationPerceptionContainer_;
-    delete pKnowledgePopulationCollisionContainer_; 
-    delete pKsObjectInteraction_;                   
-    delete pKsPopulationInteraction_;               
-    delete pKsFire_;                                
-    delete pKsPerception_;                             
+    delete pKnowledgePopulationCollisionContainer_;
+    delete pKsObjectInteraction_;
+    delete pKsPopulationInteraction_;
+    delete pKsFire_;
+    delete pKsPerception_;
 }
 
 // =============================================================================
@@ -111,20 +111,20 @@ DEC_KnowledgeBlackBoard_AgentPion::~DEC_KnowledgeBlackBoard_AgentPion()
 // Name: template< typename Archive > void DEC_KnowledgeBlackBoard_AgentPion::serialize
 // Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
-template< typename Archive > 
+template< typename Archive >
 void DEC_KnowledgeBlackBoard_AgentPion::serialize( Archive& archive, const unsigned int )
 {
     archive & boost::serialization::base_object< DEC_KnowledgeBlackBoard_ABC >( *this )
-            & pPion_                                   
-            & pKnowledgeAgentPerceptionContainer_      
-            & pKnowledgeObjectCollisionContainer_      
-            & pKnowledgeObjectPerceptionContainer_     
-            & pKnowledgePopulationPerceptionContainer_ 
-            & pKnowledgePopulationCollisionContainer_  
+            & pPion_
+            & pKnowledgeAgentPerceptionContainer_
+            & pKnowledgeObjectCollisionContainer_
+            & pKnowledgeObjectPerceptionContainer_
+            & pKnowledgePopulationPerceptionContainer_
+            & pKnowledgePopulationCollisionContainer_
             & pKnowledgeUrbanPerceptionContainer_
-            & pKsObjectInteraction_                    
-            & pKsPopulationInteraction_                
-            & pKsFire_                                 
+            & pKsObjectInteraction_
+            & pKsPopulationInteraction_
+            & pKsFire_
             & pKsPerception_
             & pKnowledgeRapForLocal_;
 }
@@ -178,9 +178,9 @@ void DEC_KnowledgeBlackBoard_AgentPion::SendChangedState() const
 bool DEC_KnowledgeBlackBoard_AgentPion::IsIdentified( const MIL_Agent_ABC& agent ) const
 {
     assert( pKnowledgeAgentPerceptionContainer_ );
-    
+
     DEC_Knowledge_AgentPerception* pKnowledge = pKnowledgeAgentPerceptionContainer_->GetKnowledgeAgentPerception( agent );
-    if ( pKnowledge )
+    if( pKnowledge )
         return pKnowledge->GetCurrentPerceptionLevel() == PHY_PerceptionLevel::identified_;
     return false;
 }
@@ -192,7 +192,7 @@ bool DEC_KnowledgeBlackBoard_AgentPion::IsIdentified( const MIL_Agent_ABC& agent
 bool DEC_KnowledgeBlackBoard_AgentPion::IsPerceived( const MIL_Agent_ABC& agent ) const
 {
     assert( pKnowledgeAgentPerceptionContainer_ );
-    
+
     DEC_Knowledge_AgentPerception* pKnowledge = pKnowledgeAgentPerceptionContainer_->GetKnowledgeAgentPerception( agent );
     if( pKnowledge )
         return pKnowledge->IsPerceived();
@@ -206,7 +206,7 @@ bool DEC_KnowledgeBlackBoard_AgentPion::IsPerceived( const MIL_Agent_ABC& agent 
 bool DEC_KnowledgeBlackBoard_AgentPion::WasPerceived( const MIL_Agent_ABC& agent ) const
 {
     assert( pKnowledgeAgentPerceptionContainer_ );
-    
+
     DEC_Knowledge_AgentPerception* pKnowledge = pKnowledgeAgentPerceptionContainer_->GetKnowledgeAgentPerception( agent );
     if( pKnowledge )
         return pKnowledge->GetPreviousPerceptionLevel() > PHY_PerceptionLevel::notSeen_;
@@ -230,11 +230,11 @@ namespace {
         {
             if( !knowledge.IsAvailable() ) // Record mode
                 return;
-                
+
             boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge = pPion_->GetKnowledgeGroup().GetKnowledge().GetKnowledgeAgent( knowledge );
             assert( pKnowledge );
 
-            if(    knowledge.GetAgentPerceived() == *pPion_ 
+            if( knowledge.GetAgentPerceived() == *pPion_
                 || pKnowledge->IsDead()
                 || pKnowledge->IsAnEnemy( *pArmy_ ) != eTristate_True
                 || pKnowledge->IsRefugee()
@@ -244,7 +244,7 @@ namespace {
             if( pZone_ && !pZone_->IsInside( pKnowledge->GetPosition() ) )
                 return;
 
-            pContainer_->push_back( pKnowledge );            
+            pContainer_->push_back( pKnowledge );
         }
 
     private:
@@ -266,7 +266,7 @@ void DEC_KnowledgeBlackBoard_AgentPion::GetLivingEnemiesPerceived( T_ConstKnowle
 
     container.clear();
     sLivingEnemiesPerceivedInsertor< TER_Polygon > functor( *pPion_, container );
-    pKnowledgeAgentPerceptionContainer_->ApplyOnKnowledgesAgentPerception( functor );           
+    pKnowledgeAgentPerceptionContainer_->ApplyOnKnowledgesAgentPerception( functor );
 }
 
 // -----------------------------------------------------------------------------
@@ -280,7 +280,7 @@ void DEC_KnowledgeBlackBoard_AgentPion::GetLivingEnemiesPerceivedInZone( T_Const
 
     container.clear();
     sLivingEnemiesPerceivedInsertor< TER_Localisation > functor( *pPion_, container, &zone );
-    pKnowledgeAgentPerceptionContainer_->ApplyOnKnowledgesAgentPerception( functor );           
+    pKnowledgeAgentPerceptionContainer_->ApplyOnKnowledgesAgentPerception( functor );
 }
 
 namespace {
@@ -320,7 +320,7 @@ void DEC_KnowledgeBlackBoard_AgentPion::GetAgentsAttacking( T_ConstKnowledgeAgen
 
     container.clear();
     sAgentsAttackingInsertor functor( *pPion_, container );
-    pKnowledgeAgentPerceptionContainer_->ApplyOnKnowledgesAgentPerception( functor );              
+    pKnowledgeAgentPerceptionContainer_->ApplyOnKnowledgesAgentPerception( functor );
 }
 
 // -----------------------------------------------------------------------------
@@ -333,7 +333,7 @@ MT_Float DEC_KnowledgeBlackBoard_AgentPion::GetRapForLocalValue() const
     MT_Float rapForLocal = pKnowledgeRapForLocal_->GetValue();
     const PHY_Morale& morale =  pPion_->GetRole< PHY_RoleInterface_HumanFactors >().GetMorale();
     if( &morale == &PHY_Morale::fanatique_ )
-             return 5.0; // $$$$ _RC_ SLG 2010-05-28: Facteur moral max 
+             return 5.0; // $$$$ _RC_ SLG 2010-05-28: Facteur moral max
     return rapForLocal;
 }
 
@@ -352,7 +352,7 @@ const T_ConstKnowledgeAgentVector& DEC_KnowledgeBlackBoard_AgentPion::GetDangero
 // Created: NLD 2006-04-13
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeBlackBoard_AgentPion::GetDangerousEnemiesInZone( T_ConstKnowledgeAgentVector& container, const TER_Localisation& zone ) const
-{    
+{
     container.clear();
 
     assert( pKnowledgeRapForLocal_ );
@@ -376,7 +376,7 @@ void DEC_KnowledgeBlackBoard_AgentPion::GetDangerousEnemiesInZone( T_ConstKnowle
 bool DEC_KnowledgeBlackBoard_AgentPion::IsIdentified( const MIL_Object_ABC& object ) const
 {
     assert( pKnowledgeObjectPerceptionContainer_ );
-    
+
     DEC_Knowledge_ObjectPerception* pKnowledge = pKnowledgeObjectPerceptionContainer_->GetKnowledgeObjectPerception( object );
     if( pKnowledge )
         return pKnowledge->GetCurrentPerceptionLevel() == PHY_PerceptionLevel::identified_;
@@ -390,7 +390,7 @@ bool DEC_KnowledgeBlackBoard_AgentPion::IsIdentified( const MIL_Object_ABC& obje
 bool DEC_KnowledgeBlackBoard_AgentPion::IsPerceived( const MIL_Object_ABC& object ) const
 {
     assert( pKnowledgeObjectPerceptionContainer_ );
-    
+
     DEC_Knowledge_ObjectPerception* pKnowledge = pKnowledgeObjectPerceptionContainer_->GetKnowledgeObjectPerception( object );
     if( pKnowledge )
         return pKnowledge->IsPerceived();
@@ -404,7 +404,7 @@ bool DEC_KnowledgeBlackBoard_AgentPion::IsPerceived( const MIL_Object_ABC& objec
 void DEC_KnowledgeBlackBoard_AgentPion::GetObjectsColliding( T_KnowledgeObjectCollisionVector& container ) const
 {
     assert( pKnowledgeObjectCollisionContainer_ );
-    pKnowledgeObjectCollisionContainer_->GetKnowledgesObjectCollision( container );    
+    pKnowledgeObjectCollisionContainer_->GetKnowledgesObjectCollision( container );
 }
 
 // -----------------------------------------------------------------------------
@@ -414,7 +414,7 @@ void DEC_KnowledgeBlackBoard_AgentPion::GetObjectsColliding( T_KnowledgeObjectCo
 void DEC_KnowledgeBlackBoard_AgentPion::GetObjectsColliding( T_KnowledgeObjectDiaIDVector& container ) const
 {
     assert( pPion_ );
-    
+
     T_KnowledgeObjectCollisionVector objectsColliding;
     GetObjectsColliding( objectsColliding );
 
@@ -439,7 +439,7 @@ void DEC_KnowledgeBlackBoard_AgentPion::GetObjectsColliding( T_KnowledgeObjectDi
 bool DEC_KnowledgeBlackBoard_AgentPion::IsIdentified( const MIL_PopulationConcentration& concentration ) const
 {
     assert( pKnowledgePopulationPerceptionContainer_ );
-    
+
     DEC_Knowledge_PopulationPerception* pKnowledge = pKnowledgePopulationPerceptionContainer_->GetKnowledgePopulationPerception( concentration.GetPopulation() );
     if( pKnowledge )
         return pKnowledge->IsIdentified( concentration );
@@ -467,7 +467,7 @@ bool DEC_KnowledgeBlackBoard_AgentPion::IsPerceived( const MIL_Population& popul
 void DEC_KnowledgeBlackBoard_AgentPion::GetPopulationsColliding( T_KnowledgePopulationCollisionVector& container ) const
 {
     assert( pKnowledgePopulationCollisionContainer_ );
-    pKnowledgePopulationCollisionContainer_->GetKnowledgesPopulationCollision( container );  
+    pKnowledgePopulationCollisionContainer_->GetKnowledgesPopulationCollision( container );
 }
 
 // -----------------------------------------------------------------------------
@@ -491,7 +491,7 @@ void DEC_KnowledgeBlackBoard_AgentPion::GetPopulationsColliding( T_KnowledgePopu
             container.push_back( pKnowledge->GetID() );
     }
 }
-  
+
 namespace {
     class sPopulationAttackingInsertor
     {
@@ -529,7 +529,7 @@ void DEC_KnowledgeBlackBoard_AgentPion::GetPopulationsAttacking( T_KnowledgePopu
 
     container.clear();
     sPopulationAttackingInsertor functor( *pPion_, container );
-    pKnowledgePopulationPerceptionContainer_->ApplyOnKnowledgesPopulationPerception( functor );              
+    pKnowledgePopulationPerceptionContainer_->ApplyOnKnowledgesPopulationPerception( functor );
 }
 
 // =============================================================================
@@ -730,7 +730,7 @@ bool DEC_KnowledgeBlackBoard_AgentPion::IsIdentified( const urban::TerrainObject
     assert( pKnowledgeUrbanPerceptionContainer_ );
 
     boost::shared_ptr< DEC_Knowledge_UrbanPerception > pKnowledge = pKnowledgeUrbanPerceptionContainer_->GetKnowledgeUrbanPerception( object );
-    if ( pKnowledge )
+    if( pKnowledge )
         return pKnowledge->GetCurrentPerceptionLevel() == PHY_PerceptionLevel::identified_;
     return false;
 }

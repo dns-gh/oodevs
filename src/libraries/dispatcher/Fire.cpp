@@ -64,7 +64,7 @@ void Fire::SendCreation( ClientPublisher_ABC& publisher ) const
     client::StartUnitFire asn;
     asn().set_fire_oid( oid_tir_.oid() );
     asn().set_firer_oid( tireur_.oid() );
-    asn().set_type( type_ );    
+    asn().set_type( type_ );
     asn().set_ammunition( munition_.oid() );
 
     Common::MsgCoordLatLong coord;

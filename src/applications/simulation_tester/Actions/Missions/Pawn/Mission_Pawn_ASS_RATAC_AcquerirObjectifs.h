@@ -21,7 +21,7 @@ namespace TEST {
     @brief  Mission_Pawn_ASS_RATAC_AcquerirObjectifs
 */
 // Created: SBO 2005-08-08
-// Generated: 
+// Generated:
 // =============================================================================
 class Mission_Pawn_ASS_RATAC_AcquerirObjectifs : public Mission_Pawn_ABC
 {

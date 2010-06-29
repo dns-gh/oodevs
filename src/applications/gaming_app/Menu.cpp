@@ -221,7 +221,7 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, kernel::ObjectTypes&
 
     controllers_.Register( *this );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Menu destructor
 // Created: SBO 2006-04-28

@@ -46,7 +46,7 @@ namespace
             entity.GetAutomats().Apply( boost::bind( &PositionComputer::AddAutomat, boost::ref( *this ), _1 ) );
             entity.GetAgents().Apply( boost::bind( &PositionComputer::AddAgent, boost::ref( *this ), _1 ) );
         }
-        
+
         geometry::Point2d position_;
         unsigned int count_;
     };

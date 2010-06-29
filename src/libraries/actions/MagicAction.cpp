@@ -77,7 +77,7 @@ void MagicAction::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void MagicAction::Publish( Publisher_ABC& publisher ) const
 {
-    MsgsClientToSim::MsgMagicAction_Type type = 
+    MsgsClientToSim::MsgMagicAction_Type type =
         ( MsgsClientToSim::MsgMagicAction_Type ) GetType().GetId();
     simulation::MagicAction message;
     message().set_type( type );

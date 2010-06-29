@@ -92,7 +92,7 @@ private:
     kernel::Controllers& controllers_;
     actions::ActionsModel& actionsModel_;
     const StaticModel& static_;
-    const kernel::Time_ABC& simulation_; 
+    const kernel::Time_ABC& simulation_;
     const kernel::Profile_ABC& profile_;
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
     bool magicMove_;

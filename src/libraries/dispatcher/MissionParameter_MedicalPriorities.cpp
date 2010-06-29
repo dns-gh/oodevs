@@ -43,5 +43,5 @@ void MissionParameter_MedicalPriorities::Send( Common::MsgMissionParameter& asn 
     MissionParameter_ABC::Send( asn );
     asn.mutable_value()->mutable_logmedicalpriorities();
     for( std::vector< int >::const_iterator it = medicalPriorities_.begin(); it != medicalPriorities_.end(); ++it )
-        asn.mutable_value()->mutable_logmedicalpriorities()->add_elem( Common::EnumHumanWound( *it ) );        
+        asn.mutable_value()->mutable_logmedicalpriorities()->add_elem( Common::EnumHumanWound( *it ) );
 }

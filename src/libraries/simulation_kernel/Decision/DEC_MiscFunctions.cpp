@@ -178,7 +178,7 @@ void DEC_MiscFunctions::CopyDirectionDanger( MT_Vector2D* pPosSource, boost::sha
 {
     assert( pPosSource );
     assert( !pPosSource->IsZero() );
-    assert( MT_IsZero( pPosSource->SquareMagnitude() - 1. ) );    
+    assert( MT_IsZero( pPosSource->SquareMagnitude() - 1. ) );
 
     pMission->AffectDirection( *pPosSource );
 }

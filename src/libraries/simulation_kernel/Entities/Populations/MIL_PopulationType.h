@@ -137,7 +137,7 @@ private:
 private:
     static T_PopulationMap populations_;
     static MT_Float        rEffectReloadingTimeDensity_;
-    static MT_Float        rEffectReloadingTimeFactor_;    
+    static MT_Float        rEffectReloadingTimeFactor_;
 };
 
 #endif // __MIL_PopulationType_h_

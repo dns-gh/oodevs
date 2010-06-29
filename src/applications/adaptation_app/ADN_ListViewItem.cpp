@@ -19,7 +19,7 @@ class ADN_ListViewItem_Connector
 : public ADN_Connector_ABC
 {
 public:
-    
+
     ADN_ListViewItem_Connector(ADN_ListViewItem& lvi,int pos,ADN_ListViewItem::E_TypeCvt eCvt, const char* szName = 0 )
     : ADN_Connector_ABC( szName )
     , lvi_(lvi)
@@ -34,7 +34,7 @@ public:
 
     void SetDataPrivate(void *data)
     {
-        
+
         switch ( eCvt_ )
         {
             case ADN_ListViewItem::eString:
@@ -92,7 +92,7 @@ private:
     ADN_ListViewItem_Connector& operator=( const ADN_ListViewItem_Connector& );
 
 private:
-    
+
     int                         nPos_;
     ADN_ListViewItem&           lvi_;
     ADN_ListViewItem::E_TypeCvt eCvt_;
@@ -118,7 +118,7 @@ ADN_ListViewItem::ADN_ListViewItem(ADN_ListView *parent,void* item,int ncol)
             parent->addColumn("");
             parent->setSorting(size+i,true);
         }
-        
+
     if (parent)
     for (int j=0;j<parent->columns();++j)
         parent->setColumnWidthMode(j,QListView::Maximum);
@@ -146,7 +146,7 @@ void ADN_ListViewItem::Connect(int ndx,ADN_Connector_ABC *data,E_TypeCvt cvt)
     // create new internal connector
     vConnectors_[ndx]=new ADN_ListViewItem_Connector(*this,ndx,cvt, "ADN_ListViewItem_Connector" );
     assert(vConnectors_[ndx]);
-    
+
 
     // connect internal connect and external data
     vConnectors_[ndx]->Connect(data);
@@ -155,12 +155,12 @@ void ADN_ListViewItem::Connect(int ndx,ADN_Connector_ABC *data,E_TypeCvt cvt)
 
 
 //-----------------------------------------------------------------------------
-// Name: ADN_ListViewItem::okRename 
+// Name: ADN_ListViewItem::okRename
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
 void ADN_ListViewItem::okRename ( int col )
 {
     assert(vConnectors_[col]);
     QListViewItem::okRename(col);
-    static_cast<ADN_ListViewItem_Connector*>(vConnectors_[col])->SetDataChanged(text(col)); 
+    static_cast<ADN_ListViewItem_Connector*>(vConnectors_[col])->SetDataChanged(text(col));
 }

@@ -17,14 +17,14 @@
 // Created: JCR 2008-05-30
 // =============================================================================
 class UpdatableAttribute_ABC
-{ 
-public:    
+{
+public:
     //! @name Type
     //@{
-    enum E_UpdateType {           
+    enum E_UpdateType {
         eOnCreation  = 0x01,
         eOnUpdate    = 0x02,
-        eOnHLAUpdate = 0x04,        
+        eOnHLAUpdate = 0x04,
         eUpdateAll   = 0xFF
     };
     //@}
@@ -42,13 +42,13 @@ public:
     //@}
 
 protected:
-    //! @name 
+    //! @name
     //@{
     virtual void Reset( int update ) const
     {
         xToUpdate_ &= ( xToUpdate_ ^ update );
     }
-    
+
     virtual void Reset() const
     {
         xToUpdate_ = 0;
@@ -71,8 +71,8 @@ protected:
     //@}
 
 private:
-    //! @name 
-    //@{    
+    //! @name
+    //@{
     mutable unsigned char xToUpdate_;
     //@}
 };

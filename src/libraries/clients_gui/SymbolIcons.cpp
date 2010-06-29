@@ -53,7 +53,7 @@ void SymbolIcons::OnWidget2dChanged( gui::GlWidget* widget )
 // -----------------------------------------------------------------------------
 QPixmap SymbolIcons::GetSymbol( SymbolIcon symbol )
 {
-    std::replace( symbol.symbol_.begin(), symbol.symbol_.end(), '*', 'f' ); // $$$$ AGE 2006-11-22: 
+    std::replace( symbol.symbol_.begin(), symbol.symbol_.end(), '*', 'f' ); // $$$$ AGE 2006-11-22:
     const QPixmap& result = icons_[ symbol ];
     if( result.isNull() )
         if( widget_ && pending_.insert( symbol ).second )

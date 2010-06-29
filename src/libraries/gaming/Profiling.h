@@ -47,7 +47,7 @@ public:
     unsigned long GetMemory() const;
     unsigned long GetVirtualMemory() const;
     unsigned long GetShortPathfinds() const;
-    unsigned long GetLongPathfinds() const; 
+    unsigned long GetLongPathfinds() const;
     //@}
 
 private:

@@ -113,7 +113,7 @@ bool PHY_DotationNature::operator==( const PHY_DotationNature& rhs ) const
 {
     return nID_ == rhs.nID_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationNature::operator!=
 // Created: NLD 2006-03-21

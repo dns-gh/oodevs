@@ -44,7 +44,7 @@ void PHY_SupplyStockRequest::AddStock( PHY_DotationStock& stock )
     request.rRequestedValue_ = std::max( 0., stock.GetCapacity() - stock.GetValue() );
     if( request.rRequestedValue_ > 0 )
     {
-        rTotalRequestedValue_ += request.rRequestedValue_;   
+        rTotalRequestedValue_ += request.rRequestedValue_;
         requests_.push_back( request );
     }
 }
@@ -61,7 +61,7 @@ void PHY_SupplyStockRequest::AddStock( PHY_DotationStock& stock, MT_Float rValue
     request.rRequestedValue_ = rValue;
     if( request.rRequestedValue_ > 0 )
     {
-        rTotalRequestedValue_ += request.rRequestedValue_;   
+        rTotalRequestedValue_ += request.rRequestedValue_;
         requests_.push_back( request );
     }
 }
@@ -79,6 +79,6 @@ void PHY_SupplyStockRequest::ApplyQuota( MT_Float rQuota )
     {
         sIndividualRequest& request = *itRequest;
         request.rRequestedValue_ *= rTmp;
-    }        
+    }
     rTotalRequestedValue_ = rNewTotalRequestedValue_;
 }

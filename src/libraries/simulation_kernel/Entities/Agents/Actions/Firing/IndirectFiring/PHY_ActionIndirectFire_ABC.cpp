@@ -24,7 +24,7 @@ using namespace firing;
 PHY_ActionIndirectFire_ABC::PHY_ActionIndirectFire_ABC( MIL_Agent_ABC& pion, const PHY_DotationCategory* pDotationCategory, float rNbInterventionType )
     : PHY_DecisionCallbackAction_ABC      ( pion )
     , role_               ( pion.GetRole< PHY_RoleAction_IndirectFiring >() )
-    , pDotationCategory_  ( 0 ) 
+    , pDotationCategory_  ( 0 )
     , rNbInterventionType_( std::max( 1.f, rNbInterventionType ) )
 {
     pDotationCategory_ = pDotationCategory;

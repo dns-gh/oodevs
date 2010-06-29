@@ -35,7 +35,7 @@
 #include <qdialog.h>
 #include <qdict.h>
 #include <qdockwindow.h>
-#include <qdragobject.h> 
+#include <qdragobject.h>
 #include <qfile.h>
 #include <qfiledialog.h>
 #include <qfont.h>
@@ -64,7 +64,7 @@
 #include <qradiobutton.h>
 #include <qregexp.h>
 #include <qsettings.h>
-#include <qsignalmapper.h> 
+#include <qsignalmapper.h>
 #include <qsimplerichtext.h>
 #include <qslider.h>
 #include <qsound.h>

@@ -1,12 +1,12 @@
 //*****************************************************************************
-// 
+//
 // $Created: AGN 02-11-25 $
 // $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Path/DEC_PathResult.cpp $
 // $Author: Age $
 // $Modtime: 16/06/05 15:23 $
 // $Revision: 28 $
 // $Workfile: DEC_PathResult.cpp $
-// 
+//
 //*****************************************************************************
 
 #include "simulation_kernel_pch.h"
@@ -92,7 +92,7 @@ DEC_PathResult::CIT_PathPointList DEC_PathResult::GetCurrentKeyOnPath( const MT_
 
     CIT_PathPointList itEnd = resultList_.begin();
     ++itEnd;
-    
+
     for( CIT_PathPointList itStart = resultList_.begin(); itEnd != resultList_.end(); ++itStart, ++itEnd )
     {
         MT_Line vLine( (*itStart)->GetPos(), (*itEnd)->GetPos() );
@@ -116,10 +116,10 @@ MT_Vector2D DEC_PathResult::InternalGetFuturePosition( const CIT_PathPointList& 
     CIT_PathPointList itNextPos = itCurrentPos;
     while ( ++itNextPos != resultList_.end() && (*itNextPos)->GetType() != DEC_PathPoint::eTypePointPath )
         ;
-    
+
     const MT_Vector2D& vCurrentPos = (*itCurrentPos)->GetPos();
     if( itNextPos == resultList_.end() )
-    {   
+    {
         const MT_Vector2D& vStartPos = resultList_.front()->GetPos();
         const MT_Vector2D& vEndPos   = resultList_.back ()->GetPos();
 
@@ -130,7 +130,7 @@ MT_Vector2D DEC_PathResult::InternalGetFuturePosition( const CIT_PathPointList& 
     }
 
     MT_Float rLength = vCurrentPos.Distance( (*itNextPos)->GetPos() );
-    if ( rLength >= rDist )
+    if( rLength >= rDist )
         return vCurrentPos + ( (*itNextPos)->GetPos() - vCurrentPos ).Normalize() * rDist;
 
     // parcours sur le segment suivant
@@ -146,19 +146,19 @@ MT_Vector2D DEC_PathResult::GetFuturePosition( const MT_Vector2D& vStartPos, MT_
     CIT_PathPointList itCurrentPathPoint = GetCurrentKeyOnPath( vStartPos );
     if( itCurrentPathPoint == resultList_.end() )
         return vStartPos;
-    
+
     CIT_PathPointList itNextPathPoint = itCurrentPathPoint;
     ++itNextPathPoint;
 
-    // Recherche du premier pathpoint  
-    if ( itNextPathPoint == resultList_.end() )
+    // Recherche du premier pathpoint
+    if( itNextPathPoint == resultList_.end() )
     {
         const MT_Vector2D& vEndPos   = resultList_.back ()->GetPos();
         return vEndPos == vStartPos ? vEndPos : vStartPos + ( vEndPos - vStartPos ).Normalize() * rDist;
     }
 
     MT_Float rLength = vStartPos.Distance( (*itNextPathPoint)->GetPos() );
-    if ( rLength >= rDist )
+    if( rLength >= rDist )
         return vStartPos + ( (*itNextPathPoint)->GetPos() - vStartPos ).Normalize() * rDist;
 
     // parcours sur les points
@@ -182,17 +182,17 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos,
     CIT_PathPointList itCurrentPathPoint = GetCurrentKeyOnPath( vStartPos );
     if( itCurrentPathPoint == resultList_.end() )
         return false;
-        
+
     CIT_PathPointList itNextPathPoint = itCurrentPathPoint;
     ++itNextPathPoint;
-       
+
     std::multimap< MT_Float, boost::shared_ptr< DEC_Knowledge_Object > > objectsOnPathMap;
 
     // Determination de tous les objets connus avec lesquels il va y avoir collision dans le déplacement en cours
     for( CIT_KnowledgeObjectVector itKnowledge = objectsToTest.begin(); itKnowledge != objectsToTest.end(); ++itKnowledge )
     {
         boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = *itKnowledge;
-        
+
         const MT_Vector2D* pPrevPos = &vStartPos;
 
         for( CIT_PathPointList itPathPoint = itNextPathPoint; itPathPoint != resultList_.end(); ++itPathPoint )
@@ -239,7 +239,7 @@ void DEC_PathResult::Serialize( Common::MsgPath& asn ) const
 }
 
 // =============================================================================
-// RESULT 
+// RESULT
 // =============================================================================
 
 // -----------------------------------------------------------------------------

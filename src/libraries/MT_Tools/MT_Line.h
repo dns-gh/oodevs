@@ -64,7 +64,7 @@ typedef T_LineVector::const_iterator     CIT_LineVector;
 
 
 #ifndef  _DEBUG
-#   undef   INLINE                  
+#   undef   INLINE
 #   define  INLINE inline
 #   include "MT_Line.inl"
 #endif  // ! _DEBUG

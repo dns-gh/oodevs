@@ -29,7 +29,7 @@ class ADN_CT_Sensors_Environments
 {
 public:
 
-    ADN_CT_Sensors_Environments(ADN_Sensors_Environments_GUI& tab) 
+    ADN_CT_Sensors_Environments(ADN_Sensors_Environments_GUI& tab)
     : ADN_Connector_Table_ABC(tab,false)
     {}
 
@@ -43,7 +43,7 @@ public:
         // add a new row & set new values
         tab_.setItem(i,0,pItemString=new ADN_TableItem_String(&tab_,obj));
         tab_.setItem(i,1,pItemDouble=new ADN_TableItem_Double(&tab_,obj));
-        
+
         // disable first column
         pItemString->setEnabled(false);
         pItemString->setText(ADN_Tr::ConvertFromVisionObject(static_cast<ModificatorEnvironmentInfos*>(obj)->eType_,ENT_Tr_ABC::eToTr).c_str());
@@ -75,14 +75,14 @@ ADN_Sensors_Environments_GUI::ADN_Sensors_Environments_GUI(QWidget * parent)
 
     // hide vertical header
     verticalHeader()->hide();
-    
+
     // tab with 2 columns
     setNumCols(2);
     setNumRows(0);
     setColumnStretchable(0,true);
     setColumnStretchable(1,true);
     setMaximumWidth( 300 );
-    
+
     horizontalHeader()->setLabel(0, tr( "Environments" ) );
     horizontalHeader()->setLabel(1, tr( "Modifiers" ) );
 

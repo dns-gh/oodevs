@@ -35,7 +35,7 @@ VisualisationScalesPanel::VisualisationScalesPanel( QWidget* parent, kernel::Con
 {
     QGroupBox* box = new QGroupBox( 3, Qt::Horizontal, tr( "Visualisation scales" ), this );
 
-    const QString elements[ 14 ] = 
+    const QString elements[ 14 ] =
     { tr( "Large texts" ), tr( "Small texts" ), tr( "Edges" ),           tr( "Cliffs" ),
       tr( "Highways" ),    tr( "Main roads" ),  tr( "Secondary roads" ), tr( "Country roads" ),
       tr( "Bridges" ),     tr( "Railroads" ),   tr( "Main rivers" ),     tr( "Rivers" ),
@@ -99,7 +99,7 @@ void VisualisationScalesPanel::Commit()
     for( int i = 0; i < 14; ++i )
     {
         std::stringstream stream;
-        stream << i;        
+        stream << i;
         currentScales_[ i ].min_ = controllers_.options_.GetOption( strMinScale + stream.str(), currentScales_[ i ].min_ ).To< int >();
         currentScales_[ i ].max_ = controllers_.options_.GetOption( strMaxScale + stream.str(), currentScales_[ i ].max_ ).To< int >();
     }
@@ -248,6 +248,6 @@ int VisualisationScalesPanel::ConvertToScale( int index )
     case 11:
         return 5000;
     default:
-        return 1000000;  
+        return 1000000;
     }
 }

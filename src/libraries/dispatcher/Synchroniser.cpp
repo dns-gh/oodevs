@@ -102,7 +102,7 @@ void Synchroniser::Commit( ClientPublisher_ABC& publisher, Model& model )
     Publisher p( publisher, model );
     for( std::vector< kernel::Entity_ABC* >::reverse_iterator it = toDestroy_.rbegin(); it != toDestroy_.rend(); ++it )
     {
-        // $$$$ AGE 2008-06-20: 
+        // $$$$ AGE 2008-06-20:
 //        (*it)->Apply( &EntityPublisher_ABC::SendDestruction, p );
         // $$$$ AGE 2008-06-20: causes reentrances in the destructor...
         // $$$$ AGE 2008-06-20: Change the whole thing (see SimulationDispatcher::EndSynchronisation)

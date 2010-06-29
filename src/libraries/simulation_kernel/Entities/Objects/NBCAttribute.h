@@ -19,7 +19,7 @@ class MIL_CheckPointInArchive;
 class MIL_CheckPointOutArchive;
 class MIL_NbcAgentType;
 
-namespace hla 
+namespace hla
 {
     class Deserializer;
 }
@@ -34,7 +34,7 @@ class HLA_UpdateFunctor;
 // =============================================================================
 class NBCAttribute : public ObjectAttribute_ABC
                    , public UpdatableAttribute_ABC
-{   
+{
 public:
     //! @name Types
     //@{
@@ -44,7 +44,7 @@ public:
         eGas
     };
     typedef std::vector< const MIL_NbcAgentType* > T_NBCAgents;
-    typedef T_NBCAgents::const_iterator CIT_NBCAgents;    
+    typedef T_NBCAgents::const_iterator CIT_NBCAgents;
     //@}
 
 public:
@@ -57,8 +57,8 @@ public:
     //@}
 
     //! @name Knowledge
-    //@{    
-    virtual void Instanciate( DEC_Knowledge_Object& object ) const;      
+    //@{
+    virtual void Instanciate( DEC_Knowledge_Object& object ) const;
     //@}
 
     //! @name From ObjectAttribute_ABC
@@ -69,7 +69,7 @@ public:
     //! @name Network update
     //@{
     virtual void SendFullState( Common::MsgObjectAttributes& asn ) const;
-    virtual void SendUpdate( Common::MsgObjectAttributes& asn ) const;  
+    virtual void SendUpdate( Common::MsgObjectAttributes& asn ) const;
     //@}
 
     //! @name ODB
@@ -85,7 +85,7 @@ public:
 
     //! @name CheckPoints
     //@{
-    BOOST_SERIALIZATION_SPLIT_MEMBER()    
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}

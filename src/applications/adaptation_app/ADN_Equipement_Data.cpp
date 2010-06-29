@@ -117,7 +117,7 @@ void ADN_Equipement_Data::CategoryInfo::ReadArchive( xml::xistream& input )
     strCodeEMAT8_ = strName_.GetData();
     strCodeLFRIL_ = strName_.GetData();
     strCodeNNO_   = strName_.GetData();
-    
+
     std::string strNature;
     input >> xml::optional() >> xml::attribute( "codeEMAT6", strCodeEMAT6_ )
           >> xml::optional() >> xml::attribute( "codeEMAT8", strCodeEMAT8_ )
@@ -520,12 +520,12 @@ ADN_Equipement_Data::CategoryInfo* ADN_Equipement_Data::AmmoCategoryInfo::Create
     pCopy->bDirect_ = bDirect_.GetData();
     pCopy->bUrbanAttrition_ = bUrbanAttrition_.GetData();
     pCopy->bIndirect_ = bIndirect_.GetData();
-    
+
     pCopy->rNbrInPackage_  = rNbrInPackage_ .GetData();
     pCopy->rPackageVolume_ = rPackageVolume_.GetData();
     pCopy->rPackageWeight_ = rPackageWeight_.GetData();
 
-    pCopy->strCodeEMAT6_  = strCodeEMAT6_.GetData(); 
+    pCopy->strCodeEMAT6_  = strCodeEMAT6_.GetData();
     pCopy->strCodeEMAT8_  = strCodeEMAT8_.GetData();
     pCopy->strCodeLFRIL_  = strCodeLFRIL_.GetData();
     pCopy->strCodeNNO_    = strCodeNNO_.GetData();
@@ -595,7 +595,7 @@ void ADN_Equipement_Data::AmmoCategoryInfo::ReadArchive( xml::xistream& input )
     std::string type;
     input >> xml::optional() >> xml::attribute( "d-type", bTrancheD_ );
     input >> xml::optional() >> xml::attribute( "type", type );
-    if ( !type.empty() )
+    if( !type.empty() )
     {
         nType_ = ADN_Tr::ConvertToMunitionType( type );
         if( nType_ == E_MunitionType( -1 ) )
@@ -618,9 +618,9 @@ void ADN_Equipement_Data::AmmoCategoryInfo::ReadArchive( xml::xistream& input )
                 >> xml::attribute( "range", fGuidanceRange_ )
               >> xml::end();
     }
-    
 
-    input >> xml::optional() 
+
+    input >> xml::optional()
           >> xml::start( "attritions" )
             >> xml::list( "attrition", *this, &ADN_Equipement_Data::AmmoCategoryInfo::ReadAttrition )
           >> xml::end()
@@ -669,7 +669,7 @@ void ADN_Equipement_Data::AmmoCategoryInfo::WriteArchive( xml::xostream& output 
     {
         output << xml::start( "urbanModifiers" );
         for( IT_UrbanAttritionInfos_Vector itUrbanAttrition = modifUrbanBlocks_.begin(); itUrbanAttrition != modifUrbanBlocks_.end(); ++itUrbanAttrition )
-            (*itUrbanAttrition)->WriteArchive( output ); 
+            (*itUrbanAttrition)->WriteArchive( output );
         output << xml::end();
     }
 
@@ -877,7 +877,7 @@ ADN_Equipement_Data::CategoryInfo* ADN_Equipement_Data::FindEquipementCategory( 
     for ( IT_DotationInfos_Vector it = dotations_.begin(); it != dotations_.end(); ++it )
     {
         ADN_Equipement_Data::CategoryInfo* category = (*it)->FindCategory( strCategoryName );
-        if ( category )
+        if( category )
             return category;
     }
     return 0;

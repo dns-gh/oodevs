@@ -76,11 +76,11 @@ void PHY_RolePion_HumanFactors::load( MIL_CheckPointInArchive& file, const unsig
     file >> nID;
     pMorale_ = PHY_Morale::Find( nID );
     assert( pMorale_ );
-    
+
     file >> nID;
     pExperience_ = PHY_Experience::Find( nID );
     assert( pExperience_ );
-    
+
     file >> nID;
     pTiredness_ = PHY_Tiredness::Find( nID );
     assert( pTiredness_ );
@@ -228,7 +228,7 @@ void PHY_RolePion_HumanFactors::SetMorale( const PHY_Morale& morale )
     pMorale_     = &morale;
     bHasChanged_ = true;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_HumanFactors::SetExperience
 // Created: NLD 2004-11-29
@@ -241,7 +241,7 @@ void PHY_RolePion_HumanFactors::SetExperience( const PHY_Experience& experience 
     pExperience_ = &experience;
     bHasChanged_ = true;
 }
- 
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_HumanFactors::SetTiredness
 // Created: NLD 2004-11-29

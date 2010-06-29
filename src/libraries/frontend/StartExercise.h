@@ -55,7 +55,7 @@ private:
     //@}
 
 private:
-    //! @name Member data 
+    //! @name Member data
     //@{
     std::string exercise_;
     std::string session_ ;

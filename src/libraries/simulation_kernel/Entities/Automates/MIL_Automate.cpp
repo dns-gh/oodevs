@@ -81,7 +81,7 @@ void load_construct_data( Archive& archive, MIL_Automate* automat, const unsigne
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
 MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Formation& parent, xml::xistream& xis, DEC_DataBase& database )
-    : MIL_Entity_ABC                     ( xis ) 
+    : MIL_Entity_ABC                     ( xis )
     , pType_                             ( &type )
     , nID_                               ( nID )
     , pParentFormation_                  ( &parent )
@@ -106,13 +106,13 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
     Initialize( xis, database );
     pParentFormation_->RegisterAutomate( *this );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Automate constructor
 // Created: NLD 2007-03-29
 // -----------------------------------------------------------------------------
 MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Automate& parent, xml::xistream& xis, DEC_DataBase& database )
-    : MIL_Entity_ABC                     ( xis ) 
+    : MIL_Entity_ABC                     ( xis )
     , pType_                             ( &type )
     , nID_                               ( nID )
     , pParentFormation_                  ( 0 )
@@ -143,7 +143,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
 // Created: LDC 2009-04-24
 // -----------------------------------------------------------------------------
 MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID)
-    : MIL_Entity_ABC                     ( "" ) 
+    : MIL_Entity_ABC                     ( "" )
     , pType_                             ( &type )
     , nID_                               ( nID )
     , pParentFormation_                  ( 0 )
@@ -179,7 +179,7 @@ MIL_Automate::~MIL_Automate()
     if( pParentAutomate_ )
         pParentAutomate_->UnregisterAutomate( *this );
     if( pParentFormation_ )
-        pParentFormation_->UnregisterAutomate( *this );    
+        pParentFormation_->UnregisterAutomate( *this );
 }
 
 // =============================================================================
@@ -192,16 +192,16 @@ MIL_Automate::~MIL_Automate()
 // -----------------------------------------------------------------------------
 const DEC_AutomateDecision& MIL_Automate::GetDecision() const
 {
-    return GetRole< DEC_AutomateDecision >(); 
+    return GetRole< DEC_AutomateDecision >();
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Automate::GetDecision
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
-DEC_AutomateDecision& MIL_Automate::GetDecision() 
+DEC_AutomateDecision& MIL_Automate::GetDecision()
 {
-    return GetRole< DEC_AutomateDecision >(); 
+    return GetRole< DEC_AutomateDecision >();
 }
 
 
@@ -253,7 +253,7 @@ namespace boost
 // -----------------------------------------------------------------------------
 void MIL_Automate::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> boost::serialization::base_object< MIL_Entity_ABC >( *this )  
+    file >> boost::serialization::base_object< MIL_Entity_ABC >( *this )
          >> pTC2_
          >> pNominalTC2_;
 
@@ -287,7 +287,7 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void MIL_Automate::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << boost::serialization::base_object< MIL_Entity_ABC >( *this ) 
+    file << boost::serialization::base_object< MIL_Entity_ABC >( *this )
          << pTC2_
          << pNominalTC2_
          << const_cast< unsigned int& >( nID_ );
@@ -315,7 +315,7 @@ void MIL_Automate::save( MIL_CheckPointOutArchive& file, const unsigned int ) co
 // -----------------------------------------------------------------------------
 void MIL_Automate::Initialize( xml::xistream& xis, DEC_DataBase& database )
 {
-    xis >> xml::optional() >> xml::attribute( "engaged", bEngaged_ ); 
+    xis >> xml::optional() >> xml::attribute( "engaged", bEngaged_ );
 
     unsigned int nKnowledgeGroup;
     xis >> xml::attribute( "knowledge-group", nKnowledgeGroup );
@@ -323,13 +323,13 @@ void MIL_Automate::Initialize( xml::xistream& xis, DEC_DataBase& database )
     if( !pKnowledgeGroup_ )
         xis.error( "Unknown knowledge group" );
     pKnowledgeGroup_->RegisterAutomate( *this );
-      
-    RegisterRole( *new DEC_AutomateDecision( *this, database ) ) ; 
+
+    RegisterRole( *new DEC_AutomateDecision( *this, database ) ) ;
     RegisterRole( *new DEC_Representations() );
-    
+
     xis >> xml::list( "unit"    , *this, &MIL_Automate::ReadUnitSubordinate    )
         >> xml::list( "automat" , *this, &MIL_Automate::ReadAutomatSubordinate );
-        
+
     if( !pPionPC_ )
         xis.error( "Automat's command post is not defined" );
 }
@@ -365,7 +365,7 @@ void MIL_Automate::ReadAutomatSubordinate( xml::xistream& xis )
 {
     MIL_AgentServer::GetWorkspace().GetEntityManager().CreateAutomat( xis, *this ); // Auto-registration
 }
-    
+
 // =============================================================================
 // DYNAMIC PIONS
 // =============================================================================
@@ -410,10 +410,10 @@ void MIL_Automate::WriteODB( xml::xostream& xos ) const
     assert( pType_ );
     assert( pKnowledgeGroup_ );
 
-    xos << xml::start( "automat" ); 
-    
-    MIL_Entity_ABC::WriteODB( xos ) ;  
-    
+    xos << xml::start( "automat" );
+
+    MIL_Entity_ABC::WriteODB( xos ) ;
+
     xos << xml::attribute( "id", nID_ )
         << xml::attribute( "engaged", bEngaged_ )
         << xml::attribute( "knowledge-group", pKnowledgeGroup_->GetId() )
@@ -987,7 +987,7 @@ void MIL_Automate::OnReceiveMsgUnitCreationRequest( const MsgsClientToSim::MsgUn
 
     if( !msg.has_parametres() || msg.parametres().elem_size() != 2)
         throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
-    
+
     const Common::MsgMissionParameter& id = msg.parametres().elem( 0 );
     if( !id.has_value() || !id.value().has_identifier() )
         throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
@@ -1002,7 +1002,7 @@ void MIL_Automate::OnReceiveMsgUnitCreationRequest( const MsgsClientToSim::MsgUn
 
     const Common::MsgPoint& point = location.value().point();
 
-    if( point.location().type() != Common::MsgLocation_Geometry_point 
+    if( point.location().type() != Common::MsgLocation_Geometry_point
         || point.location().coordinates().elem_size() != 1 )
         throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
 
@@ -1056,14 +1056,14 @@ void MIL_Automate::OnReceiveMsgMagicActionMoveTo( const MsgsClientToSim::MsgUnit
 
     if( !msg.has_parametres() || msg.parametres().elem_size() != 1 )
         throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
-    
+
     const Common::MsgMissionParameter& parametre = msg.parametres().elem( 0 );
     if( !parametre.has_value() || !parametre.value().has_point() )
         throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
 
     const Common::MsgPoint& point = parametre.value().point();
 
-    if( point.location().type() != Common::MsgLocation_Geometry_point 
+    if( point.location().type() != Common::MsgLocation_Geometry_point
         || point.location().coordinates().elem_size() != 1 )
         throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
 
@@ -1090,7 +1090,7 @@ void MIL_Automate::OnReceiveMsgChangeKnowledgeGroup( const MsgsClientToSim::MsgU
 
     if( !msg.has_parametres() || msg.parametres().elem_size() != 2 )
         throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
-    
+
     if( !msg.parametres().elem( 0 ).has_value() || !msg.parametres().elem( 0 ).value().has_knowledgegroup() )
         throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
 
@@ -1153,7 +1153,7 @@ void MIL_Automate::OnReceiveMsgChangeSuperior( const MsgsClientToSim::MsgUnitMag
         if( pParentAutomate_ )
             pParentAutomate_->UnregisterAutomate( *this );
         if( pParentFormation_ )
-            pParentFormation_->UnregisterAutomate( *this );    
+            pParentFormation_->UnregisterAutomate( *this );
         pParentAutomate_  = 0;
         pParentFormation_ = pNewFormation;
         pNewFormation->RegisterAutomate( *this );
@@ -1165,12 +1165,12 @@ void MIL_Automate::OnReceiveMsgChangeSuperior( const MsgsClientToSim::MsgUnitMag
             throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_automate );
         if( pNewAutomate->GetArmy() != GetArmy() )
             throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_teams_mismatched );
-        if( pNewAutomate == this ) 
+        if( pNewAutomate == this )
             throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_automate );
         if( pParentAutomate_ )
             pParentAutomate_->UnregisterAutomate( *this );
         if( pParentFormation_ )
-            pParentFormation_->UnregisterAutomate( *this );    
+            pParentFormation_->UnregisterAutomate( *this );
         pParentFormation_ = 0;
         pParentAutomate_  = pNewAutomate;
         pNewAutomate->RegisterAutomate( *this );

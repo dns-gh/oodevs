@@ -21,11 +21,11 @@ class Population;
 // =============================================================================
 class PopulationPositions : public kernel::Positions
 {
-    
+
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PopulationPositions( const Population& popu ); // $$$$ AGE 2006-04-10: 
+    explicit PopulationPositions( const Population& popu ); // $$$$ AGE 2006-04-10:
     virtual ~PopulationPositions();
     //@}
 

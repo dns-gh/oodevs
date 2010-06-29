@@ -20,7 +20,7 @@
 // Created: JSR 2010-06-07
 // -----------------------------------------------------------------------------
 EfficientRangeDialog::EfficientRangeDialog( QWidget* parent, kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::VolumeType >& resolver, kernel::Options& options )
-    : QDialog ( parent, 0, true, WStyle_Customize | WStyle_NormalBorder | WStyle_Title ) 
+    : QDialog ( parent, 0, true, WStyle_Customize | WStyle_NormalBorder | WStyle_Title )
     , controllers_    ( controllers )
     , resolver_( resolver )
     , options_( options )

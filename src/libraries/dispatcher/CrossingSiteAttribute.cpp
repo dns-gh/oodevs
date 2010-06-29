@@ -22,7 +22,7 @@ CrossingSiteAttribute::CrossingSiteAttribute( const Common::MsgObjectAttributes&
     : nWidth_            ( 0 )
     , nDepth_            ( 0 )
     , nSpeed_            ( 0 )
-    , bNeedsConstruction_( false ) 
+    , bNeedsConstruction_( false )
 {
     Update( asnMsg );
 }
@@ -34,7 +34,7 @@ CrossingSiteAttribute::CrossingSiteAttribute( const Common::MsgObjectAttributes&
 CrossingSiteAttribute::~CrossingSiteAttribute()
 {
     // NOTHING
-}  
+}
 
 // -----------------------------------------------------------------------------
 // Name: CrossingSiteAttribute::Update
@@ -42,7 +42,7 @@ CrossingSiteAttribute::~CrossingSiteAttribute()
 // -----------------------------------------------------------------------------
 void CrossingSiteAttribute::Update( const Common::MsgObjectAttributes& asnMsg )
 {
-    if ( asnMsg.has_crossing_site() )
+    if( asnMsg.has_crossing_site() )
     {
         nWidth_             = asnMsg.crossing_site().width();
         nDepth_             = asnMsg.crossing_site().depth();

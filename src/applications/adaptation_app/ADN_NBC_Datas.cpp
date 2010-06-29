@@ -90,7 +90,7 @@ void ADN_NBC_Datas::NbcIntoxInfos::ReadEffect( xml::xistream& input )
 {
     using namespace std;
     const std::string wound = lower( xml::attribute< std::string >( input, "wound" ) );
-    ADN_Type_Double* pWound = 
+    ADN_Type_Double* pWound =
         wound == "nonblesse" ? &rNbAlivedHumans_ :
         wound == "u1"        ? &rNbHurtedHumans1_ :
         wound == "u2"        ? &rNbHurtedHumans2_ :
@@ -104,7 +104,7 @@ void ADN_NBC_Datas::NbcIntoxInfos::ReadEffect( xml::xistream& input )
         if( pWound->GetData() < 0. || pWound->GetData() > 100. )
             throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "NBC - Wound '%1' data < 0 or > 1" ).arg( wound.c_str() ).ascii() );
     }
-    else 
+    else
         throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "NBC - Invalid wound type '%1'" ).arg( wound.c_str() ).ascii() );
 }
 
@@ -233,7 +233,7 @@ void ADN_NBC_Datas::NbcGazInfos::ReadArchive( xml::xistream& input )
     input >> xml::attribute( "life-time", lifeTime_ )
           >> xml::attribute( "propagation", rSpreadAngle_ );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_NBC_Datas::WriteArchive
 // Created: SBO 2006-10-30
@@ -310,7 +310,7 @@ void ADN_NBC_Datas::NbcAgentInfos::ReadEffect( xml::xistream& input )
     if( type == "liquid" )
     {
         bLiquidPresent_ = true;
-        liquidInfos_.ReadArchive( input );    
+        liquidInfos_.ReadArchive( input );
     }
     else if( type == "gaseous" )
     {
@@ -335,7 +335,7 @@ void ADN_NBC_Datas::NbcAgentInfos::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_NBC_Datas::NbcAgentInfos::WriteArchive( xml::xostream& output )
 {
-    if ( !bLiquidPresent_.GetData() && !bGazPresent_.GetData() )
+    if( !bLiquidPresent_.GetData() && !bGazPresent_.GetData() )
         return;
     output << xml::start( "agent" )
            << xml::attribute( "name", strName_ )

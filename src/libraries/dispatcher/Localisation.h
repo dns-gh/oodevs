@@ -33,8 +33,8 @@ class Localisation
 public:
     //! @name Constructors/Destructor
     //@{
-             Localisation(); 
-    explicit Localisation( const Common::MsgLocation& asn ); 
+             Localisation();
+    explicit Localisation( const Common::MsgLocation& asn );
     virtual ~Localisation();
     //@}
 

@@ -71,7 +71,7 @@ void MIL_NbcAgentType::Initialize( xml::xistream& xis )
         xis.error( "propagation: contamination-distance < 0" );
 
     rMinPropagationSpeed_ = MIL_Tools::ConvertSpeedMosToSim( rMinPropagationSpeed_ );
-   
+
     LoadingWrapper loader;
 
     xis >> xml::start( "agents" )
@@ -160,7 +160,7 @@ void MIL_NbcAgentType::ReadLiquid( xml::xistream& xis )
 {
     if( ReadPoisonousData( xis, liquidPoisonous_ ) )
         bLiquidPoisonous_ = true;
-    
+
     xis >> xml::optional() >> xml::attribute( "contamination", bLiquidContaminating_ );
 }
 

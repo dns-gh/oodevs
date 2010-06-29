@@ -58,14 +58,14 @@ DEC_Knowledge_ObjectCollision::~DEC_Knowledge_ObjectCollision()
 // Name: DEC_Knowledge_ObjectCollision::serialize
 // Created: JVT 2005-04-14
 // -----------------------------------------------------------------------------
-template< typename Archive > 
+template< typename Archive >
 void DEC_Knowledge_ObjectCollision::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
          & const_cast< MIL_Agent_ABC*& >( pAgentColliding_ )
          & pObject_
          & vPosition_
-         & bIsValid_;    
+         & bIsValid_;
 }
 
 // -----------------------------------------------------------------------------
@@ -93,7 +93,7 @@ void DEC_Knowledge_ObjectCollision::Update( const MT_Vector2D& vPosition )
 // -----------------------------------------------------------------------------
 bool DEC_Knowledge_ObjectCollision::IsValid() const
 {
-    return bIsValid_;    
+    return bIsValid_;
 }
 
 // -----------------------------------------------------------------------------
@@ -103,7 +103,7 @@ bool DEC_Knowledge_ObjectCollision::IsValid() const
 MIL_Object_ABC& DEC_Knowledge_ObjectCollision::GetObject() const
 {
     assert( pObject_ );
-    return *pObject_;    
+    return *pObject_;
 }
 
 // -----------------------------------------------------------------------------
@@ -113,9 +113,9 @@ MIL_Object_ABC& DEC_Knowledge_ObjectCollision::GetObject() const
 const MIL_Agent_ABC& DEC_Knowledge_ObjectCollision::GetAgentColliding() const
 {
     assert( pAgentColliding_ );
-    return *pAgentColliding_;   
+    return *pAgentColliding_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectCollision::GetPosition
 // Created: NLD 2004-11-03

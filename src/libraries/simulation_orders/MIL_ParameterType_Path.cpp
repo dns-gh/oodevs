@@ -21,7 +21,7 @@ MIL_ParameterType_Path::MIL_ParameterType_Path( const std::string& name )
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_Path destructor
 // Created: SBO 2006-11-27
@@ -30,7 +30,7 @@ MIL_ParameterType_Path::~MIL_ParameterType_Path()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_Path::Copy
 // Created: SBO 2006-11-27

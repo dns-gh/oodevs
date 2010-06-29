@@ -21,7 +21,7 @@ namespace TEST {
     @brief  Mission_Pawn_ABC_AppuyerSurPosition
 */
 // Created: SBO 2005-08-08
-// Generated: 
+// Generated:
 // =============================================================================
 class Mission_Pawn_ABC_AppuyerSurPosition : public Mission_Pawn_ABC
 {

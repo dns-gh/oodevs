@@ -97,7 +97,7 @@ AgentFactory::AgentFactory( kernel::Controllers& controllers, Model& model, cons
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: AgentFactory destructor
 // Created: AGE 2006-02-13
@@ -144,7 +144,7 @@ kernel::Automat_ABC* AgentFactory::Create( const MsgsSimToClient::MsgAutomatCrea
 
     result->Update( message );
     result->Polish();
-    
+
     return result;
 }
 

@@ -69,21 +69,21 @@ namespace
     public:
         AttributeFactory() {}
         virtual ~AttributeFactory() {}
-        
+
         void Register( const std::string& attribute, const T_CallBack& callback )
         {
-            if ( ! callbacks_.insert( std::make_pair( attribute, callback ) ).second )
+            if( ! callbacks_.insert( std::make_pair( attribute, callback ) ).second )
                 throw std::invalid_argument( "capacity '" + attribute + "' already registered." );
         }
-        
+
         void Create( const std::string& attribute, tools::SortedInterfaceContainer< Extension_ABC >& result, PropertiesDictionary& dico, xml::xistream& xis )
         {
             const CIT_Callbacks it = callbacks_.find( attribute );
-            if ( it != callbacks_.end() )
+            if( it != callbacks_.end() )
                 it->second( result, dico, xis );
         }
 
-    private:    
+    private:
         //! @name Type
         //@{
         typedef std::map< std::string, T_CallBack > T_CallBacks;
@@ -102,7 +102,7 @@ namespace
         {
             result.Register( *new T( xis, dico ) );
         }
-        
+
         template< typename T, typename Helper >
         static void Attach( tools::SortedInterfaceContainer< Extension_ABC >& result, PropertiesDictionary& dico, const Helper& helper, xml::xistream& xis )
         {
@@ -136,7 +136,7 @@ TeamFactory::TeamFactory( Controllers& controllers, Model& model, const StaticMo
     , staticModel_( staticModel )
     , idManager_( idManager )
     , factory_    ( )
-{ 
+{
     // NOTHING
 }
 
@@ -160,13 +160,13 @@ void TeamFactory::Initialize()
     factory->Register( "activity-time"      , BIND_ATTACH_ATTRIBUTE( ActivityTimeAttribute, _1, _2, _3 ) );
     factory->Register( "bypass"             , BIND_ATTACH_ATTRIBUTE( BypassAttribute, _1, _2, _3 ) );
     factory->Register( "construction"       , BIND_ATTACH_ATTRIBUTE( ConstructionAttribute, _1, _2, _3 ) );
-    factory->Register( "crossing-site"      , BIND_ATTACH_ATTRIBUTE( CrossingSiteAttribute, _1, _2, _3 ) );    
+    factory->Register( "crossing-site"      , BIND_ATTACH_ATTRIBUTE( CrossingSiteAttribute, _1, _2, _3 ) );
     factory->Register( "fire"               , BIND_ATTACH_ATTRIBUTE_STRING_HELPER( FireAttribute, kernel::FireClass, _1, _2, boost::cref( staticModel_.objectTypes_ ), _3 ) );
-    factory->Register( "input-toxic-cloud"  , 
+    factory->Register( "input-toxic-cloud"  ,
                        boost::bind( &AttributeBuilder< ToxicCloudAttribute_ABC >::Attach< InputToxicCloudAttribute >, _1, _2, _3 ) );
-    factory->Register( "medical-treatment"  , BIND_ATTACH_ATTRIBUTE_STRING_HELPER( MedicalTreatmentAttribute, kernel::MedicalTreatmentType, _1, _2, boost::cref( staticModel_.objectTypes_ ), _3 ) );    
+    factory->Register( "medical-treatment"  , BIND_ATTACH_ATTRIBUTE_STRING_HELPER( MedicalTreatmentAttribute, kernel::MedicalTreatmentType, _1, _2, boost::cref( staticModel_.objectTypes_ ), _3 ) );
     factory->Register( "mine"               , BIND_ATTACH_ATTRIBUTE( MineAttribute, _1, _2, _3 ) );
-    factory->Register( "nbc-agents"         , BIND_ATTACH_ATTRIBUTE_STRING_HELPER( NBCAttribute, kernel::NBCAgent, _1, _2, boost::cref( staticModel_.objectTypes_ ), _3 ) );    
+    factory->Register( "nbc-agents"         , BIND_ATTACH_ATTRIBUTE_STRING_HELPER( NBCAttribute, kernel::NBCAgent, _1, _2, boost::cref( staticModel_.objectTypes_ ), _3 ) );
     factory->Register( "obstacle"           , BIND_ATTACH_ATTRIBUTE( ObstacleAttribute, _1, _2, _3 ) );
     factory->Register( "supply-route"       , BIND_ATTACH_ATTRIBUTE( SupplyRouteAttribute, _1, _2, _3 ) );
     factory->Register( "tc2"                , BIND_ATTACH_ATTRIBUTE_HELPER( LogisticAttribute, kernel::Automat_ABC, _1, _2, boost::cref( model_.agents_ ), _3, boost::ref( controllers_ ) ) );
@@ -235,7 +235,7 @@ kernel::Object_ABC* TeamFactory::CreateObject( xml::xistream& xis, kernel::Team_
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< Positions >( *new ObjectPositions( xis, staticModel_.coordinateConverter_, result->GetType() ) );
     result->Attach< kernel::TacticalHierarchies >( *new ObjectHierarchies( *result, &team ) );
-    
+
     ObjectAttributesContainer& attributes = *new ObjectAttributesContainer();
     result->Attach< ObjectAttributesContainer >( attributes );
     xis >> xml::start( "attributes" )

@@ -229,7 +229,7 @@ bool PHY_Tiredness::operator==( const PHY_Tiredness& rhs ) const
 {
     return nType_ == rhs.nType_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_Tiredness::operator!=
 // Created: NLD 2004-11-29

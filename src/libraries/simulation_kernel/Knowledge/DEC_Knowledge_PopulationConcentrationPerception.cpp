@@ -108,7 +108,7 @@ void DEC_Knowledge_PopulationConcentrationPerception::Update( const PHY_Percepti
 {
     assert( perceptionLevel != PHY_PerceptionLevel::notSeen_ );
     if( perceptionLevel > *pCurrentPerceptionLevel_ )
-        pCurrentPerceptionLevel_ = &perceptionLevel;   
+        pCurrentPerceptionLevel_ = &perceptionLevel;
 }
 
 // -----------------------------------------------------------------------------

@@ -31,7 +31,7 @@ class ADN_Launchers_ModifPhs_GUI_Connector
 {
 public:
 
-    ADN_Launchers_ModifPhs_GUI_Connector(ADN_Launchers_ModifPhs_GUI& tab) 
+    ADN_Launchers_ModifPhs_GUI_Connector(ADN_Launchers_ModifPhs_GUI& tab)
     : ADN_Connector_Table_ABC(tab,false)
     {}
 
@@ -51,7 +51,7 @@ public:
             pItemDouble->GetConnector().Connect(pLine->operator[](j));
         }
     }
-    
+
 private:
     ADN_Launchers_ModifPhs_GUI_Connector& operator=( const ADN_Launchers_ModifPhs_GUI_Connector& );
 };
@@ -68,7 +68,7 @@ ADN_Launchers_ModifPhs_GUI::ADN_Launchers_ModifPhs_GUI( QWidget * parent )
     // peut etre selectionne & trie
     setSelectionMode( QTable::NoSelection );
     setShowGrid( false );
-    
+
     // columns
     setNumCols( eNbrUnitPosture );
     setNumRows( eNbrUnitPosture );
@@ -81,7 +81,7 @@ ADN_Launchers_ModifPhs_GUI::ADN_Launchers_ModifPhs_GUI( QWidget * parent )
 
     int nRowHeight = this->rowHeight( 0 );
     this->setMaximumHeight( ( eNbrUnitPosture + 1 ) * nRowHeight + 5);
-    
+
     // connector creation
     pConnector_=new ADN_Launchers_ModifPhs_GUI_Connector(*this);
 }

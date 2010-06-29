@@ -73,7 +73,7 @@ TimeLimitedAttribute::TimeLimitedAttribute( const Common::MsgMissionParameter_Va
 TimeLimitedAttribute::TimeLimitedAttribute( const TimeLimitedAttribute& from )
     : nActivityTime_ ( from.nActivityTime_ )
     , nDeathTimeStep_ ( from.nDeathTimeStep_ )
-{    
+{
     // NOTHING
 }
 
@@ -81,7 +81,7 @@ TimeLimitedAttribute::TimeLimitedAttribute( const TimeLimitedAttribute& from )
 // Name: TimeLimitedAttribute::operator=
 // Created: JCR 2008-08-21
 // -----------------------------------------------------------------------------
-TimeLimitedAttribute& TimeLimitedAttribute::operator=( const TimeLimitedAttribute& from )  
+TimeLimitedAttribute& TimeLimitedAttribute::operator=( const TimeLimitedAttribute& from )
 {
     nActivityTime_ = from.nActivityTime_;
     nDeathTimeStep_ = from.nDeathTimeStep_;
@@ -103,9 +103,9 @@ TimeLimitedAttribute::~TimeLimitedAttribute()
 // -----------------------------------------------------------------------------
 template< typename Archive >
 void TimeLimitedAttribute::serialize( Archive& file, const unsigned int )
-{    
-    file & boost::serialization::base_object< ObjectAttribute_ABC >( *this )         
-         & nActivityTime_ 
+{
+    file & boost::serialization::base_object< ObjectAttribute_ABC >( *this )
+         & nActivityTime_
          & nDeathTimeStep_;
 }
 
@@ -126,7 +126,7 @@ void TimeLimitedAttribute::WriteODB( xml::xostream& xos ) const
 {
     xos << xml::start( "activity-time" )
         << xml::attribute( "value", nActivityTime_ );
-    if ( nDeathTimeStep_ > 0 )
+    if( nDeathTimeStep_ > 0 )
         xos << xml::attribute( "initial", nDeathTimeStep_ );
     xos << xml::end();
 }
@@ -137,7 +137,7 @@ void TimeLimitedAttribute::WriteODB( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 bool TimeLimitedAttribute::IsTimeOver( unsigned int time ) const
 {
-    if ( nActivityTime_ == 0 )
+    if( nActivityTime_ == 0 )
         return false;
     if( nDeathTimeStep_ == 0 )
         nDeathTimeStep_ = unsigned int( time + MIL_Tools::ConvertSecondsToSim( nActivityTime_ ) );
@@ -152,7 +152,7 @@ void TimeLimitedAttribute::SendFullState( Common::MsgObjectAttributes& asn ) con
 {
     asn.mutable_activity_time()->set_value( nActivityTime_ );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: TimeLimitedAttribute::SendUpdate
 // Created: JCR 2008-08-21

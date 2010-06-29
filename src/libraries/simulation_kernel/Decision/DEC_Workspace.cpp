@@ -278,7 +278,7 @@ void DEC_Workspace::ReadModel( xml::xistream& xis, const std::map< std::string, 
 {
     std::string strName;
     xis >> xml::attribute( "name", strName );
-    
+
     T_ModelMap* pModels = modelTypes_[strEntityType];
     if( !pModels )
         xis.error( "Unknown model type" );
@@ -317,7 +317,7 @@ float DEC_Workspace::GetTime() const
 // Created: LDC 2009-05-25
 // -----------------------------------------------------------------------------
 void DEC_Workspace::InitializeObjectNames( MIL_Config& config )
-{    
+{
     xml::xifstream xis( config.GetPhysicalFile() );
     std::string strFile;
     xis >> xml::start( "physical" )

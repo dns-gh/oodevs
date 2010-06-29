@@ -30,7 +30,7 @@ ParamDotationTypeList::ParamDotationTypeList( QObject* parent, const kernel::Ord
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ParamDotationTypeList destructor
 // Created: SBO 2006-08-09
@@ -53,7 +53,7 @@ void ParamDotationTypeList::BuildInterface( QWidget* parent )
     list_->header()->hide();
     list_->header()->setResizeEnabled( false, 1 );
     list_->hideColumn( 1 );
-    
+
     list_->setSelectionMode( QListView::Multi );
 
     tools::Iterator< const kernel::DotationType& > it = resolver_.CreateIterator();

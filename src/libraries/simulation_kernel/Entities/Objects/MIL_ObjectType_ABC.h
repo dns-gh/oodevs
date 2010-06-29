@@ -34,7 +34,7 @@ public:
     virtual const std::string& GetName() const = 0;
     //@}
 
-    //! @name 
+    //! @name
     //@{
     template< typename Capacity >
     const Capacity* GetCapacity() const;
@@ -48,7 +48,7 @@ private:
     //@}
 };
 
-template< typename Capacity > 
+template< typename Capacity >
 const Capacity* MIL_ObjectType_ABC::GetCapacity() const
 {
     return Retrieve< Capacity >();

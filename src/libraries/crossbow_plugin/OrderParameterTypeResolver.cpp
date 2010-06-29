@@ -31,7 +31,7 @@ int OrderParameterTypeResolver::Resolve( const std::string& type ) const
     std::string lowerType = type;
     std::transform( type.begin(), type.end(), lowerType.begin(), &tolower );
     T_TypeMap::const_iterator it = map_.find( lowerType );
-    if ( it != map_.end() )
+    if( it != map_.end() )
         return it->second;
     throw std::runtime_error( "Unsupported parameter type" );
 }

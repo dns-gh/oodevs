@@ -32,7 +32,7 @@ DotationQuota::~DotationQuota()
 {
     // NOTHING
 }
-       
+
 // -----------------------------------------------------------------------------
 // Name: DotationQuota::Update
 // Created: NLD 2006-09-26

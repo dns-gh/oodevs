@@ -214,7 +214,7 @@ unsigned int PHY_BreakdownType::GetID() const
 const PHY_BreakdownType* PHY_BreakdownType::Find( const std::string& strName )
 {
     CIT_BreakdownMap it = breakdowns_.find( strName );
-    
+
     return it == breakdowns_.end() ? 0 :  it->second;
 }
 
@@ -245,7 +245,7 @@ bool PHY_BreakdownType::AffectMobility() const
 // -----------------------------------------------------------------------------
 bool PHY_BreakdownType::AffectElectronic() const
 {
-    return nType_ == eElectronic;   
+    return nType_ == eElectronic;
 }
 
 // -----------------------------------------------------------------------------

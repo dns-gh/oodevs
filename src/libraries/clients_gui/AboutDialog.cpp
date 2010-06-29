@@ -55,7 +55,7 @@ AboutDialog::AboutDialog( QWidget* parent, ItemFactory_ABC& factory, const QStri
     QPushButton* button = new QPushButton( tr( "Close" ), hbox );
     connect( button, SIGNAL( clicked() ), this, SLOT( accept() ) );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: AboutDialog destructor
 // Created: SBO 2006-05-04

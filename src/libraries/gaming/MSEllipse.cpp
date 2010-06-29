@@ -65,7 +65,7 @@ void MSEllipse::Draw( const GlTools_ABC& tools ) const
 // -----------------------------------------------------------------------------
 bool MSEllipse::IsInside( geometry::Point2f point ) const
 {
-    point.Set( point.X() - origin_.X(), point.Y() - origin_.Y())  ; 
+    point.Set( point.X() - origin_.X(), point.Y() - origin_.Y())  ;
     const float value = ( majorAxis_ * majorAxis_ * point.X() * point.X()
         + majorAxis_ * majorAxis_  * point.Y() * point.Y()
         + minorAxis_ * minorAxis_ * point.X() * point.Y()

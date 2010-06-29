@@ -37,7 +37,7 @@ class ADN_Connector_TrucksDoubleTable
     : public ADN_Connector_Table_ABC
 {
 public:
-    ADN_Connector_TrucksDoubleTable( ADN_Supply_TrucksDoubleTable& tab ) 
+    ADN_Connector_TrucksDoubleTable( ADN_Supply_TrucksDoubleTable& tab )
         : ADN_Connector_Table_ABC( tab, false, "ADN_Connector_TrucksDoubleTable" )
     {}
 
@@ -131,7 +131,7 @@ void ADN_Supply_TrucksDoubleTable::OnContextMenu( int /*nRow*/, int /*nCol*/, co
         ConvoyInfo* pNewInfo = new ConvoyInfo( 1. );
         ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
         pCTable->AddItem( pNewInfo );
-        pCTable->AddItem( 0 );  
+        pCTable->AddItem( 0 );
     }
 }
 

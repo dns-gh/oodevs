@@ -47,7 +47,7 @@ public:
 
     //! @name CheckPoints
     //@{
-    BOOST_SERIALIZATION_SPLIT_MEMBER()    
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
@@ -59,14 +59,14 @@ public:
 
     //! @name Knowledge
     //@{
-    virtual void Instanciate( DEC_Knowledge_Object& object ) const;    
+    virtual void Instanciate( DEC_Knowledge_Object& object ) const;
     //@}
 
     //! @name Network Update
     //@{
     virtual void SendFullState( Common::MsgObjectAttributes& asn ) const;
     virtual void SendUpdate( Common::MsgObjectAttributes& asn ) const;
-    virtual void OnUpdate( const Common::MsgMissionParameter_Value& attribute );        
+    virtual void OnUpdate( const Common::MsgMissionParameter_Value& attribute );
     //@}
 
     //! @name ODB
@@ -90,7 +90,7 @@ public:
     //@}
 
     //! @name Accessors
-    //@{    
+    //@{
     bool HasDotation( const PHY_DotationCategory& dotation ) const;
     unsigned int GetDotationNeededForConstruction( MT_Float rDeltaPercentage ) const;
     unsigned int GetDotationRecoveredWhenDestroying( MT_Float rDeltaPercentage ) const;
@@ -111,7 +111,7 @@ private:
     //@{
     typedef std::map< const PHY_DotationCategory*, std::pair< unsigned int, unsigned int > >    T_DotationProgress;
     //@}
-    
+
 
 private:
     //! @name Member data

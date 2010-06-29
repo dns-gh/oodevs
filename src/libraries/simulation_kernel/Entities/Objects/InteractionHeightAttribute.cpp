@@ -66,7 +66,7 @@ void InteractionHeightAttribute::serialize( Archive& file, const unsigned int )
     file & boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     file & height_;
 }
- 
+
 // -----------------------------------------------------------------------------
 // Name: InteractionHeightAttribute::Instanciate
 // Created: LDC 2009-03-09
@@ -100,7 +100,7 @@ void InteractionHeightAttribute::SendFullState( Common::MsgObjectAttributes& asn
 // -----------------------------------------------------------------------------
 void InteractionHeightAttribute::WriteODB( xml::xostream& xos ) const
 {
-    xos << xml::start( "max-interaction-height" ) 
+    xos << xml::start( "max-interaction-height" )
             << xml::attribute( "height", height_ )
         << xml::end();
 }

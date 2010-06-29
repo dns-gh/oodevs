@@ -10,6 +10,6 @@
 #include "actions_gui_pch.h"
 #include "resources.h"
 
-#define static 
+#define static
 
 #include "res/mission_title.xpm"

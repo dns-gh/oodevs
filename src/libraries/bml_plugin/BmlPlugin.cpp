@@ -51,7 +51,7 @@ BmlPlugin::~BmlPlugin()
 // -----------------------------------------------------------------------------
 void BmlPlugin::Receive( const MsgSimToClient& wrapper )
 {
-    if ( wrapper.message().has_control_end_tick() )
+    if( wrapper.message().has_control_end_tick() )
     {
         simulation_->Update( wrapper.message().control_end_tick() );
         publisher_->CommitOrders();

@@ -27,7 +27,7 @@ namespace MsgsSimToClient
     class MsgPopulationCreation;
     class MsgPopulationUpdate;
     class MsgPopulationConcentrationCreation;
-    class MsgPopulationConcentrationUpdate;  
+    class MsgPopulationConcentrationUpdate;
     class MsgPopulationConcentrationDestruction;
 }
 
@@ -104,7 +104,7 @@ private:
     const unsigned long nType_;
     const std::string strName_;
     dispatcher::Team_ABC& side_;
-    
+
     unsigned int nDominationState_;
     std::auto_ptr< PopulationOrder > order_;
     DecisionalState decisionalInfos_;

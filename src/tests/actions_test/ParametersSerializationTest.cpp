@@ -206,7 +206,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Agent )
     MOCK_EXPECT( agent, GetId ).returns( 42 );
     MockEntityResolver resolver;
     MOCK_EXPECT( resolver, GetAgent ).with( 42 ).returns( boost::ref( agent ) );
-    std::auto_ptr< Common::MsgMissionParameter > message( Serialize( "agent", input, 
+    std::auto_ptr< Common::MsgMissionParameter > message( Serialize( "agent", input,
         bl::bind( bl::new_ptr< actions::parameters::Agent >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( controller ) ) ) );
     CheckSet( *message );
     BOOST_CHECK_EQUAL( 42, message->value().unit().oid() );
@@ -229,7 +229,7 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( ParametersSerialization_Polygon )
 {
-    const std::string input( 
+    const std::string input(
         "<parameter name='Area' type='Polygon'>"
           "<location type='polygon'>"
             "<point coordinates='30TYS1037476379'/>"
@@ -259,7 +259,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Polygon )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( ParametersSerialization_Path )
 {
-    const std::string input( 
+    const std::string input(
         "<parameter name='Assault route' type='Path'>"
             "<parameter name='Pass point1' type='pathpoint'>"
                 "<location type='point'>"
@@ -284,7 +284,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Path )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParametersSerialization_Direction 
+// Name: ParametersSerialization_Direction
 // Created: FHD 2009-10-29
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( ParametersSerialization_Direction )
@@ -307,7 +307,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Automat )
     MOCK_EXPECT( automat, GetId ).returns( 42 );
     MockEntityResolver resolver;
     MOCK_EXPECT( resolver, GetAutomat ).with( 42 ).returns( boost::ref( automat ) );
-    std::auto_ptr< Common::MsgMissionParameter > message( Serialize( "automate", input, 
+    std::auto_ptr< Common::MsgMissionParameter > message( Serialize( "automate", input,
         bl::bind( bl::new_ptr< actions::parameters::Automat >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( controller ) ) ) );
     CheckSet( *message );
     BOOST_CHECK_EQUAL( 42, message->value().automat().oid() );
@@ -320,9 +320,9 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Automat )
 //BOOST_AUTO_TEST_CASE( ParametersSerialization_Level )
 //{
 //    // $$$$ FHD 2009-10-30: TODO find a right formatted level order
-//    const std::string input( "<parameter name='test' type='level' value='42'/>" );     
+//    const std::string input( "<parameter name='test' type='level' value='42'/>" );
 //    kernel::FormationLevels levels;
-//    std::auto_ptr< Common::MsgMissionParameter > message( Serialize( "level", input, 
+//    std::auto_ptr< Common::MsgMissionParameter > message( Serialize( "level", input,
 //        bl::bind( bl::new_ptr< actions::parameters::Level >(), bl::_1, bl::_2, bl::var( levels ) ) ) );
 //    CheckSet( *message );
 //    //BOOST_CHECK_EQUAL( 42, message->value().oid() );
@@ -339,13 +339,13 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Automat )
 //    tools::Resolver< kernel::Formation_ABC > resolver;
 //    MockFormation formation;
 //    resolver.Register( formation.GetId(), formation );
-//    std::auto_ptr< Common::MsgMissionParameter > message( Serialize( "formation", input, 
+//    std::auto_ptr< Common::MsgMissionParameter > message( Serialize( "formation", input,
 //        bl::bind( bl::new_ptr< actions::parameters::Formation >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( controller ) ) ) );
 //    CheckSet( *message );
 //    BOOST_CHECK_EQUAL( 42, message->value().unit().oid() );
 //}
 // -----------------------------------------------------------------------------
-// Name: ParametersSerialization_DotationType 
+// Name: ParametersSerialization_DotationType
 // Created: SBO 2009-10-29
 // -----------------------------------------------------------------------------
 //BOOST_AUTO_TEST_CASE( ParametersSerialization_DotationType )
@@ -361,7 +361,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Automat )
 //}
 
 // -----------------------------------------------------------------------------
-// Name: ParametersSerialization_Datetime 
+// Name: ParametersSerialization_Datetime
 // Created: FHD 2009-10-29
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( ParametersSerialization_Datetime )
@@ -373,7 +373,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Datetime )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParametersSerialization_AtlasNature 
+// Name: ParametersSerialization_AtlasNature
 // Created: FHD 2009-10-29
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( ParametersSerialization_AtlasNature )
@@ -388,7 +388,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_AtlasNature )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParametersSerialization_Enumeration 
+// Name: ParametersSerialization_Enumeration
 // Created: SBO 2009-10-29
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( ParametersSerialization_Enumeration )
@@ -396,7 +396,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Enumeration )
     const std::string input( "<parameter name='name' optional='false' type='Enumeration' value='2'/>");
     xml::xistringstream xis( input ); xis >> xml::start( "parameter" );
 
-    const std::string enumeration( 
+    const std::string enumeration(
         "<parameter name='my enumeration' optional='false' type='enumeration'>"
             "<value name='my value1' id='1'/>"
             "<value name='my value2' id='2'/>"
@@ -451,7 +451,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Lima )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( ParametersSerialization_Limit )
 {
-    const std::string input( 
+    const std::string input(
         "<parameter name='Boundary limit 1' type='Limit'>"
           "<location type='line'>"
             "<point coordinates='30TXS2657258333'/>"
@@ -487,8 +487,8 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_AgentList )
 //    "</parameter>" );
 //    kernel::Controller controller;
 //    tools::Resolver< kernel::Agent_ABC > resolver;
-//    
-//    
+//
+//
 //    MockAgent agent;
 //    MOCK_EXPECT( agent, GetId ).returns( 62 );
 //    MOCK_EXPECT( agent, GetId ).returns( 63 );
@@ -497,10 +497,10 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_AgentList )
 //    MOCK_EXPECT( agent, GetId ).returns( 66 );
 //    resolver.Register( agent.GetId(), agent );
 //
-//    std::auto_ptr< Common::MsgMissionParameter > message( Serialize( "agentlist", input, 
+//    std::auto_ptr< Common::MsgMissionParameter > message( Serialize( "agentlist", input,
 //        bl::bind( bl::new_ptr< actions::parameters::AgentList >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( controller ) ) ) );
-//    
-//    CheckSet( *message );    
+//
+//    CheckSet( *message );
 //    BOOST_CHECK_EQUAL( 62, message->value().unitlist().elem(0).oid() );
 //    BOOST_CHECK_EQUAL( 63, message->value().unitlist().elem(1).oid() );
 //    BOOST_CHECK_EQUAL( 64, message->value().unitlist().elem(2).oid() );
@@ -510,7 +510,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_AgentList )
 
 // -----------------------------------------------------------------------------
 // Name: ParametersSerialization_PopulationKnowledge
-// @brief Population real id is stored in XML, converter tries to find a matching knowledge 
+// @brief Population real id is stored in XML, converter tries to find a matching knowledge
 // Created: FHD 2009-10-29
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( ParametersSerialization_PopulationKnowledge )
@@ -529,14 +529,14 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_PopulationKnowledge )
 
     kernel::Controller controller;
     MOCK_EXPECT( knowledge, GetPopulationEntity ).returns( &population );
-    std::auto_ptr< Common::MsgMissionParameter > message( Serialize( "populationknowledge", input, 
+    std::auto_ptr< Common::MsgMissionParameter > message( Serialize( "populationknowledge", input,
         bl::bind( bl::new_ptr< actions::parameters::PopulationKnowledge >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( converter ), bl::var( owner ), bl::var( controller ) ) ) );
     BOOST_CHECK_EQUAL( 15, message->value().populationknowledge().oid() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ParametersSerialization_ObjectKnowledge
-// @brief Object real id is stored in XML, converter tries to find a matching knowledge 
+// @brief Object real id is stored in XML, converter tries to find a matching knowledge
 // Created: SBO 2009-10-29
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( ParametersSerialization_ObjectKnowledge )
@@ -556,7 +556,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_ObjectKnowledge )
     MockObjectKnowledgeConverter converter;
     MOCK_EXPECT( converter, FindObjectKnowledgeFromObjectWithEntity ).with( mock::same( object ), mock::same( owner ) ).returns( &knowledge );
     MOCK_EXPECT( knowledge, GetObjectEntity ).returns( &object );
-    
+
     kernel::Controller controller;
     std::auto_ptr< Common::MsgMissionParameter > message( Serialize( "objectknowledge", input,
         bl::bind( bl::new_ptr< actions::parameters::ObjectKnowledge >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( converter ), bl::var( owner ), bl::var( controller ) ) ) );

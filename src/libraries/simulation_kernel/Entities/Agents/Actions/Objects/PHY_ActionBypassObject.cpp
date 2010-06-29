@@ -49,7 +49,7 @@ void PHY_ActionBypassObject::StopAction()
 // Bypassd: NLD 2004-08-18
 // -----------------------------------------------------------------------------
 void PHY_ActionBypassObject::Execute()
-{   
+{
     int nReturn = role_.Bypass( pKnowledge_ );
     Callback( nReturn );
 }

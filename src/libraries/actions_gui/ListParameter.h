@@ -12,7 +12,7 @@
 
 #include "Param_ABC.h"
 
-namespace actions 
+namespace actions
 {
     class Parameter_ABC;
 

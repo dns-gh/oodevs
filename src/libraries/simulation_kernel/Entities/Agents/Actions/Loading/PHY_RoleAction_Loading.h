@@ -56,7 +56,7 @@ public:
     //@{
     template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
-    
+
     //! @name Operations
     //@{
     void Update    ( bool bIsDead );
@@ -131,7 +131,7 @@ private:
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RoleAction_Loading* role, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RoleAction_Loading* role, const unsigned int /*version*/ );
     //@}
-    
+
 private:
     //! @name Member data
     //@{

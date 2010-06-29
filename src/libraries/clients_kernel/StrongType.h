@@ -80,7 +80,7 @@ StrongType< T, U >::StrongType( const StrongType& rhs )
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: StrongType destructor
 // Created: SBO 2006-10-25
@@ -100,7 +100,7 @@ StrongType< T, U >::operator const T&() const
 {
     return value_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: StrongType::operator T&
 // Created: SBO 2006-10-25

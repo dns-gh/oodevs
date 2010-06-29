@@ -159,7 +159,7 @@ void MIL_Injury_NBC::SetInjury( unsigned int /*nNbrAliveHumans*/ , MT_Float /*rD
 
     //First we compute the number of persons caught in the fire
     const unsigned int nNbrOfPossibleCasualties = std::min( nNbrAliveHumans, unsigned int( std::max( 1., rDensity * pInjuryAttribute_->GetLength() * pInjuryAttribute_->GetWidth() ) ) );
-    
+
     //For, each of them, we will compute if they're going to be injured, and how
     for( unsigned int i = 0; i < nNbrOfPossibleCasualties; ++i )
     {

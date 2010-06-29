@@ -244,7 +244,7 @@ void ColorStrategy::ApplyColor( const QColor& color ) const
                             alpha_ );
 }
 
-namespace 
+namespace
 {
     int RandomInt()
     {
@@ -337,7 +337,7 @@ void ColorStrategy::InitializeColors()
     enemyAvailable_.push_back( QColor( 170, 90, 40 ) );   // marron
     enemyAvailable_.push_back( QColor( 255, 150, 10 ) );  // orange
     enemyAvailable_.push_back( QColor( 255, 0, 255 ) ); // magenta
-    enemyAvailable_.push_back( QColor( 255, 50, 50 ) );   // rouge  
+    enemyAvailable_.push_back( QColor( 255, 50, 50 ) );   // rouge
 
     friendlyAvailable_.clear();
     friendlyAvailable_.push_back( QColor( 60, 100, 170 ) ); // bleu metal 2

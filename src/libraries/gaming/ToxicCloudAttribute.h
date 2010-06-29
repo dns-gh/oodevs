@@ -41,7 +41,7 @@ namespace kernel
 */
 // Created: AGE 2006-02-14
 // =============================================================================
-class ToxicCloudAttribute : public kernel::ToxicCloudAttribute_ABC                        
+class ToxicCloudAttribute : public kernel::ToxicCloudAttribute_ABC
                          , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectUpdate >
                          , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectCreation >
                          , public kernel::Drawable_ABC
@@ -55,7 +55,7 @@ public:
     //@}
 
     //! @name Operations
-    //@{    
+    //@{
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
@@ -67,7 +67,7 @@ private:
     //@}
 
     //! @name Helpers
-    //@{    
+    //@{
     virtual void DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message );
     virtual void DoUpdate( const MsgsSimToClient::MsgObjectCreation& message );
     template< typename T >
@@ -78,7 +78,7 @@ private:
     //@}
 
 private:
-    //! @name 
+    //! @name
     //@{
     struct QuantityBoundaries : public std::pair< double, double >
     {
@@ -90,13 +90,13 @@ private:
 
         void Incorporate( double quantity )
         {
-            if ( first > quantity )
+            if( first > quantity )
                 first = quantity;
-            if ( second < quantity )
+            if( second < quantity )
                 second = quantity;
         }
     };
-    
+
     typedef std::vector< std::pair< geometry::Point2f, double > >   T_QuantityCloud;
     typedef T_QuantityCloud::const_iterator                         CIT_QuantityCloud;
     //@}

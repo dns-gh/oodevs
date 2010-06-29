@@ -72,7 +72,7 @@ public:
     //@{
     kernel::Controller& controller_;
     const tools::Resolver_ABC< kernel::Agent_ABC >& resolver_;
-    const kernel::Agent_ABC* transporter_; 
+    const kernel::Agent_ABC* transporter_;
     T_Agents transported_;
     //@}
 };

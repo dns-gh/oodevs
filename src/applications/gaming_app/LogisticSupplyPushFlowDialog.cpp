@@ -158,12 +158,12 @@ void LogisticSupplyPushFlowDialog::Validate()
     // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "log_supply_push_flow" );
     UnitMagicAction* action = new UnitMagicAction( *target, actionType, controllers_.controller_, true );
-    
+
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Automat( it.NextElement(), *selected_, controllers_.controller_ ) );
 
     parameters::ParameterList* dotations = new parameters::ParameterList( it.NextElement() );
-    
+
     action->AddParameter( *dotations );
 
     unsigned int rows = 0;
@@ -289,7 +289,7 @@ void LogisticSupplyPushFlowDialog::OnValueChanged( int row, int col )
     }
     else if( col == 1 )
     {
-        // $$$$ SBO 2006-07-03: check value/stock 
+        // $$$$ SBO 2006-07-03: check value/stock
     }
 }
 

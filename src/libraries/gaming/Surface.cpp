@@ -6,7 +6,7 @@
 // Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
- 
+
 #include "gaming_pch.h"
 
 #include "Surface.h"
@@ -114,10 +114,10 @@ void Surface::Update( VisionMap& map )
 // -----------------------------------------------------------------------------
 Rectangle2f Surface::Extent() const
 {
-    return Rectangle2f( origin_.X() - maxRadius_, origin_.Y() - maxRadius_,     
+    return Rectangle2f( origin_.X() - maxRadius_, origin_.Y() - maxRadius_,
                         origin_.X() + maxRadius_, origin_.Y() + maxRadius_ ).Intersect( map_.Extent() );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Rectangle2< unsigned > Surface::MappedExtent
 // Created: AGE 2006-04-14

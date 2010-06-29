@@ -26,7 +26,7 @@ SymbolCase::SymbolCase( xml::xistream& xis )
         >> attribute( "name", name_ )
         >> list( "choice", *this, &SymbolCase::ReadRule );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: SymbolCase destructor
 // Created: SBO 2006-03-20

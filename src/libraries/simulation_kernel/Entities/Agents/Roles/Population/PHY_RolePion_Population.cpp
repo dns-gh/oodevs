@@ -144,7 +144,7 @@ bool PHY_RolePion_Population::HasChanged() const
 {
     return bHasChanged_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Population::IsInvulnerable
 // Created: NLD 2005-11-03

@@ -98,7 +98,7 @@ ADN_KnowledgeGroups_Data::GroupInfo::GroupInfo()
 : ADN_Ref_ABC         ()
 , ADN_DataTreeNode_ABC()
 , agentInfos_         ()
-, populationInfos_    ()    
+, populationInfos_    ()
 , communicationDelay_( "0s" ) // LTO
 {
     // NOTHING

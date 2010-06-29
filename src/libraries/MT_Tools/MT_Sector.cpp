@@ -24,7 +24,7 @@ MT_Sector::MT_Sector( const MT_Vector2D& vOrigin_, const MT_Vector2D& vDirection
     , vDirection_( vDirection )
     , rSemiAngle_( rAngle / 2. )
 {
-    if ( vDirection.IsZero() )
+    if( vDirection.IsZero() )
     {   // -> on passe à 360°
         rSemiAngle_ = rSemiAngle_ > 0 ? -rSemiAngle_ : rSemiAngle_ ;
     }
@@ -41,7 +41,7 @@ MT_Sector::MT_Sector( const MT_Vector2D& vOrigin_, const MT_Vector2D& vDirection
 
         rA2_ = vDirection.rY_ * COS - vDirection.rX_ * SIN;
         rB2_ = -vDirection.rY_ * SIN - vDirection.rX_ * COS;
-        rC2_ = -( rA2_ * vOrigin_.rX_ + rB2_ * vOrigin_.rY_ );    
+        rC2_ = -( rA2_ * vOrigin_.rX_ + rB2_ * vOrigin_.rY_ );
     }
 }
 

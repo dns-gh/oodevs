@@ -12,7 +12,7 @@
 
 namespace xml
 {
-    class xistream  ; 
+    class xistream  ;
 }
 
 // =============================================================================
@@ -37,8 +37,8 @@ public:
 
     //! @name Accessors
     //@{
-    unsigned int        GetId() const; 
-    const std::string   GetName() const ; 
+    unsigned int        GetId() const;
+    const std::string   GetName() const ;
     //@}
 
 private:
@@ -55,8 +55,8 @@ private:
 private:
     //! @name Member data
     //@{
-    unsigned int id_ ; 
-    std::string name_ ; 
+    unsigned int id_ ;
+    std::string name_ ;
     //@}
 };
 

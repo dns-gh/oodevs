@@ -24,7 +24,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PoisoningCapacity )
 // Name: PoisoningCapacity constructor
 // Created: RFT 2008-06-02
 // -----------------------------------------------------------------------------
-PoisoningCapacity::PoisoningCapacity( xml::xistream& xis )    
+PoisoningCapacity::PoisoningCapacity( xml::xistream& xis )
     : injuryID_( 0 )
 {
     InitializeData( xis );
@@ -34,7 +34,7 @@ PoisoningCapacity::PoisoningCapacity( xml::xistream& xis )
 // Name: PoisoningCapacity constructor
 // Created: RFT 2008-06-02
 // -----------------------------------------------------------------------------
-PoisoningCapacity::PoisoningCapacity() 
+PoisoningCapacity::PoisoningCapacity()
     : injuryID_( 0 )
 {
     // NOTHING
@@ -75,7 +75,7 @@ void PoisoningCapacity::InitializeData( xml::xistream& xis )
 template< typename Archive >
 void PoisoningCapacity::serialize( Archive& file, const uint )
 {
-    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );        
+    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -112,7 +112,7 @@ void PoisoningCapacity::Update( MIL_Object_ABC& /*object*/, float /*time*/ )
 void PoisoningCapacity::ProcessAgentMovingInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent )
 {
     NBCTypeAttribute* attr = object.RetrieveAttribute< NBCTypeAttribute >();
-    if ( attr && attr->GetAgentType().IsPoisoning() )
+    if( attr && attr->GetAgentType().IsPoisoning() )
     {
         MIL_Injury_Poison injury( attr->GetConcentration() , attr->GetAgentType().GetName() , injuryID_ );
         agent.GetRole< PHY_RoleInterface_Composantes >().ApplyInjury( injury );

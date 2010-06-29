@@ -49,14 +49,14 @@ BOOST_AUTO_TEST_CASE( PkComputerUrbanProtectionTest )
     urbanBlock.reset( new urban::UrbanObject ( xisModel, 0, *coord ) );
     MIL_ObjectLoader loader;
     {
-        xml::xistringstream xis( "<objects>" 
+        xml::xistringstream xis( "<objects>"
             "<object type='urban block'/>"
             "</objects>"
-            ); 
+            );
         BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
     }
     MIL_Object_ABC* pObject = loader.CreateUrbanObject( *urbanBlock );
-    
+
     xisModel >> xml::end();
     PHY_RolePion_UrbanLocation* urbanRole = new PHY_RolePion_UrbanLocation( firer );
 

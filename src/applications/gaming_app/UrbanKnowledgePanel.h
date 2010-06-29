@@ -42,7 +42,7 @@ class UrbanPerceptions;
 // Created: MGD 2009-12-09
 // =============================================================================
 class UrbanKnowledgePanel : public gui::InfoPanel_ABC
-                           , public tools::Observer_ABC                           
+                           , public tools::Observer_ABC
                            , public tools::ElementObserver_ABC< UrbanPerceptions >
                            , public tools::ElementObserver_ABC< UrbanKnowledges >
                            , public kernel::TeamSelectionObserver

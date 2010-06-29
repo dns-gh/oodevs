@@ -66,7 +66,7 @@ public:
 private:
     struct FindPred
     {
-        FindPred( const T& val ) : val_ ( val ) {}        
+        FindPred( const T& val ) : val_ ( val ) {}
         bool operator()( std::pair<T, T> it )
         {
             return it.first <= val_ && it.second >= val_;

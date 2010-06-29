@@ -101,8 +101,8 @@ namespace
     {
         ModelMessage( Model& model, std::string& buffer, bool firstFrame )
             : model_( &model )
-            , output_( 0 ) 
-            , buffer_( buffer ) 
+            , output_( 0 )
+            , buffer_( buffer )
             , firstFrame_( firstFrame ) {}
         virtual ~ModelMessage() {}
         virtual void Serialize( tools::OutputBinaryWrapper& output ) const

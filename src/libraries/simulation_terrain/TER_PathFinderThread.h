@@ -40,7 +40,7 @@ public:
     void AddDynamicDataToRegister  ( TER_DynamicData& data );
     void AddDynamicDataToUnregister( TER_DynamicData& data );
 
-    TerrainRetractationHandle& CreateLineTree( const T_PointVector& points, const TerrainData& terrainData ); 
+    TerrainRetractationHandle& CreateLineTree( const T_PointVector& points, const TerrainData& terrainData );
     //@}
 
     //! @name Terrain analysis

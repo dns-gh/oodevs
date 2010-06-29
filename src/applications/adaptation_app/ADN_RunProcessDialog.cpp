@@ -52,9 +52,9 @@ void ADN_RunProcessDialog::RunCommand( const std::string& strCommandLine )
 {
     pProcess_ = new QProcess( QString( strCommandLine.c_str() ) );
 
-	connect( pProcess_, SIGNAL( readyReadStdout() ), this, SLOT( ReadFromStdout() ) );
+    connect( pProcess_, SIGNAL( readyReadStdout() ), this, SLOT( ReadFromStdout() ) );
     connect( pProcess_, SIGNAL( readyReadStderr() ), this, SLOT( ReadFromStderr() ) );
-	connect( pProcess_, SIGNAL( processExited() ), this, SLOT( ProcessFinished() ) );
+    connect( pProcess_, SIGNAL( processExited() ), this, SLOT( ProcessFinished() ) );
 
     if( !pProcess_->start() )
         throw std::exception( "error starting process" );
@@ -68,8 +68,8 @@ void ADN_RunProcessDialog::RunCommand( const std::string& strCommandLine )
 void ADN_RunProcessDialog::ReadFromStdout()
 {
     QString str( pProcess_->readStdout() );
-	if( str.length() > 0 )
-		pOutputField_->append( str );
+    if( str.length() > 0 )
+        pOutputField_->append( str );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,8 +81,8 @@ void ADN_RunProcessDialog::ReadFromStderr()
     const QColor color = pOutputField_->color();
     pOutputField_->setColor( Qt::red );
     QString str( pProcess_->readStderr() );
-	if( str.length() > 0 )
-		pOutputField_->append( str );
+    if( str.length() > 0 )
+        pOutputField_->append( str );
     pOutputField_->setColor( color );
 }
 
@@ -93,7 +93,7 @@ void ADN_RunProcessDialog::ReadFromStderr()
 void ADN_RunProcessDialog::ProcessFinished()
 {
     ReadFromStdout();
-	if( pProcess_->exitStatus() == 0 )
+    if( pProcess_->exitStatus() == 0 )
     {
         delete pProcess_;
     }

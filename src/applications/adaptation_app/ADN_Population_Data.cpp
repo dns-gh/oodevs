@@ -213,7 +213,7 @@ ADN_Population_Data::FireEffectRoeInfos::FireEffectRoeInfos( E_PopulationRoe nRo
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Population_Data::FireEffectRoeInfos::~FireEffectRoeInfos
 // Created: SBO 2005-11-21
@@ -231,7 +231,7 @@ std::string ADN_Population_Data::FireEffectRoeInfos::GetNodeName()
 {
     return std::string();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Population_Data::FireEffectRoeInfos::GetItemName
 // Created: SBO 2005-11-21
@@ -250,7 +250,7 @@ void ADN_Population_Data::FireEffectRoeInfos::ReadArchive( xml::xistream& input 
     input >> xml::attribute( "attrition-surface", rAttritionSurface_ )
           >> xml::attribute( "ph", rPH_ );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Population_Data::FireEffectRoeInfos::WriteArchive
 // Created: SBO 2005-11-21

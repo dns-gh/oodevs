@@ -32,12 +32,12 @@ MIL_Folk::MIL_Folk( const MIL_Config& config )
     , first_update_ ( true )
     , step_         ( 0 )
     , start_        ( 0 )
-{    
-    if ( pFlow_ )
+{
+    if( pFlow_ )
     {
         MT_LOG_INFO_MSG( "Loading population module" )
         Config  popConfig( config.GetPopulationDir(), "population.xml" );
-        pFlow_->Load( popConfig );        
+        pFlow_->Load( popConfig );
         start_ = 14 * 3600 * 1000; // 14h00m
     }
 }
@@ -57,7 +57,7 @@ MIL_Folk::~MIL_Folk()
 // -----------------------------------------------------------------------------
 ObjectManager_ABC* MIL_Folk::GetObjectManager() const
 {
-    if ( pFlow_ )
+    if( pFlow_ )
         return &pFlow_->GetObjectManager();
     return (ObjectManager_ABC*)0;
 }
@@ -68,7 +68,7 @@ ObjectManager_ABC* MIL_Folk::GetObjectManager() const
 // -----------------------------------------------------------------------------
 void MIL_Folk::Update( unsigned utime, unsigned timeStep )
 {
-    if ( pFlow_ )
+    if( pFlow_ )
     {
         pFlow_->Update( population::Time( "", start_ + utime ), timeStep );
         UpdateNetwork();
@@ -81,7 +81,7 @@ void MIL_Folk::Update( unsigned utime, unsigned timeStep )
 // -----------------------------------------------------------------------------
 void MIL_Folk::SendStateToNewClient() const
 {
-    if ( pFlow_ )
+    if( pFlow_ )
     {
         SendCreation();
         SendUpdate();
@@ -95,11 +95,11 @@ void MIL_Folk::SendStateToNewClient() const
 // -----------------------------------------------------------------------------
 void MIL_Folk::UpdateNetwork() const
 {
-    if ( !first_update_ && ( ++step_ % 60 ) == 0 )
+    if( !first_update_ && ( ++step_ % 60 ) == 0 )
         SendUpdate();
 }
 
-namespace 
+namespace
 {
     template< typename T >
     void CopyList( T& list, const std::vector<const std::string*>& value )
@@ -110,7 +110,7 @@ namespace
 
     struct FolkCreationSerializer : public population::message::Serializer_ABC
     {
-        explicit FolkCreationSerializer( client::FolkCreation& asn ) : asn_ ( &asn ) 
+        explicit FolkCreationSerializer( client::FolkCreation& asn ) : asn_ ( &asn )
         {
 //            (*asn_)().mutable_profiles()->set_n( 0 );
 //            (*asn_)().mutable_activities()->set_n( 0 );
@@ -118,7 +118,7 @@ namespace
 
         virtual population::message::Serializer_ABC& operator <<( const std::vector<const std::string*>& value )
         {
-            if ( (*asn_)().profiles().elem_size() == 0 )
+            if( (*asn_)().profiles().elem_size() == 0 )
                 CopyList( *(*asn_)().mutable_profiles(), value );
             else
                 CopyList( *(*asn_)().mutable_activities(), value );
@@ -132,9 +132,9 @@ namespace
         FolkUpdateSerializer()
             : bufferOffset_( 0 )
             , count_       ( 0 )
-        { 
+        {
             messages_.reserve( 50 );
-            const unsigned maxBufferLength = 0x4000 - 1; // $$$$ AGE 2008-02-13: ASN1.PER limit before fragmentation 
+            const unsigned maxBufferLength = 0x4000 - 1; // $$$$ AGE 2008-02-13: ASN1.PER limit before fragmentation
             buffer_.resize( maxBufferLength );
         }
 
@@ -156,7 +156,7 @@ namespace
                 messages_.back().add_population_occupation( *iter );
             bufferOffset_+=size;
             return *this;
-        } 
+        }
         void Commit()
         {
             if( ! messages_.empty() )
@@ -176,9 +176,9 @@ namespace
             int lastId = messages_.back().oid();
             messages_.pop_back();
             --count_;
-            
+
             Commit();
-            
+
             *this << lastId;
         }
         std::vector< int > buffer_;
@@ -208,7 +208,7 @@ namespace
 // Created: JCR 2007-08-24
 // -----------------------------------------------------------------------------
 void MIL_Folk::SendCreation() const
-{    
+{
     client::FolkCreation asn;
     FolkCreationSerializer  serializer( asn );
     asn().set_container_size( 5 ); // $$$$ AGE 2007-09-04: hc
@@ -221,7 +221,7 @@ void MIL_Folk::SendCreation() const
     pFlow_->SerializePopulationCreation( serializer );
     asn.Send( NET_Publisher_ABC::Publisher() );
     asn().mutable_profiles()->Clear();
-    asn().mutable_activities()->Clear();    
+    asn().mutable_activities()->Clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -231,7 +231,7 @@ void MIL_Folk::SendCreation() const
 void MIL_Folk::SendUpdate() const
 {
     MT_LOG_INFO_MSG( "MIL_Folk::SendUpdate()" )
-    FolkUpdateSerializer    serializer;    
+    FolkUpdateSerializer    serializer;
     pFlow_->SerializePopulationUpdate( serializer );
     serializer.Commit();
 }

@@ -129,13 +129,13 @@ void ADN_Sensors_TargetsListView::OnContextMenu( const QPoint& pt )
 bool ADN_Sensors_TargetsListView::Contains( const ADN_Objects_Data::ObjectInfos* pInfo )
 {
     QListViewItemIterator it( this );
-    while( it.current() != 0 ) 
+    while( it.current() != 0 )
     {
         ADN_ListViewItem* pCurr = (ADN_ListViewItem*)it.current();
         TargetInfos* pData = static_cast< TargetInfos* >( pCurr->GetData() );
-        if ( pData->ptrObject_.GetData() == pInfo )
+        if( pData->ptrObject_.GetData() == pInfo )
             return true;
         ++it;
     }
-    return false;    
+    return false;
 }

@@ -42,7 +42,7 @@ public:
     MT_Float                GetQuantity() const;
     //@}
 
-    //! @name 
+    //! @name
     //@{
     template< typename WoundFunctor > bool ApplyRandomWound( WoundFunctor functor ) const;
     //@}

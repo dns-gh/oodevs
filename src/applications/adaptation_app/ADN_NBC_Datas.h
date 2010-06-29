@@ -126,7 +126,7 @@ public:
     void Reset();
 
     T_NbcAgentInfos_Vector& GetNbcAgentVector();
-    
+
     int GetNextId();
 
 private:

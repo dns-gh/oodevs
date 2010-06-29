@@ -25,7 +25,7 @@ namespace Common
 */
 // Created: AGE 2006-10-19
 // =============================================================================
-class Formation : public kernel::EntityImplementation< kernel::Formation_ABC > 
+class Formation : public kernel::EntityImplementation< kernel::Formation_ABC >
 {
 
 public:

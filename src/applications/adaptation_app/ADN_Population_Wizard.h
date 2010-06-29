@@ -22,7 +22,7 @@
 #include "ADN_Population_Data.h"
 #include "ADN_Wizard_ABC.h"
 
-typedef ADN_Wizard_ABC<ADN_Population_Data::PopulationInfos> ADN_Wizard_ABC_ADN_Population_Data_PopulationInfos; 
+typedef ADN_Wizard_ABC<ADN_Population_Data::PopulationInfos> ADN_Wizard_ABC_ADN_Population_Data_PopulationInfos;
 // =============================================================================
 /** @class  ADN_Population_Wizard
     @brief  ADN_Population_Wizard

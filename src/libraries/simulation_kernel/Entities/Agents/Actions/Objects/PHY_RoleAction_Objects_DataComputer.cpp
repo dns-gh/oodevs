@@ -69,7 +69,7 @@ void PHY_RoleAction_Objects_DataComputer::CollectData( MIL_Agent_ABC& pion )
 // Created: NLD 2004-10-01
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Objects_DataComputer::operator() ( PHY_ComposantePion& composante )
-{    
+{
     pionsData_.back()( composante );
 }
 
@@ -173,12 +173,12 @@ MT_Float PHY_RoleAction_Objects_DataComputer::ComputeDeltaPercentage()
         RollbackConsumptionsReservations();
         return std::numeric_limits< MT_Float >::max();
     }
-    
+
     MT_Float rTimeTmp  = rTotalOperationTime / nTotalNbrComposantes; // <= Moyenne du temps de construction pour chaque composante
              rTimeTmp /= nTotalNbrComposantes;                       // <= Temps de construction de l'objet pour le pion
-    
+
     if( rTimeTmp == 0. )
-        return 1.;   
+        return 1.;
     return MIL_AgentServer::GetWorkspace().GetTimeStepDuration() / rTimeTmp;
 }
 
@@ -206,9 +206,9 @@ MT_Float PHY_RoleAction_Objects_DataComputer::ComputeWorkTime()
         RollbackConsumptionsReservations();
         return std::numeric_limits< MT_Float >::max();
     }
-    
+
     MT_Float rTimeTmp  = rTotalOperationTime / nTotalNbrComposantes; // <= Moyenne du temps de construction pour chaque composante
              rTimeTmp /= nTotalNbrComposantes;                       // <= Temps de construction de l'objet pour le pion
-      
+
     return rTimeTmp;
 }

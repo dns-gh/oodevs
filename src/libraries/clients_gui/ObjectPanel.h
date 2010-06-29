@@ -29,7 +29,7 @@ namespace kernel
     class MedicalTreatmentAttribute_ABC;
     class LogisticAttribute_ABC;
     class CrossingSiteAttribute_ABC;
-    class SupplyRouteAttribute_ABC;    
+    class SupplyRouteAttribute_ABC;
 }
 
 namespace gui
@@ -53,7 +53,7 @@ class ObjectPanel : public InfoPanel_ABC
                   , public tools::ElementObserver_ABC< kernel::BypassAttribute_ABC >
                   , public tools::ElementObserver_ABC< kernel::LogisticAttribute_ABC >
                   , public tools::ElementObserver_ABC< kernel::SupplyRouteAttribute_ABC >
-                  , public tools::ElementObserver_ABC< kernel::CrossingSiteAttribute_ABC >                  
+                  , public tools::ElementObserver_ABC< kernel::CrossingSiteAttribute_ABC >
                   , public tools::ElementObserver_ABC< kernel::NBCAttribute_ABC >
                   , public tools::ElementObserver_ABC< kernel::FireAttribute_ABC >
                   , public tools::ElementObserver_ABC< kernel::MedicalTreatmentAttribute_ABC >
@@ -99,7 +99,7 @@ private:
     virtual void NotifyUpdated( const kernel::MineAttribute_ABC& attributes );
     virtual void NotifyUpdated( const kernel::ConstructionAttribute_ABC& attributes );
     virtual void NotifyUpdated( const kernel::BypassAttribute_ABC& attributes );
-    virtual void NotifyUpdated( const kernel::ObstacleAttribute_ABC& attributes );    
+    virtual void NotifyUpdated( const kernel::ObstacleAttribute_ABC& attributes );
     virtual void NotifyUpdated( const kernel::LogisticAttribute_ABC& attributes );
     virtual void NotifyUpdated( const kernel::CrossingSiteAttribute_ABC& attributes );
     virtual void NotifyUpdated( const kernel::SupplyRouteAttribute_ABC& attributes );

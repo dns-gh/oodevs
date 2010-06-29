@@ -193,7 +193,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_AtlasNatureParameter_ToASN )
 {
     MsgAtlasNature asnIn;
     asnIn.set_nature( MsgAtlasNature::blinde | MsgAtlasNature::log | MsgAtlasNature::asa );
-     
+
     MIL_AtlasNatureParameter param( asnIn );
     MsgAtlasNature asnOut;
     BOOST_CHECK_EQUAL( true, param.ToNatureAtlas( asnOut ) );
@@ -314,23 +314,23 @@ BOOST_AUTO_TEST_CASE( TestMIL_EnumerationParameter_ToASN )
 namespace
 {
     void FillRlyehLocation( MsgLocation& asnIn )
-    {        
+    {
         asnIn.set_type( Common::MsgLocation_Geometry_point );
         asnIn.mutable_coordinates()->add_elem()->set_latitude( 48.52f );
         asnIn.mutable_coordinates()->mutable_elem(0)->set_longitude( 2.17f );
     }
 
     void CompareLocationToRlyeh( MsgLocation& asnOut )
-    {        
+    {
         BOOST_CHECK_EQUAL( Common::MsgLocation_Geometry_point, asnOut.type() );
         BOOST_CHECK_EQUAL( 1, asnOut.coordinates().elem_size() );
         BOOST_CHECK_CLOSE( 48.52, asnOut.coordinates().elem(0).latitude(), 1. );
         BOOST_CHECK_CLOSE( 2.17, asnOut.coordinates().elem(0).longitude(), 1. );
         asnOut.mutable_coordinates()->Clear();
     }
-    
+
     void FillPolygonLocation( MsgLocation& asnIn, float offset )
-    {        
+    {
         asnIn.set_type( Common::MsgLocation_Geometry_polygon );
         asnIn.mutable_coordinates()->add_elem()->set_latitude( 50.f + offset );
         asnIn.mutable_coordinates()->mutable_elem(0)->set_longitude( 2.17f + offset );
@@ -341,7 +341,7 @@ namespace
     }
 
     void CompareLocationToPolygon( MsgLocation& asnOut, float offset )
-    {        
+    {
         BOOST_CHECK_EQUAL( Common::MsgLocation_Geometry_polygon, asnOut.type() );
         BOOST_CHECK_EQUAL( 4, asnOut.coordinates().elem_size() );
         BOOST_CHECK_CLOSE( 50. + offset, asnOut.coordinates().elem(0).latitude(), 1. );
@@ -440,12 +440,12 @@ BOOST_AUTO_TEST_CASE( TestMIL_LogMaintenancePrioritiesParameter_ToASN )
 //    asnIn.elem = new MissionObjective[1];
 //    NET_ASN_Tools::WriteGDH( 42, asnIn.elem[0].horaire );
 //    FillRlyehLocation( asnIn.elem[0].localisation );
-//    
+//
 //    MIL_MissionObjectiveListParameter param( asnIn );
-//    
+//
 //    delete[] asnIn.elem[0].localisation.coordinates.elem;
 //    delete asnIn.elem;
-//    
+//
 //    MissionObjectiveList asnOut;
 //    BOOST_CHECK_EQUAL( true, param.ToObjectiveList( asnOut ) );
 //    BOOST_CHECK_EQUAL( 1, asnOut.n );
@@ -487,7 +487,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_ObjectKnowledgeListParameter_ToASN )
     MOCK_EXPECT( time, GetCurrentTick ).returns( 1u );
     boost::shared_ptr< DEC_Knowledge_Object > knowledge( new DEC_Knowledge_Object() ); // $$$$ LDC: id == 0... :(
     MOCK_EXPECT( resolver, ResolveKnowledgeObjectFromMessage ).once().returns( knowledge );
-    
+
     MIL_ObjectKnowledgeListParameter param( asnIn, resolver );
     asnIn.clear_elem();
     MsgObjectKnowledgeList asnOut;
@@ -575,7 +575,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_PathListParameter_ToASN )
 BOOST_AUTO_TEST_CASE( TestMIL_PlannedWorkParameter_ToASN )
 {
     TER_World::Initialize( "../../data/data/terrains/Paris_Est/Terrain.xml" );
-    
+
     const std::string typeName( "type" );
     MsgPlannedWork asnIn;
     asnIn.set_type( typeName.c_str() );
@@ -610,7 +610,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_PlannedWorkParameter_ToASN )
 BOOST_AUTO_TEST_CASE( TestMIL_PlannedWorkListParameter_ToASN )
 {
     TER_World::Initialize( "../../data/data/terrains/Paris_Est/Terrain.xml" );
-    
+
     try
     {
     const std::string typeName( "type" );
@@ -625,7 +625,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_PlannedWorkListParameter_ToASN )
     MockMIL_ObjectType_ABC objectType;
     MOCK_EXPECT( entityManager, FindObjectType ).once().returns( boost::cref( objectType ) );
     // $$$$ _RC_ SBO 2010-04-27: was not verify'ed
-//    FixtureAutomate fixture; 
+//    FixtureAutomate fixture;
 //    MOCK_EXPECT( entityManager, FindAutomate ).once().returns( fixture.pAutomat_.get() );
     MIL_PlannedWorkListParameter param( asnIn, entityManager );
     asnIn.mutable_elem(0)->mutable_position()->mutable_coordinates()->Clear();

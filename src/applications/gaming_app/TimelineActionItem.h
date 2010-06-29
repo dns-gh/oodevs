@@ -26,7 +26,7 @@ namespace actions
 }
 
 namespace gui
-{    
+{
     class Gradient;
     class GradientItem;
 }

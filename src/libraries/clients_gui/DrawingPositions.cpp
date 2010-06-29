@@ -77,7 +77,7 @@ geometry::Point2f DrawingPositions::GetPosition() const
 // -----------------------------------------------------------------------------
 float DrawingPositions::GetHeight() const
 {
-    return 0.; // $$$$ SBO 2008-06-02: 
+    return 0.; // $$$$ SBO 2008-06-02:
 }
 
 // -----------------------------------------------------------------------------
@@ -197,7 +197,7 @@ void DrawingPositions::VisitPath( const geometry::Point2f& point, const T_PointV
 {
     VisitLines( points );
     boundingBox_.Incorporate( point );
-    position_.Set( position_.X() * points.size() + point.X(), 
+    position_.Set( position_.X() * points.size() + point.X(),
                    position_.Y() * points.size() + point.Y() );
     position_.Set( position_.X() / ( points.size() + 1 ), position_.Y() / ( points.size() + 1 ) );
 }

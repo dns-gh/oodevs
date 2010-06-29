@@ -70,7 +70,7 @@ void MIL_PopulationOrderManager::OnReceiveFragOrder( const MsgsClientToSim::MsgF
         throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_order_conduite );
 
     DEC_Representations& representation = population_.GetRole<DEC_Representations>();
-    boost::shared_ptr< MIL_FragOrder > pFragOrder ( new MIL_FragOrder( *pType, population_.GetKnowledge(), asn ) ); 
+    boost::shared_ptr< MIL_FragOrder > pFragOrder ( new MIL_FragOrder( *pType, population_.GetKnowledge(), asn ) );
     representation.AddToOrdersCategory( pFragOrder );
 }
 

@@ -11,14 +11,14 @@
 #include "AuthoringPage.h"
 #include "moc_AuthoringPage.cpp"
 #include "Config.h"
-#include "CreateTerrainPage.h" 
+#include "CreateTerrainPage.h"
 #include "ProcessDialogs.h"
 #include "ProgressPage.h"
 #include "ProcessWrapper.h"
 #include "clients_gui/Tools.h"
 #include "clients_kernel/Controllers.h"
-#include "frontend/StartAuthoring.h" 
-#include "frontend/StartTerrainWorkshop.h" 
+#include "frontend/StartAuthoring.h"
+#include "frontend/StartTerrainWorkshop.h"
 
 // -----------------------------------------------------------------------------
 // Name: AuthoringPage constructor

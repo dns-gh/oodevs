@@ -41,11 +41,11 @@ ObstacleAttribute::ObstacleAttribute( bool reserved )
     // NOTHING
 }
 
-namespace 
+namespace
 {
     Common::ObstacleType_DemolitionTargetType ExtractObstacle( const std::string& obstacle )
     {
-        if ( obstacle == "reserved" )
+        if( obstacle == "reserved" )
             return Common::ObstacleType_DemolitionTargetType_reserved;
         return Common::ObstacleType_DemolitionTargetType_preliminary;
     }
@@ -58,7 +58,7 @@ namespace
             return "reserved";
         default:
             return "preliminary";
-        }        
+        }
     }
 }
 
@@ -132,14 +132,14 @@ bool ObstacleAttribute::IsActivated() const
 {
     return bActivated_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ObstacleAttribute::Activate
 // Created: JCR 2008-06-12
 // -----------------------------------------------------------------------------
 void ObstacleAttribute::Activate()
 {
-    if ( ! bActivated_ && IsActivable() )
+    if( ! bActivated_ && IsActivable() )
     {
         bActivated_ = true;
         NotifyAttributeUpdated( eOnUpdate );
@@ -172,7 +172,7 @@ void ObstacleAttribute::Register( Object& object ) const
 void ObstacleAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
 {
     asn.mutable_obstacle()->set_type( obstacle_ );
-    asn.mutable_obstacle()->set_activated( bActivated_ );   
+    asn.mutable_obstacle()->set_activated( bActivated_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -195,7 +195,7 @@ void ObstacleAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
 // -----------------------------------------------------------------------------
 void ObstacleAttribute::WriteODB( xml::xostream& xos ) const
 {
-    xos << xml::start( "obstacle" ) 
+    xos << xml::start( "obstacle" )
             << xml::attribute( "type", ExtractObstacle( obstacle_ ) )
         << xml::end();
 }

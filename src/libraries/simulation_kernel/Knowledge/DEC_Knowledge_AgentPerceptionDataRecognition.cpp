@@ -35,7 +35,7 @@ DEC_Knowledge_AgentPerceptionDataRecognition::DEC_Knowledge_AgentPerceptionDataR
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentPerceptionDataRecognition destructor
 // Created: NLD 2004-11-09
@@ -57,7 +57,7 @@ void DEC_Knowledge_AgentPerceptionDataRecognition::load( MIL_CheckPointInArchive
          >> const_cast< MIL_Army*& >( pArmy_ )
          >> bIsPC_
          >> composantes_;
-    
+
     unsigned int nID;
     file >> nID;
     pAgentType_ = MIL_AgentTypePion::Find( nID );

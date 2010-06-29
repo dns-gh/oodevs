@@ -42,11 +42,11 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
-    
+
     //! @name Operations
     //@{
     void Prepare    ();
@@ -98,9 +98,9 @@ private:
     bool        bDead_;
 
     const MIL_Army_ABC*   pArmySurrenderedTo_;
-          bool        bPrisoner_; 
+          bool        bPrisoner_;
           bool        bRefugeeManaged_;
-          
+
     // Attributes used by the vision, to see if we see a knowledge which doesn't exist anymore
     T_ComposanteVolumeSet visionVolumes_;
     const PHY_Posture*    pLastPosture_;

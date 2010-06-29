@@ -149,7 +149,7 @@ void EngineerConstruction::CommitTo( Common::MsgMissionParameter& message ) cons
     message.mutable_value()->mutable_plannedwork();    // enforce initialisation of parameter to force his type
     CommitTo( *message.mutable_value()->mutable_plannedwork() );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: EngineerConstruction::Clean
 // Created: JCR 2008-11-03
@@ -164,7 +164,7 @@ void EngineerConstruction::Clean( Common::MsgMissionParameter& message ) const
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
 void EngineerConstruction::CommitTo( Common::MsgPlannedWork& message ) const
-{    
+{
     message.set_type( type_.GetType().c_str() );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {

@@ -29,7 +29,7 @@ PreferencePanel_ABC::PreferencePanel_ABC( QWidget* parent, const char* name )
     pBox_->setMargin( 5 );
     pBox_->setSpacing( 5 );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PreferencePanel_ABC destructor
 // Created: SBO 2007-01-03
@@ -47,7 +47,7 @@ void PreferencePanel_ABC::insertChild( QObject* pObj )
 {
     pBox_->insertChild( pObj );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PreferencePanel_ABC::layout
 // Created: SBO 2007-01-03
@@ -58,7 +58,7 @@ QLayout* PreferencePanel_ABC::layout()
         return 0;
     return pBox_->layout();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PreferencePanel_ABC::sizeHint
 // Created: SBO 2007-01-03

@@ -315,12 +315,12 @@ void ADN_Weapons_Data::WeaponInfos::ReadArchive( xml::xistream& input )
 
     ADN_Launchers_Data::LauncherInfos* pLauncher = ADN_Workspace::GetWorkspace().GetLaunchers().GetData().FindLauncher( strLauncher );
     if( !pLauncher )
-		throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Weapon systems '%1'/'%2' - Invalid launcher type" ).arg( strLauncher.c_str(), strAmmunition.c_str() ).ascii() );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Weapon systems '%1'/'%2' - Invalid launcher type" ).arg( strLauncher.c_str(), strAmmunition.c_str() ).ascii() );
     ptrLauncher_ = pLauncher;
 
     ADN_Equipement_Data::CategoryInfo* pAmmo = ADN_Workspace::GetWorkspace().GetEquipements().GetData().FindEquipementCategory( "munition", strAmmunition );
     if( !pAmmo )
-		throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Weapon systems '%1'/'%2' - Invalid ammunition type" ).arg( strLauncher.c_str(), strAmmunition.c_str() ).ascii() );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Weapon systems '%1'/'%2' - Invalid ammunition type" ).arg( strLauncher.c_str(), strAmmunition.c_str() ).ascii() );
     ptrAmmunition_ = (ADN_Equipement_Data::AmmoCategoryInfo*)pAmmo;
 
     strName_ = strLauncher + " & " + strAmmunition;
@@ -332,11 +332,11 @@ void ADN_Weapons_Data::WeaponInfos::ReadArchive( xml::xistream& input )
             >> xml::attribute( "munition", nRoundsPerReload_ )
             >> xml::attribute( "duration", reloadDuration_ )
           >> xml::end();
-    input >> xml::optional() 
+    input >> xml::optional()
           >> xml::start( "direct-fire" )
             >> xml::list( "hit-probabilities", *this, &ADN_Weapons_Data::WeaponInfos::ReadTargetSize )
           >> xml::end()
-          >> xml::optional() 
+          >> xml::optional()
           >> xml::start( "indirect-fire" )
             >> xml::attribute( "average-speed", rAverageSpeed_ )
             >> xml::attribute( "min-range",     rMinRange_ )
@@ -512,8 +512,8 @@ void ADN_Weapons_Data::UpdateNames()
     for( IT_WeaponInfosVector it = weapons_.begin(); it != weapons_.end(); ++it )
     {
         WeaponInfos* pWeapon = *it;
-        pWeapon->strName_ = pWeapon->ptrLauncher_.GetData()->strName_.GetData() 
-                          + " & " 
+        pWeapon->strName_ = pWeapon->ptrLauncher_.GetData()->strName_.GetData()
+                          + " & "
                           + pWeapon->ptrAmmunition_.GetData()->strName_.GetData();
     }
 }

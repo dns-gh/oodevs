@@ -28,10 +28,10 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_Injury_Poison();
-    explicit MIL_Injury_Poison( int agentConcentration, const std::string& NBCAgent, int injuryID );            
+    explicit MIL_Injury_Poison( int agentConcentration, const std::string& NBCAgent, int injuryID );
     //@}
 
-    //! @name 
+    //! @name
     //@{
     MIL_Injury_Poison( const MIL_Injury_Poison& rhs );
     virtual ~MIL_Injury_Poison();
@@ -41,7 +41,7 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive&, const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;
     //@}

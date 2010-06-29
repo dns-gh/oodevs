@@ -75,7 +75,7 @@ bool PHY_RolePion_ActiveProtection::CounterIndirectFire( const PHY_DotationCateg
 {
     return pion_.CounterIndirectFire( category );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_ActiveProtection::DestroyIndirectFire
 // Created: LDC 2010-01-11

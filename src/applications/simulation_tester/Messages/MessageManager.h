@@ -24,18 +24,18 @@
 
 namespace DIN
 {
-	template < class T > class DIN_MessageServiceUserCbk;
- 
-	class DIN_Input;
+    template < class T > class DIN_MessageServiceUserCbk;
+
+    class DIN_Input;
     class DIN_BufferedMessage;
-	class DIN_Engine;
-	class DIN_Link;
+    class DIN_Engine;
+    class DIN_Link;
     class DIN_ErrorDescription;
 }
 
 namespace TEST
 {
-    
+
     class NetworkManager;
 
 // =============================================================================
@@ -43,12 +43,12 @@ namespace TEST
 // =============================================================================
 class MessageManager
 {
-	MT_COPYNOTALLOWED( MessageManager );
+    MT_COPYNOTALLOWED( MessageManager );
 
 public:
     //! @name DIN Messages
     //@{
-    static enum  
+    static enum
     {
         eMsgSimToClient       = 0,
         eMsgClientToSim       = 1,
@@ -73,19 +73,19 @@ public:
     void Disable( DIN::DIN_Link& link );
     //@}
 
-	//! @name Message management
-	//@{
-	void SendMsgInSim          ( MsgsClientToSim& asnMsg );
-	//@}
+    //! @name Message management
+    //@{
+    void SendMsgInSim          ( MsgsClientToSim& asnMsg );
+    //@}
 
-	//! @name Message
-	//@{
-	DIN::DIN_BufferedMessage BuildMessage();
-	//@}
+    //! @name Message
+    //@{
+    DIN::DIN_BufferedMessage BuildMessage();
+    //@}
 
     //! @name Accessors
     //@{
-	bool IsPaused() const;
+    bool IsPaused() const;
     //@}
 
 private:
@@ -93,8 +93,8 @@ private:
     //@{
     bool OnError                              ( DIN::DIN_Link &link, const DIN::DIN_ErrorDescription& info );
 
-	void OnReceiveMsgInit                     ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-	void OnReceiveMsgOutSim                   ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
+    void OnReceiveMsgInit                     ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
+    void OnReceiveMsgOutSim                   ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
 
     // Control
     void OnReceiveMsgControlInformation          ( const MsgControlInformation& asnMsg );
@@ -107,7 +107,7 @@ private:
     //! @name Entities
     //@{
     void OnReceiveMsgAutomatCreation          ( const MsgAutomatCreation& asnMsg );
-	void OnReceiveMsgPawnCreation             ( const MsgUnitCreation& asnMsg );
+    void OnReceiveMsgPawnCreation             ( const MsgUnitCreation& asnMsg );
     void OnReceiveMsgUnitAttributes           ( const MsgUnitAttributes& asnMsg );
 
     void OnReceiveMsgObjectCreation           ( const MsgObjectCreation& asnMsg );
@@ -176,8 +176,8 @@ private:
     DIN::DIN_MessageServiceUserCbk< MessageManager >   messageService_;
     Workspace&                                         workspace_;
 
-    bool bIsInitialized_; //$$$ ugly bDummy to handle MOS_Light connection after start and avoid re-lauching missions 
-	
+    bool bIsInitialized_; //$$$ ugly bDummy to handle MOS_Light connection after start and avoid re-lauching missions
+
     // ASN
     unsigned char    aASNEncodeBuffer_[100000];
     unsigned char    aASNDecodeBuffer_[100000];

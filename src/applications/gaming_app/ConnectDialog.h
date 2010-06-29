@@ -1,7 +1,7 @@
 //****************************************************************************
 //
 // This file is part of MASA DIN library.
-// 
+//
 // Refer to the included end-user license agreement (License.rtf) for
 // restrictions.
 //
@@ -27,7 +27,7 @@ class QLabel;
 class Network;
 
 //=============================================================================
-// Created:  NLD 2002-01-03 
+// Created:  NLD 2002-01-03
 //=============================================================================
 class ConnectDialog : public QDialog
 {

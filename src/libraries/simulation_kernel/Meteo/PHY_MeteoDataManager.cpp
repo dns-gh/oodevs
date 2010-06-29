@@ -47,11 +47,11 @@ PHY_MeteoDataManager::PHY_MeteoDataManager( MIL_Config& config )
 }
 
 //-----------------------------------------------------------------------------
-// Name: PHY_MeteoDataManager 
+// Name: PHY_MeteoDataManager
 // Created: JVT 02-10-21
 //-----------------------------------------------------------------------------
 PHY_MeteoDataManager::~PHY_MeteoDataManager()
-{  
+{
     delete pRawData_;
     pGlobalMeteo_->DecRef();
     assert( meteos_.size() == 1 );
@@ -159,7 +159,7 @@ void PHY_MeteoDataManager::Update( unsigned int date )
         MT_LOG_DEBUG_MSG( MT_FormatString( "Maintenant il fait %s", pEphemeride_->GetLightingBase().GetName().c_str() ) );
         for( CIT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
             (*it)->Update( pEphemeride_->GetLightingBase() );
-    }   
+    }
     for( CIT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
         (*it)->UpdateMeteoPatch( date, *pRawData_ );
 }

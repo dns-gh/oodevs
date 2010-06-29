@@ -84,7 +84,7 @@ void DEC_KS_Fire::Talk( int /*currentTimeStep*/ )
     assert( pBlackBoard_ );
 
     const MIL_Agent_ABC& agentInteracting = pBlackBoard_->GetPion();
-    
+
     for( CIT_PionSet itAttacker = pionsAttacking_.begin(); itAttacker != pionsAttacking_.end(); ++itAttacker )
     {
         MIL_AgentPion& attacker = **itAttacker;
@@ -94,8 +94,8 @@ void DEC_KS_Fire::Talk( int /*currentTimeStep*/ )
             continue;
 
         DEC_Knowledge_AgentPerception* pKnowledge = pBlackBoard_->GetKnowledgeAgentPerceptionContainer().GetKnowledgeAgentPerception( attacker );
-        if ( !pKnowledge )
-            pKnowledge = &pBlackBoard_->GetKnowledgeAgentPerceptionContainer().CreateKnowledgeAgentPerception( agentInteracting, attacker );       
+        if( !pKnowledge )
+            pKnowledge = &pBlackBoard_->GetKnowledgeAgentPerceptionContainer().CreateKnowledgeAgentPerception( agentInteracting, attacker );
         pKnowledge->Update( PHY_PerceptionLevel::recognized_, false );
         pKnowledge->NotifyAttacker();
     }

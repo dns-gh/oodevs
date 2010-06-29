@@ -17,7 +17,7 @@
 #include <google/protobuf/Descriptor.h>
 #pragma warning( pop )
 
-namespace tools 
+namespace tools
 {
 
 // =============================================================================

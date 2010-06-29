@@ -42,7 +42,7 @@ public:
     //! @name Operations
     //@{
            void Send         ( ClientPublisher_ABC& publisher );
-    static void SendNoMission( const Automat& automat, ClientPublisher_ABC& publisher ); 
+    static void SendNoMission( const Automat& automat, ClientPublisher_ABC& publisher );
     //@}
 
 private:

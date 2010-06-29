@@ -74,7 +74,7 @@ void ADN_Urban_Data::Reset()
 //-----------------------------------------------------------------------------
 void ADN_Urban_Data::Load()
 {
-    std::string szMaterialsFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() 
+    std::string szMaterialsFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData()
         + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szUrban_.GetData();
     xml::xifstream sizesInput( szMaterialsFile );
     ReadUrban( sizesInput );
@@ -86,7 +86,7 @@ void ADN_Urban_Data::Load()
 //-----------------------------------------------------------------------------
 void ADN_Urban_Data::Save()
 {
-    std::string szSizesFile= ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory() 
+    std::string szSizesFile= ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory()
         + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szUrban_.GetData();
     ADN_Tools::CreatePathToFile( szSizesFile );
     xml::xofstream sizeOutput( szSizesFile );

@@ -62,7 +62,7 @@ private:
     Note( const Note& );            //!< Copy constructor
     Note& operator=( const Note& ); //!< Assignment operator
     //@}
-    
+
 private:
     //! @name Member data
     //@{

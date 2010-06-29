@@ -73,7 +73,7 @@ void AgentKnowledge::DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeUpdate& me
     if( message.has_etat_op()  )
         nEtatOps_ = message.etat_op();
 
-    // $$$$ AGE 2008-04-03: 
+    // $$$$ AGE 2008-04-03:
 //    if( message.has_position()  )
 //        strPosition_ = std::string( (const char*)message.position.data, 15 );
 
@@ -230,7 +230,7 @@ unsigned int AgentKnowledge::ElementsToKeep( E_PerceptionResult perception ) con
     switch( perception )
     {
     default:
-    case eNotSeen:        
+    case eNotSeen:
     case eDetection:      return 3; // nothing                  sugpu
     case eRecognition:    return 5; // side + category + weapon shgpuca
     case eIdentification: return 9; // all                      shgpucaaaw
@@ -268,14 +268,14 @@ namespace
 void AgentKnowledge::UpdateSymbol()
 {
     E_PerceptionResult perception = nMaxPerceptionLevel_.IsSet() ? nMaxPerceptionLevel_ : eDetection;
-    const unsigned int toKeep = ElementsToKeep( perception ); 
+    const unsigned int toKeep = ElementsToKeep( perception );
 
     currentSymbol_ = fullSymbol_;
     App6Symbol::SetKarma( currentSymbol_, TeamKarma( perception ) );
     App6Symbol::FilterPerceptionLevel( currentSymbol_, perception );
 
-    currentNature_ = Strip( realAgent_.GetType().GetNature().GetNature(), toKeep - 3 ); // $$$$ AGE 2006-10-25: 
+    currentNature_ = Strip( realAgent_.GetType().GetNature().GetNature(), toKeep - 3 ); // $$$$ AGE 2006-10-25:
 
     if( nLevel_ == eNatureLevel_None && nMaxPerceptionLevel_.IsSet() && nMaxPerceptionLevel_ > eDetection )
-        nLevel_ = tools::NatureLevelFromString( realAgent_.GetType().GetNature().GetLevel() ); // $$$$ AGE 2006-11-20: 
+        nLevel_ = tools::NatureLevelFromString( realAgent_.GetType().GetNature().GetLevel() ); // $$$$ AGE 2006-11-20:
 }

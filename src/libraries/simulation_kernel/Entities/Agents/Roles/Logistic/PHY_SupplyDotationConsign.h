@@ -33,10 +33,10 @@ public:
     //@{
     template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
-    
+
     //! @name Operations
     //@{
-    virtual bool Update(); 
+    virtual bool Update();
     virtual void GetMerchandiseToConvoy              ( T_MerchandiseToConvoyMap& container ) const;
     virtual void RemoveConvoyedMerchandise           ( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations );
     virtual void AddConvoyedMerchandise              ( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations );
@@ -50,7 +50,7 @@ private:
     void EnterStateConvoyForming                ();
     void EnterStateConvoyGoingToLoadingPoint    ();
     void EnterStateConvoyLoading                ();
-    void EnterStateConvoyGoingToUnloadingPoint  ();    
+    void EnterStateConvoyGoingToUnloadingPoint  ();
     void EnterStateConvoyUnloading              ();
     void EnterStateConvoyGoingBackToFormingPoint();
     void EnterStateFinished                     ();

@@ -64,7 +64,7 @@ void LogConsignMaintenance::Update( const MsgsSimToClient::MsgLogMaintenanceHand
 void LogConsignMaintenance::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::LogMaintenanceHandlingCreation asn;
-    
+
     asn().set_oid_consigne  ( GetId() );
     asn().set_oid_pion      ( agent_.GetId() );
     asn().set_tick_creation ( nTickCreation_ );

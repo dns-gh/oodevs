@@ -37,7 +37,7 @@ public:
 
     //! @name Operations
     //@{
-    void ChangeSuperior( kernel::Entity_ABC& superior );    
+    void ChangeSuperior( kernel::Entity_ABC& superior );
     virtual bool CanCommunicate() const;
     //@}
 

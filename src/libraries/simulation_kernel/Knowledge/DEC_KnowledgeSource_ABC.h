@@ -18,7 +18,7 @@ class DEC_KnowledgeBlackBoard_ABC;
 
 // =============================================================================
 /** @class  DEC_KnowledgeSource_ABC
-    @brief  A knowledge source is able to 
+    @brief  A knowledge source is able to
                 - publish or modify knowledges of the black board
                 - access these knowledges
 */
@@ -39,7 +39,7 @@ public:
     //@{
     template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
-    
+
     //! @name Operations
     //@{
     virtual void Prepare() = 0;
@@ -61,7 +61,7 @@ private:
 // Name: DEC_KnowledgeSource_ABC::serialize
 // Created: NLD 2006-04-13
 // -----------------------------------------------------------------------------
-template< typename Archive > 
+template< typename Archive >
 void DEC_KnowledgeSource_ABC::serialize( Archive& archive, const unsigned int )
 {
     archive & nPriority_

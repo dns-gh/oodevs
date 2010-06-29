@@ -55,7 +55,7 @@ ObjectPanel::ObjectPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::C
                 .AddLabel( tr( "Construction dotation:" ) )
                 .AddSpinBox( tr( "Mining:" ), 0, 100, 1 )
                 .AddLabel( tr( "Development dotation:" ) )
-                .AddSpinBox( tr( "Bypass:" ), 0, 100, 1 )                
+                .AddSpinBox( tr( "Bypass:" ), 0, 100, 1 )
                 .AddLabel( tr( "Obstacle type:" ) )
                 .AddCheckBox( tr( "Reserved obstacle activated:" ) );
 
@@ -134,7 +134,7 @@ void ObjectPanel::OnApply()
         MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "update_object" );
         ObjectMagicAction* action = new ObjectMagicAction( object, actionType, controllers_.controller_, true );
         tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
-        
+
         ParameterList* attributesList = new ParameterList( it.NextElement() );
         action->AddParameter( *attributesList );
 

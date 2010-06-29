@@ -39,7 +39,7 @@ public:
 
     public:
         AttritionEffectOnHuman();
-        
+
         std::string GetItemName();
 
         void ReadArchive( xml::xistream& );
@@ -86,13 +86,13 @@ public:
 
 
 //*****************************************************************************
-    
+
     typedef ADN_Type_String SizeInfos;
     typedef ADN_Type_Vector_ABC<SizeInfos>         T_SizeInfos_Vector;
     typedef T_SizeInfos_Vector::iterator           IT_SizeInfos_Vector;
 
 //*****************************************************************************
-    
+
     typedef ADN_Type_String DotationNatureInfos;
     typedef ADN_Type_Vector_ABC<DotationNatureInfos> T_DotationNatureInfos_Vector;
     typedef T_DotationNatureInfos_Vector::iterator   IT_DotationNatureInfos_Vector;
@@ -102,7 +102,7 @@ public:
 
              ADN_Categories_Data();
     virtual ~ADN_Categories_Data();
-    
+
     void            FilesNeeded(T_StringList& l) const;
     void            Reset();
     void            Load();
@@ -203,7 +203,7 @@ ADN_Categories_Data::DotationNatureInfos* ADN_Categories_Data::FindDotationNatur
     for( IT_DotationNatureInfos_Vector it = vDotationNatures_.begin(); it != vDotationNatures_.end(); ++it )
         if( ADN_Tools::CaselessCompare( (*it)->GetData(), strName ) )
             return *it;
-    return 0;    
+    return 0;
 }
 
 // -----------------------------------------------------------------------------

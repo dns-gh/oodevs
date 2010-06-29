@@ -55,11 +55,11 @@ class PHY_RolePion_Perceiver : public PHY_RoleInterface_Perceiver
 public:
     //! @name Types
     //@{
-    typedef std::pair< const PHY_SensorTypeAgent* , MT_Float /*height*/ > T_SurfaceAgentKeyPair; 
+    typedef std::pair< const PHY_SensorTypeAgent* , MT_Float /*height*/ > T_SurfaceAgentKeyPair;
     typedef std::map< T_SurfaceAgentKeyPair, PHY_PerceptionSurfaceAgent > T_SurfaceAgentMap;
     typedef T_SurfaceAgentMap::const_iterator                             CIT_SurfaceAgentMap;
 
-    typedef std::pair< const PHY_SensorTypeObject* , MT_Float /*height*/ >     T_SurfaceObjectKeyPair; 
+    typedef std::pair< const PHY_SensorTypeObject* , MT_Float /*height*/ >     T_SurfaceObjectKeyPair;
     typedef std::map< T_SurfaceObjectKeyPair, PHY_PerceptionSurfaceObject >    T_SurfaceObjectMap;
     typedef T_SurfaceObjectMap::const_iterator                                 CIT_SurfaceObjectMap;
 
@@ -88,11 +88,11 @@ public:
     void NotifyPerception( MIL_PopulationConcentration& concentration, const PHY_PerceptionLevel& level );
     void NotifyPerception( MIL_PopulationFlow&          flow         , const PHY_PerceptionLevel& level, const T_PointVector& shape );
     void NotifyPerception( const MIL_Effect_IndirectFire& flyingShell ) const;
-    void NotifyPerception( const urban::TerrainObject_ABC& block, const PHY_PerceptionLevel& level ) const;    
+    void NotifyPerception( const urban::TerrainObject_ABC& block, const PHY_PerceptionLevel& level ) const;
     //@}
 
     //! @name Operations
-    //@{    
+    //@{
     void                       Update            ( bool bIsDead );
     void                       Clean             ();
     void                       ExecutePerceptions();
@@ -214,7 +214,7 @@ private:
     void ComputeMainPerceptionDirection( MT_Vector2D& vMainPerceptionDirection ) const;
 
     MT_Float    GetMaxObjectPerceptionDistance() const;
-    
+
     void EnsurePerceptionRecoLocalisation();
     //@}
 
@@ -222,19 +222,19 @@ private:
     MIL_Agent_ABC& pion_;
     const MT_Vector2D* perceiverPosition_;
     const MT_Vector2D* perceiverDirection_;
-    
+
     MT_Vector2D lastPerceiverPosition_;
 
     bool           bPeriphericalVisionEnabled_;
     unsigned int           nNextPeriphericalVisionStep_;
     bool           bRecordModeEnabled_;
-    
+
     // Perceptions
     T_RadarsPerClassMap radars_;
     T_SurfaceAgentMap   surfacesAgent_;
     T_SurfaceObjectMap  surfacesObject_;
     MT_Float            rMaxAgentPerceptionDistance_;
-    MT_Float            rMaxObjectPerceptionDistance_;   
+    MT_Float            rMaxObjectPerceptionDistance_;
 
     PHY_PerceptionView*             pPerceptionView_;
     PHY_PerceptionCoupDeSonde*      pPerceptionCoupDeSonde_;

@@ -28,7 +28,7 @@ MedicalTreatmentPrototype::MedicalTreatmentPrototype( QWidget* parent, const too
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MedicalTreatmentPrototype destructor
 // Created: SBO 2006-04-20
@@ -50,7 +50,7 @@ void MedicalTreatmentPrototype::Commit()
         MedicalTreatmentAttribute* attribute = new MedicalTreatmentAttribute( dico );
         for( QListViewItem* item = treatmentTypes_->firstChild(); item != 0; item = item->nextSibling() )
             if( item->isSelected() )
-                attribute->AddMedicalTreatment( *static_cast< gui::ValuedListItem* >( item )->GetValue< const MedicalTreatmentType >() );        
+                attribute->AddMedicalTreatment( *static_cast< gui::ValuedListItem* >( item )->GetValue< const MedicalTreatmentType >() );
         creation_->Get< ObjectAttributesContainer >().Register( *attribute );
     }
 }

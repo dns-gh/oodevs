@@ -24,7 +24,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeMine )
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectAttributeMine::DEC_Knowledge_ObjectAttributeMine()
     : attr_ ( 0 )
-    , nNbrDotationForMining_ ( 0 ) 
+    , nNbrDotationForMining_ ( 0 )
     , rMiningPercentage_ ( 0. )
     , nMinesActivityTime_ ( 0 )
     , rMinesDensity_ ( 0. )
@@ -39,7 +39,7 @@ DEC_Knowledge_ObjectAttributeMine::DEC_Knowledge_ObjectAttributeMine()
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectAttributeMine::DEC_Knowledge_ObjectAttributeMine( const MineAttribute& attr )
     : attr_ ( &attr )
-    , nNbrDotationForMining_ ( 0 ) 
+    , nNbrDotationForMining_ ( 0 )
     , rMiningPercentage_ ( 0. )
     , nMinesActivityTime_ ( 0 )
     , rMinesDensity_ ( 0. )
@@ -53,7 +53,7 @@ DEC_Knowledge_ObjectAttributeMine::DEC_Knowledge_ObjectAttributeMine( const Mine
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectAttributeMine::~DEC_Knowledge_ObjectAttributeMine()
-{    
+{
     // NOTHING
 }
 
@@ -94,7 +94,7 @@ void DEC_Knowledge_ObjectAttributeMine::UpdateOnPerceptionLevel( const PHY_Perce
 {
     UpdateAttributes();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectAttributeMine::UpdateOnPerception
 // Created: JCR 2008-06-04
@@ -103,7 +103,7 @@ void DEC_Knowledge_ObjectAttributeMine::UpdateOnPerception( const DEC_Knowledge_
 {
     UpdateAttributes();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectAttributeMine::UpdateOnCollision
 // Created: JCR 2008-06-04
@@ -112,14 +112,14 @@ void DEC_Knowledge_ObjectAttributeMine::UpdateOnCollision( const DEC_Knowledge_O
 {
     UpdateAttributes();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectAttributeMine::MsgObjectAttributes
 // Created: JCR 2008-06-04
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeMine::Send( Common::MsgObjectAttributes& asn ) const
 {
-    asn.mutable_mine()->set_percentage( (unsigned int)( rMiningPercentage_ * 100. ) ); 
+    asn.mutable_mine()->set_percentage( (unsigned int)( rMiningPercentage_ * 100. ) );
     asn.mutable_mine()->set_dotation_nbr( nNbrDotationForMining_ );
     asn.mutable_mine()->set_dotation_type( nDotationType_ );
 }
@@ -134,7 +134,7 @@ void DEC_Knowledge_ObjectAttributeMine::Send( Common::MsgObjectAttributes& asn )
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeMine::UpdateAttributes()
 {
-    if ( !attr_ )
+    if( !attr_ )
         return;
 
     nNbrDotationForMining_ = attr_->GetCurrentDotations();

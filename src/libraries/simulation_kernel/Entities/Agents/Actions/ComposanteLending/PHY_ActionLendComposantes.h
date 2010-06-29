@@ -28,7 +28,7 @@ class PHY_ActionLendComposantes : public PHY_DecisionCallbackAction_ABC
 public:
     //! @name Types
     //@{
-    typedef MIL_AgentPion ActorType;        
+    typedef MIL_AgentPion ActorType;
     //@}
 
 protected:
@@ -60,7 +60,7 @@ private:
 
 private:
     PHY_RolePion_Composantes& role_;
-    
+
     PHY_RolePion_Composantes* pTarget_;
     T_ComposantePredicate     predicate_;
     const unsigned int                nNbrToLend_;

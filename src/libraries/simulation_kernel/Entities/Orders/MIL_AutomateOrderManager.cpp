@@ -99,7 +99,7 @@ void MIL_AutomateOrderManager::OnReceiveFragOrder( const MsgsClientToSim::MsgFra
         throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_order_conduite );
 
     DEC_Representations& representation = automate_.GetRole<DEC_Representations>();
-    boost::shared_ptr< MIL_FragOrder > pFragOrder ( new MIL_FragOrder( *pType, automate_.GetKnowledge(), asn ) ); 
+    boost::shared_ptr< MIL_FragOrder > pFragOrder ( new MIL_FragOrder( *pType, automate_.GetKnowledge(), asn ) );
     representation.AddToOrdersCategory( pFragOrder );
 }
 
@@ -156,7 +156,7 @@ const MIL_Fuseau& MIL_AutomateOrderManager::GetFuseau() const
     //$$$ DEGUEU
     if( GetCurrentMission() )
         return GetCurrentMission()->GetFuseau();
-    static const MIL_Fuseau emptyFuseau; 
+    static const MIL_Fuseau emptyFuseau;
     return emptyFuseau;
 }
 
@@ -166,7 +166,7 @@ const MIL_Fuseau& MIL_AutomateOrderManager::GetFuseau() const
 // -----------------------------------------------------------------------------
 const MIL_Fuseau* MIL_AutomateOrderManager::MRT_GetFuseauForPion( MIL_AgentPion& pion ) const
 {
-    return mrt_.GetFuseauForPion( pion );   
+    return mrt_.GetFuseauForPion( pion );
 }
 
 // -----------------------------------------------------------------------------
@@ -174,7 +174,7 @@ const MIL_Fuseau* MIL_AutomateOrderManager::MRT_GetFuseauForPion( MIL_AgentPion&
 // Created: NLD 2006-11-24
 // -----------------------------------------------------------------------------
 void MIL_AutomateOrderManager::MRT_SetFuseauForPion( MIL_AgentPion& pion, MIL_Fuseau& fuseau )
-{    
+{
     mrt_.SetFuseauForPion( pion, fuseau );
 }
 
@@ -192,7 +192,7 @@ boost::shared_ptr< MIL_Mission_ABC > MIL_AutomateOrderManager::MRT_CreatePionMis
         return boost::shared_ptr< MIL_Mission_ABC >();
     }
 
-    boost::shared_ptr< MIL_Mission_ABC > pCurrentMission = GetCurrentMission(); 
+    boost::shared_ptr< MIL_Mission_ABC > pCurrentMission = GetCurrentMission();
     if( !pCurrentMission )
     {
         MT_LOG_WARNING( "Automate '" << automate_.GetName() << "' (ID " << automate_.GetID() << ", Model '" << automate_.GetType().GetModel().GetName() << "') has no current mission", 2, __FUNCTION__ );
@@ -204,7 +204,7 @@ boost::shared_ptr< MIL_Mission_ABC > MIL_AutomateOrderManager::MRT_CreatePionMis
         MT_LOG_ERROR( "MRT already activated for automate '" << automate_.GetName() << "' (ID " << automate_.GetID() << ", Model '" << automate_.GetType().GetModel().GetName() << "') - Mission '" << missionType.GetName() << "'", 4, __FUNCTION__ );
         return boost::shared_ptr< MIL_Mission_ABC >();
     }
-    
+
     boost::shared_ptr< MIL_Mission_ABC > pPionMission ( new MIL_PionMission( missionType, pion, pCurrentMission ) );
     mrt_.SetMissionForPion( pion, pPionMission );
     return pPionMission;
@@ -218,7 +218,7 @@ void MIL_AutomateOrderManager::MRT_Validate()
 {
     assert( automate_.IsEngaged() );
 
-    boost::shared_ptr< MIL_Mission_ABC > pCurrentMission = GetCurrentMission(); 
+    boost::shared_ptr< MIL_Mission_ABC > pCurrentMission = GetCurrentMission();
     if( !pCurrentMission )
     {
         MT_LOG_ERROR( "Automate has no current mission", 2, __FUNCTION__ );
@@ -231,7 +231,7 @@ void MIL_AutomateOrderManager::MRT_Validate()
     }
 
     mrt_.Activate();
-    static_cast< MIL_AutomateMission* >( pCurrentMission.get())->GoToCdt( pCurrentMission );    
+    static_cast< MIL_AutomateMission* >( pCurrentMission.get())->GoToCdt( pCurrentMission );
 }
 
 // -----------------------------------------------------------------------------
@@ -242,7 +242,7 @@ boost::shared_ptr< MIL_Mission_ABC > MIL_AutomateOrderManager::CDT_CreatePionMis
 {
     assert( automate_.IsEngaged() );
 
-    boost::shared_ptr< MIL_Mission_ABC > pCurrentMission = GetCurrentMission(); 
+    boost::shared_ptr< MIL_Mission_ABC > pCurrentMission = GetCurrentMission();
     if( !pCurrentMission )
     {
         MT_LOG_WARNING( "Automate '" << automate_.GetName() << "' (ID " << automate_.GetID() << ", Model '" << automate_.GetType().GetModel().GetName() << "') has no current mission", 2, "MIL_AutomateOrderManager::CDT_CreatePionMission" );
@@ -274,7 +274,7 @@ boost::shared_ptr< MIL_Mission_ABC > MIL_AutomateOrderManager::CreatePionMission
 {
     assert( automate_.IsEngaged() );
 
-    boost::shared_ptr< MIL_Mission_ABC > pCurrentMission = GetCurrentMission(); 
+    boost::shared_ptr< MIL_Mission_ABC > pCurrentMission = GetCurrentMission();
     if( !pCurrentMission )
     {
         MT_LOG_WARNING( "Automate '" << automate_.GetName() << "' (ID " << automate_.GetID() << ", Model '" << automate_.GetType().GetModel().GetName() << "') has no current mission", 2, "MIL_AutomateOrderManager::CDT_CreatePionMission" );
@@ -306,7 +306,7 @@ boost::shared_ptr< MIL_Mission_ABC > MIL_AutomateOrderManager::CreatePionMission
         return boost::shared_ptr< MIL_Mission_ABC >();
     }
 
-	//GGE pCurrentMission enlevé
+    //GGE pCurrentMission enlevé
     boost::shared_ptr< MIL_Mission_ABC > pPionMission ( new MIL_PionMission( missionType, pion ) );
     if( ! preparedMissions_.insert( pPionMission ).second )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
@@ -336,7 +336,7 @@ void MIL_AutomateOrderManager::CDT_GivePionMissionVersPion( const boost::shared_
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
     mission->GetPion().GetOrderManager().ReplaceMission( mission );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateOrderManager::CreateAutomateMission
 // Created: NLD 2007-04-03

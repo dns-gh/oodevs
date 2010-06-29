@@ -44,7 +44,7 @@ public:
     static boost::shared_ptr< TER_Localisation > CreateLocalisation ();
     static std::vector< boost::shared_ptr< MT_Vector2D > > CreateListPoint();
     static boost::shared_ptr< MT_Vector2D > CreatePoint         ();
-	static boost::shared_ptr< MT_Vector2D > CopyPoint( boost::shared_ptr< MT_Vector2D > point );
+    static boost::shared_ptr< MT_Vector2D > CopyPoint( boost::shared_ptr< MT_Vector2D > point );
     static boost::shared_ptr< MT_Vector2D > CreateDirection     ( MT_Vector2D* pPosSource, MT_Vector2D* pPosDest );
     static boost::shared_ptr< MT_Vector2D > CreateOrthoDirection( MT_Vector2D* pDir, bool bCounterClockwise );
 
@@ -78,7 +78,7 @@ public:
     static DEC_Objective* GetNextObjectiveInFuseau( const MIL_Fuseau* pFuseau, const MT_Vector2D* pRefPoint, const std::vector< DEC_Objective* >& objectives );
     static boost::shared_ptr< TER_Localisation > ComputeAreaInZone( const MIL_Fuseau* zone, const MT_Vector2D* center );
     static MT_Float         ComputeAreaSize         ( TER_Localisation* pLocalisation );
-    
+
     static DEC_FrontAndBackLinesComputer* StartComputingFrontAndBackLines       ( const MIL_Automate& callerAutomate, const std::vector< DEC_Decision_ABC* >& pionDecisionList );
     static DEC_FrontAndBackLinesComputer* StartComputingAutomatFrontAndBackLines( const MIL_Automate& callerAutomate, const std::vector< DEC_Decision_ABC* >& automatDecisionList );
     static void StopComputingFrontAndBackLines                   ( DEC_FrontAndBackLinesComputer* pComputer );
@@ -91,7 +91,7 @@ public:
     static boost::shared_ptr< MT_Vector2D > ComputeAmbushPosition ( const MIL_AgentPion& callerAgent, MT_Vector2D* pAmbushPosition, MT_Vector2D* pRetreatPosition, MT_Float rDist );
     static boost::shared_ptr< MT_Vector2D > ComputeSafetyPosition( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledgeEnemy, MT_Float rMinDistance );
     static boost::shared_ptr< MT_Vector2D > ComputeStaticSafetyPosition( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledgeEnemy);
-	static boost::shared_ptr< MT_Vector2D > ComputeSafetyPositionWithPopulation              ( const MIL_AgentPion& callerAgent, unsigned int nPopulationKnowledgeID, MT_Float rMinDistance );
+    static boost::shared_ptr< MT_Vector2D > ComputeSafetyPositionWithPopulation              ( const MIL_AgentPion& callerAgent, unsigned int nPopulationKnowledgeID, MT_Float rMinDistance );
     static boost::shared_ptr< MT_Vector2D > ComputeSafetyPositionWithObjective( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledgeEnnemy, MT_Float rMinMeterDistance, MT_Vector2D* pObjective );
     template< typename T > static boost::shared_ptr< MT_Vector2D > ComputeDestPoint     ( const T& caller );
     static boost::shared_ptr< MT_Vector2D > ComputeDestPointForPion( MIL_Automate& callerAutomate, DEC_Decision_ABC* pPion );
@@ -118,14 +118,14 @@ public:
     static std::vector< boost::shared_ptr< MT_Vector2D > > ComputePosDeploiementASAOmni( const MIL_Automate& automat, int positionCount, const MT_Vector2D* center, float radius );
     static std::vector< boost::shared_ptr< MT_Vector2D > > ComputePosDeploiementASANasse( int positionCount, const MT_Vector2D* center, float angle, float initialDistance, float spacing, const MT_Vector2D* direction );
     static std::vector< boost::shared_ptr< MT_Vector2D > > ComputePosDeploiementASADoubleRideau( int positionCount, const MT_Vector2D* center, float initialDistance, float lineSpacing, float pointSpacing, const MT_Vector2D* direction );
-    
+
     // Interception
     static boost::shared_ptr< MT_Vector2D > GetInterceptionPosition( const MIL_AgentPion& caller, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, MT_Vector2D* pInterceptingPosition, MT_Float rSpeed );
 
     static bool GetInterceptionPoint   ( const MT_Vector2D& vToInterceptPosition, const MT_Vector2D& vToInterceptSpeed, const MT_Vector2D& vInterceptingPosition, MT_Float rInterceptingSpeed, MT_Vector2D& result );
 
     // Terrain keypoint
-    static void GetCrossroads( const directia::Brain& brain, const MIL_AgentPion& pion, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& table ); 
+    static void GetCrossroads( const directia::Brain& brain, const MIL_AgentPion& pion, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& table );
     // BMArea
     static boost::shared_ptr< MT_Vector2D > ComputeBarycenter( const TER_Localisation* localisation );
     //@}

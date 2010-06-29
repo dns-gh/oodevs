@@ -23,7 +23,7 @@ MIL_PropagationManager::MIL_PropagationManager()
 {
     // NOTHING
 }
-       
+
 // -----------------------------------------------------------------------------
 // Name: MIL_PropagationManager destructor
 // Created: RFT 28/04/2008
@@ -47,7 +47,7 @@ void MIL_PropagationManager::Flag( const MT_Vector2D& vOrigin , unsigned int len
 
     coord_x = coord_x - coord_x % length;
     coord_y = coord_y - coord_y % width;
-    
+
     coordinatesSet_.insert( T_Coordinate( coord_x, coord_y ) );
 }
 
@@ -66,8 +66,8 @@ void MIL_PropagationManager::RemoveFlag( const MT_Vector2D& vOrigin , unsigned i
     coord_y = coord_y - coord_y % width;
 
     T_CoordinatesSet::iterator iter = coordinatesSet_.find( T_Coordinate( coord_x, coord_y ) );
-    
-    if ( iter != coordinatesSet_.end() ) 
+
+    if( iter != coordinatesSet_.end() )
         coordinatesSet_.erase( iter );
 }
 
@@ -81,7 +81,7 @@ bool MIL_PropagationManager::IsFlagged( const TER_Localisation& localisation , u
     //On récupère les coordonnées de la localisation ( qui sont celles d'un point)
     int coord_x = (int) ( localisation.ComputeBarycenter().rX_ );
     int coord_y = (int) ( localisation.ComputeBarycenter().rY_ );
-    
+
     //Puis on on lui enlève son reste de la division par 5, car le maillage sera de 5 par 5 pour faire des cases de feu de 25m²
     coord_x = coord_x - coord_x % length;
     coord_y = coord_y - coord_y % width;

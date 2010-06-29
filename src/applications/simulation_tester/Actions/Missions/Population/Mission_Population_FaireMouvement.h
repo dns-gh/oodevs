@@ -21,7 +21,7 @@ namespace TEST {
     @brief  Mission_Population_FaireMouvement
 */
 // Created: SBO 2005-08-08
-// Generated: 
+// Generated:
 // =============================================================================
 class Mission_Population_FaireMouvement : public Mission_Population_ABC
 {

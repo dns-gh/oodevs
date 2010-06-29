@@ -54,7 +54,7 @@ void ObjectsModel::CreateObject( const MsgsSimToClient::MsgObjectCreation& messa
         tools::Resolver< Object_ABC >::Register( message.oid(), *pObject );
     }
 }
- 
+
 // -----------------------------------------------------------------------------
 // Name: ObjectsModel::GetObject
 // Created: AGE 2006-02-10

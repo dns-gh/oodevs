@@ -44,7 +44,7 @@ const AgentType& AutomatComposition::GetType() const
 {
     return type_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: AutomatComposition::GetMin
 // Created: AGE 2006-09-05
@@ -53,7 +53,7 @@ unsigned int AutomatComposition::GetMin() const
 {
     return min_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: AutomatComposition::GetMax
 // Created: AGE 2006-09-05

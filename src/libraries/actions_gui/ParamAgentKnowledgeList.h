@@ -28,12 +28,12 @@ namespace actions
 // =============================================================================
 /** @class  ParamAgentKnowledgeList
     @brief  ParamAgentKnowledgeList
-    // $$$$ AGE 2006-03-14: factor these stuffs with single entity parameters 
+    // $$$$ AGE 2006-03-14: factor these stuffs with single entity parameters
 */
 // Created: AGE 2006-03-14
 // =============================================================================
 class ParamAgentKnowledgeList : public EntityListParameter< kernel::AgentKnowledge_ABC >
-                              , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC > 
+                              , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
 {
 
 public:

@@ -65,7 +65,7 @@ MIL_Formation& FormationFactory::Create( xml::xistream& xis, MIL_Army_ABC& army,
 // Created: SLG 2010-02-10
 // -----------------------------------------------------------------------------
 void FormationFactory::load( MIL_CheckPointInArchive& file, const unsigned int )
-{   
+{
     file >> boost::serialization::base_object < FormationFactory_ABC >( *this );
 }
 

@@ -22,7 +22,7 @@ namespace dispatcher
 }
 
 namespace kernel
-{   
+{
     class CoordinateConverter_ABC;
 }
 
@@ -51,14 +51,14 @@ public:
     //! @name Constructors/Destructor
     //@{
              Intelligence( unsigned int id, const MsgIntelligenceCreationRequest& message );
-             Intelligence( unsigned int id, xml::xistream&, const MsgFormation& formation, const kernel::CoordinateConverter_ABC& converter ); 
+             Intelligence( unsigned int id, xml::xistream&, const MsgFormation& formation, const kernel::CoordinateConverter_ABC& converter );
     virtual ~Intelligence();
     //@}
 
     //! @name Accessors
     //@{
-    unsigned int GetID() const  { return id_ ; } 
-    const MsgFormation& GetFormation() const { return formation_ ; } 
+    unsigned int GetID() const  { return id_ ; }
+    const MsgFormation& GetFormation() const { return formation_ ; }
     //@}
 
     //! @name Network
@@ -70,7 +70,7 @@ public:
     virtual void SendDestruction( dispatcher::ClientPublisher_ABC& publisher ) const;
     //@}
 
-    //! @name xml read / write 
+    //! @name xml read / write
     //@{
     virtual void Write( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter ) const;
     //@}
@@ -85,7 +85,7 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadPosition ( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter ) ;  
+    void ReadPosition ( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter ) ;
     void WritePosition( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter ) const;
     //@}
 

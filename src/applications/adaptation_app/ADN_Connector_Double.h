@@ -24,7 +24,7 @@ class ADN_Connector_Double
 public:
     explicit ADN_Connector_Double(T* gfx);
     virtual ~ADN_Connector_Double();
-    
+
     void  SetDataChanged(const QString& string);
     bool IsConnected() const;
 

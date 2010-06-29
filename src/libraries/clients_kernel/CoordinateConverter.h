@@ -35,7 +35,7 @@ class CoordinateConverter : public CoordinateConverter_ABC
 public:
     //! @name Constructor / Destructor
     //@{
-             CoordinateConverter();        
+             CoordinateConverter();
     explicit CoordinateConverter( const CoordinateSystems& coordSystems );
     explicit CoordinateConverter( const tools::ExerciseConfig& config );
     virtual ~CoordinateConverter();
@@ -44,12 +44,12 @@ public:
     //! @name Operations
     //@{
     void Load( const tools::ExerciseConfig& config );
-    
+
     virtual const CoordinateSystems& GetCoordSystem() const;
     virtual std::string GetStringPosition( const geometry::Point2f& position ) const;
 
     virtual bool IsInBoundaries( const geometry::Point2f& point ) const;
-    
+
     virtual std::string       ConvertToMgrs     ( const geometry::Point2f& pos ) const;
     virtual geometry::Point2d ConvertToGeo      ( const geometry::Point2f& pos ) const;
     virtual geometry::Point2d ConvertToGeo      ( const geometry::Point2d& pos ) const;
@@ -76,7 +76,7 @@ private:
      //! @name Helpers
     //@{
     void SetGeodeticCoordinates( const geometry::Point2f& pos ) const;
-    //@}   
+    //@}
 
 private:
     //! @name Member data
@@ -90,7 +90,7 @@ private:
     mutable geocoord::MGRS                        mgrs_;
     mutable geocoord::Geodetic                    geodetic_;
     mutable geocoord::UTM utm_;
-    const CoordinateSystems&   coordinateSystems_;    	
+    const CoordinateSystems&   coordinateSystems_;
     //@}
 };
 

@@ -31,7 +31,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( AgentFactory )
 // Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
 AgentFactory::AgentFactory( MIL_IDManager& idManager, DEC_DataBase& database )
-    : idManager_( idManager ) 
+    : idManager_( idManager )
     , algorithmsFactories_( new AlgorithmsFactories() )
     , database_( database )
 {
@@ -60,7 +60,7 @@ MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate
     pPion = type.InstanciatePion( automate, *algorithmsFactories_, xis );
 
     type.RegisterRoles( *pPion , database_ );
-    
+
     std::string strPosition;
     xis >> xml::attribute( "position", strPosition );
     MT_Vector2D vPosTmp;
@@ -101,7 +101,7 @@ void AgentFactory::Initialize( MIL_AgentPion& pion, const MT_Vector2D& vPosition
 // Created: SLG 2010-02-10
 // -----------------------------------------------------------------------------
 void AgentFactory::load( MIL_CheckPointInArchive& file, const unsigned int )
-{   
+{
     file >> boost::serialization::base_object < AgentFactory_ABC >( *this );
 }
 

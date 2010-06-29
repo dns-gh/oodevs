@@ -23,7 +23,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( ScatteringCapacity )
 // Name: ScatteringCapacity constructor
 // Created: MGD 2010-03-12
 // -----------------------------------------------------------------------------
-ScatteringCapacity::ScatteringCapacity( xml::xistream& xis )    
+ScatteringCapacity::ScatteringCapacity( xml::xistream& xis )
 :  humanByTimeStep_( xml::attribute< float >( xis, "human-by-time-step" ) )
 {
 }
@@ -32,7 +32,7 @@ ScatteringCapacity::ScatteringCapacity( xml::xistream& xis )
 // Name: ScatteringCapacity constructor
 // Created: MGD 2010-03-12
 // -----------------------------------------------------------------------------
-ScatteringCapacity::ScatteringCapacity()    
+ScatteringCapacity::ScatteringCapacity()
 {
     // NOTHING
 }
@@ -41,7 +41,7 @@ ScatteringCapacity::ScatteringCapacity()
 // Name: ScatteringCapacity constructor
 // Created: MGD 2010-03-12
 // -----------------------------------------------------------------------------
-ScatteringCapacity::ScatteringCapacity( const ScatteringCapacity& from )    
+ScatteringCapacity::ScatteringCapacity( const ScatteringCapacity& from )
     : humanByTimeStep_( from.humanByTimeStep_ )
 {
     // NOTHING
@@ -82,7 +82,7 @@ void ScatteringCapacity::Register( MIL_Object_ABC& object )
 // Created: MGD 2010-03-12
 // -----------------------------------------------------------------------------
 void ScatteringCapacity::Instanciate( MIL_Object_ABC& object ) const
-{    
+{
     ScatteringCapacity* capacity = new ScatteringCapacity( *this );
     object.AddCapacity( capacity );
     object.Register( static_cast< MIL_InteractiveContainer_ABC *>( capacity ) );

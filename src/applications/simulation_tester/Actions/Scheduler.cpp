@@ -46,7 +46,7 @@ Scheduler::Scheduler( const Config& config )
 {
     // NOTHING
 }
-   
+
 // -----------------------------------------------------------------------------
 // Name: Scheduler destructor
 // Created: SBO 2005-08-04
@@ -96,11 +96,11 @@ bool Scheduler::Run( unsigned int nCurrentTick )
         return true;
     }
 
-    while( itCurrentAction_ != actions_.end()           && 
+    while( itCurrentAction_ != actions_.end()           &&
            (int)itCurrentAction_->first < nCurrentTick_ &&
            nMissionInPeriod_ < nMaxMissionInPeriod_ )
     {
-        MT_LOG_INFO_MSG( "[" << nTestRun_ / nTestTotal_ << "][" << nTestRun_ % nTestTotal_ << "/" << nTestTotal_ 
+        MT_LOG_INFO_MSG( "[" << nTestRun_ / nTestTotal_ << "][" << nTestRun_ % nTestTotal_ << "/" << nTestTotal_
                              << "] Starting action: " << itCurrentAction_->second->ToString() );
         itCurrentAction_->second->Run( *this );
         ++itCurrentAction_;
@@ -125,7 +125,7 @@ void Scheduler::AddAction( Action_ABC& action )
     actions_.insert( std::make_pair( nNextExecutionTick_, &action ) );
     itCurrentAction_ = actions_.begin();
     ++nTestTotal_;
-    nNextExecutionTick_ += nExecutionPeriod_;    
+    nNextExecutionTick_ += nExecutionPeriod_;
 }
 
 // -----------------------------------------------------------------------------

@@ -58,7 +58,7 @@ public:
     virtual const kernel::Mission* GetCurrentMission() const;
     virtual const kernel::Entity_ABC& GetAgent() const;
 
-    bool IsEmbraye() const; // $$$$ AGE 2006-03-14: 
+    bool IsEmbraye() const; // $$$$ AGE 2006-03-14:
 
     void Engage() const;
     void Disengage() const;

@@ -91,7 +91,7 @@ ADN_Reports_Data::ReportParameter::~ReportParameter()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Reports_Data::GetItemName
 // Created: SBO 2006-12-14
@@ -243,7 +243,7 @@ ADN_Reports_Data::ADN_Reports_Data()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Reports_Data destructor
 // Created: SBO 2006-12-14

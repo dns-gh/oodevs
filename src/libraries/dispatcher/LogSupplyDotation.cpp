@@ -34,7 +34,7 @@ LogSupplyDotation::~LogSupplyDotation()
 {
 
 }
-       
+
 // -----------------------------------------------------------------------------
 // Name: LogSupplyDotation::Update
 // Created: NLD 2006-09-26

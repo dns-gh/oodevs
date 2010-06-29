@@ -22,7 +22,7 @@ using namespace xml;
 // Created: MGD 2010-02-18
 // -----------------------------------------------------------------------------
 OccupantAttribute::OccupantAttribute( kernel::PropertiesDictionary& dico )
-: iMaxSize_( 0 )    
+: iMaxSize_( 0 )
 {
     CreateDictionary( dico );
 }
@@ -33,7 +33,7 @@ OccupantAttribute::OccupantAttribute( kernel::PropertiesDictionary& dico )
 // -----------------------------------------------------------------------------
 OccupantAttribute::OccupantAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dico )
     : iMaxSize_( xis.attribute<int>("max-size") )
-{  
+{
     CreateDictionary( dico );
 }
 
@@ -51,7 +51,7 @@ OccupantAttribute::~OccupantAttribute()
 // Created: MGD 2010-02-18
 // -----------------------------------------------------------------------------
 void OccupantAttribute::Display( kernel::Displayer_ABC& displayer ) const
-{    
+{
     displayer.Group( tools::translate( "Object", "Information" ) )
              .Display( tools::translate( "Object", "Occupant:" ), iMaxSize_ );
 }
@@ -72,7 +72,7 @@ void OccupantAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const
 void OccupantAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << start( "max-size" )
-            << attribute( "max-size", iMaxSize_ )                           
+            << attribute( "max-size", iMaxSize_ )
         << end();
 }
 

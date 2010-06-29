@@ -38,9 +38,9 @@ public:
     //@{
     virtual const Entity_ABC* GetSuperior() const = 0;
     virtual const Entity_ABC& GetEntity() const = 0;
-    virtual tools::Iterator< const Entity_ABC& > CreateSubordinateIterator() const = 0; 
+    virtual tools::Iterator< const Entity_ABC& > CreateSubordinateIterator() const = 0;
     //@}
-    
+
     //! @name Modifiers
     //@{
     virtual void RegisterSubordinate  (       Entity_ABC& entity ) = 0;

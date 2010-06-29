@@ -357,7 +357,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, ::StaticModel& staticM
     gui::TerrainPicker* picker = new gui::TerrainPicker( this );
     gui::TerrainLayer* terrainLayer = new TerrainLayer( controllers_, *glProxy_, prefDialog->GetPreferences(), *picker );
     gui::Layer_ABC* meteoLayer = new ::WeatherLayer( controllers_, *glProxy_, *picker, model_.meteo_ );
-    
+
     CreateLayers( *pMissionPanel_, *creationPanels, *paramLayer, *locationsLayer, *agentsLayer, *automatsLayer, *terrainLayer, * meteoLayer,   *profilerLayer, *prefDialog, profile, simulation );
     ::StatusBar* pStatus_ = new ::StatusBar( statusBar(), *picker, staticModel_.detection_, staticModel_.coordinateConverter_, controllers_, pProfilerDockWnd_ );
     connect( selector_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus_, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
@@ -441,7 +441,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     glProxy_->Register( fogLayer );                                                                                 fogLayer            .SetPasses( "fog" );
     glProxy_->Register( tooltipLayer );                                                                             tooltipLayer        .SetPasses( "tooltip" );
     glProxy_->Register( logoLayer );                preferences.AddLayer( tr( "Logo" ), logoLayer );                logoLayer           .SetPasses( "main" );
-    
+
     // ordre des evenements
     forward_->Register( terrain );
     forward_->Register( parameters );

@@ -134,7 +134,7 @@ void PHY_RolePion_Refugee::ReleaseCamp( MIL_AgentPion& callerAgent, const MIL_Ob
 
     if( !pion_.GetType().IsRefugee() || !bManaged_ )
         return;
-    
+
     pCamp_       = &camp;
     bManaged_    = true;
     bHasChanged_ = true;

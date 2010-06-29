@@ -34,7 +34,7 @@ MOCK_BASE_CLASS( MockKnowledgeGroup, dispatcher::KnowledgeGroup_ABC )
     // LTO begin
     MOCK_METHOD( IsActivated, 0 );
     // LTO end
-   
+
     // dispatcher::KnowledgeGroup_ABC
     MOCK_METHOD( GetTeam, 0 );
     // LTO begin

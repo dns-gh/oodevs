@@ -120,7 +120,7 @@ void ADN_Equipement_GUI::BuildGeneric( E_DotationFamily nType, QTabWidget* pPare
     builder.AddField<ADN_EditLine_String>( pHolder, tr( "CodeNNO" ), vConnectors[eGenNNOCode] );
     builder.AddField<ADN_ComboBox_Equipment_Nature>( pHolder, tr( "Nature" ), vConnectors[eGenNature] );
 
-    QGroupBox* pPackagingGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Packaging" ), pGroupBox ); 
+    QGroupBox* pPackagingGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Packaging" ), pGroupBox );
     builder.AddField<ADN_EditLine_Double>( pPackagingGroup, tr( "Nbr per package" ), vConnectors[ePackageNbr], 0, eGreaterZero );
     builder.AddField<ADN_EditLine_Double>( pPackagingGroup, tr( "Package weight" ), vConnectors[ePackageWeight], tr( "T" ), eGreaterZero );
     builder.AddField<ADN_EditLine_Double>( pPackagingGroup, tr( "Package volume" ), vConnectors[ePackageVolume], tr( "m3" ), eGreaterZero );
@@ -161,7 +161,7 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
     builder.AddEnumField<E_MunitionType>( pHolder, tr( "Type" ), vConnectors[eType], ADN_Tr::ConvertFromMunitionType );
     builder.AddField<ADN_ComboBox_Equipment_Nature>( pHolder, tr( "Nature" ), vConnectors[eNature] );
 
-    QGroupBox* pPackagingGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Packaging" ), pGroupBox ); 
+    QGroupBox* pPackagingGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Packaging" ), pGroupBox );
     builder.AddField<ADN_EditLine_Double>( pPackagingGroup, tr( "Nbr per package" ), vConnectors[eAmmoPackageNbr], 0, eGreaterZero );
     builder.AddField<ADN_EditLine_Double>( pPackagingGroup, tr( "Package weight" ), vConnectors[eAmmoPackageWeight], tr( "T" ), eGreaterZero );
     builder.AddField<ADN_EditLine_Double>( pPackagingGroup, tr( "Package volume" ), vConnectors[eAmmoPackageVolume], tr( "m3" ), eGreaterZero );
@@ -185,7 +185,7 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
     QGroupBox* pAttritionVisualisation = new QGroupBox( 2, Qt::Vertical, tr( "Simulation" ), pDirectGroup );
 
     QWidget* pComboGroup = builder.AddFieldHolder( pAttritionVisualisation );
-    
+
     pArmorCombo_ = builder.AddField< ADN_ComboBox_Vector< ADN_Categories_Data::ArmorInfos > >( pComboGroup, tr( "Armor-Plating" ), vConnectors[eArmor] );
     connect( pArmorCombo_, SIGNAL( activated( int ) ), this, SLOT( SimulationCombosActivated( int ) ) );
 
@@ -194,7 +194,7 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
 
     pAttritionGraph_ = new ADN_Equipement_AttritionGraph( pAttritionVisualisation );
     vConnectors[eAttritionGraph] = &pAttritionGraph_->GetConnector();
-    
+
     // Indirect fire properties
     ADN_GroupBox* pIndirectGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Indirect fire" ), pGroupBox );
     vConnectors[eIndirect] = &pIndirectGroup->GetConnector();
@@ -238,7 +238,7 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
 
     builder.AddField<ADN_EditLine_Int>( pMineParametersGroup_, tr( "Mines quantity" ), vConnectors[eMineNumber] );
 
-    // Illumination 
+    // Illumination
     ADN_GroupBox* pIlluminationGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Illumination capacity" ), pGroupBox );
     vConnectors[eIlluminating] = &pIlluminationGroup->GetConnector();
     builder.AddField<ADN_EditLine_Double>( pIlluminationGroup, tr( "Range" ), vConnectors[eRange] );
@@ -278,7 +278,7 @@ void ADN_Equipement_GUI::InitializeSimulationCombos()
     {
         for( int i = pArmorCombo_->count() - 1; i >= 0; --i )
             if( ( ( ADN_Categories_Data::ArmorInfos* )pArmorCombo_->GetItem( i )->GetData() )->nType_ == eProtectionType_Human )
-                pArmorCombo_->removeItem( i );             
+                pArmorCombo_->removeItem( i );
         if( pArmorCombo_->GetItem( 0 ) )
             pArmorCombo_->setCurrentItem( 0 );
     }
@@ -321,11 +321,11 @@ void ADN_Equipement_GUI::IndirectTypeComboActivated( int nIndex )
     pEffectParametersGroup_->hide();
     pMineParametersGroup_->hide();
 
-    if( (E_TypeMunitionTirIndirect) nIndex == eTypeMunitionTirIndirect_Explosif 
-        || (E_TypeMunitionTirIndirect) nIndex == eTypeMunitionTirIndirect_Aced 
+    if( (E_TypeMunitionTirIndirect) nIndex == eTypeMunitionTirIndirect_Explosif
+        || (E_TypeMunitionTirIndirect) nIndex == eTypeMunitionTirIndirect_Aced
         || (E_TypeMunitionTirIndirect) nIndex == eTypeMunitionTirIndirect_Grenade )
         pExplosiveParametersGroup_->show();
-    else if(  (E_TypeMunitionTirIndirect) nIndex == eTypeMunitionTirIndirect_Eclairant
+    else if( (E_TypeMunitionTirIndirect) nIndex == eTypeMunitionTirIndirect_Eclairant
             ||(E_TypeMunitionTirIndirect) nIndex == eTypeMunitionTirIndirect_Fumigene )
         pFlareParametersGroup_->show();
     else if( (E_TypeMunitionTirIndirect) nIndex == eTypeMunitionTirIndirect_Mine )
@@ -350,7 +350,7 @@ void ADN_Equipement_GUI::SimulationCombosActivated( int /*nIndex*/ )
 ADN_Table* ADN_Equipement_GUI::CreatePKTable()
 {
     ADN_Categories_Data::T_ArmorInfos_Vector& armorInfos = ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos();
-    
+
     ADN_GuiBuilder builder;
     ADN_Table* pTable = builder.CreateTable( 0 );
 

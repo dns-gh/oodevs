@@ -83,7 +83,7 @@ void ADN_NBC_NbcAgentListView::OnContextMenu( const QPoint& pt )
     QPopupMenu popupMenu( this );
     ADN_NBC_Wizard wizard( this );
     FillContextMenuWithDefault( popupMenu, wizard );
-    popupMenu.exec( pt );  
+    popupMenu.exec( pt );
 
     ADN_NBC_Datas::T_NbcAgentInfos_Vector& vNbcAgents = ADN_Workspace::GetWorkspace().GetNbc().GetData().GetNbcAgentVector();
     std::sort( vNbcAgents.begin(), vNbcAgents.end(), ADN_Tools::NameSort<NbcAgentInfos>() );

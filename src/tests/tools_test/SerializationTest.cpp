@@ -63,7 +63,7 @@ namespace
                 if( i == 0 )
                     std::cout << "- Original/Encoded size: " << sizeof( message ) << "/" << encodedMessage.Size() - 2 * sizeof( unsigned long ) << std::endl;
             }
-            std::cout << "Encoded " << count << " message(s) in " 
+            std::cout << "Encoded " << count << " message(s) in "
                       << boost::posix_time::microsec_clock::universal_time() - start << std::endl;
         }
 

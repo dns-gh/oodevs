@@ -72,7 +72,7 @@ private:
     void AddDifference( T_Differences& differences, kernel::E_TroopHealthState state, Common::EnumHumanRank rank, int value );
     //@}
 
-public: // $$$$ AGE 2006-04-28: 
+public: // $$$$ AGE 2006-04-28:
     //! @name Member data
     //@{
     kernel::Controller& controller_;

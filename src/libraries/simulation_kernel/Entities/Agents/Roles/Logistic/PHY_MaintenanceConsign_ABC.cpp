@@ -81,7 +81,7 @@ const PHY_Breakdown& PHY_MaintenanceConsign_ABC::GetComposanteBreakdown() const
 void PHY_MaintenanceConsign_ABC::Cancel()
 {
     assert( pComposanteState_ );
-    
+
 
     SetState( eFinished );
     nTimer_ = 0;
@@ -106,7 +106,7 @@ void PHY_MaintenanceConsign_ABC::SendFullState( client::LogMaintenanceHandlingUp
 {
     assert( pComposanteState_ );
     assert( pMaintenance_ );
-    
+
     asn().set_oid_pion_log_traitant( pMaintenance_->GetID() );
     asn().set_etat( Common::EnumLogMaintenanceHandlingStatus( nState_ ) );
 }

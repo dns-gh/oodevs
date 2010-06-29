@@ -21,7 +21,7 @@ namespace TEST {
     @brief  Mission_Automat_ASS_ReconnaitreZonesDeploiement
 */
 // Created: SBO 2005-08-08
-// Generated: 
+// Generated:
 // =============================================================================
 class Mission_Automat_ASS_ReconnaitreZonesDeploiement : public Mission_Automat_ABC
 {

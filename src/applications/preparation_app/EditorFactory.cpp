@@ -43,7 +43,7 @@ EditorFactory::EditorFactory( kernel::Controllers& controllers, Model& model, co
 {
     controllers_.Register( *this );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: EditorFactory destructor
 // Created: SBO 2006-10-25
@@ -85,7 +85,7 @@ void EditorFactory::Call( MaintenanceSuperior* const& value )
 {
     BuildLogisticEditor( *value );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: EditorFactory::Call
 // Created: SBO 2006-10-25
@@ -94,7 +94,7 @@ void EditorFactory::Call( MedicalSuperior* const& value )
 {
     BuildLogisticEditor( *value );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: EditorFactory::Call
 // Created: SBO 2006-10-25
@@ -120,7 +120,7 @@ namespace
                                , public kernel::ValueEditor< EditorType >
     {
     public:
-        SimpleResolverEditor( QWidget* parent, const Resolver& resolver ) 
+        SimpleResolverEditor( QWidget* parent, const Resolver& resolver )
             : gui::ValuedComboBox< const Entity* >( parent )
         {
             tools::Iterator< const Entity& > it = resolver.CreateIterator();
@@ -252,7 +252,7 @@ namespace
                      , public kernel::ValueEditor< Enum >
     {
     public:
-        explicit EnumEditor( QWidget* parent ) 
+        explicit EnumEditor( QWidget* parent )
             : QComboBox( parent )
         {
             for( int i = 0; i < int( Enum::max() ); ++i )

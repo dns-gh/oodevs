@@ -108,7 +108,7 @@ void save_construct_data( Archive& /*archive*/, const MIL_EntityManager* /*entit
     //const AutomateFactory_ABC* const automateFactory = &factory->automateFactory_;
     //archive << armyFactory_
     //        << formationFactory_
-    //        << 
+    //        <<
 }
 
 template< typename Archive >
@@ -139,7 +139,7 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , rStatesTime_                  ( 0. )
     , idManager_                    ( new MIL_IDManager() )
     , pObjectManager_               ( new MIL_ObjectManager() )
-    , populationFactory_            ( new PopulationFactory( database ) )          
+    , populationFactory_            ( new PopulationFactory( database ) )
     , agentFactory_                 ( new AgentFactory( *idManager_, database ) )
     , automateFactory_              ( new AutomateFactory( *idManager_, database ) )
     , formationFactory_             ( new FormationFactory( *automateFactory_ ) )
@@ -164,7 +164,7 @@ MIL_EntityManager::~MIL_EntityManager()
     PHY_WeaponType                ::Terminate();
     PHY_LauncherType              ::Terminate();
     PHY_DotationType              ::Terminate();
-    PHY_DotationNature            ::Terminate();    
+    PHY_DotationNature            ::Terminate();
     MIL_NbcAgentType              ::Terminate();
     MIL_FireClass                 ::Terminate();
     MIL_MedicalTreatmentType      ::Terminate();
@@ -226,7 +226,7 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
     MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"  , automateFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , agentFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d populations", populationFactory_->Count() ) );
-    
+
     xis >> xml::end();
 
     // Check automate composition
@@ -251,14 +251,14 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
 class MIL_EntityManager::UrbanWrapperVisitor : public urban::ObjectVisitor_ABC
 {
 public:
-    UrbanWrapperVisitor( MIL_EntityManager& manager ) : manager_( manager ) 
+    UrbanWrapperVisitor( MIL_EntityManager& manager ) : manager_( manager )
     {}
     ~UrbanWrapperVisitor(){}
     virtual void Visit( const urban::TerrainObject_ABC& object )
     {
         manager_.CreateUrbanObject( object );
     }
-private: 
+private:
     MIL_EntityManager& manager_;
 };
 
@@ -458,7 +458,7 @@ MIL_Object_ABC* MIL_EntityManager::CreateObject( MIL_Army_ABC& army, const MIL_O
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_EntityManager::CreateObject( const std::string& /*type*/, MIL_Army_ABC& /*army*/, const TER_Localisation& /*localisation*/, const std::string& /*strOption*/, const std::string& /*strExtra*/, double /*rCompletion*/, double /*rMining*/, double /*rBypass*/ )
 {
-    throw std::exception( __FUNCTION__ " not implemented" );    
+    throw std::exception( __FUNCTION__ " not implemented" );
     // return pObjectManager_->CreateObject( type, army, localisation, strOption, strExtra, rCompletion, rMining, rBypass );
 }
 
@@ -637,7 +637,7 @@ void MIL_EntityManager::PreprocessRandomBreakdowns()
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::UpdateKnowledgeGroups
-// Created:  FHD 2009-12-18: 
+// Created:  FHD 2009-12-18:
 // LTO
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::UpdateKnowledgeGroups()
@@ -712,7 +712,7 @@ void MIL_EntityManager::OnReceiveMsgUnitOrder( const Common::MsgUnitOrder& messa
         pPion->OnReceiveMsgOrder( message );
     }
     catch( NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >& e )
-    { 
+    {
         ack().set_error_code( e.GetErrorID() );
     }
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
@@ -779,14 +779,14 @@ void MIL_EntityManager::OnReceiveMsgUnitMagicAction( const MsgsClientToSim::MsgU
             ProcessMsgAutomateChangeKnowledgeGroup( message, nCtx );
             break;
         case MsgsClientToSim::MsgUnitMagicAction_Type_change_logistic_links:
-            ProcessMsgAutomateChangeLogisticLinks( message, nCtx ); 
+            ProcessMsgAutomateChangeLogisticLinks( message, nCtx );
             break;
         case MsgsClientToSim::MsgUnitMagicAction_Type_unit_change_superior:
             ProcessMsgUnitChangeSuperior( message, nCtx );
             break;
         case MsgsClientToSim::MsgUnitMagicAction_Type_change_automat_superior:
         case MsgsClientToSim::MsgUnitMagicAction_Type_change_formation_superior:
-            ProcessMsgAutomateChangeSuperior( message, nCtx ); 
+            ProcessMsgAutomateChangeSuperior( message, nCtx );
             break;
         case MsgsClientToSim::MsgUnitMagicAction_Type_log_supply_push_flow:
             ProcessMsgLogSupplyPushFlow( message, nCtx );
@@ -980,7 +980,7 @@ void MIL_EntityManager::OnReceiveMsgChangeDiplomacy( const MsgMagicAction& messa
 void MIL_EntityManager::ProcessMsgAutomateChangeKnowledgeGroup( const MsgsClientToSim::MsgUnitMagicAction& message, unsigned int nCtx )
 {
     client::AutomatChangeKnowledgeGroupAck ack;
-    ack().set_error_code( MsgsSimToClient::HierarchyModificationAck_ErrorCode_no_error_hierarchy );  
+    ack().set_error_code( MsgsSimToClient::HierarchyModificationAck_ErrorCode_no_error_hierarchy );
     try
     {
         MIL_Automate* pAutomate = FindAutomate( message.oid() );
@@ -994,7 +994,7 @@ void MIL_EntityManager::ProcessMsgAutomateChangeKnowledgeGroup( const MsgsClient
     }
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
 
-    if( ack().error_code() == MsgsSimToClient::HierarchyModificationAck_ErrorCode_no_error_hierarchy ) 
+    if( ack().error_code() == MsgsSimToClient::HierarchyModificationAck_ErrorCode_no_error_hierarchy )
     {
         if( message.has_parametres() &&
             message.parametres().elem_size() == 2 )
@@ -1069,7 +1069,7 @@ void MIL_EntityManager::ProcessMsgAutomateChangeSuperior( const MsgsClientToSim:
         MIL_Automate* pAutomate = FindAutomate( message.oid() );
         if( !pAutomate )
             throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_automate );
-        pAutomate->OnReceiveMsgChangeSuperior( message, *formationFactory_ ); 
+        pAutomate->OnReceiveMsgChangeSuperior( message, *formationFactory_ );
     }
     catch( NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >& e )
     {
@@ -1180,7 +1180,7 @@ void MIL_EntityManager::ProcessMsgMagicActionMoveTo( const MsgsClientToSim::MsgU
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::OnReceiveMsgKnowledgeGroupCreation
-// Created: FHD 2009-12-15: 
+// Created: FHD 2009-12-15:
 // LTO
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveMsgKnowledgeGroupCreation( const MsgsClientToSim::MsgMagicAction& /*message*/, unsigned int nCtx )
@@ -1278,7 +1278,7 @@ void MIL_EntityManager::ProcessMsgMagicActionCreateFireOrder( const MsgsClientTo
         const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( ammo.value().dotationtype().oid() );
         if( !pDotationCategory )
             throw NET_AsnException< MsgsSimToClient::MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode >( MsgsSimToClient::MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_error_invalid_munition );
-            
+
         if( pDotationCategory->IsGuided() && !targetKn->GetAgentKnown().GetRole< PHY_RoleInterface_Illumination >().IsIlluminated() )
             throw NET_AsnException< MsgsSimToClient::MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode >( MsgsSimToClient::MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_error_target_no_illuminated );
 
@@ -1395,7 +1395,7 @@ void MIL_EntityManager::WriteODB( xml::xostream& xos ) const
             << xml::start( "dotations" )
                 << xml::attribute( "infinite", infiniteDotations_ )
             << xml::end();
-        
+
     xos     << xml::start( "sides" );
                 armyFactory_->Apply( boost::bind( &MIL_Army_ABC::WriteODB, _1, boost::ref( xos ) ) );
     xos     << xml::end();

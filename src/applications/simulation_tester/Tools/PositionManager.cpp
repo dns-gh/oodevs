@@ -101,11 +101,11 @@ void PositionManager::InitializeCoordinateConverter( const std::string& strWorld
     archive.Close     (                               );
 
     // mgrs conversion
-    pParameters_  = new PlanarCartesian::Parameters( rMiddleLatitude  * std::acos( -1. ) / 180., 
+    pParameters_  = new PlanarCartesian::Parameters( rMiddleLatitude  * std::acos( -1. ) / 180.,
                                                         rMiddleLongitude * std::acos( -1. ) / 180. );
     pPlanar_      = new PlanarCartesian            ( *pParameters_ );
     pTranslation_ = new Point2< double >( rWorldWidth_ * 0.5, rWorldHeight_ * 0.5 );
-    
+
     // wgs84 conversion
     pGeodetic_    = new Geodetic();
 
@@ -152,7 +152,7 @@ std::string PositionManager::MgrsFromPosition( const Position& position )
     }
     catch( std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Exception caught in " __FUNCTION__ " converting (" << position.GetSimX() << 
+        MT_LOG_ERROR_MSG( "Exception caught in " __FUNCTION__ " converting (" << position.GetSimX() <<
                           ", " << position.GetSimY() << ") to mgrs : " << e.what() );
         throw;
     }

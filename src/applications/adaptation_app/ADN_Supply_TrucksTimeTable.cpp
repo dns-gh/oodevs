@@ -37,7 +37,7 @@ class ADN_Connector_TrucksTimeTable
     : public ADN_Connector_Table_ABC
 {
 public:
-    ADN_Connector_TrucksTimeTable( ADN_Supply_TrucksTimeTable& tab ) 
+    ADN_Connector_TrucksTimeTable( ADN_Supply_TrucksTimeTable& tab )
         : ADN_Connector_Table_ABC( tab, false, "ADN_Connector_TrucksTimeTable" )
     {}
 
@@ -131,7 +131,7 @@ void ADN_Supply_TrucksTimeTable::OnContextMenu( int /*nRow*/, int /*nCol*/, cons
         ConvoyInfo* pNewInfo = new ConvoyInfo( "1s" );
         ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
         pCTable->AddItem( pNewInfo );
-        pCTable->AddItem( 0 );  
+        pCTable->AddItem( 0 );
     }
 }
 

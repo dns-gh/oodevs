@@ -21,7 +21,7 @@ class MIL_Mission_ABC;
 //=============================================================================
 class MIL_AutomateMRT : private boost::noncopyable
 {
-        
+
 public:
      MIL_AutomateMRT();
     virtual ~MIL_AutomateMRT();
@@ -31,7 +31,7 @@ public:
           void        SetMissionForPion( MIL_AgentPion& pion, const boost::shared_ptr< MIL_Mission_ABC > mission );
           void        SetFuseauForPion ( MIL_AgentPion& pion, MIL_Fuseau& fuseau );
     const MIL_Fuseau* GetFuseauForPion ( MIL_AgentPion& pion ) const;
-    
+
     void Activate();
     void Cancel  ();
 
@@ -43,15 +43,15 @@ private:
     //@{
     typedef std::map< MIL_AgentPion*, boost::shared_ptr< MIL_Mission_ABC > >  T_MissionPionMap;
     typedef T_MissionPionMap::const_iterator               CIT_MissionPionMap;
-    
+
     typedef std::map< MIL_AgentPion*, MIL_Fuseau* > T_FuseauPionMap;
     typedef T_FuseauPionMap::const_iterator         CIT_FuseauPionMap;
     //@}
-   
+
 private:
     bool             bActivated_;
     T_MissionPionMap missionsPion_;
-    T_FuseauPionMap  fuseauxPion_;    
+    T_FuseauPionMap  fuseauxPion_;
 };
 
 #endif // __MIL_AutomateMRT_h_

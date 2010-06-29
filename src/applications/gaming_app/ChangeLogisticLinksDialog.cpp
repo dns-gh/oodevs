@@ -75,7 +75,7 @@ ChangeLogisticLinksDialog::ChangeLogisticLinksDialog( QWidget* parent, Controlle
     color->pixmap()->fill( QColor( 255, 150, 10 ) );
     label = new QLabel( tr( "Supply superior" ), grid );
     supplyCombo_ = new ValuedComboBox< const Automat_ABC* >( grid );
-   
+
     QHBox* box = new QHBox( this );
     layout->addWidget( box );
     QPushButton* okButton = new QPushButton( tr( "Ok" ), box );
@@ -118,7 +118,7 @@ void ChangeLogisticLinksDialog::Show()
     if( !log )
         return;
     const AutomatType& type = agent.GetType();
-    
+
     tc2Combo_->SetCurrentItem( log->GetTC2() );
     maintenanceCombo_->SetCurrentItem( log->GetMaintenance() );
     medicalCombo_->SetCurrentItem( log->GetMedical() );
@@ -162,7 +162,7 @@ void ChangeLogisticLinksDialog::NotifyDeleted( const Automat_ABC& agent )
     if( type.IsLogisticMedical() && !type.IsTC2() )
         medicalCombo_->RemoveItem( &agent );
     if( type.IsLogisticSupply() && !type.IsTC2() )
-        supplyCombo_->RemoveItem( &agent );    
+        supplyCombo_->RemoveItem( &agent );
 }
 
 namespace

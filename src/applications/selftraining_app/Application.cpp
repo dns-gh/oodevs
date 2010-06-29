@@ -10,12 +10,12 @@
 #include "selftraining_app_pch.h"
 #include "Application.h"
 #include "MainWindow.h"
-#include "MessageDialog.h" 
-#include "SessionTray.h" 
+#include "MessageDialog.h"
+#include "SessionTray.h"
 #include "TrayIcon.h"
-#include "TrayMenu.h" 
+#include "TrayMenu.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/Tools.h" 
+#include "clients_kernel/Tools.h"
 #include "tools/ProcessList.h"
 #include <qsettings.h>
 #include <qtextcodec.h>
@@ -36,16 +36,16 @@ namespace
 // -----------------------------------------------------------------------------
 Application::Application( int argc, char** argv )
     : QApplication( argc, argv )
-    , controllers_( new kernel::Controllers() )  
+    , controllers_( new kernel::Controllers() )
 {
     CreateTranslators();
 
-    // Child processe status 
+    // Child processe status
     mainWindow_ = new MainWindow( *controllers_ );
     mainWindow_->show();
     setMainWidget( mainWindow_ );
 
-    // check for previous instances running 
+    // check for previous instances running
     tools::ProcessList processes;
     if( processes.Contains( "selftraining_app.exe" ) )
     {

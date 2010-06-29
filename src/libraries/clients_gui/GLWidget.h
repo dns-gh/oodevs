@@ -33,7 +33,7 @@ namespace urban
 }
 
 namespace gui
-{  
+{
     class IconLayout;
     class GlRenderPass_ABC;
     class TextureRenderPass;
@@ -164,7 +164,7 @@ private:
     unsigned int circle_;
     int minVisuScale_;
     int maxVisuScale_;
- 
+
     geometry::Rectangle2f viewport_;
     unsigned int frame_;
 

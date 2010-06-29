@@ -47,7 +47,7 @@ public:
     template< typename Archive > void serialize( Archive&, const unsigned int );
     void WriteODB( xml::xostream& xos ) const;
     //@}
-    
+
     //! @name Init
     //@{
     void ReadValues( xml::xistream& xis);
@@ -112,7 +112,7 @@ private:
 
 private:
     PHY_RoleInterface_Supply* pRoleSupply_;
-    T_StockMap              stocks_;   
+    T_StockMap              stocks_;
     T_StockSet              stocksChanged_;
     bool                    bCheckStockCapacities_;
     bool                    bInfiniteDotations_;

@@ -87,7 +87,7 @@ public:
     void ReadOverloading( xml::xistream& xis );
     //@}
 
-    //! @name Operations 
+    //! @name Operations
     //@{
     virtual void Execute( firing::WeaponAvailabilityComputer_ABC& algorithm ) const;
     virtual void Execute( transport::TransportCapacityComputer_ABC& algorithm ) const;
@@ -114,7 +114,7 @@ public:
     //! @name Humans management
     //@{
 //    virtual void WoundHumans  ( const PHY_HumanRank& rank, unsigned int nNbr );
-//    virtual void HealHumans   ( const PHY_HumanRank& rank, unsigned int nNbr );    
+//    virtual void HealHumans   ( const PHY_HumanRank& rank, unsigned int nNbr );
 //    virtual void HealAllHumans();
     //@}
 
@@ -137,7 +137,7 @@ public:
     virtual void RetrieveLentComposante( PHY_RoleInterface_Composantes& borrower, PHY_ComposantePion& composante );
 
     // Notification for the beneficary
-    virtual void NotifyLentComposanteReceived( PHY_RoleInterface_Composantes& lender, PHY_ComposantePion& composante ); 
+    virtual void NotifyLentComposanteReceived( PHY_RoleInterface_Composantes& lender, PHY_ComposantePion& composante );
     virtual void NotifyLentComposanteReturned( PHY_RoleInterface_Composantes& lender, PHY_ComposantePion& composante );
     //@}
 
@@ -173,7 +173,7 @@ public:
     virtual void     ApplyContamination              ( const MIL_ToxicEffectManipulator& contamination );
     virtual void     ApplyPoisonous                  ( const MIL_ToxicEffectManipulator& contamination );
 
-    virtual double   GetDangerosity                 ( const DEC_Knowledge_AgentComposante& compTarget, float rDistBtwSourceAndTarget ) const; 
+    virtual double   GetDangerosity                 ( const DEC_Knowledge_AgentComposante& compTarget, float rDistBtwSourceAndTarget ) const;
     virtual MT_Float GetOnlyLoadableMaxRangeToFireOn ( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;
     virtual MT_Float GetMaxRangeToFireOn             ( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;
     virtual MT_Float GetMinRangeToFireOn             ( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;
@@ -209,11 +209,11 @@ public:
     //@}
 
     //! @name Accessors
-    //@{          
+    //@{
     virtual       MT_Float          GetOperationalState     () const;
     virtual       double            GetMajorOperationalState() const;
-    virtual       bool              IsUsable                () const;                    
-    virtual const MIL_Agent_ABC&    GetPion                 () const;    
+    virtual       bool              IsUsable                () const;
+    virtual const MIL_Agent_ABC&    GetPion                 () const;
     //@}
 
     //! @name Network
@@ -257,18 +257,18 @@ private:
 
 public:
     //! @name Types
-    //@{   
+    //@{
     typedef std::set< PHY_MaintenanceComposanteState* >     T_MaintenanceComposanteStateSet;
     typedef T_MaintenanceComposanteStateSet::iterator       IT_MaintenanceComposanteStateSet;
     typedef T_MaintenanceComposanteStateSet::const_iterator CIT_MaintenanceComposanteStateSet;
-    
+
     typedef std::map< const PHY_RoleInterface_Composantes*, PHY_ComposantePion::T_ComposantePionVector > T_LoanMap;
     typedef T_LoanMap::iterator                                                 IT_LoanMap;
     typedef T_LoanMap::const_iterator                                           CIT_LoanMap;
 
     typedef std::map< const PHY_ComposanteTypePion*, T_ComposanteTypeProperties > T_ComposanteTypeMap;
     typedef T_ComposanteTypeMap::iterator                                         IT_ComposanteTypeMap;
-    typedef T_ComposanteTypeMap::const_iterator                                   CIT_ComposanteTypeMap;    
+    typedef T_ComposanteTypeMap::const_iterator                                   CIT_ComposanteTypeMap;
     //@}
 
 private:
@@ -310,7 +310,7 @@ private:
     unsigned int                   nNbrComposanteChanged_;
     double               rMajorOperationalState_;
     double               rOperationalState_;
-    bool                   bOperationalStateChanged_;    
+    bool                   bOperationalStateChanged_;
     PHY_ComposantePion*    pMajorComposante_;
     unsigned int                   nNeutralizationEndTimeStep_;
     unsigned int                   nNbrUsableComposantes_;

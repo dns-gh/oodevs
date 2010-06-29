@@ -22,7 +22,7 @@
 #include "ADN_Automata_Data.h"
 #include "ADN_Wizard_ABC.h"
 
-typedef ADN_Wizard_ABC<ADN_Automata_Data::AutomatonInfos> ADN_Wizard_ABC_ADN_Automata_Data_AutomatonInfos; 
+typedef ADN_Wizard_ABC<ADN_Automata_Data::AutomatonInfos> ADN_Wizard_ABC_ADN_Automata_Data_AutomatonInfos;
 // =============================================================================
 /** @class  ADN_Automata_Wizard
     @brief  ADN_Automata_Wizard

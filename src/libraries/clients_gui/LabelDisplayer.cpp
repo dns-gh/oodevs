@@ -32,7 +32,7 @@ LabelDisplayer::LabelDisplayer( QWidget* parent, const QString& name, bool bold,
         valueLabel_->setFont( boldFont );
     }
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: LabelDisplayer destructor
 // Created: AGE 2006-02-09

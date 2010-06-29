@@ -10,7 +10,7 @@
 #include "gaming_pch.h"
 #include "statusicons.h"
 
-#define static 
+#define static
 
 #include "res/radars_on.xpm"
 #include "res/skull.xpm"

@@ -44,7 +44,7 @@ public:
 private:
     //! @name Types
     //@{
-    typedef          std::map< KEY, VALUE, CMP > T_Map;   
+    typedef          std::map< KEY, VALUE, CMP > T_Map;
     typedef typename T_Map::const_iterator       CIT_Map;
     //@}
 

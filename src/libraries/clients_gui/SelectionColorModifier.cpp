@@ -44,7 +44,7 @@ SelectionColorModifier::~SelectionColorModifier()
 QColor SelectionColorModifier::Apply( const kernel::Entity_ABC& entity, const QColor& base )
 {
     bool selected         = selectedEntity_ == &entity;
-    bool superiorSelected = selectedEntity_ 
+    bool superiorSelected = selectedEntity_
         && entity.Retrieve< TacticalHierarchies >()
         && entity.Retrieve< TacticalHierarchies >()->IsSubordinateOf( *selectedEntity_ );
     tools_.Select( selected, superiorSelected );

@@ -12,7 +12,7 @@
 
 #include "meteo/MeteoModel_ABC.h"
 #include <list>
-    
+
 namespace kernel
 {
     class CoordinateConverter_ABC;
@@ -25,7 +25,7 @@ namespace tools
     class ExerciseConfig;
 }
 
-namespace dispatcher 
+namespace dispatcher
 {
     class Model;
 
@@ -48,7 +48,7 @@ public:
     //! @name Operations
     //@{
     virtual const weather::PHY_Lighting& GetLighting() const;
-    virtual void OnReceiveMsgGlobalMeteo( const MsgsSimToClient::MsgControlGlobalMeteo& message ); 
+    virtual void OnReceiveMsgGlobalMeteo( const MsgsSimToClient::MsgControlGlobalMeteo& message );
     virtual void OnReceiveMsgLocalMeteoCreation( const MsgsSimToClient::MsgControlLocalMeteoCreation& message );
     virtual void OnReceiveMsgLocalMeteoDestruction( const MsgsSimToClient::MsgControlLocalMeteoDestruction& message );
     void Accept( kernel::ModelVisitor_ABC& visitor );

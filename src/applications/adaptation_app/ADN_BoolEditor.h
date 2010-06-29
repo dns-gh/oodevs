@@ -51,8 +51,8 @@ public:
     //@}
 
 signals:
-	void StateChanged( bool );
-	
+    void StateChanged( bool );
+
 public slots:
     void SetState( bool );
 

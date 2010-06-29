@@ -408,7 +408,7 @@ void Mission_Pawn_Type::Initialize()
     Register< Mission_Pawn_ASY_Renseigner >( "Pion ASY Renseigner" );
 
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Mission_Pawn_Type::Terminate
 // Created: SBO 2005-08-09

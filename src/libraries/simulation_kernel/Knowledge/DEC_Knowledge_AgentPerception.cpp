@@ -117,14 +117,14 @@ void DEC_Knowledge_AgentPerception::load( MIL_CheckPointInArchive& file, const u
          >> bPreviousRecordModeEnabled_
          >> nRecordModeDisablingDelay_
          >> bAttacker_;
-    
+
     unsigned int nID;
     file >> nID;
     pCurrentPerceptionLevel_  = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
-    
+
     file >> nID;
     pPreviousPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
-    
+
     file >> nID;
     pMaxPerceptionLevel_      = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
 }
@@ -139,9 +139,9 @@ void DEC_Knowledge_AgentPerception::Prepare()
     if( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ )
     {
         pCurrentPerceptionLevel_  = &PHY_PerceptionLevel::notSeen_;
-        
+
         assert( pAgentPerceived_ );
-        dataDetection_.Prepare( *pAgentPerceived_ );    
+        dataDetection_.Prepare( *pAgentPerceived_ );
     }
 
     bAttacker_ = false;
@@ -199,7 +199,7 @@ void DEC_Knowledge_AgentPerception::SendStateToNewClient() const
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_AgentPerception::UpdateOnNetwork() const
 {
-    if ( *pCurrentPerceptionLevel_ == *pPreviousPerceptionLevel_ && bPreviousRecordModeEnabled_ == bRecordModeEnabled_ )
+    if( *pCurrentPerceptionLevel_ == *pPreviousPerceptionLevel_ && bPreviousRecordModeEnabled_ == bRecordModeEnabled_ )
         return;
 
     SendStateToNewClient();
@@ -212,7 +212,7 @@ void DEC_Knowledge_AgentPerception::UpdateOnNetwork() const
 MIL_Agent_ABC& DEC_Knowledge_AgentPerception::GetAgentPerceived() const
 {
     assert( pAgentPerceived_ );
-    return *pAgentPerceived_; 
+    return *pAgentPerceived_;
 }
 
 // -----------------------------------------------------------------------------
@@ -222,7 +222,7 @@ MIL_Agent_ABC& DEC_Knowledge_AgentPerception::GetAgentPerceived() const
 const MIL_Agent_ABC& DEC_Knowledge_AgentPerception::GetAgentPerceiving() const
 {
     assert( pAgentPerceiving_ );
-    return *pAgentPerceiving_;    
+    return *pAgentPerceiving_;
 }
 
 // -----------------------------------------------------------------------------
@@ -242,7 +242,7 @@ const PHY_PerceptionLevel& DEC_Knowledge_AgentPerception::GetMaxPerceptionLevel(
 const PHY_PerceptionLevel& DEC_Knowledge_AgentPerception::GetCurrentPerceptionLevel() const
 {
     assert( pCurrentPerceptionLevel_ );
-    return *pCurrentPerceptionLevel_;    
+    return *pCurrentPerceptionLevel_;
 }
 
 // -----------------------------------------------------------------------------
@@ -273,7 +273,7 @@ const DEC_Knowledge_AgentPerceptionDataDetection& DEC_Knowledge_AgentPerception:
 {
     return dataDetection_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentPerception::GetRecognitionData
 // Created: NLD 2004-11-10
@@ -282,7 +282,7 @@ const DEC_Knowledge_AgentPerceptionDataRecognition& DEC_Knowledge_AgentPerceptio
 {
     return dataRecognition_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentPerception::GetIdentificationData
 // Created: NLD 2004-11-10

@@ -31,7 +31,7 @@ ColorAttribute::ColorAttribute( const Model& model, const MsgsSimToClient::MsgUr
 ColorAttribute::~ColorAttribute()
 {
     delete color_;
-}  
+}
 
 // -----------------------------------------------------------------------------
 // Name: ColorAttribute::Update

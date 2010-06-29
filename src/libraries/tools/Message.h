@@ -13,7 +13,7 @@
 #include <boost/shared_ptr.hpp>
 #include <vector>
 
-namespace boost { 
+namespace boost {
     namespace asio {
         class const_buffers_1;
         class mutable_buffers_1;

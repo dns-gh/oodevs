@@ -78,7 +78,7 @@ void DEC_Knowledge_ObjectAttributeObstacle::Register( DEC_Knowledge_Object& knOb
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeObstacle::UpdateAttributes()
 {
-    if ( attr_ )
+    if( attr_ )
         bActivated_ = attr_->IsActivated();
 }
 

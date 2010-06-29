@@ -37,11 +37,11 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
-    
+
     //! @name Accessors
     //@{
     const MIL_Automate&       GetAutomate           () const;
@@ -49,7 +49,7 @@ public:
     const PHY_Breakdown&      GetComposanteBreakdown() const;
     const MT_Vector2D&        GetComposantePosition () const;
           void                SetComposantePosition ( const MT_Vector2D& vPosition );
-    const MT_Vector2D&        GetPionPosition       () const;          
+    const MT_Vector2D&        GetPionPosition       () const;
           unsigned int                ApproximateTravelTime ( const MT_Vector2D& vSourcePos, const MT_Vector2D& vTargetPos ) const;
           bool                NeedDiagnosis         () const;
           void                NotifyDiagnosed       ();

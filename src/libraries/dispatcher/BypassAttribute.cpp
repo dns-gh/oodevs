@@ -30,7 +30,7 @@ BypassAttribute::BypassAttribute( const Common::MsgObjectAttributes& asnMsg )
 BypassAttribute::~BypassAttribute()
 {
     // NOTHING
-}  
+}
 
 // -----------------------------------------------------------------------------
 // Name: BypassAttribute::Update

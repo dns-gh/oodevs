@@ -14,7 +14,7 @@
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 #include "hla/Deserializer.h"
 
-namespace hla 
+namespace hla
 {
     class AttributeIdentifier;
 }
@@ -47,11 +47,11 @@ public:
     //@{
     virtual const PHY_Posture& GetLastPosture                () const;
     virtual const PHY_Posture& GetCurrentPosture             () const;
-    virtual       MT_Float     GetPostureCompletionPercentage() const;    
+    virtual       MT_Float     GetPostureCompletionPercentage() const;
     virtual       void         SetPosturePostePrepareGenie   ();
     virtual       void         UnsetPosturePostePrepareGenie ();
     virtual       void         SetTimingFactor               ( MT_Float rFactor );
-    
+
     void Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer );
 
     virtual void Execute( detection::DetectionComputer_ABC& algorithm ) const;

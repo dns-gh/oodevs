@@ -58,7 +58,7 @@ public:
         eAmmoName,
         eAmmoPackageNbr,
         eAmmoPackageWeight,
-        eAmmoPackageVolume,        
+        eAmmoPackageVolume,
         eType,
         eNature,
         eTrancheD,
@@ -147,12 +147,12 @@ private:
     ADN_Equipement_AmmoListView*        pAmmoListView_;
     ADN_Equipement_AttritionTable*      pAttritionTable_;
     ADN_Equipement_UrbanAttritionTable* pUrbanAttritionTable_;
-    
+
     ADN_ComboBox* pIndirectTypeCombo_;
     ADN_Equipement_AttritionGraph* pAttritionGraph_;
     ADN_ComboBox_Vector< ADN_Categories_Data::ArmorInfos >* pArmorCombo_;
     ADN_ComboBox_Vector< ADN_Equipement_Data::UrbanAttritionInfos >* pMaterialCombo_;
-    
+
     QGroupBox* pExplosiveParametersGroup_;
     QGroupBox* pFlareParametersGroup_;
     QGroupBox* pEffectParametersGroup_;

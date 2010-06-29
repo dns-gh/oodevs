@@ -27,8 +27,8 @@ class ADN_CLV_Categories_DotationNature
 : public ADN_Connector_ListView_ABC
 {
 public:
-    
-    ADN_CLV_Categories_DotationNature( ADN_ListView_Categories_DotationNature& list ) 
+
+    ADN_CLV_Categories_DotationNature( ADN_ListView_Categories_DotationNature& list )
         : ADN_Connector_ListView_ABC( list ) {}
 
     virtual ~ADN_CLV_Categories_DotationNature() {}
@@ -39,7 +39,7 @@ public:
         pItem->Connect( 0, static_cast< DotationNatureInfos* >( obj ) );
         return pItem;
     }
-    
+
 private:
     ADN_CLV_Categories_DotationNature& operator=( const ADN_CLV_Categories_DotationNature& );
 };
@@ -114,7 +114,7 @@ void ADN_ListView_Categories_DotationNature::OnContextMenu( const QPoint& pt )
                 pCList->SwapItem( pos - 1, pos );
                 --pos;
             }
-            
+
             // set current item
             setCurrentItem( FindItem( pNewInfo ) );
             break;
@@ -122,7 +122,7 @@ void ADN_ListView_Categories_DotationNature::OnContextMenu( const QPoint& pt )
         case 1:
         {
             DotationNatureInfos* pCurSize = (DotationNatureInfos*)pCurData_;
-            if ( pCurSize )
+            if( pCurSize )
             {
                 if( pCurSize->IsMultiRef() && ! ADN_GuiTools::MultiRefWarning() )
                     return;

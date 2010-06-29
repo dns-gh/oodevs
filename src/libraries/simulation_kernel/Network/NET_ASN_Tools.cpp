@@ -68,7 +68,7 @@ typedef T_ObjectiveVector::const_iterator CIT_ObjectiveVector;
 // Name: NET_ASN_Tools::ReadLocation
 // Created: NLD 2003-07-24
 //-----------------------------------------------------------------------------
-// static 
+// static
 bool NET_ASN_Tools::ReadLocation( const MsgLocation& asnLocalisation, TER_Localisation& localisation )
 {
     //$$$$ ACCEDER DIRECTEMENT A LA LOCALISATION (EVITER COPIE)
@@ -120,7 +120,7 @@ bool NET_ASN_Tools::ReadLine( const MsgLine& asn, T_PointVector& points )
     if( asn.location().type() != MsgLocation_Geometry_line || asn.location().coordinates().elem_size()< 2 )
         return false;
 
-    points.clear();   
+    points.clear();
     points.reserve( asn.location().coordinates().elem_size());
     for( int i = 0; i < asn.location().coordinates().elem_size(); ++i )
     {
@@ -192,7 +192,7 @@ bool NET_ASN_Tools::ReadLocationList( const MsgLocationList& asnLocationList, T_
             return false;
         }
         localisationVector.push_back( pLocalisation );
-    }   
+    }
     return localisationVector.size() >= nNbrEltMin;
 }
 
@@ -208,7 +208,7 @@ bool NET_ASN_Tools::ReadPolygonList( const MsgPolygonList& asn, T_LocalisationPt
         if( asn.elem(i).location().type() != MsgLocation_Geometry_polygon || asn.elem(i).location().coordinates().elem_size() < 3 )
             return false;
     }
-    
+
     localisationVector.clear(); localisationVector.reserve( asn.elem_size() );
     for( int i = 0; i < asn.elem_size(); ++i )
     {
@@ -219,7 +219,7 @@ bool NET_ASN_Tools::ReadPolygonList( const MsgPolygonList& asn, T_LocalisationPt
             return false;
         }
         localisationVector.push_back( pLocalisation );
-    }   
+    }
     return localisationVector.size() >= nNbrEltMin;
 }
 
@@ -288,7 +288,7 @@ DEC_Decision_ABC* NET_ASN_Tools::ReadAgent( const MsgUnit& asnAgent )
 DEC_Decision_ABC* NET_ASN_Tools::ReadAutomate( const MsgUnit& asnAgent )
 {
     MIL_Automate* pAutomate = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( asnAgent.oid() );
-    if( !pAutomate ) 
+    if( !pAutomate )
         return 0;
     return &pAutomate->GetDecision();
 }
@@ -321,13 +321,13 @@ bool NET_ASN_Tools::ReadObjectKnowledgeList( const MsgObjectKnowledgeList& asnLi
 {
     knowledges.clear(); knowledges.reserve( asnListObject.elem_size() );
     for( int n = 0; n < asnListObject.elem_size(); ++n )
-    {        
+    {
         boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = ReadObjectKnowledge( asnListObject.elem( n ), resolver );
         if( !pKnowledge )
             return false;
         knowledges.push_back( pKnowledge );
     }
-    return true;        
+    return true;
 }
 
 //-----------------------------------------------------------------------------
@@ -361,7 +361,7 @@ void NET_ASN_Tools::ReadGDH( const MsgDateTime& asn, unsigned int& realTimeSec )
 void NET_ASN_Tools::WriteDirection( const MT_Vector2D& vDir, MsgHeading& asnDir )
 {
     static const MT_Vector2D vNorth( 0, 1 );
- 
+
     assert( !vDir.IsZero() );
 
     MT_Float rAngle = Angle( vNorth, vDir ); // Trigo ...[-PI, PI]
@@ -370,7 +370,7 @@ void NET_ASN_Tools::WriteDirection( const MT_Vector2D& vDir, MsgHeading& asnDir 
         rAngle += (2 * MT_PI); // Trigo ...[0, 2PI]
 
     rAngle = (2 * MT_PI) - rAngle; // Clockwise [0, 2PI]
-    
+
     asnDir.set_heading( (unsigned int)( rAngle * 180. / MT_PI ) );
 }
 
@@ -429,7 +429,7 @@ bool NET_ASN_Tools::WriteCoordinates( const T_PointVector& points , MsgCoordLatL
     for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
         WritePoint( *it, *asn.add_elem() );
     return true;
-}   
+}
 
 // -----------------------------------------------------------------------------
 // Name: NET_ASN_Tools::WriteCoordinates
@@ -574,7 +574,7 @@ void NET_ASN_Tools::WritePathList( const T_ItinerairePtrVector& itineraireVector
     }
 
     for( CIT_ItinerairePtrVector it = itineraireVector.begin(); it != itineraireVector.end(); ++it )
-        WritePath( **it, *asn.mutable_elem(it - itineraireVector.begin()) );    
+        WritePath( **it, *asn.mutable_elem(it - itineraireVector.begin()) );
 }
 
 // -----------------------------------------------------------------------------
@@ -620,7 +620,7 @@ void NET_ASN_Tools::WriteObjectKnowledge( const DEC_Knowledge_Object& knowledge,
 void NET_ASN_Tools::WriteObjectKnowledgeList( const T_KnowledgeObjectDiaIDVector& knowledges, Common::MsgObjectKnowledgeList& listResult, const DEC_KnowledgeResolver_ABC& /*resolver*/ )
 {
     listResult.clear_elem();
-    for( CIT_KnowledgeObjectDiaIDVector itKnowledge = knowledges.begin(); itKnowledge != knowledges.end(); ++itKnowledge )    
+    for( CIT_KnowledgeObjectDiaIDVector itKnowledge = knowledges.begin(); itKnowledge != knowledges.end(); ++itKnowledge )
     {
         boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = *itKnowledge;
         listResult.add_elem()->set_oid( pKnowledge && pKnowledge->IsValid() ? pKnowledge->GetID() : 0 );

@@ -65,12 +65,12 @@ public:
     virtual const std::string& GetDIAType() const = 0;
     virtual MIL_AgentPion& GetPion() const = 0;
     virtual MIL_Automate& GetAutomate() const = 0;
-    
+
     virtual void GarbageCollect() = 0;
-    
+
     virtual void StartMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission ) = 0;
     virtual void StopMissionBehavior ( const boost::shared_ptr< MIL_Mission_ABC > mission ) = 0;
-    
+
     virtual int  GeteEtatPhaseMission() const = 0;
     virtual void SeteEtatPhaseMission( int value ) = 0;
     virtual int  GeteEtatLima() const = 0;
@@ -129,9 +129,9 @@ public:
     virtual MT_Float GetMajorOperationalState() const = 0;
     virtual bool IsAutomateEngaged() const = 0;
     virtual bool IsDead() const = 0;
-    
+
     virtual boost::shared_ptr< MT_Vector2D > GetLastPointOfPath( const MT_Float time, bool bBoundOnPath ) const = 0;
-    virtual boost::shared_ptr< MT_Vector2D > ExtrapolatePosition( const MT_Float time, bool bBoundOnPath ) const = 0;  
+    virtual boost::shared_ptr< MT_Vector2D > ExtrapolatePosition( const MT_Float time, bool bBoundOnPath ) const = 0;
     //@}
 
     //! @name Serialization

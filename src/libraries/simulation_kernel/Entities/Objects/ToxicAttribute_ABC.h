@@ -22,7 +22,7 @@ class NBCAttribute;
 // Created: JCR 2008-05-30
 // =============================================================================
 class ToxicAttribute_ABC : public ObjectAttribute_ABC
-{ 
+{
 public:
     //! @name Constructors/Destructor
     //@{
@@ -30,9 +30,9 @@ public:
     virtual ~ToxicAttribute_ABC() {}
     //@}
 
-    //! @name 
+    //! @name
     //@{
-    virtual MIL_ToxicEffectManipulator GetContaminationEffect( const NBCAttribute& nbc, const MT_Vector2D& position ) const = 0;    
+    virtual MIL_ToxicEffectManipulator GetContaminationEffect( const NBCAttribute& nbc, const MT_Vector2D& position ) const = 0;
     //@}
 };
 

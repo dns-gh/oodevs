@@ -32,15 +32,15 @@
 typedef ADN_Models_Data::OrderInfos OrderInfos;
 
 //-----------------------------------------------------------------------------
-// Internal List View connector 
+// Internal List View connector
 //-----------------------------------------------------------------------------
 class ADN_CLV_Orders
 : public ADN_Connector_ListView_ABC
 {
 
 public:
-    
-    ADN_CLV_Orders(ADN_ListView_Orders& list) 
+
+    ADN_CLV_Orders(ADN_ListView_Orders& list)
     : ADN_Connector_ListView_ABC(list)
     {}
 
@@ -101,7 +101,7 @@ void ADN_ListView_Orders::OnContextMenu( const QPoint& pt )
 
     bool bDisplayAdd = false;
     bool bDisplayRem = GetCurrentData() != 0;
-    
+
     unsigned int n = 0;
     ADN_Missions_Data::T_FragOrder_Vector& fragOrders = ADN_Workspace::GetWorkspace().GetMissions().GetData().GetFragOrders();
     for( ADN_Missions_Data::IT_FragOrder_Vector it = fragOrders.begin(); it != fragOrders.end(); ++it )
@@ -118,15 +118,15 @@ void ADN_ListView_Orders::OnContextMenu( const QPoint& pt )
         return;
 
     QPopupMenu * pMenu=new QPopupMenu(this);
-    if ( bDisplayAdd )
+    if( bDisplayAdd )
         pMenu->insertItem( tr( "Add frag order"), pTargetMenu.get() ,0 );
-    if ( bDisplayRem )
+    if( bDisplayRem )
         pMenu->insertItem( tr( "Remove frag order"), 1 );
-    
+
     int nMenu = pMenu->exec( pt );
-    if ( nMenu == 1 )
+    if( nMenu == 1 )
         RemoveCurrentItem();
-    else if ( nMenu > 1 )
+    else if( nMenu > 1 )
         CreateNewItem( nMenu - 2 );
 }
 
@@ -178,7 +178,7 @@ void ADN_ListView_Orders::CreateNewItem( int n )
 
     ADN_Connector_Vector_ABC* pCList = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
     pCList->AddItem( pNewInfo );
-    setCurrentItem(FindItem(pNewInfo));    
+    setCurrentItem(FindItem(pNewInfo));
 }
 
 
@@ -195,5 +195,5 @@ void ADN_ListView_Orders::RemoveCurrentItem()
         // remove current data from list
         // take care cause pCurData_ can change!!
         static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurComposante );
-    }    
+    }
 }

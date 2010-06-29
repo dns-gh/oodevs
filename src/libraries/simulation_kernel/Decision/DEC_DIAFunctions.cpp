@@ -91,7 +91,7 @@ void DEC_DIAFunctions::CopyLocalisationListMission( const std::vector< boost::sh
 void DEC_DIAFunctions::CopyPathMission( std::vector< boost::shared_ptr< MT_Vector2D > >pointList, boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter )
 {
     pMission->SetParameter( parameter, MIL_MissionParameterFactory::CreatePath( pointList ) );
-}    
+}
 
 //-----------------------------------------------------------------------------
 // Name: DEC_DIAFunctions::CopyPoint
@@ -151,7 +151,7 @@ void DEC_DIAFunctions::CopyLocalisationMission( boost::shared_ptr< TER_Localisat
     assert( pLocation );
     boost::shared_ptr< MIL_MissionParameter_ABC > pParameter = MIL_MissionParameterFactory::Create( pLocation );
     pMission->SetParameter( parameter, pParameter );
-}    
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_DIAFunctions::CopyKnowledgeObjectToKnowledgeObjectListMission

@@ -74,7 +74,7 @@ namespace boost
         {
             split_free( file, map, nVersion );
         }
-        
+
         template< typename Archive >
         void save( Archive& file, const DEC_KS_Perception::T_AgentPerceptionMap& map, const unsigned int )
         {
@@ -87,7 +87,7 @@ namespace boost
                      << id;
             }
         }
-        
+
         template< typename Archive >
         void load( Archive& file, DEC_KS_Perception::T_AgentPerceptionMap& map, const unsigned int )
         {
@@ -97,10 +97,10 @@ namespace boost
             {
                 MIL_Agent_ABC* pAgent;
                 file >> pAgent;
-                
+
                 unsigned int nID;
                 file >> nID;
-                
+
                 map[ pAgent ] = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
             }
         }
@@ -111,7 +111,7 @@ namespace boost
 // Name: template< typename Archive > void DEC_KnowledgeBlackBoard_AgentPion::serialize
 // Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
-template< typename Archive > 
+template< typename Archive >
 void DEC_KS_Perception::serialize( Archive& archive, const unsigned int )
 {
     archive & boost::serialization::base_object< DEC_KnowledgeSource_ABC >( *this )
@@ -207,15 +207,15 @@ void DEC_KS_Perception::NotifyExternalPerception( MIL_Agent_ABC& agentPerceived,
 // -----------------------------------------------------------------------------
 void DEC_KS_Perception::NotifyPerception( MIL_Agent_ABC& agentPerceived, const PHY_PerceptionLevel& level, bool bRecordModeEnabled )
 {
-    if ( level == PHY_PerceptionLevel::notSeen_ )
+    if( level == PHY_PerceptionLevel::notSeen_ )
         return;
 
     assert( pBlackBoard_ );
 
     DEC_Knowledge_AgentPerception* pKnowledge = pBlackBoard_->GetKnowledgeAgentPerceptionContainer().GetKnowledgeAgentPerception( agentPerceived );
-    if ( !pKnowledge )
+    if( !pKnowledge )
         pKnowledge = &pBlackBoard_->GetKnowledgeAgentPerceptionContainer().CreateKnowledgeAgentPerception( pBlackBoard_->GetPion(), agentPerceived );
-    
+
     pKnowledge->Update( level, bRecordModeEnabled );
 }
 
@@ -231,7 +231,7 @@ void DEC_KS_Perception::NotifyPerception( MIL_Object_ABC& objectPerceived, const
     assert( pBlackBoard_ );
 
     DEC_Knowledge_ObjectPerception* pKnowledge = pBlackBoard_->GetKnowledgeObjectPerceptionContainer().GetKnowledgeObjectPerception( objectPerceived );
-    if ( !pKnowledge )
+    if( !pKnowledge )
         pKnowledge = &pBlackBoard_->GetKnowledgeObjectPerceptionContainer().CreateKnowledgeObjectPerception( pBlackBoard_->GetPion(), objectPerceived );
 
     pKnowledge->Update( level );
@@ -286,7 +286,7 @@ void DEC_KS_Perception::NotifyPerception( const urban::TerrainObject_ABC& object
     assert( pBlackBoard_ );
 
     boost::shared_ptr< DEC_Knowledge_UrbanPerception > pKnowledge = pBlackBoard_->GetKnowledgeUrbanPerceptionContainer().GetKnowledgeUrbanPerception( object );
-    if ( !pKnowledge )
+    if( !pKnowledge )
         pKnowledge = pBlackBoard_->GetKnowledgeUrbanPerceptionContainer().CreateKnowledgeUrbanPerception( pBlackBoard_->GetPion(), object );
 
     pKnowledge->Update( level );
@@ -331,7 +331,7 @@ namespace
             : nReferenceTimeStep_( nReferenceTimeStep )
         {
         }
-        
+
         void operator() ( DEC_Knowledge_AgentPerception& perception ) const
         {
             if( !perception.IsAvailable() )
@@ -372,7 +372,7 @@ void DEC_KS_Perception::Talk( int /*currentTimeStep*/ )
         sReferenceTimeCalculator functor( nReferenceTimeStep );
         pBlackBoard_->GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( functor );
 
-        if ( nReferenceTimeStep != std::numeric_limits< unsigned int >::max() )
+        if( nReferenceTimeStep != std::numeric_limits< unsigned int >::max() )
         {
             sMakePerceptionAvailableTimedFunctor functor2( nReferenceTimeStep );
             pBlackBoard_->GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( functor2 );
@@ -387,15 +387,15 @@ namespace
     struct sDelayedPerceptionFinder
     {
         sDelayedPerceptionFinder( bool& bResult ) : bHasDelayedPerceptions_( bResult ) {}
-        
+
         void operator() ( DEC_Knowledge_AgentPerception& perception )
         {
             bHasDelayedPerceptions_ |= !perception.IsAvailable();
         }
-        
+
         private:
             sDelayedPerceptionFinder& operator = ( const sDelayedPerceptionFinder& );
-            
+
         private:
             bool& bHasDelayedPerceptions_;
     };

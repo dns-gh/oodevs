@@ -44,8 +44,8 @@ void PHY_SensorTypeObject::ReadObject( xml::xistream& xis )
     try
     {
         const MIL_ObjectType_ABC& objectType = MIL_ObjectFactory::FindType( strType );
-        
-        if ( objectData_.size() <= objectType.GetID() )
+
+        if( objectData_.size() <= objectType.GetID() )
             objectData_.resize( objectType.GetID() + 1, 0 );
 
         const PHY_SensorTypeObjectData* pObjectData = new PHY_SensorTypeObjectData( xis );
@@ -80,12 +80,12 @@ const PHY_PerceptionLevel& PHY_SensorTypeObject::ComputePerception( const MIL_Ag
 
     if( objectData_.size() <= target.GetType().GetID() )
         return PHY_PerceptionLevel::notSeen_;
-    
+
     const PHY_SensorTypeObjectData* pObjectData = objectData_[ target.GetType().GetID() ];
     if( !pObjectData )
         return PHY_PerceptionLevel::notSeen_;
 
-    return pObjectData->ComputePerception( perceiver, target, rSensorHeight );    
+    return pObjectData->ComputePerception( perceiver, target, rSensorHeight );
 }
 
 // -----------------------------------------------------------------------------
@@ -99,7 +99,7 @@ const PHY_PerceptionLevel& PHY_SensorTypeObject::ComputePerception( const MIL_Ag
     const PHY_SensorTypeObjectData* pObjectData = objectData_[ target.GetType().GetID() ];
     if( !pObjectData )
         return PHY_PerceptionLevel::notSeen_;
-    return pObjectData->ComputePerception( perceiver, target, rSensorHeight );    
+    return pObjectData->ComputePerception( perceiver, target, rSensorHeight );
 }
 
 // -----------------------------------------------------------------------------

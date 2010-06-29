@@ -36,7 +36,7 @@ public:
     explicit MIL_PopulationOrderManager( MIL_Population& population );
     virtual ~MIL_PopulationOrderManager();
 
-    // @name Events 
+    // @name Events
     //@{
     virtual void OnReceiveFragOrder( const MsgsClientToSim::MsgFragOrder& asn );
             void OnReceiveMission  ( const Common::MsgPopulationOrder& asn );
@@ -46,7 +46,7 @@ public:
     //@{
     bool IsMissionAvailable( const MIL_MissionType_ABC& missionType ) const;
     //@}
-   
+
 private:
     MIL_Population& population_;
 };

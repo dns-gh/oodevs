@@ -28,26 +28,26 @@ class ADN_Urban_Data : public ADN_Data_ABC
     MT_COPYNOTALLOWED(ADN_Urban_Data)
 
 public:
-    
+
     typedef ADN_Type_String UrbanInfos;
     typedef ADN_Type_Vector_ABC<UrbanInfos>         T_UrbanInfos_Vector;
     typedef T_UrbanInfos_Vector::iterator           IT_UrbanInfos_Vector;
-    
+
 public:
 
              ADN_Urban_Data();
     virtual ~ADN_Urban_Data();
-    
+
     void            FilesNeeded(T_StringList& l) const;
     void            Reset();
     void            Load();
     void            Save();
 
-    T_UrbanInfos_Vector&           GetMaterialsInfos();  
+    T_UrbanInfos_Vector&           GetMaterialsInfos();
     UrbanInfos*                    FindMaterial( const std::string& strName );
-    T_UrbanInfos_Vector&           GetFacadesInfos();  
+    T_UrbanInfos_Vector&           GetFacadesInfos();
     UrbanInfos*                    FindFacade( const std::string& strName );
-    T_UrbanInfos_Vector&           GetRoofShapesInfos();  
+    T_UrbanInfos_Vector&           GetRoofShapesInfos();
     UrbanInfos*                    FindRoofShape( const std::string& strName );
 
 

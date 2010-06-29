@@ -29,7 +29,7 @@ MIL_BoolParameter::~MIL_BoolParameter()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_BoolParameter::IsOfType
 // Created: LDC 2009-05-22

@@ -45,7 +45,7 @@ class AgentKnowledge : public kernel::EntityImplementation< kernel::AgentKnowled
 public:
     //! @name Constructor / Destructor
     //@{
-             AgentKnowledge( const kernel::KnowledgeGroup_ABC& group, const MsgsSimToClient::MsgUnitKnowledgeCreation& message, kernel::Controller& controller, 
+             AgentKnowledge( const kernel::KnowledgeGroup_ABC& group, const MsgsSimToClient::MsgUnitKnowledgeCreation& message, kernel::Controller& controller,
                              const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver );
     virtual ~AgentKnowledge();
     //@}
@@ -89,7 +89,7 @@ public:
     std::string fullSymbol_;
     std::string currentSymbol_;
     std::string currentNature_;
-    
+
     // $$$$ AGE 2006-02-22: Use Attributes ?
     kernel::OptionalValue< std::string >                strPosition_;
     kernel::OptionalValue< uint >                       nDirection_;

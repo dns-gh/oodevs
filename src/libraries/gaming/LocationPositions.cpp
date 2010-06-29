@@ -119,7 +119,7 @@ void LocationPositions::Draw( const geometry::Point2f& /*where*/, const kernel::
 {
     if( ! viewport.IsVisible( boundingBox_ ) || points_.empty() )
         return;
-    
+
     const bool selected = tools.ShouldDisplay();
     glPushAttrib( GL_LINE_BIT );
     if( selected )

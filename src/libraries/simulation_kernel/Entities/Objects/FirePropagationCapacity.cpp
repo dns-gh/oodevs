@@ -78,7 +78,7 @@ FirePropagationCapacity::~FirePropagationCapacity()
 template< typename Archive >
 void FirePropagationCapacity::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );        
+    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
     file //& pManager_
          & timeOfCreation_
          & timeOfDeath_;
@@ -113,22 +113,22 @@ void FirePropagationCapacity::Update( MIL_Object_ABC& object, unsigned int time 
 {
     FireAttribute& attr = object.GetAttribute< FireAttribute >();
     const unsigned int timeSinceCreation = time - timeOfCreation_;
-    
+
     if( needUpdate_ )
         InitializeUpdate( object, attr );
     attr.ComputeHeatEvolution( timeOfCreation_, time );
     int heat = UpdateState( object, attr, time );
-    if ( heat > 0 && heat * (int)timeSinceCreation > attr.GetClass().GetPropagationThreshold() )
+    if( heat > 0 && heat * (int)timeSinceCreation > attr.GetClass().GetPropagationThreshold() )
         Propagate( object );
 }
 
 void FirePropagationCapacity::InitializeUpdate( MIL_Object_ABC& object, const FireAttribute& attr )
 {
-    // We get the coordinates of the fire and adjust them in order that they become divisible by length and width of the fire 
+    // We get the coordinates of the fire and adjust them in order that they become divisible by length and width of the fire
     MT_Vector2D vOrigin( object.GetLocalisation().ComputeBarycenter() );
     vOrigin.rX_ = (int)vOrigin.rX_ - (int)vOrigin.rX_ % attr.GetLength();
     vOrigin.rY_ = (int)vOrigin.rY_ - (int)vOrigin.rY_ % attr.GetWidth();
-    
+
     //We define the origin vector of the fire
     object.UpdateLocalisation( GetLocalisation( vOrigin ) );
     pManager_->Flag( vOrigin , attr.GetLength() , attr.GetWidth() );
@@ -154,7 +154,7 @@ int FirePropagationCapacity::UpdateState( MIL_Object_ABC& object, const FireAttr
             //A reflechir
             timeOfDeath_ = time + 10;
         }
-        if ( time >= timeOfDeath_ )
+        if( time >= timeOfDeath_ )
             pManager_->RemoveFlag( object.GetLocalisation().ComputeBarycenter() , attr.GetLength() , attr.GetWidth() );
     }
     return attr.GetHeat();
@@ -173,7 +173,7 @@ void FirePropagationCapacity::Propagate( MIL_Object_ABC& object )
 
     const weather::PHY_Meteo::sWindData& wind = MIL_Tools::GetWind( vOrigin );
 
-    //we normalize the wind vector and multiply it by length and width of the fire 
+    //we normalize the wind vector and multiply it by length and width of the fire
     vNormalizedWind.rX_ = attr.GetLength() * wind.vWindDirection_.rX_ / pow(wind.vWindDirection_.rY_ * wind.vWindDirection_.rY_ + wind.vWindDirection_.rX_ * wind.vWindDirection_.rX_ , 0.5);
     vNormalizedWind.rY_ = attr.GetWidth() * wind.vWindDirection_.rY_ / pow(wind.vWindDirection_.rY_ * wind.vWindDirection_.rY_ + wind.vWindDirection_.rX_ * wind.vWindDirection_.rX_ , 0.5);
 
@@ -182,7 +182,7 @@ void FirePropagationCapacity::Propagate( MIL_Object_ABC& object )
 
     vPerpendicularToWind.rX_ = -vNormalizedWind.rY_;
     vPerpendicularToWind.rY_ = vNormalizedWind.rX_;
-    
+
     //Propagation to three out of four adjacent positions.
     CheckPropagation( vOrigin + vNormalizedWind, object );
     CheckPropagation( vOrigin + vPerpendicularToWind, object );
@@ -197,19 +197,19 @@ namespace
     class MIL_FireBuilder : public MIL_ObjectBuilder_ABC
     {
     public:
-        MIL_FireBuilder( const MIL_Object_ABC& object, const TER_Localisation& location ) 
-            : object_ ( object ) 
+        MIL_FireBuilder( const MIL_Object_ABC& object, const TER_Localisation& location )
+            : object_ ( object )
             , location_ ( location )
         {
         }
 
-        const MIL_ObjectType_ABC& GetType() const 
+        const MIL_ObjectType_ABC& GetType() const
         {
             return object_.GetType();
         }
 
         virtual void Build( MIL_Object_ABC& object ) const
-        {            
+        {
             object.Initialize( location_ );
             object.GetAttribute< FireAttribute >() = FireAttribute( object_.GetAttribute< FireAttribute >() );
             object.Attach< BurnCapacity >( *new BurnCapacity() );
@@ -231,7 +231,7 @@ void FirePropagationCapacity::CheckPropagation( const MT_Vector2D& vOrigin, MIL_
     FireAttribute& attr = object.GetAttribute< FireAttribute >();
     TER_Localisation location( GetLocalisation( vOrigin ) );
 
-    if( !pManager_->IsFlagged( location , attr.GetLength() , attr.GetWidth() ) ) 
+    if( !pManager_->IsFlagged( location , attr.GetLength() , attr.GetWidth() ) )
     {
         MIL_FireBuilder builder( object, location );
         try

@@ -38,7 +38,7 @@ public:
 
     static void intercept( QtMsgType type, const char *msg )
     {
-        switch ( type ) 
+        switch ( type )
         {
             case QtDebugMsg:
                 fprintf( stderr, "Debug: %s\n", msg );
@@ -48,7 +48,7 @@ public:
                 break;
             case QtFatalMsg:
             {
-                _asm {int 3}   
+                _asm {int 3}
                 fprintf( stderr, "Fatal: %s\n", msg );
             }
         }
@@ -80,9 +80,9 @@ void SetConsolePos( const int nPosX, const int nPosY )
 int main( uint nArgc, char** ppArgv )
 {
     // Console
-    SetConsoleTitle( szADN_Version );    
+    SetConsoleTitle( szADN_Version );
     SetConsolePos( 0, 0 );
-    MT_ConsoleLogger		consoleLogger;
+    MT_ConsoleLogger        consoleLogger;
     MT_LOG_REGISTER_LOGGER( consoleLogger );
 
     ADN_App app( nArgc, ppArgv );
@@ -113,11 +113,11 @@ int main( uint nArgc, char** ppArgv )
         std::stringstream strMsg;
         strMsg << "Context : " << exception.GetContext() << std::endl
                << "Message : " << exception.GetInfo()    << std::endl;
-        
+
         if( !outputFile.empty() )
             MessageBox( 0, strMsg.str().c_str(), "Sword Adaptation Tool - Exception", MB_ICONERROR | MB_OK );
         else
-            MT_LOG_ERROR_MSG( strMsg.str().c_str() );            
+            MT_LOG_ERROR_MSG( strMsg.str().c_str() );
         app.quit();
         MT_LOG_UNREGISTER_LOGGER( consoleLogger );
         return EXIT_FAILURE;

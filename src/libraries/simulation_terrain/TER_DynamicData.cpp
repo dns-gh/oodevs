@@ -32,7 +32,7 @@ TER_DynamicData::TER_DynamicData( const T_PointVector& points, const TerrainData
     , points_     ( points )
     , terrainData_( terrainData )
 {
-    
+
 }
 
 // -----------------------------------------------------------------------------
@@ -54,7 +54,7 @@ void TER_DynamicData::AddForRegistration( TER_PathFinderThread& thread )
     boost::mutex::scoped_lock locker( mutex_ );
 
     ++ nNbrRefs_;
-    thread.AddDynamicDataToRegister( *this );    
+    thread.AddDynamicDataToRegister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -80,7 +80,7 @@ void TER_DynamicData::AddForUnregistration( TER_PathFinderThread& thread )
     boost::mutex::scoped_lock locker( mutex_ );
 
     ++ nNbrRefs_;
-    thread.AddDynamicDataToUnregister( *this );    
+    thread.AddDynamicDataToUnregister( *this );
 }
 
 // -----------------------------------------------------------------------------

@@ -14,7 +14,7 @@
 
 #include "DEC_Model_ABC.h"
 
-class DEC_DIAWorkspace ; 
+class DEC_DIAWorkspace ;
 
 namespace xml
 {

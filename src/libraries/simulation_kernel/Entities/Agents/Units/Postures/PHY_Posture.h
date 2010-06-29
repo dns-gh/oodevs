@@ -34,7 +34,7 @@ public:
     //@}
 
 public:
-    //! @name 
+    //! @name
     //@{
     static const PHY_Posture mouvement_;
     static const PHY_Posture mouvementDiscret_;
@@ -100,7 +100,7 @@ private:
     const E_PostureType                                 nType_;
     const MsgsSimToClient::MsgUnitAttributes_Posture    nAsnID_;
     const unsigned int                                  nFlags_;
-    const PHY_ConsumptionType&                          consumptionMode_;  
+    const PHY_ConsumptionType&                          consumptionMode_;
     const PHY_Posture*                                  pNextAutoPosture_;
 
 private:

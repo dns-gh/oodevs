@@ -51,7 +51,7 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
@@ -61,7 +61,7 @@ public:
     virtual void WriteODB( xml::xostream& xos ) const;
     //@}
 
-    //! @name 
+    //! @name
     //@{
     virtual void Register( ObjectCapacity_ABC* capacity );
     virtual void Register( MIL_InteractiveContainer_ABC* capacity );
@@ -120,7 +120,7 @@ public:
     void Serialize( HLA_UpdateFunctor& functor ) const;
     //@}
 
-    //! @name 
+    //! @name
     //@{
     unsigned int  GetID() const;
     virtual unsigned int  GetMaterial() const{ return std::numeric_limits< unsigned int >::max(); };   // $$$$ _TODO_ SLG 2010-06-24: mettre en place un système de material pour les objets
@@ -134,14 +134,14 @@ private:
     Object& operator=( const Object& ); //!< Assignment operator
     //@}
 
-    //! @name 
+    //! @name
     //@{
     void SendMsgUpdate() const;
     //@}
 
-    //! @name 
+    //! @name
     //@{
-    virtual void Register( ObjectAttribute_ABC* attribute );    
+    virtual void Register( ObjectAttribute_ABC* attribute );
     //@}
 
 private:
@@ -149,7 +149,7 @@ private:
     //@{
     typedef std::vector< ObjectAttribute_ABC* >     T_Attributes;
     typedef T_Attributes::const_iterator            CIT_Attributes;
-    
+
     typedef std::vector< ObjectCapacity_ABC* >              T_Capacities;
     typedef std::vector< MIL_InteractiveContainer_ABC* >    T_InteractiveCapacities;
     //@}
@@ -175,11 +175,11 @@ private:
     unsigned int                    id_;
     T_Capacities            capacities_;
     T_InteractiveCapacities interactives_;
-    T_Attributes            attributes_;   
+    T_Attributes            attributes_;
     std::auto_ptr< Object > pChildObject_;
     //@}
 
-    //! @name 
+    //! @name
     //@{
     std::auto_ptr< MIL_ObjectManipulator_ABC > manipulator_;
     //@}
@@ -190,7 +190,7 @@ private:
     //@}
 
     //! @name Network
-    //@{ 
+    //@{
     mutable unsigned char xAttrToUpdate_;
     mutable unsigned char xAttrToUpdateForHLA_;
     //@}

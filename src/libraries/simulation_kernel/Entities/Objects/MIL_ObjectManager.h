@@ -64,18 +64,18 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
-    
+
     //! @name Operations
     //@{
     void ProcessEvents();
     void UpdateStates ();
 
     //@TODO MGD return reference
-    MIL_Object_ABC&     CreateObject( xml::xistream& xis, MIL_Army_ABC& army ); 
+    MIL_Object_ABC&     CreateObject( xml::xistream& xis, MIL_Army_ABC& army );
     MIL_Object_ABC*     CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation );
     MIL_Object_ABC*     CreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation* pLocalisation, Common::ObstacleType_DemolitionTargetType obstacleType );
     MIL_Object_ABC*     CreateObject( MIL_Army_ABC& army, const MIL_ObjectBuilder_ABC& builder );
@@ -93,7 +93,7 @@ public:
     void OnReceiveMsgObjectMagicAction( const MsgsClientToSim::MsgObjectMagicAction& asnMsg, unsigned int nCtx, const tools::Resolver< MIL_Army_ABC >& armies );
     //@}
 
-    //! @name 
+    //! @name
     //@{
     void RegisterObject( MIL_Object_ABC& object );
     //@}
@@ -113,7 +113,7 @@ private:
     //@}
 
 private:
-    //! @name 
+    //! @name
     //@{
     T_ObjectMap                         objects_;
     std::auto_ptr< MIL_ObjectFactory >  builder_;

@@ -27,7 +27,7 @@ GroupDisplayer::GroupDisplayer( QWidget* parent, const QString& name, ItemFactor
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: GroupDisplayer destructor
 // Created: AGE 2006-02-09

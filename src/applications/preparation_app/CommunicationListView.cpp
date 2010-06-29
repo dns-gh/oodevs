@@ -184,11 +184,11 @@ bool CommunicationListView::Drop( const Entity_ABC& draggedEntity, const Entity_
             static_cast< AutomatCommunications& >( com ).ChangeSuperior( const_cast< Entity_ABC& >( target ) );
             return true;
         }
-        else if ( knowledgegroup && team )
+        else if( knowledgegroup && team )
         {
             // moving knowledgegroup under side
             CommunicationHierarchies& com = const_cast< CommunicationHierarchies& >( knowledgegroup->Get< CommunicationHierarchies >() );
-            if ( &com.GetTop() != team )
+            if( &com.GetTop() != team )
                 return false;
             static_cast< KnowledgeGroupCommunications& >( com ).ChangeSuperior( const_cast< Entity_ABC& >( *team ) );
             return true;

@@ -24,7 +24,7 @@ LogisticSuperior::LogisticSuperior( const kernel::Entity_ABC& entity )
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: LogisticSuperior destructor
 // Created: SBO 2006-10-26

@@ -50,7 +50,7 @@ MedicalTreatmentAttribute::~MedicalTreatmentAttribute()
 template< typename T >
 void MedicalTreatmentAttribute::UpdateData( const T& message )
 {
-    if ( message.has_medical_treatment()  )
+    if( message.has_medical_treatment()  )
     {
         beds_             = message.medical_treatment().beds();
         availableBeds_    = message.medical_treatment().available_beds();
@@ -61,7 +61,7 @@ void MedicalTreatmentAttribute::UpdateData( const T& message )
         for( int i = 0 ; i < nMedicalTreatmentType_ ; i++ )
             typeList_.push_back( & resolver_.Get( message.medical_treatment().type_id().elem ( i ) ) );
 
-        controller_.Update( *(MedicalTreatmentAttribute_ABC*)this );        
+        controller_.Update( *(MedicalTreatmentAttribute_ABC*)this );
     }
 }
 
@@ -101,7 +101,7 @@ void MedicalTreatmentAttribute::Display( Displayer_ABC& displayer ) const
     Displayer_ABC& sub = displayer.Group( tools::translate( "MedicalTreatment", "Medical Treatment services" ) )
         .Item( tools::translate( "MedicalTreatment", "Medical Treatment type:" ) )
                 .Start( nMedicalTreatmentType_ );
-    
+
     for ( CIT_MedicalTreatmentTypeList it = typeList_.begin(); it != typeList_.end(); ++it )
         sub.Add( " " ).Add( (*it)->GetName() );
     sub.End();

@@ -22,7 +22,7 @@ namespace kernel
 namespace gui
 {
     class LocationEditorBox;
-}   
+}
 
 // =============================================================================
 /** @class  PositionEditor
@@ -33,7 +33,7 @@ namespace gui
 class PositionEditor : public QDialog
                      , public kernel::ValueEditor< kernel::Moveable_ABC* >
 {
-	Q_OBJECT;
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
@@ -70,7 +70,7 @@ private:
 private:
     //! @name Member data
     //@{
-	const kernel::CoordinateConverter_ABC& converter_;
+    const kernel::CoordinateConverter_ABC& converter_;
     geometry::Point2f lastValid_;
     kernel::Moveable_ABC** value_;
     gui::LocationEditorBox* locBox_;

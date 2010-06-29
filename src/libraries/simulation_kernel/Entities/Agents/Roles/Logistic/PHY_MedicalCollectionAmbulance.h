@@ -37,7 +37,7 @@ public:
     //@{
     template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
-    
+
     //! @name Operations
     //@{
     bool Update();
@@ -81,7 +81,7 @@ private:
     void EnterStateUnloading              ();
     void EnterStateGoingFrom              ();
     void EnterStateFinished               ();
-    
+
     bool DoLoading             ();
     bool DoUnloading           ();
     bool DoSearchForSortingArea();

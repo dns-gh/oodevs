@@ -36,15 +36,15 @@ QueryBuilder::~QueryBuilder()
     // NOTHING
 }
 
-namespace 
+namespace
 {
-    
+
     void replace_if( std::string& value, char compare )
     {
         for ( std::string::iterator it = value.begin(); it != value.end(); ++it )
         {
-            if ( *it == compare )             
-                it = value.insert( it, compare ) + 1;            
+            if( *it == compare )
+                it = value.insert( it, compare ) + 1;
         }
     }
 }
@@ -86,7 +86,7 @@ void QueryBuilder::SetField( const std::string& field, const std::string& value 
     replace_if( clean, '\'' );
     AddParameter( T_Parameter( field, "'" + clean + "'" ) );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: QueryBuilder::SetField
 // Created: JCR 2009-04-24
@@ -95,7 +95,7 @@ void QueryBuilder::SetField( const std::string& field, int value )
 {
     AddParameter( T_Parameter( field, boost::lexical_cast< std::string >( value ) ) );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: QueryBuilder::SetField
 // Created: JCR 2009-04-24
@@ -138,7 +138,7 @@ void QueryBuilder::AddParameter( const T_Parameter& parameter )
     parameters_.push_back( parameter );
 }
 
-namespace 
+namespace
 {
     template< typename pair_type >
     struct select1st : public std::unary_function< const pair_type&, typename const pair_type::first_type& >
@@ -175,12 +175,12 @@ namespace
 std::string QueryBuilder::BuildInsert() const
 {
     std::stringstream rows;
-    std::transform( parameters_.begin(), parameters_.end() - 1, 
+    std::transform( parameters_.begin(), parameters_.end() - 1,
         std::ostream_iterator< std::string >( rows, "," ), select1st< T_Parameter >() );
     rows << select1st< T_Parameter >()( *(parameters_.end() - 1) );
 
     std::stringstream values;
-    std::transform( parameters_.begin(), parameters_.end() - 1, 
+    std::transform( parameters_.begin(), parameters_.end() - 1,
         std::ostream_iterator< std::string >( values, "," ), select2nd< T_Parameter >() );
     values << select2nd< T_Parameter >()( *(parameters_.end() - 1) );
     return "INSERT INTO " + table_ + " (" + rows.str() + ") VALUES (" + values.str() + ")";
@@ -199,10 +199,10 @@ std::string QueryBuilder::BuildUpdate( const std::string& clause ) const
     */
 
     std::stringstream rows;
-    std::transform( parameters_.begin(), parameters_.end() - 1, 
+    std::transform( parameters_.begin(), parameters_.end() - 1,
         std::ostream_iterator< std::string >( rows, "," ), update_builder< T_Parameter >() );
     rows << update_builder< T_Parameter >()( *(parameters_.end() - 1) );
-    
+
     if( clause.empty() )
         return "UPDATE " + table_ + " SET " + rows.str();
     else

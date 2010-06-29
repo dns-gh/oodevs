@@ -20,7 +20,7 @@ class MIL_Object_ABC;
 */
 // Created: JCR 2008-05-30
 // =============================================================================
-class ObjectCapacity_ABC 
+class ObjectCapacity_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -38,7 +38,7 @@ public:
     //! @name Capacity creation
     //@{
     virtual void Instanciate( MIL_Object_ABC& object ) const = 0;
-    virtual void Finalize( MIL_Object_ABC& /*object*/ ) {};    
+    virtual void Finalize( MIL_Object_ABC& /*object*/ ) {};
     //@}
 
     //! @name Update

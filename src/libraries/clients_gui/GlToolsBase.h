@@ -41,7 +41,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::pair< bool, bool > UnSelect() const; 
+    virtual std::pair< bool, bool > UnSelect() const;
     virtual void Select( bool, bool ) const;
 
     virtual bool ShouldDisplay( const std::string& name = std::string() ) const;

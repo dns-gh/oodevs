@@ -50,8 +50,8 @@ public:
 
 private:
     //!@ Constructor and destructor
-    //@{   
-    MIL_FireClass( const std::string& strName, xml::xistream& xis ); 
+    //@{
+    MIL_FireClass( const std::string& strName, xml::xistream& xis );
     ~MIL_FireClass();
     //@}
 
@@ -86,7 +86,7 @@ private:
     //@{
     typedef std::map< std::string, const MIL_FireClass*, sCaseInsensitiveLess > T_FireClassMap;
     typedef T_FireClassMap::const_iterator                                      CIT_FireClassMap;
-    
+
     //The following map contains a extinguisher agent name and its effect on the fire
     typedef std::map< E_FireExtinguisherAgent, int >                            T_ExtinguisherAgentEffectMap;
     typedef T_ExtinguisherAgentEffectMap::const_iterator                        CIT_ExtinguisherAgentEffectMap;
@@ -95,7 +95,7 @@ private:
 private:
     //! @name Helpers
     //@{
-    static void ReadClass( xml::xistream& xis );    
+    static void ReadClass( xml::xistream& xis );
            void ReadExtinguisherAgentEffect( xml::xistream& xis );
     //@}
 
@@ -109,7 +109,7 @@ private:
     unsigned int                    decreaseRate_;
     T_ExtinguisherAgentEffectMap    extinguisherAgentEffect_;
     unsigned int                    propagationThreshold_;
-    
+
     static T_FireClassMap           classes_;
     static unsigned int             length_;
     static unsigned int             width_;

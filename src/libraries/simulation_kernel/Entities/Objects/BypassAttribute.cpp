@@ -56,7 +56,7 @@ template< typename Archive >
 void BypassAttribute::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectAttribute_ABC >( *this );
-    file & rBypass_;         
+    file & rBypass_;
 }
 
 // -----------------------------------------------------------------------------
@@ -82,7 +82,7 @@ void BypassAttribute::Register( Object& object ) const
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
 void BypassAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
-{    
+{
     asn.mutable_bypass()->set_percentage( unsigned int( rBypass_ * 100. ) );
 }
 
@@ -127,7 +127,7 @@ void BypassAttribute::Update( MT_Float progress )
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
 BypassAttribute& BypassAttribute::operator=( const BypassAttribute& rhs )
-{    
+{
     rBypass_ = rhs.rBypass_;
     return *this;
 }
@@ -159,14 +159,14 @@ void BypassAttribute::Serialize( HLA_UpdateFunctor& functor ) const
     functor.Serialize( "contournement", NeedUpdate( eOnHLAUpdate ), rBypass_ );
     Reset( eOnHLAUpdate );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: BypassAttribute::Deserialize
 // Created: JCR 2008-06-18
 // -----------------------------------------------------------------------------
 void BypassAttribute::Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer )
 {
-    if ( attributeID == "contournement" )
+    if( attributeID == "contournement" )
     {
         deserializer >> rBypass_;
         NotifyAttributeUpdated( eOnUpdate );

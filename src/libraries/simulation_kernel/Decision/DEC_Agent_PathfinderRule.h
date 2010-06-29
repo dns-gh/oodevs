@@ -56,7 +56,7 @@ private:
     //! @name Initialization
     //@{
     void InitializeFuseauData        ( const MT_Vector2D& from, const MT_Vector2D& to );
-    void InitializeAutomateFuseauData( const MT_Vector2D& from );    
+    void InitializeAutomateFuseauData( const MT_Vector2D& from );
     //@}
 
     //! @name Helpers
@@ -104,7 +104,7 @@ private:
     const MIL_Fuseau*  pAutomateFuseau_;
           MT_Float     rMaximumAutomataFuseauDistance_;
           MT_Float     rAutomataFuseauCostPerMeterOut_;
-        
+
     // Danger direction
     const MT_Vector2D  dangerDirection_;
     const MT_Float     rDangerDirectionBaseCost_;

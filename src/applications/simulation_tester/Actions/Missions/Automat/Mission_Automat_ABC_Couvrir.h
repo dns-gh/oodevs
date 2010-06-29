@@ -21,7 +21,7 @@ namespace TEST {
     @brief  Mission_Automat_ABC_Couvrir
 */
 // Created: SBO 2005-08-08
-// Generated: 
+// Generated:
 // =============================================================================
 class Mission_Automat_ABC_Couvrir : public Mission_Automat_ABC
 {

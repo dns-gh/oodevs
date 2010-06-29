@@ -22,7 +22,7 @@ CommandPostAttributes::CommandPostAttributes( const Agent_ABC& holder )
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: CommandPostAttributes destructor
 // Created: SBO 2006-11-30

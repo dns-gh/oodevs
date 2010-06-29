@@ -146,7 +146,7 @@ void ParamLocation::SetShapeFilter( bool point, bool line, bool polygon, bool ci
 void ParamLocation::Draw( const geometry::Point2f& , const kernel::Viewport_ABC& , const kernel::GlTools_ABC& tools ) const
 {
     if( location_.get() )
-        ShapeHandler_ABC::Draw( *location_, geometry::Rectangle2f(), tools ); // $$$$ SBO 2008-06-03: 
+        ShapeHandler_ABC::Draw( *location_, geometry::Rectangle2f(), tools ); // $$$$ SBO 2008-06-03:
 }
 
 // -----------------------------------------------------------------------------

@@ -33,7 +33,7 @@
 */
 // Created: APE 2005-01-03
 // =============================================================================
-class ADN_GroupBox 
+class ADN_GroupBox
 : public QGroupBox
 , public ADN_Gfx_ABC
 {

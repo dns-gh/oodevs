@@ -60,7 +60,7 @@ void MIL_FireFunctor::operator()( PHY_ComposantePion& composantePion )
 void MIL_FireFunctor::operator()( const PHY_ComposantePion& /*composantePion*/, const PHY_Weapon& weapon )
 {
     MIL_FireClass::T_EvaluationResult result = fireClass_.Evaluate( weapon );
-    if ( result.score_ > bestExtinguisherAgentandFireHoseRange_.score_ )
+    if( result.score_ > bestExtinguisherAgentandFireHoseRange_.score_ )
     {
         bestExtinguisherAgentandFireHoseRange_.score_ = result.score_;
         bestExtinguisherAgentandFireHoseRange_.agent_ = result.agent_;

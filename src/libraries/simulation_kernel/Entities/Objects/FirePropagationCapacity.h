@@ -21,7 +21,7 @@ class FireAttribute;
 */
 // Created: RFT 2008-05-30
 // =============================================================================
-class FirePropagationCapacity : public PropagationCapacity_ABC    
+class FirePropagationCapacity : public PropagationCapacity_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -56,7 +56,7 @@ private:
     void Propagate( MIL_Object_ABC& object );
     void CheckPropagation( const MT_Vector2D& vOrigin, MIL_Object_ABC& object );
     //@}
-    
+
     //! @name Helpers
     //@{
     TER_Localisation GetLocalisation( const MT_Vector2D& pt ) const;

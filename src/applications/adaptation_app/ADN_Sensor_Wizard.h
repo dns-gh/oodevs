@@ -36,7 +36,7 @@ typedef ADN_Wizard_ABC<ADN_Sensors_Data::SensorInfos> ADN_Wizard_ABC_ADN_Sensors
 class ADN_Sensor_Wizard
 : public ADN_Wizard_ABC_ADN_Sensors_Data_SensorInfos_
 {
-	MT_COPYNOTALLOWED( ADN_Sensor_Wizard )
+    MT_COPYNOTALLOWED( ADN_Sensor_Wizard )
 
 public:
     //! @name Constructors/Destructor

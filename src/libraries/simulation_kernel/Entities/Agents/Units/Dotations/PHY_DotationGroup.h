@@ -54,13 +54,13 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
 
     void WriteODB( xml::xostream& xos ) const;
     //@}
-    
+
     //! @name Init
     //@{
     void ReadValues( xml::xistream& xis, const PHY_DotationCategory& category ); //$$$ A VIRER
@@ -71,15 +71,15 @@ public:
     void     AddCapacity   ( const PHY_DotationCapacity& capacity );
     void     RemoveCapacity( const PHY_DotationCapacity& capacity );
     MT_Float GetCapacity   ( const PHY_DotationCategory& category ) const;
-    
+
     void     CancelConsumptionReservations ();
     MT_Float AddConsumptionReservation     ( const PHY_DotationCategory& category, MT_Float rNbr );
-    void     ConsumeConsumptionReservations();    
+    void     ConsumeConsumptionReservations();
 
     MT_Float AddFireReservation     ( const PHY_DotationCategory& category, MT_Float rNbr );
-    void     ConsumeFireReservations(); 
+    void     ConsumeFireReservations();
 
-    MT_Float GetValue( const PHY_DotationCategory& category ) const;   
+    MT_Float GetValue( const PHY_DotationCategory& category ) const;
     MT_Float Consume ( const PHY_DotationCategory& category, MT_Float rNbr );
     MT_Float Supply  ( const PHY_DotationCategory& category, MT_Float rNbr );
 
@@ -87,7 +87,7 @@ public:
     float GetIlluminatingRange( ) const;
 
     void     Resupply( MT_Float rFactor = 1. );
-    void     Resupply( const PHY_AmmoDotationClass& ammoDotationClass, MT_Float rFactor );    
+    void     Resupply( const PHY_AmmoDotationClass& ammoDotationClass, MT_Float rFactor );
     //@}
 
     //! @name Misc

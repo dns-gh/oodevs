@@ -22,8 +22,8 @@
 
 // -----------------------------------------------------------------------------
 // Name: ADN_RemoveElementCommand constructor
-/** @param  modifiedData 
-    @param  pRemovedObject 
+/** @param  modifiedData
+    @param  pRemovedObject
 */
 // Created: AGN 2004-05-13
 // -----------------------------------------------------------------------------
@@ -78,18 +78,18 @@ void ADN_RemoveElementCommand< ADN_Type_ABC< std::string > >::UpdateDescription(
         }
         pParent = pParent->GetParentNode();
     }
-    
-    setDescription( strDescription );    
+
+    setDescription( strDescription );
 }
 
 // =============================================================================
-// 
+//
 // =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: ADN_RemoveElementCommand constructor
-/** @param  modifiedData 
-    @param  pRemovedObject 
+/** @param  modifiedData
+    @param  pRemovedObject
 */
 // Created: AGN 2004-05-13
 // -----------------------------------------------------------------------------
@@ -142,6 +142,6 @@ void ADN_RemoveElementCommand< ADN_Type_ABC< double > >::UpdateDescription()
         }
         pParent = pParent->GetParentNode();
     }
-    
-    setDescription( strDescription );    
+
+    setDescription( strDescription );
 }

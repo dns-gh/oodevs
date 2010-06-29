@@ -26,7 +26,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( ContaminationCapacity )
 // Name: ContaminationCapacity constructor
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
-ContaminationCapacity::ContaminationCapacity() 
+ContaminationCapacity::ContaminationCapacity()
     : maxToxic_( 0 )
 {
     // NOTHING
@@ -65,14 +65,14 @@ ContaminationCapacity::~ContaminationCapacity()
 // Name: template< typename Archive > void ContaminationCapacity::serialize
 // Created: JCR 2008-08-28
 // -----------------------------------------------------------------------------
-template< typename Archive > 
+template< typename Archive >
 void ContaminationCapacity::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
          & maxToxic_
-         & decontaminatedZones_;    
+         & decontaminatedZones_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ContaminationCapacity::Register
 // Created: JCR 2008-07-03
@@ -88,7 +88,7 @@ void ContaminationCapacity::Register( MIL_Object_ABC& object )
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
 void ContaminationCapacity::Instanciate( MIL_Object_ABC& object ) const
-{    
+{
     ContaminationCapacity* capacity = new ContaminationCapacity( *this );
     object.AddCapacity( capacity );
     object.Register( static_cast< MIL_InteractiveContainer_ABC *>( capacity ) );
@@ -102,7 +102,7 @@ void ContaminationCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agen
 {
     const MT_Vector2D& position = agent.GetRole< PHY_RoleInterface_Location >().GetPosition();
     const NBCAttribute* pNBC = object.RetrieveAttribute< NBCAttribute >();
-    
+
     if( !IsInsideDecontaminatedZone( position ) && pNBC && pNBC->IsContaminating() )
     {
         const ToxicAttribute_ABC* pAttribute = object.RetrieveAttribute< ToxicAttribute_ABC >();
@@ -124,7 +124,7 @@ void ContaminationCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agen
 // Created: NLD 2005-03-22
 // -----------------------------------------------------------------------------
 bool ContaminationCapacity::IsInsideDecontaminatedZone( const MT_Vector2D& position ) const
-{    
+{
     for( CIT_LocalisationVector it = decontaminatedZones_.begin(); it != decontaminatedZones_.end(); ++it )
         if( it->IsInside( position ) )
             return true;

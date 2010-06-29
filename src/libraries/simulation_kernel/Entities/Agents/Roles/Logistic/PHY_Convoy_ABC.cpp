@@ -45,7 +45,7 @@ const MIL_MissionType_ABC*                PHY_Convoy_ABC::pConvoyMissionType_ = 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_Convoy_ABC )
 
 // =============================================================================
-// 
+//
 // =============================================================================
 
 // -----------------------------------------------------------------------------
@@ -66,7 +66,7 @@ void PHY_Convoy_ABC::Initialize( xml::xistream& xis )
     InitializeInterpolatedTime ( xis, "loading-times"     , loadingTime_   );
     InitializeInterpolatedTime ( xis, "unloading-times"   , unloadingTime_ );
     InitializeSpeedModificators( xis );
-   
+
     xis     >> xml::end()
         >> xml::end();
 }
@@ -182,7 +182,7 @@ void PHY_Convoy_ABC::ReadSpeedModifier( xml::xistream& xis, std::pair< unsigned 
     if( rValue <= 0 )
         xis.error( "speed-modifier: value <= 0" );
 
-    coefSpeedModificator_.AddNewPoint( nNbrCamions, rValue ); 
+    coefSpeedModificator_.AddNewPoint( nNbrCamions, rValue );
 
     if( nNbrCamions >= upperBound.first )
     {
@@ -209,7 +209,7 @@ PHY_Convoy_ABC::PHY_Convoy_ABC( PHY_SupplyConsign_ABC& consign )
     , conveyors_()
 {
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_Convoy_ABC constructor
 // Created: JVT 2005-03-31
@@ -248,7 +248,7 @@ MIL_AutomateLOG& PHY_Convoy_ABC::GetConvoyingAutomate() const
     assert( pConsign_ );
     return pConsign_->GetConvoyingAutomate();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_Convoy_ABC::GetSuppliedAutomate
 // Created: NLD 2005-02-10
@@ -275,9 +275,9 @@ void PHY_Convoy_ABC::UnlockConvoy()
 // Created: NLD 2005-12-14
 // -----------------------------------------------------------------------------
 bool PHY_Convoy_ABC::ReserveTransporters()
-{      
+{
     assert( pConsign_ );
-   
+
     T_MerchandiseToConvoyMap merchandise;
     pConsign_->GetMerchandiseToConvoy( merchandise );
     assert( !merchandise.empty() );
@@ -295,9 +295,9 @@ bool PHY_Convoy_ABC::ReserveTransporters()
 
             const MT_Float rNbrConvoyed = conveyor.Convoy( *pConsign_, dotationCategory, itMerchandise->second );
             if( rNbrConvoyed > 0. )
-                itMerchandise->second -= rNbrConvoyed;            
+                itMerchandise->second -= rNbrConvoyed;
         }
-            
+
         // Allocate new conveyors
         while( itMerchandise->second > 0. )
         {
@@ -308,19 +308,19 @@ bool PHY_Convoy_ABC::ReserveTransporters()
 
             PHY_Conveyor* pConveyor = new PHY_Conveyor( *pConveyorComp, *pConveyorPion );
             if( ! conveyors_.insert( std::make_pair( pConveyorComp, pConveyor ) ).second )
-                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );            
+                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
 
             const MT_Float rNbrConvoyed = pConveyor->Convoy( *pConsign_, dotationCategory, itMerchandise->second );
             if( rNbrConvoyed > 0. )
-                itMerchandise->second -= rNbrConvoyed;            
+                itMerchandise->second -= rNbrConvoyed;
         }
-    }            
+    }
 
     if( conveyors_.empty() )
         return false;
 
     pConsign_->CancelMerchandiseOverheadReservation();
-    return true; 
+    return true;
 }
 
 // -----------------------------------------------------------------------------

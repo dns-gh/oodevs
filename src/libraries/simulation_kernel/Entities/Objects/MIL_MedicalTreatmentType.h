@@ -46,7 +46,7 @@ public:
 
 private:
     //!@ Constructor and destructor
-    //@{   
+    //@{
     MIL_MedicalTreatmentType( const std::string& strName, xml::xistream& xis );
     ~MIL_MedicalTreatmentType();
     //@}
@@ -68,7 +68,7 @@ private:
     //@{
     typedef std::map< std::string, const MIL_MedicalTreatmentType*, sCaseInsensitiveLess > T_MedicalTreatmentTypeMap;
     typedef T_MedicalTreatmentTypeMap::const_iterator                                      CIT_MedicalTreatmentTypeMap;
-    
+
     struct T_InjuryDescription {
         T_InjuryDescription() : treatmentTime_( 0 ), hospitalisationTime_( 0 ), lifeExpectancy_( -1 ), injuryThreshold_( eNone ) {}
         float             treatmentTime_;
@@ -84,7 +84,7 @@ private:
 private:
     //! @name Helpers
     //@{
-    static void ReadMedicalTreatment( xml::xistream& xis );    
+    static void ReadMedicalTreatment( xml::xistream& xis );
            void ReadMedicalTreatmentEffect( xml::xistream& xis );
     //@}
 
@@ -93,7 +93,7 @@ private:
     unsigned int                nID_;
     int                         deathThreshold_;
     T_MedicalTreatmentEffectMap medicalTreatmentEffect_;
-    
+
     static T_MedicalTreatmentTypeMap    types_;
 };
 

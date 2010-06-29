@@ -35,7 +35,7 @@ class PHY_Volume;
 // =============================================================================
 class ControlZoneCapacity : public ObjectCapacity_ABC
 {
-public:    
+public:
     //! @name Types
     //@{
     typedef std::pair< MIL_Agent_ABC*, PHY_Composante_ABC* > T_TargetPair;
@@ -52,7 +52,7 @@ public:
     //@}
 
     //! @name CheckPoints
-    //@{    
+    //@{
     template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 

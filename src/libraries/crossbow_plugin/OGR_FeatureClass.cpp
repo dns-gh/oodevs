@@ -58,7 +58,7 @@ Row_ABC& OGR_FeatureClass::CreateRow()
 Row_ABC* OGR_FeatureClass::GetNextRow()
 {
     OGRFeature* poFeature = layer_.GetNextFeature();
-    if ( poFeature == NULL )
+    if( poFeature == NULL )
         return NULL;
     feature_->BindFeature( *poFeature, poFeature->GetFID() );
     return feature_.get();

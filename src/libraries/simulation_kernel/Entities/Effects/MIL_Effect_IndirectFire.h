@@ -51,7 +51,7 @@ public:
     //@{
     virtual bool Execute();
 
-    void ForceFlying                (); 
+    void ForceFlying                ();
     void NotifyAmmoFired            ( const PHY_WeaponDataType_IndirectFire& weaponType, unsigned int nNbrAmmoReserved );
     bool IsFlyingThroughLocalisation( const TER_Localisation& localisation ) const;
     bool CanWeaponBeUsed            ( const PHY_Weapon& weapon ) const;
@@ -62,14 +62,14 @@ private:
     //@{
     void UpdateTargetPositionFromKnowledge();
     void StartFlying                      ();
-    void StopFlying                       (); 
+    void StopFlying                       ();
     //@}
 
 private:
           unsigned int                                   nNbrRefs_;
     const MIL_Agent_ABC&                         firer_;
     const MT_Float                               rInterventionTypeToFire_;
-    const PHY_DotationCategory_IndirectFire_ABC& indirectDotationCategory_;                                                
+    const PHY_DotationCategory_IndirectFire_ABC& indirectDotationCategory_;
     const MT_Vector2D                            vSourcePosition_;
           MT_Vector2D                            vTargetPosition_;
           unsigned int                                   nTargetKnowledgeID_;

@@ -66,7 +66,7 @@ public:
     typedef std::multimap< unsigned int /*nShareTimeStep*/, sShareSource > T_ShareSourceMMap;
     typedef T_ShareSourceMMap::iterator                            IT_ShareSourceMMap;
     //@}
-    
+
 private:
     DEC_KnowledgeBlackBoard_KnowledgeGroup* pBlackBoard_;
     T_ShareSourceMMap                       shareSources_;
@@ -78,7 +78,7 @@ BOOST_CLASS_EXPORT_KEY( DEC_KS_Sharing )
 // Name: template< typename Archive > void DEC_KS_Sharing::serialize
 // Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
-template< typename Archive > 
+template< typename Archive >
 void DEC_KS_Sharing::serialize( Archive& archive, const unsigned int )
 {
     archive & boost::serialization::base_object< DEC_KnowledgeSource_ABC >( *this )

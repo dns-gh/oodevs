@@ -37,7 +37,7 @@ public:
     //@{
     void Register( MIL_Effect_ABC& effect );
     void Update();
-    //@}    
+    //@}
 
     //! @name Flying shells
     //@{

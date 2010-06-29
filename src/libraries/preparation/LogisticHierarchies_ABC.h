@@ -35,7 +35,7 @@ namespace xml
 // Created: AGE 2006-11-21
 // =============================================================================
 template< typename I >
-class LogisticHierarchies_ABC : public kernel::EntityHierarchies< I > 
+class LogisticHierarchies_ABC : public kernel::EntityHierarchies< I >
                               , public kernel::Serializable_ABC
                               , public kernel::Drawable_ABC
 {

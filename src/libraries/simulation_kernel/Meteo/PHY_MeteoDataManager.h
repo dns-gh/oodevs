@@ -40,7 +40,7 @@ class PHY_MeteoDataManager : private boost::noncopyable
 public:
     explicit PHY_MeteoDataManager( MIL_Config& config );
     virtual ~PHY_MeteoDataManager();
-    
+
     //! @name Raw Data management
     //@{
     virtual const PHY_RawVisionData& GetRawVisionData() const;
@@ -52,7 +52,7 @@ public:
 
     //! @name Weather effects
     //@{
-    void RegisterWeatherEffect  ( const MT_Ellipse& surface, const PHY_IndirectFireDotationClass& ammoCategory ); 
+    void RegisterWeatherEffect  ( const MT_Ellipse& surface, const PHY_IndirectFireDotationClass& ammoCategory );
     void UnregisterWeatherEffect( const MT_Ellipse& surface, const PHY_IndirectFireDotationClass& ammoCategory );
     //@}
 
@@ -93,7 +93,7 @@ private:
     PHY_Ephemeride*          pEphemeride_;
     PHY_GlobalMeteo*         pGlobalMeteo_;
     T_MeteoSet               meteos_;
-    PHY_RawVisionData*       pRawData_; 
+    PHY_RawVisionData*       pRawData_;
     static MIL_IDManager idManager_;
 };
 

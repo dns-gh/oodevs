@@ -73,7 +73,7 @@ void Mission_Automat_ABC::Send( const Scheduler& scheduler )
         pTarget_->SendMagicAction( T_MsgUnitMagicAction_action_recompletement_total );
         MT_LOG_INFO_MSG( "Automat #" << pTarget_->GetId() << " - Magic recompletion" );
     }
-    
+
     // then send msg
     asnMsg_.Send( 56 );
 }

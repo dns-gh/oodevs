@@ -35,7 +35,7 @@ class Equipment;
 class Dotation;
 
 //=============================================================================
-// Created:  SBO 2005-07-27 
+// Created:  SBO 2005-07-27
 //=============================================================================
 class LogisticSupplyRecompletionDialog : public QDialog
                                        , public tools::Observer_ABC
@@ -109,7 +109,7 @@ private:
     typedef std::map< QString, const Equipment* > T_Equipments;
     typedef std::map< QString, const Dotation* >  T_Dotations;
     //@}
-   
+
 private:
     //! @name Member data
     //@{

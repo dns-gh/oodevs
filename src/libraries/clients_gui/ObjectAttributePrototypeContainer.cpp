@@ -60,8 +60,8 @@ void ObjectAttributePrototypeContainer::NotifyUpdated()
 // -----------------------------------------------------------------------------
 void ObjectAttributePrototypeContainer::Load( const kernel::ObjectType& type )
 {
-    // load qwidget container if necessary    
-    if ( attributes_.find( type.GetType() ) == attributes_.end() )
+    // load qwidget container if necessary
+    if( attributes_.find( type.GetType() ) == attributes_.end() )
     {
         std::pair< IT_AttributesPrototypes, bool > result = attributes_.insert( std::make_pair( type.GetType(), new T_AttributeContainer() ) );
         for( kernel::ObjectType::T_Capacities::const_iterator it = type.CapacitiesBegin(); result.second && it != type.CapacitiesEnd(); ++it )
@@ -75,10 +75,10 @@ void ObjectAttributePrototypeContainer::Load( const kernel::ObjectType& type )
 // -----------------------------------------------------------------------------
 const ObjectAttributePrototypeContainer::T_AttributeContainer* ObjectAttributePrototypeContainer::Select( const kernel::ObjectType& type )
 {
-    CIT_AttributesPrototypes it = attributes_.find( type.GetType() );    
-    Hide();    
-    if ( it != attributes_.end() )
-        current_ = it->second; // throw std::runtime_error( "Unable to select " + type.GetType() + " object type." );        
+    CIT_AttributesPrototypes it = attributes_.find( type.GetType() );
+    Hide();
+    if( it != attributes_.end() )
+        current_ = it->second; // throw std::runtime_error( "Unable to select " + type.GetType() + " object type." );
     Show();
     return current_.get();
 }
@@ -116,7 +116,7 @@ void ObjectAttributePrototypeContainer::Hide()
         std::for_each( current_->begin(), current_->end(), boost::bind( &ObjectAttributePrototype_ABC::hide, _1 ) );
     current_.reset();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ObjectAttributePrototypeContainer::Show
 // Created: JCR 2008-06-11

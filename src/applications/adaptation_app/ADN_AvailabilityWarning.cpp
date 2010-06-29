@@ -19,7 +19,7 @@ ADN_AvailabilityWarning::ADN_AvailabilityWarning()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_AvailabilityWarning destructor
 // Created: SBO 2006-08-04
@@ -37,7 +37,7 @@ std::string ADN_AvailabilityWarning::GetNodeName()
 {
     return std::string();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_AvailabilityWarning::GetItemName
 // Created: SBO 2006-08-04
@@ -55,7 +55,7 @@ void ADN_AvailabilityWarning::ReadArchive( xml::xistream& input )
 {
     input >> xml::attribute( "availability-threshold", percentage_ );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_AvailabilityWarning::WriteArchive
 // Created: SBO 2006-08-04

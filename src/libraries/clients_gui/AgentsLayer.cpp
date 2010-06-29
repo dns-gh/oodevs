@@ -64,7 +64,7 @@ void AgentsLayer::Toggle( const Automat_ABC& automat, bool aggregate )
     while( children.HasMoreElements() )
     {
         const Entity_ABC& child = children.NextElement();
-        child.Interface().Apply( & Aggregatable_ABC::Aggregate, aggregate );    
+        child.Interface().Apply( & Aggregatable_ABC::Aggregate, aggregate );
         if( aggregate )
             RemoveEntity( child );
         else

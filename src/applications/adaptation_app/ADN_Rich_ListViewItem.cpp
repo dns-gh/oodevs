@@ -71,7 +71,7 @@ void ADN_Rich_ListViewItem::SetWarning( uint nColumn )
 {
     SetBackgroundColor( nColumn, warningColor_ );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Rich_ListViewItem::SetError
 // Created: SBO 2006-01-04

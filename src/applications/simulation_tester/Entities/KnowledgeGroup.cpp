@@ -57,7 +57,7 @@ void KnowledgeGroup::OnReceiveMsgUnitKnowledgeCreation( const MsgUnitKnowledgeCr
 {
     if( knownPawns_.find( asnMsg.oid_connaissance() ) != knownPawns_.end() )
         return;
-    PawnKnowledge* pKnownPawn = new PawnKnowledge( entityManager_, asnMsg, *this );    
+    PawnKnowledge* pKnownPawn = new PawnKnowledge( entityManager_, asnMsg, *this );
     bool bOut = knownPawns_.insert( std::make_pair( pKnownPawn->GetId(), pKnownPawn ) ).second;
     assert( bOut );
 }
@@ -92,7 +92,7 @@ void KnowledgeGroup::OnReceiveMsgPopulationKnowledgeCreation( const MsgPopulatio
     bool bOut = knownPopulations_.insert( std::make_pair( pKnownPopulation->GetId(), pKnownPopulation ) ).second;
     assert( bOut );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroup::OnReceiveMsgPopulationKnowledgeUpdate
 // Created: SBO 2006-01-03
@@ -101,7 +101,7 @@ void KnowledgeGroup::OnReceiveMsgPopulationKnowledgeUpdate( const MsgPopulationK
 {
     //$$$ TODO
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroup::OnReceiveMsgPopulationKnowledgeDestruction
 // Created: SBO 2006-01-03

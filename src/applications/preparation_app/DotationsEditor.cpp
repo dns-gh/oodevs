@@ -77,7 +77,7 @@ void DotationsEditor::OnAccept()
     (*value_)->Update();
     accept();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DotationsEditor::OnReject
 // Created: SBO 2006-11-10

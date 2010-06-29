@@ -157,12 +157,12 @@ void LogisticSupplyChangeQuotasDialog::Validate()
     // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "log_supply_change_quotas" );
     UnitMagicAction* action = new UnitMagicAction( *target, actionType, controllers_.controller_, true );
-    
+
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Automat( it.NextElement(), *selected_, controllers_.controller_ ) );
 
     parameters::ParameterList* dotations = new parameters::ParameterList( it.NextElement() );
-    
+
     action->AddParameter( *dotations );
 
     unsigned int rows = 0;
@@ -219,7 +219,7 @@ void LogisticSupplyChangeQuotasDialog::OnSelectionChanged()
         // $$$$ AGE 2006-10-06: use LogisticHierarchies ?
         const CommunicationHierarchies& hierarchies = agent->Get< CommunicationHierarchies >();
         tools::Iterator< const Entity_ABC& > children = hierarchies.CreateSubordinateIterator();
-        
+
         while( children.HasMoreElements() )
             AddDotation( children.NextElement() );
     }
@@ -295,7 +295,7 @@ void LogisticSupplyChangeQuotasDialog::OnValueChanged( int row, int col )
     }
     else if( col == 1 )
     {
-        // $$$$ SBO 2006-07-03: check value/stock 
+        // $$$$ SBO 2006-07-03: check value/stock
     }
 }
 

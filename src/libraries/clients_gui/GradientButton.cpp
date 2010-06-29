@@ -113,11 +113,11 @@ GradientButton::GradientButton( QWidget* parent )
     , selected_( 0 )
 {
     setFrameStyle( QFrame::Raised | QFrame::Box );
-    
+
     setFixedHeight( 50 );
     setHScrollBarMode( QScrollView::AlwaysOff );
     setVScrollBarMode( QScrollView::AlwaysOff );
-    
+
     AddItem( 0, Qt::white );
     AddItem( 100, Qt::black );
     setFocusPolicy( QWidget::StrongFocus );

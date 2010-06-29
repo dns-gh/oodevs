@@ -36,13 +36,13 @@ public:
     //@{
     virtual ~PointCollection();
     //@}
-    
+
     //! @name Operations
     //@{
     virtual void Serialize( Common::MsgLocation& message ) const;
     //@}
 
-    //! @name 
+    //! @name
     //@{
     virtual OGRGeometry* Extract( OGRSpatialReference* spatialReference ) const;
     //@}
@@ -54,8 +54,8 @@ protected:
     explicit PointCollection( const Common::MsgCoordLatLongList& message );
     explicit PointCollection( const OGRLineString& geometry );
     //@}
-    
-    //! @name 
+
+    //! @name
     //@{
     virtual OGRLineString* Extract( OGRLineString* points, OGRSpatialReference* spatialReference ) const;
     virtual void Serialize( std::ostream& geometry ) const;

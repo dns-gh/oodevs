@@ -31,7 +31,7 @@ ObstacleType::ObstacleType( const kernel::OrderParameter& parameter, unsigned in
 // Created: SBO 2007-05-25
 // -----------------------------------------------------------------------------
 ObstacleType::ObstacleType( xml::xistream& xis )
-    : Parameter< QString >( kernel::OrderParameter( xml::attribute< std::string >( xis, "name" ).c_str(), xml::attribute< std::string >( xis, "type" ), false ) )    
+    : Parameter< QString >( kernel::OrderParameter( xml::attribute< std::string >( xis, "name" ).c_str(), xml::attribute< std::string >( xis, "type" ), false ) )
     , value_( Common::ObstacleType_DemolitionTargetType( xml::attribute< unsigned int >( xis, "value" ) ) )
 {
     SetValue( tools::ToString( E_DemolitionTargetType( value_ ) ) );

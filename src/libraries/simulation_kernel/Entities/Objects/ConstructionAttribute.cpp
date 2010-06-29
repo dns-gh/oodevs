@@ -112,7 +112,7 @@ ConstructionAttribute& ConstructionAttribute::operator=( const ConstructionAttri
     nFullNbrDotation_ = rhs.nFullNbrDotation_;
     nCurrentNbrDotation_ = rhs.nCurrentNbrDotation_;
     rConstructionPercentage_ = rhs.rConstructionPercentage_;
-    dotation_ = rhs.dotation_;    
+    dotation_ = rhs.dotation_;
     return *this;
 }
 
@@ -129,10 +129,10 @@ void ConstructionAttribute::load( MIL_CheckPointInArchive& ar, const unsigned in
        >> nCurrentNbrDotation_
        >> rConstructionPercentage_;
     dotation_ = PHY_DotationType::FindDotationCategory( dotation );
-    if ( !dotation_ )
-       throw std::runtime_error( "Unknown dotation category - " + dotation + " - " ); 
+    if( !dotation_ )
+       throw std::runtime_error( "Unknown dotation category - " + dotation + " - " );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ConstructionAttribute::save
 // Created: JCR 2008-09-15
@@ -140,7 +140,7 @@ void ConstructionAttribute::load( MIL_CheckPointInArchive& ar, const unsigned in
 void ConstructionAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) const
 {
     ar << boost::serialization::base_object< ObjectAttribute_ABC >( *this );
-    if ( dotation_ )
+    if( dotation_ )
        ar << dotation_->GetName();
     else
        ar << "";
@@ -154,8 +154,8 @@ void ConstructionAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned i
 // Created: JCR 2008-06-05
 // -----------------------------------------------------------------------------
 void ConstructionAttribute::WriteODB( xml::xostream& xos ) const
-{    
-    xos << xml::start( "construction" ) 
+{
+    xos << xml::start( "construction" )
             << xml::attribute( "completion", rConstructionPercentage_ )
         << xml::end();
 }
@@ -218,7 +218,7 @@ void ConstructionAttribute::Set( MT_Float percentage )
 // -----------------------------------------------------------------------------
 void ConstructionAttribute::Build( MT_Float rDeltaPercentage )
 {
-    Set( rConstructionPercentage_ + rDeltaPercentage );        
+    Set( rConstructionPercentage_ + rDeltaPercentage );
 }
 
 // -----------------------------------------------------------------------------
@@ -295,7 +295,7 @@ void ConstructionAttribute::Serialize( HLA_UpdateFunctor& functor ) const
     functor.Serialize( "completion", NeedUpdate( eOnHLAUpdate ), rConstructionPercentage_ );
     Reset( eOnHLAUpdate );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ConstructionAttribute::Deserialize
 // Created: JCR 2008-06-18

@@ -38,7 +38,7 @@ public:
              MIL_AgentHLA( const hla::ObjectIdentifier& objectId, HLA_InteractionManager_ABC& interactionManager );
     virtual ~MIL_AgentHLA();
     //@}
-        
+
     //! @name Operations
     //@{
     virtual       MIL_Army_ABC&       GetArmy          () const;
@@ -81,7 +81,7 @@ public:
     //! @name Accessors
     //@{
     bool IsValid() const;
-    
+
     virtual       DEC_Decision_ABC& GetDecision   ();
     virtual const DEC_Decision_ABC& GetDecision   () const;
     //@}

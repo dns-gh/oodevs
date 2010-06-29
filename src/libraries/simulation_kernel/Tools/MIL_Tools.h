@@ -38,7 +38,7 @@ public:
     //-------------------------------------------------------------------------
     /** @name Units converters */
     //-------------------------------------------------------------------------
-    //@{    
+    //@{
     static MT_Float    ConvertMeterSquareToSim( MT_Float );
     static float       ConvertSimToMeterSquare( MT_Float );
     static MT_Float    ConvertMeterToSim      ( MT_Float );
@@ -54,9 +54,9 @@ public:
     static MT_Float ConvertMinutesToSim ( MT_Float ); // min          -> DeltaT
     static MT_Float ConvertHoursToSim   ( MT_Float ); // h            -> DeltaT
     static MT_Float ConvertSimToMinutes ( MT_Float ); // DeltaT       -> min
-    
+
     static       MT_Float              GetAltitude( const MT_Vector2D& );
-    static const weather::PHY_Meteo::sWindData& GetWind    ( const MT_Vector2D& );   
+    static const weather::PHY_Meteo::sWindData& GetWind    ( const MT_Vector2D& );
     //@}
 
     //-------------------------------------------------------------------------
@@ -78,7 +78,7 @@ public:
     //@{
     static boost::crc_32_type::value_type ComputeCRC( const std::string& strFileName );
     //@}
-    
+
 private:
     MIL_Tools();
 
@@ -126,7 +126,7 @@ private:
         {
             const std::string& sCurrentName = conv[i].name_;
 
-            if ( sCurrentName.empty() || sCaseInsensitiveEqual()( sCurrentName, str ) )
+            if( sCurrentName.empty() || sCaseInsensitiveEqual()( sCurrentName, str ) )
                 return conv[i].type_;
         }
         /*assert( false ); // On ne doit pas arriver ici !!!
@@ -140,7 +140,7 @@ private:
     template < typename T > static const std::string& InverseFindInConverter( const converter<T> conv[], T val )
     {
         for ( unsigned int i = 0; !conv[i].name_.empty(); ++i )
-            if ( conv[i].type_ == val )
+            if( conv[i].type_ == val )
                 return conv[i].name_;
 
         static std::string badString( "" );
@@ -149,7 +149,7 @@ private:
 
 private:
     static converter< PHY_RawVisionData::E_VisionObject > environnementConverter_[];
-  
+
 };
 
 #include "MIL_Tools.inl"

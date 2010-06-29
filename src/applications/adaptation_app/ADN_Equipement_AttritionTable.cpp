@@ -35,7 +35,7 @@ class ADN_Equipement_AttritionTable_Connector
     MT_COPYNOTALLOWED( ADN_Equipement_AttritionTable_Connector )
 
 public:
-    ADN_Equipement_AttritionTable_Connector( ADN_Equipement_AttritionTable& tab ) 
+    ADN_Equipement_AttritionTable_Connector( ADN_Equipement_AttritionTable& tab )
         : ADN_Connector_Table_ABC( tab, false )
     {}
 

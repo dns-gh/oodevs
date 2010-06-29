@@ -58,7 +58,7 @@ void PHY_IndirectFireData::sComposanteWeapons::AddWeapon( PHY_Weapon& weapon )
 }
 
 // =============================================================================
-// 
+//
 // =============================================================================
 
 // -----------------------------------------------------------------------------
@@ -93,7 +93,7 @@ PHY_IndirectFireData::~PHY_IndirectFireData()
 // -----------------------------------------------------------------------------
 void PHY_IndirectFireData::operator() ( const PHY_ComposantePion& compFirer, PHY_Weapon& weapon )
 {
-    if( !compFirer.CanFire() || !effect_.CanWeaponBeUsed( weapon ) ) 
+    if( !compFirer.CanFire() || !effect_.CanWeaponBeUsed( weapon ) )
         return;
 
     std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer = firer_.GetAlgorithms().dotationComputerFactory_->Create();
@@ -106,7 +106,7 @@ void PHY_IndirectFireData::operator() ( const PHY_ComposantePion& compFirer, PHY
         data.AddWeapon( weapon );
         bHasWeaponsReady_    |= data.HasWeaponsReady   ();
         bHasWeaponsNotReady_ |= data.IsFiring          ();
-    }    
+    }
 }
 
 // -----------------------------------------------------------------------------

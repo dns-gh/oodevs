@@ -35,7 +35,7 @@ MIL_MedicalTreatmentType::T_MedicalTreatmentTypeMap MIL_MedicalTreatmentType::ty
 // Modified: none
 // -----------------------------------------------------------------------------
 void MIL_MedicalTreatmentType::ReadMedicalTreatment( xml::xistream& xis )
-{    
+{
     std::string strName;
 
     xis >> xml::attribute( "name", strName );
@@ -43,7 +43,7 @@ void MIL_MedicalTreatmentType::ReadMedicalTreatment( xml::xistream& xis )
     const MIL_MedicalTreatmentType*& pType = types_[ strName ];
     if( pType )
         throw std::runtime_error( "Medical Treatment of Type " + strName + " already exists" );
-    pType = new MIL_MedicalTreatmentType( strName, xis );        
+    pType = new MIL_MedicalTreatmentType( strName, xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,7 +55,7 @@ void MIL_MedicalTreatmentType::Initialize( xml::xistream& xis )
 {
     std::set< unsigned int > ids;
     MT_LOG_INFO_MSG( "Initializing Medical Treatment Types" );
-    
+
     xis >> xml::start( "medical-treatments" )
             >> xml::list( "medical-treatment", &ReadMedicalTreatment )
         >> xml::end();
@@ -79,10 +79,10 @@ MIL_MedicalTreatmentType::MIL_MedicalTreatmentType( const std::string& strName, 
         >> xml::attribute( "death-threshold", deathThreshold_ )
         >> xml::start( "injuries" )
             >> xml::list( "injury", *this, &MIL_MedicalTreatmentType::ReadMedicalTreatmentEffect )
-        >> xml::end();    
+        >> xml::end();
 }
 
-namespace 
+namespace
 {
     MIL_MedicalTreatmentType::E_InjuryCategories StringToE_InjuryCategories( const std::string& category )
     {
@@ -109,7 +109,7 @@ void MIL_MedicalTreatmentType::ReadMedicalTreatmentEffect( xml::xistream& xis )
 {
     std::string injuryCategory;
     T_InjuryDescription injuryDescription;
-    
+
     //ReadTimeAttribute already includes a the xml optional function
     tools::ReadTimeAttribute( xis , "life-expectancy" , injuryDescription.lifeExpectancy_ );
     //No test here to check if the life expectancy is negative because a non-deadly injury sets life expectancy to "-1"
@@ -127,7 +127,7 @@ void MIL_MedicalTreatmentType::ReadMedicalTreatmentEffect( xml::xistream& xis )
     if( injuryDescription.hospitalisationTime_ <= 0 )
         xis.error( "hospitalisation-time <= 0" );
     injuryDescription.hospitalisationTime_ = MIL_Tools::ConvertSecondsToSim( injuryDescription.hospitalisationTime_ );
-   
+
     medicalTreatmentEffect_.insert( std::make_pair( StringToE_InjuryCategories( injuryCategory ), injuryDescription ) );
 }
 

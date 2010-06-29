@@ -47,14 +47,14 @@ DEC_KnowledgeBlackBoard_Automate::DEC_KnowledgeBlackBoard_Automate()
 // -----------------------------------------------------------------------------
 DEC_KnowledgeBlackBoard_Automate::~DEC_KnowledgeBlackBoard_Automate()
 {
-    // NOTHING    
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: template< typename Archive > void DEC_KnowledgeBlackBoard_Automate::serialize
 // Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
-template< typename Archive > 
+template< typename Archive >
 void DEC_KnowledgeBlackBoard_Automate::serialize( Archive& archive, const unsigned int )
 {
     archive & boost::serialization::base_object< DEC_KnowledgeBlackBoard_ABC >( *this )

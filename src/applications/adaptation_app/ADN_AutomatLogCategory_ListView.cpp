@@ -82,7 +82,7 @@ void ADN_AutomatLogCategory_ListView::BuildHeaders()
 void ADN_AutomatLogCategory_ListView::BuildBody()
 {
     // Dotation (eg. ration)
-    ADN_Equipement_Data::T_DotationInfos_Vector& dotations = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotations(); 
+    ADN_Equipement_Data::T_DotationInfos_Vector& dotations = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotations();
     for( ADN_Equipement_Data::IT_DotationInfos_Vector itDotation = dotations.begin(); itDotation != dotations.end(); ++itDotation )
     {
         ADN_Equipement_Data::DotationInfos& dotation = **itDotation;
@@ -170,8 +170,8 @@ void ADN_AutomatLogCategory_ListView::BuildBody()
 // Name: ADN_AutomatLogCategory_ListView::FillComponentItem
 // Created: SBO 2006-01-12
 // -----------------------------------------------------------------------------
-void ADN_AutomatLogCategory_ListView::FillComponentItem( ADN_Rich_ListViewItem&             item, 
-                                                         ADN_Equipement_Data::CategoryInfo& category, 
+void ADN_AutomatLogCategory_ListView::FillComponentItem( ADN_Rich_ListViewItem&             item,
+                                                         ADN_Equipement_Data::CategoryInfo& category,
                                                          ADN_Units_Data::ComposanteInfos&   comp )
 {
     item.setText( eColumnTarget, comp.ptrComposante_.GetData()->strName_.GetData().c_str() );
@@ -256,7 +256,7 @@ void ADN_AutomatLogCategory_ListView::FillTotalItem( ADN_Rich_ListViewItem& item
     item.setText( eColumnMoveConso         , QString::number( total.rMoveQuantityUsedPerHour_, 'f', 2 ) );
     item.setText( eColumnEngineStoppedConso, QString::number( total.rEngineStoppedQuantityUsedPerHour_, 'f', 2 ) );
     item.setText( eColumnEngineStartedConso, QString::number( total.rEngineStartedQuantityUsedPerHour_, 'f', 2 ) );
-    
+
     if( total.rMoveAutonomy_ > 0. )
         item.SetValueGreaterThan( eColumnMoveAutonomy, total.rMoveAutonomy_, 2., 3., ADN_Rich_ListViewItem::eUnitHour );
     else
@@ -266,7 +266,7 @@ void ADN_AutomatLogCategory_ListView::FillTotalItem( ADN_Rich_ListViewItem& item
         item.SetValueGreaterThan( eColumnEngineStoppedAutonomy, total.rEngineStoppedAutonomy_, 2., 3., ADN_Rich_ListViewItem::eUnitHour );
     else
         item.SetValueGreaterThan( eColumnEngineStoppedAutonomy, std::numeric_limits< double >::max(), 2., 3., ADN_Rich_ListViewItem::eUnitHour );
-    
+
     if( total.rEngineStartedAutonomy_ > 0 )
         item.SetValueGreaterThan( eColumnEngineStartedAutonomy, total.rEngineStartedAutonomy_, 2., 3., ADN_Rich_ListViewItem::eUnitHour );
     else

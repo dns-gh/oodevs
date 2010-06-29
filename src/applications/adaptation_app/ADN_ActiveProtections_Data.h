@@ -40,11 +40,11 @@ public:
     public:
         ActiveProtectionsInfosWeapons();
         virtual ~ActiveProtectionsInfosWeapons() {}
-        std::string GetItemName();  
+        std::string GetItemName();
 
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& xos );
-    
+
     public:
         ADN_Type_String strName_; // To use with ADN_Tools::NameCmp
         ADN_TypePtr_InVector_ABC<ADN_Equipement_Data::CategoryInfo> ptrWeapon_;
@@ -57,7 +57,7 @@ public:
 
     //! @name Types
     //@{
-    class ActiveProtectionsInfos 
+    class ActiveProtectionsInfos
         : public ADN_Ref_ABC
         , public ADN_DataTreeNode_ABC
     {
@@ -65,15 +65,15 @@ public:
 
     public:
         ActiveProtectionsInfos();
-        virtual ~ActiveProtectionsInfos() {}        
-        std::string GetItemName();        
+        virtual ~ActiveProtectionsInfos() {}
+        std::string GetItemName();
 
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& xos );
         void ReadWeapon( xml::xistream& xis );
 
         T_ActiveProtectionsInfosWeaponsVector& GetActiveProtectionsInfosWeapons();
-    
+
     public:
         ADN_Type_String                       strName_; // To use with ADN_Tools::NameCmp
         ADN_Type_Double                       coefficient_;

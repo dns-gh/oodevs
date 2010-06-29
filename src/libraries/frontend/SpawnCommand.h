@@ -68,12 +68,12 @@ private:
 
     //! @name Types
     //@{
-    struct InternalData; //!< obscure data structure to hide OS implementation 
+    struct InternalData; //!< obscure data structure to hide OS implementation
     //@}
 
     //! @name Helpers
     //@{
-    void CloseWindows(); 
+    void CloseWindows();
     //@}
 
 protected:
@@ -87,7 +87,7 @@ private:
     //@{
     QString                     commandLine_;
     std::auto_ptr<InternalData> internal_; //!< obscure data structure to hide OS implementation
-    bool                        attach_;   //!< if set to true , kill the attached process on exit 
+    bool                        attach_;   //!< if set to true , kill the attached process on exit
     std::string                 workingDirectory_;
     //@}
 };

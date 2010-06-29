@@ -20,7 +20,7 @@
 #include <string>
 #include <memory>
 
-namespace boost { 
+namespace boost {
     namespace asio {
         class io_service;
     }

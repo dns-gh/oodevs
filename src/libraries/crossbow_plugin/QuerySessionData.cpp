@@ -81,7 +81,7 @@ int QuerySessionData::FindExercise( const std::string& name ) const
     {
         std::auto_ptr< Table_ABC > table( database_.OpenTable( "Exercises" ) );
         Row_ABC* row = table->Find( "name='" + name + "'" );
-        if ( row != 0 )
+        if( row != 0 )
             return row->GetID();
     }
     catch ( std::exception& ex )

@@ -35,7 +35,7 @@ class PHY_ActionControlZone : public PHY_Action_ABC
 {
 
 public:
-    typedef MIL_AgentPion ActorType;        
+    typedef MIL_AgentPion ActorType;
 
 public:
              PHY_ActionControlZone( MIL_AgentPion& pion, const TER_Localisation* pLocalisation, MT_Float rRadius, bool bFire );

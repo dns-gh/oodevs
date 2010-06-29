@@ -81,7 +81,7 @@ private:
     unsigned int                 nSpeed_;
     unsigned long                nNbrAliveHumans_;
     unsigned long                nNbrDeadHumans_;
-    Common::EnumPopulationAttitude nAttitude_;    
+    Common::EnumPopulationAttitude nAttitude_;
     //@}
 };
 

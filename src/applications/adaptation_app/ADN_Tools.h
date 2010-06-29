@@ -41,7 +41,7 @@ public:
         virtual ~NameCmp() {}
 
         template < typename T >
-        bool operator()( T* tgtnfos ) const 
+        bool operator()( T* tgtnfos ) const
         { return CaselessCompare( tgtnfos->strName_.GetData(), strName_ ); }
 
     private:

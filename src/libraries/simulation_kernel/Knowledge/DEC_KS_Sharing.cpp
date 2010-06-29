@@ -166,7 +166,7 @@ void DEC_KS_Sharing::ShareFromSource( const MIL_KnowledgeGroup& source, unsigned
 {
     shareSources_.insert( std::make_pair( nShareTimeStep, sShareSource( source ) ) );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_Sharing::ShareFromSource
 // Created: NLD 2005-04-20

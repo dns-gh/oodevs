@@ -60,30 +60,30 @@ void MIL_AutomateType::Initialize( xml::xistream& xis )
     MT_LOG_INFO_MSG( "Initializing automate types" );
 
     automateTypeAllocators_[ "Automate SGTIA"                  ] = &MIL_AutomateType       ::Create;
-    automateTypeAllocators_[ "Automate INF"                    ] = &MIL_AutomateType       ::Create; 
-    automateTypeAllocators_[ "Automate ASA"                    ] = &MIL_AutomateTypeASA    ::Create; 
-    automateTypeAllocators_[ "Automate ALAT"                   ] = &MIL_AutomateType       ::Create; 
-    automateTypeAllocators_[ "Automate RENS"                   ] = &MIL_AutomateType       ::Create; 
-    automateTypeAllocators_[ "Automate NBC"                    ] = &MIL_AutomateType       ::Create; 
+    automateTypeAllocators_[ "Automate INF"                    ] = &MIL_AutomateType       ::Create;
+    automateTypeAllocators_[ "Automate ASA"                    ] = &MIL_AutomateTypeASA    ::Create;
+    automateTypeAllocators_[ "Automate ALAT"                   ] = &MIL_AutomateType       ::Create;
+    automateTypeAllocators_[ "Automate RENS"                   ] = &MIL_AutomateType       ::Create;
+    automateTypeAllocators_[ "Automate NBC"                    ] = &MIL_AutomateType       ::Create;
     automateTypeAllocators_[ "Automate ABC"                    ] = &MIL_AutomateType       ::Create;
     automateTypeAllocators_[ "Automate GEN"                    ] = &MIL_AutomateType       ::Create;
-    automateTypeAllocators_[ "Automate ASS"                    ] = &MIL_AutomateType       ::Create; 
-    automateTypeAllocators_[ "Automate TRANS"                  ] = &MIL_AutomateType       ::Create; 
-    automateTypeAllocators_[ "Automate LOG TC2"                ] = &MIL_AutomateTypeLOG    ::Create; 
-    automateTypeAllocators_[ "Automate LOG BLD Sante"          ] = &MIL_AutomateTypeLOG    ::Create; 
-    automateTypeAllocators_[ "Automate LOG BLD Maintenance"    ] = &MIL_AutomateTypeLOG    ::Create; 
-    automateTypeAllocators_[ "Automate LOG BLD Ravitaillement" ] = &MIL_AutomateTypeLOG    ::Create; 
-    automateTypeAllocators_[ "Automate LOG BLT Sante"          ] = &MIL_AutomateTypeLOG    ::Create; 
-    automateTypeAllocators_[ "Automate LOG BLT Maintenance"    ] = &MIL_AutomateTypeLOG    ::Create; 
-    automateTypeAllocators_[ "Automate LOG BLT Ravitaillement" ] = &MIL_AutomateTypeLOG    ::Create; 
-    automateTypeAllocators_[ "Automate JOINT"                  ] = &MIL_AutomateType       ::Create; 
-    automateTypeAllocators_[ "Automate CIRCULATION"            ] = &MIL_AutomateType       ::Create; 
-    automateTypeAllocators_[ "Automate REFUGIE"                ] = &MIL_AutomateTypeREFUGIE::Create; 
+    automateTypeAllocators_[ "Automate ASS"                    ] = &MIL_AutomateType       ::Create;
+    automateTypeAllocators_[ "Automate TRANS"                  ] = &MIL_AutomateType       ::Create;
+    automateTypeAllocators_[ "Automate LOG TC2"                ] = &MIL_AutomateTypeLOG    ::Create;
+    automateTypeAllocators_[ "Automate LOG BLD Sante"          ] = &MIL_AutomateTypeLOG    ::Create;
+    automateTypeAllocators_[ "Automate LOG BLD Maintenance"    ] = &MIL_AutomateTypeLOG    ::Create;
+    automateTypeAllocators_[ "Automate LOG BLD Ravitaillement" ] = &MIL_AutomateTypeLOG    ::Create;
+    automateTypeAllocators_[ "Automate LOG BLT Sante"          ] = &MIL_AutomateTypeLOG    ::Create;
+    automateTypeAllocators_[ "Automate LOG BLT Maintenance"    ] = &MIL_AutomateTypeLOG    ::Create;
+    automateTypeAllocators_[ "Automate LOG BLT Ravitaillement" ] = &MIL_AutomateTypeLOG    ::Create;
+    automateTypeAllocators_[ "Automate JOINT"                  ] = &MIL_AutomateType       ::Create;
+    automateTypeAllocators_[ "Automate CIRCULATION"            ] = &MIL_AutomateType       ::Create;
+    automateTypeAllocators_[ "Automate REFUGIE"                ] = &MIL_AutomateTypeREFUGIE::Create;
     automateTypeAllocators_[ "Automate MILICE"                 ] = &MIL_AutomateType       ::Create;
     automateTypeAllocators_[ "Automate ASY"                    ] = &MIL_AutomateType       ::Create;
     automateTypeAllocators_[ "Automate Emergency"              ] = &MIL_AutomateType       ::Create;
     automateTypeAllocators_[ "Automate Injured Human"          ] = &MIL_AutomateTypeInjuredHuman::Create;
-    
+
     LoadingWrapper loader;
 
     xis >> xml::start( "automats" )
@@ -200,7 +200,7 @@ void MIL_AutomateType::ReadUnit( xml::xistream& xis )
         if( !pTypePC_ )
             pTypePC_ = pType;
         else
-            xis.error( "Multiple command-post defined in automat type: " + strName_ ); 
+            xis.error( "Multiple command-post defined in automat type: " + strName_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -239,10 +239,10 @@ bool MIL_AutomateType::CheckComposition( const MIL_Automate& automate ) const
 {
     typedef std::map< const MIL_AgentType_ABC*, unsigned int > T_CounterMap;
     typedef T_CounterMap::const_iterator               CIT_CounterMap;
-    
+
     T_CounterMap currentComposition;
     const MIL_Automate::T_PionVector& pions = automate.GetPions();
-    
+
     for( MIL_Automate::CIT_PionVector it = pions.begin(); it != pions.end(); ++it )
     {
         const MIL_AgentPion& pion = **it;
@@ -252,16 +252,16 @@ bool MIL_AutomateType::CheckComposition( const MIL_Automate& automate ) const
         if( composition_.find( &pionType ) == composition_.end() )
             return false;
     }
-    
+
     for( CIT_CompositionMap it = composition_.begin(); it != composition_.end(); ++it )
     {
         const sCompositionBounds& bounds   = it->second;
         const unsigned int&               nRealNbr = currentComposition[ it->first ];
-        
-        if ( bounds.nMin_ > nRealNbr || bounds.nMax_ < nRealNbr )
+
+        if( bounds.nMin_ > nRealNbr || bounds.nMax_ < nRealNbr )
             return false;
     }
-    
+
     return true;
 }
 
@@ -313,7 +313,7 @@ const MIL_AutomateType* MIL_AutomateType::FindAutomateType( const std::string& s
 {
     CIT_AutomateTypeMap it = automateTypes_.find( strName );
 
-    
+
     return it == automateTypes_.end() ? 0 : it->second;
 }
 

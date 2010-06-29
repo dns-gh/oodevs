@@ -24,7 +24,7 @@ class TER_DynamicData;
 // Created: JCR 2008-05-30
 // =============================================================================
 class AvoidanceCapacity : public ObjectCapacity_ABC
-{ 
+{
 
 public:
     //! @name Constructors/Destructor
@@ -44,7 +44,7 @@ public:
     //@{
     virtual void Instanciate( MIL_Object_ABC& object ) const;
     virtual void Register( MIL_Object_ABC& object );
-    virtual void Finalize( MIL_Object_ABC& object );    
+    virtual void Finalize( MIL_Object_ABC& object );
     //@}
 
     //! @name Accessors
@@ -54,7 +54,7 @@ public:
 
 private:
     //! @name Copy
-    //@{    
+    //@{
     AvoidanceCapacity& operator=( const AvoidanceCapacity& ); //!< Assignment operator
     //@}
 

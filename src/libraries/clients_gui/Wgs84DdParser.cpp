@@ -24,7 +24,7 @@ Wgs84DdParser::Wgs84DdParser( const kernel::CoordinateConverter_ABC& converter )
     : converter_( converter )
     , numParameters_( 2 )
 {
-	// NOTHING
+    // NOTHING
 }
 // -----------------------------------------------------------------------------
 // Name: Wgs84DdParser destructor
@@ -32,7 +32,7 @@ Wgs84DdParser::Wgs84DdParser( const kernel::CoordinateConverter_ABC& converter )
 // -----------------------------------------------------------------------------
 Wgs84DdParser::~Wgs84DdParser()
 {
-	// NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

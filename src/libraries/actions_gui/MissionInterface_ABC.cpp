@@ -48,7 +48,7 @@ MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, const kernel::Order
     , controller_( controller )
     , entity_    ( entity )
 {
-    setMinimumSize( 280, 250 ); // $$$$ SBO 2007-04-27: 
+    setMinimumSize( 280, 250 ); // $$$$ SBO 2007-04-27:
     CreateTitle( title_ );
     tabs_ = new QTabWidget( this );
     mainTab_ = CreateTab( tabs_, tools::translate( "MissionInterface_ABC", "Mandatory" ) );

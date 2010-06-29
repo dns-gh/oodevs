@@ -50,7 +50,7 @@ public:
     //@{
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     //@}
-    
+
 private:
     //! @name Copy/Assignment
     //@{

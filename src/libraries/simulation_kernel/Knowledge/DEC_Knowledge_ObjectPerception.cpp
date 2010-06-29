@@ -64,13 +64,13 @@ void DEC_Knowledge_ObjectPerception::load( MIL_CheckPointInArchive& file, const 
 {
     file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this );
 
-    file >> const_cast< MIL_Agent_ABC*& >( pAgentPerceiving_ ) 
+    file >> const_cast< MIL_Agent_ABC*& >( pAgentPerceiving_ )
          >> pObjectPerceived_;
-    
+
     unsigned int nTmp;
     file >> nTmp;
     pCurrentPerceptionLevel_  = &PHY_PerceptionLevel::FindPerceptionLevel( nTmp );
-    
+
     file >> nTmp;
     pPreviousPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nTmp );
 }
@@ -85,7 +85,7 @@ void DEC_Knowledge_ObjectPerception::save( MIL_CheckPointOutArchive& file, const
     unsigned current  = pCurrentPerceptionLevel_->GetID(),
              previous = pPreviousPerceptionLevel_->GetID();
     file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
-         << pAgentPerceiving_ 
+         << pAgentPerceiving_
          << pObjectPerceived_
          << current
          << previous;
@@ -109,7 +109,7 @@ void DEC_Knowledge_ObjectPerception::Update( const PHY_PerceptionLevel& percepti
 {
     assert( perceptionLevel != PHY_PerceptionLevel::notSeen_ );
     if( perceptionLevel > *pCurrentPerceptionLevel_ )
-        pCurrentPerceptionLevel_ = &perceptionLevel;   
+        pCurrentPerceptionLevel_ = &perceptionLevel;
 }
 
 
@@ -119,7 +119,7 @@ void DEC_Knowledge_ObjectPerception::Update( const PHY_PerceptionLevel& percepti
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectPerception::UpdateOnNetwork() const
 {
-    if ( *pCurrentPerceptionLevel_ != *pPreviousPerceptionLevel_ )
+    if( *pCurrentPerceptionLevel_ != *pPreviousPerceptionLevel_ )
         SendStateToNewClient();
 }
 
@@ -143,7 +143,7 @@ void DEC_Knowledge_ObjectPerception::SendStateToNewClient() const
 MIL_Object_ABC& DEC_Knowledge_ObjectPerception::GetObjectPerceived() const
 {
     assert( pObjectPerceived_ );
-    return *pObjectPerceived_; 
+    return *pObjectPerceived_;
 }
 
 // -----------------------------------------------------------------------------
@@ -153,7 +153,7 @@ MIL_Object_ABC& DEC_Knowledge_ObjectPerception::GetObjectPerceived() const
 const MIL_Agent_ABC& DEC_Knowledge_ObjectPerception::GetAgentPerceiving() const
 {
     assert( pAgentPerceiving_ );
-    return *pAgentPerceiving_;    
+    return *pAgentPerceiving_;
 }
 
 // -----------------------------------------------------------------------------

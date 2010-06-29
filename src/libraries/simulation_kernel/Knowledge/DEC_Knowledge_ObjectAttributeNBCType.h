@@ -25,7 +25,7 @@ class MIL_CheckPointOutArchive;
 // =============================================================================
 class DEC_Knowledge_ObjectAttributeNBCType : public DEC_Knowledge_ObjectAttribute_ABC
 {
-    MT_COPYNOTALLOWED( DEC_Knowledge_ObjectAttributeNBCType ) 
+    MT_COPYNOTALLOWED( DEC_Knowledge_ObjectAttributeNBCType )
 
 public:
     //! @name Constructors/Destructor
@@ -38,7 +38,7 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive&, const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;
     //@}
@@ -50,12 +50,12 @@ public:
 
     //! @name Update
     //@{
-    virtual void UpdateOnPerceptionLevel( const PHY_PerceptionLevel& currentPerceptionLevel );    
+    virtual void UpdateOnPerceptionLevel( const PHY_PerceptionLevel& currentPerceptionLevel );
     virtual void UpdateOnPerception( const DEC_Knowledge_ObjectPerception& perception );
     virtual void UpdateOnCollision( const DEC_Knowledge_ObjectCollision& collision );
     virtual void Send( Common::MsgObjectAttributes& message ) const;
     //@}
-    
+
 private:
     //! @name Update
     //@{

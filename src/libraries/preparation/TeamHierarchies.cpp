@@ -23,7 +23,7 @@ TeamHierarchies::TeamHierarchies( kernel::Controller& controller, kernel::Entity
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: TeamHierarchies destructor
 // Created: SBO 2006-09-21

@@ -66,7 +66,7 @@ public:
 
     void        SetCoeff ( unsigned int nOrder, const coeffType& value )
     {
-        if ( nOrder >= vCoeff_.size() )
+        if( nOrder >= vCoeff_.size() )
             vCoeff_.resize( nOrder + 1 );
         vCoeff_[ nOrder ] = value;
     }
@@ -78,7 +78,7 @@ public:
 
     valuesType operator () ( valuesType value )
     {
-        if ( !vCoeff_.size() )
+        if( !vCoeff_.size() )
             return valuesType();
 
         CIT_CoeffVector it = vCoeff_.begin();

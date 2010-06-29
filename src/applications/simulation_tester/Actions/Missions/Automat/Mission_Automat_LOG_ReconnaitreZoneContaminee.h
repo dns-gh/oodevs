@@ -21,7 +21,7 @@ namespace TEST {
     @brief  Mission_Automat_LOG_ReconnaitreZoneContaminee
 */
 // Created: SBO 2005-08-08
-// Generated: 
+// Generated:
 // =============================================================================
 class Mission_Automat_LOG_ReconnaitreZoneContaminee : public Mission_Automat_ABC
 {

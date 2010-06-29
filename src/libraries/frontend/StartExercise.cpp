@@ -9,8 +9,8 @@
 
 #include "frontend_pch.h"
 #include "StartExercise.h"
-#include "ExerciseListener.h" 
-#include "ConfigurationManipulator.h" 
+#include "ExerciseListener.h"
+#include "ConfigurationManipulator.h"
 #include "clients_gui/Tools.h"
 
 #include <boost/thread.hpp>
@@ -19,7 +19,7 @@
 
 using namespace frontend;
 
-namespace 
+namespace
 {
     class StartDispatcher : public SpawnCommand
     {
@@ -34,7 +34,7 @@ namespace
             AddSessionArgument( session );
         }
 
-        void addArgument( const QString& arg ) 
+        void addArgument( const QString& arg )
         {
             SpawnCommand::addArgument( arg );
         }
@@ -58,7 +58,7 @@ namespace
 StartExercise::StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, bool attach )
     : SpawnCommand( config, "simulation_app.exe", attach )
     , exercise_ ( exercise.ascii() )
-    , session_ ( session.ascii() ) 
+    , session_ ( session.ascii() )
     , configManipulator_ ( new ConfigurationManipulator( config_, exercise_, session_ ) )
 {
     if( ! HasEmbeddedDispatcher( *configManipulator_ ) )
@@ -132,7 +132,7 @@ bool StartExercise::Wait()
         listener_.reset( new ExerciseListener( "localhost", nPort ) );
         return listener_->Wait();
     }
-    return true; 
+    return true;
 }
 
 // -----------------------------------------------------------------------------

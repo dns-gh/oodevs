@@ -133,7 +133,7 @@ void MIL_EntityManagerStaticMethods::Initialize( MIL_Config& config, const MIL_T
     InitializeType< PHY_MaintenanceWorkRate        >( xis, config, "maintenance"        );
     InitializeType< PHY_MaintenanceResourcesAlarms >( xis, config, "maintenance"        );
     InitializeType< PHY_Experience                 >( xis, config, "human-factors"      );
-    InitializeType< PHY_Tiredness                  >( xis, config, "human-factors"      );    
+    InitializeType< PHY_Tiredness                  >( xis, config, "human-factors"      );
     InitializeType< PHY_Volume                     >( xis, config, "volumes"            );
     InitializeType< PHY_Protection                 >( xis, config, "protections"        );
     InitializeType< PHY_DotationNature             >( xis, config, "dotation-natures"   );
@@ -151,14 +151,14 @@ void MIL_EntityManagerStaticMethods::Initialize( MIL_Config& config, const MIL_T
     InitializeType< MIL_NbcAgentType               >( xis, config, "nbc"                );
     InitializeType< MIL_FireClass                  >( xis, config, "fire"               );
     InitializeType< MIL_MedicalTreatmentType       >( xis, config, "medical-treatment"  );
-    InitializeType< PHY_SupplyResourcesAlarms      >( xis, config, "supply"             );   
+    InitializeType< PHY_SupplyResourcesAlarms      >( xis, config, "supply"             );
     InitializeType< PHY_Convoy_ABC                 >( xis, config, "supply"             );
     InitializeType< PHY_MedicalResourcesAlarms     >( xis, config, "health"             );
     InitializeType< PHY_RolePion_Communications    >( xis, config, "communications"     );
     InitializeType< MIL_PopulationType             >( xis, config, "populations"        );
     InitializeMedical( xis, config );
 
-    xis >> xml::end(); // physical  
+    xis >> xml::end(); // physical
 }
 
 // -----------------------------------------------------------------------------

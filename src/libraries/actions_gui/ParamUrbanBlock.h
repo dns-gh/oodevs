@@ -62,7 +62,7 @@ public:
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
 
     virtual void NotifyContextMenu( const ::gui::TerrainObjectProxy& object, kernel::ContextMenu& menu );
-    //@} 
+    //@}
 
 private:
     //! @name Copy/Assignment

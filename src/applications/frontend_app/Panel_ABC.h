@@ -15,8 +15,8 @@
 
 namespace frontend
 {
-    class SpawnCommand; 
-} 
+    class SpawnCommand;
+}
 
 class QAction;
 class QWidgetStack;
@@ -57,7 +57,7 @@ protected:
     virtual void showEvent( QShowEvent* event );
     virtual void Update();
     void ShowNext();
-    void Start ( frontend::SpawnCommand* command ) ; 
+    void Start ( frontend::SpawnCommand* command ) ;
     //@}
 
 protected:
@@ -72,7 +72,7 @@ private:
     QWidgetStack* stack_;
     QAction& action_;
     QAction* next_;
-    boost::ptr_vector< frontend::SpawnCommand > commands_ ; 
+    boost::ptr_vector< frontend::SpawnCommand > commands_ ;
     //@}
 };
 

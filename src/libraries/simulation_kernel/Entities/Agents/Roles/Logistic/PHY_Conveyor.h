@@ -50,7 +50,7 @@ public:
 
     //! @name Operations
     //@{
-    unsigned int ApproximateTravelTime( const MT_Vector2D& vStartPos, const MT_Vector2D& vEndPos );   
+    unsigned int ApproximateTravelTime( const MT_Vector2D& vStartPos, const MT_Vector2D& vEndPos );
     //@}
 
     //! @name Serialization

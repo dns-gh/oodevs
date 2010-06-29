@@ -51,7 +51,7 @@ void PHY_ActionMineObject::StopAction()
 // Mined: NLD 2004-08-18
 // -----------------------------------------------------------------------------
 void PHY_ActionMineObject::Execute()
-{   
+{
     int nReturn = role_.Mine( pKnowledge_ );
     Callback( nReturn );
 }

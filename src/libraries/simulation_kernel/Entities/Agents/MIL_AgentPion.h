@@ -68,10 +68,10 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
-    
+
     virtual void WriteODB( xml::xostream& xos ) const;
     //@}
 
@@ -82,7 +82,7 @@ public:
 
     //! @name Accessors
     //@{
-    virtual DEC_KnowledgeBlackBoard_AgentPion& GetKnowledge   () const;        
+    virtual DEC_KnowledgeBlackBoard_AgentPion& GetKnowledge   () const;
     const   MIL_PionOrderManager&              GetOrderManager() const;
             MIL_PionOrderManager&              GetOrderManager();
     virtual DEC_Decision_ABC&                  GetDecision    (); //$$$ Dérolifier DEC_Decision_ABC
@@ -135,7 +135,7 @@ public:
 
     void OnReceiveMsgUnitMagicAction  ( const MsgsClientToSim::MsgUnitMagicAction& msg, const tools::Resolver< MIL_Army_ABC >& armies );
     void OnReceiveMsgMagicActionMoveTo( const MsgsClientToSim::MsgUnitMagicAction& asn );
-    void OnReceiveMsgOrder            ( const Common::MsgUnitOrder& msg ); 
+    void OnReceiveMsgOrder            ( const Common::MsgUnitOrder& msg );
     void OnReceiveMsgFragOrder        ( const MsgsClientToSim::MsgFragOrder& msg );
     void OnReceiveMsgChangeSuperior   ( const MIL_EntityManager& manager, const MsgsClientToSim::MsgUnitMagicAction& msg );
     void OnReceiveMagicSurrender      ();
@@ -150,7 +150,7 @@ public:
 
     //! @name Misc operations
     //@{
-    virtual void MagicMove       ( const MT_Vector2D& vNewPos );    
+    virtual void MagicMove       ( const MT_Vector2D& vNewPos );
             void NotifyAttacking ( MIL_Agent_ABC& target ) const;
             void NotifyAttacking ( MIL_Population& target ) const;
     virtual void NotifyAttackedBy( MIL_AgentPion& pion );

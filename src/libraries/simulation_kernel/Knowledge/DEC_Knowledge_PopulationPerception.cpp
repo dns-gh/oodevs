@@ -72,7 +72,7 @@ namespace boost
         {
             split_free( file, map, nVersion );
         }
-        
+
         template< typename Archive >
         void save( Archive& file, const DEC_Knowledge_PopulationPerception::T_ConcentrationMap& map, const unsigned int )
         {
@@ -84,7 +84,7 @@ namespace boost
                      << it->second;
             }
         }
-        
+
         template< typename Archive >
         void load( Archive& file, DEC_Knowledge_PopulationPerception::T_ConcentrationMap& map, const unsigned int )
         {
@@ -104,7 +104,7 @@ namespace boost
         {
             split_free( file, map, nVersion );
         }
-        
+
         template< typename Archive >
         void save( Archive& file, const DEC_Knowledge_PopulationPerception::T_FlowMap& map, const unsigned int )
         {
@@ -116,7 +116,7 @@ namespace boost
                      << it->second;
             }
         }
-        
+
         template< typename Archive >
         void load( Archive& file, DEC_Knowledge_PopulationPerception::T_FlowMap& map, const unsigned int )
         {
@@ -214,7 +214,7 @@ bool DEC_Knowledge_PopulationPerception::Clean()
             delete pKnowledge;
             it = concentrations_.erase( it );
         }
-        else 
+        else
             ++ it;
     }
 
@@ -226,7 +226,7 @@ bool DEC_Knowledge_PopulationPerception::Clean()
             delete pKnowledge;
             it = flows_.erase( it );
         }
-        else 
+        else
             ++ it;
     }
 
@@ -307,7 +307,7 @@ void DEC_Knowledge_PopulationPerception::SendStateToNewClient() const
 MIL_Population& DEC_Knowledge_PopulationPerception::GetPopulationPerceived() const
 {
     assert( pPopulationPerceived_ );
-    return *pPopulationPerceived_; 
+    return *pPopulationPerceived_;
 }
 
 // -----------------------------------------------------------------------------
@@ -317,7 +317,7 @@ MIL_Population& DEC_Knowledge_PopulationPerception::GetPopulationPerceived() con
 const MIL_Agent_ABC& DEC_Knowledge_PopulationPerception::GetAgentPerceiving() const
 {
     assert( pAgentPerceiving_ );
-    return *pAgentPerceiving_;    
+    return *pAgentPerceiving_;
 }
 
 

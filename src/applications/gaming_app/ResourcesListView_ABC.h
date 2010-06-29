@@ -135,7 +135,7 @@ void ResourcesListView_ABC< ConcreteDisplayer, Extension >::showEvent( QShowEven
     NotifySelected( selected );
     gui::ListDisplayer< ConcreteDisplayer >::showEvent( event );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ResourcesListView_ABC::NotifySelected
 // Created: SBO 2007-02-16

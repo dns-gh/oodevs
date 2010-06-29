@@ -21,7 +21,7 @@ namespace TEST {
     @brief  Mission_Pawn_Test_MoveTo
 */
 // Created: SBO 2005-08-08
-// Generated: 
+// Generated:
 // =============================================================================
 class Mission_Pawn_Test_MoveTo : public Mission_Pawn_ABC
 {

@@ -33,14 +33,14 @@ public:
     static bool IsDead                      ( const MIL_Agent_ABC& callerAgent );
     static bool IsAutomateEngaged           ( const MIL_Agent_ABC& callerAgent );
     static bool IsTransported               ( const MIL_Agent_ABC& callerAgent );
-    static bool IsNeutralized               ( const MIL_Agent_ABC& callerAgent );            
+    static bool IsNeutralized               ( const MIL_Agent_ABC& callerAgent );
     static MT_Float GetOperationalState     ( const MIL_Agent_ABC& callerAgent );
     static MT_Float GetMajorOperationalState( const MIL_Agent_ABC& callerAgent );
     static boost::shared_ptr< MT_Vector2D > GetPosition   ( const MIL_Agent_ABC& callerAgent );
     static boost::shared_ptr< MT_Vector2D > GetAgentPositionPtr( DEC_Decision_ABC* brain );
     static const MT_Vector2D* GetDirection  ( const MIL_Agent_ABC& callerAgent );
-	static float GetIdentificationDistance	( MIL_Agent_ABC& callerAgent );
-	static float GetReconnoissanceDistance	( MIL_Agent_ABC& callerAgent );
+    static float GetIdentificationDistance    ( MIL_Agent_ABC& callerAgent );
+    static float GetReconnoissanceDistance    ( MIL_Agent_ABC& callerAgent );
     static float GetDetectionDistance       ( MIL_Agent_ABC& callerAgent );
     static void ActivateBlackout            ( MIL_Agent_ABC& callerAgent );
     static void ActivatePartialBlackout     ( MIL_Agent_ABC& callerAgent );
@@ -53,12 +53,12 @@ public:
     static bool CanDestroyObject            ( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );
     static bool CanMineObject               ( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );
     static bool CanActivateObject           ( boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );
-    
+
     static void EnableDiscreteMode          ( MIL_Agent_ABC& callerAgent );
     static void DisableDiscreteMode         ( MIL_Agent_ABC& callerAgent );
 
     // Embarquement / débarquement
-    static bool IsLoaded                          ( const MIL_Agent_ABC& callerAgent );          
+    static bool IsLoaded                          ( const MIL_Agent_ABC& callerAgent );
     static MT_Float GetLoadingTime                ( const MIL_Agent_ABC& callerAgent );
     static MT_Float GetUnloadingTime              ( const MIL_Agent_ABC& callerAgent );
     static bool AreHumanTransportersReady         ( const MIL_Agent_ABC& callerAgent );
@@ -79,14 +79,14 @@ public:
     static unsigned int GetHumanFactorMorale    ( const MIL_Agent_ABC& callerAgent );
 
     // Etats du pion
-    static bool	IsFlying				( const MIL_Agent_ABC& callerAgent );
-    static void	SetFlyingHeight			( MIL_Agent_ABC& callerAgent, MT_Float height );
-    static void SetElongationFactor		( MIL_Agent_ABC& callerAgent, MT_Float factor );
-    static float TimeLeftForMoving		( const MIL_Agent_ABC& callerAgent );
-    static float TimeToMoveDistance		( const MIL_Agent_ABC& callerAgent, float distance );
-    static void Suicide					( MIL_Agent_ABC& callerAgent );
-    static bool CanIlluminate			( DEC_Decision_ABC* pAgent );
-	static float GetIlluminatingRange	( const MIL_Agent_ABC&  callerAgent );
+    static bool    IsFlying                ( const MIL_Agent_ABC& callerAgent );
+    static void    SetFlyingHeight            ( MIL_Agent_ABC& callerAgent, MT_Float height );
+    static void SetElongationFactor        ( MIL_Agent_ABC& callerAgent, MT_Float factor );
+    static float TimeLeftForMoving        ( const MIL_Agent_ABC& callerAgent );
+    static float TimeToMoveDistance        ( const MIL_Agent_ABC& callerAgent, float distance );
+    static void Suicide                    ( MIL_Agent_ABC& callerAgent );
+    static bool CanIlluminate            ( DEC_Decision_ABC* pAgent );
+    static float GetIlluminatingRange    ( const MIL_Agent_ABC&  callerAgent );
 
     // Hiérarchie
     static std::vector< DEC_Decision_ABC* > GetPionsWithPC   ( const MIL_Agent_ABC& callerAgent );
@@ -95,7 +95,7 @@ public:
     static DEC_Decision_ABC* GetPionPCOfAutomate( const DEC_Decision_ABC* automat );
     static std::vector< DEC_Decision_ABC* > GetPionsWithoutPCOfAutomate( const DEC_Decision_ABC* automat );
     static bool ChangeAutomate( MIL_Agent_ABC& callerAgent, DEC_Decision_ABC* automat );
-       
+
     // Interception
     static boost::shared_ptr< MT_Vector2D > GetInterceptionPoint( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
 
@@ -126,7 +126,7 @@ public:
 
     // Test / debug
     static void DecisionalState( const MIL_Agent_ABC& callerAgent, const std::string& key, const std::string& value );
-    
+
     static bool RelievePion   ( MIL_Agent_ABC& callerAgent, const DEC_Decision_ABC* agentToRelieve );
     static bool CanRelievePion( MIL_Agent_ABC& callerAgent, const DEC_Decision_ABC* agentToRelieve );
     //@}

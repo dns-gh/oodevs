@@ -37,7 +37,7 @@ public:
     //! @name Operations
     //@{
     virtual void RegisterIn( directia::Brain& brain ) = 0;
-    
+
     virtual void UsedByDIA    () {};
     virtual void ReleasedByDIA() {};
     //@}

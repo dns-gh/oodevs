@@ -43,7 +43,7 @@ MIL_Fuseau::MIL_Fuseau( const MT_Vector2D& vOrientationRefPos, const T_PointVect
 {
     Reset( vOrientationRefPos, leftLimit, rightLimit, pBeginMissionLima, pEndMissionLima );
 }
-   
+
 //-----------------------------------------------------------------------------
 // Name: MIL_Fuseau constructor
 // Created: NLD 2003-01-14
@@ -82,7 +82,7 @@ void InsertClosestIntersectionWithDroite( T_PointVector& pointVector, const MT_D
 {
     MT_Vector2D     vIntersect;
     IT_PointVector itWhereToInsertIntersection = pointVector.end();
-       
+
     IT_PointVector itFirstPoint = pointVector.begin();
     const MT_Vector2D* pPos1 = &*itFirstPoint;
     for( IT_PointVector itPoint = ++itFirstPoint; itPoint != pointVector.end(); ++itPoint )
@@ -91,7 +91,7 @@ void InsertClosestIntersectionWithDroite( T_PointVector& pointVector, const MT_D
         MT_Line lineTmp( *pPos1, *pPos2 );
 
         MT_Vector2D vIntersectTmp;
-        if(     droite.Intersect2D( lineTmp, vIntersectTmp ) == eDoIntersect 
+        if( droite.Intersect2D( lineTmp, vIntersectTmp ) == eDoIntersect
             &&  ( vIntersect.IsZero() || vPointSrc.SquareDistance( vIntersect ) < vPointSrc.SquareDistance( vIntersectTmp ) ) )
         {
             vIntersect                  = vIntersectTmp;
@@ -195,7 +195,7 @@ void MIL_Fuseau::SplitLimit( const MIL_LimaOrder* pBeginMissionLima, const MIL_L
         parts.push_back( T_PointVector() );
         parts.back().push_back( vBeginLimaIntersection );
         itPrev = itBeginLimaIntersection;
-    } 
+    }
     else if( pBeginMissionLima )
     {
         parts.back().push_back( limit.front() );
@@ -281,7 +281,7 @@ void MIL_Fuseau::TruncateAndReorientLimits( T_PointVector& leftLimit, T_PointVec
         std::reverse( rightLimit.begin(), rightLimit.end() );
 
     // The orientation cannot be determined from the 'LDM' and the 'LFM'
-    //  => orient it regarding the 'orientation reference position' (usually the 
+    //  => orient it regarding the 'orientation reference position' (usually the
     //     position of unit owning the fuseau
 
     // Orientation = From the closest border to the furthest
@@ -289,14 +289,14 @@ void MIL_Fuseau::TruncateAndReorientLimits( T_PointVector& leftLimit, T_PointVec
     {
         std::reverse( rightLimit.begin(), rightLimit.end() );
         std::reverse( leftLimit.begin(), leftLimit.end() );
-    }    
+    }
 
     T_PointVectorVector leftParts;
     T_PointVectorVector rightParts;
 
     SplitLimit( pBeginMissionLima, pEndMissionLima, leftLimit , leftParts  );
     SplitLimit( pBeginMissionLima, pEndMissionLima, rightLimit, rightParts );
- 
+
     assert( leftParts.size() == rightParts.size() );
     assert( !leftParts.empty() );
     assert( leftParts.size() <= 2 );
@@ -326,7 +326,7 @@ void MIL_Fuseau::TruncateAndReorientLimits( T_PointVector& leftLimit, T_PointVec
             leftLimit  = leftParts [0];
             rightLimit = rightParts[0];
         }
-    }  
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -369,7 +369,7 @@ void MIL_Fuseau::InitializeMiddleLimit()
     assert( leftPointVectorTmp.size() == rightPointVectorTmp.size() );
     assert( !leftPointVectorTmp.empty() );
     ///
-    T_PointVector middle; 
+    T_PointVector middle;
     middle.reserve( leftPointVectorTmp.size() );
     for( unsigned int j = 0; j < leftPointVectorTmp.size(); ++j )
         middle.push_back( leftPointVectorTmp[j] + ( rightPointVectorTmp[j] - leftPointVectorTmp[j] ) / 2 );
@@ -401,16 +401,16 @@ void MIL_Fuseau::Reset( const MT_Vector2D& vOrientationRefPos, const T_PointVect
 
     pLeftLimit_  = &MIL_AgentServer::GetWorkspace().GetTacticalLineManager().CreateLimitData( leftLimitTmp  );
     pRightLimit_ = &MIL_AgentServer::GetWorkspace().GetTacticalLineManager().CreateLimitData( rightLimitTmp );
-    pLeftLimit_ ->AddRef( *this );   
+    pLeftLimit_ ->AddRef( *this );
     pRightLimit_->AddRef( *this );
 
     InitializeMiddleLimit();
     InitializePolygon    ();
-    
+
     // Fuseau global orientation
     vStartGlobalDirection_ = MT_Line( *pLeftLimit_->GetPoints().begin (), *pRightLimit_->GetPoints().begin () ).GetCenter();
     vEndGlobalDirection_   = MT_Line( *pLeftLimit_->GetPoints().rbegin(), *pRightLimit_->GetPoints().rbegin() ).GetCenter();
-  
+
     // DEBUG
     /*printf( "MIL_Fuseau::Reset BEGIN\n" );
     printf("\tLEFT\n");
@@ -421,7 +421,7 @@ void MIL_Fuseau::Reset( const MT_Vector2D& vOrientationRefPos, const T_PointVect
     for( itPoint = rightPointVector_.begin(); itPoint != rightPointVector_.end(); ++itPoint )
         printf("\t\t %.2f\n", itPoint->rX_, itPoint->rY_ );
     printf( "MIL_Fuseau::Reset END\n" );*/
-    // DEBUG 
+    // DEBUG
 }
 
 //-----------------------------------------------------------------------------
@@ -495,7 +495,7 @@ void GetNextPoint( MT_Vector2D& vCur, Iterator itEnd, Iterator& itNext, MT_Float
             if( rDirLength )
                 vDir /= rDirLength;
         }
-    } 
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -585,7 +585,7 @@ bool MIL_Fuseau::Split( unsigned int nNbrSubFuseau, T_PointVectorVector& interme
     {
         MT_Vector2D vTmp = rightPointVectorTmp[j] - leftPointVectorTmp[j];
         vTmp /= nNbrSubFuseau;
-    
+
         unsigned int i = 1;
         for( IT_PointVectorVector it = intermediateLimits.begin(); it != intermediateLimits.end(); ++it, ++i )
         {
@@ -600,7 +600,7 @@ bool MIL_Fuseau::Split( unsigned int nNbrSubFuseau, T_PointVectorVector& interme
 //    for( CIT_PointVectorVector it = limitsPoints.begin(); it != limitsPoints.end(); ++it )
 //        limitVector.push_back( &MIL_AgentServer::GetWorkspace().GetTacticalLineManager().CreateLimitData( *it ) );
 //    limitVector.push_back( pRightLimit_ );
-    return true;         
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -618,7 +618,7 @@ bool MIL_Fuseau::SplitIntoSubFuseaux( unsigned int nNbrSubFuseau, T_FuseauPtrLis
         assert( intermediateLimits.empty() );
         return false;
     }
-       
+
     // Creation des fuseaux
     assert( pLeftLimit_ && pRightLimit_ );
     const T_PointVector* pPrevLimit = &pLeftLimit_->GetPoints();
@@ -636,7 +636,7 @@ bool MIL_Fuseau::SplitIntoSubFuseaux( unsigned int nNbrSubFuseau, T_FuseauPtrLis
     return true;
 }
 
-           
+
 //-----------------------------------------------------------------------------
 // Name: MIL_Fuseau::ComputeFurthestExtremityPoint
 // Created: NLD 2003-04-23
@@ -682,7 +682,7 @@ void MIL_Fuseau::ComputeNearestEntryPoint( const MT_Vector2D& vStartPos, MT_Vect
     assert( pLeftLimit_ && pRightLimit_ );
     CT_PointVector& borderVector = GetBorderPoints();
 
-    MT_Float rSquareDist = std::numeric_limits<MT_Float>::max();  
+    MT_Float rSquareDist = std::numeric_limits<MT_Float>::max();
 
     const MT_Vector2D* pLastPos = 0;
     for( CIT_PointVector itPoint = borderVector.begin(); itPoint != borderVector.end(); ++itPoint )
@@ -692,7 +692,7 @@ void MIL_Fuseau::ComputeNearestEntryPoint( const MT_Vector2D& vStartPos, MT_Vect
         if( pLastPos )
         {
             MT_Line lineTmp( *pLastPos, *pPos );
-            
+
             MT_Vector2D vTmp        = lineTmp.ClosestPointOnLine( vStartPos );
             MT_Float rSquareDistTmp = vStartPos.SquareDistance( vTmp );
             if( rSquareDistTmp < rSquareDist )
@@ -752,7 +752,7 @@ void MIL_Fuseau::ComputeEntryPoint(const MT_Vector2D& vPos, MT_Vector2D& vResult
     }
 
     assert( pLeftLimit_ && pRightLimit_ );
-    
+
     const T_PointVector* pOwnLimit   = 0;
     const T_PointVector* pOtherLimit = 0;
     MT_Line*       pExtremity  = 0;
@@ -763,7 +763,7 @@ void MIL_Fuseau::ComputeEntryPoint(const MT_Vector2D& vPos, MT_Vector2D& vResult
 
     // check nearest point with left border
     IT_PointVector itAfterRefPointProjection;
-    if ( GetPolyLineClosestPoint( vPos, pLeftLimit_->GetPoints(), vNearest, itAfterRefPointProjection ) )
+    if( GetPolyLineClosestPoint( vPos, pLeftLimit_->GetPoints(), vNearest, itAfterRefPointProjection ) )
     {
         pOwnLimit    = &pLeftLimit_ ->GetPoints();
         pOtherLimit  = &pRightLimit_->GetPoints();
@@ -772,7 +772,7 @@ void MIL_Fuseau::ComputeEntryPoint(const MT_Vector2D& vPos, MT_Vector2D& vResult
     }
 
     // check nearest point with right border
-    if ( GetPolyLineClosestPoint( vPos, pRightLimit_->GetPoints(), vNearest, itAfterRefPointProjection ) )
+    if( GetPolyLineClosestPoint( vPos, pRightLimit_->GetPoints(), vNearest, itAfterRefPointProjection ) )
     {
         pOwnLimit    = &pRightLimit_->GetPoints();
         pOtherLimit  = &pLeftLimit_ ->GetPoints();
@@ -783,12 +783,12 @@ void MIL_Fuseau::ComputeEntryPoint(const MT_Vector2D& vPos, MT_Vector2D& vResult
     MT_Float rSquareDist = vPos.SquareDistance( vNearest );
 
     // check extremity segments
-    
+
     // left
     MT_Line vLeftSeg( *pLeftLimit_->GetPoints().begin(), *pRightLimit_->GetPoints().begin() );
     MT_Vector2D vTmp        = vLeftSeg.ClosestPointOnLine( vPos );
     MT_Float rSquareDistTmp = vPos.SquareDistance( vTmp );
-    if ( rSquareDistTmp <= rSquareDist)
+    if( rSquareDistTmp <= rSquareDist)
     {
         rSquareDist = rSquareDistTmp;
         vNearest    = vTmp;
@@ -799,27 +799,27 @@ void MIL_Fuseau::ComputeEntryPoint(const MT_Vector2D& vPos, MT_Vector2D& vResult
     MT_Line vRightSeg( *pLeftLimit_->GetPoints().rbegin(), *pRightLimit_->GetPoints().rbegin() );
     vTmp           = vRightSeg.ClosestPointOnLine( vPos );
     rSquareDistTmp = vPos.SquareDistance( vTmp );
-    if ( rSquareDistTmp <= rSquareDist)
+    if( rSquareDistTmp <= rSquareDist)
     {
         rSquareDist = rSquareDistTmp;
         vNearest    = vTmp;
         pExtremity  = &vRightSeg;
     }
 
-    // nearest point is on an extremity 
+    // nearest point is on an extremity
     if (pExtremity)
     {
         // return middle of this extremity
         vResult=pExtremity->GetCenter();
         return;
     }
-    
+
     // general case - nearest point is on a limit
     CIT_PointVector itOwnPointNext   = pOwnLimit->begin();
     CIT_PointVector itOtherPointNext = pOtherLimit->begin();
     MT_Vector2D     vCurOwnPoint     = *itOwnPointNext;
     MT_Vector2D     vCurOtherPoint   = *itOtherPointNext;
-    
+
     ++itOwnPointNext;
     ++itOtherPointNext;
     for( unsigned int j = 0; j < rNbSteps; ++j )
@@ -829,7 +829,7 @@ void MIL_Fuseau::ComputeEntryPoint(const MT_Vector2D& vPos, MT_Vector2D& vResult
         GetNextPoint( vCurOwnPoint  , pOwnLimit  ->end(), itOwnPointNext , rOwnStep  );
         GetNextPoint( vCurOtherPoint, pOtherLimit->end(), itOtherPointNext, rOtherStep );
         MT_Vector2D vDir=((vCurOwnPoint-vLastOwnPoint).Normalize()+(vCurOtherPoint-vLastOtherPoint).Normalize())/2;
-        if ( MT_Line(vLastOwnPoint,vCurOwnPoint).IsInside(vNearest,PRECISION) )
+        if( MT_Line(vLastOwnPoint,vCurOwnPoint).IsInside(vNearest,PRECISION) )
         {
             vResult=(vLastOwnPoint+vLastOtherPoint)/2+vDir*vNearest.Distance(vLastOwnPoint);
             return;
@@ -848,12 +848,12 @@ bool MIL_Fuseau::ComputePointBeforeLima( const MIL_LimaOrder& lima, MT_Float rDi
     T_PointVector result;
     ComputePointsBeforeLima( lima, rDistBefore, 1, result );
 
-    if ( result.size() == 1 )
+    if( result.size() == 1 )
     {
         vResult = result.front();
         return true;
     }
-    
+
     assert( result.empty() );
     return false;
 }
@@ -893,28 +893,28 @@ bool MIL_Fuseau::ComputePointsBeforeLima( const MIL_LimaOrder& lima, MT_Float rD
     MT_Vector2D vTranslation = ( ( vLeftPointBefore - vLeftIntersection ) + ( vRightPointBefore - vRightIntersection ) ) / 2.;
 
     // calcul du support
-    MT_Polyline supportLine( lima.GetPoints() );  
+    MT_Polyline supportLine( lima.GetPoints() );
     supportLine.Translate( vTranslation );
 
     TER_Polygon::Intersection( supportLine, PRECISION );
-    
+
     // positionnement des points
     const MT_Float rDist = supportLine.Magnitude() / nNbPoints;
     if( rDist == 0. )
         return false;
-          
+
     for ( MT_Float rCurrentDist = rDist * 0.5; nNbPoints--; rCurrentDist += rDist )
         results.push_back( supportLine.GetPointAt( rCurrentDist ) );
     return true;
 }
 
-namespace 
+namespace
 {
     MT_Float ComputeDistance( const T_PointVector& points, const CIT_PointVector& itNextRefPos, const MT_Vector2D& refPos )
     {
         assert( itNextRefPos != points.begin() );
         MT_Float rDist = 0.;
-        CIT_PointVector itPrev = points.begin(); 
+        CIT_PointVector itPrev = points.begin();
         CIT_PointVector itCur = itPrev;
         ++itCur;
         for( ; itCur != itNextRefPos; ++itCur )
@@ -940,7 +940,7 @@ MT_Float MIL_Fuseau::ComputeAverageDistanceFromLima( const MIL_LimaOrder& lima, 
     IT_PointVector itAfterRefPointProjection;
     if( !GetPolyLineClosestPoint( refPoint, pMiddleLimit_->GetPoints(), refPointProjection, itAfterRefPointProjection ) )
         return 0.;
-    
+
     // point intersection entre lima et middle limit
     MT_Vector2D    limaPoint;
     IT_PointVector itAfterLimaPoint;
@@ -950,7 +950,7 @@ MT_Float MIL_Fuseau::ComputeAverageDistanceFromLima( const MIL_LimaOrder& lima, 
     // Calcul distance
     const MT_Float rDist1 = ComputeDistance( pMiddleLimit_->GetPoints(), itAfterRefPointProjection, refPointProjection );
     const MT_Float rDist2 = ComputeDistance( pMiddleLimit_->GetPoints(), itAfterLimaPoint         , limaPoint          );
-    
+
     if( rDist1 > rDist2 )
         return 0;
     return rDist2 - rDist1;
@@ -979,7 +979,7 @@ MT_Float MIL_Fuseau::ComputeAverageDistanceFromObjective( const DEC_Objective& o
     // Calcul distance
     const MT_Float rDist1 = ComputeDistance( pMiddleLimit_->GetPoints(), itAfterRefPointProjection , refPointProjection  );
     const MT_Float rDist2 = ComputeDistance( pMiddleLimit_->GetPoints(), itAfterObjectiveProjection, objectiveProjection );
-    
+
     if( rDist1 > rDist2 )
         return 0;
     return rDist2 - rDist1;
@@ -1012,14 +1012,14 @@ MIL_Fuseau& MIL_Fuseau::operator=( const MIL_Fuseau& fuseau )
     pLeftLimit_   = fuseau.pLeftLimit_;
     pRightLimit_  = fuseau.pRightLimit_;
     pMiddleLimit_ = fuseau.pMiddleLimit_;
-    
+
     if( pLeftLimit_ )
         pLeftLimit_->AddRef( *this );
     if( pRightLimit_ )
         pRightLimit_->AddRef( *this );
     if( pMiddleLimit_ )
         pMiddleLimit_->AddRef( *this );
-    
+
     return *this;
 }
 
@@ -1033,7 +1033,7 @@ MIL_Fuseau& MIL_Fuseau::operator=( const MIL_Fuseau& fuseau )
 // -----------------------------------------------------------------------------
 MT_Float MIL_Fuseau::Distance( const MT_Vector2D& p, bool bLimitsOnly ) const
 {
-    if( ! pLeftLimit_ || ! pRightLimit_ 
+    if( ! pLeftLimit_ || ! pRightLimit_
        || ( !bLimitsOnly && IsInside( p ) ) )
         return 0;
 
@@ -1063,8 +1063,8 @@ MT_Float MIL_Fuseau::GetCost( const MT_Vector2D&, const MT_Vector2D& to, MT_Floa
         if( rMinDistance > rComfortDistanceIn )
             return 0;
         return ( rComfortDistanceIn - rMinDistance ) * rCostPerMeterIn;
-    } 
-    else 
+    }
+    else
     {
         if( rMinDistance > rMaxDistanceOut )
             return -1;

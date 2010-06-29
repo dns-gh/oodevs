@@ -35,23 +35,23 @@ StatusBar::StatusBar( QStatusBar* parent, TerrainPicker& picker, const Detection
     QToolButton* toolButton = new QToolButton( parent );
     toolButton->setPopupDelay( 0 );
     toolButton->adjustSize();
-	parent->addWidget( toolButton, 0, true );
-	pMenu_ = new QPopupMenu( toolButton );
+    parent->addWidget( toolButton, 0, true );
+    pMenu_ = new QPopupMenu( toolButton );
     pMenu_->setCheckable( true );
-	toolButton->setPopup( pMenu_ );
+    toolButton->setPopup( pMenu_ );
 
     AddField( parent, 155, CoordinateSystems::E_Local, true );
     AddField( parent, 105, CoordinateSystems::E_Mgrs, true );
     AddField( parent, 155, CoordinateSystems::E_Wgs84Dd, true );
-	AddField( parent, 215, CoordinateSystems::E_Wgs84Dms, false );
+    AddField( parent, 215, CoordinateSystems::E_Wgs84Dms, false );
     pMenu_->insertSeparator();
-	pElevation_   = AddField( parent, 50, tr( "Elevation" ), true );
+    pElevation_   = AddField( parent, 50, tr( "Elevation" ), true );
     pTerrainType_ = AddField( parent, 150, tr( "Terrain type" ), true );
-    
-	connect( pMenu_, SIGNAL( activated( int ) ), this, SLOT( ParameterSelected( int ) ) );
+
+    connect( pMenu_, SIGNAL( activated( int ) ), this, SLOT( ParameterSelected( int ) ) );
     connect( &terrainPicker_, SIGNAL( TerrainPicked( const QString& ) ), SLOT( TerrainPicked( const QString& ) ) );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: StatusBar destructor
 // Created: SBO 2006-04-14
@@ -104,29 +104,29 @@ void StatusBar::OnMouseMove( const geometry::Point2f& position )
     if( !converter_.IsInBoundaries( position ) )
         for( T_MenuFields::iterator it = menuFields_.begin(); it != menuFields_.end(); ++it )
             (*it)->setText( tr( "---" ) );
-	else
+    else
     {
         const QString xypos = tr( "y:%1 x:%2" ).arg( position.Y(), 4 ).arg( position.X(), 4 );
         coordinateFields_[ CoordinateSystems::E_Local ]->setText( xypos );
-		
-		const QString elev = tr( "h:%1 " ).arg( detection_.ElevationAt( position ) );
-		pElevation_->setText( elev );
+
+        const QString elev = tr( "h:%1 " ).arg( detection_.ElevationAt( position ) );
+        pElevation_->setText( elev );
 
         coordinateFields_[ CoordinateSystems::E_Mgrs ]->setText( converter_.ConvertToMgrs( position ).c_str() );
 
         const geometry::Point2d latLong( converter_.ConvertToGeo( position ) );
         const QString latlongpos = tr( "Lat:%1 Lon:%2" ).arg( latLong.Y(), 0, 'g', 6 )
                                                         .arg( latLong.X(), 0, 'g', 6 );
-		coordinateFields_[ CoordinateSystems::E_Wgs84Dd ]->setText( latlongpos );
+        coordinateFields_[ CoordinateSystems::E_Wgs84Dd ]->setText( latlongpos );
 
-		std::string pos( converter_.ConvertToGeoDms( position ) );
+        std::string pos( converter_.ConvertToGeoDms( position ) );
         std::string::size_type loc = pos.find( ":", 0 );
-		if( loc != std::string::npos )
-		{
-			const std::string latlongdmspos( boost::str( boost::format( "Lat:%s, Lon:%s" ) 	% pos.substr( 0, loc )
-																						    % pos.substr( loc + 1, pos.size() - loc ) ) );			
-			coordinateFields_[ CoordinateSystems::E_Wgs84Dms ]->setText( latlongdmspos.c_str() );
-		}
+        if( loc != std::string::npos )
+        {
+            const std::string latlongdmspos( boost::str( boost::format( "Lat:%s, Lon:%s" )     % pos.substr( 0, loc )
+                                                                                            % pos.substr( loc + 1, pos.size() - loc ) ) );
+            coordinateFields_[ CoordinateSystems::E_Wgs84Dms ]->setText( latlongdmspos.c_str() );
+        }
     }
 }
 
@@ -146,7 +146,7 @@ void StatusBar::OnMouseMove( const geometry::Point3f& position )
 // -----------------------------------------------------------------------------
 void StatusBar::ParameterSelected( int index )
 {
-	pMenu_->setItemChecked( index, !pMenu_->isItemChecked( index ) );
+    pMenu_->setItemChecked( index, !pMenu_->isItemChecked( index ) );
     if( QLabel* field = menuFields_[index - 1] )
         field->setShown( field->isHidden() );
 }

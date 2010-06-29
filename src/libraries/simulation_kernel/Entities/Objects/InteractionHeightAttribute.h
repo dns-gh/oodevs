@@ -37,7 +37,7 @@ public:
     //@}
 
     //! @name Knowledge instance
-    //@{    
+    //@{
     virtual void Instanciate( DEC_Knowledge_Object& object ) const;
     //@}
 
@@ -47,7 +47,7 @@ public:
     //@}
 
     //! @name ASN Network update
-    //@{     
+    //@{
     virtual void SendFullState( Common::MsgObjectAttributes& asn ) const; //<! Send update to asn client
     //@}
 

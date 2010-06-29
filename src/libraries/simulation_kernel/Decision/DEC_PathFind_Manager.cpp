@@ -37,7 +37,7 @@ DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_Config& config )
 {
     xml::xifstream xis( config.GetPhysicalFile() );
     xis >> xml::start( "physical" );
-    
+
     std::string strPathFindFile;
     xis >> xml::start( "pathfinder" )
             >> xml::attribute( "file", strPathFindFile )
@@ -104,7 +104,7 @@ unsigned int DEC_PathFind_Manager::GetNbrShortRequests() const
     boost::mutex::scoped_lock locker( mutex_ );
     return shortRequests_.size();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFind_Manager::GetNbrLongRequests
 // Created: NLD 2005-04-01
@@ -189,7 +189,7 @@ namespace
     template< typename T >
     AreNotEmpty_< T > AreNotEmpty( const T& cont, const T& cont2 ) { return AreNotEmpty_< T >( cont, cont2 ); };
 
-    struct { 
+    struct {
         struct {
             static const unsigned maximumShortRequest = 5;
         } cpp;
@@ -202,7 +202,7 @@ namespace
 // -----------------------------------------------------------------------------
 DEC_PathFind_Manager::T_Requests& DEC_PathFind_Manager::GetRequests()
 {
-    const bool shortHavePriority = 
+    const bool shortHavePriority =
            ( ! shortRequests_.empty() )
            && ( pathFindThreads_.size() == 1 || shortRequests_.size() > Config.cpp.maximumShortRequest );
     if( shortHavePriority || longRequests_.empty() )

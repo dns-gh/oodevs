@@ -42,7 +42,7 @@ void AgentSelectionObserver::BeforeSelection()
 {
     selected_ = 0;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: AgentSelectionObserver::AfterSelection
 // Created: AGE 2006-03-09

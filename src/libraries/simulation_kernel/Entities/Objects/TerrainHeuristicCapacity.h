@@ -31,7 +31,7 @@ public:
     //@}
 
      //! @name Operations
-    //@{    
+    //@{
     template< typename Archive > void serialize( Archive&, const unsigned int );
     virtual void Instanciate( MIL_Object_ABC& object ) const;
     virtual void Register( MIL_Object_ABC& object );
@@ -50,7 +50,7 @@ private:
     //@}
 
 private:
-    //! @name 
+    //! @name
     //@{
     typedef std::pair < TerrainData, int >          T_ScorePair;
     typedef std::vector< T_ScorePair >              T_EnvironmentScoreMap;

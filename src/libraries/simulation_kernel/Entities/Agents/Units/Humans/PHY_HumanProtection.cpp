@@ -47,7 +47,7 @@ void PHY_HumanProtection::ReadProtection( xml::xistream& xis )
 {
     std::string strProtection;
     xis >> xml::attribute( "name", strProtection );
-    
+
     const PHY_HumanProtection*& pProtection = protections_[ strProtection ];
     if( pProtection )
         xis.error( "Protection " + strProtection + " already defined" );
@@ -63,7 +63,7 @@ void PHY_HumanProtection::ReadHumanProtection( xml::xistream& xis )
 {
     std::string strInjury;
     xis >> xml::attribute( "name", strInjury );
-    
+
     if( MIL_MedicalTreatmentType::Find( strInjury ) == 0 )
         xis.error( "The injury, which name is " + strInjury + " , isn't the name of a medical treatment" );
     protectionDescription_.injuryName_ = strInjury;
@@ -159,7 +159,7 @@ PHY_HumanProtection::~PHY_HumanProtection()
 // Created: NLD 2004-08-04
 // -----------------------------------------------------------------------------
 float PHY_HumanProtection::ComputeProtectionValue( int injuryID , int threshold , const std::string type ) const
-{   
+{
     MIL_MedicalTreatmentType::Find( injuryID )->GetName();
     float protectionValue = 0;
     CIT_HumanProtectionMap it = protections_.find( strName_ );
@@ -184,7 +184,7 @@ float PHY_HumanProtection::ComputeProtectionValue( int injuryID , int threshold 
                 ++iter;
                 ++iterJustBehind;
             }
-    
+
         }
         protectionValue -= ( threshold - (*iterJustBehind).first ) * (*iterJustBehind).second;
     }

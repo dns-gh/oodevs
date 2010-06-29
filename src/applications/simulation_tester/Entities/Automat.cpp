@@ -73,7 +73,7 @@ void Automat::AttachPawn( Pawn& pawn )
 //-----------------------------------------------------------------------------
 void Automat::DetachPawn( Pawn& pawn )
 {
-	childPawns_.erase( &pawn );
+    childPawns_.erase( &pawn );
 }
 
 //-----------------------------------------------------------------------------

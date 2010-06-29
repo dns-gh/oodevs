@@ -33,7 +33,7 @@ public:
 
     //! @name Constructors/Destructor
     //@{
-    MockAgent() 
+    MockAgent()
         : mockpp::ChainableMockObject( MOCKPP_PCHAR( "MockAgent" ) )
         , MIL_Agent_ABC( "" )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( GetID )
@@ -102,15 +102,15 @@ public:
     MOCKPP_CONST_CHAINABLE0          ( MockAgent, bool, IsPC );
 
     MOCKPP_CONST_CHAINABLE_EXT0      ( MockAgent, const MIL_AgentType_ABC*, GetTypeShadow, MIL_AgentType_ABC, );
-    MOCKPP_CONST_CHAINABLE_EXT0      ( MockAgent, MIL_Army_ABC*, GetArmyShadow, MIL_Army_ABC, );   
-    MOCKPP_CONST_CHAINABLE_EXT0      ( MockAgent, MIL_KnowledgeGroup*, GetKnowledgeGroupShadow, MIL_KnowledgeGroup, );   
+    MOCKPP_CONST_CHAINABLE_EXT0      ( MockAgent, MIL_Army_ABC*, GetArmyShadow, MIL_Army_ABC, );
+    MOCKPP_CONST_CHAINABLE_EXT0      ( MockAgent, MIL_KnowledgeGroup*, GetKnowledgeGroupShadow, MIL_KnowledgeGroup, );
 
     MOCKPP_VOID_CHAINABLE_EXT1       ( MockAgent, NotifyAttackedBy, MIL_AgentPion&, _Pion, MIL_AgentPion );
     MOCKPP_VOID_CHAINABLE_EXT1       ( MockAgent, NotifyAttackedBy, MIL_Population&, _Population, MIL_Population );
 
     MOCKPP_CONST_CHAINABLE_EXT1      ( MockAgent, bool, BelongsTo, const MIL_KnowledgeGroup&, bool, , MIL_KnowledgeGroup );
     MOCKPP_CONST_CHAINABLE_EXT1      ( MockAgent, bool, IsPerceived, const MIL_Agent_ABC&, bool, , MIL_Agent_ABC );
-    MOCKPP_CHAINABLE_EXT1            ( MockAgent, boost::shared_ptr< DEC_Knowledge_Agent >, CreateKnowledgeShadow, const MIL_KnowledgeGroup&, DEC_Knowledge_Agent, , MIL_KnowledgeGroup ); 
+    MOCKPP_CHAINABLE_EXT1            ( MockAgent, boost::shared_ptr< DEC_Knowledge_Agent >, CreateKnowledgeShadow, const MIL_KnowledgeGroup&, DEC_Knowledge_Agent, , MIL_KnowledgeGroup );
 
     mockpp::ChainableMockMethod< DEC_KnowledgeBlackBoard_AgentPion* > GetKnowledge_mocker;
 

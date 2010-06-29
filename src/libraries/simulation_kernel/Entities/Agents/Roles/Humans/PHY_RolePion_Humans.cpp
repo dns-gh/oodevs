@@ -69,13 +69,13 @@ PHY_RolePion_Humans::T_HumanData::T_HumanData()
 template< typename Archive >
 void PHY_RolePion_Humans::T_HumanData::serialize( Archive& file, const unsigned int )
 {
-    file & nNbrTotal_                
+    file & nNbrTotal_
          & nNbrOperational_
-         & nNbrDead_                 
-         & nNbrWounded_              
-         & nNbrMentalDiseased_       
-         & nNbrNBC_                  
-         & nNbrInLogisticMedical_    
+         & nNbrDead_
+         & nNbrWounded_
+         & nNbrMentalDiseased_
+         & nNbrNBC_
+         & nNbrInLogisticMedical_
          & nNbrInLogisticMaintenance_
          & bHasChanged_;
 }
@@ -120,14 +120,14 @@ void PHY_RolePion_Humans::serialize( Archive& file, const unsigned int )
     file & boost::serialization::base_object< PHY_RoleInterface_Humans >( *this )
          & humansData_
          & nNbrUsableHumans_
-         & nNbrHumans_ 
+         & nNbrHumans_
          & humansToUpdate_
          & nNbrHumansDataChanged_
          & medicalHumanStates_
          & nTickRcMedicalQuerySent_;
 }
 
-namespace 
+namespace
 {
     struct sRankData
     {
@@ -191,7 +191,7 @@ void PHY_RolePion_Humans::Update( bool /*bIsDead*/ )
     for( CIT_HumanSet it = humansToUpdate_.begin(); it != humansToUpdate_.end(); )
     {
         Human_ABC& human = **it;
-        ++it; 
+        ++it;
         human.Update(); // !!! Can erase the human from humansToUpdate_
     }
 
@@ -414,14 +414,14 @@ bool PHY_RolePion_Humans::HasWoundedHumansToEvacuate() const
 void PHY_RolePion_Humans::NotifyHumanEvacuatedByThirdParty( Human_ABC& human, MIL_AutomateLOG& destinationTC2 )
 {
 
-    
+
     PHY_MedicalHumanState* pMedicalHumanState = destinationTC2.MedicalHandleHumanEvacuatedByThirdParty( pion_, human );
     if( !pMedicalHumanState )
     {
         human.SetMedicalState( 0 );
         return;
     }
-    
+
     if( ! medicalHumanStates_.insert( pMedicalHumanState ).second )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
     human.SetMedicalState( pMedicalHumanState );
@@ -434,9 +434,9 @@ void PHY_RolePion_Humans::NotifyHumanEvacuatedByThirdParty( Human_ABC& human, MI
 void PHY_RolePion_Humans::NotifyHumanWaitingForMedical( Human_ABC& human )
 {
 
-    
+
     MIL_AutomateLOG* pTC2 = pion_.GetAutomate().GetTC2();
-    if ( !pTC2 || nEvacuationMode_ == eEvacuationMode_Manual )
+    if( !pTC2 || nEvacuationMode_ == eEvacuationMode_Manual )
     {
         human.SetMedicalState( 0 );
         return;
@@ -455,7 +455,7 @@ void PHY_RolePion_Humans::NotifyHumanWaitingForMedical( Human_ABC& human )
         human.SetMedicalState( 0 );
         return;
     }
-    
+
     if( ! medicalHumanStates_.insert( pMedicalHumanState ).second )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
     human.SetMedicalState( pMedicalHumanState );
@@ -483,9 +483,9 @@ void PHY_RolePion_Humans::NotifyHumanBackFromMedical( PHY_MedicalHumanState& hum
 void PHY_RolePion_Humans::SendChangedState( client::UnitAttributes& asn ) const
 {
     if( nNbrHumansDataChanged_ == 0 )
-        return;   
+        return;
     assert( nNbrHumansDataChanged_ <= humansData_.size() );
- 
+
     const PHY_HumanRank::T_HumanRankMap& ranks = PHY_HumanRank::GetHumanRanks();
     for( PHY_HumanRank::CIT_HumanRankMap itRank = ranks.begin(); itRank != ranks.end(); ++itRank )
     {
@@ -494,7 +494,7 @@ void PHY_RolePion_Humans::SendChangedState( client::UnitAttributes& asn ) const
 
         if( !humanData.bHasChanged_ )
             continue;
-              
+
         MsgsSimToClient::HumanDotations_HumanDotation& personnel = *asn().mutable_dotation_eff_personnel()->add_elem();
 
         personnel.set_rang                         ( rank.GetAsnID() );

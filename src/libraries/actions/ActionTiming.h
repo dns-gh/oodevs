@@ -27,7 +27,7 @@ namespace kernel
     class Time_ABC;
 }
 
-namespace actions 
+namespace actions
 {
     class Action_ABC;
 

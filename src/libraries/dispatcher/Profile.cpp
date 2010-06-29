@@ -54,7 +54,7 @@ Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const std::s
                 >> xml::list( "population", *this, &Profile::ReadPopulationRights, readWritePopulations_ )
             >> xml::end()
         >> xml::end();
-    if ( !role.empty() )
+    if( !role.empty() )
         role_ = ProfileManager::FindRole( role );
 }
 
@@ -296,7 +296,7 @@ void Profile::Send( MsgsAuthenticationToClient::MsgProfile& message ) const
 {
     message.set_login( strLogin_.c_str() );
     message.set_superviseur( bSupervision_ );
-    if ( role_ != eRoleUndefined )
+    if( role_ != eRoleUndefined )
         message.set_role( static_cast< MsgsAuthenticationToClient::Role >( role_ ) );
 
     Serialize( *message.mutable_read_only_automates(), readOnlyAutomats_ );

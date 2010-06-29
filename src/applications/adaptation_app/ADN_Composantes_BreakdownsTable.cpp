@@ -37,7 +37,7 @@ class ADN_CT_Composantes_BreakdownsTable
 {
 public:
 
-    ADN_CT_Composantes_BreakdownsTable( ADN_Composantes_BreakdownsTable& table ) 
+    ADN_CT_Composantes_BreakdownsTable( ADN_Composantes_BreakdownsTable& table )
         : ADN_Connector_Table_ABC( table, false )
         , breakdownsTable_       ( table )
     {}
@@ -130,7 +130,7 @@ void ADN_Composantes_BreakdownsTable::OnContextMenu( int /*nRow*/, int /*nCol*/,
     ADN_Breakdowns_Data& breakdownsData = ADN_Workspace::GetWorkspace().GetBreakdowns().GetData();
     for( ADN_Breakdowns_Data::IT_BreakdownInfoVector it = breakdownsData.vBreakdowns_.begin(); it != breakdownsData.vBreakdowns_.end(); ++it )
         addMenu.insertItem( (*it)->strName_.GetData().c_str(), (int)(*it) );
-    
+
     menu.insertItem( tr( "New" ), &addMenu );
     menu.insertItem( tr( "Delete" ), 1 );
     menu.setItemEnabled( 1, GetCurrentData() != 0 );
@@ -156,7 +156,7 @@ void ADN_Composantes_BreakdownsTable::OnContextMenu( int /*nRow*/, int /*nCol*/,
         //pNewInfo->ptrBreakdown_.SetVector( pCast->nti_.vBreakdowns_ );
         ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
         pCTable->AddItem( pNewInfo );
-        pCTable->AddItem( 0 );  
+        pCTable->AddItem( 0 );
     }
 }
 

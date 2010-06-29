@@ -40,11 +40,11 @@ PHY_PerceptionRecoObjectsReco::PHY_PerceptionRecoObjectsReco( const TER_Localisa
 // -----------------------------------------------------------------------------
 void PHY_PerceptionRecoObjectsReco::UpdateLocalisation()
 {
-    if ( bMaxSizeDone_ )
+    if( bMaxSizeDone_ )
         return;
 
     rCurrentSize_ += rGrowthSpeed_;
-    
+
     // $$$$ JVT : Beark
     T_PointVector points;
     points.push_back( vCenter_ );
@@ -76,7 +76,7 @@ void PHY_PerceptionRecoObjectsReco::GetObjectsInside( TER_Object_ABC::T_ObjectVe
     TER_World::GetWorld().GetObjectManager().GetListWithinCircle( vCenter_, rCurrentSize_, result );
 
     for ( TER_Object_ABC::IT_ObjectVector it = result.begin(); it != result.end(); )
-        if ( localisation_.IsIntersecting( (*it)->GetLocalisation() ) )
+        if( localisation_.IsIntersecting( (*it)->GetLocalisation() ) )
             ++it;
         else
             it = result.erase( it );
@@ -139,7 +139,7 @@ void PHY_PerceptionRecoObjects::Update()
 const PHY_PerceptionLevel& PHY_PerceptionRecoObjects::Compute( const MIL_Object_ABC& object ) const
 {
     for ( CIT_RecoVector it = recos_.begin(); it != recos_.end(); ++it )
-        if ( (*it)->IsInside( object.GetLocalisation() ) )
+        if( (*it)->IsInside( object.GetLocalisation() ) )
             return PHY_PerceptionLevel::recognized_;
     return PHY_PerceptionLevel::notSeen_;
 }
@@ -151,7 +151,7 @@ const PHY_PerceptionLevel& PHY_PerceptionRecoObjects::Compute( const MIL_Object_
 const PHY_PerceptionLevel& PHY_PerceptionRecoObjects::Compute( const DEC_Knowledge_Object& knowledge ) const
 {
     for ( CIT_RecoVector it = recos_.begin(); it != recos_.end(); ++it )
-        if ( (*it)->IsInside( knowledge.GetLocalisation() ) )
+        if( (*it)->IsInside( knowledge.GetLocalisation() ) )
             return PHY_PerceptionLevel::recognized_;
     return PHY_PerceptionLevel::notSeen_;
 }
@@ -165,7 +165,7 @@ void PHY_PerceptionRecoObjects::Execute( const TER_Object_ABC::T_ObjectVector& /
     TER_Object_ABC::T_ObjectVector perceivableObjects;
 
     for ( CIT_RecoVector itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
-    {       
+    {
         perceivableObjects.clear();
         (*itReco)->GetObjectsInside( perceivableObjects );
 

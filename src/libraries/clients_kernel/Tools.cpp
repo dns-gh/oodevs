@@ -385,7 +385,7 @@ E_LocationType tools::LocationFromString( const std::string& type )
     return ENT_Tr::ConvertToLocationType( type );
 }
 
-namespace 
+namespace
 {
     // $$$$ SBO 2008-08-11: create a phase line type into static model
     struct PhaseLineType

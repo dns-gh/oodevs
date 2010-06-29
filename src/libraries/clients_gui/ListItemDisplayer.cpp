@@ -111,7 +111,7 @@ void ListItemDisplayer::StartDisplay()
     message_ = "";
     pixmap_ = QPixmap();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ListItemDisplayer::DisplayFormatted
 // Created: AGE 2006-02-22
@@ -137,7 +137,7 @@ void ListItemDisplayer::EndDisplay()
         item_->setPixmap( column_, pixmap_ );
     column_ = ( column_ + 1 ) % columns_.size();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ListItemDisplayer::FindColumn
 // Created: AGE 2006-02-22

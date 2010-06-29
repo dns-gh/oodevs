@@ -51,7 +51,7 @@ KnowledgeGroupFactory::~KnowledgeGroupFactory()
 kernel::KnowledgeGroup_ABC* KnowledgeGroupFactory::CreateKnowledgeGroup( const MsgsSimToClient::MsgKnowledgeGroupCreation& message )
 {
     // LTO begin
-    Entity_ABC* superior = message.has_oid_parent() ? 
+    Entity_ABC* superior = message.has_oid_parent() ?
         (Entity_ABC*) &model_.knowledgeGroups_.Resolver< KnowledgeGroup_ABC >::Get( message.oid_parent() ) :
     (Entity_ABC*) &model_.teams_.Resolver< Team_ABC >::Get( message.oid_camp() );
     // LTO end

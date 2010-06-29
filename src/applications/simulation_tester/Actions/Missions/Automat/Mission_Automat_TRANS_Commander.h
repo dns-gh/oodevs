@@ -21,7 +21,7 @@ namespace TEST {
     @brief  Mission_Automat_TRANS_Commander
 */
 // Created: SBO 2005-08-08
-// Generated: 
+// Generated:
 // =============================================================================
 class Mission_Automat_TRANS_Commander : public Mission_Automat_ABC
 {

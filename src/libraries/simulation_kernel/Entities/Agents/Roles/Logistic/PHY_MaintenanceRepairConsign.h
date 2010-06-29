@@ -32,18 +32,18 @@ public:
     //@{
     template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
-    
+
     //! @name Operations
     //@{
     virtual void Cancel();
-    virtual bool Update(); 
+    virtual bool Update();
     //@}
 
 private:
-    //! @name 
+    //! @name
     //@{
     bool DoWaitingForParts                 ();
-    bool DoWaitingForRepairer              (); 
+    bool DoWaitingForRepairer              ();
     void DoReturnComposante                ();
     bool DoSearchForCarrier                ();
 

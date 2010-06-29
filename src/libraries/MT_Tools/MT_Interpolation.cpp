@@ -26,7 +26,7 @@
         {
             coeffType coef = poly.GetCoeff( i );
 
-            if ( coef != coeffType() )
+            if( coef != coeffType() )
                 out << coef << ".x^" << i << " + " ;
         }
         return out << poly.GetCoeff( 0 );

@@ -23,9 +23,9 @@
 
 // -----------------------------------------------------------------------------
 // Name: NotesPanel constructor
-/** @param  mainWindow 
-    @param  controllers 
-    @param  factory 
+/** @param  mainWindow
+    @param  controllers
+    @param  factory
 */
 // Created: HBD 2010-01-19
 // -----------------------------------------------------------------------------
@@ -50,7 +50,7 @@ NotesPanel::NotesPanel( QMainWindow* mainWindow, kernel::Controller& controller,
     notes_->setColumnWidthMode( 2, QListView::Manual );
     for( int col = 0; col < 5 ; ++col )
         notes_->setColumnAlignment( col, Qt::AlignCenter );
-   
+
     notes_->setRootIsDecorated( true );
     connect( notes_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int) ), this, SLOT( OnContextMenu( QListViewItem*, const QPoint&, int) ) );
     setWidget( notes_ );
@@ -100,7 +100,7 @@ QListViewItem* NotesPanel::FindItem(const Note* element ) const
 
 // -----------------------------------------------------------------------------
 // Name: NotesPanel::NotifyCreated
-/** @param  element 
+/** @param  element
 */
 // Created: HBD 2010-01-19
 // -----------------------------------------------------------------------------
@@ -121,7 +121,7 @@ void NotesPanel::NotifyCreated( const Note& element )
 
 // -----------------------------------------------------------------------------
 // Name: NotesPanel::NotifyUpdated
-/** @param  element 
+/** @param  element
 */
 // Created: HBD 2010-01-19
 // -----------------------------------------------------------------------------
@@ -149,7 +149,7 @@ void NotesPanel::NotifyUpdated( const Note& element )
 
 // -----------------------------------------------------------------------------
 // Name: NotesPanel::NotifyDeleted
-/** @param  element 
+/** @param  element
 */
 // Created: HBD 2010-01-19
 // -----------------------------------------------------------------------------
@@ -157,7 +157,7 @@ void NotesPanel::NotifyDeleted( const Note& element )
 {
     if( QListViewItem* item = FindItem( &element ))
     {
-        if ( element.GetId() == noteDialog_->GetCurrentNoteEdited())
+        if( element.GetId() == noteDialog_->GetCurrentNoteEdited())
         {
             noteDialog_->SetUpdate( false );
             QMessageBox::information( this, tools::translate( "Notes", "Current note edited has been deleted" ),
@@ -170,8 +170,8 @@ void NotesPanel::NotifyDeleted( const Note& element )
 
 // -----------------------------------------------------------------------------
 // Name: ScorePanel::Display
-/** @param  score 
-    @param  item 
+/** @param  score
+    @param  item
 */
 // Created: HBD 2010-01-19
 // -----------------------------------------------------------------------------
@@ -183,8 +183,8 @@ void NotesPanel::Display( const Note& note, QListViewItem* item )
 
 // -----------------------------------------------------------------------------
 // Name: NotesPanel::OnContextMenu
-/** @param  item 
-    @param  point 
+/** @param  item
+    @param  point
 */
 // Created: HBD 2010-01-20
 // -----------------------------------------------------------------------------
@@ -250,7 +250,7 @@ void NotesPanel::ConfirmDeleteNote()
                 asn().set_id( it->second->GetId() );
                 asn().set_delete_all( false );
                 asn.Send( publisher_ );
-            }      
+            }
     }
 }
 
@@ -282,9 +282,9 @@ void NotesPanel::UpdateNote()
        T_Items::iterator it = itemsList_.find( item );
        if( it != itemsList_.end())
            noteDialog_->SetUpdate( *( it->second ) );
-   }  
-    noteDialog_->show(); 
-}   
+   }
+    noteDialog_->show();
+}
 
 // -----------------------------------------------------------------------------
 // Name: NotesPanel::NotifyUpdated

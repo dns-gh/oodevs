@@ -73,10 +73,10 @@ private:
     DrawingTemplate( const DrawingTemplate& );            //!< Copy constructor
     DrawingTemplate& operator=( const DrawingTemplate& ); //!< Assignement operator
     //@}
-    
+
     //! @name Types
     //@{
-    // $$$$ AGE 2006-09-01: 
+    // $$$$ AGE 2006-09-01:
     enum Unit
     {
         eMeter,

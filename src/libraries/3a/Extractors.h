@@ -35,24 +35,24 @@ namespace extractors
     struct OperationalState : public Extractor< NumericValue >
     {
         bool  HasFlag( const MsgUnitAttributes& attributes ) const
-        { 
-            return attributes.has_etat_operationnel_brut(); 
+        {
+            return attributes.has_etat_operationnel_brut();
         }
         NumericValue Extract( const MsgUnitAttributes& attributes ) const
-        { 
-            return NumericValue( attributes.etat_operationnel_brut() * 0.01f ); 
+        {
+            return NumericValue( attributes.etat_operationnel_brut() * 0.01f );
         }
     };
 
     struct Position : public Extractor< ::Position >
     {
         bool  HasFlag( const MsgUnitAttributes& attributes ) const
-        { 
-            return attributes.has_position(); 
+        {
+            return attributes.has_position();
         }
         ::Position Extract( const MsgUnitAttributes& attributes ) const
-        { 
-            return ::Position( attributes.position() ); 
+        {
+            return ::Position( attributes.position() );
         }
     };
 
@@ -60,50 +60,50 @@ namespace extractors
     struct MaintenanceHandlingUnitId : public Extractor< NumericValue >
     {
         bool IsCreation( const MsgSimToClient& wrapper ) const
-        { 
-            return wrapper.message().has_log_maintenance_handling_creation(); 
+        {
+            return wrapper.message().has_log_maintenance_handling_creation();
         }
         NumericValue Extract( const MsgSimToClient& wrapper ) const
-        { 
-            return NumericValue( wrapper.message().log_maintenance_handling_creation().oid_pion() ); 
+        {
+            return NumericValue( wrapper.message().log_maintenance_handling_creation().oid_pion() );
         }
         bool IsDestruction( const MsgSimToClient& wrapper ) const
-        { 
-            return wrapper.message().has_log_maintenance_handling_destruction(); 
+        {
+            return wrapper.message().has_log_maintenance_handling_destruction();
         }
     };
 
     struct DirectFireUnitId : public Extractor< NumericValue >
     {
         bool IsCreation( const MsgSimToClient& wrapper ) const
-        { 
-            return wrapper.message().has_start_unit_fire() && 
-                   wrapper.message().start_unit_fire().type() == Common::direct; 
+        {
+            return wrapper.message().has_start_unit_fire() &&
+                   wrapper.message().start_unit_fire().type() == Common::direct;
         }
         NumericValue Extract( const MsgSimToClient& wrapper ) const
-        { 
-            return NumericValue( wrapper.message().start_unit_fire().firer_oid() ); 
+        {
+            return NumericValue( wrapper.message().start_unit_fire().firer_oid() );
         }
         bool IsDestruction( const MsgSimToClient& wrapper ) const
-        { 
-            return wrapper.message().has_stop_unit_fire(); 
+        {
+            return wrapper.message().has_stop_unit_fire();
         }
     };
 
     struct IndirectFireUnitId : public Extractor< NumericValue >
     {
         bool IsCreation( const MsgSimToClient& wrapper ) const
-        { 
-            return wrapper.message().has_start_unit_fire() && 
-                   wrapper.message().start_unit_fire().type() == Common::indirect; 
+        {
+            return wrapper.message().has_start_unit_fire() &&
+                   wrapper.message().start_unit_fire().type() == Common::indirect;
         }
         NumericValue Extract( const MsgSimToClient& wrapper ) const
-        { 
-            return NumericValue( wrapper.message().start_unit_fire().firer_oid() ); 
+        {
+            return NumericValue( wrapper.message().start_unit_fire().firer_oid() );
         }
         bool IsDestruction( const MsgSimToClient& wrapper ) const
-        { 
-            return wrapper.message().has_stop_unit_fire(); 
+        {
+            return wrapper.message().has_stop_unit_fire();
         }
     };
 

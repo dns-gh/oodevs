@@ -181,7 +181,7 @@ void HLA_InteractionManager::Receive( HLA_Activation& interaction )
 {
     interaction.Execute();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: HLA_InteractionManager::Receive
 // Created: AGE 2004-12-06
@@ -190,7 +190,7 @@ void HLA_InteractionManager::Receive( HLA_Bypassing& interaction )
 {
     interaction.Execute();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: HLA_InteractionManager::Receive
 // Created: AGE 2004-12-06
@@ -199,7 +199,7 @@ void HLA_InteractionManager::Receive( HLA_Construction& interaction )
 {
     interaction.Execute();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: HLA_InteractionManager::Receive
 // Created: AGE 2004-12-06

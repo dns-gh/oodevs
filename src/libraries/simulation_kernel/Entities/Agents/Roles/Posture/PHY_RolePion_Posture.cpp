@@ -96,7 +96,7 @@ void PHY_RolePion_Posture::load( MIL_CheckPointInArchive& file, const unsigned i
 
     file >> nID;
     pLastPosture_ = PHY_Posture::FindPosture( nID );
-    
+
     file >> rPostureCompletionPercentage_
          >> rElongationFactor_
          >> bDiscreteModeEnabled_
@@ -159,7 +159,7 @@ void PHY_RolePion_Posture::ChangePosture( const PHY_Posture& newPosture )
 {
     if( pCurrentPosture_ == &newPosture )
         return;
-    
+
     pLastPosture_    = pCurrentPosture_;
     pCurrentPosture_ = &newPosture;
 
@@ -189,7 +189,7 @@ void PHY_RolePion_Posture::Update( bool bIsDead )
 
     std::auto_ptr< PostureComputer_ABC > computer( pion_.GetAlgorithms().postureComputerFactory_->Create( params ) );
     pion_.Execute( *computer );
-    PostureComputer_ABC::Results& result = computer->Result(); 
+    PostureComputer_ABC::Results& result = computer->Result();
     if( result.newPosture_ )
         ChangePosture( *result.newPosture_ );
     else
@@ -215,7 +215,7 @@ void PHY_RolePion_Posture::SetPosturePostePrepareGenie()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Posture::UnsetPosturePostePrepareGenie()
 {
-    if ( pCurrentPosture_ == &PHY_Posture::postePrepareGenie_ )
+    if( pCurrentPosture_ == &PHY_Posture::postePrepareGenie_ )
         ChangePosture( PHY_Posture::arret_ );
 }
 
@@ -431,7 +431,7 @@ void PHY_RolePion_Posture::SetTimingFactor( MT_Float rFactor )
 void PHY_RolePion_Posture::SetElongationFactor( MT_Float rFactor )
 {
     assert( rFactor > 0. );
-    if ( rFactor > 0. )
+    if( rFactor > 0. )
         rElongationFactor_ = rFactor;
 }
 

@@ -91,14 +91,14 @@ void DEC_Knowledge_PopulationFlowPart::Prepare()
 {
     bPerceived_ = false;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationFlowPart::Update
 // Created: NLD 2005-10-14
 // -----------------------------------------------------------------------------
 bool DEC_Knowledge_PopulationFlowPart::Update( const DEC_Knowledge_PopulationFlowPerception& perception )
 {
-    nTimeLastUpdate_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();    
+    nTimeLastUpdate_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
 
     if( perception.GetCurrentPerceptionLevel() != PHY_PerceptionLevel::notSeen_ )
     {
@@ -118,10 +118,10 @@ bool DEC_Knowledge_PopulationFlowPart::Update( const DEC_Knowledge_PopulationFlo
 // -----------------------------------------------------------------------------
 bool DEC_Knowledge_PopulationFlowPart::Update( const DEC_Knowledge_PopulationCollision& collision  )
 {
-    nTimeLastUpdate_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();    
+    nTimeLastUpdate_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     if( bPerceived_ )
         return false;
-    
+
     T_PointVector shape( 1, collision.GetPosition() );
     if( shape_ != shape )
     {
@@ -147,18 +147,18 @@ bool DEC_Knowledge_PopulationFlowPart::UpdateRelevance( const MT_Float rMaxLifeT
         return ChangeRelevance( 0. );
 
     assert( rRelevance_ >= 0. && rRelevance_ <= 1. );
-  
+
     if( rMaxLifeTime == 0. )
     {
-        nTimeLastUpdate_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();  
+        nTimeLastUpdate_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
         return ChangeRelevance( 0. );
     }
     else
     {
         // Degradation : effacement au bout de X minutes
         const MT_Float rTimeRelevanceDegradation = ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() - nTimeLastUpdate_ ) / rMaxLifeTime;
-        const MT_Float rRelevance                = std::max( 0., rRelevance_ - rTimeRelevanceDegradation );       
-        nTimeLastUpdate_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();  
+        const MT_Float rRelevance                = std::max( 0., rRelevance_ - rTimeRelevanceDegradation );
+        nTimeLastUpdate_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
         return ChangeRelevance( rRelevance );
     }
 }
@@ -167,11 +167,11 @@ bool DEC_Knowledge_PopulationFlowPart::UpdateRelevance( const MT_Float rMaxLifeT
 // Name: DEC_Knowledge_PopulationFlowPart::Serialize
 // Created: NLD 2005-10-14
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_PopulationFlowPart::Serialize( MsgsSimToClient::MsgFlowPart& asn ) 
+void DEC_Knowledge_PopulationFlowPart::Serialize( MsgsSimToClient::MsgFlowPart& asn )
 {
     NET_ASN_Tools::WritePath( shape_, *asn.mutable_forme() );
     asn.set_pertinence( rRelevance_ * 100. );
-    rLastRelevanceSent_ = rRelevance_;    
+    rLastRelevanceSent_ = rRelevance_;
 }
 
 // -----------------------------------------------------------------------------

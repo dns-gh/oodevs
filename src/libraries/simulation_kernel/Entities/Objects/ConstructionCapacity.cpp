@@ -25,11 +25,11 @@ ConstructionCapacity::ConstructionCapacity( ObjectPrototype& prototype, xml::xis
     , prototype_ ( prototype )
 {
     std::string unit_type( xml::attribute< std::string >( xis, "unit-type" ) );
-    if ( unit_type == "raw" )
+    if( unit_type == "raw" )
         unit_type_ = eRaw;
-    else if ( unit_type == "density" )
-        unit_type_ = eDensity;    
-    else 
+    else if( unit_type == "density" )
+        unit_type_ = eDensity;
+    else
         throw std::runtime_error( "unknown unit-type : " + unit_type + ". Must be 'raw' or 'density'" );
 }
 
@@ -48,8 +48,8 @@ ConstructionCapacity::~ConstructionCapacity()
 // -----------------------------------------------------------------------------
 void ConstructionCapacity::AddCapacity( const std::string& capacity, xml::xistream& xis ) const
 {
-    if ( capacity == "buildable" )
+    if( capacity == "buildable" )
         prototype_.AddCapacity( new BuildableCapacity( *default_, unit_type_, xis ) );
-    if ( capacity == "improvable" )
+    if( capacity == "improvable" )
         prototype_.AddCapacity( new ImprovableCapacity( *default_, unit_type_, xis ) );
 }

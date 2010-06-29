@@ -65,7 +65,7 @@ public:
     //@{
     void UpdateSuperior( kernel::Entity_ABC& superior );
     //@}
-  
+
 
 private:
     //! @name Copy/Assignment

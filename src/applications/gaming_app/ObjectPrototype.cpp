@@ -53,7 +53,7 @@ namespace
             , attributesList_ ( attributesList ) {}
 
         void BuildPrototype( xml::xistream& /*xis*/, bool /*density*/ )
-        {            
+        {
         }
 
         void ImprovePrototype( xml::xistream& /*xis*/, bool /*density*/ )
@@ -65,7 +65,7 @@ namespace
 
     private:
         T_AttributeContainer& container_;
-        QWidget* parent_; 
+        QWidget* parent_;
         ParameterList*& attributesList_;
     };
 
@@ -87,7 +87,7 @@ namespace
     {
         container.push_back( new LogisticPrototype( parent, controllers, attributesList ) );
     }
-    
+
     void PropagationAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, const kernel::ObjectTypes& resolver, ParameterList*& attributesList )
     {
         std::string model( xml::attribute< std::string >( xis, "model" ) );
@@ -119,7 +119,7 @@ namespace
             container.push_back( new T( parent, attributesList ) );
         }
     };
-    
+
     ObjectAttributePrototypeFactory_ABC* FactoryMaker( kernel::Controllers& controllers, const kernel::ObjectTypes& resolver, ParameterList*& attributesList )
     {
         ObjectAttributePrototypeFactory* factory = new ObjectAttributePrototypeFactory();
@@ -128,12 +128,12 @@ namespace
         factory->Register( "time-limited"   , boost::bind( &Capacity< ActivityTimePrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
         factory->Register( "supply-route"   , boost::bind( &Capacity< SupplyRoutePrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
         factory->Register( "bridging"       , boost::bind( &Capacity< CrossingSitePrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
-        
+
         factory->Register( "logistic"       , boost::bind( &LogisticAttribute, _2, _3, boost::ref( controllers ), boost::ref( attributesList ) ) );
 
         factory->Register( "healable"       , boost::bind( &MedicalTreatmentAttribute, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
         factory->Register( "propagation"    , boost::bind( &PropagationAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
-                       
+
         factory->Register( "contamination"  , boost::bind( &ContaminationAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
         return factory;
     }
@@ -164,19 +164,19 @@ ObjectPrototype::~ObjectPrototype()
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
 void ObjectPrototype::Commit( actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation )
-{    
+{
     if( CheckValidity() )
     {
         kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "create_object" );
         ObjectMagicAction* action = new ObjectMagicAction( 0, actionType, controllers_.controller_, true );
         tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
-        
+
         action->AddParameter( *new String( it.NextElement(), objectTypes_->GetValue()->GetType() ) );
         kernel::Point point;
         action->AddParameter( *new Location( it.NextElement(), static_.coordinateConverter_, location_? *location_ : point ) );
         action->AddParameter( *new String( it.NextElement(), name_->text().isEmpty() ? "" : name_->text().ascii() ) );
         action->AddParameter( *new Army( it.NextElement(), *teams_->GetValue(), controllers_.controller_ ) );
-        
+
         attributesList_ = new ParameterList( it.NextElement() );
         action->AddParameter( *attributesList_ );
 

@@ -19,7 +19,7 @@ IdManager::IdManager()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: IdManager destructor
 // Created: SBO 2006-09-26
@@ -28,7 +28,7 @@ IdManager::~IdManager()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: IdManager::GetNextId
 // Created: SBO 2006-09-26

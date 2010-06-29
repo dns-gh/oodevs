@@ -22,7 +22,7 @@ KnowledgeGroupHierarchies::KnowledgeGroupHierarchies( kernel::Controller& contro
     , resolver_( resolver )
     , controller_( controller )
 {
-    // NOTHING   
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -44,7 +44,7 @@ void KnowledgeGroupHierarchies::DoUpdate( const MsgsSimToClient::MsgKnowledgeGro
     if( message.has_oid_parent() )
     {
         if( message.oid_parent() != 0 )
-            ChangeSuperior( &resolver_.Get( message.oid_parent() ) );    
+            ChangeSuperior( &resolver_.Get( message.oid_parent() ) );
         else
         {
             const kernel::Entity_ABC* top = &resolver_.Get( message.oid() ).Retrieve< kernel::CommunicationHierarchies >()->GetTop();

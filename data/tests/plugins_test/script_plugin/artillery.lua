@@ -23,20 +23,20 @@ include "luaunit.lua"
 TestArtillery = {}
 
 function TestArtillery:setUp()
-	-- nothing to set up
+    -- nothing to set up
 end
 
 function TestArtillery:tearDown()
-	-- nothing to tear down
+    -- nothing to tear down
 end
 
 function TestArtillery:test_SimpleFire()
-	-- artillery.DeclareFires( { name = "FireArea", firers = { 529, 530, 531 }, targetTeams = { "Blue" } } )
+    -- artillery.DeclareFires( { name = "FireArea", firers = { 529, 530, 531 }, targetTeams = { "Blue" } } )
 end
 
 function TestArtillery:test_MultipleFires()
 end
 
 function RunTest()
-	LuaUnit:run()
+    LuaUnit:run()
 end

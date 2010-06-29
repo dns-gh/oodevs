@@ -134,7 +134,7 @@ void ImportOrbatDialog::LoadPreview()
             xml::xifstream xis( filename_->text().ascii() );
             xis >> xml::start( "orbat" )
                     >> xml::start( "sides" )
-                    >> xml::list( "side", *this, &ImportOrbatDialog::ReadTeam );                
+                    >> xml::list( "side", *this, &ImportOrbatDialog::ReadTeam );
             okButton_->setDisabled( false );
         }
         catch( ... )

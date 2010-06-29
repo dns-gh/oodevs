@@ -185,7 +185,7 @@ bool DEC_KnowledgeAgentFunctions::IsKnowledgeValid( boost::shared_ptr< DEC_Knowl
 {
     return pKnowledge && pKnowledge->IsValid();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::IsPrisoner
 // Created: NLD 2005-03-04
@@ -217,7 +217,7 @@ int DEC_KnowledgeAgentFunctions::Lock( boost::shared_ptr< DEC_Knowledge_Agent > 
     }
     return int( eQueryInvalid );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::Unlock
 // Created: NLD 2005-04-21
@@ -302,7 +302,7 @@ bool DEC_KnowledgeAgentFunctions::CanBeIlluminate( const MIL_AgentPion& callerAg
 {
     const dotation::PHY_RoleInterface_Dotations& roleDotations = callerAgent.GetRole< dotation::PHY_RoleInterface_Dotations >();
     float range = pKnowledge->GetPosition().Distance( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition() );
-    
+
     if( roleDotations.GetIlluminationDotations( range, true ) || roleDotations.GetIlluminationDotations( range, false ) )
         return true;
     else
@@ -314,5 +314,5 @@ double DEC_KnowledgeAgentFunctions::GetMaterialComposantesProtectionLevel(boost:
     if( pUrbanBlock.get() && pUrbanBlock->IsValid() )
         return 1.f - pTarget->GetMaterialComposantesAttritionLevel(pUrbanBlock);
     else
-        throw std::exception( "urbanBlock not valid" );   
+        throw std::exception( "urbanBlock not valid" );
 }

@@ -15,7 +15,7 @@
 //=============================================================================
 // ASN ENCODER WRAPPER MACROS
 //=============================================================================
- 
+
 //#define GENERATE_EMPTY_ASN_MSG_SENDER( TARGET, ASNMSG, ASNVAR )          \
 //class ASNMSG                                                             \
 //{                                                                        \
@@ -86,7 +86,7 @@ public:                                                                  \
     }                                                                    \
 };
 
-                                          
+
 #define GENERATE_NOCTX_ASN_MSG_SENDER( TARGET, ASNMSG, ASNVAR  )         \
 class ASNMSG                                                             \
 {                                                                        \

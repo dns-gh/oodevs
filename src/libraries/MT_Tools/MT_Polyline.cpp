@@ -88,7 +88,7 @@ bool MT_Polyline::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, MT_Fl
             return true;
         pPos1 = pPos2;
     }
-    return false;   
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -128,9 +128,9 @@ bool MT_Polyline::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, MT_Fl
                 itAfterEntryPoint = itCur;
                 vEntryPoint = res.front();
             }
-            
+
             itAfterExitPoint = itCur;
-            vExitPoint       = res.back();            
+            vExitPoint       = res.back();
         }
         itPrev = itCur;
         ++ itCur;
@@ -212,7 +212,7 @@ bool MT_Polyline::Intersect2D( const MT_Droite& droite, T_PointSet& collisions )
         MT_Vector2D vIntersect;
         if( droite.Intersect2D( lineTmp, vIntersect ) == eDoIntersect )
             collisions.insert( vIntersect );
-        
+
         pPos1 = pPos2;
     }
     return false;
@@ -238,7 +238,7 @@ MT_Float MT_Polyline::Magnitude() const
         rMagnitude += (*pPos2 - *pPos1).Magnitude();
         pPos1 = pPos2;
     }
-    return rMagnitude;    
+    return rMagnitude;
 }
 
 // -----------------------------------------------------------------------------
@@ -273,8 +273,8 @@ MT_Vector2D MT_Polyline::GetPointAt( MT_Float rDist ) const
         rDirLength = vDir.Magnitude();
         if( rDirLength )
             vDir /= rDirLength;
-    }  
+    }
     vCur = vCur + ( vDir * rDist );
-    return vCur;   
+    return vCur;
 }
 

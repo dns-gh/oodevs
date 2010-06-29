@@ -66,7 +66,7 @@ private:
     //! @name Member data
     //@{
     static T_Positions positions_;
-    T_Drawables extensions_; 
+    T_Drawables extensions_;
     //@}
 };
 

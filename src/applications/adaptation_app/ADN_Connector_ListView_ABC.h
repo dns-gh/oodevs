@@ -26,7 +26,7 @@ class ADN_Connector_ListView_ABC
 public:
     explicit ADN_Connector_ListView_ABC(ADN_ListView& list, const char* szName = 0 );
     virtual ~ADN_Connector_ListView_ABC();
-    
+
     bool IsConnected() const;
 
 protected:
@@ -40,7 +40,7 @@ protected:
     virtual void ClearPrivate(bool bInConnection=false);
 
     virtual ADN_ListViewItem* CreateItem(void * obj) = 0;
-    
+
 private:
     ADN_Connector_ListView_ABC& operator=( const ADN_Connector_ListView_ABC& );
 

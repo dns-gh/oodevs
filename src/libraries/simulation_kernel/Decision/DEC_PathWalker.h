@@ -100,7 +100,7 @@ private:
         T_ObjectSet ponctualObjectsOnSet_;  // Ponctual objets that are on this move step point (i.e. Objects that aren't on the path to the next point)
     };
 
-    // STL comparison operator : use the SquareDistance between the start pos and the collision pos 
+    // STL comparison operator : use the SquareDistance between the start pos and the collision pos
     struct sMoveStepCmp : std::binary_function< const T_MoveStep& , const T_MoveStep&, bool >
     {
     public:
@@ -114,7 +114,7 @@ private:
             return vPosStart_.SquareDistance( vPos1.vPos_ ) < vPosStart_.SquareDistance( vPos2.vPos_ );
         };
     private:
-        MT_Vector2D vPosStart_;    
+        MT_Vector2D vPosStart_;
     };
 
     typedef std::set< T_MoveStep, sMoveStepCmp > T_MoveStepSet;
@@ -130,7 +130,7 @@ private:
     //@}
 
     //! @name Tools
-    //@{    
+    //@{
     bool TryToMoveToNextStep        ( CIT_MoveStepSet itCurMoveStep, CIT_MoveStepSet itNextMoveStep, MT_Float& rTimeRemaining, bool bFirstMove );
     bool TryToMoveTo                ( const DEC_PathResult& path, const MT_Vector2D& vNewPosTmp, MT_Float& rTimeRemaining );
     void ComputeObjectsCollision    ( const MT_Vector2D& vStart, const MT_Vector2D& vEnd, T_MoveStepSet& moveStepSet );
@@ -155,7 +155,7 @@ private:
     MT_Float        rWalkedDistance_;
 
     bool            bForcePathCheck_;
-    bool            bHasMoved_; 
+    bool            bHasMoved_;
 
     boost::shared_ptr< DEC_PathResult > pCurrentPath_;
 };

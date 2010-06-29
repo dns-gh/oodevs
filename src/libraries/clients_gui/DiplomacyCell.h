@@ -62,7 +62,7 @@ private:
     virtual QWidget* createEditor() const;
     void SetColor( const kernel::Karma& karma, const QColor& color );
     //@}
-   
+
 private:
     std::map< const QString, QColor > colors_;
     std::map< const QString, kernel::Karma > diplomacies_;

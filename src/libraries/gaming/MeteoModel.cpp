@@ -43,7 +43,7 @@ MeteoModel::~MeteoModel()
 // -----------------------------------------------------------------------------
 void MeteoModel::UnregisterMeteo( weather::PHY_Meteo& meteo )
 {
-   meteos_.remove( &meteo ); 
+   meteos_.remove( &meteo );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,9 +75,9 @@ void MeteoModel::OnReceiveMsgGlobalMeteo( const MsgsSimToClient::MsgControlGloba
 // -----------------------------------------------------------------------------
 void MeteoModel::OnReceiveMsgLocalMeteoCreation( const MsgsSimToClient::MsgControlLocalMeteoCreation& msg )
 {
-    const geometry::Point2f topLeft = converter_.ConvertFromGeo( 
+    const geometry::Point2f topLeft = converter_.ConvertFromGeo(
         geometry::Point2d( float( msg.top_left_coordinate().longitude() ), float( msg.top_left_coordinate().latitude() ) ) );
-    const geometry::Point2f bottomRight = converter_.ConvertFromGeo( 
+    const geometry::Point2f bottomRight = converter_.ConvertFromGeo(
         geometry::Point2d( float( msg.bottom_right_coordinate().longitude() ), float( msg.bottom_right_coordinate().latitude() ) ) );
 
     weather::PHY_Meteo* pTmp = 0;
@@ -94,7 +94,7 @@ void MeteoModel::OnReceiveMsgLocalMeteoCreation( const MsgsSimToClient::MsgContr
 // -----------------------------------------------------------------------------
 void MeteoModel::RegisterMeteo( weather::PHY_Meteo& meteo )
 {
-    meteos_.push_front( &meteo ); 
+    meteos_.push_front( &meteo );
 }
 
 // -----------------------------------------------------------------------------

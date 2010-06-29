@@ -35,9 +35,9 @@ class BuildableCapacity : public ObjectCapacity_ABC
 {
 public:
     //! @name Constructors/Destructor
-    //@{    
+    //@{
              BuildableCapacity();
-    explicit BuildableCapacity( const PHY_ConsumptionType& consumption, ConstructionCapacity::E_UnitType type, xml::xistream& xis );    
+    explicit BuildableCapacity( const PHY_ConsumptionType& consumption, ConstructionCapacity::E_UnitType type, xml::xistream& xis );
     virtual ~BuildableCapacity();
     //@}
 

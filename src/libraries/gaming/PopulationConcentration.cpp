@@ -68,7 +68,7 @@ unsigned long PopulationConcentration::GetId() const
 // -----------------------------------------------------------------------------
 void PopulationConcentration::DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationUpdate& message )
 {
-    if ( message.has_attitude()  )
+    if( message.has_attitude()  )
         attitude_ = (E_PopulationAttitude)message.attitude();
     static const float oneOnpi = 1.f / std::acos( -1.f );
     if( message.has_nb_humains_vivants()  )
@@ -119,7 +119,7 @@ unsigned int PopulationConcentration::GetDensity() const
 // -----------------------------------------------------------------------------
 QString PopulationConcentration::GetAttitude() const
 {
-    return tools::ToString( attitude_ ); 
+    return tools::ToString( attitude_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -160,7 +160,7 @@ void PopulationConcentration::Draw( const geometry::Point2f& /*where*/, const ke
     tools.DrawCircle( position_, radius_ );
     glPopAttrib();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PopulationConcentration::GetPosition
 // Created: AGE 2006-04-10

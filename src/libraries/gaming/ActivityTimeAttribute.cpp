@@ -23,7 +23,7 @@ using namespace xml;
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
 ActivityTimeAttribute::ActivityTimeAttribute( kernel::Controller& controller )
-    : controller_ ( controller ) 
+    : controller_ ( controller )
     , activityTime_ ( 0 )
 {
     // NOTHINH
@@ -70,7 +70,7 @@ void ActivityTimeAttribute::DisplayInSummary( kernel::Displayer_ABC& displayer )
 // Name: template< typename T >     void ActivityTimeAttribute::UpdateData
 // Created: JCR 2008-08-25
 // -----------------------------------------------------------------------------
-template< typename T >     
+template< typename T >
 void ActivityTimeAttribute::UpdateData( const T& message )
 {
     if( message.has_activity_time()  )

@@ -25,7 +25,7 @@ SymbolRule::SymbolRule( xml::xistream& xis )
     xis >> attribute( "name", name_ );
     xis >> list( "case", *this, & SymbolRule::ReadCase );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: SymbolRule destructor
 // Created: SBO 2006-03-20

@@ -74,7 +74,7 @@ void AarPlugin::Register( dispatcher::Services& services )
 void AarPlugin::NotifyClientAuthenticated( ClientPublisher_ABC& client, Profile_ABC& )
 {
     aar::AarInformation info;
-    const std::string description = "<functions/>"; // $$$$ AGE 2008-08-04: 
+    const std::string description = "<functions/>"; // $$$$ AGE 2008-08-04:
     info().set_information( description.c_str() );
     info.Send( client );
 }
@@ -94,7 +94,7 @@ void AarPlugin::NotifyClientLeft( ClientPublisher_ABC& )
 // -----------------------------------------------------------------------------
 void AarPlugin::OnReceive( const std::string& client, const MsgsClientToAar::MsgClientToAar& wrapper )
 {
-    if ( wrapper.message().has_plot_request() )
+    if( wrapper.message().has_plot_request() )
         OnReceiveIndicatorRequest( client, wrapper.message().plot_request() );
 }
 
@@ -115,7 +115,7 @@ void AarPlugin::OnReceiveIndicatorRequest( const std::string& client, const Msgs
         boost::shared_ptr< Task > task( factory.CreateTask( xis ) );
         xis >> xml::end();
         task->Process( *messages_ ); // $$$$ AGE 2007-09-17: deconnexion en route=>crash
-    } 
+    }
     catch( std::exception& e )
     {
         aar::PlotResult message;

@@ -32,7 +32,7 @@ public:
     //@{
     template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
-    
+
     //! @name Operators
     //@{
     bool IsInCone  ( const MT_Vector2D& vPos, MT_Float rRadius ) const;

@@ -54,11 +54,11 @@ public:
     virtual ~GlTools_ABC() {};
     //@}
 
-    //! @name Options  
+    //! @name Options
     // $$$$ AGE 2006-05-19: Sortir de GlTools_ABC ?
     // $$$$ AGE 2006-05-19: et trouver mieux
     //@{
-    virtual std::pair< bool, bool > UnSelect() const = 0; 
+    virtual std::pair< bool, bool > UnSelect() const = 0;
     virtual void Select( bool, bool ) const = 0;  //!< Returns the previous selection state
     virtual bool ShouldDisplay( const std::string& name = std::string() ) const = 0;
     virtual bool ShouldDisplay( const std::string& name, bool autoCondition ) const = 0;

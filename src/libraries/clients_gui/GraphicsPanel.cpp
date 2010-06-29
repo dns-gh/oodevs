@@ -23,7 +23,7 @@ GraphicsPanel::GraphicsPanel( QWidget* parent, kernel::Controllers& controllers 
 {
     preferences_.Display( this );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: GraphicsPanel destructor
 // Created: SBO 2006-04-04
@@ -50,7 +50,7 @@ void GraphicsPanel::Commit()
 {
     preferences_.Commit();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: GraphicsPanel::Reset
 // Created: SBO 2007-01-03

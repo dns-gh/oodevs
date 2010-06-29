@@ -51,7 +51,7 @@ public:
     virtual void Clean  ();
     //@}
 
-private:    
+private:
     //! @name Update
     //@{
     void                  UpdateKnowledgesFromUrbanPerception( const DEC_Knowledge_UrbanPerception& perception );
@@ -72,7 +72,7 @@ private:
     typedef std::vector< boost::shared_ptr< DEC_Knowledge_Urban > >  T_UrbanKnowledgeVector;
     typedef T_UrbanKnowledgeVector::const_iterator  CIT_UrbanKnowledgeVector;
     //@}
-    
+
 private:
     //! @name Members
     //@{
@@ -86,7 +86,7 @@ BOOST_CLASS_EXPORT_KEY( DEC_KS_UrbanKnowledgeSynthetizer )
 // Name: DEC_KS_UrbanKnowledgeSynthetizer::serialize
 // Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
-template< typename Archive > 
+template< typename Archive >
 void DEC_KS_UrbanKnowledgeSynthetizer::serialize( Archive& archive, const uint )
 {
     archive & boost::serialization::base_object< DEC_KnowledgeSource_ABC >( *this )

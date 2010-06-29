@@ -58,7 +58,7 @@ public:
     //@{
     void Serialize( Common::MsgMissionParameters& asn ) const;
     //@}
- 
+
 private:
     //! @name Copy/Assignement
     //@{

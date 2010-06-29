@@ -31,7 +31,7 @@ DEC_Knowledge_RapForLocal::DEC_Knowledge_RapForLocal( const MIL_Agent_ABC& pion 
 {
 
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_RapForLocal constructor
 // Created: NLD 2006-04-21
@@ -50,7 +50,7 @@ DEC_Knowledge_RapForLocal::DEC_Knowledge_RapForLocal()
 // -----------------------------------------------------------------------------
 DEC_Knowledge_RapForLocal::~DEC_Knowledge_RapForLocal()
 {
-    
+
 }
 
 // =============================================================================
@@ -61,7 +61,7 @@ DEC_Knowledge_RapForLocal::~DEC_Knowledge_RapForLocal()
 // Name: template< typename Archive > void DEC_Knowledge_RapForLocal::serialize
 // Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
-template< typename Archive > 
+template< typename Archive >
 void DEC_Knowledge_RapForLocal::serialize( Archive& archive, const unsigned int )
 {
     archive & boost::serialization::base_object< DEC_Knowledge_RapFor_ABC >( *this )
@@ -89,7 +89,7 @@ void DEC_Knowledge_RapForLocal::Update()
     const T_KnowledgeAgentVector& friends = pPion_->GetKnowledgeGroup().GetKnowledge().GetFriends();
 
     dangerousEnemies_.clear();
-    
+
     MT_Float rTotalFightScoreEnemy  = 0;
     MT_Float rTotalFightScoreFriend = 0;
 
@@ -117,7 +117,7 @@ void DEC_Knowledge_RapForLocal::Update()
             rTotalFightScoreFriend += ( rTotalDangerosity / dangerousEnemies_.size() );
         }
     }
-    
+
     ApplyValue( rTotalFightScoreFriend, rTotalFightScoreEnemy, pPion_->GetType().GetRapForIncreasePerTimeStepValue() );
 }
 

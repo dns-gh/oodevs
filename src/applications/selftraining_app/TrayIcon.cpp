@@ -76,7 +76,7 @@ QPixmap TrayIcon::icon() const
 /*!
   \property TrayIcon::toolTip
   \brief the tooltip for the system tray entry
-  
+
   On some systems, the tooltip's length is limited and will be truncated as necessary.
 */
 void TrayIcon::setToolTip( const QString &tooltip )
@@ -115,22 +115,22 @@ bool TrayIcon::event( QEvent *e )
 {
     switch ( e->type() ) {
     case QEvent::MouseMove:
-	mouseMoveEvent( (QMouseEvent*)e );
-	break;
+    mouseMoveEvent( (QMouseEvent*)e );
+    break;
 
     case QEvent::MouseButtonPress:
-	mousePressEvent( (QMouseEvent*)e );
-	break;
+    mousePressEvent( (QMouseEvent*)e );
+    break;
 
     case QEvent::MouseButtonRelease:
-	mouseReleaseEvent( (QMouseEvent*)e );
-	break;
+    mouseReleaseEvent( (QMouseEvent*)e );
+    break;
 
     case QEvent::MouseButtonDblClick:
-	mouseDoubleClickEvent( (QMouseEvent*)e );
-	break;
+    mouseDoubleClickEvent( (QMouseEvent*)e );
+    break;
     default:
-	return QObject::event( e );
+    return QObject::event( e );
     }
 
     return TRUE;
@@ -173,20 +173,20 @@ void TrayIcon::mouseReleaseEvent( QMouseEvent *e )
 {
     switch ( e->button() ) {
     case RightButton:
-	if ( pop ) {
-	    // Necessary to make keyboard focus
-	    // and menu closing work on Windows.
-	    pop->setActiveWindow();
-	    pop->popup( e->globalPos() );
-	    pop->setActiveWindow();
-	    e->accept();
-	}
-	break;
+    if( pop ) {
+        // Necessary to make keyboard focus
+        // and menu closing work on Windows.
+        pop->setActiveWindow();
+        pop->popup( e->globalPos() );
+        pop->setActiveWindow();
+        e->accept();
+    }
+    break;
     case LeftButton:
-	emit clicked( e->globalPos() );
-	break;
+    emit clicked( e->globalPos() );
+    break;
     default:
-	break;
+    break;
     }
     e->ignore();
 }
@@ -203,8 +203,8 @@ void TrayIcon::mouseReleaseEvent( QMouseEvent *e )
 */
 void TrayIcon::mouseDoubleClickEvent( QMouseEvent *e )
 {
-    if ( e->button() == LeftButton )
-	emit doubleClicked( e->globalPos() );
+    if( e->button() == LeftButton )
+    emit doubleClicked( e->globalPos() );
     e->ignore();
 }
 

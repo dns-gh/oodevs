@@ -26,7 +26,7 @@ class ADN_HtmlBuilder;
 */
 // Created: APE 2004-12-06
 // =============================================================================
-class ADN_Launchers_GUI 
+class ADN_Launchers_GUI
 : public ADN_GUI_ABC
 {
 

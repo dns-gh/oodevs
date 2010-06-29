@@ -39,11 +39,11 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
-    
+
     //! @name Accessors
     //@{
     const MIL_Automate& GetAutomate          () const;
@@ -57,7 +57,7 @@ public:
           bool          IsInAmbulance        () const;
           bool          EvacuatedByThirdParty() const;
           bool          ShouldGoBackToWar    () const;
-          void          NotifyDiagnosed      ();     
+          void          NotifyDiagnosed      ();
           void          NotifySorted         ();
     //@}
 

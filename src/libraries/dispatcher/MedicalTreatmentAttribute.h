@@ -41,9 +41,9 @@ public:
 private:
     //! @name Data members
     //@{
-    int              beds_;            
-    int              availableBeds_;   
-    int              doctors_;         
+    int              beds_;
+    int              availableBeds_;
+    int              doctors_;
     int              availableDoctors_;
     std::list< int > medicalTreatmentList_; // XML reference - no resolved by dispatcher
     //@}

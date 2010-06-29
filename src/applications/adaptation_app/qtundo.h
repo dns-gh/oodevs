@@ -38,44 +38,44 @@ class QtCommand : public QObject
     friend class QtUndoStack;
 
     public:
-	enum Type { Command, MacroBegin, MacroEnd };
+    enum Type { Command, MacroBegin, MacroEnd };
 
-	QtCommand(Type type, const QString &description = QString::null,
-			bool canMerge = false);
-	QtCommand(const QString &description = QString::null,
-			bool canMerge = true);
+    QtCommand(Type type, const QString &description = QString::null,
+            bool canMerge = false);
+    QtCommand(const QString &description = QString::null,
+            bool canMerge = true);
     virtual ~QtCommand() {}
 
-	virtual void redo() {};
-	virtual void undo() {};
+    virtual void redo() {};
+    virtual void undo() {};
 
-	QString description() const
-	    { return m_description; }
-	void setDescription(const QString &s)
-	    { m_description = s; }
-	bool canMerge() const
-	    { return m_can_merge; }
-	void setCanMerge(bool b)
-	    { m_can_merge = b; }
-	Type type() const
-	    { return m_type; }
+    QString description() const
+        { return m_description; }
+    void setDescription(const QString &s)
+        { m_description = s; }
+    bool canMerge() const
+        { return m_can_merge; }
+    void setCanMerge(bool b)
+        { m_can_merge = b; }
+    Type type() const
+        { return m_type; }
 
-	bool isMacroBegin() const
-	    { return m_type == MacroBegin; }
-	bool isMacroEnd() const
-	    { return m_type == MacroEnd; }
-	bool isCommand() const
-	    { return m_type == Command; }
+    bool isMacroBegin() const
+        { return m_type == MacroBegin; }
+    bool isMacroEnd() const
+        { return m_type == MacroEnd; }
+    bool isCommand() const
+        { return m_type == Command; }
 
     protected:
-	virtual bool mergeMeWith(QtCommand *other);
+    virtual bool mergeMeWith(QtCommand *other);
 
     private:
-	void shortenStack();
+    void shortenStack();
 
-	bool m_can_merge;
-	QString m_description;
-	Type m_type;
+    bool m_can_merge;
+    QString m_description;
+    Type m_type;
 };
 
 
@@ -86,43 +86,43 @@ class QtUndoStack : public QObject, private QPtrList<QtCommand>
     friend class QtUndoManager;
 
     public:
-	QtUndoStack(QObject *parent = 0, const char* szName = 0);
-	virtual ~QtUndoStack() {}
-	void push(QtCommand *command);
-	bool canUndo() const;
-	bool canRedo() const;
-	QString undoDescription() const;
-	QString redoDescription() const;
-	QStringList undoList() const;
-	QStringList redoList() const;
-	bool isClean() const;
-	
-    public slots:
-	void undo();
-	void redo();
-	void clear();
+    QtUndoStack(QObject *parent = 0, const char* szName = 0);
+    virtual ~QtUndoStack() {}
+    void push(QtCommand *command);
+    bool canUndo() const;
+    bool canRedo() const;
+    QString undoDescription() const;
+    QString redoDescription() const;
+    QStringList undoList() const;
+    QStringList redoList() const;
+    bool isClean() const;
 
-	void setClean();
+    public slots:
+    void undo();
+    void redo();
+    void clear();
+
+    void setClean();
 
     signals:
-    	void cleanChanged(bool clean);
-	void commandExecuted();
+        void cleanChanged(bool clean);
+    void commandExecuted();
 
     private:
-	typedef QPtrListIterator<QtCommand> CommandIter;
+    typedef QPtrListIterator<QtCommand> CommandIter;
 
-	void undoMacro();
-	void redoMacro();
-	CommandIter findMacroBegin(CommandIter it) const;
-	CommandIter findMacroEnd(CommandIter it) const;
+    void undoMacro();
+    void redoMacro();
+    CommandIter findMacroBegin(CommandIter it) const;
+    CommandIter findMacroEnd(CommandIter it) const;
 
-	// *m_current_iter == 0 means "one-before-first"
-	CommandIter m_current_iter;
-	uint m_num_commands;
-	int m_macro_nest;
-	
-	bool m_have_clean_command;
-	const QtCommand *m_clean_command;
+    // *m_current_iter == 0 means "one-before-first"
+    CommandIter m_current_iter;
+    uint m_num_commands;
+    int m_macro_nest;
+
+    bool m_have_clean_command;
+    const QtCommand *m_clean_command;
 };
 
 class QtUndoManager : public QObject
@@ -130,59 +130,59 @@ class QtUndoManager : public QObject
     Q_OBJECT
 
     public:
-	QAction *createUndoAction(QWidget *parent) const;
-	QAction *createRedoAction(QWidget *parent) const;
+    QAction *createUndoAction(QWidget *parent) const;
+    QAction *createRedoAction(QWidget *parent) const;
 
-	void associateView(QObject *obj, QtUndoStack *stack);
-	void disassociateView(QObject *obj);
+    void associateView(QObject *obj, QtUndoStack *stack);
+    void disassociateView(QObject *obj);
 
-	bool canUndo() const;
-	bool canRedo() const;
-	QString undoDescription() const;
-	QString redoDescription() const;
-	void setUndoLimit(uint i);
-	uint undoLimit() const;
-	QStringList undoList() const;
-	QStringList redoList() const;
+    bool canUndo() const;
+    bool canRedo() const;
+    QString undoDescription() const;
+    QString redoDescription() const;
+    void setUndoLimit(uint i);
+    uint undoLimit() const;
+    QStringList undoList() const;
+    QStringList redoList() const;
 
-	static QtUndoManager *manager();
+    static QtUndoManager *manager();
 
-	virtual bool eventFilter(QObject *obj, QEvent *e);
+    virtual bool eventFilter(QObject *obj, QEvent *e);
 
     public slots:
-	void undo();
-	void redo();
+    void undo();
+    void redo();
 
-	void updateActions();
+    void updateActions();
 
     signals:
-	void changed();
-	
-	void undoDescriptionChanged(const QString &newDescription);
-	void redoDescriptionChanged(const QString &newDescription);
-	void canUndoChanged(bool enabled);
-	void canRedoChanged(bool enabled);
+    void changed();
+
+    void undoDescriptionChanged(const QString &newDescription);
+    void redoDescriptionChanged(const QString &newDescription);
+    void canUndoChanged(bool enabled);
+    void canRedoChanged(bool enabled);
 
     private slots:
-	void stackDestroyed(QObject *stack);
-	void viewDestroyed(QObject *view);
+    void stackDestroyed(QObject *stack);
+    void viewDestroyed(QObject *view);
 
     private:
-	typedef QMap<QObject*, QtUndoStack*> StackMap;
+    typedef QMap<QObject*, QtUndoStack*> StackMap;
 
-	QtUndoManager();
+    QtUndoManager();
     virtual ~QtUndoManager() {}
-	QtUndoStack *currentStack() const;
+    QtUndoStack *currentStack() const;
 
-	StackMap m_stack_map;
-	QListBox *m_undo_list;
-	mutable QtUndoStack *m_current_stack;
+    StackMap m_stack_map;
+    QListBox *m_undo_list;
+    mutable QtUndoStack *m_current_stack;
 
-	static QtUndoManager *m_manager; // singleton
-	static uint m_undo_limit;
-	
-	bool m_can_undo, m_can_redo;
-	QString m_undo_description, m_redo_description; 
+    static QtUndoManager *m_manager; // singleton
+    static uint m_undo_limit;
+
+    bool m_can_undo, m_can_redo;
+    QString m_undo_description, m_redo_description;
 };
 
 class QtUndoListBox : public QListBox
@@ -190,18 +190,18 @@ class QtUndoListBox : public QListBox
     Q_OBJECT
 
     public:
-	QtUndoListBox(QWidget* pParent = 0, const char* szName = 0);
-	virtual ~QtUndoListBox() {}
+    QtUndoListBox(QWidget* pParent = 0, const char* szName = 0);
+    virtual ~QtUndoListBox() {}
 
     public slots:
-	void updateContents();
-	
+    void updateContents();
+
     private slots:
-    	void undoOrRedo();
+        void undoOrRedo();
 
     private:
-	int m_undo_idx;
-	bool m_dont_update;
+    int m_undo_idx;
+    bool m_dont_update;
 };
 
 class UndoRedoAction : public QAction
@@ -209,12 +209,12 @@ class UndoRedoAction : public QAction
     Q_OBJECT
 
     public:
-    	UndoRedoAction(QWidget *parent) : QAction(parent) {}
-    	virtual ~UndoRedoAction() {}
-    
+        UndoRedoAction(QWidget *parent) : QAction(parent) {}
+        virtual ~UndoRedoAction() {}
+
     public slots:
-    	// It's a pity QAction::setText() is not a slot...
-    	void setTextSlot(const QString &text) { setText(text); }
+        // It's a pity QAction::setText() is not a slot...
+        void setTextSlot(const QString &text) { setText(text); }
 };
 
 #endif

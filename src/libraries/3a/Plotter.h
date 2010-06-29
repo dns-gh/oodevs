@@ -30,7 +30,7 @@ class Plotter : public Function1_ABC< K, T >
 public:
     //! @name Constructors/Destructor
     //@{
-             Plotter( dispatcher::ClientPublisher_ABC& publisher, int context ) 
+             Plotter( dispatcher::ClientPublisher_ABC& publisher, int context )
                  : publisher_( publisher ), context_( context ) {};
     virtual ~Plotter() {};
     //@}

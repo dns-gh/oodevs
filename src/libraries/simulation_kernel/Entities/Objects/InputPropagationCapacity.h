@@ -18,7 +18,7 @@
 */
 // Created: RFT 2008-05-30
 // =============================================================================
-class InputPropagationCapacity : public PropagationCapacity_ABC    
+class InputPropagationCapacity : public PropagationCapacity_ABC
 {
 public:
     //! @name Constructors/Destructor

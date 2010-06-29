@@ -33,7 +33,7 @@ ADN_ListView_MissionTypes::ADN_ListView_MissionTypes( ADN_Missions_Data::T_Missi
     pConnector_ = new ADN_Connector_ListView< Mission >( *this );
     SetDeletionEnabled( true );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_MissionTypes destructor
 // Created: SBO 2006-12-04

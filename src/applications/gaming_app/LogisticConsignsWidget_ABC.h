@@ -216,7 +216,7 @@ void LogisticConsignsWidget_ABC< ConcreteDisplayer, Consign, Extension >::Notify
 template< typename ConcreteDisplayer, typename Consign, typename Extension >
 void LogisticConsignsWidget_ABC< ConcreteDisplayer, Consign, Extension >::DisplayRequested( const Extension& consigns, gui::ListDisplayer< ConcreteDisplayer >* list )
 {
-    list->DeleteTail( 
+    list->DeleteTail(
         list->DisplayList( consigns.requested_.begin(), consigns.requested_.end() )
         );
 }
@@ -228,7 +228,7 @@ void LogisticConsignsWidget_ABC< ConcreteDisplayer, Consign, Extension >::Displa
 template< typename ConcreteDisplayer, typename Consign, typename Extension >
 void LogisticConsignsWidget_ABC< ConcreteDisplayer, Consign, Extension >::DisplayHandled( const Extension& consigns, gui::ListDisplayer< ConcreteDisplayer >* list )
 {
-    list->DeleteTail( 
+    list->DeleteTail(
         list->DisplayList( consigns.handled_.begin(), consigns.handled_.end() )
         );
 }

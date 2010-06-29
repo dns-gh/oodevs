@@ -72,11 +72,11 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
 {
     assert( !pTheAgentServer_ );
     pTheAgentServer_ = this;
-    
+
     config_.AddFileToCRC( config_.GetExerciseFile() );
-    
+
     ReadStaticData();
-    
+
     if( config_.HasCheckpoint() )
         pCheckPointManager_->LoadCheckPoint( config_ );
     else
@@ -135,15 +135,15 @@ MIL_AgentServer::~MIL_AgentServer()
 // Created: JVT 2005-03-07
 // -----------------------------------------------------------------------------
 void MIL_AgentServer::ReadStaticData()
-{   
+{
     nSimState_         = eSimPaused;
     nTimeStepDuration_ = config_.GetTimeStep();
     nTimeFactor_       = config_.GetTimeFactor();
     MT_LOG_INFO_MSG( MT_FormatString( "Simulation tick duration : %d seconds", nTimeStepDuration_ ) );
-    MT_LOG_INFO_MSG( MT_FormatString( "Simulation acceleration factor : %d", nTimeFactor_ ) );    
-        
+    MT_LOG_INFO_MSG( MT_FormatString( "Simulation acceleration factor : %d", nTimeFactor_ ) );
+
     pAgentServer_ = new NET_AgentServer( config_, *this, *this );
-    
+
     ReadTerData();
     pMeteoDataManager_ = new PHY_MeteoDataManager( config_ );
     pWorkspaceDIA_     = new DEC_Workspace       ( config_ );
@@ -152,7 +152,7 @@ void MIL_AgentServer::ReadStaticData()
 
     if( !config_.IsDataTestMode() )
         pPathFindManager_ = new DEC_PathFind_Manager( config_ );
-    ReadHLA();    
+    ReadHLA();
 }
 
 //-----------------------------------------------------------------------------
@@ -216,7 +216,7 @@ void MIL_AgentServer::WaitForNextStep()
     pPathFindManager_->Update();
     if( pFederate_ )
         pFederate_->Tick();
-    
+
     long sleepTime = 100;
     if( nSimState_ == eSimRunning )
     {
@@ -256,7 +256,7 @@ void MIL_AgentServer::MainSimLoop()
 {
     pProfilerMgr_->NotifyTickBegin( GetCurrentTimeStep() );
     SendMsgBeginTick();
-    
+
     pEntityManager_   ->Update();
     pFolk_            ->Update( nCurrentTimeStep_ * nTimeStepDuration_, nTimeStepDuration_ );
     pMeteoDataManager_->Update( nRealTime_ );
@@ -264,17 +264,17 @@ void MIL_AgentServer::MainSimLoop()
 
     if( pProcessMonitor_->MonitorProcess() )
     {
-        
+
         MT_LOG_INFO_MSG( MT_FormatString( "**************** Time tick %d - Profiling (K/D/A/E/S) : %.2fms %.2fms (A:%.2f P:%.2f Pop:%.2f) %.2fms %.2fms %.2fms - PathFind : %d short %d long %d done - RAM : %.3f MB / %.3f MB (VM)",
-            nCurrentTimeStep_, pEntityManager_->GetKnowledgesTime(), pEntityManager_->GetDecisionsTime(), pEntityManager_->GetAutomatesDecisionTime(), pEntityManager_->GetPionsDecisionTime(), 
-            pEntityManager_->GetPopulationsDecisionTime(), pEntityManager_->GetActionsTime(), pEntityManager_->GetEffectsTime(), pEntityManager_->GetStatesTime(), pPathFindManager_->GetNbrShortRequests(), 
+            nCurrentTimeStep_, pEntityManager_->GetKnowledgesTime(), pEntityManager_->GetDecisionsTime(), pEntityManager_->GetAutomatesDecisionTime(), pEntityManager_->GetPionsDecisionTime(),
+            pEntityManager_->GetPopulationsDecisionTime(), pEntityManager_->GetActionsTime(), pEntityManager_->GetEffectsTime(), pEntityManager_->GetStatesTime(), pPathFindManager_->GetNbrShortRequests(),
             pPathFindManager_->GetNbrLongRequests(), pPathFindManager_->GetNbrTreatedRequests(), pProcessMonitor_->GetMemory() / 1048576., pProcessMonitor_->GetVirtualMemory() / 1048576. ) );
     }
     else
     {
         MT_LOG_INFO_MSG( MT_FormatString( "**************** Time tick %d - Profiling (K/D/A/E/S) : %.2fms %.2fms (A:%.2f P:%.2f Pop:%.2f) %.2fms %.2fms %.2fms - PathFind : %d short %d long %d done",
-            nCurrentTimeStep_, pEntityManager_->GetKnowledgesTime(), pEntityManager_->GetDecisionsTime(), pEntityManager_->GetAutomatesDecisionTime(), pEntityManager_->GetPionsDecisionTime(), 
-            pEntityManager_->GetPopulationsDecisionTime(), pEntityManager_->GetActionsTime(), pEntityManager_->GetEffectsTime(), pEntityManager_->GetStatesTime(), pPathFindManager_->GetNbrShortRequests(), 
+            nCurrentTimeStep_, pEntityManager_->GetKnowledgesTime(), pEntityManager_->GetDecisionsTime(), pEntityManager_->GetAutomatesDecisionTime(), pEntityManager_->GetPionsDecisionTime(),
+            pEntityManager_->GetPopulationsDecisionTime(), pEntityManager_->GetActionsTime(), pEntityManager_->GetEffectsTime(), pEntityManager_->GetStatesTime(), pPathFindManager_->GetNbrShortRequests(),
             pPathFindManager_->GetNbrLongRequests(), pPathFindManager_->GetNbrTreatedRequests() ) );
     }
 
@@ -328,7 +328,7 @@ void MIL_AgentServer::SendMsgEndTick() const
 // Created: JCR 2007-08-30
 // -----------------------------------------------------------------------------
 void MIL_AgentServer::SendStateToNewClient() const
-{    
+{
     pEntityManager_->SendStateToNewClient();
     pFolk_->SendStateToNewClient();
     pMeteoDataManager_->SendStateToNewClient();
@@ -358,7 +358,7 @@ void MIL_AgentServer::save( MIL_CheckPointOutArchive& file ) const
          << pCheckPointManager_
 //         << pAgentServer_         // moi-même ( static )
 //         << pFederate_            // reloadé à la main ( cf. MIL_AgentServer::Initialize )
-         << nInitialRealTime_         
+         << nInitialRealTime_
          << nRealTime_
     ;
 }
@@ -375,7 +375,7 @@ void MIL_AgentServer::load( MIL_CheckPointInArchive& file )
          >> nTimeFactor_
          >> nCurrentTimeStep_
          >> nSimTime_
-         >> pEntityManager_ 
+         >> pEntityManager_
 //         >> pWorkspaceDIA_
 //         >> pMeteoDataManager_
 //         >> timerManager_
@@ -385,7 +385,7 @@ void MIL_AgentServer::load( MIL_CheckPointInArchive& file )
          >> pCheckPointManager_
 //         >> pAgentServer_
 //         >> pFederate_
-         >> nInitialRealTime_ 
+         >> nInitialRealTime_
          >> nRealTime_
     ;
 
@@ -534,7 +534,7 @@ unsigned int MIL_AgentServer::RealTimeToTick( unsigned int rt ) const
 {
     return ( rt - nRealTime_ + nSimTime_ ) / nTimeStepDuration_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentServer::TickToRealTime
 // Created: AGE 2007-10-12

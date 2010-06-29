@@ -97,7 +97,7 @@ void ADN_Objects_Data::ScoreLocationInfos::WriteArchive( xml::xostream& output )
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data::PopulationAttritionInfos::~PopulationAttritionInfos
 // Created: SBO 2006-04-25
@@ -132,7 +132,7 @@ void ADN_Objects_Data::PopulationAttritionInfos::WriteArchive( xml::xostream& ou
 }
 */
 
-namespace 
+namespace
 {
     std::vector< std::string > VectorBuilder( const char* choice[], uint size )
     {
@@ -149,8 +149,8 @@ namespace
 // Created: JCR 2008-07-15
 // -----------------------------------------------------------------------------
 ADN_Objects_Data::ADN_CapacityInfos_Buildable::ADN_CapacityInfos_Buildable()
-{    
-    categories_.SetParentNode( *this );    
+{
+    categories_.SetParentNode( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -160,31 +160,31 @@ ADN_Objects_Data::ADN_CapacityInfos_Buildable::ADN_CapacityInfos_Buildable()
 void ADN_Objects_Data::ADN_CapacityInfos_Buildable::ReadArchive( xml::xistream& xis )
 {
     ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
-    
-    xis >> xml::optional() 
-        >> xml::start( "resources" ) 
+
+    xis >> xml::optional()
+        >> xml::start( "resources" )
             >> xml::list( "dotation", *this, &ADN_Objects_Data::ADN_CapacityInfos_Buildable::ReadDotation )
         >> xml::end();
 }
 
 void ADN_Objects_Data::ADN_CapacityInfos_Buildable::ReadDotation( xml::xistream& xis )
 {
-    std::string dotation; 
+    std::string dotation;
     int quantity;
     xis >> xml::attribute( "name", dotation )
         >> xml::attribute( "count", quantity );
-    if ( dotation != "" )
+    if( dotation != "" )
     {
         ADN_Equipement_Data::CategoryInfo* category = ADN_Workspace::GetWorkspace().GetEquipements().GetData().FindEquipementCategory( dotation );
         if( category == 0 )
-            throw ADN_DataException( "Donnée invalide", "Dotation invalide : " + dotation );                
-        ADN_Composantes_Data::CategoryInfos* infos = new ADN_Composantes_Data::CategoryInfos( category->parentDotation_ );        
+            throw ADN_DataException( "Donnée invalide", "Dotation invalide : " + dotation );
+        ADN_Composantes_Data::CategoryInfos* infos = new ADN_Composantes_Data::CategoryInfos( category->parentDotation_ );
         infos->ptrCategory_ = category;
         infos->rNbr_ = quantity;
         categories_.AddItem( infos );
 
 //        ADN_Composantes_Data::CategoryInfos* infos = reinterpret_cast< ADN_Composantes_Data::CategoryInfos* >( categories_.back() );
-        
+
     }
 }
 
@@ -194,17 +194,17 @@ void ADN_Objects_Data::ADN_CapacityInfos_Buildable::ReadDotation( xml::xistream&
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ADN_CapacityInfos_Buildable::WriteArchive( xml::xostream& xos )
 {
-    if ( categories_.size() == 0 )
+    if( categories_.size() == 0 )
         return;
-    xos << xml::start( "resources" );    
+    xos << xml::start( "resources" );
     for( CIT_Categories it = categories_.begin(); it != categories_.end(); ++it )
     {
         ADN_Composantes_Data::CategoryInfos* infos = reinterpret_cast< ADN_Composantes_Data::CategoryInfos* >(*it);
-        xos << xml::start( "dotation" ) 
+        xos << xml::start( "dotation" )
                 << xml::attribute( "name", infos->ptrCategory_.GetData()->strName_ ) << xml::attribute( "count", infos->rNbr_ )
             << xml::end();
     }
-    xos << xml::end();    
+    xos << xml::end();
 }
 
 // =============================================================================
@@ -213,9 +213,9 @@ void ADN_Objects_Data::ADN_CapacityInfos_Buildable::WriteArchive( xml::xostream&
 // Name: ADN_Objects_Data::ADN_CapacityInfos_Improvable
 // Created: JCR 2008-07-15
 // -----------------------------------------------------------------------------
-ADN_Objects_Data::ADN_CapacityInfos_Improvable::ADN_CapacityInfos_Improvable()    
+ADN_Objects_Data::ADN_CapacityInfos_Improvable::ADN_CapacityInfos_Improvable()
 {
-    categories_.SetParentNode( *this );    
+    categories_.SetParentNode( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -225,28 +225,28 @@ ADN_Objects_Data::ADN_CapacityInfos_Improvable::ADN_CapacityInfos_Improvable()
 void ADN_Objects_Data::ADN_CapacityInfos_Improvable::ReadArchive( xml::xistream& xis )
 {
     ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
-    
-    xis >> xml::optional() 
-         >> xml::start( "resources" ) 
+
+    xis >> xml::optional()
+         >> xml::start( "resources" )
             >> xml::list( "dotation", *this, &ADN_Objects_Data::ADN_CapacityInfos_Improvable::ReadDotation )
-        >> xml::end();        
+        >> xml::end();
 }
 
 void ADN_Objects_Data::ADN_CapacityInfos_Improvable::ReadDotation( xml::xistream& xis )
 {
-    std::string dotation; 
+    std::string dotation;
     int quantity;
     xis >> xml::attribute( "name", dotation )
-        >> xml::attribute( "count", quantity );     
-    if ( dotation != "" )
+        >> xml::attribute( "count", quantity );
+    if( dotation != "" )
     {
         ADN_Equipement_Data::CategoryInfo* category = ADN_Workspace::GetWorkspace().GetEquipements().GetData().FindEquipementCategory( dotation );
         if( category == 0 )
-            throw ADN_DataException( "Donnée invalide", "Dotation invalide : " + dotation );                
-        ADN_Composantes_Data::CategoryInfos* infos = new ADN_Composantes_Data::CategoryInfos( category->parentDotation_ );        
+            throw ADN_DataException( "Donnée invalide", "Dotation invalide : " + dotation );
+        ADN_Composantes_Data::CategoryInfos* infos = new ADN_Composantes_Data::CategoryInfos( category->parentDotation_ );
         infos->ptrCategory_ = category;
         infos->rNbr_ = quantity;
-        categories_.AddItem( infos );        
+        categories_.AddItem( infos );
 //        ADN_Composantes_Data::CategoryInfos* infos = reinterpret_cast< ADN_Composantes_Data::CategoryInfos* >( categories_.back() );
 //        infos->rNbr_ = quantity;
     }
@@ -258,17 +258,17 @@ void ADN_Objects_Data::ADN_CapacityInfos_Improvable::ReadDotation( xml::xistream
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ADN_CapacityInfos_Improvable::WriteArchive( xml::xostream& xos )
 {
-    if ( categories_.size() == 0 )
+    if( categories_.size() == 0 )
         return;
-    xos << xml::start( "resources" );    
+    xos << xml::start( "resources" );
     for( CIT_Categories it = categories_.begin(); it != categories_.end(); ++it )
     {
         ADN_Composantes_Data::CategoryInfos* infos = reinterpret_cast< ADN_Composantes_Data::CategoryInfos* >(*it);
-        xos << xml::start( "dotation" ) 
+        xos << xml::start( "dotation" )
                 << xml::attribute( "name", infos->ptrCategory_.GetData()->strName_ ) << xml::attribute( "count", infos->rNbr_ )
             << xml::end();
     }
-    xos << xml::end();    
+    xos << xml::end();
 }
 
 
@@ -303,9 +303,9 @@ void ADN_Objects_Data::ADN_CapacityInfos_Constructor::ReadArchive( xml::xistream
     nDefaultConsumption_ = ADN_Tr::ConvertToConsumptionType( strComsuption );
     unitType_ = xml::attribute< std::string >( xis, "unit-type" );
     xis >> xml::optional() >> xml::list( ADN_CapacityInfos_Buildable::TAG, *ptrBuildable_, &ADN_CapacityInfos_Buildable::ReadArchive );
-    xis >> xml::optional() >> xml::list( ADN_CapacityInfos_Improvable::TAG, *ptrImprovable_, &ADN_CapacityInfos_Improvable::ReadArchive );    
+    xis >> xml::optional() >> xml::list( ADN_CapacityInfos_Improvable::TAG, *ptrImprovable_, &ADN_CapacityInfos_Improvable::ReadArchive );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data::WriteArchive
 // Created: JCR 2008-08-25
@@ -314,13 +314,13 @@ void ADN_Objects_Data::ADN_CapacityInfos_Constructor::WriteArchive( xml::xostrea
 {
     xos << xml::attribute( "default-consumption-mode", ADN_Tr::ConvertFromConsumptionType( nDefaultConsumption_.GetData() ) )
         << xml::attribute( "unit-type", unitType_.GetData() );
-    if ( ptrBuildable_->bPresent_.GetData() )
+    if( ptrBuildable_->bPresent_.GetData() )
     {
         xos << xml::start( ADN_CapacityInfos_Buildable::TAG );
             ptrBuildable_->WriteArchive( xos );
         xos << xml::end();
     }
-    if ( ptrImprovable_->bPresent_.GetData() )
+    if( ptrImprovable_->bPresent_.GetData() )
     {
         xos << xml::start( ADN_CapacityInfos_Improvable::TAG );
         ptrImprovable_->WriteArchive( xos );
@@ -334,10 +334,10 @@ void ADN_Objects_Data::ADN_CapacityInfos_Constructor::WriteArchive( xml::xostrea
 // Name: ADN_Objects_Data::ADN_CapacityInfos_Avoidable
 // Created: JCR 2008-07-15
 // -----------------------------------------------------------------------------
-ADN_Objects_Data::ADN_CapacityInfos_Avoidable::ADN_CapacityInfos_Avoidable()    
+ADN_Objects_Data::ADN_CapacityInfos_Avoidable::ADN_CapacityInfos_Avoidable()
     : fields_("Distance"), rDistance_ ( 0. )
 {
-    rDistance_.SetParentNode( *this );    
+    rDistance_.SetParentNode( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -365,7 +365,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Avoidable::WriteArchive( xml::xostream&
 // Name: ADN_Objects_Data::ADN_CapacityInfos_Bypassable
 // Created: JCR 2008-07-15
 // -----------------------------------------------------------------------------
-ADN_Objects_Data::ADN_CapacityInfos_Bypassable::ADN_CapacityInfos_Bypassable()    
+ADN_Objects_Data::ADN_CapacityInfos_Bypassable::ADN_CapacityInfos_Bypassable()
     : fields_( "Speed" ), rSpeed_ ( 0. )
 {
     rSpeed_.SetParentNode( *this );
@@ -391,14 +391,14 @@ void ADN_Objects_Data::ADN_CapacityInfos_Bypassable::WriteArchive( xml::xostream
     xos << xml::attribute( "bypass-speed", rSpeed_ );
 }
 
-// 
+//
 // =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data::ADN_CapacityInfos_Mobility
 // Created: JCR 2008-07-15
 // -----------------------------------------------------------------------------
-ADN_Objects_Data::ADN_CapacityInfos_Mobility::ADN_CapacityInfos_Mobility()    
+ADN_Objects_Data::ADN_CapacityInfos_Mobility::ADN_CapacityInfos_Mobility()
     : rDefaultSpeed_ ( 0. )
     , nSpeedModifier_ ( eSpeedImpact_AuPlusLent )
     , rMaxAgentSpeed_ ( 0 )
@@ -421,8 +421,8 @@ void ADN_Objects_Data::ADN_CapacityInfos_Mobility::ReadArchive( xml::xistream& x
         >> xml::attribute( "unit-speed-impact-mode", impact );
     nSpeedModifier_ = ADN_Tr::ConvertToSpeedImpact( impact );
     if( nSpeedModifier_ == eSpeedImpact_VitesseMaxAgent )
-        xis >> xml::attribute( "max-unit-percentage-speed", rMaxAgentSpeed_ );        
-    
+        xis >> xml::attribute( "max-unit-percentage-speed", rMaxAgentSpeed_ );
+
 }
 
 // -----------------------------------------------------------------------------
@@ -436,7 +436,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Mobility::WriteArchive( xml::xostream& 
         << xml::attribute( "max-unit-percentage-speed", rMaxAgentSpeed_ );
 }
 
-  
+
 
 //! @name ADN_CapacityInfos_Attrition
 //@{
@@ -452,9 +452,9 @@ ADN_Objects_Data::ADN_CapacityInfos_Attrition::ADN_CapacityInfos_Attrition()
 
 void ADN_Objects_Data::ADN_CapacityInfos_Attrition::ReadArchive( xml::xistream& xis )
 {
-	ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
+    ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
     std::string dotation( xml::attribute< std::string >( xis, "category" ) );
-	if ( dotation != "" )
+    if( dotation != "" )
     {
         ADN_Equipement_Data::CategoryInfo* pCategory = ADN_Workspace::GetWorkspace().GetEquipements().GetData().FindEquipementCategory( dotation );
         if( pCategory == 0 )
@@ -469,9 +469,9 @@ void ADN_Objects_Data::ADN_CapacityInfos_Attrition::ReadArchive( xml::xistream& 
 void ADN_Objects_Data::ADN_CapacityInfos_Attrition::WriteArchive( xml::xostream& xos )
 {
     if( useAmmo_.GetData() == true )
-	    xos << xml::attribute( "category", ammoCategory_.GetData()->strName_ );
+        xos << xml::attribute( "category", ammoCategory_.GetData()->strName_ );
     else
-	    xos << xml::attribute( "category", category_.GetData()->strName_ );
+        xos << xml::attribute( "category", category_.GetData()->strName_ );
 }
 //@}
 
@@ -485,13 +485,13 @@ ADN_Objects_Data::ADN_CapacityInfos_Contamination::ADN_CapacityInfos_Contaminati
 
 void ADN_Objects_Data::ADN_CapacityInfos_Contamination::ReadArchive( xml::xistream& xis )
 {
-	ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
-	xis >> xml::attribute( "max-toxic", max_toxic_ );
+    ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
+    xis >> xml::attribute( "max-toxic", max_toxic_ );
 }
 
 void ADN_Objects_Data::ADN_CapacityInfos_Contamination::WriteArchive( xml::xostream& xos )
 {
-	xos << xml::attribute( "max-toxic", max_toxic_ );
+    xos << xml::attribute( "max-toxic", max_toxic_ );
 }
 //@}
 
@@ -506,7 +506,7 @@ ADN_Objects_Data::ADN_CapacityInfos_InteractionHeight::ADN_CapacityInfos_Interac
 
 void ADN_Objects_Data::ADN_CapacityInfos_InteractionHeight::ReadArchive( xml::xistream& xis )
 {
-	ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
+    ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
     xis >> xml::attribute( "height", height_ );
 }
 
@@ -527,13 +527,13 @@ ADN_Objects_Data::ADN_CapacityInfos_Intoxication::ADN_CapacityInfos_Intoxication
 
 void ADN_Objects_Data::ADN_CapacityInfos_Intoxication::ReadArchive( xml::xistream& xis )
 {
-	ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
-	xis >> xml::attribute( "max-toxic", max_toxic_ );
+    ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
+    xis >> xml::attribute( "max-toxic", max_toxic_ );
 }
 
 void ADN_Objects_Data::ADN_CapacityInfos_Intoxication::WriteArchive( xml::xostream& xos )
 {
-	xos << xml::attribute( "max-toxic", max_toxic_ );
+    xos << xml::attribute( "max-toxic", max_toxic_ );
 }
 //@}
 
@@ -545,7 +545,7 @@ ADN_Objects_Data::ADN_CapacityInfos_Decontamination::ADN_CapacityInfos_Decontami
 }
 void ADN_Objects_Data::ADN_CapacityInfos_Decontamination::ReadArchive( xml::xistream& xis )
 {
-	ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
+    ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
 }
 void ADN_Objects_Data::ADN_CapacityInfos_Decontamination::WriteArchive( xml::xostream& /* xos */ )
 {
@@ -586,8 +586,8 @@ ADN_Objects_Data::ADN_CapacityInfos_Propagation::ADN_CapacityInfos_Propagation()
 
 void ADN_Objects_Data::ADN_CapacityInfos_Propagation::ReadArchive( xml::xistream& xis )
 {
-	ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
-    model_ = xml::attribute< std::string >( xis, "model" );    
+    ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
+    model_ = xml::attribute< std::string >( xis, "model" );
 }
 void ADN_Objects_Data::ADN_CapacityInfos_Propagation::WriteArchive( xml::xostream& xos )
 {
@@ -617,7 +617,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Protection::ReadArchive( xml::xistream&
     max_size_ = xml::attribute< int >( xis, "max-size" );
     geniePrepared_ = xml::attribute< bool >( xis, "geniePrepared" );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data::WriteArchive
 // Created: JCR 2008-08-20
@@ -647,7 +647,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Workable::ReadArchive( xml::xistream& x
     ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
     worker_ = xml::attribute< int >( xis, "max-animator" );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data::WriteArchive
 // Created: JCR 2008-08-20
@@ -671,14 +671,14 @@ ADN_Objects_Data::ADN_CapacityInfos_Healable::ADN_CapacityInfos_Healable()
 }
 void ADN_Objects_Data::ADN_CapacityInfos_Healable::ReadArchive( xml::xistream& xis )
 {
-	ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
-	xis >> xml::attribute( "emergency-plan-beds", emergencyBedsRate_ );
+    ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
+    xis >> xml::attribute( "emergency-plan-beds", emergencyBedsRate_ );
     xis >> xml::attribute( "emergency-plan-doctors", emergencyDoctorsRate_ );
     xis >> xml::attribute( "night-doctors", nightDoctorsRate_ );
 }
 void ADN_Objects_Data::ADN_CapacityInfos_Healable::WriteArchive( xml::xostream& xos )
 {
-	xos << xml::attribute( "emergency-plan-beds", emergencyBedsRate_ );
+    xos << xml::attribute( "emergency-plan-beds", emergencyBedsRate_ );
     xos << xml::attribute( "emergency-plan-doctors", emergencyDoctorsRate_ );
     xos << xml::attribute( "night-doctors", nightDoctorsRate_ );
 }
@@ -692,7 +692,7 @@ ADN_Objects_Data::ADN_CapacityInfos_Occupable::ADN_CapacityInfos_Occupable()
 }
 void ADN_Objects_Data::ADN_CapacityInfos_Occupable::ReadArchive( xml::xistream& /*xis*/ )
 {
-//	ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
+//    ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
 }
 void ADN_Objects_Data::ADN_CapacityInfos_Occupable::WriteArchive( xml::xostream& /*xos*/ )
 {
@@ -708,8 +708,8 @@ ADN_Objects_Data::ADN_CapacityInfos_TerrainHeuristic::ADN_CapacityInfos_TerrainH
 
 void ADN_Objects_Data::ADN_CapacityInfos_TerrainHeuristic::ReadArchive( xml::xistream& xis )
 {
-	ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
-    
+    ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
+
     xis >> xml::list( "terrain", *this, &ADN_Objects_Data::ADN_CapacityInfos_TerrainHeuristic::ReadTerrain );
 }
 
@@ -721,9 +721,9 @@ void ADN_Objects_Data::ADN_CapacityInfos_TerrainHeuristic::ReadTerrain( xml::xis
 }
 
 void ADN_Objects_Data::ADN_CapacityInfos_TerrainHeuristic::WriteArchive( xml::xostream& xos )
-{    
+{
     for( T_ScoreLocationInfosVector::iterator itScore = scores_.begin(); itScore != scores_.end(); ++itScore )
-            (*itScore)->WriteArchive( xos );    
+            (*itScore)->WriteArchive( xos );
 }
 //@}
 
@@ -734,7 +734,7 @@ ADN_Objects_Data::ADN_CapacityInfos_SupplyRoute::ADN_CapacityInfos_SupplyRoute()
 }
 void ADN_Objects_Data::ADN_CapacityInfos_SupplyRoute::ReadArchive( xml::xistream& xis )
 {
-	ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
+    ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
 }
 void ADN_Objects_Data::ADN_CapacityInfos_SupplyRoute::WriteArchive( xml::xostream& /*xos*/ )
 {
@@ -749,7 +749,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_SupplyRoute::WriteArchive( xml::xostrea
 //}
 //void ADN_Objects_Data::ADN_CapacityInfos_TimeLimited::ReadArchive( xml::xistream& xis )
 //{
-//	ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
+//    ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
 //}
 //void ADN_Objects_Data::ADN_CapacityInfos_TimeLimited::WriteArchive( xml::xostream& xos )
 //{
@@ -762,7 +762,7 @@ ADN_Objects_Data::ADN_CapacityInfos_Bridging::ADN_CapacityInfos_Bridging()
 }
 void ADN_Objects_Data::ADN_CapacityInfos_Bridging::ReadArchive( xml::xistream& xis )
 {
-	ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
+    ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
 }
 void ADN_Objects_Data::ADN_CapacityInfos_Bridging::WriteArchive( xml::xostream& /*xos*/ )
 {
@@ -777,7 +777,7 @@ ADN_Objects_Data::ADN_CapacityInfos_Toxic::ADN_CapacityInfos_Toxic()
 }
 void ADN_Objects_Data::ADN_CapacityInfos_Toxic::ReadArchive( xml::xistream& xis )
 {
-	ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
+    ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
 }
 void ADN_Objects_Data::ADN_CapacityInfos_Toxic::WriteArchive( xml::xostream& xos )
 {
@@ -827,7 +827,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Detection::ReadArchive( xml::xistream& 
 void ADN_Objects_Data::ADN_CapacityInfos_Detection::ReadAcquisitionTime( xml::xistream& input )
 {
     std::string time, level;
-    input >> xml::optional() 
+    input >> xml::optional()
           >> xml::attribute( "time", time )
           >> xml::attribute( "level", level );
     if( time.empty() )
@@ -906,7 +906,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Spawn::ReadArchive( xml::xistream& inpu
 void ADN_Objects_Data::ADN_CapacityInfos_Spawn::WriteArchive( xml::xostream& output )
 {
     output << xml::attribute( "object", strObjectType_ )
-           << xml::attribute( "action-range", rActionRange_ ); 
+           << xml::attribute( "action-range", rActionRange_ );
 }
 //@}
 
@@ -938,7 +938,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Structural::ReadArchive( xml::xistream&
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ADN_CapacityInfos_Structural::WriteArchive( xml::xostream& output )
 {
-    output << xml::attribute( "value", rStructuralState_ ); 
+    output << xml::attribute( "value", rStructuralState_ );
 }
 //@}
 
@@ -1047,9 +1047,9 @@ void ADN_Objects_Data::ADN_CapacityInfos_Scattering::WriteArchive( xml::xostream
 
 #define INIT_DATA( CLASS, NAME, TAG_NAME ) \
     const std::string ADN_Objects_Data::##CLASS##::TAG( TAG_NAME ); \
-    const std::string ADN_Objects_Data::##CLASS##::DISPLAY_NAME( NAME )    
+    const std::string ADN_Objects_Data::##CLASS##::DISPLAY_NAME( NAME )
 
-    
+
 #pragma warning( push )
 #pragma warning( disable : 4356 )
 
@@ -1126,7 +1126,7 @@ ADN_Objects_Data::ObjectInfos::~ObjectInfos()
 // Created: JCR 2008-08-20
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ObjectInfos::InitializeCapacities()
-{    
+{
 //    capacities_[ ADN_CapacityInfos_Buildable::TAG ].reset( new ADN_CapacityInfos_Buildable() );
 //    capacities_[ ADN_CapacityInfos_Improvable::TAG ].reset( new ADN_CapacityInfos_Improvable() );
 //    capacities_[ "propagation" ].reset( new ADN_CapacityInfos_FirePropagation() );
@@ -1250,11 +1250,11 @@ void ADN_Objects_Data::ObjectInfos::ReadUnitAttrition( xml::xistream& /*input*/ 
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ObjectInfos::ReadCapacityArchive( const std::string& type, xml::xistream& xis )
 {
-//	typedef boost::mpl::fold<ADN_CapacityTypes, NullType, Reader<boost::mpl::_1,boost::mpl::_2> >::type ReaderType;
-//	ReaderType::Read( type, xis, capacities_ );
-	
+//    typedef boost::mpl::fold<ADN_CapacityTypes, NullType, Reader<boost::mpl::_1,boost::mpl::_2> >::type ReaderType;
+//    ReaderType::Read( type, xis, capacities_ );
+
     IT_CapacityMap it = capacities_.find( type );
-    if ( it != capacities_.end() )
+    if( it != capacities_.end() )
         it->second->ReadArchive( xis );
 }
 
@@ -1282,17 +1282,17 @@ void ADN_Objects_Data::ObjectInfos::WriteArchive( xml::xostream& xos )
         << xml::attribute( "geometry", geometries_.GetData() )
         << xml::attribute( "symbol", symbol_ );
     if( strType_ == "" )
-        xos << xml::attribute( "type", strName_ ); 
+        xos << xml::attribute( "type", strName_ );
     else
-        xos << xml::attribute( "type", strType_ ); 
+        xos << xml::attribute( "type", strType_ );
 
-	for( CIT_CapacityMap it = capacities_.begin(); capacities_.end() != it; ++it )
-		if( it->second->bPresent_.GetData() )
-		{
-			xos << xml::start( it->first );
+    for( CIT_CapacityMap it = capacities_.begin(); capacities_.end() != it; ++it )
+        if( it->second->bPresent_.GetData() )
+        {
+            xos << xml::start( it->first );
             it->second->WriteArchive( xos );
             xos << xml::end();
-		}
+        }
     xos << xml::end();
 }
 
@@ -1312,7 +1312,7 @@ ADN_Objects_Data::ADN_Objects_Data()
 //-----------------------------------------------------------------------------
 ADN_Objects_Data::~ADN_Objects_Data()
 {
-    vObjectInfos_.Reset();	
+    vObjectInfos_.Reset();
 }
 
 //-----------------------------------------------------------------------------
@@ -1341,18 +1341,18 @@ void ADN_Objects_Data::Reset()
 // Created: AGE 2007-08-20
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ReadObject( xml::xistream& xis )
-{    
+{
 //    E_ObjectType nObjectType = ENT_Tr::ConvertToObjectType( type );
 //    if( nObjectType == (E_ObjectType)-1)
 //        throw ADN_DataException( "Object", "Le type d'objet " + type + " n'est pas connu" );
 //
     std::string type = xml::attribute< std::string >( xis, "type" );
     ObjectInfos* pObjInfo = new ObjectInfos( type );
-    if ( pObjInfo )
+    if( pObjInfo )
     {
         pObjInfo->ReadArchive( xis );
         vObjectInfos_.AddItem( pObjInfo );
-        // static_cast< std::vector< ObjectInfos* >* >( &vObjectInfos_ )->push_back( pObjInfo );    
+        // static_cast< std::vector< ObjectInfos* >* >( &vObjectInfos_ )->push_back( pObjInfo );
     }
 }
 

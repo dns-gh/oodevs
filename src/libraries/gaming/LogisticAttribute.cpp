@@ -43,7 +43,7 @@ LogisticAttribute::~LogisticAttribute()
 template< typename T >
 void LogisticAttribute::UpdateData( const T& message )
 {
-    if ( message.has_logistic()  )
+    if( message.has_logistic()  )
     {
         tc2_ = resolver_.Find( message.logistic().tc2() );
         controller_.Update( *(LogisticAttribute_ABC*)this );

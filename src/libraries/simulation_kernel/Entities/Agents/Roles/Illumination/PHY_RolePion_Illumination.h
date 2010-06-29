@@ -44,7 +44,7 @@ public:
     virtual void NotifyStartIlluminatedBy( const MIL_Entity_ABC& entity );
     virtual void NotifyStopIlluminatedBy( const MIL_Entity_ABC& entity );
     virtual void NotifyDefinitelyIlluminated();
-    
+
     virtual bool IsUnderIndirectFire() const;
     virtual void NotifyHitByIndirectFire();
     //@}
@@ -52,7 +52,7 @@ public:
     //! @name Serialization
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}

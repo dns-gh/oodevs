@@ -81,7 +81,7 @@ void AgentTypes::Purge()
     unitModels_.DeleteAll();
     automatModels_.DeleteAll();
     populationModels_.DeleteAll();
-    unitMissions_.DeleteAll(); 
+    unitMissions_.DeleteAll();
     automatMissions_.DeleteAll();
     populationMissions_.DeleteAll();
     tools::Resolver< MissionType >::Clear();
@@ -118,7 +118,7 @@ void AgentTypes::ReadComponents( xml::xistream& xis )
     xis >> start( "elements" )
             >> list( "element", *this, &AgentTypes::ReadComponent );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: AgentTypes::ReadComponent
 // Created: AGE 2006-02-14
@@ -167,7 +167,7 @@ void AgentTypes::ReadMissionType( xml::xistream& xis, T_MissionResolver& mission
     tools::Resolver< MissionType >::Register( mission->GetId(), *mission );
     missions.Register( mission->GetName(), *mission );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: AgentTypes::ReadFragOrderType
 // Created: SBO 2006-11-29
@@ -200,7 +200,7 @@ void AgentTypes::ReadModels( xml::xistream& xis )
                 >> list( "population", *this, &AgentTypes::ReadModel, populationResolver, populationModels_ )
             >> end();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: AgentTypes::ReadModel
 // Created: AGE 2006-02-14

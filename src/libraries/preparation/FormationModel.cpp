@@ -33,7 +33,7 @@ FormationModel::FormationModel( kernel::Controllers& controllers, FormationFacto
 {
     controllers_.Register( *this );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: FormationModel destructor
 // Created: SBO 2006-09-19
@@ -44,7 +44,7 @@ FormationModel::~FormationModel()
     Purge();
     controllers_.Unregister( *this );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: FormationModel::Create
 // Created: SBO 2006-09-22

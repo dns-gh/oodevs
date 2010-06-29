@@ -33,7 +33,7 @@ DEC_BlackBoard_CanContainKnowledgeObjectCollision::DEC_BlackBoard_CanContainKnow
 DEC_BlackBoard_CanContainKnowledgeObjectCollision::~DEC_BlackBoard_CanContainKnowledgeObjectCollision()
 {
     while ( !knowledgeObjectCollisionMap_.empty() )
-        DestroyKnowledgeObjectCollision( *knowledgeObjectCollisionMap_.begin()->second );        
+        DestroyKnowledgeObjectCollision( *knowledgeObjectCollisionMap_.begin()->second );
 }
 
 // =============================================================================
@@ -49,7 +49,7 @@ namespace boost
         {
             split_free( file, map, nVersion );
         }
-        
+
         template< typename Archive >
         void save( Archive& file, const DEC_BlackBoard_CanContainKnowledgeObjectCollision::T_KnowledgeObjectCollisionMap& map, const unsigned int )
         {
@@ -61,7 +61,7 @@ namespace boost
                 file << it->second;
             }
         }
-        
+
         template< typename Archive >
         void load( Archive& file, DEC_BlackBoard_CanContainKnowledgeObjectCollision::T_KnowledgeObjectCollisionMap& map, const unsigned int )
         {
@@ -70,7 +70,7 @@ namespace boost
             while ( nNbr-- )
             {
                 MIL_Object_ABC* pObject;
-                
+
                 file >> pObject;
                 file >> map[ pObject ];
             }
@@ -102,7 +102,7 @@ void DEC_BlackBoard_CanContainKnowledgeObjectCollision::save( MIL_CheckPointOutA
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectCollision& DEC_BlackBoard_CanContainKnowledgeObjectCollision::CreateKnowledgeObjectCollision( const MIL_Agent_ABC& agentPerceiving, MIL_Object_ABC& objectPerceived )
 {
-    DEC_Knowledge_ObjectCollision* pKnowledge = new DEC_Knowledge_ObjectCollision( agentPerceiving, objectPerceived );//$$ RAM   
+    DEC_Knowledge_ObjectCollision* pKnowledge = new DEC_Knowledge_ObjectCollision( agentPerceiving, objectPerceived );//$$ RAM
     if( ! knowledgeObjectCollisionMap_.insert( std::make_pair( &objectPerceived, pKnowledge ) ).second )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
     return *pKnowledge;

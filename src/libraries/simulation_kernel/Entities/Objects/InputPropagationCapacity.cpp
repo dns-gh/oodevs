@@ -62,7 +62,7 @@ InputPropagationCapacity::~InputPropagationCapacity()
 template< typename Archive >
 void InputPropagationCapacity::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );        
+    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
     file & model_;
 }
 
@@ -81,16 +81,16 @@ void InputPropagationCapacity::Register( MIL_Object_ABC& object )
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
 void InputPropagationCapacity::Instanciate( MIL_Object_ABC& object ) const
-{    
+{
     InputPropagationCapacity* capacity = new InputPropagationCapacity( *this );
     object.AddCapacity< PropagationCapacity_ABC >( capacity );
     object.Register( static_cast< MIL_InteractiveContainer_ABC *>( capacity ) );
 }
 
-namespace 
+namespace
 {
     void ConvertSimCoord( const TER_Localisation& location, T_PointVector& output )
-    {        
+    {
         const T_PointVector& points = location.GetPoints();
         output.resize( points.size() );
         for( unsigned int i = 0; i < points.size(); ++i )
@@ -103,13 +103,13 @@ namespace
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 void InputPropagationCapacity::Update( MIL_Object_ABC& object, unsigned int time )
-{    
+{
     ToxicAttribute_ABC* pAttr = object.RetrieveAttribute< ToxicAttribute_ABC >();
     if( pAttr )
     {
         TER_Polygon   polygon;
         InputToxicCloudAttribute* pInput = static_cast< InputToxicCloudAttribute* >( pAttr );
-        if ( pInput && pInput->Update( time, polygon ) )
+        if( pInput && pInput->Update( time, polygon ) )
             object.UpdateLocalisation( TER_Localisation( polygon ) );
     }
 }

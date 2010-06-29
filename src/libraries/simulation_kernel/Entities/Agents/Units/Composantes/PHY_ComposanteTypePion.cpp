@@ -69,7 +69,7 @@ bool PHY_ComposanteTypePion::sNTICapability::CanRepair( const PHY_Breakdown& bre
     if( breakdown.AffectMobility() && !bMobility_ )
         return false;
 
-    if ( breakdown.GetTheoricRepairTime() > nMaxTime_ )
+    if( breakdown.GetTheoricRepairTime() > nMaxTime_ )
         return false;
 
     return true;
@@ -159,7 +159,7 @@ PHY_ComposanteTypePion::PHY_ComposanteTypePion( const MIL_Time_ABC& time, const 
     , rNbrHumansLoadedForEvacuationPerTimeStep_  ( 0. )
     , rNbrHumansUnloadedForEvacuationPerTimeStep_( 0. )
     , woundHealingCapabilities_                  ( PHY_HumanWound::GetHumanWounds().size(), false )
-    , bCanHealMentalDiseases_                    ( false )  
+    , bCanHealMentalDiseases_                    ( false )
     , bCanHealContaminated_                      ( false )
     , bCanSortHumans_                            ( false )
     , bCanDiagnoseHumans_                        ( false )
@@ -209,7 +209,7 @@ PHY_ComposanteTypePion::~PHY_ComposanteTypePion()
 // Created: JVT 2005-04-26
 // -----------------------------------------------------------------------------
 void PHY_ComposanteTypePion::InitializeBreakdownTypes( xml::xistream& xis )
-{   
+{
     if( GetProtection().IsHuman() )
         return;
 
@@ -250,9 +250,9 @@ void PHY_ComposanteTypePion::InitializeRandomBreakdownTypes( xml::xistream& xis 
     std::string strBuf;
     xis >> xml::attribute( "type", strBuf );
     const PHY_BreakdownType* pType = PHY_BreakdownType::Find( strBuf );
-    if ( !pType )
+    if( !pType )
         xis.error( "Unknown breakdown type '" + strBuf + "'" );
-    
+
     MT_Float rPercentage;
     xis >> xml::attribute( "percentage", rPercentage );
     if( rPercentage < 0 || rPercentage > 100 )
@@ -273,7 +273,7 @@ void PHY_ComposanteTypePion::InitializeAttritionBreakdownTypes( xml::xistream& x
     std::string strBuf;
     xis >> xml::attribute( "type", strBuf );
     const PHY_BreakdownType* pType = PHY_BreakdownType::Find( strBuf );
-    if ( !pType )
+    if( !pType )
         xis.error( "Unknown breakdown type '" + strBuf + "'" );
 
     MT_Float rPercentage;
@@ -319,7 +319,7 @@ void PHY_ComposanteTypePion::ReadWeaponSystem( xml::xistream& xis )
 
         if( weaponTypes_.find( pWeaponType ) != weaponTypes_.end() )
             xis.error( "Weapon type (" + strLauncher + ", " + strAmmunition + ") already initialized" );
-            
+
         weaponTypes_[ pWeaponType ] = bMajor;
 }
 
@@ -341,7 +341,7 @@ void PHY_ComposanteTypePion::InitializeProtections( xml::xistream& xis )
 void PHY_ComposanteTypePion::ReadActiveProtection( xml::xistream& xis )
 {
     std::string strProtectionName;
-    
+
     xis >> xml::attribute( "name", strProtectionName );
     const PHY_ActiveProtection* pProtection = PHY_ActiveProtection::Find( strProtectionName );
     if( !pProtection )
@@ -367,7 +367,7 @@ void PHY_ComposanteTypePion::InitializeHumanProtections( xml::xistream& xis )
 void PHY_ComposanteTypePion::ReadHumanProtection( xml::xistream& xis )
 {
     std::string strProtectionName;
-    
+
     xis >> xml::attribute( "name", strProtectionName );
     const PHY_HumanProtection* pHumanProtection = PHY_HumanProtection::Find( strProtectionName );
     if( !pHumanProtection )
@@ -387,8 +387,8 @@ void PHY_ComposanteTypePion::InitializeSensors( xml::xistream& xis )
     xis >> xml::start( "sensors" )
             >> xml::list( "sensor", *this, &PHY_ComposanteTypePion::ReadSensor )
         >> xml::end();
-    
-    if ( rSensorRotationAngle_ == std::numeric_limits< MT_Float >::max() )
+
+    if( rSensorRotationAngle_ == std::numeric_limits< MT_Float >::max() )
         rSensorRotationAngle_ = 0.;
     else
         rSensorRotationAngle_ -= std::min( rSensorRotationAngle_, 0.1 );
@@ -511,12 +511,12 @@ void PHY_ComposanteTypePion::InitializeObjects( xml::xistream& xis )
 void PHY_ComposanteTypePion::ReadObject( xml::xistream& xis )
 {
     std::string strType( xml::attribute( xis, "type", std::string() ) );
-    
+
     try
     {
         const MIL_ObjectType_ABC& objectType = MIL_ObjectFactory::FindType( strType );
 
-        if ( objectData_.size() <= objectType.GetID() )
+        if( objectData_.size() <= objectType.GetID() )
             objectData_.resize( objectType.GetID() + 1, 0 );
         const PHY_ComposanteTypeObjectData*& pObject = objectData_[ objectType.GetID() ];
         if( pObject )
@@ -574,7 +574,7 @@ void PHY_ComposanteTypePion::ReadMaintenance( xml::xistream& xis )
     rHaulerLoadingTime_    = 0.;
     rHaulerUnloadingTime_  = 0.;
     rHaulerWeightCapacity_ = 0.;
-    
+
     ntiCapabilities_.clear();
 
     xis >> xml::list( "towing", *this, &PHY_ComposanteTypePion::ReadTowing )
@@ -616,7 +616,7 @@ void PHY_ComposanteTypePion::ReadRepairing( xml::xistream& xis )
             xis.error( "category: max-reparation-time <= 0" );
         ntiCapability.nMaxTime_ = (unsigned int)MIL_Tools::ConvertSecondsToSim( rTime );
     }
-    
+
     if( !ntiCapability.bMobility_ && !ntiCapability.bElectronic_ )
         xis.error( "NTI has not 'EA' nor 'M'" );
 
@@ -864,7 +864,7 @@ void PHY_ComposanteTypePion::InstanciateProtections( std::back_insert_iterator <
 // -----------------------------------------------------------------------------
 bool PHY_ComposanteTypePion::CanConstruct( const MIL_ObjectType_ABC& object ) const
 {
-    if ( objectData_.size() <= object.GetID() )
+    if( objectData_.size() <= object.GetID() )
         return false;
     const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
     return pObjectData && pObjectData->CanConstruct();
@@ -876,7 +876,7 @@ bool PHY_ComposanteTypePion::CanConstruct( const MIL_ObjectType_ABC& object ) co
 // -----------------------------------------------------------------------------
 bool PHY_ComposanteTypePion::CanDestroy( const MIL_ObjectType_ABC& object ) const
 {
-    if ( objectData_.size() <= object.GetID() )
+    if( objectData_.size() <= object.GetID() )
         return false;
     const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
     return pObjectData && pObjectData->CanDestroy();
@@ -888,7 +888,7 @@ bool PHY_ComposanteTypePion::CanDestroy( const MIL_ObjectType_ABC& object ) cons
 // -----------------------------------------------------------------------------
 bool PHY_ComposanteTypePion::CanMine( const MIL_ObjectType_ABC& object ) const
 {
-    if ( objectData_.size() <= object.GetID() )
+    if( objectData_.size() <= object.GetID() )
         return false;
     const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
     return pObjectData && pObjectData->CanMine();
@@ -900,7 +900,7 @@ bool PHY_ComposanteTypePion::CanMine( const MIL_ObjectType_ABC& object ) const
 // -----------------------------------------------------------------------------
 bool PHY_ComposanteTypePion::CanDemine( const MIL_ObjectType_ABC& object ) const
 {
-    if ( objectData_.size() <= object.GetID() )
+    if( objectData_.size() <= object.GetID() )
         return false;
     const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
     return pObjectData && pObjectData->CanDemine();
@@ -912,7 +912,7 @@ bool PHY_ComposanteTypePion::CanDemine( const MIL_ObjectType_ABC& object ) const
 // -----------------------------------------------------------------------------
 bool PHY_ComposanteTypePion::CanBypass( const MIL_ObjectType_ABC& object, bool bObjectIsMined ) const
 {
-    if ( objectData_.size() <= object.GetID() )
+    if( objectData_.size() <= object.GetID() )
         return false;
     const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
     return pObjectData && pObjectData->CanBypass( bObjectIsMined );
@@ -924,7 +924,7 @@ bool PHY_ComposanteTypePion::CanBypass( const MIL_ObjectType_ABC& object, bool b
 // -----------------------------------------------------------------------------
 MT_Float PHY_ComposanteTypePion::GetConstructionTime( const MIL_ObjectType_ABC& object, MT_Float rSizeCoef ) const
 {
-    if ( objectData_.size() <= object.GetID() )
+    if( objectData_.size() <= object.GetID() )
         return std::numeric_limits< MT_Float >::max();
     const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
     if( pObjectData )
@@ -938,7 +938,7 @@ MT_Float PHY_ComposanteTypePion::GetConstructionTime( const MIL_ObjectType_ABC& 
 // -----------------------------------------------------------------------------
 MT_Float PHY_ComposanteTypePion::GetDestructionTime( const MIL_ObjectType_ABC& object, MT_Float rSizeCoef ) const
 {
-    if ( objectData_.size() <= object.GetID() )
+    if( objectData_.size() <= object.GetID() )
         return std::numeric_limits< MT_Float >::max();
     const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
     if( pObjectData )
@@ -952,7 +952,7 @@ MT_Float PHY_ComposanteTypePion::GetDestructionTime( const MIL_ObjectType_ABC& o
 // -----------------------------------------------------------------------------
 MT_Float PHY_ComposanteTypePion::GetMiningTime( const MIL_ObjectType_ABC& object ) const
 {
-    if ( objectData_.size() <= object.GetID() )
+    if( objectData_.size() <= object.GetID() )
         return std::numeric_limits< MT_Float >::max();
     const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
     if( pObjectData )
@@ -965,7 +965,7 @@ MT_Float PHY_ComposanteTypePion::GetMiningTime( const MIL_ObjectType_ABC& object
 // -----------------------------------------------------------------------------
 MT_Float PHY_ComposanteTypePion::GetDeminingTime( const MIL_ObjectType_ABC& object ) const
 {
-    if ( objectData_.size() <= object.GetID() )
+    if( objectData_.size() <= object.GetID() )
         return std::numeric_limits< MT_Float >::max();
     const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
     if( pObjectData )
@@ -979,7 +979,7 @@ MT_Float PHY_ComposanteTypePion::GetDeminingTime( const MIL_ObjectType_ABC& obje
 // -----------------------------------------------------------------------------
 MT_Float PHY_ComposanteTypePion::GetBypassTime( const MIL_ObjectType_ABC& object, MT_Float rSizeCoef, bool bObjectIsMined ) const
 {
-    if ( objectData_.size() <= object.GetID() )
+    if( objectData_.size() <= object.GetID() )
         return std::numeric_limits< MT_Float >::max();
     const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
     if( pObjectData )
@@ -993,11 +993,11 @@ MT_Float PHY_ComposanteTypePion::GetBypassTime( const MIL_ObjectType_ABC& object
 // -----------------------------------------------------------------------------
 MT_Float PHY_ComposanteTypePion::GetMaxSpeed( const MIL_Object_ABC& object ) const
 {
-    if ( objectData_.size() <= object.GetID() )
+    if( objectData_.size() <= object.GetID() )
         return std::numeric_limits< MT_Float >::max();
     const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetType().GetID() ];
     if( pObjectData )
-        return pObjectData->GetMaxSpeed( object );    
+        return pObjectData->GetMaxSpeed( object );
     return object.Get< MobilityCapacity >().GetDefaultSpeed();
 }
 
@@ -1017,7 +1017,7 @@ const PHY_DotationConsumptions* PHY_ComposanteTypePion::GetDotationConsumptions(
 // -----------------------------------------------------------------------------
 const PHY_ConsumptionType& PHY_ComposanteTypePion::GetConsumptionMode( const MIL_ObjectType_ABC& object ) const
 {
-    if ( objectData_.size() <= object.GetID() )
+    if( objectData_.size() <= object.GetID() )
         return object.GetCapacity< BuildableCapacity >()->GetDefaultConsumptionMode();
     const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
     if( pObjectData && pObjectData->GetConsumptionMode() )
@@ -1036,10 +1036,10 @@ const PHY_ConsumptionType& PHY_ComposanteTypePion::GetConsumptionMode( const MIL
 const PHY_BreakdownType& PHY_ComposanteTypePion::GetBreakdownType( const T_BreakdownTypeProbabilityVector& probasVector ) const
 {
     const MT_Float rRandomValue = randomGenerator_.rand_ii( 0., 1. );
-    
+
     for ( CIT_BreakdownTypeProbabilityVector it = probasVector.begin(); it != probasVector.end(); ++it )
     {
-        if ( rRandomValue <= it->rProbabilityBound_ )
+        if( rRandomValue <= it->rProbabilityBound_ )
             return *it->pBreakdownType_;
     }
     assert( false );
@@ -1093,7 +1093,7 @@ MT_Float PHY_ComposanteTypePion::GetMaxRangeToFireOnWithPosture( const MIL_Agent
         rRange = std::max( rRange, itWeapon->first->GetMaxRangeToFireOnWithPosture( firer, target, targetComposanteType, rWantedPH ) );
     return rRange;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::GetMinRangeToFireOnWithPosture
 // Created: SBO 2006-01-10
@@ -1113,7 +1113,7 @@ MT_Float PHY_ComposanteTypePion::GetMinRangeToFireOnWithPosture( const MIL_Agent
 MT_Float PHY_ComposanteTypePion::GetMaxRangeToIndirectFire( const MIL_Agent_ABC& firer, const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const
 {
     MT_Float rRange = -1.;
-    
+
     for( CIT_WeaponTypeMap it = weaponTypes_.begin(); it != weaponTypes_.end(); ++it )
     {
         if( it->first->GetDotationCategory() == dotationCategory )
@@ -1129,7 +1129,7 @@ MT_Float PHY_ComposanteTypePion::GetMaxRangeToIndirectFire( const MIL_Agent_ABC&
 MT_Float PHY_ComposanteTypePion::GetMinRangeToIndirectFire( const MIL_Agent_ABC& firer, const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const
 {
     MT_Float rRange = std::numeric_limits< MT_Float >::max();
-    
+
     for( CIT_WeaponTypeMap it = weaponTypes_.begin(); it != weaponTypes_.end(); ++it )
     {
         if( it->first->GetDotationCategory() == dotationCategory )
@@ -1354,7 +1354,7 @@ bool PHY_ComposanteTypePion::CounterIndirectFire( const PHY_DotationCategory& ca
     return false;
 
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::DestroyIndirectFire
 // Created: LDC 2010-01-08
@@ -1376,7 +1376,7 @@ double PHY_ComposanteTypePion::GetAttritionIndexComposante(int idMaterial) const
     double rRange = 0.;
     for( CIT_WeaponTypeMap it = weaponTypes_.begin(); it != weaponTypes_.end(); ++it )
         rRange = std::max( rRange, it->first->GetDotationCategory().GetAttrition(idMaterial) );
- 
+
     return rRange;
 }
     

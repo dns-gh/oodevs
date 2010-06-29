@@ -25,18 +25,18 @@ PHY_ActionUnloadActivity::PHY_ActionUnloadActivity( MIL_AgentPion& pion, const s
     , role_               ( pion.GetRole< PHY_RoleAction_FolkInfluence >() )
     , activity_           ( activity )
     , influence_          ( influence )
-{    
+{
     const MT_Vector2D&  vPos = pion_.GetRole< PHY_RoleInterface_Location >().GetPosition();
     pObject_ = role_.InfluenceActivity( vPos, activity_, influence_, 1 );
-    if ( pObject_ )
+    if( pObject_ )
     {
         pObject_->UnloadActivity( activity_, influence_ ); // population concerned
         Callback( static_cast<int>(PHY_RoleAction_FolkInfluence::eRunning ) );
-    }        
+    }
     else
         Callback( static_cast<int>( PHY_RoleAction_FolkInfluence::eImpossible ) );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionUnloadActivity destructor
 // Created: JCR 2007-09-12
@@ -52,7 +52,7 @@ PHY_ActionUnloadActivity::~PHY_ActionUnloadActivity()
 // -----------------------------------------------------------------------------
 void PHY_ActionUnloadActivity::StopAction()
 {
-    if ( pObject_ )
+    if( pObject_ )
         role_.ReleaseInfluence( *pObject_ );
 }
 
@@ -62,20 +62,20 @@ void PHY_ActionUnloadActivity::StopAction()
 // -----------------------------------------------------------------------------
 void PHY_ActionUnloadActivity::Execute()
 {
-    if ( pObject_ && !pObject_->IsActivated() )
+    if( pObject_ && !pObject_->IsActivated() )
     {
         pObject_->Activate();
         Callback( static_cast<int>( PHY_RoleAction_FolkInfluence::eActivated ) );
     }
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionUnloadActivity::ExecuteSuspended
 // Created: JCR 2007-09-12
 // -----------------------------------------------------------------------------
 void PHY_ActionUnloadActivity::ExecuteSuspended()
 {
-    if ( pObject_ )
+    if( pObject_ )
     {
         pObject_->Deactivate();
         Callback( static_cast<int>( PHY_RoleAction_FolkInfluence::eDeactivated ) );

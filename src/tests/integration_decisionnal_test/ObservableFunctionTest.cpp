@@ -28,7 +28,7 @@ namespace
     {
     public:
         BrainFixture()
-        : brain( BOOST_RESOLVE( "." ) ) 
+        : brain( BOOST_RESOLVE( "." ) )
         {
             brain.RegisterFunction< boost::function< void( double, double ) > >( "check", boost::bind( &Check, _1, _2 ) );
             brain.RegisterFunction< boost::function< void( double, double ) > >( "checkClose", boost::bind( &CheckClose, _1, _2 ) );
@@ -43,28 +43,28 @@ namespace
         }
         int Mock_IsEnemy( const std::string& name )
         {
-            if ( name == "enemy" )
+            if( name == "enemy" )
                 return 0;
-            if ( name == "allie" )
+            if( name == "allie" )
                 return 1;
             return 2;
         }
         int Mock_IsAllie( const std::string& name )
         {
-            if ( name == "allie" )
+            if( name == "allie" )
                 return 0;
-            if ( name == "enemy" )
+            if( name == "enemy" )
                 return 1;
             return 2;
         }
 
         int Mock_GetPerceptionLevel( const std::string& name )
         {
-            if ( name == "enemyDetected" )
+            if( name == "enemyDetected" )
                 return 1;
-            if ( name == "enemyRecognized" )
+            if( name == "enemyRecognized" )
                 return 2;
-            if ( name == "enemyIdentified" )
+            if( name == "enemyIdentified" )
                 return 3;
             return 0;
         }

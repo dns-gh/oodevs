@@ -56,7 +56,7 @@ Object::~Object()
 }
 
 #define MSG_ASN_CREATION( ASN, CLASS ) \
-    if ( attributes.has_##ASN##()  ) \
+    if( attributes.has_##ASN##()  ) \
         AddAttribute( new CLASS( attributes ) )
 
 // -----------------------------------------------------------------------------
@@ -96,7 +96,7 @@ void Object::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& msg )
 {
     if( msg.has_location()  )
         localisation_.Update( msg.location() );
-    
+
     std::for_each( attributes_.begin(), attributes_.end(),
                    boost::bind( &ObjectAttribute_ABC::Update, _1, boost::cref( msg.attributes() ) ) );
 }

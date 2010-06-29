@@ -97,7 +97,7 @@ void PHY_RolePion_Location::load( MIL_CheckPointInArchive& file, const unsigned 
          >> bHasDoneMagicMove_
          >> bHasMove_;
     pvPosition_.reset( new MT_Vector2D( vPosition ) );
-         
+
     UpdatePatch();
 }
 
@@ -124,7 +124,7 @@ void PHY_RolePion_Location::save( MIL_CheckPointOutArchive& file, const unsigned
 // -----------------------------------------------------------------------------
 MIL_Agent_ABC& PHY_RolePion_Location::GetAgent() const
 {
-    return pion_;    
+    return pion_;
 }
 
 // -----------------------------------------------------------------------------
@@ -473,7 +473,7 @@ void PHY_RolePion_Location::Clean()
     bPositionHasChanged_     = false;
     bDirectionHasChanged_    = false;
     bCurrentSpeedHasChanged_ = false;
-    bHeightHasChanged_       = false;    
+    bHeightHasChanged_       = false;
 }
 
 // -----------------------------------------------------------------------------

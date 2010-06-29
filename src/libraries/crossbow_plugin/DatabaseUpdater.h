@@ -66,7 +66,7 @@ public:
     virtual ~DatabaseUpdater();
     //@}
 
-    //! @name 
+    //! @name
     //@{
     void Flush();
     void Clean();
@@ -103,7 +103,7 @@ private:
     DatabaseUpdater& operator=( const DatabaseUpdater& ); //!< Assignement operator
     //@}
 
-    //! @name 
+    //! @name
     //@{
     void UpdateObjectKnowledgeGeometry( const std::string& tablename, const MsgsSimToClient::MsgObjectKnowledgeUpdate& msg );
     //@}
@@ -111,7 +111,7 @@ private:
 private:
     //! @name Member data
     //@{
-    Database_ABC&               geometryDb_; 
+    Database_ABC&               geometryDb_;
     Database_ABC&               flatDb_;
     const dispatcher::Model&    model_;
     const WorkingSession&       session_;

@@ -28,8 +28,8 @@
 
 // -----------------------------------------------------------------------------
 // Name: ADN_BoolEditor constructor
-/** @param  pParent 
-    @param  bState 
+/** @param  pParent
+    @param  bState
 */
 // Created: AGN 2004-03-11
 // -----------------------------------------------------------------------------
@@ -57,12 +57,12 @@ ADN_BoolEditor::~ADN_BoolEditor()
 void ADN_BoolEditor::mousePressEvent( QMouseEvent*  )
 {
     SetState( !bState_ );
-	emit StateChanged( bState_ );
+    emit StateChanged( bState_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_BoolEditor::CheckedBoxPixmap
-/** @return 
+/** @return
 */
 // Created: AGN 2004-03-11
 // -----------------------------------------------------------------------------
@@ -74,7 +74,7 @@ const QPixmap& ADN_BoolEditor::CheckedBoxPixmap()
 
 // -----------------------------------------------------------------------------
 // Name: ADN_BoolEditor::EmptyBoxPixmap
-/** @return 
+/** @return
 */
 // Created: AGN 2004-03-11
 // -----------------------------------------------------------------------------
@@ -94,22 +94,22 @@ void ADN_BoolEditor::paintEvent( QPaintEvent * pEvent )
     QPainter painter( this );
 
     const QRect& rect = pEvent->rect();
-    
+
     const QPixmap* pPixmap = 0;
     if( bState_ )
     {
         pPixmap = &CheckedBoxPixmap();
     }
-    else 
+    else
     {
         pPixmap = &EmptyBoxPixmap();
     }
 
-    
+
     int dx = ( rect.width() - pPixmap->width() ) / 2;
     if( dx < 0 )
         dx = 0;
-    
+
     int dy = ( rect.height() - pPixmap->height() ) / 2;
     if( dy < 0 )
         dy = 0;
@@ -123,6 +123,6 @@ void ADN_BoolEditor::paintEvent( QPaintEvent * pEvent )
 // -----------------------------------------------------------------------------
 void ADN_BoolEditor::SetState( bool bState )
 {
-	bState_ = bState;
-	update();
+    bState_ = bState;
+    update();
 }

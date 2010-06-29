@@ -26,7 +26,7 @@
 
 namespace
 {
-    xml::xistringstream xis( "<objects>" 
+    xml::xistringstream xis( "<objects>"
         "<object type='object'>"
             "<avoidable/>"
             "<bypassable/>"
@@ -49,9 +49,9 @@ namespace
             "<supply/>"
             "<supply-route/>"
             "<detection/>"
-        "</object>" 
+        "</object>"
     "</objects>"
-    ); 
+    );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,12 +73,12 @@ BOOST_AUTO_TEST_CASE( VerifyEmptyObjectDefinition )
 BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Constructor )
 {
     MIL_ObjectLoader loader;
-    xml::xistringstream xis( "<objects>" 
+    xml::xistringstream xis( "<objects>"
             "<object type='object'>"
                 "<constructor unit-type='raw' default-consumption-mode='EnTravaux'/>"
-            "</object>" 
+            "</object>"
         "</objects>"
-        ); 
+        );
     BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
 
     const MIL_ObjectType_ABC& type = loader.GetType( "object" );
@@ -93,14 +93,14 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Constructor )
 BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_ConstructorBuildable )
 {
     MIL_ObjectLoader loader;
-    xml::xistringstream xis( "<objects>" 
+    xml::xistringstream xis( "<objects>"
             "<object type='object'>"
                 "<constructor unit-type='raw' default-consumption-mode='EnTravaux'>"
                     "<buildable/>"
                 "</constructor>"
-            "</object>" 
+            "</object>"
         "</objects>"
-        ); 
+        );
     BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
 
     const MIL_ObjectType_ABC& type = loader.GetType( "object" );
@@ -115,15 +115,15 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_ConstructorBuildable )
 BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_ConstructorImprovable )
 {
     MIL_ObjectLoader loader;
-    xml::xistringstream xis( "<objects>" 
+    xml::xistringstream xis( "<objects>"
             "<object type='object'>"
                 "<constructor unit-type='raw' default-consumption-mode='EnTravaux'>"
                     "<buildable/>"
                     "<improvable/>"
                 "</constructor>"
-            "</object>" 
+            "</object>"
         "</objects>"
-        ); 
+        );
     BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
 
     const MIL_ObjectType_ABC& type = loader.GetType( "object" );
@@ -138,12 +138,12 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_ConstructorImprovable )
 BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Spawn )
 {
     MIL_ObjectLoader loader;
-    xml::xistringstream xis( "<objects>" 
+    xml::xistringstream xis( "<objects>"
         "<object type='object'>"
         "<spawn object='toto' action-range='10'/>"
-        "</object>" 
+        "</object>"
         "</objects>"
-        ); 
+        );
     BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
 
     const MIL_ObjectType_ABC& type = loader.GetType( "object" );

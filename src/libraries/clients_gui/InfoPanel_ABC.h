@@ -59,7 +59,7 @@ protected:
     //! @name Member data
     //@{
     PanelStack_ABC& stack_;
-    QString name_; 
+    QString name_;
     QVBox* pBox_;
     //@}
 };

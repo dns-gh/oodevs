@@ -25,9 +25,9 @@
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ChangeValueCommand_Int constructor
-/** @param  modifiedData 
-    @param  nOldValue 
-    @param  nNewValue 
+/** @param  modifiedData
+    @param  nOldValue
+    @param  nNewValue
 */
 // Created: AGN 2004-05-13
 // -----------------------------------------------------------------------------
@@ -46,7 +46,7 @@ ADN_ChangeValueCommand_Int::ADN_ChangeValueCommand_Int( ADN_Type_Int& modifiedDa
 // -----------------------------------------------------------------------------
 ADN_ChangeValueCommand_Int::~ADN_ChangeValueCommand_Int()
 {
-    
+
 }
 
 // -----------------------------------------------------------------------------
@@ -60,8 +60,8 @@ void ADN_ChangeValueCommand_Int::undo()
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ChangeValueCommand_Int::mergeMeWith
-/** @param  other 
-    @return 
+/** @param  other
+    @return
 */
 // Created: AGN 2004-05-13
 // -----------------------------------------------------------------------------
@@ -75,7 +75,7 @@ bool ADN_ChangeValueCommand_Int::mergeMeWith( QtCommand* other )
         return true;
     }
     else
-        return false;    
+        return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -86,7 +86,7 @@ void ADN_ChangeValueCommand_Int::UpdateDescription()
 {
     QString strDescription( qApp->translate("ADN_ChangeValueCommand","Change ") );
     strDescription += modifiedData_.GetNodeName().c_str();
-    
+
     ADN_DataTreeNode_ABC* pParent = modifiedData_.GetParentNode();
     while( pParent != 0 )
     {
@@ -103,5 +103,5 @@ void ADN_ChangeValueCommand_Int::UpdateDescription()
     strDescription += QString::number( oldValue_ );
     strDescription += qApp->translate("ADN_ChangeValueCommand"," to ");
     strDescription += QString::number( newValue_ );
-    setDescription( strDescription );    
+    setDescription( strDescription );
 }

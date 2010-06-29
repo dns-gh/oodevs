@@ -23,7 +23,7 @@ namespace types
 class bad_type_usage : public std::invalid_argument
 {
 public:
-    bad_type_usage( const std::string& message ) 
+    bad_type_usage( const std::string& message )
         : std::invalid_argument( "Invalid type usage : " + message )
     {};
 };
@@ -48,7 +48,7 @@ void check( const char* message )
 
 template< typename T >
 struct Arithmetic
-{           
+{
     Arithmetic()
     {
         check< boost::is_arithmetic< T > >( "Type must be arithmetic" );
@@ -57,7 +57,7 @@ struct Arithmetic
 
 template<>
 struct Arithmetic< NumericValue >
-{           
+{
     Arithmetic() {}
 };
 

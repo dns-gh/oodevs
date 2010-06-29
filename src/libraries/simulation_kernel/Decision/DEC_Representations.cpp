@@ -104,7 +104,7 @@ void DEC_Representations::RemoveFromPointsCategory( boost::shared_ptr< DEC_PathP
 // Created: LDC 2009-04-03
 // -----------------------------------------------------------------------------
 void DEC_Representations::DeleteOrderRepresentation( boost::shared_ptr< MIL_FragOrder > pObject )
-{    
+{
     for( IT_OrdersRepresentationVector oit = orderRepresentations_.begin(); oit != orderRepresentations_.end(); ++oit )
     {
         if( *oit == pObject )

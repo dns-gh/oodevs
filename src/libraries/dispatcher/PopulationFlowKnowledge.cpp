@@ -27,12 +27,12 @@ using namespace dispatcher;
 PopulationFlowKnowledge::PopulationFlowKnowledge( const kernel::PopulationKnowledge_ABC& populationKnowledge, const MsgsSimToClient::MsgPopulationFlowKnowledgeCreation& msg )
     : SimpleEntity< >     ( msg.oid_connaissance_flux() )
     , populationKnowledge_( populationKnowledge )
-    , pFlow_              ( msg.oid_flux_reel() == 0 ? 0 : &populationKnowledge_.GetEntity()->GetFlow( msg.oid_flux_reel() ) ) // $$$$ SBO 2008-07-11: 
+    , pFlow_              ( msg.oid_flux_reel() == 0 ? 0 : &populationKnowledge_.GetEntity()->GetFlow( msg.oid_flux_reel() ) ) // $$$$ SBO 2008-07-11:
     , nDirection_         ( 0 )
     , nSpeed_             ( 0 )
     , nNbrAliveHumans_    ( 0 )
     , nNbrDeadHumans_     ( 0 )
-    , nAttitude_          ( Common::agressive ) 
+    , nAttitude_          ( Common::agressive )
     , bPerceived_         ( false )
 {
     optionals_.vitessePresent            = 0;
@@ -61,7 +61,7 @@ PopulationFlowKnowledge::~PopulationFlowKnowledge()
 void PopulationFlowKnowledge::Update( const MsgsSimToClient::MsgPopulationFlowKnowledgeUpdate& msg )
 {
     if( msg.has_oid_flux_reel()  )
-        pFlow_ = msg.oid_flux_reel() == 0 ? 0 : &populationKnowledge_.GetEntity()->GetFlow( msg.oid_flux_reel() ); // $$$$ SBO 2008-07-11: 
+        pFlow_ = msg.oid_flux_reel() == 0 ? 0 : &populationKnowledge_.GetEntity()->GetFlow( msg.oid_flux_reel() ); // $$$$ SBO 2008-07-11:
 
     if( msg.has_portions_flux()  )
     {

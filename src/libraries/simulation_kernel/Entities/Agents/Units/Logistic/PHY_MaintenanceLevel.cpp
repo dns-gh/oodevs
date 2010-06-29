@@ -16,7 +16,7 @@ PHY_MaintenanceLevel::T_MaintenanceLevelMap PHY_MaintenanceLevel::maintenanceLev
 
 PHY_MaintenanceLevel PHY_MaintenanceLevel::nti1_( "NTI1" );
 PHY_MaintenanceLevel PHY_MaintenanceLevel::nti2_( "NTI2" );
-PHY_MaintenanceLevel PHY_MaintenanceLevel::nti3_( "NTI3" );   
+PHY_MaintenanceLevel PHY_MaintenanceLevel::nti3_( "NTI3" );
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceLevel::Initialize
@@ -37,7 +37,7 @@ void PHY_MaintenanceLevel::Terminate()
 {
     maintenanceLevels_.clear();
 }
-  
+
 // -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceLevel constructor
 // Created: NLD 2004-12-20

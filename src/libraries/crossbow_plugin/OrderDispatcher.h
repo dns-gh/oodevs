@@ -91,7 +91,7 @@ private:
 
 private:
     //! @name Member data
-    //@{    
+    //@{
     const OrderTypes& types_;
     const dispatcher::Model& model_;
     Database_ABC& database_;

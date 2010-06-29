@@ -56,7 +56,7 @@ ProfileWizardDialog::ProfileWizardDialog( QWidget* parent, const Model& model, P
         profileTypes_->insert( new QRadioButton( tr( "one profile per top-level formation" ), profileTypes_ ), 1 );
         profileTypes_->insert( new QRadioButton( tr( "one profile per formation" ), profileTypes_ )          , 2 );
         profileTypes_->setButton( 0 );
-        
+
         creationMode_ = new QHButtonGroup( tr( "Select creation mode: " ), box );
         creationMode_->setRadioButtonExclusive( true );
         creationMode_->insert( new QRadioButton( tr( "clear existing profiles" ), creationMode_ )     , 0 );
@@ -71,7 +71,7 @@ ProfileWizardDialog::ProfileWizardDialog( QWidget* parent, const Model& model, P
 
         grid->addWidget( box, 1, 0 );
     }
-    
+
     {
         QHBox* box = new QHBox( this );
         box->setMargin( 5 );

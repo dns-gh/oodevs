@@ -49,15 +49,15 @@ DecisionalStates::~DecisionalStates()
 // -----------------------------------------------------------------------------
 void DecisionalStates::DoUpdate( const MsgsSimToClient::MsgDecisionalState& message )
 {
-    static const std::string contact( "Contact" ); 
+    static const std::string contact( "Contact" );
     static const std::string sauvegarde( "eEtatDec_Sauvegarde" );
-    static const std::string echelon( "Echelon" ); 
+    static const std::string echelon( "Echelon" );
     static const std::string first     ( "eEtatEchelon_Premier" );
     static const std::string eclairage ( "eEtatEchelon_Eclairage" );
-    static const std::string etat   ( "EtatOps" ); 
+    static const std::string etat   ( "EtatOps" );
     static const std::string none      ( "eEtatDestruction_None" );
 
-    // $$$$ AGE 2007-05-31: 
+    // $$$$ AGE 2007-05-31:
     if( message.key() == contact )
         drawSauvegarde_ = message.value() == sauvegarde;
     else if( message.key() == echelon )

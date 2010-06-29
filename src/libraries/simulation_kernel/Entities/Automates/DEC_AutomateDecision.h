@@ -44,13 +44,13 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     template< typename Archive > friend  void save_construct_data( Archive& archive, const DEC_AutomateDecision* role, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, DEC_AutomateDecision* role, const unsigned int /*version*/ );
     void load( MIL_CheckPointInArchive&, const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;
     //@}
-    
+
     //! @name Operations
     //@{
     void Clean          ();
@@ -161,7 +161,7 @@ template< typename Archive >
 void save_construct_data( Archive& archive, const DEC_AutomateDecision* role, const unsigned int /*version*/ )
 {
     const DEC_DataBase* const database = &role->database_;
-    archive << role->pEntity_ 
+    archive << role->pEntity_
         << database;
 }
 

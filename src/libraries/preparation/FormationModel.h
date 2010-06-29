@@ -23,7 +23,7 @@ namespace kernel
 }
 
 namespace xml
-{ 
+{
     class xostream;
     class xistream;
 }

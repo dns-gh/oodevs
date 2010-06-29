@@ -66,7 +66,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
     , profileFactory_( *new ProfileFactory( controllers.controller_, *this ) )
     , scoreFactory_( *new ScoreFactory( controllers_.controller_, staticModel.indicators_, staticModel.gaugeTypes_ ) )
     , successFactorFactory_( *new SuccessFactorFactory( controllers_, *this, staticModel.successFactorActionTypes_ ) )
-    , drawingFactory_( *new gui::DrawerFactory( controllers.controller_, staticModel.drawings_ ) ) 
+    , drawingFactory_( *new gui::DrawerFactory( controllers.controller_, staticModel.drawings_ ) )
     , loaded_ ( false )
     , exercise_( *new Exercise( controllers.controller_ ) )
     , teams_( *new TeamsModel( controllers, teamFactory_ ) )
@@ -111,7 +111,7 @@ Model::~Model()
     delete &idManager_;
 }
 
-// ----------------------------------------------------------------------------- 
+// -----------------------------------------------------------------------------
 // Name: Model::Purge
 // Created: AGE 2006-04-20
 // -----------------------------------------------------------------------------
@@ -160,7 +160,7 @@ void Model::Load( const tools::ExerciseConfig& config )
         exercise_.Load( xis );
     }
     {
-        const std::string orbatFile = config.GetOrbatFile() ; 
+        const std::string orbatFile = config.GetOrbatFile() ;
         if( bfs::exists( bfs::path( orbatFile, bfs::native ) ) )
         {
             UpdateName( config.GetOrbatFile() );
@@ -174,7 +174,7 @@ void Model::Load( const tools::ExerciseConfig& config )
         {
             urban::WorldParameters world( directoryPath );
             urban_.Load( directoryPath, world );
-            const std::string urbanStateFile = config.GetUrbanStateFile() ; 
+            const std::string urbanStateFile = config.GetUrbanStateFile() ;
             if( bfs::exists( bfs::path( urbanStateFile, bfs::native ) ) )
             {
                 xml::xifstream xis( urbanStateFile );

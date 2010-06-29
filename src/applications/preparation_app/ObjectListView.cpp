@@ -22,7 +22,7 @@ ObjectListView::ObjectListView( QWidget* pParent, kernel::Controllers& controlle
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ObjectListView destructor
 // Created: SBO 2006-10-16

@@ -31,7 +31,7 @@ class ADN_CT_PointDistances
 {
 public:
 
-    ADN_CT_PointDistances(ADN_Point_GUI& tab) 
+    ADN_CT_PointDistances(ADN_Point_GUI& tab)
     : ADN_Connector_Table_ABC(tab,false)
     {}
 
@@ -46,7 +46,7 @@ public:
         tab_.setItem(i,0,pItemString=new ADN_TableItem_String(&tab_,obj));
         tab_.setItem(i,1,pItemInt=new ADN_TableItem_Int(&tab_,obj));
         pItemInt->GetValidator().setBottom( 0 );
-        
+
         // set table item properties
         pItemString->setEnabled(false);
         pItemString->setText(ADN_Tr::ConvertFromKeyPoint(static_cast<PointInfos*>(obj)->nTypeTerrain_, ADN_Tr::eToApp ).c_str());
@@ -54,7 +54,7 @@ public:
         // connect items & datas
         pItemInt->GetConnector().Connect(&static_cast<PointInfos*>(obj)->nDistance_);
     }
-    
+
 
 private:
     ADN_CT_PointDistances& operator=( const ADN_CT_PointDistances& );
@@ -151,7 +151,7 @@ void ADN_Point_GUI::AddNewElement( E_KeyPoint nKeyPoint )
 void ADN_Point_GUI::DeleteCurrentElement()
 {
     PointInfos* pCurComposante = (PointInfos*)GetCurrentData();
-    if ( pCurComposante )
+    if( pCurComposante )
         static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem(pCurComposante);
 }
 

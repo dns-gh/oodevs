@@ -42,7 +42,7 @@ ADN_Population_Wizard::ADN_Population_Wizard( QWidget* pParent, const char* szNa
     pFirstPage->SetCaptions( qApp->translate( "ADN_Population_Wizard", "New population creation" ), qApp->translate( "ADN_Population_Wizard", "Population" ) );
     pFirstPage_ = pFirstPage;
 
-    new ADN_Wizard_LastPage( this, qApp->translate( "ADN_Population_Wizard",  "Creation finished" ), 
+    new ADN_Wizard_LastPage( this, qApp->translate( "ADN_Population_Wizard",  "Creation finished" ),
         qApp->translate( "ADN_Population_Wizard", "Click \"Done\" to create the new population." ) );
 }
 

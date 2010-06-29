@@ -25,7 +25,7 @@ class DEC_Gen_Object;
 class DEC_ObjectFunctions
 {
 public:
-    
+
     static void RegisterObjectNames( xml::xistream& xis );
 
     //! @name Functions

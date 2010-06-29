@@ -106,6 +106,6 @@ void RoadFormation::Apply( Movable_ABC* movable )
         movable->Move( result_.back() );
         result_.pop_back();
     }
-    else 
+    else
         movable->Stop();
 }

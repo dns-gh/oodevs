@@ -34,8 +34,8 @@ public:
     virtual void ProcessAgentMovingInside( MIL_Agent_ABC& agent ) {}
     virtual void ProcessAgentInside      ( MIL_Agent_ABC& agent ) {}
     virtual void ProcessPopulationInside ( MIL_PopulationElement_ABC& population ) {}
-    virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( const MIL_Army_ABC& team ) { throw; }    
-    virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( const MIL_KnowledgeGroup& group ) { throw; } 
+    virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( const MIL_Army_ABC& team ) { throw; }
+    virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( const MIL_KnowledgeGroup& group ) { throw; }
     virtual const MIL_ObjectManipulator_ABC& operator()() const { throw; }
     virtual       MIL_ObjectManipulator_ABC& operator()() { throw; }
     virtual HLA_Object_ABC* GetHLAView() const { throw; }

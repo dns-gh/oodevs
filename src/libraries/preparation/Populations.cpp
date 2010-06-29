@@ -22,7 +22,7 @@ Populations::Populations()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Populations destructor
 // Created: SBO 2006-11-09

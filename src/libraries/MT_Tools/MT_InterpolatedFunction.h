@@ -68,10 +68,10 @@ public:
     {
         return knownData_.empty();
     }
-    
+
     TypeOut operator () ( const TypeIn& x ) const
     {
-        if ( knownData_.empty() )
+        if( knownData_.empty() )
             return (TypeOut)-1;
 
         // $$$$ AGE 2005-04-12: Use a dichotomy
@@ -79,12 +79,12 @@ public:
         while( it != knownData_.end() && it->first < x )
             ++it;
 
-        if ( it == knownData_.end() )
+        if( it == knownData_.end() )
             return useAfterDefault_ ? afterDefaultValue_ : knownData_.back().second;
 
-        if ( it->first == x )
+        if( it->first == x )
             return it->second;
-            
+
         if( it == knownData_.begin() )
             return useBeforeDefault_ ? beforeDefaultValue_ : it->second;
 
@@ -97,45 +97,45 @@ public:
     // $$$$ AGE 2005-04-12: Et c'est plutot GetMaxXForY ...
     TypeIn GetMaxYForX ( const TypeOut& y ) const
     {
-        if ( knownData_.empty() )
+        if( knownData_.empty() )
             return (TypeIn)0;
 
         CRIT_Points it1 = knownData_.rbegin();
 
-        if ( ( useAfterDefault_ && afterDefaultValue_ >= y ) || ( !useAfterDefault_ && it1->second >= y ) )
+        if( ( useAfterDefault_ && afterDefaultValue_ >= y ) || ( !useAfterDefault_ && it1->second >= y ) )
             return it1->first;
 
         for ( CRIT_Points it2 = it1++; it1 != knownData_.rend(); ++it1, ++it2 )
         {
-            if ( y <= it2->second )
+            if( y <= it2->second )
                 return it2->first;
 
             TypeIn rRes = interpolation_.InverseInterpolation( it1->first, it1->second, it2->first, it2->second, y );
-            if ( rRes >= it1->first && rRes <= it2->first && rRes >= (TypeIn)0 )
+            if( rRes >= it1->first && rRes <= it2->first && rRes >= (TypeIn)0 )
                 return rRes;
         }
-        
+
         return TypeIn();
     }
 
     // $$$$ JVT : Fonction un peu pourrie....
     TypeIn GetMinYForX ( const TypeOut& y ) const
     {
-        if ( knownData_.empty() )
+        if( knownData_.empty() )
             return (TypeIn)0;
-            
+
         CIT_Points it1 = knownData_.begin();
-        
-        if ( ( useBeforeDefault_ && beforeDefaultValue_ >= y ) || ( !useBeforeDefault_ && it1->second >= y ) )
+
+        if( ( useBeforeDefault_ && beforeDefaultValue_ >= y ) || ( !useBeforeDefault_ && it1->second >= y ) )
             return std::min( (TypeIn)0, it1->first );
-        
+
         for ( CIT_Points it2 = it1++; it1 != knownData_.end(); ++it1, ++it2 )
         {
-            if ( y <= it2->second )
+            if( y <= it2->second )
                 return it2->first;
-                
+
             TypeIn rRes = interpolation_.InverseInterpolation( it2->first, it2->second, it1->first, it1->second, y );
-            if ( rRes <= it1->first && rRes >= it2->first && rRes >= (TypeIn)0 )
+            if( rRes <= it1->first && rRes >= it2->first && rRes >= (TypeIn)0 )
                 return rRes;
         }
         return TypeIn();

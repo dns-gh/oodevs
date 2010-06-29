@@ -107,7 +107,7 @@ void FogLayer::CreateTexture()
 
     float colors[] = { 1, 1, 1, 1,
                        1, 1, 1, 1,
-                       0.8f, 0.8f, 0.8f, 1, 
+                       0.8f, 0.8f, 0.8f, 1,
                        0, 0, 0, 1 };
 
     glTexImage1D( GL_TEXTURE_1D, 0, GL_RGBA, 4, 0, GL_RGBA, GL_FLOAT, colors ) ;

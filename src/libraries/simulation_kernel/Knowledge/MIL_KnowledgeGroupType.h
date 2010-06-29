@@ -57,7 +57,7 @@ public:
     //@}
 
 private:
-   
+
     MIL_KnowledgeGroupType( const std::string& strName, xml::xistream& xis, double   timeFactor );
 
     //! @name Types

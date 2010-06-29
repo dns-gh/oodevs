@@ -78,7 +78,7 @@ bool PHY_RolePion_Reinforcement::CanReinforce() const
 {
     return !pion_.IsDead() && bExternalCanReinforce_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Reinforcement::CanBeReinforced
 // Created: NLD 2004-11-22
@@ -97,7 +97,7 @@ bool PHY_RolePion_Reinforcement::IsReinforcedBy( MIL_AgentPion& pion ) const
     for ( CIT_PionSet itPion = reinforcements_.begin(); itPion != reinforcements_.end(); ++itPion )
     {
         const MIL_AgentPion& reinforcement = **itPion;
-        if ( pion == reinforcement || reinforcement.GetRole< PHY_RolePion_Reinforcement >().IsReinforcedBy( pion ) )
+        if( pion == reinforcement || reinforcement.GetRole< PHY_RolePion_Reinforcement >().IsReinforcedBy( pion ) )
             return true;
     }
     return false;
@@ -109,7 +109,7 @@ bool PHY_RolePion_Reinforcement::IsReinforcedBy( MIL_AgentPion& pion ) const
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Reinforcement::Reinforce( MIL_AgentPion& pionToReinforce )
 {
-    if ( pionToReinforce == pion_ )
+    if( pionToReinforce == pion_ )
         return false;
 
     // Detection des boucles
@@ -140,7 +140,7 @@ void PHY_RolePion_Reinforcement::CancelReinforcement()
         pPionReinforced_->GetRole< PHY_RolePion_Reinforcement >().NotifyReinforcementRemoved( pion_ );
         pPionReinforced_ = 0;
         bHasChanged_ = true;
-    }    
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -178,7 +178,7 @@ void PHY_RolePion_Reinforcement::SendFullState( client::UnitAttributes& msg ) co
 {
     msg().set_pion_renforce( pPionReinforced_ ? pPionReinforced_->GetID() : 0 );
     if( !reinforcements_.empty() )
-    {   
+    {
         unsigned int i = 0;
         for( CIT_PionSet it = reinforcements_.begin(); it != reinforcements_.end(); ++it, ++i )
             msg().mutable_pions_renforcant()->add_elem()->set_oid( (**it).GetID() );
@@ -193,7 +193,7 @@ void PHY_RolePion_Reinforcement::SendChangedState( client::UnitAttributes& msg )
 {
     if( bHasChanged_ )
         SendFullState( msg );
-}   
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Reinforcement::NotifyReinforcementAdded
@@ -202,7 +202,7 @@ void PHY_RolePion_Reinforcement::SendChangedState( client::UnitAttributes& msg )
 void PHY_RolePion_Reinforcement::NotifyReinforcementAdded( MIL_AgentPion& reinforcement )
 {
     if( ! reinforcements_.insert( &reinforcement ).second )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );    
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
     bHasChanged_ = true;
 }
 

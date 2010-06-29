@@ -33,7 +33,7 @@ PopulationType::PopulationType( const TypeManager& typeManager, const std::strin
     : strName_ ( strName )
     , pModel_  ( 0 )
 {
-    try   
+    try
     {
         std::string strValue;
 

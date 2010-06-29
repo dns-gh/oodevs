@@ -81,7 +81,7 @@ void Profiling::Tick()
     }
     lastCall_ = now;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Profiling::Clear
 // Created: AGE 2007-04-13

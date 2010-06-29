@@ -83,7 +83,7 @@ void HLA_DirectFire::Execute() const
     MIL_Agent_ABC* pTarget = GetTarget();
     if( ! pTarget )
         return; // Normal behavior with more than 2 federates : the target may not be ours
-    
+
     const PHY_DotationCategory* pCategory = GetAmmunition();
     if( ! pCategory )
         return;
@@ -97,7 +97,7 @@ void HLA_DirectFire::Execute() const
     pFireResult->DecRef();
 }
 
-namespace 
+namespace
 {
     struct ComposanteTypeIsNot
     {

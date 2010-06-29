@@ -95,7 +95,7 @@ void AgentsModel::CreateAutomat( kernel::Entity_ABC& parent, const kernel::Autom
         }
     }
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: AgentsModel::CreateAutomat
 // Created: SBO 2006-10-09
@@ -109,7 +109,7 @@ void AgentsModel::CreateAutomat( xml::xistream& xis, kernel::Entity_ABC& parent,
         >> list( "lima"   , limits, &LimitsModel::CreateLima , *(Entity_ABC*)agent )
         >> list( "limit"  , limits, &LimitsModel::CreateLimit, *(Entity_ABC*)agent );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: AgentsModel::GetAutomat
 // Created: SBO 2006-10-09
@@ -118,7 +118,7 @@ kernel::Automat_ABC& AgentsModel::GetAutomat( unsigned long id )
 {
     return tools::Resolver< Automat_ABC >::Get( id );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: AgentsModel::FindAutomat
 // Created: SBO 2006-10-09

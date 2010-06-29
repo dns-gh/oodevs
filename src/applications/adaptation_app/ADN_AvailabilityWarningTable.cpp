@@ -20,7 +20,7 @@ class ADN_Connector_WarningTable
     : public ADN_Connector_Table_ABC
 {
 public:
-    ADN_Connector_WarningTable( ADN_AvailabilityWarningTable& tab ) 
+    ADN_Connector_WarningTable( ADN_AvailabilityWarningTable& tab )
         : ADN_Connector_Table_ABC( tab, true, "ADN_Connector_WarningTable" )
     {}
 
@@ -67,7 +67,7 @@ ADN_AvailabilityWarningTable::ADN_AvailabilityWarningTable( QWidget* pParent )
     // Create the connector.
     pConnector_ = new ADN_Connector_WarningTable( *this );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_AvailabilityWarningTable destructor
 // Created: SBO 2006-08-03

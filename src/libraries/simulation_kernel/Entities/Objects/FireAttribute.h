@@ -22,14 +22,14 @@
 */
 // Created: JCR 2008-05-30
 // =============================================================================
-class FireAttribute 
+class FireAttribute
     : public ObjectAttribute_ABC
     , public UpdatableAttribute_ABC
-{ 
+{
 public:
     //! @name Constructors/Destructor
     //@{
-             FireAttribute();    
+             FireAttribute();
     explicit FireAttribute( xml::xistream& xis );
     explicit FireAttribute( const Common::MsgMissionParameter_Value& attributes );
     virtual ~FireAttribute();
@@ -38,7 +38,7 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
@@ -75,8 +75,8 @@ public:
 
 private:
     //! @name Member data
-    //@{    
-    //Fire temperature    
+    //@{
+    //Fire temperature
     const MIL_FireClass*  pClass_;
     int                   heat_;
     unsigned int          timeOfLastUpdate_;

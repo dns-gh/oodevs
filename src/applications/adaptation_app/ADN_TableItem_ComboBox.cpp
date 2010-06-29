@@ -34,11 +34,11 @@ ADN_TableItem_ComboBox::ADN_TableItem_ComboBox( ADN_Table *table ,void* data )
 {
     setReplaceable( false );
 
-    if ( !fakeCombo ) 
+    if( !fakeCombo )
     {
-	    fakeComboWidget = new QWidget( 0, 0 );
-	    fakeCombo = new QComboBox( false, fakeComboWidget, 0 );
-	    fakeCombo->hide();
+        fakeComboWidget = new QWidget( 0, 0 );
+        fakeCombo = new QComboBox( false, fakeComboWidget, 0 );
+        fakeCombo->hide();
     }
 }
 
@@ -65,21 +65,21 @@ void ADN_TableItem_ComboBox::setStringList( const QStringList &l )
 
 
 //-----------------------------------------------------------------------------
-// Name: ADN_TableItem_ComboBox::insertItem 
+// Name: ADN_TableItem_ComboBox::insertItem
 // Created: JDY 03-07-22
 //-----------------------------------------------------------------------------
 void ADN_TableItem_ComboBox::insertItem ( const QString & t, int index )
 {
-    if ( index == -1 )
+    if( index == -1 )
         entries.push_back(t);
     else
     {
         int i=0;
         QStringList::iterator it=entries.begin();
         for ( ;it!=entries.end();++it ,++i)
-            if ( i == index )
+            if( i == index )
                 break;
-        if ( it == entries.end() )
+        if( it == entries.end() )
             entries.push_back(t);
         else
             entries.insert(it,t);
@@ -90,41 +90,41 @@ void ADN_TableItem_ComboBox::insertItem ( const QString & t, int index )
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_TableItem_ComboBox::insertItem 
+// Name: ADN_TableItem_ComboBox::insertItem
 // Created: JDY 03-09-10
 //-----------------------------------------------------------------------------
 void ADN_TableItem_ComboBox::insertItem ( ADN_TableItem_ComboBoxItem* item, int index )
 {
-    if ( !item )
+    if( !item )
         return;
 
     // insert string in combo
     insertItem( item->text() , index );
 
     // insert item in vector
-    if ( index == -1)
+    if( index == -1)
         vItems_.push_back(item);
     else
         vItems_.insert(vItems_.begin()+index,item);
-    
-    
+
+
 }
 
 
 //-----------------------------------------------------------------------------
-// Name: ADN_TableItem_ComboBox::changeItem 
+// Name: ADN_TableItem_ComboBox::changeItem
 // Created: JDY 03-09-10
 //-----------------------------------------------------------------------------
 void ADN_TableItem_ComboBox::changeItem ( const QString & t, int index )
 {
-    if ( index == -1)
+    if( index == -1)
         return;
     int i=0;
     QStringList::iterator it=entries.begin();
     for ( ;it!=entries.end();++it ,++i)
-        if ( i == index )
+        if( i == index )
             break;
-    if ( it == entries.end() )
+    if( it == entries.end() )
         return;
     else
         (*it)=t;
@@ -132,7 +132,7 @@ void ADN_TableItem_ComboBox::changeItem ( const QString & t, int index )
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_TableItem_ComboBox::removeItem 
+// Name: ADN_TableItem_ComboBox::removeItem
 // Created: JDY 03-07-22
 //-----------------------------------------------------------------------------
 void ADN_TableItem_ComboBox::removeItem ( int index )
@@ -141,14 +141,14 @@ void ADN_TableItem_ComboBox::removeItem ( int index )
     ADN_TableItem_ComboBoxItem* item=vItems_[index];
     vItems_.erase(vItems_.begin()+index );
     delete item;
-    
+
     // remove entrie
     int i=0;
     QStringList::iterator it=entries.begin();
     for ( ;it!=entries.end();++it ,++i)
-        if ( i == index )
+        if( i == index )
             break;
-    if ( it == entries.end() )
+    if( it == entries.end() )
         return;
     else
         entries.erase(it);
@@ -202,13 +202,13 @@ QWidget *ADN_TableItem_ComboBox::createEditor() const
 //-----------------------------------------------------------------------------
 void ADN_TableItem_ComboBox::setContentFromEditor( QWidget *w )
 {
-    if ( w->inherits( "QComboBox" ) ) {
-	QComboBox *cb = (QComboBox*)w;
-	entries.clear();
-	for ( int i = 0; i < cb->count(); ++i )
-	    entries << cb->text( i );
-	current = cb->currentItem();
-	setText( *entries.at( current ) );
+    if( w->inherits( "QComboBox" ) ) {
+    QComboBox *cb = (QComboBox*)w;
+    entries.clear();
+    for ( int i = 0; i < cb->count(); ++i )
+        entries << cb->text( i );
+    current = cb->currentItem();
+    setText( *entries.at( current ) );
     }
 }
 
@@ -218,21 +218,21 @@ void ADN_TableItem_ComboBox::setContentFromEditor( QWidget *w )
 // Created: JDY 03-07-21
 //-----------------------------------------------------------------------------
 void ADN_TableItem_ComboBox::paint( QPainter *p, const QColorGroup &cg,
-			   const QRect &cr, bool selected )
+               const QRect &cr, bool selected )
 {
     fakeCombo->resize( cr.width(), cr.height() );
 
     QColorGroup c( cg );
-    if ( selected ) {
-	c.setBrush( QColorGroup::Base, cg.brush( QColorGroup::Highlight ) );
-	c.setColor( QColorGroup::Text, cg.highlightedText() );
+    if( selected ) {
+    c.setBrush( QColorGroup::Base, cg.brush( QColorGroup::Highlight ) );
+    c.setColor( QColorGroup::Text, cg.highlightedText() );
     }
 
     table()->style().drawComplexControl( QStyle::CC_ComboBox, p, fakeCombo, fakeCombo->rect(), c );
 
     p->save();
     QRect textR = table()->style().querySubControlMetrics(QStyle::CC_ComboBox, fakeCombo,
-							 QStyle::SC_ComboBoxEditField);
+                             QStyle::SC_ComboBoxEditField);
     p->drawText( textR, wordWrap() ? ( alignment() | QTableItem::WordBreak ) : alignment(), *entries.at( current ) );
     p->restore();
 }
@@ -245,14 +245,14 @@ void ADN_TableItem_ComboBox::paint( QPainter *p, const QColorGroup &cg,
 void ADN_TableItem_ComboBox::setCurrentItem( int i )
 {
     QWidget *w = table()->cellWidget( row(), col() );
-    if ( w && w->inherits( "QComboBox" ) ) {
-	( (QComboBox*)w )->setCurrentItem( i );
-	current = i;
-	setText( ( (QComboBox*)w )->currentText() );
+    if( w && w->inherits( "QComboBox" ) ) {
+    ( (QComboBox*)w )->setCurrentItem( i );
+    current = i;
+    setText( ( (QComboBox*)w )->currentText() );
     } else {
-	current = i;
-	setText( *entries.at( i ) );
-	table()->updateCell( row(), col() );
+    current = i;
+    setText( *entries.at( i ) );
+    table()->updateCell( row(), col() );
     }
 }
 
@@ -264,8 +264,8 @@ void ADN_TableItem_ComboBox::setCurrentItem( int i )
 void ADN_TableItem_ComboBox::setCurrentItem( const QString &s )
 {
     int i = entries.findIndex( s );
-    if ( i != -1 )
-	setCurrentItem( i );
+    if( i != -1 )
+    setCurrentItem( i );
 }
 
 
@@ -276,8 +276,8 @@ void ADN_TableItem_ComboBox::setCurrentItem( const QString &s )
 int ADN_TableItem_ComboBox::currentItem() const
 {
     QWidget *w = table()->cellWidget( row(), col() );
-    if ( w && w->inherits( "QComboBox" ) )
-	return ( (QComboBox*)w )->currentItem();
+    if( w && w->inherits( "QComboBox" ) )
+    return ( (QComboBox*)w )->currentItem();
     return current;
 }
 
@@ -289,8 +289,8 @@ int ADN_TableItem_ComboBox::currentItem() const
 QString ADN_TableItem_ComboBox::currentText() const
 {
     QWidget *w = table()->cellWidget( row(), col() );
-    if ( w && w->inherits( "QComboBox" ) )
-	return ( (QComboBox*)w )->currentText();
+    if( w && w->inherits( "QComboBox" ) )
+    return ( (QComboBox*)w )->currentText();
     return *entries.at( current );
 }
 
@@ -302,8 +302,8 @@ QString ADN_TableItem_ComboBox::currentText() const
 int ADN_TableItem_ComboBox::count() const
 {
     QWidget *w = table()->cellWidget( row(), col() );
-    if ( w && w->inherits( "QComboBox" ) )
-	return ( (QComboBox*)w )->count();
+    if( w && w->inherits( "QComboBox" ) )
+    return ( (QComboBox*)w )->count();
     return (int)entries.count();    //### size_t/int cast
 }
 
@@ -315,8 +315,8 @@ int ADN_TableItem_ComboBox::count() const
 QString ADN_TableItem_ComboBox::text( int i ) const
 {
     QWidget *w = table()->cellWidget( row(), col() );
-    if ( w && w->inherits( "QComboBox" ) )
-	return ( (QComboBox*)w )->text( i );
+    if( w && w->inherits( "QComboBox" ) )
+    return ( (QComboBox*)w )->text( i );
     return *entries.at( i );
 }
 
@@ -371,7 +371,7 @@ int ADN_TableItem_ComboBox::FindNdx( const ADN_TableItem_ComboBoxItem* item ) co
 {
     int ndx=0;
     for ( CIT_Ptr_TableItem_ComboBoxItem_Vector it=vItems_.begin();it!=vItems_.end();++it,++ndx)
-        if ( (*it)==item)
+        if( (*it)==item)
             return ndx;
     return -1;
 }
@@ -385,7 +385,7 @@ int ADN_TableItem_ComboBox::FindNdx( void * data) const
 {
     int ndx=0;
     for ( CIT_Ptr_TableItem_ComboBoxItem_Vector it=vItems_.begin();it!=vItems_.end();++it,++ndx)
-        if ( (*it) && (*it)->GetData() == data)
+        if( (*it) && (*it)->GetData() == data)
             return ndx;
     return -1;
 }

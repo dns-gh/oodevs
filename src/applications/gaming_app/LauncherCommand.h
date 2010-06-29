@@ -19,7 +19,7 @@ namespace gui
 
 namespace tools
 {
-    class ExerciseConfig ; 
+    class ExerciseConfig ;
 }
 
 class CommandHandler;
@@ -60,8 +60,8 @@ private:
     //! @name Member data
     //@{
     CommandHandler& handler_;
-    gui::LinkInterpreter_ABC& interpreter_ ; 
-    tools::ExerciseConfig& config_ ; 
+    gui::LinkInterpreter_ABC& interpreter_ ;
+    tools::ExerciseConfig& config_ ;
     //@}
 };
 

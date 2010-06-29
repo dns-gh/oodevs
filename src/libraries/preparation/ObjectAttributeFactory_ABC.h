@@ -31,15 +31,15 @@ namespace kernel
 
 class ObjectAttributeFactory_ABC
 {
-public:    
+public:
     //! @name Constructors/Destructor
     //@{
             ObjectAttributeFactory_ABC() {}
     virtual ~ObjectAttributeFactory_ABC() {}
-    //@}    
+    //@}
 
     //! @name Registrer
-    //@{    
+    //@{
     virtual void Create( const std::string& attribute, tools::SortedInterfaceContainer< kernel::Extension_ABC >& result, kernel::PropertiesDictionary& dico, xml::xistream& xis ) = 0;
     //@}
 

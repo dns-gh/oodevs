@@ -57,7 +57,7 @@ public:
     virtual const PHY_HumanRank&  GetRank         () const = 0;
     virtual const PHY_HumanWound& GetWound        () const = 0;
           virtual E_Location      GetLocation     () const = 0;
-          virtual bool            IsUsable        () const = 0;  
+          virtual bool            IsUsable        () const = 0;
           virtual bool            IsDead          () const = 0;
           virtual bool            IsWounded       () const = 0;
           virtual bool            IsContaminated  () const = 0;
@@ -76,7 +76,7 @@ public:
     virtual void Evacuate      ( MIL_AutomateLOG& destinationTC2 ) = 0;
     virtual bool NeedMedical   () const = 0;
     virtual void SetMedicalState( PHY_MedicalHumanState* pMedicalState ) = 0;
-    
+
     virtual void NotifyHandledByMedical () = 0;
     virtual bool NotifyBackToWar        () = 0;
     virtual void HealMentalDisease      () = 0;

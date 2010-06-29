@@ -31,7 +31,7 @@ DotationsItem::DotationsItem( kernel::Controller& controller, kernel::Entity_ABC
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DotationsItem destructor
 // Created: SBO 2006-11-10

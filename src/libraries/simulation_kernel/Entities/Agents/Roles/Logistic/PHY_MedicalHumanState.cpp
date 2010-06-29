@@ -76,7 +76,7 @@ PHY_MedicalHumanState::PHY_MedicalHumanState()
 // -----------------------------------------------------------------------------
 PHY_MedicalHumanState::~PHY_MedicalHumanState()
 {
-    SendMsgDestruction();    
+    SendMsgDestruction();
 }
 
 // -----------------------------------------------------------------------------
@@ -153,7 +153,7 @@ const MT_Vector2D& PHY_MedicalHumanState::GetPionPosition() const
 // Created: NLD 2004-12-24
 // -----------------------------------------------------------------------------
 void PHY_MedicalHumanState::NotifyHandledByMedical()
-{   
+{
     assert( pHuman_ );
     pHuman_->NotifyHandledByMedical();
     bShouldGoBackToWar_ = !( pHuman_->IsWounded() || pHuman_->IsContaminated() );
@@ -167,7 +167,7 @@ bool PHY_MedicalHumanState::GoBackToWar()
 {
     if( !bShouldGoBackToWar_ )
         return false;
-        
+
     return pHuman_->NotifyBackToWar();
 }
 
@@ -232,7 +232,7 @@ void PHY_MedicalHumanState::SendFullState() const
 
     asn().set_blessure( pHuman_->GetWound().GetAsnID() );
     asn().set_blesse_mental( pHuman_->IsMentalDiseased() );
-    asn().set_contamine_nbc( pHuman_->IsContaminated() );    
+    asn().set_contamine_nbc( pHuman_->IsContaminated() );
     asn().set_diagnostique_effectue( bDiagnosed_ );
 
     asn.Send( NET_Publisher_ABC::Publisher() );
@@ -302,7 +302,7 @@ void PHY_MedicalHumanState::SendMsgCreation() const
     asn().set_contamine_nbc( pHuman_->IsContaminated() );
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalHumanState::SendMsgDestruction
 // Created: NLD 2004-12-29
@@ -310,7 +310,7 @@ void PHY_MedicalHumanState::SendMsgCreation() const
 void PHY_MedicalHumanState::SendMsgDestruction() const
 {
     assert( pPion_ );
-    
+
     client::LogMedicalHandlingDestruction asn;
     asn().set_oid_consigne( nID_ );
     asn().set_oid_pion( pPion_->GetID() );
@@ -335,7 +335,7 @@ void PHY_MedicalHumanState::SetConsign( PHY_MedicalConsign_ABC* pConsign )
 {
     if( pConsign == pConsign_ )
         return;
-        
+
     pConsign_    = pConsign;
     bHasChanged_ = true;
 }

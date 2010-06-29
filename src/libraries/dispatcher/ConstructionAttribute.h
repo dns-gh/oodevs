@@ -43,7 +43,7 @@ private:
     unsigned int nPercentageConstruction_;
     unsigned int nNbrDotationForConstruction_;
     //@}
-    
+
 };
 
 }

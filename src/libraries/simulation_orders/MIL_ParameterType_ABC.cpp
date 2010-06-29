@@ -148,7 +148,7 @@ MIL_ParameterType_ABC::MIL_ParameterType_ABC( const std::string& strName )
     : strName_( strName )
 {
 }
-   
+
 //-----------------------------------------------------------------------------
 // Name: MIL_ParameterType_ABC destructor
 // Created: NLD 2006-11-19

@@ -82,7 +82,7 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestNonExistingFunction )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestExtractorTypeIsImplicit )
 {
-    const std::string expected = 
+    const std::string expected =
         "<indicator>"
             "<extract function='operational-state' id='1'/>"
         "</indicator>";
@@ -95,7 +95,7 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestExtractorTypeIsImplicit )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestFunctionNameIsCaseInsensitive )
 {
-    const std::string expected = 
+    const std::string expected =
         "<indicator>"
             "<extract function='operational-state' id='1'/>"
         "</indicator>";
@@ -108,7 +108,7 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestFunctionNameIsCaseInsensitive )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestResultFunctionsHaveNoId )
 {
-    const std::string expected = 
+    const std::string expected =
         "<indicator>"
             "<extract function='operational-state' id='1'/>"
             "<result function='indicator' input='1' name='test' type='float'/>"
@@ -122,7 +122,7 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestResultFunctionsHaveNoId )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestFunctionWithReturnTypeDeducedFromParameterType )
 {
-    const std::string expected = 
+    const std::string expected =
         "<indicator>"
             "<constant id='$values' type='list(string)' value='va,lu,es'/>"
             "<reduce function='mean' id='1' input='$values' type='string'/>"
@@ -137,7 +137,7 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestFunctionWithReturnTypeDeducedFromP
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestVariableReferenceIsReplacedByValue )
 {
-    const std::string expected = 
+    const std::string expected =
         "<indicator>"
             "<extract equipments='eq1,eq2,eq3' function='equipments' id='1' states='state1,state2,state3'/>"
         "</indicator>";
@@ -152,7 +152,7 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestVariableReferenceIsReplacedByValue
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestUnreferencedVariableIsNotDeclared )
 {
-    const std::string expected = 
+    const std::string expected =
         "<indicator>"
             "<extract equipments='eq1,eq2,eq3' function='equipments' id='1' states='state1,state2,state3'/>"
         "</indicator>";
@@ -168,7 +168,7 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestUnreferencedVariableIsNotDeclared 
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestVariableReferencedInInputNeedsDeclaration )
 {
-    const std::string expected = 
+    const std::string expected =
         "<indicator>"
             "<constant id='$values' type='list(float)' value='va,lu,es'/>"
             "<reduce function='sum' id='1' input='$values' type='float'/>"
@@ -183,7 +183,7 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestVariableReferencedInInputNeedsDecl
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestNestedFunctions )
 {
-    const std::string expected = 
+    const std::string expected =
         "<indicator>"
             "<extract dotations='res,our,ces' function='resources' id='1'/>"
             "<transform function='domain' id='2' input='1' select='un,its' type='int'/>"
@@ -200,7 +200,7 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestNestedFunctions )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestMultipleReferencedVariableIsDeclaredOnlyOnce )
 {
-    const std::string expected = 
+    const std::string expected =
         "<indicator>"
             "<constant id='$loc' type='position' value='00UTM0000000000'/>"
             "<transform function='distance' id='1' input='$loc,$loc' type='float'/>"
@@ -215,7 +215,7 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestMultipleReferencedVariableIsDeclar
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestMultipleReferencedVariableIsDeclaredBeforeFirstReference )
 {
-    const std::string expected = 
+    const std::string expected =
         "<indicator>"
             "<constant id='$Zone' type='zone' value='circle(00UTM0000000000,00UTM0000000000)'/>"
             "<extract function='position' id='1'/>"
@@ -238,7 +238,7 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestMultipleReferencedVariableIsDeclar
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestMultipleInputOrder )
 {
-    const std::string expected = 
+    const std::string expected =
         "<indicator>"
             "<constant id='$loc1' type='position' value='00UTM0000000000'/>"
             "<constant id='$loc2' type='position' value='00UTM0000000001'/>"
@@ -255,7 +255,7 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestMultipleInputOrder )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestOperationalState )
 {
-    const std::string expected = 
+    const std::string expected =
         "<indicator>"
             "<extract function='operational-state' id='1'/>"
             "<reduce function='select' id='2' input='1' key='42' type='float'/>"
@@ -270,7 +270,7 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestOperationalState )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestMeanOperationalState )
 {
-    const std::string expected = 
+    const std::string expected =
         "<indicator>"
             "<extract function='operational-state' id='1'/>"
             "<transform function='domain' id='2' input='1' select='un,its' type='float'/>"
@@ -286,7 +286,7 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestMeanOperationalState )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestDistanceBetweenUnits )
 {
-    const std::string expected = 
+    const std::string expected =
         "<indicator>"
             "<extract function='position' id='1'/>"
             "<reduce function='select' id='2' input='1' key='42' type='position'/>"
@@ -305,7 +305,7 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestDistanceBetweenUnits )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestNumberOfBreakdown )
 {
-    const std::string expected = 
+    const std::string expected =
         "<indicator>"
             "<extract function='maintenance-handling-unit' id='1'/>"
             "<transform function='is-one-of' id='2' input='1' select='un,its' type='bool'/>"
@@ -323,7 +323,7 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestNumberOfBreakdown )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestNumberOfDirectFire )
 {
-    const std::string expected = 
+    const std::string expected =
         "<indicator>"
             "<extract function='direct-fire-unit' id='1'/>"
             "<reduce function='count' id='2' input='1' type='unsigned'/>"
@@ -337,7 +337,7 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestNumberOfDirectFire )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestComponentDamages )
 {
-    const std::string expected = 
+    const std::string expected =
         "<indicator>"
             "<extract components='com,pon,ents' function='fire-component-damage' id='1'/>"
             "<reduce function='sum' id='2' input='1' type='float'/>"
@@ -352,7 +352,7 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestComponentDamages )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestInflictedDamageFromDirectFiresFromZone )
 {
-    const std::string expected = 
+    const std::string expected =
         "<indicator>"
             "<constant id='$Zone' type='zone' value='circle(00UTM0000000000,00UTM0000000000)'/>"
             "<extract function='position' id='1'/>"
@@ -374,7 +374,7 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestInflictedDamageFromDirectFiresFrom
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestTotalResourcesForUnits )
 {
-    const std::string expected = 
+    const std::string expected =
         "<indicator>"
             "<extract dotations='dot,ati,ons' function='resources' id='1'/>"
             "<transform function='domain' id='2' input='1' select='un,its' type='int'/>"
@@ -391,7 +391,7 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestTotalResourcesForUnits )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestResourceConsumptionsForUnits )
 {
-    const std::string expected = 
+    const std::string expected =
         "<indicator>"
             "<constant id='4' type='float' value='0'/>"
             "<extract dotations='res,our,ces' function='resources' id='1'/>"
@@ -414,7 +414,7 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestResourceConsumptionsForUnits )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestEquipmentStatusForUnits )
 {
-    const std::string expected = 
+    const std::string expected =
         "<indicator>"
             "<extract equipments='11' function='equipments' id='1' states='prisoner,repairable,repairing,unavailable'/>"
             "<transform function='domain' id='2' input='1' select='14,22,23,24,15,16,17,18,25,26,20,21' type='unsigned long'/>"
@@ -433,7 +433,7 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestEquipmentStatusForUnits )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestHumansStatusForUnits )
 {
-    const std::string expected = 
+    const std::string expected =
         "<indicator>"
             "<extract function='humans' id='1' ranks='officer,sub-officer,troopers' states='dead'/>"
             "<transform function='domain' id='2' input='1' select='14,22,23,24,15,16,17,18,25,26,20,21' type='unsigned long'/>"
@@ -452,7 +452,7 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestHumansStatusForUnits )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestUnitDetection )
 {
-    const std::string expected = 
+    const std::string expected =
         "<indicator>"
             "<extract detected='69' function='detecting-unit' id='1' visibility='detected,recognized,identified'/>"
             "<transform function='domain' id='2' input='1' select='42,51' type='unsigned long'/>"

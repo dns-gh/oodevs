@@ -70,7 +70,7 @@ private:
     const MIL_Object_ABC*    pObject_;
           MIL_Agent_ABC*         pPion_;
           bool                   bConsumptionReserved_;
-          T_ComposanteDataVector workingComposantes_;    
+          T_ComposanteDataVector workingComposantes_;
 };
 
 

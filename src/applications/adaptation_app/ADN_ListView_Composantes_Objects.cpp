@@ -89,7 +89,7 @@ void ADN_ListView_Composantes_Objects::ConnectItem( bool bConnect )
 
     ObjectInfos* pInfos = (ObjectInfos*)pCurData_;
     ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Composantes_GUI::eNbrObjGuiElements );
-    
+
     vItemConnectors_[ADN_Composantes_GUI::eInitialBuildTime]->Connect( &pInfos->initialBuildTime_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eInitialDestructionTime]->Connect( &pInfos->initialDestructionTime_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eCoeffBuildTime]->Connect( &pInfos->coeffBuildTime_, bConnect );
@@ -165,14 +165,14 @@ void ADN_ListView_Composantes_Objects::OnContextMenu( const QPoint& pt )
 bool ADN_ListView_Composantes_Objects::Contains( const ADN_Objects_Data::ObjectInfos* pInfo )
 {
     QListViewItemIterator it( this );
-    while ( it.current() != 0 ) 
+    while ( it.current() != 0 )
     {
         ADN_ListViewItem* pCurr = (ADN_ListViewItem*)it.current();
         ADN_Composantes_Data::ObjectInfos* pData = static_cast< ADN_Composantes_Data::ObjectInfos* >( pCurr->GetData() );
-        if ( pData->ptrObject_.GetData() == pInfo )
+        if( pData->ptrObject_.GetData() == pInfo )
             return true;
         ++it;
     }
-    return false;    
+    return false;
 }
 

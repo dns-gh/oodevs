@@ -21,7 +21,7 @@ MIL_ParameterType_Numeric::MIL_ParameterType_Numeric()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_Numeric destructor
 // Created: SBO 2006-11-27

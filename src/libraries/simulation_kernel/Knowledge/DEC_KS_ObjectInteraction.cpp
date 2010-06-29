@@ -60,7 +60,7 @@ DEC_KS_ObjectInteraction::~DEC_KS_ObjectInteraction()
 // Name: template< typename Archive > void DEC_KnowledgeBlackBoard_AgentPion::serialize
 // Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
-template< typename Archive > 
+template< typename Archive >
 void DEC_KS_ObjectInteraction::serialize( Archive& archive, const unsigned int )
 {
     archive & boost::serialization::base_object< DEC_KnowledgeSource_ABC >( *this )
@@ -86,7 +86,7 @@ void DEC_KS_ObjectInteraction::Prepare()
 DEC_Knowledge_ObjectPerception& DEC_KS_ObjectInteraction::GetKnowledgeObjectPerception( MIL_Object_ABC& object ) const
 {
     assert( pBlackBoard_ );
-    
+
     DEC_Knowledge_ObjectPerception* pKnowledge = pBlackBoard_->GetKnowledgeObjectPerceptionContainer().GetKnowledgeObjectPerception( object );
     if( !pKnowledge )
         pKnowledge = &pBlackBoard_->GetKnowledgeObjectPerceptionContainer().CreateKnowledgeObjectPerception( pBlackBoard_->GetPion(), object );
@@ -100,7 +100,7 @@ DEC_Knowledge_ObjectPerception& DEC_KS_ObjectInteraction::GetKnowledgeObjectPerc
 DEC_Knowledge_ObjectCollision& DEC_KS_ObjectInteraction::GetKnowledgeObjectCollision( MIL_Object_ABC& object ) const
 {
     assert( pBlackBoard_ );
-    
+
     DEC_Knowledge_ObjectCollision* pKnowledge = pBlackBoard_->GetKnowledgeObjectCollisionContainer().GetKnowledgeObjectCollision( object );
     if( !pKnowledge )
         pKnowledge = &pBlackBoard_->GetKnowledgeObjectCollisionContainer().CreateKnowledgeObjectCollision( pBlackBoard_->GetPion(), object );
@@ -120,10 +120,10 @@ void DEC_KS_ObjectInteraction::Talk( int /*currentTimeStep*/ )
         if( object.IsMarkedForDestruction() )
             continue;
         DEC_Knowledge_ObjectPerception& knowledge = GetKnowledgeObjectPerception( object );
-        knowledge.Update( PHY_PerceptionLevel::identified_ ); 
+        knowledge.Update( PHY_PerceptionLevel::identified_ );
     }
     objectInteractions_.clear();
-        
+
     // Collision with objects
     for( CIT_ObjectCollisionVector itCollision = objectCollisions_.begin(); itCollision != objectCollisions_.end(); ++itCollision )
     {
@@ -131,7 +131,7 @@ void DEC_KS_ObjectInteraction::Talk( int /*currentTimeStep*/ )
         if( object.IsMarkedForDestruction() )
             continue;
         DEC_Knowledge_ObjectCollision& knowledge = GetKnowledgeObjectCollision( object );
-        knowledge.Update( itCollision->second ); 
+        knowledge.Update( itCollision->second );
     }
     objectCollisions_.clear();
 }
@@ -157,8 +157,8 @@ void DEC_KS_ObjectInteraction::Clean()
 {
     // Remove all invalid knowledges
     assert( pBlackBoard_ );
-    class_mem_fun_void_t< DEC_KS_ObjectInteraction, DEC_Knowledge_ObjectCollision> method( & DEC_KS_ObjectInteraction::CleanKnowledgeObjectCollision, *this );        
-    pBlackBoard_->GetKnowledgeObjectCollisionContainer().ApplyOnKnowledgesObjectCollision( method );    
+    class_mem_fun_void_t< DEC_KS_ObjectInteraction, DEC_Knowledge_ObjectCollision> method( & DEC_KS_ObjectInteraction::CleanKnowledgeObjectCollision, *this );
+    pBlackBoard_->GetKnowledgeObjectCollisionContainer().ApplyOnKnowledgesObjectCollision( method );
 }
 
 // -----------------------------------------------------------------------------
@@ -167,7 +167,7 @@ void DEC_KS_ObjectInteraction::Clean()
 // -----------------------------------------------------------------------------
 void DEC_KS_ObjectInteraction::NotifyObjectInteraction( MIL_Object_ABC& object )
 {
-    objectInteractions_.push_back( &object );    
+    objectInteractions_.push_back( &object );
 }
 
 // -----------------------------------------------------------------------------

@@ -37,7 +37,7 @@ ADN_MissionParameterType::ADN_MissionParameterType( ADN_Table* parent, void* dat
 {
     pConnector_ = new ADN_Private_EnumConnector( *this );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_MissionParameterType destructor
 // Created: SBO 2006-12-05

@@ -65,14 +65,14 @@ void DEC_Knowledge_RapFor_ABC::ApplyValue( MT_Float rTotalFightScoreFriend, MT_F
     MT_Float rNewRapForValue = std::numeric_limits< MT_Float >::max();
     if( rTotalFightScoreEnemy != 0. )
         rNewRapForValue = rTotalFightScoreFriend / rTotalFightScoreEnemy;
-    
+
     // Bound the value between 0.2 and 5.0
     static MT_Float rRapForMidValue_ = ( rRapForBoundMax_ - rRapForBoundMin_ ) / 2;
     if( rNewRapForValue < 1. )
         rNewRapForValue = ( (rRapForMidValue_ - rRapForBoundMin_) * rNewRapForValue ) + rRapForBoundMin_;
     else
         rNewRapForValue = std::min( rNewRapForValue + (rRapForMidValue_ - 1), rRapForBoundMax_ );
-    
+
     if( rNewRapForValue <= rRapForValue_ )
         rRapForValue_ = rNewRapForValue;
     else
@@ -86,7 +86,7 @@ void DEC_Knowledge_RapFor_ABC::ApplyValue( MT_Float rTotalFightScoreFriend, MT_F
 MT_Float DEC_Knowledge_RapFor_ABC::GetValue()
 {
     Update();
-    return rRapForValue_;    
+    return rRapForValue_;
 }
 
 // -----------------------------------------------------------------------------

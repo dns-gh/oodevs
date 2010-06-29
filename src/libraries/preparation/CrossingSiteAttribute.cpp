@@ -77,7 +77,7 @@ void CrossingSiteAttribute::SetWidth( unsigned int value )
 {
     width_.value_ = value;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: CrossingSiteAttribute::SetDepth
 // Created: SBO 2006-09-15
@@ -86,7 +86,7 @@ void CrossingSiteAttribute::SetDepth( unsigned int value )
 {
     depth_.value_ = value;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: CrossingSiteAttribute::SetFlowSpeed
 // Created: SBO 2006-09-15
@@ -95,7 +95,7 @@ void CrossingSiteAttribute::SetFlowSpeed( unsigned int value )
 {
     speed_.value_ = value;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: CrossingSiteAttribute::SetConstruction
 // Created: SBO 2006-09-15

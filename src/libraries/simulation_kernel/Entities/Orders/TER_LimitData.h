@@ -43,7 +43,7 @@ public:
     //@}
 
 private:
-    //! @name 
+    //! @name
     //@{
     class DistanceData
     {

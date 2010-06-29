@@ -198,7 +198,7 @@ void ReplayPlugin::SkipToFrame( unsigned frame )
     asn().set_tick( loader_.GetCurrentTick() );
     if( frame < loader_.GetTickNumber() )
     {
-        asn().set_tick( frame );    
+        asn().set_tick( frame );
         asn().set_error_code( MsgsSimToClient::ControlAck_ErrorCode_no_error );
         MT_LOG_INFO_MSG( "Skipping to frame " << frame );
     }

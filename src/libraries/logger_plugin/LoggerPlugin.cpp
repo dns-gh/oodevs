@@ -109,7 +109,7 @@ bool LoggerPlugin::Initialize()
             if( !file_ )
             {
                 file_ = new std::ofstream( filename_.c_str() );
-                if ( !file_ || !*file_ || !file_->is_open() )
+                if( !file_ || !*file_ || !file_->is_open() )
                     enabled_ = false;
             }
         }
@@ -211,7 +211,7 @@ void LoggerPlugin::Receive( const MsgsSimToClient::MsgSimToClient& message )
 void LoggerPlugin::FormatMission( const char* name, int id, int mission )
 {
     if( mission )
-        *file_ << date_ << " Mission - " << name << "[" << id << "] : " 
+        *file_ << date_ << " Mission - " << name << "[" << id << "] : "
                << staticModel_.types_.tools::Resolver< kernel::MissionType >::Get( mission ).GetName() << std::endl;
     else
         *file_ << date_ << " Mission - " << name << "[" << id << "] : Mission cancelled." << std::endl;

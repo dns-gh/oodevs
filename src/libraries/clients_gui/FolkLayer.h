@@ -60,7 +60,7 @@ private:
     //@{
     virtual void NotifyUpdated( const kernel::ModelLoaded& modelLoaded );
     void LoadGraph( const std::string& graph );
-    void UpdateGradient(); 
+    void UpdateGradient();
     //@}
 
     //! @name Types

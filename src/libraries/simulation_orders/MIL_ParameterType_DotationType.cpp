@@ -21,7 +21,7 @@ MIL_ParameterType_DotationType::MIL_ParameterType_DotationType()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_DotationType destructor
 // Created: SBO 2006-11-27
@@ -30,7 +30,7 @@ MIL_ParameterType_DotationType::~MIL_ParameterType_DotationType()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_DotationType::Copy
 // Created: SBO 2006-11-27

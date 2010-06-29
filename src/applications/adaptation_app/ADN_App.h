@@ -20,7 +20,7 @@ class ADN_Config;
 */
 // Created: APE 2004-12-02
 // =============================================================================
-class ADN_App 
+class ADN_App
 : public Application_ABC
 {
     MT_COPYNOTALLOWED( ADN_App );
@@ -38,7 +38,7 @@ public:
     static ADN_App* pApplication_;
 
 private:
-    ADN_MainWindow* pMainWindow_; 
+    ADN_MainWindow* pMainWindow_;
     ADN_Config*     config_;
 };
 

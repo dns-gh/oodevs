@@ -39,11 +39,11 @@ ADN_Breakdown_Wizard::ADN_Breakdown_Wizard( QWidget* pParent, const char* szName
 
     ADN_Breakdowns_Data::T_BreakdownInfoVector& breakdowns = ADN_Workspace::GetWorkspace().GetBreakdowns().GetData().vBreakdowns_;
     ADN_Wizard_FirstPage_Default<BreakdownInfo>* pFirstPage = new ADN_Wizard_FirstPage_Default<BreakdownInfo>( breakdowns, this );
-    pFirstPage->SetCaptions( qApp->translate( "ADN_Breakdown_Wizard", "New breakdown creation" ), 
+    pFirstPage->SetCaptions( qApp->translate( "ADN_Breakdown_Wizard", "New breakdown creation" ),
         qApp->translate( "ADN_Breakdown_Wizard",  "Breakdowns" ) );
     pFirstPage_ = pFirstPage;
 
-    new ADN_Wizard_LastPage( this,qApp->translate( "ADN_Breakdown_Wizard", "Creation finished" ), 
+    new ADN_Wizard_LastPage( this,qApp->translate( "ADN_Breakdown_Wizard", "Creation finished" ),
         qApp->translate( "ADN_Breakdown_Wizard",  "Click \"Done\" to create the new breakdown." ) );
 }
 

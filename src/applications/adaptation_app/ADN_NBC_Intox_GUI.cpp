@@ -25,7 +25,7 @@ namespace
     public:
         explicit ADN_NBC_Intox_Connector( T_ConnectorVector& itemConnectors ) : vItemConnectors_( itemConnectors ) {}
         virtual ~ADN_NBC_Intox_Connector() {}
-    
+
         virtual void Connect( ADN_Ref_ABC* pTarget, bool bConnect )
         {
             ADN_NBC_Datas::NbcIntoxInfos* pInfos = (ADN_NBC_Datas::NbcIntoxInfos*)pTarget;
@@ -82,7 +82,7 @@ ADN_NBC_Intox_GUI::ADN_NBC_Intox_GUI( QWidget* pParent )
 
     pConnector_ = new ADN_NBC_Intox_Connector( vInfosConnectors_ );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_NBC_Intox_GUI destructor
 // Created: SBO 2006-10-30
@@ -92,4 +92,4 @@ ADN_NBC_Intox_GUI::~ADN_NBC_Intox_GUI()
     delete pConnector_;
 }
 
-    
+

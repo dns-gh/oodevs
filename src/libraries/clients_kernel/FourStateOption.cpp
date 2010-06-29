@@ -42,7 +42,7 @@ QString FourStateOption::OnName() {
     static const QString name = tools::translate( "Fourstate", "On" );
     return name;
 }
- 
+
 QString FourStateOption::SelectedName() {
     static const QString name = tools::translate( "Fourstate", "Selected" );
     return name;

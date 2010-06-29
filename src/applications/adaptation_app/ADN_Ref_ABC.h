@@ -33,7 +33,7 @@ class ADN_Ref_ABC
 public:
     explicit ADN_Ref_ABC( const char* szName = 0 );
     virtual ~ADN_Ref_ABC();
-    
+
     //! @name Connection
     //@{
     virtual void    Connect( ADN_Ref_ABC* pTarget, bool bConnect );
@@ -145,7 +145,7 @@ bool ADN_Ref_ABC::SlotsBlocked() const
 inline
 void ADN_Ref_ABC::BlockSlots( bool bBlock )
 {
-    bSlotsBlocked_ = bBlock; 
+    bSlotsBlocked_ = bBlock;
 }
 
 #endif // __ADN_Ref_ABC_h_

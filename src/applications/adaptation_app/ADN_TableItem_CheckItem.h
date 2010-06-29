@@ -61,18 +61,18 @@ public:
     /** @name Methods used by Connector */
     //-------------------------------------------------------------------------
     //@{
-	void setChecked( bool b );
+    void setChecked( bool b );
     //@}
 
-    
+
 protected:
 
     virtual void        DoValueChanged();
 
 private:
-	ADN_BoolEditor*							pEditor_;
-//	QCheckBox*								pEditor_;
-	bool									bIsChecked_;
+    ADN_BoolEditor*                            pEditor_;
+//    QCheckBox*                                pEditor_;
+    bool                                    bIsChecked_;
 
 };
 

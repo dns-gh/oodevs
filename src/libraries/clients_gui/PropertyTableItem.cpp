@@ -29,7 +29,7 @@ PropertyTableItem::PropertyTableItem( QTable* table, Property_ABC& property, Tab
     displayer_.SetItem( this );
     property_.Display( displayer_ );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PropertyTableItem destructor
 // Created: SBO 2006-10-18
@@ -53,7 +53,7 @@ QWidget* PropertyTableItem::createEditor() const
     }
     return editor;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PropertyTableItem::setContentFromEditor
 // Created: SBO 2006-10-18

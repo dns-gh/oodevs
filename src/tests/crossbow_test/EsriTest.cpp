@@ -30,7 +30,7 @@ using namespace plugins::crossbow;
 namespace
 {
     IPropertySetPtr CreateProperty()
-    {        
+    {
         IPropertySetPtr spProperty;
         spProperty.CreateInstance( CLSID_PropertySet );
         spProperty->SetProperty( CComBSTR( "server" ), CComVariant( "localhost" ) );
@@ -46,14 +46,14 @@ namespace
     class ScopedLicence
     {
     public:
-        ScopedLicence() 
+        ScopedLicence()
         {
             ::CoInitialize( NULL );
             IAoInitializePtr ipInit( CLSID_AoInitialize );
             esriLicenseStatus licenseStatus = esriLicenseFailure;
-  
-	        ipInit->IsProductCodeAvailable(esriLicenseProductCodeEngine, &licenseStatus);
-	        if (licenseStatus == esriLicenseAvailable)
+
+            ipInit->IsProductCodeAvailable(esriLicenseProductCodeEngine, &licenseStatus);
+            if (licenseStatus == esriLicenseAvailable)
                 ipInit->Initialize(esriLicenseProductCodeEngine, &licenseStatus);
         }
         ~ScopedLicence()
@@ -91,7 +91,7 @@ BOOST_AUTO_TEST_CASE( EsriTest_Connection_Sample )
             throw std::runtime_error( "Unable to create sde workspace factory." );
 
         IWorkspacePtr workspace;
-        if ( FAILED( spWorkspaceFactory->Open( CreateProperty(), 0, &workspace ) ) )
+        if( FAILED( spWorkspaceFactory->Open( CreateProperty(), 0, &workspace ) ) )
         {
             ThrowError();
             BOOST_CHECK( "spWorkspaceFactory->Open failed" && false );
@@ -129,7 +129,7 @@ BOOST_AUTO_TEST_CASE( EsriTest_CrossbowConnection )
 {
     crossbow::Workspace scoped;
     {
-    	crossbow::ConnectionDatabase db( "sde://sword:sword@localhost:5432/sword_crossbow_db.sword" );
+        crossbow::ConnectionDatabase db( "sde://sword:sword@localhost:5432/sword_crossbow_db.sword" );
     }
     std::cout << "crossbow::Worskpace loaded." << std::endl;
 }
@@ -142,12 +142,12 @@ BOOST_AUTO_TEST_CASE( EsriTest_CrossbowConnection )
 // Created: JCR 2009-02-10
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( EsriTest_ConnectionParsing )
-{        
+{
     const boost::regex expression( "(sde|postgresql):\\/\\/(\\w+):(\\w+)@(\\w+):(\\d+)\\/(\\w*).(\\w*)" );
     boost::cmatch matches;
-    
+
     std::string url( "sde://user:pass@localhost:4242/database.schema" );
-    if ( boost::regex_match( url.c_str(), matches, expression ) )
+    if( boost::regex_match( url.c_str(), matches, expression ) )
     {
         BOOST_CHECK_EQUAL( matches[ 0 ], url );
         BOOST_CHECK_EQUAL( matches[ 2 ], "user" );
@@ -169,9 +169,9 @@ BOOST_AUTO_TEST_CASE( EsriTest_ConnectionParsing_2 )
 {
     const boost::regex expression( "(sde):\\/\\/(\\w+):(\\w+)" );
     boost::cmatch matches;
-    
+
     std::string url( "sde://user:08/database" );
-    if ( boost::regex_match( url.c_str(), matches, expression ) )
+    if( boost::regex_match( url.c_str(), matches, expression ) )
     {
         BOOST_CHECK_EQUAL( matches[ 0 ], url );
         BOOST_CHECK_EQUAL( matches[ 2 ], "user" );
@@ -190,9 +190,9 @@ BOOST_AUTO_TEST_CASE( EsriTest_ConnectionParsing_Port )
 {
     const boost::regex expression( "(sde):\\/\\/(\\w+):(\\w+)@(\\w+)(:(\\d+)){0,1}\\/(\\w*).(\\w*)" );
     boost::cmatch matches;
-    
+
     std::string url( "sde://user:08@localhost/database.schema" );
-    if ( boost::regex_match( url.c_str(), matches, expression ) )
+    if( boost::regex_match( url.c_str(), matches, expression ) )
     {
         BOOST_CHECK_EQUAL( matches[ 0 ], url );
         BOOST_CHECK_EQUAL( matches[ 2 ], "user" );
@@ -216,9 +216,9 @@ BOOST_AUTO_TEST_CASE( EsriTest_ConnectionParsing_IpAndPort )
 {
     const boost::regex expression( "(sde):\\/\\/(\\w+):(\\w+)@([\\w\\-\\.]+)(:(\\d+)){0,1}\\/(\\w*).(\\w*)" );
     boost::cmatch matches;
-    
+
     std::string url( "sde://user:08@172.0.65.2/database.schema" );
-    if ( boost::regex_match( url.c_str(), matches, expression ) )
+    if( boost::regex_match( url.c_str(), matches, expression ) )
     {
         BOOST_CHECK_EQUAL( matches[ 0 ], url );
         BOOST_CHECK_EQUAL( matches[ 2 ], "user" );
@@ -242,9 +242,9 @@ BOOST_AUTO_TEST_CASE( EsriTest_ConnectionParsing_HostAndPort )
 {
     const boost::regex expression( "(sde):\\/\\/(\\w+):(\\w+)@([\\w\\-\\.]+)(:(\\d+)){0,1}\\/(\\w*).(\\w*)" );
     boost::cmatch matches;
-    
+
     std::string url( "sde://user:08@my-host-25/database.schema" );
-    if ( boost::regex_match( url.c_str(), matches, expression ) )
+    if( boost::regex_match( url.c_str(), matches, expression ) )
     {
         BOOST_CHECK_EQUAL( matches[ 0 ], url );
         BOOST_CHECK_EQUAL( matches[ 2 ], "user" );
@@ -268,9 +268,9 @@ BOOST_AUTO_TEST_CASE( EsriTest_ConnectionParsing_PortOptional )
 {
     const boost::regex expression( "(sde):\\/\\/(\\w+):(\\w+)@(\\w+)(:(\\d+)){0,1}\\/(\\w*).(\\w*)" );
     boost::cmatch matches;
-    
+
     std::string url( "sde://user:08@localhost:4242/database.schema" );
-    if ( boost::regex_match( url.c_str(), matches, expression ) )
+    if( boost::regex_match( url.c_str(), matches, expression ) )
     {
         BOOST_CHECK_EQUAL( matches[ 0 ], url );
         BOOST_CHECK_EQUAL( matches[ 2 ], "user" );
@@ -301,7 +301,7 @@ BOOST_AUTO_TEST_CASE( EsriTest_QueryBuilder_InsertString )
 {
     InsertQueryBuilder builder( "table" );
     builder.SetField( "row1", "v1" );
-    builder.SetField( "row2", "v2" );    
+    builder.SetField( "row2", "v2" );
     BOOST_CHECK_EQUAL( "INSERT INTO table (row1,row2) VALUES ('v1','v2')", builder.Create() );
 }
 
@@ -309,7 +309,7 @@ BOOST_AUTO_TEST_CASE( EsriTest_QueryBuilder_InsertNumeric )
 {
     InsertQueryBuilder builder( "table" );
     builder.SetField( "row1", 1 );
-    builder.SetField( "row2", 2 );    
+    builder.SetField( "row2", 2 );
     BOOST_CHECK_EQUAL( "INSERT INTO table (row1,row2) VALUES (1,2)", builder.Create() );
 }
 
@@ -362,7 +362,7 @@ BOOST_AUTO_TEST_CASE( EsriTest_QueryBuilder_UpdateNumeric )
 {
     UpdateQueryBuilder builder( "table" );
     builder.SetField( "row1", 1 );
-    builder.SetField( "row2", 2 );    
+    builder.SetField( "row2", 2 );
     BOOST_CHECK_EQUAL( "UPDATE table SET row1=1,row2=2", builder.Create() );
 }
 

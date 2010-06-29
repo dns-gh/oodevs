@@ -30,7 +30,7 @@ class ADN_TimeField_EditLine;
 // =============================================================================
 // Created: SBO 2005-09-09
 // =============================================================================
-class ADN_TimeField 
+class ADN_TimeField
     : public QWidget
     , public ADN_Gfx_ABC
 {

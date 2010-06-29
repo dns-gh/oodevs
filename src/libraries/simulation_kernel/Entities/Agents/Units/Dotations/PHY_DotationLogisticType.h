@@ -61,7 +61,7 @@ private:
         eUniteEssence   = 0,
         eUniteFeuTD     = 1,
         eUniteFeuSansTD = 2,
-        eUniteVivre     = 3,        
+        eUniteVivre     = 3,
         ePieces         = 4
     };
     //@}

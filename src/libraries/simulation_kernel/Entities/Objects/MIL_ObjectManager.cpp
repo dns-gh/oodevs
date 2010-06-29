@@ -48,7 +48,7 @@ MIL_ObjectManager::MIL_ObjectManager()
 MIL_ObjectManager::~MIL_ObjectManager()
 {
     for( CIT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
-        if ( it->second )
+        if( it->second )
             delete it->second;
 }
 
@@ -101,7 +101,7 @@ void MIL_ObjectManager::UpdateStates()
         }
         else
         {
-            object.UpdateState();   
+            object.UpdateState();
             ++it;
         }
     }
@@ -166,8 +166,8 @@ MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode MIL_ObjectManager::CreateObje
 // Created: JCR 2008-06-03
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectManager::CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation )
-{    
-    return builder_->BuildObject( type, army, localisation, Common::ObstacleType_DemolitionTargetType_preliminary );    
+{
+    return builder_->BuildObject( type, army, localisation, Common::ObstacleType_DemolitionTargetType_preliminary );
 }
 
 // -----------------------------------------------------------------------------
@@ -176,7 +176,7 @@ MIL_Object_ABC* MIL_ObjectManager::CreateObject( const std::string& type, MIL_Ar
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation* pLocalisation, Common::ObstacleType_DemolitionTargetType obstacleType )
 {
-    if ( pLocalisation )
+    if( pLocalisation )
         return builder_->BuildObject( type, army, *pLocalisation, obstacleType );
     return 0;
 }
@@ -296,7 +296,7 @@ void MIL_ObjectManager::OnReceiveMsgObjectMagicAction( const MsgsClientToSim::Ms
                 nErrorCode = pObject->OnUpdate( params.elem( 0 ).value() );
         }
     }
-    
+
     client::ObjectMagicActionAck asnReplyMsg;
     asnReplyMsg().set_error_code( nErrorCode );
     asnReplyMsg.Send( NET_Publisher_ABC::Publisher(), nCtx );

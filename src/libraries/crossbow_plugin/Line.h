@@ -47,7 +47,7 @@ public:
     void Serialize( Common::MsgLocation& message ) const;
     //@}
 
-    //! @name 
+    //! @name
     //@{
     virtual OGRLineString* Extract( OGRSpatialReference* spatialReference ) const;
     //@}

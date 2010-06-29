@@ -21,7 +21,7 @@
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------
-// Name: MeteoModel constructor 
+// Name: MeteoModel constructor
 // Created: HBD 2010-03-23
 // -----------------------------------------------------------------------------
 MeteoModel::MeteoModel( const tools::ExerciseConfig& config, Model& model )
@@ -59,7 +59,7 @@ const weather::PHY_Lighting& MeteoModel::GetLighting() const
 // -----------------------------------------------------------------------------
 void MeteoModel::OnReceiveMsgGlobalMeteo( const MsgsSimToClient::MsgControlGlobalMeteo& msg )
 {
-    if ( pGlobalMeteo_ )
+    if( pGlobalMeteo_ )
         pGlobalMeteo_->Update( msg.attributes() );
     else
     {
@@ -73,7 +73,7 @@ void MeteoModel::OnReceiveMsgGlobalMeteo( const MsgsSimToClient::MsgControlGloba
 // Created: HBD 2010-03-23
 // -----------------------------------------------------------------------------
 void MeteoModel::OnReceiveMsgLocalMeteoCreation( const MsgsSimToClient::MsgControlLocalMeteoCreation& msg )
-{   
+{
     const geometry::Point2d topLeft( msg.top_left_coordinate().longitude(), msg.top_left_coordinate().latitude() );
     const geometry::Point2f vUpLeft = converter_->ConvertFromGeo( topLeft );
     const geometry::Point2d bottomRight( msg.bottom_right_coordinate().longitude(), msg.bottom_right_coordinate().latitude() );
@@ -111,7 +111,7 @@ void MeteoModel::OnReceiveMsgLocalMeteoDestruction( const MsgsSimToClient::MsgCo
 // -----------------------------------------------------------------------------
 void MeteoModel::RegisterMeteo( weather::PHY_Meteo& meteo )
 {
-    meteos_.push_front( &meteo ); 
+    meteos_.push_front( &meteo );
 }
 
 // -----------------------------------------------------------------------------

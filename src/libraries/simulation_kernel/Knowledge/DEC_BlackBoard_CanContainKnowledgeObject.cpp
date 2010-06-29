@@ -37,7 +37,7 @@ DEC_BlackBoard_CanContainKnowledgeObject::DEC_BlackBoard_CanContainKnowledgeObje
 DEC_BlackBoard_CanContainKnowledgeObject::~DEC_BlackBoard_CanContainKnowledgeObject()
 {
     while( !knowledgeObjectFromIDMap_.empty() )
-        DestroyKnowledgeObject( *knowledgeObjectFromIDMap_.begin()->second );            
+        DestroyKnowledgeObject( *knowledgeObjectFromIDMap_.begin()->second );
 }
 
 // -----------------------------------------------------------------------------
@@ -51,7 +51,7 @@ DEC_BlackBoard_CanContainKnowledgeObject::DEC_BlackBoard_CanContainKnowledgeObje
     DEC_BlackBoard_CanContainKnowledgeObject& copy = army.GetKnowledge().GetKnowledgeObjectContainer();
     for( CIT_KnowledgeObjectMap it = copy.objectMap_.begin(); it != copy.objectMap_.end(); ++it )
     {
-        boost::shared_ptr< DEC_Knowledge_Object > knowledge( new DEC_Knowledge_Object( *(it->second), pKnowledgeGroup_ ) );   
+        boost::shared_ptr< DEC_Knowledge_Object > knowledge( new DEC_Knowledge_Object( *(it->second), pKnowledgeGroup_ ) );
         if( ! objectMap_.insert( std::make_pair( it->first, knowledge ) ).second )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
         if( ! knowledgeObjectFromIDMap_.insert( std::make_pair( knowledge->GetID(), knowledge ) ).second )
@@ -72,7 +72,7 @@ namespace boost
         {
             split_free( file, map, nVersion );
         }
-        
+
         template< typename Archive >
         void save( Archive& file, const DEC_BlackBoard_CanContainKnowledgeObject::T_KnowledgeObjectMap& map, const unsigned int )
         {
@@ -81,10 +81,10 @@ namespace boost
             for ( DEC_BlackBoard_CanContainKnowledgeObject::CIT_KnowledgeObjectMap it = map.begin(); it != map.end(); ++it )
             {
                 file << it->first
-                     << *it->second;                
+                     << *it->second;
             }
         }
-        
+
         template< typename Archive >
         void load( Archive& file, DEC_BlackBoard_CanContainKnowledgeObject::T_KnowledgeObjectMap& map, const unsigned int )
         {
@@ -134,7 +134,7 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_BlackBoard_CanContainKnowledgeObje
         knowledge = objectKnown.CreateKnowledge( *pKnowledgeGroup_ );
     else
         knowledge = objectKnown.CreateKnowledge( teamKnowing );
-   
+
     if( ! objectMap_.insert( std::make_pair( &objectKnown, knowledge ) ).second )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
     if( ! knowledgeObjectFromIDMap_.insert( std::make_pair( knowledge->GetID(), knowledge ) ).second )
@@ -173,7 +173,7 @@ void DEC_BlackBoard_CanContainKnowledgeObject::NotifyKnowledgeObjectDissociatedF
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > DEC_BlackBoard_CanContainKnowledgeObject::GetKnowledgeObject( const MIL_Object_ABC& objectKnown ) const
 {
-    CIT_KnowledgeObjectMap itKnowledge = objectMap_.find( &objectKnown );   
+    CIT_KnowledgeObjectMap itKnowledge = objectMap_.find( &objectKnown );
     if( itKnowledge == objectMap_.end() )
         return boost::shared_ptr< DEC_Knowledge_Object >();
     return itKnowledge->second;

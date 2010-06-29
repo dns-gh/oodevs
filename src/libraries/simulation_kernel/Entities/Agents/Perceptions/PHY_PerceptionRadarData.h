@@ -66,7 +66,7 @@ private:
     };
 
     typedef std::map< MIL_Agent_ABC*, sAcquisitionData > T_AgentAcquisitionMap;
-    typedef T_AgentAcquisitionMap::iterator              IT_AgentAcquisitionMap;    
+    typedef T_AgentAcquisitionMap::iterator              IT_AgentAcquisitionMap;
     //@}
 
 private:

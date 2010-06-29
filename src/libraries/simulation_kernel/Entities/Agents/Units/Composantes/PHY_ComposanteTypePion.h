@@ -147,10 +147,10 @@ public:
     bool     CanRepair              () const;
     bool     CanHaul                () const;
     bool     CanHaul                ( const PHY_ComposanteTypePion& type ) const;
-    MT_Float GetHaulerWeightCapacity() const;    
+    MT_Float GetHaulerWeightCapacity() const;
     MT_Float GetHaulerLoadingTime   () const;
     MT_Float GetHaulerUnloadingTime () const;
-    
+
     const PHY_BreakdownType& GetRandomBreakdownType   () const;
     const PHY_BreakdownType& GetAttritionBreakdownType() const;
     //@}
@@ -252,7 +252,7 @@ private:
     typedef std::list< const PHY_HumanProtection * >        T_ListOfHumanProtection;
     typedef T_ListOfHumanProtection::const_iterator CIT_ListOfHumanProtection;
     typedef T_ListOfHumanProtection::iterator       IT_ListOfHumanProtection;
-    
+
     typedef std::vector< const PHY_ActiveProtection* > T_ActiveProtectionVector;
     typedef T_ActiveProtectionVector::const_iterator CIT_ActiveProtectionVector;
     //@}
@@ -270,7 +270,7 @@ private:
     void InitializeHumanProtections       ( xml::xistream& xis );
     void InitializeLogistic               ( xml::xistream& xis );
     void InitializeLogisticMaintenance    ( xml::xistream& xis );
-    void InitializeLogisticMedical        ( xml::xistream& xis ); 
+    void InitializeLogisticMedical        ( xml::xistream& xis );
     void InitializeLogisticSupply         ( xml::xistream& xis );
     void InitializeObjects                ( xml::xistream& xis );
     void InitializeProtections            ( xml::xistream& xis );
@@ -281,7 +281,7 @@ private:
     void InitializeWeapons                ( xml::xistream& xis );
     bool ReadWoundCapabilities            ( xml::xistream& xis, T_WoundCapabilityVector& container, const std::string attributeName ) const;
     //@}
-    
+
     //! @name Tools
     //@{
     const PHY_BreakdownType& GetBreakdownType( const T_BreakdownTypeProbabilityVector& probasVector ) const;
@@ -314,7 +314,7 @@ private:
     const MIL_Time_ABC&          time_;
     const PHY_Speeds             speeds_;
           MT_Float               rMaxSlope_;
-    const PHY_DotationCapacities dotationCapacities_;         
+    const PHY_DotationCapacities dotationCapacities_;
           T_WeaponTypeMap        weaponTypes_;
           T_SensorTypeMap        sensorTypes_;
           T_RadarTypeSet         radarTypes_;
@@ -335,7 +335,7 @@ private:
 
     // Logistic : Breakdowns
     T_BreakdownTypeProbabilityVector randomBreakdownTypeProbabilities_;
-    T_BreakdownTypeProbabilityVector attritionBreakdownTypeProbabilities_;    
+    T_BreakdownTypeProbabilityVector attritionBreakdownTypeProbabilities_;
 
     // Logistic : maintenance
     MT_Float            rHaulerWeightCapacity_;

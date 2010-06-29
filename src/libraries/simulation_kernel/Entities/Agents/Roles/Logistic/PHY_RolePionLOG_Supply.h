@@ -44,7 +44,7 @@ public:
     template< typename Archive > void serialize( Archive&, const unsigned int );
     virtual void WriteODB( xml::xostream& xos ) const;
     //@}
-    
+
     //! @name Init
     //@{
     virtual void ReadOverloading( xml::xistream& xis );
@@ -105,7 +105,7 @@ private:
     bool                        bSystemEnabled_;
     bool                        bHasChanged_;
     bool                        bExternalMustChangeState_;
-    PHY_DotationStockContainer* pStocks_; 
+    PHY_DotationStockContainer* pStocks_;
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePionLOG_Supply* role, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePionLOG_Supply* role, const unsigned int /*version*/ );

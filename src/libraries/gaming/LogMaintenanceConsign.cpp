@@ -78,7 +78,7 @@ void LogMaintenanceConsign::Update( const MsgsSimToClient::MsgLogMaintenanceHand
     pPionLogHandling_ = resolver_.Find( message.oid_pion_log_traitant() );
     if( pPionLogHandling_ )
         pPionLogHandling_->Get< LogMaintenanceConsigns >().HandleConsign( *this );
-    
+
     controller_.Update( *this );
 }
 

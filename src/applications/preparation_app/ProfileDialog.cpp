@@ -49,7 +49,7 @@ ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers,
     pages_ = new UserProfileWidget( box, controllers, factory, icons );
     pages_->setMargin( 5 );
     grid->addWidget( box, 1, 1 );
-    
+
     box = new QVBox( this );
     box->setMargin( 5 );
     list_ = new UserProfileList( box, *pages_, controllers, model );

@@ -40,7 +40,7 @@
 ADN_GuiBuilder::ADN_GuiBuilder()
 : pCurrentFieldWidget1_ ( 0 )
 , pCurrentFieldWidget2_ ( 0 )
-, pCurrentFieldGfx2_    ( 0 ) 
+, pCurrentFieldGfx2_    ( 0 )
 , pCurrentFieldWidget3_ ( 0 )
 {
 }

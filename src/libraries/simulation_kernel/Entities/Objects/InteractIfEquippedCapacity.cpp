@@ -82,7 +82,7 @@ void InteractIfEquippedCapacity::Instanciate( MIL_Object_ABC& object ) const
     object.Register( static_cast< MIL_InteractiveContainer_ABC *>( capacity ) );
 
     const TER_Localisation& currentLocalisation = object.GetLocalisation();
-    
+
     if( currentLocalisation.GetType() == TER_Localisation::eLine && currentLocalisation.GetPoints().size() >= 2 )
     {
         TER_Localisation newLocalisation( currentLocalisation );

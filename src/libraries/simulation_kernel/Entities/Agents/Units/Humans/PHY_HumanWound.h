@@ -98,7 +98,7 @@ private:
     //@{
     enum E_Wound
     {
-        eNotWounded, 
+        eNotWounded,
         eWoundedU3,
         eWoundedU2,
         eWoundedU1,

@@ -31,7 +31,7 @@ DEC_Knowledge_PopulationCollision::DEC_Knowledge_PopulationCollision( const MIL_
     , pAgentColliding_       ( &agentColliding )
     , pPopulation_           ( &population )
     , flows_                 ()
-    , concentrations_        () 
+    , concentrations_        ()
     , previousFlows_         ()
     , previousConcentrations_()
 {
@@ -46,7 +46,7 @@ DEC_Knowledge_PopulationCollision::DEC_Knowledge_PopulationCollision()
     , pAgentColliding_       ( 0 )
     , pPopulation_           ( 0 )
     , flows_                 ()
-    , concentrations_        () 
+    , concentrations_        ()
     , previousFlows_         ()
     , previousConcentrations_()
 {
@@ -68,7 +68,7 @@ DEC_Knowledge_PopulationCollision::~DEC_Knowledge_PopulationCollision()
 // Name: DEC_Knowledge_PopulationCollision::serialize
 // Created: JVT 2005-04-14
 // -----------------------------------------------------------------------------
-template< typename Archive > 
+template< typename Archive >
 void DEC_Knowledge_PopulationCollision::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
@@ -92,7 +92,7 @@ void DEC_Knowledge_PopulationCollision::Update( MIL_PopulationFlow& flow )
 {
     flows_.insert( &flow ).second;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationCollision::Update
 // Created: NLD 2005-10-21
@@ -206,7 +206,7 @@ const MIL_Agent_ABC& DEC_Knowledge_PopulationCollision::GetAgentColliding() cons
 {
     assert( pAgentColliding_ );
     return *pAgentColliding_;
-}  
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationCollision::Prepare

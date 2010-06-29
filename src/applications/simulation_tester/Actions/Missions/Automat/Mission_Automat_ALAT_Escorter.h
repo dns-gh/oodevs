@@ -21,7 +21,7 @@ namespace TEST {
     @brief  Mission_Automat_ALAT_Escorter
 */
 // Created: SBO 2005-08-08
-// Generated: 
+// Generated:
 // =============================================================================
 class Mission_Automat_ALAT_Escorter : public Mission_Automat_ABC
 {

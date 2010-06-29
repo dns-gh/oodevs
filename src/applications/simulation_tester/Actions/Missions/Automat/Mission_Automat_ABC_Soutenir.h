@@ -21,7 +21,7 @@ namespace TEST {
     @brief  Mission_Automat_ABC_Soutenir
 */
 // Created: SBO 2005-08-08
-// Generated: 
+// Generated:
 // =============================================================================
 class Mission_Automat_ABC_Soutenir : public Mission_Automat_ABC
 {

@@ -21,7 +21,7 @@ namespace TEST {
     @brief  Mission_Pawn_INF_DetruireEmbuscade
 */
 // Created: SBO 2005-08-08
-// Generated: 
+// Generated:
 // =============================================================================
 class Mission_Pawn_INF_DetruireEmbuscade : public Mission_Pawn_ABC
 {

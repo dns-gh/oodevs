@@ -29,7 +29,7 @@ DEC_Knowledge_AgentDataIdentification::DEC_Knowledge_AgentDataIdentification()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentDataIdentification destructor
 // Created: NLD 2004-11-09
@@ -46,11 +46,11 @@ DEC_Knowledge_AgentDataIdentification::~DEC_Knowledge_AgentDataIdentification()
 void DEC_Knowledge_AgentDataIdentification::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> nTimeLastUpdate_;
-   
+
     unsigned int nID;
     file >> nID;
     pAgentType_ = MIL_AgentTypePion::Find( nID );
-    
+
     file >> bAgentTypeUpdated_;
 }
 
@@ -84,7 +84,7 @@ void DEC_Knowledge_AgentDataIdentification::DoUpdate( const T& data )
 {
     if( data.GetTimeLastUpdate() <= nTimeLastUpdate_ )
         return;
-   
+
     if( !pAgentType_ )
     {
         pAgentType_ = data.GetAgentType();

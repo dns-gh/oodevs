@@ -89,7 +89,7 @@ namespace
         boost::replace_all( result, "human ranks", "list(human-rank)" );
         boost::replace_all( result, "equipment states", "list(equipment-state)" );
         boost::replace_all( result, "perception levels", "list(perception-level)" );
-        boost::replace_all( result, "operator", "string" ); // $$$$ SBO 2009-06-05: 
+        boost::replace_all( result, "operator", "string" ); // $$$$ SBO 2009-06-05:
         return result;
     }
 
@@ -122,7 +122,7 @@ namespace
 // -----------------------------------------------------------------------------
 std::string ElementTypeResolver::Resolve( const std::string& type ) const
 {
-    const_cast< ElementTypeResolver* >( this )->Update(); // $$$$ SBO 2009-04-15: 
+    const_cast< ElementTypeResolver* >( this )->Update(); // $$$$ SBO 2009-04-15:
     std::string result( type );
     for( std::map< std::string, std::string >::const_iterator it = dictionary_.begin(); it != dictionary_.end(); ++it )
         if( ! it->second.empty() )
@@ -197,7 +197,7 @@ std::string ElementTypeResolver::ToSimpleType( const std::string& type )
 // -----------------------------------------------------------------------------
 bool ElementTypeResolver::IsCompatible( const std::string& lhs, const std::string& rhs )
 {
-    return IsAbstract( lhs ) || IsAbstract( rhs ) 
+    return IsAbstract( lhs ) || IsAbstract( rhs )
         || IsNumericCompatible( lhs, rhs )
         || ReplaceVariableTypes( lhs ) == ReplaceVariableTypes( rhs );
 }

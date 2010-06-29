@@ -30,7 +30,7 @@ FormationHierarchies::FormationHierarchies( kernel::Controller& controller, kern
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: FormationHierarchies destructor
 // Created: SBO 2006-09-21
@@ -98,11 +98,11 @@ namespace
 // -----------------------------------------------------------------------------
 void FormationHierarchies::SerializeLogistics( xml::xostream& xos ) const
 {
-    // $$$$ AGE 2007-04-05: quick ada fix. 
+    // $$$$ AGE 2007-04-05: quick ada fix.
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
         if( SerializeAutomatLogistics( xos, *it->second ) )
         {
-            tools::Iterator< const kernel::Entity_ABC& > subIt 
+            tools::Iterator< const kernel::Entity_ABC& > subIt
                 = it->second->Get< TacticalHierarchies >().CreateSubordinateIterator();
             while( subIt.HasMoreElements() )
                 SerializeAutomatLogistics( xos, subIt.NextElement() );

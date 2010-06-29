@@ -109,14 +109,14 @@ public:
           bool                         IsKnown                     ( const MIL_Agent_ABC& agent ) const;
           boost::shared_ptr< DEC_Knowledge_Agent > GetKnowledgeAgent           ( const DEC_Knowledge_AgentPerception& perception ) const;
           boost::shared_ptr< DEC_Knowledge_Agent > GetKnowledgeAgentFromID     ( unsigned int nID ) const;
-          void                         GetDetectedAgentsInZone     ( T_ConstKnowledgeAgentVector& container, const TER_Polygon&      zone ) const;          
-          void                         GetDetectedAgentsInZone     ( T_ConstKnowledgeAgentVector& container, const TER_Localisation& zone ) const;          
+          void                         GetDetectedAgentsInZone     ( T_ConstKnowledgeAgentVector& container, const TER_Polygon&      zone ) const;
+          void                         GetDetectedAgentsInZone     ( T_ConstKnowledgeAgentVector& container, const TER_Localisation& zone ) const;
 
     const T_KnowledgeAgentVector&      GetFriends                  () const;
           void                         GetFriendsInZone            ( T_ConstKnowledgeAgentVector& container, const TER_Localisation& zone ) const;
     const T_KnowledgeAgentVector&      GetEnemies                  () const;
-          void                         GetLivingEnemiesInZone      ( T_ConstKnowledgeAgentVector& container, const TER_Polygon&      zone ) const;    
-          void                         GetLivingEnemiesInZone      ( T_ConstKnowledgeAgentVector& container, const TER_Localisation& zone ) const;    
+          void                         GetLivingEnemiesInZone      ( T_ConstKnowledgeAgentVector& container, const TER_Polygon&      zone ) const;
+          void                         GetLivingEnemiesInZone      ( T_ConstKnowledgeAgentVector& container, const TER_Localisation& zone ) const;
           void                         GetLivingEnemiesInCircle    ( T_ConstKnowledgeAgentVector& container, const MT_Vector2D& center, MT_Float rRadius ) const;
           bool                         EnemyPresenceInCircle       ( const MT_Vector2D& center, MT_Float rRadius ) const;
 
@@ -126,7 +126,7 @@ public:
     // Knowledge populations
     DEC_Knowledge_Population*    GetKnowledgePopulation      ( const DEC_Knowledge_PopulationCollision&  collision  ) const;
     DEC_Knowledge_Population*    GetKnowledgePopulation      ( const DEC_Knowledge_PopulationPerception& perception ) const;
-    DEC_Knowledge_Population*    GetKnowledgePopulationFromID( unsigned int nID ) const;  
+    DEC_Knowledge_Population*    GetKnowledgePopulationFromID( unsigned int nID ) const;
     void                         GetPopulations              ( T_KnowledgePopulationDiaIDVector& container ) const;
     void                         GetPopulations              ( T_KnowledgePopulationVector&      container ) const;
      //@}
@@ -154,7 +154,7 @@ public:
 
 private:
     MIL_KnowledgeGroup* pKnowledgeGroup_;
-    
+
     // Containers
     DEC_BlackBoard_CanContainKnowledgeAgent*       pKnowledgeAgentContainer_;
     DEC_BlackBoard_CanContainKnowledgePopulation*  pKnowledgePopulationContainer_;

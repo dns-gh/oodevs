@@ -73,7 +73,7 @@ public:
     static void EvacuateWoundedHumansToTC2       ( DEC_Decision_ABC* pPionWounded, DEC_Decision_ABC* pDecTC2 );
     static bool HasWoundedHumansToEvacuate       ( DEC_Decision_ABC* pPion );
     static void ForbidWoundedHumansAutoEvacuation( DEC_Decision_ABC* pPion );
-    static void AllowWoundedHumansAutoEvacuation ( DEC_Decision_ABC* pPion ); 
+    static void AllowWoundedHumansAutoEvacuation ( DEC_Decision_ABC* pPion );
     //@}
 
     //! @name Supply
@@ -82,11 +82,11 @@ public:
     static void PionSupplyDisableSystem    ( MIL_Agent_ABC& callerAgent );
     static void AutomateSupplyEnableSystem ( MIL_Automate& callerAutomate );
     static void AutomateSupplyDisableSystem( MIL_Automate& callerAutomate );
-    
+
     static bool ConvoyIsLoadingDone        ( const MIL_Agent_ABC& callerAgent );
     static bool ConvoyIsUnloadingDone      ( const MIL_Agent_ABC& callerAgent );
     static DEC_Decision_ABC* ConvoyGetSupplyingAutomate( const MIL_Agent_ABC& callerAgent );
-    static DEC_Decision_ABC* ConvoyGetConvoyingAutomate( const MIL_Agent_ABC& callerAgent );  
+    static DEC_Decision_ABC* ConvoyGetConvoyingAutomate( const MIL_Agent_ABC& callerAgent );
     static DEC_Decision_ABC* ConvoyGetSuppliedAutomate ( const MIL_Agent_ABC& callerAgent );
     static void ConvoyEndMission           ( MIL_Agent_ABC& callerAgent );
 
@@ -95,14 +95,14 @@ public:
 
     static void ChangeDotationsValueUsingTC2( MIL_Agent_ABC& callerAgent, int dotationType, const MT_Float rCapacityFactor, int ammoDotationClassId );
     //@}
-    
+
     //! @name Misc
     //@{
     static DEC_Decision_ABC*  PionGetTC2    ( const MIL_Agent_ABC& );
     static DEC_Decision_ABC* AutomateGetTC2( const MIL_Automate& );
 
-    static void UndoLendCollectionComposantes( MIL_Agent_ABC& callerAgent, const DEC_Decision_ABC* pTarget, const unsigned int nNbrToGetBack ); 
-    static void UndoLendHaulerComposantes    ( MIL_Agent_ABC& callerAgent, const DEC_Decision_ABC* pTarget, const unsigned int nNbrToGetBack ); 
+    static void UndoLendCollectionComposantes( MIL_Agent_ABC& callerAgent, const DEC_Decision_ABC* pTarget, const unsigned int nNbrToGetBack );
+    static void UndoLendHaulerComposantes    ( MIL_Agent_ABC& callerAgent, const DEC_Decision_ABC* pTarget, const unsigned int nNbrToGetBack );
     //@}
 
     //! @name Helpers

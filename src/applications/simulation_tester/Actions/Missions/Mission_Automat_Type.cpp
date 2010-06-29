@@ -332,7 +332,7 @@ void Mission_Automat_Type::Initialize()
     Register< Mission_Automat_TRANS_Commander >( "Automate TRANS Commander" );
 
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Mission_Automat_Type::Terminate
 // Created: SBO 2005-08-09

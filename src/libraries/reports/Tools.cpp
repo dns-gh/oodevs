@@ -12,7 +12,7 @@
 #include "Tools.h"
 #include "ENT/ENT_Tr.h"
 
-const QString localisations[] = 
+const QString localisations[] =
 {
     tools::translate( "Localisation", "Circle" ),
     tools::translate( "Localisation", "Ellipse" ),

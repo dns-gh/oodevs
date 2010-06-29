@@ -44,11 +44,11 @@ FireAttribute::~FireAttribute()
 template< typename T >
 void FireAttribute::UpdateData( const T& message )
 {
-    if ( message.has_fire()  )    
+    if( message.has_fire()  )
     {
         fireClass_  = & resolver_.Get( message.fire().class_id() );
         heat_       = message.fire().heat();
-        controller_.Update( *(FireAttribute_ABC*)this );        
+        controller_.Update( *(FireAttribute_ABC*)this );
     }
 }
 

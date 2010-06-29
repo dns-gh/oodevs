@@ -40,7 +40,7 @@ public:
 //    enum E_DetectionAlgorithmElemements
 //    {
 //        eDistPreviewDetection,
-////        eDistPreviewReco,  
+////        eDistPreviewReco,
 ////        eDistPreviewIdent,
 //        eNbrAlgoGuiElements
 //    };

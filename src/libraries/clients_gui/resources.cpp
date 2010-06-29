@@ -1,7 +1,7 @@
 //****************************************************************************
 //
 // This file is part of MASA DIN library.
-// 
+//
 // Refer to the included end-user license agreement (License.rtf) for
 // restrictions.
 //
@@ -17,9 +17,9 @@
 #include "clients_gui_pch.h"
 #include "resources.h"
 
-// Hack to encapsulate the xpm resources in a resources.cpp 
+// Hack to encapsulate the xpm resources in a resources.cpp
 // instead of resources.h
-#define static 
+#define static
 
 #include "res/csword.xpm"
 #include "res/connected.xpm"

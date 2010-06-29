@@ -59,7 +59,7 @@ public:
     //! @name Medical
     //@{
     virtual void                   EvacuateWoundedHumans           ( MIL_AutomateLOG& destinationTC2 ) const = 0;
-    virtual bool                   HasWoundedHumansToEvacuate      () const = 0;   
+    virtual bool                   HasWoundedHumansToEvacuate      () const = 0;
     virtual void                   ChangeEvacuationMode            ( E_EvacuationMode nMode ) = 0;
     //@}
 

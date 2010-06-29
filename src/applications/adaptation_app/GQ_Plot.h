@@ -41,7 +41,7 @@ class QStringList;
 // =============================================================================
 /** @class  GQ_Plot
     @brief  2D Plot widget
-   
+
 */
 // Created: CBX 2003-08-07
 // =============================================================================
@@ -53,8 +53,8 @@ public:
     typedef std::pair< double, double >    T_Point;
     typedef std::vector< GQ_PlotData* >    T_PlotLayer;
     typedef std::map< int, T_PlotLayer >   T_LayerMap; //!< map< layer depth, layer >
-    typedef T_LayerMap::iterator          IT_LayerMap; 
-    typedef T_LayerMap::const_iterator   CIT_LayerMap; 
+    typedef T_LayerMap::iterator          IT_LayerMap;
+    typedef T_LayerMap::const_iterator   CIT_LayerMap;
     typedef std::pair< int, int >          T_DataIndex;
 
     typedef GQ_ValueConvertor< T_Point, QString > T_CoordToString; //!< string convertor for coordinates display
@@ -69,8 +69,8 @@ public:
         iterator( const GQ_Plot& plot                        ) : pPlot_( &plot ), dataIndex_( 0, -1 )     {}
         iterator( const GQ_Plot& plot, T_DataIndex dataIndex ) : pPlot_( &plot ), dataIndex_( dataIndex ) {}
 
-        iterator& operator++() 
-        { 
+        iterator& operator++()
+        {
             dataIndex_ = pPlot_->GetNextDataIndex( dataIndex_ );
             return *this;
         }
@@ -80,7 +80,7 @@ public:
             return ( &it != this && ( it.pPlot_ != pPlot_ || it.dataIndex_ != dataIndex_ ) );
         }
 
-        GQ_PlotData& operator*() 
+        GQ_PlotData& operator*()
         {
             return pPlot_->GetPlotData( dataIndex_ );
         }
@@ -94,7 +94,7 @@ public:
         eNone,
         eSingle
     };
-    
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -127,7 +127,7 @@ public:
     GQ_PlotAxis& YAxis();
 
     virtual QString GetStrCoordinates( const T_Point& ) const;
-    
+
     virtual bool GetToolTips( const QPoint&, QRect& tipRect, QStringList& ) const;
     //@}
 
@@ -147,7 +147,7 @@ public:
     iterator begin() const;
     iterator end  () const;
 
-    T_DataIndex  GetNextDataIndex( T_DataIndex ) const;    
+    T_DataIndex  GetNextDataIndex( T_DataIndex ) const;
     GQ_PlotData& GetPlotData     ( T_DataIndex ) const;
     //@}
 
@@ -219,7 +219,7 @@ private:
     //@}
 
     //! @name Helpers
-    //@{    
+    //@{
     //@}
 
 private:
@@ -261,7 +261,7 @@ private:
 
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot::XAxis
-/** @return 
+/** @return
 */
 // Created: CBX 2003-08-07
 // -----------------------------------------------------------------------------
@@ -273,7 +273,7 @@ GQ_PlotAxis& GQ_Plot::XAxis()
 
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot::YAxis
-/** @return 
+/** @return
 */
 // Created: CBX 2003-08-07
 // -----------------------------------------------------------------------------

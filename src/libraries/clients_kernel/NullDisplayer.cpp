@@ -38,7 +38,7 @@ void NullDisplayer::Hide()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: NullDisplayer::SubItem
 // Created: AGE 2006-08-24
@@ -47,7 +47,7 @@ Displayer_ABC& NullDisplayer::SubItem( const QString&  )
 {
     return *this;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: NullDisplayer::StartDisplay
 // Created: AGE 2006-08-24
@@ -56,7 +56,7 @@ void NullDisplayer::StartDisplay()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: NullDisplayer::DisplayFormatted
 // Created: AGE 2006-08-24
@@ -65,7 +65,7 @@ void NullDisplayer::DisplayFormatted( const QString&  )
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: NullDisplayer::EndDisplay
 // Created: AGE 2006-08-24

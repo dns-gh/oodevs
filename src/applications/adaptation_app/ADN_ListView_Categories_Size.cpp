@@ -28,8 +28,8 @@ class ADN_CLV_Categories_Size
 : public ADN_Connector_ListView_ABC
 {
 public:
-    
-    ADN_CLV_Categories_Size(ADN_ListView_Categories_Size& list) 
+
+    ADN_CLV_Categories_Size(ADN_ListView_Categories_Size& list)
     : ADN_Connector_ListView_ABC(list)
     {}
 
@@ -40,13 +40,13 @@ public:
     {
         // create new list item
         ADN_ListViewItem *pItem                 = new ADN_ListViewItem(&list_,obj,1);
-        
+
         // connect list item with object's name
         pItem->Connect(0,static_cast<SizeInfos*>(obj));
 
         return pItem;
     }
-    
+
 private:
     ADN_CLV_Categories_Size& operator=( const ADN_CLV_Categories_Size& );
 };
@@ -63,7 +63,7 @@ ADN_ListView_Categories_Size::ADN_ListView_Categories_Size(QWidget * parent, con
     addColumn( tr( "Sizes" ) );
     setSorting( -1, true );
     setResizeMode( QListView::AllColumns );
-    
+
     // Connector creation
     pConnector_ = new ADN_CLV_Categories_Size( *this );
 
@@ -128,7 +128,7 @@ void  ADN_ListView_Categories_Size::OnContextMenu( const QPoint& pt)
                 pCList->SwapItem( pos - 1, pos );
                 --pos;
             }
-            
+
             // set current item
             setCurrentItem( FindItem( pNewInfo ) );
             break;
@@ -136,7 +136,7 @@ void  ADN_ListView_Categories_Size::OnContextMenu( const QPoint& pt)
         case 1:
         {
             SizeInfos* pCurSize=(SizeInfos*)pCurData_;
-            if ( pCurSize )
+            if( pCurSize )
             {
                 if( pCurSize->IsMultiRef() && ! ADN_GuiTools::MultiRefWarning() )
                     return;

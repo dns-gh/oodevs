@@ -18,7 +18,7 @@
 namespace kernel
 {
     class Controllers;
-	class CoordinateConverter_ABC;
+    class CoordinateConverter_ABC;
     class CoordinateSystems;
 }
 
@@ -26,8 +26,8 @@ namespace gui
 {
     class LocationParser_ABC;
     class UtmParser;
-	class Wgs84DdParser;
-	class Wgs84DmsParser;
+    class Wgs84DdParser;
+    class Wgs84DmsParser;
     class XyParser;
 // =============================================================================
 /** @class  LocationParsers
@@ -54,12 +54,12 @@ public:
 
 public:
     enum paramPos
-	{
-		E_Local,
-		E_Mgrs,
-		E_Wgs84Dd,
-		E_Wgs84Dms
-	};
+    {
+        E_Local,
+        E_Mgrs,
+        E_Wgs84Dd,
+        E_Wgs84Dms
+    };
 
 private:
     //! @name Copy/Assignment
@@ -80,7 +80,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-	const kernel::CoordinateConverter_ABC& converter_;
+    const kernel::CoordinateConverter_ABC& converter_;
     T_parsers parsers_;
     //@}
 };

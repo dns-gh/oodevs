@@ -14,7 +14,7 @@
 
 namespace gui
 {
-    
+
 // =============================================================================
 /** @class  ConstructionPrototype_ABC
     @brief  ConstructionPrototype_ABC

@@ -30,7 +30,7 @@ public:
              MeteoManager_ABC() {};
     virtual ~MeteoManager_ABC() {};
     //@}
-    
+
     //! @name Operations
     //@{
     virtual void RegisterMeteo( PHY_Meteo& weather ) = 0;

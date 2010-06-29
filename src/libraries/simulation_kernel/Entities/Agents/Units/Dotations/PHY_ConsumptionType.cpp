@@ -37,7 +37,7 @@ void PHY_ConsumptionType::Initialize()
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
 void PHY_ConsumptionType::Terminate()
-{    
+{
     consumptionTypes_.clear();
 }
 

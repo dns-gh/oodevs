@@ -27,7 +27,7 @@ namespace crossbow
 
 // =============================================================================
 /** @class  StatusListener
-    @brief  StatusListener    
+    @brief  StatusListener
 */
 // Created: JCR 2007-06-13
 // =============================================================================
@@ -42,7 +42,7 @@ public:
     //@}
 
     //! @name Operations
-    //@{    
+    //@{
     virtual void Listen();
     //@}
 
@@ -52,7 +52,7 @@ private:
     StatusListener( const StatusListener& );            //!< Copy constructor
     StatusListener& operator=( const StatusListener& ); //!< Assignement operator
     //@}
-    
+
     //! @name Helpers
     //@{
     void ChangeStatus( const std::string& status );

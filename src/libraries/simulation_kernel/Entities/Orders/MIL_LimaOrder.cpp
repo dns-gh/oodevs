@@ -77,7 +77,7 @@ bool MIL_LimaOrder::Intersect2D( const MT_Line& line, MT_Vector2D& vPos ) const 
 bool MIL_LimaOrder::Intersect2D( const T_PointVector& polyline, T_PointSet& intersectionSet ) const
 {
     intersectionSet.clear();
-    
+
     MT_Vector2D vIntersect;
 
     CIT_PointVector itPoint = polyline.begin();

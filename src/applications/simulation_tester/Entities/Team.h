@@ -61,7 +61,7 @@ public:
     //! @name Accessors
     //@{
           T_EntityId   GetId          ()                   const;
-	const std::string& GetName        ()                   const;
+    const std::string& GetName        ()                   const;
           E_Tristate   IsAFriend      ( const Team& team ) const;
           E_Tristate   IsAnEnemy      ( const Team& team ) const;
           E_Tristate   IsNeutral      ( const Team& team ) const;
@@ -108,8 +108,8 @@ private:
     //! @name Member data
     //@{
     T_EntityId           nId_;
-	std::string          strName_;
-	T_TeamRelationMap    relations_;
+    std::string          strName_;
+    T_TeamRelationMap    relations_;
     T_ObjectKnowledgeMap knownObjects_;
 
     const EntityManager& entityManager_;

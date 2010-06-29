@@ -19,10 +19,10 @@ class MIL_Agent_ABC;
 
 // =============================================================================
 /** @class  DEC_Knowledge_ObjectCollision
-    @brief  This class represents the Collision of an object 
+    @brief  This class represents the Collision of an object
             An object can be
                 - perceived : the object is seen by the sensors
-                - detected  : the object 
+                - detected  : the object
 */
 // Created: NLD 2004-03-11
 // =============================================================================
@@ -41,7 +41,7 @@ public:
     //@{
     template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
-    
+
     //! @name Operations
     //@{
     void Prepare();

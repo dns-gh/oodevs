@@ -53,7 +53,7 @@ void MetricsLayer::Paint( kernel::Viewport_ABC& )
         {
             if( metricPoints_.size() > 1 )
             {
-                geometry::Point2f start = *(it - 1 ); 
+                geometry::Point2f start = *(it - 1 );
                 geometry::Point2f end = *it ;
                 glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
                 glLineWidth( 4 );
@@ -162,9 +162,9 @@ float MetricsLayer::ComputeRuleDistance( bool b3dComputation )
         for( CIT_MetricPoints it = ( metricPoints_.begin() + 1 ); it != metricPoints_.end(); ++it )
         {
             geometry::Point2f start2d = *(it - 1 );
-            geometry::Point2f end2d = *(it ); 
+            geometry::Point2f end2d = *(it );
             geometry::Point3f start3d = geometry::Point3f( start2d.X(), start2d.Y(), elevation_.ElevationAt( start2d ) ) ;
-            geometry::Point3f end3d = geometry::Point3f( end2d.X(), end2d.Y(), elevation_.ElevationAt( end2d ) ); 
+            geometry::Point3f end3d = geometry::Point3f( end2d.X(), end2d.Y(), elevation_.ElevationAt( end2d ) );
             distance += start3d.Distance( end3d );
         }
         geometry::Point3f start3dPoint = geometry::Point3f( metricPoints_.back().X(), metricPoints_.back().Y(), elevation_.ElevationAt( metricPoints_.back() ) );
@@ -177,7 +177,7 @@ float MetricsLayer::ComputeRuleDistance( bool b3dComputation )
         for( CIT_MetricPoints it = ( metricPoints_.begin() + 1 ); it != metricPoints_.end(); ++it )
         {
             geometry::Point2f start = *(it - 1 );
-            geometry::Point2f end = *(it ); 
+            geometry::Point2f end = *(it );
             distance += start.Distance( end );
         }
         distance += metricPoints_.back().Distance( end_ );

@@ -28,7 +28,7 @@ ObstaclePrototype::ObstaclePrototype( QWidget* parent, Object_ABC*& creation )
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ObstaclePrototype::~ObstaclePrototype
 // Created: SBO 2006-04-19

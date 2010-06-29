@@ -81,7 +81,7 @@ private:
     //@{
     const kernel::Entity_ABC& entity_;
     E_Type                    type_;
-    QString                   message_; 
+    QString                   message_;
     QDateTime                 time_;
     bool                      isNew_;
     geometry::Point2f         point_;

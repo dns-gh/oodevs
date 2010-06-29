@@ -72,7 +72,7 @@ private:
         eDrizzle  ,
         eRain     ,
         eSnow     ,
-        eSmoke    
+        eSmoke
     };
     //@}
 

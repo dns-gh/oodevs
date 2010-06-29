@@ -40,7 +40,7 @@ void DEC_KnowledgeBlackBoard_ABC::Update( int currentTimeStep )
 
     for( itKS = talkingKnowledgeSources_.begin(); itKS != talkingKnowledgeSources_.end(); ++itKS )
         (**itKS).Prepare();
-    
+
     for( itKS = talkingKnowledgeSources_.begin(); itKS != talkingKnowledgeSources_.end(); ++itKS )
         (**itKS).Talk( currentTimeStep );
 
@@ -73,8 +73,8 @@ void DEC_KnowledgeBlackBoard_ABC::AddToScheduler( DEC_KnowledgeSource_ABC& newKs
             talkingKnowledgeSources_.insert( it, &newKs );
             return;
         }
-    }       
-    talkingKnowledgeSources_.push_back( &newKs );    
+    }
+    talkingKnowledgeSources_.push_back( &newKs );
 }
 
 // -----------------------------------------------------------------------------

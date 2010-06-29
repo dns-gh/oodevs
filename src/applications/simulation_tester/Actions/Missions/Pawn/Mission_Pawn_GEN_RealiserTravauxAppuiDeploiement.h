@@ -21,7 +21,7 @@ namespace TEST {
     @brief  Mission_Pawn_GEN_RealiserTravauxAppuiDeploiement
 */
 // Created: SBO 2005-08-08
-// Generated: 
+// Generated:
 // =============================================================================
 class Mission_Pawn_GEN_RealiserTravauxAppuiDeploiement : public Mission_Pawn_ABC
 {

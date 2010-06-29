@@ -23,7 +23,7 @@ namespace kernel
 */
 // Created: AGE 2006-02-21
 // =============================================================================
-class Displayer_ABC : public tools::VirtualTemplate< Displayer_ABC > 
+class Displayer_ABC : public tools::VirtualTemplate< Displayer_ABC >
 {
     friend tools::VirtualTemplate< Displayer_ABC >;
 

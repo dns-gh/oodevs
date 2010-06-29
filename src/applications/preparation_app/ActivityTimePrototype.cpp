@@ -26,7 +26,7 @@ ActivityTimePrototype::ActivityTimePrototype( QWidget* parent, Object_ABC*& crea
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ActivityTimePrototype destructor
 // Created: SBO 2006-04-20
@@ -46,7 +46,7 @@ void ActivityTimePrototype::Commit()
     {
         PropertiesDictionary& dico = creation_->Get< PropertiesDictionary >();
         ActivityTimeAttribute*    attribute = new ActivityTimeAttribute( dico );
-                                  attribute->SetActivityTime( 3600 * activityTime_->time().hour() + 
+                                  attribute->SetActivityTime( 3600 * activityTime_->time().hour() +
                                                               60 * activityTime_->time().minute() +
                                                               activityTime_->time().second() );
         creation_->Get< ObjectAttributesContainer >().Register( *attribute );

@@ -45,7 +45,7 @@ void LinkInterpreter::NotifyCreated( const kernel::Entity_ABC& entity )
 {
     AddEntity( entity.GetTypeName(), entity );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: LinkInterpreter::NotifyDeleted
 // Created: SBO 2006-10-13

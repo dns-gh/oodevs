@@ -28,7 +28,7 @@ Note::Note( kernel::Controller& controller, const MsgsMessengerToClient::MsgNote
     , lastUpdateTime_ (message.date().data() )
 {
      controller_.Create( *this );
-}   
+}
 
 // -----------------------------------------------------------------------------
 // Name: Note destructor
@@ -45,13 +45,13 @@ Note::~Note()
 // -----------------------------------------------------------------------------
 void Note::Update(const MsgsMessengerToClient::MsgNoteUpdate& message)
 {
-    if ( message.has_name() )
+    if( message.has_name() )
         name_ = message.name();
-    if ( message.has_number() )
+    if( message.has_number() )
         noteNumber_ = message.number();
-    if ( message.has_description() )
+    if( message.has_description() )
         noteText_ = message.description();
-    if ( message.has_parent() )
+    if( message.has_parent() )
         parent_ = message.parent();
     lastUpdateTime_ = message.date().data();
     controller_.Update( *this );
@@ -68,7 +68,7 @@ void Note::Delete()
 
 // -----------------------------------------------------------------------------
 // Name: Score::Display
-/** @param  displayer 
+/** @param  displayer
 */
 // Created: HBD 2010-01-19
 // -----------------------------------------------------------------------------

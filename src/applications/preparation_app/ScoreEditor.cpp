@@ -57,8 +57,8 @@ namespace
         {
             if( e->button() != Qt::LeftButton )
             {
-	            e->ignore();
-	            return;
+                e->ignore();
+                return;
             }
             int para = 0;
             unsigned int findex = charAt( e->pos(), &para );
@@ -302,7 +302,7 @@ void ScoreEditor::CheckFormula()
     {
         if( formula_->text().isEmpty() )
             throw std::exception( tr( "Formula is empty." ) );
-        Score score( static_cast< Score& >( *current_ ) ); // $$$$ SBO 2009-05-07: 
+        Score score( static_cast< Score& >( *current_ ) ); // $$$$ SBO 2009-05-07:
         CommitTo( score );
         score.CheckValidity();
         checkResult_->setText( "" );

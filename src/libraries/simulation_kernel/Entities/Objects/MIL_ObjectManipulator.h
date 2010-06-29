@@ -27,11 +27,11 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit MIL_ObjectManipulator( MIL_Object_ABC& object );
-    explicit MIL_ObjectManipulator( const MIL_Object_ABC& object );    
+    explicit MIL_ObjectManipulator( const MIL_Object_ABC& object );
     virtual ~MIL_ObjectManipulator();
     //@}
 
-    //! @name 
+    //! @name
     //@{
     virtual void Construct ( MT_Float rDeltaPercentage );
     virtual void Destroy   ( MT_Float rDeltaPercentage );
@@ -65,7 +65,7 @@ public:
     virtual bool CanBeOccupiedBy           ( const MIL_Agent_ABC& agent ) const;
     //@}
 
-    //! @name 
+    //! @name
     //@{
     virtual bool IsBuilt() const;
     virtual bool IsBypassed() const;
@@ -73,12 +73,12 @@ public:
     virtual bool IsFullyMined() const;
     //@}
 
-    //! @name 
+    //! @name
     //@{
     virtual MT_Float GetSizeCoef() const;
     //@}
 
-    //! @name 
+    //! @name
     //@{
     virtual bool HasMobilityInfluence      () const;
     virtual MT_Float ApplySpeedPolicy( MT_Float rAgentSpeedWithinObject, MT_Float rAgentSpeedWithinEnvironment, MT_Float rAgentMaxSpeed ) const;

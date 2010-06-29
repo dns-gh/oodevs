@@ -11,10 +11,10 @@
 #include "ExerciseList.h"
 #include "ExerciseLister_ABC.h"
 #include "moc_ExerciseList.cpp"
-#include "MenuButton.h" 
+#include "MenuButton.h"
 #include "Profile.h"
 #include "ProfileList.h"
-#include "frontend/commands.h" 
+#include "frontend/commands.h"
 #include "tools/GeneralConfig.h"
 #include "clients_gui/Tools.h"
 
@@ -70,8 +70,8 @@ namespace
 // Created: RDS 2008-08-27
 // -----------------------------------------------------------------------------
 ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config, const ExerciseLister_ABC& lister, const std::string& subDir /*= ""*/, bool showBrief /*= true*/, bool showProfile /*=true*/ )
-    : QVBox      ( parent ) 
-    , config_    ( config ) 
+    : QVBox      ( parent )
+    , config_    ( config )
     , subDir_    ( subDir )
     , showBrief_ ( showBrief )
     , lister_    ( lister )
@@ -80,8 +80,8 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
     QHBox* box = new QHBox( this );
     box->setBackgroundOrigin( QWidget::WindowOrigin );
     box->setSpacing( 50 );
-    
-    {   
+
+    {
         QVBox* leftBox = new QVBox( box );
         leftBox->setSpacing( 5 );
         leftBox->setBackgroundOrigin( QWidget::WindowOrigin );
@@ -105,8 +105,8 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
         connect( profiles_ , SIGNAL( Select( const Profile& ) ), this, SLOT( SelectProfile( const Profile& ) ) );
         connect( exercises_, SIGNAL( currentChanged( QListViewItem* ) ), this, SLOT( SelectExercise( QListViewItem* ) ) );
     }
-    
-    if( showBrief ) 
+
+    if( showBrief )
     {
         QVBox* rightBox = new QVBox( box );
         rightBox->setMinimumWidth( 200 );
@@ -126,7 +126,7 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
 // Created: RDS 2008-08-27
 // -----------------------------------------------------------------------------
 ExerciseList::~ExerciseList()
-{    
+{
     // NOTHING
 }
 

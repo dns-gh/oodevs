@@ -26,7 +26,7 @@ const kernel::Profile_ABC& PreparationProfile::GetProfile()
 // -----------------------------------------------------------------------------
 QString PreparationProfile::GetLogin() const
 {
-    return "Preparation"; // $$$$ SBO 2008-06-11: 
+    return "Preparation"; // $$$$ SBO 2008-06-11:
 }
 
 // -----------------------------------------------------------------------------

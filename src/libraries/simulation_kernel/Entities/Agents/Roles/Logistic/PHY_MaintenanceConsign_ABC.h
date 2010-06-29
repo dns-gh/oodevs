@@ -39,7 +39,7 @@ public:
     //@{
     template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
-    
+
     //! @name Accessors
     //@{
           bool                            IsFinished            () const;
@@ -95,7 +95,7 @@ protected:
 protected:
     //! @name Tools
     //@{
-    void SetState( E_State nNewState );    
+    void SetState( E_State nNewState );
 
     PHY_RoleInterface_Maintenance& GetPionMaintenance() const;
     //@}
@@ -106,7 +106,7 @@ private:
     bool                            bHasChanged_;
 
 protected:
-    int                             nTimer_;        
+    int                             nTimer_;
     PHY_MaintenanceComposanteState* pComposanteState_;
 };
 

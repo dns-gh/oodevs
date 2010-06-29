@@ -111,7 +111,7 @@ Object::Object()
 // Name: Object destructor
 // Created: JCR 2008-04-21
 // -----------------------------------------------------------------------------
-Object::~Object() 
+Object::~Object()
 {
     MIL_Object_ABC::Unregister();
 }
@@ -134,7 +134,7 @@ void Object::load( MIL_CheckPointInArchive& file, const unsigned int )
     file >> boost::serialization::base_object< MIL_Object_ABC >( *this );
     file >> name_
          >> id_;
-    
+
     T_Capacities capacities;
     file >> capacities;
     std::for_each( capacities.begin(), capacities.end(), boost::bind( &ObjectCapacity_ABC::Register, _1, boost::ref( *this ) ) );
@@ -146,7 +146,7 @@ void Object::load( MIL_CheckPointInArchive& file, const unsigned int )
     idManager_.Lock( id_ );
     //MIL_Object_ABC::Register();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Object::save
 // Created: JCR 2008-06-09
@@ -170,12 +170,12 @@ void Object::WriteODB( xml::xostream& xos ) const
             << xml::attribute( "id"  , id_ )
             << xml::attribute( "name", name_ )
             << xml::attribute( "type", GetType().GetName() );
-    
+
     GetLocalisation().Write( xos );
 
     xos << xml::start( "attributes" );
     {
-        std::for_each( attributes_.begin(), attributes_.end(), 
+        std::for_each( attributes_.begin(), attributes_.end(),
             boost::bind( &ObjectAttribute_ABC::WriteODB, _1, boost::ref( xos ) ) );
     }
     xos << xml::end();
@@ -187,7 +187,7 @@ void Object::WriteODB( xml::xostream& xos ) const
 // Created: JCR 2008-06-03
 // -----------------------------------------------------------------------------
 void Object::Register( ObjectAttribute_ABC* attribute )
-{    
+{
     attributes_.push_back( attribute );
 }
 
@@ -214,10 +214,10 @@ void Object::Register( MIL_InteractiveContainer_ABC* capacity )
 // Created: JCR 2008-07-21
 // -----------------------------------------------------------------------------
 void Object::Instanciate( MIL_Object_ABC& object ) const
-{    
-    std::for_each( capacities_.begin(), capacities_.end(), 
+{
+    std::for_each( capacities_.begin(), capacities_.end(),
                    boost::bind( &ObjectCapacity_ABC::Instanciate, _1, boost::ref( object ) ) );
-//    std::for_each( object.capacities_.begin(), object.capacities_.end(), 
+//    std::for_each( object.capacities_.begin(), object.capacities_.end(),
 //                   boost::bind( &ObjectCapacity_ABC::Register, _1, boost::ref( object ) ) );
 }
 
@@ -226,7 +226,7 @@ void Object::Instanciate( MIL_Object_ABC& object ) const
 // Created: JCR 2008-07-21
 // -----------------------------------------------------------------------------
 void Object::Finalize()
-{    
+{
     std::for_each( capacities_.begin(), capacities_.end(), boost::bind( &ObjectCapacity_ABC::Finalize, _1, boost::ref( *this ) ) );
 }
 
@@ -260,20 +260,20 @@ bool Object::CanInteractWith( const MIL_Agent_ABC& agent ) const
 // -----------------------------------------------------------------------------
 void Object::ProcessAgentEntering( MIL_Agent_ABC& agent )
 {
-    std::for_each( interactives_.begin(), interactives_.end(), 
+    std::for_each( interactives_.begin(), interactives_.end(),
                    boost::bind( &MIL_InteractiveContainer_ABC::ProcessAgentEntering, _1, boost::ref( *this ), boost::ref( agent ) ) );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Object::ProcessAgentExiting
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
 void Object::ProcessAgentExiting( MIL_Agent_ABC& agent )
 {
-    std::for_each( interactives_.begin(), interactives_.end(), 
+    std::for_each( interactives_.begin(), interactives_.end(),
                    boost::bind( &MIL_InteractiveContainer_ABC::ProcessAgentExiting, _1, boost::ref( *this ), boost::ref( agent ) ) );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Object::ProcessAgentMovingInside
 // Created: JCR 2008-05-30
@@ -281,10 +281,10 @@ void Object::ProcessAgentExiting( MIL_Agent_ABC& agent )
 void Object::ProcessAgentMovingInside( MIL_Agent_ABC& agent )
 {
     agent.GetRole< PHY_RoleInterface_Location >().NotifyTerrainObjectCollision( *this );
-    std::for_each( interactives_.begin(), interactives_.end(), 
+    std::for_each( interactives_.begin(), interactives_.end(),
                    boost::bind( &MIL_InteractiveContainer_ABC::ProcessAgentMovingInside, _1, boost::ref( *this ), boost::ref( agent ) ) );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Object::ProcessAgentInside
 // Created: JCR 2008-05-30
@@ -292,7 +292,7 @@ void Object::ProcessAgentMovingInside( MIL_Agent_ABC& agent )
 void Object::ProcessAgentInside( MIL_Agent_ABC& agent )
 {
     agent.GetRole< PHY_RoleInterface_Location >().NotifyTerrainObjectCollision( *this );
-    std::for_each( interactives_.begin(), interactives_.end(), 
+    std::for_each( interactives_.begin(), interactives_.end(),
                    boost::bind( &MIL_InteractiveContainer_ABC::ProcessAgentInside, _1, boost::ref( *this ), boost::ref( agent ) ) );
 }
 
@@ -302,7 +302,7 @@ void Object::ProcessAgentInside( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void Object::ProcessPopulationInside( MIL_PopulationElement_ABC& population )
 {
-    std::for_each( interactives_.begin(), interactives_.end(), 
+    std::for_each( interactives_.begin(), interactives_.end(),
                    boost::bind( &MIL_InteractiveContainer_ABC::ProcessPopulationInside, _1, boost::ref( *this ), boost::ref( population ) ) );
 }
 
@@ -383,7 +383,7 @@ void Object::SendCreation() const
     asn().set_team( GetArmy()->GetID() );
 
     NET_ASN_Tools::WriteLocation( GetLocalisation(), *asn().mutable_location() );
-    std::for_each( attributes_.begin(), attributes_.end(), 
+    std::for_each( attributes_.begin(), attributes_.end(),
                     boost::bind( &ObjectAttribute_ABC::SendFullState, _1, boost::ref( *asn().mutable_attributes() ) ) );
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
@@ -440,17 +440,17 @@ void Object::SendMsgUpdate() const
 
     if( xAttrToUpdate_ & eAttrUpdate_Localisation )
         NET_ASN_Tools::WriteLocation( GetLocalisation(), *asn().mutable_location() );
-    
+
     Common::MsgObjectAttributes& attr = *asn().mutable_attributes();
 
-    if ( asn().has_location() || attr.has_construction() || attr.has_obstacle() 
-        || attr.has_mine() || attr.has_activity_time() || attr.has_bypass() 
+    if( asn().has_location() || attr.has_construction() || attr.has_obstacle()
+        || attr.has_mine() || attr.has_activity_time() || attr.has_bypass()
         || attr.has_logistic() || attr.has_nbc() || attr.has_crossing_site()
         || attr.has_supply_route() || attr.has_toxic_cloud() || attr.has_fire()
         || attr.has_medical_treatment() || attr.has_interaction_height() || attr.has_stock()
         || attr.has_nbc_agent() )
         asn.Send( NET_Publisher_ABC::Publisher() );
-    
+
     xAttrToUpdate_ = 0;
 
     if( asn().has_location() )
@@ -502,7 +502,7 @@ void Object::Serialize( HLA_UpdateFunctor& functor ) const
     functor.Serialize( "armee", false, GetArmy()->GetName() );
     functor.Serialize( "type",  false, GetType().GetName() );
     functor.Serialize( "coordonnees",   ( xAttrToUpdateForHLA_ & eAttrUpdate_Localisation ) != 0,           GetLocalisation() );
-    
+
     std::for_each( attributes_.begin(), attributes_.end(),
                    boost::bind( &ObjectAttribute_ABC::Serialize, _1, boost::ref( functor ) ) );
 
@@ -539,6 +539,6 @@ boost::shared_ptr< DEC_Knowledge_Object > Object::CreateKnowledge( const MIL_Kno
 // -----------------------------------------------------------------------------
 void Object::UpdateLocalisation( const TER_Localisation& location )
 {
-    xAttrToUpdate_ |= eAttrUpdate_Localisation;    
+    xAttrToUpdate_ |= eAttrUpdate_Localisation;
     MIL_Object_ABC::UpdateLocalisation( location );
 }

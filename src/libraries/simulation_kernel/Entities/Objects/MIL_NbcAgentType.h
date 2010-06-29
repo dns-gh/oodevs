@@ -44,14 +44,14 @@ public:
     //@{
     unsigned int                   GetID                   () const;
     const std::string&     GetName                 () const;
-    
+
     bool                   IsLiquidContaminating   () const;
     bool                   IsLiquidPoisonous       () const;
-    const PHY_HumanWound&  GetLiquidRandomWound    () const; 
-    
+    const PHY_HumanWound&  GetLiquidRandomWound    () const;
+
     bool                   IsGasContaminating      () const;
     bool                   IsGasPoisonous          () const;
-    const PHY_HumanWound&  GetGasRandomWound       () const; 
+    const PHY_HumanWound&  GetGasRandomWound       () const;
     unsigned int                   GetGasLifeTime          () const;
     MT_Float               GetGasPropagationAngle  () const;
     bool                   CanBeVaporized          () const;
@@ -98,7 +98,7 @@ private:
 private:
     const std::string           strName_;
           unsigned int                  nID_;
-        
+
           T_HumanPoisonousVector liquidPoisonous_;
           bool                   bLiquidPoisonous_;
           bool                   bLiquidContaminating_;

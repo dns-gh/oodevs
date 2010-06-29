@@ -28,7 +28,7 @@ public:
     virtual ~ADN_Point_GUI();
 
     virtual void OnContextMenu( int nRow, int nCol, const QPoint& pt );
-    
+
     void AddNewElement( E_KeyPoint nKeyPoint );
     void DeleteCurrentElement();
 

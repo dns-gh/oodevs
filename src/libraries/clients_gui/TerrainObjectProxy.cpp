@@ -73,9 +73,9 @@ void TerrainObjectProxy::DoUpdate( const InfrastructureParameters& infrastructur
 // Name: TerrainObjectProxy GetName
 // Created: SLG 2009-11-2
 // -----------------------------------------------------------------------------
-QString TerrainObjectProxy::GetName() const 
-{ 
-    return QString( object_->GetName().c_str() ); 
+QString TerrainObjectProxy::GetName() const
+{
+    return QString( object_->GetName().c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,8 +83,8 @@ QString TerrainObjectProxy::GetName() const
 // Created: SLG 2009-11-2
 // -----------------------------------------------------------------------------
 unsigned long TerrainObjectProxy::GetId() const
-{ 
-    return object_->GetId(); 
+{
+    return object_->GetId();
 }
 
 // -----------------------------------------------------------------------------
@@ -122,7 +122,7 @@ void TerrainObjectProxy::AddDictionaryForArchitecture( kernel::PropertiesDiction
 
 // -----------------------------------------------------------------------------
 // Name: TerrainObjectProxy::SetSelected
-//** @param  selected 
+//** @param  selected
 //*/
 // Created: FDS 2010-01-15
 // -----------------------------------------------------------------------------
@@ -133,7 +133,7 @@ void TerrainObjectProxy::SetSelected( bool selected ) const
 
 // -----------------------------------------------------------------------------
 // Name: TerrainObjectProxy::Draw
-//** @param  drawer 
+//** @param  drawer
 //*/
 // Created: FDS 2010-01-15
 // -----------------------------------------------------------------------------
@@ -144,8 +144,8 @@ void TerrainObjectProxy::Draw( urban::Drawer_ABC& drawer ) const
 
 // -----------------------------------------------------------------------------
 // Name: TerrainObjectProxy::IsInside
-//** @param  point 
-//    @return 
+//** @param  point
+//    @return
 //*/
 // Created: FDS 2010-01-15
 // -----------------------------------------------------------------------------

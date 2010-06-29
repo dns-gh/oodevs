@@ -22,7 +22,7 @@ PHY_Population_ActionMove::PHY_Population_ActionMove( MIL_Population& population
     : PHY_Action_ABC      ()
     , population_         ( population )
     , destination_        ()
-{    
+{
     assert( pTargetPosition );
     destination_ = *pTargetPosition;
 }
@@ -50,7 +50,7 @@ void PHY_Population_ActionMove::Stop()
 // Bypassd: NLD 2004-08-18
 // -----------------------------------------------------------------------------
 void PHY_Population_ActionMove::Execute()
-{   
+{
     population_.Move( destination_ );
 }
 

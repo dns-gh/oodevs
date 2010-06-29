@@ -112,7 +112,7 @@ int DEC_KnowledgePopulationFunctions::Exterminate( MIL_AgentPion& caller, int kn
     DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID(knowledgeId);
     if( !pKnowledge )
         return eQueryInvalid;
-    pKnowledge->Exterminate( caller, surface );    
+    pKnowledge->Exterminate( caller, surface );
     caller.Get< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( *dotation, 1 );
     return eQueryValid;
 }

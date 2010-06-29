@@ -27,7 +27,7 @@ TER_Polygon* TER_Polygon::empty_polygon = 0;
 TER_Polygon::TER_Polygon()
 {
     if (!empty_polygon)
-    {    
+    {
         empty_polygon=new TER_Polygon(true);
         assert(empty_polygon);
     }
@@ -61,7 +61,7 @@ TER_Polygon::TER_Polygon( const T_PointPtrVector& points,bool bConvexHull )
 
     // set ring
     pData_->borderVector_.reserve( points.size() );
-    for( CIT_PointPtrVector itPoint = points.begin(); itPoint != points.end(); ++itPoint )   
+    for( CIT_PointPtrVector itPoint = points.begin(); itPoint != points.end(); ++itPoint )
         pData_->borderVector_.push_back( **itPoint );
 
     if( bConvexHull )
@@ -69,7 +69,7 @@ TER_Polygon::TER_Polygon( const T_PointPtrVector& points,bool bConvexHull )
 
     ComputeBoundingBox();
 }
-       
+
 //-----------------------------------------------------------------------------
 // Name: TER_Polygon constructor
 // Created: JDY 03-05-26
@@ -98,7 +98,7 @@ TER_Polygon::TER_Polygon( const T_PointVector& points, bool bConvexHull )
 TER_Polygon::TER_Polygon(const TER_Polygon& poly)
 {
     pData_ = poly.pData_;
-    pData_->ref(); 
+    pData_->ref();
 }
 
 //-----------------------------------------------------------------------------
@@ -130,7 +130,7 @@ TER_Polygon& TER_Polygon::operator=( const TER_Polygon& rhs )
 void TER_Polygon::Detach()
 {
     assert(pData_);
-    if ( pData_->deref() ) 
+    if( pData_->deref() )
         delete pData_;
     pData_ = 0;
 }
@@ -201,10 +201,10 @@ bool TER_Polygon::IntersectWithBorder( const MT_Line& line, MT_Float rPrecision 
         return false;
 
     if( pData_->borderVector_.size() > 8 //$$$$ Optim, il semblerait
-   && ! pData_->boundingBox_.Intersect2D( line ) 
+   && ! pData_->boundingBox_.Intersect2D( line )
    && ! pData_->boundingBox_.IsInside( line.GetPosStart() ) )
         return false;
-   
+
     const MT_Vector2D* pLastPos = 0;
     for( CIT_PointVector itPoint = pData_->borderVector_.begin(); itPoint != pData_->borderVector_.end(); ++itPoint )
     {
@@ -226,14 +226,14 @@ bool TER_Polygon::IntersectWithBorder( const MT_Line& line, MT_Float rPrecision 
 }
 
 //-----------------------------------------------------------------------------
-// Name: TER_Polygon::IntersectWithBorder         
+// Name: TER_Polygon::IntersectWithBorder
 // Created: JDY 03-05-28
 //-----------------------------------------------------------------------------
 bool TER_Polygon::IntersectWithBorder( const MT_Line& line,T_PointSet& res, MT_Float rPrecision ) const
 {
     if (IsNull())
         return false;
-    
+
     const MT_Vector2D* pLastPos = 0;
     for( CIT_PointVector itPoint = pData_->borderVector_.begin(); itPoint != pData_->borderVector_.end(); ++itPoint )
     {
@@ -257,14 +257,14 @@ bool TER_Polygon::IntersectWithBorder( const MT_Line& line,T_PointSet& res, MT_F
 }
 
 //-----------------------------------------------------------------------------
-// Name: TER_Polygon::IntersectWithBorder         
+// Name: TER_Polygon::IntersectWithBorder
 // Created: NLD 2003-08-20
 //-----------------------------------------------------------------------------
 bool TER_Polygon::IntersectWithBorder( const MT_Droite& line, T_PointSet& res ) const
 {
     if( IsNull() )
         return false;
-    
+
     const MT_Vector2D* pLastPos = 0;
     for( CIT_PointVector itPoint = pData_->borderVector_.begin(); itPoint != pData_->borderVector_.end(); ++itPoint )
     {
@@ -323,7 +323,7 @@ bool TER_Polygon::Intersect2D( const MT_Droite& line, T_PointSet& res, MT_Float 
 // Created: NLD 2003-07-25
 //-----------------------------------------------------------------------------
 bool TER_Polygon::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, MT_Float rRadius ) const
-{   
+{
     if( IsInside( vCircleCenter ) )
         return true;
 
@@ -349,32 +349,32 @@ bool TER_Polygon::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, MT_Fl
 void TER_Polygon::Intersection( MT_Polyline& polyline, MT_Float rPrecision ) const
 {
     T_PointVector res;
-        
+
     CIT_PointVector itSegEnd = polyline.GetPoints().begin();
-    
-    if ( itSegEnd == polyline.GetPoints().end() )
+
+    if( itSegEnd == polyline.GetPoints().end() )
     {
         polyline = res;
         return;
     }
-    
-    if ( IsInside( *itSegEnd ) )
+
+    if( IsInside( *itSegEnd ) )
         res.push_back( *itSegEnd );
-    
+
     for ( CIT_PointVector itSegBegin = itSegEnd++; itSegEnd != polyline.GetPoints().end(); ++itSegBegin, ++itSegEnd )
     {
         TER_DistanceLess cmp( *itSegBegin );
         T_PointSet       collisionSet( cmp );
-        
+
         IntersectWithBorder( MT_Line( *itSegBegin, *itSegEnd ), collisionSet, rPrecision );
-        
+
         for ( CIT_PointSet it = collisionSet.begin(); it != collisionSet.end(); ++it )
             res.push_back( *it );
-        
-        if ( IsInside( *itSegEnd ) )
+
+        if( IsInside( *itSegEnd ) )
             res.push_back( *itSegEnd );
     }
-    
+
     polyline = res;
 }
 
@@ -404,18 +404,18 @@ void TER_Polygon::ComputeBoundingBox()
 {
     // bounding box
     MT_Vector2D vDownLeft( std::numeric_limits<MT_Float>::max(), std::numeric_limits<MT_Float>::max() );
-    MT_Vector2D vUpRight ( std::numeric_limits<MT_Float>::min(), std::numeric_limits<MT_Float>::min() ); 
+    MT_Vector2D vUpRight ( std::numeric_limits<MT_Float>::min(), std::numeric_limits<MT_Float>::min() );
 
     for ( CIT_PointVector itPoint = pData_->borderVector_.begin(); itPoint != pData_->borderVector_.end(); ++itPoint )
     {
         const MT_Vector2D& vPos = *itPoint;
-        if ( vPos.rX_ < vDownLeft.rX_ )
+        if( vPos.rX_ < vDownLeft.rX_ )
             vDownLeft.rX_ = vPos.rX_;
-        if ( vPos.rY_ < vDownLeft.rY_ )
+        if( vPos.rY_ < vDownLeft.rY_ )
             vDownLeft.rY_ = vPos.rY_;
-        if ( vPos.rX_ > vUpRight.rX_ )
+        if( vPos.rX_ > vUpRight.rX_ )
             vUpRight.rX_ = vPos.rX_;
-        if ( vPos.rY_ > vUpRight.rY_ )
+        if( vPos.rY_ > vUpRight.rY_ )
             vUpRight.rY_ = vPos.rY_;
     }
     pData_->boundingBox_ = MT_Rect( vDownLeft.rX_, vDownLeft.rY_, vUpRight.rX_, vUpRight.rY_ );
@@ -432,7 +432,7 @@ MT_Rect TER_Polygon::GetBoundingBox() const
 
 namespace
 {
-    
+
     // -----------------------------------------------------------------------------
     // Name: ComputeOrientation
     // Created: AGE 2005-06-14
@@ -466,16 +466,16 @@ MT_Float TER_Polygon::ComputeArea() const
     if( ! pData_ || pData_->bIsNull_ || pData_->borderVector_.empty() )
         return 0;
 
-    CIT_PointVector second = pData_->borderVector_.begin(); 
+    CIT_PointVector second = pData_->borderVector_.begin();
     ++second;
-    
+
     // check if the polygon has only one point
-    if (second == pData_->borderVector_.end()) 
+    if (second == pData_->borderVector_.end())
         return 0;
 
     const MT_Vector2D firstPoint = pData_->borderVector_.front();
     CIT_PointVector third = second;
-    while ( ++third != pData_->borderVector_.end()) 
+    while ( ++third != pData_->borderVector_.end())
     {
         result = result + TriangleArea( firstPoint, *second, *third );
         second = third;
@@ -566,7 +566,7 @@ void TER_Polygon::Convexify()
         else
             ++nPoint;
     }
-    // Ensure the polygon is closed 
+    // Ensure the polygon is closed
     if( convexHull.back() != convexHull.front() )
         convexHull.push_back( convexHull.front() );
 
@@ -601,7 +601,7 @@ TER_Polygon::E_BoundedSize TER_Polygon::BoundedSide( const MT_Vector2D& point ) 
                     bIsInside = ! bIsInside;
             }
         }
-        else if( current->rY_ > point.rY_ ) 
+        else if( current->rY_ > point.rY_ )
         {
             if( next->rY_ == point.rY_ && point.rX_ == next->rX_ )
                 return eOnBoundary;
@@ -620,7 +620,7 @@ TER_Polygon::E_BoundedSize TER_Polygon::BoundedSide( const MT_Vector2D& point ) 
                 return eOnBoundary;
             if( next->rY_ == point.rY_ )
             {
-                if( point.rX_ > current->rX_ && point.rX_ <= next->rX_ 
+                if( point.rX_ > current->rX_ && point.rX_ <= next->rX_
                  || point.rX_ < current->rX_ && point.rX_ >= next->rX_ )
                     return eOnBoundary;
             }

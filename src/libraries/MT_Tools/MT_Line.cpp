@@ -8,11 +8,11 @@
 
 
 #ifdef  _DEBUG
-#   undef   INLINE                  
+#   undef   INLINE
 #   define  INLINE
 #   include "MT_Line.inl"
 #endif  // _DEBUG
-          
+
 
 //MT_BOOSTPOOLING_FUNCTIONS( MT_Line )
 
@@ -52,7 +52,7 @@ MT_Line::~MT_Line()
 //-----------------------------------------------------------------------------
 E_CollisionState MT_Line::Intersect2D( const MT_Line& line ) const
 {
-   
+
     MT_Float rX1 = GetPosStart().rX_;
     MT_Float rY1 = GetPosStart().rY_;
     MT_Float rX2 = GetPosEnd().rX_;
@@ -77,14 +77,14 @@ E_CollisionState MT_Line::Intersect2D( const MT_Line& line ) const
     r3 = rA1 * rX3 + rB1 * rY3 + rC1;
     r4 = rA1 * rX4 + rB1 * rY4 + rC1;
 
-    /// Check signs of r3 and r4. 
+    /// Check signs of r3 and r4.
     // If both point 3 and point 4 lie on same side of line 1, the line segments do not intersect
 
-    if ( !MT_IsZero( r3 ) && !MT_IsZero( r4 ) && MT_IsSameSigns( r3, r4 ) )
+    if( !MT_IsZero( r3 ) && !MT_IsZero( r4 ) && MT_IsSameSigns( r3, r4 ) )
     {
         return ( eDontIntersect );
     }
-        
+
     // Compute a2, b2, c2
 
     rA2 = rY4 - rY3;
@@ -99,11 +99,11 @@ E_CollisionState MT_Line::Intersect2D( const MT_Line& line ) const
     // Check signs of r1 and r2.
     // If both point 1 and point 2 lie on same side of second line segment, the line segments do not intersect
 
-    if ( !MT_IsZero( r1 ) && !MT_IsZero( r2 ) && MT_IsSameSigns( r1, r2 ) )
+    if( !MT_IsZero( r1 ) && !MT_IsZero( r2 ) && MT_IsSameSigns( r1, r2 ) )
     {
         return ( eDontIntersect );
     }
-       
+
     // lines_intersect
     return ( eDoIntersect );
 }
@@ -143,7 +143,7 @@ bool MT_Line::IsClipped( const MT_Line& Line ) const
 
 inline
 bool  _GEN_IsZero( MT_Float rF )
-{ 
+{
     return rF < 1e-4 && rF > -1e-4;
 }
 
@@ -172,11 +172,11 @@ E_CollisionState MT_Line::Intersect2D( const MT_Line& line, MT_Vector2D& vPosInt
     const MT_Float r3 = rA1 * rX3 + rB1 * rY3 + rC1;
     const MT_Float r4 = rA1 * rX4 + rB1 * rY4 + rC1;
 
-    /// Check signs of r3 and r4. 
+    /// Check signs of r3 and r4.
     // If both point 3 and point 4 lie on same side of line 1, the line segments do not intersect
-    if ( !_GEN_IsZero( r3 ) && !_GEN_IsZero( r4 ) && MT_IsSameSigns( r3, r4 ) )
+    if( !_GEN_IsZero( r3 ) && !_GEN_IsZero( r4 ) && MT_IsSameSigns( r3, r4 ) )
         return ( eDontIntersect );
-        
+
     // Compute a2, b2, c2
 
     const MT_Float rA2 = rY4 - rY3;
@@ -189,14 +189,14 @@ E_CollisionState MT_Line::Intersect2D( const MT_Line& line, MT_Vector2D& vPosInt
 
     // Check signs of r1 and r2.
     // If both point 1 and point 2 lie on same side of second line segment, the line segments do not intersect
-    if ( !_GEN_IsZero( r1 ) && !_GEN_IsZero( r2 ) && MT_IsSameSigns( r1, r2 ) )
+    if( !_GEN_IsZero( r1 ) && !_GEN_IsZero( r2 ) && MT_IsSameSigns( r1, r2 ) )
         return ( eDontIntersect );
-        
+
     // Line segments intersect: compute intersection point
     const MT_Float rDenom = rA1 * rB2 - rA2 * rB1;
-    if ( _GEN_IsZero( rDenom ) )
+    if( _GEN_IsZero( rDenom ) )
         return ( eCollinear );
-        
+
 
     // The rDenom/2 is to get rounding instead of truncating. It is added or subtracted to the numerator, depending upon the sign of the numerator.
     const MT_Float rNumX = rB1 * rC2 - rB2 * rC1;
@@ -209,13 +209,13 @@ E_CollisionState MT_Line::Intersect2D( const MT_Line& line, MT_Vector2D& vPosInt
 }
 
 //-----------------------------------------------------------------------------
-// Name: MT_Line::=( const 
+// Name: MT_Line::=( const
 // Created: FBD 02-11-15
 //-----------------------------------------------------------------------------
 MT_Line& MT_Line::operator = ( const MT_Line& rhs )
 {
-    pPosStart_ = rhs.pPosStart_;    
-    pPosEnd_= rhs.pPosEnd_;    
+    pPosStart_ = rhs.pPosStart_;
+    pPosEnd_= rhs.pPosEnd_;
     return *this;
 }
 
@@ -248,7 +248,7 @@ bool MT_Line::Intersect2D( const T_PointVector& polyline, T_PointSet& orderedInt
             bFlag = true;
             orderedIntersectionSet.insert( *pPosEnd_ );
         }
-        
+
         if( !bFlag && Intersect2D( lineTmp, vIntersection ) == eDoIntersect )
         {
             assert( IsInside( vIntersection, rPrecision ) );

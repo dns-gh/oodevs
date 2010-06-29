@@ -46,11 +46,11 @@ public:
              DEC_Knowledge_Urban( const MIL_Army_ABC& army, const urban::TerrainObject_ABC& object );
     virtual ~DEC_Knowledge_Urban();
     //@}
-    
+
     //! @name CheckPoints
     //@{
     /*BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive&, const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;*/
     //@}
@@ -66,7 +66,7 @@ public:
     const PHY_PerceptionLevel& GetCurrentPerceptionLevel() const;
     const PHY_PerceptionLevel& GetCurrentPerceptionLevel( const MIL_Agent_ABC& pion ) const;
     const float GetPathfindCost( float weight ) const;
-    double GetProgress() const; 
+    double GetProgress() const;
     const geometry::Point2f GetBarycenter() const;
     const urban::TerrainObject_ABC& GetTerrainObjectKnown() const;
     //@}
@@ -139,7 +139,7 @@ private:
     bool     bMaxPerceptionLevelUpdated_;
     double   rLastRelevanceSent_;
     double   rLastProgressSent_;
-    
+
     static MIL_IDManager idManager_;
 };
 

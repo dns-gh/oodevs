@@ -82,7 +82,7 @@ void DEC_LogisticFunctions::PionMaintenanceChangeTacticalPriorities( MIL_Agent_A
     if( role )
         role->ChangePriorities( automates );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::PionMaintenanceChangeWorkRate
 // Created: NLD 2005-01-05
@@ -129,7 +129,7 @@ void DEC_LogisticFunctions::AutomateMaintenanceChangeTacticalPriorities( MIL_Aut
 {
     PionMaintenanceChangeTacticalPriorities( callerAutomate.GetPionPC(), priorities );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::AutomateMaintenanceChangeWorkRate
 // Created: NLD 2005-01-05
@@ -149,7 +149,7 @@ void DEC_LogisticFunctions::AutomateMaintenanceChangeWorkRate( MIL_Automate& cal
 // -----------------------------------------------------------------------------
 void DEC_LogisticFunctions::EvacuateWoundedHumansToTC2( DEC_Decision_ABC* pPionWounded, DEC_Decision_ABC* pDecTC2 )
 {
-    assert( pPionWounded );   
+    assert( pPionWounded );
     assert( pDecTC2 );
     if( !pDecTC2->GetAutomate().GetType().IsLogistic() )
         return;
@@ -279,7 +279,7 @@ void DEC_LogisticFunctions::PionMedicalChangeTacticalPriorities( MIL_Agent_ABC& 
     if( role )
         role->ChangePriorities( automates );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::AutomateMedicalEnableSystem
 // Created: NLD 2005-01-05
@@ -351,7 +351,7 @@ void DEC_LogisticFunctions::AutomateMedicalChangeTacticalPriorities( MIL_Automat
 {
     PionMedicalChangeTacticalPriorities( callerAutomate.GetPionPC(), priorities );
 }
-    
+
 // =============================================================================
 // SUPPLY
 // =============================================================================
@@ -365,7 +365,7 @@ void DEC_LogisticFunctions::ChangeDotationsValueUsingTC2( MIL_Agent_ABC& callerA
     const PHY_DotationType* pDotationType = PHY_DotationType::FindDotationType( dotationType );
     assert( pDotationType );
     const PHY_AmmoDotationClass* pAmmoDotationClass = PHY_AmmoDotationClass::Find( ammoDotationClassId );
-        
+
     callerAgent.GetRole< dotation::PHY_RoleInterface_Dotations >().ChangeDotationsValueUsingTC2( *pDotationType, pAmmoDotationClass, rCapacityFactor );
 }
 
@@ -390,7 +390,7 @@ void DEC_LogisticFunctions::PionSupplyDisableSystem( MIL_Agent_ABC& callerAgent 
     if( role )
         role->DisableSystem();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::AutomateSupplyEnableSystem
 // Created: NLD 2005-02-07
@@ -417,7 +417,7 @@ void DEC_LogisticFunctions::AutomateRequestSupply( MIL_Automate& callerAutomate 
 {
     callerAutomate.RequestDotationSupply();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::PionRequestSupply
 // Created: NLD 2005-03-03
@@ -558,7 +558,7 @@ DEC_Decision_ABC* DEC_LogisticFunctions::PionGetTC2( const MIL_Agent_ABC& agent 
 {
    if (MIL_AutomateLOG* pTC2 = agent.GetAutomate().GetTC2() )
        return ( &pTC2->GetDecision() );
-    return 0;  
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -567,7 +567,7 @@ DEC_Decision_ABC* DEC_LogisticFunctions::PionGetTC2( const MIL_Agent_ABC& agent 
 // -----------------------------------------------------------------------------
 DEC_Decision_ABC* DEC_LogisticFunctions::AutomateGetTC2( const MIL_Automate& agent )
 {
-    if ( MIL_AutomateLOG* pTC2 = agent.GetTC2() )
+    if( MIL_AutomateLOG* pTC2 = agent.GetTC2() )
         return ( &pTC2->GetDecision() );
     return 0;
 }

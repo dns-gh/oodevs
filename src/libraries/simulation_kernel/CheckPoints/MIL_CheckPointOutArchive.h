@@ -26,7 +26,7 @@ class  MIL_CheckPointOutArchive : public boost::archive::binary_oarchive_impl<MI
 {
 public:
 
-             MIL_CheckPointOutArchive(std::ostream & os, unsigned int flags = 0) : boost::archive::binary_oarchive_impl<MIL_CheckPointOutArchive, std::ostream::char_type, std::ostream::traits_type>(os, flags) 
+             MIL_CheckPointOutArchive(std::ostream & os, unsigned int flags = 0) : boost::archive::binary_oarchive_impl<MIL_CheckPointOutArchive, std::ostream::char_type, std::ostream::traits_type>(os, flags)
              {}
              MIL_CheckPointOutArchive(std::streambuf & bsb, unsigned int flags = 0) : boost::archive::binary_oarchive_impl<MIL_CheckPointOutArchive, std::ostream::char_type, std::ostream::traits_type>(bsb, flags)
              {}
@@ -40,7 +40,7 @@ private:
     MIL_CheckPointOutArchive& operator=( const MIL_CheckPointOutArchive& ); //!< Assignement operator
     //@}
 
-}; 
+};
 
 BOOST_SERIALIZATION_REGISTER_ARCHIVE( MIL_CheckPointOutArchive );
 

@@ -13,9 +13,9 @@
 #include "PHY_RoleInterface_Location.h"
 #include "hla/Deserializer.h"
 
-namespace hla 
+namespace hla
 {
-    class AttributeIdentifier;    
+    class AttributeIdentifier;
 }
 
 class MIL_AgentHLA;
@@ -63,7 +63,7 @@ public:
     virtual MIL_Agent_ABC&     GetAgent             () const;
     virtual MT_Float           GetCurrentSpeed      () const;
     virtual bool               HasDoneMagicMove     () const;
-    virtual bool               HasSpeedChanged      () const { return false; }; // Position or direction or height has changed 
+    virtual bool               HasSpeedChanged      () const { return false; }; // Position or direction or height has changed
     virtual bool               HasLocationChanged   () const { return false; };
 
     bool IsValid() const;

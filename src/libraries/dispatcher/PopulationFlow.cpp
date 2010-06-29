@@ -21,7 +21,7 @@ using namespace dispatcher;
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
 PopulationFlow::PopulationFlow( const Population& population, const MsgsSimToClient::MsgPopulationFlowCreation& msg )
-    : dispatcher::PopulationFlow_ABC( msg.oid() ) 
+    : dispatcher::PopulationFlow_ABC( msg.oid() )
     , population_     ( population )
     , nID_            ( msg.oid() )
     , path_           ()
@@ -30,7 +30,7 @@ PopulationFlow::PopulationFlow( const Population& population, const MsgsSimToCli
     , nSpeed_         ()
     , nNbrAliveHumans_( 0 )
     , nNbrDeadHumans_ ( 0 )
-    , nAttitude_      ( Common::agressive )    
+    , nAttitude_      ( Common::agressive )
 {
     RegisterSelf( *this );
 }
@@ -54,7 +54,7 @@ void PopulationFlow::DoUpdate( const MsgsSimToClient::MsgPopulationFlowUpdate& m
         path_.Update( msg.itineraire().location() );
     if( msg.has_flux()  )
         flow_.Update( msg.flux().location() );
-    if( msg.has_direction()  ) 
+    if( msg.has_direction()  )
         nDirection_ = msg.direction().heading();
     if( msg.has_vitesse()  )
         nSpeed_ = msg.vitesse();
@@ -87,7 +87,7 @@ void PopulationFlow::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     client::PopulationFlowUpdate asn;
     asn().set_oid( nID_ );
     asn().set_oid_population( population_.GetId() );
-    asn().mutable_direction()->set_heading( nDirection_ ); 
+    asn().mutable_direction()->set_heading( nDirection_ );
     asn().set_vitesse( nSpeed_ );
     asn().set_attitude( nAttitude_ );
     asn().set_nb_humains_morts( nNbrDeadHumans_ );

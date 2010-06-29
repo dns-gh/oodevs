@@ -66,10 +66,10 @@ DEC_Knowledge_Agent::DEC_Knowledge_Agent( const MIL_KnowledgeGroup& knowledgeGro
     , bMaxPerceptionLevelUpdated_    ( false )
     , rLastRelevanceSent_            ( 0. )
 {
-    if ( bCreatedOnNetwork_ )
+    if( bCreatedOnNetwork_ )
         SendMsgCreation();
 
-    if ( rRelevance_ < 0. || rRelevance_ > 1. )
+    if( rRelevance_ < 0. || rRelevance_ > 1. )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Relevance: major-component not in [0..1]" );
 
 }
@@ -125,7 +125,7 @@ namespace boost
         template< typename Archive >
         inline void serialize( Archive& file, DEC_Knowledge_Agent::T_PerceptionAutomateSourceMap& map, const unsigned int nVersion )
         {
-            split_free( file, map, nVersion); 
+            split_free( file, map, nVersion);
         }
 
         template < typename Archive >
@@ -141,7 +141,7 @@ namespace boost
             }
 
         }
-        
+
         template < typename Archive >
         void load( Archive& file, DEC_Knowledge_Agent::T_PerceptionAutomateSourceMap& g, const unsigned int )
         {
@@ -151,12 +151,12 @@ namespace boost
             {
                       MIL_Automate*        pAutomate;
                 const PHY_PerceptionLevel* pLevel;
-                
+
                 file >> pAutomate;
                 unsigned int nID;
                 file >> nID;
                 pLevel = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
-                
+
                 g.insert( std::make_pair( pAutomate, pLevel ) );
             }
         }
@@ -177,16 +177,16 @@ void DEC_Knowledge_Agent::load( MIL_CheckPointInArchive& file, const unsigned in
          >> dataRecognition_
          >> dataIdentification_
          >> nTimeLastUpdate_;
-    
+
     idManager_.Lock( nID_ );
 
     unsigned int nID;
     file >> nID;
     pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
-    
+
     file >> nID;
     pPreviousPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
-    
+
     file >> nID;
     pMaxPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
 
@@ -199,7 +199,7 @@ void DEC_Knowledge_Agent::load( MIL_CheckPointInArchive& file, const unsigned in
          >> bMaxPerceptionLevelUpdated_
          >> nTimeExtrapolationEnd_;
 
-    if ( rRelevance_ < 0. || rRelevance_ > 1. )
+    if( rRelevance_ < 0. || rRelevance_ > 1. )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Relevance: major-component not in [0..1]" );
 }
 
@@ -293,7 +293,7 @@ void DEC_Knowledge_Agent::UpdatePerceptionSources( const DEC_Knowledge_AgentPerc
 
     // On ne garde que les sources provenant d'autres knowledge groupes
     assert( pAgentKnown_ );
-    if ( pAgentKnown_->BelongsTo( automateSource.GetKnowledgeGroup() ) )
+    if( pAgentKnown_->BelongsTo( automateSource.GetKnowledgeGroup() ) )
         return;
 
     IT_PerceptionAutomateSourceMap it = perceptionLevelPerAutomateMap_.find( &automateSource );
@@ -316,7 +316,7 @@ void DEC_Knowledge_Agent::UpdatePerceptionSources( const DEC_Knowledge_AgentPerc
 void DEC_Knowledge_Agent::Update( const DEC_Knowledge_AgentPerception& perception, int currentTimeStep )
 {
     nTimeLastUpdate_ = currentTimeStep;
-    
+
     ChangeRelevance( 1. );
 
     if( perception.GetCurrentPerceptionLevel() > *pCurrentPerceptionLevel_ )
@@ -333,14 +333,14 @@ void DEC_Knowledge_Agent::Update( const DEC_Knowledge_AgentPerception& perceptio
     }
 
     assert( pKnowledgeGroup_ );
-    
+
     dataDetection_     .Update( perception.GetDetectionData     () );
     dataRecognition_   .Update( perception.GetRecognitionData   () );
     dataIdentification_.Update( perception.GetIdentificationData() );
 
     UpdatePerceptionSources( perception );
     nTimeExtrapolationEnd_ = ( int ) pKnowledgeGroup_->GetType().GetKnowledgeAgentExtrapolationTime();
-}   
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Agent::Update
@@ -400,8 +400,8 @@ void DEC_Knowledge_Agent::UpdateRelevance(int currentTimeStep)
     // ou quand on voit la position à laquelle l'unité devrait se trouver <==== ou pas
     assert( pAgentKnown_ );
     assert( pKnowledgeGroup_ );
-    
-    if ( pAgentKnown_->GetRole< PHY_RoleInterface_Location >().HasDoneMagicMove() /*|| pKnowledgeGroup_->IsPerceived( *this )*/ ) 
+
+    if( pAgentKnown_->GetRole< PHY_RoleInterface_Location >().HasDoneMagicMove() /*|| pKnowledgeGroup_->IsPerceived( *this )*/ )
     {
         ChangeRelevance( 0. );
         return;
@@ -448,7 +448,7 @@ void DEC_Knowledge_Agent::SendChangedState()
 {
     const bool bPerceptionPerAutomateUpdated = ( previousPerceptionLevelPerAutomateMap_ != perceptionLevelPerAutomateMap_ );
 
-    if ( !( bCurrentPerceptionLevelUpdated_ || bMaxPerceptionLevelUpdated_ || bRelevanceUpdated_  ||  bPerceptionPerAutomateUpdated 
+    if( !( bCurrentPerceptionLevelUpdated_ || bMaxPerceptionLevelUpdated_ || bRelevanceUpdated_  ||  bPerceptionPerAutomateUpdated
          || dataDetection_.HasChanged() || dataRecognition_.HasChanged() || dataIdentification_.HasChanged() ) )
         return;
 
@@ -457,7 +457,7 @@ void DEC_Knowledge_Agent::SendChangedState()
     client::UnitKnowledgeUpdate asnMsg;
     asnMsg().set_oid( nID_ );
     asnMsg().set_oid_groupe_possesseur( pKnowledgeGroup_->GetId() );
-    
+
     if( bRelevanceUpdated_ )
     {
         asnMsg().set_pertinence( (int)( rRelevance_ * 100. ) );
@@ -465,7 +465,7 @@ void DEC_Knowledge_Agent::SendChangedState()
     }
 
     if( bCurrentPerceptionLevelUpdated_ )
-    {        
+    {
         MsgsSimToClient::EnumUnitIdentificationLevel level( asnMsg().identification_level() );
         pCurrentPerceptionLevel_->Serialize( level );
         asnMsg().set_identification_level( level );
@@ -502,10 +502,10 @@ void DEC_Knowledge_Agent::SendFullState()
     client::UnitKnowledgeUpdate asnMsg;
     asnMsg().set_oid( nID_ );
     asnMsg().set_oid_groupe_possesseur( pKnowledgeGroup_->GetId() );
-    
+
     asnMsg().set_pertinence( (int)( rRelevance_ * 100. ) );
     rLastRelevanceSent_ = rRelevance_;
-    
+
     MsgsSimToClient::EnumUnitIdentificationLevel level( asnMsg().identification_level() );
     pCurrentPerceptionLevel_->Serialize( level );
     asnMsg().set_identification_level( level );
@@ -533,8 +533,8 @@ void DEC_Knowledge_Agent::UpdateOnNetwork()
 {
     assert( pAgentKnown_ );
     assert( pKnowledgeGroup_ );
-    
-    if ( pAgentKnown_->BelongsTo( *pKnowledgeGroup_ ) )
+
+    if( pAgentKnown_->BelongsTo( *pKnowledgeGroup_ ) )
     {
         if( bCreatedOnNetwork_ )
         {
@@ -579,7 +579,7 @@ void DEC_Knowledge_Agent::SendMsgCreation() const
     client::UnitKnowledgeCreation asnMsg;
     asnMsg().set_oid                  ( nID_ );
     asnMsg().set_oid_groupe_possesseur( pKnowledgeGroup_->GetId() );
-    asnMsg().set_oid_unite_reelle     ( pAgentKnown_->GetID() );    
+    asnMsg().set_oid_unite_reelle     ( pAgentKnown_->GetID() );
     asnMsg().mutable_type_unite()->set_type( pAgentKnown_->GetType().GetID() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
@@ -591,14 +591,14 @@ void DEC_Knowledge_Agent::SendMsgCreation() const
 void DEC_Knowledge_Agent::SendMsgDestruction() const
 {
     if( pKnowledgeGroup_ )
-    {    
+    {
         client::UnitKnowledgeDestruction asnMsg;
         asnMsg().set_oid                  ( nID_ );
         asnMsg().set_oid_groupe_possesseur( pKnowledgeGroup_->GetId() );
         asnMsg.Send( NET_Publisher_ABC::Publisher() );
     }
 }
-    
+
 // =============================================================================
 // DECISIONAL OPERATIONS
 // =============================================================================
@@ -621,7 +621,7 @@ void DEC_Knowledge_Agent::DegradeDangerosity( MT_Float& rDangerosity ) const
 
     // Source is neutralized
     assert( pAgentKnown_ );
-    if ( pAgentKnown_->IsNeutralized() )
+    if( pAgentKnown_->IsNeutralized() )
         rDangerosity *= 1 - rMaxDangerosityDegradationByNeutralizedState_;
 }
 
@@ -631,8 +631,8 @@ void DEC_Knowledge_Agent::DegradeDangerosity( MT_Float& rDangerosity ) const
 // -----------------------------------------------------------------------------
 MT_Float DEC_Knowledge_Agent::GetDangerosity( const MIL_Agent_ABC& target ) const
 {
-    if(     *pMaxPerceptionLevel_ < PHY_PerceptionLevel::recognized_ 
-        ||  IsAFriend( target.GetArmy() ) == eTristate_True 
+    if( *pMaxPerceptionLevel_ < PHY_PerceptionLevel::recognized_
+        ||  IsAFriend( target.GetArmy() ) == eTristate_True
         ||  dataDetection_.IsSurrendered() )
         return 0.;
 
@@ -641,7 +641,7 @@ MT_Float DEC_Knowledge_Agent::GetDangerosity( const MIL_Agent_ABC& target ) cons
     if( !pTargetMajorComposante )
         return 0.;
 
-    MT_Float rDangerosity = 0.;   
+    MT_Float rDangerosity = 0.;
 
     // Fight score
     const PHY_RoleInterface_Location& targetLocation = target.GetRole< PHY_RoleInterface_Location >();
@@ -656,7 +656,7 @@ MT_Float DEC_Knowledge_Agent::GetDangerosity( const MIL_Agent_ABC& target ) cons
     //$$$$ DEGUEU A CLEANER
     /*MT_Float rMajorWeight    = 0;
     MT_Float rNonMajorWeight = 0;
-    
+
     unsigned int nNbrInitialMajorComposantes    = target.GetUnitType().GetNbrInitialMajorComposantes();
     unsigned int nNbrInitialNonMajorComposantes = target.GetUnitType().GetNbrInitialComposantes() - target.GetUnitType().GetNbrInitialMajorComposantes();
 
@@ -702,10 +702,10 @@ MT_Float DEC_Knowledge_Agent::GetDangerosity( const MIL_Agent_ABC& target ) cons
         else
             rDangerosity += ( rLocalDangerosity * rNonMajorWeight );
     }*/
-   
+
 
     DegradeDangerosity( rDangerosity );
-    return rDangerosity;  
+    return rDangerosity;
 }
 
 // -----------------------------------------------------------------------------
@@ -721,7 +721,7 @@ MT_Float DEC_Knowledge_Agent::GetDangerosity( const DEC_Knowledge_Agent& target 
 //    if( GetArmy() && GetArmy().IsAFriend( target ) == eTristate_True )
 //        return 0.;
 
-    MT_Float rDangerosity = 0.;   
+    MT_Float rDangerosity = 0.;
 
     // Target is dead ....
     const DEC_Knowledge_AgentComposante* pTargetMajorComposante = target.GetMajorComposante();
@@ -732,13 +732,13 @@ MT_Float DEC_Knowledge_Agent::GetDangerosity( const DEC_Knowledge_Agent& target 
     const MT_Vector3D vTargetPosition( target.GetPosition().rX_, target.GetPosition().rY_, target.GetAltitude() );
     const MT_Vector3D vDataPosition  ( dataDetection_.GetPosition().rX_, dataDetection_.GetPosition().rY_, dataDetection_.GetAltitude() );
     const MT_Float rDistBtwSourceAndTarget = vTargetPosition.Distance( vDataPosition );
-        
+
     const T_KnowledgeComposanteVector& composantes = dataRecognition_.GetComposantes();
     for( CIT_KnowledgeComposanteVector itComposante = composantes.begin(); itComposante != composantes.end(); ++itComposante )
         rDangerosity = std::max( rDangerosity, itComposante->GetDangerosity( *pAgentKnown_, *pTargetMajorComposante, rDistBtwSourceAndTarget ) );
-    
+
     DegradeDangerosity( rDangerosity );
-    return rDangerosity;  
+    return rDangerosity;
 }
 
 // -----------------------------------------------------------------------------
@@ -768,7 +768,7 @@ MT_Float DEC_Knowledge_Agent::GetMaxRangeToFireOn( const MIL_Agent_ABC& target, 
 // -----------------------------------------------------------------------------
 const DEC_Knowledge_AgentComposante* DEC_Knowledge_Agent::GetMajorComposante() const
 {
-    const DEC_Knowledge_AgentComposante* pMajorComposante = 0; 
+    const DEC_Knowledge_AgentComposante* pMajorComposante = 0;
     unsigned int nMajorScore = 0;
     const T_KnowledgeComposanteVector& composantes = dataRecognition_.GetComposantes();
     for( CIT_KnowledgeComposanteVector it = composantes.begin(); it != composantes.end(); ++it )
@@ -790,8 +790,8 @@ const DEC_Knowledge_AgentComposante* DEC_Knowledge_Agent::GetMajorComposante() c
 double DEC_Knowledge_Agent::GetMaterialComposantesAttritionLevel( boost::shared_ptr< DEC_Knowledge_Urban > urbanKnowledge ) const
 {
     const urban::Architecture* architecture = urbanKnowledge->GetTerrainObjectKnown().RetrievePhysicalFeature< urban::Architecture >();
-    
-    if ( architecture )
+
+    if( architecture )
     {
         const PHY_RolePion_Composantes& role = GetAgentKnown().GetRole< PHY_RolePion_Composantes >();
         unsigned materialID = UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( architecture->GetMaterial() )->GetId();
@@ -800,7 +800,7 @@ double DEC_Knowledge_Agent::GetMaterialComposantesAttritionLevel( boost::shared_
             return role.GetAttritionIndexComposante(materialID);
         else if ((GetMaxPerceptionLevel() == PHY_PerceptionLevel::recognized_) || (GetMaxPerceptionLevel() == PHY_PerceptionLevel::detected_) )
             return PHY_DotationCategory::FindUrbanProtection( materialID );
-        else 
+        else
             return -1;
     }
     return -1;
@@ -814,7 +814,7 @@ void DEC_Knowledge_Agent::Lock()
 {
     bLocked_ = true;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Agent::Unlock
 // Created: NLD 2005-04-21
@@ -874,7 +874,7 @@ bool DEC_Knowledge_Agent::IsRefugee() const
     assert( pAgentKnown_ );
     return pAgentKnown_->GetType().IsRefugee();
 }
-          
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Agent::IsMilitia
 // Created: NLD 2005-03-10
@@ -925,7 +925,7 @@ E_Tristate DEC_Knowledge_Agent::IsAFriend( const MIL_Army_ABC& army ) const
 // -----------------------------------------------------------------------------
 unsigned int DEC_Knowledge_Agent::GetID() const
 {
-    return nID_;    
+    return nID_;
 }
 
 // -----------------------------------------------------------------------------
@@ -935,7 +935,7 @@ unsigned int DEC_Knowledge_Agent::GetID() const
 MIL_Agent_ABC& DEC_Knowledge_Agent::GetAgentKnown() const
 {
     assert( pAgentKnown_ );
-    return *pAgentKnown_; 
+    return *pAgentKnown_;
 }
 
 // -----------------------------------------------------------------------------
@@ -944,7 +944,7 @@ MIL_Agent_ABC& DEC_Knowledge_Agent::GetAgentKnown() const
 // -----------------------------------------------------------------------------
 const MT_Vector2D& DEC_Knowledge_Agent::GetPosition() const
 {
-    return dataDetection_.GetPosition();    
+    return dataDetection_.GetPosition();
 }
 
 // -----------------------------------------------------------------------------
@@ -990,7 +990,7 @@ MT_Float DEC_Knowledge_Agent::GetSpeed() const
 // -----------------------------------------------------------------------------
 MT_Float DEC_Knowledge_Agent::GetRelevance() const
 {
-    return rRelevance_;    
+    return rRelevance_;
 }
 
 // -----------------------------------------------------------------------------
@@ -999,7 +999,7 @@ MT_Float DEC_Knowledge_Agent::GetRelevance() const
 // -----------------------------------------------------------------------------
 MT_Float DEC_Knowledge_Agent::GetPostureCompletionPercentage() const
 {
-    return dataDetection_.GetPostureCompletionPercentage();   
+    return dataDetection_.GetPostureCompletionPercentage();
 }
 
 // -----------------------------------------------------------------------------
@@ -1068,7 +1068,7 @@ MT_Float DEC_Knowledge_Agent::GetOperationalState() const
 // -----------------------------------------------------------------------------
 MT_Float DEC_Knowledge_Agent::GetMajorOperationalState() const
 {
-    return dataRecognition_.GetMajorOperationalState();  
+    return dataRecognition_.GetMajorOperationalState();
 }
 
 // -----------------------------------------------------------------------------
@@ -1088,7 +1088,7 @@ bool DEC_Knowledge_Agent::IsSurrendered() const
 {
     return dataDetection_.IsSurrendered();
 }
-          
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Agent::IsPrisoner
 // Created: NLD 2005-03-04
@@ -1150,7 +1150,7 @@ bool DEC_Knowledge_Agent::IsHuman() const
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Agent::Invalidate()
 {
-    bValid_ = false;    
+    bValid_ = false;
     if( bCreatedOnNetwork_ )
     {
         SendMsgDestruction();
@@ -1172,7 +1172,7 @@ bool DEC_Knowledge_Agent::IsValid() const
 // Created: LDC 2010-04-13
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Agent::CopyFrom( const DEC_Knowledge_Agent& agent )
-{         
+{
     dataDetection_.Update( agent.dataDetection_ );
     dataRecognition_.Update( agent.dataRecognition_ );
     dataIdentification_.Update( agent.dataIdentification_ );

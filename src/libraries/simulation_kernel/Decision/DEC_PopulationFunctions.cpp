@@ -154,7 +154,7 @@ float DEC_PopulationFunctions::GetKnowledgeObjectDistance( const MIL_Population&
     else
         return (float)callerPopulation.GetDistanceTo( pObject->GetLocalisation() ) ;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationFunctions::GetKnowledgeObjectClosestPoint
 // Created: SBO 2005-12-13

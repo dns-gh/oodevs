@@ -74,48 +74,48 @@ void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& /*from*/, const
     unsigned int nCtx = wrapper.context();
 
     if( wrapper.message().has_control_stop() )
-        simulation_.Stop(); 
+        simulation_.Stop();
     else if( wrapper.message().has_control_pause() )
-        simulation_.Pause(); 
+        simulation_.Pause();
     else if( wrapper.message().has_control_resume() )
-        simulation_.Resume(); 
+        simulation_.Resume();
     else if( wrapper.message().has_control_change_time_factor() )
-        simulation_.SetTimeFactor( wrapper.message().control_change_time_factor().time_factor() ); 
+        simulation_.SetTimeFactor( wrapper.message().control_change_time_factor().time_factor() );
     else if( wrapper.message().has_control_date_time_change() )
-        simulation_.SetRealTime( wrapper.message().control_date_time_change().date_time().data() ); 
+        simulation_.SetRealTime( wrapper.message().control_date_time_change().date_time().data() );
     else if( wrapper.message().has_control_checkpoint_save_now() )
-        workspace.GetCheckPointManager    ().OnReceiveMsgCheckPointSaveNow              ( wrapper.message().control_checkpoint_save_now()               ); 
+        workspace.GetCheckPointManager    ().OnReceiveMsgCheckPointSaveNow              ( wrapper.message().control_checkpoint_save_now()               );
     else if( wrapper.message().has_control_checkpoint_set_frequency() )
-        workspace.GetCheckPointManager    ().OnReceiveMsgCheckPointSetFrequency         ( wrapper.message().control_checkpoint_set_frequency()          ); 
+        workspace.GetCheckPointManager    ().OnReceiveMsgCheckPointSetFrequency         ( wrapper.message().control_checkpoint_set_frequency()          );
     else if( wrapper.message().has_control_toggle_vision_cones() )
-        agentServer_                        .SetMustSendUnitVisionCones                 ( wrapper.message().control_toggle_vision_cones().vision_cones()); 
+        agentServer_                        .SetMustSendUnitVisionCones                 ( wrapper.message().control_toggle_vision_cones().vision_cones());
     else if( wrapper.message().has_unit_order() )
-        workspace.GetEntityManager        ().OnReceiveMsgUnitOrder                      ( wrapper.message().unit_order()                         , nCtx );          
+        workspace.GetEntityManager        ().OnReceiveMsgUnitOrder                      ( wrapper.message().unit_order()                         , nCtx );
     else if( wrapper.message().has_automat_order() )
-        workspace.GetEntityManager        ().OnReceiveMsgAutomatOrder                   ( wrapper.message().automat_order()                      , nCtx ); 
+        workspace.GetEntityManager        ().OnReceiveMsgAutomatOrder                   ( wrapper.message().automat_order()                      , nCtx );
     else if( wrapper.message().has_population_order() )
-        workspace.GetEntityManager        ().OnReceiveMsgPopulationOrder                ( wrapper.message().population_order()                   , nCtx ); 
+        workspace.GetEntityManager        ().OnReceiveMsgPopulationOrder                ( wrapper.message().population_order()                   , nCtx );
     else if( wrapper.message().has_frag_order() )
-        workspace.GetEntityManager        ().OnReceiveMsgFragOrder                      ( wrapper.message().frag_order()                         , nCtx ); 
+        workspace.GetEntityManager        ().OnReceiveMsgFragOrder                      ( wrapper.message().frag_order()                         , nCtx );
     else if( wrapper.message().has_set_automat_mode() )
-        workspace.GetEntityManager        ().OnReceiveMsgSetAutomateMode                ( wrapper.message().set_automat_mode()                   , nCtx ); 
+        workspace.GetEntityManager        ().OnReceiveMsgSetAutomateMode                ( wrapper.message().set_automat_mode()                   , nCtx );
     else if( wrapper.message().has_unit_creation_request() )
-        workspace.GetEntityManager        ().OnReceiveMsgUnitCreationRequest            ( wrapper.message().unit_creation_request()              , nCtx ); 
+        workspace.GetEntityManager        ().OnReceiveMsgUnitCreationRequest            ( wrapper.message().unit_creation_request()              , nCtx );
     else if( wrapper.message().has_knowledge_magic_action() )
-        workspace.GetEntityManager        ().OnReceiveMsgKnowledgeMagicAction           ( wrapper.message().knowledge_magic_action()             , nCtx ); 
+        workspace.GetEntityManager        ().OnReceiveMsgKnowledgeMagicAction           ( wrapper.message().knowledge_magic_action()             , nCtx );
     else if( wrapper.message().has_unit_magic_action() )
-        workspace.GetEntityManager        ().OnReceiveMsgUnitMagicAction                ( wrapper.message().unit_magic_action()                  , nCtx ); 
+        workspace.GetEntityManager        ().OnReceiveMsgUnitMagicAction                ( wrapper.message().unit_magic_action()                  , nCtx );
     else if( wrapper.message().has_object_magic_action() )
-        workspace.GetEntityManager        ().OnReceiveMsgObjectMagicAction              ( wrapper.message().object_magic_action()                , nCtx ); 
+        workspace.GetEntityManager        ().OnReceiveMsgObjectMagicAction              ( wrapper.message().object_magic_action()                , nCtx );
     else if( wrapper.message().has_magic_action() )
         if( wrapper.message().magic_action().type() == MsgsClientToSim::MsgMagicAction_Type_global_meteo
          || wrapper.message().magic_action().type() == MsgsClientToSim::MsgMagicAction_Type_local_meteo )
-            workspace.GetMeteoDataManager     ().OnReceiveMsgMeteo                      ( wrapper.message().magic_action()                              ); 
+            workspace.GetMeteoDataManager     ().OnReceiveMsgMeteo                      ( wrapper.message().magic_action()                              );
         else if( wrapper.message().magic_action().type() == MsgsClientToSim::MsgMagicAction_Type_change_diplomacy )
-            workspace.GetEntityManager        ().OnReceiveMsgChangeDiplomacy            ( wrapper.message().magic_action()                       , nCtx ); 
+            workspace.GetEntityManager        ().OnReceiveMsgChangeDiplomacy            ( wrapper.message().magic_action()                       , nCtx );
     // LTO BEGIN
         else if( wrapper.message().magic_action().type() == MsgsClientToSim::MsgMagicAction_Type_create_knowledge_group )
-            workspace.GetEntityManager        ().OnReceiveMsgKnowledgeGroupCreation     ( wrapper.message().magic_action()                       , nCtx ); 
+            workspace.GetEntityManager        ().OnReceiveMsgKnowledgeGroupCreation     ( wrapper.message().magic_action()                       , nCtx );
     // LTO END
 }
 

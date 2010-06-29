@@ -26,7 +26,7 @@ AutomatHierarchies::AutomatHierarchies( kernel::Controller& controller, kernel::
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: AutomatHierarchies destructor
 // Created: SBO 2006-10-26
@@ -53,7 +53,7 @@ void AutomatHierarchies::SerializeAttributes( xml::xostream& xos ) const
 {
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
-        // $$$$ AGE 2007-04-05: quick ada fix. 
+        // $$$$ AGE 2007-04-05: quick ada fix.
         const kernel::Entity_ABC* child = it->second;
         if( dynamic_cast< const kernel::Agent_ABC* >( child ) )
             xos << start( "unit" );

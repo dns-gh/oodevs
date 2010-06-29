@@ -52,11 +52,11 @@ PHY_Breakdown::~PHY_Breakdown()
 void PHY_Breakdown::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     unsigned int nID;
-    
+
     file >> nID;
     pType_ = PHY_BreakdownType::Find( nID );
     assert( pType_ );
-    
+
     file >> const_cast< unsigned int& >( nRepairTime_ );
 }
 
@@ -127,7 +127,7 @@ unsigned int PHY_Breakdown::GetID() const
 // -----------------------------------------------------------------------------
 bool PHY_Breakdown::AffectElectronic() const
 {
-    assert( pType_ ); 
+    assert( pType_ );
     return pType_->AffectElectronic();
 }
 

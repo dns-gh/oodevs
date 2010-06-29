@@ -37,7 +37,7 @@ public:
     template< typename Archive >
     void Serialize( Archive& archive ) const
     {
-        archive << entityKind_  << domain_   << countryCode_ << category_ 
+        archive << entityKind_  << domain_   << countryCode_ << category_
                 << subcategory_ << specific_ << extra_;
     }
     //@}

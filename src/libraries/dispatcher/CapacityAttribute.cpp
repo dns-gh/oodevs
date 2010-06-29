@@ -32,7 +32,7 @@ CapacityAttribute::CapacityAttribute( const Model& model, const MsgsSimToClient:
 CapacityAttribute::~CapacityAttribute()
 {
 
-}  
+}
 
 // -----------------------------------------------------------------------------
 // Name: CapacityAttribute::Update
@@ -42,7 +42,7 @@ void CapacityAttribute::Update( const MsgsSimToClient::MsgUrbanAttributes& messa
 {
     if( message.has_capacity() )
     {
-        if ( message.capacity().has_structuralstate() )
+        if( message.capacity().has_structuralstate() )
             structuralState_ = message.capacity().structuralstate();
     }
 }

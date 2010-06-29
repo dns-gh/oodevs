@@ -50,7 +50,7 @@ DEC_Knowledge_AgentDataDetection::DEC_Knowledge_AgentDataDetection()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentDataDetection destructor
 // Created: NLD 2004-11-09
@@ -75,7 +75,7 @@ void DEC_Knowledge_AgentDataDetection::load( MIL_CheckPointInArchive& file, cons
          >> bPrisoner_
          >> bRefugeeManaged_
          >> bDead_;
-         
+
     unsigned int nID;
     unsigned int nNbr;
     file >> nNbr;
@@ -84,10 +84,10 @@ void DEC_Knowledge_AgentDataDetection::load( MIL_CheckPointInArchive& file, cons
         file >> nID;
         visionVolumes_.insert( PHY_Volume::FindVolume( nID ) );
     }
-    
+
     file >> nID;
     pLastPosture_ = PHY_Posture::FindPosture( nID );
-    
+
     file >> nID;
     pCurrentPosture_ = PHY_Posture::FindPosture( nID );
 
@@ -116,7 +116,7 @@ void DEC_Knowledge_AgentDataDetection::save( MIL_CheckPointOutArchive& file, con
          << bPrisoner_
          << bRefugeeManaged_
          << bDead_;
-    
+
     unsigned size = visionVolumes_.size();
     file << size;
     for ( CIT_ComposanteVolumeSet it = visionVolumes_.begin(); it != visionVolumes_.end(); ++it )
@@ -124,7 +124,7 @@ void DEC_Knowledge_AgentDataDetection::save( MIL_CheckPointOutArchive& file, con
         unsigned id = (*it)->GetID();
         file << id;
     }
-    
+
     unsigned last    = pLastPosture_->GetID(),
              current = pCurrentPosture_->GetID();
     file << last
@@ -161,7 +161,7 @@ void DEC_Knowledge_AgentDataDetection::Prepare()
 template< typename T >
 void DEC_Knowledge_AgentDataDetection::DoUpdate( const T& data )
 {
-    if ( data.GetTimeLastUpdate() <= nTimeLastUpdate_ )
+    if( data.GetTimeLastUpdate() <= nTimeLastUpdate_ )
         return;
 
     const MT_Vector2D& vNewPosition = data.GetPosition();
@@ -170,7 +170,7 @@ void DEC_Knowledge_AgentDataDetection::DoUpdate( const T& data )
         vPosition_        = vNewPosition;
         bPositionUpdated_ = true;
     }
-    
+
     const MT_Vector2D& vNewDirection = data.GetDirection();
     if( vDirection_ != vNewDirection )
     {
@@ -209,10 +209,10 @@ void DEC_Knowledge_AgentDataDetection::DoUpdate( const T& data )
     const bool bNewDead = data.IsDead();
     if( bDead_ != bNewDead )
     {
-        bDead_        = bNewDead;  
+        bDead_        = bNewDead;
         bDeadUpdated_ = true;
     }
-    
+
     rAltitude_                    =  data.GetAltitude();
     pLastPosture_                 = &data.GetLastPosture();
     pCurrentPosture_              = &data.GetCurrentPosture();
@@ -236,7 +236,7 @@ void DEC_Knowledge_AgentDataDetection::Update( const DEC_Knowledge_AgentPercepti
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_AgentDataDetection::Update( const DEC_Knowledge_AgentDataDetection& data )
 {
-    DoUpdate( data ); 
+    DoUpdate( data );
 }
 
 // -----------------------------------------------------------------------------
@@ -244,7 +244,7 @@ void DEC_Knowledge_AgentDataDetection::Update( const DEC_Knowledge_AgentDataDete
 // Created: JVT 2004-11-29
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_AgentDataDetection::Extrapolate( const MIL_Agent_ABC& agentKnown )
-{   
+{
     // Pas vraiment d'extrapolation : on prend la position réelle du pion
     const MT_Vector2D& vRealPos = agentKnown.GetRole< PHY_RoleInterface_Location >().GetPosition();
 
@@ -309,16 +309,16 @@ void DEC_Knowledge_AgentDataDetection::SendChangedState( MsgsSimToClient::MsgUni
 
         asnMsg.set_rendu( pArmySurrenderedTo_ ? pArmySurrenderedTo_->GetID() : 0 );
     }
-    
+
     if( bPrisonerUpdated_ )
     {
-        
+
         asnMsg.set_prisonnier( bPrisoner_ );
     }
-    
+
     if( bRefugeeManagedUpdated_ )
     {
-        
+
         asnMsg.set_refugie_pris_en_compte( bRefugeeManaged_ );
     }
 
@@ -354,7 +354,7 @@ const MIL_Army_ABC* DEC_Knowledge_AgentDataDetection::GetArmySurrenderedTo() con
 {
     return pArmySurrenderedTo_;
 }
-          
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentDataDetection::IsPrisoner
 // Created: NLD 2005-02-24
@@ -399,7 +399,7 @@ const MT_Vector2D& DEC_Knowledge_AgentDataDetection::GetDirection() const
 {
     return vDirection_;
 }
-   
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentDataDetection::GetPosition
 // Created: NLD 2004-11-09
@@ -428,7 +428,7 @@ const PHY_Posture& DEC_Knowledge_AgentDataDetection::GetCurrentPosture() const
     assert( pCurrentPosture_ );
     return *pCurrentPosture_;
 }
-          
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentDataDetection::GetPostureCompletionPercentage
 // Created: NLD 2004-11-09

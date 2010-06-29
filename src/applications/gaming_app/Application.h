@@ -45,7 +45,7 @@ public:
     virtual ~Application();
     //@}
 
-    //! @name 
+    //! @name
     //@{
     void Initialize();
     //@}

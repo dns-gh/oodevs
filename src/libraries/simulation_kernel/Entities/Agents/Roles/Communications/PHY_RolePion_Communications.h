@@ -56,7 +56,7 @@ public:
     //@{
     template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
-    
+
     //! @name Operations
     //@{
     void Update    ( bool bIsDead );
@@ -67,7 +67,7 @@ public:
     //@{
     virtual bool CanReceive() const;
     virtual bool CanEmit() const;
-    
+
     virtual void UpdateKnowledgesFromObjectPerception( const DEC_Knowledge_ObjectPerception& perception );
     virtual void UpdateKnowledgesFromObjectCollision ( const DEC_Knowledge_ObjectCollision& collision );
     //@}

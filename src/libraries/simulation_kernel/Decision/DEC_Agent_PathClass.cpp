@@ -203,12 +203,12 @@ void DEC_Agent_PathClass::ReadObjectsCost( xml::xistream& xis )
 void DEC_Agent_PathClass::ReadObject( xml::xistream& xis )
 {
     std::string strType( xml::attribute( xis, "type", std::string() ) );
-   
+
     try
     {
         const MIL_ObjectType_ABC& objectType = MIL_ObjectFactory::FindType( strType );
         unsigned int id = objectType.GetID();
-        if ( objectCosts_.size() <= id )
+        if( objectCosts_.size() <= id )
             objectCosts_.resize( id + 1, 0 );
 
         assert( objectCosts_.size() > id );
@@ -361,7 +361,7 @@ const DEC_Agent_PathClass& DEC_Agent_PathClass::GetPathClass( const DEC_PathType
 // -----------------------------------------------------------------------------
 MT_Float DEC_Agent_PathClass::GetObjectCost( const MIL_ObjectType_ABC& objectType ) const
 {
-   if ( objectCosts_.size() <= objectType.GetID() )
+   if( objectCosts_.size() <= objectType.GetID() )
         return 0.;
     return objectCosts_[ objectType.GetID() ];
 }

@@ -119,7 +119,7 @@ void ArmyFactory::InitializeDiplomacies()
 // Created: SLG 2010-02-10
 // -----------------------------------------------------------------------------
 void ArmyFactory::load( MIL_CheckPointInArchive& file, const unsigned int )
-{   
+{
     file >> boost::serialization::base_object < ArmyFactory_ABC >( *this );
 }
 

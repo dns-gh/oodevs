@@ -50,7 +50,7 @@ public:
     //! @name Accessors
     //@{
           T_EntityId GetId  () const;
-	const Team&      GetTeam() const;
+    const Team&      GetTeam() const;
     //@}
 
 private:
@@ -64,7 +64,7 @@ private:
     //! @name Types
     //@{
     typedef std::map< T_EntityId, Object* > T_ObjectMap;
-	typedef T_ObjectMap::const_iterator	    CIT_ObjectMap;
+    typedef T_ObjectMap::const_iterator        CIT_ObjectMap;
     //@}
 
 private:

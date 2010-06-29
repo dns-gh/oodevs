@@ -47,7 +47,7 @@ PHY_ActionIndirectFire_Position::~PHY_ActionIndirectFire_Position()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionIndirectFire_Position::StopAction
 // Created: LDC 2010-03-11

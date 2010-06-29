@@ -88,7 +88,7 @@ public:
     static void F_AddToselUnitesEnAppui( DEC_Decision_ABC* pPion );
     static void F_RemoveFromselUnitesEnAppui( DEC_Decision_ABC* pPion );
     static void F_Mot_EtatDesactiveSauvegarde( DEC_Decision_ABC* pPion, bool value );
-    
+
     static int  F_GeteEtatPhaseMission( DEC_Decision_ABC* pAgent );
     static void F_SeteEtatPhaseMission( DEC_Decision_ABC* pAgent, int value );
     static int  F_GeteEtatLima( DEC_Decision_ABC* pAgent );

@@ -26,9 +26,9 @@ MineAttribute::MineAttribute( kernel::Controller& controller, const tools::Resol
     , valorization_ ( 0 )
     , minefield_( minefield )
 {
-    // NOTHING    
+    // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MineAttribute destructor
 // Created: SBO 2007-02-08
@@ -104,7 +104,7 @@ void MineAttribute::DoUpdate( const MsgsSimToClient::MsgObjectCreation& message 
 {
     UpdateData( message.attributes() );
 }
-   
+
 // -----------------------------------------------------------------------------
 // Name: MineAttribute::UpdateData
 // Created: SBO 2007-02-08
@@ -112,16 +112,16 @@ void MineAttribute::DoUpdate( const MsgsSimToClient::MsgObjectCreation& message 
 template< typename T >
 void MineAttribute::UpdateData( const T& message )
 {
-    if ( message.has_mine()  )
+    if( message.has_mine()  )
     {
         if( ! valorization_ && message.mine().has_dotation_type()  )
             valorization_ = resolver_.Find( message.mine().dotation_type() );
 
-        if ( message.mine().has_dotation_nbr()  )
+        if( message.mine().has_dotation_nbr()  )
             nDotationValorization_ = message.mine().dotation_nbr();
-        if ( message.mine().has_percentage()  )
+        if( message.mine().has_percentage()  )
             rValorizationPercentage_ = float( message.mine().percentage() );
-        if ( message.mine().has_density()  )
+        if( message.mine().has_density()  )
             density_ = float( message.mine().density() );
         controller_.Update( *(MineAttribute_ABC*)this );
     }

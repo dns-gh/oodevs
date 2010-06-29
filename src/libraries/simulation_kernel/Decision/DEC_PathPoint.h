@@ -41,7 +41,7 @@ public:
         eTypePointParticulier   = 4,    // point particulier
         eTypePointBond          = 8,    // point de limite de bond
         eTypePointLima          = 16,   // point sur une lima
-        eTypePointSonde         = 32,   // point necessitant coup de sonde 
+        eTypePointSonde         = 32,   // point necessitant coup de sonde
         eTypePointCCT           = 64    // point de changement de compartiment terrain
     };
     //@}
@@ -50,7 +50,7 @@ public:
     //! @name Constructor/Destructor
     //@{
              DEC_PathPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint );
-    virtual ~DEC_PathPoint();    
+    virtual ~DEC_PathPoint();
 protected:
              DEC_PathPoint( const MT_Vector2D& vPos, E_Type type, E_TypePoint nPointType, const char* szDIARepType);
     //@}
@@ -93,7 +93,7 @@ protected:
     E_Type      nType_;
     E_TypePoint nPointType_;
     TerrainData nObjectTypes_;
-    TerrainData nObjectTypesToNextPoint_; 
+    TerrainData nObjectTypesToNextPoint_;
 
 private:
     std::string diaType_;

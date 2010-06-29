@@ -71,7 +71,7 @@ public:
 
     /*typedef std::map< const PHY_ComposanteTypePion*, T_ComposanteTypeProperties > T_ComposanteTypeMap;
     typedef T_ComposanteTypeMap::iterator                                         IT_ComposanteTypeMap;
-    typedef T_ComposanteTypeMap::const_iterator                                   CIT_ComposanteTypeMap;   
+    typedef T_ComposanteTypeMap::const_iterator                                   CIT_ComposanteTypeMap;
 
     typedef std::map< const PHY_ComposanteTypePion*, T_ComposanteUse > T_ComposanteUseMap;
     typedef T_ComposanteUseMap::const_iterator                         CIT_ComposanteUseMap;
@@ -89,7 +89,7 @@ public:
     //! @name Humans management
     //@{
 //    virtual void WoundHumans  ( const PHY_HumanRank& rank, unsigned int nNbr ) = 0;
-//    virtual void HealHumans   ( const PHY_HumanRank& rank, unsigned int nNbr ) = 0;    
+//    virtual void HealHumans   ( const PHY_HumanRank& rank, unsigned int nNbr ) = 0;
 //    virtual void HealAllHumans() = 0 ;
     //@}
 
@@ -106,7 +106,7 @@ public:
     virtual void RetrieveLentComposante( PHY_RoleInterface_Composantes& borrower, PHY_ComposantePion& composante ) = 0;
 
     // Notification for the beneficary
-    virtual void NotifyLentComposanteReceived( PHY_RoleInterface_Composantes& lender, PHY_ComposantePion& composante ) = 0; 
+    virtual void NotifyLentComposanteReceived( PHY_RoleInterface_Composantes& lender, PHY_ComposantePion& composante ) = 0;
     virtual void NotifyLentComposanteReturned( PHY_RoleInterface_Composantes& lender, PHY_ComposantePion& composante ) = 0;
     //@}
 
@@ -141,7 +141,7 @@ public:
     virtual void ApplyIndirectFire          ( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result, MT_Float ratio ) = 0;
     virtual void ApplyDirectFireOnMajorComposantes( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& fireResult ) = 0;
     virtual void ApplyExplosion             ( const AttritionCapacity& capacity, PHY_FireResults_ABC& result ) = 0;
-    virtual double GetDangerosity           ( const DEC_Knowledge_AgentComposante& compTarget, float rDistBtwSourceAndTarget ) const = 0;   
+    virtual double GetDangerosity           ( const DEC_Knowledge_AgentComposante& compTarget, float rDistBtwSourceAndTarget ) const = 0;
     virtual double GetOnlyLoadableMaxRangeToFireOn  ( const DEC_Knowledge_Agent& target, double rWantedPH ) const = 0;
     virtual double GetMaxRangeToFireOn              ( const DEC_Knowledge_Agent& target, double rWantedPH ) const = 0;
     virtual double GetMinRangeToFireOn              ( const DEC_Knowledge_Agent& target, double rWantedPH ) const = 0;
@@ -150,7 +150,7 @@ public:
     virtual double GetMaxRangeToIndirectFire        ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const = 0;
     virtual double GetMinRangeToIndirectFire        ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const = 0;
     virtual double GetMaxRangeToFire                ( const MIL_Agent_ABC&  target, double rWantedPH ) const = 0;
-    
+
     virtual void ApplyInjury                ( MIL_Injury_ABC& injury ) = 0;
     //@}
 
@@ -166,10 +166,10 @@ public:
     //@}
 
     //! @name Accessors
-    //@{          
+    //@{
     virtual       bool           HasChanged              () const = 0;//@TODO MGD CLEAN ALL hasChanged on interface and move private
-    virtual       bool           IsUsable                () const = 0;                    
-    virtual const MIL_Agent_ABC& GetPion                 () const = 0;    
+    virtual       bool           IsUsable                () const = 0;
+    virtual const MIL_Agent_ABC& GetPion                 () const = 0;
     //@}
 
     //! @name Network

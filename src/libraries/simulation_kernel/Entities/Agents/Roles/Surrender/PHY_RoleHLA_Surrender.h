@@ -52,7 +52,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifySurrendered      () {};    
+    virtual void NotifySurrendered      () {};
     virtual void NotifySurrenderCanceled() {};
 
     virtual void Update    ( bool /*bIsDead*/ ) {};

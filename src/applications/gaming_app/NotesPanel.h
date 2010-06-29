@@ -77,7 +77,7 @@ private:
     void Display( const Note& note, QListViewItem* item );
 
     QListViewItem*  FindItem( unsigned int parent ) const;
-    QListViewItem*  FindItem(const Note* element ) const; 
+    QListViewItem*  FindItem(const Note* element ) const;
     //@}
 
     //! @name Types

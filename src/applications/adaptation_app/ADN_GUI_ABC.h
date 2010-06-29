@@ -48,8 +48,8 @@ public:
     virtual void Build() = 0;
     virtual void RegisterTable( ADN_MainWindow& /*mainWindow*/ ) {}
     virtual void ExportHtml( ADN_HtmlBuilder& /*mainIndexBuilder*/, const QString& /*strPath*/ ) {}
-    
-    QWidget* GetMainWidget() const { return pMainWidget_; }  
+
+    QWidget* GetMainWidget() const { return pMainWidget_; }
     //@}
 
     //! @name Qt reimplementation.

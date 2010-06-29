@@ -21,7 +21,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 IndicatorRequests::IndicatorRequests( Controller& controller, Publisher_ABC& publisher )
     : controller_( controller )
-    , publisher_( publisher ) 
+    , publisher_( publisher )
 {
     // NOTHING
 }

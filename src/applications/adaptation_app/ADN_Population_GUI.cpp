@@ -105,7 +105,7 @@ void ADN_Population_GUI::Build()
 
     // Model
     builder.AddField< ADN_ComboBox_Vector<ADN_Models_Data::ModelInfos> >( pPropertiesGroup, tr( "Behavior model" ), vInfosConnectors[eModel] );
-    
+
     // Concentration density
     builder.AddField<ADN_EditLine_Double>( pPropertiesGroup, tr( "Density" ), vInfosConnectors[eConcentrationDensity], tr( "people/m²" ), eGreaterZero );
 

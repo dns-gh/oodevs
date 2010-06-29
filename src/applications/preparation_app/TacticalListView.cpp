@@ -46,7 +46,7 @@ TacticalListView::TacticalListView( QWidget* pParent, Controllers& controllers, 
 
     controllers.Update( *this );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: TacticalListView destructor
 // Created: SBO 2006-08-29
@@ -266,7 +266,7 @@ bool TacticalListView::Drop( const Entity_ABC& item, const Entity_ABC& target )
     return false;
 }
 
-namespace 
+namespace
 {
     Entity_ABC& GetFirstCommunicationChild( const Entity_ABC& entity )
     {

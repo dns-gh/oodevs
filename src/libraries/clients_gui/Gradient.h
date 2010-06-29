@@ -10,7 +10,7 @@
 #ifndef __Gradient_h_
 #define __Gradient_h_
 
-namespace xml 
+namespace xml
 {
     class xistream;
 }

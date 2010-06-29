@@ -108,7 +108,7 @@ bool MapLayerProxy::HandleMousePress( QMouseEvent* mouse, const geometry::Point2
 {
     return layer_.HandleMousePress( mouse, point );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MapLayerProxy::HandleMouseDoubleClick
 // Created: AGE 2006-03-29

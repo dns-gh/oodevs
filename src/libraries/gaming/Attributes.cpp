@@ -113,7 +113,7 @@ void Attributes::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
 
     if( message.has_disponibilite_au_tir_indirect()  )
         nIndirectFireAvailability_  = (E_FireAvailability)message.disponibilite_au_tir_indirect();
-    
+
     if( message.has_posture_new()  )
         nCurrentPosture_ = (E_UnitPosture)message.posture_new();
 
@@ -126,7 +126,7 @@ void Attributes::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
     if( message.has_etat_installation()  )
         nInstallationState_ = message.etat_installation();
 
-    if( message.has_mort()  ) 
+    if( message.has_mort()  )
         bDead_ = message.mort() != 0;
 
     if( message.has_neutralise()  )
@@ -215,7 +215,7 @@ void Attributes::Display( Displayer_ABC& displayer ) const
                     .Add( ")" ).End();
     displayer.Group( tools::translate( "Attributes", "Stances" ) )
                 .Display( tools::translate( "Attributes", "Setup state:" ), nInstallationState_ * Units::percentage );
-                
+
 
     displayer.Group( tools::translate( "Attributes", "Communications" ) )
                 .Display( tools::translate( "Attributes", "Jammed:" ), bCommJammed_ )
@@ -229,7 +229,7 @@ void Attributes::Display( Displayer_ABC& displayer ) const
                 .Display( tools::translate( "Attributes", "Force ratio:" ), nFightRateState_ )
                 .Display( tools::translate( "Attributes", "Indirect fire availability:" ), nIndirectFireAvailability_ )
                 .Display( tools::translate( "Attributes", "Intention:" ), nCloseCombatState_ );
-  
+
     displayer.Group( tools::translate( "Attributes", "Military state" ) )
             .Display( tools::translate( "Attributes", "Prisoner:" ), bPrisoner_ )
             .Display( tools::translate( "Attributes", "Surrender:" ), surrenderedTo_ )
@@ -266,7 +266,7 @@ void Attributes::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void Attributes::Draw( const Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
-    if( aggregated_ 
+    if( aggregated_
     || ! ( bDead_ || bRadioReceiverSilence_ || bRadioEmitterSilence_ || bRadarEnabled_ || bCommJammed_ )
     || ! viewport.IsHotpointVisible() )
         return;

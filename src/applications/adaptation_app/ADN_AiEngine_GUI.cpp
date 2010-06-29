@@ -79,7 +79,7 @@ void ADN_AiEngine_GUI::Build()
 
     // Operational state
     QGroupBox* pOpStateBox = new QGroupBox( 3, Qt::Horizontal, tr( "Operational state computation" ), pMainWidget_ );
-    
+
     builder.AddField<ADN_EditLine_Double>( pOpStateBox, tr( "Non major equipments state weight" ), data_.rMinorEquipmentWeight_, 0, eZeroOne );
     builder.AddField<ADN_EditLine_Double>( pOpStateBox, tr( "Major equipments state weight" ), data_.rMajorEquipmentWeight_, 0, eZeroOne );
     builder.AddField<ADN_EditLine_Double>( pOpStateBox, tr( "Crew state weight" ), data_.rHumanWeight_, 0, eZeroOne );

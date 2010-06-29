@@ -33,9 +33,9 @@ public:
 
     //! @name operations
     //@{
-    bool Wait() ; 
+    bool Wait() ;
     //@}
-        
+
 private:
     //! @name Copy/Assignment
     //@{

@@ -59,7 +59,7 @@ void ToxicCloudAttribute::CreateTexture()
 // Created: JCR 2008-06-13
 // -----------------------------------------------------------------------------
 void ToxicCloudAttribute::UpdateTexture() const
-{    
+{
     static const float step = 510; // meters
     const float range = ( 1.f + float( boundaries_.second - boundaries_.first ) ) / float( boundaries_.second + boundaries_.first );
     for ( CIT_QuantityCloud it = cloud_.begin(); it != cloud_.end(); ++it )
@@ -102,10 +102,10 @@ void ToxicCloudAttribute::UpdateToxicCloud( const Common::MsgLocatedQuantityList
 template< typename T >
 void ToxicCloudAttribute::UpdateData( const T& message )
 {
-    if ( message.has_toxic_cloud()  )    
+    if( message.has_toxic_cloud()  )
     {
         UpdateToxicCloud( message.toxic_cloud().quantities() );
-        controller_.Update( *(ToxicCloudAttribute_ABC*)this );        
+        controller_.Update( *(ToxicCloudAttribute_ABC*)this );
     }
 }
 

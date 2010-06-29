@@ -62,7 +62,7 @@ MIL_Population& PopulationFactory::Create( xml::xistream& xis, MIL_Army& army )
 // Created: SLG 2010-02-10
 // -----------------------------------------------------------------------------
 void PopulationFactory::load( MIL_CheckPointInArchive& file, const unsigned int )
-{   
+{
     file >> boost::serialization::base_object < PopulationFactory_ABC >( *this );
 }
 

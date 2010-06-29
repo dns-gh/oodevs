@@ -52,9 +52,9 @@ namespace
 
 BOOST_AUTO_TEST_CASE( TestScramblingAmmo )
 {
-    TER_World::Initialize( "../../data/data/terrains/Paris_Est/Terrain.xml" ); // $$$$ because used in asn and in destructor of action!!! 
+    TER_World::Initialize( "../../data/data/terrains/Paris_Est/Terrain.xml" ); // $$$$ because used in asn and in destructor of action!!!
     MockNET_Publisher_ABC mockPublisher;
-    
+
     {
         // Ordre de conduite Appliquer les feux avec munition idoine à un pion de modele SAM / Pion ASS -> "DEC_StartTirIndirectSurPosition"
         const std::string dotationName( "ammo" );
@@ -91,11 +91,11 @@ BOOST_AUTO_TEST_CASE( TestScramblingAmmo )
         const MT_Vector2D targetPosition;
         PHY_ActionIndirectFire_Position* pAction = new PHY_ActionIndirectFire_Position( pion, pCategory, 1, &targetPosition );
         pExpectedAction = pAction;
-        // $$$$ LDC: New needed because it's deleted by PHY_Actor (inherited by MockAgent) 
+        // $$$$ LDC: New needed because it's deleted by PHY_Actor (inherited by MockAgent)
 
         // Expect a Callback
         decision->RegisterFunction( "CallbackAction", &CheckCallback );
-        
+
         MOCK_EXPECT( mockPublisher, Send ).at_least( 1 );
 
         AlgorithmsFactories algorithms;
@@ -113,7 +113,7 @@ BOOST_AUTO_TEST_CASE( TestScramblingAmmo )
 
         PHY_IndirectFireDotationClass::Terminate();
     }
-    
-    TER_World::DestroyWorld();    
+
+    TER_World::DestroyWorld();
 }
 

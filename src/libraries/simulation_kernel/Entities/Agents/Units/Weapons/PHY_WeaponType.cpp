@@ -69,7 +69,7 @@ void PHY_WeaponType::ReadWeapon( xml::xistream& xis, const MIL_Time_ABC& time, d
         >> xml::attribute( "munition", strAmmunition );
 
     const PHY_WeaponType*& pWeaponType = weaponTypes_[ std::make_pair( strLauncher, strAmmunition ) ];
-    if ( pWeaponType )
+    if( pWeaponType )
         xis.error( "Weapon " + strLauncher + "/" + strAmmunition + " already registered" );
     pWeaponType = new PHY_WeaponType( time, strLauncher, strAmmunition, xis, timeFactor );
 }
@@ -99,7 +99,7 @@ PHY_WeaponType::PHY_WeaponType( const MIL_Time_ABC& time, const std::string& str
     , rReloadingDuration_ ( 1. )
     , pDirectFireData_    ( 0 )
     , pIndirectFireData_  ( 0 )
-{ 
+{
     if( !pLauncherType_ )
         xis.error( "Unknown launcher type '" + strLauncher + "'" );
     if( !pDotationCategory_ )
@@ -120,7 +120,7 @@ PHY_WeaponType::PHY_WeaponType( const MIL_Time_ABC& time, const std::string& str
 
     rBurstDuration_     /= timeFactor;
     rReloadingDuration_ /= timeFactor;
-    
+
     if( nNbrAmmoPerBurst_ <= 0 )
         xis.error( "burst: munition <= 0" );
     if( rBurstDuration_ <= 0 )
@@ -168,9 +168,9 @@ void PHY_WeaponType::ReadDirect( xml::xistream& xis )
     assert( pLauncherType_ );
     assert( pDotationCategory_ );
 
-    if ( !pLauncherType_->CanDirectFire() )
+    if( !pLauncherType_->CanDirectFire() )
         xis.error( "Associated launcher can not direct fire" );
-    if ( !pDotationCategory_->CanBeUsedForDirectFire() )
+    if( !pDotationCategory_->CanBeUsedForDirectFire() )
         xis.error( "Associated ammunition can not direct fire" );
 
     pDirectFireData_ = new PHY_WeaponDataType_DirectFire( *this, xis );
@@ -195,9 +195,9 @@ void PHY_WeaponType::ReadIndirect( xml::xistream& xis, double timeFactor )
     assert( pLauncherType_ );
     assert( pDotationCategory_ );
 
-    if ( !pLauncherType_->CanIndirectFire() )
+    if( !pLauncherType_->CanIndirectFire() )
         xis.error( "Associated launcher can not indirect fire" );
-    if ( !pDotationCategory_->CanBeUsedForIndirectFire() )
+    if( !pDotationCategory_->CanBeUsedForIndirectFire() )
         xis.error( "Associated ammunition can not indirect fire" );
 
     pIndirectFireData_ = new PHY_WeaponDataType_IndirectFire( *this, xis, timeFactor );
@@ -319,7 +319,7 @@ MT_Float PHY_WeaponType::GetMaxRangeToFireOn( const MIL_Agent_ABC& firer, const 
     localFirer.Execute( *dotationComputer );
 
     if( !pDirectFireData_ || !dotationComputer->HasDotation( *pDotationCategory_ ) )
-        return 0.;   
+        return 0.;
     return pDirectFireData_->GetMaxRangeToFireOn( targetComposanteType, rWantedPH );
 }
 
@@ -336,7 +336,7 @@ MT_Float PHY_WeaponType::GetMinRangeToFireOn( const MIL_Agent_ABC& firer, const 
     localFirer.Execute( *dotationComputer );
 
     if( !pDirectFireData_ || !dotationComputer->HasDotation( *pDotationCategory_ ) )
-        return std::numeric_limits< MT_Float >::max(); 
+        return std::numeric_limits< MT_Float >::max();
     return pDirectFireData_->GetMinRangeToFireOn( targetComposanteType, rWantedPH );
 }
 
@@ -353,7 +353,7 @@ MT_Float PHY_WeaponType::GetMaxRangeToFire( const MIL_Agent_ABC& pion, MT_Float 
     localFirer.Execute( *dotationComputer );
 
     if( !pDirectFireData_ || !dotationComputer->HasDotation( *pDotationCategory_ ) )
-        return std::numeric_limits< MT_Float >::max(); 
+        return std::numeric_limits< MT_Float >::max();
     return pDirectFireData_->GetMaxRangeToFire( rWantedPH );
 }
 
@@ -373,7 +373,7 @@ MT_Float PHY_WeaponType::GetMaxRangeToFireOnWithPosture( const MIL_Agent_ABC& fi
         return 0.;
     return pDirectFireData_->GetMaxRangeToFireOnWithPosture( targetComposanteType, firer, target, rWantedPH );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_WeaponType::GetMinRangeToFireOnWithPosture
 // Created: SBO 2006-01-10
@@ -397,7 +397,7 @@ MT_Float PHY_WeaponType::GetMinRangeToFireOnWithPosture( const MIL_Agent_ABC& fi
 // -----------------------------------------------------------------------------
 MT_Float PHY_WeaponType::GetMaxRangeToIndirectFire( const MIL_Agent_ABC& firer, bool bCheckDotationsAvailability ) const
 {
-    if ( !pIndirectFireData_ )
+    if( !pIndirectFireData_ )
         return -1.;
 
     std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( firer.GetAlgorithms().dotationComputerFactory_->Create() );
@@ -406,7 +406,7 @@ MT_Float PHY_WeaponType::GetMaxRangeToIndirectFire( const MIL_Agent_ABC& firer, 
 
     if( bCheckDotationsAvailability && !dotationComputer->HasDotation( *pDotationCategory_ ) )
         return -1.;
-        
+
     return pIndirectFireData_->GetMaxRange();
 }
 
@@ -416,7 +416,7 @@ MT_Float PHY_WeaponType::GetMaxRangeToIndirectFire( const MIL_Agent_ABC& firer, 
 // -----------------------------------------------------------------------------
 MT_Float PHY_WeaponType::GetMinRangeToIndirectFire( const MIL_Agent_ABC& firer, bool bCheckDotationsAvailability ) const
 {
-    if ( !pIndirectFireData_ )
+    if( !pIndirectFireData_ )
       return std::numeric_limits< MT_Float >::max();
 
     std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( firer.GetAlgorithms().dotationComputerFactory_->Create() );
@@ -425,7 +425,7 @@ MT_Float PHY_WeaponType::GetMinRangeToIndirectFire( const MIL_Agent_ABC& firer, 
 
     if( bCheckDotationsAvailability && !dotationComputer->HasDotation( *pDotationCategory_ ) )
         return std::numeric_limits< MT_Float >::max();
-        
+
     return pIndirectFireData_->GetMinRange();
 }
 

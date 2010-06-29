@@ -72,7 +72,7 @@ protected:
     T_PtrComboBoxItem_Vector    vItems_;
 
 private slots:
-    void    ItemSelected( int ndx );    
+    void    ItemSelected( int ndx );
 
 protected slots:
     virtual void UpdateEnableState();

@@ -32,7 +32,7 @@ namespace dispatcher
 
 namespace plugins
 {
-    namespace messenger 
+    namespace messenger
     {
 
 class Note

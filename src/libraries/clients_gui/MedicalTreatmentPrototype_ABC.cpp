@@ -27,14 +27,14 @@ MedicalTreatmentPrototype_ABC::MedicalTreatmentPrototype_ABC( QWidget* parent, c
 {
     new QLabel( tools::translate( "MedicalTreatmentPrototype_ABC", "MedicalTreatment Type:" ), this );
     treatmentTypes_ = new QListView( this );
-    treatmentTypes_->setSelectionMode( QListView::Multi );    
+    treatmentTypes_->setSelectionMode( QListView::Multi );
     treatmentTypes_->setMinimumHeight( 5 * treatmentTypes_->height() ); // 5 visible lines
     treatmentTypes_->addColumn( tools::translate( "MedicalTreatmentPrototype_ABC", "Type" ) );
     FillTypes();
 
     new QLabel( tools::translate( "MedicalTreatmentPrototype_ABC", "Beds:" ), this );
     beds_ = new QSpinBox( 0, 1000, 1, this );
-    
+
     new QLabel( tools::translate( "MedicalTreatmentPrototype_ABC", "Initial available beds:" ), this );
     availableBeds_ = new QSpinBox( 0, 1000, 1, this );
 
@@ -44,7 +44,7 @@ MedicalTreatmentPrototype_ABC::MedicalTreatmentPrototype_ABC( QWidget* parent, c
     new QLabel( tools::translate( "MedicalTreatmentPrototype_ABC", "Initial available doctors:" ), this );
     availableDoctors_ = new QSpinBox( 0, 1000, 1, this );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MedicalTreatmentPrototype_ABC destructor
 // Created: SBO 2006-04-20

@@ -125,9 +125,9 @@ void MIL_AutomateMission::Stop( boost::shared_ptr< MIL_Mission_ABC > self )
         automate_.GetDecision().StopMissionConduiteBehavior( self );
 
     SendNoMission( automate_ );
-    
+
     bDIACdtBehaviorActivated_ = false;
-    bDIAMrtBehaviorActivated_ = false;    
+    bDIAMrtBehaviorActivated_ = false;
 }
 
 // -----------------------------------------------------------------------------

@@ -34,7 +34,7 @@ namespace bml
     class Publisher_ABC;
     class Who;
     class ReportingData;
-    
+
 // =============================================================================
 /** @class  OrderReport
     @brief  OrderReport

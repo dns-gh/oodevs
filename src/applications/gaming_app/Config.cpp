@@ -61,7 +61,7 @@ void Config::Connect( Network& network ) const
 {
     if( ! host_.empty() )
         network.Connect( host_ );
-    else 
+    else
         LoadSession( network );
 }
 

@@ -25,7 +25,7 @@ MIL_AutomatListParameter::MIL_AutomatListParameter( const Common::MsgAutomatList
     for( int i = 0; i < asn.elem_size(); ++i )
     {
         MIL_Automate* pAutomate = entityManager.FindAutomate( asn.elem(i).oid() );
-        if( !pAutomate ) 
+        if( !pAutomate )
             throw std::runtime_error( "Automat does not exist" );
         automatList_.push_back( &pAutomate->GetDecision() );
     }

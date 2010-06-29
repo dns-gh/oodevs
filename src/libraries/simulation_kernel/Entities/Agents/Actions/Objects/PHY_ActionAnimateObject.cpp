@@ -23,7 +23,7 @@ PHY_ActionAnimateObject::PHY_ActionAnimateObject( MIL_AgentPion& pion, boost::sh
     : PHY_Action_ABC    ()
     , role_             ( pion.GetRole< PHY_RoleAction_Objects >() )
     , pKnowledge_       ( pKnowledge )
-{    
+{
     role_.StartAnimateObject( pKnowledge_ );
 }
 
@@ -49,7 +49,7 @@ void PHY_ActionAnimateObject::Stop()
 // Demined: NLD 2004-08-18
 // -----------------------------------------------------------------------------
 void PHY_ActionAnimateObject::Execute()
-{   
+{
     // NOTHING
 }
 

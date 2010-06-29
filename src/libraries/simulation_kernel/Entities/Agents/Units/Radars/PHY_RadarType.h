@@ -58,7 +58,7 @@ private:
     typedef std::map< std::string, const PHY_RadarType*, sCaseInsensitiveLess > T_RadarTypeMap;
     typedef T_RadarTypeMap::const_iterator                                      CIT_RadarTypeMap;
 
-    typedef std::vector< bool >                                                 T_ActivityVector;   
+    typedef std::vector< bool >                                                 T_ActivityVector;
     //@}
 
 private:
@@ -81,7 +81,7 @@ private:
     struct LoadingWrapper;
     static void ReadRadar( xml::xistream& xis, const MIL_Time_ABC& time );
     //@}
-    
+
 private:
     const std::string     strName_;
     const PHY_RadarClass& class_;

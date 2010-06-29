@@ -76,14 +76,14 @@ BOOST_AUTO_TEST_CASE( VerifyObjectKnowledge_Serialization )
 {
     MIL_ObjectLoader loader;
     {
-        xml::xistringstream xis( "<objects>" 
+        xml::xistringstream xis( "<objects>"
                 "<object type='object'>"
                     "<constructor unit-type='raw' default-consumption-mode='EnTravaux'>"
-                        "<buildable/>"                        
+                        "<buildable/>"
                     "</constructor>"
-                "</object>" 
+                "</object>"
             "</objects>"
-            ); 
+            );
         BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
     }
     const MIL_ObjectType_ABC& type = loader.GetType( "object" );

@@ -28,7 +28,7 @@ MissionParameters::MissionParameters( kernel::Controller& controller, const acti
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MissionParameters destructor
 // Created: SBO 2006-11-13

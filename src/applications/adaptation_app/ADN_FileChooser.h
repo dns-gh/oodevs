@@ -75,7 +75,7 @@ QString ADN_FileChooser::GetDirectory() const
 
 
 //-----------------------------------------------------------------------------
-// Name: ADN_FileChooser::E_Mode  
+// Name: ADN_FileChooser::E_Mode
 // Created: JDY 03-07-01
 //-----------------------------------------------------------------------------
 inline

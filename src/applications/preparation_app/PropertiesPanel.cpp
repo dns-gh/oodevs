@@ -43,7 +43,7 @@ PropertiesPanel::PropertiesPanel( QWidget* parent, kernel::Controllers& controll
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PropertiesPanel destructor
 // Created: SBO 2006-10-27

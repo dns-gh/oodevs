@@ -60,7 +60,7 @@ void Entity_ABC::AddExtension( Extension_ABC& ext )
     tools::SortedInterfaceContainer< Extension_ABC >::Register( ext );
     drawer_->Register( ext );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Entity_ABC::Draw
 // Created: AGE 2006-03-31
@@ -79,7 +79,7 @@ tools::SortedInterfaceContainer< Extension_ABC >& Entity_ABC::Interface() const
     return *const_cast< Entity_ABC* >( this );
 }
 
-// $$$$ AGE 2006-10-12: 
+// $$$$ AGE 2006-10-12:
 
 // -----------------------------------------------------------------------------
 // Name: Entity_ABC::CheckUpdate

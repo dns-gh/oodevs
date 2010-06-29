@@ -36,7 +36,7 @@ public:
     virtual void Instanciate( MIL_Object_ABC& object ) const;
     virtual void Register( MIL_Object_ABC& object );
     virtual void ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent );
-    virtual void ProcessAgentExiting( MIL_Object_ABC& object, MIL_Agent_ABC& agent );    
+    virtual void ProcessAgentExiting( MIL_Object_ABC& object, MIL_Agent_ABC& agent );
     //@}
 
 private:

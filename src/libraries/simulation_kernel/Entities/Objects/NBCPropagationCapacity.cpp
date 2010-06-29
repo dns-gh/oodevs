@@ -74,7 +74,7 @@ NBCPropagationCapacity::~NBCPropagationCapacity()
 template< typename Archive >
 void NBCPropagationCapacity::serialize( Archive& file, const uint )
 {
-    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );  
+    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -98,11 +98,11 @@ void NBCPropagationCapacity::Instanciate( MIL_Object_ABC& object ) const
     object.AddCapacity< PropagationCapacity_ABC >( capacity );
     object.Register( static_cast< MIL_InteractiveContainer_ABC *>( capacity ) );
 
-    //We get the coordinates of the nbc cloud and adjust them in order that they become divisible by length and width of the fire 
+    //We get the coordinates of the nbc cloud and adjust them in order that they become divisible by length and width of the fire
     MT_Vector2D vOrigin( object.GetLocalisation().ComputeBarycenter() );
     vOrigin.rX_ = (int)vOrigin.rX_ - (int)vOrigin.rX_ % attr.GetLength();
     vOrigin.rY_ = (int)vOrigin.rY_ - (int)vOrigin.rY_ % attr.GetWidth();
-    
+
     //We define the origin vector of the nbc cloud
     object.UpdateLocalisation( GetLocalisation( vOrigin ) );
     pManager_->Flag( vOrigin , attr.GetLength() , attr.GetWidth() );
@@ -114,7 +114,7 @@ void NBCPropagationCapacity::Instanciate( MIL_Object_ABC& object ) const
 // Created: RFT 2008-05-22
 // -----------------------------------------------------------------------------
 void NBCPropagationCapacity::Update( MIL_Object_ABC& object, float time )
-{    
+{
     NBCTypeAttribute& attr = object.GetAttribute< NBCTypeAttribute >();
     MT_Vector2D vOrigin( object.GetLocalisation().ComputeBarycenter() );
 
@@ -137,7 +137,7 @@ void NBCPropagationCapacity::Update( MIL_Object_ABC& object, float time )
 
     //Propagate the nbc agents in accordance with wind data
     UpdateShape( object , vNormalizedWind , vPerpendicularToWind , wind.rWindSpeed_ );
-    
+
     //Compute the nbc agents concentration in accordance with wind data
     if( ! attr.IsSource() )
     {
@@ -177,7 +177,7 @@ bool NBCPropagationCapacity::UpdateState( MIL_Object_ABC& object , MT_Vector2D v
 {
     NBCTypeAttribute& attr = object.GetAttribute< NBCTypeAttribute >();
     MT_Vector2D vOrigin( object.GetLocalisation().ComputeBarycenter() );
-    
+
     MT_Float seq = windSpeed / attr.GetLength();
     for( int i = 0 ; i <= seq; i ++ )
     {
@@ -195,19 +195,19 @@ namespace
     class MIL_NBCBuilder : public MIL_ObjectBuilder_ABC
     {
     public:
-        MIL_NBCBuilder( const MIL_Object_ABC& object, const TER_Localisation& location ) 
-            : object_ ( object ) 
+        MIL_NBCBuilder( const MIL_Object_ABC& object, const TER_Localisation& location )
+            : object_ ( object )
             , location_ ( location )
         {
         }
 
-        const MIL_ObjectType_ABC& GetType() const 
+        const MIL_ObjectType_ABC& GetType() const
         {
             return object_.GetType();
         }
 
         virtual void Build( MIL_Object_ABC& object ) const
-        {            
+        {
             object.Initialize( location_ );
             object.GetAttribute< NBCTypeAttribute >() = NBCTypeAttribute( object_.GetAttribute< NBCTypeAttribute >() );
             object.Attach< ContaminationCapacity >( *new ContaminationCapacity() );
@@ -229,7 +229,7 @@ void NBCPropagationCapacity::Propagate( const MT_Vector2D& vOrigin, MIL_Object_A
     NBCTypeAttribute& attr = object.GetAttribute< NBCTypeAttribute >();
     TER_Localisation location( GetLocalisation( vOrigin ) );
 
-    if( !pManager_->IsFlagged( location , attr.GetLength() , attr.GetWidth() ) ) 
+    if( !pManager_->IsFlagged( location , attr.GetLength() , attr.GetWidth() ) )
     {
         MIL_NBCBuilder builder( object, location );
         try

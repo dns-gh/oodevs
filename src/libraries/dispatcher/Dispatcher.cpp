@@ -64,7 +64,7 @@ void Dispatcher::AddTranslations()
 }
 
 // $$$$ AGE 2008-07-16: Les plugins / MessageHandlers doivent être enregistrés dans un certain ordre
-// $$$$ AGE 2008-07-16: Typiquement : 
+// $$$$ AGE 2008-07-16: Typiquement :
 // $$$$ AGE 2008-07-16:  * DispatcherPlugin pour forwarder aux clients
 // $$$$ AGE 2008-07-16:  * Model pour les plugins l'utilisant, mais peut déclencher des évènements sur Entity_ABC::Update
 // $$$$ AGE 2008-07-16:  * SaverPlugin (justement car utilise le model)

@@ -89,7 +89,7 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
 
@@ -121,7 +121,7 @@ public:
           DEC_KnowledgeBlackBoard_Automate& GetKnowledge     () const;
           bool                              IsEngaged        () const;
     //@}
-        
+
     //! @name Operations
     //@{
     bool CheckComposition() const;
@@ -138,7 +138,7 @@ public:
     virtual void UpdateNetwork   () const;
     virtual void UpdateState     ();
     virtual void Clean           ();
-    
+
     template< typename T > void ApplyOnHierarchy( T& functor );
 
     bool IsPerceived ( const DEC_Knowledge_Agent&  knowledge ) const;
@@ -223,20 +223,20 @@ protected:
 private:
     //! @name Tools
     //@{
-    void Initialize( xml::xistream& xis, DEC_DataBase& database ); 
+    void Initialize( xml::xistream& xis, DEC_DataBase& database );
     //@}
-    
+
     //! @name Helpers
     //@{
-    void ReadAutomatSubordinate( xml::xistream& xis ); 
-    void ReadUnitSubordinate   ( xml::xistream& xis );         
+    void ReadAutomatSubordinate( xml::xistream& xis );
+    void ReadUnitSubordinate   ( xml::xistream& xis );
     //@}
 
 protected:
     // Logistic
     MIL_AutomateLOG* pTC2_;
     MIL_AutomateLOG* pNominalTC2_;
-    
+
 private:
     const MIL_AutomateType* pType_;
     const unsigned int              nID_;

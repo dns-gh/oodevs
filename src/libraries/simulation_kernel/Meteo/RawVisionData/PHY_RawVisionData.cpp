@@ -30,7 +30,7 @@ const weather::PHY_Meteo*      PHY_RawVisionData::sCell::pGlobalMeteo_;
 // Created: JVT 04-03-24
 //-----------------------------------------------------------------------------
 const weather::PHY_Precipitation& PHY_RawVisionData::sCell::GetPrecipitation() const
-{ 
+{
     const weather::PHY_Precipitation& mainPrecipitation = pMeteo ? pMeteo->GetPrecipitation() : pGlobalMeteo_->GetPrecipitation();
     return pEffects ? pEffects->GetPrecipitation( mainPrecipitation ) : mainPrecipitation;
 }
@@ -43,7 +43,7 @@ const weather::PHY_Precipitation& PHY_RawVisionData::sCell::GetPrecipitation() c
 const weather::PHY_Lighting& PHY_RawVisionData::sCell::GetLighting() const
 {
     const weather::PHY_Lighting& mainLighting = pMeteo ? pMeteo->GetLighting() : pGlobalMeteo_->GetLighting();
-    return pEffects ? pEffects->GetLighting( mainLighting ) : mainLighting; 
+    return pEffects ? pEffects->GetLighting( mainLighting ) : mainLighting;
 }
 
 //-----------------------------------------------------------------------------
@@ -95,15 +95,15 @@ void PHY_RawVisionData::RegisterMeteoPatch( const geometry::Point2d& upLeft, con
     unsigned int nYEnd = std::min( GetRow( upLeft.Y() ),    nNbrRow_ - 1 );
     unsigned int nXBeg = std::min( GetCol( upLeft.X() ),    nNbrCol_ - 1 );
     unsigned int nYBeg = std::min( GetRow( downRight.Y() ), nNbrRow_ - 1 );
-    
+
     // On remet éventuellement dans le bon sens
-    if ( nXEnd < nXBeg )
+    if( nXEnd < nXBeg )
         std::swap( nXEnd, nXBeg );
-    if ( nYEnd < nYBeg )
+    if( nYEnd < nYBeg )
         std::swap( nYEnd, nYBeg );
 
     // enregistrement du nombre de référence pour cette météo
-    if ( pMeteo )
+    if( pMeteo )
         pMeteo->IncRef( ( nXEnd - nXBeg + 1 ) * ( nYEnd - nYBeg + 1 ) );
 
     while ( nXBeg <= nXEnd )
@@ -111,7 +111,7 @@ void PHY_RawVisionData::RegisterMeteoPatch( const geometry::Point2d& upLeft, con
         for ( unsigned int y = nYBeg; y <= nYEnd; ++y )
         {
             sCell& cell = ppCells_[ nXBeg ][ y ];
-            if ( cell.pMeteo )
+            if( cell.pMeteo )
                 cell.pMeteo->DecRef();
             cell.pMeteo = pMeteo;
         }
@@ -133,9 +133,9 @@ void PHY_RawVisionData::UnregisterMeteoPatch( const geometry::Point2d& upLeft, c
     unsigned int nYBeg = std::min( GetRow( downRight.Y() ), nNbrRow_ - 1 );
 
     // On remet éventuellement dans le bon sens
-    if ( nXEnd < nXBeg )
+    if( nXEnd < nXBeg )
         std::swap( nXEnd, nXBeg );
-    if ( nYEnd < nYBeg )
+    if( nYEnd < nYBeg )
         std::swap( nYEnd, nYBeg );
 
     while ( nXBeg <= nXEnd )
@@ -143,7 +143,7 @@ void PHY_RawVisionData::UnregisterMeteoPatch( const geometry::Point2d& upLeft, c
         for ( unsigned int y = nYBeg; y <= nYEnd; ++y )
         {
             sCell& cell = ppCells_[ nXBeg ][ y ];
-            if ( cell.pMeteo == pMeteo )
+            if( cell.pMeteo == pMeteo )
                 cell.pMeteo->DecRef();
             cell.pMeteo = 0;
         }
@@ -162,13 +162,13 @@ void PHY_RawVisionData::RegisterWeatherEffect( const MT_Ellipse& surface, const 
     const MT_Float xMax = ceil ( bb.GetRight()  / rCellSize_ ) * rCellSize_;
     const MT_Float yMin = floor( bb.GetBottom() / rCellSize_ ) * rCellSize_;
     const MT_Float yMax = ceil ( bb.GetTop()    / rCellSize_ ) * rCellSize_;
-    
+
     for ( ; x < xMax; x+=rCellSize_ )
         for ( MT_Float y = yMin; y < yMax; y+=rCellSize_ )
-            if ( surface.IsInside( MT_Vector2D( x, y ) ) )
+            if( surface.IsInside( MT_Vector2D( x, y ) ) )
             {
                 sCell& cell = operator () ( x, y );
-                if ( &cell == &emptyCell_ )
+                if( &cell == &emptyCell_ )
                     continue;
 
                 PHY_AmmoEffect* pEffect = new PHY_AmmoEffect( weaponClass, cell.pEffects );
@@ -187,13 +187,13 @@ void PHY_RawVisionData::UnregisterWeatherEffect( const MT_Ellipse& surface, cons
     const MT_Float xMax = ceil ( bb.GetRight()  / rCellSize_ ) * rCellSize_;
     MT_Float y          = floor( bb.GetBottom() / rCellSize_ ) * rCellSize_;
     const MT_Float yMax = ceil ( bb.GetTop()    / rCellSize_ ) * rCellSize_;
-    
+
     for ( ; x < xMax; x+=rCellSize_ )
         for ( ; y < yMax; y+=rCellSize_ )
-            if ( surface.IsInside( MT_Vector2D( x, y ) ) )
+            if( surface.IsInside( MT_Vector2D( x, y ) ) )
             {
                 sCell& cell = operator () ( x, y );
-                if ( &cell == &emptyCell_ )
+                if( &cell == &emptyCell_ )
                     continue;
 
                 PHY_AmmoEffect* pPrevEffect = 0;
@@ -205,13 +205,13 @@ void PHY_RawVisionData::UnregisterWeatherEffect( const MT_Ellipse& surface, cons
                     pEffect     = pEffect->GetNextEffect();
                 }
 
-                if ( !pEffect || !pEffect->HandleAmmo( weaponClass ) )
+                if( !pEffect || !pEffect->HandleAmmo( weaponClass ) )
                 {
                     assert( false );
                     return;
                 }
 
-                if ( pPrevEffect )
+                if( pPrevEffect )
                     pPrevEffect->SetNextEffect( pEffect->GetNextEffect() );
                 else
                     cell.pEffects = pEffect->GetNextEffect();
@@ -234,10 +234,10 @@ void PHY_RawVisionData::UnregisterWeatherEffect( const MT_Ellipse& surface, cons
 bool PHY_RawVisionData::Read( const std::string& strFile )
 {
     tools::InputBinaryStream archive( strFile.c_str() );
-    if ( !archive )
+    if( !archive )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Cannot open file %s", strFile.c_str() ) );
 
-    if ( ! ( archive >> rCellSize_ >> nNbrRow_ >> nNbrCol_ ) )
+    if( ! ( archive >> rCellSize_ >> nNbrRow_ >> nNbrCol_ ) )
        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Error reading file %s", strFile.c_str() ) );
 
     assert( !ppCells_ );
@@ -253,7 +253,7 @@ bool PHY_RawVisionData::Read( const std::string& strFile )
             pTmp->pMeteo   = 0;
             pTmp->pEffects = 0;
             archive.Read( (char*)pTmp++, 4 );
-            if ( !archive )
+            if( !archive )
                 throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Error reading file %s", strFile.c_str() ) );
         }
     }
@@ -277,9 +277,9 @@ void PHY_RawVisionData::CalcMinMaxAltitude()
         for ( unsigned int nY = 0; nY < nNbrRow_ ; ++nY )
         {
             short nAltitude = ppCells_[nX][nY].h;
-            if ( nAltitude < nMinAltitude )
+            if( nAltitude < nMinAltitude )
                 nMinAltitude = nAltitude;
-            if ( nAltitude > nMaxAltitude )
+            if( nAltitude > nMaxAltitude )
                 nMaxAltitude = nAltitude;
         }
     }

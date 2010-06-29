@@ -38,7 +38,7 @@ class ADN_CT_ScoreLocation
 {
 public:
 
-    ADN_CT_ScoreLocation(ADN_Table_Objects_LocationScore& tab) 
+    ADN_CT_ScoreLocation(ADN_Table_Objects_LocationScore& tab)
     : ADN_Connector_Table_ABC(tab,false)
     {}
 
@@ -51,25 +51,25 @@ public:
         // set new values
         tab_.setItem(i,0,pItemString=new ADN_TableItem_String(&tab_,obj));
         tab_.setItem(i,1,pItemInt=new ADN_TableItem_Int(&tab_,obj));
-        
+
         // set items validators range
         pItemInt->GetValidator().setBottom( 0 );
 
         // disable object name
         pItemString->setEnabled(false);
         pItemString->SetAutoEnabled(false);
-        
+
         // connect items & datas
         pItemString->setText( ADN_Tr::ConvertFromLocation( static_cast<ScoreLocationInfos*>(obj)->nLocation_.GetData(),ENT_Tr_ABC::eToTr).c_str());
         pItemInt->GetConnector().Connect(&static_cast<ScoreLocationInfos*>(obj)->nScore_);
     }
-    
+
 private:
     ADN_CT_ScoreLocation& operator=( const ADN_CT_ScoreLocation& );
 };
 
 // =============================================================================
-// 
+//
 // =============================================================================
 
 // -----------------------------------------------------------------------------
@@ -96,7 +96,7 @@ ADN_Table_Objects_LocationScore::ADN_Table_Objects_LocationScore(QWidget * paren
     setNumRows(0);
     setColumnStretchable(0,true);
     setColumnStretchable(1,true);
-    
+
     horizontalHeader()->setLabel(0, tr( "Ground Type" ) );
     horizontalHeader()->setLabel(1, tr( "Weight" ) );
 
@@ -136,7 +136,7 @@ void ADN_Table_Objects_LocationScore::OnContextMenu(int /*row*/,int /*col*/,cons
     popupMenu.insertItem( tr( "Add terrain" ), &addMenu , 0 );
     if( this->GetCurrentData() != 0 )
         popupMenu.insertItem( tr( "Remove terrain" ), 1 );
-    
+
     int nResult = popupMenu.exec( pt );
     if( nResult == 1 )
     {
@@ -162,7 +162,7 @@ void ADN_Table_Objects_LocationScore::AddNewElement( int n )
 
     ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
     pCTable->AddItem( pNewInfo );
-    pCTable->AddItem( 0 );    
+    pCTable->AddItem( 0 );
 }
 
 
@@ -175,7 +175,7 @@ void ADN_Table_Objects_LocationScore::RemoveCurrentElement()
     // delete composante
     ScoreLocationInfos* pCurComposante = (ScoreLocationInfos*)GetCurrentData();
     assert( pCurComposante != 0 );
-    static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem(pCurComposante);        
+    static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem(pCurComposante);
 }
 
 

@@ -47,14 +47,14 @@ FireManager::~FireManager()
 // -----------------------------------------------------------------------------
 void FireManager::Update( const MsgSimToClient& wrapper )
 {
-    if ( wrapper.message().has_start_unit_fire() )
-        ReceiveFire( wrapper.message().start_unit_fire() ); 
-    if ( wrapper.message().has_stop_unit_fire() )
-        ReceiveFire( wrapper.message().stop_unit_fire() ); 
-    if ( wrapper.message().has_start_fire_effect() )
-        UpdateFireEffect( wrapper.message().start_fire_effect() ); 
-    if ( wrapper.message().has_control_end_tick() )
-        UpdateDetonations(); 
+    if( wrapper.message().has_start_unit_fire() )
+        ReceiveFire( wrapper.message().start_unit_fire() );
+    if( wrapper.message().has_stop_unit_fire() )
+        ReceiveFire( wrapper.message().stop_unit_fire() );
+    if( wrapper.message().has_start_fire_effect() )
+        UpdateFireEffect( wrapper.message().start_fire_effect() );
+    if( wrapper.message().has_control_end_tick() )
+        UpdateDetonations();
 }
 
 // -----------------------------------------------------------------------------

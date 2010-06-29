@@ -88,7 +88,7 @@ Workspace::~Workspace()
     Mission_Pawn_Type::Terminate();
     if( pNetworkManager_->IsConnected() )
         pNetworkManager_->Disconnect();
-	delete pNetworkManager_;
+    delete pNetworkManager_;
     delete pScheduler_;
     delete pTypeManager_;
     delete pPositionManager_;
@@ -102,7 +102,7 @@ Workspace::~Workspace()
 //-----------------------------------------------------------------------------
 void Workspace::Update()
 {
-    pNetworkManager_->Update();    
+    pNetworkManager_->Update();
 }
 
 //-----------------------------------------------------------------------------

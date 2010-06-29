@@ -38,7 +38,7 @@ NotesModel::NotesModel( const dispatcher::Config& config, dispatcher::ClientPubl
     , idManager_ ( idManager )
     , file_ ( file )
 {
-    LoadNotes( file_ );    
+    LoadNotes( file_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -53,8 +53,8 @@ NotesModel::~NotesModel()
 
 // -----------------------------------------------------------------------------
 // Name: NotesModel::HandleRequest
-/** @param  publisher 
-    @param  message 
+/** @param  publisher
+    @param  message
 */
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------
@@ -66,7 +66,7 @@ void NotesModel::HandleRequest( const MsgsClientToMessenger::MsgNoteCreationRequ
    {
      Note *parent = Find( note->GetParent() );
      parent->AddChild( note->GetId() );
-   } 
+   }
    note->SendCreation( clients_ );
    note.release();
    SaveNotes( file_ );
@@ -74,8 +74,8 @@ void NotesModel::HandleRequest( const MsgsClientToMessenger::MsgNoteCreationRequ
 
 // -----------------------------------------------------------------------------
 // Name: NotesModel::HandleRequest
-/** @param  publisher 
-    @param  message 
+/** @param  publisher
+    @param  message
 */
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------
@@ -84,10 +84,10 @@ void NotesModel::HandleRequest( const MsgsClientToMessenger::MsgNoteDestructionR
    Note* note = Find( message.id() );
    if( note )
     {
-        if ( message.delete_all() )
+        if( message.delete_all() )
             HandleRequestDestructCascade( note );
         else
-      
+
             HandleRequestDestructSingle( note );
    }
    SaveNotes( file_ );
@@ -95,8 +95,8 @@ void NotesModel::HandleRequest( const MsgsClientToMessenger::MsgNoteDestructionR
 
 // -----------------------------------------------------------------------------
 // Name: NotesModel::HandleRequest
-/** @param  publisher 
-    @param  message 
+/** @param  publisher
+    @param  message
 */
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------
@@ -105,15 +105,15 @@ void NotesModel::HandleRequest( const MsgsClientToMessenger::MsgNoteUpdateReques
     Note* note = Find( message.id() );
     if( note )
     {
-        if ( message.has_parent() )
+        if( message.has_parent() )
         {
             Note* oldParent = Find( note->GetParent() );
             Note* newParent = Find( message.parent() );
             if (newParent != oldParent)
             {
-                if ( oldParent )
+                if( oldParent )
                     oldParent->RemoveChild( note->GetId() );
-                if ( newParent )
+                if( newParent )
                     newParent->AddChild( note->GetId() );
             }
         }
@@ -125,7 +125,7 @@ void NotesModel::HandleRequest( const MsgsClientToMessenger::MsgNoteUpdateReques
 
 // -----------------------------------------------------------------------------
 // Name: NotesModel::SendStateToNewClient
-/** @param  publisher 
+/** @param  publisher
 */
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------
@@ -144,18 +144,18 @@ void NotesModel::HandleRequestDestructSingle(Note* note)
     Note *parent = Find( note->GetParent() );
     std::list<unsigned long>& noteChildren = note->GetChildren();
 
-    if ( parent )
+    if( parent )
         parent->RemoveChild(note->GetId());
-    for ( std::list<unsigned long>::iterator it = noteChildren.begin(); it != noteChildren.end(); ++it )        
+    for ( std::list<unsigned long>::iterator it = noteChildren.begin(); it != noteChildren.end(); ++it )
     {
         Note* child = Find( *it );
-        if ( parent )
+        if( parent )
             parent->AddChild( child->GetId() );
         child->SetParent(parent ? parent->GetId() : 0 );
         child->SendUpdate( clients_, true );
     }
     note->SendDestruction( clients_ );
-    Remove( note->GetId() ); 
+    Remove( note->GetId() );
     delete note;
 }
 // -----------------------------------------------------------------------------
@@ -167,17 +167,17 @@ void NotesModel::HandleRequestDestructCascade(Note* note)
     Note *parent = Find( note->GetParent() );
     std::list<unsigned long>& noteChildren = note->GetChildren();
     std::list<unsigned long>::iterator it = noteChildren.begin();
-    
-    if ( parent )
+
+    if( parent )
         parent->RemoveChild(note->GetId());
-    while ( it != noteChildren.end())   
+    while ( it != noteChildren.end())
     {
         Note* child = Find( *it );
         ++it;
         HandleRequestDestructCascade(child);
     }
     note->SendDestruction( clients_ );
-    Remove( note->GetId() ); 
+    Remove( note->GetId() );
     delete note;
 }
 // -----------------------------------------------------------------------------
@@ -217,9 +217,9 @@ void NotesModel::WriteNote( const Note& note, std::ofstream& file, int& lineNumb
     file << ";\""+ note.GetCreationTime()+ "\";\"" + note.GetLastUpdateTime() + "\"" << std::endl;
 
     std::list<unsigned long>& noteChildren = note.GetChildren();
-    int currentLine = lineNumber;   
+    int currentLine = lineNumber;
 
-    for ( std::list<unsigned long>::iterator it = noteChildren.begin(); it != noteChildren.end(); ++it )    
+    for ( std::list<unsigned long>::iterator it = noteChildren.begin(); it != noteChildren.end(); ++it )
        if( Note* child = Find( *it ))
             WriteNote( *child, file, lineNumber, currentLine);
 }
@@ -233,8 +233,8 @@ void NotesModel::LoadNotes(const std::string filename)
     std::ifstream file( filename.c_str() );
     if( !file || file.fail() )
     {
-        MT_LOG_INFO_MSG( "Cannot load note file : " << filename );  
-        return; 
+        MT_LOG_INFO_MSG( "Cannot load note file : " << filename );
+        return;
     }
     std::vector< unsigned int > notes;// id
     std::string currentLine;
@@ -277,7 +277,7 @@ unsigned int NotesModel::CreateNote( std::vector< std::string >& fields, const u
     boost::algorithm::replace_all( fields[3], "<br>", "\n" );
     std::auto_ptr< Note > note( new Note( id, fields, parent, currentTime_ ) );
     Register( note->GetId(), *note );
-    if( note->GetParent() != 0 )    
+    if( note->GetParent() != 0 )
     {
         Note *parent = Find( note->GetParent() );
         parent->AddChild( note->GetId() );

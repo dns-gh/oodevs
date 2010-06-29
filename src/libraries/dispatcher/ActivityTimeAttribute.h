@@ -38,10 +38,10 @@ public:
 
 private:
     //! @name Data members
-    //@{    
-    unsigned int nActivityTime_;    
+    //@{
+    unsigned int nActivityTime_;
     //@}
-    
+
 };
 
 }

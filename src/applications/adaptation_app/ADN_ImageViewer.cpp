@@ -160,7 +160,7 @@ void ADN_ImageViewer::Scale()
     if( image_.isNull() )
         return;
 
-    if(    width() == pm_.width()
+    if( width() == pm_.width()
         && h == pm_.height() )
     {                       // no need to scale if widget
         pmScaled_ = pm_;                // size equals pixmap size

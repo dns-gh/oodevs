@@ -29,7 +29,7 @@ public:
 
 public:
     //! @name CheckPoints
-    //@{   
+    //@{
     template< typename Archive > void serialize( Archive&, const uint ) {}
     //@}
 

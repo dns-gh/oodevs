@@ -142,7 +142,7 @@ const PHY_SensorType* PHY_SensorType::FindSensorType( const std::string& strType
 // Created: JVT 2005-04-14
 // -----------------------------------------------------------------------------
 const PHY_SensorType* PHY_SensorType::FindSensorType( const unsigned int nID )
-{ 
+{
     // $$$$ JVT : Recherche linéaire, mais n'est utilisé que lors de la reprise de la sim depuis un checkpoint
     CIT_SensorTypeMap it = std::find_if( sensorTypes_.begin(), sensorTypes_.end(), std::compose1( std::bind2nd( std::equal_to< unsigned int >(), nID ), std::compose1( std::mem_fun( &PHY_SensorType::GetID ), std::select2nd< T_SensorTypeMap::value_type >() ) ) );
 

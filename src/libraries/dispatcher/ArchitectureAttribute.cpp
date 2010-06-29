@@ -38,7 +38,7 @@ ArchitectureAttribute::ArchitectureAttribute( const Model& model, const MsgsSimT
 ArchitectureAttribute::~ArchitectureAttribute()
 {
 
-}  
+}
 
 // -----------------------------------------------------------------------------
 // Name: ArchitectureAttribute::Update
@@ -48,18 +48,18 @@ void ArchitectureAttribute::Update( const MsgsSimToClient::MsgUrbanAttributes& m
 {
     if( message.has_architecture() )
     {
-        if ( message.architecture().has_height() )
+        if( message.architecture().has_height() )
             height_ = message.architecture().height();
-        if ( message.architecture().has_floor_number() )
+        if( message.architecture().has_floor_number() )
             floorNumber_ = message.architecture().floor_number();
-        if ( message.architecture().has_roof_shape() )
-            roofShape_ = message.architecture().roof_shape(); 
-        if ( message.architecture().has_material() )
-            material_ = message.architecture().material(); 
-        if ( message.architecture().has_occupation() )
-            occupation_ = message.architecture().occupation(); 
-        if ( message.architecture().has_trafficability() )
-            trafficability_ = message.architecture().trafficability(); 
+        if( message.architecture().has_roof_shape() )
+            roofShape_ = message.architecture().roof_shape();
+        if( message.architecture().has_material() )
+            material_ = message.architecture().material();
+        if( message.architecture().has_occupation() )
+            occupation_ = message.architecture().occupation();
+        if( message.architecture().has_trafficability() )
+            trafficability_ = message.architecture().trafficability();
     }
 }
 

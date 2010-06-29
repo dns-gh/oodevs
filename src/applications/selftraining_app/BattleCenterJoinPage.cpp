@@ -59,7 +59,7 @@ BattleCenterJoinPage::BattleCenterJoinPage( QWidgetStack* pages, Page_ABC& previ
     }
     ReloadExerciseList();
     EnableButton( eButtonJoin, false );
-    AddContent( box ); 
+    AddContent( box );
 }
 
 // -----------------------------------------------------------------------------

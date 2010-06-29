@@ -53,7 +53,7 @@ public:
     //@{
     static void Register( directia::Brain& brain );
     //@}
-    
+
     //! @name Accessors
     //@{
     std::string GetDIAType() const;

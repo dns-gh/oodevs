@@ -34,7 +34,7 @@ class FireFactory;
 */
 // Created: AGE 2006-03-10
 // =============================================================================
-class Fires : public kernel::Extension_ABC 
+class Fires : public kernel::Extension_ABC
             , public kernel::Updatable_ABC< MsgsSimToClient::MsgStartUnitFire >
             , public kernel::Updatable_ABC< MsgsSimToClient::MsgStopUnitFire >
             , public kernel::Updatable_ABC< MsgsSimToClient::MsgStartPopulationFire >

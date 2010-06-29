@@ -76,7 +76,7 @@ public:
 #else
             const_cast<MT_CriticalSection&>(synchronized_->cs_).Leave();
 #endif
-            
+
         }
 
         /// access to the Value
@@ -84,7 +84,7 @@ public:
         {
             return const_cast<T&>(synchronized_->value_);
         }
-    
+
     private:
         MT_Synchronized<T> *synchronized_;
     };
@@ -105,9 +105,9 @@ public:
         {
             Unlock();
             synchronized_=0;
-            
+
         }
-        
+
         void Lock()
         {
             if (!bIsLocked_)
@@ -117,7 +117,7 @@ public:
             const_cast<MT_CriticalSection&>(synchronized_->cs_).Enter();
 #endif
             bIsLocked_=true;
-            
+
         }
 
         void Unlock()
@@ -136,7 +136,7 @@ public:
         {
             return const_cast<T&>(synchronized_->value_);
         }
-    
+
     private:
         bool                bIsLocked_;
         MT_Synchronized<T> *synchronized_;

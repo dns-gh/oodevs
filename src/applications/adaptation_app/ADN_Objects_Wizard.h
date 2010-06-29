@@ -13,7 +13,7 @@
 #include "ADN_Objects_Data.h"
 #include "ADN_Wizard_ABC.h"
 
-typedef ADN_Wizard_ABC<ADN_Objects_Data::ObjectInfos> ADN_Wizard_ABC_ADN_Object_Data_ObjectInfos; 
+typedef ADN_Wizard_ABC<ADN_Objects_Data::ObjectInfos> ADN_Wizard_ABC_ADN_Object_Data_ObjectInfos;
 // =============================================================================
 /** @class  ADN_Objects_Wizard
     @brief  ADN_Objects_Wizard
@@ -30,7 +30,7 @@ public:
     ADN_Objects_Wizard( QWidget* pParent = 0, const char* szName = 0 );
     virtual ~ADN_Objects_Wizard();
     //@}
-    
+
     virtual ADN_Ref_ABC* CreateObject();
 };
 

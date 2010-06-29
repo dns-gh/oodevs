@@ -28,12 +28,12 @@ public:
     explicit FileToolbar( QMainWindow* pParent );
     virtual ~FileToolbar();
     //@}
-    
+
     //! @name Operations
     //@{
     void EnableSaveItem( bool status );
     //@}
-    
+
     private:
     //! @name Member data
     //@{

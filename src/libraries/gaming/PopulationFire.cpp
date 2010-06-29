@@ -39,5 +39,5 @@ PopulationFire::~PopulationFire()
 // -----------------------------------------------------------------------------
 void PopulationFire::Draw( const geometry::Point2f& , const kernel::Viewport_ABC& , const GlTools_ABC& ) const
 {
-    // $$$$ AGE 2007-02-23: 
+    // $$$$ AGE 2007-02-23:
 }

@@ -37,9 +37,9 @@ namespace xml
 */
 // Created: SBO 2007-02-08
 // =============================================================================
-class ActivityTimeAttribute : public kernel::ActivityTimeAttribute_ABC                            
+class ActivityTimeAttribute : public kernel::ActivityTimeAttribute_ABC
                             , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectUpdate >
-                            , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectCreation >                            
+                            , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectCreation >
 {
 
 public:

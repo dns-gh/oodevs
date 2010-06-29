@@ -14,8 +14,8 @@
 #include "ProgressPage.h"
 #include "clients_gui/Tools.h"
 #include "clients_kernel/Controllers.h"
-#include "frontend/commands.h" 
-#include "frontend/CreateExercise.h" 
+#include "frontend/commands.h"
+#include "frontend/CreateExercise.h"
 #include "frontend/EditExercise.h"
 #include "tools/GeneralConfig.h"
 #include <qcombobox.h>

@@ -65,9 +65,9 @@ namespace
     // $$$$ SBO 2008-07-24: hack to force update of real entities
     int ComputeLevel( const MsgsSimToClient::MsgUnitAttributes& attributes )
     {
-        return attributes.has_etat_operationnel() 
-            || attributes.has_dotation_eff_materiel() 
-            || attributes.has_dotation_eff_personnel() 
+        return attributes.has_etat_operationnel()
+            || attributes.has_dotation_eff_materiel()
+            || attributes.has_dotation_eff_personnel()
             ? Common::identified : -1;
     }
 }
@@ -137,7 +137,7 @@ namespace
         void AddEquipment( const dispatcher::Equipment& equipment )
         {
             available_ += equipment.nNbrAvailable_;
-            count_ += equipment.nNbrAvailable_ + equipment.nNbrUnavailable_ + equipment.nNbrRepairable_ 
+            count_ += equipment.nNbrAvailable_ + equipment.nNbrUnavailable_ + equipment.nNbrRepairable_
                    +  equipment.nNbrInMaintenance_ + equipment.nNbrPrisoner_;
         }
         void AddHuman( const dispatcher::Humans& humans )

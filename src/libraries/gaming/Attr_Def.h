@@ -15,7 +15,7 @@
 // $Author: Age $
 // $Modtime: 31/03/05 16:33 $
 // $Revision: 8 $
-// $Workfile: Attr_Def.h $ 
+// $Workfile: Attr_Def.h $
 //*****************************************************************************
 
 #ifndef __Attr_Def_h_
@@ -41,10 +41,10 @@ enum E_PerceptionState // Utilisé pour les objets
 enum E_NatureAtlasType
 {
     eNatureAtlas_PC,
-    eNatureAtlas_Armored,       
-    eNatureAtlas_ASS,           
-    eNatureAtlas_Log,           
-    eNatureAtlas_Mortar,        
+    eNatureAtlas_Armored,
+    eNatureAtlas_ASS,
+    eNatureAtlas_Log,
+    eNatureAtlas_Mortar,
     eNatureAtlas_RocketLauncher,
     eNatureAtlas_None,
     eNatureAtlas_Vehicule,

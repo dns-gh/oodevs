@@ -69,12 +69,12 @@ void ObjectMagicOrdersInterface::NotifyContextMenu( const Object_ABC& entity, Co
         AddMagic( tr( "Mine" ), SLOT( MineObject() ), magicMenu );
         AddMagic( tr( "Sweep mines" ), SLOT( SweepMineObject() ), magicMenu );
     }
-    
+
     const Object& obj = static_cast< const Object& >( entity );
     if( obj.IsReservedObstacle() )
     {
-        if( obj.IsReservedObstacleActivated() ) 
-            AddMagic( tr( "Deactivate reserved obstacle" ), SLOT( DeactivateReservedObstacle() ), magicMenu );  
+        if( obj.IsReservedObstacleActivated() )
+            AddMagic( tr( "Deactivate reserved obstacle" ), SLOT( DeactivateReservedObstacle() ), magicMenu );
         else
             AddMagic( tr( "Activate reserved obstacle" ), SLOT( ActivateReservedObstacle() ), magicMenu );
     }
@@ -172,7 +172,7 @@ void ObjectMagicOrdersInterface::ActivateReservedObstacle()
     list.AddBool( "Activation", true );
     SendObjectMagic( list );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ObjectMagicOrdersInterface::DeactivateReservedObstacle
 // Created: NLD 2007-05-23

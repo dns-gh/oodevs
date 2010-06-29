@@ -58,19 +58,19 @@ void ADN_ActiveProtections_GUI::Build()
     ADN_ActiveProtectionsListView* pActiveProtectionListView = new ADN_ActiveProtectionsListView( pMainWidget_ );
     pActiveProtectionListView->GetConnector().Connect( &data_.GetActiveProtectionsInfos() );
     T_ConnectorVector vConnectors( ADN_ActiveProtections_GUI::eNbrActiveProtectionsGuiElements, (ADN_Connector_ABC*)0 );
-  
+
     QGroupBox* pGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Active Protection" ), pMainWidget_ );
 
     QGroupBox* pPropertiesGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Properties" ), pGroup );
-    
+
     builder.AddField<ADN_EditLine_String>( pPropertiesGroup, tr( "Name" ), vConnectors[eActiveProtectionName] );
     builder.AddField<ADN_EditLine_Double>( pPropertiesGroup, tr( "Coefficient" ), vConnectors[eActiveProtectionCoeffiscient], 0, eGreaterZero );
     builder.AddField<ADN_CheckBox>( pPropertiesGroup, tr( "Hard kill" ), vConnectors[eActiveProtectionHardKill] );
-    
-    // dotations    
+
+    // dotations
     QGroupBox* pDotationGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Dotation" ), pGroup );
 
-    builder.AddField< ADN_ComboBox_Vector<ADN_Equipement_Data::AmmoCategoryInfo> >( pDotationGroup, tr( "Dotation" ), vConnectors[eActiveProtectionDotation] ); 
+    builder.AddField< ADN_ComboBox_Vector<ADN_Equipement_Data::AmmoCategoryInfo> >( pDotationGroup, tr( "Dotation" ), vConnectors[eActiveProtectionDotation] );
     builder.SetEnabled( true );
     builder.AddField<ADN_EditLine_Double>( pDotationGroup, tr( "Usage" ), vConnectors[eActiveProtectionUsage], 0, eGreaterZero );
 

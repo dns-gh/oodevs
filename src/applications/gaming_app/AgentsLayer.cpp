@@ -26,7 +26,7 @@ AgentsLayer::AgentsLayer( Controllers& controllers, const GlTools_ABC& tools, gu
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: AgentsLayer destructor
 // Created: SBO 2006-08-18

@@ -69,7 +69,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
         return boost::shared_ptr< MIL_MissionParameter_ABC >( new MIL_ObjectKnowledgeListParameter() );
     if( dynamic_cast< const MIL_ParameterType_GenObjectList* >( &parameterType ) )
         return boost::shared_ptr< MIL_MissionParameter_ABC >( new MIL_PlannedWorkListParameter() );
-        
+
     return boost::shared_ptr<MIL_MissionParameter_ABC>( new MIL_NullParameter() );
 }
 
@@ -101,71 +101,71 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
             ptr = new MIL_PointListParameter( asn.value().pointlist() );
         else if( asn.value().has_polygon() )
             ptr = new MIL_PolygonParameter( asn.value().polygon() );
-        else if ( asn.value().has_polygonlist() )
+        else if( asn.value().has_polygonlist() )
             ptr = new MIL_PolygonListParameter( asn.value().polygonlist() );
-        else if ( asn.value().has_location() )
+        else if( asn.value().has_location() )
             ptr = new MIL_LocationParameter( asn.value().location() );
-        else if ( asn.value().has_locationlist() )
+        else if( asn.value().has_locationlist() )
             ptr = new MIL_LocationListParameter( asn.value().locationlist() );
-        else if ( asn.value().has_heading() )
+        else if( asn.value().has_heading() )
             ptr = new MIL_DirectionParameter( asn.value().heading() );
-        else if ( asn.value().has_atlasnature() )
+        else if( asn.value().has_atlasnature() )
             ptr = new MIL_AtlasNatureParameter( asn.value().atlasnature() );
-        else if ( asn.value().has_unit() )
+        else if( asn.value().has_unit() )
             ptr = new MIL_AgentParameter( asn.value().unit(), entityManager );
-        else if ( asn.value().has_unitlist() )
+        else if( asn.value().has_unitlist() )
             ptr = new MIL_AgentListParameter( asn.value().unitlist(), entityManager );
-        else if ( asn.value().has_automat() )
+        else if( asn.value().has_automat() )
             ptr = new MIL_AutomatParameter( asn.value().automat(), entityManager );
-        else if ( asn.value().has_automatlist() )
+        else if( asn.value().has_automatlist() )
             ptr = new MIL_AutomatListParameter( asn.value().automatlist(), entityManager );
-        else if ( asn.value().has_unitknowledge() )
+        else if( asn.value().has_unitknowledge() )
             ptr = new MIL_AgentKnowledgeParameter( asn.value().unitknowledge(), resolver );
-        else if ( asn.value().has_unitknowledgelist() )
+        else if( asn.value().has_unitknowledgelist() )
             ptr = new MIL_AgentKnowledgeListParameter( asn.value().unitknowledgelist(), resolver );
-        else if ( asn.value().has_objectknowledge() )
+        else if( asn.value().has_objectknowledge() )
             ptr = new MIL_ObjectKnowledgeParameter( asn.value().objectknowledge(), resolver );
-        else if ( asn.value().has_objectknowledgelist() )
+        else if( asn.value().has_objectknowledgelist() )
             ptr = new MIL_ObjectKnowledgeListParameter( asn.value().objectknowledgelist(), resolver );
-        else if ( asn.value().has_populationknowledge() )
+        else if( asn.value().has_populationknowledge() )
             ptr = new MIL_PopulationKnowledgeParameter( asn.value().populationknowledge(), resolver );
-        else if ( asn.value().has_plannedwork() )
+        else if( asn.value().has_plannedwork() )
             ptr = new MIL_PlannedWorkParameter( asn.value().plannedwork(), entityManager );
-        else if ( asn.value().has_plannedworklist() )
+        else if( asn.value().has_plannedworklist() )
             ptr = new MIL_PlannedWorkListParameter( asn.value().plannedworklist(), entityManager );
-        else if ( asn.value().has_dotationtype() )
+        else if( asn.value().has_dotationtype() )
             ptr = new MIL_DotationTypeParameter( asn.value().dotationtype() );
-        else if ( asn.value().has_equipmenttype() )
+        else if( asn.value().has_equipmenttype() )
             ptr = new MIL_EquipmentTypeParameter( asn.value().equipmenttype() );
-        else if ( asn.value().has_tirindirect() )
+        else if( asn.value().has_tirindirect() )
         {
             Common::MsgUnitFire msg;
             msg.set_oid( asn.value().tirindirect() );
             ptr = new MIL_TirIndirectParameter( msg );
         }
-        else if ( asn.value().has_urbanblock() )
+        else if( asn.value().has_urbanblock() )
             ptr = new MIL_UrbanBlockParameter( asn.value().urbanblock(), resolver );
-        else if ( asn.value().has_datetime() )
+        else if( asn.value().has_datetime() )
             ptr = new MIL_DateTimeParameter( asn.value().datetime() );
-        else if ( asn.value().has_logmaintenancepriorities() )
+        else if( asn.value().has_logmaintenancepriorities() )
             ptr = new MIL_LogMaintenancePrioritiesParameter( asn.value().logmaintenancepriorities() );
-        else if ( asn.value().has_logmedicalpriorities() )
+        else if( asn.value().has_logmedicalpriorities() )
             ptr = new MIL_LogMedicalPrioritiesParameter( asn.value().logmedicalpriorities() );
-        else if ( asn.value().has_acharstr() )
+        else if( asn.value().has_acharstr() )
             ptr = new MIL_StringParameter( asn.value().acharstr() );
-        else if ( asn.value().has_missionobjective() )              // $$$$ LDC : This type doesn't seem to ever be converted to/from. Only lists of objectives exist.
+        else if( asn.value().has_missionobjective() )              // $$$$ LDC : This type doesn't seem to ever be converted to/from. Only lists of objectives exist.
             ptr = new MIL_NullParameter();
         else if( asn.value().has_missionobjectivelist() )
             ptr = new MIL_MissionObjectiveListParameter( asn.value().missionobjectivelist() );
         else if( asn.value().has_urbanblock() )
             ptr = new MIL_UrbanBlockParameter( asn.value().urbanblock(), resolver );
-//        else if ( asn.value().has_value_line() ||
+//        else if( asn.value().has_value_line() ||
 //            asn.value().has_value_limasOrder() ||
 //            asn.value().has_value_intelligenceList() )
             // $$$$ LDC : These types are exclusively managed by the OrderContext.
         else
             ptr = new MIL_NullParameter();
-    
+
     }
     boost::shared_ptr<MIL_MissionParameter_ABC> result( ptr );
     return result;
@@ -236,7 +236,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( DEC_RolePion_Decision* pion )
-{ 
+{
     boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_AgentParameter( pion ) );
     return result;
 }
@@ -267,7 +267,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( DEC_Knowledge_Population* populationKnowledge )
 {
     boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_PopulationKnowledgeParameter( populationKnowledge ) );
-    return result; 
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -277,7 +277,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( const std::string& message )
 {
     boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_StringParameter( message ) );
-    return result; 
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -289,7 +289,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateT
     Common::MsgUnitFire msg;
     msg.set_oid( id );
     boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_TirIndirectParameter( msg ) );
-    return result; 
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -299,7 +299,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateT
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( const MT_Vector2D& point )
 {
     boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_PointParameter( point ) );
-    return result; 
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -309,7 +309,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( boost::shared_ptr< TER_Localisation > pLocation )
 {
     boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_LocationParameter( pLocation ) );
-    return result; 
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -319,7 +319,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( boost::shared_ptr< DEC_Knowledge_Urban > urbanblock )
 {
     boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_UrbanBlockParameter( urbanblock ) );
-    return result; 
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -341,7 +341,7 @@ void MIL_MissionParameterFactory::Copy( const Common::MsgMissionParameters& asn,
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreatePath( const std::vector< boost::shared_ptr< MT_Vector2D > >& pointList )
 {
     boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_PathParameter( pointList ) );
-    return result; 
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -351,17 +351,17 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateP
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreatePath( boost::shared_ptr< MT_Vector2D > point )
 {
     boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_PathParameter( point ) );
-    return result; 
+    return result;
 }
 
 // -----------------------------------------------------------------------------
 // Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateDirection
-// Created: PSN 
+// Created: PSN
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateDirection( boost::shared_ptr< MT_Vector2D > direction )
 {
     boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_DirectionParameter( direction ) );
-    return result; 
+    return result;
 }
 // -----------------------------------------------------------------------------
 // Name: MIL_MissionParameterFactory::SetPawnParameter
@@ -507,7 +507,7 @@ void MIL_MissionParameterFactory::SetGenObjectListParameter( boost::shared_ptr< 
     boost::shared_ptr< MIL_PlannedWorkListParameter > listParam( new MIL_PlannedWorkListParameter( list ) );
     pMission->SetParameter( parameter, listParam );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_MissionParameterFactory::SetPionListParameter
 // Created: LDC 2009-09-25
@@ -518,7 +518,7 @@ void MIL_MissionParameterFactory::SetPionListParameter( boost::shared_ptr< MIL_M
     for( std::vector< DEC_Decision_ABC* >::const_iterator it = pionList.begin(); it != pionList.end(); ++it )
         agentList.push_back( dynamic_cast<DEC_RolePion_Decision*>( *it ) );
     boost::shared_ptr< MIL_AgentListParameter > listParam( new MIL_AgentListParameter( agentList ) );
-    pMission->SetParameter( parameter, listParam );    
+    pMission->SetParameter( parameter, listParam );
 }
 
 // -----------------------------------------------------------------------------
@@ -528,7 +528,7 @@ void MIL_MissionParameterFactory::SetPionListParameter( boost::shared_ptr< MIL_M
 void MIL_MissionParameterFactory::SetLocationListParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< boost::shared_ptr< TER_Localisation > >& locationList )
 {
     boost::shared_ptr< MIL_LocationListParameter > listParam( new MIL_LocationListParameter( locationList ) );
-    pMission->SetParameter( parameter, listParam );    
+    pMission->SetParameter( parameter, listParam );
 }
 
 // -----------------------------------------------------------------------------
@@ -538,7 +538,7 @@ void MIL_MissionParameterFactory::SetLocationListParameter( boost::shared_ptr< M
 void MIL_MissionParameterFactory::SetPointListParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< boost::shared_ptr< MT_Vector2D > >& pointList )
 {
     boost::shared_ptr< MIL_PointListParameter > listParam( new MIL_PointListParameter( pointList ) );
-    pMission->SetParameter( parameter, listParam );    
+    pMission->SetParameter( parameter, listParam );
 }
 
 
@@ -550,7 +550,7 @@ void MIL_MissionParameterFactory::SetPointListParameter( boost::shared_ptr< MIL_
 void MIL_MissionParameterFactory::SetPolygonListParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< boost::shared_ptr< TER_Localisation > >& locationList )
 {
     boost::shared_ptr< MIL_PolygonListParameter > listParam( new MIL_PolygonListParameter( locationList ) );
-    pMission->SetParameter( parameter, listParam );    
+    pMission->SetParameter( parameter, listParam );
 }
 
 // -----------------------------------------------------------------------------

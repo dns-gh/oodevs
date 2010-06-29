@@ -21,7 +21,7 @@
 
 // =============================================================================
 /** @class  MIL_PropagationManager
-    @brief  MIL_PropagationManager    
+    @brief  MIL_PropagationManager
 */
 // Created: RFT 28/04/2008
 // Modified: RFT 05/05/2008

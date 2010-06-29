@@ -33,7 +33,7 @@ public:
     struct sStartTick{};
     struct sEndTick{};
     struct sCheckPoint { bool start_; };
-    
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -58,7 +58,7 @@ public:
     void Disconnect();
     void Pause( bool );
     void ChangeSpeed( int timeFactor );
-    
+
     void BeginCheckPoint();
     void EndCheckPoint();
     //@}
@@ -67,11 +67,11 @@ public:
     //@{
     virtual QDateTime GetInitialDateTime() const;
     virtual QDateTime GetDateTime() const;
-    QString GetTimeAsString() const; 
-    QString GetDateAsString() const; 
+    QString GetTimeAsString() const;
+    QString GetDateAsString() const;
 
     int GetTime() const;                    //!< seconds since simulation start
-    
+
     unsigned GetCurrentTick() const;         //!< tick since simulation start
     unsigned GetTickCount() const;           //!< total tick count (replayer)
     virtual unsigned int GetTickDuration() const;
@@ -89,7 +89,7 @@ public:
     unsigned long GetShortPathfinds() const;        //!< last short pathfinds count
     unsigned long GetLongPathfinds() const;         //!< last long pathfinds count
     //@}
-    
+
 private:
     //! @name Copy/Assignement
     //@{

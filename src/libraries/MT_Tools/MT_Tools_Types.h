@@ -17,7 +17,7 @@
 
 typedef double        MT_Float;
 #define MT_Epsilon  1e-8
-#define MT_PI 3.14159265358979323 
+#define MT_PI 3.14159265358979323
 inline  MT_Float     MT_flabs( MT_Float rF )    { return ( rF >= 0. ? rF : -rF ); }
 inline  bool         MT_IsZero( MT_Float rF )    { return MT_flabs( rF ) < MT_Epsilon; }
 inline  bool         MT_IsSameSigns( MT_Float rA, MT_Float rB ) { return ( rA * rB ) >= 0.; }
@@ -53,7 +53,7 @@ namespace std
             UnaryFunction1  uf1_;
             UnaryFunction2  uf2_;
     };
-    
+
     //-----------------------------------------------------------------------------
     // Name: compose2
     // Created: JVT 03-05-07
@@ -358,7 +358,7 @@ struct sCaseInsensitiveLess
     {
         return ( operator()( lhs.first, rhs.first ) || !operator()( rhs.first, lhs.first) &&  operator()( lhs.second,  rhs.second ) );
     }
-}; 
+};
 
 
 #endif // __MT_Tools_Types_h_

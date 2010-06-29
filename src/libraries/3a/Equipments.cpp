@@ -26,15 +26,15 @@ namespace
 {
     const unsigned nEquipmentStates = 5;
     typedef int (EquipmentDotations_EquipmentDotation::* EquipmentDotationsMemberFn)() const;
-    EquipmentDotationsMemberFn equipmentData[5] = 
+    EquipmentDotationsMemberFn equipmentData[5] =
     {
-        &EquipmentDotations_EquipmentDotation::nb_disponibles, 
-        &EquipmentDotations_EquipmentDotation::nb_indisponibles, 
-        &EquipmentDotations_EquipmentDotation::nb_reparables, 
-        &EquipmentDotations_EquipmentDotation::nb_dans_chaine_maintenance, 
+        &EquipmentDotations_EquipmentDotation::nb_disponibles,
+        &EquipmentDotations_EquipmentDotation::nb_indisponibles,
+        &EquipmentDotations_EquipmentDotation::nb_reparables,
+        &EquipmentDotations_EquipmentDotation::nb_dans_chaine_maintenance,
         &EquipmentDotations_EquipmentDotation::nb_prisonniers
     };
-    const char* equipmentStates[5] = 
+    const char* equipmentStates[5] =
     {
         "available",
         "unavailable",

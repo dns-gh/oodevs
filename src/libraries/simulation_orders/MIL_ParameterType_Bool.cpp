@@ -21,7 +21,7 @@ MIL_ParameterType_Bool::MIL_ParameterType_Bool()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_Bool destructor
 // Created: SBO 2006-11-27
@@ -43,5 +43,5 @@ bool MIL_ParameterType_Bool::Copy( const MIL_MissionParameter_ABC& from, Common:
         return false;
     to.set_null_value( false );
     to.mutable_value()->set_abool( value );
-    return true; 
+    return true;
 }

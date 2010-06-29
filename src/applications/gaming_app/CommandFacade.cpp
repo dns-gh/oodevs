@@ -13,7 +13,7 @@
 #include "ZoomViewCommand.h"
 #include "ChangeOptionCommand.h"
 #include "DockCommand.h"
-#include "LauncherCommand.h" 
+#include "LauncherCommand.h"
 #include "FilterViewCommand.h"
 #include "clients_kernel/Controllers.h"
 

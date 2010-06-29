@@ -58,7 +58,7 @@ StartExercisePanel::StartExercisePanel( QWidgetStack* widget, QAction& action, c
     QGroupBox* group = new QGroupBox( 1, Qt::Horizontal, action.text(), box );
     QTabWidget* tabs = new QTabWidget( group );
     tabs->setMargin( 5 );
-    
+
     listBox_ = new QGroupBox( 2, Qt::Vertical, box );
     list_ = new QListBox( listBox_ );
     tabs->addTab( listBox_, action.text() );
@@ -126,7 +126,7 @@ void StartExercisePanel::StartExercise()
     {
         const QString exercise = list_->selectedItem()->text();
         configPanel_->Commit( exercise.ascii(), session_,
-                              sessionName_->text().ascii(), sessionComment_->text().ascii(), 
+                              sessionName_->text().ascii(), sessionComment_->text().ascii(),
                               exerciseNumber_->value() );
         BOOST_FOREACH( const T_Plugins::value_type& plugin, plugins_ )
             plugin->Commit( exercise.ascii(), session_ );

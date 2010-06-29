@@ -44,7 +44,7 @@ public:
     //@{
     typedef PHY_RoleInterface_Dotations RoleInterface;
     //@}
-    
+
 public:
     //! @name Constructor/Destructor
     //@{
@@ -60,7 +60,7 @@ public:
     virtual void ReadOverloading              ( xml::xistream& xis ) = 0;
     //@}
 
-    //! @name Operations 
+    //! @name Operations
     //@{
     virtual void Update    ( bool bIsDead ) = 0;
     virtual void Clean     () = 0;

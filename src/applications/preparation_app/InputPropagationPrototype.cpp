@@ -26,7 +26,7 @@ InputPropagationPrototype::InputPropagationPrototype( QWidget* parent, kernel::O
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: InputPropagationPrototype destructor
 // Created: SBO 2006-04-20
@@ -45,7 +45,7 @@ void InputPropagationPrototype::Commit()
     if( creation_ )
     {
         PropertiesDictionary& dico = creation_->Get< PropertiesDictionary >();
-        InputToxicCloudAttribute* attribute = new InputToxicCloudAttribute( dico );                                  
+        InputToxicCloudAttribute* attribute = new InputToxicCloudAttribute( dico );
                                   attribute->SetSource( source_, dataField_->GetValue() );
                                   attribute->SetExportData( exportData_->isChecked() );
         creation_->Get< ObjectAttributesContainer >().Register( *attribute );

@@ -63,7 +63,7 @@ public:
         envBits         e     : 8;   // champ de bit représentant l'environnement visuel statique
         weather::PHY_Meteo*      pMeteo;      // météo locale
         PHY_AmmoEffect* pEffects;    // effets météo provoqués par des munitions ( fumigènes, obus eclairants )
-        
+
         static const weather::PHY_Meteo* pGlobalMeteo_;
 
     public:
@@ -77,7 +77,7 @@ public:
 
         bool operator == ( const sCell& rhs ) const
         {
-            return h == rhs.h && dh == rhs.dh && e == rhs.e; 
+            return h == rhs.h && dh == rhs.dh && e == rhs.e;
         }
     };
 
@@ -91,7 +91,7 @@ public:
     //-------------------------------------------------------------------------
     /** @name Tools */
     //-------------------------------------------------------------------------
-    //@{   
+    //@{
     const sCell& operator () ( const MT_Vector2D& ) const;
     const sCell& operator () ( double, double )     const;
 
@@ -99,10 +99,10 @@ public:
 
     MT_Float GetAltitude( const MT_Vector2D& pos )     const;
     MT_Float GetAltitude( MT_Float rX_, MT_Float rY_ ) const;
-    
+
     envBits  GetVisionObject( const MT_Vector2D& pos )     const;
     envBits  GetVisionObject( MT_Float rX_, MT_Float rY_ ) const;
-    
+
     const weather::PHY_Meteo::sWindData& GetWind( const MT_Vector2D& vPos ) const;
 
     MT_Float GetMinAltitude() const;
@@ -140,7 +140,7 @@ private:
 
 
     MT_Float rCellSize_; // taille (en metre) du côté de la cellule
-    
+
     unsigned int     nNbrCol_;
     unsigned int     nNbrRow_;
 

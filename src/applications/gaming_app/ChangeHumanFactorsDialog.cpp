@@ -34,7 +34,7 @@ using namespace kernel;
 using namespace gui;
 using namespace actions;
 
-namespace 
+namespace
 {
     template< typename Enum, typename Combo >
     void Populate( Enum size, Combo& combo )
@@ -61,7 +61,7 @@ ChangeHumanFactorsDialog::ChangeHumanFactorsDialog( QWidget* pParent, Controller
     QGridLayout* pLayout = new QGridLayout( this, 5, 2, 4 );
     pLayout->setRowStretch( 6, 1 );
     pLayout->setRowStretch( 2, 0 );
-    
+
     pLayout->addWidget( new QLabel( tr( "Tiredness:" ), this ), 1, 0 );
     pTirednessCombo_ = new ValuedComboBox< E_UnitTiredness >( this );
     pLayout->addWidget( pTirednessCombo_, 1, 1 );
@@ -128,7 +128,7 @@ void ChangeHumanFactorsDialog::Call( const E_UnitMorale& morale )
 {
     pMoralCombo_->SetCurrentItem( morale );
 }
- 
+
 // -----------------------------------------------------------------------------
 // Name: ChangeHumanFactorsDialog::Call
 // Created: AGE 2006-08-24

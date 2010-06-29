@@ -30,7 +30,7 @@ namespace xml
 //*****************************************************************************
 class PHY_Ephemeride : private boost::noncopyable
 {
-    
+
 public:
     //! @name Constructors/Destructor
     //@{

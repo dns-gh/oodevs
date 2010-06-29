@@ -65,7 +65,7 @@ class MIL_EntityManager_ABC;
 class NET_ASN_Tools
 {
 public:
-    
+
     static bool CopyNatureAtlas ( int value, Common::MsgAtlasNature& asn );
     static bool CopyNatureAtlas ( const Common::MsgAtlasNature& asn, int& value );
     //@}
@@ -148,7 +148,7 @@ public:
     static boost::shared_ptr< DEC_Knowledge_Object > ReadObjectKnowledge    ( const Common::MsgObjectKnowledge&     asn, const DEC_KnowledgeResolver_ABC& resolver );
     static bool                         ReadObjectKnowledgeList( const Common::MsgObjectKnowledgeList& asn, T_KnowledgeObjectDiaIDVector& knowledgeList, const DEC_KnowledgeResolver_ABC& resolver );
     //@}
-    
+
     // @name Encoding tools
     //@{
     static void WritePolygon            ( const TER_Localisation& localisation, Common::MsgPolygon&      asn );

@@ -40,7 +40,7 @@
 using namespace plugins;
 using namespace plugins::crossbow;
 
-namespace 
+namespace
 {
     void MakeTypeRegistration( OrderParameterTypeResolver& /*resolver*/ )
     {
@@ -54,7 +54,7 @@ namespace
 //                .Register( "bool", T_MissionParameter_value_aBool )
 //                .Register( "real", T_MissionParameter_value_aReal )
 //                .Register( "enumeration", T_MissionParameter_value_enumeration )
-//                .Register( "string", T_MissionParameter_value_aCharStr ) 
+//                .Register( "string", T_MissionParameter_value_aCharStr )
 //
 //                .Register( "automate", T_MissionParameter_value_automat )
 //                .Register( "automatelist", T_MissionParameter_value_automatList )
@@ -104,7 +104,7 @@ namespace
     {
         typedef TContainer Container;
         typedef TElement Element;
-        
+
         Element& operator()( Element& message, const typename Container::value_type& e )
         {
             f_( message, e );
@@ -119,7 +119,7 @@ namespace
     void SerializeList( Container& message, const typename FunctorWrapper::Container& values, FunctorWrapper wrapper )
     {
         //message = new Container();
-        //message->n 
+        //message->n
         //int size = values.size();
         if( !values.empty() )
         {
@@ -129,17 +129,17 @@ namespace
 //                *message.mutable_elem( i ) = wrapper( *message.mutable_elem( i ), values[ i ] );
 //            }
 
-            std::transform( message.mutable_elem()->begin(), message.mutable_elem()->end(), 
+            std::transform( message.mutable_elem()->begin(), message.mutable_elem()->end(),
                 values.begin(), message.mutable_elem()->begin(), wrapper );
-            
+
         }
 //        else
 //            //message->elem = 0;
 //            *message.mutable_elem() = NULL;
     }
 
-    template< typename T, typename Functor > 
-    struct FunctorWrapperList : public FunctorWrapper< T, std::vector< T* >, Functor > 
+    template< typename T, typename Functor >
+    struct FunctorWrapperList : public FunctorWrapper< T, std::vector< T* >, Functor >
     {
         FunctorWrapperList( Functor functor ) : FunctorWrapper< T, std::vector< T* >, Functor >( functor ) {}
     };
@@ -179,7 +179,7 @@ namespace
 // -----------------------------------------------------------------------------
 void OrderParameterSerializer::Serialize( Common::MsgMissionParameter& message, const kernel::OrderParameter& parameter, unsigned long parameterId, const std::string& value ) const
 {
-    std::string type = boost::algorithm::to_lower_copy( parameter.GetType() );   
+    std::string type = boost::algorithm::to_lower_copy( parameter.GetType() );
 
     if( type == "point" )
         SerializeLocation( *message.mutable_value()->mutable_point()->mutable_location(), parameterId, value );
@@ -216,21 +216,21 @@ void OrderParameterSerializer::Serialize( Common::MsgMissionParameter& message, 
     else if( type == "agentlist" )
         SerializeValueList< Common::MsgUnit >( *message.mutable_value()->mutable_unitlist(), value, BIND_SERIALIZER( SerializeUnit ) );
     else if( type == "automatelist" )
-        SerializeValueList< Common::MsgAutomat >( *message.mutable_value()->mutable_automatlist(), value, BIND_SERIALIZER( SerializeAutomat ) );    
+        SerializeValueList< Common::MsgAutomat >( *message.mutable_value()->mutable_automatlist(), value, BIND_SERIALIZER( SerializeAutomat ) );
     else if( type == "agentknowledge" )
         SerializeUnitKnowledge( *message.mutable_value()->mutable_unitknowledge(), value );
     else if( type == "agentknowledgelist" )
         SerializeValueList< Common::MsgUnitKnowledge >( *message.mutable_value()->mutable_unitknowledgelist(), value, BIND_SERIALIZER( SerializeUnitKnowledge ) );
     else if( type == "objectknowledge" )
         SerializeObjectKnowledge( *message.mutable_value()->mutable_objectknowledge(), value );
-    else if( type == "objectknowledgelist" ) 
+    else if( type == "objectknowledgelist" )
         SerializeValueList< Common::MsgObjectKnowledge >( *message.mutable_value()->mutable_objectknowledgelist(), value, BIND_SERIALIZER( SerializeObjectKnowledge ) );
     else if( type == "objective" )
         SerializeMissionObjective( *message.mutable_value()->mutable_missionobjective(), value );
     else if( type == "objectivelist" )
         SerializeMissionObjectiveList( *message.mutable_value()->mutable_missionobjectivelist(), value );
 
- 
+
     /* TODO
     case T_MissionParameter_value_atlasNature:
     case T_MissionParameter_value_populationKnowledge:
@@ -345,8 +345,8 @@ void OrderParameterSerializer::SerializeBool( bool& message, const std::string& 
 template < typename LocationType >
 void OrderParameterSerializer::SerializeLocation( LocationType& message, const Row_ABC* row ) const
 {
-    if ( row == 0 )
-        throw std::exception( "Cannot instanciate location parameter" );    
+    if( row == 0 )
+        throw std::exception( "Cannot instanciate location parameter" );
     row->GetGeometry().Serialize( message );
 }
 
@@ -429,14 +429,14 @@ void OrderParameterSerializer::SerializePhaseLines( Common::MsgLimasOrder& messa
     std::stringstream ss;
     ss << "ParameterID=" << parameterId;
     const Row_ABC* result = table.Find( ss.str() );
-        
+
     for( unsigned int i = 0; result != 0; ++i )
     {
         SerializePhaseLine(message->elem( i ), v);
         result = paramTable_.GetNextRow();
-    }    
+    }
     */
-    // $$$$ SBO 2008-03-04: value=id1,func1,func2;id2,func1;...    
+    // $$$$ SBO 2008-03-04: value=id1,func1,func2;id2,func1;...
     /*
     message = new LimasOrder();
     message->n = std::count( value.begin(), value.end(), ';' );
@@ -490,7 +490,7 @@ void OrderParameterSerializer::SerializePhaseLine( Common::MsgLimaOrder& message
     */
 }
 
-namespace 
+namespace
 {
     template< typename T >
     struct void_functor
@@ -498,8 +498,8 @@ namespace
         void operator()( T&, const T* ) {}
     };
 
-    template< typename T, typename Functor > 
-    struct VoidFunctorWrapperList : public FunctorWrapperList< T, Functor > 
+    template< typename T, typename Functor >
+    struct VoidFunctorWrapperList : public FunctorWrapperList< T, Functor >
     {
         VoidFunctorWrapperList() : FunctorWrapperList< T, Functor >( void_functor< T >() ) {}
     };
@@ -527,7 +527,7 @@ void OrderParameterSerializer::SerializeUnitKnowledge( Common::MsgUnitKnowledge&
         throw std::runtime_error( "unknown unit knowledge [" + value + "]" );
     message.set_oid( id );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: OrderParameterSerializer::SerializeObjectKnowledge
 // Created: JCR 2009-10-14

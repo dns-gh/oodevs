@@ -38,8 +38,8 @@ public:
 
     //! @name Modifiers
     //@{
-    void Update( unsigned utime, unsigned timeStep );    
-    void SendStateToNewClient() const;    
+    void Update( unsigned utime, unsigned timeStep );
+    void SendStateToNewClient() const;
     //@}
 
     //! @name Accessors
@@ -48,7 +48,7 @@ public:
     //@}
 
 private:
-    //! @name 
+    //! @name
     //@{
     void UpdateNetwork() const;
     void SendUpdate() const;

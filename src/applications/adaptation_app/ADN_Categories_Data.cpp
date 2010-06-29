@@ -106,7 +106,7 @@ void ADN_Categories_Data::ArmorInfos::CreateDefaultAttrition()
     pNewEffect = new AttritionEffectOnHuman();
     pNewEffect->nEquipmentState_ = eEquipmentState_FixableInPlace ;
     pNewEffect->strName_ = ADN_Tr::ConvertFromEquipmentState(eEquipmentState_FixableInPlace );
-    vAttritionEffects_.AddItem( pNewEffect );  
+    vAttritionEffects_.AddItem( pNewEffect );
     pNewEffect = new AttritionEffectOnHuman();
     pNewEffect->nEquipmentState_ =  eEquipmentState_Destroyed ;
     pNewEffect->strName_ = ADN_Tr::ConvertFromEquipmentState(eEquipmentState_Destroyed );
@@ -247,17 +247,17 @@ void ADN_Categories_Data::Reset()
 //-----------------------------------------------------------------------------
 void ADN_Categories_Data::Load()
 {
-    std::string szArmorsFile= ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() 
+    std::string szArmorsFile= ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData()
                       + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szArmors_.GetData();
     xml::xifstream armorsInput( szArmorsFile );
     ReadArmors( armorsInput );
 
-    std::string szSizesFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() 
+    std::string szSizesFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData()
         + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szSizes_.GetData();
     xml::xifstream sizesInput( szSizesFile );
     ReadSizes( sizesInput );
 
-    std::string szDotationNaturesFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() 
+    std::string szDotationNaturesFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData()
         + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szDotationNatures_.GetData();
     xml::xifstream dotationNaturesInput( szDotationNaturesFile );
     ReadDotationNatures( dotationNaturesInput );
@@ -270,7 +270,7 @@ void ADN_Categories_Data::Load()
 void ADN_Categories_Data::Save()
 {
     {
-        std::string szArmorFile= ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory() 
+        std::string szArmorFile= ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory()
             + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szArmors_.GetData();
         ADN_Tools::CreatePathToFile( szArmorFile );
         xml::xofstream armorOutput( szArmorFile );
@@ -278,14 +278,14 @@ void ADN_Categories_Data::Save()
     }
 
     {
-        std::string szSizesFile= ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory() 
+        std::string szSizesFile= ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory()
             + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szSizes_.GetData();
         ADN_Tools::CreatePathToFile( szSizesFile );
         xml::xofstream sizeOutput( szSizesFile );
         WriteSizes( sizeOutput );
     }
     {
-        std::string szNaturesFile= ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory() 
+        std::string szNaturesFile= ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory()
             + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szDotationNatures_.GetData();
         ADN_Tools::CreatePathToFile( szNaturesFile );
         xml::xofstream naturesOutput( szNaturesFile );
@@ -400,11 +400,11 @@ void ADN_Categories_Data::ReadNature( xml::xistream& input )
     T_DotationNatureInfos_Vector::iterator found = std::find_if( vDotationNatures_.begin(), vDotationNatures_.end(), ADN_String_Cmp( strName ) );
     if( found != vDotationNatures_.end() )
         throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Categories - Duplicated resource nature type name '%1'" ).arg( strName.c_str() ).ascii() );
-        
+
     DotationNatureInfos* pNew = new DotationNatureInfos( strName );
     pNew->SetDataName( "le nom de la nature de dotation" );
     vDotationNatures_.AddItem( pNew );
-    
+
 }
 
 // -----------------------------------------------------------------------------

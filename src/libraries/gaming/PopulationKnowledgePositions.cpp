@@ -69,7 +69,7 @@ float PopulationKnowledgePositions::GetHeight() const
 bool PopulationKnowledgePositions::IsAt( const geometry::Point2f& pos, float precision /*= 100.f*/, float /*adaptiveFactor*/ ) const
 {
     return GetRealPosition().IsAt( pos, precision );
-}   
+}
 
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledgePositions::IsIn

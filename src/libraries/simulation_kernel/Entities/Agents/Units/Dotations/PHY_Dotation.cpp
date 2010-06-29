@@ -74,10 +74,10 @@ PHY_Dotation::~PHY_Dotation()
 void PHY_Dotation::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     unsigned int nID;
-        
+
     file >> nID;
     pCategory_ = PHY_DotationType::FindDotationCategory( nID );
-    
+
     file >> pGroup_
          >> rValue_
          >> rCapacity_
@@ -85,7 +85,7 @@ void PHY_Dotation::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> rFireReservation_
          >> rSupplyThreshold_
          >> bDotationBlocked_
-         >> bInfiniteDotations_;    
+         >> bInfiniteDotations_;
 }
 
 // -----------------------------------------------------------------------------
@@ -141,7 +141,7 @@ void PHY_Dotation::SetValue( MT_Float rValue )
 
     rValue = std::min( rValue, maxCapacity_ );
 
-    if ( (unsigned int)rValue_ != (unsigned int)rValue )
+    if( (unsigned int)rValue_ != (unsigned int)rValue )
     {
         assert( pGroup_ );
         pGroup_->NotifyDotationChanged( *this );
@@ -150,7 +150,7 @@ void PHY_Dotation::SetValue( MT_Float rValue )
     const bool bSupplyThresholdAlreadyReached = HasReachedSupplyThreshold();
     rValue_ = rValue;
 
-    if ( HasReachedSupplyThreshold() )
+    if( HasReachedSupplyThreshold() )
     {
         assert( pGroup_ );
         assert( pCategory_ );
@@ -170,13 +170,13 @@ void PHY_Dotation::AddCapacity( const PHY_DotationCapacity& capacity )
     if( bInfiniteDotations_ && MT_IsZero( rCapacity_ ) )
     {
         rCapacity_ = maxCapacity_;
-        if ( !bDotationBlocked_ )
+        if( !bDotationBlocked_ )
             rValue_ = maxCapacity_;
     }
     else
     {
         rCapacity_ += capacity.GetCapacity();
-        if ( !bDotationBlocked_ )
+        if( !bDotationBlocked_ )
             rValue_ += capacity.GetCapacity();
     }
 
@@ -184,7 +184,7 @@ void PHY_Dotation::AddCapacity( const PHY_DotationCapacity& capacity )
     rValue_ = std::min( rValue_, maxCapacity_ );
 
     rSupplyThreshold_ += capacity.GetSupplyThreshold();
-    
+
     assert( pGroup_ );
     pGroup_->NotifyDotationChanged( *this );
 }
@@ -204,22 +204,22 @@ void PHY_Dotation::RemoveCapacity( const PHY_DotationCapacity& capacity )
     {
         rFireReservation_ = rCapacity_;
         rValue_           = 0;
-        
+
         assert( pGroup_ );
         pGroup_->NotifyDotationChanged( *this );
-    }  
+    }
     else if( rConsumptionReservation_ + rFireReservation_ > rCapacity_ )
     {
         rConsumptionReservation_ = rCapacity_;
         rValue_                  = 0;
-        
+
         assert( pGroup_ );
         pGroup_->NotifyDotationChanged( *this );
     }
     else if( rFireReservation_ + rConsumptionReservation_ + rValue_ > rCapacity_ )
     {
         rValue_ = rCapacity_ - rConsumptionReservation_;
-        
+
         assert( pGroup_ );
         pGroup_->NotifyDotationChanged( *this );
     }
@@ -235,7 +235,7 @@ void PHY_Dotation::NotifyCaptured()
     rConsumptionReservation_ = 0;
     rFireReservation_        = 0;
     bDotationBlocked_        = true;
-    
+
     assert( pGroup_ );
     pGroup_->NotifyDotationChanged( *this );
 }
@@ -257,7 +257,7 @@ void PHY_Dotation::NotifyReleased()
 MT_Float PHY_Dotation::AddConsumptionReservation( MT_Float rNbr )
 {
     rNbr = Consume( rNbr );
-    rConsumptionReservation_ += rNbr;    
+    rConsumptionReservation_ += rNbr;
     return rNbr;
 }
 
@@ -268,7 +268,7 @@ MT_Float PHY_Dotation::AddConsumptionReservation( MT_Float rNbr )
 MT_Float PHY_Dotation::AddFireReservation( MT_Float rNbr )
 {
     rNbr = Consume( rNbr );
-    rFireReservation_ += rNbr;    
+    rFireReservation_ += rNbr;
     return rNbr;
 }
 
@@ -278,13 +278,13 @@ MT_Float PHY_Dotation::AddFireReservation( MT_Float rNbr )
 // -----------------------------------------------------------------------------
 void PHY_Dotation::ChangeValueUsingTC2( MT_Float rCapacityFactor, MIL_AutomateLOG& tc2 )
 {
-    //$$$ checker rFireReservation_ et rConsumptionReservation_    
+    //$$$ checker rFireReservation_ et rConsumptionReservation_
     MT_Float rValueDiff = ( rCapacity_ * rCapacityFactor ) - rValue_;
-    if ( MT_IsZero( rValueDiff ) )
+    if( MT_IsZero( rValueDiff ) )
         return;
 
     assert( pCategory_ );
-    if ( rValueDiff > 0 )
+    if( rValueDiff > 0 )
         rValueDiff = tc2.SupplyGetStock( *pCategory_, rValueDiff );
     else
         tc2.SupplyReturnStock( *pCategory_, -rValueDiff );

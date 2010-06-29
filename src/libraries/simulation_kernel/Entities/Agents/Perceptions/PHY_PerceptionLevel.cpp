@@ -69,7 +69,7 @@ PHY_PerceptionLevel::~PHY_PerceptionLevel()
 const PHY_PerceptionLevel& PHY_PerceptionLevel::FindPerceptionLevel( unsigned int nID )
 {
     CIT_LevelMap it = levels_.find( nID );
-    
+
     return it != levels_.end() ? *it->second : notSeen_;
 }
 

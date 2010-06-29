@@ -95,7 +95,7 @@ PHY_DotationCategory_IndirectFire::~PHY_DotationCategory_IndirectFire()
 // =============================================================================
 // OPERATIONS
 // =============================================================================
-   
+
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory_IndirectFire::ApplyEffect
 // Created: NLD 2004-10-12
@@ -122,21 +122,21 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC& firer,
         TER_World::GetWorld().GetAgentManager().GetListWithinCircle(vTargetPosition, 500., allTargets );
 
         std::vector< TER_Object_ABC* > objects;
-        TER_World::GetWorld().GetObjectManager().GetListWithinCircle( vTargetPosition, rInterventionTypeFired * rDispersionX_ , objects ); 
+        TER_World::GetWorld().GetObjectManager().GetListWithinCircle( vTargetPosition, rInterventionTypeFired * rDispersionX_ , objects );
 
         std::vector< const urban::TerrainObject_ABC* > urbanList;
-        UrbanModel::GetSingleton().GetModel().GetListWithinCircle( geometry::Point2f( vTargetPosition.rX_, vTargetPosition.rY_ ) , rInterventionTypeFired * rDispersionX_, urbanList ); 
+        UrbanModel::GetSingleton().GetModel().GetListWithinCircle( geometry::Point2f( vTargetPosition.rX_, vTargetPosition.rY_ ) , rInterventionTypeFired * rDispersionX_, urbanList );
 
         for( std::vector< TER_Object_ABC* >::iterator it = objects.begin(); it != objects.end(); ++it )
         {
             MIL_Object_ABC& object = *static_cast< MIL_Object_ABC* >( *it );
             StructuralCapacity* capacity = object.Retrieve< StructuralCapacity >();
-            if ( capacity )
+            if( capacity )
                 capacity->ApplyIndirectFire( object, attritionSurface, dotationCategory_ );
         }
 
         for( TER_Agent_ABC::CIT_AgentPtrVector itAllTarget = allTargets.begin(); itAllTarget != allTargets.end(); ++itAllTarget )
-        {   
+        {
             MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **itAllTarget ).GetAgent();
             const UrbanObjectWrapper* wrapper = target.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
             if( wrapper )
@@ -161,7 +161,7 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC& firer,
         {
             MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **itTarget ).GetAgent();
             if( target.GetRole< PHY_RoleInterface_Location >().GetHeight() > 0 )
-                continue;            
+                continue;
             PHY_RoleInterface_ActiveProtection& targetRoleProtection = target.GetRole< PHY_RoleInterface_ActiveProtection >();
             bool counter = targetRoleProtection.CounterIndirectFire( dotationCategory_ );
             targetRoleProtection.UseAmmunition( dotationCategory_ );
@@ -171,7 +171,7 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC& firer,
                 targetRoleComposantes.Neutralize();
                 float ratioComposanteHit = target.GetRole< PHY_RoleInterface_UrbanLocation >().ComputeRatioPionInside( attritionSurface );
                 if( ratioComposanteHit > 0 )
-                    targetRoleComposantes.ApplyIndirectFire( dotationCategory_, fireResult, ratioComposanteHit );  
+                    targetRoleComposantes.ApplyIndirectFire( dotationCategory_, fireResult, ratioComposanteHit );
 
                 if( !bRCSent && firer.GetArmy().IsAFriend( target.GetArmy() ) == eTristate_True )
                 {
@@ -188,7 +188,7 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC& firer,
                                                      vTargetPosition.Distance( vTargetPosition + vRotatedFireDirection ) );
         const MT_Circle attritionCircle( vTargetPosition, rAttritionRadius );
         bool bRCSent = false;
-    
+
         TER_PopulationConcentration_ABC::T_PopulationConcentrationVector concentrations;
         TER_World::GetWorld().GetPopulationManager().GetConcentrationManager().GetListWithinCircle ( vTargetPosition, rAttritionRadius, concentrations );
         for( TER_PopulationConcentration_ABC::CIT_PopulationConcentrationVector it = concentrations.begin(); it != concentrations.end(); ++it )
@@ -261,7 +261,7 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC& firer,
 bool PHY_DotationCategory_IndirectFire::HasHit( const MIL_Agent_ABC& target, MT_Float ratio ) const
 {
     const PHY_RoleInterface_Posture& targetPosture = target.GetRole< PHY_RoleInterface_Posture >();
-    
+
     const MT_Float rPH =   phs_[ targetPosture.GetCurrentPosture().GetID() ] *        targetPosture.GetPostureCompletionPercentage()
                          + phs_[ targetPosture.GetLastPosture   ().GetID() ] * ( 1. - targetPosture.GetPostureCompletionPercentage() );
 

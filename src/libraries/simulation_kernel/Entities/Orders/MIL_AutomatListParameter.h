@@ -36,7 +36,7 @@ public:
     //@{
     virtual bool IsOfType( const MIL_ParameterType_ABC& ) const;
     //@}
-    
+
     //! @name Conversions
     //@{
     virtual bool ToAutomatList( Common::MsgAutomatList& ) const;

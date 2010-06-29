@@ -52,7 +52,7 @@ void PHY_Volume::ReadVolume( xml::xistream& xis )
     const PHY_Volume*& pVolume = volumes_[ strVolume ];
     if( pVolume )
         xis.error( "Volume '" + strVolume + "' already registered" );
-    
+
     pVolume = new PHY_Volume( strVolume );
 }
 

@@ -35,7 +35,7 @@ public:
 public:
              PHY_RoleInterface_Refugee();
     virtual ~PHY_RoleInterface_Refugee();
-    
+
     //! @name Accessors
     //@{
     virtual bool IsManaged() const = 0;

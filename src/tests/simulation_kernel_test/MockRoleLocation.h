@@ -29,7 +29,7 @@ MOCK_BASE_CLASS( MockRoleLocation, PHY_RoleInterface_Location )
 
     MOCK_METHOD( MagicMove, 1 );
     MOCK_METHOD( Move, 3 );
-    
+
     MOCK_METHOD( GetHeight, 0 );
     MOCK_METHOD( GetAltitude, 0 );
     MOCK_METHOD( GetPosition, 0 );
@@ -40,7 +40,7 @@ MOCK_BASE_CLASS( MockRoleLocation, PHY_RoleInterface_Location )
     MOCK_METHOD( HasDoneMagicMove, 0 );
     MOCK_METHOD( HasSpeedChanged, 0 );
     MOCK_METHOD( HasLocationChanged, 0 );
-    
+
     MOCK_METHOD( Serialize, 1 );
 };
 

@@ -51,7 +51,7 @@ public:
         while( it.HasMoreElements() )
         {
             const Element& element = it.NextElement();
-            if( ! currentItem  ) 
+            if( ! currentItem  )
                 currentItem = CreateItem( parent, previousItem );
             currentItem->SetValue( &element );
             previousItem = currentItem;
@@ -68,7 +68,7 @@ public:
         ValuedListItem* previousItem = currentItem;
         while( from != to )
         {
-            if( ! currentItem  ) 
+            if( ! currentItem  )
                 currentItem = CreateItem( parent, previousItem );
             previousItem = currentItem;
             currentItem = (ValuedListItem*)( currentItem->nextSibling() );

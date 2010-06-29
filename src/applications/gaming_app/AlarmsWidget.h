@@ -72,7 +72,7 @@ private:
     kernel::Controllers& controllers_;
     const Simulation& simulation_;
     QListView* list_;
-    QPushButton* remove_; 
+    QPushButton* remove_;
     QMessageBox* messageBox_;
     //@}
 };

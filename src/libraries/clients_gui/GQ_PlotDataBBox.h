@@ -34,12 +34,12 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    GQ_PlotDataBBox(); 
-    GQ_PlotDataBBox( const T_Data&, unsigned int nFirstPoint, int nNbrPoints ); 
-    virtual ~GQ_PlotDataBBox(); 
-    
-    GQ_PlotDataBBox& operator= ( const GQ_PlotDataBBox& ); 
-    bool             operator==( const GQ_PlotDataBBox& ) const; 
+    GQ_PlotDataBBox();
+    GQ_PlotDataBBox( const T_Data&, unsigned int nFirstPoint, int nNbrPoints );
+    virtual ~GQ_PlotDataBBox();
+
+    GQ_PlotDataBBox& operator= ( const GQ_PlotDataBBox& );
+    bool             operator==( const GQ_PlotDataBBox& ) const;
     //@}
 
     //! @name Operations
@@ -109,7 +109,7 @@ private:
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotDataBBox::IsEmpty
-/** @return 
+/** @return
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
@@ -121,7 +121,7 @@ bool GQ_PlotDataBBox::IsEmpty() const
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotDataBBox::XMin
-/** @return 
+/** @return
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
@@ -133,7 +133,7 @@ double GQ_PlotDataBBox::XMin() const
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotDataBBox::XMax
-/** @return 
+/** @return
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
@@ -145,7 +145,7 @@ double GQ_PlotDataBBox::XMax() const
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotDataBBox::YMin
-/** @return 
+/** @return
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
@@ -157,7 +157,7 @@ double GQ_PlotDataBBox::YMin() const
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotDataBBox::YMax
-/** @return 
+/** @return
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
@@ -169,7 +169,7 @@ double GQ_PlotDataBBox::YMax() const
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotDataBBox::Center
-/** @return 
+/** @return
 */
 // Created: CBX 2004-03-08
 // -----------------------------------------------------------------------------

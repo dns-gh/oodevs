@@ -49,7 +49,7 @@ class PositionManager
     MT_COPYNOTALLOWED( PositionManager );
 
 public:
-	//! @name Constructors/Destructor
+    //! @name Constructors/Destructor
     //@{
              PositionManager( const std::string& strWorldConfigFile );
     virtual ~PositionManager();

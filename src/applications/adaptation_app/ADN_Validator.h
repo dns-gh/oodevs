@@ -13,7 +13,7 @@
 #define __ADN_Validator_h_
 
 
-#include <qvalidator.h> 
+#include <qvalidator.h>
 
 
 // =============================================================================
@@ -41,7 +41,7 @@ public:
 */
 // Created: APE 2005-01-03
 // =============================================================================
-class ADN_DoubleValidator 
+class ADN_DoubleValidator
 : public QDoubleValidator
 {
 public:
@@ -56,11 +56,11 @@ public:
 #include "ADN_Types.h"
 // =============================================================================
 /** @class  ADN_PercentageValidator
-    @brief  
+    @brief
 */
 // Created: APE 2005-01-03
 // =============================================================================
-class ADN_PercentageValidator 
+class ADN_PercentageValidator
     : public ADN_DoubleValidator
 {
 public:

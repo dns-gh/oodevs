@@ -40,13 +40,13 @@ class QToolButton;
 // =============================================================================
 class ADN_MainWindow : public QMainWindow
 {
-	Q_OBJECT
+    Q_OBJECT
     MT_COPYNOTALLOWED( ADN_MainWindow )
 
 public:
     explicit ADN_MainWindow( ADN_Config& config );
     virtual ~ADN_MainWindow();
-    
+
     void Build();
     void AddPage    ( const QString& strPageName, QWidget& page );
     void AddTable   ( const QString& strTableName, ADN_Callback_ABC<ADN_Table*>*    pCallback );
@@ -66,7 +66,7 @@ private slots:
     //@{
     void NewProject();
     void OpenProject();
-    void SaveProject();    
+    void SaveProject();
     void SaveAsProject();
     void ExportHtml();
     void CloseProject();
@@ -101,7 +101,7 @@ private:
 
     ADN_Workspace&          workspace_;
     ADN_Config&             config_;
-    
+
     QTabWidget*                 pTab_;
 
     QPopupMenu*             pProjectMenu_;
@@ -116,7 +116,7 @@ private:
     int                     nIdSaveTable_;
     int                     nIdPrint_;
     int                     nIdChangeOpenMode_;
-    
+
     bool bNeedSave_;
 
     T_TableRegistrationMap    vTableRegistrations_;

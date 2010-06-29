@@ -15,7 +15,7 @@
 #include "ProcessWrapper.h"
 #include "ProgressPage.h"
 #include "clients_gui/Tools.h"
-#include "clients_kernel/Controllers.h" 
+#include "clients_kernel/Controllers.h"
 #include "frontend/CreateTerrain.h"
 #include "frontend/commands.h"
 
@@ -28,7 +28,7 @@ using namespace frontend;
 CreateTerrainPage::CreateTerrainPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const ::Config& config )
     : ContentPage( pages, tools::translate( "CreateTerrainPage", "Create Terrain" ), previous, eButtonBack | eButtonStart )
     , config_( config )
-    , controllers_( controllers ) 
+    , controllers_( controllers )
     , progressPage_( new ProgressPage( pages, *this, tools::translate( "CreateTerrainPage", "Starting terrain creation" ), controllers ) )
 {
     bool available = CreateTerrain::IsAvailable();

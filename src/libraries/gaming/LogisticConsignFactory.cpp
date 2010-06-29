@@ -57,7 +57,7 @@ LogSupplyConsign* LogisticConsignFactory::CreateSupplyConsign( const MsgsSimToCl
 {
     return new LogSupplyConsign( controllers_.controller_, model_.agents_, model_.agents_, static_.objectTypes_, message );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: LogisticConsignFactory::CreateMedicalConsign
 // Created: AGE 2006-02-28

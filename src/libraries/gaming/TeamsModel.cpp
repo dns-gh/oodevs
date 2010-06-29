@@ -72,7 +72,7 @@ void TeamsModel::CreateFormation( const Common::MsgFormationCreation& message )
         tools::Resolver< Formation_ABC >::Register( message.oid(), *formation );
     }
 }
- 
+
 // -----------------------------------------------------------------------------
 // Name: TeamsModel::GetTeam
 // Created: AGE 2006-02-10

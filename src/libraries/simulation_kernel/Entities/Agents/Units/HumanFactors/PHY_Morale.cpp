@@ -93,7 +93,7 @@ const PHY_Morale* PHY_Morale::Find( unsigned int nID )
 const PHY_Morale* PHY_Morale::Find( const std::string& strName )
 {
     CIT_MoraleMap it = morales_.find( strName );
-    
+
     return it == morales_.end() ? 0 : it->second;
 }
 
@@ -123,7 +123,7 @@ bool PHY_Morale::operator==( const PHY_Morale& rhs ) const
 {
     return nType_ == rhs.nType_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_Morale::operator!=
 // Created: NLD 2004-11-29

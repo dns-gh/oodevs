@@ -45,7 +45,7 @@ ADN_App::~ADN_App()
     if( pMainWindow_ != 0 )
     {
         pMainWindow_->hide();
-        
+
         // Don't delete the main window to speed up the closing of the application.
         // Restore the next line if checking for memory leaks.
         // delete pMainWindow_;

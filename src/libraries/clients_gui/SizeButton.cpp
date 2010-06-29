@@ -36,7 +36,7 @@ SizeButton::SizeButton( QWidget* parent /*= 0*/, const char* name /*= 0*/, float
     slider_ = new QSlider( 0, 20, 1, 0, Qt::Horizontal, menu );
     slider_->setTickmarks( QSlider::Below );
     slider_->setTickInterval( 2 );
-    
+
     menu->insertItem( slider_ );
     setPopup( menu );
     connect( slider_, SIGNAL( valueChanged( int ) ), this, SLOT( OnValueChanged( int ) ) );

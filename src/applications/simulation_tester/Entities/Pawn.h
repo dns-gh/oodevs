@@ -54,13 +54,13 @@ public:
     virtual const Position&    GetPosition () const;
     virtual const Automat*     GetAutomat  () const;
 
-	        const std::string& GetName     () const;
+            const std::string& GetName     () const;
             const PawnType&    GetType     () const;
                   bool         IsPc        () const;
                   T_Direction  GetDirection() const;
                   T_Speed      GetSpeed    () const;
                   int          GetState    () const;
-		          T_Height     GetHeight   () const;
+                  T_Height     GetHeight   () const;
             const Path&        GetPath     () const;
     //@}
 
@@ -94,8 +94,8 @@ private:
     //! @name Member data
     //@{
     T_EntityId       nId_;
-	std::string      strName_;
-	bool             bIsPc_;
+    std::string      strName_;
+    bool             bIsPc_;
     const PawnType*  pType_;
     Automat*         pAutomat_;
     T_Direction      nDirection_;

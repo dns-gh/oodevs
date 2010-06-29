@@ -26,7 +26,7 @@
 // Name: DEC_Population_PathfinderRule constructor
 // Created: AGE 2005-03-23
 // -----------------------------------------------------------------------------
-DEC_Population_PathfinderRule::DEC_Population_PathfinderRule( const DEC_Population_Path& path ) 
+DEC_Population_PathfinderRule::DEC_Population_PathfinderRule( const DEC_Population_Path& path )
     : TerrainRule_ABC()
     , path_          ( path )
 {
@@ -85,9 +85,9 @@ float DEC_Population_PathfinderRule::GetCost( const geometry::Point2f& from, con
 
     const double rTerrainCost = terrainBetween.ContainsOne( preferedTerrain ) ? 0 : 10000.;
 
-    MT_Vector2D vFrom( from.X(), from.Y() ); 
+    MT_Vector2D vFrom( from.X(), from.Y() );
     MT_Vector2D vTo  ( to  .X(), to  .Y() );
 
-    const double rChannelingCost = GetChannelingCost( vFrom, vTo, terrainTo, terrainBetween );   
+    const double rChannelingCost = GetChannelingCost( vFrom, vTo, terrainTo, terrainBetween );
     return float( from.Distance( to ) * ( 1 + rChannelingCost + rTerrainCost ) );
 }

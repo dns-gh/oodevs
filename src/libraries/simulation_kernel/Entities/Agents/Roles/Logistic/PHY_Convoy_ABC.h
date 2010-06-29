@@ -36,7 +36,7 @@ class PHY_Convoy_ABC : private boost::noncopyable
 {
 
 public:
-    //! @name 
+    //! @name
     //@{
     static void Initialize( xml::xistream& xis );
     static void Terminate ();
@@ -51,12 +51,12 @@ public:
     //@{
     template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
-    
+
     //! @name Operations
     //@{
     bool     ReserveTransporters();
     MT_Float ModifySpeed        ( MT_Float rSpeed ) const;
-    //@}                
+    //@}
 
     //! @name Accessors
     //@{
@@ -73,7 +73,7 @@ public:
     void EmptyOut               ();
     void NotifyConveyorDestroyed( PHY_ComposantePion& composante );
     //@}
- 
+
 public:
     //! @name Types
     //@{

@@ -68,7 +68,7 @@ ADN_MissionParameters_Table::ADN_MissionParameters_Table( QWidget* parent /*= 0*
 
     connect( this, SIGNAL( selectionChanged() ), this, SLOT( OnSelectionChanged() ) );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_MissionParameters_Table destructor
 // Created: SBO 2006-12-04
@@ -87,9 +87,9 @@ void ADN_MissionParameters_Table::OnContextMenu( int /*row*/, int /*col*/, const
     QPopupMenu popup( this );
 
     popup.insertItem( tr( "Add parameter"), 0 );
-    if ( GetCurrentData() != 0 )
+    if( GetCurrentData() != 0 )
         popup.insertItem( tr( "Remove parameter"), 1 );
-    
+
     int result = popup.exec( pt );
     if( result == 1 )
         RemoveCurrentElement();
@@ -108,9 +108,9 @@ void ADN_MissionParameters_Table::AddNewElement()
 
     ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
     pCTable->AddItem( newElement );
-    pCTable->AddItem( 0 ); 
+    pCTable->AddItem( 0 );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_MissionParameters_Table::RemoveCurrentElement
 // Created: SBO 2006-12-05
@@ -118,7 +118,7 @@ void ADN_MissionParameters_Table::AddNewElement()
 void ADN_MissionParameters_Table::RemoveCurrentElement()
 {
     ADN_Missions_Data::MissionParameter* param = (ADN_Missions_Data::MissionParameter*)GetCurrentData();
-    if ( param )
+    if( param )
         static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( param );
 }
 

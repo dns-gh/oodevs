@@ -26,11 +26,11 @@ BOOST_CLASS_EXPORT_IMPLEMENT( LogisticAttribute )
 // Name: LogisticAttribute constructor
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-LogisticAttribute::LogisticAttribute( xml::xistream& xis )    
+LogisticAttribute::LogisticAttribute( xml::xistream& xis )
 {
-    unsigned int nTC2;   
+    unsigned int nTC2;
     xis >> xml::attribute( "id", nTC2 );
-            
+
     MIL_Automate* pTC2Tmp = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( nTC2 );
     if( !pTC2Tmp )
         xis.error( "Automate TC2 specified is invalid" );
@@ -43,7 +43,7 @@ LogisticAttribute::LogisticAttribute( xml::xistream& xis )
 // Name: LogisticAttribute constructor
 // Created: RPD 2009-10-20
 // -----------------------------------------------------------------------------
-LogisticAttribute::LogisticAttribute( const Common::MsgMissionParameter_Value& attributes )    
+LogisticAttribute::LogisticAttribute( const Common::MsgMissionParameter_Value& attributes )
 {
     MIL_Automate* pTC2Tmp = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( attributes.list( 1 ).identifier() );
     if( !pTC2Tmp )
@@ -79,7 +79,7 @@ LogisticAttribute::~LogisticAttribute()
 // -----------------------------------------------------------------------------
 void LogisticAttribute::WriteODB( xml::xostream& xos ) const
 {
-    xos << xml::start( "tc2" ) 
+    xos << xml::start( "tc2" )
             << xml::attribute( "id", pTC2_->GetID() )
         << xml::end();
 }

@@ -85,7 +85,7 @@ BOOST_AUTO_TEST_CASE( Model_TestValueExtraction )
     {
         Evaluate( *function, MakeMessage( attributes ) );
         Evaluate( *function, MakeMessage( attributes ) );
-   
+
         attributes.set_etat_operationnel_brut( 30 );
         Evaluate( *function, MakeMessage( attributes ) );
         Evaluate( *function, MakeMessage( attributes ) );
@@ -126,7 +126,7 @@ BOOST_AUTO_TEST_CASE( Model_TestDispatchedValueExtraction )
         function->Receive( MakeMessage( attributes, 1 ) );
         function->Receive( MakeMessage( attributes, 2 ) );
         function->EndTick();
-    
+
         attributes.set_etat_operationnel_brut( 30 );
         function->BeginTick();
         function->Receive( MakeMessage( attributes, 1 ) );

@@ -124,7 +124,7 @@ void ADN_ListView_Composantes::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Composantes_GUI::eLogCarryWeightCapacity]->Connect( &pInfos->logInfos_.supplyInfos_.rWeight_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eLogCarryNature]->Connect( &pInfos->logInfos_.supplyInfos_.ptrDotationNature_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eIsLogCarrier]->Connect( &pInfos->logInfos_.supplyInfos_.bIsCarrier_, bConnect );
-    
+
     vItemConnectors_[ADN_Composantes_GUI::eMaintenanceLoadTime]->Connect( &pInfos->logInfos_.maintenanceInfos_.loadTime_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eMaintenanceUnloadTime]->Connect( &pInfos->logInfos_.maintenanceInfos_.unloadTime_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eTowerCapacity]->Connect( &pInfos->logInfos_.maintenanceInfos_.rCapacity_, bConnect );
@@ -166,7 +166,7 @@ void ADN_ListView_Composantes::OnContextMenu( const QPoint& pt )
     QPopupMenu popupMenu( this );
     ADN_Composante_Wizard wizard( this );
     FillContextMenuWithDefault( popupMenu, wizard );
-    popupMenu.exec( pt );   
+    popupMenu.exec( pt );
 }
 
 

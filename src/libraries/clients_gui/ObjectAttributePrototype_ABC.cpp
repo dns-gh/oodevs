@@ -21,7 +21,7 @@ ObjectAttributePrototype_ABC::ObjectAttributePrototype_ABC( QWidget* parent, con
 {
     hide();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ObjectAttributePrototype_ABC destructor
 // Created: JCR 2008-06-11

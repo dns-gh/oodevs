@@ -30,7 +30,7 @@ class ADN_AiEngine_Data;
 */
 // Created: AGN 2004-06-15
 // =============================================================================
-class ADN_AiEngine_GUI 
+class ADN_AiEngine_GUI
 : public ADN_GUI_ABC
 {
     MT_COPYNOTALLOWED( ADN_AiEngine_GUI )

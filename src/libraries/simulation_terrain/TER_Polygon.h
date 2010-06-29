@@ -27,14 +27,14 @@ class TER_Polygon
 //    MT_BOOSTPOOLING_MEMBERS( TER_Polygon )
 
 public:
-    // @name Constructors/Destructor 
+    // @name Constructors/Destructor
     //@{
              TER_Polygon();
              TER_Polygon( const TER_Polygon& poly );
     virtual ~TER_Polygon();
     //@}
 
-    // @name Operator 
+    // @name Operator
     //@{
     TER_Polygon &operator=( const TER_Polygon & );
     //@}
@@ -45,7 +45,7 @@ public:
     virtual void Reset( const T_PointVector& points, bool bConvexHull = false );
     virtual void Reset();
     //@}
-    
+
     // @name Tools
     //@{
     virtual bool IsNull               () const;
@@ -62,17 +62,17 @@ public:
             void Intersection         (       MT_Polyline& polyline, MT_Float rPrecision ) const;
 
             void ComputeExtremities   ( const MT_Droite& line, MT_Vector2D& vLeftPoint, MT_Vector2D& vRightPoint ) const; // Retourne les deux du polygone sur la droite
-            
+
             MT_Float GetArea          () const;
 
     const T_TrianglePtrVector& GetTriangles   () const; //$$$ A GICLER
     const T_PointVector&       GetBorderPoints() const; //$$$ A CLEANER
-    
+
     MT_Rect GetBoundingBox() const;
     //@}
-          
+
 private:
-    // @name 
+    // @name
     //@{
     TER_Polygon( const T_PointPtrVector& points , bool bConvexHull = false );
     TER_Polygon( const T_PointVector& points    , bool bConvexHull = false );
@@ -98,7 +98,7 @@ private:
     //@}
 
 private:
-    
+
     TER_Polygon(bool bEmpty);
     void        Detach();
 

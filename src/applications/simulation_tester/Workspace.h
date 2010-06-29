@@ -44,10 +44,10 @@ namespace TEST
 // =============================================================================
 class Workspace
 {
-	 MT_COPYNOTALLOWED( Workspace );
+     MT_COPYNOTALLOWED( Workspace );
 
 public:
-	//! @name Constructors/Destructor
+    //! @name Constructors/Destructor
     //@{
      Workspace( TestSet_ABC&  testSet, const Config& config );
     virtual ~Workspace();
@@ -70,12 +70,12 @@ public:
     uint32               GetSimTime            () const;
     uint32               GetTick               () const;
     uint32               GetTickDuration       () const;
-	NetworkManager&      GetNetworkManager     () const;
-	EntityManager&	     GetEntityManager      () const;
+    NetworkManager&      GetNetworkManager     () const;
+    EntityManager&         GetEntityManager      () const;
     TypeManager&         GetTypeManager        () const;
     PositionManager&     GetPositionManager    () const;
     TacticalLineManager& GetTacticalLineManager() const;
-    Scheduler&  	     GetScheduler          () const;
+    Scheduler&           GetScheduler          () const;
     TestSet_ABC&         GetTestSet            () const;
     //@}
 
@@ -91,12 +91,12 @@ private:
     //@{
     void LoadScipioConfigFile( const std::string& strScipioConfigFile );
     void InitializeRandomSeed( const std::string& strConfigFile );
-	//@}
+    //@}
 
 private:
-	//! @name Member data
+    //! @name Member data
     //@{
-	static Workspace*   pWorkspace_; // keep static for ASN_Message
+    static Workspace*   pWorkspace_; // keep static for ASN_Message
 
     uint32              nCurrentSimTime_;
     uint32              nTick_;
@@ -104,8 +104,8 @@ private:
     uint32              nTimeFactor_;
 
     // Managers
-	NetworkManager*      pNetworkManager_;
-	EntityManager*       pEntityManager_;
+    NetworkManager*      pNetworkManager_;
+    EntityManager*       pEntityManager_;
     TypeManager*         pTypeManager_;
     PositionManager*     pPositionManager_;
     TacticalLineManager* pTacticalLineManager_;
@@ -116,7 +116,7 @@ private:
     TestSet_ABC*        pTestSet_;
     // Recover file
     std::string         strRecoveryFile_;
-	//@}
+    //@}
 };
 
 } // end namespace TEST

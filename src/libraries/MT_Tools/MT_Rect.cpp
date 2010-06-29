@@ -58,7 +58,7 @@ MT_Rect::MT_Rect( const MT_Rect& rhs )
     , lineLeft_      ( pointUpLeft_, pointDownLeft_ )
     , vCenter_       ( rPosX1_ + ( rPosX2_ - rPosX1_ ) / 2.0, rPosY1_ + ( rPosY2_ - rPosY1_ ) / 2.0 )
 {
-    
+
 }
 
 
@@ -68,7 +68,7 @@ MT_Rect::MT_Rect( const MT_Rect& rhs )
 //-----------------------------------------------------------------------------
 MT_Rect::~MT_Rect()
 {
-    
+
 }
 
 
@@ -128,7 +128,7 @@ bool MT_Rect::Intersect2D( const MT_Line& line ) const
 //-----------------------------------------------------------------------------
 bool MT_Rect::Intersect2D( const MT_Vector2D& vPosSrc, const MT_Vector2D& vPosDest ) const
 {
-    if (   ( vPosSrc.rX_ > rPosX2_ && vPosDest.rX_ > rPosX2_ )
+    if( ( vPosSrc.rX_ > rPosX2_ && vPosDest.rX_ > rPosX2_ )
         || ( vPosSrc.rX_ < rPosX1_ && vPosDest.rX_ < rPosX1_ )
         || ( vPosSrc.rY_ < rPosY1_ && vPosDest.rY_ < rPosY1_ )
         || ( vPosSrc.rY_ > rPosY2_ && vPosDest.rY_ > rPosY2_ )
@@ -137,44 +137,44 @@ bool MT_Rect::Intersect2D( const MT_Vector2D& vPosSrc, const MT_Vector2D& vPosDe
         return false;
     }
 
-    if (   ( vPosSrc.rX_ >= rPosX1_ && vPosSrc.rX_ <= rPosX2_ && vPosSrc.rY_ >= rPosY1_ && vPosSrc.rY_ <= rPosY2_ )
+    if( ( vPosSrc.rX_ >= rPosX1_ && vPosSrc.rX_ <= rPosX2_ && vPosSrc.rY_ >= rPosY1_ && vPosSrc.rY_ <= rPosY2_ )
         || ( vPosDest.rX_ >= rPosX1_ && vPosDest.rX_ <= rPosX2_ && vPosDest.rY_ >= rPosY1_ && vPosDest.rY_ <= rPosY2_ )
         )
     {
         return true;
     }
     MT_Line line( vPosSrc, vPosDest );
-    if ( line.IsClipped( lineUp_ ) )
+    if( line.IsClipped( lineUp_ ) )
     {
         // Upper Line of Patch
-        if ( line.Intersect2D( lineUp_ ) )
+        if( line.Intersect2D( lineUp_ ) )
         {
             return true;
         }
     }
 
-    if ( line.IsClipped( lineRight_ ) )
+    if( line.IsClipped( lineRight_ ) )
     {
         // Righter Line of Patch
-        if ( line.Intersect2D( lineRight_ ) )
+        if( line.Intersect2D( lineRight_ ) )
         {
             return true;
         }
     }
-    
+
     // Lower Line of Patch
-    if ( line.IsClipped( lineDown_ ) )
+    if( line.IsClipped( lineDown_ ) )
     {
-        if ( line.Intersect2D( lineDown_ ) )
+        if( line.Intersect2D( lineDown_ ) )
         {
             return true;
         }
     }
 
     // Lefter Line of Patch
-    if ( line.IsClipped( lineLeft_ ) )
+    if( line.IsClipped( lineLeft_ ) )
     {
-        if ( line.Intersect2D( lineLeft_ ) )
+        if( line.Intersect2D( lineLeft_ ) )
         {
             return true;
         }
@@ -248,21 +248,21 @@ bool MT_Rect::Intersect2D( const MT_Line& orientedLine, T_PointSet& collisionSet
 
     if( bTestLineDown && orientedLine.Intersect2D( lineDown_, vPosIntersect ) == eDoIntersect )
     {
-        vPosIntersect = lineDown_.ClosestPointOnLine( vPosIntersect );            
+        vPosIntersect = lineDown_.ClosestPointOnLine( vPosIntersect );
         collisionSet.insert( vPosIntersect );
         assert( IsInside( vPosIntersect ) );
     }
 
     if( bTestLineLeft && orientedLine.Intersect2D( lineLeft_, vPosIntersect ) == eDoIntersect )
     {
-        vPosIntersect = lineLeft_.ClosestPointOnLine( vPosIntersect );            
+        vPosIntersect = lineLeft_.ClosestPointOnLine( vPosIntersect );
         collisionSet.insert( vPosIntersect );
         assert( IsInside( vPosIntersect ) );
     }
 
     if( bTestLineRight && orientedLine.Intersect2D( lineRight_, vPosIntersect ) == eDoIntersect )
     {
-        vPosIntersect = lineRight_.ClosestPointOnLine( vPosIntersect );            
+        vPosIntersect = lineRight_.ClosestPointOnLine( vPosIntersect );
         collisionSet.insert( vPosIntersect );
         assert( IsInside( vPosIntersect ) );
     }
@@ -277,7 +277,7 @@ bool MT_Rect::Intersect2D( const MT_Line& orientedLine, T_PointSet& collisionSet
             collisionSet.insert( orientedLine.GetPosEnd() );*/
         return !collisionSet.empty();
     /*}
-        
+
     return true;*/
 }
 
@@ -311,7 +311,7 @@ bool MT_Rect::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, MT_Float 
     if( IsInside( vCircleCenter ) )
         return true;
 
-    return false;        
+    return false;
 }
 
 //=============================================================================

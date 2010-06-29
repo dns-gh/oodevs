@@ -29,7 +29,7 @@ class ADN_TypePtr_InVector_ABC
 public:
     typedef typename T*                      T_TypePtr;
     typedef typename ADN_Type_Vector_ABC<T>  T_TypeVector;
-    
+
 public:
     explicit ADN_TypePtr_InVector_ABC( const char* szName = 0 );
     explicit ADN_TypePtr_InVector_ABC( const T_TypePtr& value, const char* szName = 0 );
@@ -72,7 +72,7 @@ protected:
     virtual void  InvalidatePrivate( void *ptr ,bool bDel=false);
     virtual bool  AddItemPrivate(void *item,bool bCreateCommand = false );
     virtual bool  RemItemPrivate(void *item, bool bCreateCommand = false );
-        
+
 private:
     std::string     strDataName_;
     T_TypePtr       pData_;

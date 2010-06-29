@@ -29,7 +29,7 @@ public:
     typedef std::list< MIL_Fuseau* >  T_FuseauPtrList;
     typedef T_FuseauPtrList::iterator IT_FuseauPtrList;
     //@}
-    
+
 public:
               MIL_Fuseau();
      explicit MIL_Fuseau( const MT_Vector2D& vOrientationRefPos, const T_PointVector& leftLimit, const T_PointVector& rightLimit, const MIL_LimaOrder* pBeginMissionLima = 0, const MIL_LimaOrder* pEndMissionLima = 0 );
@@ -78,7 +78,7 @@ public:
     bool             IsNull            () const;
     const MT_Line&   GetGlobalDirection() const;
     //@}
-   
+
     //! @name Tools
     //@{
     bool SplitIntoSubFuseaux( unsigned int nNbrSubFuseau, T_FuseauPtrList& container ) const;

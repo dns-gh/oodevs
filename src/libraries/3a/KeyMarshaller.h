@@ -53,7 +53,7 @@ private:
     //@{
     virtual std::string GetName() const { return function_.GetName(); }
     virtual Slot_ABC* GetSubSlot( unsigned slot )
-    { 
+    {
         return slot == 0 ? &first_ :
                slot == 1 ? &second_ :
                (Slot_ABC*)0;

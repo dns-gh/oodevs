@@ -66,7 +66,7 @@ public:
 public slots:
     //! @name Slots
     //@{
-	void OnConfirmDeletion( int result );
+    void OnConfirmDeletion( int result );
     void OnDelete();
     void OnCreate();
     void OnCreateFormation( int level );

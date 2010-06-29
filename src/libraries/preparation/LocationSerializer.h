@@ -63,7 +63,7 @@ private:
 
     //! @name Helpers
     //@{
-    void SetPoints( const T_PointVector& points ); 
+    void SetPoints( const T_PointVector& points );
     //@}
 
 private:

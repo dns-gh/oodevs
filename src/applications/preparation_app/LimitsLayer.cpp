@@ -123,7 +123,7 @@ bool LimitsLayer::MousePress( kernel::TacticalLine_ABC& entity, QMouseEvent* mou
     if( entity.Get< Positions >().IsAt( point, precision ) )
     {
         eventStrategy_.TakeExclusiveFocus( *this );
-        if( mouse->button() == Qt::LeftButton && mouse->state() == Qt::NoButton ) 
+        if( mouse->button() == Qt::LeftButton && mouse->state() == Qt::NoButton )
             dragPoint_ = point;
         else
             dragPoint_ = geometry::Point2f();

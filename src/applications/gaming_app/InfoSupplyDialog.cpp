@@ -52,7 +52,7 @@ bool InfoSupplyDialog::ShouldDisplay( const kernel::Entity_ABC& element ) const
 {
     const LogSupplyConsigns* consigns = element.Retrieve< LogSupplyConsigns >();
     const Quotas* quotas = element.Retrieve< Quotas >();
-    return ( consigns && consigns->IsRelevant() ) 
-        || ( quotas && quotas->IsRelevant() ) 
+    return ( consigns && consigns->IsRelevant() )
+        || ( quotas && quotas->IsRelevant() )
         || element.Retrieve< SupplyStates >();
 }

@@ -125,7 +125,7 @@ void GlProxy::Zoom( float width )
 std::pair< bool, bool > GlProxy::UnSelect() const
 {
     return tools_->UnSelect();
-}   
+}
 
 // -----------------------------------------------------------------------------
 // Name: GlProxy::Select

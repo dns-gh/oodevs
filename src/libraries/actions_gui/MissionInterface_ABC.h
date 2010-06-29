@@ -21,7 +21,7 @@ namespace kernel
 
 class QTabWidget;
 
-namespace actions 
+namespace actions
 {
     class Action_ABC;
 

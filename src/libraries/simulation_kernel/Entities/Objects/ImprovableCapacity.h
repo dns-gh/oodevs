@@ -33,16 +33,16 @@ class ImprovableCapacity : public ObjectCapacity_ABC
 
 public:
     //! @name Constructors/Destructor
-    //@{    
+    //@{
              ImprovableCapacity();
              ImprovableCapacity( const PHY_ConsumptionType& consumption, ConstructionCapacity::E_UnitType type, xml::xistream& xis );
     virtual ~ImprovableCapacity();
     //@}
-    
+
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
@@ -55,7 +55,7 @@ public:
     //@}
 
     //! @name Accessors
-    //@{    
+    //@{
     const PHY_ConsumptionType&  GetDefaultConsumptionMode() const;
     const PHY_DotationCategory* GetDotationCategory() const;
     unsigned int                        GetMaxDotation() const;
@@ -76,7 +76,7 @@ private:
 
 private:
     //! @name Member data
-    //@{    
+    //@{
     const PHY_ConsumptionType* default_;
     ConstructionCapacity::E_UnitType unitType_;
     const PHY_DotationCategory* dotation_;

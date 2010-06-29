@@ -17,7 +17,7 @@
 #include <xeumeuleu/xml.h>
 
 using namespace xml;
-using namespace kernel; 
+using namespace kernel;
 using namespace actions;
 using namespace parameters;
 

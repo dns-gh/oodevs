@@ -59,7 +59,7 @@ boost::shared_ptr< MT_Vector2D > DEC_KnowledgeUrbanFunctions::GetCurrentBarycent
 // Created: MGD 2010-03-18
 // -----------------------------------------------------------------------------
 float DEC_KnowledgeUrbanFunctions::GetPathfindCost( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge )
-{  
+{
      if( pKnowledge.get() && pKnowledge->IsValid() )
         return pKnowledge->GetPathfindCost( (float)callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight() );
      else

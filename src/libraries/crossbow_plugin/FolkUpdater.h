@@ -18,7 +18,7 @@ using namespace MsgsSimToClient;
 namespace plugins
 {
 namespace crossbow
-{    
+{
     class Table_ABC;
     class Row_ABC;
     class Workspace_ABC;
@@ -32,7 +32,7 @@ namespace crossbow
 // Created: JCR 2007-08-29
 // =============================================================================
 class FolkUpdater
-{    
+{
 public:
     //! @name Constructors/Destructor
     //@{
@@ -40,7 +40,7 @@ public:
     virtual ~FolkUpdater();
     //@}
 
-    //! @name 
+    //! @name
     //@{
     void Lock();
     void UnLock();
@@ -49,7 +49,7 @@ public:
     //! @name Operations
     //@{
     void Update( const MsgFolkCreation& msg );
-    void Update( const MsgFolkGraphUpdate& msg );    
+    void Update( const MsgFolkGraphUpdate& msg );
     void Drop();
     //@}
 

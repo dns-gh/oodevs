@@ -35,7 +35,7 @@ ConstructionAttribute::ConstructionAttribute( xml::xistream& xis, kernel::Proper
     : completion_( unsigned int( xml::attribute< float >( xis, "completion", 1.f ) * 100 ), kernel::Units::percentage )
     , dotationType_( 0 )
     , dotationCount_( 0 )
-{    
+{
     CreateDictionary( dico );
 }
 

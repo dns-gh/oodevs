@@ -103,7 +103,7 @@ namespace
         {
             if( type.GetParameterName( i ) == name )
             {
-                int result = 0;         
+                int result = 0;
                 if( parameters[i]->ToId( result ) )
                     return result;
                 float realResult;
@@ -121,7 +121,7 @@ namespace
         {
             if( type.GetParameterName( i ) == name )
             {
-                std::vector< DEC_Decision_ABC* > result;         
+                std::vector< DEC_Decision_ABC* > result;
                 if( parameters[i]->ToAutomatList( result ) )
                     return result;
             }
@@ -415,7 +415,7 @@ int MIL_FragOrder::GetSiteFranchissementVariante() const
 boost::shared_ptr< DEC_Knowledge_Agent > MIL_FragOrder::GetAgentKnowledge() const
 {
     static const std::string parameterName( "agentKnowledge_" );
-    
+
     unsigned int parametersNumber = parameters_.size();
     for (unsigned int i = 0; i < parametersNumber; ++i )
     {

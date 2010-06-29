@@ -165,7 +165,7 @@ geometry::Point2f Parameter_ABC::GetPosition() const
 void Parameter_ABC::CommitTo( std::string& content ) const
 {
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-        it->second->CommitTo( content );  
+        it->second->CommitTo( content );
 }
 
 // -----------------------------------------------------------------------------
@@ -175,7 +175,7 @@ void Parameter_ABC::CommitTo( std::string& content ) const
 void Parameter_ABC::CommitTo( Common::MsgMissionParameter& message ) const
 {
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-        it->second->CommitTo( message );    
+        it->second->CommitTo( message );
 }
 
 // -----------------------------------------------------------------------------

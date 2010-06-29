@@ -22,10 +22,10 @@
 */
 // Created: RFT 2008-05-30
 // =============================================================================
-class MedicalTreatmentAttribute 
+class MedicalTreatmentAttribute
     : public ObjectAttribute_ABC
     , public UpdatableAttribute_ABC
-{ 
+{
 public:
     typedef std::pair< float , int >                                             T_PatientDiagnosis; //Patient entry time, Category of injury (UA or UR)
     typedef std::list< T_PatientDiagnosis >                                      T_PatientDiagnosisList;
@@ -34,12 +34,12 @@ public:
     typedef std::map< int, boost::shared_ptr< T_PatientDiagnosisList > > T_MedicalTreatmentMap;
     typedef T_MedicalTreatmentMap::const_iterator                                CIT_MedicalTreatmentMap;
     typedef T_MedicalTreatmentMap::iterator                                      IT_MedicalTreatmentMap;
-    
+
 
 public:
     //! @name Constructors/Destructor
     //@{
-             MedicalTreatmentAttribute();    
+             MedicalTreatmentAttribute();
     explicit MedicalTreatmentAttribute( xml::xistream& xis );
     explicit MedicalTreatmentAttribute( const Common::MsgMissionParameter_Value& attributes );
     virtual ~MedicalTreatmentAttribute();
@@ -55,12 +55,12 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
-    //! @name 
+    //! @name
     //@{
     void Instanciate( DEC_Knowledge_Object& object ) const;
     void Register( Object& object ) const;
@@ -102,9 +102,9 @@ private:
     //@{
     static MT_Random      randomGenerator_;
     T_MedicalTreatmentMap medicalTreatmentMap_;
-    int                   beds_;            
-    int                   availableBeds_;   
-    int                   doctors_;         
+    int                   beds_;
+    int                   availableBeds_;
+    int                   doctors_;
     int                   availableDoctors_;
     int                   initialBeds_;
     int                   initialDoctors_;

@@ -90,7 +90,7 @@ void ExerciseService::NotifyUpdated( const boost::shared_ptr< frontend::Process_
     }
     exerciseMessage_.clear();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ExerciseService::NotifyDeleted
 // Created: LDC 2008-10-23
@@ -113,9 +113,9 @@ void ExerciseService::NotifyDeleted( const boost::shared_ptr< frontend::Process_
 void ExerciseService::SetupNetwork()
 {
     socket_->async_receive_from( buffer( answer_, 32 ), remoteEndPoint_,
-						         boost::bind( &ExerciseService::OnReceive, this, 
-									          placeholders::error,
-									          placeholders::bytes_transferred ) );
+                                 boost::bind( &ExerciseService::OnReceive, this,
+                                              placeholders::error,
+                                              placeholders::bytes_transferred ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -142,8 +142,8 @@ void ExerciseService::OnReceive( const boost::system::error_code& error, size_t 
                 stream << it->first << ":" << it->second << "/";
             exerciseMessage_ = stream.str();
         }
-        socket_->async_send_to( buffer( exerciseMessage_ ), remoteEndPoint_, 
-                                boost::bind( &ExerciseService::OnSendExercisesRequest, this, 
+        socket_->async_send_to( buffer( exerciseMessage_ ), remoteEndPoint_,
+                                boost::bind( &ExerciseService::OnSendExercisesRequest, this,
                                              placeholders::error,
                                              placeholders::bytes_transferred ) );
     }
@@ -156,7 +156,7 @@ void ExerciseService::OnReceive( const boost::system::error_code& error, size_t 
 void ExerciseService::OnSendExercisesRequest( const boost::system::error_code& /*error*/, size_t /*bytes_received*/ )
 {
     socket_->async_receive_from( buffer( answer_, 32 ), remoteEndPoint_,
-					             boost::bind( &ExerciseService::OnReceive, this, 
-								              placeholders::error,
-								              placeholders::bytes_transferred ) );
+                                 boost::bind( &ExerciseService::OnReceive, this,
+                                              placeholders::error,
+                                              placeholders::bytes_transferred ) );
 }

@@ -128,9 +128,9 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
         MT_LOG_UNREGISTER_LOGGER( fileLogger );
         nResult = app.Execute();
     }
-    catch( SIM_App::QuitException& ) 
+    catch( SIM_App::QuitException& )
     {
-    } 
+    }
     catch( MT_ScipioException& exception )
     {
         std::stringstream strMsg;

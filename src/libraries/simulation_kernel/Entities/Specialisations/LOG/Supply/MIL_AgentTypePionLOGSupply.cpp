@@ -21,7 +21,7 @@
 // -----------------------------------------------------------------------------
 MIL_AgentTypePionLOGSupply::MIL_AgentTypePionLOGSupply( const std::string& strName, xml::xistream& xis )
     : MIL_AgentTypePionLOG_ABC( strName, xis )
-{ 
+{
     // NOTHING
 }
 

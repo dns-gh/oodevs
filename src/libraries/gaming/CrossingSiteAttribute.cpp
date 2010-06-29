@@ -42,7 +42,7 @@ CrossingSiteAttribute::~CrossingSiteAttribute()
 template< typename T >
 void CrossingSiteAttribute::UpdateData( const T& message )
 {
-    if( message.has_crossing_site()  )     
+    if( message.has_crossing_site()  )
     {
         width_ = message.crossing_site().width();
         depth_ = message.crossing_site().depth();

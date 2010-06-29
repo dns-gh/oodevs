@@ -21,7 +21,7 @@ namespace TEST {
     @brief  Mission_Pawn_LOG_PrendreEnCompteReactionsMentales
 */
 // Created: SBO 2005-08-08
-// Generated: 
+// Generated:
 // =============================================================================
 class Mission_Pawn_LOG_PrendreEnCompteReactionsMentales : public Mission_Pawn_ABC
 {

@@ -37,7 +37,7 @@ QtCommand* ADN_CreateCommand( ADN_Type_ABC< int >& data, int oVal , int nVal )
 QtCommand* ADN_CreateCommand( ADN_Type_ABC< double >& data, double oVal, double nVal )
 {
     return new ADN_ChangeValueCommand_Double( data, oVal, nVal );
-    
+
 }
 
 QtCommand* ADN_CreateCommand( ADN_Type_ABC< std::string >& data, const std::string& oVal, const std::string& nVal )

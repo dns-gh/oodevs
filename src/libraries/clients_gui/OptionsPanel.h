@@ -67,7 +67,7 @@ private:
     kernel::Options&     options_;
 
     QCheckBox* pCompute3dDistance_;
-   
+
     //@}
 };
 

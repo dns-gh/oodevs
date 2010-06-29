@@ -11,7 +11,7 @@
 #include "Lendings.h"
 #include "Loan.h"
 #include "clients_kernel/Controller.h"
-#include "protocol/Protocol.h" 
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 

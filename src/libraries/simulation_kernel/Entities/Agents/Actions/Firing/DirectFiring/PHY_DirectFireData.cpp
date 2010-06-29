@@ -111,14 +111,14 @@ unsigned int PHY_DirectFireData::GetNbrWeaponsUsable() const
         for( CIT_ComposanteWeaponsMap itData = composantesWeapons_.begin(); itData != composantesWeapons_.end(); ++itData )
             if( itData->second.IsFiring() )
                 ++ nNbrUsedComposantes;
-            
+
         unsigned int nNbrComps = (unsigned int)( composantesWeapons_.size() * rPercentageComposantesToUse_ );
         if( !( nNbrComps || composantesWeapons_.empty() ) )
             nNbrComps = 1;
 
         if( nNbrComps >= nNbrUsedComposantes )
             return nNbrComps - nNbrUsedComposantes;
-        return 0;   
+        return 0;
     }
 
     assert( false );
@@ -131,9 +131,9 @@ unsigned int PHY_DirectFireData::GetNbrWeaponsUsable() const
 // -----------------------------------------------------------------------------
 void PHY_DirectFireData::operator() ( const PHY_ComposantePion& compFirer, PHY_Weapon& weapon )
 {
-    if( !compFirer.CanFire() || !weapon.CanDirectFire() ) 
+    if( !compFirer.CanFire() || !weapon.CanDirectFire() )
         return;
-    
+
     if( nComposanteFiringType_ == eFireUsingOnlyComposantesLoadable && !compFirer.CanBeLoaded() )
         return;
 
@@ -152,7 +152,7 @@ void PHY_DirectFireData::operator() ( const PHY_ComposantePion& compFirer, PHY_W
         sComposanteWeapons& data = composantesWeapons_[ &compFirer ];
         data.AddWeapon( weapon );
 
-        bHasWeaponsNotReady_ |= data.IsFiring();    
+        bHasWeaponsNotReady_ |= data.IsFiring();
     }
 }
 
@@ -238,7 +238,7 @@ void PHY_DirectFireData::ChooseBestWeapon( const MIL_Agent_ABC& target, const PH
         const sComposanteWeapons& data = it->second;
 
         bool bUpdated = data.GetBestWeapon( rBestScore, firer_, target, compTarget, pBestWeapon );
-        if( bUpdated ) 
+        if( bUpdated )
             pBestFirer = it->first;
     }
 }

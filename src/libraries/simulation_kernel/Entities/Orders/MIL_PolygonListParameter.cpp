@@ -27,8 +27,8 @@ MIL_PolygonListParameter::MIL_PolygonListParameter()
 // Created: LDC 2009-05-22
 // -----------------------------------------------------------------------------
 MIL_PolygonListParameter::MIL_PolygonListParameter( const Common::MsgPolygonList& asn )
-{   
-    polygonList_.resize( asn.elem_size() ); 
+{
+    polygonList_.resize( asn.elem_size() );
     for( int i = 0; i < asn.elem_size(); ++i )
     {
         if( asn.elem(i).location().type() != Common::MsgLocation_Geometry_polygon || asn.elem(i).location().coordinates().elem_size() < 3 )

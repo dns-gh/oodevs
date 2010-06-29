@@ -62,10 +62,10 @@ void SupplyConsignsWidget::Display( const LogSupplyConsign* consign, kernel::Dis
         child->setText( 1, "" );
     }
 
-    // $$$$ AGE 2006-07-04: 
+    // $$$$ AGE 2006-07-04:
     gui::ListDisplayer< SupplyConsignsWidget >* list = (gui::ListDisplayer< SupplyConsignsWidget >*)( child->listView() );
 
-    list->DeleteTail( 
+    list->DeleteTail(
         list->DisplayList( consign->CreateIterator(), child )
         );
 }

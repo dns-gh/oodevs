@@ -49,7 +49,7 @@ DEC_Knowledge_Urban::DEC_Knowledge_Urban( const MIL_Army_ABC& army, const urban:
     , rLastRelevanceSent_            ( 0. )
     , rLastProgressSent_              ( 0. )
 {
-    if ( bCreatedOnNetwork_ )
+    if( bCreatedOnNetwork_ )
         SendMsgCreation();
 }
 
@@ -64,7 +64,7 @@ DEC_Knowledge_Urban::~DEC_Knowledge_Urban()
 }
 
 
- // $$$$ _RC_ SLG 2010-02-11: CHECKPOINTS mis en commentaire car pas de fonction de serialization dans URBAN, 
+ // $$$$ _RC_ SLG 2010-02-11: CHECKPOINTS mis en commentaire car pas de fonction de serialization dans URBAN,
 // A decommenter des que c'est fait dans la lib urban
 // =============================================================================
 // CHECKPOINTS
@@ -80,14 +80,14 @@ void DEC_Knowledge_Urban::load( MIL_CheckPointInArchive& file, const uint )
     file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
          >> const_cast< uint& >( nID_ )
          >> nTimeLastUpdate_;
-    
+
     uint nID;
     file >> nID;
     pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
-    
+
     file >> nID;
     pPreviousPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
-    
+
     file >> nID;
     pMaxPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
 
@@ -205,7 +205,7 @@ void DEC_Knowledge_Urban::UpdatePerceptionSources( const DEC_Knowledge_UrbanPerc
     if( perception.GetCurrentPerceptionLevel() == PHY_PerceptionLevel::notSeen_ )
         return;
 
-    const MIL_Automate* pAutomateSource = &perception.GetPerceiver().GetAutomate(); 
+    const MIL_Automate* pAutomateSource = &perception.GetPerceiver().GetAutomate();
     const MIL_Agent_ABC& pionSource = perception.GetPerceiver();
 
 
@@ -425,7 +425,7 @@ void DEC_Knowledge_Urban::SendMsgDestruction() const
 // -----------------------------------------------------------------------------
 MT_Float DEC_Knowledge_Urban::GetRelevance() const
 {
-    return rRelevance_;    
+    return rRelevance_;
 }
 
 // -----------------------------------------------------------------------------

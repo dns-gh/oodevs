@@ -202,7 +202,7 @@ namespace
         {
             //NOTHING
         }
-        
+
         void operator() ( const PHY_ComposantePion& composantePion )
         {
             composantePion.ApplyOnHumanProtection( *this );
@@ -258,10 +258,10 @@ bool MIL_Injury_Contamination::IsInjured( const PHY_ComposantePion& pComposante 
 void MIL_Injury_Contamination::SetInjury( unsigned int nNbrAliveHumans , MT_Float rDensity )
 {
     //Population doesn't have any protection
-    
+
     //First we compute the number of persons caught in the fire
     const unsigned int nNbrOfPossibleCasualties = std::min( nNbrAliveHumans, unsigned int( std::max( 1., rDensity * MIL_NBCType::GetLength() * MIL_NBCType::GetWidth() ) ) );
-    
+
     //For, each of them, we will compute if they're going to be injured, and how
     for( unsigned int i = 0; i < nNbrOfPossibleCasualties; ++i )
     {
@@ -293,7 +293,7 @@ void MIL_Injury_Contamination::Injure( PHY_InjuredHuman& injuredHuman )
         protection( *injuredHuman.GetComposantePion() );
         injuryThreshold *= ( 1 - protection.GetProtectionValue() );
     }
-    
+
     //If injuredHuman isn't already injured by this kind of injury, add possibly an injury of this kind
     if( ! injuredHuman.FindInjury( injuryID_ ) )
     {

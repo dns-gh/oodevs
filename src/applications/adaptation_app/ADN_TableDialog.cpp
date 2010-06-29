@@ -47,13 +47,13 @@ ADN_TableDialog::ADN_TableDialog( QWidget* pParent, const QString& strCaption, A
 
     pTable->reparent( this, QPoint(0,0) );
     connect( pTable, SIGNAL( contextMenuRequested( int, int, const QPoint& ) ), this, SLOT( OnContextMenu() ) );
-    
+
     QHBox* pHBox = new QHBox( this );
     QPushButton* pPrintButton = new QPushButton( tr( "Print" ), pHBox );
     QPushButton* pCloseButton = new QPushButton( tr( "Close" ), pHBox );
     connect( pPrintButton, SIGNAL( clicked() ), this, SLOT( PrintTable() ) );
     connect( pCloseButton, SIGNAL( clicked() ), this, SLOT( reject() ) );
-        
+
     QVBoxLayout* pLayout = new QVBoxLayout( this );
     pLayout->addWidget( pTable );
     pLayout->addWidget( pHBox );
@@ -100,7 +100,7 @@ void ADN_TableDialog::PrintTable()
     QPainter painter( &printer );
 
     // Check that there is a valid device to print to.
-    if ( !painter.device() )
+    if( !painter.device() )
         return;
 
     // Hide headers, show first line (headers as "table cells")
@@ -114,7 +114,7 @@ void ADN_TableDialog::PrintTable()
     // Compute the printing rectangle.
     QPaintDeviceMetrics metrics( painter.device() );
 
-    const float rMarginInInches = 0.5f; 
+    const float rMarginInInches = 0.5f;
     int nXMargin = rMarginInInches * (float)metrics.logicalDpiX();
     int nYMargin = rMarginInInches * (float)metrics.logicalDpiY();
 

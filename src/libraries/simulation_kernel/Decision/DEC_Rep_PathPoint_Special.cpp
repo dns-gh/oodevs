@@ -20,7 +20,7 @@
 DEC_Rep_PathPoint_Special::DEC_Rep_PathPoint_Special( const MT_Vector2D& vPos, E_TypePointParticulier nTypePoint, const TerrainData& nTypeTerrain )
     : DEC_Rep_PathPoint     ( vPos, DEC_Rep_PathPoint::eTypePointParticulier, nTypeTerrain, "Rep_PointParticulier" )
     , nTypePointParticulier_( nTypePoint )
-{ 
+{
 }
 
 //-----------------------------------------------------------------------------
@@ -28,7 +28,7 @@ DEC_Rep_PathPoint_Special::DEC_Rep_PathPoint_Special( const MT_Vector2D& vPos, E
 // Created: JVT 02-12-10
 //-----------------------------------------------------------------------------
 DEC_Rep_PathPoint_Special::~DEC_Rep_PathPoint_Special()
-{   
+{
 }
 
 // -----------------------------------------------------------------------------
@@ -37,9 +37,9 @@ DEC_Rep_PathPoint_Special::~DEC_Rep_PathPoint_Special()
 // -----------------------------------------------------------------------------
 void DEC_Rep_PathPoint_Special::Dump() const
 {
-    std::cout << "    DEC_Rep_PathPoint_Special " << vPos_ 
-              << " - Type : " << nObjectTypes_.DumpToString() 
-              << " - TypeToNext " << nObjectTypesToNextPoint_.DumpToString() 
+    std::cout << "    DEC_Rep_PathPoint_Special " << vPos_
+              << " - Type : " << nObjectTypes_.DumpToString()
+              << " - TypeToNext " << nObjectTypesToNextPoint_.DumpToString()
               << " - nTypePoint_ " << (unsigned int)GetTypePoint()
               << " - Type particulier " << (unsigned int)nTypePointParticulier_
               << std::endl;

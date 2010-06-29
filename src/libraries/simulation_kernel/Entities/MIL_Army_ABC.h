@@ -37,7 +37,7 @@ namespace xml
 // Created: JVT 2004-08-03
 // =============================================================================
 class MIL_Army_ABC
-{  
+{
 public:
     //! @name Diplomacy Types
     //@{
@@ -50,7 +50,7 @@ public:
     };
     //@}
 
-public:    
+public:
     //! @name Constructor/destructor
     //@{
     virtual ~MIL_Army_ABC() {}
@@ -83,7 +83,7 @@ public:
     //@}
 
     //! @name Operations
-    //@{    
+    //@{
     virtual bool       IsPerceived( const DEC_Knowledge_Object& knowledge ) const = 0;
 
     virtual E_Tristate IsAFriend( const MIL_Army_ABC& army ) const = 0;
@@ -107,7 +107,7 @@ public:
     virtual const std::map< unsigned int, MIL_KnowledgeGroup* >& GetKnowledgeGroups() const = 0;
     //@}
 
-    //! @name 
+    //! @name
     //@{
     bool operator== ( const MIL_Army_ABC& rhs ) const
     {

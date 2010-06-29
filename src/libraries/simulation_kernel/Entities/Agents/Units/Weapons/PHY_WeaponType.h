@@ -76,7 +76,7 @@ public:
 
     MT_Float GetDangerosity     ( const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& compTarget, bool bUsePH ) const;
     MT_Float GetDangerosity     ( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rDistBtwFirerAndTarget ) const;
-   
+
     MT_Float GetMaxRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const;
     MT_Float GetMinRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const;
 
@@ -133,7 +133,7 @@ private:
 
     PHY_WeaponDataType_DirectFire*   pDirectFireData_;
     PHY_WeaponDataType_IndirectFire* pIndirectFireData_;
-    
+
 private:
     static T_WeaponTypeMap   weaponTypes_;
 };

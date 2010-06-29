@@ -28,7 +28,7 @@ class ADN_CT_Sensors_Targets
 {
 public:
 
-    ADN_CT_Sensors_Targets(ADN_Sensors_Targets_GUI& tab) 
+    ADN_CT_Sensors_Targets(ADN_Sensors_Targets_GUI& tab)
     : ADN_Connector_Table_ABC(tab,false)
     {}
 
@@ -41,19 +41,19 @@ public:
         // set new values
         tab_.setItem(i,0,pItemString=new ADN_TableItem_String(&tab_,obj));
         tab_.setItem(i,1,pItemIntDist=new ADN_TableItem_Int(&tab_,obj));
-        
+
         // set items validators range
         pItemIntDist->GetValidator().setBottom( 0 );
 
         // disable object name
         pItemString->setEnabled(false);
         pItemString->SetAutoEnabled(false);
-        
+
         // connect items & datas
         pItemString->GetConnector().Connect(&static_cast<TargetInfos*>(obj)->ptrObject_.GetData()->strName_);
         pItemIntDist->GetConnector().Connect(&static_cast<TargetInfos*>(obj)->rDistanceDetection_);
     }
-    
+
 private:
     ADN_CT_Sensors_Targets& operator=( const ADN_CT_Sensors_Targets& );
 };
@@ -70,10 +70,10 @@ ADN_Sensors_Targets_GUI::ADN_Sensors_Targets_GUI(QWidget * parent )
     setSelectionMode(QTable::Single);
     setShowGrid(false);
     setLeftMargin(0);
-    
+
     // hide vertical header
     verticalHeader()->hide();
-    
+
     // tab with 2 columns
     setNumCols(3);
     setNumRows(0);
@@ -81,7 +81,7 @@ ADN_Sensors_Targets_GUI::ADN_Sensors_Targets_GUI(QWidget * parent )
     setColumnStretchable(1,true);
     setColumnStretchable(2,true);
     setMaximumWidth( 300 );
-    
+
     horizontalHeader()->setLabel(0, tr( "Objects"));
     horizontalHeader()->setLabel(1, tr( "Detection time (s)"));
     horizontalHeader()->setLabel(2, tr( "Detection distance (m)"));
@@ -102,9 +102,9 @@ ADN_Sensors_Targets_GUI::~ADN_Sensors_Targets_GUI()
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Sensors_Targets_GUI::OnContextMenu
-/** @param  row 
-    @param  col 
-    @param  pt 
+/** @param  row
+    @param  col
+    @param  pt
 */
 // Created: AGN 2004-05-24
 // -----------------------------------------------------------------------------
@@ -132,17 +132,17 @@ void ADN_Sensors_Targets_GUI::OnContextMenu(int /*row*/,int /*col*/,const QPoint
         return;
 
     QPopupMenu * pMenu=new QPopupMenu(this);
-    if ( bDisplayAdd )
+    if( bDisplayAdd )
         pMenu->insertItem( tr( "Add object" ), pTargetMenu.get() ,0 );
-    if ( bDisplayRem )
+    if( bDisplayRem )
         pMenu->insertItem( tr( "Remove object" ), 1 );
-    
+
     int nMenu=pMenu->exec(pt);
-    if ( nMenu == 1 )
+    if( nMenu == 1 )
     {
         RemoveCurrentElement();
     }
-    else if ( nMenu > 1 )
+    else if( nMenu > 1 )
     {
         assert( nMenu - 2 < (int)vAllMunitions.size() );
 
@@ -152,8 +152,8 @@ void ADN_Sensors_Targets_GUI::OnContextMenu(int /*row*/,int /*col*/,const QPoint
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Sensors_Targets_GUI::Contains
-/** @param  strMunitionName 
-    @return 
+/** @param  strMunitionName
+    @return
 */
 // Created: AGN 2004-05-24
 // -----------------------------------------------------------------------------
@@ -167,11 +167,11 @@ bool ADN_Sensors_Targets_GUI::Contains( const std::string& strMunitionName )
         ++i;
     }
     return false;
-}  
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Sensors_Targets_GUI::AddNewElement
-/** @param  n 
+/** @param  n
 */
 // Created: AGN 2004-05-24
 // -----------------------------------------------------------------------------
@@ -183,7 +183,7 @@ void ADN_Sensors_Targets_GUI::AddNewElement( int n )
 
     ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
     pCTable->AddItem( pNewInfo );
-    pCTable->AddItem( 0 );    
+    pCTable->AddItem( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -194,10 +194,10 @@ void ADN_Sensors_Targets_GUI::RemoveCurrentElement()
 {
     // delete composante
     TargetInfos* pCurComposante=(TargetInfos*)GetCurrentData();
-    if ( pCurComposante )
+    if( pCurComposante )
     {
         // remove current data from list
         // take care cause pCurData_ can change!!
-        static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem(pCurComposante);        
-    }    
+        static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem(pCurComposante);
+    }
 }

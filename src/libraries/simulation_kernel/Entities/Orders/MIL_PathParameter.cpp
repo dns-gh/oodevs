@@ -48,7 +48,7 @@ MIL_PathParameter::MIL_PathParameter( const std::vector< boost::shared_ptr< MT_V
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_PathParameter destructor
 // Created: LDC 2009-05-22

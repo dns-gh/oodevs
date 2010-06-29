@@ -24,11 +24,11 @@ using namespace kernel;
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
 ObstacleAttribute::ObstacleAttribute( kernel::Controller& controller )
-    : controller_( controller )    
+    : controller_( controller )
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ObstacleAttribute destructor
 // Created: SBO 2007-02-08
@@ -43,7 +43,7 @@ ObstacleAttribute::~ObstacleAttribute()
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
 void ObstacleAttribute::Display( kernel::Displayer_ABC& displayer ) const
-{    
+{
     displayer.Group( tools::translate( "Object", "Information" ) )
              .Display( tools::translate( "Object", "Obstacle type:" ), obstacleType_ )
              .Display( tools::translate( "Object", "Reserved obstacle activated:" ), reservedObstacleActivated_ );
@@ -93,7 +93,7 @@ void ObstacleAttribute::DoUpdate( const MsgsSimToClient::MsgObjectCreation& mess
 {
     UpdateData( message.attributes() );
 }
-   
+
 // -----------------------------------------------------------------------------
 // Name: ObstacleAttribute::UpdateData
 // Created: SBO 2007-02-08
@@ -118,8 +118,8 @@ void ObstacleAttribute::Draw( const geometry::Point2f& where, const Viewport_ABC
     if( reservedObstacleActivated_.IsSet() && viewport.IsVisible( where ) )
     {
         // $$$$ SBO 2007-05-04: hard coded icon positions
-        glPushAttrib( GL_CURRENT_BIT );    
-            glColor3f( 1, 1, 1 );            
+        glPushAttrib( GL_CURRENT_BIT );
+            glColor3f( 1, 1, 1 );
             tools.DrawIcon( reservedObstacleActivated_ ? xpm_activated : xpm_not_activated, where + geometry::Vector2f( 250.f, 150.f ), 150.f );
         glPopAttrib();
     }

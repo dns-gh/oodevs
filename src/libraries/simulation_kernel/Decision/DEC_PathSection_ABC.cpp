@@ -1,12 +1,12 @@
 //*****************************************************************************
-// 
+//
 // $Created: AGN 02-11-25 $
 // $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Path/DEC_PathSection_ABC.cpp $
 // $Author: Age $
 // $Modtime: 12/05/05 16:18 $
 // $Revision: 7 $
 // $Workfile: DEC_PathSection_ABC.cpp $
-// 
+//
 //*****************************************************************************
 
 #include "simulation_kernel_pch.h"

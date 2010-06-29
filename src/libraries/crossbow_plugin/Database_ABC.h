@@ -33,24 +33,24 @@ public:
     virtual ~Database_ABC() {}
     //@}
 
-    //! @name 
+    //! @name
     //@{
     virtual std::string GetTableName( const std::string& name ) const = 0;
     //@}
 
     //! @name Operations
-    //@{    
+    //@{
     virtual Table_ABC&  OpenBufferedTable( const std::string& name, bool clear = true ) = 0;
     virtual Table_ABC*  OpenTable( const std::string& name ) = 0;
     virtual void        ClearTable( const std::string& name, const std::string& filter ) = 0;
     //@}
 
-    //! @name 
-    //@{    
+    //! @name
+    //@{
     virtual void Execute( const QueryBuilder_ABC& builder ) = 0;
     //@}
 
-    //! @name 
+    //! @name
     //@{
     virtual void Flush() = 0;
     //@}

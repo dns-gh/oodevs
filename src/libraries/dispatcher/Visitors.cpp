@@ -24,7 +24,7 @@ FullUpdateVisitor::FullUpdateVisitor( ClientPublisher_ABC& publisher )
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: FullUpdateVisitor::Visit
 // Created: AGE 2007-04-12

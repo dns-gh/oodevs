@@ -72,7 +72,7 @@ private:
     //! @name Types
     //@{
     typedef std::vector< unsigned long > T_Ids;
-    
+
     struct ExistenceChecker_ABC
     {
         virtual bool operator()( unsigned long id ) const = 0;

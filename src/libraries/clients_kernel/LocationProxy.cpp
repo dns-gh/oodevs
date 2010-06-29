@@ -95,7 +95,7 @@ Location_ABC& LocationProxy::Clone() const
         return location_->Clone();
     throw std::runtime_error( __FUNCTION__ " Location proxy was not initialized." );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: LocationProxy::Accept
 // Created: SBO 2008-06-02

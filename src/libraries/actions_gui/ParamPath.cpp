@@ -71,7 +71,7 @@ void ParamPath::BuildInterface( QWidget* parent )
 void ParamPath::Draw( const geometry::Point2f& , const kernel::Viewport_ABC& , const kernel::GlTools_ABC& tools ) const
 {
     if( location_.get() )
-        ShapeHandler_ABC::Draw( *location_, geometry::Rectangle2f(), tools ); // $$$$ SBO 2008-06-03: 
+        ShapeHandler_ABC::Draw( *location_, geometry::Rectangle2f(), tools ); // $$$$ SBO 2008-06-03:
 }
 
 // -----------------------------------------------------------------------------
@@ -114,7 +114,7 @@ void ParamPath::CommitTo( actions::ParameterContainer_ABC& action ) const
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
 void ParamPath::NotifyContextMenu( const kernel::Nothing&, kernel::ContextMenu& menu )
-{   
+{
     menu.InsertItem( "Parameter", GetName(), this, SLOT( StartPath() ) );
 }
 

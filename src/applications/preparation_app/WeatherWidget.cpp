@@ -62,7 +62,7 @@ void WeatherWidget::Update( const Weather& weather )
     cloudFloor_->setValue( weather.cloudFloor_ );
     cloudCeiling_->setValue( weather.cloudCeiling_ );
     cloudDensity_->setValue( weather.cloudDensity_ );
-    type_->SetCurrentItem( weather.type_ ); 
+    type_->SetCurrentItem( weather.type_ );
 }
 
 // -----------------------------------------------------------------------------

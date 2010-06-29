@@ -38,7 +38,7 @@ public:
 
     //! @name Operations
     //@{
-    GraphicPreferences& GetPreferences(); // $$$$ AGE 2006-04-05: 
+    GraphicPreferences& GetPreferences(); // $$$$ AGE 2006-04-05:
     virtual void Commit();
     virtual void Reset();
     //@}

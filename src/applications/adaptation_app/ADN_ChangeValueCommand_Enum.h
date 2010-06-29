@@ -46,7 +46,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void undo();    
+    virtual void undo();
     //@}
 
     //! @name Accessors

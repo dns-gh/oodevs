@@ -47,7 +47,7 @@ public:
     //@{
     template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
-    
+
     //! @name Operations
     //@{
     bool ChangeHumanRank   ( const PHY_HumanRank& oldRank, const PHY_HumanRank& newRank, const PHY_HumanWound& wound );
@@ -58,7 +58,7 @@ public:
     void ApplyWounds       ( const PHY_ComposanteState& newCompState, PHY_FireDamages_Agent& fireDamages );
     unsigned int WoundHumans       ( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& newWound );
     unsigned int HealHumans        ( const PHY_HumanRank& rank, unsigned int nNbrToChange );
-    void HealAllHumans     ();    
+    void HealAllHumans     ();
 
     MT_Float GetOperationalState() const;
     bool     IsViable           () const;

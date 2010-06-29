@@ -57,7 +57,7 @@ using namespace urbanLocation;
 PHY_RolePion_UrbanLocation::PHY_RolePion_UrbanLocation( MIL_Agent_ABC& pion )
     : pion_( pion )
     , urbanObject_( 0 )
-    , delegate_( new OutsideUrbanBlockPosition() ) 
+    , delegate_( new OutsideUrbanBlockPosition() )
     , isInCity_( false )
 {
     // NOTHING
@@ -95,11 +95,11 @@ void PHY_RolePion_UrbanLocation::save( MIL_CheckPointOutArchive& file, const uns
 // Created: SLG 2010-04-19
 // -----------------------------------------------------------------------------
 void PHY_RolePion_UrbanLocation::MagicMove( MT_Vector2D vPosition )
-{ 
+{
     urbanObject_ = 0;
     isInCity_ = false;
     std::vector< const TER_Object_ABC* > objects;
-    TER_World::GetWorld().GetObjectManager().GetListWithinCircle2( vPosition, 500, objects ); 
+    TER_World::GetWorld().GetObjectManager().GetListWithinCircle2( vPosition, 500, objects );
     for (std::vector< const TER_Object_ABC* >::const_iterator it = objects.begin(); it != objects.end(); ++it )
     {
         const UrbanObjectWrapper* urbanObject = dynamic_cast< const UrbanObjectWrapper* >( *it );
@@ -128,10 +128,10 @@ void PHY_RolePion_UrbanLocation::NotifyMovingInsideObject( MIL_Object_ABC& objec
     UrbanObjectWrapper* urbanObject = dynamic_cast< UrbanObjectWrapper* >( &object );
     if( urbanObject )
     {
-        if( !urbanObject->GetObject().HasChild() ) 
+        if( !urbanObject->GetObject().HasChild() )
         {
             urbanObject_ = urbanObject;
-            delegate_.reset( new InsideUrbanBlockPosition( &urbanObject_->GetObject() ) );    
+            delegate_.reset( new InsideUrbanBlockPosition( &urbanObject_->GetObject() ) );
         }
         isInCity_ = true;
     }
@@ -233,7 +233,7 @@ geometry::Point2f PHY_RolePion_UrbanLocation::GetTargetPosition( MIL_Agent_ABC& 
     UrbanLocationComputer_ABC::Results& targetResult = targetComputer->Result();
 
     return delegate_->GetTargetPosition( firer, targetResult );
-    
+
 }
 
 // -----------------------------------------------------------------------------
@@ -264,7 +264,7 @@ float PHY_RolePion_UrbanLocation::ComputeDistanceInsideSameUrbanBlock( MIL_Agent
 // -----------------------------------------------------------------------------
 void PHY_RolePion_UrbanLocation::Execute( posture::PostureComputer_ABC& algorithm ) const
 {
-    if ( urbanObject_ )
+    if( urbanObject_ )
     {
         double timeModifier = urbanObject_->GetObject().ComputeComplexity();
         algorithm.AddUrbanCoefficientModifier( timeModifier );
@@ -278,15 +278,15 @@ void PHY_RolePion_UrbanLocation::Execute( posture::PostureComputer_ABC& algorith
 void PHY_RolePion_UrbanLocation::Execute( moving::SpeedComputer_ABC& algorithm ) const
 {
    if( urbanObject_ )
-   {    
+   {
        // Occupation Speed Modifier
         const urban::Architecture* architecture = urbanObject_->GetObject().RetrievePhysicalFeature< urban::Architecture >();
         if( architecture )
             algorithm.AddModifier( 1. - architecture->GetOccupation() , true);
-        
+
         //Structural Speed Modifier
         const StructuralCapacity* capacity = urbanObject_->Retrieve< StructuralCapacity >();
-        if ( capacity )
+        if( capacity )
             algorithm.AddModifier( capacity->GetStructuralState() );
     }
 }

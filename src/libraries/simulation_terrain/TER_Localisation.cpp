@@ -58,7 +58,7 @@ TER_Localisation::TER_Localisation( const TER_Localisation& localisation )
     else if( nType_ == ePoint )
         polygon_ = localisation.polygon_;
 
-    boundingBox_ = localisation.boundingBox_;   
+    boundingBox_ = localisation.boundingBox_;
 }
 
 // -----------------------------------------------------------------------------
@@ -130,18 +130,18 @@ void TER_Localisation::InitializeBoundingBox( CT_PointVector& pointVector )
 {
     // bounding box
     MT_Vector2D vDownLeft( std::numeric_limits<MT_Float>::max(), std::numeric_limits<MT_Float>::max() );
-    MT_Vector2D vUpRight ( std::numeric_limits<MT_Float>::min(), std::numeric_limits<MT_Float>::min() ); 
+    MT_Vector2D vUpRight ( std::numeric_limits<MT_Float>::min(), std::numeric_limits<MT_Float>::min() );
 
     for ( CIT_PointVector itPoint = pointVector.begin(); itPoint != pointVector.end(); ++itPoint )
     {
         const MT_Vector2D& vPos = *itPoint;
-        if ( vPos.rX_ < vDownLeft.rX_ )
+        if( vPos.rX_ < vDownLeft.rX_ )
             vDownLeft.rX_ = vPos.rX_;
-        if ( vPos.rY_ < vDownLeft.rY_ )
+        if( vPos.rY_ < vDownLeft.rY_ )
             vDownLeft.rY_ = vPos.rY_;
-        if ( vPos.rX_ > vUpRight.rX_ )
+        if( vPos.rX_ > vUpRight.rX_ )
             vUpRight.rX_ = vPos.rX_;
-        if ( vPos.rY_ > vUpRight.rY_ )
+        if( vPos.rY_ > vUpRight.rY_ )
             vUpRight.rY_ = vPos.rY_;
     }
     boundingBox_.Set( vDownLeft, vUpRight );
@@ -239,7 +239,7 @@ bool TER_Localisation::InitializeCircle()
 
     //$$$ test
     pointVector_ = pointsTmp;
-    nType_ = ePolygon;   
+    nType_ = ePolygon;
     return true;
 }
 
@@ -259,7 +259,7 @@ MT_Float ComputeAngle( const MT_Vector2D& v1Tmp, const MT_Vector2D& v2Tmp )
     MT_Float rSinAngle = v1.rX_ * v2.rY_ - v1.rY_ * v2.rX_; // (sin angle)
 
     MT_Float rAngle = acos(rCosAngle);
-     
+
     if( rSinAngle >= 0.0 )
         return rAngle ;
     else
@@ -310,7 +310,7 @@ bool TER_Localisation::InitializeSector()
             rAngleTmp = rSectorAngle;
     }
     pointsTmp.push_back( vCenter );
-                                                                    
+
     polygon_.Reset( pointsTmp );
 
     InitializeBoundingBox( pointsTmp );
@@ -348,7 +348,7 @@ bool TER_Localisation::InitializeEllipse()
         pointsTmp.push_back( vNewPoint );
     }
     pointsTmp.push_back( pointsTmp.front() );
-                                                                    
+
     polygon_.Reset( pointsTmp );
 
     InitializeBoundingBox( pointsTmp );
@@ -549,7 +549,7 @@ void TER_Localisation::Write( xml::xostream& xos ) const
             TER_World::GetWorld().SimToMosMgrsCoord( *it, strPoint );
             xos << content( "point", strPoint );
         }
-        xos << end(); // points        
+        xos << end(); // points
     }
     xos << end(); // shape
 }
@@ -567,17 +567,17 @@ void TER_Localisation::Write( xml::xostream& xos ) const
 // static
 TER_Localisation::E_LocationType TER_Localisation::ConvertLocalisationType( const std::string& strType )
 {
-    if ( !::_strcmpi( strType.c_str(), "cercle" ) )
+    if( !::_strcmpi( strType.c_str(), "cercle" ) )
         return eCircle;
-    else if ( !::_strcmpi( strType.c_str(), "ellipse" ) )
+    else if( !::_strcmpi( strType.c_str(), "ellipse" ) )
         return eEllipse;
-    else if ( !::_strcmpi( strType.c_str(), "ligne" ) )
+    else if( !::_strcmpi( strType.c_str(), "ligne" ) )
         return eLine;
-    else if ( !::_strcmpi( strType.c_str(), "polygone" ) )
+    else if( !::_strcmpi( strType.c_str(), "polygone" ) )
         return ePolygon;
-    else if ( !::_strcmpi( strType.c_str(), "point" ) )
+    else if( !::_strcmpi( strType.c_str(), "point" ) )
         return ePoint;
-    else if ( !::_strcmpi( strType.c_str(), "secteur" ) )
+    else if( !::_strcmpi( strType.c_str(), "secteur" ) )
         return eSector;
     else
         throw MT_ScipioException( "TER_Localisation::ConvertLocalisationType", __FILE__, __LINE__, MT_FormatString( "Invalid location type: '%s'", strType.c_str() ) );
@@ -585,7 +585,7 @@ TER_Localisation::E_LocationType TER_Localisation::ConvertLocalisationType( cons
 
 
 //-----------------------------------------------------------------------------
-// Name: std::string 
+// Name: std::string
 // Created: JVT 03-07-31
 //-----------------------------------------------------------------------------
 std::string TER_Localisation::ConvertLocalisationType( E_LocationType nType )         // A deplacer dans TER_Tools si nécessaire
@@ -608,7 +608,7 @@ std::string TER_Localisation::ConvertLocalisationType( E_LocationType nType )   
 //=============================================================================
 // GEO TOOLS
 //=============================================================================
-            
+
 //-----------------------------------------------------------------------------
 // Name: TER_Localisation::ComputeNearestPoint
 // Calcule la position de la localisation la plus proche de vSrc
@@ -830,8 +830,8 @@ void TER_Localisation::GetPointsClippedBetweenTwoLines( const MT_Droite& leftDro
     }
 
     // bouclage (dernier point -> premier point)
-    if ( !clippedPointVector.empty() )
-        clippedPointVector.push_back( *clippedPointVector.begin() );    
+    if( !clippedPointVector.empty() )
+        clippedPointVector.push_back( *clippedPointVector.begin() );
 }
 
 
@@ -847,7 +847,7 @@ void TER_Localisation::Split( unsigned int nNbrParts, T_LocalisationPtrVector& l
     else if( nNbrParts == 1 )
     {
         boost::shared_ptr< TER_Localisation > pLocalisation( new TER_Localisation( *this ) ); //$$$ RAM
-        locVector.push_back( pLocalisation );  
+        locVector.push_back( pLocalisation );
     }
 
     else if( nType_ == ePoint )
@@ -873,7 +873,7 @@ void TER_Localisation::Split( unsigned int nNbrParts, T_LocalisationPtrVector& l
 
     else if( nType_ == ePolygon )
     {
-        // 1. Barycentre 
+        // 1. Barycentre
         MT_Vector2D vBarycenter = MT_ComputeBarycenter( pointVector_ );
         assert( TER_World::GetWorld().IsValidPosition( vBarycenter ) );
 
@@ -887,7 +887,7 @@ void TER_Localisation::Split( unsigned int nNbrParts, T_LocalisationPtrVector& l
             vDir.Rotate( rAngle );
             droiteVector.push_back( MT_Droite( vBarycenter, vDir + vBarycenter ) );
         }
-    
+
         // 3. Création des localisation découpées
         CIT_DroiteVector itDroite = droiteVector.begin();
         const MT_Droite* pPrevDroite = &*itDroite;
@@ -901,7 +901,7 @@ void TER_Localisation::Split( unsigned int nNbrParts, T_LocalisationPtrVector& l
             {
                 boost::shared_ptr< TER_Localisation > pLocalisation( new TER_Localisation() ); //$$$ RAM
                 pLocalisation->Reset( splitPolyPoints );
-                locVector.push_back( pLocalisation );  
+                locVector.push_back( pLocalisation );
             }
             pPrevDroite = pCurDroite;
         }
@@ -956,7 +956,7 @@ void TER_Localisation::Scale( MT_Float rDist )
     {
         T_PointVector points1Vector;
         T_PointVector points2Vector;
-        
+
         MT_Vector2D vNormDirCurLine;
         for( CIT_PointVector itPoint = pointVector_.begin(); itPoint != pointVector_.end(); ++ itPoint )
         {
@@ -1020,7 +1020,7 @@ bool TER_Localisation::IsIntersecting( const TER_Polygon& polygon ) const
     {
         const MT_Vector2D* pCurPoint = &*itPoint;
         if( polygon.IsInside( *pPrevPoint ) || polygon.Intersect2D( MT_Line( *pPrevPoint, *pCurPoint ), rPrecision_ ) )
-            return true;           
+            return true;
         pPrevPoint = pCurPoint;
     }
     if( polygon.IsInside( *pPrevPoint ) )
@@ -1036,7 +1036,7 @@ bool TER_Localisation::IsIntersecting( const TER_Polygon& polygon ) const
 // -----------------------------------------------------------------------------
 bool TER_Localisation::IsIntersecting( const TER_Localisation& localisation ) const
 {
-    if ( localisation.GetPoints().empty() ) // Nécessaire au dernier test...
+    if( localisation.GetPoints().empty() ) // Nécessaire au dernier test...
         return false;
 
     CIT_PointVector itPoint = pointVector_.begin();
@@ -1044,14 +1044,14 @@ bool TER_Localisation::IsIntersecting( const TER_Localisation& localisation ) co
     for ( ++itPoint; itPoint != pointVector_.end(); ++itPoint )
     {
         const MT_Vector2D* pCurPoint = &*itPoint;
-        
-        if ( localisation.IsInside( *pPrevPoint ) || localisation.Intersect2D( MT_Line( *pPrevPoint, *pCurPoint ) ) )
+
+        if( localisation.IsInside( *pPrevPoint ) || localisation.Intersect2D( MT_Line( *pPrevPoint, *pCurPoint ) ) )
             return true;
-            
+
         pPrevPoint = pCurPoint;
     }
 
-    if ( localisation.IsInside( *pPrevPoint ) )
+    if( localisation.IsInside( *pPrevPoint ) )
         return true;
 
     // ici, les deux localisations sont dijointes OU localisation est inclu dans *this

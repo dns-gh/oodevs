@@ -21,7 +21,7 @@ namespace TEST {
     @brief  Mission_Automat_INF_PrendrePreciserMaintenirContact
 */
 // Created: SBO 2005-08-08
-// Generated: 
+// Generated:
 // =============================================================================
 class Mission_Automat_INF_PrendrePreciserMaintenirContact : public Mission_Automat_ABC
 {

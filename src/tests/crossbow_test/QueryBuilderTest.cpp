@@ -32,7 +32,7 @@ BOOST_AUTO_TEST_CASE( EsriTest_QueryBuilder_InsertString )
 {
     InsertQueryBuilder builder( "table" );
     builder.SetField( "row1", "v1" );
-    builder.SetField( "row2", "v2" );    
+    builder.SetField( "row2", "v2" );
     BOOST_CHECK_EQUAL( "INSERT INTO table (row1,row2) VALUES ('v1','v2')", builder.Create() );
 }
 
@@ -40,7 +40,7 @@ BOOST_AUTO_TEST_CASE( EsriTest_QueryBuilder_InsertNumeric )
 {
     InsertQueryBuilder builder( "table" );
     builder.SetField( "row1", 1 );
-    builder.SetField( "row2", 2 );    
+    builder.SetField( "row2", 2 );
     BOOST_CHECK_EQUAL( "INSERT INTO table (row1,row2) VALUES (1,2)", builder.Create() );
 }
 
@@ -93,7 +93,7 @@ BOOST_AUTO_TEST_CASE( EsriTest_QueryBuilder_UpdateNumeric )
 {
     UpdateQueryBuilder builder( "table" );
     builder.SetField( "row1", 1 );
-    builder.SetField( "row2", 2 );    
+    builder.SetField( "row2", 2 );
     BOOST_CHECK_EQUAL( "UPDATE table SET row1=1,row2=2", builder.Create() );
 }
 

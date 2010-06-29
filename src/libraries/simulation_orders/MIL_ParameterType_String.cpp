@@ -21,7 +21,7 @@ MIL_ParameterType_String::MIL_ParameterType_String()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_String destructor
 // Created: SBO 2006-11-27
@@ -30,7 +30,7 @@ MIL_ParameterType_String::~MIL_ParameterType_String()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_String::Copy
 // Created: SBO 2006-11-27

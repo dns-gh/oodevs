@@ -21,7 +21,7 @@ class MIL_Agent_ABC;
 // Created: SLG 2010-02-16
 // =============================================================================
 class DetectorAttribute : public ObjectAttribute_ABC
-{ 
+{
 
 public:
     //! @name Constructors/Destructor

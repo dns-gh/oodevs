@@ -35,7 +35,7 @@ public:
     //@{
     bool Execute    ( MIL_AutomateLOG* pFirstSupplyingAutomate, MIL_AutomateLOG* pSecondSupplyingAutomate, MIL_Automate::T_SupplyDotationStateMap& dotationSupplies );
     void AddDotation( PHY_Dotation& dotation );
-    //@}   
+    //@}
 
 private:
     //! @name Types
@@ -59,7 +59,7 @@ private:
     bool          bForceRequestActivation_;
     bool          bAtLeastOneExplicitSupplySatisfied_;
     bool          bAtLeastOneSupplySatisfied_;
-    bool          bExplicitSupplyFullSatisfied_;   
+    bool          bExplicitSupplyFullSatisfied_;
 };
 
 #endif // __PHY_SupplyDotationRequestContainer_h_

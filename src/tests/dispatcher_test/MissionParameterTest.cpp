@@ -243,7 +243,7 @@ namespace
         location.set_type( Common::MsgLocation_Geometry_point );
         MakePoint( *location.mutable_coordinates()->add_elem() );
     }
-    
+
     void MakeLine( Common::MsgLocation& location )
     {
         location.set_type( Common::MsgLocation_Geometry_line );

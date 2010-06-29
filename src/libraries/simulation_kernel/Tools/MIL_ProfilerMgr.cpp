@@ -58,7 +58,7 @@ void MIL_ProfilerMgr::NotifyTickEnd( unsigned int nTick )
         for( CIT_DecFunctionProfilingVector itData = decFunctionProfilingVector_.begin(); itData != decFunctionProfilingVector_.end(); ++itData )
             decFunctionsFile_ << nTick << ' ' << itData->nAgentID_ << ' ' << itData->strFunction_ << ' ' << itData->rTime_ << std::endl;
         decFunctionsFile_.flush();
-        decFunctionProfilingVector_.clear(); 
+        decFunctionProfilingVector_.clear();
         decFunctionProfilingVector_.reserve( 1000 );
     }
 }
@@ -74,7 +74,7 @@ void MIL_ProfilerMgr::NotifyDecisionUpdated( const MIL_AgentPion& pion, MT_Float
     decisionUpdateFile_ << MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() << " P " << pion.GetID() << " \"" << pion.GetOrderManager().GetMissionName() << "\" " << rTime << std::endl;
     decisionUpdateFile_.flush();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_ProfilerMgr::NotifyDecisionUpdated
 // Created: NLD 2005-03-04
@@ -87,7 +87,7 @@ void MIL_ProfilerMgr::NotifyDecisionUpdated( const MIL_Automate& automate, MT_Fl
     decisionUpdateFile_.flush();
 }
 
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_ProfilerMgr::NotifyDecisionUpdated
 // Created: NLD 2005-03-04

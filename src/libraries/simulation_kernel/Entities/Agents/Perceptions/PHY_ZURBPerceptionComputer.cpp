@@ -68,13 +68,13 @@ const PHY_PerceptionLevel& PHY_ZURBPerceptionComputer::ComputePerception( const 
     float identificationPercentage =  target.GetRole< PHY_RoleInterface_UrbanLocation >().ComputeRatioPionInside( perceptionPolygons.identificationPolygon, roll_ );
     float recognitionPercentage    =  target.GetRole< PHY_RoleInterface_UrbanLocation >().ComputeRatioPionInside( perceptionPolygons.recognitionPolygon, roll_ );
     float detectionPercentage      =  target.GetRole< PHY_RoleInterface_UrbanLocation >().ComputeRatioPionInside( perceptionPolygons.detectionPolygon, roll_ );
-    
-    unsigned int delay = bestSensorParameters.delay; 
-    if ( roll_ < identificationPercentage )
+
+    unsigned int delay = bestSensorParameters.delay;
+    if( roll_ < identificationPercentage )
         return GetLevelWithDelay( delay, PHY_PerceptionLevel::identified_ );
-    else if ( roll_ < recognitionPercentage )        
+    else if( roll_ < recognitionPercentage )
         return GetLevelWithDelay( delay, PHY_PerceptionLevel::recognized_ );
-    else if ( roll_ < detectionPercentage )
+    else if( roll_ < detectionPercentage )
         return GetLevelWithDelay( delay, PHY_PerceptionLevel::detected_ );
     else
         return PHY_PerceptionLevel::notSeen_;
@@ -91,7 +91,7 @@ const PHY_ZURBPerceptionComputer::Polygons PHY_ZURBPerceptionComputer::ComputePe
     const PHY_Posture& currentPerceiverPosture = perceiver_.GetRole< PHY_RoleInterface_Posture >().GetCurrentPosture();
     const UrbanObjectWrapper* perceiverUrbanBlock = perceiver_.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
     Polygons returnValue;
-    if ( perceiverUrbanBlock && ( &currentPerceiverPosture == &PHY_Posture::poste_ || &currentPerceiverPosture == &PHY_Posture::posteAmenage_ ) )
+    if( perceiverUrbanBlock && ( &currentPerceiverPosture == &PHY_Posture::poste_ || &currentPerceiverPosture == &PHY_Posture::posteAmenage_ ) )
     {
         returnValue.identificationPolygon = MakePolygon( perceiverUrbanBlock->GetObject(), distancePerception.identificationDist );
         returnValue.recognitionPolygon = MakePolygon( perceiverUrbanBlock->GetObject(), distancePerception.recognitionDist );
@@ -100,8 +100,8 @@ const PHY_ZURBPerceptionComputer::Polygons PHY_ZURBPerceptionComputer::ComputePe
     else
     {
         const MT_Vector2D& perceiverPosition = perceiver_.GetRole< PHY_RoleInterface_Location >().GetPosition();
-        returnValue.identificationPolygon = MakePolygon ( geometry::Point2f( perceiverPosition .rX_, perceiverPosition .rY_), distancePerception.identificationDist );  
-        returnValue.recognitionPolygon = MakePolygon    ( geometry::Point2f( perceiverPosition .rX_, perceiverPosition .rY_), distancePerception.recognitionDist    );  
+        returnValue.identificationPolygon = MakePolygon ( geometry::Point2f( perceiverPosition .rX_, perceiverPosition .rY_), distancePerception.identificationDist );
+        returnValue.recognitionPolygon = MakePolygon    ( geometry::Point2f( perceiverPosition .rX_, perceiverPosition .rY_), distancePerception.recognitionDist    );
         returnValue.detectionPolygon = MakePolygon      ( geometry::Point2f( perceiverPosition .rX_, perceiverPosition .rY_), distancePerception.detectionDist      );
     }
     return returnValue;
@@ -188,7 +188,7 @@ namespace
                             const urban::TerrainObject_ABC& object = **it;
                             const geometry::Polygon2f* footPrint = object.GetFootprint();
                             std::vector< geometry::Point2f > intersectPoints = footPrint->Intersect( geometry::Segment2f( vSourcePoint, vTargetPoint ) );
-                            if ( !intersectPoints.empty() || footPrint->IsInside( vSourcePoint ) || footPrint->IsInside( vTargetPoint ) )
+                            if( !intersectPoints.empty() || footPrint->IsInside( vSourcePoint ) || footPrint->IsInside( vTargetPoint ) )
                             {
                                 float perceiverUrbanBlockHeight = 2; //2 = SensorHeight
                                 float objectHeight = 2; //2 = SensorHeight
@@ -196,7 +196,7 @@ namespace
                                 const urban::Architecture* architecture = object.RetrievePhysicalFeature< urban::Architecture >();
                                 if( architecture )
                                     urbanFactor *=  1. - architecture->GetOccupation();
-                                if ( perceiverUrbanBlock )
+                                if( perceiverUrbanBlock )
                                 {
                                     const urban::Architecture* perceiverUrbanBlockArchitecture = perceiverUrbanBlock->GetObject().RetrievePhysicalFeature< urban::Architecture >();
                                     if( perceiverUrbanBlockArchitecture )
@@ -204,7 +204,7 @@ namespace
                                 }
                                 const urban::Architecture* objectArchitecture = object.RetrievePhysicalFeature< urban::Architecture >();
                                 if( objectArchitecture )
-                                    objectHeight += objectArchitecture->GetHeight(); 
+                                    objectHeight += objectArchitecture->GetHeight();
                                 urbanFactor *= static_cast< double >( perceiverUrbanBlockHeight / objectHeight );
 
                                 worstFactor = std::min( worstFactor, urbanFactor );
@@ -252,7 +252,7 @@ namespace
         }
         PHY_ZURBPerceptionComputer::Distances GetDistances(){ return distances_; }
         unsigned int GetDelay(){ return delay_; }
-        
+
     private:
         const MIL_Agent_ABC& perceiver_;
         const MIL_Agent_ABC& target_;

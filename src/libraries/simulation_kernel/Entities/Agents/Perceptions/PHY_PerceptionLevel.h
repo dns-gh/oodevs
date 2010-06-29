@@ -66,7 +66,7 @@ private:
         eNotSeen    = 0,
         eDetected   = 1,
         eRecognized = 2,
-        eIdentified = 3, 
+        eIdentified = 3,
     };
     //@}
 
@@ -85,7 +85,7 @@ private:
     const std::string                       strName_;
     const E_Level                           nLevel_;
     const MsgsSimToClient::EnumUnitIdentificationLevel nAsnID_;
-    
+
 private:
     static T_LevelMap levels_;
 };

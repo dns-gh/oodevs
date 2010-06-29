@@ -40,7 +40,7 @@ public:
     virtual geometry::Point2f ConvertToXY           ( const std::string& mgrs ) const = 0;
     virtual std::string       ConvertToGeoDms       ( const geometry::Point2f& pos ) const = 0;
     virtual std::string       ConvertToUtm          ( const geometry::Point2f& pos ) const = 0;
-    virtual geometry::Point2f ConvertFromGeoDms	    ( const std::string& longitude, const std::string& latitude ) const = 0;
+    virtual geometry::Point2f ConvertFromGeoDms        ( const std::string& longitude, const std::string& latitude ) const = 0;
     virtual const CoordinateSystems& GetCoordSystem() const = 0;
     virtual std::string GetStringPosition( const geometry::Point2f& position ) const = 0;
 
@@ -62,7 +62,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    
+
     //@}
 };
 

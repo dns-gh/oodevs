@@ -32,8 +32,8 @@ PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MI
     asnMsg().set_fire_oid       ( nID_ );
     asnMsg().set_firer_oid      ( firer.GetID() );
     asnMsg().set_type           ( Common::direct );
-    asnMsg().mutable_target()->set_unit( target.GetID() );    
-    
+    asnMsg().mutable_target()->set_unit( target.GetID() );
+
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -63,7 +63,7 @@ PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MT
     , firer_             ( firer )
     , nID_               ( idManager_.GetFreeId() )
 {
-    client::StartUnitFire asnMsg;    
+    client::StartUnitFire asnMsg;
     asnMsg().set_fire_oid( nID_ );
     asnMsg().set_firer_oid( firer.GetID() );
     asnMsg().set_type( Common::indirect );

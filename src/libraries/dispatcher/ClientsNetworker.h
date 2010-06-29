@@ -16,7 +16,7 @@
 #include "tools/ServerNetworker.h"
 #include "tools/MessageDispatcher_ABC.h"
 
-namespace dispatcher 
+namespace dispatcher
 {
     class Client;
     class Config;

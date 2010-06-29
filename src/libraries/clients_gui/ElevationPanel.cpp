@@ -42,7 +42,7 @@ ElevationPanel::ElevationPanel( QWidget* parent, Elevation2dLayer& layer, kernel
 {
     {
         QGroupBox* box = new QGroupBox( 1, Qt::Horizontal, tr( "Elevation colors" ), this );
-        
+
         QHBox* hBox = new QHBox( box );
         fitColorGradienttoViewPort_ = new CheckBox( tr( "Fit color gradient to viewport" ), hBox );
         fitColorGradienttoViewPort_->setChecked( true );

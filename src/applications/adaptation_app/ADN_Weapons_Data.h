@@ -105,7 +105,7 @@ public:
             Cmp(const std::string& val) : val_(val) {}
             ~Cmp() {}
 
-            bool operator()( PhSizeInfos* tgtnfos ) const 
+            bool operator()( PhSizeInfos* tgtnfos ) const
             {   return tgtnfos->ptrSize_.GetData() && tgtnfos->ptrSize_.GetData()->GetData()==val_;}
 
         private:
@@ -118,7 +118,7 @@ public:
             CmpRef(ADN_Categories_Data::SizeInfos* val) : val_(val) {}
             ~CmpRef(){}
 
-            bool operator()( PhSizeInfos* tgtnfos ) const 
+            bool operator()( PhSizeInfos* tgtnfos ) const
             {   return tgtnfos->ptrSize_.GetData() == val_;}
 
         private:
@@ -182,15 +182,15 @@ public:
         class Cmp : public std::unary_function< WeaponInfos* , bool >
         {
         public:
-            Cmp( const std::string& strLauncher, const std::string& strAmmo ) 
+            Cmp( const std::string& strLauncher, const std::string& strAmmo )
                 : strLauncher_(strLauncher)
                 , strAmmo_(strAmmo)
             {}
             ~Cmp(){}
 
-            bool operator()( WeaponInfos* tgtnfos ) const 
+            bool operator()( WeaponInfos* tgtnfos ) const
             {
-                return (  ADN_Tools::CaselessCompare( tgtnfos->ptrLauncher_.GetData()->strName_.GetData(), strLauncher_ ) 
+                return (  ADN_Tools::CaselessCompare( tgtnfos->ptrLauncher_.GetData()->strName_.GetData(), strLauncher_ )
                        && ADN_Tools::CaselessCompare( tgtnfos->ptrAmmunition_.GetData()->strName_.GetData(), strAmmo_ ) );
             }
 

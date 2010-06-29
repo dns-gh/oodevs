@@ -23,7 +23,7 @@
 
 
 // =============================================================================
-// 
+//
 // =============================================================================
 
 
@@ -101,7 +101,7 @@ void ADN_Sensors_Data::LimitedToSensorsInfos::WriteArchive( xml::xostream& outpu
 }
 
 // =============================================================================
-// 
+//
 // =============================================================================
 
 //-----------------------------------------------------------------------------
@@ -160,7 +160,7 @@ void ADN_Sensors_Data::ModificatorSizeInfos::WriteArchive( xml::xostream& output
 }
 
 // =============================================================================
-// 
+//
 // =============================================================================
 
 //-----------------------------------------------------------------------------
@@ -218,7 +218,7 @@ void ADN_Sensors_Data::ModificatorIlluminationInfos::WriteArchive( xml::xostream
 }
 
 // =============================================================================
-// 
+//
 // =============================================================================
 
 //-----------------------------------------------------------------------------
@@ -276,7 +276,7 @@ void ADN_Sensors_Data::ModificatorMeteoInfos::WriteArchive( xml::xostream& outpu
 }
 
 // =============================================================================
-// 
+//
 // =============================================================================
 
 //-----------------------------------------------------------------------------
@@ -334,7 +334,7 @@ void ADN_Sensors_Data::ModificatorEnvironmentInfos::WriteArchive( xml::xostream&
 }
 
 // =============================================================================
-// 
+//
 // =============================================================================
 
 //-----------------------------------------------------------------------------
@@ -394,7 +394,7 @@ void ADN_Sensors_Data::ModificatorUrbanBlockInfos::WriteArchive( xml::xostream& 
 }
 
 // =============================================================================
-// 
+//
 // =============================================================================
 
 //-----------------------------------------------------------------------------
@@ -451,7 +451,7 @@ void ADN_Sensors_Data::ModificatorPostureInfos::WriteArchive( xml::xostream& out
 }
 
 // =============================================================================
-// 
+//
 // =============================================================================
 
 //-----------------------------------------------------------------------------
@@ -605,7 +605,7 @@ ADN_Sensors_Data::PopulationInfos::~PopulationInfos()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Sensors_Data::PopulationInfos::GetItemName
 // Created: SBO 2005-11-21
@@ -614,7 +614,7 @@ std::string ADN_Sensors_Data::PopulationInfos::GetItemName()
 {
     return strName_.GetData();
 }
- 
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Sensors_Data::PopulationInfos::CopyFrom
 // Created: SBO 2005-11-21
@@ -636,7 +636,7 @@ void ADN_Sensors_Data::PopulationInfos::ReadArchive( xml::xistream& input )
             >> xml::attribute( "modifier", rModifier_ )
           >> xml::end();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Sensors_Data::PopulationInfos::WriteArchive
 // Created: SBO 2005-11-21
@@ -908,7 +908,7 @@ void ADN_Sensors_Data::SensorInfos::ReadPrecipitation( xml::xistream& input )
         {
             vModifWeather_.at( i )->ReadArchive( input );
             return;
-    
+
     }
     throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Sensors - Invalid weather '%1'" ).arg( type.c_str() ).ascii() );
 }
@@ -1090,7 +1090,7 @@ void ADN_Sensors_Data::SensorInfos::WriteArchive( xml::xostream& output )
                 << xml::attribute( "angle", rAngle_ );
 
         // LTO begin
-        if ( bLimitedToSensors_.GetData() )
+        if( bLimitedToSensors_.GetData() )
         {
             output << xml::start( "limited-to-sensors" );
             for( unsigned int i = 0; i < vLimitedToSensorsInfos_.size(); ++i )
@@ -1263,7 +1263,7 @@ void ADN_Sensors_Data::CobraInfos::WriteArchive( xml::xostream& output )
 }
 
 // =============================================================================
-// 
+//
 // =============================================================================
 
 //-----------------------------------------------------------------------------
@@ -1349,6 +1349,6 @@ void ADN_Sensors_Data::WriteArchive( xml::xostream& output )
     for( IT_SensorsInfos_Vector it = vSensors_.begin(); it != vSensors_.end(); ++it )
         (*it)->WriteArchive( output );
     output << xml::end();
-    
+
     output << xml::end();
 }

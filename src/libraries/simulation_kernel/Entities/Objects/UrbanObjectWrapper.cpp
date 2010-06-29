@@ -44,9 +44,9 @@ UrbanObjectWrapper::UrbanObjectWrapper( const MIL_ObjectBuilder_ABC& builder, co
     , id_( idManager_.GetFreeId() )
     , manipulator_( *new MIL_ObjectManipulator( *this ) )
 {
-    std::string name = object.GetName(); 
+    std::string name = object.GetName();
     geometry::Polygon2f::T_Vertices vertices = object.GetFootprint()->Vertices();
-    std::vector< MT_Vector2D > vector; 
+    std::vector< MT_Vector2D > vector;
     for( geometry::Polygon2f::CIT_Vertices it = vertices.begin(); it != vertices.end(); ++it )
         vector.push_back( MT_Vector2D( it->X(), it->Y() ) );
     Initialize( TER_Localisation( TER_Localisation::ePolygon , vector ) );
@@ -57,7 +57,7 @@ UrbanObjectWrapper::UrbanObjectWrapper( const MIL_ObjectBuilder_ABC& builder, co
 // Name: UrbanObjectWrapper destructor
 // Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
-UrbanObjectWrapper::~UrbanObjectWrapper() 
+UrbanObjectWrapper::~UrbanObjectWrapper()
 {
 }
 
@@ -99,7 +99,7 @@ void UrbanObjectWrapper::UpdateCapacities( const std::string& capacity, xml::xis
 // -----------------------------------------------------------------------------
 void UrbanObjectWrapper::ProcessAgentEntering( MIL_Agent_ABC& agent )
 {
-    std::for_each( interactives_.begin(), interactives_.end(), 
+    std::for_each( interactives_.begin(), interactives_.end(),
         boost::bind( &MIL_InteractiveContainer_ABC::ProcessAgentEntering, _1, boost::ref( *this ), boost::ref( agent ) ) );
 }
 
@@ -109,7 +109,7 @@ void UrbanObjectWrapper::ProcessAgentEntering( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void UrbanObjectWrapper::ProcessAgentExiting( MIL_Agent_ABC& agent )
 {
-    std::for_each( interactives_.begin(), interactives_.end(), 
+    std::for_each( interactives_.begin(), interactives_.end(),
         boost::bind( &MIL_InteractiveContainer_ABC::ProcessAgentExiting, _1, boost::ref( *this ), boost::ref( agent ) ) );
 }
 
@@ -119,7 +119,7 @@ void UrbanObjectWrapper::ProcessAgentExiting( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void UrbanObjectWrapper::ProcessAgentMovingInside( MIL_Agent_ABC& agent )
 {
-    std::for_each( interactives_.begin(), interactives_.end(), 
+    std::for_each( interactives_.begin(), interactives_.end(),
         boost::bind( &MIL_InteractiveContainer_ABC::ProcessAgentMovingInside, _1, boost::ref( *this ), boost::ref( agent ) ) );
 }
 
@@ -129,7 +129,7 @@ void UrbanObjectWrapper::ProcessAgentMovingInside( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void UrbanObjectWrapper::ProcessAgentInside( MIL_Agent_ABC& agent )
 {
-    std::for_each( interactives_.begin(), interactives_.end(), 
+    std::for_each( interactives_.begin(), interactives_.end(),
         boost::bind( &MIL_InteractiveContainer_ABC::ProcessAgentInside, _1, boost::ref( *this ), boost::ref( agent ) ) );
 }
 
@@ -139,7 +139,7 @@ void UrbanObjectWrapper::ProcessAgentInside( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void UrbanObjectWrapper::ProcessPopulationInside( MIL_PopulationElement_ABC& population )
 {
-    std::for_each( interactives_.begin(), interactives_.end(), 
+    std::for_each( interactives_.begin(), interactives_.end(),
         boost::bind( &MIL_InteractiveContainer_ABC::ProcessPopulationInside, _1, boost::ref( *this ), boost::ref( population ) ) );
 }
 
@@ -149,7 +149,7 @@ void UrbanObjectWrapper::ProcessPopulationInside( MIL_PopulationElement_ABC& pop
 // -----------------------------------------------------------------------------
 void UrbanObjectWrapper::Instanciate( MIL_Object_ABC& object ) const
 {
-    std::for_each( capacities_.begin(), capacities_.end(), 
+    std::for_each( capacities_.begin(), capacities_.end(),
         boost::bind( &ObjectCapacity_ABC::Instanciate, _1, boost::ref( object ) ) );
 }
 
@@ -266,7 +266,7 @@ void UrbanObjectWrapper::SendCreation() const
     }
 
     const ColorRGBA* color = object_.GetColor();
-    if ( color != 0 )
+    if( color != 0 )
     {
         message().mutable_attributes()->mutable_color()->set_red( color->Red() );
         message().mutable_attributes()->mutable_color()->set_green( color->Green() );
@@ -275,8 +275,8 @@ void UrbanObjectWrapper::SendCreation() const
     }
 
     const urban::Architecture* architecture = object_.RetrievePhysicalFeature< urban::Architecture >();
-    if ( architecture != 0 )
-    {       
+    if( architecture != 0 )
+    {
         message().mutable_attributes()->mutable_architecture()->set_height( architecture->GetHeight() );
         message().mutable_attributes()->mutable_architecture()->set_floor_number( architecture->GetFloorNumber() );
         message().mutable_attributes()->mutable_architecture()->set_roof_shape( architecture->GetRoofShape().c_str() );
@@ -322,7 +322,7 @@ void UrbanObjectWrapper::UpdateState()
     Retrieve< StructuralCapacity >()->SendState( *message().mutable_attributes() );
     message.Send( NET_Publisher_ABC::Publisher() );
 }
-  
+
 // -----------------------------------------------------------------------------
 // Name: UrbanObjectWrapper::GetID
 // Created: SLG 2010-06-18

@@ -41,7 +41,7 @@ public:
 
 private:
     PHY_RoleAction_Objects& role_;
-    boost::shared_ptr< DEC_Knowledge_Object > pKnowledge_;    
+    boost::shared_ptr< DEC_Knowledge_Object > pKnowledge_;
 };
 
 #endif // __PHY_ActionDestroyObject_h_

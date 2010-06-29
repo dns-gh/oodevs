@@ -57,12 +57,12 @@ public:
     //@{
     typedef PHY_RoleInterface_Perceiver RoleInterface;
 
-    typedef std::pair< const PHY_SensorTypeAgent* , MT_Float /*height*/ > T_SurfaceAgentKeyPair; 
+    typedef std::pair< const PHY_SensorTypeAgent* , MT_Float /*height*/ > T_SurfaceAgentKeyPair;
     typedef std::map< T_SurfaceAgentKeyPair, PHY_PerceptionSurfaceAgent > T_SurfaceAgentMap;
     typedef T_SurfaceAgentMap::const_iterator                             CIT_SurfaceAgentMap;
     typedef T_SurfaceAgentMap::const_iterator                             IT_SurfaceAgentMap;
 
-    typedef std::pair< const PHY_SensorTypeObject* , MT_Float /*height*/ >     T_SurfaceObjectKeyPair; 
+    typedef std::pair< const PHY_SensorTypeObject* , MT_Float /*height*/ >     T_SurfaceObjectKeyPair;
     typedef std::map< T_SurfaceObjectKeyPair, PHY_PerceptionSurfaceObject >    T_SurfaceObjectMap;
     typedef T_SurfaceObjectMap::const_iterator                                 CIT_SurfaceObjectMap;
 
@@ -79,7 +79,7 @@ public:
     virtual ~PHY_RoleInterface_Perceiver() {}
 
     //! @name Operations
-    //@{    
+    //@{
     virtual bool IsUsingActiveRadar()                                   const = 0;
     virtual bool IsUsingActiveRadar( const PHY_RadarClass& radarClass ) const = 0; // LTO
     //@}
@@ -95,7 +95,7 @@ public:
     //@}
 
     //! @name Operations
-    //@{    
+    //@{
     virtual bool                       HasChanged        () const = 0;
     virtual void                       Update            ( bool bIsDead ) = 0;
     virtual void                       Clean             () = 0;

@@ -22,7 +22,7 @@ class PHY_PerceptionRecoObjectsReco : public PHY_PerceptionLocalisation
 {
 public:
     PHY_PerceptionRecoObjectsReco( const TER_Localisation& localisation, const MT_Vector2D& vCenter, MT_Float rGrowthSpeed, DEC_Decision_ABC& callerAgent );
-    
+
     bool IsInside        ( const TER_Localisation& )                 const;
     void GetObjectsInside( TER_Object_ABC::T_ObjectVector& ) const;
 
@@ -30,7 +30,7 @@ public:
 
 private:
     PHY_PerceptionRecoObjectsReco& operator = ( const PHY_PerceptionRecoObjectsReco& );
-    
+
 private:
     const MT_Vector2D      vCenter_;
     const TER_Localisation localisation_;

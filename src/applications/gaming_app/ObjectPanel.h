@@ -68,9 +68,9 @@ private:
     const StaticModel& static_;
     const kernel::Time_ABC& simulation_;
     gui::SpinBoxDisplayer* construction_;
-    gui::SpinBoxDisplayer* valorisation_;     
+    gui::SpinBoxDisplayer* valorisation_;
     gui::SpinBoxDisplayer* contournement_;
     //@}
-}; 
+};
 
 #endif // __ObjectPanel_h_

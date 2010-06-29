@@ -1,7 +1,7 @@
 //****************************************************************************
 //
 // This file is part of MASA DIN library.
-// 
+//
 // Refer to the included end-user license agreement (License.rtf) for
 // restrictions.
 //
@@ -22,7 +22,7 @@ class Network;
 *   @class  DisconnectDialog
 *   @brief  Disconnect dialog
 */
-// Created:  NLD 2002-01-03 
+// Created:  NLD 2002-01-03
 //=============================================================================
 class DisconnectDialog : public QDialog
 {

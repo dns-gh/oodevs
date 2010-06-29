@@ -47,7 +47,7 @@ signals:
     //@}
 
 protected:
-    //! @name 
+    //! @name
     //@{
     virtual void drawButton( QPainter* painter );
     //@}

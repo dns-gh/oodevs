@@ -57,7 +57,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    QAction& CreateAction( const QString& name, const char* cname ); 
+    QAction& CreateAction( const QString& name, const char* cname );
     //@}
 
 private:

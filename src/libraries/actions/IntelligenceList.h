@@ -46,7 +46,7 @@ public:
              IntelligenceList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis
                                             , const kernel::EntityResolver_ABC& resolver
                                             , const kernel::FormationLevels& levels, kernel::Controller& controller );
-             IntelligenceList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const Common::MsgIntelligenceList& asn 
+             IntelligenceList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const Common::MsgIntelligenceList& asn
                                             , const kernel::EntityResolver_ABC& resolver
                                             , const kernel::FormationLevels& levels, kernel::Controller& controller );
     virtual ~IntelligenceList();

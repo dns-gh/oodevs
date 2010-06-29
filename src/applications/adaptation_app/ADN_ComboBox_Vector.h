@@ -70,7 +70,7 @@ public:
         // Connect it with the object's name.
         pItem->GetConnector().Connect( &(static_cast<AType*>(obj))->strName_ );
 
-        return pItem; 
+        return pItem;
     };
 };
 

@@ -44,8 +44,8 @@ public:
     template< typename Archive > void serialize( Archive&, const unsigned int );
     void Register( DEC_Knowledge_Object& knObject );
     //@}
-    
-    //! @name 
+
+    //! @name
     //@{
     bool IsEquipped() const;
     //@}
@@ -58,7 +58,7 @@ private:
 
 private:
     //! @name Data Members
-    //@{    
+    //@{
     const SupplyRouteAttribute* attr_;
     bool     bEquipped_;
     MT_Float rWeightSupported_;

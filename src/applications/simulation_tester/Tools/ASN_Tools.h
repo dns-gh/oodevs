@@ -75,7 +75,7 @@ public:
     static void CopyGDH                ( unsigned int                     nTime         , DateTime&                  asn );
     static void CopyPopulationKnowledge( unsigned int                     nIdPopulation , PopulationKnowledge&  asn );
     static void CopyMedicalPriorities  ( const T_IdVector&        ids           , LogMedicalPriorities&       asn );
-    static void CopyDotationDType      ( unsigned int                     nIdValue      , DotationType&         asn ); 
+    static void CopyDotationDType      ( unsigned int                     nIdValue      , DotationType&         asn );
     //@}
 
     template< typename T >

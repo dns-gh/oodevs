@@ -18,12 +18,12 @@
 // Created: JCR 2009-02-10
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( EsriTest_ConnectionParsing )
-{        
+{
     const boost::regex expression( "(sde|postgresql):\\/\\/(\\w+):(\\w+)@(\\w+):(\\d+)\\/(\\w*).(\\w*)" );
     boost::cmatch matches;
-    
+
     std::string url( "sde://user:pass@localhost:4242/database.schema" );
-    if ( boost::regex_match( url.c_str(), matches, expression ) )
+    if( boost::regex_match( url.c_str(), matches, expression ) )
     {
         BOOST_CHECK_EQUAL( matches[ 0 ], url );
         BOOST_CHECK_EQUAL( matches[ 2 ], "user" );
@@ -45,9 +45,9 @@ BOOST_AUTO_TEST_CASE( EsriTest_ConnectionParsing_2 )
 {
     const boost::regex expression( "(sde):\\/\\/(\\w+):(\\w+)" );
     boost::cmatch matches;
-    
+
     std::string url( "sde://user:08/database" );
-    if ( boost::regex_match( url.c_str(), matches, expression ) )
+    if( boost::regex_match( url.c_str(), matches, expression ) )
     {
         BOOST_CHECK_EQUAL( matches[ 0 ], url );
         BOOST_CHECK_EQUAL( matches[ 2 ], "user" );
@@ -66,9 +66,9 @@ BOOST_AUTO_TEST_CASE( EsriTest_ConnectionParsing_Port )
 {
     const boost::regex expression( "(sde):\\/\\/(\\w+):(\\w+)@(\\w+)(:(\\d+)){0,1}\\/(\\w*).(\\w*)" );
     boost::cmatch matches;
-    
+
     std::string url( "sde://user:08@localhost/database.schema" );
-    if ( boost::regex_match( url.c_str(), matches, expression ) )
+    if( boost::regex_match( url.c_str(), matches, expression ) )
     {
         BOOST_CHECK_EQUAL( matches[ 0 ], url );
         BOOST_CHECK_EQUAL( matches[ 2 ], "user" );
@@ -92,9 +92,9 @@ BOOST_AUTO_TEST_CASE( EsriTest_ConnectionParsing_IpAndPort )
 {
     const boost::regex expression( "(sde):\\/\\/(\\w+):(\\w+)@([\\w\\-\\.]+)(:(\\d+)){0,1}\\/(\\w*).(\\w*)" );
     boost::cmatch matches;
-    
+
     std::string url( "sde://user:08@172.0.65.2/database.schema" );
-    if ( boost::regex_match( url.c_str(), matches, expression ) )
+    if( boost::regex_match( url.c_str(), matches, expression ) )
     {
         BOOST_CHECK_EQUAL( matches[ 0 ], url );
         BOOST_CHECK_EQUAL( matches[ 2 ], "user" );
@@ -118,9 +118,9 @@ BOOST_AUTO_TEST_CASE( EsriTest_ConnectionParsing_HostAndPort )
 {
     const boost::regex expression( "(sde):\\/\\/(\\w+):(\\w+)@([\\w\\-\\.]+)(:(\\d+)){0,1}\\/(\\w*).(\\w*)" );
     boost::cmatch matches;
-    
+
     std::string url( "sde://user:08@my-host-25/database.schema" );
-    if ( boost::regex_match( url.c_str(), matches, expression ) )
+    if( boost::regex_match( url.c_str(), matches, expression ) )
     {
         BOOST_CHECK_EQUAL( matches[ 0 ], url );
         BOOST_CHECK_EQUAL( matches[ 2 ], "user" );
@@ -144,9 +144,9 @@ BOOST_AUTO_TEST_CASE( EsriTest_ConnectionParsing_PortOptional )
 {
     const boost::regex expression( "(sde):\\/\\/(\\w+):(\\w+)@(\\w+)(:(\\d+)){0,1}\\/(\\w*).(\\w*)" );
     boost::cmatch matches;
-    
+
     std::string url( "sde://user:08@localhost:4242/database.schema" );
-    if ( boost::regex_match( url.c_str(), matches, expression ) )
+    if( boost::regex_match( url.c_str(), matches, expression ) )
     {
         BOOST_CHECK_EQUAL( matches[ 0 ], url );
         BOOST_CHECK_EQUAL( matches[ 2 ], "user" );

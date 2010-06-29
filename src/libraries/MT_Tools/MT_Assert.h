@@ -25,9 +25,9 @@ bool MT_Assert( const char* strExpression, const char* strFile, int nLine )
 {
     std::stringstream strMsg;
 
-    strMsg << "assert '"   << strExpression 
+    strMsg << "assert '"   << strExpression
            << "' - File '" << strFile
-           << "' - Line "  << nLine; 
+           << "' - Line "  << nLine;
 
     std::cerr << strMsg.str() << std::endl;
     _asm int 3;

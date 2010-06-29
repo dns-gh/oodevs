@@ -18,8 +18,8 @@ using namespace gui;
 // Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
 ActivityTimePrototype_ABC::ActivityTimePrototype_ABC( QWidget* parent )
-    : ObjectAttributePrototype_ABC( parent, tools::translate( "ActivityTimePrototype_ABC", "Activity time" ) )    
-{    
+    : ObjectAttributePrototype_ABC( parent, tools::translate( "ActivityTimePrototype_ABC", "Activity time" ) )
+{
     new QLabel( tools::translate( "ActivityTimePrototype_ABC", "Activity time:" ), this );
     activityTime_ = new QTimeEdit( this );
 }

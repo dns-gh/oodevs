@@ -44,7 +44,7 @@ namespace
         std::auto_ptr< kernel::DecisionalModel > model( MakeDecisionalModel() );
         modelResolver.Register( model->GetName(), *model );
         const kernel::SymbolFactory symbolFactory;
-        const std::string xml( 
+        const std::string xml(
             "<type name='my_name' type='my_type' id='42' decisional-model='my_model'>"
                 "<nature level='iii' nature='undefined/undefined' atlas-nature='none'/>"
                 "<equipments/>"
@@ -67,7 +67,7 @@ BOOST_AUTO_TEST_CASE( Agent_IsCreatedUnderAnAutomat )
     MockAutomat automat( 51 );
     MOCK_EXPECT( automat, GetId ).returns( 51 );
     automats.Register( automat.GetId(), automat );
-    
+
     // agent types
     tools::Resolver< kernel::AgentType > types;
     std::auto_ptr< kernel::AgentType > type( MakeAgentType() );
@@ -115,7 +115,7 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
     MockAutomat automat( 51 );
     MOCK_EXPECT( automat, GetId ).returns( 51 );
     automats.Register( automat.GetId(), automat );
-    
+
     // agent types
     tools::Resolver< kernel::AgentType > types;
     std::auto_ptr< kernel::AgentType > type( MakeAgentType() );

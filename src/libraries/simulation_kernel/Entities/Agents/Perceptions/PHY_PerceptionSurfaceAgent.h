@@ -43,7 +43,7 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
@@ -86,7 +86,7 @@ private:
     //@{
     typedef std::vector< MT_Sector >       T_SectorVector;
     typedef T_SectorVector::const_iterator CIT_SectorVector;
-          
+
     typedef std::map< const void*, unsigned int > T_PerceptionTickMap;
     typedef T_PerceptionTickMap::const_iterator    CIT_PerceptionTickMap;
     //@}

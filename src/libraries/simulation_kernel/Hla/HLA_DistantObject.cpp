@@ -113,7 +113,7 @@ void HLA_DistantObject::Bypass( double rDeltaPercentage )
 //{
 //    interactionManager_.Send( HLA_Activation( *this, false ) );
 //}
-    
+
 // -----------------------------------------------------------------------------
 // Name: HLA_DistantObject::Activate
 // Created: AGE 2004-12-06
@@ -145,7 +145,7 @@ void HLA_DistantObject::Deserialize( const AttributeIdentifier& attributeID, con
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* HLA_DistantObject::InstanciateObject()
 {
-    MIL_Army* pArmy = 0;// = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( strArmy_ );//@TODO MGD give armies resolver to HLA role 
+    MIL_Army* pArmy = 0;// = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( strArmy_ );//@TODO MGD give armies resolver to HLA role
     if( !pArmy )
         return 0;
     if( localisation_.GetType() == TER_Localisation::eNone )

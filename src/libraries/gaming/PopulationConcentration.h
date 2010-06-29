@@ -85,7 +85,7 @@ private:
     float radius_;
     float deadRadius_;
     E_PopulationAttitude attitude_;
-    //@}            
+    //@}
 };
 
 #endif // __PopulationConcentration_h_

@@ -120,7 +120,7 @@ bool PHY_MedicalCollectionConsign::EnterStateCollectionWaitingForFullLoading()
     assert( GetState() == eCollectionWaitingForFullLoading );
     return false;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalCollectionConsign::EnterStateSearchingForSortingArea
 // Created: NLD 2005-01-12
@@ -134,7 +134,7 @@ void PHY_MedicalCollectionConsign::EnterStateSearchingForSortingArea()
     SetState( eSearchingForSortingArea );
     nTimer_ = 0;
 }
- 
+
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalCollectionConsign::EnterStateCollectionGoingTo
 // Created: NLD 2005-01-12
@@ -175,7 +175,7 @@ void PHY_MedicalCollectionConsign::TransferToSortingArea( PHY_RoleInterface_Medi
     SetState( eFinished );
     nTimer_               = 0;
     sortingArea.HandleHumanForSorting( *pCollectionAmbulance_, *pHumanState_ );
-    pCollectionAmbulance_ = 0;    
+    pCollectionAmbulance_ = 0;
     pHumanState_          = 0;
 }
 
@@ -202,10 +202,10 @@ void PHY_MedicalCollectionConsign::NotifyOutOfMedicalSystem()
 // -----------------------------------------------------------------------------
 bool PHY_MedicalCollectionConsign::Update()
 {
-    if ( --nTimer_ > 0 )
+    if( --nTimer_ > 0 )
         return GetState() == eFinished;
 
-    switch( GetState() ) 
+    switch( GetState() )
     {
         case eWaitingForCollection             : CreateCollectionAmbulance(); break; // Géré par PHY_MedicalAmbulance
         case eCollectionGoingTo                : break;                              // Géré par PHY_MedicalAmbulance

@@ -21,7 +21,7 @@ namespace TEST {
     @brief  Mission_Pawn_INF_DetruireParCoupDeMain
 */
 // Created: SBO 2005-08-08
-// Generated: 
+// Generated:
 // =============================================================================
 class Mission_Pawn_INF_DetruireParCoupDeMain : public Mission_Pawn_ABC
 {

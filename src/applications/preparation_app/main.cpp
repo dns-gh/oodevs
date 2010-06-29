@@ -21,7 +21,7 @@
 #endif
 
 int main( int argc, char** argv )
-{   
+{
     QString expiration;
 #if !defined( NO_LICENSE_CHECK )
     std::auto_ptr< FlexLmLicense > license = FlexLmLicense::CheckLicense( "sword", 1.0f );
@@ -44,12 +44,12 @@ int main( int argc, char** argv )
         QMessageBox::critical( 0, tools::translate( "Application", "Unhandled error" ), e.what() );
         throw;
     }
-    
+
     return 0;
 }
 
 int WINAPI WinMain( HINSTANCE /*hinstance */, HINSTANCE /* hPrevInstance */ ,LPSTR lpCmdLine, int /* nCmdShow */ )
 {
-    WinArguments winArgs(lpCmdLine) ; 
-    return main( winArgs.Argc(), const_cast<char**>( winArgs.Argv() ) ); 
+    WinArguments winArgs(lpCmdLine) ;
+    return main( winArgs.Argc(), const_cast<char**>( winArgs.Argv() ) );
 }

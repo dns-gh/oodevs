@@ -70,7 +70,7 @@ bool SimplerRichText::RichElement::IsAt( const QPoint& point ) const
 {
     return point.x() >= offset_ && point.x() < widthUsed();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: SimplerRichText::RichElement::Anchor
 // Created: AGE 2007-04-20
@@ -213,7 +213,7 @@ void SimplerRichText::AddLinkElement( const QString& text )
     if( regexp.search( text ) > -1 )
     {
         QStringList result = regexp.capturedTexts();
-        AddLinkElement( result[1], result[2] );    
+        AddLinkElement( result[1], result[2] );
     }
     else
         AddTextElement( text );

@@ -38,11 +38,11 @@ public:
     //@{
     template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
-    
+
     //! @name Operations
     //@{
     virtual void Cancel();
-    virtual bool Update(); 
+    virtual bool Update();
     //@}
 
     //! @name Accessors

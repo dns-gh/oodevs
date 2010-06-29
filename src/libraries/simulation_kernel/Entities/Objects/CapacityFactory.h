@@ -30,7 +30,7 @@ public:
     //@{
              CapacityFactory();
     virtual ~CapacityFactory();
-    //@}    
+    //@}
 
     //! @name Creation
     //@{

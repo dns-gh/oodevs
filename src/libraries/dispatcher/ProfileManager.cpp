@@ -233,7 +233,7 @@ void ProfileManager::SetAutomatRight( const std::string& profile, unsigned int a
 // -----------------------------------------------------------------------------
 void ProfileManager::RegisterRole( const std::string name )
 {
-    if ( roles_.find( name ) == roles_.end() )
+    if( roles_.find( name ) == roles_.end() )
     {
         roles_.insert( std::pair< const std::string, unsigned >( name, roles_.size() + 1 ) );
     }
@@ -262,7 +262,7 @@ E_ScipioRole ProfileManager::FindRole( const std::string& name )
 {
     unsigned roleID ( eRoleUndefined );
     CIT_RoleMap cit = roles_.find( name );
-    if ( cit != roles_.end() )
+    if( cit != roles_.end() )
         roleID = cit->second;
     return static_cast< E_ScipioRole >( roleID );
 }

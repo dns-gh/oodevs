@@ -41,7 +41,7 @@ public:
              TeamHierarchies( kernel::Controller& controller, kernel::Team_ABC& holder );
     virtual ~TeamHierarchies();
     //@}
-    
+
     virtual bool CanCommunicate() const;
 
 private:

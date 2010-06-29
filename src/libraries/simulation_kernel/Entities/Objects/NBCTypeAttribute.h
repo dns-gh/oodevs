@@ -28,22 +28,22 @@ class NBCTypeAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             NBCTypeAttribute();    
+             NBCTypeAttribute();
     explicit NBCTypeAttribute( xml::xistream& xis );
     explicit NBCTypeAttribute( const Common::MsgObjectAttributes& asn );
-    virtual ~NBCTypeAttribute();       
+    virtual ~NBCTypeAttribute();
     //@}
 
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive&, const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;
     //@}
 
     //! @name Knowledge
-    //@{    
+    //@{
     void Instanciate( DEC_Knowledge_Object& object ) const;
     void Register( Object& object ) const;
     void SendFullState( Common::MsgObjectAttributes& asn ) const;
@@ -77,8 +77,8 @@ public:
 
 private:
     //! @name Member data
-    //@{    
-    //Fire temperature    
+    //@{
+    //Fire temperature
     const MIL_NBCType* pAgent_;
     int                concentration_;
     unsigned int       width_;

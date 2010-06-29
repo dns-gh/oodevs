@@ -56,7 +56,7 @@ bool DEC_PerceptionFunctions::IsPointVisible( const MIL_Agent_ABC& callerAgent, 
 {
     assert( pPt );
     const PHY_PerceptionLevel& level = callerAgent.GetRole< PHY_RoleInterface_Perceiver >().ComputePerception( *pPt );
-    return( level != PHY_PerceptionLevel::notSeen_ ); 
+    return( level != PHY_PerceptionLevel::notSeen_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -133,7 +133,7 @@ int DEC_PerceptionFunctions::EnableObjectRecognitionLocalisation( DEC_Decision_A
 
     return callerAgent.GetPion().GetRole< PHY_RoleInterface_Perceiver >().EnableRecoObjects( *pLocalisation, *pCenter, rGrowthSpeed, callerAgent );
 }
- 
+
 // -----------------------------------------------------------------------------
 // Name: DEC_PerceptionFunctions::DisableObjectRecognitionLocalisation
 // Created: JVT 2005-01-19
@@ -328,7 +328,7 @@ int DEC_PerceptionFunctions::EnableFlyingShellDetection( MIL_Agent_ABC& callerAg
     assert( pLocalisation );
     return callerAgent.GetRole< PHY_RoleInterface_Perceiver >().EnableFlyingShellDetection( *pLocalisation );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_PerceptionFunctions::DisableFlyingShellDetection
 // Created: NLD 2005-02-21

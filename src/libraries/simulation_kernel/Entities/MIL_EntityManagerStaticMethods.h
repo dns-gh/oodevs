@@ -46,7 +46,7 @@ private:
 protected:
     //! @name static Type Initializations
     //@{
-    template < typename T > 
+    template < typename T >
     static void InitializeType       ( xml::xistream& xis, MIL_Config& config, const std::string& strSection );
     static void InitializeMedical    ( xml::xistream& xis, MIL_Config& config );
     static void InitializeComposantes( xml::xistream& xis, MIL_Config& config, const MIL_Time_ABC& time );

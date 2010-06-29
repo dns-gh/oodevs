@@ -83,7 +83,7 @@ void OrderTypes::ReadMissionType( xml::xistream& xis, T_OrderTypes& missions, co
     kernel::MissionType* mission = new kernel::MissionType( xis, context );
     missions[mission->GetName()] = mission;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: OrderTypes::ReadFragOrderType
 // Created: SBO 2006-11-29

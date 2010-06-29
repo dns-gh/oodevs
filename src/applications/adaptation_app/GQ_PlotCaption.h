@@ -81,7 +81,7 @@ private:
 
     //! @name Runtime members
     //@{
-    bool bUpdateNeeded_;    
+    bool bUpdateNeeded_;
     //@}
 };
 

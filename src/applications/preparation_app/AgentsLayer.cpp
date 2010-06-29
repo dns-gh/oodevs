@@ -38,7 +38,7 @@ AgentsLayer::AgentsLayer( Controllers& controllers, const GlTools_ABC& tools, gu
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: AgentsLayer destructor
 // Created: SBO 2006-08-31
@@ -59,7 +59,7 @@ void AgentsLayer::BeforeSelection()
     selectedFormation_ = 0;
     selectedTeam_ = 0;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: AgentsLayer::AfterSelection
 // Created: SBO 2006-10-09

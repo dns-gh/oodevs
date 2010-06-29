@@ -42,8 +42,8 @@ DEC_KnowledgeBlackBoard_KnowledgeGroup::DEC_KnowledgeBlackBoard_KnowledgeGroup( 
     , pKnowledgeAgentContainer_         ( new DEC_BlackBoard_CanContainKnowledgeAgent     ( knowledgeGroup ) )
     , pKnowledgePopulationContainer_    ( new DEC_BlackBoard_CanContainKnowledgePopulation() )
     , pKnowledgeObjectContainer_        ( 0 )
-    , pKsKnowledgeSynthetizer_          ( new DEC_KS_KnowledgeSynthetizer            ( *this ) )      
-//    , pKsAgentKnowledgeSynthetizer_     ( new DEC_KS_AgentKnowledgeSynthetizer            ( *this ) )      
+    , pKsKnowledgeSynthetizer_          ( new DEC_KS_KnowledgeSynthetizer            ( *this ) )
+//    , pKsAgentKnowledgeSynthetizer_     ( new DEC_KS_AgentKnowledgeSynthetizer            ( *this ) )
 //    , pKsPopulationKnowledgeSynthetizer_( new DEC_KS_PopulationKnowledgeSynthetizer       ( *this ) )
     , pKsSharing_                       ( new DEC_KS_Sharing                              ( *this ) )
 {
@@ -59,8 +59,8 @@ DEC_KnowledgeBlackBoard_KnowledgeGroup::DEC_KnowledgeBlackBoard_KnowledgeGroup()
     , pKnowledgeAgentContainer_         ( 0 )
     , pKnowledgePopulationContainer_    ( 0 )
     , pKnowledgeObjectContainer_        ( 0 )
-    , pKsKnowledgeSynthetizer_          ( 0 )      
-//    , pKsAgentKnowledgeSynthetizer_     ( 0 )      
+    , pKsKnowledgeSynthetizer_          ( 0 )
+//    , pKsAgentKnowledgeSynthetizer_     ( 0 )
 //    , pKsPopulationKnowledgeSynthetizer_( 0 )
     , pKsSharing_                       ( 0 )
 {
@@ -73,20 +73,20 @@ DEC_KnowledgeBlackBoard_KnowledgeGroup::DEC_KnowledgeBlackBoard_KnowledgeGroup()
 // -----------------------------------------------------------------------------
 DEC_KnowledgeBlackBoard_KnowledgeGroup::~DEC_KnowledgeBlackBoard_KnowledgeGroup()
 {
-    delete pKnowledgeAgentContainer_;         
-    delete pKnowledgePopulationContainer_;   
-    delete pKnowledgeObjectContainer_; 
-    delete pKsKnowledgeSynthetizer_;     
-//    delete pKsAgentKnowledgeSynthetizer_;     
+    delete pKnowledgeAgentContainer_;
+    delete pKnowledgePopulationContainer_;
+    delete pKnowledgeObjectContainer_;
+    delete pKsKnowledgeSynthetizer_;
+//    delete pKsAgentKnowledgeSynthetizer_;
 //    delete pKsPopulationKnowledgeSynthetizer_;
-    delete pKsSharing_;                       
+    delete pKsSharing_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: template< typename Archive > void DEC_KnowledgeBlackBoard_KnowledgeGroup::serialize
 // Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
-template< typename Archive > 
+template< typename Archive >
 void DEC_KnowledgeBlackBoard_KnowledgeGroup::serialize( Archive& archive, const unsigned int )
 {
     archive & boost::serialization::base_object< DEC_KnowledgeBlackBoard_ABC >( *this )
@@ -94,8 +94,8 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::serialize( Archive& archive, const 
             & pKnowledgeAgentContainer_
             & pKnowledgePopulationContainer_
             & pKnowledgeObjectContainer_
-            & pKsKnowledgeSynthetizer_     
-//            & pKsAgentKnowledgeSynthetizer_     
+            & pKsKnowledgeSynthetizer_
+//            & pKsAgentKnowledgeSynthetizer_
 //            & pKsPopulationKnowledgeSynthetizer_
             & pKsSharing_;
 }
@@ -335,7 +335,7 @@ DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgePo
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgePopulation( const DEC_Knowledge_PopulationCollision& collision ) const
-{   
+{
     assert( pKnowledgePopulationContainer_ );
     return pKnowledgePopulationContainer_->GetKnowledgePopulation( collision.GetPopulation() );
 }
@@ -586,7 +586,7 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::ApplyOnKnowledgesPerception( int cu
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Agent& DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledgeAgent( const MIL_KnowledgeGroup& knowledgeGroup, MIL_Agent_ABC& perceived )
 {
-    return GetKnowledgeAgentContainer().CreateKnowledgeAgent( knowledgeGroup, perceived );    
+    return GetKnowledgeAgentContainer().CreateKnowledgeAgent( knowledgeGroup, perceived );
 }
 
 // -----------------------------------------------------------------------------
@@ -595,7 +595,7 @@ DEC_Knowledge_Agent& DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledgeAgen
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Population& DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledgePopulation( const MIL_KnowledgeGroup& knowledgeGroup, MIL_Population& perceived )
 {
-    return GetKnowledgePopulationContainer().CreateKnowledgePopulation( knowledgeGroup, perceived );    
+    return GetKnowledgePopulationContainer().CreateKnowledgePopulation( knowledgeGroup, perceived );
 }
 
 // -----------------------------------------------------------------------------

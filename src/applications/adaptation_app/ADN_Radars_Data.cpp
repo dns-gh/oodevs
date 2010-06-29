@@ -230,7 +230,7 @@ void ADN_Radars_Data::RadarInfos::WriteArchive( xml::xostream& output )
     if( bHasMaxHeight_.GetData() )
         output << xml::attribute( "max-height", rMaxHeight_ );
 
-    if( bHasDetectableActivities_.GetData() ) 
+    if( bHasDetectableActivities_.GetData() )
     {
         output << xml::start( "detectable-activities" );
 
@@ -244,7 +244,7 @@ void ADN_Radars_Data::RadarInfos::WriteArchive( xml::xostream& output )
         output << xml::end();
     }
 
-    if( bHasDetectTimes_.GetData() || bHasHQDetectTimes_.GetData() ) 
+    if( bHasDetectTimes_.GetData() || bHasHQDetectTimes_.GetData() )
     {
         output << xml::start( "acquisition-times" );
         detectTimes_.WriteArchive( output, false );

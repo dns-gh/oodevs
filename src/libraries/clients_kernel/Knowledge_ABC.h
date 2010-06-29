@@ -42,7 +42,7 @@ public:
     void AddListener( KnowledgeListener_ABC& listener ) { listeners_.insert( &listener ); }
     void RemoveListener( KnowledgeListener_ABC& listener ) { listeners_.erase( &listener ); }
 
-    virtual std::string GetSymbol() const { return ""; } // $$$$ SBO 2007-02-26: 
+    virtual std::string GetSymbol() const { return ""; } // $$$$ SBO 2007-02-26:
     //@}
 
 private:

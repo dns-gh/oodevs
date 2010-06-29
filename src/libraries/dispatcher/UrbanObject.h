@@ -71,11 +71,11 @@ private:
     //@}
 
     //! @name Types
-    //@{   
+    //@{
     typedef boost::ptr_vector< UrbanObjectAttribute_ABC > T_UrbanObjectAttributes;
     //@}
 
-public:    
+public:
 
     Model&                      model_;
     const std::string           strName_;

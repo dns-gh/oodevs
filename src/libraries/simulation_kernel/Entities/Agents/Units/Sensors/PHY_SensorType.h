@@ -70,7 +70,7 @@ private:
     void newSensorTypeAgent ( xml::xistream& xis );
     void newSensorTypeObject( xml::xistream& xis );
     //@}
-    
+
 private:
     const unsigned int                  nID_;
     const std::string           strName_;

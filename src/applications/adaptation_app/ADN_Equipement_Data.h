@@ -52,7 +52,7 @@ public:
         MT_COPYNOTALLOWED( CategoryInfo );
 
     public:
-        CategoryInfo(); // For template usage. 
+        CategoryInfo(); // For template usage.
         CategoryInfo( DotationInfos& parentDotation );
 
         virtual std::string GetNodeName();
@@ -68,7 +68,7 @@ public:
         DotationInfos&  parentDotation_;
         ADN_Type_String strName_;
         int             nMosId_;
-        ADN_Type_String strCodeEMAT6_; 
+        ADN_Type_String strCodeEMAT6_;
         ADN_Type_String strCodeEMAT8_;
         ADN_Type_String strCodeLFRIL_;
         ADN_Type_String strCodeNNO_;
@@ -112,7 +112,7 @@ public:
         {
         public:
             CmpRef(ADN_Categories_Data::ArmorInfos* val) : val_(val) {}
-            bool operator()( AttritionInfos* tgtnfos ) const 
+            bool operator()( AttritionInfos* tgtnfos ) const
             {   return tgtnfos->ptrArmor_.GetData() == val_;}
 
         private:
@@ -123,7 +123,7 @@ public:
         {
         public:
             Cmp( const std::string& name ) : name_(name) {}
-            bool operator()( AttritionInfos* tgtnfos ) const 
+            bool operator()( AttritionInfos* tgtnfos ) const
             {   return tgtnfos->ptrArmor_.GetData()->strName_ == name_;}
 
         private:
@@ -164,7 +164,7 @@ public:
         {
         public:
             CmpRef(ADN_Urban_Data::UrbanInfos* val) : val_(val) {}
-            bool operator()( UrbanAttritionInfos* tgtnfos ) const 
+            bool operator()( UrbanAttritionInfos* tgtnfos ) const
             {   return tgtnfos->ptrMaterial_.GetData() == val_;}
 
         private:
@@ -177,7 +177,7 @@ public:
             Cmp(const std::string& val) : val_(val) {}
             ~Cmp() {}
 
-            bool operator()( UrbanAttritionInfos* tgtnfos ) const 
+            bool operator()( UrbanAttritionInfos* tgtnfos ) const
             { return tgtnfos->ptrMaterial_.GetData() && tgtnfos->ptrMaterial_.GetData()->GetData()==val_; }
 
         private:
@@ -215,7 +215,7 @@ public:
             Cmp(const E_UnitPosture& val) : val_(val) {}
             ~Cmp() {}
 
-            bool operator()( ModificatorPostureInfos* tgtnfos ) const 
+            bool operator()( ModificatorPostureInfos* tgtnfos ) const
             { return tgtnfos->eType_==val_; }
 
         private:
@@ -312,7 +312,7 @@ public:
         , public ADN_DataTreeNode_ABC
     {
         MT_COPYNOTALLOWED( DotationInfos );
-    
+
     public:
          DotationInfos( E_DotationFamily nType );
         ~DotationInfos();
@@ -324,7 +324,7 @@ public:
 
         T_CategoryInfos_Vector& GetCategories();
         CategoryInfo* FindCategory( const std::string& strName );
-        
+
         void ReadArchive( xml::xistream& );
         void WriteArchive( xml::xostream& );
 

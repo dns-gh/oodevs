@@ -61,7 +61,7 @@ private:
     //@}
 
 private:
-    MIL_AgentPion&                      pion_;   
+    MIL_AgentPion&                      pion_;
     moving::PHY_RoleAction_Moving&      role_;
     boost::shared_ptr< DEC_Agent_Path > pMainPath_;
     boost::shared_ptr< DEC_Agent_Path > pJoiningPath_;

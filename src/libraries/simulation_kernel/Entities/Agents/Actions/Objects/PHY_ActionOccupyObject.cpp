@@ -23,7 +23,7 @@ PHY_ActionOccupyObject::PHY_ActionOccupyObject( MIL_AgentPion& pion, boost::shar
     : PHY_Action_ABC()
     , role_         ( pion.GetRole< PHY_RoleAction_Objects >() )
     , pKnowledge_   ( pKnowledge )
-{    
+{
     role_.StartOccupyingObject( pKnowledge_ );
 }
 
@@ -50,7 +50,7 @@ void PHY_ActionOccupyObject::Stop()
 // Demined: NLD 2004-08-18
 // -----------------------------------------------------------------------------
 void PHY_ActionOccupyObject::Execute()
-{   
+{
     // NOTHING
 }
 

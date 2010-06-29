@@ -43,7 +43,7 @@ public:
 
     //! @name kernel::Serializable_ABC
     //@{
-    virtual void SerializeAttributes( xml::xostream& xos ) const;    
+    virtual void SerializeAttributes( xml::xostream& xos ) const;
     //@}
 
     //! @name kernel::Displayable_ABC

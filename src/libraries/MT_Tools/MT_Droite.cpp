@@ -115,7 +115,7 @@ bool MT_Droite::IsInside( const MT_Vector2D& vPoint ) const
 {
     return GetSide( vPoint ) == eOnBoundary;
 }
-                  
+
 // -----------------------------------------------------------------------------
 // Name: MT_Droite::Intersect2D
 // Created: NLD 2003-08-20
@@ -123,14 +123,14 @@ bool MT_Droite::IsInside( const MT_Vector2D& vPoint ) const
 E_CollisionState MT_Droite::Intersect2D( const MT_Line& segment, MT_Vector2D& vPosIntersect ) const
 {
     vPosIntersect.Reset();
-    
+
     // Test if segment intersect with the line
     const MT_Float r3 = segment.GetPosStart().rX_ * rA_ + segment.GetPosStart().rY_ * rB_ + rC_;
     const MT_Float r4 = segment.GetPosEnd  ().rX_ * rA_ + segment.GetPosEnd  ().rY_ * rB_ + rC_;
 
-    /// Check signs of r3 and r4. 
+    /// Check signs of r3 and r4.
     // If both point 3 and point 4 lie on same side of line 1, the line segments do not intersect
-    if ( !MT_IsZero( r3 ) && !MT_IsZero( r4 ) && MT_IsSameSigns( r3, r4 ) )
+    if( !MT_IsZero( r3 ) && !MT_IsZero( r4 ) && MT_IsSameSigns( r3, r4 ) )
         return eDontIntersect;
 
     // Compute intersection
@@ -140,7 +140,7 @@ E_CollisionState MT_Droite::Intersect2D( const MT_Line& segment, MT_Vector2D& vP
     const MT_Float rC2 = segment.GetPosEnd  ().rX_ * segment.GetPosStart().rY_ - segment.GetPosStart().rX_ * segment.GetPosEnd().rY_;
 
     const MT_Float rDenom = rA_ * rB2 - rA2 * rB_;
-    if ( MT_IsZero( rDenom ) )
+    if( MT_IsZero( rDenom ) )
         return eCollinear;
 
     vPosIntersect.rX_ = rB_ * rC2 - rB2 * rC_;
@@ -158,9 +158,9 @@ E_CollisionState MT_Droite::Intersect2D( const MT_Line& segment, MT_Vector2D& vP
 E_CollisionState MT_Droite::Intersect2D( const MT_Droite& droite, MT_Vector2D& vPosIntersect ) const
 {
     vPosIntersect.Reset();
-            
+
     const MT_Float rDenom = rA_ * droite.rB_ - droite.rA_ * rB_;
-    if ( MT_IsZero( rDenom ) )
+    if( MT_IsZero( rDenom ) )
         return eCollinear;
 
     vPosIntersect.rX_ = rB_ * droite.rC_ - droite.rB_ * rC_;

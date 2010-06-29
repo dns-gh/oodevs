@@ -32,7 +32,7 @@ public:
     //@}
 
 public:
-    static const PHY_HumanRank officier_; 
+    static const PHY_HumanRank officier_;
     static const PHY_HumanRank sousOfficier_;
     static const PHY_HumanRank militaireDuRang_;
 

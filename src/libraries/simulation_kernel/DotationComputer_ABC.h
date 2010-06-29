@@ -36,7 +36,7 @@ public:
     //@{
     virtual void SetDotationContainer( PHY_DotationGroupContainer& container ) = 0;
     virtual void SetForbiddenAmmunition( const std::vector< const PHY_DotationCategory* >* container ) = 0;
-    
+
     virtual bool HasDotation( const PHY_DotationCategory& category ) const = 0;
     virtual double GetDotationValue( const PHY_DotationCategory& category ) const = 0;
     virtual double GetDotationCapacity( const PHY_DotationCategory& category ) const = 0;

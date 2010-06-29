@@ -31,7 +31,7 @@ void PHY_PerceptionFlyingShell::Initialize( xml::xistream& xis )
     xis >> xml::start( "cobra-radar" )
             >> xml::attribute( "action-range", rRadius_ )
         >> xml::end();
-    
+
     if( rRadius_ < 0 )
         xis.error( "cobra-radar: action-range < 0" );
     rRadius_ = MIL_Tools::ConvertMeterToSim( rRadius_ );
@@ -80,10 +80,10 @@ void PHY_PerceptionFlyingShell::RemoveLocalisation( int id )
     const TER_Localisation* pLoc = ids_[ id ];
 
     IT_ZoneVector it = std::find( zones_.begin(), zones_.end(), pLoc );
-    if ( it != zones_.end() )
+    if( it != zones_.end() )
     {
         delete pLoc;
-        zones_.erase( it );    
+        zones_.erase( it );
     }
     ids_.erase( id );
 }

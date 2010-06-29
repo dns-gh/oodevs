@@ -21,7 +21,7 @@ PopulationHierarchies::PopulationHierarchies( kernel::Entity_ABC& holder, kernel
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PopulationHierarchies destructor
 // Created: SBO 2006-10-19

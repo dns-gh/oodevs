@@ -45,7 +45,7 @@ public:
                  , gui::ItemFactory_ABC& factory, const QString& license, const gui::HelpSystem& help );
     virtual ~Menu();
     //@}
-    
+
     //! @name Operations
     //@{
     void EnableSaveItem( bool status );

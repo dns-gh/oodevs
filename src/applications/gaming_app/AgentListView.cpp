@@ -47,7 +47,7 @@ AgentListView::AgentListView( QWidget* pParent, kernel::Controllers& controllers
     addColumn( "HiddenPuce", 15 );
     setColumnAlignment( 1, Qt::AlignCenter );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: AgentListView destructor
 // Created: SBO 2006-08-18
@@ -66,7 +66,7 @@ void AgentListView::viewportResizeEvent( QResizeEvent* e )
     QScrollView::viewportResizeEvent( e );
     setColumnWidth( 0, -1 );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: AgentListView::setColumnWidth
 // Created: SBO 2006-11-30
@@ -88,7 +88,7 @@ void AgentListView::Display( const kernel::Entity_ABC& entity, gui::ValuedListIt
     else if( const kernel::CommandPostAttributes* commandPost = entity.Retrieve< kernel::CommandPostAttributes >() )
         item->setPixmap( 1, commandPost->IsCommandPost() ? commandPost_ : QPixmap() );
     // LTO begin
-    else if ( const kernel::KnowledgeGroup_ABC* kg = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &entity ) ) // $$$$ _RC_ SLG 2009-12-21: TEMP
+    else if( const kernel::KnowledgeGroup_ABC* kg = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &entity ) ) // $$$$ _RC_ SLG 2009-12-21: TEMP
         item->setPixmap( 1, !kg->IsActivated() ? scisors_ : QPixmap() );
     // LTO end
 
@@ -225,7 +225,7 @@ bool AgentListView::Drop( const kernel::KnowledgeGroup_ABC& item, const kernel::
 
 // -----------------------------------------------------------------------------
 // Name: AgentListView::Drop
-// Created: FHD 2010-01-04: 
+// Created: FHD 2010-01-04:
 // LTO
 // -----------------------------------------------------------------------------
 bool AgentListView::Drop( const kernel::KnowledgeGroup_ABC& item, const kernel::KnowledgeGroup_ABC& target )

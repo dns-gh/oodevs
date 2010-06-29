@@ -28,7 +28,7 @@ class PHY_ActionIllumination : public PHY_DecisionCallbackAction_ABC
 {
 
 public:
-    typedef MIL_AgentPion ActorType;        
+    typedef MIL_AgentPion ActorType;
 
 public:
              PHY_ActionIllumination( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Agent > pEnemy, DEC_Decision_ABC* allie );

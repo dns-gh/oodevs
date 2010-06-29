@@ -121,7 +121,7 @@ MIL_Object_ABC* PHY_RoleAction_Objects::GetObject( const boost::shared_ptr< DEC_
 // Created: NLD 2005-01-19
 // -----------------------------------------------------------------------------
 int PHY_RoleAction_Objects::Construct( MIL_Object_ABC& object )
-{    
+{
     if( !object().CanBeConstructed() )
         return eImpossible;
 
@@ -178,20 +178,20 @@ int PHY_RoleAction_Objects::Destroy( boost::shared_ptr< DEC_Knowledge_Object >& 
         return 0;
 
     MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown();
-    if( !pObject ) 
+    if( !pObject )
     {
         pion_.GetArmy().GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( pKnowledge );
         return 0;
     }
-        
-    MIL_Object_ABC& object = *pObject; 
+
+    MIL_Object_ABC& object = *pObject;
     if( !object().CanBeDestroyed() )
         return eImpossible;
 
     if( object().IsMined() )
     {
-        PHY_RoleAction_Objects_DataComputer dataComputer( pion_, PHY_RoleAction_Objects_DataComputerPionData::eDemine, object );        
-   
+        PHY_RoleAction_Objects_DataComputer dataComputer( pion_, PHY_RoleAction_Objects_DataComputerPionData::eDemine, object );
+
         const MT_Float rDeltaPercentage = dataComputer.ComputeDeltaPercentage();
         if( rDeltaPercentage == std::numeric_limits< MT_Float >::max() )
             return eNoCapacity;
@@ -203,7 +203,7 @@ int PHY_RoleAction_Objects::Destroy( boost::shared_ptr< DEC_Knowledge_Object >& 
     else
     {
         PHY_RoleAction_Objects_DataComputer dataComputer( pion_, PHY_RoleAction_Objects_DataComputerPionData::eDestroy, object );
-   
+
         const MT_Float rDeltaPercentage = dataComputer.ComputeDeltaPercentage();
         if( rDeltaPercentage == std::numeric_limits< MT_Float >::max() )
             return eNoCapacity;
@@ -304,7 +304,7 @@ int PHY_RoleAction_Objects::Demine( MIL_Object_ABC& object )
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
 int PHY_RoleAction_Objects::Bypass( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge )
-{    
+{
     MIL_Object_ABC* pObject = GetObject( pKnowledge );
     if( !pObject )
         return eImpossible;
@@ -345,7 +345,7 @@ namespace
             std::auto_ptr< OnComponentComputer_ABC > componentComputer( (*itReinforcement)->GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
             (*itReinforcement)->Execute( *componentComputer );
         }
-    
+
         return functor.GetNumberOfTheExtinguisherAgent();
     }
 }
@@ -361,8 +361,8 @@ int PHY_RoleAction_Objects::Extinguish( boost::shared_ptr< DEC_Knowledge_Object 
         return eImpossible;
 
     MIL_Object_ABC& object = *pObject;
-    ExtinguishableCapacity* capacity = object.Retrieve< ExtinguishableCapacity >(); 
-    if ( !capacity )    
+    ExtinguishableCapacity* capacity = object.Retrieve< ExtinguishableCapacity >();
+    if( !capacity )
         return eImpossible;
 
     pion_.GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
@@ -371,7 +371,7 @@ int PHY_RoleAction_Objects::Extinguish( boost::shared_ptr< DEC_Knowledge_Object 
     MIL_FireFunctor functor( object.GetAttribute< FireAttribute >().GetClass() );
     int bestExtinguisherAgent = GetBestExtinguisher( &pion_, functor );
     object().Extinguish( bestExtinguisherAgent, pion_.GetNumberOfFireHoses( bestExtinguisherAgent ) );
-    
+
     if( object.GetAttribute< FireAttribute >().GetHeat() <= 0 )
         return eFinished;
     return eRunning;
@@ -382,14 +382,14 @@ int PHY_RoleAction_Objects::Extinguish( boost::shared_ptr< DEC_Knowledge_Object 
 // Created: JCR 2009-06-04
 // -----------------------------------------------------------------------------
 int PHY_RoleAction_Objects::Supply( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge )
-{    
+{
     MIL_Object_ABC* pObject = GetObject( objectKnowledge );
     if( !pObject || pObject->IsMarkedForDestruction() )
         return eImpossible;
 
     MIL_Object_ABC& object = *pObject;
-    StockAttribute* attribute = object.RetrieveAttribute< StockAttribute >(); 
-    if ( !attribute )    
+    StockAttribute* attribute = object.RetrieveAttribute< StockAttribute >();
+    if( !attribute )
         return eImpossible;
 
     pion_.GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
@@ -405,12 +405,12 @@ int PHY_RoleAction_Objects::Supply( boost::shared_ptr< DEC_Knowledge_Object >& o
 
     typedef std::vector< std::pair< const PHY_DotationCategory*, uint > > T_SelectionVector;
     typedef T_SelectionVector::iterator IT_SelectionVector;
-    
-    T_SelectionVector selection; 
+
+    T_SelectionVector selection;
     attribute->SelectDotations( selection, false );
     for ( IT_SelectionVector it = selection.begin(); it != selection.end(); ++it )
-    { 
-        if ( dataComputer.HasDotations( *it->first, 1 ) )
+    {
+        if( dataComputer.HasDotations( *it->first, 1 ) )
         {
             dataComputer.ConsumeDotations( *it->first, attribute->Supply( *it->first, 1 ) );
         }
@@ -431,22 +431,22 @@ int PHY_RoleAction_Objects::Distribute( boost::shared_ptr< DEC_Knowledge_Object 
         return eImpossible;
 
     MIL_Object_ABC& object = *pObject;
-    StockAttribute* attribute = object.RetrieveAttribute< StockAttribute >(); 
-    if ( !attribute )    
+    StockAttribute* attribute = object.RetrieveAttribute< StockAttribute >();
+    if( !attribute )
         return eImpossible;
 
     pion_.GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
 
     typedef std::vector< std::pair< const PHY_DotationCategory*, uint > > T_SelectionVector;
     typedef T_SelectionVector::iterator IT_SelectionVector;
-    
-    T_SelectionVector selection; 
+
+    T_SelectionVector selection;
     PHY_RoleAction_Objects_DataComputer dataComputer( pion_, PHY_RoleAction_Objects_DataComputerPionData::eConstruct, object );
 
     attribute->SelectDotations( selection, true );
     for ( IT_SelectionVector it = selection.begin(); it != selection.end(); ++it )
-    { 
-        if ( dataComputer.HasDotations( *it->first, 0 ) )
+    {
+        if( dataComputer.HasDotations( *it->first, 0 ) )
             attribute->Distribute( *it->first, quantity );
     }
     return eRunning;
@@ -457,7 +457,7 @@ int PHY_RoleAction_Objects::Distribute( boost::shared_ptr< DEC_Knowledge_Object 
 // Created: NLD 2005-01-19
 // -----------------------------------------------------------------------------
 int PHY_RoleAction_Objects::ResumeWork( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge )
-{    
+{
     MIL_Object_ABC* pObject = GetObject( pKnowledge );
     if( !pObject )
         return eImpossible;
@@ -482,7 +482,7 @@ void PHY_RoleAction_Objects::StartAnimateObject( boost::shared_ptr< DEC_Knowledg
     MIL_Object_ABC& object = *pObject;
 
     WorkableCapacity* capacity = object.Retrieve< WorkableCapacity >();
-    if ( capacity )
+    if( capacity )
     {
         pion_.GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
         object().AddAnimator( pion_ );
@@ -496,7 +496,7 @@ void PHY_RoleAction_Objects::StartAnimateObject( boost::shared_ptr< DEC_Knowledg
 void PHY_RoleAction_Objects::SetCreator( MIL_Object_ABC& object )
 {
     SpawnCapacity* capacity = object.Retrieve< SpawnCapacity >();
-    if ( capacity )
+    if( capacity )
     {
         object().AddCreator( pion_ );
     }
@@ -533,7 +533,7 @@ void PHY_RoleAction_Objects::StartOccupyingObject( boost::shared_ptr< DEC_Knowle
         return;
 
     OccupantAttribute* pAttribute = pObject->RetrieveAttribute< OccupantAttribute >();
-    if ( pAttribute )
+    if( pAttribute )
     {
         pion_.GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( *pObject );
         pAttribute->AddOccupant( pion_ );
@@ -551,7 +551,7 @@ void PHY_RoleAction_Objects::StopOccupyingObject( boost::shared_ptr< DEC_Knowled
         return;
 
     OccupantAttribute* pAttribute = pObject->RetrieveAttribute< OccupantAttribute >();
-    if ( pAttribute )
+    if( pAttribute )
     {
         pion_.GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( *pObject );
         pAttribute->ReleaseOccupant( pion_ );

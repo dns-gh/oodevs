@@ -50,7 +50,7 @@ void Mission_Population_Type::Initialize()
     Register< Mission_Population_CommettreExactions >( "Population CommettreExactions" );
 
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Mission_Population_Type::Terminate
 // Created: SBO 2005-08-09

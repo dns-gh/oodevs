@@ -84,7 +84,7 @@ private:
     float height_;
     const kernel::SensorType& sensorType_;
     T_SectorVector sectors_;
-    
+
     float elongation_;
     mutable float maxRadius_;
     mutable float distanceModificator_;

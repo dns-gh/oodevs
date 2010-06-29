@@ -65,7 +65,7 @@ void ADN_Table::paintCell( QPainter* p, int nRow, int nCol, const QRect& cr, boo
 
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Table::paintCell 
+// Name: ADN_Table::paintCell
 // Created: JDY 03-07-08
 //-----------------------------------------------------------------------------
 void ADN_Table::paintCell( QPainter* p, int nRow, int nCol, const QRect& cr, bool bSelected )
@@ -76,7 +76,7 @@ void ADN_Table::paintCell( QPainter* p, int nRow, int nCol, const QRect& cr, boo
 
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Table::doValueChanged 
+// Name: ADN_Table::doValueChanged
 // Created: JDY 03-07-09
 //-----------------------------------------------------------------------------
 void ADN_Table::doValueChanged ( int row, int col )
@@ -253,32 +253,32 @@ void ADN_Table::Print( int nPage, QPainter& painter, const QSize& painterSize )
 // -----------------------------------------------------------------------------
 QWidget *ADN_Table::createEditor( int nRow, int nCol, bool bInitFromCell ) const
 {
-    if ( isReadOnly() || isRowReadOnly( nRow ) || isColumnReadOnly( nCol ) )
+    if( isReadOnly() || isRowReadOnly( nRow ) || isColumnReadOnly( nCol ) )
         return 0;
 
     QWidget *e = 0;
 
     // the current item in the cell should be edited if possible
     QTableItem *i = item( nRow, nCol );
-    if ( bInitFromCell || ( i && !i->isReplaceable() ) ) {
-        if ( i ) {
-            if ( i->editType() == QTableItem::Never )
+    if( bInitFromCell || ( i && !i->isReplaceable() ) ) {
+        if( i ) {
+            if( i->editType() == QTableItem::Never )
                 return 0;
 
             e = i->createEditor();
-            if ( !e )
+            if( !e )
                 return 0;
         }
     }
 
     // no contents in the cell yet, so open the default editor
-    if ( !e ) {
-        if ( i ) {
-            if ( i->editType() == QTableItem::Never )
+    if( !e ) {
+        if( i ) {
+            if( i->editType() == QTableItem::Never )
                 return 0;
 
             e = i->createEditor();
-            if ( !e )
+            if( !e )
                 return 0;
         }
         else

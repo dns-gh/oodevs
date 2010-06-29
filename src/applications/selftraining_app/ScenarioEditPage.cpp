@@ -13,9 +13,9 @@
 #include "ExerciseList.h"
 #include "ProgressPage.h"
 #include "ProcessWrapper.h"
-#include "frontend/commands.h" 
-#include "frontend/CreateExercise.h" 
-#include "frontend/EditExercise.h" 
+#include "frontend/commands.h"
+#include "frontend/CreateExercise.h"
+#include "frontend/EditExercise.h"
 #include "clients_gui/Tools.h"
 #include "clients_kernel/Controllers.h"
 #include <qcombobox.h>
@@ -59,7 +59,7 @@ ScenarioEditPage::ScenarioEditPage( QWidgetStack* pages, Page_ABC& previous, con
         connect( exercises_, SIGNAL( Select( const QString&, const Profile& ) ), this, SLOT( OnSelect( const QString&, const Profile& ) ) );
     }
     EnableButton( eButtonEdit, false );
-    AddContent( box ); 
+    AddContent( box );
 }
 
 // -----------------------------------------------------------------------------
@@ -109,7 +109,7 @@ void ScenarioEditPage::CreateExercise()
         const QStringList model = QStringList::split( "/", editModelList_->currentText() );
         frontend::CreateExercise( config_, editName_->text().ascii(), terrain, model.front().ascii(), model.back().ascii() );
         Edit( editName_->text() );
-    }    
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -80,7 +80,7 @@ void ADN_Units_GUI::Build()
     T_ConnectorVector vInfosConnectors( eNbrGuiElements, (ADN_Connector_ABC*)0 );
     pListUnits_ = new ADN_ListView_Units( pMainWidget_ );
     connect( pListUnits_, SIGNAL( selectionChanged() ), this, SLOT( OnTypeChanged() ) );
-    pListUnits_->GetConnector().Connect( &data_.GetUnitsInfos() );    
+    pListUnits_->GetConnector().Connect( &data_.GetUnitsInfos() );
 
     // Unit data
     QGroupBox* pGroup = new QGroupBox( 0, Qt::Vertical, tr( "Unit" ), pMainWidget_ );
@@ -122,7 +122,7 @@ void ADN_Units_GUI::Build()
 
 
     // Nature
-    QGroupBox* pNatureGroup = new QGroupBox( 2, Qt::Vertical, tr( "Nature" ), pGroup ); 
+    QGroupBox* pNatureGroup = new QGroupBox( 2, Qt::Vertical, tr( "Nature" ), pGroup );
     QGroupBox* subLayout = new QGroupBox( 3, Qt::Horizontal, pNatureGroup );
     subLayout->setInsideMargin( 0 );
     subLayout->setInsideSpacing( 0 );
@@ -137,7 +137,7 @@ void ADN_Units_GUI::Build()
     vInfosConnectors[eNatureNature] = &natureGui->GetConnector();
 
     // Commandement
-    QGroupBox* pCommandGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Command" ), pGroup ); 
+    QGroupBox* pCommandGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Command" ), pGroup );
     pCommandGroup->setInsideMargin(20);
     pCommandGroup->setInsideSpacing(10);
 
@@ -190,7 +190,7 @@ void ADN_Units_GUI::Build()
     vInfosConnectors[eStock] = &pStockLogThreshold_->GetConnector();
 
     // set list units auto connectors
-    pListUnits_->SetItemConnectors( vInfosConnectors );    
+    pListUnits_->SetItemConnectors( vInfosConnectors );
 
     // Layout
     QHBoxLayout* pMainLayout = new QHBoxLayout( pMainWidget_, 10 );
@@ -219,7 +219,7 @@ void ADN_Units_GUI::Build()
 void ADN_Units_GUI::OnTypeChanged()
 {
     QString strType = pTypeCombo_->currentText();
-    if(   strType == ADN_Tr::ConvertFromAgentTypePion( eAgentTypePionLOGBLDRavitaillement ).c_str() 
+    if( strType == ADN_Tr::ConvertFromAgentTypePion( eAgentTypePionLOGBLDRavitaillement ).c_str()
         || strType == ADN_Tr::ConvertFromAgentTypePion( eAgentTypePionLOGBLTRavitaillement ).c_str()
         || strType == ADN_Tr::ConvertFromAgentTypePion( eAgentTypePionLOGConvoi ).c_str()
         || strType == ADN_Tr::ConvertFromAgentTypePion( eAgentTypePionLOGTC2 ).c_str() )

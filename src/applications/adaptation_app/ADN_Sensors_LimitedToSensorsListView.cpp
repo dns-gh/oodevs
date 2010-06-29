@@ -111,16 +111,16 @@ void ADN_Sensors_LimitedToSensorsListView::OnContextMenu( const QPoint& pt)
 bool ADN_Sensors_LimitedToSensorsListView::Contains( ADN_Sensors_Data::SensorInfos* pInfo )
 {
     QListViewItemIterator it( this );
-    while( it.current() != 0 ) 
+    while( it.current() != 0 )
     {
         ADN_ListViewItem* pCurr = (ADN_ListViewItem*)it.current();
         ADN_Sensors_Data::LimitedToSensorsInfos* pData = static_cast< ADN_Sensors_Data::LimitedToSensorsInfos* >( pCurr->GetData() );
 
-        if ( pData->strName_.GetData() == pInfo->strName_.GetData() )
+        if( pData->strName_.GetData() == pInfo->strName_.GetData() )
             return true;
         ++it;
     }
-    return false;    
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -130,14 +130,14 @@ bool ADN_Sensors_LimitedToSensorsListView::Contains( ADN_Sensors_Data::SensorInf
 bool ADN_Sensors_LimitedToSensorsListView::Contains( ADN_Radars_Data::RadarInfos* pInfo )
 {
     QListViewItemIterator it( this );
-    while( it.current() != 0 ) 
+    while( it.current() != 0 )
     {
         ADN_ListViewItem* pCurr = (ADN_ListViewItem*)it.current();
         ADN_Sensors_Data::LimitedToSensorsInfos* pData = static_cast< ADN_Sensors_Data::LimitedToSensorsInfos* >( pCurr->GetData() );
 
-        if ( pData->strName_.GetData() == pInfo->strName_.GetData() )
+        if( pData->strName_.GetData() == pInfo->strName_.GetData() )
             return true;
         ++it;
     }
-    return false;    
+    return false;
 }

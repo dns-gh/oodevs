@@ -109,7 +109,7 @@ void ADN_Composantes_Data::AmbulanceInfos::WriteArchive( const std::string& sect
                 woundedTransports += ", ";
             woundedTransports += ADN_Tr::ConvertFromDoctorSkills( (E_DoctorSkills)n );
         }
-    output << xml::start( section ) 
+    output << xml::start( section )
             << xml::attribute( "capacity", rCapacity_ )
             << xml::attribute( "man-loading-time", loadTimePerPerson_ )
             << xml::attribute( "man-unloading-time", unloadTimePerPerson_ )
@@ -252,7 +252,7 @@ void ADN_Composantes_Data::LogHealthInfos::WriteArchive( xml::xostream& output )
             output << xml::attribute( "nbc", true );
         if( bCuresShock_.GetData() )
             output << xml::attribute( "psychiatry", true );
-    
+
         output << xml::end();
     }
     output << xml::end();
@@ -601,7 +601,7 @@ void ADN_Composantes_Data::LogInfos::ReadLogisticFunction( const std::string& ty
 // -----------------------------------------------------------------------------
 void ADN_Composantes_Data::LogInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::optional() 
+    input >> xml::optional()
             >> xml::start( "logistic-functions" )
                 >> xml::list( *this, &ADN_Composantes_Data::LogInfos::ReadLogisticFunction )
             >> xml::end();
@@ -766,7 +766,7 @@ void ADN_Composantes_Data::BreakdownGroupInfos::ReadBreakdown( xml::xistream& in
 // -----------------------------------------------------------------------------
 void ADN_Composantes_Data::BreakdownGroupInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::optional() 
+    input >> xml::optional()
           >> xml::start( "breakdowns" )
             >> xml::list( "breakdown", *this, &ADN_Composantes_Data::BreakdownGroupInfos::ReadBreakdown )
           >> xml::end();
@@ -1101,10 +1101,10 @@ void ADN_Composantes_Data::HumanProtectionInfos::CopyFrom( HumanProtectionInfos&
 // -----------------------------------------------------------------------------
 void ADN_Composantes_Data::HumanProtectionInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::optional() >> xml::start( "human-protections" ) 
+    input >> xml::optional() >> xml::start( "human-protections" )
                              >> xml::end();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Composantes_Data::WriteArchive
 // Created: JCR 2009-05-17
@@ -1991,14 +1991,14 @@ void ADN_Composantes_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
     input >> xml::optional() >> xml::start( "radars" )
             >> xml::list( "radar", *this, &ADN_Composantes_Data::ComposanteInfos::ReadRadar )
           >> xml::end();
-        
+
     input >> xml::start( "transports" )
-            >> xml::optional() 
+            >> xml::optional()
             >> xml::start( "crew" )
                 >> xml::attribute( "man-boarding-time", embarkingTimePerPerson_ )
                 >> xml::attribute( "man-unloading-time", disembarkingTimePerPerson_ )
             >> xml::end()
-            >> xml::optional() 
+            >> xml::optional()
             >> xml::start( "unit" )
                 >> xml::attribute( "capacity", rWeightTransportCapacity_ )
                 >> xml::attribute( "ton-loading-time", embarkingTimePerTon_ )
@@ -2008,7 +2008,7 @@ void ADN_Composantes_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
     bTroopEmbarkingTimes_ = embarkingTimePerPerson_ != "0s" || disembarkingTimePerPerson_ != "0s";
     bCanCarryCargo_ = rWeightTransportCapacity_ != 0.;
 
-    consumptions_.ReadArchive( input );    
+    consumptions_.ReadArchive( input );
 
     input >> xml::start( "weapon-systems" )
             >> xml::list( "weapon-system", *this, &ADN_Composantes_Data::ComposanteInfos::ReadWeapon )

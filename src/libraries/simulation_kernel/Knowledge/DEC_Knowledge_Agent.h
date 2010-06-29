@@ -42,7 +42,7 @@ class PHY_NatureAtlas;
 
 // =============================================================================
 /** @class  DEC_Knowledge_Agent
-    @brief  This class represents the knowledge of an agent 
+    @brief  This class represents the knowledge of an agent
 */
 // Created: NLD 2004-03-11
 // Modified: JVT 2004-12-09
@@ -63,11 +63,11 @@ public:
              DEC_Knowledge_Agent();
     virtual ~DEC_Knowledge_Agent();
     //@}
-    
+
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
@@ -185,7 +185,7 @@ private:
     const MIL_KnowledgeGroup* pKnowledgeGroup_;
           MIL_Agent_ABC*      pAgentKnown_;
     const unsigned int        nID_;
-         
+
     DEC_Knowledge_AgentDataDetection      dataDetection_;
     DEC_Knowledge_AgentDataRecognition    dataRecognition_;
     DEC_Knowledge_AgentDataIdentification dataIdentification_;

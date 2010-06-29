@@ -101,7 +101,7 @@ MineAttribute::~MineAttribute()
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
 MineAttribute& MineAttribute::operator=( const MineAttribute& rhs )
-{    
+{
     nCurrentNbrDotation_ = rhs.nCurrentNbrDotation_;
     rMiningPercentage_ = rhs.rMiningPercentage_;
     nFullNbrDotation_ = rhs.nFullNbrDotation_;
@@ -123,7 +123,7 @@ void MineAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
        >> rMiningPercentage_;
     dotation_ = PHY_DotationType::FindDotationCategory( dotation );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MineAttribute::save
 // Created: JCR 2008-09-15
@@ -131,7 +131,7 @@ void MineAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
 void MineAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) const
 {
     ar << boost::serialization::base_object< ObjectAttribute_ABC >( *this );
-    if ( dotation_ )
+    if( dotation_ )
        ar << dotation_->GetName();
     else
        ar << "";
@@ -146,7 +146,7 @@ void MineAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) con
 // -----------------------------------------------------------------------------
 void MineAttribute::WriteODB( xml::xostream& xos ) const
 {
-    xos << xml::start( "mine" ) 
+    xos << xml::start( "mine" )
             << xml::attribute( "completion", rMiningPercentage_ )
         << xml::end();
 }
@@ -215,7 +215,7 @@ void MineAttribute::OnUpdate( const Common::MsgMissionParameter_Value& attribute
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
 void MineAttribute::Set( MT_Float percentage )
-{    
+{
     rMiningPercentage_ = std::max( 0., std::min( 1., percentage ) );
     nCurrentNbrDotation_ = (unsigned int)( rMiningPercentage_ * nFullNbrDotation_ );
     NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
@@ -259,7 +259,7 @@ void MineAttribute::Serialize( HLA_UpdateFunctor& functor ) const
     functor.Serialize( "valorisation",  NeedUpdate( eOnHLAUpdate ), rMiningPercentage_ );
     Reset( eOnHLAUpdate );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MineAttribute::Deserialize
 // Created: JCR 2008-06-18

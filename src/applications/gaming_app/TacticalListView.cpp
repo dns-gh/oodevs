@@ -83,7 +83,7 @@ void TacticalListView::Display( const kernel::Entity_ABC& entity, gui::ValuedLis
         item->setPixmap( 1, decisions->IsEmbraye() ? lock_ : QPixmap() );
     else if( const kernel::CommandPostAttributes* commandPost = entity.Retrieve< kernel::CommandPostAttributes >() )
         item->setPixmap( 1, commandPost->IsCommandPost() ? commandPost_ : QPixmap() );
-    
+
     if( const Attributes* attributes = static_cast< const Attributes* >( entity.Retrieve< kernel::Attributes_ABC >() ) )
         item->SetBackgroundColor( attributes->bDead_ ? QColor( 255, 200, 200 ) : QColor() );
 

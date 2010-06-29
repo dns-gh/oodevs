@@ -10,7 +10,7 @@
 #include "selftraining_app_pch.h"
 #include "MessageDialog.h"
 #include "moc_MessageDialog.cpp"
-#include "MenuButton.h" 
+#include "MenuButton.h"
 #include "clients_gui/Tools.h"
 
 namespace
@@ -45,7 +45,7 @@ MessageDialog::MessageDialog( QWidget* parent, const QString& title, const QStri
 {
     if( parent )
         setPalette( parent->palette() );
-    
+
     QFont font( "Century Gothic", 14, QFont::Bold );
     font.setItalic( true );
     setFont( font );
@@ -61,7 +61,7 @@ MessageDialog::MessageDialog( QWidget* parent, const QString& title, const QStri
     label->setAlignment( Qt::AlignCenter | Qt::WordBreak );
     label->setMinimumHeight( 50 );
     QHBox* hbox = new QHBox( vbox );
-    
+
     CreateButton( hbox, button1 );
     CreateButton( hbox, button2 );
 

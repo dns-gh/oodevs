@@ -24,7 +24,7 @@ template< typename K, typename T >
 class Filter : public Function2_ABC< K, bool, T >
 {
 public:
-    //! @name 
+    //! @name
     //@{
     typedef T Result_Type;
     //@}

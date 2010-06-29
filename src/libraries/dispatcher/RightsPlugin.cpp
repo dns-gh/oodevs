@@ -106,13 +106,13 @@ void RightsPlugin::OnReceive( const std::string& link, const MsgsClientToAuthent
     if( GetProfile( link ).CheckRights( wrapper ) )
     {
         if( wrapper.message().has_authentication_request() )
-            OnReceiveMsgAuthenticationRequest( link, wrapper.message().authentication_request() ); 
+            OnReceiveMsgAuthenticationRequest( link, wrapper.message().authentication_request() );
         if( wrapper.message().has_profile_creation_request() )
-            OnReceiveMsgProfileCreationRequest( GetPublisher( link ), wrapper.message().profile_creation_request() ); 
+            OnReceiveMsgProfileCreationRequest( GetPublisher( link ), wrapper.message().profile_creation_request() );
         if( wrapper.message().has_profile_update_request() )
-            OnReceiveMsgProfileUpdateRequest( GetPublisher( link ), wrapper.message().profile_update_request() ); 
+            OnReceiveMsgProfileUpdateRequest( GetPublisher( link ), wrapper.message().profile_update_request() );
         if( wrapper.message().has_profile_destruction_request() )
-            OnReceiveMsgProfileDestructionRequest( GetPublisher( link ), wrapper.message().profile_destruction_request() ); 
+            OnReceiveMsgProfileDestructionRequest( GetPublisher( link ), wrapper.message().profile_destruction_request() );
     }
 }
 
@@ -127,7 +127,7 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
     ProtocolVersionChecker checker ( message.version() );
     authentication::AuthenticationResponse ack;
     ack().mutable_server_version()->set_value( ProtocolVersionChecker::GetCurrentProtocolVersion() );
-    if ( !checker.CheckCompatibility() )
+    if( !checker.CheckCompatibility() )
     {
         ack().set_error_code( MsgsAuthenticationToClient::MsgAuthenticationResponse_ErrorCode_mismatched_protocol_version );
         profiles_->Send( ack() );
@@ -169,7 +169,7 @@ void RightsPlugin::OnReceiveMsgProfileCreationRequest( ClientPublisher_ABC& clie
     ack().set_error_code ( profiles_->Create( message ) );
     ack().set_login      ( message.profile().login() );
     ack.Send( client );
-}   
+}
 
 // -----------------------------------------------------------------------------
 // Name: RightsPlugin::OnReceiveMsgProfileUpdateRequest

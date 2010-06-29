@@ -64,7 +64,7 @@ namespace
         MOCK_METHOD_EXT( Create, 1, kernel::KnowledgeGroup_ABC*( kernel::KnowledgeGroup_ABC& ), Create3 );
         MOCK_METHOD_EXT( Create, 2, kernel::KnowledgeGroup_ABC*( xml::xistream&, kernel::KnowledgeGroup_ABC&  ), Create4 );
     };
-    
+
     typedef tools::Resolver< kernel::KnowledgeGroupType, std::string > T_KnowledgeGroupTypeResolver;
     MOCK_BASE_CLASS( MockKnowledgeGroupTypeResolver, T_KnowledgeGroupTypeResolver )
     {
@@ -123,7 +123,7 @@ BOOST_AUTO_TEST_CASE( KnowledgeGroupTypeShowCommunicationDelayMinutes )
 
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroupTest
-// Created:  FHD 2009-11-30: 
+// Created:  FHD 2009-11-30:
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( ReadKnowledgeGroupTest )
 {
@@ -132,7 +132,7 @@ BOOST_AUTO_TEST_CASE( ReadKnowledgeGroupTest )
     QApplication app(argc, &argv);
 
     assert(qApp);
-    xml::xistringstream xis( "<knowledge-group id=\"42\" name =\"group1\"/>" ); 
+    xml::xistringstream xis( "<knowledge-group id=\"42\" name =\"group1\"/>" );
     xis >> xml::start( "knowledge-group" );
     kernel::Controller controller;
     MockKnowledgeGroupFactory factory;
@@ -150,7 +150,7 @@ BOOST_AUTO_TEST_CASE( ReadKnowledgeGroupTest )
 
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroupComposite
-// Created:  FHD 2009-11-30: 
+// Created:  FHD 2009-11-30:
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( ReadKnowledgeGroupCompositeTest )
 {
@@ -159,7 +159,7 @@ BOOST_AUTO_TEST_CASE( ReadKnowledgeGroupCompositeTest )
     QApplication app(argc, &argv);
 
     assert(qApp);
-    xml::xistringstream xis( "<knowledge-group id=\"42\" name =\"group1\"><knowledge-group id=\"2\" name =\"group2\"/></knowledge-group>" );    
+    xml::xistringstream xis( "<knowledge-group id=\"42\" name =\"group1\"><knowledge-group id=\"2\" name =\"group2\"/></knowledge-group>" );
     xis >> xml::start( "knowledge-group" );
     kernel::Controller controller;
     MockKnowledgeGroupFactory factory;
@@ -181,7 +181,7 @@ BOOST_AUTO_TEST_CASE( ReadKnowledgeGroupCompositeTest )
 
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroupComposite
-// Created:  FHD 2009-11-30: 
+// Created:  FHD 2009-11-30:
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( ReadKnowledgeGroupMultiTest )
 {
@@ -190,7 +190,7 @@ BOOST_AUTO_TEST_CASE( ReadKnowledgeGroupMultiTest )
     QApplication app(argc, &argv);
 
     assert(qApp);
-    xml::xistringstream xis( "<knowledge-group id=\"42\" name =\"group1\"><knowledge-group id=\"2\" name =\"group2\"><knowledge-group id=\"71\" name =\"group3\"/></knowledge-group></knowledge-group>" );    
+    xml::xistringstream xis( "<knowledge-group id=\"42\" name =\"group1\"><knowledge-group id=\"2\" name =\"group2\"><knowledge-group id=\"71\" name =\"group3\"/></knowledge-group></knowledge-group>" );
     xis >> xml::start( "knowledge-group" );
     kernel::Controller controller;
     MockKnowledgeGroupFactory factory;
@@ -209,7 +209,7 @@ BOOST_AUTO_TEST_CASE( ReadKnowledgeGroupMultiTest )
     MockKnowledgeGroup subSubGroup;
     MOCK_EXPECT( factory, Create4 ).with( mock::any, mock::same( subGroup ) ).returns( &subSubGroup );
     MOCK_EXPECT( subSubGroup, GetId ).returns( 71 );
-    
+
     kgModel.Create( xis, team, model );
 }
 
@@ -267,10 +267,10 @@ BOOST_AUTO_TEST_CASE( WriteKnowledgeGroupTest )
 //        KnowledgeGroup kg( xis, controller, idManager, types );
 //        KnowledgeGroupCommunications *kgCom = new KnowledgeGroupCommunications( controller, kg, &team );
 //        kg.Attach< kernel::CommunicationHierarchies >( *kgCom );
-//        
+//
 //        const std::string expected = "<communication><knowledge-group id='1' name='test' type='Standard'/></communication>";
-//        TeamCommunications* tcom = new TeamCommunications( controller, team, NULL );        
-//        team.Attach< kernel::CommunicationHierarchies >( *tcom );        
+//        TeamCommunications* tcom = new TeamCommunications( controller, team, NULL );
+//        team.Attach< kernel::CommunicationHierarchies >( *tcom );
 //        tcom->AddSubordinate( kg );
 //
 //        xml::xostringstream xos;

@@ -42,7 +42,7 @@ public:
     const PHY_AttritionData& GetAttritionData( const MIL_PopulationAttitude& attitude, const PHY_Protection& protection ) const;
           MT_Float           GetPH           ( const MIL_PopulationAttitude& attitude, MT_Float rDensity ) const;
     //@}
-    
+
 private:
     //! @name Copy/Assignement
     //@{

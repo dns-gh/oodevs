@@ -60,7 +60,7 @@ void PHY_Protection::ReadProtection( xml::xistream& xis )
 {
     std::string strProtection;
     xis >> xml::attribute( "name", strProtection );
-    
+
     const PHY_Protection*& pProtection = protections_[ strProtection ];
     if( pProtection )
         xis.error( "Protection " + strProtection + " already defined" );
@@ -162,7 +162,7 @@ void PHY_Protection::ReadAttrition( xml::xistream& xis )
     if( rTmp < 0 || rTmp > 100 )
         xis.error( "injured-percentage not in [0..100]" );
     data.rWoundedRatio_ = rTmp / 100.;
-        
+
     xis >> xml::attribute( "dead-percentage", rTmp );
     if( rTmp < 0 || rTmp > 100 )
         xis.error( "dead-percentage not in [0..100]" );

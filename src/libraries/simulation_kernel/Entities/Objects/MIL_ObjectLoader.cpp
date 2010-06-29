@@ -30,7 +30,7 @@ namespace
 // -----------------------------------------------------------------------------
 MIL_ObjectLoader& MIL_ObjectLoader::GetLoader()
 {
-    if ( !pLoader_ )
+    if( !pLoader_ )
         pLoader_ = new MIL_ObjectLoader();
     return *pLoader_;
 }
@@ -43,7 +43,7 @@ MIL_ObjectLoader::MIL_ObjectLoader()
     : factory_( new CapacityFactory() )
     , attributes_( new AttributeFactory() )
 {
-    if ( !pLoader_ )
+    if( !pLoader_ )
         pLoader_ = this;
     else
         throw std::runtime_error( "MIL_ObjectLoader already created" );
@@ -132,9 +132,9 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const std::string& type, MIL_Arm
 // Created: JCR 2008-05-23
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectLoader::CreateObject( xml::xistream& xis, MIL_Army_ABC& army ) const
-{    
+{
     const std::string type( xml::attribute< std::string >( xis, "type" ) );
-    
+
     CIT_Prototypes it = prototypes_.find( type );
     if( it == prototypes_.end() )
         throw std::runtime_error( __FUNCTION__ " - Unknown object prototype: " + type );
@@ -177,7 +177,7 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const Common::MsgMissionParamete
 MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army ) const
 {
     CIT_Prototypes it = prototypes_.find( builder.GetType().GetName() );
-    if ( it == prototypes_.end() )
+    if( it == prototypes_.end() )
         return 0;
     Object* pObject = new Object( *it->second, army, 0 );
     builder.Build( *pObject );
@@ -192,7 +192,7 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const MIL_ObjectBuilder_ABC& bui
 MIL_Object_ABC* MIL_ObjectLoader::CreateUrbanObject( const urban::TerrainObject_ABC& object ) const
 {
     CIT_Prototypes it = prototypes_.find( "urban block" );
-    if ( it == prototypes_.end() )
+    if( it == prototypes_.end() )
         return 0;
     UrbanObjectWrapper* pObject = new UrbanObjectWrapper( *it->second, object );
     // pObject->Finalize();
@@ -207,7 +207,7 @@ void MIL_ObjectLoader::ReadAttributes( const std::string& attribute, xml::xistre
 {
     attributes_->Create( object, attribute, xis );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectLoader::InitializeLocation
 // Created: JCR 2008-06-18

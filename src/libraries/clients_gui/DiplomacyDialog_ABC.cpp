@@ -148,7 +148,7 @@ void DiplomacyDialog_ABC::showEvent( QShowEvent* )
                     item = new DiplomacyCell( table_ );
                     table_->setItem( i, j, item );
                 }
-                item->setText( diplomacy == kernel::Karma::unknown_ ? kernel::Karma::neutral_.GetName() : diplomacy.GetName() ); // $$$$ SBO 2008-12-09: 
+                item->setText( diplomacy == kernel::Karma::unknown_ ? kernel::Karma::neutral_.GetName() : diplomacy.GetName() ); // $$$$ SBO 2008-12-09:
             }
         }
 }

@@ -213,7 +213,7 @@ const PHY_DotationCategory* PHY_DotationType::FindDotationCategory( unsigned int
     for( CIT_DotationTypeMap it = dotationTypes_.begin(); it != dotationTypes_.end(); ++it )
     {
         const PHY_DotationCategory* pDotationCategory = it->second->InternalFindDotationCategory( nID );
-        if( pDotationCategory ) 
+        if( pDotationCategory )
             return pDotationCategory;
     }
     return 0;
@@ -228,7 +228,7 @@ const PHY_DotationCategory* PHY_DotationType::FindDotationCategory( const std::s
     for( CIT_DotationTypeMap it = dotationTypes_.begin(); it != dotationTypes_.end(); ++it )
     {
         const PHY_DotationCategory* pDotationCategory = it->second->InternalFindDotationCategory( strName );
-        if( pDotationCategory ) 
+        if( pDotationCategory )
             return pDotationCategory;
     }
     return 0;
@@ -242,7 +242,7 @@ const std::string& PHY_DotationType::GetName() const
 {
     return strName_;
 }
-          
+
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationType::GetID
 // Created: NLD 2005-03-17

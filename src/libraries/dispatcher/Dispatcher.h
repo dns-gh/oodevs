@@ -76,7 +76,7 @@ private:
     boost::shared_ptr< SimulationNetworker >  simulationNetworker_;
     std::auto_ptr< PluginFactory >            factory_;
     std::auto_ptr< Logger >                   logger_;
-    std::auto_ptr< Application_ABC >          qapp_;                             
+    std::auto_ptr< Application_ABC >          qapp_;
 };
 
 }

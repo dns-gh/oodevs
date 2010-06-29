@@ -100,7 +100,7 @@ private:
     void SerializeLocation( T& message, unsigned long parameterId, const std::string& value ) const;
     template< typename T >
     void SerializeLocationList( T& message, unsigned long parameterId, const std::string& value ) const;
-    
+
     template< typename T >
     void SerializeLocList( T& message, unsigned long parameterId, const std::string& tablename ) const;
 

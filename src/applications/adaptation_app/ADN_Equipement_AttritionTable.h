@@ -32,7 +32,7 @@
 */
 // Created: APE 2004-12-29
 // =============================================================================
-class ADN_Equipement_AttritionTable 
+class ADN_Equipement_AttritionTable
 : public ADN_Table2
 {
     MT_COPYNOTALLOWED( ADN_Equipement_AttritionTable )

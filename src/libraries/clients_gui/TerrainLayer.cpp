@@ -91,7 +91,7 @@ void TerrainLayer::Paint( const geometry::Rectangle2f& viewport )
             glDisable( GL_TEXTURE_GEN_T );
             if( layer_.get() )
                 layer_->Paint( viewport );
-            else 
+            else
                 noVBOlayer_->Paint( viewport );
         glPopAttrib();
     }
@@ -160,7 +160,7 @@ public:
             return true;
 
         float pixels = parent_.tools_.Pixels();
-        
+
         switch( data.Linear() )
         {
         case 0:

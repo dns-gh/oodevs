@@ -30,7 +30,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 // Name: Object::Object
 // Created: SBO 2005-09-02
-// -----------------------------------------------------------------------------    
+// -----------------------------------------------------------------------------
 Object::Object( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const kernel::ObjectType& type, const QString& name, IdManager& idManager )
     : EntityImplementation< Object_ABC >( controller, idManager.GetNextId(), "" )
     , converter_( converter )
@@ -64,7 +64,7 @@ Object::Object( xml::xistream& xis, kernel::Controller& controller, const kernel
 Object::~Object()
 {
     if( Entity_ABC* superior = const_cast< Entity_ABC* >( Get< kernel::TacticalHierarchies >().GetSuperior() ) )
-        static_cast< Team* >( superior )->Resolver< kernel::Object_ABC >::Remove( id_ ); // $$$$ SBO 2006-10-20: 
+        static_cast< Team* >( superior )->Resolver< kernel::Object_ABC >::Remove( id_ ); // $$$$ SBO 2006-10-20:
     Destroy();
 }
 
@@ -87,7 +87,7 @@ void Object::Display( Displayer_ABC& displayer ) const
              .Display( tools::translate( "Object", "Identifier:" ), id_ )
              .Display( tools::translate( "Object", "Name:" ), name_ )
              .Display( tools::translate( "Object", "Type:" ), type_ )
-             .Display( tools::translate( "Object", "Location:" ), converter_.ConvertToMgrs( Get< Positions >().GetPosition() ) ); // $$$$ AGE 2006-03-22: 
+             .Display( tools::translate( "Object", "Location:" ), converter_.ConvertToMgrs( Get< Positions >().GetPosition() ) ); // $$$$ AGE 2006-03-22:
 }
 
 // -----------------------------------------------------------------------------

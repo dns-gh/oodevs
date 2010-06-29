@@ -20,12 +20,12 @@ using namespace plugins::crossbow;
 // -----------------------------------------------------------------------------
 DatabaseEditor::DatabaseEditor( OGRLayer& layer )
     : layer_ ( layer )
-    , useTransaction_ ( false) 
+    , useTransaction_ ( false)
     , inTransaction_ ( false )
 {
     useTransaction_ = ( /*cpl_port TRUE*/ 1 == layer.TestCapability( "Transactions" ) );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DatabaseEditor destructor
 // Created: JCR 2009-04-22
@@ -41,7 +41,7 @@ DatabaseEditor::~DatabaseEditor()
 // -----------------------------------------------------------------------------
 void DatabaseEditor::BeginTransaction()
 {
-    if ( useTransaction_ && !InTransaction() )
+    if( useTransaction_ && !InTransaction() )
     {
         layer_.StartTransaction();
         inTransaction_ = true;
@@ -54,7 +54,7 @@ void DatabaseEditor::BeginTransaction()
 // -----------------------------------------------------------------------------
 void DatabaseEditor::EndTransaction()
 {
-    if ( useTransaction_ && InTransaction() )
+    if( useTransaction_ && InTransaction() )
     {
         layer_.CommitTransaction();
         inTransaction_ = false;

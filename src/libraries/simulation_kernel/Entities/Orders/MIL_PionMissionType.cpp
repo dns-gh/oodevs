@@ -36,7 +36,7 @@ void MIL_PionMissionType::Initialize( xml::xistream& xis )
     MT_LOG_INFO_MSG( "Initializing pion mission types" );
 
     LoadingWrapper loader;
-    
+
     xis >> xml::start( "missions" )
             >> xml::start( "units" )
                 >> xml::list( "mission", loader, &LoadingWrapper::ReadMission )

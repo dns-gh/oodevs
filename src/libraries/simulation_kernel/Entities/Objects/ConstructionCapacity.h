@@ -46,7 +46,7 @@ private:
     ConstructionCapacity& operator=( const ConstructionCapacity& );
     //@}
 
-private:        
+private:
     //! @name Member data
     //@{
     const PHY_ConsumptionType* default_;

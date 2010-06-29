@@ -34,7 +34,7 @@ LoggerApplication::LoggerApplication( const std::string& hostname, const std::st
     RegisterMessage( *this, &LoggerApplication::OnReceiveMsgAuthenticationToClient );
     RegisterMessage( *this, &LoggerApplication::OnReceiveMsgDispatcherToClient );
     RegisterMessage( *this, &LoggerApplication::OnReceiveMsgMessengerToClient );
-    
+
     RegisterMessage( *this, &LoggerApplication::OnReceiveMsgReplayToClient );
     RegisterMessage( *this, &LoggerApplication::OnReceiveMsgAarToClient );
 
@@ -87,7 +87,7 @@ void LoggerApplication::ConnectionSucceeded( const std::string& endpoint )
     authentication::AuthenticationRequest message;
     message().set_login( login_.c_str() );
     message().set_password( password_.c_str() );
-	message.Send( *this );
+    message.Send( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -120,7 +120,7 @@ void LoggerApplication::OnReceiveMsgSimToClient( const std::string& /*from*/, co
 {
     if( wrapper.message().has_control_begin_tick() )
         OnReceiveMsgControlBeginTick( wrapper.message().control_begin_tick().current_tick() );
-	else
+    else
         LogMessage( wrapper );
 }
 
@@ -133,7 +133,7 @@ void LoggerApplication::OnReceiveMsgAuthenticationToClient( const std::string& /
     DumpTime();
     file_ << "Authentication received" << std::endl << std::flush;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: LoggerApplication::OnReceiveMsgDispatcherToClient
 // Created: LDC 2009-09-02

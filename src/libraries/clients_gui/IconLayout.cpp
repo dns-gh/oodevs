@@ -20,7 +20,7 @@ IconLayout::IconLayout()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: IconLayout destructor
 // Created: SBO 2006-08-18

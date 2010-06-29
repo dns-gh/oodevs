@@ -127,7 +127,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     , staticModel_  ( staticModel )
     , model_        ( model )
     , modelBuilder_ ( new ModelBuilder( controllers, model ) )
-    , config_       ( config )    
+    , config_       ( config )
     , forward_      ( new CircularEventStrategy() )
     , eventStrategy_( new ExclusiveEventStrategy( *forward_ ) )
     , glProxy_      ( 0 )
@@ -140,7 +140,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     lighting_ = new LightingProxy( this );
     PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers, *lighting_, staticModel_.coordinateSystems_ );
     new Dialogs( this, controllers, PreparationProfile::GetProfile() );
-    
+
     glProxy_ = new GlProxy();
     strategy_ = new ColorStrategy( controllers, *glProxy_ );
     strategy_->Add( std::auto_ptr< ColorModifier_ABC >( new SelectionColorModifier( controllers, *glProxy_ ) ) );
@@ -361,7 +361,7 @@ bool MainWindow::New()
 // -----------------------------------------------------------------------------
 void MainWindow::Open()
 {
-    if ( model_.IsLoaded() && !CheckSaving())
+    if( model_.IsLoaded() && !CheckSaving())
         return;
     if( New() )
         LoadExercise();
@@ -463,7 +463,7 @@ namespace
 bool MainWindow::Save()
 {
     bool result ( false );
-    if ( needsSaving_ )
+    if( needsSaving_ )
     {
         SaveModelChecker checker( this );
         const bool result = model_.Save( config_, checker );
@@ -593,14 +593,14 @@ void MainWindow::SetWindowTitle( bool needsSaving )
 {
     SetNeedsSaving( needsSaving );
     QString filename = tr( "No file loaded" );
-    if ( model_.IsLoaded() )
+    if( model_.IsLoaded() )
     {
         filename = model_.GetName().isEmpty() ? tr( "New ORBAT" ) : model_.GetName();
         if( needsSaving )
             filename += "*";
     }
     setCaption( tr( "Preparation - [%1]" ).arg( filename ) );
-    if ( menu_ && fileToolBar_ )
+    if( menu_ && fileToolBar_ )
     {
         menu_->EnableSaveItem( needsSaving );
         fileToolBar_->EnableSaveItem( needsSaving );
@@ -622,7 +622,7 @@ void MainWindow::SetNeedsSaving( bool status )
 // -----------------------------------------------------------------------------
 bool MainWindow::CheckSaving()
 {
-    if ( needsSaving_ )
+    if( needsSaving_ )
     {
         int result = QMessageBox::question( this, tools::translate( "Application", "SWORD" )
                                                 , tr( "Save modifications?" )

@@ -77,7 +77,7 @@ private:
     kernel::Controllers& controllers_;
     const kernel::GlTools_ABC& tools_;
     T_Effects effects_;
-    const MeteoModel& meteoModel_; 
+    const MeteoModel& meteoModel_;
     //@}
 };
 

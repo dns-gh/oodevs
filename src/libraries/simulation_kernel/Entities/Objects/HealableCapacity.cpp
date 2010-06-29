@@ -88,7 +88,7 @@ void HealableCapacity::InitializeData( xml::xistream& xis )
 template< typename Archive >
 void HealableCapacity::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );        
+    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -116,7 +116,7 @@ void HealableCapacity::Instanciate( MIL_Object_ABC& object ) const
 void HealableCapacity::Update( MIL_Object_ABC& object, float time )
 {
     MedicalTreatmentAttribute attr = object.GetAttribute< MedicalTreatmentAttribute >();
-    
+
     //Initialize capacity state
     bool bCanReceiveNewPatient_ = UpdateInitialState( attr, time );
 
@@ -145,7 +145,7 @@ bool HealableCapacity::UpdateInitialState( MedicalTreatmentAttribute& attr, floa
     //Update data
     attr.UpdateAvailableBeds( bEmergencyPlan_ , emergencyBedsRate_ );
     attr.UpdateAvailableDoctors( bEmergencyPlan_ , bBusinessHours_ , emergencyDoctorsRate_, nightDoctorsRate_ );
-    
+
     //Update information about the possibility to admit a new patient
     return ( attr.GetAvailableBeds() > 0 && attr.GetAvailableDoctors() > 0 );
 }

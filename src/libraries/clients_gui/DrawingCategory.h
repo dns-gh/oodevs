@@ -19,7 +19,7 @@ namespace kernel
 
 namespace svg
 {
-    class TextRenderer; 
+    class TextRenderer;
 }
 
 namespace xml

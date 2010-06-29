@@ -15,7 +15,7 @@ namespace kernel
 {
     class Settings_ABC;
 
-    namespace detail 
+    namespace detail
     {
         class ValueHolder_ABC;
     }

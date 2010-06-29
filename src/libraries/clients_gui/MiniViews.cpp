@@ -41,7 +41,7 @@ MiniViews::MiniViews( QMainWindow* parent, Controllers& controllers )
     setCaption( tr( "Miniviews" ) );
     grid_ = new SmartGridWidget( this, 2, Qt::Vertical, "miniviews" );
     setWidget( grid_ );
-   
+
     controllers_.Register( *this );
 }
 

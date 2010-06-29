@@ -113,8 +113,8 @@ void StartAnalysisPanel::ReplaySelected()
 QString StartAnalysisPanel::BuildMessage( const QString& session ) const
 {
     const QString exercise = exercises_->selectedItem()->text();
-    const std::string sessionXml = config_.BuildSessionDir( exercise.ascii(), session.ascii() ) + "/session.xml"; // $$$$ AGE 2008-01-07: 
-    
+    const std::string sessionXml = config_.BuildSessionDir( exercise.ascii(), session.ascii() ) + "/session.xml"; // $$$$ AGE 2008-01-07:
+
     std::string name( " --- " ), comment(  " --- " );
     try
     {

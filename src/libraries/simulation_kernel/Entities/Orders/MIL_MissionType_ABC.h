@@ -21,14 +21,14 @@
 class MIL_MissionType_ABC : public MIL_OrderType_ABC
 {
 public:
-    //! @name Phase enum to access the behavior string 
+    //! @name Phase enum to access the behavior string
     //@{
     enum Phase
     {
         eNoPhase = 0,
-        ePhaseMRT, 
-        ePhaseCDT 
-    }; 
+        ePhaseMRT,
+        ePhaseCDT
+    };
     //@}
 
 public:
@@ -42,13 +42,13 @@ public:
     //@{
     virtual const std::string& GetDIABehavior( Phase phase = eNoPhase ) const = 0;
     //@}
-    
+
     //! @name Types
     //@{
     typedef std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > T_MissionNameMap;
     typedef T_MissionNameMap::const_iterator                                          CIT_MissionNameMap;
     //@}
-    
+
 protected:
     MIL_MissionType_ABC();
 

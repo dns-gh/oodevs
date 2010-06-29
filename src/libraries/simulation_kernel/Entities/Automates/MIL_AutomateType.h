@@ -78,7 +78,7 @@ public:
     virtual bool IsRefugee () const;
     virtual bool IsInjuredHuman() const;
     //@}
-    
+
     //! @name Logistic
     //@{
     virtual void RegisterFunctions( directia::Brain& brain, MIL_Automate& automat ) const;
@@ -101,7 +101,7 @@ private:
     struct sCompositionBounds
     {
         sCompositionBounds() : nMin_( 0 ), nMax_( 0 ) {}
-    
+
         unsigned int nMin_;
         unsigned int nMax_;
     };

@@ -133,7 +133,7 @@ void AgentKnowledgeConverter::NotifyCreated( const AgentKnowledge_ABC& knowledge
 {
     agents_[ & knowledge.GetOwner() ][ knowledge.GetEntity() ] = &knowledge;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledgeConverter::NotifyDeleted
 // Created: AGE 2006-05-18
@@ -142,7 +142,7 @@ void AgentKnowledgeConverter::NotifyDeleted( const AgentKnowledge_ABC& knowledge
 {
     agents_[ & knowledge.GetOwner() ].erase( knowledge.GetEntity() );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledgeConverter::NotifyCreated
 // Created: AGE 2006-05-18
@@ -151,7 +151,7 @@ void AgentKnowledgeConverter::NotifyCreated( const PopulationKnowledge_ABC& know
 {
     populations_[ & knowledge.GetOwner() ][ knowledge.GetEntity() ] = &knowledge;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledgeConverter::NotifyDeleted
 // Created: AGE 2006-05-18

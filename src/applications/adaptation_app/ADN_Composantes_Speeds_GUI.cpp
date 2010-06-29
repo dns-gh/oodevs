@@ -19,7 +19,7 @@ class ADN_CT_Composantes_Speeds
 {
 public:
 
-    ADN_CT_Composantes_Speeds(ADN_Composantes_Speeds_GUI& tab) 
+    ADN_CT_Composantes_Speeds(ADN_Composantes_Speeds_GUI& tab)
     : ADN_Connector_Table_ABC(tab,false)
     {}
 
@@ -33,18 +33,18 @@ public:
         // add a new row & set new values
         tab_.setItem(i,0,pItemString=new ADN_TableItem_String(&tab_,obj));
         tab_.setItem(i,1,pItemSpeed=new ADN_TableItem_Double(&tab_,obj));
-        
+
         // set table item properties
         pItemString->setEnabled(false);
         pItemString->setText(ADN_Tr::ConvertFromLocation(static_cast<SpeedInfos*>(obj)->nTypeTerrain_,ENT_Tr_ABC::eToTr).c_str());
 
         // set table item properties
         pItemSpeed->GetValidator().setBottom(0);
-        
+
         // connect items & datas
         pItemSpeed->GetConnector().Connect(&static_cast<SpeedInfos*>(obj)->rSpeed_);
     }
-    
+
 private:
     ADN_CT_Composantes_Speeds& operator=( const ADN_CT_Composantes_Speeds& );
 };
@@ -66,13 +66,13 @@ ADN_Composantes_Speeds_GUI::ADN_Composantes_Speeds_GUI(QWidget * parent )
 
     // hide vertical header
     verticalHeader()->hide();
-    
+
     // tab with 2 columns
     setNumCols( 2 );
     setNumRows( 0 );
 //    setColumnStretchable( 0, true );
 //    setColumnStretchable( 1, false );
-    
+
     horizontalHeader()->setLabel( 0, tr( "Ground type") );
     horizontalHeader()->setLabel( 1, tr( "Speed (km/h)") );
 

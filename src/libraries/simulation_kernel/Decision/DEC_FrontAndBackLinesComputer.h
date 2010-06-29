@@ -51,7 +51,7 @@ private:
     //@{
     void Compute();
     //@}
-                                              
+
 private:
     const MIL_Automate&     refAutomate_; // reference
           T_PionVector      pions_;           //$$$ Factoriser

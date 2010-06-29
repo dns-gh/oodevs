@@ -184,15 +184,15 @@ void DEC_KnowledgeFunctions::GetUrbanBlockKnowledgeInCercle( const directia::Bra
 {
     //Urban
     T_KnowledgeUrbanVector urbansKn;
-	T_KnowledgeUrbanVector result;
+    T_KnowledgeUrbanVector result;
     pion.GetArmy().GetKnowledge().GetUrbanObjects( urbansKn );
-	geometry::Point2f geoCenter( (float)center->rX_, (float)center->rY_ ); 
+    geometry::Point2f geoCenter( (float)center->rX_, (float)center->rY_ );
 
-	for( T_KnowledgeUrbanVector::iterator it = urbansKn.begin(); it != urbansKn.end(); it++ )
-	{
-		if( (*it)->GetTerrainObjectKnown().GetFootprint()->Intersect( geoCenter, radius ) )
+    for( T_KnowledgeUrbanVector::iterator it = urbansKn.begin(); it != urbansKn.end(); it++ )
+    {
+        if( (*it)->GetTerrainObjectKnown().GetFootprint()->Intersect( geoCenter, radius ) )
             result.push_back( (*it) );
-	}
+    }
 
 
     knowledgeCreateFunction( table, brain.GetScriptVariable( "net.masagroup.sword.military.world.UrbanBlock" ), result, true );

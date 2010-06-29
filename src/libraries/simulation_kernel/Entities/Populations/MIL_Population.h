@@ -141,7 +141,7 @@ public:
     MIL_PopulationConcentration& GetConcentration( const MT_Vector2D& position );
     //@}
 
-    //! @name Network 
+    //! @name Network
     //@{
     void OnReceiveMsgOrder    ( const Common::MsgPopulationOrder& msg );
     void OnReceiveMsgFragOrder( const MsgsClientToSim::MsgFragOrder&       msg );
@@ -156,7 +156,7 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     void WriteODB( xml::xostream& xos ) const;
@@ -171,12 +171,12 @@ public:
     //@{
     struct sPeopleCounter
     {
-        sPeopleCounter( unsigned int rInit );   
+        sPeopleCounter( unsigned int rInit );
         unsigned GetBoundedPeople( unsigned int nPeople );
 
         unsigned int nPeople_;
     };
-    
+
 
 protected:
     MIL_Population( const MIL_PopulationType& type );
@@ -197,8 +197,8 @@ private:
     //@}
 
     //! @name Network
-    //@{    
-    void SendDestruction() const;    
+    //@{
+    void SendDestruction() const;
     //@}
 
     //! @name Helpers
@@ -212,7 +212,7 @@ private:
     typedef std::vector< MIL_PopulationConcentration* > T_ConcentrationVector;
     typedef T_ConcentrationVector::iterator             IT_ConcentrationVector;
     typedef T_ConcentrationVector::const_iterator       CIT_ConcentrationVector;
-    
+
     typedef std::vector< MIL_PopulationFlow* >          T_FlowVector;
     typedef T_FlowVector::iterator                      IT_FlowVector;
     typedef T_FlowVector::const_iterator                CIT_FlowVector;

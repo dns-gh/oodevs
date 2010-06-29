@@ -40,7 +40,7 @@ PHY_DotationCategory_IndirectObjectCreationFire::PHY_DotationCategory_IndirectOb
     std::string lifeTime;
     xis >> xml::attribute( "object-type", objectType_ )
         >> xml::attribute( "life-time", lifeTime );
-    
+
     if( ! tools::DecodeTime( lifeTime, nLifeDuration_ ) || nLifeDuration_ < 0 )
       xis.error( "indirect-fire: life-time < 0" );
 }

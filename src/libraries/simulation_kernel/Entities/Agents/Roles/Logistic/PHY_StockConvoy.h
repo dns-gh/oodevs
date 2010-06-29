@@ -31,7 +31,7 @@ class PHY_StockConvoy : public PHY_Convoy_ABC
 {
 
 public:
-    //! @name 
+    //! @name
     //@{
     static void Initialize( xml::xistream& xis );
     static void Terminate ();
@@ -45,11 +45,11 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
-    
+
     //! @name Operations
     //@{
     bool Form();
@@ -70,7 +70,7 @@ public:
     bool IsLoadingDone  () const;
     bool IsUnloadingDone() const;
     //@}
-   
+
 private:
     PHY_SupplyStockConsign* pConsign_;
     MIL_AgentPion*          pPionConvoy_;

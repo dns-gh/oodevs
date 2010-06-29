@@ -60,24 +60,24 @@ bool XyParser::Parse( QString content, geometry::Point2f& result, QString& hint 
 bool XyParser::Parse( QString content, geometry::Point2f& result, QStringList& hint ) const
 {
     QStringList listValue = QStringList::split( ":", content );
-	QString hintX = listValue[ 0 ].stripWhiteSpace();
-	QString hintY = listValue[ 1 ].stripWhiteSpace();
+    QString hintX = listValue[ 0 ].stripWhiteSpace();
+    QString hintY = listValue[ 1 ].stripWhiteSpace();
 
     float x, y;
-	std::stringstream strX( hintX.ascii() );
+    std::stringstream strX( hintX.ascii() );
     strX >> x ;
     if( ! strX )
         return false;
-	std::stringstream strY( hintY.ascii() );
+    std::stringstream strY( hintY.ascii() );
     strY >> y ;
     if( ! strY )
-		return false;
-    
+        return false;
+
     hint.append( hintX );
     hint.append( hintY );
 
     result.Set( x, y );
-	    return true;
+        return true;
 }
 
 // -----------------------------------------------------------------------------

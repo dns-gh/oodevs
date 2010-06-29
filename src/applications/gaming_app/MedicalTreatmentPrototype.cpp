@@ -28,7 +28,7 @@ MedicalTreatmentPrototype::MedicalTreatmentPrototype( QWidget* parent, const too
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MedicalTreatmentPrototype destructor
 // Created: SBO 2006-04-20

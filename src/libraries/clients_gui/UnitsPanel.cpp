@@ -91,7 +91,7 @@ void UnitsPanel::OpenList()
 {
     list_->SetOpen( true );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: UnitsPanel::CloseList
 // Created: SBO 2006-08-29

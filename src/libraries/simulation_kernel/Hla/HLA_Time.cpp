@@ -91,7 +91,7 @@ HLA_Time& HLA_Time::SetFinal()
     rCurrentTime_ = std::numeric_limits< double >::infinity();
     return *this;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: HLA_Time::IsFinal
 // Created: AGE 2004-10-13
@@ -124,7 +124,7 @@ HLA_Time& HLA_Time::IncreaseBy( TimeInterval_ABC const & interval )
     const HLA_TimeInterval* pInterval = static_cast< const HLA_TimeInterval* >( &interval );
     if( pInterval )
         rCurrentTime_ += pInterval->GetValue();
-    else 
+    else
         throw __FUNCTION__;
     return *this;
 }
@@ -138,7 +138,7 @@ HLA_Time& HLA_Time::DecreaseBy( TimeInterval_ABC const & interval )
     const HLA_TimeInterval* pInterval = static_cast< const HLA_TimeInterval* >( &interval );
     if( pInterval )
         rCurrentTime_ -= pInterval->GetValue();
-    else 
+    else
         throw __FUNCTION__;
     return *this;
 }
@@ -153,7 +153,7 @@ TimeInterval_ABC& HLA_Time::Substract( Time_ABC const & rhs ) const
     if( pRhs )
         return *new HLA_TimeInterval( rCurrentTime_ - pRhs->rCurrentTime_ );
     throw __FUNCTION__;
-}   
+}
 
 // -----------------------------------------------------------------------------
 // Name: HLA_Time::IsGreaterThan

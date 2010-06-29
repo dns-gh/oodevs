@@ -77,7 +77,7 @@ ADN_Sensors_GUI::~ADN_Sensors_GUI()
 void ADN_Sensors_GUI::Build()
 {
     assert( pMainWidget_ == 0 );
-    
+
     // Create the main widget.
     pMainWidget_ = new QWidget( 0, "sensors main widget" );
     QTabWidget* pTabWidget = new QTabWidget( pMainWidget_ );
@@ -129,7 +129,7 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
 
     // Detection distances
     QGroupBox* pDistancesGroupBox = new QGroupBox( 3, Qt::Horizontal, tr( "Ranges" ), pAgentParamGroupBox );
-    
+
     builder.AddField<ADN_EditLine_Double>( pDistancesGroupBox, tr( "Proximity range" ), vConnectors[eDistProximity], tr( "m" ), eGreaterEqualZero );
     QLineEdit*  detection = builder.AddField<ADN_EditLine_Double>( pDistancesGroupBox, tr( "Detection range" ), vConnectors[eDistDetection], tr( "m" ), eGreaterEqualZero );
     QLineEdit*  recognition = builder.AddField<ADN_EditLine_Double>( pDistancesGroupBox, tr( "Recognition range" ), vConnectors[eDistReco], tr( "m" ), eGreaterEqualZero );
@@ -223,7 +223,7 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     vConnectors[ePreviewModifTargetStances] = &pTargetStance->GetConnector();
     connect( pListView, SIGNAL( ItemSelected( void * ) ), algorithmPreview, SLOT( OnSelectSensor( void* ) ) );
 
-    // Set the connectors.  
+    // Set the connectors.
     pTargetListView->SetItemConnectors( vTargetConnectors );
     pListView->SetItemConnectors(vConnectors);
 
@@ -413,7 +413,7 @@ ADN_Table* ADN_Sensors_GUI::CreateAgentDetectionTable()
     pTable->AddBoldGridCol( 6 );
     pTable->AddBoldGridRow( 2 );
 
-    int nCol = 7;    
+    int nCol = 7;
     builder.AddTableCell( pTable, 0, nCol, 1, sizes.size(), tr( "Target size" ) );
     for( uint n = 0; n < sizes.size(); ++n )
         builder.AddTableCell( pTable, 1, nCol + n, sizes[n]->GetData().c_str() );
@@ -455,7 +455,7 @@ ADN_Table* ADN_Sensors_GUI::CreateAgentDetectionTable()
 
         ++nRow;
     }
-    
+
     pTable->AdjustColumns( 50 );
     return pTable;
 }
@@ -484,7 +484,7 @@ ADN_Table* ADN_Sensors_GUI::CreateObjectDetectionTable()
     pTable->AddBoldGridCol( 3 );
 
     for( uint n = 0; n < eNbrUnitPosture; ++n )
-		builder.AddTableCell( pTable, 1, 3 + n, ENT_Tr::ConvertFromUnitPosture( (E_UnitPosture)n, ENT_Tr::eToTr  ).c_str());
+        builder.AddTableCell( pTable, 1, 3 + n, ENT_Tr::ConvertFromUnitPosture( (E_UnitPosture)n, ENT_Tr::eToTr  ).c_str());
 
     // Fill the table
     int nRow = 2;
@@ -497,7 +497,7 @@ ADN_Table* ADN_Sensors_GUI::CreateObjectDetectionTable()
         pTable->setNumRows( nRow + sensor.vTargets_.size() );
         pTable->AddBoldGridRow( nRow );
         builder.AddTableCell<ADN_TableItem_String>( pTable, &sensor, nRow, 0, sensor.vTargets_.size(), 1, sensor.strName_, eNone, QTableItem::Never );
-        
+
         int nSubRow = 0;
         for( ADN_Sensors_Data::IT_TargetsInfos_Vector it2 = sensor.vTargets_.begin(); it2 != sensor.vTargets_.end(); ++it2, ++nSubRow )
         {

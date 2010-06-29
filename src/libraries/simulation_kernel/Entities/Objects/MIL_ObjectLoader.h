@@ -14,7 +14,7 @@
 #include <boost/shared_ptr.hpp>
 
 namespace Common
-{    
+{
     class MsgLocation;
     class MsgMissionParameters;
 }
@@ -94,7 +94,7 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadObjectPrototype( xml::xistream& xis );    
+    void ReadObjectPrototype( xml::xistream& xis );
     void ReadCapacity( const std::string& capacity, xml::xistream& xis, ObjectPrototype& prototype );
     void ReadAttributes( const std::string& attribute, xml::xistream& xis, Object& object ) const;
     MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode InitializeLocation( Object& object, const Common::MsgLocation& asn ) const;

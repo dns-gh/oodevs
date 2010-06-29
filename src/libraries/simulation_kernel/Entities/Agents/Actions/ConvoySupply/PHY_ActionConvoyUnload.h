@@ -25,7 +25,7 @@ class PHY_ActionConvoyUnload : public PHY_DecisionCallbackAction_ABC
 {
 
 public:
-    typedef MIL_Agent_ABC ActorType;        
+    typedef MIL_Agent_ABC ActorType;
 
 public:
     explicit PHY_ActionConvoyUnload( MIL_Agent_ABC& pion );

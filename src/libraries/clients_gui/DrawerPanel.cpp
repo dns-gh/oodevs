@@ -206,7 +206,7 @@ void DrawerPanel::Save()
     if( filename.isEmpty() )
         return;
     if( filename.startsWith( "//" ) )
-        filename.replace( "/", "\\" ); 
+        filename.replace( "/", "\\" );
     if( !filename.endsWith( ".xml" ) )
         filename.append( ".xml" );
     try

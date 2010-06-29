@@ -41,7 +41,7 @@ public:
     MT_Float           GetBottom() const;
     MT_Float           GetLeft  () const;
     MT_Float           GetRight () const;
-                        
+
     MT_Float           GetWidth () const;
     MT_Float           GetHeight() const;
 
@@ -49,7 +49,7 @@ public:
     const MT_Vector2D& GetPointUpRight  () const;
     const MT_Vector2D& GetPointDownRight() const;
     const MT_Vector2D& GetPointDownLeft () const;
-    
+
     const MT_Line& GetLineLeft   () const;
     const MT_Line& GetLineRight  () const;
     const MT_Line& GetLineUp     () const;
@@ -71,7 +71,7 @@ public:
     bool Intersect2D( const MT_Line& orientedLine, T_PointSet& collisionSet, MT_Float rPrecision ) const;
 
     bool Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, MT_Float rRadius ) const; // NB : return true if the circle is inside the rect
-    //@}                
+    //@}
 
     //-------------------------------------------------------------------------
     /** @name Tools */
@@ -86,7 +86,7 @@ public:
     //@{
     MT_Rect& operator=( const MT_Rect& rhs );
     //@}
-    
+
 private:
     MT_Float rPosX1_;
     MT_Float rPosY1_;

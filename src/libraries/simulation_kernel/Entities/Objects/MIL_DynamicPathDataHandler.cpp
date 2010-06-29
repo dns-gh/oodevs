@@ -20,7 +20,7 @@ MIL_DynamicPathDataHandler::MIL_DynamicPathDataHandler()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_DynamicPathDataHandler::~DynamicDataHandler
 // Created: JCR 2008-08-11

@@ -86,7 +86,7 @@ void UrbanModel::Serialize( const std::string& filename ) const
     xml::xofstream xos( filename, xml::encoding( "ISO-8859-1" ) );
     xos << start( "urban-state" )
             << start( "blocks" );
-    
+
     for( Resolver< gui::TerrainObjectProxy >::CIT_Elements it = Resolver< gui::TerrainObjectProxy >::elements_.begin(); it != Resolver< gui::TerrainObjectProxy >::elements_.end(); ++it )
     {
         xos << start( "block" );

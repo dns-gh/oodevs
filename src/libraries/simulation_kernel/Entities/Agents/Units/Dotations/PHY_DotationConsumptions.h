@@ -32,7 +32,7 @@ public:
     //! @name types
     //@{
     typedef std::map< const PHY_DotationCategory*, MT_Float > T_ConsumptionValue;
-    typedef T_ConsumptionValue::const_iterator                CIT_ConsumptionValue;  
+    typedef T_ConsumptionValue::const_iterator                CIT_ConsumptionValue;
     //@}
 
 public:
@@ -43,7 +43,7 @@ public:
     //@{
     void AddConsumptionValues( T_ConsumptionValue& ) const;
     //@}
-    
+
     //! @name Operations
     //@{
     bool RegisterConsumptionReservations( PHY_DotationGroupContainer& container ) const;
@@ -53,7 +53,7 @@ private:
     //! @name Types
     //@{
     typedef std::map< const PHY_DotationCategory*, PHY_DotationConsumption* > T_DotationConsumptionMap;
-    typedef T_DotationConsumptionMap::const_iterator                          CIT_DotationConsumptionMap;  
+    typedef T_DotationConsumptionMap::const_iterator                          CIT_DotationConsumptionMap;
     //@}
 
 private:

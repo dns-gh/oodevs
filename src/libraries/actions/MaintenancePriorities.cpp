@@ -65,7 +65,7 @@ MaintenancePriorities::~MaintenancePriorities()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MaintenancePriorities::AddPriority
 // Created: SBO 2007-06-26

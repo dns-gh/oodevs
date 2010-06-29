@@ -59,11 +59,11 @@ private:
             void Initialize     ( const T_PointVector& pathPoints );
     virtual void InsertDecPoints();
     //@}
-   
+
 private:
     const DEC_Population_PathClass&       pathClass_;
-    const MIL_Population&                 population_;        
-          MT_Profiler                     profiler_;   
+    const MIL_Population&                 population_;
+          MT_Profiler                     profiler_;
           T_PopulationPathChannelerVector channelers_;
 };
 

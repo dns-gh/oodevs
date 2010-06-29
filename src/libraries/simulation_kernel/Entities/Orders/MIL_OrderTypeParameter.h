@@ -33,7 +33,7 @@ class MIL_MissionParameter_ABC;
 // =============================================================================
 class MIL_OrderTypeParameter
 {
-public:   
+public:
     //! @name Constructors/Destructor
     //@{
     explicit MIL_OrderTypeParameter( xml::xistream& xis );

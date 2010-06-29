@@ -29,7 +29,7 @@ ADN_AiEngine_Data::ADN_AiEngine_Data()
 , rMinorEquipmentWeight_( 0.0 )
 , rMajorEquipmentWeight_( 0.0 )
 , rHumanWeight_( 0.0 )
-, rDefaultFeedbackTime_( "1s" ) 
+, rDefaultFeedbackTime_( "1s" )
 {
     rMinorEquipmentWeight_.SetDataName( "Poids des composantes non majeures." );
     rMajorEquipmentWeight_.SetDataName( "Poids des composantes majeures." );
@@ -96,7 +96,7 @@ void ADN_AiEngine_Data::ReadArchive( xml::xistream& input )
 
     if( rMinorEquipmentWeight_.GetData() < 0.0 || rMinorEquipmentWeight_.GetData() > 1.0 )
         throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Op. Indicators - Op. state computation - Invalid equipment weight sum (must be >=0 and <= 1)" ).ascii() );
-    
+
     if( rMajorEquipmentWeight_.GetData() < 0.0 || rMajorEquipmentWeight_.GetData() > 1.0 )
         throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Op. Indicators - Op. state computation - Invalid equipment weight sum (must be >=0 and <= 1)" ).ascii() );
 
@@ -105,7 +105,7 @@ void ADN_AiEngine_Data::ReadArchive( xml::xistream& input )
 
     if( rHumanWeight_.GetData() < 0.0 || rHumanWeight_.GetData() > 1.0 )
         throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Op. Indicators - Op. state computation - Invalid crew state weight (must be >=0 and <= 1)" ).ascii() );
-        
+
     input >> xml::start( "force-ratio" )
             >> xml::attribute( "default-feedback-time", rDefaultFeedbackTime_ )
           >> xml::end();

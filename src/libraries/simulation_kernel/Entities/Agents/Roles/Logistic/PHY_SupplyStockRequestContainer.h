@@ -42,7 +42,7 @@ public:
     //@{
     bool Execute ( MIL_AutomateLOG& supplyAutomate, PHY_SupplyStockState*& pStockSupplyState );
     void AddStock( PHY_DotationStock& stock );
-    //@}   
+    //@}
 
 private:
     //! @name Types
@@ -65,7 +65,7 @@ private:
           T_RequestMap     requests_;
           bool             bAtLeastOneExplicitSupplySatisfied_;
           bool             bAtLeastOneSupplySatisfied_;
-          bool             bExplicitSupplyFullSatisfied_;   
+          bool             bExplicitSupplyFullSatisfied_;
 };
 
 #endif // __PHY_SupplyStockRequestContainer_h_

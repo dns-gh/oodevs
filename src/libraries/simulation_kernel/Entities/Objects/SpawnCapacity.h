@@ -34,14 +34,14 @@ public:
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );    
+    template< typename Archive > void serialize( Archive&, const uint );
     //@}
 
     //! @name Operations
     //@{
     virtual void Instanciate( MIL_Object_ABC& object ) const;
     virtual void Register( MIL_Object_ABC& object );
-    
+
     void AddCreator( MIL_Object_ABC& object, const MIL_Agent_ABC& agent );
     //@}
 

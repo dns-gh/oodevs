@@ -16,7 +16,7 @@
 #include "Entities/Populations/MIL_Population.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_BlackBoard_CanContainKnowledgePopulation )
-BOOST_CLASS_TRACKING   ( DEC_BlackBoard_CanContainKnowledgePopulation, boost::serialization::track_never ) 
+BOOST_CLASS_TRACKING   ( DEC_BlackBoard_CanContainKnowledgePopulation, boost::serialization::track_never )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgePopulation constructor
@@ -34,7 +34,7 @@ DEC_BlackBoard_CanContainKnowledgePopulation::DEC_BlackBoard_CanContainKnowledge
 DEC_BlackBoard_CanContainKnowledgePopulation::~DEC_BlackBoard_CanContainKnowledgePopulation()
 {
     while( !knowledgePopulationMap_.empty() )
-        DestroyKnowledgePopulation( *knowledgePopulationMap_.begin()->second );        
+        DestroyKnowledgePopulation( *knowledgePopulationMap_.begin()->second );
 }
 
 // -----------------------------------------------------------------------------
@@ -101,7 +101,7 @@ DEC_Knowledge_Population* DEC_BlackBoard_CanContainKnowledgePopulation::GetKnowl
     for( CIT_KnowledgePopulationMap it = knowledgePopulationMap_.begin(); it != knowledgePopulationMap_.end(); ++it )
     {
         DEC_Knowledge_Population& knowledge = *it->second;
-        if( knowledge.GetID() == nID ) 
+        if( knowledge.GetID() == nID )
             return &knowledge;
     }
     return 0;

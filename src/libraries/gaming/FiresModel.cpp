@@ -62,7 +62,7 @@ void FiresModel::AddFire( const MsgsSimToClient::MsgStartPopulationFire& message
     if( ! Find( message.fire_oid() ) )
         Register( message.fire_oid(), populations_.Get( message.firer_oid() ) );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: FiresModel::FindFirer
 // Created: AGE 2006-03-13

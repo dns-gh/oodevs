@@ -22,7 +22,7 @@ namespace client
 class MIL_Object_ABC;
 class DEC_Knowledge_ObjectPerception;
 class DEC_Knowledge_ObjectCollision;
-    
+
 
 // =============================================================================
 // @class  PHY_RoleInterface_Communications
@@ -38,7 +38,7 @@ public:
 public:
              PHY_RoleInterface_Communications();
     virtual ~PHY_RoleInterface_Communications();
-    
+
     //! @name Operations
     //@{
     virtual bool CanEmit() const = 0;
@@ -50,7 +50,7 @@ public:
     virtual void DeactivateBlackout() = 0;
     virtual void UpdateKnowledgesFromObjectPerception( const DEC_Knowledge_ObjectPerception& perception ) = 0;
     virtual void UpdateKnowledgesFromObjectCollision ( const DEC_Knowledge_ObjectCollision& collision ) = 0;
-    
+
     //@}
 
     //! @name Operations

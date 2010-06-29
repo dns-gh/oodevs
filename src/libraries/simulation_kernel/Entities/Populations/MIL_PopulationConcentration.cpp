@@ -72,7 +72,7 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
         xis.error( "nNbrHumans is not greater than 0." );
 
     PushHumans( T_Humans( nNbrHumans, 0. ) );
-        
+
     UpdateLocation();
     UpdateDensity ();
     // SendCreation()
@@ -108,7 +108,7 @@ MIL_PopulationConcentration::~MIL_PopulationConcentration()
 
     SendDestruction();
     RemoveFromPatch();
-} 
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationConcentration::Update
@@ -212,7 +212,7 @@ void MIL_PopulationConcentration::RegisterPushingFlow( MIL_PopulationFlow& flow 
 {
     if( ! pushingFlows_.insert( &flow ).second )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
-    SetAttitude( flow.GetAttitude() );   
+    SetAttitude( flow.GetAttitude() );
 }
 
 // -----------------------------------------------------------------------------
@@ -240,7 +240,7 @@ MT_Float MIL_PopulationConcentration::GetPullingFlowsDensity() const
 {
     if( pSplittingObject_ )
         return pSplittingObject_->GetAttribute< PopulationAttribute >().GetDensity();
-    return rPullingFlowsDensity_;  
+    return rPullingFlowsDensity_;
 }
 
 // -----------------------------------------------------------------------------
@@ -267,7 +267,7 @@ void MIL_PopulationConcentration::SendCreation() const
     client::PopulationConcentrationCreation asnMsg;
     asnMsg().set_oid( GetID() );
     asnMsg().set_oid_population( GetPopulation().GetID() );
-    NET_ASN_Tools::WritePoint( position_, *asnMsg().mutable_position() ); 
+    NET_ASN_Tools::WritePoint( position_, *asnMsg().mutable_position() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -334,7 +334,7 @@ void MIL_PopulationConcentration::load( MIL_CheckPointInArchive& file, const uns
 {
     file >> boost::serialization::base_object< TER_PopulationConcentration_ABC >( *this );
     file >> boost::serialization::base_object< MIL_PopulationElement_ABC       >( *this );
-    
+
     file >> position_
          >> location_
          >> pPullingFlow_
@@ -385,7 +385,7 @@ const MT_Vector2D& MIL_PopulationConcentration::GetPosition() const
 // -----------------------------------------------------------------------------
 void MIL_PopulationConcentration::Clean()
 {
-    MIL_PopulationElement_ABC::Clean();    
+    MIL_PopulationElement_ABC::Clean();
 }
 
 // -----------------------------------------------------------------------------

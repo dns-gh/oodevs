@@ -62,7 +62,7 @@ DEC_Knowledge_ObjectAttributeFire::~DEC_Knowledge_ObjectAttributeFire()
 void DEC_Knowledge_ObjectAttributeFire::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     unsigned int nID;
-    
+
     file >> boost::serialization::base_object< DEC_Knowledge_ObjectAttribute_ABC >( *this );
     file >> const_cast< FireAttribute*& >( attr_ );
     file >> nID;
@@ -102,7 +102,7 @@ void DEC_Knowledge_ObjectAttributeFire::Register( DEC_Knowledge_Object& knObject
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeFire::UpdateAttributes()
 {
-    if ( !attr_ )
+    if( !attr_ )
         return;
 
     pFireClass_ = & attr_->GetClass();

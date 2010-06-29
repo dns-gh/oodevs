@@ -38,7 +38,7 @@ class ADN_CLV_PhSizes
     MT_COPYNOTALLOWED( ADN_CLV_PhSizes )
 
 public:
-    ADN_CLV_PhSizes( ADN_Weapons_PhSizeListView& list, GQ_Plot& plot ) 
+    ADN_CLV_PhSizes( ADN_Weapons_PhSizeListView& list, GQ_Plot& plot )
     : ADN_Connector_ListView_ABC( list, "ADN_CLV_PhSizes" )
     , plot_ ( plot )
     {}

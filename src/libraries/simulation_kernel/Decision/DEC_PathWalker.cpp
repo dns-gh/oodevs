@@ -101,14 +101,14 @@ void DEC_PathWalker::ComputeCurrentSpeed()
     const DEC_PathPoint& curPathPoint = **itCurrentPathPoint_;
     if( curPathPoint.GetType() == DEC_PathPoint::eTypePointPath )
     {
-        TerrainData tmpEnvironment = curPathPoint.GetObjectTypesToNextPoint();       
+        TerrainData tmpEnvironment = curPathPoint.GetObjectTypesToNextPoint();
         if( !( environment_ == tmpEnvironment ) ) //$$$
         {
             movingEntity_.NotifyEnvironmentChanged();
             environment_ = tmpEnvironment;
-        }    
+        }
     }
-    rCurrentSpeed_ = movingEntity_.GetSpeedWithReinforcement( environment_ );    
+    rCurrentSpeed_ = movingEntity_.GetSpeedWithReinforcement( environment_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -128,7 +128,7 @@ void DEC_PathWalker::InitializeEnvironment( const DEC_PathResult& path )
     {
         movingEntity_.NotifyEnvironmentChanged();
         environment_ = tmpEnvironment;
-    }    
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -154,7 +154,7 @@ bool DEC_PathWalker::SetCurrentPath( boost::shared_ptr< DEC_PathResult > pPath )
     if( pCurrentPath_->GetState() == DEC_PathResult::ePartial )
         movingEntity_.SendRC( MIL_Report::eReport_DifficultTerrain );
 
-    itNextPathPoint_ = itCurrentPathPoint_;   
+    itNextPathPoint_ = itCurrentPathPoint_;
     ++itNextPathPoint_;
     InitializeEnvironment( *pPath );
     return true;
@@ -168,7 +168,7 @@ bool DEC_PathWalker::SetCurrentPath( boost::shared_ptr< DEC_PathResult > pPath )
 inline
 bool DEC_PathWalker::GoToNextNavPoint( const DEC_PathResult& path )
 {
-    if ( (*itNextPathPoint_)->GetType() == DEC_PathPoint::eTypePointPath )
+    if( (*itNextPathPoint_)->GetType() == DEC_PathPoint::eTypePointPath )
     {
         movingEntity_.NotifyMovingOnPathPoint( **itNextPathPoint_ );
         itCurrentPathPoint_ = itNextPathPoint_;
@@ -177,7 +177,7 @@ bool DEC_PathWalker::GoToNextNavPoint( const DEC_PathResult& path )
     }
 
     // points particuliers -> EVT vers DEC
-    do 
+    do
     {
         movingEntity_.NotifyMovingOnSpecialPoint( *itNextPathPoint_ );
         itCurrentPathPoint_ = itNextPathPoint_;
@@ -193,10 +193,10 @@ bool DEC_PathWalker::GoToNextNavPoint( const DEC_PathResult& path )
 // Created: NLD 2002-12-17
 //-----------------------------------------------------------------------------
 void DEC_PathWalker::ComputeObjectsCollision( const MT_Vector2D& vStart, const MT_Vector2D& vEnd, T_MoveStepSet& moveStepSet )
-{   
+{
     // Récupération de la liste des objets dynamiques contenus dans le rayon vEnd - vStart
     TER_Object_ABC::T_ObjectVector objects;
-    TER_World::GetWorld().GetObjectManager().GetListWithinCircle( vNewPos_, (vEnd - vStart).Magnitude(), objects ); 
+    TER_World::GetWorld().GetObjectManager().GetListWithinCircle( vNewPos_, (vEnd - vStart).Magnitude(), objects );
 
     MT_Line lineTmp( vStart, vEnd );
 
@@ -215,7 +215,7 @@ void DEC_PathWalker::ComputeObjectsCollision( const MT_Vector2D& vStart, const M
 
         // Ajout des points de collision dans moveStepSet
         if( object.Intersect2D( lineTmp, collisions ) )
-        {           
+        {
             for( IT_PointSet itPoint = collisions.begin(); itPoint != collisions.end(); ++itPoint )
             {
                 MT_Vector2D& vPoint = *itPoint;
@@ -234,11 +234,11 @@ void DEC_PathWalker::ComputeObjectsCollision( const MT_Vector2D& vStart, const M
             collisions.clear();
         }
 
-        // Détermination si objet courant se trouve sur le trajet entre chaque point 
+        // Détermination si objet courant se trouve sur le trajet entre chaque point
         IT_MoveStepSet itPrevMoveStep = moveStepSet.begin();
         bool bInsideObjectOnPrevPoint = false;
         for( IT_MoveStepSet itMoveStep = ++(moveStepSet.begin()); itMoveStep != moveStepSet.end(); ++itMoveStep )
-        {           
+        {
             // Picking au milieu de la ligne reliant les 2 points
             MT_Vector2D vTmp = ( itMoveStep->vPos_ + itPrevMoveStep->vPos_ ) / 2;
             if( object.IsInside( vTmp ) )
@@ -266,7 +266,7 @@ void DEC_PathWalker::ComputeObjectsCollision( const MT_Vector2D& vStart, const M
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
 bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_MoveStepSet itNextMoveStep, MT_Float& rTimeRemaining, bool bFirstMove )
-{  
+{
     static int nDistanceBeforeBlockingObject = -10;
     CIT_ObjectSet itObject;
 
@@ -276,35 +276,35 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
         MIL_Object_ABC& object = const_cast< MIL_Object_ABC& >( **itObject );
 
         MT_Float rSpeedWithinObject = movingEntity_.GetSpeedWithReinforcement( environment_, object );
-   
+
         if( !bFirstMove ) //// $$$$$ !bFirstMove A REVOIR - PERMET DE SORTIR D'UN OBSTACLE PONCTUEL
         {
-            movingEntity_.NotifyMovingInsideObject( object );            
+            movingEntity_.NotifyMovingInsideObject( object );
             if( rSpeedWithinObject == 0. )
             {
                 rCurrentSpeed_ = 0;
                 vNewPos_           = ( itCurMoveStep->vPos_ + ( vNewDir_ * nDistanceBeforeBlockingObject ) );
-                movingEntity_.NotifyMovingOutsideObject( object );  // $$$$ NLD 2007-05-07: 
+                movingEntity_.NotifyMovingOutsideObject( object );  // $$$$ NLD 2007-05-07:
                 return false;
             }
         }
         movingEntity_.NotifyMovingOutsideObject( object );
     }
-    
+
     MT_Float rMaxSpeedForStep = std::numeric_limits< MT_Float >::max();
     for( itObject = itCurMoveStep->objectsToNextPointSet_.begin(); itObject != itCurMoveStep->objectsToNextPointSet_.end(); ++itObject )
     {
         MIL_Object_ABC& object = const_cast< MIL_Object_ABC& >( **itObject );
         movingEntity_.NotifyMovingInsideObject( object );
 
-        rMaxSpeedForStep = std::min( rMaxSpeedForStep, movingEntity_.GetSpeedWithReinforcement( environment_, object) );        
+        rMaxSpeedForStep = std::min( rMaxSpeedForStep, movingEntity_.GetSpeedWithReinforcement( environment_, object) );
         if( rMaxSpeedForStep == 0. )
         {
             rCurrentSpeed_ = 0;
             vNewPos_       = ( itCurMoveStep->vPos_ + ( vNewDir_ * nDistanceBeforeBlockingObject ) );
             movingEntity_.NotifyMovingOutsideObject( object );  // $$$$ NLD 2007-05-07: FOIREUX
             return false;
-        }    
+        }
     }
 
     // itCurMoveStep a pu être dépassé => notification des objets dont on sort
@@ -316,7 +316,7 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
     const MT_Float rDistToWalk = rTimeRemaining * rCurrentSpeed_;
     const MT_Vector2D vNewPosTmp( vNewPos_ + ( vNewDir_ * rDistToWalk ) );
 
-    if ( vNewPos_.SquareDistance( vNewPosTmp ) >= vNewPos_.SquareDistance( itNextMoveStep->vPos_ )  )
+    if( vNewPos_.SquareDistance( vNewPosTmp ) >= vNewPos_.SquareDistance( itNextMoveStep->vPos_ )  )
     {
         rTimeRemaining -= ( itNextMoveStep->vPos_ - vNewPos_ ).Magnitude() / rCurrentSpeed_;
         vNewPos_        = itNextMoveStep->vPos_;
@@ -341,7 +341,7 @@ bool DEC_PathWalker::TryToMoveTo( const DEC_PathResult& path, const MT_Vector2D&
         return true;
 
     assert( rCurrentSpeed_ > 0. );
-//    bool bFirstMove = ( vNewPos_.Distance( (*path.GetResult().begin())->GetPos() ) <= 10. );    
+//    bool bFirstMove = ( vNewPos_.Distance( (*path.GetResult().begin())->GetPos() ) <= 10. );
     bool bFirstMove = ( (float)vNewPos_.rX_ == (float)(*path.GetResult().begin())->GetPos().rX_ && (float)vNewPos_.rY_ == (float)(*path.GetResult().begin())->GetPos().rY_ );
 
     sMoveStepCmp  cmp( vNewPos_ );
@@ -364,7 +364,7 @@ bool DEC_PathWalker::TryToMoveTo( const DEC_PathResult& path, const MT_Vector2D&
 
         if( itNextMoveStep == moveStepSet.end() )
             return true;
-    } 
+    }
     return true;
 }
 
@@ -375,19 +375,19 @@ bool DEC_PathWalker::TryToMoveTo( const DEC_PathResult& path, const MT_Vector2D&
 // -----------------------------------------------------------------------------
 int DEC_PathWalker::Move( boost::shared_ptr< DEC_PathResult > pPath )
 {
-    if( bHasMoved_ ) 
+    if( bHasMoved_ )
         return eAlreadyMoving;
 
     DEC_PathResult::E_State nPathState = pPath->GetState();
     if( nPathState == DEC_Path_ABC::eInvalid || nPathState == DEC_Path_ABC::eImpossible || nPathState == DEC_Path_ABC::eCanceled )
         return eNotAllowed;
-    
+
     if( nPathState == DEC_Path_ABC::eComputing )
     {
         bHasMoved_ = true;
         return eRunning;
     }
-    
+
     if( !SetCurrentPath( pPath ) )
         return eItineraireMustBeJoined;
 
@@ -424,7 +424,7 @@ int DEC_PathWalker::Move( boost::shared_ptr< DEC_PathResult > pPath )
     while( rTimeRemaining > 0. )
     {
         const MT_Vector2D vPosBeforeMove( vNewPos_ );
-        
+
         if( !TryToMoveTo( *pPath, (*itNextPathPoint_)->GetPos(), rTimeRemaining ) )
         {
             rWalkedDistance_ += vPosBeforeMove.Distance( vNewPos_ );
@@ -459,7 +459,7 @@ void DEC_PathWalker::MoveSuspended( boost::shared_ptr< DEC_PathResult > pPath )
 {
     assert( pCurrentPath_.get() || bForcePathCheck_ );
 
-    if( pCurrentPath_.get() && pCurrentPath_ == pPath ) 
+    if( pCurrentPath_.get() && pCurrentPath_ == pPath )
         bForcePathCheck_ = true;
 }
 

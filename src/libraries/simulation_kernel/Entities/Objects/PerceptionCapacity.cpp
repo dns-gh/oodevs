@@ -24,7 +24,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PerceptionCapacity )
 // Name: PerceptionCapacity constructor
 // Created: MGD 2010-03-12
 // -----------------------------------------------------------------------------
-PerceptionCapacity::PerceptionCapacity( xml::xistream& xis )    
+PerceptionCapacity::PerceptionCapacity( xml::xistream& xis )
 :  modifier_( xml::attribute< bool >( xis, "blinded" ) )
 {
 }
@@ -33,7 +33,7 @@ PerceptionCapacity::PerceptionCapacity( xml::xistream& xis )
 // Name: PerceptionCapacity constructor
 // Created: MGD 2010-03-12
 // -----------------------------------------------------------------------------
-PerceptionCapacity::PerceptionCapacity()    
+PerceptionCapacity::PerceptionCapacity()
 {
     // NOTHING
 }
@@ -42,7 +42,7 @@ PerceptionCapacity::PerceptionCapacity()
 // Name: PerceptionCapacity constructor
 // Created: MGD 2010-03-12
 // -----------------------------------------------------------------------------
-PerceptionCapacity::PerceptionCapacity( const PerceptionCapacity& from )    
+PerceptionCapacity::PerceptionCapacity( const PerceptionCapacity& from )
 : modifier_ ( from.modifier_ )
 {
     // NOTHING
@@ -83,7 +83,7 @@ void PerceptionCapacity::Register( MIL_Object_ABC& object )
 // Created: MGD 2010-03-12
 // -----------------------------------------------------------------------------
 void PerceptionCapacity::Instanciate( MIL_Object_ABC& object ) const
-{    
+{
     PerceptionCapacity* capacity = new PerceptionCapacity( *this );
     object.AddCapacity( capacity );
     object.Register( static_cast< MIL_InteractiveContainer_ABC *>( capacity ) );

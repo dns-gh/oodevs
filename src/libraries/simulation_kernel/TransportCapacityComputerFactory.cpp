@@ -49,7 +49,7 @@ std::auto_ptr< TransportCapacityComputer_ABC > TransportComputerFactory::CreateC
 // Created: AHC 2009-10-01
 // -----------------------------------------------------------------------------
 std::auto_ptr< TransportWeightComputer_ABC > TransportComputerFactory::CreateWeightComputer( const TransportStrategy_ABC* strategy ) const
-{    
+{
     std::auto_ptr< TransportWeightComputer_ABC > weightComputer( new DefaultTransportWeightComputer( strategy ) );
     return weightComputer;
 }

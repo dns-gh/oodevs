@@ -96,7 +96,7 @@ class DEC_TestPopulationDecision : public DEC_Decision<MIL_Population>
 {
 public:
     DEC_TestPopulationDecision( MIL_Population& population, DEC_TestPopulationDecision* pOther, DEC_DataBase& database )
-        : DEC_Decision( population, database ) 
+        : DEC_Decision( population, database )
         , pOther_     ( pOther )
     {
         const DEC_Model_ABC& model = population.GetType().GetModel();
@@ -115,7 +115,7 @@ public:
         const std::string& strBehavior = mission->GetType().GetDIABehavior();
         ActivateOrder( strBehavior, mission );
     }
-    
+
     virtual DEC_AutomateDecision* GetDecAutomate() const { return 0; }
     virtual std::string GetName() const { return "Test Decision"; }
     virtual void EndCleanStateAfterCrash() {}
@@ -146,7 +146,7 @@ private:
 };
 
 namespace
-{  
+{
     boost::shared_ptr< MIL_Mission_ABC > GetRawMission( DEC_TestPopulationDecision* pAgent )
     {
         return pAgent->GetMission();
@@ -208,7 +208,7 @@ BOOST_AUTO_TEST_CASE( ActivateOrderPassesMissionToDecisional )
 // -----------------------------------------------------------------------------
 // Name: DecisionalCanUseMissionParameters
 // Created: LDC 2009-04-29
-// Tests that if a MIL_Mission_ABC is passed to lua through a function, 
+// Tests that if a MIL_Mission_ABC is passed to lua through a function,
 // its parameters can be accessed from lua
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( DecisionalCanUseMissionParameters )

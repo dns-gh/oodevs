@@ -29,7 +29,7 @@ using namespace kernel;
 // Name: UrbanKnowledge constructor
 // Created: MGD 2009-12-10
 // -----------------------------------------------------------------------------
-UrbanKnowledge::UrbanKnowledge( const Team_ABC& owner, const MsgsSimToClient::MsgUrbanKnowledgeCreation& message, Controller& controller, 
+UrbanKnowledge::UrbanKnowledge( const Team_ABC& owner, const MsgsSimToClient::MsgUrbanKnowledgeCreation& message, Controller& controller,
                                const tools::Resolver_ABC< urban::TerrainObject_ABC >& terrainObjectResolver )
     : EntityImplementation< UrbanKnowledge_ABC >( controller, message.oid(), "" )
     , owner_         ( owner )

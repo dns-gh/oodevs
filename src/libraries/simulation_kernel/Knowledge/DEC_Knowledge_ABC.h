@@ -29,7 +29,7 @@ public:
              DEC_Knowledge_ABC();
     virtual ~DEC_Knowledge_ABC();
     //@}
-    
+
     //! @name CheckPoints
     //@{
     template < typename Archive > void serialize( Archive& /*file*/, const unsigned int /*version*/ )
@@ -37,11 +37,11 @@ public:
         //NOTHING
     }
     //@}
-    
+
 protected:
     //! @name Tools
     //@{
-    unsigned int GetCurrentTimeStep() const; 
+    unsigned int GetCurrentTimeStep() const;
     //@}
 
 };

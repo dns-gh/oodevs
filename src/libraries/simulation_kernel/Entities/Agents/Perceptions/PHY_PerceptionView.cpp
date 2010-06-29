@@ -50,7 +50,7 @@ PHY_PerceptionView::~PHY_PerceptionView()
 const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MT_Vector2D& vPoint ) const
 {
     const PHY_PerceptionLevel* pBestLevel = &PHY_PerceptionLevel::notSeen_;
-    
+
     if( bIsEnabled_ )
     {
         const PHY_RoleInterface_Perceiver::T_SurfaceAgentMap& surfaces = perceiver_.GetSurfacesAgent();
@@ -75,7 +75,7 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MT_Vector2D& vPoin
 const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const DEC_Knowledge_Agent & knowledge ) const
 {
     const PHY_PerceptionLevel* pBestLevel = &PHY_PerceptionLevel::notSeen_;
-    
+
     if( bIsEnabled_ )
     {
         const PHY_RoleInterface_Perceiver::T_SurfaceAgentMap& surfaces = perceiver_.GetSurfacesAgent();
@@ -106,8 +106,8 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_Agent_ABC& tar
     if( !bIsEnabled_ )
         return PHY_PerceptionLevel::notSeen_;
 
-    if ( !perceiver_.GetPion().GetRole< PHY_RoleInterface_UrbanLocation >().IsInCity() ) 
-    {              
+    if( !perceiver_.GetPion().GetRole< PHY_RoleInterface_UrbanLocation >().IsInCity() )
+    {
         PHY_ZOPerceptionComputer computer( perceiver_.GetPion() );
         return computer.ComputePerception( target );
     }
@@ -138,7 +138,7 @@ void PHY_PerceptionView::Execute( const TER_Agent_ABC::T_AgentPtrVector& perceiv
         for ( TER_Agent_ABC::CIT_AgentPtrVector itAgent = perceivableAgents.begin(); itAgent != perceivableAgents.end(); ++itAgent )
         {
             MIL_Agent_ABC& agent = static_cast< PHY_RoleInterface_Location& >( **itAgent ).GetAgent();
-           
+
             std::auto_ptr< detection::DetectionComputer_ABC > detectionComputer( detectionComputerFactory.Create( agent ) );
             perceiver_.GetPion().Execute( *detectionComputer );
             agent.Execute( *detectionComputer );
@@ -156,7 +156,7 @@ void PHY_PerceptionView::Execute( const TER_Agent_ABC::T_AgentPtrVector& perceiv
 const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const DEC_Knowledge_Object& knowledge ) const
 {
     const PHY_PerceptionLevel* pBestLevel = &PHY_PerceptionLevel::notSeen_;
-    
+
     if( bIsEnabled_ )
     {
         const PHY_RoleInterface_Perceiver::T_SurfaceObjectMap& surfaces = perceiver_.GetSurfacesObject();
@@ -197,7 +197,7 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_Object_ABC& ta
             pBestLevel = &currentLevel;
             if( pBestLevel->IsBestLevel() )
                 return *pBestLevel;
-        }       
+        }
     }
     return *pBestLevel;
 }
@@ -212,7 +212,7 @@ void PHY_PerceptionView::Execute( const TER_Object_ABC::T_ObjectVector& perceiva
     {
         for( TER_Object_ABC::CIT_ObjectVector itObject = perceivableObjects.begin(); itObject != perceivableObjects.end(); ++itObject )
         {
-            MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **itObject );            
+            MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **itObject );
             perceiver_.NotifyPerception( object, Compute( object ) );
         }
     }
@@ -287,7 +287,7 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_PopulationConc
             pBestLevel = &currentLevel;
             if( pBestLevel->IsBestLevel() )
                 return *pBestLevel;
-        }       
+        }
     }
     return *pBestLevel;
 }
@@ -334,7 +334,7 @@ void PHY_PerceptionView::Execute( const std::vector< const urban::TerrainObject_
     {
         for( std::vector< const urban::TerrainObject_ABC* >::const_iterator itBlock = perceivables.begin(); itBlock != perceivables.end(); ++itBlock )
         {
-            const urban::TerrainObject_ABC& object = **itBlock ;            
+            const urban::TerrainObject_ABC& object = **itBlock ;
             perceiver_.NotifyPerception( object, Compute( object ) );
         }
     }
@@ -362,7 +362,7 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const urban::TerrainObje
             pBestLevel = &currentLevel;
             if( pBestLevel->IsBestLevel() )
                 return *pBestLevel;
-        }       
+        }
     }
     return *pBestLevel;
 }
@@ -393,7 +393,7 @@ void PHY_PerceptionView::FinalizePerception()
 // -----------------------------------------------------------------------------
 void PHY_PerceptionView::TransfertPerception()
 {
-    bool isInCity = perceiver_.GetPion().GetRole< PHY_RoleInterface_UrbanLocation >().IsInCity(); 
+    bool isInCity = perceiver_.GetPion().GetRole< PHY_RoleInterface_UrbanLocation >().IsInCity();
     if( isInCity && !wasInCity_ )
     {
         perceptionsBuffer_.clear();
@@ -405,13 +405,13 @@ void PHY_PerceptionView::TransfertPerception()
             for( std::map< const void*, unsigned int >::const_iterator it = perceptionMap.begin(); it != perceptionMap.end(); ++it )
             {
                 T_PerceptionTickMap::iterator it2 = perceptionsBuffer_.find( it->first );
-                if( it2 != perceptionsBuffer_.end() )  
+                if( it2 != perceptionsBuffer_.end() )
                     perceptionsBuffer_[ it2->first ] = std::pair< unsigned int, float >( std::max( it2->second.first, it->second ), static_cast< float >( randomGenerator_.rand_ii() )  );
                 else
-                    perceptionsBuffer_[ it->first ] = std::pair< unsigned int, float >( it->second, static_cast< float >( randomGenerator_.rand_ii() )  );   
+                    perceptionsBuffer_[ it->first ] = std::pair< unsigned int, float >( it->second, static_cast< float >( randomGenerator_.rand_ii() )  );
             }
         }
-    
+
         wasInCity_ = isInCity;
     }
     else if( !isInCity && wasInCity_ )

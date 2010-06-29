@@ -56,7 +56,7 @@ OGR_Database::~OGR_Database()
 // -----------------------------------------------------------------------------
 std::string OGR_Database::GetTableName( const std::string& name ) const
 {
-    if ( name_ != "" && schema_ != "" )
+    if( name_ != "" && schema_ != "" )
         return name_ + "." + schema_ + "." + name;
     return name;
 }

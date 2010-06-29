@@ -39,7 +39,7 @@ class MIL_Config;
 // =============================================================================
 class MIL_CheckPointManager : private boost::noncopyable
 {
-    
+
 public:
               MIL_CheckPointManager();
      explicit MIL_CheckPointManager( const MIL_Config& config );
@@ -66,12 +66,12 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
-private:   
+private:
     //! @name Tools
     //@{
     void RotateCheckPoints       ( const std::string& newName );
@@ -81,7 +81,7 @@ private:
 
     void UpdateNextCheckPointTick();
     //@}
-    
+
     //! @name Tools
     //@{
     static void                           CreateMetaData     ( const std::string& strPath, const std::string& strName, const boost::crc_32_type::value_type&, const boost::crc_32_type::value_type& );
@@ -97,10 +97,10 @@ private:
     //@{
     typedef std::queue< std::string > T_CheckPointsQueue;
     //@}
-    
+
 private:
     unsigned int         nMaxCheckPointNbr_;
-    unsigned int         nCheckPointsFrequency_; 
+    unsigned int         nCheckPointsFrequency_;
     unsigned int         nLastCheckPointTick_;
     unsigned int         nNextCheckPointTick_;
     T_CheckPointsQueue   currentCheckPoints_;

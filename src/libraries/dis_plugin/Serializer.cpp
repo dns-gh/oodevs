@@ -85,7 +85,7 @@ Serializer& Serializer::operator<<( const unsigned char& c )
     Write( c, sizeof( char ) );
     return *this;
 }
- 
+
 // -----------------------------------------------------------------------------
 // Name: Serializer::operator<<
 // Created: AGE 2008-03-10

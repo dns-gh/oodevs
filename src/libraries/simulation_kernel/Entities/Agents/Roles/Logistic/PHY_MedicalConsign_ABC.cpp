@@ -84,7 +84,7 @@ void PHY_MedicalConsign_ABC::Cancel()
     nTimer_ = 0;
     pHumanState_ = 0;
 }
- 
+
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalConsign_ABC::EnterStateFinished
 // Created: NLD 2004-12-23

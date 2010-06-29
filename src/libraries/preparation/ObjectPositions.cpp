@@ -110,7 +110,7 @@ float ObjectPositions::GetHeight() const
 {
     return 0;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ObjectPositions::IsAt
 // Created: SBO 2006-09-11
@@ -133,7 +133,7 @@ bool ObjectPositions::IsAt( const geometry::Point2f& pos, float precision /*= 10
     }
     return false;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ObjectPositions::IsIn
 // Created: SBO 2006-09-11
@@ -142,7 +142,7 @@ bool ObjectPositions::IsIn( const geometry::Rectangle2f& rectangle ) const
 {
     return ! boundingBox_.Intersect( rectangle ).IsEmpty();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ObjectPositions::GetBoundingBox
 // Created: SBO 2006-09-11
@@ -205,7 +205,7 @@ void ObjectPositions::VisitRectangle( const T_PointVector& points )
 {
     points_ = points;
 }
-   
+
 // -----------------------------------------------------------------------------
 // Name: ObjectPositions::VisitPolygon
 // Created: SBO 2006-10-16
@@ -214,7 +214,7 @@ void ObjectPositions::VisitPolygon( const T_PointVector& points )
 {
     points_ = points;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ObjectPositions::VisitCircle
 // Created: SBO 2006-10-16
@@ -227,7 +227,7 @@ void ObjectPositions::VisitCircle( const geometry::Point2f& center, float radius
         points_.push_back( geometry::Point2f( center.X() + radius * std::cos( angle )
                                             , center.Y() + radius * std::sin( angle ) ) );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ObjectPositions::VisitPoint
 // Created: SBO 2006-10-16

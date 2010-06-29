@@ -53,7 +53,7 @@ ActivityTimeAttribute::~ActivityTimeAttribute()
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
 void ActivityTimeAttribute::Display( kernel::Displayer_ABC& displayer ) const
-{    
+{
     displayer.Group( tools::translate( "Object", "Mine parameters" ) )
              .Display( tools::translate( "Object", "Activity time:" ), activityTime_ );
 }
@@ -72,7 +72,7 @@ void ActivityTimeAttribute::DisplayInTooltip( Displayer_ABC& /*displayer*/ ) con
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
 void ActivityTimeAttribute::SerializeAttributes( xml::xostream& xos ) const
-{    
+{
     xos << xml::start( "activity-time" )
             << xml::attribute( "value", activityTime_.value_ )
         << xml::end();

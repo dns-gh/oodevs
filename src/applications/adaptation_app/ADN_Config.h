@@ -37,7 +37,7 @@ public:
     const std::string& GetSimPath     () const;
     const std::string& GetSimArguments() const;
     //@}
-    
+
     //! @name Modifiers
     //@{
     void SetSimPath     ( const std::string& strPath );

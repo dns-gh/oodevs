@@ -26,7 +26,7 @@ PopulationListView::PopulationListView( QWidget* pParent, kernel::Controllers& c
 {
     connect( this, SIGNAL( itemRenamed( QListViewItem*, int, const QString& ) ), &modelBuilder_, SLOT( OnRename( QListViewItem*, int, const QString& ) ) );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PopulationListView destructor
 // Created: SBO 2006-10-16

@@ -46,7 +46,7 @@ void PerceptionMap::DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeUpdate& mes
         for( int i = 0; i < message.perception_par_compagnie().elem_size(); ++i )
         {
             const Automat_ABC& agent = resolver_.Get( message.perception_par_compagnie().elem( i ).oid_compagnie() );
-            // $$$$ AGE 2006-02-22: 
+            // $$$$ AGE 2006-02-22:
             perceptions_.push_back( Perception( agent, (E_PerceptionResult)( 3 - message.perception_par_compagnie().elem( i ).identification_level() ) ) );
         }
         controller_.Update( *this );

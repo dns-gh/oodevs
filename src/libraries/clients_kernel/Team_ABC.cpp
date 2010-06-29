@@ -23,7 +23,7 @@ Team_ABC::Team_ABC()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Team_ABC destructor
 // Created: SBO 2006-08-08
@@ -50,7 +50,7 @@ void Team_ABC::Select( ActionController& controller ) const
 {
     controller.Select( *this, *(const Entity_ABC*)this );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Team_ABC::ContextMenu
 // Created: SBO 2006-08-08
@@ -59,7 +59,7 @@ void Team_ABC::ContextMenu( ActionController& controller, const QPoint& where ) 
 {
     controller.ContextMenu( *this, *(const Entity_ABC*)this, where );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Team_ABC::Activate
 // Created: SBO 2006-08-08

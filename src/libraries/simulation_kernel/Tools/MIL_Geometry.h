@@ -36,7 +36,7 @@ public:
 
     //! @name Operations
     //@{
-    template< typename T > static geometry::Polygon2< T > Scale( geometry::Polygon2< T > polygon, T distance ); 
+    template< typename T > static geometry::Polygon2< T > Scale( geometry::Polygon2< T > polygon, T distance );
     template< typename T > static geometry::Polygon2< T > ComputeHull( geometry::Polygon2< T > polygon );
     template< typename T > static T IntersectionArea( const geometry::Polygon2< T > polygon1, const geometry::Polygon2< T > polygon2 );
 
@@ -51,7 +51,7 @@ private:
 
     //! @name Helpers
     //@{
-    template< typename T > static bool FindOuterPoint( const std::vector< geometry::Point2< T > > vertices, const geometry::Point2< T >& from, const geometry::Vector2< T >& direction, geometry::Point2< T >& worst ); 
+    template< typename T > static bool FindOuterPoint( const std::vector< geometry::Point2< T > > vertices, const geometry::Point2< T >& from, const geometry::Vector2< T >& direction, geometry::Point2< T >& worst );
     //@}
 
 private:
@@ -70,7 +70,7 @@ geometry::Polygon2< T > MIL_Geometry::Scale( geometry::Polygon2< T > polygon, T 
     geometry::Polygon2< T > hull   = ComputeHull( polygon );
     geometry::Point2< T > barycenter = hull.Barycenter();
     const std::vector< geometry::Point2< T > > vertices = hull.Vertices();
-    geometry::Polygon2< T > result; 
+    geometry::Polygon2< T > result;
     for( std::vector< geometry::Point2< T > >::const_iterator it = vertices.begin(); it != vertices.end(); ++it )
     {
         geometry::Vector2< T > scaleVector( *it, barycenter );
@@ -84,7 +84,7 @@ geometry::Polygon2< T > MIL_Geometry::Scale( geometry::Polygon2< T > polygon, T 
 // Name: template< typename T > geometry::Polygon2< T > MIL_Geometry::ComputeHull
 // Created: SLG 2010-04-30
 // -----------------------------------------------------------------------------
-template< typename T > 
+template< typename T >
 geometry::Polygon2< T > MIL_Geometry::ComputeHull( geometry::Polygon2< T > polygon )
 {
     const std::vector< geometry::Point2< T > > vertices = polygon.Vertices();
@@ -124,7 +124,7 @@ geometry::Polygon2< T > MIL_Geometry::ComputeHull( geometry::Polygon2< T > polyg
 // Name: template< typename T > geometry::Polygon2< T > MIL_Geometry::ComputeHull
 // Created: SLG 2010-04-30
 // -----------------------------------------------------------------------------
-template< typename T > 
+template< typename T >
 bool MIL_Geometry::FindOuterPoint( const std::vector< geometry::Point2< T > > vertices, const geometry::Point2< T >& from, const geometry::Vector2< T >& direction, geometry::Point2< T >& worst )
 {
     bool bFound = false;
@@ -150,7 +150,7 @@ bool MIL_Geometry::FindOuterPoint( const std::vector< geometry::Point2< T > > ve
 // Name: template< typename T > static T MIL_Geometry::IntersectionArea
 // Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
-template< typename T > 
+template< typename T >
 T MIL_Geometry::IntersectionArea( const geometry::Polygon2< T > polygon1, const geometry::Polygon2< T > polygon2 )
 {
     bg::polygon< bg::point_xy< T > > poly1;
@@ -184,7 +184,7 @@ T MIL_Geometry::IntersectionArea( const geometry::Polygon2< T > polygon1, const 
     T intersectArea = 0;
     for( std::vector< bg::polygon< bg::point_xy< T > > >::const_iterator it = polygonResult.begin(); it != polygonResult.end(); ++it  )
     {
-        intersectArea += float( area( *it ) ); 
+        intersectArea += float( area( *it ) );
     }
     return intersectArea;
 }

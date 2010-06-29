@@ -22,7 +22,7 @@ using namespace tools;
 // Created: NLD 2002-07-12
 //-----------------------------------------------------------------------------
 NET_AgentServer::NET_AgentServer( const MIL_Config& config, const MIL_Time_ABC& time, NET_Simulation_ABC& simulation )
-    : ServerNetworker                ( config.GetNetworkPort() )          
+    : ServerNetworker                ( config.GetNetworkPort() )
     , time_                          ( time )
     , pMsgMgr_                       ( new NET_AS_MOSServerMsgMgr( *this, simulation ) )
     , nUnitVisionConesChangeTimeStep_( 0 )
@@ -64,8 +64,8 @@ void NET_AgentServer::ConnectionSucceeded( const std::string& endpoint )
 {
     MT_LOG_INFO_MSG( "Connection received from client '" << endpoint << "'" );
     ServerNetworker::ConnectionSucceeded( endpoint );
-    // should allow only one connection so ... 
-    DenyConnections(); 
+    // should allow only one connection so ...
+    DenyConnections();
 }
 
 // -----------------------------------------------------------------------------
@@ -85,7 +85,7 @@ void NET_AgentServer::ConnectionFailed( const std::string& address, const std::s
 // -----------------------------------------------------------------------------
 void NET_AgentServer::ConnectionError( const std::string& address, const std::string& error )
 {
-    MT_LOG_INFO_MSG( "Connection to '" << address << "' lost (" << error << ")" );    
+    MT_LOG_INFO_MSG( "Connection to '" << address << "' lost (" << error << ")" );
     ServerNetworker::ConnectionError( address, error );
     pMsgMgr_->RemoveClient( address );
 }

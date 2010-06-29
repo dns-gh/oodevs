@@ -24,7 +24,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( BuildableCapacity )
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 BuildableCapacity::BuildableCapacity()
-    : default_( 0 )    
+    : default_( 0 )
     , dotation_( 0 )
     , nFullNbrDotation_( 0 )
     , unitType_( ConstructionCapacity::eRaw )
@@ -81,8 +81,8 @@ void BuildableCapacity::ReadDotation( xml::xistream& xis )
     {
         std::string dotation( xml::attribute< std::string >( xis, "name" ) );
         dotation_ = PHY_DotationType::FindDotationCategory( dotation );
-        if ( !dotation_ )
-            throw std::runtime_error( "Unknown dotation category - " + dotation + " - " ); 
+        if( !dotation_ )
+            throw std::runtime_error( "Unknown dotation category - " + dotation + " - " );
         nFullNbrDotation_ = xml::attribute< int >( xis, "count" );
     }
 }
@@ -101,18 +101,18 @@ void BuildableCapacity::load( MIL_CheckPointInArchive& ar, const unsigned int )
        >> unitType_;
     default_  = PHY_ConsumptionType::FindConsumptionType( consumptionId );
     if( !default_ )
-        throw std::runtime_error( __FUNCTION__ " Unknown consumption category" ); 
+        throw std::runtime_error( __FUNCTION__ " Unknown consumption category" );
     dotation_ = PHY_DotationType::FindDotationCategory( dotationId );
     if( !dotation_ && dotationId )
-        throw std::runtime_error( __FUNCTION__ " Unknown dotation category" ); 
+        throw std::runtime_error( __FUNCTION__ " Unknown dotation category" );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: BuildableCapacity::save
 // Created: JCR 2008-07-03
 // -----------------------------------------------------------------------------
 void BuildableCapacity::save( MIL_CheckPointOutArchive& ar, const unsigned int ) const
-{    
+{
     ar << boost::serialization::base_object< ObjectCapacity_ABC >( *this );
     ar << (const unsigned int&)default_->GetID()
        << (const unsigned int&)( dotation_ ? dotation_->GetMosID() : 0 )
@@ -136,9 +136,9 @@ void BuildableCapacity::Register( MIL_Object_ABC& object )
 void BuildableCapacity::Instanciate( MIL_Object_ABC& object ) const
 {
     object.AddCapacity( new BuildableCapacity( *this ) );
-    if ( unitType_ == ConstructionCapacity::eRaw && dotation_ )
+    if( unitType_ == ConstructionCapacity::eRaw && dotation_ )
         object.GetAttribute< ConstructionAttribute >() = ConstructionAttribute( *dotation_, nFullNbrDotation_ );
-    else if ( unitType_ == ConstructionCapacity::eDensity && dotation_ )
+    else if( unitType_ == ConstructionCapacity::eDensity && dotation_ )
     {
         const TER_Localisation& location = object.GetLocalisation();
         object.GetAttribute< ConstructionAttribute >() = ConstructionAttribute( *dotation_, unsigned int( nFullNbrDotation_ * location.GetArea() ) );
@@ -196,7 +196,7 @@ void BuildableCapacity::Construct( MIL_Object_ABC& object )
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
 void BuildableCapacity::Construct( MIL_Object_ABC& object, float rDeltaPercentage )
-{    
+{
     object.GetAttribute< ConstructionAttribute >().Build( rDeltaPercentage );
 }
 
@@ -205,7 +205,7 @@ void BuildableCapacity::Construct( MIL_Object_ABC& object, float rDeltaPercentag
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
 void BuildableCapacity::Destroy( MIL_Object_ABC& object, float rDeltaPercentage )
-{    
+{
     object.GetAttribute< ConstructionAttribute >().Build( -rDeltaPercentage );
 }
 
@@ -231,6 +231,6 @@ void BuildableCapacity::ChangeConstructionPercentage( MIL_Object_ABC& object, fl
         return;
     if( rDeltaPercentage > 0 )
         Construct( object, rDeltaPercentage );
-    else    
+    else
         Destroy( object, -rDeltaPercentage );
 }

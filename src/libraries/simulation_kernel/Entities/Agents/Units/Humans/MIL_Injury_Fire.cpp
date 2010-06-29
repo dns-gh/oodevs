@@ -208,7 +208,7 @@ namespace
         {
             //NOTHING
         }
-        
+
         void operator() ( const PHY_ComposantePion& composantePion )
         {
             composantePion.ApplyOnHumanProtection( *this );
@@ -241,10 +241,10 @@ namespace
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
 bool MIL_Injury_Fire::IsInjured( const PHY_ComposantePion& pComposante )
-{   
+{
     PHY_FireProtectionFunctor protection( heat_ , fireClass_ , injuryID_ );
-    
-    // pComposante.ApplyOnHumanProtection( protection );    
+
+    // pComposante.ApplyOnHumanProtection( protection );
     // PHY_InjuredHuman* injured = new PHY_InjuredHuman( *this, pComposante );
     // Injure( injured );
 
@@ -281,7 +281,7 @@ void MIL_Injury_Fire::SetInjury( unsigned int nNbrAliveHumans , MT_Float rDensit
     //Population doesn't have any protection
     //First we compute the number of persons caught in the fire
     const unsigned int nNbrOfPossibleCasualties = std::min( nNbrAliveHumans, unsigned int( std::max( 1., rDensity * MIL_FireClass::GetLength() * MIL_FireClass::GetWidth() ) ) );
-    
+
     //For, each of them, we will compute if they're going to be injured, and how
     for( unsigned int i = 0; i < nNbrOfPossibleCasualties; ++i )
     {
@@ -310,7 +310,7 @@ void MIL_Injury_Fire::SetInjury( unsigned int nNbrAliveHumans , MT_Float rDensit
 // -----------------------------------------------------------------------------
 void MIL_Injury_Fire::Injure( PHY_InjuredHuman& injuredHuman )
 {
-    unsigned int injuryThreshold = ( unsigned int )( ( 1 + 0.2 * randomGenerator_.rand_ii( 0 , 1 ) ) * heat_ );  
+    unsigned int injuryThreshold = ( unsigned int )( ( 1 + 0.2 * randomGenerator_.rand_ii( 0 , 1 ) ) * heat_ );
     //If injuredHuman has a protection, we compute its protection effect
     if( injuredHuman.GetComposantePion() != 0 )
     {
@@ -318,7 +318,7 @@ void MIL_Injury_Fire::Injure( PHY_InjuredHuman& injuredHuman )
         protection( *injuredHuman.GetComposantePion() );
         injuryThreshold *= ( 1 - protection.GetProtectionValue() );
     }
-    
+
     //If injuredHuman isn't already injured by this kind of injury, add possibly an injury of this kind
     if( ! injuredHuman.FindInjury( injuryID_ ) )
     {

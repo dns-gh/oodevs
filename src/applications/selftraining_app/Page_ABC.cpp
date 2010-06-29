@@ -33,7 +33,7 @@ Page_ABC::Page_ABC( QWidgetStack* pages, Page_ABC& previous, unsigned short flag
 
     //layout()->setAlignment( Qt::AlignTop );
     grid_ = new QGridLayout( layout(), 3, 2 );
-    grid_->setRowStretch( 0, 1 ); 
+    grid_->setRowStretch( 0, 1 );
     grid_->setRowStretch( 1, 10 );
     grid_->setRowStretch( 2, 2 );
 
@@ -55,7 +55,7 @@ Page_ABC::Page_ABC( QWidgetStack* pages, Page_ABC& previous, unsigned short flag
         buttonLayout->addWidget( button, 0, Qt::AlignBottom | Qt::AlignLeft );
         connect( button, SIGNAL( clicked() ), this, SLOT( OnOptions() ) );
     }
-    
+
     if( flags & eButtonQuit )
     {
         if( !quitPage_ )

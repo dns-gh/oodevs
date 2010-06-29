@@ -23242,9 +23242,9 @@ static const QByteArray& qembed_findData(const char* name)
 {
     static QDict<QByteArray> dict;
     QByteArray* ba = dict.find(name);
-    if ( !ba ) {
+    if( !ba ) {
         for (int i=0; embed_vec[i].data; i++) {
-        if ( 0==strcmp(embed_vec[i].name, name) ) {
+        if( 0==strcmp(embed_vec[i].name, name) ) {
             ba = new QByteArray;
             ba->setRawData( (char*)embed_vec[i].data,
                             embed_vec[i].size );
@@ -23252,7 +23252,7 @@ static const QByteArray& qembed_findData(const char* name)
             break;
         }
         }
-        if ( !ba ) {
+        if( !ba ) {
             static QByteArray dummy;
             return dummy;
         }

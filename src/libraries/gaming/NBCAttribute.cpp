@@ -43,7 +43,7 @@ NBCAttribute::~NBCAttribute()
 template< typename T >
 void NBCAttribute::UpdateData( const T& message )
 {
-    if ( message.has_nbc()  )    
+    if( message.has_nbc()  )
     {
         agents_.resize( message.nbc().nbc_agents().elem_size() );
 

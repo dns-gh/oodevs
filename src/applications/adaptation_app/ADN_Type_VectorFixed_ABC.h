@@ -19,7 +19,7 @@
 // Created: JDY 03-08-28
 //*****************************************************************************
 template <class T, class Cmp=T::CmpRef>
-class ADN_Type_VectorFixed_ABC 
+class ADN_Type_VectorFixed_ABC
 : public ADN_Type_Vector_ABC<T>
 {
     typedef typename T::T_Item       T_Item;
@@ -35,14 +35,14 @@ public:
     {
         SetFixedVector(v);
     }
-    
+
     template <class U> void SetFixedVector(const ADN_Type_Vector_ABC<U>& v)
     {
         // initialize vector
         for ( ADN_Type_Vector_ABC<U>::CIT_PtrVector it=v.begin();it!=v.end();++it)
             AddItem( new T(*it) );
         EndVector();
-    
+
         // connection
         connect(&v,SIGNAL(ItemAdded(void*)),this,SLOT(AutoCreate(void*)));
 

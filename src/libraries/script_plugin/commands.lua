@@ -10,7 +10,7 @@ function Command( t, command )
     else
         clients:SendCommand( t.client, profile, command )
     end
-end 
+end
 
 function Message( t )
     Command( t, "/text \"" .. t.message .. "\"" )
@@ -74,7 +74,7 @@ function ClearFilter( t )
     Command( t or {}, "/clearfilter" )
 end
 
-function Launch( t ) 
+function Launch( t )
     Command( t, "/launch " .. t.target )
 end
 
@@ -82,7 +82,7 @@ function Zoom( t )
     Command( t, "/zoom " .. t.width )
 end
 
-options = 
+options =
 {
     tristate  = { off = { "0", "T" }, on = { "1", "T" }, auto     = { "a", "T" } },
     fourstate = { off = { "0", "4" }, on = { "1", "4" }, selected = { "s", "4" }, superior = { "+", "4" } }
@@ -102,7 +102,7 @@ function ChangeOptionByName( t )
         end
     end
 
-    local type, value = Format( t.value )    
+    local type, value = Format( t.value )
     Command( t, "/option " .. type .. t.name .. " " .. value )
 end
 

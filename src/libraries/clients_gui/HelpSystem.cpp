@@ -58,7 +58,7 @@ void HelpSystem::ReadWidget( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 std::string HelpSystem::FindWidget( const QWidget* root )
 {
-    if( root ) 
+    if( root )
     {
         CIT_Anchors it = anchors_.find( root->name() );
         if( it != anchors_.end() && root->hasMouse() )

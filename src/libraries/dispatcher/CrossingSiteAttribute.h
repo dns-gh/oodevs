@@ -42,7 +42,7 @@ private:
     unsigned int nWidth_;
     unsigned int nDepth_;
     unsigned int nSpeed_;
-    bool         bNeedsConstruction_;    
+    bool         bNeedsConstruction_;
     //@}
 };
 

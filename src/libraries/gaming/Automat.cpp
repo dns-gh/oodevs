@@ -26,7 +26,7 @@ using namespace kernel;
 // Name: Automat constructor
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-Automat::Automat( const MsgsSimToClient::MsgAutomatCreation& message, Controller& controller, 
+Automat::Automat( const MsgsSimToClient::MsgAutomatCreation& message, Controller& controller,
                   const tools::Resolver_ABC< AutomatType >& resolver )
     : EntityImplementation< Automat_ABC >( controller, message.oid(), QString( message.nom().c_str() ) )
     , type_( resolver.Get( message.type_automate() ) )

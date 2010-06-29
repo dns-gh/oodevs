@@ -32,13 +32,13 @@ public:
 
 
     //! @name Operations
-    //@{  
+    //@{
     bool     HasDotations                    ( const PHY_DotationCategory& category, unsigned int nNbr ) const;
     void     ConsumeDotations                ( const PHY_DotationCategory& category, unsigned int nNbr );
     void     RecoverDotations                ( const PHY_DotationCategory& category, unsigned int nNbr );
 
     MT_Float ComputeDeltaPercentage          ();
-    MT_Float ComputeWorkTime				 ();
+    MT_Float ComputeWorkTime                 ();
 
     void     operator()                      ( PHY_ComposantePion& composante );
     //@}
@@ -50,7 +50,7 @@ private:
     void FilterData                      ();
 
     void ReserveConsumptions             ();
-    void RollbackConsumptionsReservations();   
+    void RollbackConsumptionsReservations();
     //@}
 
 private:

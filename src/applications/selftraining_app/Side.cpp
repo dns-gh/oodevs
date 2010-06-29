@@ -10,7 +10,7 @@
 #include "selftraining_app_pch.h"
 #include "Side.h"
 
-#include "xeumeuleu/xml.h" 
+#include "xeumeuleu/xml.h"
 
 // -----------------------------------------------------------------------------
 // Name: Side constructor
@@ -19,7 +19,7 @@
 Side::Side( xml::xistream& xis )
     : id_ ( xml::attribute<unsigned int>( xis,"id") )
 {
-    xis >> xml::optional() >> xml::attribute<std::string>( "name", name_ ) ; 
+    xis >> xml::optional() >> xml::attribute<std::string>( "name", name_ ) ;
 }
 
 // -----------------------------------------------------------------------------
@@ -36,9 +36,9 @@ Side::~Side()
 // Name: Side::GetId
 // Created: RDS 2008-09-10
 // -----------------------------------------------------------------------------
-unsigned int Side::GetId() const 
+unsigned int Side::GetId() const
 {
-    return id_ ; 
+    return id_ ;
 }
 
 // -----------------------------------------------------------------------------
@@ -47,6 +47,6 @@ unsigned int Side::GetId() const
 // -----------------------------------------------------------------------------
 const std::string Side::GetName() const
 {
-    return name_ ; 
+    return name_ ;
 }
 

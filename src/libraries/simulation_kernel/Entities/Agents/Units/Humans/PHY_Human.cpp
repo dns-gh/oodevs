@@ -98,14 +98,14 @@ void PHY_Human::load( MIL_CheckPointInArchive& file, const unsigned int )
     file >> boost::serialization::base_object< Human_ABC >( *this );
 
     file >> pComposante_;
-    
+
     unsigned int nID;
     file >> nID;
     pRank_ = PHY_HumanRank::Find( nID );
-    
+
     file >> nID;
     pWound_ = PHY_HumanWound::Find( nID );
-    
+
     file >> bMentalDiseased_
          >> bContamined_
          >> nLocation_
@@ -146,7 +146,7 @@ void PHY_Human::NotifyHumanChanged( const Human_ABC& oldHumanState )
 {
     assert( pComposante_ );
     pComposante_->NotifyHumanChanged( *this, oldHumanState );
-    
+
     if( pMedicalState_ )
         pMedicalState_->NotifyHumanChanged();
 }
@@ -164,7 +164,7 @@ void PHY_Human::CancelLogisticRequest()
         const_cast< MIL_Agent_ABC& >( pComposante_->GetComposante().GetRole().GetPion() ).Apply( &human::HumansActionsNotificationHandler_ABC::NotifyHumanBackFromMedical, *pMedicalState_ );
         if( pComposante_->GetComposante().GetState() == PHY_ComposanteState::maintenance_ )
             nLocation_ = eMaintenance;
-        else 
+        else
             nLocation_ = eBattleField;
         pMedicalState_->Cancel();
         delete pMedicalState_;
@@ -192,7 +192,7 @@ void PHY_Human::Heal()
     CancelLogisticRequest();
     HealMentalDisease    ();
     HealContamination    ();
-    SetWound             ( PHY_HumanWound::notWounded_ ); //$$$ NB : don't use HealWound() => 'cause it don't heal deads ...    
+    SetWound             ( PHY_HumanWound::notWounded_ ); //$$$ NB : don't use HealWound() => 'cause it don't heal deads ...
 }
 
 // -----------------------------------------------------------------------------
@@ -221,7 +221,7 @@ void PHY_Human::HealWound()
     nDeathTimeStep_ = std::numeric_limits< unsigned int >::max();
     NotifyHumanChanged( oldHumanState );
 }
- 
+
 // -----------------------------------------------------------------------------
 // Name: PHY_Human::HealContamination
 // Created: NLD 2005-01-12
@@ -323,14 +323,14 @@ bool PHY_Human::SetWound( const PHY_HumanWound& newWound )
     {
         nDeathTimeStep_  = 0;
         bMentalDiseased_ = false;
-        bContamined_     = false;        
+        bContamined_     = false;
     }
     else if( *pWound_ == PHY_HumanWound::notWounded_ )
         nDeathTimeStep_ = std::numeric_limits< unsigned int >::max();
     else
         nDeathTimeStep_ = std::min( nDeathTimeStep_, time_.GetCurrentTick() + pWound_->GetLifeExpectancy() );
-    
-    NotifyHumanChanged( oldHumanState );   
+
+    NotifyHumanChanged( oldHumanState );
 
     // !!!! $$$ Must be called after NotifyHumanChanged() (CancelLogisticRequest() call NotifyHumanChanged() too
     if( !NeedMedical() )

@@ -42,7 +42,7 @@ class MIL_PopulationElement_ABC;
 class TER_Localisation;
 
 // HLA
-namespace hla 
+namespace hla
 {
     class Deserializer;
     class AttributeIdentifier;
@@ -57,16 +57,16 @@ class HLA_UpdateFunctor;
 // Last modified: JVT 03-07-15
 //=============================================================================
 class MIL_Object_ABC : public TER_Object_ABC
-                     , public tools::Extendable< ObjectCapacity_ABC > 
+                     , public tools::Extendable< ObjectCapacity_ABC >
                      , protected tools::Extendable< ObjectAttribute_ABC >
                      , private boost::noncopyable
 {
-   
+
 public:
              MIL_Object_ABC();
              MIL_Object_ABC( MIL_Army_ABC* army, const MIL_ObjectType_ABC& type );
     virtual ~MIL_Object_ABC();
-    
+
     //! @name Init
     //@{
     virtual void Initialize( const TER_Localisation& localisation );
@@ -75,9 +75,9 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive&, const unsigned int );
-    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;    
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
     //! @name ODB
@@ -88,7 +88,7 @@ public:
     //! @name Operations
     //@{
     virtual void UpdateState       ();
-    virtual void UpdateLocalisation( const TER_Localisation& newLocalisation ); 
+    virtual void UpdateLocalisation( const TER_Localisation& newLocalisation );
             void ProcessEvents     ();
             void MarkForDestruction();
     //@}
@@ -99,8 +99,8 @@ public:
     virtual bool CanInteractWith( const MIL_PopulationElement_ABC& population ) const;
     //@}
 
-    //! @name Interaction events 
-    //@{    
+    //! @name Interaction events
+    //@{
     void NotifyPopulationMovingInside ( MIL_PopulationElement_ABC& population );
     void NotifyPopulationMovingOutside( MIL_PopulationElement_ABC& population );
 
@@ -108,7 +108,7 @@ public:
     void NotifyAgentMovingOutside( MIL_Agent_ABC& agent );
     void NotifyAgentPutInside    ( MIL_Agent_ABC& agent );
     void NotifyAgentPutOutside   ( MIL_Agent_ABC& agent );
-    //@}   
+    //@}
 
     //! @name InteractiveContainer
     //@{
@@ -117,10 +117,10 @@ public:
     virtual void ProcessAgentExiting     ( MIL_Agent_ABC& agent ) = 0;
     virtual void ProcessAgentMovingInside( MIL_Agent_ABC& agent ) = 0;
     virtual void ProcessAgentInside      ( MIL_Agent_ABC& agent ) = 0;
-    virtual void ProcessPopulationInside ( MIL_PopulationElement_ABC& population ) = 0;    
+    virtual void ProcessPopulationInside ( MIL_PopulationElement_ABC& population ) = 0;
     //@}
 
-    //! @name 
+    //! @name
     //@{
     template< typename T> void ProcessAgentsInside( T functor ) const;
     //@}
@@ -156,7 +156,7 @@ public:
     virtual void    Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer ) = 0;
     virtual void    Serialize  ( HLA_UpdateFunctor& functor ) const = 0;
     //@}
-    
+
     //! @name Network
     //@{
     virtual MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode OnUpdate( const Common::MsgMissionParameter_Value& asn ) = 0;
@@ -166,7 +166,7 @@ public:
     //@}
 
     //! @name Accessors
-    //@{    
+    //@{
     virtual unsigned int              GetID() const = 0;
     const MIL_ObjectType_ABC& GetType() const;
     const MIL_Army_ABC* GetArmy() const;
@@ -201,7 +201,7 @@ protected:
 private:
     //! @name Members
     //@{
-    const MIL_ObjectType_ABC* pType_;    
+    const MIL_ObjectType_ABC* pType_;
           MIL_Army_ABC*       pArmy_;
     //@}
 
@@ -213,7 +213,7 @@ private:
     //! @name destruction management
     //@{
     bool bMarkedForDestruction_;
-    bool bReadyForDeletion_;        
+    bool bReadyForDeletion_;
     //@}
 };
 

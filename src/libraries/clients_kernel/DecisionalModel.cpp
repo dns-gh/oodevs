@@ -25,7 +25,7 @@ using namespace xml;
 DecisionalModel::DecisionalModel( xml::xistream& xis, MissionFactory& factory, const T_Resolver& missionResolver, const tools::Resolver_ABC< FragOrderType >& fragOrders )
 {
     xis >> attribute( "name", name_ )
-        >> optional() 
+        >> optional()
             >> start( "missions" )
                 >> list( "mission", *this, &DecisionalModel::ReadMission, factory, missionResolver )
             >> end();
@@ -66,7 +66,7 @@ void DecisionalModel::ReadFragOrder( xml::xistream& xis, Mission& mission, Missi
     FragOrder* order = factory.CreateFragOrder( name );
     if( ! mission.Find( order->GetId() ) )
         mission.Register( order->GetId(), *order );
-    else 
+    else
         delete order;
 }
 

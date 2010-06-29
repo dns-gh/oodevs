@@ -30,7 +30,7 @@ public:
     virtual ~Workspace_ABC() {}
     //@}
 
-    //! @name 
+    //! @name
     //@{
     virtual Database_ABC& GetDatabase( const std::string& name ) = 0;
     //@}

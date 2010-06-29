@@ -36,10 +36,10 @@ MT_Profiler::MT_Profiler()
     : nCounterStart_    ( 0 )
     , rLastTime_        ( 0. )
     , rTotalTime_       ( 0. )
-    , nNbrCount_        ( 0 )  
+    , nNbrCount_        ( 0 )
 {
     assert( nFrequency_ != 0 ); // Call Initialize before instanciation
-}    
+}
 
 
 //-----------------------------------------------------------------------------
@@ -48,7 +48,7 @@ MT_Profiler::MT_Profiler()
 //-----------------------------------------------------------------------------
 MT_Profiler::~MT_Profiler()
 {
-    
+
 }
 
 

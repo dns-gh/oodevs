@@ -73,7 +73,7 @@ public:
     MsgsAuthenticationToClient::MsgProfileCreationRequestAck_ErrorCode    Create ( const MsgsClientToAuthentication::MsgProfileCreationRequest&    message );
     MsgsAuthenticationToClient::MsgProfileUpdateRequestAck_ErrorCode      Update ( const MsgsClientToAuthentication::MsgProfileUpdateRequest&      message );
     MsgsAuthenticationToClient::MsgProfileDestructionRequestAck_ErrorCode Destroy( const MsgsClientToAuthentication::MsgProfileDestructionRequest& message );
-    
+
     static void RegisterRoles();
     static E_ScipioRole FindRole( const std::string& name );
     //@}

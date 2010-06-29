@@ -27,7 +27,7 @@ class ADN_Units_LogThreshold_GUI_Connector
 {
 public:
 
-    ADN_Units_LogThreshold_GUI_Connector( ADN_Units_LogThreshold_GUI& tab ) 
+    ADN_Units_LogThreshold_GUI_Connector( ADN_Units_LogThreshold_GUI& tab )
     : ADN_Connector_Table_ABC( tab, false )
     {}
 
@@ -51,7 +51,7 @@ public:
         // Connect the item
         pItemLogThreshold->GetConnector().Connect( &pInfo->rLogThreshold_ );
     }
-    
+
 private:
     ADN_Units_LogThreshold_GUI_Connector& operator=( const ADN_Units_LogThreshold_GUI_Connector& );
 };
@@ -105,5 +105,5 @@ void ADN_Units_LogThreshold_GUI::InitializeLogThresholds()
         //vLogThresholds_.AddItem( spNew.release() );
         pCTable->AddItem( spNew.release() );
     }
-    pCTable->AddItem( 0 ); 
+    pCTable->AddItem( 0 );
 }

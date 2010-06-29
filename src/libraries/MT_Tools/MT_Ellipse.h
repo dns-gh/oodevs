@@ -21,7 +21,7 @@
 // Last modified: JVT 04-03-25
 //*****************************************************************************
 class MT_Ellipse
-{    
+{
 //    MT_BOOSTPOOLING_MEMBERS( MT_Ellipse )
 
 public:

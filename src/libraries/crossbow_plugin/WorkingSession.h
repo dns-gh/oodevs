@@ -54,8 +54,8 @@ private:
     //@{
     int GetExercise() const;
 
-	void LoadExercise( const dispatcher::Config& config, QuerySessionData& database );
-	void LoadSession( const dispatcher::Config& config, QuerySessionData& database );
+    void LoadExercise( const dispatcher::Config& config, QuerySessionData& database );
+    void LoadSession( const dispatcher::Config& config, QuerySessionData& database );
     //@}
 
 private:

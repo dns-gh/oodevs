@@ -48,7 +48,7 @@ public:
 
 private:
     //! @name Copy/Assignment
-    //@{    
+    //@{
     ParamComboBox( const ParamComboBox& );
     ParamComboBox& operator=( const ParamComboBox& );
     //@}

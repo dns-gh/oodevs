@@ -81,7 +81,7 @@ void SupplyRouteAttribute::SetFlow( unsigned int value )
 {
     flow_.value_ = value;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: SupplyRouteAttribute::SetWidth
 // Created: SBO 2006-09-15
@@ -90,7 +90,7 @@ void SupplyRouteAttribute::SetWidth( unsigned int value )
 {
     width_.value_ = value;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: SupplyRouteAttribute::SetLength
 // Created: SBO 2006-09-15
@@ -99,7 +99,7 @@ void SupplyRouteAttribute::SetLength( unsigned int value )
 {
     length_.value_ = value;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: SupplyRouteAttribute::SetMaxWeight
 // Created: SBO 2006-09-15
@@ -129,7 +129,7 @@ void SupplyRouteAttribute::SerializeAttributes( xml::xostream& xos ) const
             << content( "width", int( width_.value_ ) )
             << content( "length", int( length_.value_ ) )
             << content( "max-weight", int( maxWeight_.value_ ) )
-            << content( "equipped", equipped_ )        
+            << content( "equipped", equipped_ )
         << end();
 }
 

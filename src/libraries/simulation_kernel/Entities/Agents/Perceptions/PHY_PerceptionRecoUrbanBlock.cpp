@@ -92,7 +92,7 @@ int PHY_PerceptionRecoUrbanBlock::AddUrbanBlock( const boost::shared_ptr< DEC_Kn
 {
     PHY_PerceptionRecoUrbanBlockReco* pNewReco = new PHY_PerceptionRecoUrbanBlockReco( urbanBlock );
     assert( pNewReco );
-    return Add( pNewReco ); 
+    return Add( pNewReco );
 }
 
 // -----------------------------------------------------------------------------
@@ -113,10 +113,10 @@ const PHY_PerceptionLevel& PHY_PerceptionRecoUrbanBlock::Compute( const MT_Vecto
 {
     for ( CIT_RecoVector it = recos_.begin(); it != recos_.end(); ++it )
     {
-        if ( (*it)->IsInside( perceiver_, vPoint ) )
+        if( (*it)->IsInside( perceiver_, vPoint ) )
             return PHY_PerceptionLevel::recognized_;
     }
-    
+
     return PHY_PerceptionLevel::notSeen_;
 }
 
@@ -127,11 +127,11 @@ const PHY_PerceptionLevel& PHY_PerceptionRecoUrbanBlock::Compute( const MT_Vecto
 void PHY_PerceptionRecoUrbanBlock::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/, const detection::DetectionComputerFactory_ABC& detectionComputerFactory )
 {
     TER_Agent_ABC::T_AgentPtrVector perceivableAgents;
-    
+
     for ( CIT_RecoVector itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
     {
         (*itReco)->GetAgentsInside( perceiver_, perceivableAgents );
-        
+
         for ( TER_Agent_ABC::CIT_AgentPtrVector it = perceivableAgents.begin(); it != perceivableAgents.end(); ++it )
         {
             MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >(**it).GetAgent();

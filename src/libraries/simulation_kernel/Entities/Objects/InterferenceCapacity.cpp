@@ -33,7 +33,7 @@ InterferenceCapacity::InterferenceCapacity( xml::xistream& /*xis*/ )
 // Name: InterferenceCapacity constructor
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
-InterferenceCapacity::InterferenceCapacity()    
+InterferenceCapacity::InterferenceCapacity()
 {
     // NOTHING
 }
@@ -81,7 +81,7 @@ void InterferenceCapacity::Register( MIL_Object_ABC& object )
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
 void InterferenceCapacity::Instanciate( MIL_Object_ABC& object ) const
-{    
+{
     InterferenceCapacity* capacity = new InterferenceCapacity( *this );
     object.AddCapacity( capacity );
     object.Register( static_cast< MIL_InteractiveContainer_ABC *>( capacity ) );
@@ -102,6 +102,6 @@ void InterferenceCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 void InterferenceCapacity::ProcessAgentExiting( MIL_Object_ABC& object, MIL_Agent_ABC& agent )
-{    
+{
     agent.GetRole< PHY_RoleInterface_Communications >().Unjam( object );
 }

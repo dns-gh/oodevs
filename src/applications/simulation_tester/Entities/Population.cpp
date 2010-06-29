@@ -41,7 +41,7 @@ Population::Concentration::Concentration( const MsgPopulationConcentrationCreati
 : position_ ( (const char*)asnMsg.position.data() )
 {
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Population::~Concentration
 // Created: SBO 2005-11-24
@@ -169,7 +169,7 @@ void Population::OnConcentrationUpdated( const MsgPopulationConcentrationUpdate&
     if( concentrations_[ asnMsg.oid_concentration() ] )
         concentrations_[ asnMsg.oid_concentration() ]->OnUpdate( asnMsg );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Population::OnConcentrationDestroyed
 // Created: SBO 2005-11-24
@@ -189,7 +189,7 @@ void Population::OnFlowCreated( const MsgPopulationFlowCreation& asnMsg )
     if( !flows_[ asnMsg.oid_flux() ] )
         flows_[ asnMsg.oid_flux() ] = new Flow( asnMsg );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Population::OnFlowUpdated
 // Created: SBO 2005-11-24
@@ -199,7 +199,7 @@ void Population::OnFlowUpdated( const MsgPopulationFlowUpdate& asnMsg )
     if( flows_[ asnMsg.oid_flux() ] )
         flows_[ asnMsg.oid_flux() ]->OnUpdate( asnMsg );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Population::OnFlowDestroyed
 // Created: SBO 2005-11-24

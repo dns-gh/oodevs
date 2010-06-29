@@ -2,20 +2,20 @@
 <medical-treatments>
   <medical-treatment id="1" name="Surgery" death-threshold="95">
     <injuries>
-   		<injury category="UA" treatment-time="120m" hospitalisation-time="72m" threshold="80"/>
- 	    <injury category="UR" treatment-time="30m" hospitalisation-time="3m" threshold="25"/>
-   	</injuries>
-	</medical-treatment>
-	<medical-treatment id="2" name="NBC" death-threshold="95" >	
+           <injury category="UA" treatment-time="120m" hospitalisation-time="72m" threshold="80"/>
+         <injury category="UR" treatment-time="30m" hospitalisation-time="3m" threshold="25"/>
+       </injuries>
+    </medical-treatment>
+    <medical-treatment id="2" name="NBC" death-threshold="95" >
     <injuries>
-   		<injury category="UA" treatment-time="120m" hospitalisation-time="72m" threshold="80"/>
- 	    <injury category="UR" treatment-time="30m" hospitalisation-time="3m" threshold="25"/>	
-   	</injuries>
+           <injury category="UA" treatment-time="120m" hospitalisation-time="72m" threshold="80"/>
+         <injury category="UR" treatment-time="30m" hospitalisation-time="3m" threshold="25"/>
+       </injuries>
   </medical-treatment>
   <medical-treatment id="3" name="Poison" death-threshold="95" >
     <injuries>
-    	<injury category="UA" treatment-time="120m" hospitalisation-time="72m" threshold="80"/>
- 		  <injury category="UR" treatment-time="30m" hospitalisation-time="3m" threshold="25"/>	
+        <injury category="UA" treatment-time="120m" hospitalisation-time="72m" threshold="80"/>
+           <injury category="UR" treatment-time="30m" hospitalisation-time="3m" threshold="25"/>
     </injuries>
-	</medical-treatment>
+    </medical-treatment>
 </medical-treatments>

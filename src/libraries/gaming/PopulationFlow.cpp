@@ -69,23 +69,23 @@ unsigned long PopulationFlow::GetId() const
 // -----------------------------------------------------------------------------
 void PopulationFlow::DoUpdate( const MsgsSimToClient::MsgPopulationFlowUpdate& message )
 {
-    if ( message.has_attitude()  )
+    if( message.has_attitude()  )
         attitude_ = (E_PopulationAttitude)message.attitude();
     if( message.has_nb_humains_vivants()  )
         nLivingHumans_ = message.nb_humains_vivants();
-    if ( message.has_nb_humains_morts()  )
+    if( message.has_nb_humains_morts()  )
         nDeadHumans_ = message.nb_humains_morts();
-    if ( message.has_vitesse()  )
+    if( message.has_vitesse()  )
         nSpeed_ = message.vitesse();
-    if ( message.has_direction()  )
+    if( message.has_direction()  )
         nDirection_    = message.direction().heading();
-    if ( message.has_itineraire()  )
+    if( message.has_itineraire()  )
     {
         itineraire_.clear();
         for( int i = 0; i < message.itineraire().location().coordinates().elem_size(); ++i )
             itineraire_.push_back( converter_.ConvertToXY( message.itineraire().location().coordinates().elem(i) ) );
     }
-    if ( message.has_flux()  )
+    if( message.has_flux()  )
     {
         flow_.clear(); flow_.reserve( message.flux().location().coordinates().elem_size() );
         boundingBox_ = Rectangle2f();
@@ -105,7 +105,7 @@ void PopulationFlow::DoUpdate( const MsgsSimToClient::MsgPopulationFlowUpdate& m
 
         if( rLength > 0. )
             rDensity_ = nLivingHumans_ / rLength;
-        else 
+        else
             rDensity_ = 0.;
     }
 }
@@ -145,7 +145,7 @@ QString PopulationFlow::GetAttitude() const
 {
     return tools::ToString( attitude_ );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PopulationFlow::GetHeight
 // Created: SBO 2006-08-23

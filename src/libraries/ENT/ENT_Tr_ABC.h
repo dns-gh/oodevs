@@ -13,9 +13,9 @@
 #include <qapplication.h>
 #include <assert.h>
 
-#include <string> 
+#include <string>
 #include <algorithm>
-#include <cctype> 
+#include <cctype>
 
 
 // =============================================================================

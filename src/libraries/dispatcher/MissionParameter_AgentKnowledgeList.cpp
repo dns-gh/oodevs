@@ -21,7 +21,7 @@ MissionParameter_AgentKnowledgeList::MissionParameter_AgentKnowledgeList( const 
     : MissionParameter_ABC( asn )
 {
     for( int i = 0; i < asn.value().unitknowledgelist().elem_size(); ++i )
-        agentKnowledges_.push_back( asn.value().unitknowledgelist().elem( i ).oid() );    
+        agentKnowledges_.push_back( asn.value().unitknowledgelist().elem( i ).oid() );
 }
 
 // -----------------------------------------------------------------------------

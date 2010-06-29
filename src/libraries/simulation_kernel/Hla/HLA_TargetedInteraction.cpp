@@ -43,7 +43,7 @@ HLA_TargetedInteraction::HLA_TargetedInteraction( const HLA_RoleInterface& hlaRo
 {
     //NOTHING
 }
- 
+
 // -----------------------------------------------------------------------------
 // Name: HLA_TargetedInteraction destructor
 // Created: AGE 2004-11-29

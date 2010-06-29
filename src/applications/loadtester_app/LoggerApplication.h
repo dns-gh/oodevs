@@ -59,7 +59,7 @@ private:
 
     void OnReceiveMsgReplayToClient        ( const std::string& from, const MsgsReplayToClient::MsgReplayToClient& wrapper );
     void OnReceiveMsgAarToClient           ( const std::string& from, const MsgsAarToClient::MsgAarToClient& wrapper );
-    
+
     void OnReceiveMsgControlBeginTick( int tick );
     void LogMessage( const MsgsSimToClient::MsgSimToClient& wrapper );
     void DumpTime();

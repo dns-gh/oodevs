@@ -38,7 +38,7 @@
 #include "Entities/Agents/Roles/Network/NET_RolePion_Dotations.h"
 
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
-#include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"    
+#include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
 #include "Entities/Agents/Roles/Posture/PHY_RolePion_Posture.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Reinforcement/PHY_RolePion_Reinforcement.h"
@@ -68,7 +68,7 @@
 #include "Decision/DEC_Representations.h"
 
 #include "Knowledge/DEC_Knowledge_RapFor_ABC.h"
- 
+
 #include "MIL_AgentServer.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
@@ -102,32 +102,32 @@ void MIL_AgentTypePion::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing agent types" );
 
-    pionTypeAllocators_[ "Pion INF"                    ] = &MIL_AgentTypePion               ::Create; 
-    pionTypeAllocators_[ "Pion ASA"                    ] = &MIL_AgentTypePionASA            ::Create; 
-    pionTypeAllocators_[ "Pion ALAT"                   ] = &MIL_AgentTypePionALAT           ::Create; 
-    pionTypeAllocators_[ "Pion RENS"                   ] = &MIL_AgentTypePionRENS           ::Create; 
-    pionTypeAllocators_[ "Pion NBC"                    ] = &MIL_AgentTypePionNBC            ::Create; 
+    pionTypeAllocators_[ "Pion INF"                    ] = &MIL_AgentTypePion               ::Create;
+    pionTypeAllocators_[ "Pion ASA"                    ] = &MIL_AgentTypePionASA            ::Create;
+    pionTypeAllocators_[ "Pion ALAT"                   ] = &MIL_AgentTypePionALAT           ::Create;
+    pionTypeAllocators_[ "Pion RENS"                   ] = &MIL_AgentTypePionRENS           ::Create;
+    pionTypeAllocators_[ "Pion NBC"                    ] = &MIL_AgentTypePionNBC            ::Create;
     pionTypeAllocators_[ "Pion ABC"                    ] = &MIL_AgentTypePion               ::Create;
     pionTypeAllocators_[ "Pion GEN"                    ] = &MIL_AgentTypePion               ::Create;
-    pionTypeAllocators_[ "Pion ASS"                    ] = &MIL_AgentTypePion               ::Create; 
-    pionTypeAllocators_[ "Pion TRANS"                  ] = &MIL_AgentTypePion               ::Create; 
-    pionTypeAllocators_[ "Pion LOG TC2"                ] = &MIL_AgentTypePionLOGTC2         ::Create;     
-    pionTypeAllocators_[ "Pion LOG BLD Sante"          ] = &MIL_AgentTypePionLOGMedical     ::Create; 
-    pionTypeAllocators_[ "Pion LOG BLD Maintenance"    ] = &MIL_AgentTypePionLOGMaintenance ::Create; 
-    pionTypeAllocators_[ "Pion LOG BLD Ravitaillement" ] = &MIL_AgentTypePionLOGSupply      ::Create; 
-    pionTypeAllocators_[ "Pion LOG BLT Sante"          ] = &MIL_AgentTypePionLOGMedical     ::Create; 
-    pionTypeAllocators_[ "Pion LOG BLT Maintenance"    ] = &MIL_AgentTypePionLOGMaintenance ::Create; 
-    pionTypeAllocators_[ "Pion LOG BLT Ravitaillement" ] = &MIL_AgentTypePionLOGSupply      ::Create; 
-    pionTypeAllocators_[ "Pion LOG Convoi"             ] = &MIL_AgentTypePionLOGConvoy      ::Create; 
-    pionTypeAllocators_[ "Pion CIRCULATION"            ] = &MIL_AgentTypePionCirculation    ::Create; 
-    pionTypeAllocators_[ "Pion JOINT"                  ] = &MIL_AgentTypePion               ::Create; 
-    pionTypeAllocators_[ "Pion MILICE"                 ] = &MIL_AgentTypePionMILICE         ::Create; 
+    pionTypeAllocators_[ "Pion ASS"                    ] = &MIL_AgentTypePion               ::Create;
+    pionTypeAllocators_[ "Pion TRANS"                  ] = &MIL_AgentTypePion               ::Create;
+    pionTypeAllocators_[ "Pion LOG TC2"                ] = &MIL_AgentTypePionLOGTC2         ::Create;
+    pionTypeAllocators_[ "Pion LOG BLD Sante"          ] = &MIL_AgentTypePionLOGMedical     ::Create;
+    pionTypeAllocators_[ "Pion LOG BLD Maintenance"    ] = &MIL_AgentTypePionLOGMaintenance ::Create;
+    pionTypeAllocators_[ "Pion LOG BLD Ravitaillement" ] = &MIL_AgentTypePionLOGSupply      ::Create;
+    pionTypeAllocators_[ "Pion LOG BLT Sante"          ] = &MIL_AgentTypePionLOGMedical     ::Create;
+    pionTypeAllocators_[ "Pion LOG BLT Maintenance"    ] = &MIL_AgentTypePionLOGMaintenance ::Create;
+    pionTypeAllocators_[ "Pion LOG BLT Ravitaillement" ] = &MIL_AgentTypePionLOGSupply      ::Create;
+    pionTypeAllocators_[ "Pion LOG Convoi"             ] = &MIL_AgentTypePionLOGConvoy      ::Create;
+    pionTypeAllocators_[ "Pion CIRCULATION"            ] = &MIL_AgentTypePionCirculation    ::Create;
+    pionTypeAllocators_[ "Pion JOINT"                  ] = &MIL_AgentTypePion               ::Create;
+    pionTypeAllocators_[ "Pion MILICE"                 ] = &MIL_AgentTypePionMILICE         ::Create;
     pionTypeAllocators_[ "Pion ASY"                    ] = &MIL_AgentTypePionASY            ::Create;
-    pionTypeAllocators_[ "Pion REFUGIE"                ] = &MIL_AgentTypePionREFUGIE        ::Create; 
-    pionTypeAllocators_[ "Pion Emergency"              ] = &MIL_AgentTypePion               ::Create; 
-    
+    pionTypeAllocators_[ "Pion REFUGIE"                ] = &MIL_AgentTypePionREFUGIE        ::Create;
+    pionTypeAllocators_[ "Pion Emergency"              ] = &MIL_AgentTypePion               ::Create;
+
     LoadingWrapper loader;
-    
+
     xis >> xml::start( "units" )
             >> xml::list( "unit", loader, &LoadingWrapper::ReadUnit )
         >> xml::end();
@@ -138,7 +138,7 @@ void MIL_AgentTypePion::Initialize( xml::xistream& xis )
 // Created: ABL 2007-07-23
 // -----------------------------------------------------------------------------
 void MIL_AgentTypePion::ReadUnit( xml::xistream& xis )
-{   
+{
     std::set< unsigned int > ids_;
     std::string strName;
     std::string strType;
@@ -188,7 +188,7 @@ MIL_AgentTypePion::MIL_AgentTypePion( const std::string& strName, xml::xistream&
     InitializeRapFor              ( xis );
     InitializeDistancesAvantPoints( xis );
     InitializeModel               ( xis );
-    InitializeDiaFunctions        ();    
+    InitializeDiaFunctions        ();
 }
 
 // -----------------------------------------------------------------------------
@@ -233,7 +233,7 @@ void MIL_AgentTypePion::ReadPoint( xml::xistream& xis )
     xis >> xml::attribute( "type", strTypePoint );
 
     // Cas particulier : limas ( point n'appartenant pas à TER ! )
-    if ( sCaseInsensitiveEqual()( strTypePoint, "lima" ) )
+    if( sCaseInsensitiveEqual()( strTypePoint, "lima" ) )
     {
         xis >> xml::attribute( "value", rDistanceAvantLimas_ );
         rDistanceAvantLimas_ = MIL_Tools::ConvertMeterToSim( rDistanceAvantLimas_ );
@@ -241,7 +241,7 @@ void MIL_AgentTypePion::ReadPoint( xml::xistream& xis )
     else
     {
         const TerrainData nType = MIL_Tools::ConvertLandType( strTypePoint );
-        
+
         if( nType.Area() == 0xFF )
             xis.error( "Unknown land type" );
 

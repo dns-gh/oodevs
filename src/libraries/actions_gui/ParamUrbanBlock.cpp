@@ -86,7 +86,7 @@ void ParamUrbanBlock::CommitTo( actions::ParameterContainer_ABC& action ) const
         std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::UrbanBlock( parameter_, selected_->GetId() ) );
         param->Set( true );
         action.AddParameter( *param.release() );
-    }   
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -127,7 +127,7 @@ void ParamUrbanBlock::MenuItemValidated()
     selected_ = potential_;
     if( selected_ )
     {
-        if ( selected_->GetName().isEmpty() )
+        if( selected_->GetName().isEmpty() )
             pBlockLabel_->setText( tr( "Untitled block [" ) + QString::number( selected_->GetId() ) + tr( "]" ) );
         else
             pBlockLabel_->setText(  selected_->object_->GetName().c_str() );

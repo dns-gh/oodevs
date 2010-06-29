@@ -30,7 +30,7 @@ MIL_Effect_Weather::MIL_Effect_Weather( const MT_Ellipse& surface, const PHY_Ind
     , surface_            ( surface )
     , ammoCategory_       ( ammoCategory )
     , nDeploymentTimeStep_( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + (unsigned int)rDeploymentDuration )
-    , nLifeLastTimeStep_  ( nDeploymentTimeStep_ + (unsigned int)rLifeDuration ) 
+    , nLifeLastTimeStep_  ( nDeploymentTimeStep_ + (unsigned int)rLifeDuration )
     , bIsDeployed_        ( false )
 {
     assert( ammoCategory_ == PHY_IndirectFireDotationClass::eclairant_ || ammoCategory_ == PHY_IndirectFireDotationClass::fumigene_ );
@@ -66,7 +66,7 @@ bool MIL_Effect_Weather::Execute()
         delete this;
         return false;
     }
-    return true; 
+    return true;
 }
 
 //-----------------------------------------------------------------------------

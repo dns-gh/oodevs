@@ -101,7 +101,7 @@ void SensorType::ReadUrbanBlockMaterialFactor( xml::xistream& xis )
 void SensorType::InitializeAngle( xml::xistream& xis )
 {
     std::string unit;
-    xis >> attribute( "angle", rAngle_ ) 
+    xis >> attribute( "angle", rAngle_ )
         >> attribute( "scanning", bScanningAllowed_ );
     rAngle_ *= ( std::acos( -1.f ) / 180.f );
 }
@@ -238,11 +238,11 @@ float SensorType::ComputeExtinction( float distanceModificator, bool inForest, b
 // -----------------------------------------------------------------------------
 E_PerceptionResult SensorType::InterpreteNRJ( float rNRJ ) const
 {
-    if ( rNRJ >= rDetectionDist_ - rIdentificationDist_ )
+    if( rNRJ >= rDetectionDist_ - rIdentificationDist_ )
         return eIdentification;
-    if ( rNRJ >= rDetectionDist_ - rRecognitionDist_ )
+    if( rNRJ >= rDetectionDist_ - rRecognitionDist_ )
         return  eRecognition;
-    if ( rNRJ >= 0 )
+    if( rNRJ >= 0 )
         return eDetection;
     return eNotSeen;
 }
@@ -254,11 +254,11 @@ E_PerceptionResult SensorType::InterpreteNRJ( float rNRJ ) const
 bool SensorType::ComputeUrbanExtinction( float& rVisionNRJ, float distance, const urban::TerrainObject_ABC* object ) const
 {
     bool bIsAroundBU = false;
-    if ( object )
+    if( object )
     {
         bIsAroundBU = true;
         const urban::Architecture* architecture = object->RetrievePhysicalFeature< urban::Architecture >();
-        if ( architecture )
+        if( architecture )
         {
             float rDistanceModificator = urbanBlockFactors_.find( architecture->GetMaterial() )->second;
             rDistanceModificator <= 1e-8 ? rVisionNRJ = -1 : rVisionNRJ = rVisionNRJ - distance / rDistanceModificator ;

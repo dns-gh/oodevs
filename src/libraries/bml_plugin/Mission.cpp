@@ -284,7 +284,7 @@ void Mission::FillEmptyParameters( MsgMissionParameters& asn ) const
             if( type == "phaselinelist" )
             {
                 static MsgLimasOrder limas;
-                asnParam.set_null_value( 0 ); 
+                asnParam.set_null_value( 0 );
                 *asnParam.mutable_value()->mutable_limasorder() = limas ;
             }
             else
@@ -354,11 +354,11 @@ void Mission::CleanDummyParameters( MsgMissionParameters& asn ) const
 {
     for( int i = 0; i < asn.elem_size(); ++i )
     {
-        if ( asn.elem().Get(i).value().has_intelligencelist() )
+        if( asn.elem().Get(i).value().has_intelligencelist() )
             asn.mutable_elem(i)->mutable_value()->clear_intelligencelist();
-        if ( asn.elem().Get(i).value().has_missionobjectivelist() )
+        if( asn.elem().Get(i).value().has_missionobjectivelist() )
             asn.mutable_elem(i)->mutable_value()->clear_missionobjectivelist();
-        if ( asn.elem().Get(i).value().has_plannedworklist() )
+        if( asn.elem().Get(i).value().has_plannedworklist() )
             asn.mutable_elem(i)->mutable_value()->clear_plannedworklist();
     }
 }

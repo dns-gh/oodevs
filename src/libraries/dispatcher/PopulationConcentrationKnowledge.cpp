@@ -27,11 +27,11 @@ using namespace dispatcher;
 PopulationConcentrationKnowledge::PopulationConcentrationKnowledge( const kernel::PopulationKnowledge_ABC& populationKnowledge, const MsgsSimToClient::MsgPopulationConcentrationKnowledgeCreation& msg )
     : SimpleEntity< >     ( msg.oid_connaissance_concentration() )
     , populationKnowledge_( populationKnowledge )
-    , pConcentration_     ( msg.oid_concentration_reelle() == 0 ? 0 : &populationKnowledge_.GetEntity()->GetConcentration( msg.oid_concentration_reelle() ) ) // $$$$ SBO 2008-07-11: 
+    , pConcentration_     ( msg.oid_concentration_reelle() == 0 ? 0 : &populationKnowledge_.GetEntity()->GetConcentration( msg.oid_concentration_reelle() ) ) // $$$$ SBO 2008-07-11:
     , position_           ( msg.position() )
     , nNbrAliveHumans_    ( 0 )
     , nNbrDeadHumans_     ( 0 )
-    , nAttitude_          ( Common::agressive ) 
+    , nAttitude_          ( Common::agressive )
     , nRelevance_         ( 0 )
     , bPerceived_         ( false )
 {
@@ -59,7 +59,7 @@ PopulationConcentrationKnowledge::~PopulationConcentrationKnowledge()
 void PopulationConcentrationKnowledge::Update( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate& msg )
 {
     if( msg.has_oid_concentration_reelle()  )
-        pConcentration_ = msg.oid_concentration_reelle() == 0 ? 0 : &populationKnowledge_.GetEntity()->GetConcentration( msg.oid_concentration_reelle() ); // $$$$ SBO 2008-07-11: 
+        pConcentration_ = msg.oid_concentration_reelle() == 0 ? 0 : &populationKnowledge_.GetEntity()->GetConcentration( msg.oid_concentration_reelle() ); // $$$$ SBO 2008-07-11:
 
     if( msg.has_attitude()  )
     {

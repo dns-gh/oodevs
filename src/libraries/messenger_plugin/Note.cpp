@@ -60,7 +60,7 @@ Note::~Note()
 
 // -----------------------------------------------------------------------------
 // Name: Note::GetId
-/** @return 
+/** @return
 */
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------
@@ -71,7 +71,7 @@ unsigned long  Note::GetId() const
 
 // -----------------------------------------------------------------------------
 // Name: Note::Update
-/** @param  asn 
+/** @param  asn
 */
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------
@@ -90,7 +90,7 @@ void Note::Update( const MsgsClientToMessenger::MsgNoteUpdateRequest& message, s
 
 // -----------------------------------------------------------------------------
 // Name: Note::SendCreation
-/** @param  publisher 
+/** @param  publisher
 */
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------
@@ -109,7 +109,7 @@ void Note::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
 
 // -----------------------------------------------------------------------------
 // Name: Note::SendUpdate
-/** @param  publisher 
+/** @param  publisher
 */
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------
@@ -135,7 +135,7 @@ void  Note::SendUpdate( dispatcher::ClientPublisher_ABC& publisher, bool modifPa
 
 // -----------------------------------------------------------------------------
 // Name: Note::SendFullState
-/** @param  publisher 
+/** @param  publisher
 */
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------
@@ -146,7 +146,7 @@ void  Note::SendFullState  ( dispatcher::ClientPublisher_ABC& publisher ) const
 
 // -----------------------------------------------------------------------------
 // Name: Note::SendDestruction
-/** @param  publisher 
+/** @param  publisher
 */
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------

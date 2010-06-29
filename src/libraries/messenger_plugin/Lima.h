@@ -48,7 +48,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Lima( unsigned int id, const MsgsClientToMessenger::MsgLimaCreationRequest& message );
-             Lima( unsigned int id, xml::xistream&, const MsgTacticalLine_Diffusion& diffusion, const kernel::CoordinateConverter_ABC& converter ); 
+             Lima( unsigned int id, xml::xistream&, const MsgTacticalLine_Diffusion& diffusion, const kernel::CoordinateConverter_ABC& converter );
     virtual ~Lima();
     //@}
 
@@ -61,7 +61,7 @@ public:
     void SendDestruction( dispatcher::ClientPublisher_ABC& publisher ) const;
     //@}
 
-    //! @name xml read / write 
+    //! @name xml read / write
     //@{
     virtual void Write( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter ) const;
     //@}

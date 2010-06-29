@@ -14,7 +14,7 @@
 
 #include "ADN_Data_ABC.h"
 
-#include "ADN_Types.h" 
+#include "ADN_Types.h"
 #include "ADN_Type_Tab_ABC.h"
 #include "ADN_Enums.h"
 #include "ADN_Tools.h"
@@ -32,7 +32,7 @@ class ADN_Launchers_Data : public ADN_Data_ABC
 public:
 //*****************************************************************************
     typedef ADN_Type_Double ModifPhsInfos;
-    
+
 
 //*****************************************************************************
     class LauncherInfos
@@ -75,7 +75,7 @@ public:
 
     void FilesNeeded(T_StringList& l) const;
     void Reset();
-    
+
     T_LauncherInfos_Vector& GetLaunchersInfos();
     LauncherInfos*          FindLauncher( const std::string& strName );
 

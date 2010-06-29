@@ -57,7 +57,7 @@ public:
     //@{
     template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
-    
+
     //! @name Init
     //@{
     void ReadValues( xml::xistream& xis );
@@ -72,7 +72,7 @@ public:
 
     void     CancelConsumptionReservations ();
     MT_Float AddConsumptionReservation     ( const PHY_DotationCategory& category, MT_Float rNbr );
-    void     ConsumeConsumptionReservations();    
+    void     ConsumeConsumptionReservations();
 
     MT_Float AddFireReservation     ( const PHY_DotationCategory& category, MT_Float rNbr );
     void     ConsumeFireReservations();
@@ -84,10 +84,10 @@ public:
     void     Resupply( const PHY_AmmoDotationClass& ammoDotationClass, MT_Float rFactor );
     void     Resupply( const PHY_DotationType&     type              , MT_Float rFactor );
     const PHY_DotationCategory* GetIlluminationDotations( float range, bool permanent ) const;
-	float	 GetIlluminatingRange() const;
+    float     GetIlluminatingRange() const;
     //@}
 
-    //! @name 
+    //! @name
     //@{
     void NotifyCaptured();
     void NotifyReleased();
@@ -125,7 +125,7 @@ public:
     //! @name Types
     //@{
     typedef std::map< const PHY_DotationType*, PHY_DotationGroup* > T_DotationGroupMap;
-    typedef T_DotationGroupMap::const_iterator                      CIT_DotationGroupMap;  
+    typedef T_DotationGroupMap::const_iterator                      CIT_DotationGroupMap;
 
     typedef std::set< const PHY_Dotation* > T_DotationSet;
     typedef T_DotationSet::const_iterator   CIT_DotationSet;

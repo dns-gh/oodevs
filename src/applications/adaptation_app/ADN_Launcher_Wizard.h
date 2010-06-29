@@ -22,7 +22,7 @@
 #include "ADN_Launchers_Data.h"
 #include "ADN_Wizard_ABC.h"
 
-typedef ADN_Wizard_ABC<ADN_Launchers_Data::LauncherInfos> ADN_Wizard_ABC_ADN_Launchers_Data_LauncherInfos_; 
+typedef ADN_Wizard_ABC<ADN_Launchers_Data::LauncherInfos> ADN_Wizard_ABC_ADN_Launchers_Data_LauncherInfos_;
 // =============================================================================
 /** @class  ADN_Launcher_Wizard
     @brief  ADN_Launcher_Wizard

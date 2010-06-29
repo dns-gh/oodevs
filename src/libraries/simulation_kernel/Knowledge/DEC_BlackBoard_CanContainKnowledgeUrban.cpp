@@ -129,7 +129,7 @@ boost::shared_ptr< DEC_Knowledge_Urban > DEC_BlackBoard_CanContainKnowledgeUrban
     if( it == urbanMapFromConcrete_.end() )
     {
         return boost::shared_ptr< DEC_Knowledge_Urban >();
-    }  
+    }
     return it->second;
 }
 

@@ -142,7 +142,7 @@ private:
     void ShowMenu( const QPoint& where );
     //@}
 
-    
+
 private:
     //! @name Member data
     //@{

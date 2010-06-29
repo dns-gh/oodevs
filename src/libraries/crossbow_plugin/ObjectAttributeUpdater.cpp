@@ -73,11 +73,11 @@ void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objec
     InsertQueryBuilder builder( db.GetTableName( "TacticalObject_Attribute_Obstacle" ) );
 
     builder.SetId( "id" );
-    builder.SetField( "object_id", objectId );    
+    builder.SetField( "object_id", objectId );
     builder.SetField( "activated", obstacle.activated() ); // bool
     // JSR
     builder.SetField( "type", obstacle.type() == Common::ObstacleType_DemolitionTargetType_preliminary ? "preliminary" : "reserved" );
-    
+
     db.Execute( builder );
 }
 
@@ -94,7 +94,7 @@ void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objec
         builder.SetField( "dotation_type", mine.dotation_type() );
     if( mine.has_dotation_nbr() )
         builder.SetField( "dotation_nbr", mine.dotation_nbr() );
-    
+
     db.Execute( builder );
 }
 
@@ -110,7 +110,7 @@ void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objec
 
 void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::MsgObjectAttributeBypass& bypass ){
     InsertQueryBuilder builder( db.GetTableName( "TacticalObject_Attribute_Bypass" ) );
-        
+
     builder.SetId( "id" );
     builder.SetField( "object_id", objectId );
     if( bypass.has_percentage() )
@@ -201,7 +201,7 @@ void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objec
 
     builder.SetId( "id" );
     builder.SetField( "object_id", objectId );
-    builder.SetField( "height", interaction_height.height() ); //real 
+    builder.SetField( "height", interaction_height.height() ); //real
 
     db.Execute( builder );
 }
@@ -210,9 +210,9 @@ void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objec
 
     builder.SetId( "id" );
     builder.SetField( "object_id", objectId );
-    builder.SetField( "agent_id", nbc_agent.agent_id() ); // int 
-    builder.SetField( "concentration", nbc_agent.concentration() ); // int 
-    builder.SetField( "source_life_duration", nbc_agent.source_life_duration() ); // int 
+    builder.SetField( "agent_id", nbc_agent.agent_id() ); // int
+    builder.SetField( "concentration", nbc_agent.concentration() ); // int
+    builder.SetField( "source_life_duration", nbc_agent.source_life_duration() ); // int
 
     db.Execute( builder );
 }

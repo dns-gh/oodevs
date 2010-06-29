@@ -19,7 +19,7 @@
 //*****************************************************************************
 // Created: JDY 03-07-02
 //*****************************************************************************
-template <class T > 
+template <class T >
 class ADN_Type_ABC
 : public ADN_Connector_ABC
 , public ADN_DataTreeNode_ABC

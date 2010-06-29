@@ -78,11 +78,11 @@ EntityManager::~EntityManager()
 //-----------------------------------------------------------------------------
 Automat* EntityManager::FindAutomat( T_EntityId nId ) const
 {
-	CIT_AutomatMap it;
-	it = automats_.find( nId );
-	if ( it != automats_.end() )
-		return ( *it ).second;
-	return 0;
+    CIT_AutomatMap it;
+    it = automats_.find( nId );
+    if( it != automats_.end() )
+        return ( *it ).second;
+    return 0;
 }
 
 //-----------------------------------------------------------------------------
@@ -101,11 +101,11 @@ void EntityManager::Register( Automat& automat )
 //-----------------------------------------------------------------------------
 Pawn* EntityManager::FindPawn( T_EntityId nId ) const
 {
-	CIT_PawnMap it;
-	it = pawns_.find( nId );
-	if ( it != pawns_.end() )
-		return ( *it ).second;
-	return 0;
+    CIT_PawnMap it;
+    it = pawns_.find( nId );
+    if( it != pawns_.end() )
+        return ( *it ).second;
+    return 0;
 }
 
 //-----------------------------------------------------------------------------
@@ -124,11 +124,11 @@ void EntityManager::Register( Pawn& pawn )
 //-----------------------------------------------------------------------------
 Team* EntityManager::FindTeam( T_EntityId nId ) const
 {
-	CIT_TeamMap it;
-	it = teams_.find( nId );
-	if ( it != teams_.end() )
-		return ( *it ).second;
-	return 0;
+    CIT_TeamMap it;
+    it = teams_.find( nId );
+    if( it != teams_.end() )
+        return ( *it ).second;
+    return 0;
 }
 
 //-----------------------------------------------------------------------------
@@ -147,11 +147,11 @@ void EntityManager::Register( Team& team )
 //-----------------------------------------------------------------------------
 KnowledgeGroup* EntityManager::FindKnowledgeGroup( T_EntityId nId ) const
 {
-	CIT_KnowledgeGroupMap it;
-	it = knowledgeGroups_.find( nId );
-	if ( it != knowledgeGroups_.end() )
-		return ( *it ).second;
-	return 0;
+    CIT_KnowledgeGroupMap it;
+    it = knowledgeGroups_.find( nId );
+    if( it != knowledgeGroups_.end() )
+        return ( *it ).second;
+    return 0;
 }
 
 //-----------------------------------------------------------------------------
@@ -170,11 +170,11 @@ void EntityManager::Register( KnowledgeGroup& knowledgeGroup )
 //-----------------------------------------------------------------------------
 Object* EntityManager::FindObject( T_EntityId nId ) const
 {
-	CIT_ObjectMap it;
-	it = objects_.find( nId );
-	if ( it != objects_.end() )
-		return ( *it ).second;
-	return 0;
+    CIT_ObjectMap it;
+    it = objects_.find( nId );
+    if( it != objects_.end() )
+        return ( *it ).second;
+    return 0;
 }
 
 //-----------------------------------------------------------------------------
@@ -203,11 +203,11 @@ void EntityManager::Unregister( Object& object )
 // -----------------------------------------------------------------------------
 Population* EntityManager::FindPopulation( T_EntityId nId ) const
 {
-	CIT_PopulationMap it;
+    CIT_PopulationMap it;
     it = populations_.find( nId );
-	if ( it != populations_.end() )
-		return ( *it ).second;
-	return 0;
+    if( it != populations_.end() )
+        return ( *it ).second;
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -270,7 +270,7 @@ T_IdVector& EntityManager::GetTestParam_AgentList( unsigned int nNbr, const Test
 {
     T_IdVector& agents = *new T_IdVector();
     for( CIT_PawnMap it = pawns_.begin(); nNbr > 0 && it != pawns_.end(); ++it )
-        if( it->first != target.GetId() && 
+        if( it->first != target.GetId() &&
             it->second->GetAutomat()->GetKnowledgeGroup().GetId() == target.GetAutomat()->GetKnowledgeGroup().GetId() )
         {
             agents.push_back( it->first );

@@ -69,9 +69,9 @@ public:
             functor.operator()< ::Zone >( name_, xis_, result_ );
         else if( type == "bool" )
             functor.operator()< bool >( name_, xis_, result_ );
-        else if( type == "int" ) 
+        else if( type == "int" )
             functor.operator()< NumericValue >( name_, xis_, result_ );
-        else if( type == "unsigned" || type == "unsigned int" ) 
+        else if( type == "unsigned" || type == "unsigned int" )
             functor.operator()< NumericValue >( name_, xis_, result_ );
         else if( type == "unsigned long" || type == "unit" )
             functor.operator()< NumericValue >( name_, xis_, result_ );

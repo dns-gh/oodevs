@@ -14,7 +14,7 @@
 #include "Types.h"
 #include "ObjectType.h"
 
-#define static 
+#define static
 #include "res/objectTypeZoneProtegee.xpm"
 #include "res/objectTypeZonePoserHelicoptere.xpm"
 #include "res/objectTypeZoneNBC.xpm"

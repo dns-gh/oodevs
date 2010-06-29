@@ -35,7 +35,7 @@ public:
     //@}
 
     //! @name Operations
-    //@{    
+    //@{
     void Create( Object& object, const std::string& attribute, xml::xistream& xis ) const;
     void Create( Object& object, const Common::MsgMissionParameter_Value& attributes ) const;
     //@}

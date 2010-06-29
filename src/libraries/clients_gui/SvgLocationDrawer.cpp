@@ -145,7 +145,7 @@ void SvgLocationDrawer::DrawShape( const T& shape )
 
     std::string color = color_.name().ascii();
     const geometry::BoundingBox box( viewport_.Left(), viewport_.Bottom(), viewport_.Right(), viewport_.Top() );
-    context_->SetViewport( box, 320, 200 ); // $$$$ AGE 2006-09-04: 
+    context_->SetViewport( box, 320, 200 ); // $$$$ AGE 2006-09-04:
     svg::Color svgColor( color_.name().ascii() );
     context_->PushProperty( svg::RenderingContext_ABC::color, svgColor );
     style_.Draw( shape, *context_, *tools_ );

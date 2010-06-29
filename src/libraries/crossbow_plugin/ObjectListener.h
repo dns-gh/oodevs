@@ -46,7 +46,7 @@ public:
     //! @name Operations
     //@{
     virtual void Listen();
-            
+
     //@}
 
 private:

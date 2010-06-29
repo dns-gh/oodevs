@@ -91,7 +91,7 @@ bool PHY_MaintenanceTransportConsign::DoWaitingForCarrier()
 {
     assert( pComposanteState_ );
     assert( !pCarrier_ );
-    
+
     nTimer_ = 0;
     pCarrier_ = GetPionMaintenance().GetAvailableHauler( GetComposanteType() );
     if( pCarrier_ )
@@ -107,7 +107,7 @@ bool PHY_MaintenanceTransportConsign::DoSearchForUpperLevel()
 {
     assert( pComposanteState_ );
     assert( !pCarrier_ );
-    
+
     nTimer_ = 0;
     MIL_AutomateLOG* pMaintenanceSuperior = GetPionMaintenance().GetAutomate().GetMaintenanceSuperior();
     if( !pMaintenanceSuperior )
@@ -142,7 +142,7 @@ void PHY_MaintenanceTransportConsign::EnterStateGoingFrom()
 {
     assert( pComposanteState_ );
     assert( !pCarrier_ );
-    
+
     SetState( eGoingFrom );
     nTimer_ = pComposanteState_->ApproximateTravelTime( pComposanteState_->GetComposantePosition(), pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition() );
     pComposanteState_->NotifyHandledByMaintenance();
@@ -156,7 +156,7 @@ void PHY_MaintenanceTransportConsign::EnterStateCarrierGoingTo()
 {
     assert( pComposanteState_ );
     assert( pCarrier_ );
-    
+
     SetState( eCarrierGoingTo );
     nTimer_ = pCarrier_->ApproximateTravelTime( pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition(), pComposanteState_->GetComposantePosition() );
 }
@@ -169,7 +169,7 @@ void PHY_MaintenanceTransportConsign::EnterStateCarrierLoading()
 {
     assert( pComposanteState_ );
     assert( pCarrier_ );
-    
+
     SetState( eCarrierLoading );
     nTimer_ = ( int ) pCarrier_->GetType().GetHaulerLoadingTime();
     pComposanteState_->NotifyHandledByMaintenance();
@@ -183,7 +183,7 @@ void PHY_MaintenanceTransportConsign::EnterStateCarrierGoingFrom()
 {
     assert( pComposanteState_ );
     assert( pCarrier_ );
-    
+
     SetState( eCarrierGoingFrom );
     nTimer_ = pCarrier_->ApproximateTravelTime( pComposanteState_->GetComposantePosition(), pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition() );
 }
@@ -196,7 +196,7 @@ void PHY_MaintenanceTransportConsign::EnterStateCarrierUnloading()
 {
     assert( pComposanteState_ );
     assert( pCarrier_ );
-    
+
     SetState( eCarrierUnloading );
     nTimer_ = ( int ) pCarrier_->GetType().GetHaulerUnloadingTime();
 }
@@ -208,30 +208,30 @@ void PHY_MaintenanceTransportConsign::EnterStateCarrierUnloading()
 void PHY_MaintenanceTransportConsign::EnterStateDiagnosing()
 {
     assert( pComposanteState_ );
-    
+
     if( pCarrier_ )
     {
         GetPionMaintenance().StopUsingForLogistic( *pCarrier_ );
         pCarrier_ = 0;
-    }    
-    
+    }
+
     if( pComposanteState_->NeedDiagnosis() )
     {
         SetState( eDiagnosing );
-        nTimer_ = PHY_BreakdownType::GetDiagnosticTime();    
+        nTimer_ = PHY_BreakdownType::GetDiagnosticTime();
     }
     else
         ChooseStateAfterDiagnostic();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceTransportConsign::ChooseStateAfterDiagnostic
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
 void PHY_MaintenanceTransportConsign::ChooseStateAfterDiagnostic()
 {
-    assert( pComposanteState_ );    
-    
+    assert( pComposanteState_ );
+
     pComposanteState_->NotifyDiagnosed();
     pComposanteState_->SetComposantePosition( pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition() );
     nTimer_ = 0;
@@ -251,7 +251,7 @@ void PHY_MaintenanceTransportConsign::ChooseStateAfterDiagnostic()
 // -----------------------------------------------------------------------------
 bool PHY_MaintenanceTransportConsign::Update()
 {
-    if ( --nTimer_ > 0 )
+    if( --nTimer_ > 0 )
         return GetState() == eFinished;
 
     switch( GetState() )
@@ -263,7 +263,7 @@ bool PHY_MaintenanceTransportConsign::Update()
         case eCarrierGoingFrom      :                               EnterStateCarrierUnloading  (); break;
         case eCarrierUnloading      :                               EnterStateDiagnosing        (); break;
         case eDiagnosing            :                               ChooseStateAfterDiagnostic  (); break;
-        case eSearchingForUpperLevel: if( DoSearchForUpperLevel() ) EnterStateFinished          (); break; 
+        case eSearchingForUpperLevel: if( DoSearchForUpperLevel() ) EnterStateFinished          (); break;
         case eFinished              :                                                               break;
         default:
             assert( false );

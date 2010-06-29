@@ -50,21 +50,21 @@
     \code
     CmdChangeImage::CmdChangeImage(Face *face, const QString &image)
     {
-	m_face = face;
-	m_old_image = face->image();
-	m_new_image = image;
-	setCanMerge(false);
-	setDescription(tr("change %1 to %2").arg(m_old_image).arg(m_new_image));
+    m_face = face;
+    m_old_image = face->image();
+    m_new_image = image;
+    setCanMerge(false);
+    setDescription(tr("change %1 to %2").arg(m_old_image).arg(m_new_image));
     }
 
     void CmdChangeImage::redo()
     {
-	m_face->setImage(m_new_image);
+    m_face->setImage(m_new_image);
     }
 
     void CmdChangeImage::undo()
     {
-	m_face->setImage(m_old_image);
+    m_face->setImage(m_old_image);
     }
     \endcode
 
@@ -174,9 +174,9 @@ QtCommand::QtCommand(Type type, const QString &description, bool canMerge)
 
     Typical examples include "typing", "delete block", "change font", etc.
 
-    This description is used to assign meaningful information to the widgets 
+    This description is used to assign meaningful information to the widgets
     which trigger undo or redo in an application, such as the QAction
-    objects returned by QtUndoManager::createUndoAction() and 
+    objects returned by QtUndoManager::createUndoAction() and
     QtUndoManager::createRedoAction().
 
 
@@ -224,22 +224,22 @@ QtCommand::QtCommand(Type type, const QString &description, bool canMerge)
     \code
     CmdChangeColor::CmdChangeColor(Face *face, const QString &color)
     {
-	...
-	setCanMerge(true);
-	...
+    ...
+    setCanMerge(true);
+    ...
     }
 
     bool CmdChangeColor::mergeMeWith(QtCommand *c)
     {
-	CmdChangeColor *other = (CmdChangeColor*) c;
+    CmdChangeColor *other = (CmdChangeColor*) c;
 
-	if (m_face != other->m_face)
-	    return false;
+    if (m_face != other->m_face)
+        return false;
 
-	m_new_color = other->m_new_color;
-	setDescription("change " + m_old_color + " to " + m_new_color);
-	setDescription(tr("change %1 to %2").arg(m_old_color).arg(m_new_color));
-	return true;
+    m_new_color = other->m_new_color;
+    setDescription("change " + m_old_color + " to " + m_new_color);
+    setDescription(tr("change %1 to %2").arg(m_old_color).arg(m_new_color));
+    return true;
     }
     \endcode
 
@@ -284,19 +284,19 @@ bool QtCommand::mergeMeWith(QtCommand *)
 
     \code
     FaceEdit::FaceEdit(QWidget *parent, const char *name)
-	: QWidget(parent, name, Qt::WDestructiveClose)
+    : QWidget(parent, name, Qt::WDestructiveClose)
     {
-	...
-	m_undo_stack = new QtUndoStack(this);
-	...
+    ...
+    m_undo_stack = new QtUndoStack(this);
+    ...
     }
 
     void FaceEdit::setImage(const QString &image_name)
     {
-	Face *face = focusedFace();
-	...
-	m_undo_stack->push(new CmdChangeImage(face, image_name));
-	...
+    Face *face = focusedFace();
+    ...
+    m_undo_stack->push(new CmdChangeImage(face, image_name));
+    ...
     }
     \endcode
 
@@ -326,20 +326,20 @@ bool QtCommand::mergeMeWith(QtCommand *)
     \code
     void FaceEdit::clearFaces()
     {
-	...
-	m_undo_stack->push(new QtCommand(QtCommand::MacroBegin, "Clear faces"));
-	for (; *child_it != 0; ++child_it) {
-	    Face *face = (Face*) *child_it;
-	    m_undo_stack->push(new CmdChangeImage(face, "none"));
-	    m_undo_stack->push(new CmdChangeColor(face, "green"));
-	}
-	m_undo_stack->push(new QtCommand(QtCommand::MacroEnd));
-	...
+    ...
+    m_undo_stack->push(new QtCommand(QtCommand::MacroBegin, "Clear faces"));
+    for (; *child_it != 0; ++child_it) {
+        Face *face = (Face*) *child_it;
+        m_undo_stack->push(new CmdChangeImage(face, "none"));
+        m_undo_stack->push(new CmdChangeColor(face, "green"));
+    }
+    m_undo_stack->push(new QtCommand(QtCommand::MacroEnd));
+    ...
     }
     \endcode
 
     A certain state of the edited object may be marked as "clean", using
-    setClean(). This function is usually called whenever the edited object 
+    setClean(). This function is usually called whenever the edited object
     is saved.  QtUndoStack emits the cleanChanged() signal whenever
     the edited object enters or leaves the clean state.
 
@@ -360,12 +360,12 @@ QtUndoStack::QtUndoStack(QObject *parent, const char *name)
     setAutoDelete(true);
     QtUndoManager *manager = QtUndoManager::manager();
     connect(this, SIGNAL(destroyed(QObject*)),
-		manager, SLOT(stackDestroyed(QObject*)));
+        manager, SLOT(stackDestroyed(QObject*)));
     manager->associateView(parent, this);
 
     m_macro_nest = 0;
     m_num_commands = 0;
-    
+
     m_clean_command = 0; // the initial empty stack is clean
     m_have_clean_command = true;
 }
@@ -378,18 +378,18 @@ QtUndoStack::QtUndoStack(QObject *parent, const char *name)
     More precisely, the edited object is in a clean state if the current pointer of
     the QtUndoStack points to the same command as it did at the time of the last
     call to setClean().
-        
+
     \sa setClean() cleanChanged()
 */
 bool QtUndoStack::isClean() const
 {
     return m_have_clean_command
-    	    && m_clean_command == m_current_iter.current();
+            && m_clean_command == m_current_iter.current();
 }
 
 /*!
     \fn void QtUndoStack::cleanChanged(bool clean)
-    
+
     This signal is emitted whenever the edited object enters or leaves the
     clean state. If \a clean is true, the edited object is currently clean;
     otherwise it is currently not clean.
@@ -398,10 +398,10 @@ bool QtUndoStack::isClean() const
 */
 
 /*!
-    Marks state of the edited object as clean. This function is usually called 
+    Marks state of the edited object as clean. This function is usually called
     whenever the edited object is saved. The cleanChanged() signal is emited
     whenever the edited object enters or leaves the clean state.
-        
+
     \sa isClean() cleanChanged()
 */
 
@@ -413,7 +413,7 @@ void QtUndoStack::setClean()
     m_clean_command = m_current_iter.current();
 
     if (old_clean != isClean())
-    	emit cleanChanged(isClean());
+        emit cleanChanged(isClean());
 }
 
 QtUndoStack::CommandIter QtUndoStack::findMacroBegin(CommandIter it) const
@@ -423,16 +423,16 @@ QtUndoStack::CommandIter QtUndoStack::findMacroBegin(CommandIter it) const
     QtCommand *command = *it;
     Q_ASSERT(command != 0 && command->isMacroEnd());
     do {
-	--it;
+    --it;
 
-	command = *it;
-	Q_ASSERT(command != 0);
+    command = *it;
+    Q_ASSERT(command != 0);
 
-	if (command->isMacroBegin())
-	    --nest;
-	else if (command->isMacroEnd())
-	    ++nest;
-	Q_ASSERT(nest >= 0);
+    if (command->isMacroBegin())
+        --nest;
+    else if (command->isMacroEnd())
+        ++nest;
+    Q_ASSERT(nest >= 0);
     } while (nest > 0 || !command->isMacroBegin());
 
     return it;
@@ -445,16 +445,16 @@ QtUndoStack::CommandIter QtUndoStack::findMacroEnd(CommandIter it) const
     QtCommand *command = *it;
     Q_ASSERT(command != 0 && command->isMacroBegin());
     do {
-	++it;
+    ++it;
 
-	command = *it;
-	Q_ASSERT(command != 0);
+    command = *it;
+    Q_ASSERT(command != 0);
 
-	if (command->isMacroEnd())
-	    --nest;
-	else if (command->isMacroBegin())
-	    ++nest;
-	Q_ASSERT(nest >= 0);
+    if (command->isMacroEnd())
+        --nest;
+    else if (command->isMacroBegin())
+        ++nest;
+    Q_ASSERT(nest >= 0);
     } while (nest > 0 || !command->isMacroEnd());
 
     return it;
@@ -489,69 +489,69 @@ void QtUndoStack::push(QtCommand *command)
     // If the current command on the stack is not last, we delete all
     // commands that follow it before adding the new command.
     while (!m_current_iter.atLast()) {
-	if (m_have_clean_command
-	    	&& m_current_iter.current() == m_clean_command) {
-	    m_have_clean_command = false;
-	    m_clean_command = 0;
-	}
-	removeLast();
+    if (m_have_clean_command
+            && m_current_iter.current() == m_clean_command) {
+        m_have_clean_command = false;
+        m_clean_command = 0;
+    }
+    removeLast();
     }
 
     switch (command->type()) {
 
-	case QtCommand::Command: {
-	    // Either merge the new command with the current command, or append it to the
-	    // stack.
-	    QtCommand *current = m_current_iter.current();
-	    if (command->canMerge()
-		    && current != 0
-		    && current->metaObject() == command->metaObject()
-		    && current->mergeMeWith(command))
-		delete command;
-	    else
-		append(command);
+    case QtCommand::Command: {
+        // Either merge the new command with the current command, or append it to the
+        // stack.
+        QtCommand *current = m_current_iter.current();
+        if (command->canMerge()
+            && current != 0
+            && current->metaObject() == command->metaObject()
+            && current->mergeMeWith(command))
+        delete command;
+        else
+        append(command);
 
-	    if (m_macro_nest == 0) {
-		++m_num_commands;
-	        emit commandExecuted();
-	    }
+        if (m_macro_nest == 0) {
+        ++m_num_commands;
+            emit commandExecuted();
+        }
 
-	    break;
-	}
+        break;
+    }
 
-	case QtCommand::MacroBegin:
-	    append(command);
-	    ++m_macro_nest;
-	    break;
+    case QtCommand::MacroBegin:
+        append(command);
+        ++m_macro_nest;
+        break;
 
-	case QtCommand::MacroEnd:
-	    if (m_macro_nest == 0) {
-		qWarning("QtUndoStack::push(): MacroEnd without MacroBegin");
-    	    	break;
-	    }
+    case QtCommand::MacroEnd:
+        if (m_macro_nest == 0) {
+        qWarning("QtUndoStack::push(): MacroEnd without MacroBegin");
+                break;
+        }
 
-	    append(command);
-	    --m_macro_nest;
+        append(command);
+        --m_macro_nest;
 
-	    // Set the description to the corresponding MacroBegin's description
-	    CommandIter it(*this);
-	    it.toLast();
-	    it = findMacroBegin(it); // I've just pushed the MacroEnd
-	    Q_ASSERT(*it != 0);
-	    command->setDescription((*it)->description());
+        // Set the description to the corresponding MacroBegin's description
+        CommandIter it(*this);
+        it.toLast();
+        it = findMacroBegin(it); // I've just pushed the MacroEnd
+        Q_ASSERT(*it != 0);
+        command->setDescription((*it)->description());
 
-	    if (m_macro_nest == 0) {
-		++m_num_commands;
-		emit commandExecuted();
-	    }
+        if (m_macro_nest == 0) {
+        ++m_num_commands;
+        emit commandExecuted();
+        }
 
-	    break;
+        break;
     }
 
     m_current_iter.toLast();
     QtUndoManager::manager()->updateActions();
     if (old_clean != isClean())
-    	emit cleanChanged(isClean());
+        emit cleanChanged(isClean());
 }
 
 /*!
@@ -567,13 +567,13 @@ void QtUndoStack::push(QtCommand *command)
 bool QtUndoStack::canUndo() const
 {
     if (isEmpty())
-	return false;
+    return false;
 
     if (m_macro_nest > 0)
-	return false;
+    return false;
 
     if (m_current_iter.current() == 0)
-	return false;
+    return false;
 
     return true;
 }
@@ -591,17 +591,17 @@ bool QtUndoStack::canUndo() const
 bool QtUndoStack::canRedo() const
 {
     if (isEmpty())
-	return false;
+    return false;
 
     if (m_macro_nest > 0)
-	return false;
+    return false;
 
     // We know the stack is not empty
     if (m_current_iter.current() == 0)
-	return true;
+    return true;
 
     if (m_current_iter.atLast())
-	return false;
+    return false;
 
     return true;
 }
@@ -619,24 +619,24 @@ void QtUndoStack::undoMacro()
 
     QtCommand *command = 0;
     do {
-	--m_current_iter;
+    --m_current_iter;
 
-	command = m_current_iter.current();
-	Q_ASSERT(command != 0);
+    command = m_current_iter.current();
+    Q_ASSERT(command != 0);
 
-	if (command->isMacroBegin())
-	    --nest;
-	else if (command->isMacroEnd())
-	    ++nest;
-	else
-	    command_executed = true;
-	Q_ASSERT(nest >= 0);
+    if (command->isMacroBegin())
+        --nest;
+    else if (command->isMacroEnd())
+        ++nest;
+    else
+        command_executed = true;
+    Q_ASSERT(nest >= 0);
 
-	command->undo();
+    command->undo();
     } while (nest > 0 || !command->isMacroBegin());
 
     if (command_executed)
-    	emit commandExecuted();
+        emit commandExecuted();
 }
 
 void QtUndoStack::redoMacro()
@@ -651,24 +651,24 @@ void QtUndoStack::redoMacro()
 
     QtCommand *command = 0;
     do {
-	++m_current_iter;
+    ++m_current_iter;
 
-	command = m_current_iter.current();
-	Q_ASSERT(command != 0);
+    command = m_current_iter.current();
+    Q_ASSERT(command != 0);
 
-	if (command->isMacroBegin())
-	    ++nest;
-	else if (command->isMacroEnd())
-	    --nest;
-	else
-	    command_executed = true;
-	Q_ASSERT(nest >= 0);
+    if (command->isMacroBegin())
+        ++nest;
+    else if (command->isMacroEnd())
+        --nest;
+    else
+        command_executed = true;
+    Q_ASSERT(nest >= 0);
 
-	command->redo();
+    command->redo();
     } while (!command->isMacroEnd() || nest > 0);
 
     if (command_executed)
-    	emit commandExecuted();
+        emit commandExecuted();
 }
 
 /*!
@@ -691,24 +691,24 @@ void QtUndoStack::undo()
     bool old_clean = isClean();
 
     if (!canUndo()) {
-	qWarning("QtUndoStack::undo(): can't undo");
-	return;
+    qWarning("QtUndoStack::undo(): can't undo");
+    return;
     }
 
     QtCommand *command = m_current_iter.current();
     Q_ASSERT(!command->isMacroBegin());
 
     if (command->isCommand()) {
-	command->undo();
-	emit commandExecuted();
+    command->undo();
+    emit commandExecuted();
     } else
-	undoMacro();
+    undoMacro();
 
     --m_current_iter;
 
     QtUndoManager::manager()->updateActions();
     if (old_clean != isClean())
-    	emit cleanChanged(isClean());
+        emit cleanChanged(isClean());
 }
 
 
@@ -732,28 +732,28 @@ void QtUndoStack::redo()
     bool old_clean = isClean();
 
     if (!canRedo()) {
-	qWarning("QtUndoStack::redo(): can't redo");
-	return;
+    qWarning("QtUndoStack::redo(): can't redo");
+    return;
     }
 
     if (m_current_iter.current() == 0)
-	m_current_iter.toFirst();
+    m_current_iter.toFirst();
     else
-	++m_current_iter;
+    ++m_current_iter;
 
     QtCommand *command = m_current_iter.current();
     Q_ASSERT(!command->isMacroEnd());
 
     if (command->isCommand()) {
-	command->redo();
-    	emit commandExecuted();
+    command->redo();
+        emit commandExecuted();
     }
     else
-	redoMacro();
+    redoMacro();
 
     QtUndoManager::manager()->updateActions();
     if (old_clean != isClean())
-    	emit cleanChanged(isClean());
+        emit cleanChanged(isClean());
 }
 
 /*!
@@ -767,9 +767,9 @@ void QtUndoStack::redo()
 QString QtUndoStack::undoDescription() const
 {
     if (canUndo())
-	return m_current_iter.current()->description();
+    return m_current_iter.current()->description();
     else
-	return QString::null;
+    return QString::null;
 }
 
 /*!
@@ -783,15 +783,15 @@ QString QtUndoStack::undoDescription() const
 QString QtUndoStack::redoDescription() const
 {
     if (canRedo()) {
-	CommandIter it = m_current_iter;
-	if (it.current() == 0)
-	    it.toFirst();
-	else
-	    ++it;
-	return it.current()->description();
+    CommandIter it = m_current_iter;
+    if (it.current() == 0)
+        it.toFirst();
+    else
+        ++it;
+    return it.current()->description();
     }
     else
-	return QString::null;
+    return QString::null;
 }
 
 /*!
@@ -811,7 +811,7 @@ void QtUndoStack::clear()
     m_clean_command = 0;
 
     if (old_clean != isClean())
-    	emit cleanChanged(isClean());
+        emit cleanChanged(isClean());
 }
 
 /*!
@@ -826,23 +826,23 @@ QStringList QtUndoStack::undoList() const
     QStringList result;
 
     if (m_macro_nest > 0)
-	return result;
+    return result;
 
     if (m_current_iter.current() == 0)
-	return result;
+    return result;
 
     CommandIter it(*this);
     for (; *it != 0; ++it) {
-	QtCommand *command = *it;
+    QtCommand *command = *it;
 
-	result.append(command->description());
+    result.append(command->description());
 
-	Q_ASSERT(!command->isMacroEnd());
-	if (command->isMacroBegin())
-	    it = findMacroEnd(it);
+    Q_ASSERT(!command->isMacroEnd());
+    if (command->isMacroBegin())
+        it = findMacroEnd(it);
 
-	if (it == m_current_iter)
-	    break;
+    if (it == m_current_iter)
+        break;
     }
 
     return result;
@@ -860,22 +860,22 @@ QStringList QtUndoStack::redoList() const
     QStringList result;
 
     if (m_macro_nest > 0)
-	return result;
+    return result;
 
     CommandIter it = m_current_iter;
     if (it.current() == 0)
-	it.toFirst();
+    it.toFirst();
     else
-	++it;
+    ++it;
 
     for (; it.current() != 0; ++it) {
-	QtCommand *command = it.current();
+    QtCommand *command = it.current();
 
-	result.append(command->description());
+    result.append(command->description());
 
-	Q_ASSERT(!command->isMacroEnd());
-	if (command->isMacroBegin())
-	    it = findMacroEnd(it);
+    Q_ASSERT(!command->isMacroEnd());
+    if (command->isMacroBegin())
+        it = findMacroEnd(it);
     }
 
     return result;
@@ -915,29 +915,29 @@ QStringList QtUndoStack::redoList() const
     QtUndoManager also provides the functions createUndoAction()
     and createRedoAction() for creating QAction objects that trigger
     undo and redo. These QActions have the additional benefit of keeping
-    their text properties in sync with undoDescription() and redoDescription(), 
+    their text properties in sync with undoDescription() and redoDescription(),
     as well as disabling themselves whenever no commands are available
     for undo or redo.
 
     \code
     MainWindow::MainWindow(QWidget *parent, const char *name)
-	: QMainWindow(parent, name)
+    : QMainWindow(parent, name)
     {
-	...
-	QtUndoManager *manager = QtUndoManager::manager();
-	QAction *undo_action = manager->createUndoAction(this);
-	QAction *redo_action = manager->createRedoAction(this);
-	undo_action->setAccel(QKeySequence("Ctrl+Z"));
-	redo_action->setAccel(QKeySequence("Shift+Ctrl+Z"));
+    ...
+    QtUndoManager *manager = QtUndoManager::manager();
+    QAction *undo_action = manager->createUndoAction(this);
+    QAction *redo_action = manager->createRedoAction(this);
+    undo_action->setAccel(QKeySequence("Ctrl+Z"));
+    redo_action->setAccel(QKeySequence("Shift+Ctrl+Z"));
 
-	QToolBar *toolbar = new QToolBar(this);
-	undo_action->addTo(toolbar);
-	redo_action->addTo(toolbar);
+    QToolBar *toolbar = new QToolBar(this);
+    undo_action->addTo(toolbar);
+    redo_action->addTo(toolbar);
 
-	QPopupMenu *editmenu = new QPopupMenu(this);
-	undo_action->addTo(editmenu);
-	redo_action->addTo(editmenu);
-	...
+    QPopupMenu *editmenu = new QPopupMenu(this);
+    undo_action->addTo(editmenu);
+    redo_action->addTo(editmenu);
+    ...
     }
     \endcode
 
@@ -967,9 +967,9 @@ static bool loadPixmapFromMimeSource(const QString &abs_name, QPixmap &pm)
 {
     const QMimeSource *ms = QMimeSourceFactory::defaultFactory()->data(abs_name);
     if (ms)
-	return QImageDrag::decode(ms, pm);
+    return QImageDrag::decode(ms, pm);
     else
-	return false;
+    return false;
 }
 
 /*! \internal */
@@ -989,10 +989,10 @@ QtUndoManager::QtUndoManager()
     significant, since any accelerators that are assigned to the
     QAction will only work within \a parent.
 
-    The returned QAction will keep its text property in sync with 
+    The returned QAction will keep its text property in sync with
     undoDescription() and disable itself whenever no commands are available
     for undo.
-        
+
     If the application's default QMimeSourceFactory contains a pixmap
     called "undo", this pixmap is assigned to the QAction.
 
@@ -1004,16 +1004,16 @@ QAction *QtUndoManager::createUndoAction(QWidget *parent) const
     UndoRedoAction *undo_action = new UndoRedoAction(parent);
     connect(undo_action, SIGNAL(activated()), this, SLOT(undo()));
     connect(this, SIGNAL(undoDescriptionChanged(const QString&)),
-    	    	undo_action, SLOT(setTextSlot(const QString&)));
-    connect(this, SIGNAL(canUndoChanged(bool)), 
-    	    	undo_action, SLOT(setEnabled(bool)));
+                undo_action, SLOT(setTextSlot(const QString&)));
+    connect(this, SIGNAL(canUndoChanged(bool)),
+                undo_action, SLOT(setEnabled(bool)));
 
     undo_action->setEnabled(m_can_undo);
     undo_action->setText(m_undo_description);
 
     QPixmap pm;
     if (loadPixmapFromMimeSource("undo", pm))
-	undo_action->setIconSet(pm);
+    undo_action->setIconSet(pm);
 
     return undo_action;
 }
@@ -1024,10 +1024,10 @@ QAction *QtUndoManager::createUndoAction(QWidget *parent) const
     significant, since any accelerators that are assigned to the
     QAction will only work within \a parent.
 
-    The returned QAction will keep its text property in sync with 
+    The returned QAction will keep its text property in sync with
     redoDescription() and disable itself whenever no commands are available
     for redo.
-        
+
     If the application's default QMimeSourceFactory contains a pixmap
     called "redo", this pixmap is assigned to the QAction.
 
@@ -1039,16 +1039,16 @@ QAction *QtUndoManager::createRedoAction(QWidget *parent) const
     UndoRedoAction *redo_action = new UndoRedoAction(parent);
     connect(redo_action, SIGNAL(activated()), this, SLOT(redo()));
     connect(this, SIGNAL(redoDescriptionChanged(const QString&)),
-    	    	redo_action, SLOT(setTextSlot(const QString&)));
-    connect(this, SIGNAL(canRedoChanged(bool)), 
-    	    	redo_action, SLOT(setEnabled(bool)));
+                redo_action, SLOT(setTextSlot(const QString&)));
+    connect(this, SIGNAL(canRedoChanged(bool)),
+                redo_action, SLOT(setEnabled(bool)));
 
     redo_action->setEnabled(m_can_redo);
     redo_action->setText(m_redo_description);
 
     QPixmap pm;
     if (loadPixmapFromMimeSource("redo", pm))
-	redo_action->setIconSet(pm);
+    redo_action->setIconSet(pm);
 
     return redo_action;
 }
@@ -1064,37 +1064,37 @@ void QtUndoManager::updateActions()
     bool undo_enabled = stack != 0 && stack->canUndo();
     QString undo_description = "Undo";
     if (undo_enabled)
-    	undo_description += " " + stack->undoDescription();
+        undo_description += " " + stack->undoDescription();
 
     if (undo_enabled != m_can_undo) {
-	changed = true;
-    	m_can_undo = undo_enabled;
-    	emit canUndoChanged(undo_enabled);
+    changed = true;
+        m_can_undo = undo_enabled;
+        emit canUndoChanged(undo_enabled);
     }
     if (undo_description != m_undo_description) {
-	changed = true;
-    	m_undo_description = undo_description;
-	emit undoDescriptionChanged(undo_description);
+    changed = true;
+        m_undo_description = undo_description;
+    emit undoDescriptionChanged(undo_description);
     }
-    
+
     bool redo_enabled = stack != 0 && stack->canRedo();
     QString redo_description = "Redo";
     if (redo_enabled)
-    	redo_description += " " + stack->redoDescription();
+        redo_description += " " + stack->redoDescription();
 
     if (redo_enabled != m_can_redo) {
-	changed = true;
-    	m_can_redo = redo_enabled;
-    	emit canRedoChanged(redo_enabled);
+    changed = true;
+        m_can_redo = redo_enabled;
+        emit canRedoChanged(redo_enabled);
     }
     if (redo_description != m_redo_description) {
-	changed = true;
-    	m_redo_description = redo_description;
-	emit redoDescriptionChanged(redo_description);
+    changed = true;
+        m_redo_description = redo_description;
+    emit redoDescriptionChanged(redo_description);
     }
 
     if (changed)
-    	emit QtUndoManager::changed();
+        emit QtUndoManager::changed();
 }
 
 /*!
@@ -1121,7 +1121,7 @@ bool QtUndoManager::canUndo() const
     has no targets in its parent chain, or a target is found but the
     associated stack is empty, or if the first command on the stack
     has already been redone.
-    
+
     A QAction returned by createRedoAction() disables itself
     whenever canRedo() is false.
 
@@ -1138,19 +1138,19 @@ bool QtUndoManager::canRedo() const
 void QtUndoManager::stackDestroyed(QObject *stack)
 {
     if (m_current_stack == stack)
-	m_current_stack = 0;
+    m_current_stack = 0;
 
     // remove all views associated with that stack from the map
     StackMap::iterator it = m_stack_map.begin();
     while (it != m_stack_map.end()) {
-	if (*it == stack) {
-	    disconnect(it.key(), 0, this, 0);
-	    StackMap::iterator tmp = it; // iterator invalidation
-	    ++tmp;
-	    m_stack_map.remove(it);
-	    it = tmp;
-	}
-	else ++it;
+    if (*it == stack) {
+        disconnect(it.key(), 0, this, 0);
+        StackMap::iterator tmp = it; // iterator invalidation
+        ++tmp;
+        m_stack_map.remove(it);
+        it = tmp;
+    }
+    else ++it;
     }
 
     updateActions();
@@ -1162,12 +1162,12 @@ void QtUndoManager::viewDestroyed(QObject *view)
 {
     StackMap::iterator it = m_stack_map.find(view);
     if (it == m_stack_map.end()) {
-	qWarning("QtUndoManager::viewDestroyed(): no such view");
-	return;
+    qWarning("QtUndoManager::viewDestroyed(): no such view");
+    return;
     }
 
     if (*it == m_current_stack)
-	m_current_stack = 0;
+    m_current_stack = 0;
 
     m_stack_map.erase(it);
 
@@ -1190,8 +1190,8 @@ void QtUndoManager::undo()
     QtUndoStack *stack = currentStack();
 
     if (stack == 0 || !stack->canUndo()) {
-	qWarning("QtUndoManager::undo(): can't undo");
-	return;
+    qWarning("QtUndoManager::undo(): can't undo");
+    return;
     }
 
     stack->undo();
@@ -1214,8 +1214,8 @@ void QtUndoManager::redo()
     QtUndoStack *stack = currentStack();
 
     if (stack == 0 || !stack->canRedo()) {
-	qWarning("QtUndoManager::redo(): can't redo");
-	return;
+    qWarning("QtUndoManager::redo(): can't redo");
+    return;
     }
 
     stack->redo();
@@ -1234,7 +1234,7 @@ uint QtUndoManager::m_undo_limit = 0;
 QtUndoManager *QtUndoManager::manager()
 {
     if (m_manager == 0)
-	m_manager = new QtUndoManager;
+    m_manager = new QtUndoManager;
 
     return m_manager;
 }
@@ -1248,14 +1248,14 @@ QtUndoManager *QtUndoManager::manager()
 void QtUndoManager::disassociateView(QObject *obj)
 {
     if (obj == 0) {
-	qWarning("QtUndoManager::disassociateView(): canot disassociate null object");
-	return;
+    qWarning("QtUndoManager::disassociateView(): canot disassociate null object");
+    return;
     }
 
     StackMap::iterator it = m_stack_map.find(obj);
     if (it == m_stack_map.end()) {
-	qWarning("QtUndoManager::disassociateView(): object has no associated stack");
-	return;
+    qWarning("QtUndoManager::disassociateView(): object has no associated stack");
+    return;
     }
 
     disconnect(obj, 0, this, 0);
@@ -1273,23 +1273,23 @@ void QtUndoManager::disassociateView(QObject *obj)
 void QtUndoManager::associateView(QObject *obj, QtUndoStack *stack)
 {
     if (obj == 0) {
-	qWarning("QtUndoManager::associateView(): cannot associate a null object");
-	return;
+    qWarning("QtUndoManager::associateView(): cannot associate a null object");
+    return;
     }
 
     if (stack == 0) {
-	qWarning("QtUndoManager::associateView(): cannot associate a null stack");
-	return;
+    qWarning("QtUndoManager::associateView(): cannot associate a null stack");
+    return;
     }
 
     if (m_stack_map.contains(obj)) {
-	qWarning("QtUndoManager::associateView(): view already associated with a stack");
-	return;
+    qWarning("QtUndoManager::associateView(): view already associated with a stack");
+    return;
     }
 
     m_stack_map[obj] = stack;
     connect(obj, SIGNAL(destroyed(QObject*)), this,
-		SLOT(viewDestroyed(QObject*)));
+        SLOT(viewDestroyed(QObject*)));
 
     updateActions();
 }
@@ -1324,7 +1324,7 @@ void QtUndoManager::setUndoLimit(uint i)
 bool QtUndoManager::eventFilter(QObject*, QEvent *e)
 {
     if (e->type() == QEvent::FocusIn || e->type() == QEvent::FocusOut)
-	updateActions();
+    updateActions();
 
     return false;
 }
@@ -1335,12 +1335,12 @@ QtUndoStack *QtUndoManager::currentStack() const
 {
     QWidget *w = qApp->focusWidget();
     while (w != 0) {
-	StackMap::const_iterator it = m_stack_map.find(w);
-	if (it != m_stack_map.end()) {
-	    m_current_stack = (QtUndoStack*) *it;
-	    break;
-	}
-	w = w->parentWidget();
+    StackMap::const_iterator it = m_stack_map.find(w);
+    if (it != m_stack_map.end()) {
+        m_current_stack = (QtUndoStack*) *it;
+        break;
+    }
+    w = w->parentWidget();
     }
 
     return m_current_stack;
@@ -1353,18 +1353,18 @@ QtUndoStack *QtUndoManager::currentStack() const
 
 /*!
     Returns the current undo description.
-    
+
     The undo description is a string that describes what effects calling
-    QtUndoManager::undo() will have on the edited object. 
-    
-    It contains the text returned by QtCommand::description() for the current 
-    command on the QtUndoStack associated with the target widget that contains 
+    QtUndoManager::undo() will have on the edited object.
+
+    It contains the text returned by QtCommand::description() for the current
+    command on the QtUndoStack associated with the target widget that contains
     the keyboard focus.
 
     The QAction returned by createUndoAction() keeps its text property
     in sync with the undo description. This function is useful if you want to
     trigger undo with a custom widget, rather than this QAction.
-    
+
     \sa undoDescriptionChanged() createUndoAction() QtCommand::description() QtUndoStack::undoDescription()
 */
 
@@ -1375,14 +1375,14 @@ QString QtUndoManager::undoDescription() const
 
 /*!
     Returns the current redo description.
-    
+
     The redo description is a string that describes what effects calling
-    QtUndoManager::redo() will have on the edited object. 
-    
-    It contains the text returned by QtCommand::description() for the 
-    command preceding the current command on the QtUndoStack associated 
+    QtUndoManager::redo() will have on the edited object.
+
+    It contains the text returned by QtCommand::description() for the
+    command preceding the current command on the QtUndoStack associated
     with the target widget that contains the keyboard focus.
-    
+
     The QAction returned by createRedoAction() keeps its text property
     in sync with the redo description. This function is useful if you want to
     trigger redo with a custom widget, rather than this QAction.
@@ -1402,7 +1402,7 @@ QString QtUndoManager::redoDescription() const
     \a newDescription is the new redo description. It is useful when
     you want to trigger redo using a custom widget, rather than
     using the QAction returned by createRedoAction().
-    
+
     \sa redoDescription() canRedoChanged() undoDescriptionChanged()
 */
 
@@ -1413,17 +1413,17 @@ QString QtUndoManager::redoDescription() const
     \a newDescription is the new undo description. It is useful when
     you want to trigger undo using a custom widget, rather than
     using the QAction returned by createUndoAction().
-    
+
     \sa undoDescription() canUndoChanged() redoDescriptionChanged()
 */
 
 /*!
     \fn void QtUndoManager::canUndoChanged(bool enabled)
-    
+
     This signal is emitted whenever the state reported by canUndo()
     changes. \a enabled is the new state.
-    
-    This function is useful if you want to trigger undo with a custom widget, 
+
+    This function is useful if you want to trigger undo with a custom widget,
     rather than the QAction returned by createUndoAction().
 
     \sa canUndo() undoDescriptionChanged() canRedoChanged()
@@ -1435,7 +1435,7 @@ QString QtUndoManager::redoDescription() const
     This signal is emitted whenever the state reported by canRedo()
     changes. \a enabled is the new state.
 
-    This function is useful if you want to trigger redo with a custom widget, 
+    This function is useful if you want to trigger redo with a custom widget,
     rather than the QAction returned by createRedoAction().
 
     \sa canRedo() redoDescriptionChanged() canUndoChanged()
@@ -1453,7 +1453,7 @@ QStringList QtUndoManager::undoList() const
 {
     QtUndoStack *stack = currentStack();
     if (stack == 0)
-	return QStringList();
+    return QStringList();
 
     return stack->undoList();
 }
@@ -1470,7 +1470,7 @@ QStringList QtUndoManager::redoList() const
 {
     QtUndoStack *stack = currentStack();
     if (stack == 0)
-	return QStringList();
+    return QStringList();
 
     return stack->redoList();
 }
@@ -1501,7 +1501,7 @@ QtUndoListBox::QtUndoListBox(QWidget *parent, const char *name)
     : QListBox(parent, name)
 {
     connect(QtUndoManager::manager(), SIGNAL(changed()),
-		this, SLOT(updateContents()));
+        this, SLOT(updateContents()));
     connect(this, SIGNAL(highlighted(int)), this, SLOT(undoOrRedo()));
 
     m_undo_idx = -1;
@@ -1515,7 +1515,7 @@ QtUndoListBox::QtUndoListBox(QWidget *parent, const char *name)
 void QtUndoListBox::updateContents()
 {
     if (m_dont_update)
-    	return;
+        return;
 
     blockSignals(true);
 
@@ -1529,11 +1529,11 @@ void QtUndoListBox::updateContents()
 
     QStringList current_list;
     for (uint i = 0; i < count(); ++i)
-    	current_list.append(text(i));
-    
+        current_list.append(text(i));
+
     if (current_list != undo_list) {
-    	clear();
-	insertStringList(undo_list);
+        clear();
+    insertStringList(undo_list);
     }
 
     setCurrentItem(m_undo_idx);
@@ -1547,27 +1547,27 @@ void QtUndoListBox::undoOrRedo()
 {
     int  idx = currentItem();
     if (idx == -1)
-    	return;
-    
+        return;
+
     if (idx == m_undo_idx)
-    	return;
-    
+        return;
+
     QtUndoManager *manager = QtUndoManager::manager();
-    
+
     m_dont_update = true;
     if (idx < m_undo_idx) {
-    	for (int i = idx; i < m_undo_idx; ++i) {
-	    Q_ASSERT(manager->canUndo());
-	    manager->undo();
-	}
+        for (int i = idx; i < m_undo_idx; ++i) {
+        Q_ASSERT(manager->canUndo());
+        manager->undo();
+    }
     } else {
-    	for (int i = m_undo_idx; i < idx; ++i) {
-	    Q_ASSERT(manager->canRedo());
-	    manager->redo();
-	}
+        for (int i = m_undo_idx; i < idx; ++i) {
+        Q_ASSERT(manager->canRedo());
+        manager->redo();
+    }
     }
     m_dont_update = false;
-    
+
     updateContents();
 }
 

@@ -47,7 +47,7 @@ signals:
     //@}
 
 private slots:
-    //! @name 
+    //! @name
     //@{
     void OnTimeOut();
     //@}

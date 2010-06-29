@@ -56,7 +56,7 @@ tools::Iterator< const kernel::KnowledgeGroup_ABC& > KnowledgeGroupsModel::Creat
 
 // -----------------------------------------------------------------------------
 // Name: void KnowledgeGroupsModel::Create
-// Created:  FHD 2009-11-19: 
+// Created:  FHD 2009-11-19:
 // -----------------------------------------------------------------------------
 void KnowledgeGroupsModel::Create( kernel::Team_ABC& parent )
 {
@@ -66,7 +66,7 @@ void KnowledgeGroupsModel::Create( kernel::Team_ABC& parent )
 
 // -----------------------------------------------------------------------------
 // Name: void KnowledgeGroupsModel::Create
-// Created:  FHD 2009-11-19: 
+// Created:  FHD 2009-11-19:
 // -----------------------------------------------------------------------------
 void KnowledgeGroupsModel::Create( xml::xistream& xis, kernel::Team_ABC& parent, Model& model )
 {
@@ -77,7 +77,7 @@ void KnowledgeGroupsModel::Create( xml::xistream& xis, kernel::Team_ABC& parent,
 
 // -----------------------------------------------------------------------------
 // Name: void KnowledgeGroupsModel::CreateSubKnowledgeGroup
-// Created:  FHD 2009-11-19: 
+// Created:  FHD 2009-11-19:
 // -----------------------------------------------------------------------------
 void KnowledgeGroupsModel::CreateSubKnowledgeGroup( kernel::KnowledgeGroup_ABC& parent )
 {
@@ -87,7 +87,7 @@ void KnowledgeGroupsModel::CreateSubKnowledgeGroup( kernel::KnowledgeGroup_ABC& 
 
 // -----------------------------------------------------------------------------
 // Name: void KnowledgeGroupsModel::CreateSubKnowledgeGroup
-// Created:  FHD 2009-11-19: 
+// Created:  FHD 2009-11-19:
 // -----------------------------------------------------------------------------
 void KnowledgeGroupsModel::CreateSubKnowledgeGroup( xml::xistream& xis, kernel::KnowledgeGroup_ABC& parent, Model& model )
 {

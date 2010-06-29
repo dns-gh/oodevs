@@ -34,11 +34,11 @@ ADN_Equipement_Wizard::ADN_Equipement_Wizard( ADN_Equipement_Data::DotationInfos
     setCaption( qApp->translate( "ADN_Equipement_Wizard", "New resource creation" ) );
 
     ADN_Equipement_Wizard_Page0* pFirstPage = new ADN_Equipement_Wizard_Page0( parentDotation, this );
-    pFirstPage->SetCaptions( qApp->translate( "ADN_Equipement_Wizard", "New resource creation" ), 
+    pFirstPage->SetCaptions( qApp->translate( "ADN_Equipement_Wizard", "New resource creation" ),
         qApp->translate( "ADN_Equipement_Wizard", "Resources" ) );
     pFirstPage_ = pFirstPage;
 
-    new ADN_Wizard_LastPage( this, qApp->translate( "ADN_Equipement_Wizard", "Creation completed" ), 
+    new ADN_Wizard_LastPage( this, qApp->translate( "ADN_Equipement_Wizard", "Creation completed" ),
         qApp->translate( "ADN_Equipement_Wizard", "Click \"Done\" to create the new resource category." ) );
 }
 

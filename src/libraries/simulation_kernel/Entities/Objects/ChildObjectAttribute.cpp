@@ -47,7 +47,7 @@ ChildObjectAttribute::~ChildObjectAttribute()
 // Name: template< typename Archive > void ChildObjectAttribute::serialize
 // Created: SLG 2010-02-16
 // -----------------------------------------------------------------------------
-template< typename Archive > 
+template< typename Archive >
 void ChildObjectAttribute::serialize( Archive& /*file*/, const uint )
 {
     //TODO
@@ -68,7 +68,7 @@ void ChildObjectAttribute::Register( Object& object ) const
 // -----------------------------------------------------------------------------
 void ChildObjectAttribute::AddChildObject( Object& object )
 {
-    if ( childObject_ )
+    if( childObject_ )
         throw( std::exception( " Detector already registered" ) );
     childObject_ = &object;
 }

@@ -21,7 +21,7 @@ using namespace xml;
 // Name: ObstacleAttribute constructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-ObstacleAttribute::ObstacleAttribute( kernel::PropertiesDictionary& dico ) 
+ObstacleAttribute::ObstacleAttribute( kernel::PropertiesDictionary& dico )
     : type_ ( eDemolitionTargetType_Preliminary )
     , bActivated_ ( true )
 {
@@ -46,7 +46,7 @@ ObstacleAttribute::ObstacleAttribute( kernel::PropertiesDictionary& dico, Enum_D
 ObstacleAttribute::ObstacleAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dico )
     : type_ ( attribute( xis, "type", std::string() ) )
     , bActivated_ ( type_.GetValue() == eDemolitionTargetType_Preliminary )
-{    
+{
     CreateDictionary( dico );
 }
 
@@ -98,7 +98,7 @@ void ObstacleAttribute::SerializeAttributes( xml::xostream& xos ) const
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
 void ObstacleAttribute::CreateDictionary( kernel::PropertiesDictionary& dico )
-{    
+{
     dico.Register( *this, tools::translate( "Object", "Info/Demolition target parameters/Obstacle type" ), type_ );
     dico.Register( *this, tools::translate( "Object", "Info/Demolition target parameters/Obstacle activated" ), bActivated_ );
 }
@@ -109,6 +109,6 @@ void ObstacleAttribute::CreateDictionary( kernel::PropertiesDictionary& dico )
 // -----------------------------------------------------------------------------
 void ObstacleAttribute::Activate( bool activate )
 {
-    if ( type_.GetValue() == eDemolitionTargetType_Reserved )
+    if( type_.GetValue() == eDemolitionTargetType_Reserved )
         bActivated_ = activate;
 }

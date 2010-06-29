@@ -191,7 +191,7 @@ BOOST_AUTO_TEST_CASE( Test_CoordinatesOnZero45 )
 
         // whatever
         Orientation orientation( location, velocity );
-        BOOST_CHECK_CLOSE(  0.9569, orientation.Psi(), tolerance ); 
+        BOOST_CHECK_CLOSE(  0.9569, orientation.Psi(), tolerance );
         BOOST_CHECK_CLOSE( 0.5255, orientation.Theta(), tolerance );
         BOOST_CHECK_CLOSE( -2.522, orientation.Phi(), tolerance );
     }

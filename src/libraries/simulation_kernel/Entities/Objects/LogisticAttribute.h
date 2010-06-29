@@ -21,7 +21,7 @@ class MIL_AutomateLOG;
 */
 // Created: JCR 2008-05-30
 // =============================================================================
-class LogisticAttribute : public ObjectAttribute_ABC    
+class LogisticAttribute : public ObjectAttribute_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -63,7 +63,7 @@ private:
     //@}
 
 private:
-    //! @name 
+    //! @name
     //@{
     MIL_AutomateLOG* pTC2_;
     //@}

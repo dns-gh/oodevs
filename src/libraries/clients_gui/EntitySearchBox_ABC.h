@@ -56,7 +56,7 @@ protected:
     //@{
     void AddItem( const kernel::Entity_ABC& entity );
     void RemoveItem( const kernel::Entity_ABC& entity );
-    
+
     void Find();
     bool Find( CIT_Items begin, CIT_Items end );
     //@}

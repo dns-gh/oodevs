@@ -36,7 +36,7 @@ public:
     //@{
     template< typename Archive > void serialize( Archive&, const unsigned int ) {}
     //@}
-        
+
     //! @name Operations
     //@{
     virtual std::auto_ptr< TransportCapacityComputer_ABC > CreateCapacityComputer( ) const = 0;

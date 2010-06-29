@@ -86,5 +86,5 @@ void MeteoData::SendDestruction( dispatcher::ClientPublisher_ABC& publisher ) co
 {
     client::ControlLocalMeteoDestruction msg;
     msg().set_oid( id_ );
-    msg.Send( publisher );    
+    msg.Send( publisher );
 }

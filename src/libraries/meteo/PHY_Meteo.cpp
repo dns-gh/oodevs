@@ -52,7 +52,7 @@ PHY_Meteo::PHY_Meteo( unsigned int id, xml::xistream& xis, const PHY_Lighting& l
         >> xml::end();
     if( wind_.rWindSpeed_ < 0 )
         xis.error( "meteo: VitesseVent < 0" );
-    
+
         wind_.rWindSpeed_ = conversionFactor_ * /*MIL_Tools::ConvertSpeedMosToSim*/( wind_.rWindSpeed_ );
     if( nAngle < 0 || nAngle > 360 )
         xis.error( "meteo: DirectionVent not in [0..360]" );
@@ -146,14 +146,14 @@ void PHY_Meteo::Update( const Common::MsgMeteoAttributes& msg )
     pPrecipitation_ = PHY_Precipitation::FindPrecipitation( msg.precipitation() );
     if( !pPrecipitation_ )
         pPrecipitation_ = &PHY_Precipitation::none_;
-    
+
     // Lighting
     pLighting_ = PHY_Lighting::FindLighting( msg.lighting() );
 
     if( !pLighting_ )
     {
-        if ( listener_ )
-            pLighting_ = &( listener_->GetLighting() ); 
+        if( listener_ )
+            pLighting_ = &( listener_->GetLighting() );
         else
             pLighting_ = &PHY_Lighting::jourSansNuage_;
     }
@@ -344,7 +344,7 @@ void PHY_Meteo::SendDestruction( dispatcher::ClientPublisher_ABC& ) const
 {
     //NOTHING
 }
- 
+
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Meteo::IsInside

@@ -47,7 +47,7 @@ OGR_FeatureRow::~OGR_FeatureRow()
 // -----------------------------------------------------------------------------
 void OGR_FeatureRow::Release()
 {
-    if ( feature_ != NULL )
+    if( feature_ != NULL )
         OGRFeature::DestroyFeature( feature_ );
 }
 

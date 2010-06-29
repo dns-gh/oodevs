@@ -59,22 +59,22 @@ static struct EmbedImage {
 static QImage uic_findImage( const QString& name )
 {
     for ( int i=0; embed_image_vec[i].data; i++ ) {
-	if ( QString::fromUtf8(embed_image_vec[i].name) == name ) {
-	    QByteArray baunzip;
-	    baunzip = qUncompress( embed_image_vec[i].data, 
-		embed_image_vec[i].compressed );
-	    QImage img((uchar*)baunzip.data(),
-			embed_image_vec[i].width,
-			embed_image_vec[i].height,
-			embed_image_vec[i].depth,
-			(QRgb*)embed_image_vec[i].colorTable,
-			embed_image_vec[i].numColors,
-			QImage::BigEndian
-		);
-	    img = img.copy();
-	    if ( embed_image_vec[i].alpha )
-		img.setAlphaBuffer(TRUE);
-	    return img;
+    if( QString::fromUtf8(embed_image_vec[i].name) == name ) {
+        QByteArray baunzip;
+        baunzip = qUncompress( embed_image_vec[i].data,
+        embed_image_vec[i].compressed );
+        QImage img((uchar*)baunzip.data(),
+            embed_image_vec[i].width,
+            embed_image_vec[i].height,
+            embed_image_vec[i].depth,
+            (QRgb*)embed_image_vec[i].colorTable,
+            embed_image_vec[i].numColors,
+            QImage::BigEndian
+        );
+        img = img.copy();
+        if( embed_image_vec[i].alpha )
+        img.setAlphaBuffer(TRUE);
+        return img;
         }
     }
     return QImage();
@@ -86,12 +86,12 @@ public:
     MimeSourceFactory_example() {}
     ~MimeSourceFactory_example() {}
     const QMimeSource* data( const QString& abs_name ) const {
-	const QMimeSource* d = QMimeSourceFactory::data( abs_name );
-	if ( d || abs_name.isNull() ) return d;
-	QImage img = uic_findImage( abs_name );
-	if ( !img.isNull() )
-	    ((QMimeSourceFactory*)this)->setImage( abs_name, img );
-	return QMimeSourceFactory::data( abs_name );
+    const QMimeSource* d = QMimeSourceFactory::data( abs_name );
+    if( d || abs_name.isNull() ) return d;
+    QImage img = uic_findImage( abs_name );
+    if( !img.isNull() )
+        ((QMimeSourceFactory*)this)->setImage( abs_name, img );
+    return QMimeSourceFactory::data( abs_name );
     };
 };
 
@@ -99,18 +99,18 @@ static QMimeSourceFactory* factory = 0;
 
 void qInitImages_example()
 {
-    if ( !factory ) {
-	factory = new MimeSourceFactory_example;
-	QMimeSourceFactory::defaultFactory()->addFactory( factory );
+    if( !factory ) {
+    factory = new MimeSourceFactory_example;
+    QMimeSourceFactory::defaultFactory()->addFactory( factory );
     }
 }
 
 void qCleanupImages_example()
 {
-    if ( factory ) {
-	QMimeSourceFactory::defaultFactory()->removeFactory( factory );
-	delete factory;
-	factory = 0;
+    if( factory ) {
+    QMimeSourceFactory::defaultFactory()->removeFactory( factory );
+    delete factory;
+    factory = 0;
     }
 }
 
@@ -127,9 +127,9 @@ public:
 
 static StaticInitImages_example staticImages;
 
-// $$$$ CBX 01-06-26: Hack to encapsulate the xpm resources in a resources.cpp 
+// $$$$ CBX 01-06-26: Hack to encapsulate the xpm resources in a resources.cpp
 // $$$$ CBX 01-06-26: instead of resources.h
-#define static 
+#define static
 
 #include "res/fileopen.xpm"
 #include "res/filesave.xpm"

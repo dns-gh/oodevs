@@ -40,7 +40,7 @@ public:
     //@{
     virtual bool CheckValidity() const;
     //@}
-    
+
 signals:
     //! @name signals
     //@{
@@ -62,13 +62,13 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void showEvent( QShowEvent* );    
+    virtual void showEvent( QShowEvent* );
     //@}
 
 protected:
     //! @name Helpers
     //@{
-    bool IsActivated() const;    
+    bool IsActivated() const;
     //@}
 
 protected:

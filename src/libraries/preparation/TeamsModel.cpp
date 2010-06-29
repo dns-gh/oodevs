@@ -39,7 +39,7 @@ TeamsModel::TeamsModel( Controllers& controllers, TeamFactory_ABC& factory )
 {
     controllers_.Register( *this );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: TeamsModel destructor
 // Created: SBO 2006-08-30
@@ -49,7 +49,7 @@ TeamsModel::~TeamsModel()
     Purge();
     controllers_.Unregister( *this );
 }
- 
+
 // -----------------------------------------------------------------------------
 // Name: TeamsModel::Purge
 // Created: SBO 2006-08-30

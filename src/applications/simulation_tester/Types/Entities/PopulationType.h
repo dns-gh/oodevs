@@ -53,7 +53,7 @@ private:
     //! @name Member data
     //@{
     std::string            strName_;
-	unsigned int                   nId_;
+    unsigned int                   nId_;
     const PopulationModel* pModel_;
     //@}
 };

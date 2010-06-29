@@ -70,7 +70,7 @@ private:
     mutable geocoord::PlanarCartesian             planar_;
     mutable geocoord::MGRS                        mgrs_;
     mutable geocoord::Geodetic                    geodetic_;
-    
+
     const MT_Rect     extent_;
     const MT_Vector2D translation_;
 

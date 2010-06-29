@@ -22,7 +22,7 @@ namespace gui
 // Created: SBO 2006-04-20
 // =============================================================================
 class SupplyRoutePrototype_ABC : public ObjectAttributePrototype_ABC
-{    
+{
 public:
     //! @name Constructors/Destructor
     //@{

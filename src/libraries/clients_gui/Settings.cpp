@@ -29,7 +29,7 @@ Settings::Settings()
 
 // -----------------------------------------------------------------------------
 // Name: Settings constructor
-/** @param  nFormat 
+/** @param  nFormat
 */
 // Created: APE 2004-06-01
 // -----------------------------------------------------------------------------
@@ -116,7 +116,7 @@ void Settings::Save( const std::string& name, int value )
 {
     writeEntry( ( "/" + AddType( name, intPrefix ) ).c_str(), value );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Settings::Save
 // Created: AGE 2006-04-19
@@ -179,7 +179,7 @@ bool Settings::Load( const std::string& name, bool defaultValue )
 {
     return readBoolEntry( ( "/" + AddType( name, boolPrefix ) ).c_str(), defaultValue );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Settings::Load
 // Created: AGE 2006-04-19

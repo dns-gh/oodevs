@@ -21,7 +21,7 @@ class MIL_Agent_ABC;
 // Created: JCR 2008-05-30
 // =============================================================================
 class WorkableCapacity : public ObjectCapacity_ABC
-{ 
+{
 
 public:
     //! @name Constructors/Destructor

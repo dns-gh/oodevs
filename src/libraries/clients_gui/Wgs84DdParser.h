@@ -40,7 +40,7 @@ public:
 
     //! @name Operations
     //@{
-	virtual bool Parse( QString content, geometry::Point2f& result, QStringList& hint ) const;
+    virtual bool Parse( QString content, geometry::Point2f& result, QStringList& hint ) const;
     virtual int GetNumberOfParameters() const;
     //@}
 
@@ -58,7 +58,7 @@ private:
 private:
     //! @name Member data
     //@{
-	const kernel::CoordinateConverter_ABC& converter_;
+    const kernel::CoordinateConverter_ABC& converter_;
     int numParameters_;
     //@}
 };

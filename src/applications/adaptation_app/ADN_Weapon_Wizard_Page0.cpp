@@ -110,9 +110,9 @@ ADN_Weapons_Data::WeaponInfos* ADN_Weapon_Wizard_Page0::CreateObject()
     ADN_Weapons_Data::WeaponInfos* pExistingWeapon = ADN_Workspace::GetWorkspace().GetWeapons().GetData().FindWeapon( strLauncher, strAmmo );
     if( pExistingWeapon != 0 )
     {
-        QMessageBox::warning( this, 
-            tr( "Warning" ), 
-            tr( "A weapon using the same launcher and ammunition already exists. Please modify your choices." ), 
+        QMessageBox::warning( this,
+            tr( "Warning" ),
+            tr( "A weapon using the same launcher and ammunition already exists. Please modify your choices." ),
             QMessageBox::Ok, QMessageBox::NoButton );
         return 0;
     }

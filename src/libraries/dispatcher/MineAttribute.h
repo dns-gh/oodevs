@@ -39,7 +39,7 @@ public:
 private:
     //! @name Data members
     //@{
-    unsigned     dotation_;    
+    unsigned     dotation_;
     unsigned int nNbrDotationForMining_;
     unsigned int nPercentageMining_;
     //@}

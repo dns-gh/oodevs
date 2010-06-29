@@ -46,29 +46,29 @@ MenuPage::MenuPage( QWidgetStack* pages, Page_ABC& previous, unsigned short butt
 {
     QVBox* box = new QVBox(this);
     AddContent( box );
-    box->setSpacing( 5 );    
+    box->setSpacing( 5 );
     box->setBackgroundOrigin( QWidget::WindowOrigin );
-    // title 
-    QFont titleFont( "Century Gothic", 18, QFont::Bold );  
-    titleFont.setItalic( true ) ; 
-    title_ = new QLabel( title, box ) ; 
+    // title
+    QFont titleFont( "Century Gothic", 18, QFont::Bold );
+    titleFont.setItalic( true ) ;
+    title_ = new QLabel( title, box ) ;
     title_->setBackgroundOrigin( QWidget::WindowOrigin );
-    title_->setFont( titleFont ); 
-    title_->setAlignment( Qt::AlignCenter ) ; 
-    QWidget* spacer = new QWidget( box ); 
-    spacer->setMinimumHeight( 40 ); 
+    title_->setFont( titleFont );
+    title_->setAlignment( Qt::AlignCenter ) ;
+    QWidget* spacer = new QWidget( box );
+    spacer->setMinimumHeight( 40 );
     spacer->setBackgroundOrigin( QWidget::WindowOrigin );
-    // main container 
+    // main container
     container_ = new TransparentContainer( box);
 
-    // subtitle 
-    QFont subTitleFont( "Century Gothic", 12, QFont::Bold );  
+    // subtitle
+    QFont subTitleFont( "Century Gothic", 12, QFont::Bold );
     subTitleFont.setItalic( true );
     subTitle_ = new QLabel( box );
     subTitle_->setMargin( 5 );
     subTitle_->setBackgroundOrigin( QWidget::WindowOrigin );
-    subTitle_->setFont( subTitleFont);  
-    
+    subTitle_->setFont( subTitleFont);
+
     layout()->setAlignment( Qt::AlignCenter );
 }
 
@@ -88,7 +88,7 @@ MenuPage::~MenuPage()
 void MenuPage::AddLink( const QString& title, Page_ABC& page, const QString& subTitle, const char* slot /*= 0*/ )
 {
     MenuButton* button = new MenuButton( title, container_ );
-    subTitles_[ button ] = subTitle ; 
+    subTitles_[ button ] = subTitle ;
     connect( button, SIGNAL( clicked() ), &page, slot ? slot : SLOT( show() ) );
     connect( button, SIGNAL( Selected( MenuButton* ) ), this, SLOT( OnSelectedItem( MenuButton* ) ) );
     connect( button, SIGNAL( UnSelected( MenuButton* ) ), this, SLOT( OnUnSelectedItem( MenuButton* ) ) );
@@ -100,7 +100,7 @@ void MenuPage::AddLink( const QString& title, Page_ABC& page, const QString& sub
 // -----------------------------------------------------------------------------
 void MenuPage::OnSelectedItem( MenuButton* button )
 {
-    subTitle_->setText( subTitles_[ button ] ) ; 
+    subTitle_->setText( subTitles_[ button ] ) ;
 }
 
 // -----------------------------------------------------------------------------
@@ -109,5 +109,5 @@ void MenuPage::OnSelectedItem( MenuButton* button )
 // -----------------------------------------------------------------------------
 void MenuPage::OnUnSelectedItem( MenuButton* /* button */ )
 {
-    subTitle_->setText( "" ) ; 
+    subTitle_->setText( "" ) ;
 }

@@ -24,7 +24,7 @@ Order_ABC::Order_ABC( Model_ABC& model, unsigned int missionID, const Common::Ms
     , missionID_ ( missionID )
     , parameters_()
 {
-    InitializeParameters( parameters );   
+    InitializeParameters( parameters );
 }
 
 // -----------------------------------------------------------------------------

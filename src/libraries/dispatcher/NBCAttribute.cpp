@@ -30,7 +30,7 @@ NBCAttribute::NBCAttribute( const Common::MsgObjectAttributes& asnMsg )
 NBCAttribute::~NBCAttribute()
 {
     // NOTHING
-}  
+}
 
 // -----------------------------------------------------------------------------
 // Name: NBCAttribute::Update

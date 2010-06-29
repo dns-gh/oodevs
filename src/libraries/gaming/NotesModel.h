@@ -9,7 +9,7 @@
 
 #ifndef __NotesModel_h_
 #define __NotesModel_h_
- 
+
 #include <qstring.h>
 #include "tools/Resolver.h"
 #include "tools/Observer_ABC.h"
@@ -69,7 +69,7 @@ private:
 
 private:
     //! @name Member data
-    //@{ 
+    //@{
     kernel::Controller& controller_;
     //@}
 };

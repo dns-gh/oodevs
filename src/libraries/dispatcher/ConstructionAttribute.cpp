@@ -32,22 +32,22 @@ ConstructionAttribute::ConstructionAttribute( const Common::MsgObjectAttributes&
 ConstructionAttribute::~ConstructionAttribute()
 {
     // NOTHING
-}  
+}
 
 // -----------------------------------------------------------------------------
 // Name: ConstructionAttribute::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
 void ConstructionAttribute::Update( const Common::MsgObjectAttributes& asnMsg )
-{    
+{
     if( asnMsg.has_construction()  )
     {
-        if ( asnMsg.construction().has_dotation_type() )
+        if( asnMsg.construction().has_dotation_type() )
             dotation_ = asnMsg.construction().dotation_type();
-        if ( asnMsg.construction().has_dotation_nbr() )
+        if( asnMsg.construction().has_dotation_nbr() )
             nNbrDotationForConstruction_ = asnMsg.construction().dotation_nbr();
-        if ( asnMsg.construction().has_percentage() )
-            nPercentageConstruction_ = asnMsg.construction().percentage();    
+        if( asnMsg.construction().has_percentage() )
+            nPercentageConstruction_ = asnMsg.construction().percentage();
     }
 }
 

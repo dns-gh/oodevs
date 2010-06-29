@@ -79,7 +79,7 @@ namespace boost
         {
             split_free( file, map, nVersion );
         }
-        
+
         template< typename Archive >
         void save( Archive& file, const DEC_BlackBoard_CanContainKnowledgeAgent::T_KnowledgeAgentMap& map, const unsigned int )
         {
@@ -91,7 +91,7 @@ namespace boost
                      << *it->second;
             }
         }
-        
+
         template< typename Archive >
         void load( Archive& file, DEC_BlackBoard_CanContainKnowledgeAgent::T_KnowledgeAgentMap& map, const unsigned int )
         {
@@ -101,10 +101,10 @@ namespace boost
             {
                 MIL_Agent_ABC*       pAgent;
                 boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge( new DEC_Knowledge_Agent() );
-                
+
                 file >> pAgent
                      >> *pKnowledge;
-                     
+
                 map.insert( std::make_pair( pAgent, pKnowledge ) );
             }
         }
@@ -195,7 +195,7 @@ void DEC_BlackBoard_CanContainKnowledgeAgent::UpdateQueriesCache()
     refugeesContainer_         .clear();
     surrenderedAgentsContainer_.clear();
 
-    assert( pKnowledgeGroup_ ); 
+    assert( pKnowledgeGroup_ );
     const MIL_Army_ABC& army = pKnowledgeGroup_->GetArmy();
 
     for( CIT_KnowledgeAgentMap itKnowledge = realAgentMap_.begin(); itKnowledge != realAgentMap_.end(); ++itKnowledge )
@@ -206,7 +206,7 @@ void DEC_BlackBoard_CanContainKnowledgeAgent::UpdateQueriesCache()
             refugeesContainer_.push_back( knowledge );
         else if( knowledge->IsSurrendered() )
         {
-            if( !knowledge->GetArmy() || *knowledge->GetArmy() != army ) 
+            if( !knowledge->GetArmy() || *knowledge->GetArmy() != army )
                 surrenderedAgentsContainer_.push_back( knowledge );
         }
         else
@@ -217,7 +217,7 @@ void DEC_BlackBoard_CanContainKnowledgeAgent::UpdateQueriesCache()
                     detectedContainer_.push_back( knowledge );
             }
             else if( knowledge->IsAFriend( army ) == eTristate_True )
-                friendsContainer_.push_back( knowledge );            
+                friendsContainer_.push_back( knowledge );
             else if( knowledge->IsAnEnemy( army ) == eTristate_True )
                 enemiesContainer_.push_back( knowledge );
             if( knowledge->IsMilitia() )

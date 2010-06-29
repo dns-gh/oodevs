@@ -53,7 +53,7 @@ private:
 private:
     //! @name Member data
     //@{
-    actions::parameters::ParameterList*& attributesList_;    
+    actions::parameters::ParameterList*& attributesList_;
     //@}
 };
 

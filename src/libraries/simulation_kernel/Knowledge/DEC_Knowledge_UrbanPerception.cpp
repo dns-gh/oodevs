@@ -54,11 +54,11 @@ void DEC_Knowledge_UrbanPerception::load( MIL_CheckPointInArchive& file, const u
 {
     file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
          >> const_cast< uint& >( nID_ );
-    
+
     uint nID;
     file >> nID;
     pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
-    
+
     file >> nID;
     pPreviousPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
 }
@@ -97,7 +97,7 @@ void DEC_Knowledge_UrbanPerception::Update( const PHY_PerceptionLevel& perceptio
 {
     assert( perceptionLevel != PHY_PerceptionLevel::notSeen_ );
     if( perceptionLevel > *pCurrentPerceptionLevel_ )
-        SetPerceptionLevel( perceptionLevel );   
+        SetPerceptionLevel( perceptionLevel );
 }
 
 // -----------------------------------------------------------------------------
@@ -120,7 +120,7 @@ void DEC_Knowledge_UrbanPerception::SetPerceptionLevel( const PHY_PerceptionLeve
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_UrbanPerception::UpdateOnNetwork()
 {
-    if ( *pCurrentPerceptionLevel_ != *pPreviousPerceptionLevel_ )
+    if( *pCurrentPerceptionLevel_ != *pPreviousPerceptionLevel_ )
         SendStateToNewClient();
 }
 

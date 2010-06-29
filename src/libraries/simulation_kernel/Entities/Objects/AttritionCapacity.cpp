@@ -32,7 +32,7 @@ AttritionCapacity::AttritionCapacity( xml::xistream& xis )
     : category_ ( xml::attribute( xis, "category", std::string() ) )
     , dotation_ ( PHY_DotationType::FindDotationCategory( category_ ) )
 {
-    if ( !dotation_ )
+    if( !dotation_ )
         throw std::runtime_error( "Unknown dotation category - " + category_ + " - " );
 }
 
@@ -71,15 +71,15 @@ AttritionCapacity::~AttritionCapacity()
 // Created: JCR 2008-07-03
 // -----------------------------------------------------------------------------
 void AttritionCapacity::load( MIL_CheckPointInArchive& ar, const unsigned int )
-{    
+{
     ar >> boost::serialization::base_object< ObjectCapacity_ABC >( *this )
        >> boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this );
     ar >> category_;
     dotation_ = PHY_DotationType::FindDotationCategory( category_ );
-    if ( !dotation_ )
+    if( !dotation_ )
         throw std::runtime_error( "Unknown dotation category - " + category_ + " - " );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: AttritionCapacity::save
 // Created: JCR 2008-07-03
@@ -106,7 +106,7 @@ void AttritionCapacity::Register( MIL_Object_ABC& object )
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
 void AttritionCapacity::Instanciate( MIL_Object_ABC& object ) const
-{    
+{
     AttritionCapacity* capacity = new AttritionCapacity( *this );
     object.AddCapacity( capacity );
     object.Register( static_cast< MIL_InteractiveContainer_ABC *>( capacity ) );
@@ -117,7 +117,7 @@ void AttritionCapacity::Instanciate( MIL_Object_ABC& object ) const
 // Created: JCR 2008-08-11
 // -----------------------------------------------------------------------------
 bool AttritionCapacity::HasInteractionCapabilities( MIL_Object_ABC& object ) const
-{    
+{
     // Is Bypassed
     const BypassAttribute* bypass = object.RetrieveAttribute< BypassAttribute >();
     if( bypass && bypass->IsBypassed() )
@@ -137,14 +137,14 @@ void AttritionCapacity::ProcessAgentMovingInside( MIL_Object_ABC& object, MIL_Ag
 {
     if( !object.GetArmy() || object.GetArmy()->GetID() == agent.GetArmy().GetID() || !HasInteractionCapabilities( object ) )
         return;
-    ConstructionAttribute* construction = object.RetrieveAttribute< ConstructionAttribute >();    
+    ConstructionAttribute* construction = object.RetrieveAttribute< ConstructionAttribute >();
     if( ! ( construction && construction->HasDotation( *dotation_ ) && dotation_->HasAttritions() ) )
         return;
-    PHY_ObjectExplosionFireResult fireResult( object );    
+    PHY_ObjectExplosionFireResult fireResult( object );
     agent.GetRole< PHY_RoleInterface_Composantes >().ApplyExplosion( *this, fireResult );
 
     unsigned int hits = fireResult.GetHits();
-    if ( hits > 0 )    
+    if( hits > 0 )
         construction->Build( - MT_Float( hits ) / MT_Float( construction->GetMaxDotation() ) );
 }
 
@@ -154,17 +154,17 @@ void AttritionCapacity::ProcessAgentMovingInside( MIL_Object_ABC& object, MIL_Ag
 // -----------------------------------------------------------------------------
 void AttritionCapacity::ProcessPopulationInside( MIL_Object_ABC& object, MIL_PopulationElement_ABC& population )
 {
-    if( population_.surface_ > 0. ) 
+    if( population_.surface_ > 0. )
     {
         PHY_ObjectExplosionFireResult fireResult( object );
-        if ( dotation_->HasAttritions() )
+        if( dotation_->HasAttritions() )
         {
-            ConstructionAttribute* construction = object.RetrieveAttribute< ConstructionAttribute >();    
+            ConstructionAttribute* construction = object.RetrieveAttribute< ConstructionAttribute >();
             if( ! ( construction && construction->HasDotation( *dotation_ ) ) )
                 return;
             population.ApplyExplosion( *this, fireResult );
             unsigned int hits = fireResult.GetHits();
-            if ( hits > 0 )    
+            if( hits > 0 )
                 construction->Build( - MT_Float( hits ) / MT_Float( construction->GetMaxDotation() ) );
         }
     }

@@ -64,9 +64,9 @@ public:
 
     //! @name Test Parameters
     //@{
-    static Location&         GetTestParam_Location    ( const Position& pos, 
+    static Location&         GetTestParam_Location    ( const Position& pos,
                                                         EnumLocationType eType = ( EnumLocationType )-1 );
-    static T_LocationVector& GetTestParam_LocationList( const Position& pos, unsigned int nLocation, 
+    static T_LocationVector& GetTestParam_LocationList( const Position& pos, unsigned int nLocation,
                                                         EnumLocationType eType = ( EnumLocationType )-1 );
     //@}
 

@@ -75,7 +75,7 @@ HierarchyListView_ABC::~HierarchyListView_ABC()
 // Created: AGE 2006-10-04
 // -----------------------------------------------------------------------------
 void HierarchyListView_ABC::NotifyCreated( const kernel::Hierarchies& hierarchy )
-{   
+{
     NotifyUpdated( hierarchy );
 }
 
@@ -87,7 +87,7 @@ void HierarchyListView_ABC::NotifyUpdated( const kernel::Hierarchies& hierarchy 
 {
     const Entity_ABC& entity = hierarchy.GetEntity();
     Display( entity, FindOrCreate( &entity ) );
-}   
+}
 
 // -----------------------------------------------------------------------------
 // Name: HierarchyListView_ABC::NotifyDeleted
@@ -128,7 +128,7 @@ void HierarchyListView_ABC::Display( const Entity_ABC& entity, ValuedListItem* i
     item->setDropEnabled( true );
     item->setDragEnabled( true );
     item->SetToolTip( QString( "%1 [%2]" ).arg( entity.GetName() ).arg( entity.GetId() ) );
-    
+
     if( const Hierarchies* hierarchy = RetrieveHierarchy( entity ) )
         DeleteTail( ListView< HierarchyListView_ABC >::Display( hierarchy->CreateSubordinateIterator(), item ) );
 
@@ -293,7 +293,7 @@ bool HierarchyListView_ABC::Drop( const Entity_ABC& , const Entity_ABC& )
 // -----------------------------------------------------------------------------
 void HierarchyListView_ABC::NotifyActivated( const Entity_ABC& element )
 {
-    ValuedListItem* item = FindItem( &element, firstChild() );    
+    ValuedListItem* item = FindItem( &element, firstChild() );
     if( item )
         ensureItemVisible( item );
 }

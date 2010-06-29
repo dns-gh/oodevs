@@ -22,7 +22,7 @@ int main( int /*argc*/, char** /*argv*/ )
         try
         {
             boost::filesystem::remove_all( "agr_tmp" );
-            boost::filesystem::remove_all( strOutputPath );        
+            boost::filesystem::remove_all( strOutputPath );
         }
         catch( std::exception& e )
         {
@@ -37,7 +37,7 @@ int main( int /*argc*/, char** /*argv*/ )
         {
             std::cout << "asn2xsd.exe exited with code " << nErrorCode << "." << std::endl;
             return nErrorCode;
-        } 
+        }
 
         std::cout << "Parsing XSD files" << std::endl;
 
@@ -49,7 +49,7 @@ int main( int /*argc*/, char** /*argv*/ )
         std::vector< AGR_Generator_ABC* > generators;
         generators.push_back( new AGR_EnumGenerator() );
 
-        MT_MakeDir( strOutputPath );        
+        MT_MakeDir( strOutputPath );
         for( std::vector< AGR_Generator_ABC* >::iterator it = generators.begin(); it != generators.end(); ++it )
         {
             AGR_Generator_ABC& generator = **it;

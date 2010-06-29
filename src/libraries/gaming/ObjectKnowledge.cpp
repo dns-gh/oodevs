@@ -30,7 +30,7 @@ using namespace kernel;
 // Name: ObjectKnowledge constructor
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-ObjectKnowledge::ObjectKnowledge( const Entity_ABC& owner, const MsgsSimToClient::MsgObjectKnowledgeCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, 
+ObjectKnowledge::ObjectKnowledge( const Entity_ABC& owner, const MsgsSimToClient::MsgObjectKnowledgeCreation& message, Controller& controller, const CoordinateConverter_ABC& converter,
                                   const tools::Resolver_ABC< Object_ABC >& objectResolver, const tools::Resolver_ABC< ObjectType, std::string >& typeResolver )
     : EntityImplementation< ObjectKnowledge_ABC >( controller, message.oid(), "" )
     , converter_     ( converter )

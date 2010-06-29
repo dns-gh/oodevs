@@ -45,8 +45,8 @@ void ImprovableCapacity::ReadDotation( xml::xistream& xis )
     {
         std::string dotation( xml::attribute< std::string >( xis, "name" ) );
         dotation_ = PHY_DotationType::FindDotationCategory( dotation );
-        if ( !dotation_ )
-            throw std::runtime_error( "Unknown dotation category - " + dotation + " - " ); 
+        if( !dotation_ )
+            throw std::runtime_error( "Unknown dotation category - " + dotation + " - " );
         xis >> xml::attribute( "count", nFullNbrDotation_ );
     }
 }
@@ -99,12 +99,12 @@ void ImprovableCapacity::load( MIL_CheckPointInArchive& ar, const unsigned int )
        >> nFullNbrDotation_;
     default_  = PHY_ConsumptionType::FindConsumptionType( consumptionId );
     if( !default_ )
-        throw std::runtime_error( __FUNCTION__ " Unknown consumption category" ); 
+        throw std::runtime_error( __FUNCTION__ " Unknown consumption category" );
     dotation_ = PHY_DotationType::FindDotationCategory( dotationId );
     if( !dotation_ && dotationId )
-        throw std::runtime_error( __FUNCTION__ " Unknown dotation category" ); 
+        throw std::runtime_error( __FUNCTION__ " Unknown dotation category" );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ImprovableCapacity::save
 // Created: JCR 2008-07-03
@@ -123,7 +123,7 @@ void ImprovableCapacity::save( MIL_CheckPointOutArchive& ar, const unsigned int 
 // -----------------------------------------------------------------------------
 void ImprovableCapacity::Register( MIL_Object_ABC& object )
 {
-    object.AddCapacity( this );    
+    object.AddCapacity( this );
 }
 
 // -----------------------------------------------------------------------------

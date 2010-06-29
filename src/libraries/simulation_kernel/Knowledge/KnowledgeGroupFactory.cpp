@@ -26,7 +26,7 @@ void save_construct_data( Archive& /*archive*/, const KnowledgeGroupFactory* /*f
 template< typename Archive >
 void load_construct_data( Archive& /*archive*/, KnowledgeGroupFactory* factory, const unsigned int /*version*/ )
 {
-    ::new( factory )KnowledgeGroupFactory(); 
+    ::new( factory )KnowledgeGroupFactory();
 }
 // LTO end
 
@@ -64,7 +64,7 @@ MIL_KnowledgeGroup& KnowledgeGroupFactory::Create( xml::xistream& xis, MIL_Army_
 // Created: SLG 2010-02-10
 // -----------------------------------------------------------------------------
 void KnowledgeGroupFactory::load( MIL_CheckPointInArchive& file, const unsigned int )
-{   
+{
     file >> boost::serialization::base_object < KnowledgeGroupFactory_ABC >( *this );
 }
 

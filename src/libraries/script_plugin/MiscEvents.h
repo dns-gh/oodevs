@@ -21,7 +21,7 @@ namespace script
         DECLARE_EVENT2( TickEnded, int, tick, unsigned int, duration );
         DECLARE_EVENT( TimeFlowed, float, delta );
         DECLARE_EVENT( PhaseChanged, std::string, phase );
-        
+
         DECLARE_EVENT2( ClientJoined, std::string, client, std::string, profile );
         DECLARE_EVENT( ClientLeft, std::string, client );
 

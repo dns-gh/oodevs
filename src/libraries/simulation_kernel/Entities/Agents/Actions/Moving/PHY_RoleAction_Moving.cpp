@@ -222,7 +222,7 @@ double PHY_RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& envi
 // Created: NLD 2004-09-23
 // -----------------------------------------------------------------------------
 double PHY_RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& environment, const MIL_Object_ABC& object ) const
-{    
+{
     if( !object().HasMobilityInfluence() )
         return std::numeric_limits< double >::max();
 
@@ -265,9 +265,9 @@ void PHY_RoleAction_Moving::SendEnvironmentType() const
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Moving::SendCurrentPath() const
-{  
+{
     client::UnitPathFind asnMsg;
-    asnMsg().set_oid( pion_.GetID() );   
+    asnMsg().set_oid( pion_.GetID() );
     if( !SerializeCurrentPath( *asnMsg().mutable_itineraire() ) )
         return;
 
@@ -311,7 +311,7 @@ const MT_Vector2D& PHY_RoleAction_Moving::GetPosition() const
     assert( pRoleLocation_ );
     return pRoleLocation_->GetPosition();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Moving::GetDirection
 // Created: NLD 2005-09-30
@@ -402,9 +402,9 @@ bool PHY_RoleAction_Moving::HasResources()
     std::auto_ptr< moving::MoveComputer_ABC > moveComputer = pion_.GetAlgorithms().moveComputerFactory_->CreateMoveComputer();
     pion_.Execute( *moveComputer );
 
-    if ( moveComputer->CanMoveOverride() )
+    if( moveComputer->CanMoveOverride() )
         return true;
-    
+
     std::auto_ptr< dotation::ConsumptionModeChangeRequest_ABC > request =
             pion_.GetAlgorithms().consumptionComputerFactory_->CreateConsumptionModeChangeRequest(PHY_ConsumptionType::moving_);
     pion_.Apply( &dotation::ConsumptionChangeRequestHandler_ABC::ChangeConsumptionMode, *request ); // automatic rollback
@@ -463,7 +463,7 @@ void PHY_RoleAction_Moving::NotifyEnvironmentChanged()
 {
     bEnvironmentHasChanged_ = true;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Moving::NotifyCurrentPathChanged
 // Created: NLD 2005-10-03

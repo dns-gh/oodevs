@@ -36,7 +36,7 @@ public:
         PHY_DotationNature::Initialize( xisDotationNature );
         xml::xistringstream xisDotations( "<dotations><dotation category='ammo' name='munition' id='1' nature='Solide' package-size='1' package-mass='1' package-volume='1'>"
             "<attritions><attrition destruction='0' protection='protection1' repairable-with-evacuation='0.1' repairable-without-evacuation='0.05'/></attritions>"
-            "<urbanModifiers><urbanModifier material-type='Brique' value='0.4' /></urbanModifiers>"        
+            "<urbanModifiers><urbanModifier material-type='Brique' value='0.4' /></urbanModifiers>"
             "</dotation></dotations>" );
         PHY_DotationType::Initialize( xisDotations );
         xml::xistringstream xisLauncher( "<launchers><launcher name='gun' indirect-fire='true'/></launchers>" );

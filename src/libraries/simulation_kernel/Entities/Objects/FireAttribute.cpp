@@ -48,7 +48,7 @@ FireAttribute::FireAttribute( xml::xistream& xis )
     if( !pClass_ )
         xis.error( "Unknown 'Fire class' '" + className + "' for fire object attribute" );
     heat_ = pClass_->GetDefaultHeat();
-    xis >> xml::optional() 
+    xis >> xml::optional()
         >> xml::attribute( "heat", heat_ );
 }
 
@@ -62,10 +62,10 @@ FireAttribute::FireAttribute( const Common::MsgMissionParameter_Value& attribute
     , width_    ( MIL_FireClass::GetWidth() )
     , length_   ( MIL_FireClass::GetLength() )
     , timeOfLastUpdate_ ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
-{        
+{
     pClass_ = MIL_FireClass::Find( attributes.list( 1 ).identifier() );
     if( !pClass_ )
-        throw std::runtime_error( "Unknown 'Fire class' for fire object attribute" );    
+        throw std::runtime_error( "Unknown 'Fire class' for fire object attribute" );
     heat_ = pClass_->GetDefaultHeat();
 //    asn.fire.heat
 }
@@ -125,7 +125,7 @@ void FireAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
     if( !pClass_ )
         throw std::runtime_error( "Unknown 'Fire class' '" + className + "' for fire object attribute" );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: FireAttribute::save
 // Created: JCR 2008-07-03
@@ -175,9 +175,9 @@ void FireAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
 // -----------------------------------------------------------------------------
 void FireAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
 {
-    if ( NeedUpdate() )
+    if( NeedUpdate() )
     {
-        SendFullState( asn );        
+        SendFullState( asn );
         Reset();
     }
 }
@@ -188,7 +188,7 @@ void FireAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
 // -----------------------------------------------------------------------------
 void FireAttribute::WriteODB( xml::xostream& xos ) const
 {
-    xos << xml::start( "fire" ) 
+    xos << xml::start( "fire" )
             << xml::attribute( "heat", heat_ )
             << xml::attribute( "class", pClass_->GetName() )
         << xml::end();

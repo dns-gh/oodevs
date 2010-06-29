@@ -14,10 +14,10 @@
 
 //-----------------------------------------------------------------------------
 // Name: DisconnectDialog constructor
-// Created:  NLD 2002-01-03 
+// Created:  NLD 2002-01-03
 //-----------------------------------------------------------------------------
 DisconnectDialog::DisconnectDialog( QWidget* pParent, Network& network )
-    : QDialog( pParent, 0, true, WStyle_Customize | WStyle_NormalBorder | WStyle_Title ) 
+    : QDialog( pParent, 0, true, WStyle_Customize | WStyle_NormalBorder | WStyle_Title )
     , network_( network )
 {
     setCaption( tr("Disconnect") );
@@ -32,7 +32,7 @@ DisconnectDialog::DisconnectDialog( QWidget* pParent, Network& network )
     pMainLayout->addWidget( pOKButton,     0, 0 );
     pMainLayout->addWidget( pCancelButton, 0, 1 );
     pOKButton->setDefault( TRUE );
-    
+
     connect( pCancelButton, SIGNAL( clicked() ), SLOT( Reject() ) );
     connect( pOKButton    , SIGNAL( clicked() ), SLOT( Validate() ) );
 }
@@ -40,7 +40,7 @@ DisconnectDialog::DisconnectDialog( QWidget* pParent, Network& network )
 
 //-----------------------------------------------------------------------------
 // Name: DisconnectDialog destructor
-// Created:  NLD 2002-01-03 
+// Created:  NLD 2002-01-03
 //-----------------------------------------------------------------------------
 DisconnectDialog::~DisconnectDialog()
 {
@@ -49,7 +49,7 @@ DisconnectDialog::~DisconnectDialog()
 
 //-----------------------------------------------------------------------------
 // Name: DisconnectDialog::Validate
-// Created:  NLD 2002-01-03 
+// Created:  NLD 2002-01-03
 //-----------------------------------------------------------------------------
 void DisconnectDialog::Validate()
 {
@@ -59,7 +59,7 @@ void DisconnectDialog::Validate()
 
 //-----------------------------------------------------------------------------
 // Name: DisconnectDialog::Validate
-// Created:  NLD 2002-01-03 
+// Created:  NLD 2002-01-03
 //-----------------------------------------------------------------------------
 void DisconnectDialog::Reject()
 {

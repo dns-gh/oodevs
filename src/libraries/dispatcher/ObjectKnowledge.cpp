@@ -44,7 +44,7 @@ ObjectKnowledge::ObjectKnowledge( const Model_ABC& model, const MsgsSimToClient:
     , knowledgeGroup_               ( 0 )
     , localisation_                 ( )
     , bPerceived_                   ( false )
-    , automatPerceptions_           ()    
+    , automatPerceptions_           ()
 {
     if( asnMsg.has_group() )
         knowledgeGroup_ = &model.KnowledgeGroups().Get( asnMsg.group() );
@@ -62,7 +62,7 @@ ObjectKnowledge::~ObjectKnowledge()
 
 
 #define CHECK_ASN_ATTRIBUTE_CREATION( ASN, CLASS ) \
-    if ( attributes.has_##ASN##()  ) \
+    if( attributes.has_##ASN##()  ) \
         AddAttribute( new CLASS( attributes ) )
 
 // -----------------------------------------------------------------------------
@@ -152,7 +152,7 @@ void ObjectKnowledge::Update( const MsgsSimToClient::MsgObjectKnowledgeCreation&
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
 void ObjectKnowledge::Update( const MsgsSimToClient::MsgObjectKnowledgeUpdate& asnMsg )
-{  
+{
     if( asnMsg.has_location()  )
     {
         localisation_.Update( asnMsg.location() );

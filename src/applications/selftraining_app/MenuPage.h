@@ -13,7 +13,7 @@
 #include "Page_ABC.h"
 #include <map>
 
-class MenuButton ; 
+class MenuButton ;
 
 // =============================================================================
 /** @class  MenuPage
@@ -34,7 +34,7 @@ public:
 
 
 protected:
-    
+
     //! @name Operations
     //@{
     void AddLink( const QString& title, Page_ABC& page, const QString& subtitle="", const char* slot = 0 );
@@ -42,10 +42,10 @@ protected:
 
 protected slots:
 
-    //! @name 
+    //! @name
     //@{
-    void OnSelectedItem( MenuButton* ) ; 
-    void OnUnSelectedItem( MenuButton* ) ; 
+    void OnSelectedItem( MenuButton* ) ;
+    void OnUnSelectedItem( MenuButton* ) ;
     //@}
 
 private:
@@ -58,10 +58,10 @@ private:
 private:
     //! @name Member data
     //@{
-    QLabel* title_ ; 
+    QLabel* title_ ;
     QHBox* container_;
-    QLabel* subTitle_ ; 
-    std::map< QWidget*, QString > subTitles_ ; 
+    QLabel* subTitle_ ;
+    std::map< QWidget*, QString > subTitles_ ;
     //@}
 };
 

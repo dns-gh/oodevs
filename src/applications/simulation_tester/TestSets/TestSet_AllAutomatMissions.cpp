@@ -44,7 +44,7 @@ TestSet_AllAutomatMissions::~TestSet_AllAutomatMissions()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: TestSet_AllAutomatMissions::Load
 // Created: SBO 2005-08-17

@@ -13,7 +13,7 @@
 #define __SIM_App_h_
 
 #include "Sim.h"
-#include "WinArguments.h" 
+#include "WinArguments.h"
 #include "simulation_kernel/tools/MIL_Config.h"
 #pragma warning( push )
 #pragma warning( disable : 4512 4244 )
@@ -31,18 +31,18 @@ class SIM_App : private boost::noncopyable
 {
 
 public:
-     
+
     class QuitException : public std::exception
     {
 
-    } ; 
+    } ;
 
-    //! @name Constructors / Destructors 
+    //! @name Constructors / Destructors
     //@{
-             SIM_App( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdShow, int maxConnections ); //!< win32 
+             SIM_App( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdShow, int maxConnections ); //!< win32
     virtual ~SIM_App();
     //@}
-    
+
     int Execute();
 
     static bool CrashWithCoreDump();
@@ -52,8 +52,8 @@ private:
     //@{
     void Initialize        ();
     void Run               ();
-    void Stop              (); 
-    bool Tic               (); 
+    void Stop              ();
+    bool Tic               ();
     void Cleanup           ();
     int  Test              ();
     void CheckpointTest    ();
@@ -61,13 +61,13 @@ private:
     std::string Wrap( const std::string& content, const std::string& prefix ) const;
 
     //@}
-    
+
 private:
     //! @name Member data
     //@{
     MIL_Config        startupConfig_;
-    
-    WinArguments    winArguments_ ; 
+
+    WinArguments    winArguments_ ;
 
     SIM_NetworkLogger*                pNetworkLogger_;    //<! Error dispatchers
     MT_FileLogger*                  logger_;
@@ -78,24 +78,24 @@ private:
     int                                maxConnections_;
     //@}
 
-    //! @name UI members 
+    //! @name UI members
     //@{
     HWND                           hWnd_ ;
-    HINSTANCE                       hInstance_ ; 
+    HINSTANCE                       hInstance_ ;
     NOTIFYICONDATA                   TrayIcon_;
-    unsigned int                   nIconIndex_; 
-    std::auto_ptr< boost::thread > guiThread_ ; 
-    std::auto_ptr< boost::thread > dispatcherThread_ ; 
+    unsigned int                   nIconIndex_;
+    std::auto_ptr< boost::thread > guiThread_ ;
+    std::auto_ptr< boost::thread > dispatcherThread_ ;
     //@}
 
 
-    void RunGUI(); 
-    void RunDispatcher(); 
-    void AnimateIcon() ; 
-    void StartIconAnimation(); 
-    void StopIconAnimation(); 
+    void RunGUI();
+    void RunDispatcher();
+    void AnimateIcon() ;
+    void StartIconAnimation();
+    void StopIconAnimation();
 
-    static LRESULT CALLBACK    MainWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam); 
+    static LRESULT CALLBACK    MainWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 };
 

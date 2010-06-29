@@ -84,11 +84,11 @@ namespace serialization {
 // Name: template< typename Archive > void MIL_Entity_ABC::serialize
 // Created: RDS 2008-05-09
 // -----------------------------------------------------------------------------
-template< typename Archive > 
+template< typename Archive >
 void MIL_Entity_ABC::serialize( Archive& archive, const unsigned int )
 {
     archive & boost::serialization::base_object< tools::RoleContainer >( *this )
-        & const_cast< std::string& >( strName_ ) ; 
+        & const_cast< std::string& >( strName_ ) ;
 }
 
 #endif // __MIL_Entity_ABC_h_

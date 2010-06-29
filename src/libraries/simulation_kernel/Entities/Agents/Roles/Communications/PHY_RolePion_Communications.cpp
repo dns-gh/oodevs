@@ -88,7 +88,7 @@ PHY_RolePion_Communications::PHY_RolePion_Communications( MIL_Agent_ABC& entity,
 {
     // NOTHING
 }
- 
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Communications destructor
 // Created: NLD 2004-09-07
@@ -104,7 +104,7 @@ PHY_RolePion_Communications::~PHY_RolePion_Communications()
 namespace boost
 {
     namespace serialization
-    {        
+    {
         template< typename Archive >
         void save( Archive& file, const PHY_RolePion_Communications::T_JammerSet& set, const unsigned int )
         {
@@ -113,7 +113,7 @@ namespace boost
             for ( PHY_RolePion_Communications::CIT_JammerSet it = set.begin(); it != set.end(); ++it )
                 file << *it;
         }
-        
+
         template< typename Archive >
         void load( Archive& file, PHY_RolePion_Communications::T_JammerSet& set, const unsigned int )
         {
@@ -159,7 +159,7 @@ void PHY_RolePion_Communications::serialize( Archive& file, const unsigned int )
 void PHY_RolePion_Communications::Jam( const MIL_Object_ABC& jammer )
 {
     // UAC ...
-    if( bIsAutonomous_ ) 
+    if( bIsAutonomous_ )
         return;
 
     // $$$$ >>>> MODIF FDS 2010-03-17
@@ -219,7 +219,7 @@ void PHY_RolePion_Communications::Unjam( const MIL_Object_ABC& jammer )
 void PHY_RolePion_Communications::SendFullState( client::UnitAttributes& msg ) const
 {
     msg().mutable_communications()->set_jammed( !jammers_.empty() );
-    
+
     if( !jammers_.empty() || bBlackoutEmmittedActivated_ )
         msg().mutable_communications()->set_knowledge_group( GetKnowledgeGroup().GetId() );
     else
@@ -288,7 +288,7 @@ void PHY_RolePion_Communications::ActivateBlackout()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Communications::ActivatePartialBlackout()
 {
-   if ( bBlackoutEmmittedActivated_  && !bBlackoutReceivedActivated_ )
+   if( bBlackoutEmmittedActivated_  && !bBlackoutReceivedActivated_ )
        return;
     CopyKnowledgeGroupPartial();
     bBlackoutEmmittedActivated_ = true;
@@ -303,7 +303,7 @@ void PHY_RolePion_Communications::ActivatePartialBlackout()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Communications::DeactivateBlackout()
 {
-    if ( !bBlackoutEmmittedActivated_  && !bBlackoutReceivedActivated_ )
+    if( !bBlackoutEmmittedActivated_  && !bBlackoutReceivedActivated_ )
         return;
     bBlackoutEmmittedActivated_ = false;
     bBlackoutReceivedActivated_ = false;
@@ -318,8 +318,8 @@ void PHY_RolePion_Communications::DeactivateBlackout()
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Communications::GetKnowledgeGroup
-// Returns the jamming knowledge group if it is defined, the caller must check with 
-// CanCommunicate to check if the jamming knowledge group is defined. 
+// Returns the jamming knowledge group if it is defined, the caller must check with
+// CanCommunicate to check if the jamming knowledge group is defined.
 // Throws MT_ScipioException if the jamming knowledge group is undefined
 // Created: FDS 2010-03-15
 // -----------------------------------------------------------------------------
@@ -358,7 +358,7 @@ void PHY_RolePion_Communications::Execute( firing::WeaponReloadingComputer_ABC& 
 void PHY_RolePion_Communications::UpdateKnowledgesFromObjectPerception( const DEC_Knowledge_ObjectPerception& perception )
 {
     boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = pJammingKnowledgeGroup_->GetKnowledge().ResolveKnowledgeObject( perception.GetObjectPerceived() );
-    
+
     if( !pKnowledge || !pKnowledge->IsValid() )
         pKnowledge = pJammingKnowledgeGroup_->CreateKnowledgeObject( entity_.GetArmy(), perception.GetObjectPerceived() );
 

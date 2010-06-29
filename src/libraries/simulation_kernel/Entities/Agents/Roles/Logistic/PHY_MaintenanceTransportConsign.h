@@ -36,14 +36,14 @@ public:
     //! @name Operations
     //@{
     virtual void Cancel();
-    virtual bool Update(); 
+    virtual bool Update();
     //@}
 
 private:
-    //! @name 
+    //! @name
     //@{
     bool DoWaitingForCarrier               ();
-    bool DoSearchForUpperLevel             ();  
+    bool DoSearchForUpperLevel             ();
 
     void EnterStateWaitingForCarrier       ();
     void EnterStateGoingFrom               ();

@@ -59,7 +59,7 @@ bool ConnectionHandler::ConnectToServer( const std::string& strHostName, unsigne
         assert( false );
         return false;
     }
-    
+
     NEK_AddressINET addr( strHostName.c_str(), ( uint16 )nPort );
 
     connectionService_.JoinHost( addr );
@@ -98,9 +98,9 @@ void ConnectionHandler::OnConnected( DIN_Link& link )
     networkManager_.BindLink( link );
 
     // bind message manager
-	networkManager_.GetMessageMgr().Enable( link );
-    
-	MOS_ASN_MsgCtrlClientAnnouncement asnMsg;
+    networkManager_.GetMessageMgr().Enable( link );
+
+    MOS_ASN_MsgCtrlClientAnnouncement asnMsg;
     asnMsg.Send();
 }
 

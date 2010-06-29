@@ -48,8 +48,8 @@ public:
 
 private:
     PHY_RoleAction_Objects&                         role_;
-    boost::shared_ptr< DEC_Knowledge_Object >       pObject_;  
-    boost::shared_ptr< DEC_Knowledge_Population >   pPeople_; 
+    boost::shared_ptr< DEC_Knowledge_Object >       pObject_;
+    boost::shared_ptr< DEC_Knowledge_Population >   pPeople_;
     uint                                            quantity_;
 };
 

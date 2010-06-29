@@ -63,7 +63,7 @@ bool AgentKnowledgePositions::IsAt( const geometry::Point2f& pos, float precisio
                                         position_.Y() + sizeY * adaptiveFactor + precision);
     return bBox.IsInside( pos );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledgePositions::IsIn
 // Created: AGE 2006-05-17

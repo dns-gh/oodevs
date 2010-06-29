@@ -169,11 +169,11 @@ void ADN_MainWindow::Build()
     pProjectNewAction->addTo( pProjectMenu_ );
     pProjectLoadAction->addTo( pProjectMenu_ );
     rIdClose_ = pProjectMenu_->insertItem( tr("&Close"),  this, SLOT(CloseProject()) );
-    pProjectMenu_->insertSeparator(); 
+    pProjectMenu_->insertSeparator();
     pProjectSaveAction->addTo( pProjectMenu_ );
     rIdSaveAs_ = pProjectMenu_->insertItem( tr("Save &As"),  this, SLOT(SaveAsProject()) );
                  pProjectMenu_->insertItem( tr("&Export HTML"),  this, SLOT(ExportHtml()) );
-    pProjectMenu_->insertSeparator(); 
+    pProjectMenu_->insertSeparator();
     pProjectMenu_->insertItem( tr("E&xit"),  this, SLOT(close()) );
 
     // Coherance tables menu
@@ -279,12 +279,12 @@ void ADN_MainWindow::SaveProject()
     }
     catch( ADN_Exception_ABC& exception )
     {
-        QApplication::restoreOverrideCursor();	// restore original cursor
+        QApplication::restoreOverrideCursor();    // restore original cursor
         QMessageBox::critical( this, exception.GetExceptionTitle().c_str(), exception.GetExceptionMessage().c_str() );
         return;
     }
 
-    QApplication::restoreOverrideCursor();	// restore original cursor
+    QApplication::restoreOverrideCursor();    // restore original cursor
 
     if( ! bNoReadOnlyFiles )
         return; // we were not able to save all the datas
@@ -302,24 +302,24 @@ void ADN_MainWindow::SaveAsProject()
     QString strFileName = QFileDialog::getSaveFileName( generalConfig_->GetModelsDir().c_str(), tr( "Physical model file (physical.xml)" ) , this, "", tr( "Save project as" ) );
     if( strFileName.isEmpty() )
         return;
-    
+
     QApplication::setOverrideCursor( waitCursor ); // this might take time
 
     try
     {
         std::string res( strFileName );
         std::replace( res.begin(), res.end(), '\\', '/' );
-        workspace_.SaveAs( res ); 
+        workspace_.SaveAs( res );
     }
     catch( ADN_Exception_ABC& exception )
     {
-        QApplication::restoreOverrideCursor();	// restore original cursor
+        QApplication::restoreOverrideCursor();    // restore original cursor
         QMessageBox::critical( this, exception.GetExceptionTitle().c_str(), exception.GetExceptionMessage().c_str() );
         return;
     }
 
-    QApplication::restoreOverrideCursor();	// restore original cursor
-    
+    QApplication::restoreOverrideCursor();    // restore original cursor
+
     QString strCaption = tr( "Sword Adaptation Tool - " ) + strFileName;
     setCaption( strCaption );
 }
@@ -368,12 +368,12 @@ void ADN_MainWindow::OpenProject()
     }
     catch( ADN_Exception_ABC& exception )
     {
-        QApplication::restoreOverrideCursor();	// restore original cursor
+        QApplication::restoreOverrideCursor();    // restore original cursor
         QMessageBox::critical( this, exception.GetExceptionTitle().c_str(), exception.GetExceptionMessage().c_str() );
     }
     catch( std::exception& e )
     {
-        QApplication::restoreOverrideCursor();	// restore original cursor
+        QApplication::restoreOverrideCursor();    // restore original cursor
         workspace_.ResetProgressIndicator();
         QMessageBox::critical( 0, "Error", e.what() );
         CloseProject();
@@ -389,7 +389,7 @@ void ADN_MainWindow::OpenProject( const std::string& szFilename, const bool isNo
 
     if (isNormalMode){
         workspace_.SetOpenMode( eOpenMode_Normal );
-        emit OpenModeToggled();    
+        emit OpenModeToggled();
     }
     else if( ! SelectOpenMode() )
         return;
@@ -410,7 +410,7 @@ void ADN_MainWindow::OpenProject( const std::string& szFilename, const bool isNo
     }
     else
         workspace_.Load( szFilename );
-    QApplication::restoreOverrideCursor();	// restore original cursor
+    QApplication::restoreOverrideCursor();    // restore original cursor
     setCaption( tr( "Sword Adaptation Tool - %1" ).arg( szFilename.c_str() ) );
     SetMenuEnabled( true );
     pTab_->show();
@@ -473,7 +473,7 @@ void ADN_MainWindow::TestData()
         }
 //        else
 //            strCommandLine += " -conffile \"" + workspace_.GetProject().GetFileInfos().GetFileNameFull() + "\"";
-        
+
         static ADN_RunProcessDialog* pDialog = new ADN_RunProcessDialog( this, tr( "Running data check" ) );
         pDialog->RunCommand( strCommandLine );
     }
@@ -504,7 +504,7 @@ void ADN_MainWindow::About()
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_MainWindow::closeEvent 
+// Name: ADN_MainWindow::closeEvent
 // Created: JDY 03-09-03
 //-----------------------------------------------------------------------------
 void ADN_MainWindow::closeEvent( QCloseEvent * e )
@@ -568,7 +568,7 @@ bool ADN_MainWindow::SelectOpenMode()
 
         if( strAdminPassword_ == strGivenPassword.ascii() )
             break; // password ok
-        
+
         // wrong password, inform the user and let him try again
         QMessageBox::critical( this,
                                tr( "Invalid password"),

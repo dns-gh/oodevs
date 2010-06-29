@@ -64,12 +64,12 @@ int WorkingSession::GetExercise() const
 void WorkingSession::LoadExercise( const dispatcher::Config& config, QuerySessionData& database )
 {
     bfs::path p( config.GetExerciseFile(), bfs::native );
-    
+
     exercise_.first = p.parent_path().filename();
-    if ( ! exercise_.first.empty() )
+    if( ! exercise_.first.empty() )
     {
         exercise_.second = database.FindExercise( exercise_.first );
-        if( exercise_.second < 0 ) 
+        if( exercise_.second < 0 )
             exercise_.second = database.CreateExercise( exercise_.first );
     }
     else

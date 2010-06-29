@@ -27,7 +27,7 @@ FirePrototype_ABC::FirePrototype_ABC( QWidget* parent, const tools::Resolver_ABC
     fireClass_ = new ValuedComboBox< const kernel::FireClass* >( this );
     FillTypes();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: FirePrototype_ABC destructor
 // Created: JCR 2008-06-30

@@ -245,7 +245,7 @@ const PHY_DotationCategory* PHY_DotationGroup::GetIlluminationDotations( float r
 // -----------------------------------------------------------------------------
 float PHY_DotationGroup::GetIlluminatingRange( ) const
 {
-	float rangeMax = 0.0;
+    float rangeMax = 0.0;
     for( T_DotationMap::const_iterator it = dotations_.begin(); it != dotations_.end(); it++ )
     {
         if( it->first->GetIlluminatingRange( ) > rangeMax )

@@ -29,7 +29,7 @@ IDManager::IDManager( unsigned int nMOSClassID, unsigned int nStartInstanceID )
     : nMOSClassID_     ( nMOSClassID )
     , nStartInstanceID_( nStartInstanceID )
 {
-    
+
 }
 
 
@@ -39,7 +39,7 @@ IDManager::IDManager( unsigned int nMOSClassID, unsigned int nStartInstanceID )
 //-----------------------------------------------------------------------------
 IDManager::~IDManager()
 {
-    
+
 }
 
 //=============================================================================
@@ -84,5 +84,5 @@ void IDManager::ReleaseIdentifier( unsigned int nID )
 
     nID -= nStartInstanceID_;
 
-    idManager_.ReleaseIdentifier( nID );   
+    idManager_.ReleaseIdentifier( nID );
 }

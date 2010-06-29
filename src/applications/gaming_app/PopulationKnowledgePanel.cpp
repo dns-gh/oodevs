@@ -148,7 +148,7 @@ void PopulationKnowledgePanel::NotifyUpdated( const PopulationKnowledges& elemen
     if( ! IsVisible() || selected_ != &element )
         return;
 
-    knowledgeList_->DeleteTail( 
+    knowledgeList_->DeleteTail(
         knowledgeList_->DisplayList( element.CreateIterator() )
         );
     ValuedListItem* item = FindItem( subSelected_, knowledgeList_->firstChild() );
@@ -166,7 +166,7 @@ void PopulationKnowledgePanel::Display( const PopulationKnowledge_ABC& knowledge
 {
     item->SetValue( &knowledge );
     knowledge.DisplayInList( displayer );
-    const PopulationKnowledge& k = dynamic_cast< const PopulationKnowledge& >( knowledge );  // $$$$ AGE 2008-06-19: 
+    const PopulationKnowledge& k = dynamic_cast< const PopulationKnowledge& >( knowledge );  // $$$$ AGE 2008-06-19:
     ValuedListItem* subItem = knowledgeList_->DisplayList( k.Resolver< PopulationConcentrationKnowledge >::CreateIterator(), item );
     subItem = knowledgeList_->DisplayList( k.Resolver< PopulationFlowKnowledge >::CreateIterator(), item, subItem );
     knowledgeList_->DeleteTail( subItem );

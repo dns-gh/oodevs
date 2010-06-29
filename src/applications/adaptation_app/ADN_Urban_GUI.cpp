@@ -65,7 +65,7 @@ void ADN_Urban_GUI::Build()
     assert( pMainWidget_ == 0 );
 
     ADN_GuiBuilder builder;
-    ADN_EditLine_ABC* pEdit = 0;  
+    ADN_EditLine_ABC* pEdit = 0;
 
     // Create the main widget.
     pMainWidget_ = new QWidget( 0, "Urban main widget" );
@@ -81,13 +81,13 @@ void ADN_Urban_GUI::Build()
     ///////////////////
     // Materials
     QGroupBox* pGroupMaterials = new QVGroupBox( tr( "Materials" ), pBox );
-    QHBox* pGroupMaterial = new QHBox(pGroupMaterials);  
+    QHBox* pGroupMaterial = new QHBox(pGroupMaterials);
 
     // materials list
     T_ConnectorVector    vMaterialInfosConnectors(eNbrUrbanGuiElements,(ADN_Connector_ABC*)0 );
     pListMaterial_= new ADN_ListView_Urban_Type( pGroupMaterial, "Material" );
     static_cast<ADN_Connector_Vector_ABC*>( &pListMaterial_->GetConnector() )->Connect( &data_.GetMaterialsInfos() );
-    
+
     // material
     pGroupMaterials = new QVGroupBox( tr( "Material" ),pGroupMaterials);
     pGroupMaterials->setInsideMargin(20);
@@ -98,7 +98,7 @@ void ADN_Urban_GUI::Build()
     ///////////////////
     // Facades
     QGroupBox* pGroupFacades = new QVGroupBox( tr( "Facades" ), pBox );
-    QHBox* pGroupFacade = new QHBox(pGroupFacades);  
+    QHBox* pGroupFacade = new QHBox(pGroupFacades);
 
     // facades list
     T_ConnectorVector    vFacadeInfosConnectors(eNbrUrbanGuiElements,(ADN_Connector_ABC*)0 );
@@ -115,7 +115,7 @@ void ADN_Urban_GUI::Build()
     ///////////////////
     // RoofShapes
     QGroupBox* pGroupRoofShapes = new QVGroupBox( tr( "RoofShapes" ), pBox );
-    QHBox* pGroupRoofShape = new QHBox(pGroupRoofShapes);  
+    QHBox* pGroupRoofShape = new QHBox(pGroupRoofShapes);
 
     // roofshapes list
     T_ConnectorVector    vRoofShapeInfosConnectors(eNbrUrbanGuiElements,(ADN_Connector_ABC*)0 );

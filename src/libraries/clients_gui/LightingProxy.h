@@ -26,7 +26,7 @@ namespace gui
 // =============================================================================
 class LightingProxy : public QObject
                     , public Lighting_ABC
-                    
+
 {
 
 public:
@@ -51,7 +51,7 @@ public:
     void SetDiffuse       ( float r, float g, float b );
     //@}
 
-    //! @name Time lighting 
+    //! @name Time lighting
     //@{
     void SetLatitude( float latitude );
     void SetTime    ( const QDateTime& time );

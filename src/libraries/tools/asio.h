@@ -25,8 +25,8 @@ namespace tools
 inline
 std::string ToString( const boost::asio::ip::tcp::endpoint& endpoint )
 {
-    return endpoint.address().to_string() 
-        + ":" +  boost::lexical_cast< std::string >( endpoint.port() ); 
+    return endpoint.address().to_string()
+        + ":" +  boost::lexical_cast< std::string >( endpoint.port() );
 }
 
 }

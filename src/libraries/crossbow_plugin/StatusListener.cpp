@@ -29,7 +29,7 @@ StatusListener::StatusListener( Database_ABC& database, dispatcher::SimulationPu
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: StatusListener destructor
 // Created: JCR 2007-06-13

@@ -38,7 +38,7 @@ class ObjectsModel : public tools::Resolver< kernel::Object_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ObjectsModel( ObjectFactory_ABC& objectFactory ); 
+    explicit ObjectsModel( ObjectFactory_ABC& objectFactory );
     virtual ~ObjectsModel();
     //@}
 

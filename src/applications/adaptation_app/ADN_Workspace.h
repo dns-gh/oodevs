@@ -87,11 +87,11 @@ public:
     void Load( const std::string& filename );
     bool Save();
     bool SaveAs( const std::string& filename );
-    
+
     void ExportHtml( const std::string& strPath );
 
 
-    ADN_Project_Data& GetProject(); // $$$$ NLD 2007-01-15: 
+    ADN_Project_Data& GetProject(); // $$$$ NLD 2007-01-15:
 
     ADN_WorkspaceElement< ADN_NBC_Datas, ADN_GUI_ABC >& GetNbc();
     ADN_WorkspaceElement< ADN_Launchers_Data, ADN_Launchers_GUI >& GetLaunchers();
@@ -121,7 +121,7 @@ public:
     QtUndoStack&                GetUndoStack();
 
     void AddCommand( QtCommand* pNewCommand );
-    
+
     E_OpenMode GetOpenMode() const;
     void SetOpenMode( E_OpenMode nNewMode );
 
@@ -129,7 +129,7 @@ private:
     explicit ADN_Workspace();
     virtual ~ADN_Workspace();
 
-private: 
+private:
     enum E_WorkspaceElements
     {
         eCategories,
@@ -155,7 +155,7 @@ private:
         eSupply,
         eHealth,
         ePopulation,
-        eReports,        
+        eReports,
         eNbrWorkspaceElements
     };
 

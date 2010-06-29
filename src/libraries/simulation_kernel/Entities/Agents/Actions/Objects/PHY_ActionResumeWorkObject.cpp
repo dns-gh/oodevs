@@ -50,7 +50,7 @@ void PHY_ActionResumeWorkObject::StopAction()
 // Mined: NLD 2004-08-18
 // -----------------------------------------------------------------------------
 void PHY_ActionResumeWorkObject::Execute()
-{   
+{
     int nReturn = role_.ResumeWork( pKnowledge_ );
     Callback( nReturn );
 }

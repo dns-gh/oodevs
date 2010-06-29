@@ -33,7 +33,7 @@ BOOST_AUTO_TEST_CASE( Team_CanBeCreated )
         message.set_oid( 1 );
         message.set_nom( "test" );
         message.set_type( Common::friend_diplo );
-        
+
         // creation
         std::auto_ptr< dispatcher::Team_ABC > result( new dispatcher::Side( model, message ) );
 
@@ -68,7 +68,7 @@ BOOST_AUTO_TEST_CASE( Team_DiplomacyCanBeChanged )
             message.set_oid( 1 );
             message.set_nom( "test" );
             message.set_type( Common::friend_diplo );
-        
+
             // creation
             result.reset( new dispatcher::Side( model, message ) );
             sides.Register( result->GetId(), *result );

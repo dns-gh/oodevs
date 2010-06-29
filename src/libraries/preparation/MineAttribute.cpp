@@ -24,7 +24,7 @@ using namespace xml;
 MineAttribute::MineAttribute( kernel::PropertiesDictionary& dico )
     : rValorizationPercentage_ ( 0. )
     , nDotationValorization_   ( 0 )
-    , valorization_            ( 0 )   
+    , valorization_            ( 0 )
     , density_                 ( 1, Units::minesPerMeter )
 {
     CreateDictionary( dico );
@@ -88,7 +88,7 @@ void MineAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void MineAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << start( "mine" )            
+    xos << start( "mine" )
             << content( "density", density_.value_ )
         << end();
 }
@@ -107,6 +107,6 @@ void MineAttribute::SetDensity( float density )
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
 void MineAttribute::CreateDictionary( kernel::PropertiesDictionary& dico )
-{    
+{
     dico.Register( *this, tools::translate( "MineAttribute", "Info/Mine parameters/Density" ), density_ );
 }

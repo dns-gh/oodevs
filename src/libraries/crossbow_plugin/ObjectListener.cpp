@@ -80,7 +80,7 @@ void ObjectListener::Listen()
         SendCreation( *row );
         row = table_->GetNextRow();
     }
-    if ( bHasUpdates )
+    if( bHasUpdates )
         table_->DeleteRows( query.str() );
 }
 

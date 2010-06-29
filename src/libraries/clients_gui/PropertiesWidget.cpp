@@ -64,7 +64,7 @@ PropertiesWidget::~PropertiesWidget()
     controller_.Unregister( *this );
 }
 
-namespace 
+namespace
 {
     class MyButton : public QToolButton
     {

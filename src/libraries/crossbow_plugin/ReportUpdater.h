@@ -21,9 +21,9 @@ namespace MsgsSimToClient
     class MsgReport;
 }
 
-namespace plugins 
+namespace plugins
 {
-namespace crossbow 
+namespace crossbow
 {
     class Database_ABC;
     class Workspace_ABC;
@@ -46,7 +46,7 @@ public:
     virtual ~ReportUpdater();
     //@}
 
-    //! @name 
+    //! @name
     //@{
     void Clean();
     //@}
@@ -65,14 +65,14 @@ private:
 
 private:
 
-    //! @name 
+    //! @name
     //@{
-    std::auto_ptr< ReportFactory >  reportFactory_; 
+    std::auto_ptr< ReportFactory >  reportFactory_;
     //@}
 
     //! @name Member data
     //@{
-    Database_ABC&           database_;    
+    Database_ABC&           database_;
     const WorkingSession&   session_;
     //@}
 };

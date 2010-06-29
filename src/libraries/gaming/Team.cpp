@@ -23,7 +23,7 @@ namespace
             case Common::friend_diplo : return kernel::Karma::friend_;
             case Common::enemy_diplo  : return kernel::Karma::enemy_;
             case Common::neutral_diplo: return kernel::Karma::neutral_;
-            case Common::unknown_diplo: 
+            case Common::unknown_diplo:
             default: return kernel::Karma::unknown_;
         }
     }

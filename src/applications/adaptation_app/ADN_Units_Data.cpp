@@ -664,7 +664,7 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
             >> xml::list( "posture", *this, &ADN_Units_Data::UnitInfos::ReadPosture )
           >> xml::end();
 
-    input >> xml::optional() 
+    input >> xml::optional()
             >> xml::start( "setup" )
                 >> xml::attribute( "installation-time", installationDelay_ )
                 >> xml::attribute( "uninstallation-time", uninstallationDelay_ )
@@ -714,11 +714,11 @@ void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output )
     output << xml::end();
 
     output << xml::start( "crew-ranks" )
-            << xml::start( "crew-rank" ) 
+            << xml::start( "crew-rank" )
              << xml::attribute( "type", "Officier" )
              << xml::attribute( "count", nNbOfficer_ )
             << xml::end()
-            << xml::start( "crew-rank" ) 
+            << xml::start( "crew-rank" )
              << xml::attribute( "type", "SousOfficier" )
              << xml::attribute( "count", nNbNCOfficer_ )
             << xml::end()
@@ -745,7 +745,7 @@ void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output )
                 << xml::attribute( "uninstallation-time", uninstallationDelay_ )
                << xml::end();
 
-    output << xml::start( "nbc" ) 
+    output << xml::start( "nbc" )
             << xml::attribute(  "decontamination-delay", decontaminationDelay_ )
            << xml::end();
 

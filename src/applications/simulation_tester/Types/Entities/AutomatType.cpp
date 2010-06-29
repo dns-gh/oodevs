@@ -30,7 +30,7 @@ using namespace TEST;
 AutomatType::AutomatType( const TypeManager& typeManager, const std::string& strName, XmlInputArchive& archive )
     : strName_ ( strName )
 {
-    try   
+    try
     {
         std::string strValue;
 

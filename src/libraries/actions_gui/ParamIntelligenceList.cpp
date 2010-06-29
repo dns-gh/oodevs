@@ -47,7 +47,7 @@ void ParamIntelligenceList::CommitTo( actions::ParameterContainer_ABC& action ) 
 {
     std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::IntelligenceList( parameter_ ) );
     CommitChildrenTo( *param );
-    action.AddParameter( *param.release() );    
+    action.AddParameter( *param.release() );
 }
 
 // -----------------------------------------------------------------------------

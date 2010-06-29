@@ -29,7 +29,7 @@ class ADN_CT_Units_Postures
 {
 public:
 
-    ADN_CT_Units_Postures(ADN_Units_Postures_GUI& tab) 
+    ADN_CT_Units_Postures(ADN_Units_Postures_GUI& tab)
     : ADN_Connector_Table_ABC(tab,false)
     {}
 
@@ -54,7 +54,7 @@ public:
         else
             pItemDoubleTimeToActivate->GetConnector().Connect( &pInfo->timeToActivate_ );
     }
-    
+
 private:
     ADN_CT_Units_Postures& operator=( const ADN_CT_Units_Postures& );
 };
@@ -84,10 +84,10 @@ ADN_Units_Postures_GUI::ADN_Units_Postures_GUI( QWidget* pParent )
     setNumRows( 0 );
     setColumnStretchable( 0, true );
     setColumnStretchable( 1, true );
-    
+
     horizontalHeader()->setLabel(0, tr( "Stance"));
     horizontalHeader()->setLabel(1, tr( "Time to activate"));
-    
+
     // Create the connector.
     pConnector_ = new ADN_CT_Units_Postures(*this);
 }

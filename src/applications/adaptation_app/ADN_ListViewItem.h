@@ -44,7 +44,7 @@ public:
 protected:
 
     virtual void okRename ( int col );
-    
+
 private:
 
     void*                       pData_;

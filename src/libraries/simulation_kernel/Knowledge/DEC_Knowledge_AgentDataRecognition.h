@@ -43,14 +43,14 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
     //! @name Operations
     //@{
-    void Prepare    (); 
+    void Prepare    ();
     void Update     ( const DEC_Knowledge_AgentPerceptionDataRecognition& data );
     void Update     ( const DEC_Knowledge_AgentDataRecognition&           data );
     void Extrapolate( const MIL_Agent_ABC& agentKnown );

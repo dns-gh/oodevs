@@ -41,7 +41,7 @@ InteractWithEnemyCapacity::~InteractWithEnemyCapacity()
 {
     // NOTHING
 }
-   
+
 // -----------------------------------------------------------------------------
 // Name: InteractWithEnemyCapacity::CanInteractWith
 // Created: LDC 2009-03-06

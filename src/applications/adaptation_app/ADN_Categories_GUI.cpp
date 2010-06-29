@@ -69,7 +69,7 @@ void ADN_Categories_GUI::Build()
     assert( pMainWidget_ == 0 );
 
     ADN_GuiBuilder builder;
-    ADN_EditLine_ABC* pEdit = 0;  
+    ADN_EditLine_ABC* pEdit = 0;
 
     // Create the main widget.
     pMainWidget_ = new QWidget( 0, "categories main widget" );
@@ -84,7 +84,7 @@ void ADN_Categories_GUI::Build()
     // Armors
     QGroupBox* pArmorGroup = new QVGroupBox( tr( "Armor classes" ), pMainWidget_ );
 
-    QHBox* pArmorListViewGroup = new QHBox( pArmorGroup );      
+    QHBox* pArmorListViewGroup = new QHBox( pArmorGroup );
 
     // Armors listview
     T_ConnectorVector vArmorInfosConnectors( eNbrArmorGuiElements, (ADN_Connector_ABC*)0 );
@@ -117,8 +117,8 @@ void ADN_Categories_GUI::Build()
     ///////////////////
     // Sizes
     QGroupBox* pGroup = new QVGroupBox( tr( "Sizes" ), pBox );
-    QHBox* pGroupSize = new QHBox(pGroup);  
-    
+    QHBox* pGroupSize = new QHBox(pGroup);
+
     // sizes list
     T_ConnectorVector    vSizeInfosConnectors(eNbrSizeGuiElements,(ADN_Connector_ABC*)0 );
     pListSize_=new ADN_ListView_Categories_Size(pGroupSize);
@@ -136,12 +136,12 @@ void ADN_Categories_GUI::Build()
     // Dotation Natures
     QGroupBox* pNatureGroup = new QVGroupBox( tr( "Resource natures" ), pBox );
     QHBox*     pNatureHBox  = new QHBox( pNatureGroup );
-    
+
     // dotation natures list
     T_ConnectorVector    vDotationNatureInfosConnectors( eNbrDotationNatureGuiElements, (ADN_Connector_ABC*)0 );
     pListDotationNature_ = new ADN_ListView_Categories_DotationNature( pNatureHBox );
     static_cast<ADN_Connector_Vector_ABC*>( &pListDotationNature_->GetConnector() )->Connect( &data_.GetDotationNaturesInfos() );
-	//QWhatsThis::add( pListDotationNature_, "Les différentes nature de dotations existantes dans la simulation." );
+    //QWhatsThis::add( pListDotationNature_, "Les différentes nature de dotations existantes dans la simulation." );
 
     // size
     pNatureGroup = new QVGroupBox( tr( "Nature" ), pNatureGroup );

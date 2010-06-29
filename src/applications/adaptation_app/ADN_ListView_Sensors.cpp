@@ -64,7 +64,7 @@ void ADN_ListView_Sensors::ConnectItem( bool bConnect )
         return;
 
     SensorInfos *pInfos = (SensorInfos*)pCurData_;
-    ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Sensors_GUI::eNbrGuiElements );                                               
+    ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Sensors_GUI::eNbrGuiElements );
 
     vItemConnectors_[ADN_Sensors_GUI::eName]->Connect( &pInfos->strName_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::eAngle]->Connect( &pInfos->rAngle_, bConnect );

@@ -113,7 +113,7 @@ void NetworkExerciseLister::OnReceive( const boost::system::error_code& error, s
             (*it)->Update();
     }
     socket_->async_receive( buffer( answer_, 1024 ),
-                            boost::bind( &NetworkExerciseLister::OnReceive, this, 
+                            boost::bind( &NetworkExerciseLister::OnReceive, this,
                                           placeholders::error,
                                           placeholders::bytes_transferred ) );
 }

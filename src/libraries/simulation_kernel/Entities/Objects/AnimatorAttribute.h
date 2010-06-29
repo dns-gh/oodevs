@@ -22,13 +22,13 @@ class MIL_Agent_ABC;
 // Created: JCR 2008-05-30
 // =============================================================================
 class AnimatorAttribute : public ObjectAttribute_ABC
-{ 
+{
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AnimatorAttribute();    
-    explicit AnimatorAttribute( unsigned int maxAnimator ); 
+             AnimatorAttribute();
+    explicit AnimatorAttribute( unsigned int maxAnimator );
     explicit AnimatorAttribute( xml::xistream& xis );
     virtual ~AnimatorAttribute();
     //@}
@@ -51,7 +51,7 @@ public:
     void ReleaseAnimator( const MIL_Agent_ABC& agent );
     //@}
 
-    //! @name 
+    //! @name
     //@{
     bool CanBeAnimatedBy( const MIL_Agent_ABC& agent ) const;
     //@}

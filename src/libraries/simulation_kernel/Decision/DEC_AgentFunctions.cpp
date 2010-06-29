@@ -621,7 +621,7 @@ boost::shared_ptr< MT_Vector2D > DEC_AgentFunctions::GetInterceptionPoint( const
     if( pKnowledge && pKnowledge->IsValid())
     {
         result.reset( new MT_Vector2D() );
-        DEC_GeometryFunctions::GetInterceptionPoint( pKnowledge->GetPosition(), pKnowledge->GetDirection() * pKnowledge->GetSpeed(), 
+        DEC_GeometryFunctions::GetInterceptionPoint( pKnowledge->GetPosition(), pKnowledge->GetDirection() * pKnowledge->GetSpeed(),
                 callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(),
                 callerAgent.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSpeedWithReinforcement(), *result );
     }
@@ -746,8 +746,8 @@ void DEC_AgentFunctions::Suicide( MIL_Agent_ABC& callerAgent )
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::CanIlluminate( DEC_Decision_ABC* pAgent )
 {
-	const dotation::PHY_RoleInterface_Dotations& roleDotations = pAgent->GetPion().GetRole< dotation::PHY_RoleInterface_Dotations >();
-    
+    const dotation::PHY_RoleInterface_Dotations& roleDotations = pAgent->GetPion().GetRole< dotation::PHY_RoleInterface_Dotations >();
+
     if( roleDotations.GetIlluminationDotations( 0.0, true ) || roleDotations.GetIlluminationDotations( 0.0, false ) )
         return true;
     else
@@ -760,7 +760,7 @@ bool DEC_AgentFunctions::CanIlluminate( DEC_Decision_ABC* pAgent )
 // -----------------------------------------------------------------------------
 float DEC_AgentFunctions::GetIlluminatingRange( const MIL_Agent_ABC& callerAgent )
 {
-	const dotation::PHY_RoleInterface_Dotations& roleDotations = callerAgent.GetRole< dotation::PHY_RoleInterface_Dotations >();
-    
+    const dotation::PHY_RoleInterface_Dotations& roleDotations = callerAgent.GetRole< dotation::PHY_RoleInterface_Dotations >();
+
     return roleDotations.GetIlluminatingRange( );
 }

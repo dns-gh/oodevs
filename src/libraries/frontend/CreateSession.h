@@ -77,7 +77,7 @@ void CreateSession::SetOption( const std::string& path, const T& value )
 template< typename T >
 T CreateSession::GetOption( const std::string& path ) const
 {
-    return setter_->GetValue<T>( path ) ; 
+    return setter_->GetValue<T>( path ) ;
 }
 
 }

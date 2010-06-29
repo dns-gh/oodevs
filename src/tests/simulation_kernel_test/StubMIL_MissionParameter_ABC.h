@@ -24,7 +24,7 @@ class StubMIL_MissionParameter_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit StubMIL_MissionParameter_ABC( const std::string& param )    
+    explicit StubMIL_MissionParameter_ABC( const std::string& param )
         : param_( param )
              {}
     virtual ~StubMIL_MissionParameter_ABC() {}
@@ -101,7 +101,7 @@ public:
     virtual bool ToPopulationKnowledge( Common::MsgPopulationKnowledge& asn ) const
     { throw; }
     virtual bool ToString( std::string& result ) const
-    { 
+    {
         result = param_;
         return true;
     }
@@ -166,11 +166,11 @@ public:
     virtual void Append( boost::shared_ptr< TER_Localisation > pLocation )
     { throw; }
     virtual void Append( boost::shared_ptr< DEC_Knowledge_Object > pKnowledgeObject )
-    { throw; }    
+    { throw; }
     virtual void Append( boost::shared_ptr< DEC_Gen_Object > pGenObject )
     { throw; }
     //@}
-    
+
 private:
     std::string param_;
 };

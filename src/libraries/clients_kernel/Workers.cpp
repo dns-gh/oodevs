@@ -49,11 +49,11 @@ Workers::~Workers()
     // NOTHING
 }
 
-namespace 
+namespace
 {
     struct Adaptor
     {
-        Adaptor( WorkerTask_ABC& task, boost::mutex& mutex, std::vector< WorkerTask_ABC* >& tasks ) 
+        Adaptor( WorkerTask_ABC& task, boost::mutex& mutex, std::vector< WorkerTask_ABC* >& tasks )
             : task_ ( &task  )
             , mutex_( &mutex )
             , tasks_( &tasks ) {}

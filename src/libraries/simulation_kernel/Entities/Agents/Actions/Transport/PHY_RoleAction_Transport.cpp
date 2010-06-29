@@ -200,7 +200,7 @@ MT_Float PHY_RoleAction_Transport::DoLoad( const MT_Float rWeightToLoad )
             continue;
 
         pion.Apply(&TransportNotificationHandler_ABC::LoadForTransport, transporter_, transportData.bTransportOnlyLoadable_, bTransportedByAnother );
-       
+
         if( it->second.rTransportedWeight_ <= 0. && bTransportedByAnother /* TODO && pion.CanBeTransported() */ ) // Filer position embarquement si bTransportOnlyLoadable_  + transporteur
             continue; // LoadForTransport fails when the 'pion' is already transported by another unit
 
@@ -300,16 +300,16 @@ void PHY_RoleAction_Transport::NotifyComposanteChanged( const PHY_ComposantePion
         if( it->second.rTransportedWeight_ )
         {
             const MT_Float rTmpWeight = std::min( rWeightDamaged, it->second.rTransportedWeight_ );
-            rWeightDamaged -= rTmpWeight; 
+            rWeightDamaged -= rTmpWeight;
             (*it->first).Apply(&TransportNotificationHandler_ABC::DamageTransported, it->second.rTransportedWeight_,composante.GetState(), it->second.bTransportOnlyLoadable_ );
 
             if( !composante.GetState().IsUsable() )
             {
                 rWeightTransported_           -= rTmpWeight;
-                it->second.rTransportedWeight_ = 0.; 
+                it->second.rTransportedWeight_ = 0.;
             }
         }
-    }       
+    }
 }
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Transport::ApplyContamination
@@ -369,10 +369,10 @@ namespace
 // -----------------------------------------------------------------------------
 bool PHY_RoleAction_Transport::AddPion( MIL_Agent_ABC& transported, bool bTransportOnlyLoadable )
 {
-    if(    transported == transporter_
+    if( transported == transporter_
            || transportedPions_.find( &transported ) != transportedPions_.end() )
         return false;
-   
+
     std::auto_ptr< TransportPermissionComputer_ABC > computer( transporter_.GetAlgorithms().transportComputerFactory_->CreatePermissionComputer() );
     if( !transported.Execute( *computer ).CanBeLoaded() )
         return false;
@@ -399,7 +399,7 @@ bool PHY_RoleAction_Transport::AddPion( MIL_Agent_ABC& transported, bool bTransp
 void PHY_RoleAction_Transport::MagicLoadPion( MIL_Agent_ABC& transported, bool bTransportOnlyLoadable )
 {
     bool bTransportedByAnother = false;
-    if(   transported == transporter_
+    if( transported == transporter_
         || transportedPions_.find( &transported ) != transportedPions_.end() )
         return;
 
@@ -416,7 +416,7 @@ void PHY_RoleAction_Transport::MagicLoadPion( MIL_Agent_ABC& transported, bool b
     data.rRemainingWeight_   = 0.;
     data.rTransportedWeight_ = data.rTotalWeight_;
     rWeightTransported_ += data.rTotalWeight_;
-    
+
     bHasChanged_ = true;
 }
 

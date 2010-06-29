@@ -50,12 +50,12 @@ void PopulationOrder::Send( ClientPublisher_ABC& publisher )
     client::PopulationOrder asn;
     asn().set_oid( population_.GetId() );
     asn().set_mission( missionID_ );
-    
+
     Order_ABC::Send( *asn().mutable_parametres() );
 
     asn.Send( publisher );
 
-    Delete( *asn().mutable_parametres() );    
+    Delete( *asn().mutable_parametres() );
 }
 
 // -----------------------------------------------------------------------------

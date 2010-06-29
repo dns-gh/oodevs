@@ -30,7 +30,7 @@ class Profile;
 */
 // Created: RDS 2008-09-05
 // =============================================================================
-class ProfileList : public QListBox 
+class ProfileList : public QListBox
 {
 
     Q_OBJECT;
@@ -51,7 +51,7 @@ public slots:
     //@}
 
 signals:
-    //! @name 
+    //! @name
     //@{
     void Select( const Profile& profile );
     //@}

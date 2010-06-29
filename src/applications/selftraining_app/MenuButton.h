@@ -21,7 +21,7 @@
 class MenuButton : public QButton
 {
 
-    Q_OBJECT; 
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
@@ -32,10 +32,10 @@ public:
 
 signals:
 
-    //! @name signals 
+    //! @name signals
     //@{
-    void Selected( MenuButton* ); 
-    void UnSelected( MenuButton* ); 
+    void Selected( MenuButton* );
+    void UnSelected( MenuButton* );
     //@}
 
 private:

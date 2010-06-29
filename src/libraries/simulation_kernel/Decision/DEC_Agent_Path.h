@@ -37,7 +37,7 @@ class DEC_Agent_Path : public DEC_PathResult
 {
 public:
     //! @name Types
-    //@{   
+    //@{
     typedef std::vector< DEC_Path_KnowledgeAgent >     T_PathKnowledgeAgentVector;
     typedef T_PathKnowledgeAgentVector::const_iterator CIT_PathKnowledgeAgentVector;
 
@@ -66,8 +66,8 @@ public:
     virtual bool NeedRefine           () const;
     virtual bool UseStrictClosest     () const;
     //@}
-    
-    //! @name Accessors 
+
+    //! @name Accessors
     //@{
     const MIL_Fuseau&                         GetFuseau                   () const;
     const MIL_Fuseau&                         GetAutomataFuseau           () const;
@@ -82,7 +82,7 @@ public:
     const DEC_Agent_PathClass&                GetPathClass                () const;
           MT_Float                            GetUnitMajorWeight          () const;
     //@}
-    
+
     //! @name Tools
     //@{
     virtual void InsertDecPoints();
@@ -106,17 +106,17 @@ private:
     void InsertLimas      ();
 
     void InsertPointAvant        ( boost::shared_ptr< DEC_PathPoint > spottedPathPoint, IT_PathPointList itCurrent );
-    void InsertPointAvant        ( boost::shared_ptr< DEC_PathPoint > spottedPathPoint, IT_PathPointList itCurrent, MT_Float& rDistSinceLastPointAvant );    
+    void InsertPointAvant        ( boost::shared_ptr< DEC_PathPoint > spottedPathPoint, IT_PathPointList itCurrent, MT_Float& rDistSinceLastPointAvant );
     bool InsertPoint             ( boost::shared_ptr< DEC_PathPoint > spottedPathPoint, IT_PathPointList itCurrent, MT_Float& rDistSinceLastPoint );
     void InsertPointAndPointAvant( boost::shared_ptr< DEC_PathPoint > spottedPathPoint, IT_PathPointList itCurrent, MT_Float& rDistSinceLastPoint, MT_Float& rDistSinceLastPointAvant );
     void InsertLima              ( const MIL_LimaOrder& lima );
 
     IT_PathPointList GetPreviousPathPointOnDifferentLocation( IT_PathPointList );
     //@}
- 
-private:   
-    const MIL_Agent_ABC& queryMaker_;   
-    
+
+private:
+    const MIL_Agent_ABC& queryMaker_;
+
     // Path calculation parameters
     const DEC_PathType&                      pathType_; //$$$ A VIRER
     const DEC_Agent_PathClass&               pathClass_;
@@ -131,9 +131,9 @@ private:
           T_PathKnowledgeObjectByTypesVector pathKnowledgeObjects_;
           MT_Float                           rCostOutsideOfAllObjects_;
           T_PathKnowledgePopulationVector    pathKnowledgePopulations_;
-          
+
           MT_Profiler                        profiler_;
-    
+
     //! @name
     //@{
     bool bDecPointsInserted_;

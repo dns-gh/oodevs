@@ -38,7 +38,7 @@ namespace
 
     Common::EnumDiplomacy ConvertToDiplomacy( const kernel::Karma& karma )
     {
-        
+
         if (karma == kernel::Karma::friend_)
             return Common::friend_diplo;
         else if (karma == kernel::Karma::enemy_)

@@ -106,14 +106,14 @@ void ADN_Composantes_ActiveProtectionsListView::OnContextMenu( const QPoint& pt 
 bool ADN_Composantes_ActiveProtectionsListView::Contains( const ADN_ActiveProtections_Data::ActiveProtectionsInfos* pInfo )
 {
     QListViewItemIterator it( this );
-    while( it.current() != 0 ) 
+    while( it.current() != 0 )
     {
         ADN_ListViewItem* pCurr = (ADN_ListViewItem*)it.current();
         ADN_Composantes_Data::ActiveProtectionsInfos* pData = static_cast< ADN_Composantes_Data::ActiveProtectionsInfos* >( pCurr->GetData() );
-        if ( pData->ptrActiveProtections_.GetData() == pInfo )
+        if( pData->ptrActiveProtections_.GetData() == pInfo )
             return true;
         ++it;
     }
-    return false;    
+    return false;
 }
 

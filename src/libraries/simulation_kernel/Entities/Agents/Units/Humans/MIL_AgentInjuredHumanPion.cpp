@@ -19,15 +19,15 @@
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AgentInjuredHumanPion )
 
 
-template< typename Archive > 
+template< typename Archive >
 void save_construct_data( Archive& archive, const MIL_AgentInjuredHumanPion* unit, const unsigned int /*version*/ )
 {
     unsigned int nTypeID = unit->GetType().GetID();
     unsigned int nID = unit->GetID() ;
     const MIL_Automate* const pAutomate = &unit->GetAutomate();
     const AlgorithmsFactories* const algorithmFactories = &unit->GetAlgorithms();
-    archive << nTypeID 
-        << nID 
+    archive << nTypeID
+        << nID
         << pAutomate
         << algorithmFactories;
 }

@@ -51,8 +51,8 @@ public:
     T&          operator []( int i )                        { return ( (T*)&rX_ )[i]; }
     MT_V3D<T>   operator - ( void ) const                   { return MT_V3D<T>( -rX_, -rY_, -rZ_ ); }
     bool        operator < ( const MT_V3D<T>& v ) const     { return ( rX_ != v.rX_ || rY_ != v.rY_ || rZ_ != v.rZ_ ); }// Attention < sert par defaut aux map et donc pas de distance pour l'operationr <
-    
-    
+
+
     T               rX_;
     T               rY_;
     T               rZ_;

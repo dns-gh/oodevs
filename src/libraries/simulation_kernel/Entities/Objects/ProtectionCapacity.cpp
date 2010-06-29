@@ -98,7 +98,7 @@ void ProtectionCapacity::Instanciate( MIL_Object_ABC& object ) const
 void ProtectionCapacity::ProcessAgentExiting( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& agent )
 {
     IT_AgentContainer it = container_.find( &agent );
-    if ( it != container_.end() )
+    if( it != container_.end() )
     {
         if( bGeniePrepared_ )
             agent.GetRole< PHY_RoleInterface_Posture >().UnsetPosturePostePrepareGenie();
@@ -116,7 +116,7 @@ void ProtectionCapacity::ProcessAgentExiting( MIL_Object_ABC& /*object*/, MIL_Ag
 void ProtectionCapacity::ProcessAgentInside( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& agent )
 {
     CIT_AgentContainer it = container_.find( &agent );
-    if ( it != container_.end() )
+    if( it != container_.end() )
     {
         if( bGeniePrepared_ )
             agent.GetRole< PHY_RoleInterface_Posture >().SetPosturePostePrepareGenie();

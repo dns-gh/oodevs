@@ -33,7 +33,7 @@ public:
 
     //! @name Main
     //@{
-    int Execute(); 
+    int Execute();
     //@}
 
 private:

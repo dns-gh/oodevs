@@ -37,7 +37,7 @@ class xml::xistream;
 // Created: JDY 03-06-25
 //*****************************************************************************
 class ADN_Objects_Data : public ADN_Data_ABC
-{    
+{
     MT_COPYNOTALLOWED( ADN_Objects_Data )
 
 public:
@@ -70,7 +70,7 @@ public:
 
             bool operator()( ScoreLocationInfos* tgtnfos ) const
             {   return tgtnfos->nLocation_.GetData()==val_;}
-        
+
         private:
             E_Location val_;
         };
@@ -81,7 +81,7 @@ public:
 
 
 //*****************************************************************************
-//    typedef ADN_Equipement_Data::AttritionInfos AttritionInfos; 
+//    typedef ADN_Equipement_Data::AttritionInfos AttritionInfos;
 //    typedef ADN_Type_VectorFixed_ABC<AttritionInfos> T_AttritionInfosVector;
 //    typedef T_AttritionInfosVector::iterator        IT_AttritionInfosVector;
 
@@ -91,7 +91,7 @@ public:
 
     template <typename T> struct NamedField
     {
-    public:		
+    public:
         typedef T value_type;
 
         NamedField(const char* n) : name_ (n) {}
@@ -119,18 +119,18 @@ public:
     public:
         ADN_TypeCapacity_Infos() : bPresent_ ( false ) {}
         virtual ~ADN_TypeCapacity_Infos() {}
-        
+
         virtual void ReadArchive( xml::xistream& )
         {
             bPresent_ = true;
         }
-        virtual void WriteArchive( xml::xostream& ) {}        
+        virtual void WriteArchive( xml::xostream& ) {}
     public:
-        ADN_Type_Bool   bPresent_;        
+        ADN_Type_Bool   bPresent_;
     };
-    
+
     enum E_Capacities
-    {   
+    {
         eActivableCapacity = 0,
         eAttritionCapacity,
         eAvoidableCapacity,
@@ -172,8 +172,8 @@ public:
     public:
         typedef typename DefaultFieldsHolderType FieldsHolderType;
         enum { type = T };
-    
-    public:        
+
+    public:
         static const std::string DISPLAY_NAME;
         static const std::string TAG;
 
@@ -193,11 +193,11 @@ public:
     typedef ADN_CapacityInfos_Default< eLogisticCapacity >          ADN_CapacityInfos_Logistic;
     typedef ADN_CapacityInfos_Default< eSupplyCapacity >            ADN_CapacityInfos_Supply;
     typedef ADN_CapacityInfos_Default< eTimeLimitedCapacity >       ADN_CapacityInfos_TimeLimited;
- 
+
     class ADN_CapacityInfos_Attrition
         : public ADN_CapacityInfos_Default< eAttritionCapacity >
     {
-    public:		
+    public:
         ADN_CapacityInfos_Attrition();
 
         void ReadArchive( xml::xistream& xis );
@@ -209,7 +209,7 @@ public:
     };
 
      class ADN_CapacityInfos_Avoidable
-        : public ADN_CapacityInfos_Default< eAvoidableCapacity, 
+        : public ADN_CapacityInfos_Default< eAvoidableCapacity,
                             boost::tuples::tuple<NamedField<ADN_Type_Double> > >
     {
     public:
@@ -218,8 +218,8 @@ public:
         void WriteArchive( xml::xostream& xos );
 
     public:
-        FieldsHolderType fields_; 
-        ADN_Type_Double  rDistance_;        
+        FieldsHolderType fields_;
+        ADN_Type_Double  rDistance_;
     };
 
     class ADN_CapacityInfos_Bridging
@@ -229,9 +229,9 @@ public:
         ADN_CapacityInfos_Bridging();
 
         void ReadArchive( xml::xistream& xis );
-        void WriteArchive( xml::xostream& xos );		
+        void WriteArchive( xml::xostream& xos );
     public:
-        
+
     };
 
     class ADN_CapacityInfos_Buildable
@@ -241,19 +241,19 @@ public:
         ADN_CapacityInfos_Buildable();
         void ReadArchive( xml::xistream& xis );
         void WriteArchive( xml::xostream& xos );
-    
-    private:    
+
+    private:
         void ReadDotation( xml::xistream& xis );
-    
+
     private:
         typedef ADN_Type_Vector_ABC< ADN_Equipement_Data::CategoryInfo > ::const_iterator CIT_Categories;
-    
-    public:        
-        ADN_Type_Vector_ABC< ADN_Equipement_Data::CategoryInfo > categories_;  
+
+    public:
+        ADN_Type_Vector_ABC< ADN_Equipement_Data::CategoryInfo > categories_;
     };
 
     class ADN_CapacityInfos_Bypassable
-        : public ADN_CapacityInfos_Default< eBypassableCapacity, 
+        : public ADN_CapacityInfos_Default< eBypassableCapacity,
                                             boost::tuples::tuple<NamedField<ADN_Type_Double> > >
     {
     public:
@@ -261,21 +261,21 @@ public:
         void ReadArchive( xml::xistream& xis );
         void WriteArchive( xml::xostream& xos );
 
-    public:		
-        FieldsHolderType fields_; 
-        ADN_Type_Double  rSpeed_;        
+    public:
+        FieldsHolderType fields_;
+        ADN_Type_Double  rSpeed_;
     };
 
     class ADN_CapacityInfos_Contamination
         : public ADN_CapacityInfos_Default< eContaminationCapacity >
     {
-    public:        
+    public:
         ADN_CapacityInfos_Contamination();
 
         void ReadArchive( xml::xistream& xis );
-        void WriteArchive( xml::xostream& xos );		
+        void WriteArchive( xml::xostream& xos );
 
-    public:		
+    public:
         ADN_Type_String type_;
         ADN_Type_Int max_toxic_;
     };
@@ -324,39 +324,39 @@ public:
         void ReadArchive( xml::xistream& xis );
         void WriteArchive( xml::xostream& xos );
 
-    private:    
+    private:
         void ReadDotation( xml::xistream& xis );
-    
+
     private:
         typedef ADN_Type_Vector_ABC< ADN_Equipement_Data::CategoryInfo > ::const_iterator CIT_Categories;
-    
-    public:        
+
+    public:
         ADN_Type_Vector_ABC< ADN_Equipement_Data::CategoryInfo > categories_;
     };
-    
+
     class ADN_CapacityInfos_InteractionHeight
-        : public ADN_CapacityInfos_Default< eInteractionHeightCapacity > 
+        : public ADN_CapacityInfos_Default< eInteractionHeightCapacity >
     {
     public:
         ADN_CapacityInfos_InteractionHeight();
 
         void ReadArchive( xml::xistream& xis );
-        void WriteArchive( xml::xostream& xos );		
+        void WriteArchive( xml::xostream& xos );
 
-    public:		
+    public:
         ADN_Type_Double height_;
     };
 
     class ADN_CapacityInfos_Intoxication
         : public ADN_CapacityInfos_Default< eIntoxicationCapacity >
     {
-    public:        
+    public:
         ADN_CapacityInfos_Intoxication();
 
         void ReadArchive( xml::xistream& xis );
-        void WriteArchive( xml::xostream& xos );		
+        void WriteArchive( xml::xostream& xos );
 
-    public:		
+    public:
         ADN_Type_String type_;
         ADN_Type_Int max_toxic_;
     };
@@ -364,14 +364,14 @@ public:
     class ADN_CapacityInfos_Mobility
         : public ADN_CapacityInfos_Default< eMobilityCapacity >
     {
-    public:		
+    public:
         ADN_CapacityInfos_Mobility();
         void ReadArchive( xml::xistream& xis );
-        void WriteArchive( xml::xostream& xos );		
-    
+        void WriteArchive( xml::xostream& xos );
+
     public:
-        ADN_Type_Double     rDefaultSpeed_;        
-        ADN_Type_Enum< E_SpeedImpact, eNbrSpeedImpact > nSpeedModifier_;        
+        ADN_Type_Double     rDefaultSpeed_;
+        ADN_Type_Enum< E_SpeedImpact, eNbrSpeedImpact > nSpeedModifier_;
         ADN_Type_Double     rMaxAgentSpeed_; // percentage
     };
 
@@ -395,7 +395,7 @@ public:
         : public ADN_TypeCapacity_Infos
     {
     public:
-        
+
         static const std::string TAG;
         static const std::string DISPLAY_NAME;
 
@@ -414,7 +414,7 @@ public:
         : public ADN_TypeCapacity_Infos
     {
     public:
-        
+
         static const std::string TAG;
         static const std::string DISPLAY_NAME;
 
@@ -441,8 +441,8 @@ public:
         void WriteArchive( xml::xostream& xos );
 
     public:
-        ADN_Type_Int  max_size_; 
-        ADN_Type_Bool geniePrepared_;       
+        ADN_Type_Int  max_size_;
+        ADN_Type_Bool geniePrepared_;
     };
 
     class ADN_CapacityInfos_SupplyRoute
@@ -480,7 +480,7 @@ public:
 
         void ReadArchive( xml::xistream& xis );
         void WriteArchive( xml::xostream& xos );
-        
+
         const std::string& displayName() const
         {
             return DISPLAY_NAME;
@@ -505,8 +505,8 @@ public:
         void ReadArchive( xml::xistream& xis );
         void WriteArchive( xml::xostream& xos );
 
-    public:		
-        ADN_Type_Int  worker_;        
+    public:
+        ADN_Type_Int  worker_;
     };
 
     class ADN_CapacityInfos_Constructor
@@ -515,14 +515,14 @@ public:
     public:
         ADN_CapacityInfos_Constructor();
         void ReadArchive( xml::xistream& xis );
-        void WriteArchive( xml::xostream& xos );		
-    
+        void WriteArchive( xml::xostream& xos );
+
     private:
         static const char* choices_[];
 
     public:
         ADN_Type_Enum< E_ConsumptionType, eNbrConsumptionType>      nDefaultConsumption_;
-        ADN_Type_Choice< std::string > unitType_;   
+        ADN_Type_Choice< std::string > unitType_;
         std::auto_ptr< ADN_CapacityInfos_Buildable >     ptrBuildable_;
         std::auto_ptr< ADN_CapacityInfos_Improvable >    ptrImprovable_;
     };
@@ -678,7 +678,7 @@ public:
     public:
         ADN_Type_Int humanByTimeStep_;
     };
-    
+
 //*****************************************************************************
     class ObjectInfos
         : public ADN_Ref_ABC
@@ -715,20 +715,20 @@ public:
         typedef T_CapacityMap::iterator IT_CapacityMap;
         typedef T_CapacityMap::const_iterator CIT_CapacityMap;
         T_CapacityMap capacities_;
-        
+
         static int VAL;
         template <typename T> struct Enumerator
         {
             enum E { value = VAL++ };
         };
     };
-    
+
     typedef ADN_Type_Vector_ABC< ObjectInfos > T_ObjectsInfos_Vector;
     typedef T_ObjectsInfos_Vector::iterator  IT_ObjectsInfos_Vector;
 
 
 //*****************************************************************************
-public:    
+public:
              ADN_Objects_Data();
     virtual ~ADN_Objects_Data();
 
@@ -744,11 +744,11 @@ private:
     void ReadArchive( xml::xistream& input );
     void ReadObject ( xml::xistream& input );
     void ReadShotPercentage( xml::xistream& input );
-    
+
     void WriteArchive( xml::xostream& output );
 
 private:
-    T_ObjectsInfos_Vector     vObjectInfos_;	
+    T_ObjectsInfos_Vector     vObjectInfos_;
 };
 
 
@@ -772,7 +772,7 @@ namespace
         ~TypeCmp() {}
 
         template < typename T >
-        bool operator()( T* tgtnfos ) const 
+        bool operator()( T* tgtnfos ) const
         { return ADN_Tools::CaselessCompare( tgtnfos->strType_.GetData(), strType_ ); }
 
     private:

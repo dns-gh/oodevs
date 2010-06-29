@@ -15,7 +15,7 @@
 #include "clients_kernel/SafePointer.h"
 #include "protocol/ServerPublisher_ABC.h"
 
-namespace MsgsClientToSim 
+namespace MsgsClientToSim
 {
     class MsgMagicActionUpdateObject;
 }

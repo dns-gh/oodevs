@@ -26,7 +26,7 @@ AgentNature::AgentNature( xml::xistream& xis )
             >> attribute( "atlas-nature", atlas_ )
         >> end();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: AgentNature destructor
 // Created: SBO 2006-03-20

@@ -63,7 +63,7 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     template<class Archive>
     void load( Archive&, const unsigned int );
     template<class Archive>
@@ -137,7 +137,7 @@ public:
           MT_Float     GetCircleRadius() const;
     const MT_Vector2D& GetCircleCenter() const;
     //@}
-    
+
     //! @name Tools
     //@{
     static E_LocationType ConvertLocalisationType( const std::string& strType ); // A deplacer dans TER_Tools si nécessaire
@@ -165,7 +165,7 @@ private:
     //@{
     void ReadPoint( xml::xistream& xis );
     //@}
-    
+
 protected:
     E_LocationType nType_;
     T_PointVector      pointVector_; // Initial points
@@ -179,7 +179,7 @@ protected:
 
     MT_Rect boundingBox_;
 
-    // Circle   
+    // Circle
     bool         bWasCircle_;
     MT_Vector2D  vCircleCenter_;
     MT_Float     rCircleRadius_;

@@ -21,7 +21,7 @@ void save_construct_data( Archive& archive, const MIL_AgentPionLOGMaintenance* p
 {
     unsigned int nTypeID = pion->GetType().GetID();
     const AlgorithmsFactories* const algorithmFactories = &pion->GetAlgorithms();
-    archive << nTypeID 
+    archive << nTypeID
             << algorithmFactories;
 }
 
@@ -81,7 +81,7 @@ MIL_AgentPionLOGMaintenance::~MIL_AgentPionLOGMaintenance()
 void MIL_AgentPionLOGMaintenance::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< MIL_AgentPionLOG_ABC >( *this );
-    
+
     PHY_RolePionLOG_Maintenance* pRole;
     file >> pRole;
     RegisterRole( *pRole );

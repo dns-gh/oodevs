@@ -91,7 +91,7 @@ UserProfile::UserProfile( const UserProfile& p )
     , readFormations_   ( p.readFormations_ )
     , readAutomats_     ( p.readAutomats_ )
     , readPopulations_  ( p.readPopulations_ )
-    , writeSides_       ( p.writeSides_ ) 
+    , writeSides_       ( p.writeSides_ )
     , writeFormations_  ( p.writeFormations_ )
     , writeAutomats_    ( p.writeAutomats_ )
     , writePopulations_ ( p.writePopulations_ )
@@ -117,7 +117,7 @@ UserProfile::~UserProfile()
 void UserProfile::Serialize( xml::xostream& xos ) const
 {
     xos << start( "profile" );
-    if ( role_.length() )
+    if( role_.length() )
         xos << attribute( "scipio-role", role_.ascii() );
     xos     << attribute( "name", login_.ascii() )
             << attribute( "password", password_.ascii() )
@@ -150,7 +150,7 @@ void UserProfile::ReadRights( xml::xistream& xis, T_Ids& list, const ExistenceCh
     if( checker( id ) )
         list.push_back( id );
     else
-        std::cerr << "Invalid entity id in profile: " << id << std::endl; // $$$$ SBO 2007-11-06: 
+        std::cerr << "Invalid entity id in profile: " << id << std::endl; // $$$$ SBO 2007-11-06:
 }
 
 // -----------------------------------------------------------------------------

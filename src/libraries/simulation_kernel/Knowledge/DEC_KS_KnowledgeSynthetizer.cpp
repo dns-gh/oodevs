@@ -11,7 +11,7 @@
 #include "MIL_KnowledgeGroup.h"
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
- 
+
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KS_KnowledgeSynthetizer )
 
 // -----------------------------------------------------------------------------
@@ -53,7 +53,7 @@ DEC_KS_KnowledgeSynthetizer::~DEC_KS_KnowledgeSynthetizer()
 // -----------------------------------------------------------------------------
 void DEC_KS_KnowledgeSynthetizer::Prepare()
 {
-    // Agent 
+    // Agent
     pBlackBoard_->GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( boost::bind( & DEC_Knowledge_Agent::Prepare, _1 ) );
 
     // Population
@@ -68,7 +68,7 @@ void DEC_KS_KnowledgeSynthetizer::Talk( int currentTimeStep )
 {
     assert( pBlackBoard_ );
 
-    pBlackBoard_->ApplyOnKnowledgesPerception( currentTimeStep ); 
+    pBlackBoard_->ApplyOnKnowledgesPerception( currentTimeStep );
 
     // Extrapolation
     pBlackBoard_->GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( boost::bind( & DEC_Knowledge_Agent::Extrapolate, _1 ) );

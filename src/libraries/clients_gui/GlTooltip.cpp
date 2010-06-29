@@ -81,7 +81,7 @@ void GlTooltip::Call( const Styles::Style& value )
 void GlTooltip::Call( const E_OperationalStatus& value )
 {
     font_.setItalic( true );
-    if ( value == eOperationalStatus_DetruitTactiquement )
+    if( value == eOperationalStatus_DetruitTactiquement )
         color_.setRgb( 255, 128, 0 );
     else if( value == eOperationalStatus_DetruitTotalement )
         color_.setRgb( 250, 0, 0 );
@@ -95,7 +95,7 @@ void GlTooltip::Call( const E_OperationalStatus& value )
 void GlTooltip::Call( const E_ForceRatioStatus& value )
 {
     font_.setBold( true );
-    if ( value == eForceRatioStatus_Defavorable )
+    if( value == eForceRatioStatus_Defavorable )
         color_.setRgb( 160, 0, 0 );
     else
         color_.setRgb( 0, 160, 0 );
@@ -219,7 +219,7 @@ void GlTooltip::EndDisplay()
 void GlTooltip::DirtyImage()
 {
     // $$$$ SBO 2008-10-06: optimisation shows a side effect in new_ filling order... fix and uncomment
-//    if( new_.size()  != current_.size() 
+//    if( new_.size()  != current_.size()
 //     || new_.front() != current_.front()
 //     || new_.back()  != current_.at( new_.size() - 1 ) )
         image_ = QImage();
@@ -253,7 +253,7 @@ void GlTooltip::GenerateImage( unsigned int width, unsigned int height )
     QPainter p;
     QFontMetrics metrics( p.font() );
     int fontHeight = metrics.height();
-    
+
     QPixmap pixmap( CreatePixmap( width, height ) );
     pixmap.fill( Qt::magenta );
     p.begin( &pixmap );
@@ -313,7 +313,7 @@ void GlTooltip::RestoreAlpha()
     unsigned int* data = (unsigned int*)image_.bits();
     for( int i = image_.width() * image_.height(); i > 0; --i )
     {
-        if( IsMagenta( *data ) ) 
+        if( IsMagenta( *data ) )
             *data |= 0xE000FF00;
         else
             *data |= 0xFF000000;

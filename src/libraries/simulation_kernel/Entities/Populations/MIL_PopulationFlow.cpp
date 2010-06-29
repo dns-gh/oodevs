@@ -69,7 +69,7 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, MIL_Populati
     , direction_               ( 0., 1. )
     , rSpeed_                  ( 0. )
     , bPathUpdated_            ( true )
-    , bFlowShapeUpdated_       ( true ) 
+    , bFlowShapeUpdated_       ( true )
     , bDirectionUpdated_       ( true )
     , bSpeedUpdated_           ( true )
     , pSplittingObject_        ( 0 )
@@ -97,7 +97,7 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, const MIL_Po
     , direction_               ( 0., 1. )
     , rSpeed_                  ( 0. )
     , bPathUpdated_            ( true )
-    , bFlowShapeUpdated_       ( true ) 
+    , bFlowShapeUpdated_       ( true )
     , bDirectionUpdated_       ( true )
     , bSpeedUpdated_           ( true )
     , pSplittingObject_        ( 0 )
@@ -145,7 +145,7 @@ MIL_PopulationFlow::MIL_PopulationFlow(MIL_Population& population, unsigned int 
 MIL_PopulationFlow::~MIL_PopulationFlow()
 {
     assert( !pSourceConcentration_ );
-    assert( !pDestConcentration_   );    
+    assert( !pDestConcentration_   );
 
     SendDestruction();
     RemoveFromPatch();
@@ -226,7 +226,7 @@ void MIL_PopulationFlow::Move( const MT_Vector2D& destination )
         alternateDestination_ = destination;
         ComputePath( primaryDestination_ );
     }
-    
+
     // Split management : $$ bof
     if( pTailPath_ && pTailPath_->GetState() != DEC_Path_ABC::ePartial && pTailPath_->GetState() != DEC_Path_ABC::eValid )
         return;
@@ -253,7 +253,7 @@ void MIL_PopulationFlow::NotifyMovingInsideObject( MIL_Object_ABC& object )
     const PopulationAttribute* attr = object.RetrieveAttribute< PopulationAttribute >();
     if( !attr )
         return;
-    
+
     if( !pSplittingObject_ || attr->GetDensity() < pSplittingObject_->GetAttribute< PopulationAttribute >().GetDensity() )
         pSplittingObject_ = &object;
 }
@@ -275,7 +275,7 @@ MT_Float MIL_PopulationFlow::GetSpeedWithReinforcement( const TerrainData& /*env
 {
     if( !CanObjectInteractWith( object ) )
         return GetMaxSpeed();
-    
+
     // $$$$ SBO 2009-12-13: object.RetrieveAttribute
     const PopulationAttribute* attr = (const_cast< MIL_Object_ABC* >( &object ))->RetrieveAttribute< PopulationAttribute >();
     if( !attr )
@@ -362,7 +362,7 @@ void MIL_PopulationFlow::UpdateTailPosition( const MT_Float rWalkedDistance )
             if( rDirLength )
                 vDir /= rDirLength;
         }
-    }   
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -396,7 +396,7 @@ bool MIL_PopulationFlow::ManageSplit()
     // this flow => from tail position to split position
     // new  flow => from split position to head position
     const MT_Float rDensityBeforeSplit = GetDensity();
-    MIL_PopulationFlow& newFlow = GetPopulation().CreateFlow( *this, *itSplit ); 
+    MIL_PopulationFlow& newFlow = GetPopulation().CreateFlow( *this, *itSplit );
     flowShape_.erase( ++itSplit, flowShape_.end() );
     flowShape_.insert( flowShape_.end(), flowShape_.back() ); // split position is a way point
     assert( flowShape_.size() >= 2 );
@@ -407,9 +407,9 @@ bool MIL_PopulationFlow::ManageSplit()
     pHeadPath_ = pTailPath_; ///$$$ Degueu : destruction de pHeadPath ... (newFlow.pHeadPath_ = pHeadPath_)
     pTailPath_.reset();
 
-    const MT_Float rNbrHumans = GetLocation().GetArea() * rDensityBeforeSplit;    
+    const MT_Float rNbrHumans = GetLocation().GetArea() * rDensityBeforeSplit;
     newFlow.PushHumans( PullHumans( GetNbrHumans() - rNbrHumans ) );
-    UpdateDensity();    
+    UpdateDensity();
     return true;
 }
 
@@ -430,17 +430,17 @@ bool MIL_PopulationFlow::ManageObjectSplit()
     //pDestConcentration_->Move( destination_ ); $$ Auto next tick
 
     //$$$ TMP CRs - a changer apres refactor objets
-    
+
     // $$$ TODO
     const AnimatorAttribute::T_AgentSet& animators = pSplittingObject_->GetAttribute<AnimatorAttribute>().GetAnimators();
     for( AnimatorAttribute::CIT_AgentSet it = animators.begin(); it != animators.end(); ++it )
-        MIL_Report::PostEvent( **it, MIL_Report::eReport_InterventionAgainstPopulationStarted, GetAttitude().GetID() );            
+        MIL_Report::PostEvent( **it, MIL_Report::eReport_InterventionAgainstPopulationStarted, GetAttitude().GetID() );
     return true;
 
     /*
     //$$$$$$$$$$$$$$$$$$$$$
     // $$$ TEST
-    TER_ObjectManager::T_ObjectVector objects; 
+    TER_ObjectManager::T_ObjectVector objects;
     TER_World::GetWorld().GetObjectManager().GetListWithinLocalisation( GetLocation(), objects );
     if( new object collision && object has effect on population flow )
     {
@@ -458,7 +458,7 @@ bool MIL_PopulationFlow::ManageObjectSplit()
             => si effet split sur popu
                 => ptCollision = GetCollisionPoint()
                 => si ptCollision = tête
-                        
+
                 => sinon
 */
 }
@@ -474,7 +474,7 @@ void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector
 
     if( ManageObjectSplit() )
         return;
-        
+
     const MT_Float rWalkedDistance = GetPopulation().GetMaxSpeed() /* * 1.*/; // vitesse en pixel/deltaT = metre/deltaT
 
     //$$ TMP
@@ -637,7 +637,7 @@ void MIL_PopulationFlow::SendDestruction() const
 void MIL_PopulationFlow::SendFullState( MIL_Population::sPeopleCounter& peopleCounter ) const
 {
     client::PopulationFlowUpdate asnMsg;
-    
+
     asnMsg().set_oid           ( GetID() );
     asnMsg().set_oid_population( GetPopulation().GetID() );
 
@@ -647,7 +647,7 @@ void MIL_PopulationFlow::SendFullState( MIL_Population::sPeopleCounter& peopleCo
     NET_ASN_Tools::WritePath     ( flowShape_, *asnMsg().mutable_flux()      );
     NET_ASN_Tools::WriteDirection( direction_, *asnMsg().mutable_direction() );
     asnMsg().set_attitude           ( GetAttitude().GetAsnID() );
-    asnMsg().set_vitesse            ( (unsigned int)MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) ); 
+    asnMsg().set_vitesse            ( (unsigned int)MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) );
     asnMsg().set_nb_humains_vivants ( peopleCounter.GetBoundedPeople( GetNbrAliveHumans() ) );
     asnMsg().set_nb_humains_morts   ( peopleCounter.GetBoundedPeople( GetNbrDeadHumans () ) );
 
@@ -668,7 +668,7 @@ void MIL_PopulationFlow::SendChangedState( MIL_Population::sPeopleCounter& peopl
         return;
 
     client::PopulationFlowUpdate asnMsg;
-    
+
     asnMsg().set_oid( GetID() );
     asnMsg().set_oid_population( GetPopulation().GetID() );
 
@@ -701,7 +701,7 @@ void MIL_PopulationFlow::SendChangedState( MIL_Population::sPeopleCounter& peopl
     {
         asnMsg().set_vitesse( (unsigned int)MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) );
     }
-    
+
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 
     if( asnMsg().has_flux()  )
@@ -733,7 +733,7 @@ void MIL_PopulationFlow::load( MIL_CheckPointInArchive& file, const unsigned int
 
     UpdateLocation();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow::save
 // Created: SBO 2005-10-18
@@ -804,7 +804,7 @@ bool MIL_PopulationFlow::HasResources()
 {
     return true;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow::Clean
 // Created: NLD 2005-10-03
@@ -828,13 +828,13 @@ void MIL_PopulationFlow::Clean()
 // -----------------------------------------------------------------------------
 bool MIL_PopulationFlow::HasChanged() const
 {
-    return    HasHumansChanged  () 
+    return    HasHumansChanged  ()
            || HasAttitudeChanged()
            || bFlowShapeUpdated_
            || bDirectionUpdated_
            || bSpeedUpdated_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow::UnregisterSourceConcentration
 // Created: NLD 2005-10-04
@@ -873,7 +873,7 @@ const MT_Vector2D& MIL_PopulationFlow::GetPosition() const
 {
     return GetHeadPosition();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow::GetDirection
 // Created: NLD 2005-10-03

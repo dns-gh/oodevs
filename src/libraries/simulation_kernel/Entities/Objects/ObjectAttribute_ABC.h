@@ -18,7 +18,7 @@ namespace Common
     class MsgMissionParameter_Value;
 }
 
-namespace hla 
+namespace hla
 {
     class AttributeIdentifier;
 }
@@ -50,7 +50,7 @@ public:
 
     //! @name Serialization
     //@{
-    template< typename Archive > 
+    template< typename Archive >
     void serialize( Archive&, const unsigned int )
     {
         // NOTHING
@@ -58,13 +58,13 @@ public:
     //@}
 
     //! @name Knowledge instance
-    //@{    
-    virtual void Instanciate( DEC_Knowledge_Object& /*object*/ ) const { /*NOTHING*/ }    
+    //@{
+    virtual void Instanciate( DEC_Knowledge_Object& /*object*/ ) const { /*NOTHING*/ }
     virtual void Register( Object& /*object*/ ) const { /*NOTHING*/ }
     //@}
 
     //! @name ASN Network update
-    //@{     
+    //@{
     virtual void SendFullState( Common::MsgObjectAttributes& /*asn*/ ) const {} //<! Send update to asn client
     virtual void SendUpdate( Common::MsgObjectAttributes& /*asn*/ ) const {} //<! Send update to asn client
     virtual void OnUpdate( const Common::MsgMissionParameter_Value& /*attribute*/ ) {} //<! Update from asn msg
@@ -74,7 +74,7 @@ public:
 
     //! @name ODB
     //@{
-    virtual void WriteODB( xml::xostream& /*xos*/ ) const {} 
+    virtual void WriteODB( xml::xostream& /*xos*/ ) const {}
     //@}
 };
 

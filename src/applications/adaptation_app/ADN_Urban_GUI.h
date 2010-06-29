@@ -25,7 +25,7 @@ class ADN_ListView_Urban_Type;
 */
 // Created: APE 2004-12-06
 // =============================================================================
-class ADN_Urban_GUI 
+class ADN_Urban_GUI
     : public ADN_GUI_ABC
 {
     Q_OBJECT

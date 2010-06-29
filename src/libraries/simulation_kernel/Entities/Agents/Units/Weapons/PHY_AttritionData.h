@@ -37,7 +37,7 @@ public:
     //@{
     PHY_AttritionData&         operator=             ( const PHY_AttritionData& rhs );
     MT_Float                   GetScore              () const;
-    const PHY_ComposanteState& ComputeComposanteState( MT_Float urbanProtection ) const; 
+    const PHY_ComposanteState& ComputeComposanteState( MT_Float urbanProtection ) const;
     //@}
 
 private:

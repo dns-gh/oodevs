@@ -50,7 +50,7 @@ public:
     std::string GetSymbol() const;
     const DecisionalModel& GetDecisionalModel() const;
     tools::Iterator< const AutomatComposition& > CreateIterator() const;
-    
+
     bool HasLogistics() const;
     bool IsTC2() const;
     bool IsLogisticSupply() const;

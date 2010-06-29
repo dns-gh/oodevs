@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "LogisticPrototype.h"
 #include "clients_kernel/Automat_ABC.h"
-#include "protocol/Protocol.h"       
+#include "protocol/Protocol.h"
 #include "actions/ParameterList.h"
 
 using namespace kernel;
@@ -26,7 +26,7 @@ LogisticPrototype::LogisticPrototype( QWidget* parent, Controllers& controllers,
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: LogisticPrototype::~LogisticPrototype
 // Created: SBO 2006-04-19

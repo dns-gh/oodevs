@@ -54,7 +54,7 @@ void WeatherModel::CreateAmmoEffect( const MsgsSimToClient::MsgStartFireEffect& 
 {
     Register( message.effect_oid(), *new AmmoEffect( message, controllers_.controller_, model_.static_.coordinateConverter_ ) );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: WeatherModel::DeleteAmmoEffect
 // Created: AGE 2006-04-04

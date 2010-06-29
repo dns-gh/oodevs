@@ -48,13 +48,13 @@ public:
     virtual void Serialize( Common::MsgCoordLatLong& message ) const;
     //@}
 
-    //! @name 
+    //! @name
     //@{
     virtual OGRPoint* Extract( OGRSpatialReference* spatialReference ) const;
     //@}
 
-    //! @name 
-    //@{    
+    //! @name
+    //@{
     std::ostream& SerializeCoordinates( std::ostream& geometry, char sep ) const;
     //@}
 

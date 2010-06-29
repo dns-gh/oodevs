@@ -28,7 +28,7 @@
 */
 // Created: APE 2004-12-29
 // =============================================================================
-class ADN_Equipement_GenericListView 
+class ADN_Equipement_GenericListView
 : public ADN_ListView
 {
 public:

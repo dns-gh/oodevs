@@ -50,7 +50,7 @@ void PHY_LauncherType::ReadLauncher( xml::xistream& xis )
         xis >> xml::attribute( "name", strLauncherName );
 
         const PHY_LauncherType*& pLauncherType = launcherTypes_[ strLauncherName ];
-        if ( pLauncherType )
+        if( pLauncherType )
             xis.error( "Launcher type already registered" );
 
         pLauncherType = new PHY_LauncherType( strLauncherName, xis );
@@ -184,7 +184,7 @@ MT_Float PHY_LauncherType::GetPHModificator( const PHY_RoleInterface_Posture& fi
     const unsigned int     nTargetCurrentPosture     = targetPosture.GetCurrentPosture             ().GetID();
     const unsigned int     nTargetLastPosture        = targetPosture.GetLastPosture                ().GetID();
     const MT_Float rTargetPostureCompletion  = targetPosture.GetPostureCompletionPercentage();
-      
+
     const T_PhModificatorValueVector& firerCurrentModificator = phModificators_[ nFirerCurrentPosture ];
     const T_PhModificatorValueVector& firerLastModificator    = phModificators_[ nFirerLastPosture ];
     const MT_Float rInverseFirerPostureCompletion             = 1.f - rFirerPostureCompletion;

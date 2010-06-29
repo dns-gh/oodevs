@@ -105,7 +105,7 @@ unsigned short Gl3dWidget::StipplePattern( int factor /*= 1*/ ) const
         0xFF00, 0xFE01, 0xFC03, 0xF807,
         0xF00F, 0xE01F, 0xC03F, 0x807F
     };
-    return pattern[ ( factor * frame_ )%16 ]; 
+    return pattern[ ( factor * frame_ )%16 ];
 }
 
 // -----------------------------------------------------------------------------
@@ -145,7 +145,7 @@ void Gl3dWidget::DrawCross( const Point2f& at, float size /*= -1.f*/, E_Unit uni
         size = 10.f * Pixels( at );
     else if( unit == pixels )
         size *= Pixels( at );
-    
+
     const Vector2f u( size, size );
     const Vector2f v( size, -size );
     DrawLine( at + u, at - u );
@@ -285,7 +285,7 @@ void Gl3dWidget::DrawArc( const Point2f& center, const Point2f& from, const Poin
         static const float twoPi = 2.f * std::acos( -1.f );
         maxAngle = maxAngle + twoPi;
     }
-    
+
     const float deltaAngle = ( maxAngle - minAngle ) / 24.f + 1e-6f;
     glBegin( GL_LINE_STRIP );
     for( float angle = minAngle; angle < maxAngle; angle += deltaAngle )
@@ -313,7 +313,7 @@ void Gl3dWidget::DrawCurvedArrow( const Point2f& from, const Point2f& to, float 
     }
     Vector2f u( from, to );
     const Vector2f v( u.Normal() );
-    
+
     const Point2f center = from + 0.5f * u;
     const float distance = u.Length();
     const float zCenter = distance * ( 1.f - 1.f / curveRatio );
@@ -389,7 +389,7 @@ void Gl3dWidget::DrawDisc( const Point2f& center, float radius /*= -1.f*/, E_Uni
 // -----------------------------------------------------------------------------
 void Gl3dWidget::DrawLife( const Point2f& center, float h, float factor /*= 1.f*/ ) const
 {
-    // $$$$ AGE 2006-09-11: 
+    // $$$$ AGE 2006-09-11:
     const float halfWidth   = factor * 600.f * 0.5f * 0.92f;
     const float deltaHeight = factor * 600.f * 0.062f;
     const float xdelta = h * halfWidth;
@@ -399,7 +399,7 @@ void Gl3dWidget::DrawLife( const Point2f& center, float h, float factor /*= 1.f*
         UndoRotations();
         glTranslatef( 0, 0, 1 );
         glLineWidth( 3 );
-        glColor3f( 1 - h, h, 0.1f ); // $$$$ AGE 2006-09-11: 
+        glColor3f( 1 - h, h, 0.1f ); // $$$$ AGE 2006-09-11:
         glBegin( GL_LINES );
             glVertex2f( - xdelta, deltaHeight );
             glVertex2f(   xdelta, deltaHeight );
@@ -447,7 +447,7 @@ void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const std::string& s
         glTranslatef( - expectedWidth * 0.5f, expectedHeight, 0 );
         glScalef( scaleRatio, -scaleRatio, scaleRatio );
         glTranslatef( svgDeltaX, svgDeltaY, 0.0f );
-        const Rectangle2f bbox( -10000,-10000,10000,10000 ); // $$$$ AGE 2006-09-11: 
+        const Rectangle2f bbox( -10000,-10000,10000,10000 ); // $$$$ AGE 2006-09-11:
         Base().PrintApp6( symbol, style, bbox );
     glPopAttrib();
     glPopMatrix();
@@ -533,7 +533,7 @@ void Gl3dWidget::DrawSvg( const std::string& svg, const geometry::Point2f& cente
     UndoRotations();
     if( ratio != 1.f )
         glScalef( ratio, ratio, ratio );
-    const Rectangle2f bbox( -10000,-10000,10000,10000 ); // $$$$ AGE 2006-09-11: 
+    const Rectangle2f bbox( -10000,-10000,10000,10000 ); // $$$$ AGE 2006-09-11:
     Base().DrawSvg( svg, bbox );
     glPopMatrix();
 }
@@ -641,7 +641,7 @@ void Gl3dWidget::mousePressEvent( QMouseEvent* event )
 {
     Gl3dWidget::mouseReleaseEvent( event );
     Widget3D::mousePressEvent( event );
-}   
+}
 
 // -----------------------------------------------------------------------------
 // Name: Gl3dWidget::CenterView
@@ -664,7 +664,7 @@ void Gl3dWidget::UndoRotations() const
 {
     float modelview[ 16 ];
     glGetFloatv( GL_MODELVIEW_MATRIX, modelview );
-    for( uint i = 0; i < 3; i++ ) 
+    for( uint i = 0; i < 3; i++ )
         for( uint j = 0; j < 3; j++ )
             modelview[ i * 4 + j ] = ( i == j ) ? 1.f : 0;
     glLoadMatrixf( modelview );

@@ -24,12 +24,12 @@ namespace tools
 
         //! @name Field access
         //@{
-        void SetAffiliation( std::string& symbol, unsigned int affiliation ); // $$$$ SBO 2007-08-23: 
+        void SetAffiliation( std::string& symbol, unsigned int affiliation ); // $$$$ SBO 2007-08-23:
         void SetBattleDimension( std::string& symbol, char dimension );
         void SetFunction( std::string& symbol, const std::string& function );
         void SetCommandPost( std::string& symbol, bool commandPost );
-        void SetLevel( std::string& symbol, unsigned int level ); // $$$$ SBO 2007-08-23: 
-        void SetLevel( std::string& symbol, const std::string& level ); // $$$$ SBO 2007-08-23: 
+        void SetLevel( std::string& symbol, unsigned int level ); // $$$$ SBO 2007-08-23:
+        void SetLevel( std::string& symbol, const std::string& level ); // $$$$ SBO 2007-08-23:
 
         unsigned int GetLevel( const std::string& symbol );
         std::string GetAffiliation( const std::string& symbol );

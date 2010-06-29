@@ -36,7 +36,7 @@ class ADN_Units_Composantes_GUI_Connector
 {
 public:
 
-    ADN_Units_Composantes_GUI_Connector( ADN_Units_Composantes_GUI& tab ) 
+    ADN_Units_Composantes_GUI_Connector( ADN_Units_Composantes_GUI& tab )
     : ADN_Connector_Table_ABC( tab, false )
     {}
 
@@ -58,16 +58,16 @@ public:
         tab_.setItem( nRow, 3, pItemLoadable );
         tab_.setItem( nRow, 4, pItemConveyor );
         tab_.setItem( nRow, 5, pItemNbrHuman );
-        
+
         // connect items & datas
         pItemName->GetConnector().Connect(&static_cast<ComposanteInfos*>(pObj)->ptrComposante_.GetData()->strName_);
         pItemNbr->GetConnector().Connect(&static_cast<ComposanteInfos*>(pObj)->nNb_);
-		pItemMajor->GetConnector().Connect( &static_cast<ComposanteInfos*>(pObj)->bMajor_ );
-		pItemLoadable->GetConnector().Connect( &static_cast<ComposanteInfos*>(pObj)->bLoadable_ );
+        pItemMajor->GetConnector().Connect( &static_cast<ComposanteInfos*>(pObj)->bMajor_ );
+        pItemLoadable->GetConnector().Connect( &static_cast<ComposanteInfos*>(pObj)->bLoadable_ );
         pItemConveyor->GetConnector().Connect( &static_cast<ComposanteInfos*>(pObj)->bConveyor_ );
         pItemNbrHuman->GetConnector().Connect( &static_cast<ComposanteInfos*>(pObj)->nNbrHumanInCrew_ );
     }
-    
+
 private:
     ADN_Units_Composantes_GUI_Connector& operator=( const ADN_Units_Composantes_GUI_Connector& );
 };
@@ -90,7 +90,7 @@ ADN_Units_Composantes_GUI::ADN_Units_Composantes_GUI(QWidget * parent )
 
     // hide vertical header
     verticalHeader()->hide();
-    
+
     // tab with 4 columns
     setNumCols(6);
     setNumRows(0);
@@ -154,9 +154,9 @@ void ADN_Units_Composantes_GUI::OnContextMenu(int /*row*/,int /*col*/,const QPoi
     addMenu.insertItem( &listView );
 
     popupMenu.insertItem( tr( "Add equipment"), &addMenu ,0 );
-    if ( GetCurrentData() != 0 )
+    if( GetCurrentData() != 0 )
         popupMenu.insertItem( tr( "Remove equipment"), 1 );
-    
+
     bMenuListItemSelected_ = false;
     connect( &listView, SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ), this, SLOT( MenuListItemSelected() ) );
     connect( &listView, SIGNAL( returnPressed( QListViewItem* ) ), this, SLOT( MenuListItemSelected() ) );
@@ -165,7 +165,7 @@ void ADN_Units_Composantes_GUI::OnContextMenu(int /*row*/,int /*col*/,const QPoi
     {
         RemoveCurrentElement();
     }
-    else if(  bMenuListItemSelected_ )
+    else if( bMenuListItemSelected_ )
     {
         assert( listView.selectedItem() != 0 );
         MT_ValuedListViewItem<int>* pItem = (MT_ValuedListViewItem<int>*)listView.selectedItem();
@@ -186,7 +186,7 @@ void ADN_Units_Composantes_GUI::AddNewElement( int n )
 
     ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
     pCTable->AddItem( pNewInfo );
-    pCTable->AddItem( 0 );    
+    pCTable->AddItem( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -197,12 +197,12 @@ void ADN_Units_Composantes_GUI::RemoveCurrentElement()
 {
     // delete composante
     ComposanteInfos* pCurComposante=(ComposanteInfos*)GetCurrentData();
-    if ( pCurComposante )
+    if( pCurComposante )
     {
         // remove current data from list
         // take care cause pCurData_ can change!!
-        static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem(pCurComposante);        
-    }    
+        static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem(pCurComposante);
+    }
 }
 
 

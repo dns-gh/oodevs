@@ -60,7 +60,7 @@ private:
     //@}
 
 private:
-    //! @name 
+    //! @name
     //@{
     void InitializeDistances                ( xml::xistream& xis );
     void InitializeEnvironnementFactors     ( xml::xistream& xis );

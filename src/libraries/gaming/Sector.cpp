@@ -26,7 +26,7 @@ Sector::Sector( const Point2f& vOrigin, unsigned heading, float rAngle )
     , vDirection_( std::sin( heading * pi_ / 180.f ), std::cos( heading * pi_ / 180.f ) )
     , rSemiAngle_( rAngle / 2.f )
 {
-    if ( vDirection_.IsNull() )
+    if( vDirection_.IsNull() )
     {   // -> on passe à 360°
         rSemiAngle_ = rSemiAngle_ > 0 ? -rSemiAngle_ : rSemiAngle_ ;
     }
@@ -43,7 +43,7 @@ Sector::Sector( const Point2f& vOrigin, unsigned heading, float rAngle )
 
         rA2_ = vDirection_.Y() * COS - vDirection_.X() * SIN;
         rB2_ = -vDirection_.Y() * SIN - vDirection_.X() * COS;
-        rC2_ = -( rA2_ * vOrigin_.X() + rB2_ * vOrigin_.Y() );    
+        rC2_ = -( rA2_ * vOrigin_.X() + rB2_ * vOrigin_.Y() );
     }
 
     direction1_ = direction2_ = vDirection_;

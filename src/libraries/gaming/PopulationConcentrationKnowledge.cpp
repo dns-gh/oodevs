@@ -1,12 +1,12 @@
 //*****************************************************************************
-// 
+//
 // $Created: AGN 03-04-03 $
 // $Archive: /MVW_v10/Build/SDK/Light2/src/PopulationConcentrationKnowledge.cpp $
 // $Author: Age $
 // $Modtime: 31/03/05 17:45 $
 // $Revision: 8 $
 // $Workfile: PopulationConcentrationKnowledge.cpp $
-// 
+//
 //*****************************************************************************
 
 #include "gaming_pch.h"

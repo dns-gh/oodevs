@@ -70,7 +70,7 @@ private:
     };
 
     typedef std::vector< const DEC_PathType* >  T_PathTypeFromIDVector;
-    //@}    
+    //@}
 
 private:
      DEC_PathType( E_PathType nType, const std::string& strName );

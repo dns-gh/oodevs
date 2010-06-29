@@ -41,7 +41,7 @@ ADN_Sensor_Wizard::ADN_Sensor_Wizard( QWidget* pParent, const char* szName )
     pFirstPage->SetCaptions( qApp->translate( "ADN_Sensor_Wizard",  "New sensor creation" ), qApp->translate( "ADN_Sensor_Wizard", "Sensors" ) );
     pFirstPage_ = pFirstPage;
 
-    new ADN_Wizard_LastPage( this, qApp->translate( "ADN_Sensor_Wizard","Creation completed" ), 
+    new ADN_Wizard_LastPage( this, qApp->translate( "ADN_Sensor_Wizard","Creation completed" ),
         qApp->translate( "ADN_Sensor_Wizard","Click \"Done\" to create the new sensor." ) );
 }
 

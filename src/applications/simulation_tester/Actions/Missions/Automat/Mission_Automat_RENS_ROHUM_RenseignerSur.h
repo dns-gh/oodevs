@@ -21,7 +21,7 @@ namespace TEST {
     @brief  Mission_Automat_RENS_ROHUM_RenseignerSur
 */
 // Created: SBO 2005-08-08
-// Generated: 
+// Generated:
 // =============================================================================
 class Mission_Automat_RENS_ROHUM_RenseignerSur : public Mission_Automat_ABC
 {

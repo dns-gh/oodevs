@@ -24,7 +24,7 @@ class QWidget;
 */
 // Created: APE 2004-12-06
 // =============================================================================
-class ADN_Models_GUI 
+class ADN_Models_GUI
 : public ADN_GUI_ABC
 {
 
@@ -54,7 +54,7 @@ public:
     //! @name Operations
     //@{
     void Build();
-    void Enable( bool enable ); 
+    void Enable( bool enable );
     //@}
 
 private:

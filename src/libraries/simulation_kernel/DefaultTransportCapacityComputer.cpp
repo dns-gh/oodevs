@@ -14,8 +14,8 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 
 namespace transport {
-    
-    
+
+
 // -----------------------------------------------------------------------------
 // Name: DefaultTransportCapacityComputer constructor
 // Created: AHC 2009-10-01
@@ -60,7 +60,7 @@ void DefaultTransportCapacityComputer::ApplyOnComposante( PHY_ComposantePion& co
 double DefaultTransportCapacityComputer::WeightCapacity() const
 {
     return rWeightCapacity_;
-} 
+}
 
 // -----------------------------------------------------------------------------
 // Name: DefaultTransportCapacityComputer::WeightLoadedPerTimeStep

@@ -55,12 +55,12 @@ PHY_PerceptionSurfaceAgent::~PHY_PerceptionSurfaceAgent()
 void PHY_PerceptionSurfaceAgent::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     unsigned int nID;
-    
+
     file >> nID;
     assert( PHY_SensorType::FindSensorType( nID ) );
     pSensorType_ = PHY_SensorType::FindSensorType( nID )->GetTypeAgent();
     assert( pSensorType_ );
-    
+
     file >> vOrigin_
          >> rHeight_
          >> sectors_;
@@ -262,7 +262,7 @@ const std::string& PHY_PerceptionSurfaceAgent::GetSensorTypeName() const
 void PHY_PerceptionSurfaceAgent::TransfertPerception( std::map< const void*, std::pair< unsigned int, float > > urbanPerceptionMap ) const
 {
     perceptionsBuffer_.clear();
-    
+
     for ( std::map< const void*, std::pair< unsigned int, float > >::const_iterator it = urbanPerceptionMap.begin(); it != urbanPerceptionMap.end(); ++it )
         perceptionsBuffer_[ it->first ] = it->second.first;
 }

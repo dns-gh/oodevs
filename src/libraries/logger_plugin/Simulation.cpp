@@ -19,7 +19,7 @@ namespace
     {
         // $$$$ AGE 2007-10-12: ...
         QString extended( str.c_str() );
-        extended.insert( 13, ':' ); extended.insert( 11, ':' ); 
+        extended.insert( 13, ':' ); extended.insert( 11, ':' );
         extended.insert(  6, '-' ); extended.insert(  4, '-' );
         return QDateTime::fromString( extended, Qt::ISODate );
     }

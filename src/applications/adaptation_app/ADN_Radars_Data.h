@@ -67,7 +67,7 @@ public:
 
         void ReadArchive( xml::xistream& input );
         void ReadDetectableActivity( xml::xistream& input );
-        
+
         void WriteArchive( xml::xostream& output );
 
     public:

@@ -50,7 +50,7 @@ public:
     virtual void Clean( Common::MsgMissionParameter& asn ) const;
     virtual bool IsSet() const;
     //@}
-    
+
 private:
     //! @name Copy/Assignment
     //@{

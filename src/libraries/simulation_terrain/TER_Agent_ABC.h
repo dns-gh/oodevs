@@ -60,7 +60,7 @@ public:
 
     void SetListener( TER_AgentManager& agentManager );
     //@}
-    
+
 protected:
     //! @name Operations
     //@{

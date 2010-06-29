@@ -29,7 +29,7 @@ using namespace TEST;
 // -----------------------------------------------------------------------------
 PopulationKnowledge::PopulationKnowledge( const EntityManager& entityManager, const MsgPopulationKnowledgeCreation& asnMsg, const KnowledgeGroup& knowledgeGroup )
     : owner_     ( knowledgeGroup )
-    , nId_       ( asnMsg.oid_connaissance() ) 
+    , nId_       ( asnMsg.oid_connaissance() )
     , pRealPopulation_ ( asnMsg.oid_population_reelle() == 0 ? 0 : entityManager.FindPopulation( asnMsg.oid_population_reelle() ) )
 {
     // NOTHING

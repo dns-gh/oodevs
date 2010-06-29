@@ -33,7 +33,7 @@
 
 using namespace MsgsClientToSim;
 
-namespace 
+namespace
 {
     template< typename T, typename I = T  >
     struct AddBuilder
@@ -55,19 +55,19 @@ namespace
     }
 
     template<>
-    struct AddBuilder< MineAttribute > 
-    {    
+    struct AddBuilder< MineAttribute >
+    {
         static void Add( Object& object, xml::xistream& xis )
         {
             InitializeDotation< ImprovableCapacity, MineAttribute >( object );
             InitializeDotation< BuildableCapacity, MineAttribute >( object );
-            object.GetAttribute< MineAttribute >().Load( xis );            
+            object.GetAttribute< MineAttribute >().Load( xis );
         }
     };
 
     template<>
-    struct AddBuilder< ConstructionAttribute > 
-    {    
+    struct AddBuilder< ConstructionAttribute >
+    {
         static void Add( Object& object, xml::xistream& xis )
         {
             InitializeDotation< ImprovableCapacity, ConstructionAttribute >( object );
@@ -116,7 +116,7 @@ AttributeFactory::~AttributeFactory()
 // -----------------------------------------------------------------------------
 void AttributeFactory::Register( const std::string& attribute, const T_CallBack& callback )
 {
-    if ( ! callbacks_.insert( std::make_pair( attribute, callback ) ).second )
+    if( ! callbacks_.insert( std::make_pair( attribute, callback ) ).second )
         throw std::invalid_argument( "capacity '" + attribute + "' already registered." );
 }
 
@@ -127,7 +127,7 @@ void AttributeFactory::Register( const std::string& attribute, const T_CallBack&
 void AttributeFactory::Create( Object& object, const std::string& attribute, xml::xistream& xis ) const
 {
     const CIT_Callbacks it = callbacks_.find( attribute );
-    if ( it != callbacks_.end() )
+    if( it != callbacks_.end() )
         it->second( object, xis );
 }
 

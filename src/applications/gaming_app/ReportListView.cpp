@@ -39,7 +39,7 @@ ReportListView::ReportListView( QWidget* pParent, Controllers& controllers, cons
     setMargin( 2 );
     AddColumn( tr( "Received" ) );
     AddColumn( tr( "Report" ) );
-    
+
     // Set a descending sorting order, then disable user sorting.
     setSorting( 0, false );
     setSorting( -1, false );
@@ -219,7 +219,7 @@ void ReportListView::MarkReportsAsRead()
 {
     const Reports* reports = 0;
     if( selected_ && ( reports = selected_->Retrieve< Reports >() ) != 0 )
-        const_cast< Reports* >( reports )->MarkAsRead(); // $$$$ AGE 2006-09-18: 
+        const_cast< Reports* >( reports )->MarkAsRead(); // $$$$ AGE 2006-09-18:
 }
 
 // -----------------------------------------------------------------------------
@@ -230,7 +230,7 @@ void ReportListView::OnClearAll()
 {
     const Reports* reports = 0;
     if( selected_ && ( reports = selected_->Retrieve< Reports >() ) != 0 )
-        const_cast< Reports* >( reports )->Clear(); // $$$$ AGE 2006-09-18: 
+        const_cast< Reports* >( reports )->Clear(); // $$$$ AGE 2006-09-18:
 }
 
 // -----------------------------------------------------------------------------
@@ -241,7 +241,7 @@ void ReportListView::OnClearTrace()
 {
     const Reports* reports = 0;
     if( selected_ && ( reports = selected_->Retrieve< Reports >() ) != 0 )
-        const_cast< Reports* >( reports )->ClearTraces(); // $$$$ AGE 2006-09-18: 
+        const_cast< Reports* >( reports )->ClearTraces(); // $$$$ AGE 2006-09-18:
 }
 
 // -----------------------------------------------------------------------------

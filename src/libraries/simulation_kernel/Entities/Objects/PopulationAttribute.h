@@ -34,7 +34,7 @@ public:
     //@{
     MT_Float GetDensity() const;
     void  Reset();
-    void  SetDensity( MT_Float rDensity );    
+    void  SetDensity( MT_Float rDensity );
     template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
@@ -55,7 +55,7 @@ private:
     //@}
 
 private:
-    //! @name 
+    //! @name
     //@{
     MT_Float density_;
     //@}

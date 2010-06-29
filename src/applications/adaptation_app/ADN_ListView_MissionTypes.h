@@ -35,7 +35,7 @@ private:
     void ConnectItem( bool bConnect );
     void OnContextMenu( const QPoint& pt );
     //@}
-    
+
 private:
     //! @name Copy/Assignement
     //@{

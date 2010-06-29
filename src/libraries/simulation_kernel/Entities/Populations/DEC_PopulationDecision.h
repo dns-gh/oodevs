@@ -37,7 +37,7 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     //! @name Checkpoint
     //@{
     template< typename Archive > friend  void save_construct_data( Archive& archive, const DEC_PopulationDecision* role, const unsigned int /*version*/ );
@@ -45,7 +45,7 @@ public:
     void load( MIL_CheckPointInArchive&, const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;
     //@}
-    
+
     //! @name Operations
     //@{
     void SetModel( const DEC_Model_ABC& model );
@@ -79,7 +79,7 @@ protected:
     //! @name Helpers
     //@{
     virtual void      EndCleanStateAfterCrash      ();
-    
+
     virtual void RegisterUserFunctions( directia::Brain& brain );
     //@}
 
@@ -106,7 +106,7 @@ template< typename Archive >
 void save_construct_data( Archive& archive, const DEC_PopulationDecision* role, const unsigned int /*version*/ )
 {
     const DEC_DataBase* const database = &role->database_;
-    archive << role->pEntity_ 
+    archive << role->pEntity_
         << database;
 }
 

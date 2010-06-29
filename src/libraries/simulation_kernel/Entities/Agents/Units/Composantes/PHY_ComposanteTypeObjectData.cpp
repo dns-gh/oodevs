@@ -46,20 +46,20 @@ PHY_ComposanteTypeObjectData::PHY_ComposanteTypeObjectData( xml::xistream& xis )
     tools::ReadTimeAttribute( xis, "non-bypassed-speed"       , rSpeedWithinWhenNotBypassed_ );
     tools::ReadTimeAttribute( xis, "bypassed-speed"           , rSpeedWithinWhenBypassed_    );
 
-    if ( rSpeedWithinWhenNotBypassed_ < 0 )
+    if( rSpeedWithinWhenNotBypassed_ < 0 )
         rSpeedWithinWhenNotBypassed_ = std::numeric_limits< MT_Float >::max();
 
-    if ( rSpeedWithinWhenBypassed_ < 0 )
+    if( rSpeedWithinWhenBypassed_ < 0 )
         rSpeedWithinWhenBypassed_ = std::numeric_limits< MT_Float >::max();
 
     xis >> xml::optional() >> xml::attribute( "consumption-mode", strConsumptionMode );
 
-    if ( strConsumptionMode != "" )
+    if( strConsumptionMode != "" )
     {
         pConsumptionMode_ = PHY_ConsumptionType::FindConsumptionType( strConsumptionMode );
         if( !pConsumptionMode_ )
             xis.error( "Unknown consumption mode '" + strConsumptionMode + "'" );
-    }      
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -76,10 +76,10 @@ PHY_ComposanteTypeObjectData::~PHY_ComposanteTypeObjectData()
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
 MT_Float PHY_ComposanteTypeObjectData::GetMaxSpeed( const MIL_Object_ABC& object ) const
-{    
+{
     if( object().IsBypassed() )
         return rSpeedWithinWhenBypassed_;
-    else 
+    else
         return rSpeedWithinWhenNotBypassed_;
 }
 

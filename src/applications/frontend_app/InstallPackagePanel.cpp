@@ -140,7 +140,7 @@ namespace
     struct Progress
     {
         Progress( QProgressBar* progress ) : progress_( progress ), count_( 0 ) {}
-        void operator()() 
+        void operator()()
         {
             progress_->setProgress( ++count_ );
             qApp->processEvents();

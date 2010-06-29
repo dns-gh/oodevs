@@ -38,7 +38,7 @@ class PHY_ComposantePion;
 class MIL_AutomateInjuredHuman : public MIL_Automate
 {
     MT_COPYNOTALLOWED( MIL_AutomateInjuredHuman )
-    
+
 public:
              MIL_AutomateInjuredHuman(  const MIL_AutomateTypeInjuredHuman& type
                                         , uint nID, MIL_Formation& parent
@@ -53,13 +53,13 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive&, const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;
     //@}
 
     //! @name Operations
-    //@{    
+    //@{
     virtual void UpdateNetwork() const;
     virtual void UpdateState  ();
     virtual void Clean        ();
@@ -94,7 +94,7 @@ private:
     MIL_AutomateInjuredHuman* GetAutomateInjuredHuman( uint nID ) const;
     const MIL_AutomateType* RetrieveType() const;
     //@}
-    
+
     //! @name Serialization
     //@{
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_AutomateInjuredHuman* automat, const unsigned int /*version*/ );

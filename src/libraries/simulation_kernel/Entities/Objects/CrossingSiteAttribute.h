@@ -49,14 +49,14 @@ public:
 
     //! @name ODB
     //@{
-    virtual void WriteODB( xml::xostream& /*xos*/ ) const;    
+    virtual void WriteODB( xml::xostream& /*xos*/ ) const;
     //@}
 
     //! @name Network
     //@{
     virtual void SendFullState( Common::MsgObjectAttributes& asn ) const;
     virtual void SendUpdate( Common::MsgObjectAttributes& asn ) const;
-    virtual void OnUpdate( const Common::MsgMissionParameter_Value& attribute );    
+    virtual void OnUpdate( const Common::MsgMissionParameter_Value& attribute );
     //@}
 
     //! @name Knowledge
@@ -84,7 +84,7 @@ private:
     //@}
 
 private:
-    //! @name 
+    //! @name
     //@{
     MT_Float rWidth_;
     MT_Float rDepth_;

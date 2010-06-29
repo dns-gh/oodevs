@@ -24,14 +24,14 @@ using namespace mockpp;
 
 // -----------------------------------------------------------------------------
 // Name: BOOST_AUTO_TEST_CASE
-// Created: FHD 2010-01-19: 
+// Created: FHD 2010-01-19:
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorKnowledgeGroupUnderKnowledgeGroup )
 {
     MockArmy army;
     MOCK_EXPECT( army, GetID ).returns( 1 );
     MockKnowledgeGroupFactory mockKnowledgeGroupFactory;
-    
+
     // define knowledgeGroup type
     const std::string initialisation ="<knowledge-groups><knowledge-group name=\"TOTO\" communication-delay=\"01m\">"
         "<unit-knowledge max-lifetime=\"03h\" max-unit-to-knowledge-distance=\"60000\"/>"
@@ -43,7 +43,7 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorKnowledgeGroupUnderKnowledgeGroup )
     MIL_KnowledgeGroupType::Initialize(xis, timeFactor);
 
     const MIL_KnowledgeGroupType &kgType = *MIL_KnowledgeGroupType::FindType("TOTO");
-  
+
     // register army sub knowledge group
     MOCK_EXPECT( army, RegisterKnowledgeGroup ).once();
     MIL_KnowledgeGroup groupArmy( kgType, 1, army );
@@ -61,7 +61,7 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorKnowledgeGroupUnderKnowledgeGroup )
 //    MOCK_EXPECT( groupArmy, RegisterKnowledgeGroup ).once(); // $$$$ _RC_ SBO 2010-04-27: TODO: check registration into parent KG
     MIL_KnowledgeGroup group2( xis3, army, &groupArmy, mockKnowledgeGroupFactory );
 //    army.verify();
-    
+
     MsgsClientToSim::MsgKnowledgeMagicAction msg;
     msg.set_oid( group2.GetId() );
     msg.set_type( MsgsClientToSim::MsgKnowledgeMagicAction_Type_update_side_parent );
@@ -89,17 +89,17 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorKnowledgeGroupUnderKnowledgeGroup )
 
 // -----------------------------------------------------------------------------
 // Name: BOOST_AUTO_TEST_CASE
-// Created: FHD 2010-01-19: 
+// Created: FHD 2010-01-19:
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorKnowledgeGroupUnderArmy )
 {
     MockArmy army;
     MOCK_EXPECT( army, GetID ).returns( 10u );
     MockKnowledgeGroupFactory mockKnowledgeGroupFactory;
-    
+
     // Use previously define type
     const MIL_KnowledgeGroupType &kgType = *MIL_KnowledgeGroupType::FindType("TOTO");
-  
+
     // register army sub knowledge group
     MOCK_EXPECT( army, RegisterKnowledgeGroup ).once();
     MIL_KnowledgeGroup groupArmy( kgType, 10, army );
@@ -117,7 +117,7 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorKnowledgeGroupUnderArmy )
 //    MOCK_EXPECT( group1, RegisterKnowledgeGroup ).once(); // $$$$ _RC_ SBO 2010-04-27: TODO: check registration into parent KG
     MIL_KnowledgeGroup group2( xis3, army, &group1, mockKnowledgeGroupFactory );
 //    group1.verify();
-    
+
     MsgsClientToSim::MsgKnowledgeMagicAction msg;
     msg.set_oid( group2.GetId() );
     msg.set_type( MsgsClientToSim::MsgKnowledgeMagicAction_Type_update_side );
@@ -148,17 +148,17 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorKnowledgeGroupUnderArmy )
 
 // -----------------------------------------------------------------------------
 // Name: BOOST_AUTO_TEST_CASE
-// Created: FHD 2010-01-19: 
+// Created: FHD 2010-01-19:
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorArmyUnderKnowledgeGroup )
 {
     MockArmy army;
     MOCK_EXPECT( army, GetID ).returns( 20u );
     MockKnowledgeGroupFactory mockKnowledgeGroupFactory;
-    
+
     // Use previously define type
     const MIL_KnowledgeGroupType &kgType = *MIL_KnowledgeGroupType::FindType("TOTO");
-  
+
     // register army sub knowledge group
     MOCK_EXPECT( army, RegisterKnowledgeGroup ).once();
     MIL_KnowledgeGroup groupArmy( kgType, 20, army );
@@ -176,11 +176,11 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorArmyUnderKnowledgeGroup )
     MOCK_EXPECT( army, RegisterKnowledgeGroup ).once();
     MIL_KnowledgeGroup group2( xis3, army, 0, mockKnowledgeGroupFactory );
     army.verify();
-    
+
     MsgsClientToSim::MsgKnowledgeMagicAction msg;
     msg.set_oid( group2.GetId() );
     msg.set_type( MsgsClientToSim::MsgKnowledgeMagicAction_Type_update_side_parent );
-    
+
     msg.mutable_parametres()->add_elem()->mutable_value()->mutable_army()->set_oid( army.GetID() );
     msg.mutable_parametres()->add_elem()->mutable_value()->mutable_knowledgegroup()->set_oid( group1.GetId() );
 
@@ -208,13 +208,13 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorArmyUnderKnowledgeGroup )
 
 // -----------------------------------------------------------------------------
 // Name: BOOST_AUTO_TEST_CASE
-// Created: FHD 2010-01-19: 
+// Created: FHD 2010-01-19:
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( ReceiveKnowledgeGroupSetType )
 {
     MockArmy army;
     MockKnowledgeGroupFactory mockKnowledgeGroupFactory;
-    
+
     // define a new knowledge group type
     const std::string initialisation ="<knowledge-groups><knowledge-group name=\"Standard\" communication-delay=\"01m\">"
     "<unit-knowledge max-lifetime=\"03h\" max-unit-to-knowledge-distance=\"60000\"/>"
@@ -230,7 +230,7 @@ BOOST_AUTO_TEST_CASE( ReceiveKnowledgeGroupSetType )
     MOCK_EXPECT( army, RegisterKnowledgeGroup ).once();
     MIL_KnowledgeGroup groupArmy( kgType, 30, army );
 
-    // prepare message    
+    // prepare message
     MsgsClientToSim::MsgKnowledgeMagicAction msg;
     msg.set_oid( groupArmy.GetId() );
     msg.set_type( MsgsClientToSim::MsgKnowledgeMagicAction_Type_update_type );

@@ -32,7 +32,7 @@ ParamAgentList::ParamAgentList( QObject* parent, const kernel::OrderParameter& p
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ParamAgentList destructor
 // Created: AGE 2006-11-29
@@ -107,7 +107,7 @@ void ParamAgentList::AddHierarchy()
 // -----------------------------------------------------------------------------
 void ParamAgentList::AddHierarchy( const kernel::Entity_ABC& superior )
 {
-    // $$$$ AGE 2007-10-15: 
+    // $$$$ AGE 2007-10-15:
     if( const kernel::Agent_ABC* agent = dynamic_cast< const kernel::Agent_ABC* >( &superior ) )
         Add( *agent );
     else if( const kernel::Hierarchies* h = superior.Retrieve< kernel::TacticalHierarchies >() )

@@ -77,7 +77,7 @@ private:
     //! @name Helpers
     //@{
     void Update( const MsgsSimToClient::MsgFolkGraphEdgeUpdate& update );
-    void ComputeRatios(); 
+    void ComputeRatios();
     //@}
 
     //! @name Types
@@ -97,7 +97,7 @@ private:
     unsigned edgeCount_;
     unsigned edgeSize_;
 
-    std::auto_ptr< T_Values > values_;   
+    std::auto_ptr< T_Values > values_;
 
     int currentContainer_, currentProfile_, currentActivity_;
     T_Ratios ratios_;

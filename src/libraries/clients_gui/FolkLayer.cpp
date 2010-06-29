@@ -63,7 +63,7 @@ void FolkLayer::SetOccupation( const std::vector< float >& coordinates )
 {
     if( coordinates.empty() )
         return;
-    
+
     std::vector< float > transformed( coordinates );
     CIT_Edges itEdge = edges_.begin();
     std::vector< float >::iterator it = transformed.begin();

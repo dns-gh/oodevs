@@ -143,7 +143,7 @@ MT_Float PHY_SensorTypeObjectData::GetSourceFactor( const MIL_Agent_ABC& source 
 
     assert( postureSourceFactors_.size() > nOldPostureIdx );
     assert( postureSourceFactors_.size() > nCurPostureIdx );
-    MT_Float rModificator =     postureSourceFactors_[ nOldPostureIdx ] + sourcePosture.GetPostureCompletionPercentage() 
+    MT_Float rModificator =     postureSourceFactors_[ nOldPostureIdx ] + sourcePosture.GetPostureCompletionPercentage()
                             * ( postureSourceFactors_[ nCurPostureIdx ] - postureSourceFactors_[ nOldPostureIdx ] );
 
     MIL_Agent_ABC& tempSource = const_cast< MIL_Agent_ABC& >( source );//@TODO MGD FIND A BETTER WAY
@@ -162,7 +162,7 @@ MT_Float PHY_SensorTypeObjectData::GetSourceFactor( const MIL_Agent_ABC& source 
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& PHY_SensorTypeObjectData::ComputePerception( const MIL_Agent_ABC& source, const MIL_Object_ABC& target, MT_Float /*rSensorHeight*/ ) const
-{   
+{
     const MT_Float     rDistanceMaxModificator = GetSourceFactor( source );
     const MT_Vector2D& vSourcePos              = source.GetRole< PHY_RoleInterface_Location >().GetPosition();
 
@@ -182,7 +182,7 @@ const PHY_PerceptionLevel& PHY_SensorTypeObjectData::ComputePerception( const MI
 
     if( rDistanceMaxModificator == 0. || !target.GetLocalisation().Intersect2DWithCircle( vSourcePos, rDD_ * rDistanceMaxModificator ) )
         return PHY_PerceptionLevel::notSeen_;
-    return PHY_PerceptionLevel::identified_;    
+    return PHY_PerceptionLevel::identified_;
 }
 
 // -----------------------------------------------------------------------------

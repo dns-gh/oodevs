@@ -82,13 +82,13 @@ void ADN_Health_GUI::Build()
     pMainWidget_ = new QWidget( 0 );
     QGroupBox* pGroup = new QGroupBox( 4, Qt::Horizontal, tr( "Medical system data" ), pMainWidget_ );
 
-    QVBox* pVBox = new QVBox( pGroup ); 
+    QVBox* pVBox = new QVBox( pGroup );
 
     QWidget* pHolder = builder.AddFieldHolder( pVBox );
 
     builder.AddField< ADN_TimeField >( pHolder, tr( "Diagnostic duration" ), data_.diagnosticTime_ );
     builder.AddField< ADN_TimeField >( pHolder, tr( "Triage duration" ), data_.sortingTime_ );
-    
+
     // wounds
     QHBox* pWoundsGroup = new QHBox( pVBox );
     pWoundsGroup->setSpacing( 5 );
@@ -144,7 +144,7 @@ void ADN_Health_GUI::Build()
     QHGroupBox* pAvailabilityGroup = new QHGroupBox( tr( "Ambulances - evacuation" ), pWarningGroup );
     ADN_AvailabilityWarningTable* pChangeOverWarningTable = new ADN_AvailabilityWarningTable( pAvailabilityGroup );
     pChangeOverWarningTable->GetConnector().Connect( & data_.vChangeOverWarnings_ );
-    
+
     pAvailabilityGroup = new QHGroupBox( tr( "Ambulances - collection" ), pWarningGroup );
     ADN_AvailabilityWarningTable* pCollectWarningTable = new ADN_AvailabilityWarningTable( pAvailabilityGroup );
     pCollectWarningTable->GetConnector().Connect( & data_.vCollectingWarnings_ );

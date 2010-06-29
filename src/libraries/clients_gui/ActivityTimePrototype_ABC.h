@@ -14,7 +14,7 @@
 
 namespace gui
 {
-    
+
 // =============================================================================
 /** @class  PropagationPrototype_ABC
     @brief  PropagationPrototype_ABC
@@ -44,7 +44,7 @@ private:
 
 protected:
     //! @name Member data
-    //@{    
+    //@{
     QTimeEdit*  activityTime_;
     //@}
 };

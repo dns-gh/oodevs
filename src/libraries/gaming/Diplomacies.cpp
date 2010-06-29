@@ -42,11 +42,11 @@ namespace
     {
         switch( diplomacy )
         {
-        case Common::friend_diplo:    
+        case Common::friend_diplo:
             return Karma::friend_;
-        case Common::enemy_diplo: 
+        case Common::enemy_diplo:
             return Karma::enemy_;
-        case Common::neutral_diplo: 
+        case Common::neutral_diplo:
             return Karma::neutral_;
         default:
             return kernel::Karma::unknown_;
@@ -112,17 +112,17 @@ void Diplomacies::DoUpdate( const MsgsSimToClient::MsgTeamCreation& message )
 {
     switch( message.type() )
     {
-    case Common::friend_diplo :     
-        karma_ = kernel::Karma::friend_; 
+    case Common::friend_diplo :
+        karma_ = kernel::Karma::friend_;
         break;
-    case Common::enemy_diplo :  
-        karma_ = kernel::Karma::enemy_; 
+    case Common::enemy_diplo :
+        karma_ = kernel::Karma::enemy_;
         break;
-    case Common::neutral_diplo :  
-        karma_ = kernel::Karma::neutral_; 
+    case Common::neutral_diplo :
+        karma_ = kernel::Karma::neutral_;
         break;
     default:
-        karma_ = kernel::Karma::unknown_; 
+        karma_ = kernel::Karma::unknown_;
         break;
     }
 }

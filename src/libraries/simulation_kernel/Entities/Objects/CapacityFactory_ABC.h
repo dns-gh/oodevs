@@ -24,7 +24,7 @@ public:
     //@{
             CapacityFactory_ABC() {}
     virtual ~CapacityFactory_ABC() {}
-    //@}    
+    //@}
 
     //! @name Registrer
     //@{

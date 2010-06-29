@@ -101,7 +101,7 @@ void MIL_PopulationElement_ABC::FireOnPion( MT_Float rIntensity, MIL_Agent_ABC& 
     target.NotifyAttackedBy( *pPopulation_ );
 
     const MT_Float rPH = GetPopulation().GetType().GetPH( *pAttitude_, rDensity_ );
-    if ( !( randomGenerator_.rand_oi() <= rPH * rIntensity ) ) 
+    if( !( randomGenerator_.rand_oi() <= rPH * rIntensity ) )
         return;
 
     MIL_Effect_PopulationFire* pEffect = new MIL_Effect_PopulationFire( GetPopulation().GetType(), GetAttitude(), target, *compTargets.front(), fireResult );
@@ -202,7 +202,7 @@ void MIL_PopulationElement_ABC::UpdateCollisions()
     {
         MIL_Agent_ABC& agent = static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent();
         collidingAgents_.push_back( &agent );
-        
+
         NotifyCollision( agent );
     }
 }
@@ -293,7 +293,7 @@ const MIL_PopulationAttitude& MIL_PopulationElement_ABC::GetAttitude() const
 // -----------------------------------------------------------------------------
 void MIL_PopulationElement_ABC::Clean()
 {
-    bAttitudeUpdated_ = false;   
+    bAttitudeUpdated_ = false;
     bHumansUpdated_   = false;
 }
 
@@ -371,7 +371,7 @@ void MIL_PopulationElement_ABC::UpdateDensity()
     if( rArea == 0. )
         rDensity_ = 0; // $$$ +infini sauf si aucun humain
     else
-        rDensity_ = MT_Float( nNbrAliveHumans_ ) / rArea;    
+        rDensity_ = MT_Float( nNbrAliveHumans_ ) / rArea;
 }
 
 // -----------------------------------------------------------------------------
@@ -471,7 +471,7 @@ unsigned int MIL_PopulationElement_ABC::Kill( unsigned int count )
     bHumansUpdated_ = true;
     return kills;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationElement_ABC::Resurrect
 // Created: SBO 2006-04-05

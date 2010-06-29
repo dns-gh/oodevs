@@ -47,7 +47,7 @@ private slots:
     //! @name Slots
     //@{
     void OnDoubleClicked( QListViewItem* );
-    //@}    
+    //@}
 
 private:
     //! @name Copy/Assignment

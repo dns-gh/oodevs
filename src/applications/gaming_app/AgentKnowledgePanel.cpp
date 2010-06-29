@@ -42,7 +42,7 @@ AgentKnowledgePanel::AgentKnowledgePanel( QWidget* parent, PanelStack_ABC& panel
 {
     pKnowledgeListView_ = new ListDisplayer< AgentKnowledgePanel >( this, *this, factory );
     pKnowledgeListView_->AddColumn( tr( "Known units" ) );
-    
+
     display_ = new DisplayBuilder( this, factory );
     display_->AddGroup( tr( "Details" ) )
                 .AddLabel( tr( "Identifier:" ) )
@@ -94,7 +94,7 @@ AgentKnowledgePanel::~AgentKnowledgePanel()
 // -----------------------------------------------------------------------------
 void AgentKnowledgePanel::showEvent( QShowEvent* )
 {
-    if( selected_ ) 
+    if( selected_ )
         NotifyUpdated( *selected_ );
 }
 
@@ -107,7 +107,7 @@ void AgentKnowledgePanel::NotifyUpdated( const AgentKnowledges& knowledges )
     if( ! IsVisible() || selected_ != &knowledges )
         return;
 
-    pKnowledgeListView_->DeleteTail( 
+    pKnowledgeListView_->DeleteTail(
         pKnowledgeListView_->DisplayList( knowledges.CreateIterator() )
         );
     ValuedListItem* item = FindItem( subSelected_, pKnowledgeListView_->firstChild() );
@@ -262,7 +262,7 @@ void AgentKnowledgePanel::NotifyUpdated( const PerceptionMap& perceptions )
     if( ! IsVisible() || ! subSelected_ || subSelected_->Retrieve< PerceptionMap >() != & perceptions )
         return;
 
-    pPerceptionListView_->DeleteTail( 
+    pPerceptionListView_->DeleteTail(
         pPerceptionListView_->DisplayList( perceptions.perceptions_.begin(), perceptions.perceptions_.end() )
         );
 }

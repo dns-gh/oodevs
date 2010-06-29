@@ -24,7 +24,7 @@ namespace
     {
         xml::xifstream xis( session );
         unsigned step;
-        xis >> xml::start( "session" ) >> xml::start( "config" ) 
+        xis >> xml::start( "session" ) >> xml::start( "config" )
                 >> xml::start( "simulation" ) >> xml::start( "time" )
                     >> xml::attribute( "step", step );
         return step;

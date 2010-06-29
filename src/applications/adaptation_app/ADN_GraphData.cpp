@@ -23,7 +23,7 @@
 
 // -----------------------------------------------------------------------------
 // Name: ADN_GraphData constructor
-/** @param  nUserID 
+/** @param  nUserID
 */
 // Created: APE 2004-12-21
 // -----------------------------------------------------------------------------
@@ -59,7 +59,7 @@ void ADN_GraphData::AddData( ADN_GraphValue& value )
 
 // -----------------------------------------------------------------------------
 // Name: ADN_GraphData::DeleteData
-/** @param  pRelatedObject 
+/** @param  pRelatedObject
 */
 // Created: APE 2004-12-21
 // -----------------------------------------------------------------------------
@@ -68,7 +68,7 @@ void ADN_GraphData::DeleteData( void* pRelatedObject )
     for( IT_GraphValue_Vector it = graphValueList_.begin(); it != graphValueList_.end(); )
     {
         ADN_GraphValue& value = **it;
-        // Check if the value is related to the object being deleted. 
+        // Check if the value is related to the object being deleted.
         if( value.GetRelatedObject() == pRelatedObject )
         {
             // It is. Delete the graphData point and the value.
@@ -80,7 +80,7 @@ void ADN_GraphData::DeleteData( void* pRelatedObject )
         }
         // The value is not related to the object being deleted. Update it in case it has changed
         // as a result of having the other value deleted (for example, it's x coordinate
-        // changing because the preceding value was deleted thus avoiding some ugly empty space). 
+        // changing because the preceding value was deleted thus avoiding some ugly empty space).
         this->ChangePoint( std::distance( graphValueList_.begin(), it ), value.GetPoint() );
         ++it;
     }
@@ -102,7 +102,7 @@ void ADN_GraphData::OnDataChanged( ADN_GraphValue& value )
 
 // -----------------------------------------------------------------------------
 // Name: ADN_GraphData::SelectRelatedData
-/** @param  pObj 
+/** @param  pObj
 */
 // Created: APE 2004-12-22
 // -----------------------------------------------------------------------------

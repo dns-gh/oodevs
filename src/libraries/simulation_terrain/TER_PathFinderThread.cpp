@@ -88,7 +88,7 @@ void TER_PathFinderThread::ProcessDynamicData()
             pData->RegisterDynamicData( *this );
         }
 
-        MT_LOG_INFO_MSG( MT_FormatString( "Register %d dynamic data - %.2f ms", tmpDynamicDataToRegister.size(), profiler.Stop() ) );    
+        MT_LOG_INFO_MSG( MT_FormatString( "Register %d dynamic data - %.2f ms", tmpDynamicDataToRegister.size(), profiler.Stop() ) );
         tmpDynamicDataToRegister.clear();
     }
 
@@ -104,10 +104,10 @@ void TER_PathFinderThread::ProcessDynamicData()
             pData->UnregisterDynamicData( *this );
         }
 
-        MT_LOG_INFO_MSG( MT_FormatString( "Unregister %d dynamic data - %.2f ms", tmpDynamicDataToUnregister.size(), profiler.Stop() ) );    
+        MT_LOG_INFO_MSG( MT_FormatString( "Unregister %d dynamic data - %.2f ms", tmpDynamicDataToUnregister.size(), profiler.Stop() ) );
         tmpDynamicDataToUnregister.clear();
     }
-}   
+}
 
 // -----------------------------------------------------------------------------
 // Name: TER_PathFinderThread::Process
@@ -118,10 +118,10 @@ void TER_PathFinderThread::Process( const boost::shared_ptr< TER_PathFindRequest
     try
     {
         ProcessDynamicData();
-        
+
         if( pRequest.get() )
         {
-            pRequest->Execute( *pPathfinder_ );            
+            pRequest->Execute( *pPathfinder_ );
             MIL_AgentServer::GetWorkspace().GetPathFindManager().CleanPathAfterComputation( pRequest );
         }
     }
@@ -160,7 +160,7 @@ TerrainRetractationHandle& TER_PathFinderThread::CreateLineTree( const T_PointVe
     return pPathfinder_->CreateDynamicData( geometryPoints.begin(), geometryPoints.end(), terrainData );
 }
 
-namespace 
+namespace
 {
     class DataBuilder
     {
@@ -252,7 +252,7 @@ void TER_PathFinderThread::Dump() const
     str << nDump++;
     const std::string strDirectory = str.str();
     MT_MakeDir( strDirectory );
-    Dump( strDirectory + "/" ); 
+    Dump( strDirectory + "/" );
 }
 
 // -----------------------------------------------------------------------------
@@ -261,8 +261,8 @@ void TER_PathFinderThread::Dump() const
 // -----------------------------------------------------------------------------
 void TER_PathFinderThread::Dump( const std::string& strBaseArchiveName ) const
 {
-    pPathfinder_->Dump( strBaseArchiveName + "Graph.bin", 
-                        strBaseArchiveName + "Nodes.bin", 
+    pPathfinder_->Dump( strBaseArchiveName + "Graph.bin",
+                        strBaseArchiveName + "Nodes.bin",
                         strBaseArchiveName + "Links.bin" );
 }
 

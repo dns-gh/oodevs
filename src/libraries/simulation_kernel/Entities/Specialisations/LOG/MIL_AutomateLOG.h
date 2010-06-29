@@ -54,7 +54,7 @@ public:
         MT_Float rQuota_;
         MT_Float rQuotaThreshold_;
     };
-    
+
 public:
              MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, unsigned int nID, MIL_Formation& parent, xml::xistream& xis, DEC_DataBase& database );
              MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, unsigned int nID, MIL_Automate&  parent, xml::xistream& xis, DEC_DataBase& database );
@@ -64,7 +64,7 @@ public:
     //@{
     template < typename Archive > void serialize( Archive&, const unsigned int );
     //@}
-    
+
     //! @name Initialize
     //@{
     virtual void ReadLogisticLink( MIL_AutomateLOG& superior, xml::xistream& xis );
@@ -96,10 +96,10 @@ public:
     //@{
     PHY_MedicalHumanState* MedicalHandleHumanEvacuatedByThirdParty( MIL_AgentPion& pion, Human_ABC& human ); // Imex
     PHY_MedicalHumanState* MedicalHandleHumanForEvacuation        ( MIL_AgentPion& pion, Human_ABC& human ); // Releve
-    bool                   MedicalHandleHumanForCollection        ( PHY_MedicalHumanState& humanState );     // Ramassage    
+    bool                   MedicalHandleHumanForCollection        ( PHY_MedicalHumanState& humanState );     // Ramassage
     PHY_RoleInterface_Medical*  MedicalReserveForSorting          ( PHY_MedicalCollectionAmbulance& ambulance );
     bool                   MedicalHandleHumanForHealing           ( PHY_MedicalHumanState& humanState );
-    bool                   MedicalCanCollectionAmbulanceGo        ( const PHY_MedicalCollectionAmbulance& ambulance ) const;    
+    bool                   MedicalCanCollectionAmbulanceGo        ( const PHY_MedicalCollectionAmbulance& ambulance ) const;
     //@}
 
     //! @name Supply
@@ -167,13 +167,13 @@ private:
     //@{
     void ReadDotation( xml::xistream& xis );
     //@}
-    
+
 private:
     MIL_AutomateLOG* pMaintenanceSuperior_;
     MIL_AutomateLOG* pMedicalSuperior_;
     MIL_AutomateLOG* pSupplySuperior_;
 
-    // Supply   
+    // Supply
     T_SupplyConsignList supplyConsigns_;
 
     T_DotationQuotaMap    stockQuotas_;

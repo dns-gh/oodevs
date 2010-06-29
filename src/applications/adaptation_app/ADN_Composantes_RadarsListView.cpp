@@ -32,7 +32,7 @@ ADN_Composantes_RadarsListView::ADN_Composantes_RadarsListView( QWidget* pParent
     // Add one column.
     addColumn( tr( "Special sensors" ) );
     //setResizeMode( QListView::AllColumns );
-    
+
     setMinimumHeight( 115 );
     setMaximumHeight( 115 );
 
@@ -116,14 +116,14 @@ void ADN_Composantes_RadarsListView::OnContextMenu( const QPoint& pt )
 bool ADN_Composantes_RadarsListView::Contains( const ADN_Radars_Data::RadarInfos* pInfo )
 {
     QListViewItemIterator it( this );
-    while( it.current() != 0 ) 
+    while( it.current() != 0 )
     {
         ADN_ListViewItem* pCurr = (ADN_ListViewItem*)it.current();
         ADN_Composantes_Data::RadarInfos* pData = static_cast< ADN_Composantes_Data::RadarInfos* >( pCurr->GetData() );
-        if ( pData->ptrRadar_.GetData() == pInfo )
+        if( pData->ptrRadar_.GetData() == pInfo )
             return true;
         ++it;
     }
-    return false;    
+    return false;
 }
 

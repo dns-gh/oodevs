@@ -168,7 +168,7 @@ ADN_Tr::T_ConverterAgentTypeAutomate ADN_Tr::agentTypeAutomateConverter_[] =
     T_ConverterAgentTypeAutomate( "Automate LOG BLT Sante"          ,QT_TRANSLATE_NOOP( "ADN_Tr", "Commander, Medical system, division level" ),             eAgentTypeAutomateLOGBLTSante ),
     T_ConverterAgentTypeAutomate( "Automate LOG BLT Maintenance"    ,QT_TRANSLATE_NOOP( "ADN_Tr", "Commander, Maintenance system, division level" ),       eAgentTypeAutomateLOGBLTMaintenance ),
     T_ConverterAgentTypeAutomate( "Automate LOG BLT Ravitaillement" ,QT_TRANSLATE_NOOP( "ADN_Tr", "Commander, Supply system, division level" ),    eAgentTypeAutomateLOGBLTRavitaillement ),
-    T_ConverterAgentTypeAutomate( "Automate CIRCULATION"            ,QT_TRANSLATE_NOOP( "ADN_Tr", "Commander, Movement support" ),               eAgentTypeAutomateCIRCULATION ),  
+    T_ConverterAgentTypeAutomate( "Automate CIRCULATION"            ,QT_TRANSLATE_NOOP( "ADN_Tr", "Commander, Movement support" ),               eAgentTypeAutomateCIRCULATION ),
     T_ConverterAgentTypeAutomate( "Automate REFUGIE"                ,QT_TRANSLATE_NOOP( "ADN_Tr", "Commander, Refugee" ),                   eAgentTypeAutomateREFUGIE ),
     T_ConverterAgentTypeAutomate( "Automate MILICE"                 ,QT_TRANSLATE_NOOP( "ADN_Tr", "Commander, Militia" ),                    eAgentTypeAutomateMILICE ),
     T_ConverterAgentTypeAutomate( "Automate JOINT"                  ,QT_TRANSLATE_NOOP( "ADN_Tr", "Commander, Joint" ),                     eAgentTypeAutomateJOINT ),
@@ -253,10 +253,10 @@ ADN_Tr::T_ConverterBreakdownNTI ADN_Tr::breakdownNTIConverter_[] =
 
 ADN_Tr::T_ConverterMunitionType ADN_Tr::munitionTypeConverter_[] =
 {
-    T_ConverterMunitionType( "Obus",          QT_TRANSLATE_NOOP( "ADN_Tr", "Shell" )	  , eMunitionType_Obus ),
-    T_ConverterMunitionType( "MissileSol",    QT_TRANSLATE_NOOP( "ADN_Tr", "Missile" )	  , eMunitionType_MissileSol ),
+    T_ConverterMunitionType( "Obus",          QT_TRANSLATE_NOOP( "ADN_Tr", "Shell" )      , eMunitionType_Obus ),
+    T_ConverterMunitionType( "MissileSol",    QT_TRANSLATE_NOOP( "ADN_Tr", "Missile" )      , eMunitionType_MissileSol ),
     T_ConverterMunitionType( "MissileAir",    QT_TRANSLATE_NOOP( "ADN_Tr", "Air missile" ), eMunitionType_MissileAir ),
-	T_ConverterMunitionType( "Mitraille",     QT_TRANSLATE_NOOP( "ADN_Tr", "Bullet" )	  , eMunitionType_Mitraille),
+    T_ConverterMunitionType( "Mitraille",     QT_TRANSLATE_NOOP( "ADN_Tr", "Bullet" )      , eMunitionType_Mitraille),
     T_ConverterMunitionType( "", "", (E_MunitionType)-1 )
 };
 

@@ -24,7 +24,7 @@ PHY_ActionDestroyObject::PHY_ActionDestroyObject( MIL_AgentPion& pion, boost::sh
     : PHY_DecisionCallbackAction_ABC( pion )
     , role_         ( pion.GetRole< PHY_RoleAction_Objects >() )
     , pKnowledge_   ( pKnowledge )
-{    
+{
     Callback( role_.GetInitialReturnCode() );
 }
 
@@ -51,7 +51,7 @@ void PHY_ActionDestroyObject::StopAction()
 // Destroyd: NLD 2004-08-18
 // -----------------------------------------------------------------------------
 void PHY_ActionDestroyObject::Execute()
-{   
+{
     int nReturn = role_.Destroy( pKnowledge_ );
     Callback( nReturn );
 }

@@ -56,8 +56,8 @@ void MIL_AgentTypePionALAT::RegisterFunctions( directia::Brain& brain, MIL_Agent
         boost::function< void( const TER_Localisation* ) >( boost::bind( &DEC_PerceptionFunctions::EnableRecoAlat, boost::ref( agent ), _1 ) ) );
     brain.RegisterFunction( "DEC_ALAT_DesactiverReconnaissance", boost::bind( &DEC_PerceptionFunctions::DisableRecoAlat, boost::ref( agent ) ) );
     brain.RegisterFunction( "DEC_ALAT_ReconnaissanceNonVuTerminee", boost::bind( &DEC_PerceptionFunctions::HasNoDelayedPeceptions, boost::cref( agent ) ) );
-    brain.RegisterFunction( "DEC_Perception_ActiverSurveillance", 
+    brain.RegisterFunction( "DEC_Perception_ActiverSurveillance",
         boost::function< int( const TER_Localisation* ) >( boost::bind( &DEC_PerceptionFunctions::EnableSurveillanceLocalisation, boost::ref( agent ), _1 ) ) );
-    brain.RegisterFunction( "DEC_Perception_DesactiverSurveillance", 
+    brain.RegisterFunction( "DEC_Perception_DesactiverSurveillance",
         boost::function< void( int ) >( boost::bind( &DEC_PerceptionFunctions::DisableSurveillanceLocalisation, boost::ref( agent ), _1 ) ) );
 }

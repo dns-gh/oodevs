@@ -32,7 +32,7 @@
 
 using namespace kernel;
 
-namespace 
+namespace
 {
     struct CatchMeIfYouCan {};
 
@@ -91,7 +91,7 @@ void Application::Initialize()
         Initialize( argc(), argv() );
     }
     catch( std::exception& e )
-    { 
+    {
         QMessageBox::critical( 0, tools::translate( "Application", "SWORD" ), e.what() );
         throw CatchMeIfYouCan();
     }
@@ -136,7 +136,7 @@ void Application::UpdateData()
     {
         workers_->CommitTasks();
         network_->Update();
-    } 
+    }
     catch( std::exception& e )
     {
         network_->Disconnect();

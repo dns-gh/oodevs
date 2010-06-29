@@ -145,7 +145,7 @@ UnloadedSpeedComputer::UnloadedSpeedComputer( const SpeedStrategy_ABC& strategy 
 {
     // NOTHING
 }
-             
+
 // -----------------------------------------------------------------------------
 // Name: UnloadedSpeedComputer::~UnloadedSpeedComputer
 // Created: LMT 2010-05-04

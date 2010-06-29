@@ -76,10 +76,10 @@ private:
     kernel::OptionalValue< unsigned int > nDotationValorization_;
     kernel::DotationType*                 valorization_;
     kernel::OptionalValue< float >        rValorizationPercentage_;
-    
+
     bool minefield_;
     kernel::OptionalValue< unsigned int > activityTime_;
-    kernel::OptionalValue< float >        density_;    
+    kernel::OptionalValue< float >        density_;
     //@}
 };
 

@@ -26,7 +26,7 @@ LocationSerializer::LocationSerializer( const CoordinateConverter_ABC& converter
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: LocationSerializer destructor
 // Created: SBO 2006-09-12

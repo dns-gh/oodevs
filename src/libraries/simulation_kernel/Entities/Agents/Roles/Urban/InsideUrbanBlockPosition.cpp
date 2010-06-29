@@ -65,7 +65,7 @@ geometry::Point2f InsideUrbanBlockPosition::GetFirerPosition( MIL_Agent_ABC& tar
     std::vector< geometry::Point2f > points = urbanObject_->GetFootprint()->Intersect( geometry::Segment2f( firerResult.position_, targetResult.position_ ) );
     if( points.empty() )
         throw std::exception( "error in urbanBlock intersection for firer" );
-    return GetNearestUrbanBlockPoint( targetResult.position_, points ); 
+    return GetNearestUrbanBlockPoint( targetResult.position_, points );
 }
 
 // -----------------------------------------------------------------------------
@@ -95,7 +95,7 @@ geometry::Point2f InsideUrbanBlockPosition::GetTargetPosition(MIL_Agent_ABC& fir
 // Name: InsideUrbanBlockPosition::GetNearestUrbanBlockPoint
 // Created: SLG 2010-04-13
 // -----------------------------------------------------------------------------
-geometry::Point2f InsideUrbanBlockPosition::GetNearestUrbanBlockPoint( const geometry::Point2f pionPosition, const std::vector< geometry::Point2f > points ) const 
+geometry::Point2f InsideUrbanBlockPosition::GetNearestUrbanBlockPoint( const geometry::Point2f pionPosition, const std::vector< geometry::Point2f > points ) const
 {
     geometry::Point2f nearestPosition;
     float distance = std::numeric_limits< float >::max();
@@ -139,7 +139,7 @@ float InsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_AB
 {
     std::vector< bg::point_xy< double > > ellipseKeyPoints;
     bg::polygon< bg::point_xy< double > > attritionPolygon;
-    ellipseKeyPoints.push_back( bg::point_xy< double >( attritionSurface.GetMajorAxisHighPoint().rX_ + attritionSurface.GetMinorAxisHighPoint().rX_ - attritionSurface.GetCenter().rX_, 
+    ellipseKeyPoints.push_back( bg::point_xy< double >( attritionSurface.GetMajorAxisHighPoint().rX_ + attritionSurface.GetMinorAxisHighPoint().rX_ - attritionSurface.GetCenter().rX_,
         attritionSurface.GetMajorAxisHighPoint().rY_ + attritionSurface.GetMinorAxisHighPoint().rY_ - attritionSurface.GetCenter().rY_ ) );
     ellipseKeyPoints.push_back( bg::point_xy< double >(attritionSurface.GetMajorAxisHighPoint().rX_ - attritionSurface.GetMinorAxisHighPoint().rX_ + attritionSurface.GetCenter().rX_,
         attritionSurface.GetMajorAxisHighPoint().rY_ - attritionSurface.GetMinorAxisHighPoint().rY_ + attritionSurface.GetCenter().rY_ ) ) ;
@@ -167,7 +167,7 @@ float InsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_AB
     double intersectArea = 0;
     for( std::vector< bg::polygon< bg::point_xy< double > > >::const_iterator it = polygonResult.begin(); it != polygonResult.end(); ++it  )
     {
-        intersectArea += area( *it ); 
+        intersectArea += area( *it );
     }
     return float( ( intersectArea / ( urbanObject_->GetFootprint()->ComputeArea() ) ) * result.urbanDeployment_ );
 }
@@ -189,7 +189,7 @@ float InsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_AB
     else if( urbanObjectArea )
     {
         float intersectArea = MIL_Geometry::IntersectionArea( polygon, *urbanObject_->GetFootprint() );
-        return ( intersectArea / urbanObjectArea ) * result.urbanDeployment_; 
+        return ( intersectArea / urbanObjectArea ) * result.urbanDeployment_;
     }
     return 0.;
 }

@@ -31,14 +31,14 @@ ActivityTimeAttribute::ActivityTimeAttribute( const Common::MsgObjectAttributes&
 ActivityTimeAttribute::~ActivityTimeAttribute()
 {
     // NOTHING
-}  
+}
 
 // -----------------------------------------------------------------------------
 // Name: ActivityTimeAttribute::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
 void ActivityTimeAttribute::Update( const Common::MsgObjectAttributes& asnMsg )
-{    
+{
     if( asnMsg.has_activity_time()  )
         nActivityTime_ = asnMsg.activity_time().value();
 }

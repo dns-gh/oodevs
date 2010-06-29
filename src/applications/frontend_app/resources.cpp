@@ -10,9 +10,9 @@
 #include "frontend_app_pch.h"
 #include "resources.h"
 
-// Hack to encapsulate the xpm resources in a resources.cpp 
+// Hack to encapsulate the xpm resources in a resources.cpp
 // instead of resources.h
-#define static 
+#define static
 
 #include "res/exercise_create.xpm"
 #include "res/exercise_edit.xpm"

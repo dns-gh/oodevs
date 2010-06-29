@@ -41,11 +41,11 @@ ADN_Composante_Wizard::ADN_Composante_Wizard( QWidget* pParent, const char* szNa
     pFirstPage->SetCaptions( qApp->translate( "ADN_Composante_Wizard","New equipment creation" ), qApp->translate( "ADN_Composante_Wizard", "Equipments" ) );
     pFirstPage_ = pFirstPage;
 
-    new ADN_Wizard_LastPage( this, qApp->translate( "ADN_Composante_Wizard", "Creation completed" ), qApp->translate( "ADN_Composante_Wizard", 
+    new ADN_Wizard_LastPage( this, qApp->translate( "ADN_Composante_Wizard", "Creation completed" ), qApp->translate( "ADN_Composante_Wizard",
         "Click \"Done\" to create the new equipment." ) );
 }
 
-     
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Composante_Wizard destructor
 // Created: AGN 2003-11-03

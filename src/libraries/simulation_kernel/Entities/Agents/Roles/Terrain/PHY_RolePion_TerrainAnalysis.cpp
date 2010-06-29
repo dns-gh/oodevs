@@ -89,7 +89,7 @@ void PHY_RolePion_TerrainAnalysis::NotifyHasMove( const MT_Vector2D& newPos )
                     it++;
             }
         }
-       
+
         lastPos_ = newPos;
     }
 }

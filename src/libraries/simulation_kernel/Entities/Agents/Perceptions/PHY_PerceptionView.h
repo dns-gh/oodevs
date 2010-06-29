@@ -24,7 +24,7 @@ public:
     void Enable();
     void Disable();
     //@}
-    
+
     //! @name Execution
     //@{
     virtual const PHY_PerceptionLevel& Compute( const MT_Vector2D& vPoint ) const;
@@ -45,7 +45,7 @@ public:
 
     virtual void                       Execute( const TER_PopulationConcentration_ABC::T_PopulationConcentrationVector perceivableConcentrations );
     virtual const PHY_PerceptionLevel& Compute( const MIL_PopulationConcentration& concentration ) const;
-    
+
     virtual void FinalizePerception();
     //@}
 
@@ -69,7 +69,7 @@ private:
     bool bIsEnabled_;
     T_PerceptionTickMap perceptionsBuffer_;
     T_PerceptionTickMap perceptionsUnderway_;
-    bool wasInCity_; 
+    bool wasInCity_;
 
 private:
     static MT_Random randomGenerator_;

@@ -51,7 +51,7 @@ public:
     //@}
 
 private:
-    MT_IdentifierManager idManager_; 
+    MT_IdentifierManager idManager_;
     unsigned int                 nMOSClassID_;
     unsigned int                 nStartInstanceID_;
 };

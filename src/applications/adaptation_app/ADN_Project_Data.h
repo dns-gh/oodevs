@@ -109,17 +109,17 @@ public:
 
     public:
         WorkDirInfos();
-    
-        void               SetWorkingDirectory( const std::string& filename ); 
+
+        void               SetWorkingDirectory( const std::string& filename );
         ADN_Type_String&   GetWorkingDirectory();  //!< Returns the working directory
 
         void               UseTempDirectory( bool bUse );
         ADN_Type_String&   GetTempDirectory();     //!< Returns a temporary directory
 
-        const std::string  GetSaveDirectory(); //!< Returns either the working or the temporary directory according to the 
-    
+        const std::string  GetSaveDirectory(); //!< Returns either the working or the temporary directory according to the
+
         std::string        GetRelativePath(const std::string& full, E_WorkDir e=eWorking); //!< Given "the/whole/path/toto/toto.xml" returns "/toto/toto.xml"
-    
+
         // private
         std::string        GetFullPath(const std::string& part, E_WorkDir e=eWorking); //!< Given "/toto/toto.xml" returns "the/whole/path/toto/toto.xml"
 

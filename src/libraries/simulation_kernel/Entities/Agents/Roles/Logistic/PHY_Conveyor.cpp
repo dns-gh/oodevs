@@ -75,7 +75,7 @@ namespace boost
         {
             split_free( file, map, nVersion );
         }
-        
+
         template< typename Archive >
         void save( Archive& file, const PHY_Conveyor::T_DotationMap& map, const unsigned int )
         {
@@ -86,9 +86,9 @@ namespace boost
                 unsigned id = it->first->GetMosID();
                 file << id;
                 file << it->second;
-            }   
+            }
         }
-        
+
         template< typename Archive >
         void load( Archive& file, PHY_Conveyor::T_DotationMap& map, const unsigned int )
         {
@@ -97,7 +97,7 @@ namespace boost
             while ( nNbr-- )
             {
                 unsigned int nID;
-                
+
                 file >> nID;
                 file >> map[ PHY_DotationType::FindDotationCategory( nID ) ];
             }
@@ -111,7 +111,7 @@ namespace boost
 // -----------------------------------------------------------------------------
 template< typename Archive >
 void PHY_Conveyor::serialize( Archive& file, const unsigned int )
-{ 
+{
     file & pConveyorComp_
          & pConveyorPion_
          & rWeightCapacity_

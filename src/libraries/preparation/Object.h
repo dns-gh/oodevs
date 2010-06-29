@@ -48,7 +48,7 @@ public:
     //@{
              Object( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
                      const kernel::ObjectType& type, const QString& name, IdManager& idManager );
-             Object( xml::xistream& xis, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, 
+             Object( xml::xistream& xis, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
                      const tools::Resolver_ABC< kernel::ObjectType, std::string >& types, IdManager& idManager );
     virtual ~Object();
     //@}
@@ -81,7 +81,7 @@ public:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
-    const kernel::ObjectType& type_;    
+    const kernel::ObjectType& type_;
     //@}
 };
 

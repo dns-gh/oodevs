@@ -27,7 +27,7 @@ PopulationConcentration::PopulationConcentration( const Population& population, 
     , position_       ( msg.position() )
     , nNbrAliveHumans_( 0 )
     , nNbrDeadHumans_ ( 0 )
-    , nAttitude_      ( Common::agressive )    
+    , nAttitude_      ( Common::agressive )
 {
     Register( *this );
 }

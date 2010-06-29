@@ -35,7 +35,7 @@ unsigned int MIL_FireClass::width_;
 // Modified: none
 // -----------------------------------------------------------------------------
 void MIL_FireClass::ReadClass( xml::xistream& xis )
-{    
+{
     std::string strName;
 
     xis >> xml::attribute( "name", strName );
@@ -43,7 +43,7 @@ void MIL_FireClass::ReadClass( xml::xistream& xis )
     const MIL_FireClass*& pClass = classes_[ strName ];
     if( pClass )
         throw std::runtime_error( "Fire Class " + strName + " already exists" );
-    pClass = new MIL_FireClass( strName, xis );        
+    pClass = new MIL_FireClass( strName, xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,7 +55,7 @@ void MIL_FireClass::Initialize( xml::xistream& xis )
 {
     std::set< unsigned int > ids;
     MT_LOG_INFO_MSG( "Initializing fire classes" );
-    
+
     xis >> xml::start( "fire-classes" )
             >> xml::start( "fire-surface" )
                 >> xml::attribute( "length", length_ )
@@ -95,10 +95,10 @@ MIL_FireClass::MIL_FireClass( const std::string& strName, xml::xistream& xis )
         >> xml::attribute( "propagation-threshold"  , propagationThreshold_ )
         >> xml::start( "extinguisher-agents" )
             >> xml::list( "agent", *this, &MIL_FireClass::ReadExtinguisherAgentEffect )
-        >> xml::end();   
+        >> xml::end();
 }
 
-namespace 
+namespace
 {
     MIL_FireClass::E_FireExtinguisherAgent StringToE_FireExtinguisherAgent( const std::string& nature )
     {
@@ -131,7 +131,7 @@ void MIL_FireClass::ReadExtinguisherAgentEffect( xml::xistream& xis )
 {
     unsigned int effect;
     std::string nature;
-    E_FireExtinguisherAgent extinguisherAgent; 
+    E_FireExtinguisherAgent extinguisherAgent;
     xis >> xml::attribute( "effect", effect )
         >> xml::attribute( "nature", nature );
 
@@ -173,7 +173,7 @@ const MIL_FireClass* MIL_FireClass::Find( const std::string& strName )
 const MIL_FireClass* MIL_FireClass::Find( unsigned int nID )
 {
     for( CIT_FireClassMap it = classes_.begin(); it != classes_.end(); ++it )
-    {        
+    {
         if( it->second->GetID() == nID )
             return it->second;
     }
@@ -272,7 +272,7 @@ int    MIL_FireClass::ComputeHeatEvolution( int heat, unsigned int timeOfCreatio
         heat =  heat + ( int )( ( time - timeOflastUpdate )*increaseRate_ );
     else if( timeSinceCreation > tempThreshold_ )
         heat = heat - ( int )( ( time - timeOflastUpdate )*decreaseRate_ );
-       
+
     return heat;
 }
 
@@ -295,7 +295,7 @@ MIL_FireClass::T_EvaluationResult MIL_FireClass::Evaluate( const PHY_Weapon& wea
     //If the extinguisher agent isn't found return extinguisher agent effect = -1
     //If the extinguisher agent isn't found return fire hose range = -1
 
-    MIL_FireClass::T_EvaluationResult result; 
+    MIL_FireClass::T_EvaluationResult result;
     result.agent_ = StringToE_FireExtinguisherAgent( weapon.GetDotationCategory().GetNature().GetName() );
     CIT_ExtinguisherAgentEffectMap iter = extinguisherAgentEffect_.find( result.agent_ );
     if( iter != extinguisherAgentEffect_.end() )

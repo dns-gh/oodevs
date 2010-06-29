@@ -38,7 +38,7 @@ Lima::Lima( kernel::Controller& controller, xml::xistream& xis, IdManager& idMan
 {
     // NOTHING
 }
- 
+
 // -----------------------------------------------------------------------------
 // Name: Lima destructor
 // Created: AGE 2006-03-15

@@ -69,7 +69,7 @@ void DEC_FrontAndBackLinesComputer::Compute()
         return;
 
     nLastTimeComputed_ = nCurrentTime;
-    
+
     if( refAutomate_.GetOrderManager().GetFuseau().IsNull() || ( pions_.empty() && automates_.empty() ) )
         return;
 
@@ -80,11 +80,11 @@ void DEC_FrontAndBackLinesComputer::Compute()
     vDirPerpendicularFuseau.Normalize();
     MT_Float rTmp                 = vDirPerpendicularFuseau.rX_;
     vDirPerpendicularFuseau.rX_   = vDirPerpendicularFuseau.rY_;
-    vDirPerpendicularFuseau.rY_   = -rTmp; 
+    vDirPerpendicularFuseau.rY_   = -rTmp;
 
     TER_DistanceLess cmp ( fuseauGlobalDirLine.GetPosStart() );
     T_PointSet projectedPointSet( cmp );
-                     
+
     // Project all the positions on the fuseau global direction
     for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
     {
@@ -106,7 +106,7 @@ void DEC_FrontAndBackLinesComputer::Compute()
     else
     {
         const MT_Vector2D& vBackLinePoint_  = *projectedPointSet.begin ();
-        const MT_Vector2D& vFrontLinePoint_ = *projectedPointSet.rbegin();   
+        const MT_Vector2D& vFrontLinePoint_ = *projectedPointSet.rbegin();
 
         backLineDroite_  = MT_Droite( vBackLinePoint_ , vBackLinePoint_  + vDirPerpendicularFuseau );
         frontLineDroite_ = MT_Droite( vFrontLinePoint_, vFrontLinePoint_ + vDirPerpendicularFuseau );

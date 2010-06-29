@@ -70,7 +70,7 @@ DEC_KnowledgeBlackBoard_Army::~DEC_KnowledgeBlackBoard_Army()
 // Name: template< typename Archive > void DEC_KnowledgeBlackBoard_Army::serialize
 // Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
-template< typename Archive > 
+template< typename Archive >
 void DEC_KnowledgeBlackBoard_Army::serialize( Archive& archive, const unsigned int )
 {
     archive & boost::serialization::base_object< DEC_KnowledgeBlackBoard_ABC >( *this )
@@ -136,9 +136,9 @@ namespace
 void DEC_KnowledgeBlackBoard_Army::GetObjects( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter ) const
 {
     sObjectKnowledgesDiaIDInserter functor( container, filter );
-    
+
     assert( pKnowledgeObjectContainer_ );
-    pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );           
+    pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );
 }
 
 namespace
@@ -175,9 +175,9 @@ namespace
 void DEC_KnowledgeBlackBoard_Army::GetObjectsInCircle( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const MT_Vector2D& center, MT_Float rRadius )
 {
     sObjectKnowledgesInCircleFilteredInserter functor( container, filter, center, rRadius );
-    
+
     assert( pKnowledgeObjectContainer_ );
-    pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );           
+    pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );
 }
 
 namespace
@@ -213,17 +213,17 @@ namespace
 void DEC_KnowledgeBlackBoard_Army::GetObjectsInZone( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const TER_Localisation& zone )
 {
     sObjectKnowledgesInZoneFilteredInserter< TER_Localisation > functor( container, filter, zone );
-   
+
     assert( pKnowledgeObjectContainer_ );
-    pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );           
+    pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );
 }
 
 void DEC_KnowledgeBlackBoard_Army::GetObjectsInZone( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const TER_Polygon& zone )
 {
     sObjectKnowledgesInZoneFilteredInserter< TER_Polygon > functor( container, filter, zone );
-   
+
     assert( pKnowledgeObjectContainer_ );
-    pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );           
+    pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );
 }
 
 namespace
@@ -258,9 +258,9 @@ namespace
 void DEC_KnowledgeBlackBoard_Army::GetObjectsAtInteractionHeight( T_KnowledgeObjectVector& container, MT_Float rHeight, const MIL_ObjectFilter& filter ) const
 {
     sObjectKnowledgesFilteredHeightInserter functor( container, rHeight, filter );
-    
+
     assert( pKnowledgeObjectContainer_ );
-    pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );           
+    pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );
 }
 
 namespace
@@ -291,9 +291,9 @@ namespace
 void DEC_KnowledgeBlackBoard_Army::GetObjects( T_KnowledgeObjectVector& container ) const
 {
     sObjectKnowledgesInserter functor( container );
-    
+
     assert( pKnowledgeObjectContainer_ );
-    pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );           
+    pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );
 }
 
 
@@ -330,7 +330,7 @@ namespace
 
     private:
               MT_Float          rClosestDist_;
-        const MT_Vector2D&      pPos_;   
+        const MT_Vector2D&      pPos_;
         const MIL_ObjectFilter& filter_;
     };
 }
@@ -338,7 +338,7 @@ namespace
 boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Army::GetClosestObject( const MT_Vector2D& vPos, const MIL_ObjectFilter& filter  ) const
 {
     sClosestObjectInserter functor( vPos, filter );
-    
+
     assert( pKnowledgeObjectContainer_ );
     pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );
     return functor.pResult_;
@@ -382,7 +382,7 @@ namespace
     private:
               MT_Float          rClosestDist_;
         const MIL_Army_ABC*     pArmy_;
-        const MT_Vector2D&      pos_;   
+        const MT_Vector2D&      pos_;
         const MIL_ObjectFilter& filter_;
     };
 }
@@ -390,7 +390,7 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Army::GetClose
 {
     assert( pArmy_ );
     sClosestObjectFriendInserter functor( vPos, *pArmy_, filter );
-    
+
     assert( pKnowledgeObjectContainer_ );
     pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );
     return functor.pResult_;
@@ -403,7 +403,7 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Army::GetClose
 void DEC_KnowledgeBlackBoard_Army::GetKnowledgesObject( T_KnowledgeObjectVector& container ) const
 {
     assert( pKnowledgeObjectContainer_ );
-    pKnowledgeObjectContainer_->GetKnowledgesObject( container );    
+    pKnowledgeObjectContainer_->GetKnowledgesObject( container );
 }
 
 // -----------------------------------------------------------------------------
@@ -579,7 +579,7 @@ void DEC_KnowledgeBlackBoard_Army::GetUrbanObjects( T_KnowledgeUrbanVector& cont
     sUrbanKnowledgesInserter functor( container );
 
     assert( pKnowledgeUrbanContainer_ );
-    pKnowledgeUrbanContainer_->ApplyOnKnowledgesUrban( functor );           
+    pKnowledgeUrbanContainer_->ApplyOnKnowledgesUrban( functor );
 }
 
 // -----------------------------------------------------------------------------

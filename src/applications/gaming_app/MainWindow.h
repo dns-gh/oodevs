@@ -142,7 +142,7 @@ private:
     gui::ParametersLayer* parameters_;
     gui::AgentsLayer*     agents_;
     StatusBar*            pStatus_;
-    bool                  connected_; 
+    bool                  connected_;
     //@}
 };
 

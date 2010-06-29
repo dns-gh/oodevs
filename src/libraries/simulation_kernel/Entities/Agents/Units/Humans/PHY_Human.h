@@ -34,11 +34,11 @@ public:
     PHY_Human();
     virtual ~PHY_Human();
     //@}
-    
+
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
@@ -60,7 +60,7 @@ public:
     const PHY_HumanRank&  GetRank         () const;
     const PHY_HumanWound& GetWound        () const;
           E_Location      GetLocation     () const;
-          bool            IsUsable        () const;  
+          bool            IsUsable        () const;
           bool            IsDead          () const;
           bool            IsWounded       () const;
           bool            IsContaminated  () const;
@@ -79,7 +79,7 @@ public:
     void Evacuate      ( MIL_AutomateLOG& destinationTC2 );
     bool NeedMedical   () const;
     void SetMedicalState( PHY_MedicalHumanState* pMedicalState );
-    
+
     void NotifyHandledByMedical ();
     bool NotifyBackToWar        ();
     void HealMentalDisease      ();
@@ -110,7 +110,7 @@ private:
     const PHY_HumanRank*         pRank_;
     const PHY_HumanWound*        pWound_;
           bool                   bMentalDiseased_;
-          bool                   bContamined_;  
+          bool                   bContamined_;
           E_Location             nLocation_;
           PHY_MedicalHumanState* pMedicalState_;
           unsigned int                   nDeathTimeStep_;

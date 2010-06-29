@@ -73,7 +73,7 @@ void TemplatesPanel::NotifyUpdated( const kernel::ModelUnLoaded& )
 // -----------------------------------------------------------------------------
 void TemplatesPanel::NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
 {
-    if(    ! dynamic_cast< const kernel::Team_ABC* >( & entity )
+    if( ! dynamic_cast< const kernel::Team_ABC* >( & entity )
         && ! dynamic_cast< const kernel::KnowledgeGroup_ABC* >( & entity ) ) // LTO
     {
         menuEntity_ = &entity;

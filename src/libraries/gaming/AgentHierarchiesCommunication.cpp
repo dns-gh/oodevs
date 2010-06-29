@@ -27,9 +27,9 @@ AgentHierarchiesCommunication::AgentHierarchiesCommunication( kernel::Controller
                                const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver,
                                const tools::Resolver_ABC< kernel::KnowledgeGroup_ABC >& groupResolver )
 :AgentHierarchies< kernel::CommunicationHierarchies >::AgentHierarchies(controller, holder, automatResolver)
-    ,jammed_ ( false ) 
-    ,radioEmitterDisabled_ ( false ) 
-    ,radioReceiverDisabled_ ( false ) 
+    ,jammed_ ( false )
+    ,radioEmitterDisabled_ ( false )
+    ,radioReceiverDisabled_ ( false )
     , superior_ ( 0 )
     ,groupResolver_ ( groupResolver )
 {
@@ -61,12 +61,12 @@ void AgentHierarchiesCommunication::DoUpdate( const MsgsSimToClient::MsgUnitCrea
 // -----------------------------------------------------------------------------
 void AgentHierarchiesCommunication::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
 {
-    if(  message.has_communications() && message.communications().has_jammed() )
+    if( message.has_communications() && message.communications().has_jammed() )
     {
         jammed_ = message.communications().jammed() ;
         radioEmitterDisabled_ = message.has_radio_emitter_disabled() && message.radio_emitter_disabled();
         radioReceiverDisabled_ = message.has_radio_receiver_disabled() && message.radio_receiver_disabled();
-        if ( jammed_ || radioReceiverDisabled_ || radioEmitterDisabled_ )
+        if( jammed_ || radioReceiverDisabled_ || radioEmitterDisabled_ )
             UpdateSuperior( groupResolver_.Get( message.communications().knowledge_group() )  );
         else
             UpdateSuperior( *superior_ );

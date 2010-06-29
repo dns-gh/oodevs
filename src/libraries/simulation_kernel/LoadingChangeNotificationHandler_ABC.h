@@ -22,7 +22,7 @@ class LoadingChangeNotificationHandler_ABC
 {
 
 public:
-    //! @name Constructors/Destructor 
+    //! @name Constructors/Destructor
     //@{
              LoadingChangeNotificationHandler_ABC() {}
     virtual ~LoadingChangeNotificationHandler_ABC() {}

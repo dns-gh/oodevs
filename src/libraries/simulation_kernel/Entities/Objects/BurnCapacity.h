@@ -23,7 +23,7 @@ class MIL_Agent_ABC;
 // Created: RFT 2008-06-02
 // =============================================================================
 
-class BurnCapacity 
+class BurnCapacity
     : public ObjectCapacity_ABC
     , public MIL_InteractiveContainer_ABC
 {
@@ -64,7 +64,7 @@ public:
 
     //! @name Get
     //@{
-    //@}    
+    //@}
 
 private:
     //! @name Copy

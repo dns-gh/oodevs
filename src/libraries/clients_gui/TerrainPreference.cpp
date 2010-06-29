@@ -35,7 +35,7 @@ TerrainPreference::TerrainPreference( xml::xistream& xis, kernel::Controllers& c
     color_ = QColor( color.c_str() );
     controllers_.Register( *this );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: TerrainPreference destructor
 // Created: SBO 2006-04-04

@@ -14,8 +14,8 @@
 #include "clients_kernel/SafePointer.h"
 
 namespace kernel
-{    
-    class ObjectType; 
+{
+    class ObjectType;
 }
 
 namespace gui
@@ -29,7 +29,7 @@ namespace gui
 */
 // Created: SBO 2007-10-16
 // =============================================================================
-class ObjectPreviewIcon : public QHBox    
+class ObjectPreviewIcon : public QHBox
 {
 public:
     //! @name Constructors/Destructor
@@ -40,7 +40,7 @@ public:
 
     //! @name Operations
     //@{
-    void NotifySelected( const kernel::ObjectType& type );    
+    void NotifySelected( const kernel::ObjectType& type );
     //@}
 
 private:
@@ -59,7 +59,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    SymbolIcons& icons_;    
+    SymbolIcons& icons_;
     QLabel* icon_;
     std::string symbol_;
     //@}

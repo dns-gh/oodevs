@@ -21,7 +21,7 @@ namespace TEST {
     @brief  Mission_Automat_INF_Interdire
 */
 // Created: SBO 2005-08-08
-// Generated: 
+// Generated:
 // =============================================================================
 class Mission_Automat_INF_Interdire : public Mission_Automat_ABC
 {

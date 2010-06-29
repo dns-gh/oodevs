@@ -83,7 +83,7 @@ private:
     kernel::Controller& controller_;
     const kernel::CoordinateConverter_ABC& converter_;
 
-    const kernel::Population_ABC& popu_; 
+    const kernel::Population_ABC& popu_;
     const uint nID_;
     const kernel::PopulationFlow_ABC* pFlow_;
 

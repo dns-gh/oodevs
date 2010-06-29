@@ -23,16 +23,16 @@ class MIL_LimaFunction
 public:
     //! @name Types
     //@{
-    static const MIL_LimaFunction LD_;  
+    static const MIL_LimaFunction LD_;
     static const MIL_LimaFunction LCA_;
     static const MIL_LimaFunction LC_;
-    static const MIL_LimaFunction LI_; 
+    static const MIL_LimaFunction LI_;
     static const MIL_LimaFunction LO_;
     static const MIL_LimaFunction LCAR_;
     static const MIL_LimaFunction LR_;
     static const MIL_LimaFunction LDM_;
     static const MIL_LimaFunction LFM_;
-    static const MIL_LimaFunction LIA_; 
+    static const MIL_LimaFunction LIA_;
     //@}
 
 public:
@@ -79,8 +79,8 @@ private:
         eLimaFuncLCAR   = 5, // Ligne de coup d'arrêt
         eLimaFuncLR     = 6, // Ligne de recueil
         eLimaFuncLDM    = 7, // Ligne de début de mission
-        eLimaFuncLFM    = 8, // Ligne de fin de mission      
-        eLimaFuncLIA    = 9  // Ligne d'identification et de recueil       
+        eLimaFuncLFM    = 8, // Ligne de fin de mission
+        eLimaFuncLIA    = 9  // Ligne d'identification et de recueil
     };
     //@}
 

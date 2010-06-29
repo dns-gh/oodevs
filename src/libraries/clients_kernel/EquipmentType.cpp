@@ -63,7 +63,7 @@ void EquipmentType::ReadWeaponSystem( xml::xistream& xis, const tools::Resolver_
     std::string launcher, munition;
     xis >> xml::attribute( "launcher", launcher )
         >> xml::attribute( "munition", munition );
-    const std::string systemId = launcher + munition; // $$$$ SBO 2008-08-06: 
+    const std::string systemId = launcher + munition; // $$$$ SBO 2008-08-06:
     WeaponSystemType& type = weapons.Get( systemId );
     Register( type.GetId(), type );
 }

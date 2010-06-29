@@ -66,7 +66,7 @@ ObjectKnowledgePanel::ObjectKnowledgePanel( QWidget* parent, PanelStack_ABC& pan
 
     display_->AddGroup( tr( "NBC" ) )
                 .AddLabel( tr( "Danger:" ) )
-                .AddLabel( tr( "NBC agent(s):" ) );   
+                .AddLabel( tr( "NBC agent(s):" ) );
 
     display_->AddGroup( tr( "Logistic route" ) )
                 .AddLabel( tr( "Equipped:" ) )
@@ -267,7 +267,7 @@ void ObjectKnowledgePanel::Select( const Team_ABC* team )
 {
     const ObjectKnowledges* k = team ? team->Retrieve< ObjectKnowledges >() : 0;
     if( ! k || k != selected_ )
-        Select( k );    
+        Select( k );
 }
 
 // -----------------------------------------------------------------------------
@@ -295,7 +295,7 @@ void ObjectKnowledgePanel::Select( const kernel::KnowledgeGroup_ABC* group )
 {
     const ObjectKnowledges* k = group ? group->Retrieve< ObjectKnowledges >() : 0;
     if( !k && group )
-    {        
+    {
         const Hierarchies* hierarchies = group->Retrieve< kernel::CommunicationHierarchies >();
         if( hierarchies )
             Select( static_cast< const Team_ABC* >( & hierarchies->GetTop() ) );

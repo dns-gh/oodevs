@@ -51,7 +51,7 @@ public:
 
 protected:
     //! @name Operations
-    //@{    
+    //@{
     virtual void Select( const kernel::KnowledgeGroup_ABC* ) = 0;
     //@}
 

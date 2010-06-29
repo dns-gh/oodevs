@@ -117,7 +117,7 @@ void PHY_SupplyDotationRequestContainer::ActivateSupply( MIL_Automate::T_SupplyD
             request.GetSupplyingAutomate()->SupplyHandleRequest( *pSupplyState );
         }
         request.ReserveStocks();
-        pSupplyState->AddRequest( request );       
+        pSupplyState->AddRequest( request );
     }
 
     for( MIL_Automate::CIT_SupplyDotationStateMap itState = dotationSupplies.begin(); itState != dotationSupplies.end(); ++itState )

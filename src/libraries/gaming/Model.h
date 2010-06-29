@@ -132,7 +132,7 @@ public:
     SurfaceFactory&       surfaceFactory_;
     NotesModel&           notes_;   // LTO
     //@}
-    MeteoModel&           meteo_;  
+    MeteoModel&           meteo_;
 
 
 private:

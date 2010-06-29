@@ -44,7 +44,7 @@ class LogSupplyConsign : public tools::Resolver< DotationRequest >
 public:
     //! @name Constructor / Destructor
     //@{
-             LogSupplyConsign( kernel::Controller& controller, const tools::Resolver_ABC< kernel::Automat_ABC >& resolver, 
+             LogSupplyConsign( kernel::Controller& controller, const tools::Resolver_ABC< kernel::Automat_ABC >& resolver,
                                const tools::Resolver_ABC< kernel::Agent_ABC >&   agentResolver,
                                const tools::Resolver_ABC< kernel::DotationType >& dotationResolver, const MsgsSimToClient::MsgLogSupplyHandlingCreation& message );
     virtual ~LogSupplyConsign();

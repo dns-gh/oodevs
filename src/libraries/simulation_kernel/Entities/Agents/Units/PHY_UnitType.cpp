@@ -110,7 +110,7 @@ void PHY_UnitType::ReadStock( xml::xistream& xis )
     if( rThreshold < 0 || rThreshold > 100 )
         xis.error( "stock: thresolh not in [0..100]" );
 
-    rThreshold /= 100.;                  
+    rThreshold /= 100.;
 
     stockLogisticThresholdRatios_[ pType->GetID() ] = rThreshold;
 }
@@ -208,7 +208,7 @@ void PHY_UnitType::ReadCrewRank( xml::xistream& xis )
         return;
 
     if( commandersRepartition_.find( &rank ) != commandersRepartition_.end() )
-        xis.error( "crew-rank: type undefined" );        
+        xis.error( "crew-rank: type undefined" );
 
     unsigned int nValue = 0;
     xis >> xml::attribute( "count", nValue );
@@ -294,7 +294,7 @@ void PHY_UnitType::ReadDrill( xml::xistream& xis )
     xis >> xml::attribute( "width", rCoupDeSondeWidth_ )
         >> xml::attribute( "length", rCoupDeSondeLength_ );
 
-    if ( rCoupDeSondeLength_ < rCoupDeSondeWidth_ )
+    if( rCoupDeSondeLength_ < rCoupDeSondeWidth_ )
         xis.error( "Length should be greater than width" );
 
     rCoupDeSondeLength_ = MIL_Tools::ConvertMeterToSim( rCoupDeSondeLength_ );

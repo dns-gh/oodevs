@@ -28,7 +28,7 @@ class ADN_CT_ActiveProtections_WeaponsTable
 {
 public:
 
-    ADN_CT_ActiveProtections_WeaponsTable( ADN_ActiveProtections_WeaponsTable& table ) 
+    ADN_CT_ActiveProtections_WeaponsTable( ADN_ActiveProtections_WeaponsTable& table )
         : ADN_Connector_Table_ABC( table, false )
         , weaponsTable_          ( table )
     {}
@@ -116,13 +116,13 @@ void ADN_ActiveProtections_WeaponsTable::OnContextMenu( int , int , const QPoint
 
     ADN_Equipement_Data::T_CategoryInfos_Vector& pWeapon = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Munition ).categories_;
     for( ADN_Equipement_Data::IT_CategoryInfos_Vector it = pWeapon.begin(); it != pWeapon.end(); ++it )
-    {       
+    {
         if( this->Contains( **it ) )
             continue;
         addMenu.insertItem( (*it)->strName_.GetData().c_str(), (int)(*it) );
     }
     ADN_Tools::SortMenu( addMenu );
-    
+
     menu.insertItem( tr( "New" ), &addMenu );
     menu.insertItem( tr( "Delete" ), 1 );
     menu.setItemEnabled( 1, GetCurrentData() != 0 );
@@ -148,7 +148,7 @@ void ADN_ActiveProtections_WeaponsTable::OnContextMenu( int , int , const QPoint
 
         ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
         pCTable->AddItem( pNewInfo );
-        pCTable->AddItem( 0 );  
+        pCTable->AddItem( 0 );
     }
 }
 

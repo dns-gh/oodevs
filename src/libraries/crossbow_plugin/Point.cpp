@@ -78,7 +78,7 @@ void crossbow::Point::Serialize( std::ostream& geometry ) const
     SerializeCoordinates( ss, ',' );
     geometry << "st_point("
                 << ss.str() << ',' << srid
-             << ")"; 
+             << ")";
 }
 
 // -----------------------------------------------------------------------------
@@ -86,7 +86,7 @@ void crossbow::Point::Serialize( std::ostream& geometry ) const
 // Created: JCR 2009-04-27
 // -----------------------------------------------------------------------------
 std::ostream& crossbow::Point::SerializeCoordinates( std::ostream& geometry, char sep ) const
-{    
+{
     geometry << x_ << sep << y_;
     return geometry;
 }

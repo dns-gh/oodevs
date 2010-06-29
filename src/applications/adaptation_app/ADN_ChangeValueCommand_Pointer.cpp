@@ -21,14 +21,14 @@
 #include "ADN_ChangeValueCommand_Pointer.h"
 
 // =============================================================================
-// 
+//
 // =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ChangeValueCommand_Pointer constructor
-/** @param  modifiedData 
-    @param  pOldValue 
-    @param  pNewValue 
+/** @param  modifiedData
+    @param  pOldValue
+    @param  pNewValue
 */
 // Created: AGN 2004-05-13
 // -----------------------------------------------------------------------------
@@ -47,7 +47,7 @@ ADN_ChangeValueCommand_Pointer< ADN_Type_ABC< std::string > >::ADN_ChangeValueCo
 // -----------------------------------------------------------------------------
 ADN_ChangeValueCommand_Pointer< ADN_Type_ABC< std::string > >::~ADN_ChangeValueCommand_Pointer()
 {
-    
+
 }
 
 // -----------------------------------------------------------------------------
@@ -86,5 +86,5 @@ void ADN_ChangeValueCommand_Pointer< ADN_Type_ABC< std::string > >::UpdateDescri
     strDescription += qApp->translate("ADN_ChangeValueCommand"," to ");
     if( pNewValue_ != 0 )
         strDescription += pNewValue_->GetData().c_str();
-    setDescription( strDescription );        
+    setDescription( strDescription );
 }

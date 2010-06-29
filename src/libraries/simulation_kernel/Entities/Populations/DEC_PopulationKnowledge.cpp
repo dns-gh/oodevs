@@ -70,7 +70,7 @@ namespace boost
         {
             split_free( file, set, nVersion );
         }
-        
+
         template< typename Archive >
         void save( Archive& file, const DEC_PopulationKnowledge::T_AgentSet& set, const unsigned int )
         {
@@ -79,7 +79,7 @@ namespace boost
             for ( DEC_PopulationKnowledge::CIT_AgentSet it = set.begin(); it != set.end(); ++it )
                 file << *it;
         }
-        
+
         template< typename Archive >
         void load( Archive& file, DEC_PopulationKnowledge::T_AgentSet& set, const unsigned int )
         {
@@ -99,7 +99,7 @@ namespace boost
 // Name: template< typename Archive > void DEC_PopulationKnowledge::serialize
 // Created: NLD 2005-12-01
 // -----------------------------------------------------------------------------
-template< typename Archive > 
+template< typename Archive >
 void DEC_PopulationKnowledge::serialize( Archive& file, const unsigned int )
 {
     file & attackers_

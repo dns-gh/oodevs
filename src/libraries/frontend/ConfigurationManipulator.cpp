@@ -38,7 +38,7 @@ ConfigurationManipulator::ConfigurationManipulator( const tools::GeneralConfig& 
     : document_( new XmlNode( GetSessionXml( config, exercise, session ) ) )
     , output_  ( new xml::xofstream( GetSessionXml( config, exercise, session ) ) )
 {
-    // NOTHING   
+    // NOTHING
 }
 
 

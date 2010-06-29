@@ -34,16 +34,16 @@ namespace gui
 */
 // Created: SLG 2009-02-10
 // =============================================================================
-class TerrainObjectProxy : public kernel::Extension_ABC                         
-                         , public kernel::EntityImplementation< kernel::Entity_ABC > 
+class TerrainObjectProxy : public kernel::Extension_ABC
+                         , public kernel::EntityImplementation< kernel::Entity_ABC >
                          , public kernel::Updatable_ABC< InfrastructureParameters >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             TerrainObjectProxy( kernel::Controller& controller, urban::TerrainObject_ABC& object, unsigned int id, const QString& name, const InfrastructureParameters& parameters ); 
-             TerrainObjectProxy( kernel::Controller& controller, urban::TerrainObject_ABC& object ); 
+             TerrainObjectProxy( kernel::Controller& controller, urban::TerrainObject_ABC& object, unsigned int id, const QString& name, const InfrastructureParameters& parameters );
+             TerrainObjectProxy( kernel::Controller& controller, urban::TerrainObject_ABC& object );
     virtual ~TerrainObjectProxy();
     //@}
 

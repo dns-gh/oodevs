@@ -48,7 +48,7 @@ private:
 
     //! @name Types
     //@{
-    class ProcInfo; //!< obscure process information class to hide OS imaplementation 
+    class ProcInfo; //!< obscure process information class to hide OS imaplementation
     typedef boost::ptr_multimap< const std::string, ProcInfo >  T_ProcList;
     //@}
 

@@ -58,7 +58,7 @@ void GridLayer::Paint( const geometry::Rectangle2f& v )
     {
         geometry::Rectangle2f viewport = v.Intersect( extent_ );
         glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
-        
+
         float gridSize = gridSize_;
         if( gridSize < 2 * tools_.Pixels() )
             gridSize = 2 * tools_.Pixels();

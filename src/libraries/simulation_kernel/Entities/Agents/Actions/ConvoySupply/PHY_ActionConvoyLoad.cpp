@@ -21,7 +21,7 @@
 PHY_ActionConvoyLoad::PHY_ActionConvoyLoad( MIL_Agent_ABC& pion )
     : PHY_DecisionCallbackAction_ABC( pion )
     , role_         ( pion.GetRole< PHY_RoleInterface_Supply >() )
-{    
+{
     Callback( false );
 }
 
@@ -48,7 +48,7 @@ void PHY_ActionConvoyLoad::StopAction()
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
 void PHY_ActionConvoyLoad::Execute()
-{   
+{
     bool bResult = role_.ConvoyLoad();
     Callback( bResult );
 }

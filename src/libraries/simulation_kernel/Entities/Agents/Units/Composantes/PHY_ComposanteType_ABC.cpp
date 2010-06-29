@@ -31,12 +31,12 @@ PHY_ComposanteType_ABC::PHY_ComposanteType_ABC( const std::string& strName, xml:
         >> xml::attribute( "protection", strVal );
     nMosID_.set_equipment( equipmenttype_val );
     pProtection_ = PHY_Protection::Find( strVal );
-    if ( !pProtection_ )
+    if( !pProtection_ )
         xis.error( "Unknown protection '" + strVal + "'" );
 
     xis >> xml::attribute( "size", strVal );
     pVolume_ = PHY_Volume::FindVolume( strVal );
-    if ( !pVolume_ )
+    if( !pVolume_ )
         xis.error( "Unknown volume '" + strVal + "'" );
 }
 

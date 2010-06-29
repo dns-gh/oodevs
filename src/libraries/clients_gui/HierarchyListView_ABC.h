@@ -65,7 +65,7 @@ public:
     //! @name Operations
     //@{
     virtual void Display( const kernel::Entity_ABC& entity, ValuedListItem* item );
-    
+
     //@}
 
 private:

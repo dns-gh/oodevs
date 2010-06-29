@@ -49,7 +49,7 @@ namespace score
         std::string value_;
     };
 
-    
+
 // =============================================================================
 /** @class  ScoresModel
     @brief  ScoresModel

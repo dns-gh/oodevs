@@ -42,7 +42,7 @@ public:
     template< typename Archive >
     void Serialize( Archive& archive ) const
     {
-        archive << protocolVersion_ << exerciseIdentifier_ 
+        archive << protocolVersion_ << exerciseIdentifier_
                 << PDUType_ << protocolFamily_ << timeStamp_
                 << length_ << padding_;
     }

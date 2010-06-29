@@ -23,7 +23,7 @@ PHY_Population_ActionFireOnPions::PHY_Population_ActionFireOnPions( MIL_Populati
     , population_   ( population )
     , fireResults_  ( population )
     , rIntensity_   ( rIntensity )
-{    
+{
     assert( rIntensity_ > 0. );
 }
 
@@ -50,7 +50,7 @@ void PHY_Population_ActionFireOnPions::Stop()
 // Bypassd: NLD 2004-08-18
 // -----------------------------------------------------------------------------
 void PHY_Population_ActionFireOnPions::Execute()
-{   
+{
     population_.FireOnPions( rIntensity_, fireResults_ );
 }
 

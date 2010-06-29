@@ -31,7 +31,7 @@ class ADN_Weapons_ListView;
 */
 // Created: APE 2004-12-07
 // =============================================================================
-class ADN_Weapons_GUI 
+class ADN_Weapons_GUI
 : public ADN_GUI_ABC
 {
     Q_OBJECT

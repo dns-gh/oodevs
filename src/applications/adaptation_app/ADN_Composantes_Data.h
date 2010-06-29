@@ -228,7 +228,7 @@ public:
 
     public:
         ADN_TypePtr_InVector_ABC<ADN_Breakdowns_Data::BreakdownInfo> ptrBreakdown_;
-        ADN_Type_Double          rPercentage_; 
+        ADN_Type_Double          rPercentage_;
     };
 
     typedef ADN_Type_Vector_ABC<BreakdownInfos>     T_BreakdownInfos_Vector;
@@ -283,13 +283,13 @@ public:
             Cmp(E_Location& val) : val_(val) {}
             ~Cmp() {}
 
-            bool operator()( SpeedInfos* tgtnfos ) const 
+            bool operator()( SpeedInfos* tgtnfos ) const
             { return tgtnfos->nTypeTerrain_==val_; }
 
         private:
 
             E_Location val_;
-        };   
+        };
     };
 
     typedef ADN_Type_Vector_ABC<SpeedInfos>    T_SpeedInfos_Vector;
@@ -325,7 +325,7 @@ public:
             Cmp(const std::string& val) : val_(val) {}
             ~Cmp() {}
 
-            bool operator()( SensorInfos* tgtnfos ) const 
+            bool operator()( SensorInfos* tgtnfos ) const
             { return tgtnfos->ptrSensor_.GetData() && tgtnfos->ptrSensor_.GetData()->strName_==val_; }
 
         private:
@@ -386,7 +386,7 @@ public:
 
     public:
         ADN_TypePtr_InVector_ABC<ADN_Weapons_Data::WeaponInfos> ptrWeapon_;
-        ADN_Type_String                                         strName_; //!< Not for editing. 
+        ADN_Type_String                                         strName_; //!< Not for editing.
 
     public:
         /*
@@ -396,7 +396,7 @@ public:
         Cmp(const std::string& val) : val_(val) {}
         ~Cmp() {}
 
-        bool operator()( WeaponInfos* tgtnfos ) const 
+        bool operator()( WeaponInfos* tgtnfos ) const
         { return tgtnfos->ptrLauncher_.GetData() && tgtnfos->ptrLauncher_.GetData()->strName_==val_; }
 
         private:
@@ -424,13 +424,13 @@ public:
 
         ActiveProtectionsInfos* CreateCopy();
 
-        void ReadArchive( xml::xistream& input );        
+        void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
         void ReadProtection( xml::xistream& input );
 
     public:
         ADN_TypePtr_InVector_ABC<ADN_ActiveProtections_Data::ActiveProtectionsInfos> ptrActiveProtections_;
-        ADN_Type_String                                                              strName_; //!< Not for editing. 
+        ADN_Type_String                                                              strName_; //!< Not for editing.
     };
 
     typedef ADN_Type_Vector_ABC<ActiveProtectionsInfos>    T_ActiveProtectionsInfos_Vector;
@@ -583,7 +583,7 @@ public:
 //            Cmp(const E_ObjectType& val) : val_(val) {}
 //            ~Cmp() {}
 //
-//            bool operator()( ObjectInfos* tgtnfos ) const 
+//            bool operator()( ObjectInfos* tgtnfos ) const
 //            { return tgtnfos->ptrObject_.GetData() && tgtnfos->ptrObject_.GetData()->nObjectType_.GetData()==val_; }
 //
 //        private:
@@ -686,7 +686,7 @@ public:
 
         ADN_TypePtr_InVector_ABC<ADN_Categories_Data::ArmorInfos>                 ptrArmor_;
         ADN_TypePtr_InVector_ABC<ADN_Categories_Data::SizeInfos>                  ptrSize_;
-        ADN_Type_Double                                                           rWeight_;       
+        ADN_Type_Double                                                           rWeight_;
         ADN_Type_Double                                                           rMaxSpeed_;
 
         T_SpeedInfos_Vector                                                       vSpeeds_;
@@ -724,7 +724,7 @@ public:
             CmpId( int val) : val_(val) {}
             ~CmpId() {}
 
-            bool operator()( ComposanteInfos* tgtnfos ) const 
+            bool operator()( ComposanteInfos* tgtnfos ) const
             { return tgtnfos->nMosId_.GetData() ==val_; }
 
         private:

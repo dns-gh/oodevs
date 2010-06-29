@@ -47,7 +47,7 @@ public:
     //@{
     template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
-    
+
     //! @name Operations
     //@{
     void Update    ( bool bIsDead );
@@ -62,9 +62,9 @@ public:
 
     int  Construct           ( MIL_Object_ABC* pObject, boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
     int  ResumeWork          ( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
-    int  Destroy             ( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge ); 
-    int  Mine                ( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge ); 
-    int  Demine              ( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge ); 
+    int  Destroy             ( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
+    int  Mine                ( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
+    int  Demine              ( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
     int  Bypass              ( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
     int  Extinguish          ( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
     void StartAnimateObject  ( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
@@ -89,7 +89,7 @@ public:
     bool CanConstructWithReinforcement( const std::string& objectType ) const;
     bool CanBypassWithReinforcement   ( const MIL_ObjectType_ABC& object ) const;
     bool CanDestroyWithReinforcement  ( const MIL_ObjectType_ABC& object ) const;
-    bool CanMineWithReinforcement     ( const MIL_ObjectType_ABC& object ) const;    
+    bool CanMineWithReinforcement     ( const MIL_ObjectType_ABC& object ) const;
     //@}
 
 private:

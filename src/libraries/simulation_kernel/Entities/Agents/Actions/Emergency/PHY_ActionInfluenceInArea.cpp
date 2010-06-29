@@ -25,12 +25,12 @@ PHY_ActionInfluenceInArea::PHY_ActionInfluenceInArea( MIL_AgentPion& pion, const
     , role_               ( pion.GetRole< PHY_RoleAction_FolkInfluence >() )
     , activity_           ( activity )
     , influence_          ( influence )
-{    
+{
     // Register( GetRole().InfluenceActivityInArea( diaCall[ 1 ).ToString(), diaCall[ 2 ].ToFloat(), pLocalisation ) );
     const MT_Vector2D&  vPos = pion_.GetRole< PHY_RoleInterface_Location >().GetPosition();
-    if ( pLocalisation )
+    if( pLocalisation )
         pObject_ = role_.InfluenceActivityInArea( vPos, activity_, influence_, *pLocalisation );
-    if ( !pObject_ )
+    if( !pObject_ )
         Callback( static_cast< int >( PHY_RoleAction_FolkInfluence::eImpossible ) );
     else
         Callback( static_cast< int >( PHY_RoleAction_FolkInfluence::eRunning ) );
@@ -51,7 +51,7 @@ PHY_ActionInfluenceInArea::~PHY_ActionInfluenceInArea()
 // -----------------------------------------------------------------------------
 void PHY_ActionInfluenceInArea::StopAction()
 {
-    if ( pObject_ )
+    if( pObject_ )
         role_.ReleaseInfluence( *pObject_ );
 }
 
@@ -61,20 +61,20 @@ void PHY_ActionInfluenceInArea::StopAction()
 // -----------------------------------------------------------------------------
 void PHY_ActionInfluenceInArea::Execute()
 {
-    if ( pObject_ && !pObject_->IsActivated() )
+    if( pObject_ && !pObject_->IsActivated() )
     {
         pObject_->Activate();
         Callback( static_cast< int >( PHY_RoleAction_FolkInfluence::eActivated ) );
     }
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionInfluenceInArea::ExecuteSuspended
 // Created: JCR 2007-09-12
 // -----------------------------------------------------------------------------
 void PHY_ActionInfluenceInArea::ExecuteSuspended()
-{    
-    if ( pObject_ )
+{
+    if( pObject_ )
     {
         pObject_->Deactivate();
         Callback( static_cast< int >( PHY_RoleAction_FolkInfluence::eDeactivated ) );

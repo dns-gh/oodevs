@@ -46,12 +46,12 @@ public:
     // Automate
     static boost::shared_ptr< MIL_Mission_ABC > MRT_CreatePionMission  ( MIL_Automate& callerAutomate, DEC_Decision_ABC* pPion, const std::string& mission );
     static void             MRT_Validate           ( MIL_Automate& callerAutomate );
-    static void             MRT_AffectFuseaux      ( MIL_Automate& callerAutomate, std::vector< DEC_Decision_ABC* > pions );   
+    static void             MRT_AffectFuseaux      ( MIL_Automate& callerAutomate, std::vector< DEC_Decision_ABC* > pions );
     static boost::shared_ptr< MIL_Mission_ABC > CDT_CreatePionMission  ( MIL_Automate& callerAutomate, DEC_Decision_ABC* pPion, const std::string& mission );
     static boost::shared_ptr< MIL_Mission_ABC > CreatePionMissionBM    ( MIL_Automate& callerAutomate, DEC_Decision_ABC* pPion, const std::string& mission );
     static boost::shared_ptr< MIL_Mission_ABC > CreatePionMissionVersPionBM    ( MIL_Automate& callerAutomate, DEC_Decision_ABC* pPion, const std::string& mission );
-	static void             CDT_GivePionMission    ( MIL_Automate& callerAutomate, boost::shared_ptr< MIL_Mission_ABC > pMission );
-	static void             CDT_GivePionMissionVersPion    ( MIL_Automate& callerAutomate, boost::shared_ptr< MIL_Mission_ABC > pMission );
+    static void             CDT_GivePionMission    ( MIL_Automate& callerAutomate, boost::shared_ptr< MIL_Mission_ABC > pMission );
+    static void             CDT_GivePionMissionVersPion    ( MIL_Automate& callerAutomate, boost::shared_ptr< MIL_Mission_ABC > pMission );
     static boost::shared_ptr< MIL_Mission_ABC > CreateAutomateMission  ( MIL_Automate& callerAutomate, DEC_Decision_ABC* pAutomate, const std::string& mission  );
     static void AssignFuseauToAutomateMission   ( MIL_Fuseau* pFuseau, boost::shared_ptr< MIL_Mission_ABC > pMission );
     static void AssignDirectionToAutomateMission( MT_Vector2D* pDirection, boost::shared_ptr< MIL_Mission_ABC > pMission);

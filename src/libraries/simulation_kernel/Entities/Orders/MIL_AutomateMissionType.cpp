@@ -32,7 +32,7 @@ void MIL_AutomateMissionType::Initialize( xml::xistream& xis )
     MT_LOG_INFO_MSG( "Initializing automate mission types" );
 
     LoadingWrapper loader;
-    
+
     xis >> xml::start( "missions" )
             >> xml::start( "automats" )
                 >> xml::list( "mission", loader, &LoadingWrapper::ReadMission )
@@ -104,10 +104,10 @@ const MIL_MissionType_ABC* MIL_AutomateMissionType::Find( const std::string& str
 // -----------------------------------------------------------------------------
 const std::string& MIL_AutomateMissionType::GetDIABehavior( Phase phase ) const
 {
-    switch( phase ) 
+    switch( phase )
     {
-        case ePhaseMRT : return strDIAMrtBehavior_;  
-        case ePhaseCDT : return strDIACdtBehavior_; 
+        case ePhaseMRT : return strDIAMrtBehavior_;
+        case ePhaseCDT : return strDIACdtBehavior_;
         default: throw std::runtime_error( __FUNCTION__ " invalid behavior phase" );
     }
 }

@@ -1657,37 +1657,37 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& , const Msgs
     else if( wrapper.message().has_set_automat_mode_ack() )
         OnReceiveMsgSetAutomatModeAck                  ( wrapper.message().set_automat_mode_ack() , wrapper.context() );
     else if( wrapper.message().has_unit_change_superior_ack() )
-        OnReceiveMsgUnitChangeSuperiorAck              (  wrapper.message().unit_change_superior_ack() , wrapper.context() ); 
+        OnReceiveMsgUnitChangeSuperiorAck              (  wrapper.message().unit_change_superior_ack() , wrapper.context() );
     else if( wrapper.message().has_change_diplomacy_ack() )
         OnReceiveMsgChangeDiplomacyAck                 ( wrapper.message().change_diplomacy_ack() , wrapper.context() );
     else if( wrapper.message().has_automat_change_knowledge_group_ack() )
-        OnReceiveMsgAutomatChangeKnowledgeGroupAck     (  wrapper.message().automat_change_knowledge_group_ack() , wrapper.context() ); 
+        OnReceiveMsgAutomatChangeKnowledgeGroupAck     (  wrapper.message().automat_change_knowledge_group_ack() , wrapper.context() );
     else if( wrapper.message().has_object_magic_action_ack() )
-      OnReceiveMsgObjectMagicActionAck               ( wrapper.message().object_magic_action_ack() , wrapper.context() ); 
+      OnReceiveMsgObjectMagicActionAck               ( wrapper.message().object_magic_action_ack() , wrapper.context() );
     else if( wrapper.message().has_automat_change_logistic_links_ack() )
        OnReceiveMsgAutomatChangeLogisticLinksAck      (  wrapper.message().automat_change_logistic_links_ack() , wrapper.context() );
     else if( wrapper.message().has_automat_change_logistic_links() )
        OnReceiveMsgAutomatChangeLogisticLinks         ( wrapper.message().automat_change_logistic_links() );
     else if( wrapper.message().has_automat_change_superior_ack() )
-       OnReceiveMsgAutomatChangeSuperiorAck           (  wrapper.message().automat_change_superior_ack() , wrapper.context() ); 
+       OnReceiveMsgAutomatChangeSuperiorAck           (  wrapper.message().automat_change_superior_ack() , wrapper.context() );
     else if( wrapper.message().has_log_supply_push_flow_ack() )
         OnReceiveMsgLogSupplyPushFlowAck               (  wrapper.message().log_supply_push_flow_ack() , wrapper.context() );
     else if( wrapper.message().has_log_supply_change_quotas_ack() )
         OnReceiveMsgLogRavitaillementChangeQuotaAck    (  wrapper.message().log_supply_change_quotas_ack() , wrapper.context() );
     else if( wrapper.message().has_population_magic_action_ack() )
-        OnReceiveMsgPopulationMagicActionAck           ( wrapper.message().population_magic_action_ack() , wrapper.context() ); 
+        OnReceiveMsgPopulationMagicActionAck           ( wrapper.message().population_magic_action_ack() , wrapper.context() );
     else if( wrapper.message().has_population_order_ack() )
-        OnReceiveMsgPopulationOrderAck                 ( wrapper.message().population_order_ack() , wrapper.context() ); 
+        OnReceiveMsgPopulationOrderAck                 ( wrapper.message().population_order_ack() , wrapper.context() );
     else if( wrapper.message().has_control_information() )
-        OnReceiveMsgControlInformation           ( wrapper.message().control_information() ); 
+        OnReceiveMsgControlInformation           ( wrapper.message().control_information() );
     else if( wrapper.message().has_control_profiling_information() )
         OnReceiveMsgProfilingValues              ( wrapper.message().control_profiling_information() );
     else if( wrapper.message().has_control_begin_tick() )
-        OnReceiveMsgControlBeginTick             ( wrapper.message().control_begin_tick() ); 
+        OnReceiveMsgControlBeginTick             ( wrapper.message().control_begin_tick() );
     else if( wrapper.message().has_control_end_tick() )
-        OnReceiveMsgControlEndTick               ( wrapper.message().control_end_tick() ); 
+        OnReceiveMsgControlEndTick               ( wrapper.message().control_end_tick() );
     //if( wrapper.message().has_control_stop_ack() )
-    
+
     else if( wrapper.message().has_control_pause_ack() )
         OnReceiveMsgControlPauseAck              ( wrapper.message().control_pause_ack() );
     else if( wrapper.message().has_control_resume_ack() )
@@ -1695,65 +1695,65 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& , const Msgs
     else if( wrapper.message().has_control_change_time_factor_ack() )
         OnReceiveMsgControlChangeTimeFactorAck   ( wrapper.message().control_change_time_factor_ack() );
     else if( wrapper.message().has_control_date_time_change_ack() )
-        OnReceiveMsgControlDatetimeChangeAck     ( wrapper.message().control_date_time_change_ack() ); 
+        OnReceiveMsgControlDatetimeChangeAck     ( wrapper.message().control_date_time_change_ack() );
     else if( wrapper.message().has_control_global_meteo_ack() )
-        OnReceiveMsgControlMeteoGlobalAck        (); 
+        OnReceiveMsgControlMeteoGlobalAck        ();
     else if( wrapper.message().has_control_local_meteo_ack() )
-        OnReceiveMsgControlMeteoLocalAck         (); 
+        OnReceiveMsgControlMeteoLocalAck         ();
     else if( wrapper.message().has_control_checkpoint_save_begin() )
-        OnReceiveMsgCheckPointSaveBegin       (); 
+        OnReceiveMsgCheckPointSaveBegin       ();
     else if( wrapper.message().has_control_checkpoint_save_end() )
-        OnReceiveMsgCheckPointSaveEnd         (); 
+        OnReceiveMsgCheckPointSaveEnd         ();
     else if( wrapper.message().has_control_checkpoint_set_frequency_ack() )
-        OnReceiveMsgCheckPointSetFrequencyAck (); 
+        OnReceiveMsgCheckPointSetFrequencyAck ();
     else if( wrapper.message().has_control_checkpoint_save_now_ack() )
-        OnReceiveMsgCheckPointSaveNowAck      (); 
+        OnReceiveMsgCheckPointSaveNowAck      ();
     else if( wrapper.message().has_control_send_current_state_begin() )
         return;
     else if( wrapper.message().has_control_send_current_state_end() )
         OnReceiveMsgSendCurrentStateEnd( wrapper.message().control_send_current_state_end() );
-    else if( wrapper.message().has_knowledge_group_creation() ) 
-        OnReceiveMsgKnowledgeGroupCreation( wrapper.message().knowledge_group_creation() ); 
-    else if( wrapper.message().has_knowledge_group_destruction() ) 
-        OnReceiveMsgKnowledgeGroupDestruction( wrapper.message().knowledge_group_destruction() ); 
+    else if( wrapper.message().has_knowledge_group_creation() )
+        OnReceiveMsgKnowledgeGroupCreation( wrapper.message().knowledge_group_creation() );
+    else if( wrapper.message().has_knowledge_group_destruction() )
+        OnReceiveMsgKnowledgeGroupDestruction( wrapper.message().knowledge_group_destruction() );
     else if( wrapper.message().has_side_creation() )
-        OnReceiveMsgTeamCreation              ( wrapper.message().side_creation() ); 
+        OnReceiveMsgTeamCreation              ( wrapper.message().side_creation() );
     else if( wrapper.message().has_formation_creation() )
-        OnReceiveMsgFormationCreation         ( wrapper.message().formation_creation() ); 
+        OnReceiveMsgFormationCreation         ( wrapper.message().formation_creation() );
     else if( wrapper.message().has_unit_knowledge_creation() )
-        OnReceiveMsgUnitKnowledgeCreation     ( wrapper.message().unit_knowledge_creation() ); 
+        OnReceiveMsgUnitKnowledgeCreation     ( wrapper.message().unit_knowledge_creation() );
     else if( wrapper.message().has_unit_knowledge_update() )
-        OnReceiveMsgUnitKnowledgeUpdate       ( wrapper.message().unit_knowledge_update() ); 
+        OnReceiveMsgUnitKnowledgeUpdate       ( wrapper.message().unit_knowledge_update() );
     else if( wrapper.message().has_unit_knowledge_destruction() )
-        OnReceiveMsgUnitKnowledgeDestruction  ( wrapper.message().unit_knowledge_destruction() ); 
+        OnReceiveMsgUnitKnowledgeDestruction  ( wrapper.message().unit_knowledge_destruction() );
     else if( wrapper.message().has_unit_attributes() )
         OnReceiveMsgUnitAttributes            ( wrapper.message().unit_attributes() );
     else if( wrapper.message().has_unit_pathfind() )
-        OnReceiveMsgUnitPathFind              ( wrapper.message().unit_pathfind() ); 
+        OnReceiveMsgUnitPathFind              ( wrapper.message().unit_pathfind() );
     else if( wrapper.message().has_automat_attributes() )
-        OnReceiveMsgAutomatAttributes         ( wrapper.message().automat_attributes() );               
+        OnReceiveMsgAutomatAttributes         ( wrapper.message().automat_attributes() );
     else if( wrapper.message().has_unit_vision_cones() )
         OnReceiveMsgUnitVisionCones           ( wrapper.message().unit_vision_cones() );
     else if( wrapper.message().has_unit_detection() )
-        OnReceiveMsgUnitInterVisibility       ( wrapper.message().unit_detection() ); 
+        OnReceiveMsgUnitInterVisibility       ( wrapper.message().unit_detection() );
     else if( wrapper.message().has_object_detection() )
-        OnReceiveMsgObjectInterVisibility     ( wrapper.message().object_detection() ); 
+        OnReceiveMsgObjectInterVisibility     ( wrapper.message().object_detection() );
     else if( wrapper.message().has_population_concentration_detection() )
-        OnReceiveMsgPopulationConcentrationInterVisibility( wrapper.message().population_concentration_detection() ); 
+        OnReceiveMsgPopulationConcentrationInterVisibility( wrapper.message().population_concentration_detection() );
     else if( wrapper.message().has_population_flow_detection() )
-        OnReceiveMsgPopulationFlowInterVisibility( wrapper.message().population_flow_detection()); 
+        OnReceiveMsgPopulationFlowInterVisibility( wrapper.message().population_flow_detection());
     else if( wrapper.message().has_start_unit_fire() )
-        OnReceiveMsgStartUnitFire             ( wrapper.message().start_unit_fire() ); 
+        OnReceiveMsgStartUnitFire             ( wrapper.message().start_unit_fire() );
     else if( wrapper.message().has_stop_unit_fire() )
-        OnReceiveMsgStopUnitFire              ( wrapper.message().stop_unit_fire() ); 
+        OnReceiveMsgStopUnitFire              ( wrapper.message().stop_unit_fire() );
     else if( wrapper.message().has_start_population_fire() )
-        OnReceiveMsgStartPopulationFire       ( wrapper.message().start_population_fire() ); 
+        OnReceiveMsgStartPopulationFire       ( wrapper.message().start_population_fire() );
     else if( wrapper.message().has_stop_population_fire() )
-        OnReceiveMsgStopPopulationFire        ( wrapper.message().stop_population_fire() ); 
+        OnReceiveMsgStopPopulationFire        ( wrapper.message().stop_population_fire() );
     else if( wrapper.message().has_explosion() )
         OnReceiveMsgExplosion                 ( wrapper.message().explosion() );
     else if( wrapper.message().has_report() )
-       OnReceiveMsgCR                        ( wrapper.message().report() ); 
+       OnReceiveMsgCR                        ( wrapper.message().report() );
     else if( wrapper.message().has_invalidate_report() )
         OnReceiveMsgInvalidateReport          ( wrapper.message().invalidate_report() );
     else if( wrapper.message().has_debug_points() )
@@ -1761,110 +1761,110 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& , const Msgs
     else if( wrapper.message().has_trace() )
         OnReceiveMsgTrace                     ( wrapper.message().trace() );
     else if( wrapper.message().has_decisional_state() )
-        OnReceiveMsgDecisionalState           ( wrapper.message().decisional_state() ); 
+        OnReceiveMsgDecisionalState           ( wrapper.message().decisional_state() );
     else if( wrapper.message().has_start_fire_effect() )
         OnReceiveMsgStartFireEffect           ( wrapper.message().start_fire_effect() );
     else if( wrapper.message().has_stop_fire_effect() )
-        OnReceiveMsgStopFireEffect            ( wrapper.message().stop_fire_effect() );       
+        OnReceiveMsgStopFireEffect            ( wrapper.message().stop_fire_effect() );
     else if( wrapper.message().has_unit_order() )
-        OnReceiveMsgUnitOrder                 ( wrapper.message().unit_order() );       
+        OnReceiveMsgUnitOrder                 ( wrapper.message().unit_order() );
     else if( wrapper.message().has_automat_order() )
-        OnReceiveMsgAutomatOrder              ( wrapper.message().automat_order() );    
+        OnReceiveMsgAutomatOrder              ( wrapper.message().automat_order() );
     else if( wrapper.message().has_population_order() )
-        OnReceiveMsgPopulationOrder           ( wrapper.message().population_order() ); 
+        OnReceiveMsgPopulationOrder           ( wrapper.message().population_order() );
     else if( wrapper.message().has_object_creation() )
-        OnReceiveMsgObjectCreation            ( wrapper.message().object_creation() ); 
+        OnReceiveMsgObjectCreation            ( wrapper.message().object_creation() );
     else if( wrapper.message().has_object_update() )
-        OnReceiveMsgObjectUpdate              ( wrapper.message().object_update() ); 
+        OnReceiveMsgObjectUpdate              ( wrapper.message().object_update() );
     else if( wrapper.message().has_object_destruction() )
         OnReceiveMsgObjectDestruction         ( wrapper.message().object_destruction() );
     else if( wrapper.message().has_object_knowledge_creation() )
-        OnReceiveMsgObjectKnowledgeCreation   ( wrapper.message().object_knowledge_creation() ); 
+        OnReceiveMsgObjectKnowledgeCreation   ( wrapper.message().object_knowledge_creation() );
     else if( wrapper.message().has_object_knowledge_update() )
-        OnReceiveMsgObjectKnowledgeUpdate     ( wrapper.message().object_knowledge_update() ); 
+        OnReceiveMsgObjectKnowledgeUpdate     ( wrapper.message().object_knowledge_update() );
     else if( wrapper.message().has_object_knowledge_destruction() )
-        OnReceiveMsgObjectKnowledgeDestruction( wrapper.message().object_knowledge_destruction() ); 
+        OnReceiveMsgObjectKnowledgeDestruction( wrapper.message().object_knowledge_destruction() );
     else if( wrapper.message().has_unit_change_superior() )
-        OnReceiveMsgUnitChangeSuperior         ( wrapper.message().unit_change_superior() ); 
+        OnReceiveMsgUnitChangeSuperior         ( wrapper.message().unit_change_superior() );
     else if( wrapper.message().has_automat_change_superior() )
         OnReceiveMsgAutomatChangeSuperior      ( wrapper.message().automat_change_superior() );
     else if( wrapper.message().has_automat_change_knowledge_group() )
         OnReceiveMsgAutomatChangeKnowledgeGroup( wrapper.message().automat_change_knowledge_group() );
     else if( wrapper.message().has_unit_creation() )
-        OnReceiveMsgUnitCreation              ( wrapper.message().unit_creation() ); 
+        OnReceiveMsgUnitCreation              ( wrapper.message().unit_creation() );
     else if( wrapper.message().has_automat_creation() )
-        OnReceiveMsgAutomatCreation           ( wrapper.message().automat_creation() ); 
+        OnReceiveMsgAutomatCreation           ( wrapper.message().automat_creation() );
     else if( wrapper.message().has_change_diplomacy() )
-        OnReceiveMsgChangeDiplomacy           ( wrapper.message().change_diplomacy() ); 
+        OnReceiveMsgChangeDiplomacy           ( wrapper.message().change_diplomacy() );
     else if( wrapper.message().has_unit_destruction() )
-        OnReceiveMsgUnitDestruction           (  wrapper.message().unit_destruction() ); 
+        OnReceiveMsgUnitDestruction           (  wrapper.message().unit_destruction() );
     else if( wrapper.message().has_log_maintenance_handling_creation() )
-        OnReceiveMsgLogMaintenanceHandlingCreation   ( wrapper.message().log_maintenance_handling_creation() ); 
+        OnReceiveMsgLogMaintenanceHandlingCreation   ( wrapper.message().log_maintenance_handling_creation() );
     else if( wrapper.message().has_log_maintenance_handling_destruction() )
-        OnReceiveMsgLogMaintenanceHandlingDestruction( wrapper.message().log_maintenance_handling_destruction() ); 
+        OnReceiveMsgLogMaintenanceHandlingDestruction( wrapper.message().log_maintenance_handling_destruction() );
     else if( wrapper.message().has_log_maintenance_handling_update() )
-        OnReceiveMsgLogMaintenanceHandlingUpdate     ( wrapper.message().log_maintenance_handling_update() ); 
+        OnReceiveMsgLogMaintenanceHandlingUpdate     ( wrapper.message().log_maintenance_handling_update() );
     else if( wrapper.message().has_log_maintenance_state() )
-        OnReceiveMsgLogMaintenanceState( wrapper.message().log_maintenance_state() ); 
+        OnReceiveMsgLogMaintenanceState( wrapper.message().log_maintenance_state() );
     else if( wrapper.message().has_log_supply_handling_creation() )
-        OnReceiveMsgLogSupplyHandlingCreation   ( wrapper.message().log_supply_handling_creation() ); 
+        OnReceiveMsgLogSupplyHandlingCreation   ( wrapper.message().log_supply_handling_creation() );
     else if( wrapper.message().has_log_supply_handling_destruction() )
-        OnReceiveMsgLogSupplyHandlingDestruction( wrapper.message().log_supply_handling_destruction() ); 
+        OnReceiveMsgLogSupplyHandlingDestruction( wrapper.message().log_supply_handling_destruction() );
     else if( wrapper.message().has_log_supply_handling_update() )
-        OnReceiveMsgLogSupplyHandlingUpdate     ( wrapper.message().log_supply_handling_update() ); 
+        OnReceiveMsgLogSupplyHandlingUpdate     ( wrapper.message().log_supply_handling_update() );
     else if( wrapper.message().has_log_supply_state() )
-        OnReceiveMsgLogSupplyState              ( wrapper.message().log_supply_state() ); 
+        OnReceiveMsgLogSupplyState              ( wrapper.message().log_supply_state() );
     else if( wrapper.message().has_log_supply_quotas() )
-        OnReceiveMsgLogSupplyQuotas             ( wrapper.message().log_supply_quotas() ); 
+        OnReceiveMsgLogSupplyQuotas             ( wrapper.message().log_supply_quotas() );
     else if( wrapper.message().has_log_medical_handling_creation() )
-        OnReceiveMsgLogMedicalHandlingCreation   ( wrapper.message().log_medical_handling_creation() ); 
+        OnReceiveMsgLogMedicalHandlingCreation   ( wrapper.message().log_medical_handling_creation() );
     else if( wrapper.message().has_log_medical_handling_destruction() )
-        OnReceiveMsgLogMedicalHandlingDestruction( wrapper.message().log_medical_handling_destruction() ); 
+        OnReceiveMsgLogMedicalHandlingDestruction( wrapper.message().log_medical_handling_destruction() );
     else if( wrapper.message().has_log_medical_handling_update() )
-        OnReceiveMsgLogMedicalHandlingUpdate     ( wrapper.message().log_medical_handling_update() ); 
+        OnReceiveMsgLogMedicalHandlingUpdate     ( wrapper.message().log_medical_handling_update() );
     else if( wrapper.message().has_log_medical_state() )
-        OnReceiveMsgLogMedicalState              ( wrapper.message().log_medical_state() ); 
+        OnReceiveMsgLogMedicalState              ( wrapper.message().log_medical_state() );
     else if( wrapper.message().has_population_creation() )
-        OnMsgPopulationCreation                ( wrapper.message().population_creation() ); 
+        OnMsgPopulationCreation                ( wrapper.message().population_creation() );
     else if( wrapper.message().has_population_update() )
-        OnMsgPopulationUpdate                  ( wrapper.message().population_update() ); 
+        OnMsgPopulationUpdate                  ( wrapper.message().population_update() );
     else if( wrapper.message().has_population_concentration_creation() )
-        OnMsgPopulationConcentrationCreation   ( wrapper.message().population_concentration_creation() ); 
+        OnMsgPopulationConcentrationCreation   ( wrapper.message().population_concentration_creation() );
     else if( wrapper.message().has_population_concentration_destruction() )
-        OnMsgPopulationConcentrationDestruction( wrapper.message().population_concentration_destruction() ); 
+        OnMsgPopulationConcentrationDestruction( wrapper.message().population_concentration_destruction() );
     else if( wrapper.message().has_population_concentration_update() )
-        OnMsgPopulationConcentrationUpdate     ( wrapper.message().population_concentration_update() ); 
+        OnMsgPopulationConcentrationUpdate     ( wrapper.message().population_concentration_update() );
     else if( wrapper.message().has_population_flow_creation() )
-        OnMsgPopulationFlowCreation            ( wrapper.message().population_flow_creation() ); 
+        OnMsgPopulationFlowCreation            ( wrapper.message().population_flow_creation() );
     else if( wrapper.message().has_population_flow_destruction() )
-        OnMsgPopulationFlowDestruction         ( wrapper.message().population_flow_destruction() ); 
+        OnMsgPopulationFlowDestruction         ( wrapper.message().population_flow_destruction() );
     else if( wrapper.message().has_population_flow_update() )
-        OnMsgPopulationFlowUpdate              ( wrapper.message().population_flow_update() ); 
+        OnMsgPopulationFlowUpdate              ( wrapper.message().population_flow_update() );
 
     else if( wrapper.message().has_population_knowledge_creation() )
-        OnReceiveMsgPopulationKnowledgeCreation                ( wrapper.message().population_knowledge_creation() ); 
+        OnReceiveMsgPopulationKnowledgeCreation                ( wrapper.message().population_knowledge_creation() );
     else if( wrapper.message().has_population_knowledge_update() )
-        OnReceiveMsgPopulationKnowledgeUpdate                  ( wrapper.message().population_knowledge_update() ); 
+        OnReceiveMsgPopulationKnowledgeUpdate                  ( wrapper.message().population_knowledge_update() );
     else if( wrapper.message().has_population_knowledge_destruction() )
-        OnReceiveMsgPopulationKnowledgeDestruction             ( wrapper.message().population_knowledge_destruction() ); 
+        OnReceiveMsgPopulationKnowledgeDestruction             ( wrapper.message().population_knowledge_destruction() );
     else if( wrapper.message().has_population_concentration_knowledge_creation() )
-        OnReceiveMsgPopulationConcentrationKnowledgeCreation   ( wrapper.message().population_concentration_knowledge_creation() ); 
+        OnReceiveMsgPopulationConcentrationKnowledgeCreation   ( wrapper.message().population_concentration_knowledge_creation() );
     else if( wrapper.message().has_population_concentration_knowledge_update() )
-        OnReceiveMsgPopulationConcentrationKnowledgeUpdate     ( wrapper.message().population_concentration_knowledge_update() ); 
+        OnReceiveMsgPopulationConcentrationKnowledgeUpdate     ( wrapper.message().population_concentration_knowledge_update() );
     else if( wrapper.message().has_population_concentration_knowledge_destruction() )
-        OnReceiveMsgPopulationConcentrationKnowledgeDestruction( wrapper.message().population_concentration_knowledge_destruction() ); 
+        OnReceiveMsgPopulationConcentrationKnowledgeDestruction( wrapper.message().population_concentration_knowledge_destruction() );
     else if( wrapper.message().has_population_flow_knowledge_creation() )
-        OnReceiveMsgPopulationFlowKnowledgeCreation            ( wrapper.message().population_flow_knowledge_creation() ); 
+        OnReceiveMsgPopulationFlowKnowledgeCreation            ( wrapper.message().population_flow_knowledge_creation() );
     else if( wrapper.message().has_population_flow_knowledge_update() )
-        OnReceiveMsgPopulationFlowKnowledgeUpdate              ( wrapper.message().population_flow_knowledge_update() ); 
+        OnReceiveMsgPopulationFlowKnowledgeUpdate              ( wrapper.message().population_flow_knowledge_update() );
     else if( wrapper.message().has_population_flow_knowledge_destruction() )
-        OnReceiveMsgPopulationFlowKnowledgeDestruction         ( wrapper.message().population_flow_knowledge_destruction() ); 
+        OnReceiveMsgPopulationFlowKnowledgeDestruction         ( wrapper.message().population_flow_knowledge_destruction() );
     else if( wrapper.message().has_unit_environment_type() )
         ;     // $$$$ AGE 2007-07-06: break;
     else if( wrapper.message().has_folk_creation() )
-        OnReceiveMsgFolkCreation   ( wrapper.message().folk_creation() ); 
+        OnReceiveMsgFolkCreation   ( wrapper.message().folk_creation() );
     else if( wrapper.message().has_folk_graph_update() )
-        OnReceiveMsgFolkGraphUpdate( wrapper.message().folk_graph_update() ); 
+        OnReceiveMsgFolkGraphUpdate( wrapper.message().folk_graph_update() );
     else if( wrapper.message().has_urban_creation() )
         OnReceiveMsgUrbanCreation( wrapper.message().urban_creation() );
     else if( wrapper.message().has_urban_update() )
@@ -1878,7 +1878,7 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& , const Msgs
     else if( wrapper.message().has_urban_knowledge_destruction() )
         OnReceiveMsgUrbanKnowledgeDestruction( wrapper.message().urban_knowledge_destruction() );
     else if( wrapper.message().has_knowledge_group_magic_action_ack() )
-        OnReceiveMsgKnowledgeGroupMagicActionAck(  wrapper.message().knowledge_group_magic_action_ack() , wrapper.context() ); 
+        OnReceiveMsgKnowledgeGroupMagicActionAck(  wrapper.message().knowledge_group_magic_action_ack() , wrapper.context() );
     else if( wrapper.message().has_knowledge_group_update() )
         OnReceiveMsgKnowledgeGroupUpdate( wrapper.message().knowledge_group_update() );
     else if( wrapper.message().has_knowledge_group_update_ack() )
@@ -1888,11 +1888,11 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& , const Msgs
     else if( wrapper.message().has_action_create_fire_order_ack() )
         OnReceiveMsgActionCreateFireOrderAck( wrapper.message().action_create_fire_order_ack(), wrapper.context() );
     else if( wrapper.message().has_control_global_meteo() )
-        OnReceiveMsgControlMeteoGlobal        ( wrapper.message().control_global_meteo() ); 
+        OnReceiveMsgControlMeteoGlobal        ( wrapper.message().control_global_meteo() );
     else if( wrapper.message().has_control_local_meteo_creation() )
-        OnReceiveMsgControlMeteoLocalCreation ( wrapper.message().control_local_meteo_creation() );     
+        OnReceiveMsgControlMeteoLocalCreation ( wrapper.message().control_local_meteo_creation() );
     else if( wrapper.message().has_control_local_meteo_destruction() )
-        OnReceiveMsgControlMeteoLocalDestruction( wrapper.message().control_local_meteo_destruction() );     
+        OnReceiveMsgControlMeteoLocalDestruction( wrapper.message().control_local_meteo_destruction() );
     else
         UnhandledMessage( &wrapper.message() );
 }
@@ -1906,19 +1906,19 @@ void AgentServerMsgMgr::OnReceiveMsgAuthenticationToClient( const std::string& ,
     if( host_.empty() )
         return;
     if( wrapper.message().has_authentication_response() )
-        OnReceiveMsgAuthenticationResponse      ( wrapper.message().authentication_response() ); 
+        OnReceiveMsgAuthenticationResponse      ( wrapper.message().authentication_response() );
     else if( wrapper.message().has_profile_creation() )
-        OnReceiveMsgProfileCreation             ( wrapper.message().profile_creation() ); 
+        OnReceiveMsgProfileCreation             ( wrapper.message().profile_creation() );
     else if( wrapper.message().has_profile_creation_request_ack() )
-        OnReceiveMsgProfileCreationRequestAck   ( wrapper.message().profile_creation_request_ack() ); 
+        OnReceiveMsgProfileCreationRequestAck   ( wrapper.message().profile_creation_request_ack() );
     else if( wrapper.message().has_profile_update() )
-        OnReceiveMsgProfileUpdate               ( wrapper.message().profile_update() ); 
+        OnReceiveMsgProfileUpdate               ( wrapper.message().profile_update() );
     else if( wrapper.message().has_profile_update_request_ack() )
-        OnReceiveMsgProfileUpdateRequestAck     ( wrapper.message().profile_update_request_ack() ); 
+        OnReceiveMsgProfileUpdateRequestAck     ( wrapper.message().profile_update_request_ack() );
     else if( wrapper.message().has_profile_destruction() )
-        OnReceiveMsgProfileDestruction          ( wrapper.message().profile_destruction() ); 
+        OnReceiveMsgProfileDestruction          ( wrapper.message().profile_destruction() );
     else if( wrapper.message().has_profile_destruction_request_ack() )
-        OnReceiveMsgProfileDestructionRequestAck( wrapper.message().profile_destruction_request_ack() ); 
+        OnReceiveMsgProfileDestructionRequestAck( wrapper.message().profile_destruction_request_ack() );
     else
         UnhandledMessage( &wrapper.message() );
 }
@@ -1932,7 +1932,7 @@ void AgentServerMsgMgr::OnReceiveMsgReplayToClient( const std::string& , const M
     if( host_.empty() )
         return;
     if( wrapper.message().has_control_replay_information() )
-        OnReceiveMsgCtrReplayInfo             ( wrapper.message().control_replay_information()     ); 
+        OnReceiveMsgCtrReplayInfo             ( wrapper.message().control_replay_information()     );
     else if( wrapper.message().has_control_stop_ack() )
         {}
     else if( wrapper.message().has_control_pause_ack() )
@@ -1940,9 +1940,9 @@ void AgentServerMsgMgr::OnReceiveMsgReplayToClient( const std::string& , const M
     else if( wrapper.message().has_control_resume_ack() )
         OnReceiveMsgControlResumeAck          ( wrapper.message().control_resume_ack() );
     else if( wrapper.message().has_control_skip_to_tick_ack() )
-        OnReceiveMsgControlSkipToTickAck      ( wrapper.message().control_skip_to_tick_ack() ); 
+        OnReceiveMsgControlSkipToTickAck      ( wrapper.message().control_skip_to_tick_ack() );
     else if( wrapper.message().has_control_change_time_factor_ack() )
-        OnReceiveMsgControlChangeTimeFactorAck( wrapper.message().control_change_time_factor_ack() ); 
+        OnReceiveMsgControlChangeTimeFactorAck( wrapper.message().control_change_time_factor_ack() );
     else
         UnhandledMessage( &wrapper.message() );
 }
@@ -1956,11 +1956,11 @@ void AgentServerMsgMgr::OnReceiveMsgAarToClient( const std::string&, const MsgsA
     if( host_.empty() )
         return;
     if( wrapper.message().has_aar_information() )
-        OnReceiveMsgAarInformation( wrapper.message().aar_information() ); 
+        OnReceiveMsgAarInformation( wrapper.message().aar_information() );
     else if( wrapper.message().has_plot_result() )
-        OnReceiveMsgAarResult     ( wrapper.message().plot_result() ); 
+        OnReceiveMsgAarResult     ( wrapper.message().plot_result() );
     else if( wrapper.message().has_indicator() )
-        OnReceiveMsgAarIndicator  ( wrapper.message().indicator() ); 
+        OnReceiveMsgAarIndicator  ( wrapper.message().indicator() );
     else
         UnhandledMessage( &wrapper.message() );
 }
@@ -1974,53 +1974,53 @@ void AgentServerMsgMgr::OnReceiveMsgMessengerToClient( const std::string&, const
     if( host_.empty() )
         return;
     if( wrapper.message().has_limit_creation_request_ack() )
-        OnReceiveMsgLimitCreationRequestAck   ( wrapper.message().limit_creation_request_ack() ); 
+        OnReceiveMsgLimitCreationRequestAck   ( wrapper.message().limit_creation_request_ack() );
     else if( wrapper.message().has_limit_update_request_ack() )
-        OnReceiveMsgLimitUpdateRequestAck     ( wrapper.message().limit_update_request_ack() ); 
+        OnReceiveMsgLimitUpdateRequestAck     ( wrapper.message().limit_update_request_ack() );
     else if( wrapper.message().has_limit_destruction_request_ack() )
-        OnReceiveMsgLimitDestructionRequestAck( wrapper.message().limit_destruction_request_ack() ); 
+        OnReceiveMsgLimitDestructionRequestAck( wrapper.message().limit_destruction_request_ack() );
     else if( wrapper.message().has_lima_creation_request_ack() )
-        OnReceiveMsgLimaCreationRequestAck    ( wrapper.message().lima_creation_request_ack() ); 
+        OnReceiveMsgLimaCreationRequestAck    ( wrapper.message().lima_creation_request_ack() );
     else if( wrapper.message().has_lima_update_request_ack() )
-        OnReceiveMsgLimaUpdateRequestAck      ( wrapper.message().lima_update_request_ack() ); 
+        OnReceiveMsgLimaUpdateRequestAck      ( wrapper.message().lima_update_request_ack() );
     else if( wrapper.message().has_lima_destruction_request_ack() )
-        OnReceiveMsgLimaDestructionRequestAck ( wrapper.message().lima_destruction_request_ack() ); 
+        OnReceiveMsgLimaDestructionRequestAck ( wrapper.message().lima_destruction_request_ack() );
     else if( wrapper.message().has_limit_creation() )
-        OnReceiveMsgLimitCreation   ( wrapper.message().limit_creation() ); 
+        OnReceiveMsgLimitCreation   ( wrapper.message().limit_creation() );
     else if( wrapper.message().has_limit_update() )
-        OnReceiveMsgLimitUpdate     ( wrapper.message().limit_update() ); 
+        OnReceiveMsgLimitUpdate     ( wrapper.message().limit_update() );
     else if( wrapper.message().has_lima_creation() )
-        OnReceiveMsgLimaCreation    ( wrapper.message().lima_creation() ); 
+        OnReceiveMsgLimaCreation    ( wrapper.message().lima_creation() );
     else if( wrapper.message().has_lima_update() )
-        OnReceiveMsgLimaUpdate      ( wrapper.message().lima_update() ); 
+        OnReceiveMsgLimaUpdate      ( wrapper.message().lima_update() );
     else if( wrapper.message().has_lima_destruction() )
-        OnReceiveMsgLimaDestruction ( wrapper.message().lima_destruction() ); 
+        OnReceiveMsgLimaDestruction ( wrapper.message().lima_destruction() );
     else if( wrapper.message().has_intelligence_creation_request_ack() )
-        OnReceiveMsgIntelligenceCreationRequestAck   ( wrapper.message().intelligence_creation_request_ack() ); 
+        OnReceiveMsgIntelligenceCreationRequestAck   ( wrapper.message().intelligence_creation_request_ack() );
     else if( wrapper.message().has_intelligence_update_request_ack() )
-        OnReceiveMsgIntelligenceUpdateRequestAck     ( wrapper.message().intelligence_update_request_ack() ); 
+        OnReceiveMsgIntelligenceUpdateRequestAck     ( wrapper.message().intelligence_update_request_ack() );
     else if( wrapper.message().has_intelligence_destruction_request_ack() )
-        OnReceiveMsgIntelligenceDestructionRequestAck( wrapper.message().intelligence_destruction_request_ack() ); 
+        OnReceiveMsgIntelligenceDestructionRequestAck( wrapper.message().intelligence_destruction_request_ack() );
     else if( wrapper.message().has_intelligence_creation() )
-        OnReceiveMsgIntelligenceCreation             ( wrapper.message().intelligence_creation() ); 
+        OnReceiveMsgIntelligenceCreation             ( wrapper.message().intelligence_creation() );
     else if( wrapper.message().has_intelligence_update() )
-        OnReceiveMsgIntelligenceUpdate               ( wrapper.message().intelligence_update() ); 
+        OnReceiveMsgIntelligenceUpdate               ( wrapper.message().intelligence_update() );
     else if( wrapper.message().has_intelligence_destruction() )
-        OnReceiveMsgIntelligenceDestruction          ( wrapper.message().intelligence_destruction() ); 
+        OnReceiveMsgIntelligenceDestruction          ( wrapper.message().intelligence_destruction() );
     else if( wrapper.message().has_shape_creation_request_ack() )
-        OnReceiveMsgShapeCreationRequestAck   ( wrapper.message().shape_creation_request_ack() ); 
+        OnReceiveMsgShapeCreationRequestAck   ( wrapper.message().shape_creation_request_ack() );
     else if( wrapper.message().has_shape_update_request_ack() )
-        OnReceiveMsgShapeUpdateRequestAck     ( wrapper.message().shape_update_request_ack() ); 
+        OnReceiveMsgShapeUpdateRequestAck     ( wrapper.message().shape_update_request_ack() );
     else if( wrapper.message().has_shape_destruction_request_ack() )
-        OnReceiveMsgShapeDestructionRequestAck( wrapper.message().shape_destruction_request_ack() ); 
+        OnReceiveMsgShapeDestructionRequestAck( wrapper.message().shape_destruction_request_ack() );
     else if( wrapper.message().has_shape_creation() )
-        OnReceiveMsgShapeCreation             ( wrapper.message().shape_creation() ); 
+        OnReceiveMsgShapeCreation             ( wrapper.message().shape_creation() );
     else if( wrapper.message().has_shape_update() )
-        OnReceiveMsgShapeUpdate               ( wrapper.message().shape_update() ); 
+        OnReceiveMsgShapeUpdate               ( wrapper.message().shape_update() );
     else if( wrapper.message().has_shape_destruction() )
-        OnReceiveMsgShapeDestruction          ( wrapper.message().shape_destruction() ); 
+        OnReceiveMsgShapeDestruction          ( wrapper.message().shape_destruction() );
     else if( wrapper.message().has_text_message() )
-        OnReceiveMsgTextMessage( wrapper.message().text_message() ); 
+        OnReceiveMsgTextMessage( wrapper.message().text_message() );
     else if (wrapper.message().has_note_creation() )
         OnReceiveMsgNoteCreation              ( wrapper.message().note_creation()     );
     else if (wrapper.message().has_note_update() )

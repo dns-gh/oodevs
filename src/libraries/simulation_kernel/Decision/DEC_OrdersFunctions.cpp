@@ -238,10 +238,10 @@ MIL_Automate& DEC_OrdersFunctions::GetHigherEngagedAutomate( MIL_Automate& autom
     return automate;
 }
 
-namespace 
+namespace
 {
     class FlagMissionLima
-    {   
+    {
     public:
         FlagMissionLima( unsigned int nLimaID, bool bValue ) : nLimaID_( nLimaID ), bValue_( bValue ) {}
 
@@ -258,7 +258,7 @@ namespace
     };
 
     class FlagScheduleMissionLima
-    {   
+    {
     public:
         FlagScheduleMissionLima( unsigned int nLimaID, bool bValue ) : nLimaID_( nLimaID ), bValue_( bValue ) {}
 

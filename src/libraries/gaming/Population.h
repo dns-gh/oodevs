@@ -44,9 +44,9 @@ class Population : public kernel::EntityImplementation< kernel::Population_ABC >
                  , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationFlowCreation > // $$$$ AGE 2006-03-13: dégager dans des extensions ?
                  , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationFlowUpdate >
                  , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationFlowDestruction >
-                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationUpdate >       
+                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationUpdate >
                  , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationConcentrationCreation >
-                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationConcentrationUpdate > 
+                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationConcentrationUpdate >
                  , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationConcentrationDestruction >
                  , public kernel::Drawable_ABC
                  , public kernel::Displayable_ABC
@@ -83,7 +83,7 @@ public:
     //@{
     const kernel::PopulationType& GetType() const;
     //@}
-    
+
 private:
     //! @name Copy / Assignment
     //@{

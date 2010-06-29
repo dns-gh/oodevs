@@ -55,7 +55,7 @@ void MIL_ObjectFilter::Set( const std::string& type )
 // Created: NLD 2004-10-22
 // -----------------------------------------------------------------------------
 void MIL_ObjectFilter::Reset( const std::string& type )
-{    
+{
     objects_.erase( type );
 }
 

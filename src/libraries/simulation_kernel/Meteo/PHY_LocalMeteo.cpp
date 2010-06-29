@@ -133,7 +133,7 @@ void PHY_LocalMeteo::SendCreation() const
     msg.Send( NET_Publisher_ABC::Publisher() );
 }
 
-void PHY_LocalMeteo::SendDestruction() 
+void PHY_LocalMeteo::SendDestruction()
 {
     client::ControlLocalMeteoDestruction msg;
     msg().set_oid( id_ );

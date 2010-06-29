@@ -120,7 +120,7 @@ namespace
         const size_t index = path.find_first_of( '/' );
         return index == path.npos ? path : path.substr( 0, index );
     }
-   
+
     bool IsAttribute( const std::string& path )
     {
         return !path.empty() && path[ 0 ] == '@';
@@ -171,9 +171,9 @@ bool XmlNode::GetStringValue( const std::string& path, std::string& value ) cons
         if( IsAttribute( path ) )
         {
             bool optional = IsOptionalAttribute( path );
-            T_Attributes::const_iterator it = attributes_.find( CleanAttribute( path, optional ) ) ; 
-            if ( it == attributes_.end() ) 
-                return optional; 
+            T_Attributes::const_iterator it = attributes_.find( CleanAttribute( path, optional ) ) ;
+            if( it == attributes_.end() )
+                return optional;
             else
                value = (*it).second;
         }
@@ -182,33 +182,33 @@ bool XmlNode::GetStringValue( const std::string& path, std::string& value ) cons
         return true ;
     }
     std::string element = NextElement( path );
-    T_Nodes::const_iterator it = children_.find( element ) ; 
-    if ( it == children_.end() )
-        return false ; 
+    T_Nodes::const_iterator it = children_.find( element ) ;
+    if( it == children_.end() )
+        return false ;
     else
     {
         element = element != path ? path.substr( element.length() + 1 ) : "";
-        return (*it).second->GetStringValue( element, value ) ; 
+        return (*it).second->GetStringValue( element, value ) ;
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: XmlNode::GetValue partial implementation 
+// Name: XmlNode::GetValue partial implementation
 // Created: RDS 2008-08-19
 // -----------------------------------------------------------------------------
 template<>
 bool XmlNode::GetValue<bool>( const std::string& path ) const
 {
-    std::string str ; 
-    if ( GetStringValue( path, str ) )     
+    std::string str ;
+    if( GetStringValue( path, str ) )
     {
-        std::transform( str.begin(), str.end(), str.begin(), std::tolower ); 
-        if ( str =="false" ) 
-            return false ; 
-        if ( str =="true" ) 
+        std::transform( str.begin(), str.end(), str.begin(), std::tolower );
+        if( str =="false" )
+            return false ;
+        if( str =="true" )
             return true ;
-        return boost::lexical_cast<bool>(str); 
+        return boost::lexical_cast<bool>(str);
     }
     else
-        throw ( std::exception( "XmlNode impossible to find path" ) ) ; 
+        throw ( std::exception( "XmlNode impossible to find path" ) ) ;
 }

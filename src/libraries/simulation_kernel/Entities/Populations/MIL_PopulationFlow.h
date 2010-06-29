@@ -80,7 +80,7 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
@@ -95,7 +95,7 @@ private:
     MIL_PopulationFlow& operator=( const MIL_PopulationFlow& ); //!< Assignement operator
     //@}
 
-    //! @name 
+    //! @name
     //@{
     virtual MT_Float GetMaxSpeed              () const;
     virtual MT_Float GetSpeedWithReinforcement( const TerrainData& environment ) const;
@@ -130,7 +130,7 @@ private:
     virtual void NotifyCollision           ( MIL_Agent_ABC& agent );
     //@}
 
-    //! @name 
+    //! @name
     //@{
     virtual bool CanMove              () const;
     virtual bool CanObjectInteractWith( const MIL_Object_ABC& object ) const;
@@ -153,7 +153,7 @@ private:
 private:
     MIL_PopulationConcentration* pSourceConcentration_;
     MIL_PopulationConcentration* pDestConcentration_;
-         
+
     MT_Vector2D          primaryDestination_;
     MT_Vector2D          alternateDestination_; // Used when the flow is splitted
     boost::shared_ptr< DEC_Population_Path > pHeadPath_;

@@ -27,7 +27,7 @@ FirePrototype::FirePrototype( QWidget* parent, const tools::Resolver_ABC< FireCl
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: FirePrototype destructor
 // Created: SBO 2006-04-20

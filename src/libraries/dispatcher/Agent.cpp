@@ -418,7 +418,7 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 
         asn().mutable_etat_contamination()->set_percentage( contaminationPercentage_ );
         asn().mutable_etat_contamination()->set_quantity( contaminationQuantity_ );
-        
+
         asn().mutable_communications()->set_jammed( communicationJammed_ );
         asn().mutable_communications()->set_knowledge_group( knowledgeGroupJammed_ );
 

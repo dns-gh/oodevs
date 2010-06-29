@@ -48,7 +48,7 @@ const std::string& ObjectPrototype::GetName() const
 // -----------------------------------------------------------------------------
 unsigned int ObjectPrototype::GetID() const
 {
-    return id_; 
+    return id_;
 }
 
 // -----------------------------------------------------------------------------

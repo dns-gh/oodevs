@@ -18,7 +18,7 @@
 
 namespace bfs = boost::filesystem;
 
-namespace 
+namespace
 {
     void CreateExerciseXml( const std::string& file, const std::string& terrain, const std::string& model, const std::string& physical )
     {

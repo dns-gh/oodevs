@@ -44,16 +44,16 @@ void DEC_KnowledgeObjectFunctions::Recon( const MIL_Agent_ABC& callerAgent, boos
         pKnowledge->Recon( callerAgent );
 }
 
-namespace 
+namespace
 {
     template< typename Capacity >
     Capacity* IsValidObjectCapacity( const boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge )
     {
-        if ( !pKnowledge || !pKnowledge->IsValid() )
+        if( !pKnowledge || !pKnowledge->IsValid() )
             return 0;
 
         MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown();
-        if ( pObject )
+        if( pObject )
             return pObject->Retrieve< Capacity >();
         return 0;
     }
@@ -97,7 +97,7 @@ float DEC_KnowledgeObjectFunctions::GetAnimationLevel( boost::shared_ptr< DEC_Kn
         {
             const AnimatorAttribute* capacity = object->RetrieveAttribute< AnimatorAttribute >();
             if( capacity )
-                return float(capacity->GetCurrent()) / float(capacity->GetMaxAnimators()); 
+                return float(capacity->GetCurrent()) / float(capacity->GetMaxAnimators());
         }
     }
     return 0.f;
@@ -112,7 +112,7 @@ void DEC_KnowledgeObjectFunctions::DecontaminateZone( const MIL_Agent_ABC& calle
     assert( location );
 
     MIL_ObjectFilter filter;
-    filter.Set( "nbc zone" ); 
+    filter.Set( "nbc zone" );
     filter.Set( "nbc cloud" );
 
     T_KnowledgeObjectVector knownObjects;
@@ -394,7 +394,7 @@ float DEC_KnowledgeObjectFunctions::GetValorizationLevel( boost::shared_ptr< DEC
 // Created: GGE & PSN 2010-04-09
 // -----------------------------------------------------------------------------
 float DEC_KnowledgeObjectFunctions::EstimatedWorkTime( MIL_Agent_ABC& pion, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
-{   
+{
     if( pKnowledge && pKnowledge->IsValid() )
         if( MIL_Object_ABC* object = pKnowledge->GetObjectKnown() )
         {

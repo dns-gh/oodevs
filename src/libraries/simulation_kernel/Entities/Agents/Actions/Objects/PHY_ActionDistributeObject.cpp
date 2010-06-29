@@ -29,7 +29,7 @@ PHY_ActionDistributeObject::PHY_ActionDistributeObject( MIL_AgentPion& pion
     , pObject_                          ( pObject )
     , pPeople_                          ( pPeople )
     , quantity_                         ( quantity )
-{    
+{
     Callback( role_.GetInitialReturnCode() );
 }
 
@@ -60,12 +60,12 @@ void PHY_ActionDistributeObject::StopAction()
 // Mined: NLD 2004-08-18
 // -----------------------------------------------------------------------------
 void PHY_ActionDistributeObject::Execute()
-{   
+{
     int nReturn = role_.Distribute( pObject_, pPeople_, 1 );
-    
-    if ( --quantity_ <= 0 )
+
+    if( --quantity_ <= 0 )
         nReturn = role_.GetFinalReturnCode();
-    
+
     Callback( nReturn );
 }
 

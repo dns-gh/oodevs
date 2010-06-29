@@ -25,7 +25,7 @@ class PHY_ActionFly : public PHY_Action_ABC
 {
 
 public:
-    typedef MIL_Entity_ABC ActorType;        
+    typedef MIL_Entity_ABC ActorType;
 
 public:
     explicit PHY_ActionFly( MIL_Entity_ABC& entity );

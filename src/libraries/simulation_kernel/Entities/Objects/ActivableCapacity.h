@@ -28,7 +28,7 @@ class ActivableCapacity : public ObjectCapacity_ABC
 
 public:
     //! @name Constructors/Destructor
-    //@{    
+    //@{
              ActivableCapacity();
              ActivableCapacity( const ActivableCapacity& );
     explicit ActivableCapacity( xml::xistream& xis );
@@ -36,7 +36,7 @@ public:
     //@}
 
      //! @name CheckPoints
-    //@{    
+    //@{
     template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
@@ -45,7 +45,7 @@ public:
     virtual void Instanciate( MIL_Object_ABC& object ) const;
     virtual void Register( MIL_Object_ABC& object );
     void Activate( MIL_Object_ABC& object );
-    //@}   
+    //@}
 
     //! @name Accessors
     //@{
@@ -54,7 +54,7 @@ public:
 
 private:
     //! @name Copy/Assignment
-    //@{    
+    //@{
     ActivableCapacity& operator=( const ActivableCapacity& ); //!< Assignment operator
     //@}
 };

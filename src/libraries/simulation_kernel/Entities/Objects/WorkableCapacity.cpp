@@ -19,7 +19,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( WorkableCapacity )
 // Name: WorkableCapacity constructor
 // Created: JCR 2008-06-05
 // -----------------------------------------------------------------------------
-WorkableCapacity::WorkableCapacity( xml::xistream& xis )    
+WorkableCapacity::WorkableCapacity( xml::xistream& xis )
     : maxAnimators_ ( xml::attribute< int >( xis, "max-animator" ) )
 {
     // NOTHING
@@ -29,7 +29,7 @@ WorkableCapacity::WorkableCapacity( xml::xistream& xis )
 // Name: WorkableCapacity constructor
 // Created: JCR 2008-06-05
 // -----------------------------------------------------------------------------
-WorkableCapacity::WorkableCapacity()    
+WorkableCapacity::WorkableCapacity()
     : maxAnimators_ ( 0 )
 {
     // NOTHING
@@ -91,7 +91,7 @@ void WorkableCapacity::Instanciate( MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 bool WorkableCapacity::AddAnimator( MIL_Object_ABC& object, const MIL_Agent_ABC& agent )
 {
-    return object.GetAttribute< AnimatorAttribute >().AddAnimator( agent );    
+    return object.GetAttribute< AnimatorAttribute >().AddAnimator( agent );
 }
 
 // -----------------------------------------------------------------------------

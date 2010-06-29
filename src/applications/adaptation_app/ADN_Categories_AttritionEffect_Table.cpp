@@ -25,7 +25,7 @@ class ADN_Connector_AttritionEffectTable
     : public ADN_Connector_Table_ABC
 {
 public:
-    ADN_Connector_AttritionEffectTable( ADN_Categories_AttritionEffect_Table& tab ) 
+    ADN_Connector_AttritionEffectTable( ADN_Categories_AttritionEffect_Table& tab )
         : ADN_Connector_Table_ABC( tab, false, "ADN_Connector_AttritionEffect_ListView" )
     {}
 

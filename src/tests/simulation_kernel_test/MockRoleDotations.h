@@ -19,16 +19,16 @@ MOCK_BASE_CLASS( MockRoleDotations, dotation::PHY_RoleInterface_Dotations )
     MOCK_METHOD( Update, 1 );
     MOCK_METHOD( Clean, 0 );
     MOCK_METHOD( HasChanged, 0 );
-    
+
     MOCK_METHOD( SupplyDotation, 2 );
     MOCK_METHOD_EXT( ResupplyDotations, 0, void(), ResupplyDotationsAll );
     MOCK_METHOD_EXT( ResupplyDotations, 2, void( const PHY_AmmoDotationClass&, double ), ResupplyDotationsByAmmo );
     MOCK_METHOD_EXT( ResupplyDotations, 2, void( const PHY_DotationType&, double ), ResupplyDotationsByType );
-    
+
     MOCK_METHOD( SetConsumptionMode, 1 );
     MOCK_METHOD( RollbackConsumptionMode, 0 );
     MOCK_METHOD( GetMaxTimeForConsumption, 1 );
-    
+
     MOCK_METHOD( AddFireReservation, 2 );
     MOCK_METHOD( GetDotationNumber, 1 );
     MOCK_METHOD( GetIlluminationDotations, 2 );

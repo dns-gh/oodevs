@@ -35,7 +35,7 @@ public:
     virtual void Contaminate   ( const MIL_ToxicEffectManipulator& nbcAgent );
     virtual void Decontaminate ();
     virtual void Decontaminate ( MT_Float rRatioAgentsWorking );
-    virtual MT_Float GetContaminationQuantity() const;  
+    virtual MT_Float GetContaminationQuantity() const;
     //@}
 
     //! @name Modifiers

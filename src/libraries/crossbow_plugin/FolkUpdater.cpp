@@ -46,7 +46,7 @@ FolkUpdater::FolkUpdater( Workspace_ABC& workspace, const WorkingSession& sessio
     builder.SetField( "session_id" , session_.GetId() );
     // Let previous state because of the delay : database_.Execute( builder );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: FolkUpdater destructor
 // Created: JCR 2007-08-29
@@ -86,7 +86,7 @@ void FolkUpdater::Update( const MsgsSimToClient::MsgFolkCreation& msg )
 void FolkUpdater::Update( const MsgsSimToClient::MsgFolkGraphUpdate& msg )
 {
     if( edges_.size() == 0 )
-        throw std::runtime_error( "Trying to update population graph before its creation." );    
+        throw std::runtime_error( "Trying to update population graph before its creation." );
     for( unsigned int i = 0; i < msg.elem_size(); ++i )
         Update( msg.elem( i ) );
 }
@@ -97,7 +97,7 @@ void FolkUpdater::Update( const MsgsSimToClient::MsgFolkGraphUpdate& msg )
 // -----------------------------------------------------------------------------
 void FolkUpdater::Drop()
 {
-    // LockedScopeEditor   lock( database_ );    
+    // LockedScopeEditor   lock( database_ );
 //    database_.ReleaseTable( "Population" );
 }
 
@@ -122,15 +122,15 @@ void FolkUpdater::Update( const MsgsSimToClient::MsgFolkGraphEdgeUpdate& msg )
 // Created: SBO 2007-09-19
 // -----------------------------------------------------------------------------
 void FolkUpdater::Commit( Table_ABC& table )
-{    
+{
     Row_ABC* row = table.Find( "", true );
     int checkflush = 0;
     table.BeginTransaction();
     for( CIT_Edges it = edges_.begin(); it != edges_.end() && row; ++it )
     {
         CommitEdge( *row, *it );
-        
-        if ( ++checkflush >= 500 )
+
+        if( ++checkflush >= 500 )
         {
             table.UpdateRow( *row );
             // table.BeginTransaction();
@@ -158,7 +158,7 @@ void FolkUpdater::CommitEdge( Row_ABC& row, const Edge& edge )
 
 // -----------------------------------------------------------------------------
 // Name: FolkUpdater::Update
-/* Read message containing population information and store appropriate 
+/* Read message containing population information and store appropriate
    indiviudals
 */
 // Created: JCR 2007-08-29
@@ -171,9 +171,9 @@ void FolkUpdater::Update( Edge& edge, const MsgsSimToClient::MsgFolkGraphEdgeUpd
     for ( unsigned i = 0; i < msg.population_occupation_size(); ++i )
     {
         const int individuals = msg.population_occupation( i );
-        if ( i % size == 0 )
+        if( i % size == 0 )
             ++c;
         edge.population_    += individuals;
-        edge.containers_[c] += individuals;        
+        edge.containers_[c] += individuals;
     }
 }

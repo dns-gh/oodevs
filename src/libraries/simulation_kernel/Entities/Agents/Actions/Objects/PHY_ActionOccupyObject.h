@@ -24,7 +24,7 @@ class DEC_Knowledge_Object;
 // =============================================================================
 class PHY_ActionOccupyObject : public PHY_Action_ABC
 {
-    
+
 public:
     typedef MIL_AgentPion ActorType;
 
@@ -41,7 +41,7 @@ public:
 
 private:
     PHY_RoleAction_Objects& role_;
-    boost::shared_ptr< DEC_Knowledge_Object > pKnowledge_;    
+    boost::shared_ptr< DEC_Knowledge_Object > pKnowledge_;
 };
 
 #endif // __PHY_ActionOccupyObject_h_

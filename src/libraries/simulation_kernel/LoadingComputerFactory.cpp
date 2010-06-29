@@ -19,7 +19,7 @@ namespace transport
 // Name: LoadingComputerFactory constructor
 // Created: AHC 2009-10-01
 // -----------------------------------------------------------------------------
-LoadingComputerFactory::LoadingComputerFactory() 
+LoadingComputerFactory::LoadingComputerFactory()
 {
     // NOTHING
 }

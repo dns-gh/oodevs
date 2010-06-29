@@ -62,7 +62,7 @@ bool DEC_Model_ABC::FileChanged( const std::string& strFileName, time_t since )
 }
 
 // =============================================================================
-// 
+//
 // =============================================================================
 
 // -----------------------------------------------------------------------------
@@ -89,7 +89,7 @@ void DEC_Model_ABC::ReadMission( xml::xistream& xis, const std::map< std::string
     xis >> xml::attribute( "name", strMission );
 
     std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess >::const_iterator it = missionTypes.find( strMission );
-    if ( it == missionTypes.end() )
+    if( it == missionTypes.end() )
         xis.error( "Invalid mission name '" + strMission + "' for model '" + GetName() + "'" );
     const MIL_MissionType_ABC* pType = it->second;
     if( !pType )
@@ -125,7 +125,7 @@ void DEC_Model_ABC::ReadFragOrder( xml::xistream& xis, const MIL_MissionType_ABC
     if( !pType )
         xis.error( "Unknown orderConduite type" );
 
-    availableFragOrdersPerMission_[ &missionType ].insert( pType ) ; 
+    availableFragOrdersPerMission_[ &missionType ].insert( pType ) ;
 }
 
 // =============================================================================
@@ -138,7 +138,7 @@ void DEC_Model_ABC::ReadFragOrder( xml::xistream& xis, const MIL_MissionType_ABC
 // -----------------------------------------------------------------------------
 bool DEC_Model_ABC::IsMissionAvailable( const MIL_MissionType_ABC& missionType ) const
 {
-    return availableMissions_.find( &missionType ) !=  availableMissions_.end(); 
+    return availableMissions_.find( &missionType ) !=  availableMissions_.end();
 }
 
 // -----------------------------------------------------------------------------
@@ -172,7 +172,7 @@ const std::string& DEC_Model_ABC::GetName() const
 // -----------------------------------------------------------------------------
 const std::string& DEC_Model_ABC::GetScriptFile() const
 {
-    return strScript_; 
+    return strScript_;
 }
 
 // -----------------------------------------------------------------------------

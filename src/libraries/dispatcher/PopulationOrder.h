@@ -16,7 +16,7 @@
 namespace Common
 {
     class MsgUnitOrder;
-    class MsgPopulationOrder; 
+    class MsgPopulationOrder;
 }
 
 namespace dispatcher
@@ -42,7 +42,7 @@ public:
 
     //! @name Operations
     //@{
-           void Send         ( ClientPublisher_ABC& publisher );  
+           void Send         ( ClientPublisher_ABC& publisher );
     static void SendNoMission( const Population& population, ClientPublisher_ABC& publisher );
     //@}
 

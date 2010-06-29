@@ -31,7 +31,7 @@ DEC_BlackBoard_CanContainKnowledgeUrbanPerception::DEC_BlackBoard_CanContainKnow
 DEC_BlackBoard_CanContainKnowledgeUrbanPerception::~DEC_BlackBoard_CanContainKnowledgeUrbanPerception()
 {
     while( !knowledgeUrbanPerceptionMap_.empty() )
-        DestroyKnowledgeUrbanPerception( *knowledgeUrbanPerceptionMap_.begin()->second );        
+        DestroyKnowledgeUrbanPerception( *knowledgeUrbanPerceptionMap_.begin()->second );
 }
 
 // -----------------------------------------------------------------------------

@@ -32,28 +32,28 @@ LocationEditorBox::LocationEditorBox( QWidget* parent, kernel::Controllers& cont
     parsers_ = new LocationParsers( controllers, converter );
 
     choiceParserButton_ = new QToolButton( this );
-	choiceParserButton_->setFixedWidth( 60 );
-	parserMenu_ = new  QPopupMenu( choiceParserButton_ );
-	choiceParserButton_->setPopup( parserMenu_ );
-	choiceParserButton_->setPopupDelay( 0 );
-	choiceParserButton_->setText( tr("Location: " ));
+    choiceParserButton_->setFixedWidth( 60 );
+    parserMenu_ = new  QPopupMenu( choiceParserButton_ );
+    choiceParserButton_->setPopup( parserMenu_ );
+    choiceParserButton_->setPopupDelay( 0 );
+    choiceParserButton_->setText( tr("Location: " ));
 
     coordBox_ = new QHBox( this );
-	valueBox_ = new QHBox( this );
+    valueBox_ = new QHBox( this );
 
-	latitudeLabel_ = new QLabel( tr( "lat: " ), coordBox_ );
-	latitudeLabel_->setAlignment( Qt::AlignRight | Qt::AlignVCenter );
-	latitudeLabel_->setFixedWidth( 30 );
+    latitudeLabel_ = new QLabel( tr( "lat: " ), coordBox_ );
+    latitudeLabel_->setAlignment( Qt::AlignRight | Qt::AlignVCenter );
+    latitudeLabel_->setFixedWidth( 30 );
     latitude_ = new QLineEdit( coordBox_ );
-	latitude_->setFixedWidth( 80 );
+    latitude_->setFixedWidth( 80 );
     longitudeLabel_ = new QLabel( tr( "long: " ), coordBox_ );
-	longitudeLabel_->setAlignment( Qt::AlignRight | Qt::AlignVCenter );
-	longitudeLabel_->setFixedWidth( 30 );
+    longitudeLabel_->setAlignment( Qt::AlignRight | Qt::AlignVCenter );
+    longitudeLabel_->setFixedWidth( 30 );
     longitude_ = new QLineEdit( coordBox_ );
-	longitude_->setFixedWidth( 80 );
+    longitude_->setFixedWidth( 80 );
 
     singleField_ = new QLineEdit( valueBox_ );
-	singleField_->setFixedWidth( 220 );
+    singleField_->setFixedWidth( 220 );
     FillDefaultMenu();
     SelectParser( converter.GetCoordSystem().defaultCoordinateSystem_ );
 
@@ -65,8 +65,8 @@ LocationEditorBox::LocationEditorBox( QWidget* parent, kernel::Controllers& cont
     subMenu_->insertItem( list_ );
     subMenu_->hide();
 
-   	connect( parserMenu_, SIGNAL( activated( int ) ), SLOT( SelectParser( int ) ) );
-    connect( list_, SIGNAL( selected( int ) ), SLOT( GetSelectedItemInSubList( int ) ) ); 
+       connect( parserMenu_, SIGNAL( activated( int ) ), SLOT( SelectParser( int ) ) );
+    connect( list_, SIGNAL( selected( int ) ), SLOT( GetSelectedItemInSubList( int ) ) );
 }
 // -----------------------------------------------------------------------------
 // Name: LocationEditorBox destructor
@@ -84,7 +84,7 @@ LocationEditorBox::~LocationEditorBox()
 void LocationEditorBox::FillDefaultMenu()
 {
     for( kernel::CoordinateSystems::CIT_spatialReference it = coordinateSystems_.systems_.begin(); it != coordinateSystems_.systems_.end(); it++ )
-	    parserMenu_->insertItem( it->second->c_str(), it->first );
+        parserMenu_->insertItem( it->second->c_str(), it->first );
 }
 
 // -----------------------------------------------------------------------------
@@ -103,17 +103,17 @@ void LocationEditorBox::SelectDefaultParser( int index )
 void LocationEditorBox::SelectParser( int index )
 {
     parserSelected_ = index;
-	for( int i = 0; i < (int) parserMenu_->count(); i++ )
-	{
-		if ( parserMenu_->idAt( i ) == index )
-		{
-			parserMenu_->setItemChecked( parserMenu_->idAt( i ), true );
-			QToolTip::add( choiceParserButton_,  parserMenu_->text( i ) );
-		}
-		else
-			parserMenu_->setItemChecked( parserMenu_->idAt( i ), false );
-	}
-	UpdateParamZone( parserSelected_ );
+    for( int i = 0; i < (int) parserMenu_->count(); i++ )
+    {
+        if( parserMenu_->idAt( i ) == index )
+        {
+            parserMenu_->setItemChecked( parserMenu_->idAt( i ), true );
+            QToolTip::add( choiceParserButton_,  parserMenu_->text( i ) );
+        }
+        else
+            parserMenu_->setItemChecked( parserMenu_->idAt( i ), false );
+    }
+    UpdateParamZone( parserSelected_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -123,29 +123,29 @@ void LocationEditorBox::SelectParser( int index )
 void LocationEditorBox::UpdateParamZone( int index )
 {
     QString text = parserMenu_->text( index );
-	latitude_->clear();
-	longitude_->clear();
+    latitude_->clear();
+    longitude_->clear();
     singleField_->clear();
-    if ( parsers_->GetParser( index ).GetNumberOfParameters() == 1 )
-	{
+    if( parsers_->GetParser( index ).GetNumberOfParameters() == 1 )
+    {
         coordBox_->hide();
-		valueBox_->show();
-	}
-	else
-	{
-		coordBox_->show();
-		valueBox_->hide();
-		if ( index == kernel::CoordinateSystems::E_Local )
-		{
-			latitudeLabel_->setText( tr( "y: " ) );
-			longitudeLabel_->setText( tr( "x: " ) );
-		}
-		else
-		{
-			latitudeLabel_->setText( tr( "lat: " ) );
-			longitudeLabel_->setText( tr( "long: " ) );
-		}
-	}
+        valueBox_->show();
+    }
+    else
+    {
+        coordBox_->show();
+        valueBox_->hide();
+        if( index == kernel::CoordinateSystems::E_Local )
+        {
+            latitudeLabel_->setText( tr( "y: " ) );
+            longitudeLabel_->setText( tr( "x: " ) );
+        }
+        else
+        {
+            latitudeLabel_->setText( tr( "lat: " ) );
+            longitudeLabel_->setText( tr( "long: " ) );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -166,7 +166,7 @@ void LocationEditorBox::SetAspect( bool oneValue, bool red )
 {
     if( red )
     {
-        if ( oneValue )
+        if( oneValue )
             singleField_->setPaletteBackgroundColor( Qt::red.light( 120 ) );
         else
         {
@@ -175,8 +175,8 @@ void LocationEditorBox::SetAspect( bool oneValue, bool red )
         }
     }
     else
-    {		
-        if ( oneValue )
+    {
+        if( oneValue )
             singleField_->unsetPalette();
         else
         {
@@ -189,9 +189,9 @@ void LocationEditorBox::SetAspect( bool oneValue, bool red )
 // Name: LocationEditorBox::GetSelectedItemInSubList
 // Created: AME 2010-03-05
 // -----------------------------------------------------------------------------
-void LocationEditorBox::GetSelectedItemInSubList( int index ) 
+void LocationEditorBox::GetSelectedItemInSubList( int index )
 {
-	singleField_->setText( list_->text( index ) );
+    singleField_->setText( list_->text( index ) );
     singleField_->setFocus();
     subMenu_->hide();
 }
@@ -207,37 +207,37 @@ bool LocationEditorBox::GetPosition( geometry::Point2f& result )
         return false;
 
     QStringList hint;
-	bool parsing_succeed = false;
-	bool oneParameter = false;
-	if( parsers_->GetParser( parserSelected_ ).GetNumberOfParameters() == 1  )
-	{
+    bool parsing_succeed = false;
+    bool oneParameter = false;
+    if( parsers_->GetParser( parserSelected_ ).GetNumberOfParameters() == 1  )
+    {
         oneParameter = true;
-		parsing_succeed = parsers_->Parse( parserSelected_, singleField_->text(), result, hint );            
-		if( !hint.isEmpty() && parsing_succeed )
-		{
-            if ( hint.count() == 1 )
+        parsing_succeed = parsers_->Parse( parserSelected_, singleField_->text(), result, hint );
+        if( !hint.isEmpty() && parsing_succeed )
+        {
+            if( hint.count() == 1 )
                 singleField_->setText( hint[ 0 ] );
             else
             {
-			    list_->clear();
-			    list_->insertStringList( hint );
-			    list_->setMinimumSize( 110, 12 );
-			    const QPoint topLeft = singleField_->mapToGlobal( QPoint( 0, 0 ) );
-			    subMenu_->popup( QPoint( topLeft.x(), topLeft.y() + singleField_->height() ) );
-			    singleField_->setFocus();
+                list_->clear();
+                list_->insertStringList( hint );
+                list_->setMinimumSize( 110, 12 );
+                const QPoint topLeft = singleField_->mapToGlobal( QPoint( 0, 0 ) );
+                subMenu_->popup( QPoint( topLeft.x(), topLeft.y() + singleField_->height() ) );
+                singleField_->setFocus();
             }
-		}
-	}
-	else
-	{
-		parsing_succeed = parsers_->Parse( parserSelected_, longitude_->text(), latitude_->text(), result, hint );
-		if ( parsing_succeed )
-		{        
-			longitude_->setText( hint[0] );
-			latitude_->setText( hint[1] );
-		}
-	}
-   	SetAspect( oneParameter, !parsing_succeed );
+        }
+    }
+    else
+    {
+        parsing_succeed = parsers_->Parse( parserSelected_, longitude_->text(), latitude_->text(), result, hint );
+        if( parsing_succeed )
+        {
+            longitude_->setText( hint[0] );
+            latitude_->setText( hint[1] );
+        }
+    }
+       SetAspect( oneParameter, !parsing_succeed );
     return parsing_succeed;
 }
 
@@ -248,12 +248,12 @@ bool LocationEditorBox::GetPosition( geometry::Point2f& result )
 void LocationEditorBox::UpdateField( const geometry::Point2f& position )
 {
     std::string coordinateStr( converter_.GetStringPosition( position ) );
-    if ( parsers_->GetParser( parserSelected_ ).GetNumberOfParameters() == 1 )
+    if( parsers_->GetParser( parserSelected_ ).GetNumberOfParameters() == 1 )
         singleField_->setText ( coordinateStr.c_str() );
     else
     {
         std::string::size_type found = coordinateStr.find_first_of( ":" );
-        if ( found != std::string::npos )
+        if( found != std::string::npos )
         {
             longitude_->setText( coordinateStr.substr( 0, found ).c_str() );
             latitude_->setText(  coordinateStr.substr( found + 1, coordinateStr.length() - found ).c_str() );

@@ -7,7 +7,7 @@ class StubMIL_AgentPion : public MIL_AgentPion
 {
 public:
     StubMIL_AgentPion( MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis ) :
-            	 MIL_AgentPion( type, automate, algorithmFactories, xis ) {}
+                 MIL_AgentPion( type, automate, algorithmFactories, xis ) {}
     virtual ~StubMIL_AgentPion() {}
 };
 

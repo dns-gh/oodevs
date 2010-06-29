@@ -170,7 +170,7 @@ void UrbanKnowledgePanel::Select( const Team_ABC* team )
 // Created: LDC 2010-04-15
 // -----------------------------------------------------------------------------
 void UrbanKnowledgePanel::Select( const kernel::KnowledgeGroup_ABC* group )
-{    
+{
     const Hierarchies* hierarchies = group ? group->Retrieve< kernel::CommunicationHierarchies >() : 0;
     if( hierarchies )
         Select( static_cast< const Team_ABC* >( & hierarchies->GetTop() ) );

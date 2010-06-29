@@ -87,12 +87,12 @@ GQ_PlotAxis::GQ_PlotAxis( QWidget* pParent, Qt::Orientation nOrientation )
 // -----------------------------------------------------------------------------
 GQ_PlotAxis::~GQ_PlotAxis()
 {
-    // NOTHING   
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotAxis::SetAxisCaption
-/** @param  QString& 
+/** @param  QString&
 */
 // Created: CBX 2003-08-07
 // -----------------------------------------------------------------------------
@@ -107,7 +107,7 @@ void GQ_PlotAxis::SetAxisCaption( const QString& caption )
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotAxis::SetCaptionMargin
-/** @param  
+/** @param
 */
 // Created: CBX 2003-08-07
 // -----------------------------------------------------------------------------
@@ -117,12 +117,12 @@ void GQ_PlotAxis::SetCaptionMargin( unsigned int nMargin )
         return;
 
     nCaptionMargin_ = nMargin;
-    Touch();    
+    Touch();
 }
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotAxis::ShowAxis
-/** @param  bShow 
+/** @param  bShow
 */
 // Created: CBX 2003-08-18
 // -----------------------------------------------------------------------------
@@ -137,7 +137,7 @@ void GQ_PlotAxis::ShowAxis( bool bShow )
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotAxis::ShowGrid
-/** @param  bShow 
+/** @param  bShow
 */
 // Created: CBX 2003-08-18
 // -----------------------------------------------------------------------------
@@ -154,9 +154,9 @@ void GQ_PlotAxis::ShowGrid( bool bShow )
 // Name: GQ_PlotAxis::ShowTicks
 /** Toggles display of tick marks with preferred space in pixels between them.
 
-  If @a nTicksSpacing is -1, tick marks are disabled. 
+  If @a nTicksSpacing is -1, tick marks are disabled.
 
-  The real space between tick marks will be adjusted according to min spacing, preferred spacing and 
+  The real space between tick marks will be adjusted according to min spacing, preferred spacing and
   selection of a user readable scale.
 */
 // Created: CBX 2003-08-07
@@ -169,7 +169,7 @@ void GQ_PlotAxis::ShowTicks( unsigned int nTicksSpacing )
     if( nTicksSpacing > 0 && nTicksSpacing < nMinTicksSpacing_ )
         nTicksSpacing = nMinTicksSpacing_;
 
-    nTicksSpacing_ = nTicksSpacing;    
+    nTicksSpacing_ = nTicksSpacing;
     Touch();
 }
 
@@ -222,7 +222,7 @@ void GQ_PlotAxis::SetSubTicksLength( unsigned int nLength )
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotAxis::ShowSubTicks
-/** @param  nNbrSubTicks 
+/** @param  nNbrSubTicks
 */
 // Created: CBX 2003-08-07
 // -----------------------------------------------------------------------------
@@ -230,15 +230,15 @@ void GQ_PlotAxis::ShowSubTicks( unsigned int nNbrSubTicks )
 {
     if( nNbrSubTicks == nNbrSubTicks_ )
         return;
-    
-    nNbrSubTicks_ = nNbrSubTicks;    
+
+    nNbrSubTicks_ = nNbrSubTicks;
     Touch();
 }
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotAxis::ShowTicksValue
-/** @param  bShow 
-    @param  valueFormat 
+/** @param  bShow
+    @param  valueFormat
 */
 // Created: CBX 2003-08-07
 // -----------------------------------------------------------------------------
@@ -257,8 +257,8 @@ void GQ_PlotAxis::ShowTicksValue( bool bShow )
 // -----------------------------------------------------------------------------
 void GQ_PlotAxis::SetTickMultiples( double rMultiplesBase, const std::vector< unsigned int >& multiples, double rMinTickPeriod, int nMinBasePower )
 {
-    if(    rMultiplesBase == rMultiplesBase_ 
-        && multiples      == tickMultiples_ 
+    if( rMultiplesBase == rMultiplesBase_
+        && multiples      == tickMultiples_
         && rMinTickPeriod == rMinTickPeriod_
         && nMinBasePower  == nMinBasePower_  )
         return;
@@ -284,7 +284,7 @@ void GQ_PlotAxis::SetTickMultiples( double rMultiplesBase, const std::vector< un
 void GQ_PlotAxis::InitTickMultiplesForIntegers()
 {
     T_TickMultipleList multiples( _defaultTickMultiples, _defaultTickMultiples + 4 );
-    SetTickMultiples( 10.0, multiples, 1.0, 0 );    
+    SetTickMultiples( 10.0, multiples, 1.0, 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -299,7 +299,7 @@ void GQ_PlotAxis::InitTickMultiplesForMinutes()
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotAxis::SetValueToStringConvertor
-/** @param  T_ValueToString* 
+/** @param  T_ValueToString*
 */
 // Created: CBX 2003-08-19
 // -----------------------------------------------------------------------------
@@ -314,7 +314,7 @@ void GQ_PlotAxis::SetValueToStringConvertor( const T_ValueToString* pValueToStri
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotAxis::SetCaptionFont
-/** @param  QFont& 
+/** @param  QFont&
 */
 // Created: CBX 2003-08-07
 // -----------------------------------------------------------------------------
@@ -326,7 +326,7 @@ void GQ_PlotAxis::SetCaptionFont( const QFont& font )
     captionFont_ = font;
     Touch();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotAxis::SetTickValueFont
 /** @param  QFont&
@@ -339,13 +339,13 @@ void GQ_PlotAxis::SetTickValueFont( const QFont& font )
         return;
 
     tickValueFont_ = font;
-    Touch(); 
+    Touch();
 }
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotAxis::SetDataRange
-/** @param  rMinDataValue 
-    @param  rMaxDataValue 
+/** @param  rMinDataValue
+    @param  rMaxDataValue
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
@@ -369,7 +369,7 @@ void GQ_PlotAxis::SetDataRange( double rMinDataValue, double rMaxDataValue )
     {
         if( rMinVirtualValue_ < rMinDataValue_ )
             rMinDataValue_ = rMinVirtualValue_;
-        
+
         if( rMaxVirtualValue_ > rMaxDataValue_ )
             rMaxDataValue_ = rMaxVirtualValue_;
     }
@@ -379,8 +379,8 @@ void GQ_PlotAxis::SetDataRange( double rMinDataValue, double rMaxDataValue )
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotAxis::SetAxisRange
-/** @param  rMinAxisValue 
-    @param  rMaxAxisValue 
+/** @param  rMinAxisValue
+    @param  rMaxAxisValue
 */
 // Created: CBX 2003-08-07
 // -----------------------------------------------------------------------------
@@ -393,7 +393,7 @@ void GQ_PlotAxis::SetAxisRange( double rMinAxisValue, double rMaxAxisValue, bool
     {
         rMinAxisValue_ = rMinAxisValue;
         rMaxAxisValue_ = rMaxAxisValue;
-        
+
         if( rMaxAxisValue_ == rMinAxisValue_ )
             rMaxAxisValue_ += 1.0;
     }
@@ -409,7 +409,7 @@ void GQ_PlotAxis::SetAxisRange( double rMinAxisValue, double rMaxAxisValue, bool
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotAxis::ClearVirtualRange
-/** Disables virtual range 
+/** Disables virtual range
 
   @sa AddVirtualValue()
 */
@@ -419,12 +419,12 @@ void GQ_PlotAxis::ClearVirtualRange()
 {
     bVirtualRange_ = false;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotAxis::AddVirtualValue
 /** Forces provided value to be included in the axis range.
-    
-    Toggles virtual range usage on. Should be used in combination with automatic axis range. 
+
+    Toggles virtual range usage on. Should be used in combination with automatic axis range.
     Won't have any effect if a fixed range has been provided.
 
     Several virtual values might be added.
@@ -432,15 +432,15 @@ void GQ_PlotAxis::ClearVirtualRange()
     Using example:
     @code
 
-    // Forces Y axis to include 0 
-    plot.YAxis().AddVirtualValue( 0.0 ); 
+    // Forces Y axis to include 0
+    plot.YAxis().AddVirtualValue( 0.0 );
 
     // Forces X axis to include [-10, 10] interval
-    plot.XAxis().AddVirtualValue( -10.0 ); 
-    plot.XAxis().AddVirtualValue(  10.0 ); 
+    plot.XAxis().AddVirtualValue( -10.0 );
+    plot.XAxis().AddVirtualValue(  10.0 );
 
     @encode
-    
+
   @sa ClearVirtualRange()
 */
 // Created: CBX 2003-08-18
@@ -462,7 +462,7 @@ void GQ_PlotAxis::AddVirtualValue( double rValue )
         rMinVirtualValue_ = rValue;
         Touch();
     }
-    
+
     if( rValue > rMaxVirtualValue_ )
     {
         rMaxVirtualValue_ = rValue;
@@ -487,7 +487,7 @@ void GQ_PlotAxis::SetAxisLength( unsigned int nLength )
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotAxis::Caption
-/** @return 
+/** @return
 */
 // Created: CBX 2003-08-07
 // -----------------------------------------------------------------------------
@@ -498,7 +498,7 @@ const QString& GQ_PlotAxis::Caption() const
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotAxis::UpdateNeeded
-/** @return 
+/** @return
 */
 // Created: CBX 2003-08-07
 // -----------------------------------------------------------------------------
@@ -509,7 +509,7 @@ bool GQ_PlotAxis::UpdateNeeded() const
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotAxis::GetCaptionSize
-/** @return 
+/** @return
 */
 // Created: CBX 2003-08-07
 // -----------------------------------------------------------------------------
@@ -518,19 +518,19 @@ QSize GQ_PlotAxis::GetCaptionSize() const
     if( caption_.isEmpty() )
         return QSize( 0, 0 );
 
-    QFontMetrics metrics( captionFont_ );    
+    QFontMetrics metrics( captionFont_ );
 
     QSize captionSize = metrics.boundingRect( caption_ ).size();
 
     if( nOrientation_ == Qt::Horizontal )
         return QSize( captionSize.width(), captionSize.height() + 2 * nCaptionMargin_ );
-    
+
     return QSize( captionSize.height() + 2 * nCaptionMargin_, captionSize.width() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotAxis::ComputeSize
-/** @return 
+/** @return
 */
 // Created: CBX 2003-08-07
 // -----------------------------------------------------------------------------
@@ -542,12 +542,12 @@ QSize GQ_PlotAxis::GetAxisSize() const
     if( nOrientation_ == Qt::Horizontal )
         return QSize( nAxisLength_, nAxisWidth_ );
 
-    return QSize( nAxisWidth_, nAxisLength_ );    
+    return QSize( nAxisWidth_, nAxisLength_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotAxis::GetRefTickPos
-/** @return 
+/** @return
 */
 // Created: CBX 2003-08-07
 // -----------------------------------------------------------------------------
@@ -555,7 +555,7 @@ int GQ_PlotAxis::GetRefTickPos() const
 {
     double rRefPos = rFirstTick_;
 
-    if( rFirstTick_ <= 0.0 && 0.0 <= rMaxAxisValue_ - rTickPeriod_ * 0.5 ) 
+    if( rFirstTick_ <= 0.0 && 0.0 <= rMaxAxisValue_ - rTickPeriod_ * 0.5 )
         rRefPos = 0.0;
 
     int nPos = MapToViewport( rRefPos );
@@ -564,13 +564,13 @@ int GQ_PlotAxis::GetRefTickPos() const
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotAxis::ClipValue
-/** @param  rValue 
-    @return 
+/** @param  rValue
+    @return
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
 double GQ_PlotAxis::ClipValue( double rValue ) const
-{    
+{
     if( rValue < rMinAxisValue_ )
         return rMinAxisValue_;
 
@@ -582,8 +582,8 @@ double GQ_PlotAxis::ClipValue( double rValue ) const
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotAxis::MapToViewport
-/** @param  rValue 
-    @return 
+/** @param  rValue
+    @return
 */
 // Created: CBX 2003-08-07
 // -----------------------------------------------------------------------------
@@ -594,7 +594,7 @@ int GQ_PlotAxis::MapToViewport( double rValue ) const
         return -1;
 
     double rPos = ( rValue - rMinAxisValue_ ) * rScale_;
-    
+
     if( rPos < 0.0 )
         rPos -= 0.5;
     else
@@ -605,13 +605,13 @@ int GQ_PlotAxis::MapToViewport( double rValue ) const
     if( nOrientation_ == Qt::Horizontal )
         return nPos;
 
-    return -nPos; // Y axis is upward by default 
+    return -nPos; // Y axis is upward by default
 }
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotAxis::ClipToViewport
-/** @param  rValue 
-    @return 
+/** @param  rValue
+    @return
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
@@ -623,8 +623,8 @@ int GQ_PlotAxis::ClipToViewport( double rValue ) const
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotAxis::MapFromViewport
-/** @param  nPos 
-    @return 
+/** @param  nPos
+    @return
 */
 // Created: CBX 2003-08-18
 // -----------------------------------------------------------------------------
@@ -643,7 +643,7 @@ double GQ_PlotAxis::MapFromViewport( int nPos ) const
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotAxis::AxisLength
-/** @return 
+/** @return
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
@@ -654,7 +654,7 @@ int GQ_PlotAxis::AxisLength() const
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotAxis::Scale
-/** @return 
+/** @return
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
@@ -669,8 +669,8 @@ double GQ_PlotAxis::Scale() const
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotAxis::GetStrValue
-/** @param  rValue 
-    @return 
+/** @param  rValue
+    @return
 */
 // Created: CBX 2003-08-19
 // -----------------------------------------------------------------------------
@@ -718,12 +718,12 @@ void GQ_PlotAxis::Update()
 
     if( nTicksSpacing_ == 0 )
         return;
-    
+
     nAxisWidth_ += nTicksLength_;
 
 //    GQ_LOG( "GQ_PlotAxis::Update()" );
 
-    // Get ideal ticks period 
+    // Get ideal ticks period
     UpdateTickPeriod();
 
     // Update axis range and scale to better match tick period
@@ -738,17 +738,17 @@ void GQ_PlotAxis::Update()
     {
         rFirstTick_ = rTickPeriod_ * ceil( rMinAxisValue_ / rTickPeriod_ );
     }
-    
+
     rScale_ = ( double )( nAxisLength_ - 1 )/ ( rMaxAxisValue_ - rMinAxisValue_ );
 
     rSubTickPeriod_ = rTickPeriod_ / ( nNbrSubTicks_ + 1 );
 
 
-    // Estimate space needed to display tick values 
+    // Estimate space needed to display tick values
     if( bShowTickValues_ )
     {
         QFontMetrics metrics( tickValueFont_ );
-        
+
         if( nOrientation_ == Qt::Horizontal )
         {
             nAxisWidth_ += metrics.height();
@@ -775,10 +775,10 @@ void GQ_PlotAxis::Update()
 // -----------------------------------------------------------------------------
 void GQ_PlotAxis::UpdateTickPeriod()
 {
-    double rRawTickPeriod  = nTicksSpacing_ / rScale_;    
+    double rRawTickPeriod  = nTicksSpacing_ / rScale_;
     double rMinDelta       = -1.0;
     double rBaseFactor     = 1.0 / log( rMultiplesBase_ );
-    
+
     if( rRawTickPeriod < rMinTickPeriod_ )
         rRawTickPeriod = rMinTickPeriod_;
 
@@ -791,13 +791,13 @@ void GQ_PlotAxis::UpdateTickPeriod()
         double rPi0 = floor( rPi + 0.5 );
 
         if( rPi0 < nMinBasePower_ )
-            rPi0 = ( double ) nMinBasePower_;  
+            rPi0 = ( double ) nMinBasePower_;
 
         double rTickPeriod = pow( rMultiplesBase_, rPi0 ) * nMultiple;
 
         while( rTickPeriod < rMinTickPeriod_ )
             rTickPeriod *= rMultiplesBase_;
-        
+
         double rDelta = fabs( ( rTickPeriod / rRawTickPeriod ) - 1.0 );
 
 //        GQ_LOG( "    candidate tick period: " << nMultiple << ", " << rTickPeriod << " / " << rRawTickPeriod << ", r = " << rDelta );
@@ -806,7 +806,7 @@ void GQ_PlotAxis::UpdateTickPeriod()
             rMinDelta    = rDelta;
             rTickPeriod_ = rTickPeriod;
         }
-    }    
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -821,9 +821,9 @@ void GQ_PlotAxis::Touch()
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotAxis::DrawCaption
-/** @param  painter 
-    @param  colors 
-    @param  rect 
+/** @param  painter
+    @param  colors
+    @param  rect
 */
 // Created: CBX 2003-08-07
 // -----------------------------------------------------------------------------
@@ -832,7 +832,7 @@ void GQ_PlotAxis::DrawCaption( QPainter& painter, const QColorGroup& colors, con
     if( caption_.isEmpty() )
         return;
 
-    painter.setPen ( colors.text() );    
+    painter.setPen ( colors.text() );
     painter.setFont( captionFont_ );
 
     if( nOrientation_ == Qt::Horizontal )
@@ -857,8 +857,8 @@ void GQ_PlotAxis::DrawCaption( QPainter& painter, const QColorGroup& colors, con
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotAxis::DrawAxis
-/** @param  painter 
-    @param  refPoint 
+/** @param  painter
+    @param  refPoint
 */
 // Created: CBX 2003-08-07
 // -----------------------------------------------------------------------------
@@ -875,8 +875,8 @@ void GQ_PlotAxis::DrawAxis( QPainter& painter, const QColorGroup& colors, const 
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotAxis::DrawX
-/** @param  painter 
-    @param  refPoint 
+/** @param  painter
+    @param  refPoint
 */
 // Created: CBX 2003-08-07
 // -----------------------------------------------------------------------------
@@ -884,14 +884,14 @@ void GQ_PlotAxis::DrawX( QPainter& painter, const QColorGroup& colors, const QPo
 {
     int nX0 = refPoint.x();
     int nY0 = refPoint.y();
-    
+
     int nX1 = nX0 + nAxisLength_ - 1;
-        
+
     // Draw axis line
-    painter.setPen( colors.foreground() );    
+    painter.setPen( colors.foreground() );
     painter.drawLine( nX0, nY0, nX1, nY0 );
 
-    // Draw ticks 
+    // Draw ticks
     if( nTicksSpacing_ == 0 )
         return;
 
@@ -901,20 +901,20 @@ void GQ_PlotAxis::DrawX( QPainter& painter, const QColorGroup& colors, const QPo
 
     if( nNbrTicks == 0 )
         return;
-    
+
     QFontMetrics metrics( tickValueFont_ );
     if( bShowTickValues_ )
         painter.setFont( tickValueFont_ );
-    
+
     int nLastXstr = -10;
     int nYstr     = nY0 + nTicksLength_ + metrics.height();
-    
+
     for( unsigned int i = 0; i < nNbrTicks; ++i )
     {
         const T_Tick& tick = ticks_[i];
         double rTick = tick.first;
         int    nX    = tick.second;
-        
+
         painter.drawLine( nX, nY0, nX, nY0 + nTicksLength_ - 1 );
 
         for( unsigned int j = 0; j < nNbrSubTicks_; ++j )
@@ -923,18 +923,18 @@ void GQ_PlotAxis::DrawX( QPainter& painter, const QColorGroup& colors, const QPo
             int nXst = nX0 + MapToViewport( rSubTick );
             painter.drawLine( nXst, nY0, nXst, nY0 + nSubTicksLength_ - 1 );
         }
-        
+
         if( bShowTickValues_ )
         {
             QString strValue( GetStrValue( rTick ) );
-            
+
             QRect rect = metrics.boundingRect( strValue );
             int nXstart = nX - rect.width() / 2;
             if( nXstart > nLastXstr )
             {
                 rect.moveBy( nX - rect.width() / 2, nYstr );
                 painter.drawText( rect, Qt::AlignCenter, strValue );
-                
+
                 nLastXstr = rect.right() + 2;
             }
         }
@@ -943,23 +943,23 @@ void GQ_PlotAxis::DrawX( QPainter& painter, const QColorGroup& colors, const QPo
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotAxis::DrawY
-/** @param  painter 
-    @param  refPoint 
+/** @param  painter
+    @param  refPoint
 */
 // Created: CBX 2003-08-07
 // -----------------------------------------------------------------------------
 void GQ_PlotAxis::DrawY( QPainter& painter, const QColorGroup& colors, const QPoint& refPoint )
 {
     int nX0 = refPoint.x();
-    int nY0 = refPoint.y();  
-    
+    int nY0 = refPoint.y();
+
     int nY1 = nY0 - nAxisLength_ + 1;
-        
+
     // Draw axis line
-    painter.setPen( colors.foreground() );    
+    painter.setPen( colors.foreground() );
     painter.drawLine( nX0, nY0, nX0, nY1 );
 
-    // Draw ticks 
+    // Draw ticks
     if( nTicksSpacing_ == 0 )
         return;
 
@@ -973,16 +973,16 @@ void GQ_PlotAxis::DrawY( QPainter& painter, const QColorGroup& colors, const QPo
     QFontMetrics metrics( tickValueFont_ );
     if( bShowTickValues_ )
         painter.setFont( tickValueFont_ );
-    
+
     int nLastYstr  = nY0 + 10;
     int nXstrRight = nX0 - nTicksLength_;
-    
+
     for( unsigned int i = 0; i < nNbrTicks; ++i )
     {
         const T_Tick& tick = ticks_[i];
         double rTick = tick.first;
         int    nY    = tick.second;
-        
+
         painter.drawLine( nX0 - nTicksLength_ + 1, nY, nX0, nY );
 
         for( unsigned int j = 0; j < nNbrSubTicks_; ++j )
@@ -991,23 +991,23 @@ void GQ_PlotAxis::DrawY( QPainter& painter, const QColorGroup& colors, const QPo
 
             if( rSubTick > rMaxAxisValue_ )
                 break;
-            
+
             int nYst = nY0 + MapToViewport( rSubTick );
             painter.drawLine( nX0 - nSubTicksLength_ + 1, nYst, nX0, nYst );
         }
-        
+
         if( bShowTickValues_ )
         {
             QString strValue( GetStrValue( rTick ) );
-            strValue = " " + strValue; 
-            
+            strValue = " " + strValue;
+
             QRect rect = metrics.boundingRect( strValue );
             int nYstart = nY + rect.height() / 2 - 1;
             if( nYstart < nLastYstr )
             {
                 rect.moveBy( nXstrRight - rect.right() - 2, nYstart );
                 painter.drawText( rect, Qt::AlignVCenter + Qt::AlignRight, strValue );
-                
+
                 nLastYstr = rect.top() + 2;
             }
         }
@@ -1021,7 +1021,7 @@ void GQ_PlotAxis::DrawY( QPainter& painter, const QColorGroup& colors, const QPo
 void GQ_PlotAxis::UpdateTicks()
 {
     ticks_.clear();
-    
+
     if( nTicksSpacing_ == 0 )
         return;
 
@@ -1039,9 +1039,9 @@ void GQ_PlotAxis::UpdateTicks()
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotAxis::DrawGrid
-/** @param  painter 
-    @param  colors 
-    @param  nGridLength 
+/** @param  painter
+    @param  colors
+    @param  nGridLength
 */
 // Created: CBX 2003-08-18
 // -----------------------------------------------------------------------------
@@ -1049,7 +1049,7 @@ void GQ_PlotAxis::DrawGrid( QPainter& painter, const QColorGroup& colors, const 
 {
     if( ticks_.empty() )
         return;
-    
+
     painter.setPen( QPen( colors.midlight(), 0, Qt::DotLine ) );
 
     if( nOrientation_ == Qt::Horizontal )
@@ -1060,10 +1060,10 @@ void GQ_PlotAxis::DrawGrid( QPainter& painter, const QColorGroup& colors, const 
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotAxis::DrawVGrid
-/** @param  painter 
-    @param  colors 
-    @param  nY0 
-    @param  nY1 
+/** @param  painter
+    @param  colors
+    @param  nY0
+    @param  nY1
 */
 // Created: CBX 2003-08-18
 // -----------------------------------------------------------------------------
@@ -1075,15 +1075,15 @@ void GQ_PlotAxis::DrawVGrid( QPainter& painter, int nY0, int nY1 )
         int nX = ticks_[i].second;
 
         painter.drawLine( nX, nY0, nX, nY1 );
-    }    
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotAxis::DrawHGrid
-/** @param  painter 
-    @param  colors 
-    @param  refPoint 
-    @param  nLength 
+/** @param  painter
+    @param  colors
+    @param  refPoint
+    @param  nLength
 */
 // Created: CBX 2003-08-18
 // -----------------------------------------------------------------------------
@@ -1095,5 +1095,5 @@ void GQ_PlotAxis::DrawHGrid( QPainter& painter, int nX0, int nX1 )
         int nY = ticks_[i].second;
 
         painter.drawLine( nX0, nY, nX1, nY );
-    }    
+    }
 }

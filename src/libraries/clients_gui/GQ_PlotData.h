@@ -64,13 +64,13 @@ public:
       , eCircle     //!< 'o'
       , eSquare     //!< '[]'
       , eDiagSquare //!< '<>'
-      , eUTriangle  //!< '^' 
-      , eDTriangle  //!< 'v' 
+      , eUTriangle  //!< '^'
+      , eDTriangle  //!< 'v'
       , eCross      //!< '+'
       , eDiagCross  //!< 'x'
       , eVLine      //!< '|'
       , eBDiag      //!< '/'
-      , eFDiag      //!< '\'  
+      , eFDiag      //!< '\'
       , eUserShape    //!< User polygonal shape
       , eUserSegments //!< User shape as set of line segments
     };
@@ -83,7 +83,7 @@ public:
 
       , eNbrAlignments
     };
-    
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -120,7 +120,7 @@ public:
 
     const T_Data&          Data() const;
     const GQ_PlotDataBBox& BBox() const;
-    
+
     virtual bool GetToolTips( const GQ_PlotDataBBox&, QStringList& ) const;
     //@}
 
@@ -225,7 +225,7 @@ protected:
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotData::IsEmpty
-/** @return 
+/** @return
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
@@ -237,7 +237,7 @@ bool GQ_PlotData::IsEmpty() const
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotData::UserID
-/** @return 
+/** @return
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
@@ -249,7 +249,7 @@ unsigned int GQ_PlotData::UserID() const
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotData::Name
-/** @return 
+/** @return
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
@@ -261,7 +261,7 @@ const QString& GQ_PlotData::Name() const
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotData::Data
-/** @return 
+/** @return
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
@@ -273,7 +273,7 @@ const GQ_PlotData::T_Data& GQ_PlotData::Data() const
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotData::BBox
-/** @return 
+/** @return
 */
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------

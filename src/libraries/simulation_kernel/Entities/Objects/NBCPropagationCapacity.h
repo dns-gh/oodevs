@@ -15,7 +15,7 @@
 
 class MIL_PropagationManager;
 
-class NBCPropagationCapacity : public PropagationCapacity_ABC    
+class NBCPropagationCapacity : public PropagationCapacity_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -49,14 +49,14 @@ private:
     bool UpdateState( MIL_Object_ABC& object , MT_Vector2D vNormalizedWind , MT_Vector2D vPerpendicularToWind , MT_Float windSpeed );
     void Propagate( const MT_Vector2D& vOrigin, MIL_Object_ABC& object );
     //@}
-    
+
     //! @name Helpers
     //@{
     TER_Localisation GetLocalisation( const MT_Vector2D& pt ) const;
     //@}
 
 private:
-    //! @name 
+    //! @name
     //@{
     MIL_PropagationManager* pManager_;
     float                   timeOfLastUpdate_;

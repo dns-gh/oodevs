@@ -26,7 +26,7 @@ PHY_Population_ActionFireOnPion::PHY_Population_ActionFireOnPion( MIL_Population
     , fireResults_  ( population )
     , rIntensity_   ( rIntensity )
     , pTarget_      ( 0 )
-{    
+{
     assert( rIntensity_ > 0. );
     pTarget_ = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( nID ); // $$$$ HLA
     assert( pTarget_ );
@@ -55,7 +55,7 @@ void PHY_Population_ActionFireOnPion::Stop()
 // Bypassd: NLD 2004-08-18
 // -----------------------------------------------------------------------------
 void PHY_Population_ActionFireOnPion::Execute()
-{   
+{
     population_.FireOnPion( rIntensity_, *pTarget_, fireResults_ );
 }
 

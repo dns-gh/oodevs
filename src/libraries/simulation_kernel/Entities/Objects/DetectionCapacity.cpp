@@ -143,7 +143,7 @@ DetectionCapacity::~DetectionCapacity()
 // Name: template< typename Archive > void DetectionCapacity::serialize
 // Created: MGD 2009-03-05
 // -----------------------------------------------------------------------------
-template< typename Archive > 
+template< typename Archive >
 void DetectionCapacity::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
@@ -168,7 +168,7 @@ void DetectionCapacity::Register( MIL_Object_ABC& object )
 // Created: MGD 2009-03-05
 // -----------------------------------------------------------------------------
 void DetectionCapacity::Instanciate( MIL_Object_ABC& object ) const
-{    
+{
     DetectionCapacity* capacity = new DetectionCapacity( *this );
     object.AddCapacity( capacity );
     object.Register( static_cast< MIL_InteractiveContainer_ABC *>( capacity ) );
@@ -195,7 +195,7 @@ namespace
             }
         }
     private:
-        MIL_Agent_ABC& agent_; 
+        MIL_Agent_ABC& agent_;
         const PHY_PerceptionLevel& perceptionLevel_;
     };
 }
@@ -207,7 +207,7 @@ namespace
 void DetectionCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent )
 {
     CIT_AgentMap it = agentInsideMap_.find( &agent );
-    if ( it != agentInsideMap_.end() )
+    if( it != agentInsideMap_.end() )
     {
         int currentTime = MIL_Singletons::GetTime().GetCurrentTick();
         const AnimatorAttribute::T_AgentSet& animators = object.GetAttribute< AnimatorAttribute >().GetAnimators();
@@ -263,16 +263,16 @@ void DetectionCapacity::ProcessAgentEntering( MIL_Object_ABC& /*object*/, MIL_Ag
 // Name: DetectionCapacity::ProcessAgentExiting
 // Created: SLG 2010-02-11
 // -----------------------------------------------------------------------------
-void DetectionCapacity::ProcessAgentExiting( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& agent ) 
+void DetectionCapacity::ProcessAgentExiting( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& agent )
 {
     agentInsideMap_.erase( &agent );
 }
-  
+
 // -----------------------------------------------------------------------------
 // Name: WorkableCapacity::AddDetector
 // Created: SLG 2010-02-16
 // -----------------------------------------------------------------------------
 void DetectionCapacity::AddDetector( MIL_Object_ABC& object, const MIL_Agent_ABC& agent )
 {
-    object.GetAttribute< DetectorAttribute >().AddDetector( agent );    
+    object.GetAttribute< DetectorAttribute >().AddDetector( agent );
 }

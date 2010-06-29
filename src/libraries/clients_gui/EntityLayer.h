@@ -45,10 +45,10 @@ class EntityLayerBase : public Layer_ABC
 {
 public:
     //! @name Constructors/Destructor
-    //@{    
+    //@{
              EntityLayerBase( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile );
     virtual ~EntityLayerBase();
-    //@}    
+    //@}
 
     //! @name Operations
     //@{
@@ -57,7 +57,7 @@ public:
 
 protected:
     //! @name Events
-    //@{    
+    //@{
     virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );
     virtual bool HandleMouseMove( QMouseEvent* event, const geometry::Point2f& point );
     //@}
@@ -88,7 +88,7 @@ protected:
     virtual bool DisplayTooltip( unsigned i, const geometry::Point2f& point );
     virtual bool DisplayTooltip( const kernel::Entity_ABC&, kernel::Displayer_ABC& displayer );
     //@}
-    
+
 private:
     //! @name Copy/Assignement
     //@{
@@ -103,7 +103,7 @@ private:
     typedef T_Entities::iterator                     IT_Entities;
     typedef T_Entities::const_iterator              CIT_Entities;
     //@}
-        
+
 private:
     //! @name Member data
     //@{
@@ -116,7 +116,7 @@ private:
     std::auto_ptr< kernel::GlTooltip_ABC > tooltip_;
     unsigned selected_;
 
-protected: // $$$$ AGE 2006-05-17: 
+protected: // $$$$ AGE 2006-05-17:
     const kernel::Profile_ABC& profile_;
     //@}
 };

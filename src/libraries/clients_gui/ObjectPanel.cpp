@@ -152,7 +152,7 @@ template< typename Extension >
 bool ObjectPanel::ShouldUpdate( const Extension& extension )
 {
     return IsVisible()
-        && selected_ 
+        && selected_
         && ( selected_->Retrieve< Extension >() == & extension );
 }
 
@@ -175,7 +175,7 @@ void ObjectPanel::NotifyUpdated( const MineAttribute_ABC& attributes )
 {
     DisplayIfNeeded( attributes );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ObjectPanel::NotifyUpdated
 // Created: JCR 2008-06-09
@@ -184,7 +184,7 @@ void ObjectPanel::NotifyUpdated( const ConstructionAttribute_ABC& attributes )
 {
     DisplayIfNeeded( attributes );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ObjectPanel::NotifyUpdated
 // Created: JCR 2008-06-09
@@ -193,7 +193,7 @@ void ObjectPanel::NotifyUpdated( const BypassAttribute_ABC& attributes )
 {
     DisplayIfNeeded( attributes );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ObjectPanel::NotifyUpdated
 // Created: JCR 2008-06-09

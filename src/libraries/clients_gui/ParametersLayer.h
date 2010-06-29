@@ -67,7 +67,7 @@ private:
     ParametersLayer( const ParametersLayer& );            //!< Copy constructor
     ParametersLayer& operator=( const ParametersLayer& ); //!< Assignement operator
     //@}
-   
+
     //! @name Helpers
     //@{
     virtual bool HandleKeyPress        ( QKeyEvent* key );

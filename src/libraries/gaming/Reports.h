@@ -87,7 +87,7 @@ private:
     kernel::Controller& controller_;
     const ReportFactory& reportFactory_;
 
-public:  // $$$$ AGE 2006-03-09: 
+public:  // $$$$ AGE 2006-03-09:
     T_Reports traces_;
     //@}
 };

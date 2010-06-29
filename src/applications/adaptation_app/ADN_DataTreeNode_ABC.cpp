@@ -23,14 +23,14 @@
 
 // -----------------------------------------------------------------------------
 // Name: ADN_DataTreeNode_ABC constructor
-/** @param  pParent 
+/** @param  pParent
 */
 // Created: AGN 2004-05-12
 // -----------------------------------------------------------------------------
 ADN_DataTreeNode_ABC::ADN_DataTreeNode_ABC( ADN_DataTreeNode_ABC* pParent )
 : pParent_( pParent )
 {
-    
+
 }
 
 // -----------------------------------------------------------------------------
@@ -39,12 +39,12 @@ ADN_DataTreeNode_ABC::ADN_DataTreeNode_ABC( ADN_DataTreeNode_ABC* pParent )
 // -----------------------------------------------------------------------------
 ADN_DataTreeNode_ABC::~ADN_DataTreeNode_ABC()
 {
-    
+
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_DataTreeNode_ABC::GetXmlLabel
-/** @return 
+/** @return
 */
 // Created: AGN 2004-05-12
 // -----------------------------------------------------------------------------
@@ -56,7 +56,7 @@ std::string ADN_DataTreeNode_ABC::GetNodeName()
 
 // -----------------------------------------------------------------------------
 // Name: ADN_DataTreeNode_ABC::GetParentNode
-/** @return 
+/** @return
 */
 // Created: AGN 2004-05-12
 // -----------------------------------------------------------------------------

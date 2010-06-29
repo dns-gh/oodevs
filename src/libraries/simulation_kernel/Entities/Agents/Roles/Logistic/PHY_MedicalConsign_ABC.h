@@ -36,7 +36,7 @@ public:
     //@{
     template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
-    
+
     //! @name Operations
     //@{
     virtual void Cancel();
@@ -93,7 +93,7 @@ protected:
 
 protected:
     //! @name
-    void EnterStateFinished();   
+    void EnterStateFinished();
 
     E_State GetState() const;
     void    SetState( E_State nNewState );
@@ -108,7 +108,7 @@ private:
 
 protected:
     PHY_MedicalHumanState*   pHumanState_;
-    int                      nTimer_;        
+    int                      nTimer_;
 };
 
 // -----------------------------------------------------------------------------
@@ -118,7 +118,7 @@ protected:
 template< typename Archive >
 void PHY_MedicalConsign_ABC::serialize( Archive& file, const unsigned int )
 {
-    file & pMedical_   
+    file & pMedical_
          & pHumanState_
          & nTimer_
          & nState_;

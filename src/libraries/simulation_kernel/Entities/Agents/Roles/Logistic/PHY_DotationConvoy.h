@@ -29,7 +29,7 @@ class PHY_DotationConvoy : public PHY_Convoy_ABC
 {
 
 public:
-    //! @name 
+    //! @name
     //@{
     static void Initialize( xml::xistream& xis );
     static void Terminate ();
@@ -42,11 +42,11 @@ public:
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const unsigned int ); 
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
     //! @name Operations
-    //@{    
+    //@{
     unsigned int GetTravelTimeToLoadingPoint  () const;
     unsigned int GetTravelTimeToUnloadingPoint() const;
     unsigned int GetTravelTimeToFormingPoint  () const;

@@ -27,14 +27,14 @@ class ADN_CT_Population_FireEffectRoe
 {
 public:
 
-    ADN_CT_Population_FireEffectRoe(ADN_Population_FireEffectRoe_GUI& tab) 
+    ADN_CT_Population_FireEffectRoe(ADN_Population_FireEffectRoe_GUI& tab)
     : ADN_Connector_Table_ABC(tab,false)
     {}
 
     void AddSubItems( int i, void* obj )
     {
         assert( obj );
-        
+
         E_PopulationRoe nRoe = static_cast<FireEffectRoeInfos*>(obj)->nRoe_;
         uint nNbrHiddenRoe = (uint)ePopulationRoe_EmploiForceInterdit + 1;
 
@@ -48,7 +48,7 @@ public:
         tab_.setItem( i - nNbrHiddenRoe, 0, pItemString );
         tab_.setItem( i - nNbrHiddenRoe, 1, pItemSurface );
         tab_.setItem( i - nNbrHiddenRoe, 2, pItemPH );
-        
+
         // disable first column
         pItemString->setEnabled( false );
         pItemString->setText( ENT_Tr::ConvertFromPopulationRoe( nRoe, ENT_Tr_ABC::eToTr ).c_str() );
@@ -81,14 +81,14 @@ ADN_Population_FireEffectRoe_GUI::ADN_Population_FireEffectRoe_GUI(QWidget * par
 
     // hide vertical header
     verticalHeader()->hide();
-    
+
     // tab with 3 columns
     setNumCols(3);
     setNumRows(0);
     setColumnStretchable(0,true);
     setColumnStretchable(1,true);
     setColumnStretchable(2,true);
-    
+
     horizontalHeader()->setLabel(0, tr( "ROE" ) );
     horizontalHeader()->setLabel(1, tr( "Attrition Surface (m²)" ) );
     horizontalHeader()->setLabel(2, tr( "PH" ) );

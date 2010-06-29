@@ -56,7 +56,7 @@ TacticalLineFactory::~TacticalLineFactory()
     line->Attach< kernel::TacticalHierarchies >( *new TacticalLineHierarchies( controllers_.controller_, *line, message.tactical_line().diffusion(), model_.agents_, model_.teams_ ) );
     return line;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: TacticalLineFactory::Create
 // Created: SBO 2006-11-17
@@ -80,7 +80,7 @@ void TacticalLineFactory::CreateLimit( const T_PointVector& points, const kernel
     line.Attach< kernel::TacticalHierarchies >( *new TacticalLineHierarchies( controllers_.controller_, line, superior, model_.agents_, model_.teams_ ) );
     line.Create();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: TacticalLineFactory::CreateLima
 // Created: SBO 2006-11-17
@@ -90,5 +90,5 @@ void TacticalLineFactory::CreateLima( const T_PointVector& points, const kernel:
     Lima line( controllers_.controller_, publisher_, converter_ );
     line.Attach< kernel::Positions >( *new TacticalLinePositions( points, converter_, line ) );
     line.Attach< kernel::TacticalHierarchies >( *new TacticalLineHierarchies( controllers_.controller_, line, superior, model_.agents_, model_.teams_ ) );
-    line.Create(); 
+    line.Create();
 }

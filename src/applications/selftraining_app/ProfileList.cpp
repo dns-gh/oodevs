@@ -8,13 +8,13 @@
 // *****************************************************************************
 
 #include "selftraining_app_pch.h"
-#include "Profile.h" 
+#include "Profile.h"
 #include "Side.h"
 #include "ProfileList.h"
 #include "moc_ProfileList.cpp"
 #include "frontend/commands.h"
 #include "clients_gui/Tools.h"
-#include "tools/GeneralConfig.h" 
+#include "tools/GeneralConfig.h"
 #include <xeumeuleu/xml.h>
 
 // -----------------------------------------------------------------------------
@@ -64,7 +64,7 @@ void ProfileList::Update( const QString& exercise )
 // -----------------------------------------------------------------------------
 void ProfileList::ReadProfiles( const std::string& exercise )
 {
-    std::string profilesFile; 
+    std::string profilesFile;
     {
         xml::xifstream xis( config_.GetExerciseFile( exercise ) ) ;
         xis >> xml::start( "exercise" )
@@ -87,7 +87,7 @@ void ProfileList::ReadProfile( xml::xistream& xis )
 {
     const Profile profile( xis );
     const QString name = profile.GetLogin() != "" ?  profile.GetLogin() : tools::translate( "ReadProfile", "anonymous" );
-    if ( profile.IsSupervision() )
+    if( profile.IsSupervision() )
         insertItem( QImage( "resources/images/selftraining/commandpost.xpm" ), name );
     else
         insertItem( name );

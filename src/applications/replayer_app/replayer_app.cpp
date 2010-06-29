@@ -11,7 +11,7 @@
 #include "MT_Tools/MT_CrashHandler.h"
 #include "MT/MT_Logger/MT_Logger_Lib.h"
 #include "tools/win32/FlexLm.h"
-#include "tools/WinArguments.h" 
+#include "tools/WinArguments.h"
 #include <windows.h>
 
 int WINAPI WinMain( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdShow )
@@ -26,7 +26,7 @@ int WINAPI WinMain( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine
     int nResult = EXIT_SUCCESS;
     try
     {
-        App  app( hinstance, hPrevInstance, lpCmdLine, nCmdShow ); 
+        App  app( hinstance, hPrevInstance, lpCmdLine, nCmdShow );
         app.Execute();
     }
     catch( std::exception& e )

@@ -707,7 +707,7 @@ BOOST_AUTO_TEST_CASE( Facade_TestResourceConsumptionsWithResourceFilter )
         "<transform function='compare' type='bool' operator='less' input='resources-var,zero' id='test'/>"
         "<transform function='filter' type='int' input='test,resources-var' id='consumptions'/>"
         "<reduce type='int' function='sum' input='consumptions' id='sum'/>"
-        "<transform function='integrate' id='total' input='sum' type='int'/>"        
+        "<transform function='integrate' id='total' input='sum' type='int'/>"
         "<result function='plot' input='total' type='int'/>"
     "</indicator>";
     xml::xistringstream xis( input );
@@ -750,7 +750,7 @@ namespace
         MsgSimToClient result;
         MsgUnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
         attributes.set_oid( id );
-        EquipmentDotations_EquipmentDotation& equipment = *attributes.mutable_dotation_eff_materiel()->add_elem();        
+        EquipmentDotations_EquipmentDotation& equipment = *attributes.mutable_dotation_eff_materiel()->add_elem();
         equipment.set_type_equipement( equipmentId );
         equipment.set_nb_disponibles            ( variation[0] );
         equipment.set_nb_indisponibles          ( variation[1] );

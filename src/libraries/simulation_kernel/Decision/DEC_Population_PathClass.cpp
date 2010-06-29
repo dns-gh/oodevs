@@ -61,7 +61,7 @@ void DEC_Population_PathClass::ReadPopulationRule( xml::xistream& xis )
         xis.error( "Rule '" + strType + "' already defined" );
     pRule = new DEC_Population_PathClass( xis, pBase );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Population_PathClass::Terminate
 // Created: SBO 2006-03-27
@@ -70,7 +70,7 @@ void DEC_Population_PathClass::Terminate()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Population_PathClass::GetPathClass
 // Created: SBO 2006-03-27

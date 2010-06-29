@@ -42,7 +42,7 @@ Properties::Properties( QWidget* parent, kernel::Controllers& controllers )
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Properties destructor
 // Created: SBO 2006-10-27

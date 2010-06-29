@@ -67,7 +67,7 @@ const MIL_NbcAgentType& MIL_ToxicEffectManipulator::GetType() const
 // -----------------------------------------------------------------------------
 const PHY_HumanWound& MIL_ToxicEffectManipulator::GetRandomWound( const MIL_NbcAgentType& type ) const
 {
-    return ( type.IsLiquidContaminating() ) ? 
-                type.GetLiquidRandomWound() : 
+    return ( type.IsLiquidContaminating() ) ?
+                type.GetLiquidRandomWound() :
                 type.GetGasRandomWound(); // GetGasRandomWound
 }

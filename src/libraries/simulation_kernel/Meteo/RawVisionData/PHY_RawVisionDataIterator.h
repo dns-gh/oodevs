@@ -29,7 +29,7 @@ public:
     //@}
 
     PHY_RawVisionDataIterator& operator ++ ();
-    
+
     bool                       End             () const;
     MT_Float                   Length          () const;
     PHY_RawVisionData::envBits GetCurrentEnv   () const;
@@ -38,7 +38,7 @@ public:
 
     const MT_Vector2D          GetPos()               const;
     void                       GetPos( MT_Vector2D& ) const;
-    
+
 protected:
     // Transformations entre l'espace réel et l'espace de l'algorithme
     void ToAlgorithmSpace ( MT_Float& rX, MT_Float& rY ) const;
@@ -71,7 +71,7 @@ protected:
     /*const*/ bool bNegX_;
     /*const*/ bool bNegY_;
     /*const*/ bool bSwapOffset_;
-    
+
     // Case réelle initiale
     /*const*/ int nCellColOffset_;
     /*const*/ int nCellRowOffset_;
@@ -90,13 +90,13 @@ protected:
 
     // Distance totale restant à parcourir ( condition de fin )
     MT_Float rRemainingLength_;
-    
+
     // Prochaine position de l'itérateur
     MT_Float    rAlreadyUsedDX_;        // Projection de la distance déjà parcourue sur l'axe des x dans la précédente itération
     int         nNextCellCol_;
     int         nNextCellRow_;
     MT_Vector3D vOutPoint_;             // X, Y dans l'espace de l'algorithme, Z non transformée
-    
+
     // Informations sur l'environnement précedent
     MT_Float rGroundCoeff_;
     MT_Float rEnvCoeff_;

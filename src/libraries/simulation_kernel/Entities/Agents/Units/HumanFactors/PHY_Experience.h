@@ -38,7 +38,7 @@ public:
     //@}
 
 public:
-    //! @name 
+    //! @name
     //@{
     static const PHY_Experience conscrit_;
     static const PHY_Experience experimente_;

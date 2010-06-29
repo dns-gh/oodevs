@@ -23,7 +23,7 @@ template< typename K, typename T >
 class Domain : public Function1_ABC< K, T >
 {
 public:
-    //! @name 
+    //! @name
     //@{
     typedef T Result_Type;
     //@}

@@ -31,7 +31,7 @@ ParamEquipmentList::ParamEquipmentList( QObject* parent, const kernel::OrderPara
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ParamEquipmentList destructor
 // Created: SBO 2005-09-27

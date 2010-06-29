@@ -28,7 +28,7 @@ public:
     typedef T_ComposanteVector::iterator        IT_ComposanteVector;
     typedef T_ComposanteVector::const_iterator  CIT_ComposanteVector;
 
- 
+
     struct T_ComposanteUse
     {
         uint nNbrAvailable_;
@@ -48,12 +48,12 @@ public:
     //@{
     template< typename Archive > void serialize( Archive&, const unsigned int ) {}
     //@}
-    
+
     //! @name Accessors
     //@{
     virtual const PHY_ComposanteType_ABC& GetType            () const = 0;
-	virtual float				    GetIdentificationMaxRange() const = 0;
-	virtual float				    GetReconnoissanceMaxRange() const = 0;
+    virtual float                    GetIdentificationMaxRange() const = 0;
+    virtual float                    GetReconnoissanceMaxRange() const = 0;
     virtual bool                          CanFire            () const = 0;
     virtual bool                          CanFireWhenUnloaded() const = 0;
     virtual unsigned int                          GetMajorScore      () const = 0;

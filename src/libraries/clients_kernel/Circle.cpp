@@ -43,7 +43,7 @@ void Circle::PopPoint()
 {
     if( radius_ >= 0 )
         radius_ = -1;
-    else 
+    else
         centerSet_ = false;
 }
 

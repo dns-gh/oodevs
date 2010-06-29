@@ -45,7 +45,7 @@ public:
     void Register( DEC_Knowledge_Object& knObject );
     //@}
 
-    //! @name 
+    //! @name
     //@{
     bool    IsBanksToFitOut() const;
     MT_Float   GetWidth() const;
@@ -59,7 +59,7 @@ private:
 
 private:
     //! @name Data Members
-    //@{   
+    //@{
     const CrossingSiteAttribute* attr_;
     MT_Float rWidth_;
     MT_Float rDepth_;

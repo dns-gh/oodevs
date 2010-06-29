@@ -55,10 +55,10 @@ public:
     virtual bool                      IsNeutralized() const = 0;
     virtual bool                      IsPC         () const = 0;
     virtual bool                      IsAutonomous       () const = 0;
-    
+
     virtual const MIL_Automate&       GetAutomate        () const = 0;
     virtual       MIL_Automate&       GetAutomate        () = 0;
-    
+
     virtual       DEC_Decision_ABC& GetDecision() = 0;
     virtual const DEC_Decision_ABC& GetDecision() const = 0;
 
@@ -84,7 +84,7 @@ public:
     //@{
     virtual boost::shared_ptr< DEC_Knowledge_Agent > CreateKnowledge( const MIL_KnowledgeGroup& knowledgeGroup ) = 0;
     virtual bool                                     IsPerceived    ( const MIL_Agent_ABC& target ) const = 0; //$$$$ DEGUEU - VOIR AVEC MODELISATEURS
-    virtual DEC_KnowledgeBlackBoard_AgentPion&       GetKnowledge   () const = 0; 
+    virtual DEC_KnowledgeBlackBoard_AgentPion&       GetKnowledge   () const = 0;
     //@}
 
     //! @name Operators

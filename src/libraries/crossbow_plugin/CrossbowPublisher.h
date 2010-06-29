@@ -35,7 +35,7 @@ namespace plugins
 namespace crossbow
 {
     class OGR_Workspace;
-    
+
     class DatabaseUpdater;
     class ReportUpdater;
     class FolkUpdater;

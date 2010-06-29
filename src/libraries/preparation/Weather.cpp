@@ -89,6 +89,6 @@ void Weather::Serialize( xml::xostream& xos ) const
         << attribute( "density", cloudDensity_ )
         << end()
         << start( "precipitation" )
-        << attribute( "value", tools::GetXmlSection( type_ ) ) // $$$$ SBO 2006-12-20: 
+        << attribute( "value", tools::GetXmlSection( type_ ) ) // $$$$ SBO 2006-12-20:
         << end();
 }

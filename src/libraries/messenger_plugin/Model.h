@@ -77,7 +77,7 @@ private:
 
 private:
     //! @name Member data
-    //@{    
+    //@{
     std::auto_ptr< IdManager > idManager_;
     std::auto_ptr< kernel::CoordinateConverter_ABC > converter_;
     //@}

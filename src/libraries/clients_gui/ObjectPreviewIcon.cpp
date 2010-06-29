@@ -25,9 +25,9 @@ using namespace gui;
 // Created: SBO 2007-10-16
 // -----------------------------------------------------------------------------
 ObjectPreviewIcon::ObjectPreviewIcon( QWidget* parent, kernel::Controllers& controllers, SymbolIcons& icons )
-    : QHBox        ( parent )    
+    : QHBox        ( parent )
     , icons_       ( icons )
-    , controllers_ ( controllers )    
+    , controllers_ ( controllers )
 {
     setFrameStyle( QFrame::Plain | QFrame::Box );
     setPaletteBackgroundColor( Qt::white );
@@ -35,7 +35,7 @@ ObjectPreviewIcon::ObjectPreviewIcon( QWidget* parent, kernel::Controllers& cont
     icon_ = new QLabel( this );
     icon_->setMargin( 10 );
     // QToolTip::add( icon_, tr( "Drag and drop symbol to map to create a new unit." ) );
-    UpdateSymbol();    
+    UpdateSymbol();
 }
 
 // -----------------------------------------------------------------------------
@@ -53,7 +53,7 @@ ObjectPreviewIcon::~ObjectPreviewIcon()
 // -----------------------------------------------------------------------------
 void ObjectPreviewIcon::NotifySelected( const kernel::ObjectType& type )
 {
-    symbol_ = type.GetSymbol();    
+    symbol_ = type.GetSymbol();
     UpdateSymbol();
 }
 
@@ -64,7 +64,7 @@ void ObjectPreviewIcon::NotifySelected( const kernel::ObjectType& type )
 void ObjectPreviewIcon::UpdateSymbol()
 {
     if( symbol_ != "" )
-    {        
+    {
         std::string symbol = tools::app6::MergeSymbol( symbol_, symbol_ );
         QImage img;
         SymbolIcon icon( symbol );

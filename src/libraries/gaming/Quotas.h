@@ -60,13 +60,13 @@ private:
     //! @name Types
     //@{
     typedef std::vector< Dotation >             T_Dotations;
-    //@}    
+    //@}
 
-public: // $$$$ AGE 2006-10-11: 
+public: // $$$$ AGE 2006-10-11:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const tools::Resolver_ABC< kernel::DotationType >& dotationResolver_; 
+    const tools::Resolver_ABC< kernel::DotationType >& dotationResolver_;
     T_Dotations      quotas_;
     //@}
 };

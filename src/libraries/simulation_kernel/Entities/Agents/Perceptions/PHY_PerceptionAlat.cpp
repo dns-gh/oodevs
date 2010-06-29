@@ -50,11 +50,11 @@ void PHY_PerceptionAlat::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perce
     // Recherche des pions dans la localisation
     TER_Agent_ABC::T_AgentPtrVector agentsDetected;
     TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( localisation_, agentsDetected );
-   
+
     // Enregistrement des pions vus
     for( TER_Agent_ABC::CIT_AgentPtrVector itAgent = agentsDetected.begin(); itAgent != agentsDetected.end(); ++itAgent )
-    {        
-        PHY_RoleInterface_Location& targetRoleLocation = static_cast< PHY_RoleInterface_Location& >( **itAgent );  
+    {
+        PHY_RoleInterface_Location& targetRoleLocation = static_cast< PHY_RoleInterface_Location& >( **itAgent );
         MIL_Agent_ABC& target = targetRoleLocation.GetAgent();
         std::auto_ptr< detection::DetectionComputer_ABC > detectionComputer = detectionComputerFactory.Create( target );
         perceiver_.GetPion().Execute( *detectionComputer );

@@ -62,7 +62,7 @@ void load_construct_data( Archive& archive, MIL_Population* population, const un
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
 MIL_Population::MIL_Population( xml::xistream& xis, const MIL_PopulationType& type, MIL_Army& army, DEC_DataBase& database )
-    : MIL_Entity_ABC          ( xis ) 
+    : MIL_Entity_ABC          ( xis )
     , pType_                  ( &type )
     , nID_                    ( xml::attribute< unsigned int >( xis, "id" ) )
     , pArmy_                  ( &army )
@@ -156,10 +156,10 @@ DEC_PopulationDecision& MIL_Population::GetDecision()
 // -----------------------------------------------------------------------------
 void MIL_Population::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> boost::serialization::base_object< MIL_Entity_ABC >( *this ); 
+    file >> boost::serialization::base_object< MIL_Entity_ABC >( *this );
 
     file >> const_cast< unsigned int& >( nID_ )
-         >> const_cast< MIL_Army*& >( pArmy_ ); 
+         >> const_cast< MIL_Army*& >( pArmy_ );
 
     unsigned int nAttitudeID;
     file >> nAttitudeID;
@@ -190,7 +190,7 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const unsigned int )
 void MIL_Population::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << boost::serialization::base_object< MIL_Entity_ABC >( *this );
-    
+
     unsigned attitude = pDefaultAttitude_->GetID();
     file << nID_
          << pArmy_
@@ -218,10 +218,10 @@ void MIL_Population::WriteODB( xml::xostream& xos ) const
     assert( pDefaultAttitude_ );
     assert( !concentrations_.empty() || !flows_.empty() );
 
-    xos << xml::start( "population" ); 
+    xos << xml::start( "population" );
 
-    MIL_Entity_ABC::WriteODB ( xos ) ; 
-    
+    MIL_Entity_ABC::WriteODB ( xos ) ;
+
     xos << xml::attribute( "id"      , nID_ )
         << xml::attribute( "type"    , pType_->GetName() )
         << xml::attribute( "humans"  , GetNbrAliveHumans() + GetNbrDeadHumans() )
@@ -321,10 +321,10 @@ void MIL_Population::UpdateDecision( float duration )
     try
     {
         orderManager_.Update();
-        GetRole< DEC_Decision_ABC >().UpdateDecision( duration );    
+        GetRole< DEC_Decision_ABC >().UpdateDecision( duration );
     }
     catch( std::runtime_error& /*e*/ )
-    {        
+    {
         MIL_Report::PostEvent( *this, MIL_Report::eReport_MissionImpossible_ );
     }
     GetRole< DEC_Decision_ABC >().GarbageCollect();
@@ -902,14 +902,14 @@ void MIL_Population::OnReceiveMsgPopulationMagicActionMoveTo( const MsgsClientTo
 
     if( !asn.has_parametres() || asn.parametres().elem_size() != 1 )
         throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
-    
+
     const Common::MsgMissionParameter& parametre = asn.parametres().elem( 0 );
     if( !parametre.has_value() || !parametre.value().has_point() )
         throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
 
     const Common::MsgPoint& point = parametre.value().point();
 
-    if( point.location().type() != Common::MsgLocation_Geometry_point 
+    if( point.location().type() != Common::MsgLocation_Geometry_point
         || point.location().coordinates().elem_size() != 1 )
         throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
 
@@ -954,7 +954,7 @@ void MIL_Population::OnReceiveMsgChangeAttitude( const MsgsClientToSim::MsgUnitM
 {
     if( !msg.has_parametres() )
         throw NET_AsnException< MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode >( MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode_error_invalid_attribute );
-    
+
     const Common::MsgMissionParameter& parametre = msg.parametres().elem( 0 );
     if( !parametre.has_value() || !parametre.value().has_enumeration() )
         throw NET_AsnException< MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode >( MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode_error_invalid_attribute );
@@ -1011,7 +1011,7 @@ void MIL_Population::OnReceiveMsgKill( const MsgsClientToSim::MsgUnitMagicAction
 {
     if( !msg.has_parametres() )
         throw NET_AsnException< MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode >( MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode_error_invalid_attribute );
-    
+
     const Common::MsgMissionParameter& parametre = msg.parametres().elem( 0 );
     if( !parametre.has_value() || !parametre.value().has_quantity() )
         throw NET_AsnException< MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode >( MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode_error_invalid_attribute );
@@ -1039,7 +1039,7 @@ void MIL_Population::OnReceiveMsgResurrect( const MsgsClientToSim::MsgUnitMagicA
 {
     if( !msg.has_parametres() )
         throw NET_AsnException< MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode >( MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode_error_invalid_attribute );
-    
+
     const Common::MsgMissionParameter& parametre = msg.parametres().elem( 0 );
     if( !parametre.has_value() || !parametre.value().has_quantity() )
         throw NET_AsnException< MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode >( MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode_error_invalid_attribute );
@@ -1156,11 +1156,11 @@ void MIL_Population::Apply( MIL_EntityVisitor_ABC< MIL_PopulationElement_ABC >& 
 // Name: MIL_Population::sPeopleCounter::sPeopleCounter
 // Created: MGD 2009-10-21
 // -----------------------------------------------------------------------------
-MIL_Population::sPeopleCounter::sPeopleCounter( unsigned int nInit ) 
+MIL_Population::sPeopleCounter::sPeopleCounter( unsigned int nInit )
     : nPeople_ ( nInit )
 {
 
-}    
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Population::sPeopleCounter::GetBoundedPeople

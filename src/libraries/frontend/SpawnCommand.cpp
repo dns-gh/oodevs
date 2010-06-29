@@ -16,11 +16,11 @@
 
 using namespace frontend;
 
-struct SpawnCommand::InternalData 
+struct SpawnCommand::InternalData
 {
-    PROCESS_INFORMATION pid_ ; 
+    PROCESS_INFORMATION pid_ ;
     InternalData() { ZeroMemory( &pid_ , sizeof( pid_ ) ); }
-}; 
+};
 
 // -----------------------------------------------------------------------------
 // Name: SpawnCommand constructor
@@ -32,7 +32,7 @@ SpawnCommand::SpawnCommand( const tools::GeneralConfig& config, const char* exe,
     , attach_( attach )
     , workingDirectory_( "." )
 {
-// $$$$ AGE 2007-10-09: 
+// $$$$ AGE 2007-10-09:
 //    connect( this, SIGNAL( processExited() ), parent, SLOT( OnExit() ) );
 //    connect( this, SIGNAL( processExited() ), SLOT( deleteLater() ) );
     addArgument( exe );
@@ -62,7 +62,7 @@ void SpawnCommand::AddRootDirArgument()
 // Created: AGE 2007-10-04
 // -----------------------------------------------------------------------------
 void SpawnCommand::AddExerciseArgument( const QString& exercise )
-{   
+{
     addArgument( "--exercise=\"" + exercise +"\"" );
 }
 
@@ -88,7 +88,7 @@ void SpawnCommand::Start()
         0, 0, 0,
         0, 0, 0
     };
-    std::string debug( commandLine_.local8Bit().data() ) ; 
+    std::string debug( commandLine_.local8Bit().data() ) ;
     if( !CreateProcessA( 0, commandLine_.local8Bit().data(),
                 0, 0, TRUE, CREATE_NEW_CONSOLE, 0,
                 workingDirectory_.c_str(), &startupInfo, &internal_->pid_) )
@@ -165,7 +165,7 @@ bool SpawnCommand::Wait()
 // Name: SpawnCommand::IsRunning
 // Created: RDS 2008-08-22
 // -----------------------------------------------------------------------------
-bool SpawnCommand::IsRunning() const 
+bool SpawnCommand::IsRunning() const
 {
     if( internal_->pid_.dwProcessId )
         return CreateToolhelp32Snapshot( TH32CS_SNAPMODULE, internal_->pid_.dwProcessId ) != INVALID_HANDLE_VALUE;

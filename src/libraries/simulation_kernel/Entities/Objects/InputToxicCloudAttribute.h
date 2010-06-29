@@ -27,13 +27,13 @@ class MIL_NbcAgentType;
 // =============================================================================
 class InputToxicCloudAttribute : public ToxicAttribute_ABC
                                , public UpdatableAttribute_ABC
-{ 
+{
 public:
     //! @name Types
     //@{
     typedef std::pair< MT_Vector2D, double >  T_Quantity; // Lat/Long/quantity
     struct QuantityTraits
-    { 
+    {
         int CompareOnX( double value, const T_Quantity& quantity ) const
         {
             return Compare( quantity.first.rX_, value );
@@ -46,20 +46,20 @@ public:
 
         int Compare( double lhs, double rhs ) const
         {
-            if ( lhs < rhs )
+            if( lhs < rhs )
                 return -1;
-            if ( lhs > rhs )
+            if( lhs > rhs )
                 return 1;
             return 0;
         }
     };
 
-    typedef pathfind::SpatialContainer< T_Quantity, QuantityTraits, double > T_Quantities; 
+    typedef pathfind::SpatialContainer< T_Quantity, QuantityTraits, double > T_Quantities;
     //@}
 public:
     //! @name Constructors/Destructor
     //@{
-             InputToxicCloudAttribute();    
+             InputToxicCloudAttribute();
     explicit InputToxicCloudAttribute( xml::xistream& xis );
     virtual ~InputToxicCloudAttribute();
     //@}
@@ -67,12 +67,12 @@ public:
      //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
-    //! @name 
+    //! @name
     //@{
     void Instanciate( DEC_Knowledge_Object& object ) const;
     void Register( Object& object ) const;
@@ -81,13 +81,13 @@ public:
     void WriteODB( xml::xostream& xos ) const;
     //@}
 
-    //! @name 
+    //! @name
     //@{
-    MIL_ToxicEffectManipulator GetContaminationEffect( const NBCAttribute& nbc, const MT_Vector2D& position ) const;    
+    MIL_ToxicEffectManipulator GetContaminationEffect( const NBCAttribute& nbc, const MT_Vector2D& position ) const;
     //@}
 
-    //! @name 
-    //@{    
+    //! @name
+    //@{
     bool Update( unsigned int time, TER_Polygon& shape );
     //@}
 
@@ -101,28 +101,28 @@ private:
     //@{
     typedef std::map< unsigned int, std::string >           T_Schedule;
     typedef T_Schedule::const_iterator              CIT_Schedule;
-    
+
     typedef std::vector< T_Quantity >               T_QuantityContainer;
     typedef T_QuantityContainer::const_iterator     CIT_QuantityContainer;
     //@}
 
 private:
-    //! @name 
+    //! @name
     //@{
     void Insert( T_Quantity& quantity );
     void LoadConfig();
     void ReadFiles( xml::xistream& xis );
     //@}
 
-    //! @name 
-    //@{    
-    void LoadShape( const std::string& name );    
+    //! @name
+    //@{
+    void LoadShape( const std::string& name );
     void BuildConvexHull( TER_Polygon& polygon ) const;
     //@}
 
 private:
     //! @name Member data
-    //@{    
+    //@{
     std::string     filename_;
     std::string     field_;
     std::string     dataField_;
@@ -130,7 +130,7 @@ private:
     boost::shared_ptr< T_Schedule >     schedule_;
     geometry::Rectangle2d               extent_;
     boost::shared_ptr< T_Quantities >   quantities_;
-    T_QuantityContainer                 export_;    
+    T_QuantityContainer                 export_;
     //@}
 };
 

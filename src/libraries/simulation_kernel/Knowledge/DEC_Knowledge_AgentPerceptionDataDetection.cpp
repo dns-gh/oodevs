@@ -39,7 +39,7 @@ DEC_Knowledge_AgentPerceptionDataDetection::DEC_Knowledge_AgentPerceptionDataDet
     , pCurrentPosture_             ( 0 )
     , rPostureCompletionPercentage_( 1. )
     , pArmySurrenderedTo_          ( false )
-    , bPrisoner_                   ( false ) 
+    , bPrisoner_                   ( false )
     , bRefugeeManaged_             ( false )
     , bDead_                       ( false )
 {
@@ -71,7 +71,7 @@ void DEC_Knowledge_AgentPerceptionDataDetection::load( MIL_CheckPointInArchive& 
          >> bRefugeeManaged_
          >> bDead_
          >> rPostureCompletionPercentage_;
-         
+
     // Desérialisation des volumes par nom ( données "statiques" )
     unsigned int nNbr;
     unsigned int nID;
@@ -106,7 +106,7 @@ void DEC_Knowledge_AgentPerceptionDataDetection::save( MIL_CheckPointOutArchive&
          << bRefugeeManaged_
          << bDead_
          << rPostureCompletionPercentage_;
-         
+
     // Serialisation des volumes par nom ( données "statiques" )
     unsigned size = visionVolumes_.size();
     file << size;
@@ -186,7 +186,7 @@ unsigned int DEC_Knowledge_AgentPerceptionDataDetection::GetTimeLastUpdate() con
 {
     return nTimeLastUpdate_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentPerceptionDataDetection::GetDirection
 // Created: NLD 2004-11-10
@@ -213,7 +213,7 @@ const MT_Vector2D& DEC_Knowledge_AgentPerceptionDataDetection::GetPosition() con
 {
     return vPosition_;
 }
-          
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentPerceptionDataDetection::GetAltitude
 // Created: NLD 2004-11-09
@@ -242,7 +242,7 @@ const PHY_Posture& DEC_Knowledge_AgentPerceptionDataDetection::GetCurrentPosture
     assert( pCurrentPosture_ );
     return *pCurrentPosture_;
 }
-          
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentPerceptionDataDetection::GetPostureCompletionPercentage
 // Created: NLD 2004-11-09

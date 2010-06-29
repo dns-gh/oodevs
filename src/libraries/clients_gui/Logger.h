@@ -19,7 +19,7 @@ namespace gui
 
 // =============================================================================
 /** @class  Logger
-    @brief  Captures log messages and displays them in a sorted list. 
+    @brief  Captures log messages and displays them in a sorted list.
 */
 // Created: APE 2004-06-02
 // =============================================================================

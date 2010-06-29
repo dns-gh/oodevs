@@ -176,7 +176,7 @@ namespace
 {
     struct MagicFunctor
     {
-        MagicFunctor( const ::StaticModel& staticModel, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, int id ) 
+        MagicFunctor( const ::StaticModel& staticModel, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, int id )
             : static_( staticModel )
             , controllers_( controllers )
             , actionsModel_( actionsModel)
@@ -190,22 +190,22 @@ namespace
             switch( id_ )
             {
             case MsgsClientToSim::MsgUnitMagicAction_Type_recover_all:
-                strType = "recover_all"; 
+                strType = "recover_all";
                 break;
             case MsgsClientToSim::MsgUnitMagicAction_Type_recover_troops:
-                strType = "recover_troops"; 
+                strType = "recover_troops";
                 break;
             case MsgsClientToSim::MsgUnitMagicAction_Type_recover_equipments:
-                strType = "recover_equipments"; 
+                strType = "recover_equipments";
                 break;
             case MsgsClientToSim::MsgUnitMagicAction_Type_recover_resources:
-                strType = "recover_resources"; 
+                strType = "recover_resources";
                 break;
             case MsgsClientToSim::MsgUnitMagicAction_Type_destroy_all:
-                strType = "destroy_all"; 
+                strType = "destroy_all";
                 break;
             case MsgsClientToSim::MsgUnitMagicAction_Type_cancel_surrender:
-                strType = "cancel_surrender"; 
+                strType = "cancel_surrender";
                 break;
             default:
                 return;
@@ -245,7 +245,7 @@ namespace
                 while( it.HasMoreElements() )
                 {
                     const Entity_ABC& entity = it.NextElement();
-                    operator()( entity ); 
+                    operator()( entity );
                 }
             }
         }

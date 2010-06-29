@@ -28,7 +28,7 @@ ParamAutomatList::ParamAutomatList( QObject* parent, const kernel::OrderParamete
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ParamAutomatList destructor
 // Created: AGE 2006-11-29

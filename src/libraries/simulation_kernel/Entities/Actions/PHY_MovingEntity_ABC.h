@@ -52,14 +52,14 @@ public:
     virtual void Clean();
     //@}
 
-    //! @name 
+    //! @name
     //@{
     virtual MT_Float GetMaxSpeed              () const = 0;
     virtual MT_Float GetSpeedWithReinforcement( const TerrainData& environment ) const = 0;
     virtual MT_Float GetSpeedWithReinforcement( const TerrainData& environment, const MIL_Object_ABC& object ) const = 0;
     //@}
 
-    //! @name 
+    //! @name
     //@{
     virtual const MT_Vector2D& GetPosition () const = 0;
     virtual const MT_Vector2D& GetDirection() const = 0;
@@ -77,7 +77,7 @@ public:
     virtual void NotifyCurrentPathChanged       () = 0;
     //@}
 
-    //! @name 
+    //! @name
     //@{
     virtual bool CanMove              () const = 0;
     virtual bool CanObjectInteractWith( const MIL_Object_ABC& object ) const = 0;

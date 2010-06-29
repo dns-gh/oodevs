@@ -85,7 +85,7 @@ private:
         for( std::vector< std::string >::const_iterator it = split.begin(); it != split.end(); ++it )
             ranges.insert( boost::lexical_cast< double, std::string >( *it ) );
         ranges.insert( std::numeric_limits< double >::max() );
-        
+
         list = xml::attribute< std::string >( xis, "values" );
         boost::algorithm::split( split, list, boost::algorithm::is_any_of( "," ) );
         if( split.size() < ranges.size() )
@@ -93,7 +93,7 @@ private:
             const std::string lastValue = split.empty() ? "0" : split.back();
             std::fill_n( std::back_inserter( split ), ranges.size() - split.size(), lastValue );
         }
-       
+
         std::map< double, double > thresholds;
         std::vector< std::string >::iterator valuesIt = split.begin();
         for( std::set< double >::const_iterator it = ranges.begin(); it != ranges.end(); ++it )

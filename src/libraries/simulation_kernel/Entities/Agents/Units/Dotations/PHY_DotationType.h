@@ -78,7 +78,7 @@ private:
         eMunition  = 0,
         eCarburant = 1,
         eExplosif  = 2,
-        eMine      = 3,        
+        eMine      = 3,
         eBarbele   = 4,
         ePiece     = 5,
         eRation    = 6

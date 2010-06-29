@@ -64,7 +64,7 @@ IntoxicationCapacity::~IntoxicationCapacity()
 // Name: template< typename Archive > void IntoxicationCapacity::serialize
 // Created: JCR 2008-08-28
 // -----------------------------------------------------------------------------
-template< typename Archive > 
+template< typename Archive >
 void IntoxicationCapacity::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
@@ -87,7 +87,7 @@ void IntoxicationCapacity::Register( MIL_Object_ABC& object )
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
 void IntoxicationCapacity::Instanciate( MIL_Object_ABC& object ) const
-{    
+{
     IntoxicationCapacity* capacity = new IntoxicationCapacity( *this );
     object.AddCapacity( capacity );
     object.Register( static_cast< MIL_InteractiveContainer_ABC *>( capacity ) );

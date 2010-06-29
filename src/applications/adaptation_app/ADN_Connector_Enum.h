@@ -36,7 +36,7 @@ protected:
     virtual bool RemItemPrivate(void *item);
     virtual void ClearPrivate(bool bInConnection=false);
     virtual void SetDataPrivate(void *data);
-    
+
     virtual std::string GetItem(void * obj)=0;
 
 protected:

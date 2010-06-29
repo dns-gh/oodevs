@@ -49,14 +49,14 @@ private:
     void load( InputArchive& archive, const unsigned int )
     {
         archive >> boost::serialization::base_object< tools::Role_ABC >( *this )
-                >> entity_ 
+                >> entity_
                 >> id_;
         entity_->Attach( *this );
     }
     void save( OutputArchive& archive, const unsigned int ) const
     {
         archive << boost::serialization::base_object< tools::Role_ABC >( *this )
-                << entity_ 
+                << entity_
                 << id_;
     }
 private:
@@ -80,7 +80,7 @@ private:
     void load( InputArchive& archive, const unsigned int )
     {
         archive >> boost::serialization::base_object< tools::Role_ABC >( *this )
-                >> entity_ 
+                >> entity_
                 >> value_
                 >> name_;
         entity_->Attach( *this );
@@ -88,7 +88,7 @@ private:
     void save( OutputArchive& archive, const unsigned int ) const
     {
         archive << boost::serialization::base_object< tools::Role_ABC >( *this )
-                << entity_ 
+                << entity_
                 << value_
                 << name_;
     }

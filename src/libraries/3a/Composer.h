@@ -59,7 +59,7 @@ private:
     //@{
     virtual std::string GetName() const { return "Composer"; }
     virtual Slot_ABC* GetSubSlot( unsigned slot )
-    { 
+    {
         return slot == 0 ? &second_:
                slot == 1 ? &first_ :
                (Slot_ABC*)0;

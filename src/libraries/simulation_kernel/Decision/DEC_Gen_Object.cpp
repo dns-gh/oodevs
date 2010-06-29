@@ -29,7 +29,7 @@ DEC_Gen_Object::DEC_Gen_Object( const Common::MsgPlannedWork& asn, const MIL_Ent
     , pObstacleType_     ( asn.type_obstacle() )
     , rDensity_          ( asn.densite() )
     , nMinesActivityTime_( asn.activity_time() )
-    , pTC2_              ( 0 )    
+    , pTC2_              ( 0 )
 {
     if( type_ == "" )
         throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission_parameters );
@@ -55,7 +55,7 @@ DEC_Gen_Object::DEC_Gen_Object( std::string type, boost::shared_ptr< TER_Localis
     , pObstacleType_     ( preliminary ? E_DemolitionTargetType::ObstacleType_DemolitionTargetType_preliminary : E_DemolitionTargetType::ObstacleType_DemolitionTargetType_reserved )
     , rDensity_          ( 0 )
     , nMinesActivityTime_( 0 )
-    , pTC2_              ( 0 )   
+    , pTC2_              ( 0 )
 {
     if( type_ == "" )
         throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission_parameters );
@@ -71,7 +71,7 @@ DEC_Gen_Object::DEC_Gen_Object( const DEC_Gen_Object& rhs )
     , pObstacleType_     ( rhs.pObstacleType_ )
     , rDensity_          ( rhs.rDensity_ )
     , nMinesActivityTime_( rhs.nMinesActivityTime_ )
-    , pTC2_              ( rhs.pTC2_ )      
+    , pTC2_              ( rhs.pTC2_ )
 {
 
 }
@@ -81,7 +81,7 @@ DEC_Gen_Object::DEC_Gen_Object( const DEC_Gen_Object& rhs )
 // Created: AGN 03-08-27
 //-----------------------------------------------------------------------------
 DEC_Gen_Object::~DEC_Gen_Object()
-{    
+{
     // NOTHING
 }
 

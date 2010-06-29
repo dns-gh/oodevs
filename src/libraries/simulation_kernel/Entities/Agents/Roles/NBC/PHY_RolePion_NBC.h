@@ -52,7 +52,7 @@ public:
     //@{
     template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
-    
+
     //! @name Operations
     //@{
     void Update    ( bool bIsDead );
@@ -70,7 +70,7 @@ public:
     void WearNbcProtectionSuit  ();
     void RemoveNbcProtectionSuit();
 
-    virtual MT_Float GetContaminationQuantity() const;  
+    virtual MT_Float GetContaminationQuantity() const;
 
     virtual void Execute( firing::WeaponReloadingComputer_ABC& algorithm ) const;
 

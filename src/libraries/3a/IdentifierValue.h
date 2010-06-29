@@ -32,7 +32,7 @@ struct IdentifierValue : public InstantValue< NumericValue >
         Set( wrapper.message().tag().oid_consigne() );
 #define SET_FIRE_OID( tag )                             \
     if( wrapper.message().has_##tag() )                 \
-        Set( wrapper.message().tag().fire_oid() ); 
+        Set( wrapper.message().tag().fire_oid() );
 
     //! @name Operations
     //@{

@@ -24,7 +24,7 @@ namespace actions {
 /** @class  PathPoint
     @brief  PathPoint
 */
-// Created: SBO 2007-05-15 
+// Created: SBO 2007-05-15
 // =============================================================================
 class PathPoint : public Location
 {

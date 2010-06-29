@@ -115,7 +115,7 @@ public:
     //! @name Qt reimplementation.
     //@{
     QString tr( const char* s, const char* c = 0 )
-    { 
+    {
         if( qApp )
             return qApp->translate( this->name(), s, c, QApplication::DefaultCodec );
         else

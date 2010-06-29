@@ -37,7 +37,7 @@ namespace
         {
             //(*itReinforcement)->GetRole< PHY_RolePion_Composantes >().Apply( functor );
         }
-    
+
         return functor.GetFireHoseRange();
     }
 }

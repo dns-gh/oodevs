@@ -14,7 +14,7 @@
 
 using namespace kernel;
 
-namespace 
+namespace
 {
     std::string ReadBase( xml::xistream& xis )
     {

@@ -30,7 +30,7 @@ ReplayerToolbar::ReplayerToolbar( QMainWindow* pParent, kernel::Controllers& con
     , userMove_( true )
 {
     setLabel( tr( "Replay control" ) );
-    QLabel* label = new QLabel( this );    
+    QLabel* label = new QLabel( this );
     label->setPixmap( MAKE_PIXMAP( replayer ) );
     addSeparator();
     mainWindow()->setAppropriate( this, false );

@@ -35,7 +35,7 @@ class ADN_GraphData;
 */
 // Created: APE 2004-12-14
 // =============================================================================
-class ADN_GraphValue 
+class ADN_GraphValue
 : public QObject
 {
     Q_OBJECT

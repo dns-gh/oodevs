@@ -28,7 +28,7 @@ NBCTypeAttribute::NBCTypeAttribute( xml::xistream& xis )
     , length_            ( 0 )
     , propagationAngle_  ( 0 )
     , sourceLifeDuration_( 0 )
-{   
+{
     std::string agentType( xml::attribute( xis, "type", std::string() ) );
     pAgent_ = MIL_NBCType::Find( agentType );
     if( !pAgent_ )
@@ -45,7 +45,7 @@ NBCTypeAttribute::NBCTypeAttribute()
     , width_             ( 0 )
     , length_            ( 0 )
     , propagationAngle_  ( 0 )
-    , sourceLifeDuration_( 0 )   
+    , sourceLifeDuration_( 0 )
 {
     // NOTHING
 }
@@ -117,25 +117,25 @@ NBCTypeAttribute& NBCTypeAttribute::operator=( const NBCTypeAttribute& rhs )
 void NBCTypeAttribute::load( MIL_CheckPointInArchive& ar, const uint )
 {
     std::string agentName;
-    
-    ar >> boost::serialization::base_object< ObjectAttribute_ABC >( *this );        
+
+    ar >> boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     ar >> agentName
-       >> concentration_;     
+       >> concentration_;
 
     pAgent_ = MIL_NBCType::Find( agentName );
     if( !pAgent_ )
         throw std::runtime_error( "Unknown 'nbc agent' '" + agentName + "' for nbc object attribute" );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: NBCTypeAttribute::save
 // Created: RFT 2008-07-03
 // -----------------------------------------------------------------------------
 void NBCTypeAttribute::save( MIL_CheckPointOutArchive& ar, const uint ) const
 {
-    ar << boost::serialization::base_object< ObjectAttribute_ABC >( *this );        
+    ar << boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     ar << pAgent_->GetName()
-       << concentration_;    
+       << concentration_;
 }
 
 // -----------------------------------------------------------------------------
@@ -173,9 +173,9 @@ void NBCTypeAttribute::SendFullState( Common::MsgObjectAttributes& /*message*/ )
 // -----------------------------------------------------------------------------
 void NBCTypeAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
 {
-    if ( NeedUpdate() )
+    if( NeedUpdate() )
     {
-        SendFullState( asn );        
+        SendFullState( asn );
         Reset();
     }
 }
@@ -186,7 +186,7 @@ void NBCTypeAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
 // -----------------------------------------------------------------------------
 void NBCTypeAttribute::WriteODB( xml::xostream& xos ) const
 {
-    xos << xml::start( "nbc" ) 
+    xos << xml::start( "nbc" )
             << xml::attribute( "concentration"  , concentration_ )
             << xml::attribute( "agent"          , pAgent_->GetName() )
         << xml::end();

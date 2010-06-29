@@ -17,7 +17,7 @@ namespace xml
 
 namespace kernel
 {
-    
+
 // =============================================================================
 /** @class  OrderParameterValue
     @brief  OrderParameterValue

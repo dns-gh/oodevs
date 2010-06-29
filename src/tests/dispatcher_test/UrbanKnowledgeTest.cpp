@@ -11,7 +11,7 @@ using namespace mockpp;
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( InstantiateUrbanKnowledge )
 {
-    std::auto_ptr< dispatcher::Model_ABC > model( new MockModel() ); 
+    std::auto_ptr< dispatcher::Model_ABC > model( new MockModel() );
     MsgsSimToClient::MsgUrbanKnowledgeCreation message;
     message.set_oid( 1000 );
     message.set_team( 1 );

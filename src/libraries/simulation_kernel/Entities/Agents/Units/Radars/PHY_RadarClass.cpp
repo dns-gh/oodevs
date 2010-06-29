@@ -98,7 +98,7 @@ bool PHY_RadarClass::IsActive() const
 {
     return bIsActive_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RadarClass::GetName
 // Created: NLD 2005-05-02

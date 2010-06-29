@@ -30,7 +30,7 @@ namespace dispatcher
 // =============================================================================
 class GenObject
 {
-   
+
 public:
     //! @name Constructors/Destructor
     //@{

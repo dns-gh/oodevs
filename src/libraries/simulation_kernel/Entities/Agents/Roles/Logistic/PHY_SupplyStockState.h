@@ -45,7 +45,7 @@ public:
     //! @name Operations
     //@{
     void AddRequest                          ( const PHY_SupplyStockRequest& request );
-    
+
     void GetMerchandiseToConvoy              ( T_MerchandiseToConvoyMap& container ) const;
     void RemoveConvoyedMerchandise           ( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations );
     void AddConvoyedMerchandise              ( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations );

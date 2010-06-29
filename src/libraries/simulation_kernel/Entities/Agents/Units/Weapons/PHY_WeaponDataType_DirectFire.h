@@ -50,7 +50,7 @@ public:
     MT_Float GetMinRangeToFireOn           ( const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const;
     MT_Float GetMaxRangeToFireOnWithPosture( const PHY_ComposanteType_ABC& targetComposanteType, const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, MT_Float rWantedPH ) const;
     MT_Float GetMinRangeToFireOnWithPosture( const PHY_ComposanteType_ABC& targetComposanteType, const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, MT_Float rWantedPH ) const;
-    MT_Float GetMaxRangeToFire             ( MT_Float rWantedPH ) const;   
+    MT_Float GetMaxRangeToFire             ( MT_Float rWantedPH ) const;
     void     Fire                          ( MIL_Agent_ABC& firer, MIL_Agent_ABC& target, PHY_Composante_ABC& compTarget, PHY_FireResults_ABC& fireResult, bool bUsePH ) const;
     void     Fire                          ( MIL_Agent_ABC& firer, MIL_PopulationElement_ABC& target, uint nNbrAmmoReserved, PHY_FireResults_ABC& fireResult ) const;
     //@}
@@ -59,7 +59,7 @@ private:
     //! @name Types
     //@{
     typedef std::vector< MT_InterpolatedFunction< MT_Float > >  T_PhVector;
-    typedef T_PhVector::const_iterator                          CIT_PhVector;   
+    typedef T_PhVector::const_iterator                          CIT_PhVector;
     //@}
 
 private:
@@ -67,7 +67,7 @@ private:
     //@{
     MT_Float GetPH              ( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, const PHY_Volume& targetVolume, MT_Vector3D firerPosition, MT_Vector3D targetPosition ) const;
     MT_Float GetPH              ( const PHY_Posture& firerPosture, const PHY_Posture& targetPosture, const PHY_Volume& targetVolume, MT_Float rDistance ) const;
-    
+
     MT_Float GetMaxDistanceForPH( MT_Float rPH, const PHY_Posture&          firerPosture, const PHY_Posture& targetPosture              , const PHY_Volume& targetVolume ) const;
     MT_Float GetMinDistanceForPH( MT_Float rPH, const PHY_Posture&          firerPosture, const PHY_Posture& targetPosture              , const PHY_Volume& targetVolume ) const;
     MT_Float GetMaxDistanceForPH( MT_Float rPH, const PHY_RoleInterface_Posture& firerPosture, const PHY_RoleInterface_Posture& targetPosture, const PHY_Volume& targetVolume ) const;

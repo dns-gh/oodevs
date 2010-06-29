@@ -114,7 +114,7 @@ void LogConsignMedical::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     asn().set_contamine_nbc         ( bContaminated_);
     asn().set_diagnostique_effectue ( bDiagnosed_);
     asn().set_etat                  ( nState_);
-    
+
     asn.Send( publisher );
 }
 

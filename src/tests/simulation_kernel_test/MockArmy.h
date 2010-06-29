@@ -23,12 +23,12 @@ MOCK_BASE_CLASS( MockArmy, MIL_Army_ABC )
 {
     MOCK_METHOD( WriteODB, 1 );
     MOCK_METHOD( WriteDiplomacyODB, 1 );
-    
+
     MOCK_METHOD( RegisterFormation, 1 );
     MOCK_METHOD( UnregisterFormation, 1 );
     MOCK_METHOD( RegisterObject, 1 );
     MOCK_METHOD( UnregisterObject, 1 );
-    
+
     MOCK_METHOD( UpdateKnowledges, 1 );
     MOCK_METHOD( CleanKnowledges, 0 );
 
@@ -37,7 +37,7 @@ MOCK_BASE_CLASS( MockArmy, MIL_Army_ABC )
     MOCK_METHOD( SendKnowledge, 0 );
 
     MOCK_METHOD( IsPerceived, 1 );
-    
+
     MOCK_METHOD( IsAFriend, 1 );
     MOCK_METHOD( IsAnEnemy, 1 );
     MOCK_METHOD( IsNeutral, 1 );
@@ -56,7 +56,7 @@ MOCK_BASE_CLASS( MockArmy, MIL_Army_ABC )
     MOCK_METHOD( GetKnowledgeGroups, 0 );
 
     template< typename Archive >
-    void serialize( Archive& archive, const unsigned int ) 
+    void serialize( Archive& archive, const unsigned int )
     {
         archive & boost::serialization::base_object< MIL_Army_ABC >( *this );
     }

@@ -90,7 +90,7 @@ void UserProfileRights_ABC::OnItemClicked( QListViewItem* item, const QPoint&, i
 {
     if( column == 0 || !item )
         return;
-    
+
     const Status status = Status( item->text( 3 ).toInt() );
     if( status == eWriteInherited || ( column == 1 && status == eReadInherited ) )
         return;

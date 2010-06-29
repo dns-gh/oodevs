@@ -18,7 +18,7 @@
 // Created: LDC 2009-07-31
 // -----------------------------------------------------------------------------
 void DEC_TelepathyFunctions::Register( directia::Brain& brain )
-{    
+{
     brain.RegisterFunction( "F_CopyPlotsRavitaillement", &DEC_TelepathyFunctions::CopyPlotsRavitaillement );
     brain.RegisterFunction( "F_GetListeEnisTirAutorise", &DEC_TelepathyFunctions::GetListeEnisTirAutorise );
     brain.RegisterFunction( "F_RemoveAgentFromListeEnisTirAutorise", &DEC_TelepathyFunctions::RemoveAgentFromListeEnisTirAutorise );
@@ -41,7 +41,7 @@ std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > DEC_TelepathyFunctions::
 {
     return pPion->GetVariable< std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > >( "myself.listeEnisTirAutorise_" );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_TelepathyFunctions::RemoveAgentFromListeEnisTirAutorise
 // Created: LDC 2009-07-31

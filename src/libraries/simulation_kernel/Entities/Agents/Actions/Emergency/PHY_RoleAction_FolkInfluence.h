@@ -34,7 +34,7 @@ public:
     //@{
     typedef PHY_RoleAction_FolkInfluence RoleInterface;
     //@}
-    
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -50,7 +50,7 @@ public:
     }
     //@}
 
-    //! @name 
+    //! @name
     //@{
     void Update ( bool bIsDead );
     void Clean  ();

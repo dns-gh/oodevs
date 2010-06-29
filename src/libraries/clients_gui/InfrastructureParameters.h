@@ -10,7 +10,7 @@
 #ifndef __InfrastructureParameters_h_
 #define __InfrastructureParameters_h_
 
-namespace gui 
+namespace gui
 {
 
 // =============================================================================

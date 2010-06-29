@@ -26,7 +26,7 @@ template< typename K, typename T >
 class Compare : public Function2_ABC< K, T, T >, private types::Arithmetic< T >
 {
 public:
-    //! @name 
+    //! @name
     //@{
     typedef bool Result_Type;
     //@}

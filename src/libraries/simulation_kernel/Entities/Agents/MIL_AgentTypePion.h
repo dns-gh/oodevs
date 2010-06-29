@@ -98,7 +98,7 @@ private:
     typedef T_PionTypeAllocatorMap::const_iterator                             CIT_PionTypeAllocatorMap;
 
     typedef std::map< TerrainData, MT_Float >             T_DistanceAvantPointMap;
-    typedef T_DistanceAvantPointMap::const_iterator     CIT_DistanceAvantPointMap;   
+    typedef T_DistanceAvantPointMap::const_iterator     CIT_DistanceAvantPointMap;
     //@}
 
 private:

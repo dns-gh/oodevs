@@ -104,25 +104,25 @@ T_PointVector MT_Circle::Intersection( const MT_Line& line) const
 
     assert( a != 0 );
 
-    if ( i < 0.0 )
+    if( i < 0.0 )
     {
         // no intersection
     }
-    else if ( i == 0.0)
+    else if( i == 0.0)
     {
         // one intersection
         mu = -b/(2*a) ;
         res.push_back(MT_Vector2D(p1.rX_+mu*(p2.rX_-p1.rX_),p1.rY_+mu*(p2.rY_-p1.rY_)));
 
     }
-    else if ( i > 0.0 )
+    else if( i > 0.0 )
     {
         MT_Float  ts=sqrt( square(b) - 4*a*c );
-        
+
         // first intersection
         mu = (-b + ts) / (2*a);
         res.push_back(MT_Vector2D(p1.rX_+mu*(p2.rX_-p1.rX_),p1.rY_+mu*(p2.rY_-p1.rY_)));
-        
+
         // second intersection
         mu = (-b - ts) / (2*a);
         res.push_back(MT_Vector2D(p1.rX_+mu*(p2.rX_-p1.rX_),p1.rY_+mu*(p2.rY_-p1.rY_)));
@@ -163,7 +163,7 @@ T_PointVector MT_Circle::Intersection( const MT_Vector2D& p1,const MT_Vector2D& 
 MT_Float MT_Circle::IntersectionArea( const MT_Circle& c ) const
 {
     MT_Float d = c_.Distance( c.Center() );
-    
+
     if( d == 0 || d < r_ || d < c.Radius() )
     {
         if( r_ > c.Radius() )

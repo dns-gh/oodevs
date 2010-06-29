@@ -60,8 +60,8 @@ public:
     //@}
 
 protected:
-    void	paintEvent( QPaintEvent * );
-    void	resizeEvent( QResizeEvent * );    
+    void    paintEvent( QPaintEvent * );
+    void    resizeEvent( QResizeEvent * );
 
 private:
     //! @name Copy/Assignement
@@ -82,8 +82,8 @@ private:
     //! @name Member data
     //@{
     QImage image_;          // the loaded image
-    QPixmap	pm_;			// the converted pixmap
-    QPixmap	pmScaled_;			// the converted pixmap
+    QPixmap    pm_;            // the converted pixmap
+    QPixmap    pmScaled_;            // the converted pixmap
     int alloc_context_;
 //@}
 };

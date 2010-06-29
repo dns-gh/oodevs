@@ -27,7 +27,7 @@ EditorFactory::EditorFactory()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: EditorFactory destructor
 // Created: SBO 2006-10-18
@@ -47,7 +47,7 @@ void EditorFactory::BeginEditor( QWidget* parent )
     result_ = 0;
     unit_   = 0;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: EditorFactory::EndEditor
 // Created: SBO 2006-10-18
@@ -60,7 +60,7 @@ QWidget* EditorFactory::EndEditor()
 // =============================================================================
 // QString
 // =============================================================================
-namespace 
+namespace
 {
     class QStringEditor : public QLineEdit
                         , public ValueEditor< QString >
@@ -91,7 +91,7 @@ void EditorFactory::Call( QString* const& value )
 // =============================================================================
 // Numbers
 // =============================================================================
-namespace 
+namespace
 {
     class DecimalSpinBox : public QSpinBox
     {
@@ -104,7 +104,7 @@ namespace
                      setMaxValue( std::numeric_limits< int >::max() );
                  }
         virtual ~DecimalSpinBox() {}
-        
+
         virtual QString mapValueToText( int value )
         {
             if( decimals_ > 1 )
@@ -239,13 +239,13 @@ void EditorFactory::Call( kernel::Unit* const& value )
 // =============================================================================
 // Boolean
 // =============================================================================
-namespace 
+namespace
 {
     class BooleanEditor : public ValuedComboBox< bool >
                         , public ValueEditor< bool >
     {
     public:
-        BooleanEditor( QWidget* parent ) 
+        BooleanEditor( QWidget* parent )
             : ValuedComboBox< bool >( parent )
         {
             AddItem( tools::translate( "EditorFactory", "True" ), true );

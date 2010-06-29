@@ -23,7 +23,7 @@ namespace transport
 PHY_ActionUnload::PHY_ActionUnload( MIL_AgentPion& pion )
     : PHY_DecisionCallbackAction_ABC( pion )
     , role_         ( pion.GetRole< PHY_RoleAction_Loading >() )
-{    
+{
     Callback( role_.GetInitialReturnCode() );
 }
 
@@ -50,9 +50,9 @@ void PHY_ActionUnload::StopAction()
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
 void PHY_ActionUnload::Execute()
-{   
+{
     int nResult = role_.Unload();
-    Callback( nResult );   
+    Callback( nResult );
 }
 
 // -----------------------------------------------------------------------------

@@ -75,7 +75,7 @@ void PointList::Serialize( MsgCoordLatLongList& asn ) const
     if( asn.elem_size() > 0 )
         for( int i = 0; i < asn.elem_size(); ++i )
             asn.add_elem();
-    else 
+    else
         asn.mutable_elem();
     unsigned int i = 0;
     for( T_Points::const_iterator it = points_.begin(); it != points_.end(); ++it, ++i )

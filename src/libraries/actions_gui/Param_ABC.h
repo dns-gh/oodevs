@@ -23,7 +23,7 @@ namespace kernel
 namespace actions
 {
     class ParameterContainer_ABC;
-    
+
     namespace gui
     {
 

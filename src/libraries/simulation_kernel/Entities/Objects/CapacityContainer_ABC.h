@@ -34,7 +34,7 @@ public:
     //@}
 
 protected:
-    //! @name 
+    //! @name
     //@{
     typedef boost::ptr_vector< ObjectCapacity_ABC >   T_Capacities;
     //@}

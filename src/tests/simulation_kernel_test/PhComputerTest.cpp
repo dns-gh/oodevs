@@ -56,16 +56,16 @@ BOOST_AUTO_TEST_CASE( PhComputerFirerPositionTest )
     vertices.push_back( geometry::Point2f( -1, 1 ) );
     vertices.push_back( geometry::Point2f( 1, 1 ) );
     vertices.push_back( geometry::Point2f( 1, -1 ) );
-    
+
     std::auto_ptr< urban::UrbanObject > urbanBlock;
     urbanBlock.reset( new urban::UrbanObject ( 0, "test", geometry::Polygon2f( vertices ), 0 ) );
 
     MIL_ObjectLoader loader;
     {
-        xml::xistringstream xis( "<objects>" 
+        xml::xistringstream xis( "<objects>"
             "<object type='urban block'/>"
             "</objects>"
-            ); 
+            );
         BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
     }
     std::auto_ptr< MIL_Object_ABC > pObject;
@@ -88,7 +88,7 @@ BOOST_AUTO_TEST_CASE( PhComputerFirerPositionTest )
     geometry::Point2f result( 1, 0.5 );
     BOOST_CHECK_EQUAL( result, urbanRole->GetFirerPosition( *targetFixture.pPion_ ) );
     pObject.reset();
-    TER_World::DestroyWorld();  
+    TER_World::DestroyWorld();
 }
 
 BOOST_AUTO_TEST_CASE( PhComputerTargetPositionTest )
@@ -109,10 +109,10 @@ BOOST_AUTO_TEST_CASE( PhComputerTargetPositionTest )
 
     MIL_ObjectLoader loader;
     {
-        xml::xistringstream xis( "<objects>" 
+        xml::xistringstream xis( "<objects>"
             "<object type='urban block'/>"
             "</objects>"
-            ); 
+            );
         BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
     }
     MIL_Object_ABC* pObject = loader.CreateUrbanObject( *urbanBlock );
@@ -158,10 +158,10 @@ BOOST_AUTO_TEST_CASE( PhComputerIndirectPhModifier )
 
     MIL_ObjectLoader loader;
     {
-        xml::xistringstream xis( "<objects>" 
+        xml::xistringstream xis( "<objects>"
             "<object type='urban block'/>"
             "</objects>"
-            ); 
+            );
         BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
     }
     MIL_Object_ABC* pObject = loader.CreateUrbanObject( *urbanBlock );

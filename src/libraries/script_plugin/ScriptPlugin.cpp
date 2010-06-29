@@ -98,7 +98,7 @@ void ScriptPlugin::Receive( const MsgSimToClient& wrapper )
 // -----------------------------------------------------------------------------
 void ScriptPlugin::Receive( const MsgAarToClient& wrapper )
 {
-    if  ( wrapper.message().has_indicator() )
+    if( wrapper.message().has_indicator() )
         controller_->Update( events::IndicatorChanged( wrapper.message().indicator().name(), wrapper.message().indicator().value() ) );
 }
 
@@ -146,7 +146,7 @@ void ScriptPlugin::Update()
         reset_ = false;
         LoadScripts();
     }
-    
+
     ApplyPendings();
 
     long newTime = clock();

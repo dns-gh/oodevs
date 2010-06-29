@@ -27,7 +27,7 @@ namespace Common
 // =============================================================================
 class ObstacleAttribute : public ObjectAttribute_ABC
                         , public UpdatableAttribute_ABC
-{ 
+{
 public:
     //! @name Constructors/Destructor
     //@{
@@ -54,7 +54,7 @@ public:
     virtual void WriteODB( xml::xostream& xos ) const;
     //@}
 
-    //! @name 
+    //! @name
     //@{
     bool IsActivable() const;
     bool IsActivated() const;

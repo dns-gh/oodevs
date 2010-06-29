@@ -304,7 +304,7 @@ bool PHY_RadarType::CanAcquire( const MIL_Agent_ABC& perceiver, const MIL_Agent_
     if( roleLocationPerceiver.GetPosition().Distance( roleLocationTarget.GetPosition() ) > rRadius_ )
         return false;
 
-    if ( !detectableActivities_[ target.GetRole< dotation::PHY_RoleInterface_Dotations >().GetConsumptionMode().GetID() ] )
+    if( !detectableActivities_[ target.GetRole< dotation::PHY_RoleInterface_Dotations >().GetConsumptionMode().GetID() ] )
         return false;
 
     const MT_Float rTargetHeight = target.GetRole< PHY_RoleInterface_Location >().GetHeight();
@@ -319,7 +319,7 @@ bool PHY_RadarType::CanAcquire( const MIL_Agent_ABC& perceiver, const MIL_Agent_
 
     return true;
 }
- 
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RadarType::ComputeAcquisitionLevel
 // Created: NLD 2005-05-02
@@ -337,7 +337,7 @@ const PHY_PerceptionLevel& PHY_RadarType::ComputeAcquisitionLevel( const MIL_Age
             return PHY_PerceptionLevel::detected_;
         return PHY_PerceptionLevel::notSeen_;
     }
-    else 
+    else
     {
         if( nTimePerceived >= rIdentificationTime_ )
             return PHY_PerceptionLevel::identified_;

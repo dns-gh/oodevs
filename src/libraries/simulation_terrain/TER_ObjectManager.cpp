@@ -56,7 +56,7 @@ void TER_ObjectManager::GetListAt( const MT_Vector2D& vPos, T_ObjectVector& obje
             objects.push_back( pObject );
     };
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: TER_ObjectManager::GetListWithinCircle
 // Created: AGE 2005-01-31

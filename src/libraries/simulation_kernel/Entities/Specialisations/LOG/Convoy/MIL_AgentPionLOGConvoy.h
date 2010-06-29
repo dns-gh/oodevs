@@ -33,11 +33,11 @@ public:
              MIL_AgentPionLOGConvoy( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories );
              MIL_AgentPionLOGConvoy( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories );
     virtual ~MIL_AgentPionLOGConvoy();
-    
+
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
 

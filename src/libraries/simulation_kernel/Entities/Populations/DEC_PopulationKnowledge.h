@@ -75,7 +75,7 @@ public:
     std::vector< unsigned int > GetPionsAttacking( ) const;
     void NotifySecuredBy  ( const MIL_Agent_ABC& securer );
     std::vector< unsigned int > GetPionsSecuring ( ) const;
-    
+
           void              NotifyChanneled       ( const TER_Localisation& location );
     const T_LocationVector& GetChannelingLocations() const;
           bool              HasChannelingChanged  () const;
@@ -95,7 +95,7 @@ private:
 
 private:
     const MIL_Population& population_;
-    T_AgentSet attackers_; 
+    T_AgentSet attackers_;
     T_AgentSet newAttackers_;
 
     T_AgentSet securers_;

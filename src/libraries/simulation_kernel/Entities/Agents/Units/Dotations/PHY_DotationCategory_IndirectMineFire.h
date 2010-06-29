@@ -30,7 +30,7 @@ public:
              PHY_DotationCategory_IndirectMineFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis );
     virtual ~PHY_DotationCategory_IndirectMineFire();
 
-    //! @name 
+    //! @name
     //@{
     static PHY_DotationCategory_IndirectFire_ABC& Create( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis );
     //@}

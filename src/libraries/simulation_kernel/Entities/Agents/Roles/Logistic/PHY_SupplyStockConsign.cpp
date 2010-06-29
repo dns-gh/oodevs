@@ -174,7 +174,7 @@ bool PHY_SupplyStockConsign::ConvoyLoad()
 // -----------------------------------------------------------------------------
 void PHY_SupplyStockConsign::EnterStateConvoyLoading()
 {
-    assert( pConvoy_ );    
+    assert( pConvoy_ );
     nTimer_ = pConvoy_->GetLoadingTime();
     SetState( eConvoyLoading );
 }
@@ -264,14 +264,14 @@ bool PHY_SupplyStockConsign::Update()
 {
     assert( pConvoy_ );
 
-    if ( --nTimer_ > 0 )
+    if( --nTimer_ > 0 )
         return GetState() == eFinished;
 
     switch( GetState() )
     {
         case eConvoyWaitingForTransporters  : if( pConvoy_->ReserveTransporters() )  EnterStateConvoyForming                (); break;
         case eConvoyForming                 :                                        EnterStateConvoyGoingToLoadingPoint    (); break;
-        case eConvoyGoingToLoadingPoint     :                                                                                   break; // Transition gérée par scripts 
+        case eConvoyGoingToLoadingPoint     :                                                                                   break; // Transition gérée par scripts
         case eConvoyLoading                 :                                        EnterStateConvoyGoingToUnloadingPoint  (); break;
         case eConvoyGoingToUnloadingPoint   :                                                                                   break; // Transition gérée par scripts
         case eConvoyUnloading               :                                        EnterStateConvoyGoingBackToFormingPoint(); break;

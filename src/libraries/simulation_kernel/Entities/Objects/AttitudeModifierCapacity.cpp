@@ -24,7 +24,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( AttitudeModifierCapacity )
 // Name: AttitudeModifierCapacity constructor
 // Created: MGD 2010-03-12
 // -----------------------------------------------------------------------------
-AttitudeModifierCapacity::AttitudeModifierCapacity( xml::xistream& xis )    
+AttitudeModifierCapacity::AttitudeModifierCapacity( xml::xistream& xis )
 {
     std::string sAttitude;
     xis >> xml::attribute( "attitude", sAttitude );
@@ -37,7 +37,7 @@ AttitudeModifierCapacity::AttitudeModifierCapacity( xml::xistream& xis )
 // Name: AttitudeModifierCapacity constructor
 // Created: MGD 2010-03-12
 // -----------------------------------------------------------------------------
-AttitudeModifierCapacity::AttitudeModifierCapacity()    
+AttitudeModifierCapacity::AttitudeModifierCapacity()
 {
     // NOTHING
 }
@@ -46,7 +46,7 @@ AttitudeModifierCapacity::AttitudeModifierCapacity()
 // Name: AttitudeModifierCapacity constructor
 // Created: MGD 2010-03-12
 // -----------------------------------------------------------------------------
-AttitudeModifierCapacity::AttitudeModifierCapacity( const AttitudeModifierCapacity& from )    
+AttitudeModifierCapacity::AttitudeModifierCapacity( const AttitudeModifierCapacity& from )
     : attitude_( from.attitude_ )
 {
 }
@@ -87,7 +87,7 @@ void AttitudeModifierCapacity::Register( MIL_Object_ABC& object )
 // Created: MGD 2010-03-12
 // -----------------------------------------------------------------------------
 void AttitudeModifierCapacity::Instanciate( MIL_Object_ABC& object ) const
-{    
+{
     AttitudeModifierCapacity* capacity = new AttitudeModifierCapacity( *this );
     object.AddCapacity( capacity );
     object.Register( static_cast< MIL_InteractiveContainer_ABC *>( capacity ) );

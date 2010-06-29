@@ -74,7 +74,7 @@ bool MIL_OrderType_ABC::Copy( const std::vector< boost::shared_ptr< MIL_MissionP
     std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >::const_iterator fromIt = from.begin();
     for( CIT_MissionParameterVector it = parameters_.begin(); it != parameters_.end(); ++it, ++index, ++fromIt )
         if( !(**it).Copy( **fromIt, *to.mutable_elem( index ), knowledgeResolver ) )
-        {   
+        {
             assert( false );
             to.mutable_elem()->Clear();
             return false;

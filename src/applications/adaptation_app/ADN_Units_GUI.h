@@ -28,7 +28,7 @@ class ADN_Units_LogThreshold_GUI;
 */
 // Created: APE 2004-12-06
 // =============================================================================
-class ADN_Units_GUI 
+class ADN_Units_GUI
     : public ADN_GUI_ABC
 {
     Q_OBJECT

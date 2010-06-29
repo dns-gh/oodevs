@@ -29,7 +29,7 @@ DEC_Knowledge_ObjectAttributeSupplyRoute::DEC_Knowledge_ObjectAttributeSupplyRou
     , bEquipped_          ( false )
     , rWeightSupported_   ( 0. )
     , rWidth_             ( 0. )
-    , rLength_            ( 0. ) 
+    , rLength_            ( 0. )
     , rFlow_              ( 0. )
 {
     // NOTHING
@@ -44,7 +44,7 @@ DEC_Knowledge_ObjectAttributeSupplyRoute::DEC_Knowledge_ObjectAttributeSupplyRou
     , bEquipped_          ( false )
     , rWeightSupported_   ( 0. )
     , rWidth_             ( 0. )
-    , rLength_            ( 0. ) 
+    , rLength_            ( 0. )
     , rFlow_              ( 0. )
 {
     // NOTHING
@@ -55,7 +55,7 @@ DEC_Knowledge_ObjectAttributeSupplyRoute::DEC_Knowledge_ObjectAttributeSupplyRou
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectAttributeSupplyRoute::~DEC_Knowledge_ObjectAttributeSupplyRoute()
-{    
+{
     // NOTHING
 }
 
@@ -69,9 +69,9 @@ DEC_Knowledge_ObjectAttributeSupplyRoute::~DEC_Knowledge_ObjectAttributeSupplyRo
 // -----------------------------------------------------------------------------
 template< typename Archive >
 void DEC_Knowledge_ObjectAttributeSupplyRoute::serialize( Archive& file, const unsigned int )
-{    
+{
     file & boost::serialization::base_object< DEC_Knowledge_ObjectAttribute_ABC >( *this );
-    file & const_cast< SupplyRouteAttribute*& >( attr_ ) 
+    file & const_cast< SupplyRouteAttribute*& >( attr_ )
          & bEquipped_
          & rWeightSupported_
          & rWidth_
@@ -98,7 +98,7 @@ void DEC_Knowledge_ObjectAttributeSupplyRoute::Register( DEC_Knowledge_Object& k
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeSupplyRoute::UpdateAttributes( bool bRecognized )
 {
-    if ( !attr_ )
+    if( !attr_ )
         return;
 
     bEquipped_ = attr_->IsEquipped();
@@ -127,7 +127,7 @@ void DEC_Knowledge_ObjectAttributeSupplyRoute::UpdateOnPerceptionLevel( const PH
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeSupplyRoute::UpdateOnPerception( const DEC_Knowledge_ObjectPerception& /*perception*/ )
 {
-//    UpdateAttributes( perception.GetObjectPerceived().IsReconBy( perception.GetAgentPerceiving().GetType() ) );    
+//    UpdateAttributes( perception.GetObjectPerceived().IsReconBy( perception.GetAgentPerceiving().GetType() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -136,7 +136,7 @@ void DEC_Knowledge_ObjectAttributeSupplyRoute::UpdateOnPerception( const DEC_Kno
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeSupplyRoute::UpdateOnCollision( const DEC_Knowledge_ObjectCollision& /*collision*/ )
 {
-//    UpdateAttributes( collision.GetObject().IsReconBy( collision.GetAgentColliding().GetType() ) );    
+//    UpdateAttributes( collision.GetObject().IsReconBy( collision.GetAgentColliding().GetType() ) );
 }
 
 // -----------------------------------------------------------------------------

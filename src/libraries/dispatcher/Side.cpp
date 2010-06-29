@@ -66,7 +66,7 @@ void Side::DoUpdate( const Common::MsgChangeDiplomacy& asnMsg )
 // -----------------------------------------------------------------------------
 void Side::DoUpdate( const MsgsSimToClient::MsgChangeDiplomacyAck& asnMsg )
 {
-    const kernel::Team_ABC& side = model_.Sides().Get( asnMsg.oid_camp2() );   
+    const kernel::Team_ABC& side = model_.Sides().Get( asnMsg.oid_camp2() );
     diplomacies_[ &side ] = asnMsg.diplomatie();
 }
 

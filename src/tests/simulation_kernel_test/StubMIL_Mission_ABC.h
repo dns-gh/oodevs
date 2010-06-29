@@ -6,7 +6,7 @@
 #include "Entities/Orders/MIL_MissionParameterVisitor_ABC.h"
 #include "StubMIL_MissionParameter_ABC.h"
 
-class StubMIL_Mission_ABC 
+class StubMIL_Mission_ABC
     : public MIL_Mission_ABC
 {
 public:
@@ -18,7 +18,7 @@ public:
 
     virtual void Start               ( boost::shared_ptr< MIL_Mission_ABC > self ){};
     virtual void Stop                ( boost::shared_ptr< MIL_Mission_ABC > self ){};
-    virtual bool IsFragOrderAvailable( const MIL_FragOrderType& fragOrderType ) const 
+    virtual bool IsFragOrderAvailable( const MIL_FragOrderType& fragOrderType ) const
     {
         return false;
     }

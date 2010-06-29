@@ -28,12 +28,12 @@ MOCK_BASE_CLASS( MockPHY_RoleInterface_HumanFactors, PHY_RoleInterface_HumanFact
     MOCK_METHOD( SetMorale, 1 );
     MOCK_METHOD( SetExperience, 1 );
     MOCK_METHOD( SetTiredness, 1 );
-    
+
     MOCK_METHOD( GetMorale, 0 );
     MOCK_METHOD( GetTiredness, 0 );
-    
+
     MOCK_METHOD( ModifyPH, 1 );
-    
+
     MOCK_METHOD( SendChangedState, 1 );
     MOCK_METHOD( SendFullState, 1 );
 };

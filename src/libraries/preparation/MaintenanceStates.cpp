@@ -24,7 +24,7 @@ MaintenanceStates::MaintenanceStates( Controller& controller, Entity_ABC& entity
 {
     CreateDictionary( dico, entity );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MaintenanceStates destructor
 // Created: SBO 2006-10-24

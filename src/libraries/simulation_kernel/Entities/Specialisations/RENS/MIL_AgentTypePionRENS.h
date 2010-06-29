@@ -29,7 +29,7 @@ class MIL_AgentTypePionRENS : public MIL_AgentTypePion
 public:
              MIL_AgentTypePionRENS( const std::string& strName, xml::xistream& xis );
     virtual ~MIL_AgentTypePionRENS();
-    
+
     virtual void RegisterFunctions( directia::Brain& brain, MIL_Agent_ABC& agent ) const;
 
     static const MIL_AgentTypePion* Create( const std::string& strName, xml::xistream& xis );

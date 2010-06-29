@@ -45,13 +45,13 @@ namespace
     class MIL_ObjectControlZoneBuilder : public MIL_ObjectBuilder_ABC
     {
     public:
-        MIL_ObjectControlZoneBuilder( MIL_Agent_ABC& pion, const TER_Localisation& location ) 
+        MIL_ObjectControlZoneBuilder( MIL_Agent_ABC& pion, const TER_Localisation& location )
             : location_ ( location )
             , pion_ ( pion )
         {
         }
 
-        const MIL_ObjectType_ABC& GetType() const 
+        const MIL_ObjectType_ABC& GetType() const
         {
             return type_;
         }
@@ -77,13 +77,13 @@ PHY_ActionControlZone::PHY_ActionControlZone( MIL_AgentPion& pion, const TER_Loc
     : PHY_Action_ABC    ()
     , rolePerceiver_    ( pion.GetRole< PHY_RoleInterface_Perceiver      >() )
     , roleDirectFiring_ ( pion.GetRole< PHY_RoleAction_DirectFiring >() )
-    , pFireResult_      ( 0 )  
+    , pFireResult_      ( 0 )
     , pZoneControlled_  ( 0 )
     , perceptionZoneID_ ( 0 )
 {
     // Fire
     if( bFire )
-    {    
+    {
         //{ TODO
         MIL_ObjectControlZoneBuilder builder( pion, *pLocalisation );
         try
@@ -96,9 +96,9 @@ PHY_ActionControlZone::PHY_ActionControlZone( MIL_AgentPion& pion, const TER_Loc
         }
         //@}
     }
-    
+
     // Detection
-    if ( pLocalisation->GetArea() <= rRadius * rRadius * MT_PI ) 
+    if( pLocalisation->GetArea() <= rRadius * rRadius * MT_PI )
         perceptionZoneID_ = rolePerceiver_.EnableControlLocalisation( *pLocalisation, pion.GetRole< DEC_Decision_ABC >() );
     else
         perceptionZoneID_ = rolePerceiver_.EnableRecoLocalisation   ( *pLocalisation, rRadius, pion.GetRole< DEC_Decision_ABC >() );
@@ -141,7 +141,7 @@ void PHY_ActionControlZone::Stop()
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
 void PHY_ActionControlZone::Execute()
-{   
+{
     if( !pZoneControlled_ )
         return;
 

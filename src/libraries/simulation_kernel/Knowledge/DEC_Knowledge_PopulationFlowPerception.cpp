@@ -110,7 +110,7 @@ void DEC_Knowledge_PopulationFlowPerception::Prepare()
     pCurrentPerceptionLevel_  = &PHY_PerceptionLevel::notSeen_;
 
     previousShape_.clear();
-    shape_.swap( previousShape_ );    
+    shape_.swap( previousShape_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -121,7 +121,7 @@ void DEC_Knowledge_PopulationFlowPerception::Update( const PHY_PerceptionLevel& 
 {
     assert( perceptionLevel != PHY_PerceptionLevel::notSeen_ );
     if( perceptionLevel > *pCurrentPerceptionLevel_ )
-        pCurrentPerceptionLevel_ = &perceptionLevel;   
+        pCurrentPerceptionLevel_ = &perceptionLevel;
 
     shape_                   = shape;
     pCurrentPerceptionLevel_ = &perceptionLevel;

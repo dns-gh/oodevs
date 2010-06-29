@@ -51,7 +51,7 @@ void App6Symbol::Initialize()
 // -----------------------------------------------------------------------------
 void App6Symbol::SetKarma( std::string& symbol, const kernel::Karma& karma )
 {
-    if( karmaChars_.empty() ) // $$$$ SBO 2007-02-26: 
+    if( karmaChars_.empty() ) // $$$$ SBO 2007-02-26:
         Initialize();
     std::string::size_type pos = symbol.find_last_of( '/' );
     symbol[ pos != std::string::npos ? pos + 2 : 1 ] = karmaChars_[karma];
@@ -64,7 +64,7 @@ namespace
         switch( perception )
         {
         default:
-        case eNotSeen:        
+        case eNotSeen:
         case eDetection:      return 5;  // nothing                  sugpu
         case eRecognition:    return 7;  // side + category + weapon shgpuca
         case eIdentification: return 10; // all                      shgpucaaaw

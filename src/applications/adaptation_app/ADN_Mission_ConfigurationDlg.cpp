@@ -27,8 +27,8 @@
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Mission_ConfigurationDlg constructor
-/** @param  pParent 
-    @param  connector 
+/** @param  pParent
+    @param  connector
 */
 // Created: AGN 2004-04-28
 // -----------------------------------------------------------------------------
@@ -64,5 +64,5 @@ ADN_Mission_ConfigurationDlg::ADN_Mission_ConfigurationDlg( QWidget* pParent )
 // -----------------------------------------------------------------------------
 ADN_Mission_ConfigurationDlg::~ADN_Mission_ConfigurationDlg()
 {
-    
+
 }

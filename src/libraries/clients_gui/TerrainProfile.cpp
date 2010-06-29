@@ -77,7 +77,7 @@ void TerrainProfile::Update( const geometry::Point2f& from, const geometry::Poin
     }
     YAxis().SetAxisRange( 0, yMax * 1.1f, true );
     XAxis().SetAxisRange( 0, x / 1000.f, true );
-    
+
     UpdateVision( from, to, height );
 }
 

@@ -27,7 +27,7 @@ MT_ScipioException::MT_ScipioException( const std::string& strContext, const std
     , nLine_         ( nLine )
     , strMessage_    ( strMessage )
     , strDescription_( strDescription )
-{    
+{
 }
 
 //-----------------------------------------------------------------------------

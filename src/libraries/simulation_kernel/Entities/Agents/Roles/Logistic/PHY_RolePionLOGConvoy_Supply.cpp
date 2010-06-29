@@ -73,11 +73,11 @@ void PHY_RolePionLOGConvoy_Supply::serialize( Archive& file, const unsigned int 
 // Created: NLD 2005-02-09
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOGConvoy_Supply::Update( bool bIsDead )
-{ 
+{
     if( bIsDead )
         pion_.Apply( &location::LocationActionNotificationHandler_ABC::Follow, pion_.GetAutomate().GetPionPC() );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOGConvoy_Supply::Clean
 // Created: NLD 2005-02-09
@@ -136,10 +136,10 @@ bool PHY_RolePionLOGConvoy_Supply::ConvoyUnload() const
 bool PHY_RolePionLOGConvoy_Supply::ConvoyIsLoadingDone() const
 {
     if( !pConvoy_ )
-        return true;    
+        return true;
     return pConvoy_->IsLoadingDone();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOGConvoy_Supply::ConvoyIsUnloadingDone
 // Created: NLD 2005-12-16

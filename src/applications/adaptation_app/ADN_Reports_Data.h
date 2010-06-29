@@ -57,7 +57,7 @@ public:
     public:
                  ReportParameter();
         virtual ~ReportParameter();
-        
+
         std::string GetItemName();
         ReportParameter* CreateCopy();
 

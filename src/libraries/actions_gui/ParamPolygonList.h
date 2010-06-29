@@ -56,7 +56,7 @@ private:
     const kernel::OrderParameter& parameter_;
     //@}
 };
-    
+
     }
 }
 

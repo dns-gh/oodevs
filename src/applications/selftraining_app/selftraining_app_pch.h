@@ -19,7 +19,7 @@
 
 #include <boost/shared_ptr.hpp>
 
-#include "tools/Resolver_ABC.h" 
+#include "tools/Resolver_ABC.h"
 
 #pragma warning( push, 0 )
 #include <qapplication.h>
@@ -40,9 +40,9 @@
 #include <qvbox.h>
 #include <qwidgetstack.h>
 #include <qmessagebox.h>
-#include <qpopmenu.h> 
-#include <qurl.h> 
-#include <qlineedit.h> 
+#include <qpopmenu.h>
+#include <qurl.h>
+#include <qlineedit.h>
 #include <qcursor.h>
 #include <qgroupbox.h>
 

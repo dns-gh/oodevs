@@ -68,10 +68,10 @@ int ADN_ListView::FindNdx(void *data)
 {
     int ndx=0;
     QListViewItemIterator it( this );
-    while ( it.current() != 0 ) 
+    while ( it.current() != 0 )
     {
         ADN_ListViewItem* pCurr=(ADN_ListViewItem*)it.current();
-        if ( pCurr->GetData()==data )
+        if( pCurr->GetData()==data )
             return ndx;
         ++it;
         ++ndx;
@@ -88,7 +88,7 @@ ADN_ListViewItem* ADN_ListView::ItemAt(int i)
 {
     int ndx=0;
     QListViewItemIterator it( this );
-    while ( it.current() != 0 && ndx < i ) 
+    while ( it.current() != 0 && ndx < i )
     {
         ++it;
         ++ndx;
@@ -104,10 +104,10 @@ ADN_ListViewItem* ADN_ListView::ItemAt(int i)
 ADN_ListViewItem* ADN_ListView::FindItem(void* data)
 {
     QListViewItemIterator it( this );
-    while ( it.current() != 0 ) 
+    while ( it.current() != 0 )
     {
         ADN_ListViewItem* pCurr=(ADN_ListViewItem*)it.current();
-        if ( pCurr->GetData()==data )
+        if( pCurr->GetData()==data )
             return pCurr;
         ++it;
     }
@@ -132,7 +132,7 @@ void  ADN_ListView::SetCurrentItem( void* pData )
 
     if( pData == 0 )
         SetAutoClear( vItemConnectors_, true );
-    
+
     ConnectItem( false );
 
     pCurData_ = pData;
@@ -231,7 +231,7 @@ void ADN_ListView::ContextMenuDelete()
 void  ADN_ListView::SetCurrentItem( QListViewItem* pItem )
 {
     if( pItem != 0 )
-        SetCurrentItem( static_cast<ADN_ListViewItem*>( pItem )->GetData() );   
+        SetCurrentItem( static_cast<ADN_ListViewItem*>( pItem )->GetData() );
     else
         SetCurrentItem( (void*)0 );
 }
@@ -243,7 +243,7 @@ void  ADN_ListView::SetCurrentItem( QListViewItem* pItem )
 //-----------------------------------------------------------------------------
 void ADN_ListView::OnContextMenuRequested( QListViewItem* /*pItem*/, const QPoint& pt, int /*nCol*/ )
 {
-    OnContextMenu( pt );  
+    OnContextMenu( pt );
 }
 
 
@@ -288,7 +288,7 @@ void ADN_ListView::keyReleaseEvent( QKeyEvent* pEvent )
             return;
 
         // Remove the item from the list.
-        static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurrentData );   
+        static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurrentData );
     }
 }
 

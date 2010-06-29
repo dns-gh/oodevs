@@ -76,7 +76,7 @@ void FireAttribute::SetClass( const kernel::FireClass& fireClass )
 void FireAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << start( "fire" )
-            << attribute( "class", fireClass_->GetName() )            
+            << attribute( "class", fireClass_->GetName() )
         << end();
 }
 

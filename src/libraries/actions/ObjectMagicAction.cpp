@@ -41,7 +41,7 @@ ObjectMagicAction::ObjectMagicAction( xml::xistream& xis, kernel::Controller& co
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ObjectMagicAction::~ObjectMagicAction
 // Created: JSR 2010-04-02
@@ -81,7 +81,7 @@ void ObjectMagicAction::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void ObjectMagicAction::Publish( Publisher_ABC& publisher ) const
 {
-    MsgsClientToSim::MsgObjectMagicAction_Type type = 
+    MsgsClientToSim::MsgObjectMagicAction_Type type =
         ( MsgsClientToSim::MsgObjectMagicAction_Type ) GetType().GetId();
     simulation::ObjectMagicAction message;
     message().set_oid( objectId_ );

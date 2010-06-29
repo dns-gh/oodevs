@@ -8,7 +8,7 @@
 // Name: DEC_Knowledge_ObjectAttributeInputToxicCloud constructor
 // Created: JCR 2008-08-18
 // -----------------------------------------------------------------------------
-DEC_Knowledge_ObjectAttributeInputToxicCloud::DEC_Knowledge_ObjectAttributeInputToxicCloud() 
+DEC_Knowledge_ObjectAttributeInputToxicCloud::DEC_Knowledge_ObjectAttributeInputToxicCloud()
     : attr_ ( 0 )
 {
     // NOTHING
@@ -18,7 +18,7 @@ DEC_Knowledge_ObjectAttributeInputToxicCloud::DEC_Knowledge_ObjectAttributeInput
 // Name: DEC_Knowledge_ObjectAttributeInputToxicCloud constructor
 // Created: JCR 2008-08-18
 // -----------------------------------------------------------------------------
-DEC_Knowledge_ObjectAttributeInputToxicCloud::DEC_Knowledge_ObjectAttributeInputToxicCloud( const InputToxicCloudAttribute& attr ) 
+DEC_Knowledge_ObjectAttributeInputToxicCloud::DEC_Knowledge_ObjectAttributeInputToxicCloud( const InputToxicCloudAttribute& attr )
     : attr_(&attr)
 {
     // NOTHING

@@ -29,7 +29,7 @@ class HLA_InteractionManager_ABC;
 class MIL_Entity_ABC;
 
 namespace hla {
-    class AttributeIdentifier;    
+    class AttributeIdentifier;
 }
 
 // =============================================================================
@@ -72,7 +72,7 @@ public:
     virtual void ApplyExplosion             ( const AttritionCapacity& objectType        , PHY_FireResults_ABC& result );
     virtual void ApplyContamination         ( const MIL_ToxicEffectManipulator& /*contamination*/ ) {};
     virtual void ApplyPoisonous             ( const MIL_ToxicEffectManipulator& /*contamination*/ ) {};
-    virtual double    GetDangerosity                     ( const DEC_Knowledge_AgentComposante& /*compTarget*/, float /*rDistBtwSourceAndTarget*/ ) const {return 0; }; 
+    virtual double    GetDangerosity                     ( const DEC_Knowledge_AgentComposante& /*compTarget*/, float /*rDistBtwSourceAndTarget*/ ) const {return 0; };
     virtual MT_Float GetOnlyLoadableMaxRangeToFireOn ( const DEC_Knowledge_Agent& /*target*/, MT_Float /*rWantedPH*/ ) const {return 0; };
     virtual MT_Float GetMaxRangeToFireOn             ( const DEC_Knowledge_Agent& /*target*/, MT_Float /*rWantedPH*/ ) const {return 0; };
     virtual MT_Float GetMinRangeToFireOn             ( const DEC_Knowledge_Agent& /*target*/, MT_Float /*rWantedPH*/ ) const {return 0; };
@@ -103,7 +103,7 @@ public:
     //! @name Humans management
     //@{
     virtual void WoundHumans  ( const PHY_HumanRank& /*rank*/, unsigned int /*nNbr*/ ) {};
-    virtual void HealHumans   ( const PHY_HumanRank& /*rank*/, unsigned int /*nNbr*/ ) {};    
+    virtual void HealHumans   ( const PHY_HumanRank& /*rank*/, unsigned int /*nNbr*/ ) {};
     virtual void HealAllHumans() {};
     //@}
 
@@ -120,7 +120,7 @@ public:
     virtual void RetrieveLentComposante( PHY_RoleInterface_Composantes& /*borrower*/, PHY_ComposantePion& /*composante*/ ) {}
 
     // Notification for the beneficary
-    virtual void NotifyLentComposanteReceived( PHY_RoleInterface_Composantes& /*lender*/, PHY_ComposantePion& /*composante*/ ) {} 
+    virtual void NotifyLentComposanteReceived( PHY_RoleInterface_Composantes& /*lender*/, PHY_ComposantePion& /*composante*/ ) {}
     virtual void NotifyLentComposanteReturned( PHY_RoleInterface_Composantes& /*lender*/, PHY_ComposantePion& /*composante*/ ) {}
     //@}
 
@@ -157,10 +157,10 @@ public:
     //@}
 
     //! @name Accessors
-    //@{          
+    //@{
     virtual       bool           HasChanged              () const { return false; }
     virtual       bool           IsUsable                () const { return false; }
-    virtual const MIL_Agent_ABC& GetPion                 () const { return *pPion_; }    
+    virtual const MIL_Agent_ABC& GetPion                 () const { return *pPion_; }
     //@}
 
 

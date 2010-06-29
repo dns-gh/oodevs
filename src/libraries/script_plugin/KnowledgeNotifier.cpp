@@ -49,7 +49,7 @@ void KnowledgeNotifier::DoUpdate( const MsgUnitKnowledgeUpdate& message )
         created_ = true;
         controller_.Update( events::KnowledgeCreated( knowledge_ ) );
     }
-    else 
+    else
     {
         if( message.has_max_identification_level() )
             controller_.Update( events::PerceptionChanged( knowledge_ ) );

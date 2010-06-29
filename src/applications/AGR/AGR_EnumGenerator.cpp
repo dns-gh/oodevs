@@ -64,7 +64,7 @@ void AGR_EnumGenerator::GenerateEnumFile( const AGR_Workspace& workspace, const 
 
         for( CIT_String_Vector itValues = enumValues.begin(); itValues != enumValues.end(); ++itValues )
         {
-            strEnumsDeclaration << "    " << CreatePrettyValueName( strEnumName, *itValues ) << ",\n"; 
+            strEnumsDeclaration << "    " << CreatePrettyValueName( strEnumName, *itValues ) << ",\n";
         }
 
         strEnumsDeclaration << "    eNbr" << GetCoreEnumName( strEnumName ) << "\n};\n\n\n";
@@ -96,7 +96,7 @@ void AGR_EnumGenerator::GenerateTranslatorHeader( const AGR_Workspace& workspace
 
         // static E_BreakdownType ConvertToBreakdownType( const std::string& );
 
-        strConvertToFunctions << "    static " << strPrettyEnumName << " ConvertTo" << strCoreEnumName 
+        strConvertToFunctions << "    static " << strPrettyEnumName << " ConvertTo" << strCoreEnumName
                               << "( const std::string& );\n";
 
         // static const std::string& ConvertFromObjectType( E_ObjectType, E_Conversion = eToSim );
@@ -150,8 +150,8 @@ void AGR_EnumGenerator::GenerateTranslatorImplementation( const AGR_Workspace& w
         for( CIT_String_Vector itValue = enumValues.begin(); itValue != enumValues.end(); ++itValue )
         {
             std::string strScriptName = CreateScriptName( *itValue );
-            strConverters << "    " << strConverterType << "( \"" << strScriptName << "\", QT_TRANSLATE_NOOP( \"ENT_Tr\", \"" 
-                          << strScriptName << "\" ), " << CreatePrettyValueName( strEnumName, *itValue ) << " ),\n"; 
+            strConverters << "    " << strConverterType << "( \"" << strScriptName << "\", QT_TRANSLATE_NOOP( \"ENT_Tr\", \""
+                          << strScriptName << "\" ), " << CreatePrettyValueName( strEnumName, *itValue ) << " ),\n";
         }
         strConverters << "    " << strConverterType << "( \"\", \"\", (" << strPrettyEnumName << ")-1 )\n"
                       << "};\n\n";

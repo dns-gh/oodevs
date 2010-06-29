@@ -116,7 +116,7 @@ protected:
     kernel::Location_ABC* location_;
     QLabel* locationLabel_;
     RichLabel* position_;
-    
+
     std::auto_ptr< ObjectAttributePrototypeContainer > attributes_;
     //@}
 };

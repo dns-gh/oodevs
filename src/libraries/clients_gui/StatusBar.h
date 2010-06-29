@@ -45,7 +45,7 @@ public slots:
     //@{
     void OnMouseMove( const geometry::Point2f& position );
     void OnMouseMove( const geometry::Point3f& position );
-	void ParameterSelected( int index );
+    void ParameterSelected( int index );
     void TerrainPicked( const QString& type );
     //@}
 
@@ -77,9 +77,9 @@ private:
 
     T_CoordinateFields coordinateFields_;
     T_MenuFields menuFields_;
-	QLabel* pElevation_;
+    QLabel* pElevation_;
     QLabel* pTerrainType_;
-	QPopupMenu* pMenu_;
+    QPopupMenu* pMenu_;
     //@}
 };
 

@@ -39,7 +39,7 @@ FireCreationPanel::FireCreationPanel( QWidget* parent, gui::PanelStack_ABC& pane
     , staticModel_( staticModel )
     , controllers_( controllers )
     , actionsModel_( actionsModel )
-    , simulation_( simulation ) 
+    , simulation_( simulation )
     , potentialTarget_( 0 )
     , selectedTarget_( 0 )
     , potentialReporter_( 0 )
@@ -70,7 +70,7 @@ FireCreationPanel::FireCreationPanel( QWidget* parent, gui::PanelStack_ABC& pane
 
         new QLabel( tr( "Munitions:" ), group );
         ammunitionsBox_ = new gui::ValuedComboBox< int >( group );
-        
+
         new QLabel( tr( "IT:" ), group );
         interventionType_ = new QLineEdit( "0", group );
     }
@@ -79,7 +79,7 @@ FireCreationPanel::FireCreationPanel( QWidget* parent, gui::PanelStack_ABC& pane
     connect( ok, SIGNAL( clicked() ), this, SLOT( Commit() ) );
     controllers_.Register( *this );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: FireCreationPanel destructor
 // Created: MGD 2010-02-23

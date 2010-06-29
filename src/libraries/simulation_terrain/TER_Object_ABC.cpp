@@ -119,7 +119,7 @@ void TER_Object_ABC::UpdateLocalisation( const TER_Localisation& newLocalisation
     RemoveFromWorld();
     location_.Reset( newLocalisation );
     InsertInWorld();
-    
+
 }
 
 // -----------------------------------------------------------------------------
@@ -140,4 +140,4 @@ void TER_Object_ABC::InsertInWorld()
 {
     hint_ = TER_World::GetWorld().GetObjectManager().UpdatePosition( *this, hint_ );
 }
-    
+

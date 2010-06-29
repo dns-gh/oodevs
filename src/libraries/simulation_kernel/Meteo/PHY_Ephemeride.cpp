@@ -42,7 +42,7 @@ PHY_Ephemeride::PHY_Ephemeride( xml::xistream& xis )
         char tmp = 0;
         std::istringstream strTmp( sunRise );
         strTmp >> sunriseTime_.first >> tmp >> sunriseTime_.second;
-        if ( tmp != 'h' || sunriseTime_.first < 0 || sunriseTime_.first > 23 || sunriseTime_.second < 0 || sunriseTime_.second > 59 )
+        if( tmp != 'h' || sunriseTime_.first < 0 || sunriseTime_.first > 23 || sunriseTime_.second < 0 || sunriseTime_.second > 59 )
             xis.error( "Bad time format (use 00h00)" );
     }
 
@@ -50,10 +50,10 @@ PHY_Ephemeride::PHY_Ephemeride( xml::xistream& xis )
         char tmp = 0;
         std::istringstream strTmp( sunSet );
         strTmp >> sunsetTime_.first >> tmp >> sunsetTime_.second;
-        if ( tmp != 'h' || sunsetTime_.first < 0 || sunsetTime_.first > 23 || sunsetTime_.second < 0 || sunsetTime_.second > 59 )
+        if( tmp != 'h' || sunsetTime_.first < 0 || sunsetTime_.first > 23 || sunsetTime_.second < 0 || sunsetTime_.second > 59 )
             xis.error( "Bad time format (use 00h00)" );
     }
-    
+
     pNightBase_ = weather::PHY_Lighting::FindLighting( moon );
     if( !pNightBase_ )
         xis.error( "Unknown lighting '" + moon + "'" );

@@ -47,7 +47,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit GQ_PlotToolTip( GQ_Plot& );
-    virtual ~GQ_PlotToolTip(); 
+    virtual ~GQ_PlotToolTip();
     //@}
 
 protected:

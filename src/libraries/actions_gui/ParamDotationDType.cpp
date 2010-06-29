@@ -29,7 +29,7 @@ ParamDotationDType::ParamDotationDType( const kernel::OrderParameter& parameter,
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ParamDotationDType destructor
 // Created: SBO 2006-08-09

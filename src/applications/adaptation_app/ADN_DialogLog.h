@@ -24,7 +24,7 @@ class QMessageTextView;
 //$$$$ Cette classe est hautement spécifique et n'est utilisée qu'à un endroit
 //$$$$ Vu son interet limité, la virer.
 //*****************************************************************************
-class ADN_DialogLog 
+class ADN_DialogLog
 : public QDialog
 {
 public:
@@ -34,7 +34,7 @@ public:
     void setMsg(const std::string& msg);
     void setMsgFormat(const std::string& msg);
     void addMsg(const std::string& msg);
-    
+
     bool         empty() const;
 
     virtual void show();

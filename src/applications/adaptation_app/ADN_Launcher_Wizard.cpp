@@ -40,11 +40,11 @@ ADN_Launcher_Wizard::ADN_Launcher_Wizard( QWidget* pParent, const char* szName )
 
     ADN_Launchers_Data::T_LauncherInfos_Vector& launchers = ADN_Workspace::GetWorkspace().GetLaunchers().GetData().GetLaunchersInfos();
     ADN_Wizard_FirstPage_Default<LauncherInfos>* pFirstPage = new ADN_Wizard_FirstPage_Default<LauncherInfos>( launchers, this );
-    pFirstPage->SetCaptions( qApp->translate( "ADN_Launcher_Wizard", "New launcher creation" ), 
+    pFirstPage->SetCaptions( qApp->translate( "ADN_Launcher_Wizard", "New launcher creation" ),
         qApp->translate( "ADN_Launcher_Wizard","Launchers" ) );
     pFirstPage_ = pFirstPage;
 
-    new ADN_Wizard_LastPage( this, qApp->translate( "ADN_Launcher_Wizard", "Creation finished" ), 
+    new ADN_Wizard_LastPage( this, qApp->translate( "ADN_Launcher_Wizard", "Creation finished" ),
         qApp->translate( "ADN_Launcher_Wizard", "Click \"Done\" to create the new launcher." ) );
 }
 

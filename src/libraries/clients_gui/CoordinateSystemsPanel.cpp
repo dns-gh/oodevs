@@ -82,5 +82,5 @@ void CoordinateSystemsPanel::OptionChanged( const std::string& name, const kerne
     }
 }
 
-         
+
 

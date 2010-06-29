@@ -53,7 +53,7 @@ public:
     virtual const PHY_UnitType& GetUnitType() const = 0;
     virtual MT_Float GetRapForIncreasePerTimeStepValue() const = 0;
     virtual void RegisterFunctions( directia::Brain& brain, MIL_Agent_ABC& agent ) const = 0;
-    virtual const DEC_Model_ABC& GetModel() const = 0;    
+    virtual const DEC_Model_ABC& GetModel() const = 0;
     virtual MT_Float GetDistanceAvantPoint ( const TerrainData& nType ) const = 0;
     virtual MT_Float GetDistanceAvantLima () const = 0;
     //@}

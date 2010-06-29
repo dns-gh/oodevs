@@ -32,7 +32,7 @@ class PHY_ActionDirectFirePopulation : public PHY_DecisionCallbackAction_ABC
 {
 
 public:
-    typedef MIL_AgentPion ActorType;        
+    typedef MIL_AgentPion ActorType;
 
 public:
     PHY_ActionDirectFirePopulation( MIL_AgentPion& pion, unsigned int nID );

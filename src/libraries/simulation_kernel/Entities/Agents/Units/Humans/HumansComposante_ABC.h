@@ -42,7 +42,7 @@ public:
     //@{
     template< typename Archive > void serialize( Archive&, const unsigned int ) {};
     //@}
-    
+
     //! @name Operations
     //@{
     virtual bool ChangeHumanRank   ( const PHY_HumanRank& oldRank, const PHY_HumanRank& newRank, const PHY_HumanWound& wound ) = 0;
@@ -53,7 +53,7 @@ public:
     virtual void ApplyWounds       ( const PHY_ComposanteState& newCompState, PHY_FireDamages_Agent& fireDamages ) = 0;
     virtual unsigned int WoundHumans       ( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& newWound ) = 0;
     virtual unsigned int HealHumans        ( const PHY_HumanRank& rank, unsigned int nNbrToChange ) = 0;
-    virtual void HealAllHumans     () = 0;    
+    virtual void HealAllHumans     () = 0;
 
     virtual MT_Float GetOperationalState() const = 0;
     virtual bool     IsViable           () const = 0;

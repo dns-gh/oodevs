@@ -77,7 +77,7 @@ private:
     struct Entry
     {
     public:
-        Entry() 
+        Entry()
             : rNbr_( 0. )
             , rNormalizedConsumption_ ( 0. )
             , rMoveQuantityUsedPerHour_( 0. )

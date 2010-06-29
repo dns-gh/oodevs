@@ -83,7 +83,7 @@ public:
     std::vector< const kernel::Automat_ABC* > automatPerceptions_;
 
     T_Optionals                  optionals_;
-    
+
 };
 
 }

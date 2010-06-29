@@ -47,7 +47,7 @@ ObjectFactory::ObjectFactory( kernel::Controllers& controllers, Model& model, co
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ObjectFactory destructor
 // Created: AGE 2006-02-13
@@ -67,9 +67,9 @@ kernel::Object_ABC* ObjectFactory::Create( const MsgsSimToClient::MsgObjectCreat
     result->Attach( *new Explosions( controllers_.controller_, model_.fireResultsFactory_ ) );
     result->Attach< kernel::Positions >( *new ObjectPositions( result->GetType(), static_.coordinateConverter_ ) );
     result->Attach< kernel::TacticalHierarchies >( *new kernel::ObjectHierarchies( *result, &model_.teams_.GetTeam( message.team() ) ) );
-    
+
     Register( *result, message.attributes() );
-    
+
     result->Update( message );
     result->Polish();
     return result;
@@ -81,34 +81,34 @@ kernel::Object_ABC* ObjectFactory::Create( const MsgsSimToClient::MsgObjectCreat
 // -----------------------------------------------------------------------------
 void ObjectFactory::Register( kernel::Object_ABC& result, const Common::MsgObjectAttributes& attributes ) const
 {
-    if ( attributes.has_logistic()  )
-        result.Attach< kernel::LogisticAttribute_ABC >( *new LogisticAttribute( controllers_.controller_, model_.agents_ ) );    
-    
-    if ( attributes.has_construction()  )
+    if( attributes.has_logistic()  )
+        result.Attach< kernel::LogisticAttribute_ABC >( *new LogisticAttribute( controllers_.controller_, model_.agents_ ) );
+
+    if( attributes.has_construction()  )
         result.Attach< kernel::ConstructionAttribute_ABC >( *new ConstructionAttribute( controllers_.controller_, static_.objectTypes_ ) );
-    
-    if ( attributes.has_mine()  )
+
+    if( attributes.has_mine()  )
         result.Attach< kernel::MineAttribute_ABC >( *new MineAttribute( controllers_.controller_, static_.objectTypes_ ) );
-    
-    if ( attributes.has_bypass()  )
+
+    if( attributes.has_bypass()  )
         result.Attach< kernel::BypassAttribute_ABC >( *new BypassAttribute( controllers_.controller_ ) );
-    
-    if ( attributes.has_obstacle()  )
+
+    if( attributes.has_obstacle()  )
         result.Attach< kernel::ObstacleAttribute_ABC >( *new ObstacleAttribute( controllers_.controller_ ) );
-    
-    if ( attributes.has_crossing_site()  )
+
+    if( attributes.has_crossing_site()  )
         result.Attach< kernel::CrossingSiteAttribute_ABC >( *new CrossingSiteAttribute( controllers_.controller_ ) );
-    
-    if ( attributes.has_supply_route()  )
-        result.Attach< kernel::SupplyRouteAttribute_ABC >( *new SupplyRouteAttribute( controllers_.controller_ ) );    
-    
-    if ( attributes.has_nbc()  )
+
+    if( attributes.has_supply_route()  )
+        result.Attach< kernel::SupplyRouteAttribute_ABC >( *new SupplyRouteAttribute( controllers_.controller_ ) );
+
+    if( attributes.has_nbc()  )
         result.Attach< kernel::NBCAttribute_ABC >( *new NBCAttribute( controllers_.controller_, static_.objectTypes_ ) );
 
-    if ( attributes.has_activity_time()  )
+    if( attributes.has_activity_time()  )
         result.Attach< kernel::ActivityTimeAttribute_ABC >( *new ActivityTimeAttribute( controllers_.controller_ ) );
 
-    if ( attributes.has_toxic_cloud()  )
+    if( attributes.has_toxic_cloud()  )
         result.Attach< kernel::ToxicCloudAttribute_ABC >( *new ToxicCloudAttribute( controllers_.controller_, static_.coordinateConverter_ ) );
 
     if( attributes.has_fire()  )
@@ -116,7 +116,7 @@ void ObjectFactory::Register( kernel::Object_ABC& result, const Common::MsgObjec
 
     if( attributes.has_medical_treatment()  )
         result.Attach< kernel::MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( controllers_.controller_, static_.objectTypes_ ) );
-    
+
     if( attributes.has_stock() )
         result.Attach< kernel::StockAttribute_ABC >( *new StockAttribute( controllers_.controller_, static_.objectTypes_ ) );
 }

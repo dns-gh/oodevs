@@ -157,7 +157,7 @@ bool ADN_Connector_Table_ABC::RemItemPrivate( void* pItem, bool )
     {
         ADN_TableItem_ABC* pTableItem = static_cast<ADN_TableItem_ABC*>( tab_.item( n, 0 ) );
         if( pTableItem->GetData() == pItem )
-        {   
+        {
             tab_.removeRow( n );
             break;
         }

@@ -95,7 +95,7 @@ void MIL_PionOrderManager::OnReceiveFragOrder( const MsgsClientToSim::MsgFragOrd
         throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_order_conduite );
 
     DEC_Representations& representation = pion_.GetRole<DEC_Representations>();
-    boost::shared_ptr< MIL_FragOrder > pFragOrder ( new MIL_FragOrder( *pType, pion_.GetKnowledge(), asn ) ); 
+    boost::shared_ptr< MIL_FragOrder > pFragOrder ( new MIL_FragOrder( *pType, pion_.GetKnowledge(), asn ) );
     representation.AddToOrdersCategory( pFragOrder );
 }
 

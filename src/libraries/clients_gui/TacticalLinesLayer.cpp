@@ -182,7 +182,7 @@ bool TacticalLinesLayer::HandleMouseMove( QMouseEvent* mouse, const geometry::Po
 {
     return ( selected_ != 0 && MouseMove( *selected_.ConstCast(), mouse, point ) ) || EntityLayer< kernel::TacticalLine_ABC >::HandleMouseMove( mouse, point );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: TacticalLinesLayer::HandleMousePress
 // Created: SBO 2006-12-18
@@ -191,7 +191,7 @@ bool TacticalLinesLayer::HandleMousePress( QMouseEvent* mouse, const geometry::P
 {
     return ( selected_ != 0 && MousePress( *selected_.ConstCast(), mouse, point ) ) || EntityLayer< kernel::TacticalLine_ABC >::HandleMousePress( mouse, point );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: TacticalLinesLayer::HandleMouseDoubleClick
 // Created: SBO 2006-12-18

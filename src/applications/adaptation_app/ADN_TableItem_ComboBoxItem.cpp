@@ -47,7 +47,7 @@ void ADN_TableItem_ComboBoxItem::setText(const QString& txt)
     // look if combo item is present in combo box
     // and find its index
     int ndx=combo_.FindNdx(this);
-    if ( ndx != -1 )
+    if( ndx != -1 )
         combo_.changeItem( txt , ndx);
     else
         szTmpTxt_=txt;
@@ -63,7 +63,7 @@ QString ADN_TableItem_ComboBoxItem::text() const
     // look if combo item is present in combo box
     // and find its index
     int ndx=combo_.FindNdx(this);
-    if ( ndx != -1 )
+    if( ndx != -1 )
         return combo_.text( ndx);
     else
         return szTmpTxt_;

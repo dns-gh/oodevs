@@ -59,7 +59,7 @@ UrbanLayer::~UrbanLayer()
 // Created: SLG 2006-03-23
 // -----------------------------------------------------------------------------
 void UrbanLayer::Paint( kernel::Viewport_ABC& /*viewport*/ )
-{      
+{
     for( IT_TerrainObjects it = objects_.begin(); it != objects_.end(); ++it )
     {
         const TerrainObjectProxy* object = (*it);
@@ -95,7 +95,7 @@ void UrbanLayer::NotifyCreated( const TerrainObjectProxy& object )
 void UrbanLayer::NotifyDeleted( const TerrainObjectProxy& object )
 {
     IT_TerrainObjects it = std::find( objects_.begin(), objects_.end(), &object );
-    if ( it != objects_.end() )
+    if( it != objects_.end() )
         objects_.erase( it );
 }
 
@@ -138,7 +138,7 @@ bool UrbanLayer::HandleMousePress( QMouseEvent* input, const geometry::Point2f& 
             if( object->object_->GetFootprint()->IsInside( point ) && input->state() )
             {
                 found = true;
-                if ( object == selectedObject_ )
+                if( object == selectedObject_ )
                 {
                     selectedObject_ = 0;
                     return false;
@@ -156,7 +156,7 @@ bool UrbanLayer::HandleMousePress( QMouseEvent* input, const geometry::Point2f& 
             const TerrainObjectProxy* object = (*it);
             if( object->object_->GetFootprint()->IsInside( point ) && input->state() )
             {
-                if ( object == selectedObject_ )
+                if( object == selectedObject_ )
                 {
                     selectedObject_ = 0;
                     return false;
@@ -166,7 +166,7 @@ bool UrbanLayer::HandleMousePress( QMouseEvent* input, const geometry::Point2f& 
                 return true;
             }
         }
-        if ( input->state() )
+        if( input->state() )
             selectedObject_ = 0;
     }
     return false;
@@ -200,13 +200,13 @@ bool UrbanLayer::HandleKeyPress( QKeyEvent* input )
 bool UrbanLayer::HandleMouseMove( QMouseEvent*, const geometry::Point2f& point )
 {
     lastPoint_ = point;
-    if ( selectionArea_ && selectionMode_ )
+    if( selectionArea_ && selectionMode_ )
     {
         /*geometry::T_Point2fVector points = static_cast< Lines* >(selectionArea_)->GetPoints();
-        if ( points.size() != 0 )
+        if( points.size() != 0 )
         {
             selectedObjects_.clear();
-            geometry::Polygon2f::T_Vertices selectionPoints; 
+            geometry::Polygon2f::T_Vertices selectionPoints;
             selectionPoints.push_back( points[0] );
             selectionPoints.push_back( geometry::Point2f( lastPoint_.X(), points[0].Y() ) );
             selectionPoints.push_back( lastPoint_ );

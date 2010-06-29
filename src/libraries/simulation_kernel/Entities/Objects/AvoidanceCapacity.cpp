@@ -84,8 +84,8 @@ void AvoidanceCapacity::Register( MIL_Object_ABC& object )
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
 void AvoidanceCapacity::Instanciate( MIL_Object_ABC& object ) const
-{    
-    object.AddCapacity( new AvoidanceCapacity( *this ) );        
+{
+    object.AddCapacity( new AvoidanceCapacity( *this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -112,7 +112,7 @@ const TER_Localisation& AvoidanceCapacity::GetLocalisation() const
 // -----------------------------------------------------------------------------
 void AvoidanceCapacity::InitializeArea( MIL_Object_ABC& object )
 {
-    if ( distance_ <= 0. )
+    if( distance_ <= 0. )
         avoid_.Reset();
     else
         ResetDynamicData( object );
@@ -130,5 +130,5 @@ void AvoidanceCapacity::ResetDynamicData( MIL_Object_ABC& object )
     const T_PointVector& points = avoid_.GetPoints();
     assert( points.size() > 3 );
 
-    handler_.Reset( new TER_DynamicData( points, TER_PathFindManager::DefaultTerrainData() ) );    
+    handler_.Reset( new TER_DynamicData( points, TER_PathFindManager::DefaultTerrainData() ) );
 }

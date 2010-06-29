@@ -52,7 +52,7 @@ std::ostream&    operator << ( std::ostream&, const MT_Vector2D& );
 template<class T> std::ostream& operator << ( std::ostream& out, const std::vector< T >& vect )
 {
     out << "{ ";
-    if ( !vect.empty() )
+    if( !vect.empty() )
     {
         std::copy( vect.begin(), vect.end() - 1, std::ostream_iterator<T>( out, ", " ) );
         out << vect.back() << ' ';
@@ -79,7 +79,7 @@ std::pair< T, U > operator + ( const std::pair< T, U >& lhs, const std::pair< T,
 #define MT_DELETERECYCLED(cont) std::for_each( WHOLE_CONT( cont ), DestroyRecycledObject() )
 struct DestroyRecycledObject
 {
-    template< class T > 
+    template< class T >
     void operator()( T* ptr )
     {
         ptr->Destroy();

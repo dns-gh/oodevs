@@ -39,7 +39,7 @@ UnitMagicAction::UnitMagicAction( xml::xistream& xis, kernel::Controller& contro
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: UnitMagicAction::~MagicAction
 // Created: JSR 2010-04-02
@@ -77,7 +77,7 @@ void UnitMagicAction::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void UnitMagicAction::Publish( Publisher_ABC& publisher ) const
 {
-    MsgsClientToSim::MsgUnitMagicAction_Type type = 
+    MsgsClientToSim::MsgUnitMagicAction_Type type =
         ( MsgsClientToSim::MsgUnitMagicAction_Type ) GetType().GetId();
     simulation::UnitMagicAction message;
     message().set_oid( GetEntity().GetId() );

@@ -26,7 +26,7 @@ void DEC_PathFactory::Initialize( xml::xistream& xis )
     if( !pInstance_ )
         pInstance_ = new DEC_PathFactory( xis );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFactory::Terminate
 // Created: SBO 2006-03-27
@@ -35,7 +35,7 @@ void DEC_PathFactory::Terminate()
 {
     delete pInstance_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFactory::GetInstance
 // Created: SBO 2006-03-27
@@ -56,7 +56,7 @@ DEC_PathFactory::DEC_PathFactory( xml::xistream& xis )
     DEC_Agent_PathClass     ::Initialize( xis );
     DEC_Population_PathClass::Initialize( xis );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFactory destructor
 // Created: SBO 2006-03-27

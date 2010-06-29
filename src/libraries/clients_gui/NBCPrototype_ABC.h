@@ -67,7 +67,7 @@ protected:
     //@{
     const tools::Resolver_ABC< kernel::NBCAgent >& resolver_;
     int maxToxic_;
-    
+
     RichLabel* nbcAgentsLabel_;
     QSpinBox* danger_;
     QListView* nbcAgents_;

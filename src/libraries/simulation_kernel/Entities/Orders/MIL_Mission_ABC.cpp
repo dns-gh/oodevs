@@ -36,7 +36,7 @@ MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_Kno
     : type_             ( type )
     , context_          ( true ) // $$$$ SBO 2008-12-11: Context must be present!
     , knowledgeResolver_( knowledgeResolver )
-{    
+{
     // No parameters $$$
 }
 

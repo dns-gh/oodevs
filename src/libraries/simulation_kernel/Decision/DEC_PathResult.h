@@ -31,10 +31,10 @@ class DEC_PathResult : public DEC_Path_ABC
 {
 public:
     //! @name Types
-    //@{   
+    //@{
     typedef std::list< boost::shared_ptr< DEC_PathPoint > > T_PathPointList;
     typedef T_PathPointList::iterator       IT_PathPointList;
-    typedef T_PathPointList::const_iterator CIT_PathPointList;    
+    typedef T_PathPointList::const_iterator CIT_PathPointList;
     //@}
 
 public:
@@ -43,12 +43,12 @@ public:
              DEC_PathResult();
     virtual ~DEC_PathResult();
     //@}
-   
-    //! @name Accessors 
+
+    //! @name Accessors
     //@{
     const T_PathPointList& GetResult() const;
     //@}
-    
+
     //! @name Tools
     //@{
             CIT_PathPointList GetCurrentKeyOnPath         ( const MT_Vector2D& vPos ) const;
@@ -77,7 +77,7 @@ protected:
     T_PathPointList resultList_; //$$$
     //@}
 
-private:      
+private:
     //! @name Member data
     //@{
     bool bSectionJustEnded_;

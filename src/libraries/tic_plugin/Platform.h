@@ -77,7 +77,7 @@ private:
     //@{
     void Apply( EquipmentDotations_EquipmentDotation& updateMessage );
     bool SetStatus( int& number, E_State state );
-    void ComputeHeading( const geometry::Point2f& to ); 
+    void ComputeHeading( const geometry::Point2f& to );
     //@}
 
 private:

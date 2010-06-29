@@ -45,7 +45,7 @@ BOOST_AUTO_TEST_CASE( XmlTest_ThrowInList )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Gauge_TestNormalizationIntervalBoundariesAreImplicit )
 {
-    const std::string initialisation = 
+    const std::string initialisation =
         "<root>"
             "<interval max='25' key='0'/>"
             "<interval min='25' key='1'/>"
@@ -62,7 +62,7 @@ BOOST_AUTO_TEST_CASE( Gauge_TestNormalizationIntervalBoundariesAreImplicit )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Gauge_TestNormalizationIntervalsMatchLessOrEqual )
 {
-    const std::string initialisation = 
+    const std::string initialisation =
         "<root>"
             "<interval max='25' key='0'/>"
             "<interval min='25' key='1'/>"
@@ -78,7 +78,7 @@ BOOST_AUTO_TEST_CASE( Gauge_TestNormalizationIntervalsMatchLessOrEqual )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Gauge_TestNormalizationIntervalsCanBeDiscontinuous )
 {
-    const std::string initialisation = 
+    const std::string initialisation =
         "<root>"
             "<interval max='10' key='0'/>"
             "<interval min='25' max='75' key='2'/>"

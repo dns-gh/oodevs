@@ -38,7 +38,7 @@ DrawingTemplate::DrawingTemplate( xml::xistream& input, const DrawingCategory& c
     , polygonPixmap_( MAKE_PIXMAP( polygon ) )
 {
     SVGFactory factory( renderer_ );
-    
+
     std::string name, type, code, description;
     input >> xml::attribute( "name", name )
           >> xml::attribute( "type", type )
@@ -46,16 +46,16 @@ DrawingTemplate::DrawingTemplate( xml::xistream& input, const DrawingCategory& c
           >> xml::optional() >> xml::content( "description", description )
           >> xml::start( "segment" );
 
-    name_ = name.c_str(); 
+    name_ = name.c_str();
     type_ = type.c_str();
     code_ = code.empty() ? name_ : code.c_str();
     if( ! description.empty() )
         description_ = description.c_str();
-    else 
+    else
         description_ = name_;
 
     lineUnit = ReadUnit( input );
-    line_ = factory.Compile( input, *references_, 1 ); // $$$$ AGE 2006-08-31: 
+    line_ = factory.Compile( input, *references_, 1 ); // $$$$ AGE 2006-08-31:
 
     input >> xml::end() // segment
           >> xml::list( "marker-start", *this, &DrawingTemplate::ReadMarker, markerStart_, startUnit )
@@ -143,9 +143,9 @@ kernel::Location_ABC* DrawingTemplate::CreateLocation() const
 void DrawingTemplate::ReadMarker( xml::xistream& input, svg::Node_ABC*& node, Unit& unit )
 {
     SVGFactory factory( renderer_ );
-    node = factory.Compile( input, *references_, 1 ); // $$$$ AGE 2006-08-31: 
+    node = factory.Compile( input, *references_, 1 ); // $$$$ AGE 2006-08-31:
     unit = ReadUnit( input );
-}   
+}
 
 // -----------------------------------------------------------------------------
 // Name: DrawingTemplate::ReadUnit
@@ -283,7 +283,7 @@ void DrawingTemplate::DrawMarker( svg::RenderingContext_ABC& context, const kern
     glPushMatrix();
     glTranslatef( at.X(), at.Y(), 0 );
     Align( direction );
-    const float ratio = ComputeFactor( unit, direction.Length(), tools ); // $$$$ AGE 2006-09-01: 
+    const float ratio = ComputeFactor( unit, direction.Length(), tools ); // $$$$ AGE 2006-09-01:
     glScalef( ratio, ratio, 1 );
     node.Draw( context, *references_ );
     glPopMatrix();

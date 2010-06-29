@@ -20,7 +20,7 @@ ObjectHierarchies::ObjectHierarchies( kernel::Entity_ABC& holder, kernel::Entity
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ObjectHierarchies destructor
 // Created: SBO 2006-10-19

@@ -61,7 +61,7 @@ void ActionLinker::Sublink( const QString& action )
     Panel_ABC* to   = panels_[ action ];
     if( from && to )
         from->LinkTo( *to );
-    else 
+    else
         throw std::runtime_error( ( "No action " + action ).ascii() );
     current_ = action;
 }

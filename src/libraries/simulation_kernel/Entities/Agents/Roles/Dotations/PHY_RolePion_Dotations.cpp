@@ -74,7 +74,7 @@ namespace boost
                 PHY_Dotation* pDotation;
                 file >> pDotation;
                 file >> map[ pDotation ];
-            }            
+            }
         }
     }
 }
@@ -133,17 +133,17 @@ void PHY_RolePion_Dotations::load( MIL_CheckPointInArchive& file, const unsigned
 {
     file >> ::boost::serialization::base_object< PHY_RoleInterface_Dotations >( *this )
          >> pDotations_;
-         
+
     unsigned int nID;
     file >> nID;
     pCurrentConsumptionMode_ = PHY_ConsumptionType::FindConsumptionType( nID );
-    
+
     file >> nID;
     pPreviousConsumptionMode_ = PHY_ConsumptionType::FindConsumptionType( nID );
-    
+
     file >> reservedConsumptions_;
 }
- 
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Dotations::save
 // Created: JVT 2005-03-31
@@ -229,7 +229,7 @@ class sConsumptionReservation : public ::OnComponentFunctor_ABC
 
 public:
     sConsumptionReservation( const PHY_ConsumptionType& consumptionMode, PHY_DotationGroupContainer& dotations )
-        : consumptionMode_( consumptionMode )  
+        : consumptionMode_( consumptionMode )
         , dotations_      ( dotations )
         , bReservationOK_ ( true )
     {
@@ -259,7 +259,7 @@ bool PHY_RolePion_Dotations::SetConsumptionMode( const PHY_ConsumptionType& cons
     if( pCurrentConsumptionMode_ && consumptionMode < *pCurrentConsumptionMode_  )
         return true;
 
-    assert( pDotations_ ); 
+    assert( pDotations_ );
     pDotations_->CancelConsumptionReservations();
 
     sConsumptionReservation func( consumptionMode, *pDotations_ );
@@ -303,44 +303,44 @@ void PHY_RolePion_Dotations::RollbackConsumptionMode()
 // Name: PHY_RolePion_Dotations::sConsumptionTimeExpectancy
 // Created: JVT 2005-02-07
 // -----------------------------------------------------------------------------
-class sConsumptionTimeExpectancy : public ::OnComponentFunctor_ABC 
+class sConsumptionTimeExpectancy : public ::OnComponentFunctor_ABC
 {
-    
+
 public:
     sConsumptionTimeExpectancy( const PHY_ConsumptionType& consumptionMode )
         : consumptionMode_ ( consumptionMode )
         , consumptions_    ()
     {
     }
-    
+
     void operator() ( PHY_ComposantePion& composante )
     {
         const PHY_DotationConsumptions* pConsumptions = composante.GetDotationConsumptions( consumptionMode_ );
-        
-        if ( pConsumptions )
+
+        if( pConsumptions )
             pConsumptions->AddConsumptionValues( consumptions_ );
     }
 
     MT_Float GetNbrTicksForConsumption( const PHY_DotationGroupContainer& dotations ) const
     {
         MT_Float rNbrTicks = std::numeric_limits< MT_Float >::max();
-        
+
         for ( PHY_DotationConsumptions::CIT_ConsumptionValue it = consumptions_.begin(); it != consumptions_.end(); ++it )
         {
             assert( it->first );
             assert( it->second > 0. );
-        
+
             const MT_Float rCurrentDotationValue = dotations.GetValue( *it->first );
-            
+
             rNbrTicks = std::min( rNbrTicks, rCurrentDotationValue / it->second );
         }
-        
+
         return rNbrTicks;
     }
-    
+
 private:
     const PHY_ConsumptionType&                         consumptionMode_;
-          PHY_DotationConsumptions::T_ConsumptionValue consumptions_;    
+          PHY_DotationConsumptions::T_ConsumptionValue consumptions_;
 };
 
 
@@ -379,7 +379,7 @@ const PHY_ConsumptionType& PHY_RolePion_Dotations::GetConsumptionMode() const
 void PHY_RolePion_Dotations::ChangeDotationsValueUsingTC2( const PHY_DotationType& dotationType, const PHY_AmmoDotationClass* pAmmoDotationClass, MT_Float rCapacityFactor ) const
 {
 
-    
+
     MIL_AutomateLOG* pTC2 = pion_.GetAutomate().GetTC2();
     if( !pTC2 )
         return;
@@ -393,7 +393,7 @@ void PHY_RolePion_Dotations::ChangeDotationsValueUsingTC2( const PHY_DotationTyp
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Dotations::NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const
 {
-   
+
 
     if( bNewNeed )
         MIL_Report::PostEvent( pion_, MIL_Report::eReport_LogisticDotationThresholdExceeded, dotationCategory );
@@ -412,7 +412,7 @@ void PHY_RolePion_Dotations::Update( bool bIsDead )
         return;
 
     assert( pDotations_ );
-    
+
     std::auto_ptr< ConsumptionComputer_ABC > consumptionComputer = pion_.GetAlgorithms().consumptionComputerFactory_->CreateConsumptionComputer();
     pion_.Execute( *consumptionComputer );
     SetConsumptionMode( consumptionComputer->Result() );

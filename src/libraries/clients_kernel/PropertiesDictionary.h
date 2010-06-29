@@ -39,7 +39,7 @@ public:
     //@{
     QStringList FindKey( QString name ) const;
 
-    
+
     template< typename T, typename Owner, typename Setter >
     void Register( const Owner& owner, const QString& name, T& value, const Setter& setter )
     {
@@ -100,7 +100,7 @@ private:
     {
         typedef void (O::*func)( const T& );
         caller( O& o, func s ) : o_( &o ), s_( s ) {};
-        void operator()( T*, const T& value ) 
+        void operator()( T*, const T& value )
         {
             (o_->*s_)( value );
         }

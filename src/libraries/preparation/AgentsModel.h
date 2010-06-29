@@ -65,7 +65,7 @@ public:
     void CreateAutomat( kernel::Entity_ABC& parent, const kernel::AutomatType& type, const geometry::Point2f& position );
     void CreateAutomat( xml::xistream& xis, kernel::Entity_ABC& parent, LimitsModel& limits );
     kernel::Automat_ABC& CreateAutomat( kernel::Entity_ABC& parent, const kernel::AutomatType& type, const QString& name = "" );
-    
+
     kernel::Automat_ABC& GetAutomat( unsigned long id );
     kernel::Automat_ABC* FindAutomat( unsigned long id );
 

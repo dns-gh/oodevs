@@ -29,4 +29,4 @@ UrbanObjectAttribute_ABC::UrbanObjectAttribute_ABC( const Model& /*model*/, cons
 UrbanObjectAttribute_ABC::~UrbanObjectAttribute_ABC()
 {
     // NOTHING
-}  
+}

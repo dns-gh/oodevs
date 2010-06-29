@@ -33,7 +33,7 @@ DEC_BlackBoard_CanContainKnowledgePopulationPerception::DEC_BlackBoard_CanContai
 DEC_BlackBoard_CanContainKnowledgePopulationPerception::~DEC_BlackBoard_CanContainKnowledgePopulationPerception()
 {
     while( !knowledgePopulationPerceptionMap_.empty() )
-        DestroyKnowledgePopulationPerception( *knowledgePopulationPerceptionMap_.begin()->second );        
+        DestroyKnowledgePopulationPerception( *knowledgePopulationPerceptionMap_.begin()->second );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,7 +73,7 @@ void DEC_BlackBoard_CanContainKnowledgePopulationPerception::save( MIL_CheckPoin
 // -----------------------------------------------------------------------------
 DEC_Knowledge_PopulationPerception& DEC_BlackBoard_CanContainKnowledgePopulationPerception::CreateKnowledgePopulationPerception( const MIL_Agent_ABC& agentPerceiving, MIL_Population& populationPerceived )
 {
-    DEC_Knowledge_PopulationPerception* pKnowledge = new DEC_Knowledge_PopulationPerception( agentPerceiving, populationPerceived );//$$ RAM   
+    DEC_Knowledge_PopulationPerception* pKnowledge = new DEC_Knowledge_PopulationPerception( agentPerceiving, populationPerceived );//$$ RAM
     if( ! knowledgePopulationPerceptionMap_.insert( std::make_pair( &populationPerceived, pKnowledge ) ).second )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
     return *pKnowledge;

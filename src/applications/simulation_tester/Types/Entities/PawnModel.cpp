@@ -32,7 +32,7 @@ PawnModel::PawnModel( const std::string& strName, XmlInputArchive& archive )
     : strName_      ( strName )
     , missionTypes_ ()
 {
-    try   
+    try
     {
         std::string strValue;
 

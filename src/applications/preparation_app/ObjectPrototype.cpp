@@ -76,7 +76,7 @@ namespace
     {
         container.push_back( new MedicalTreatmentPrototype( parent, resolver, object ) );
     }
-    
+
     void InterferenceAttribute( T_AttributeContainer& /*container*/, QWidget* /*parent*/, Object_ABC*& /*object*/ )
     {
     }
@@ -105,15 +105,15 @@ namespace
         factory->Register( "time-limited"       , boost::bind( &Capacity< ActivityTimePrototype >::Build, _2, _3, boost::ref( object ) ) );
         factory->Register( "supply-route"       , boost::bind( &Capacity< SupplyRoutePrototype >::Build, _2, _3, boost::ref( object ) ) );
         factory->Register( "bridging"           , boost::bind( &Capacity< CrossingSitePrototype >::Build, _2, _3, boost::ref( object ) ) );
-        
+
         factory->Register( "logistic"           , boost::bind( &::LogisticAttribute, _2, _3, boost::ref( controllers ), boost::ref( object ) ) );
         factory->Register( "interact-with-enemy", boost::bind( &::InteractWithEnemyAttribute, _2, _3, boost::ref( object ) ) );
         factory->Register( "interference"       , boost::bind( &::InterferenceAttribute, _2, _3, boost::ref( object ) ) );
-                            
-        factory->Register( "healable"           , boost::bind( &::MedicalTreatmentAttribute, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );
-        factory->Register( "propagation"        , boost::bind( &::PropagationAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );        
 
-        factory->Register( "contamination"      , boost::bind( &::ContaminationAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );  
+        factory->Register( "healable"           , boost::bind( &::MedicalTreatmentAttribute, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );
+        factory->Register( "propagation"        , boost::bind( &::PropagationAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );
+
+        factory->Register( "contamination"      , boost::bind( &::ContaminationAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );
         return *factory;
     }
 }

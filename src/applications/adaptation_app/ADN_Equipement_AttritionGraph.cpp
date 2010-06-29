@@ -17,7 +17,7 @@
 #include "moc_ADN_Equipement_AttritionGraph.cpp"
 
 //-----------------------------------------------------------------------------
-// Internal Canvas connector 
+// Internal Canvas connector
 //-----------------------------------------------------------------------------
 class ADN_Connector_AttritionGraph
     : public ADN_Connector_Vector_ABC
@@ -207,7 +207,7 @@ void ADN_Equipement_AttritionGraph::Update()
 
             double rReductionReparableWithEvacuation = ( rReparableWithEvacuation + rReductionDestroyed ) * urbanProtection;
             rReparableWithEvacuation -= rReductionReparableWithEvacuation - rReductionDestroyed;
-   
+
             double rReductionReparableWithoutEvacuation = ( rReparableWithoutEvacuation + rReductionReparableWithEvacuation ) * urbanProtection;
             rReparableWithoutEvacuation -= rReductionReparableWithoutEvacuation - rReductionReparableWithEvacuation;
 
@@ -260,7 +260,7 @@ void ADN_Equipement_AttritionGraph::Update()
             columns_.push_back( visuNoEvac );
             columns_.push_back( visuWithEvac );
             columns_.push_back( visuDestroyed );
-            
+
             update();
             return;
         }
@@ -402,7 +402,7 @@ void ADN_Equipement_AttritionGraph::paintEvent( QPaintEvent* )
 
                 painter.drawRect( rc );
 
-                cumulatedHeight += lineHeight;            
+                cumulatedHeight += lineHeight;
             }
         }
     }

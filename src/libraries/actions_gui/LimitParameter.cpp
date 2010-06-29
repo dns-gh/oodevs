@@ -36,7 +36,7 @@ LimitParameter::LimitParameter( QObject* parent, const kernel::OrderParameter& p
 {
     controller_.Register( *this );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: LimitParameter destructor
 // Created: SBO 2006-11-14

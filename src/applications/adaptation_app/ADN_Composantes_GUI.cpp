@@ -171,12 +171,12 @@ void ADN_Composantes_GUI::Build()
     vInfosConnectors[eRadars] = &pRadars_->GetConnector();
 
     // Weapons
-    QHGroupBox* pWeaponsGroup = new QHGroupBox( tr( "Weapon systems" ), pDataPage );    
+    QHGroupBox* pWeaponsGroup = new QHGroupBox( tr( "Weapon systems" ), pDataPage );
     pWeapons_ = new ADN_Composantes_WeaponsListView( pWeaponsGroup );
     vInfosConnectors[eWeapons] = &pWeapons_->GetConnector();
 
     // Active Protections
-    QHGroupBox* pActiveProtectionsGroup = new QHGroupBox( tr( "Active Protections" ), pDataPage );    
+    QHGroupBox* pActiveProtectionsGroup = new QHGroupBox( tr( "Active Protections" ), pDataPage );
     pActiveProtections_ = new ADN_Composantes_ActiveProtectionsListView( pActiveProtectionsGroup );
     vInfosConnectors[eActiveProtections] = &pActiveProtections_->GetConnector();
 
@@ -251,7 +251,7 @@ void ADN_Composantes_GUI::Build()
 
     QGridLayout* pDataPageLayout = new QGridLayout( pDataPage, 6, 4, 5 );
     pDataPageLayout->setAlignment( Qt::AlignTop );
-    
+
     pDataPageLayout->addMultiCellWidget( pParamHolder      , 0, 0, 0, 0 );
     pDataPageLayout->addMultiCellWidget( pIdGroupBox       , 1, 1, 0, 0 );
     pDataPageLayout->addMultiCellWidget( pSpeedGroup       , 2, 4, 0, 0 );
@@ -297,7 +297,7 @@ QWidget* ADN_Composantes_GUI::BuildHealth( QWidget* pParent, T_ConnectorVector& 
     for( int n = 0; n < eNbrDoctorSkills; ++n )
     {
         QWidget* pHolder = builder.AddFieldHolder( pCureDoctorGroup );
-        builder.AddField<ADN_CheckBox>( pHolder, ADN_Tr::ConvertFromDoctorSkills( (E_DoctorSkills)n ).c_str(), vInfosConnectors[eDoctorSkills + n ] );        
+        builder.AddField<ADN_CheckBox>( pHolder, ADN_Tr::ConvertFromDoctorSkills( (E_DoctorSkills)n ).c_str(), vInfosConnectors[eDoctorSkills + n ] );
     }
 
     pHolder = builder.AddFieldHolder( pDoctorGroup );
@@ -320,17 +320,17 @@ QWidget* ADN_Composantes_GUI::BuildAmbulance( QWidget* pParent, const char* szNa
 
     QVBox* box = new QVBox( pAmbulanceGroup );
     QWidget* pHolder = builder.AddFieldHolder( box );
-    builder.AddField<ADN_EditLine_Double>( pHolder, tr( "Capacity" ), vInfosConnectors[nIndex+1], 0, eGreaterZero ); 
+    builder.AddField<ADN_EditLine_Double>( pHolder, tr( "Capacity" ), vInfosConnectors[nIndex+1], 0, eGreaterZero );
     pHolder = builder.AddFieldHolder( box );
-    builder.AddField<ADN_TimeField>( pHolder, tr( "Loading duration per person" ), vInfosConnectors[nIndex+2] ); 
+    builder.AddField<ADN_TimeField>( pHolder, tr( "Loading duration per person" ), vInfosConnectors[nIndex+2] );
     pHolder = builder.AddFieldHolder( box );
-    builder.AddField<ADN_TimeField>( pHolder, tr( "Unloading duration per person" ), vInfosConnectors[nIndex+3] ); 
+    builder.AddField<ADN_TimeField>( pHolder, tr( "Unloading duration per person" ), vInfosConnectors[nIndex+3] );
 
     QGroupBox* pSkillsBox = new QGroupBox( eNbrDoctorSkills + 2, Qt::Horizontal, tr( "Capabilities" ), pAmbulanceGroup );
     for( int n = 0; n < eNbrDoctorSkills; ++n )
     {
         pHolder = builder.AddFieldHolder( pSkillsBox );
-        builder.AddField<ADN_CheckBox>( pHolder, ADN_Tr::ConvertFromDoctorSkills( (E_DoctorSkills)n ).c_str(), vInfosConnectors[nIndex+6+n ] );        
+        builder.AddField<ADN_CheckBox>( pHolder, ADN_Tr::ConvertFromDoctorSkills( (E_DoctorSkills)n ).c_str(), vInfosConnectors[nIndex+6+n ] );
     }
     pHolder = builder.AddFieldHolder( pSkillsBox );
     builder.AddField<ADN_CheckBox>( pHolder, tr( "NBC" ), vInfosConnectors[nIndex+4] );
@@ -355,8 +355,8 @@ QWidget* ADN_Composantes_GUI::BuildSupply( QWidget* pParent, T_ConnectorVector& 
     ADN_GroupBox* pCarrierGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Carrier" ), pSupplyGroup );
     vInfosConnectors[eIsLogCarrier] = & pCarrierGroup->GetConnector();
 
-    builder.AddField<ADN_EditLine_Double>( pCarrierGroup , tr( "Max weight carried"  ), vInfosConnectors[eLogCarryWeightCapacity], tr( "T" ), eGreaterZero ); 
-    builder.AddField<ADN_EditLine_Double>( pCarrierGroup , tr( "Max volume carried"  ), vInfosConnectors[eLogCarryVolumeCapacity], tr( "m3" ), eGreaterZero ); 
+    builder.AddField<ADN_EditLine_Double>( pCarrierGroup , tr( "Max weight carried"  ), vInfosConnectors[eLogCarryWeightCapacity], tr( "T" ), eGreaterZero );
+    builder.AddField<ADN_EditLine_Double>( pCarrierGroup , tr( "Max volume carried"  ), vInfosConnectors[eLogCarryVolumeCapacity], tr( "m3" ), eGreaterZero );
     builder.AddField<ADN_ComboBox_Equipment_Nature>( pCarrierGroup, tr( "Resource nature carried" ), vInfosConnectors[eLogCarryNature] );
 
     return pSupplyGroup;
@@ -375,9 +375,9 @@ QWidget* ADN_Composantes_GUI::BuildMaintenance( QWidget* pParent, T_ConnectorVec
 
     ADN_GroupBox* pTowerGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Tow truck" ), pMaintenanceGroup );
     vInfosConnectors[eIsTower] = & pTowerGroup->GetConnector();
-    builder.AddField<ADN_EditLine_Double>( pTowerGroup, tr( "Capacity" ), vInfosConnectors[eTowerCapacity], tr( "T" ), eGreaterZero ); 
-    builder.AddField<ADN_TimeField>( pTowerGroup, tr( "Loading duration" ), vInfosConnectors[eMaintenanceLoadTime] ); 
-    builder.AddField<ADN_TimeField>( pTowerGroup, tr( "Unloading duration" ), vInfosConnectors[eMaintenanceUnloadTime] ); 
+    builder.AddField<ADN_EditLine_Double>( pTowerGroup, tr( "Capacity" ), vInfosConnectors[eTowerCapacity], tr( "T" ), eGreaterZero );
+    builder.AddField<ADN_TimeField>( pTowerGroup, tr( "Loading duration" ), vInfosConnectors[eMaintenanceLoadTime] );
+    builder.AddField<ADN_TimeField>( pTowerGroup, tr( "Unloading duration" ), vInfosConnectors[eMaintenanceUnloadTime] );
 
     QHBox* pNTIHolder = new QHBox( pMaintenanceGroup );
 
@@ -399,9 +399,9 @@ QWidget* ADN_Composantes_GUI::BuildNTI( QWidget* pParent, const char* szName, T_
     ADN_GroupBox* pNTIGroup = new ADN_GroupBox( 3, Qt::Horizontal, szName, pParent );
     vInfosConnectors[nIndex + eNTIIsPresent] = & pNTIGroup->GetConnector();
 
-    builder.AddOptionnalField<ADN_TimeField>( pNTIGroup, tr( "Max repair duration" ), vInfosConnectors[nIndex + eHasMaxRepairTime], vInfosConnectors[nIndex + eMaxRepairTime] ); 
-    builder.AddField<ADN_CheckBox>( pNTIGroup, tr( "Can fix electronic breakdowns" ), vInfosConnectors[nIndex + eCanRepairEA] ); 
-    builder.AddField<ADN_CheckBox>( pNTIGroup, tr( "Can fix mobility breakdowns" ), vInfosConnectors[nIndex + eCanRepairM] ); 
+    builder.AddOptionnalField<ADN_TimeField>( pNTIGroup, tr( "Max repair duration" ), vInfosConnectors[nIndex + eHasMaxRepairTime], vInfosConnectors[nIndex + eMaxRepairTime] );
+    builder.AddField<ADN_CheckBox>( pNTIGroup, tr( "Can fix electronic breakdowns" ), vInfosConnectors[nIndex + eCanRepairEA] );
+    builder.AddField<ADN_CheckBox>( pNTIGroup, tr( "Can fix mobility breakdowns" ), vInfosConnectors[nIndex + eCanRepairM] );
 
     return pNTIGroup;
 }
@@ -420,7 +420,7 @@ ADN_Table* ADN_Composantes_GUI::CreateComposanteSpeedsTable()
     pTable->setNumCols( eNbrLocation + 1 );
     pTable->horizontalHeader()->setLabel( 0, tr( "Equipment" ) );
     for( uint n = 0; n < eNbrLocation; ++n )
-		pTable->horizontalHeader()->setLabel( n + 1, ADN_Tr::ConvertFromLocation( (E_Location)n, ADN_Tr::eToTr ).c_str() );
+        pTable->horizontalHeader()->setLabel( n + 1, ADN_Tr::ConvertFromLocation( (E_Location)n, ADN_Tr::eToTr ).c_str() );
     pTable->horizontalHeader()->show();
 
     pTable->setNumRows( data_.vComposantes_.size() + 1 );

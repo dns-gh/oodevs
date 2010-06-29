@@ -56,19 +56,19 @@ QValidator::State ADN_IntValidator::validate( QString& input, int& nPos ) const
 
     QString stripped = input.stripWhiteSpace();
     if( stripped.isEmpty() || (b < 0 && stripped == "-") )
-	    return Intermediate;
+        return Intermediate;
     bool ok;
     long entered = input.toLong( &ok );
-    if ( !ok || (entered < 0 && b >= 0) || entered > t)
+    if( !ok || (entered < 0 && b >= 0) || entered > t)
     {
         this->fixup( input );
         nPos = input.length();
         return Acceptable;
     }
-    else if ( entered < b )
-	    return Intermediate;
+    else if( entered < b )
+        return Intermediate;
     else
-	    return Acceptable;
+        return Acceptable;
 }
 
 
@@ -137,48 +137,48 @@ QValidator::State ADN_DoubleValidator::validate( QString& input, int& nPos ) con
     int d = decimals();
 
     QRegExp empty( QString::fromLatin1(" *-?\\.? *") );
-    if ( b >= 0 &&
-	 input.stripWhiteSpace().startsWith(QString::fromLatin1("-")) )
-	    return Invalid;
-    if ( empty.exactMatch(input) )
-    	return Intermediate;
+    if( b >= 0 &&
+     input.stripWhiteSpace().startsWith(QString::fromLatin1("-")) )
+        return Invalid;
+    if( empty.exactMatch(input) )
+        return Intermediate;
     bool ok = TRUE;
     double entered = input.toDouble( &ok );
     int nume = input.contains( 'e', FALSE );
-    if ( !ok ) 
+    if( !ok )
     {
-	    // explicit exponent regexp
-	    QRegExp expexpexp( QString::fromLatin1("[Ee][+-]?\\d*$") );
-	    int eeePos = expexpexp.search( input );
-	    if ( eeePos > 0 && nume == 1 ) 
+        // explicit exponent regexp
+        QRegExp expexpexp( QString::fromLatin1("[Ee][+-]?\\d*$") );
+        int eeePos = expexpexp.search( input );
+        if( eeePos > 0 && nume == 1 )
         {
-	        QString mantissa = input.left( eeePos );
-	        entered = mantissa.toDouble( &ok );
-	        if ( !ok )
-		    return Invalid;
-	    } 
-        else if ( eeePos == 0 ) 
+            QString mantissa = input.left( eeePos );
+            entered = mantissa.toDouble( &ok );
+            if( !ok )
+            return Invalid;
+        }
+        else if( eeePos == 0 )
             return Intermediate;
-	    else 
+        else
             return Invalid;
     }
 
     int i = input.find( '.' );
-    if ( i >= 0 )
-        if ( d==0 )
+    if( i >= 0 )
+        if( d==0 )
             return Invalid;
-        else if ( nume == 0 ) 
+        else if( nume == 0 )
         {
-	        // has decimal point (but no E), now count digits after that
-	        i++;
-	        int j = i;
-	        while( input[j].isDigit() )
-	            j++;
-	        if ( j - i > d )
-	            return Invalid;
+            // has decimal point (but no E), now count digits after that
+            i++;
+            int j = i;
+            while( input[j].isDigit() )
+                j++;
+            if( j - i > d )
+                return Invalid;
         }
 
-    if ( entered > t )
+    if( entered > t )
     {
         this->fixup( input );
         nPos = input.length();
@@ -187,7 +187,7 @@ QValidator::State ADN_DoubleValidator::validate( QString& input, int& nPos ) con
     else if( entered < b )
         return Intermediate;
     else
-	    return Acceptable;
+        return Acceptable;
 }
 
 

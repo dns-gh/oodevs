@@ -72,9 +72,9 @@ void DEC_PopulationDecision::load( MIL_CheckPointInArchive& file, const unsigned
     file >> pEntity_
          >> rDominationState_
          >> rLastDominationState_;
-   
+
     const DEC_Model_ABC& model = pEntity_->GetType().GetModel();
-    
+
     SetModel( model );
 
     StartDefaultBehavior();
@@ -87,7 +87,7 @@ void DEC_PopulationDecision::load( MIL_CheckPointInArchive& file, const unsigned
 void DEC_PopulationDecision::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     assert( pEntity_ );
-    
+
     file << boost::serialization::base_object< DEC_Decision< MIL_Population  > >( *this )
          << pEntity_
          << rDominationState_
@@ -201,9 +201,9 @@ void DEC_PopulationDecision::RegisterUserFunctions( directia::Brain& brain )
         boost::function< int() >(boost::bind( &DEC_PopulationFunctions::GetAttitude, boost::ref( GetPopulation() ) ) ) );
 
     // Etats decisionnel
-    brain.RegisterFunction( "DEC_Population_ChangeEtatDomination", 
+    brain.RegisterFunction( "DEC_Population_ChangeEtatDomination",
         boost::function<void (MT_Float)>(boost::bind(&DEC_PopulationFunctions::NotifyDominationStateChanged, boost::ref( GetPopulation() ), _1 ) ) );
-    brain.RegisterFunction( "DEC_Population_Morts",                
+    brain.RegisterFunction( "DEC_Population_Morts",
         boost::function<unsigned int()>( boost::bind(&MIL_Population::GetNbrDeadHumans, boost::ref(GetPopulation()) ) ) );
 
     // Representations
@@ -217,7 +217,7 @@ void DEC_PopulationDecision::RegisterUserFunctions( directia::Brain& brain )
         boost::function< void ( boost::shared_ptr< MIL_FragOrder > ) > ( boost::bind( &DEC_MiscFunctions::DeleteOrderRepresentation , boost::ref( GetPopulation() ), _1 ) ) );
     brain.RegisterFunction( "DEC_RemoveFromPointsCategory",
         boost::function< void( boost::shared_ptr< DEC_PathPoint > )>( boost::bind( &DEC_MiscFunctions::RemoveFromPointsCategory, boost::ref( GetPopulation() ), _1 ) ) );
-    
+
     // Former szName_, mission_, automate_:
     brain.RegisterFunction( "DEC_GetSzName",             &DEC_PopulationFunctions::GetSzName       );
     brain.RegisterFunction( "DEC_GetRawMission",         &DEC_PopulationFunctions::GetMission            );
@@ -298,7 +298,7 @@ void DEC_PopulationDecision::NotifyDominationStateChanged( MT_Float rValue )
 
     static const MT_Float rDeltaPercentageForNetwork = 0.05;
     if( fabs( rLastDominationState_ - rDominationState_ ) > rDeltaPercentageForNetwork || rDominationState_ == 0. || rDominationState_ == 1. )
-    {   
+    {
         bStateHasChanged_ = true;
         rLastDominationState_ = rDominationState_;
     }

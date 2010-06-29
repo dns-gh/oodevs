@@ -45,6 +45,6 @@ StartReplay::~StartReplay()
 // -----------------------------------------------------------------------------
 bool StartReplay::Wait()
 {
-    return true; 
+    return true;
 }
 

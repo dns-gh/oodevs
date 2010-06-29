@@ -69,7 +69,7 @@ PHY_RoleAction_IndirectFiring::~PHY_RoleAction_IndirectFiring()
 // Name: PHY_RoleAction_IndirectFiring::serialize
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
-template< typename Archive > 
+template< typename Archive >
 void PHY_RoleAction_IndirectFiring::serialize( Archive& archive , const unsigned int )
 {
     archive & boost::serialization::base_object< tools::Role_ABC >( *this );
@@ -80,7 +80,7 @@ void PHY_RoleAction_IndirectFiring::serialize( Archive& archive , const unsigned
 // Created: NLD 2004-10-11
 // -----------------------------------------------------------------------------
 int PHY_RoleAction_IndirectFiring::Fire( MIL_Effect_IndirectFire* pEffect )
-{   
+{
     if( !pEffect )
         return eImpossible;
 
@@ -89,10 +89,10 @@ int PHY_RoleAction_IndirectFiring::Fire( MIL_Effect_IndirectFire* pEffect )
     if( pEffect->IsInterventionTypeFired() )
         return eFinished;
 
-    if( !pEffect->IsTargetValid() ) 
+    if( !pEffect->IsTargetValid() )
         return eImpossible;
 
-    // Firers  
+    // Firers
     PHY_IndirectFireData firerWeapons( pion_, *pEffect );
     std::auto_ptr< WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer( pion_.GetAlgorithms().weaponAvailabilityComputerFactory_->Create( firerWeapons ) );
     pion_.Execute( *weaponAvailabilityComputer );
@@ -106,14 +106,14 @@ int PHY_RoleAction_IndirectFiring::Fire( MIL_Effect_IndirectFire* pEffect )
         return eNoCapacity;
     }
 
-    // 
+    //
     const PHY_ComposantePion* pFirer         = 0;
     PHY_Weapon*         pFirerWeapon         = 0;
     while( firerWeapons.GetUnusedFirerWeapon( pFirer, pFirerWeapon ) && !pEffect->IsInterventionTypeFired() ) // ready weapons
     {
         if( !pFirerWeapon->IndirectFire( pion_, *pEffect ) )
         {
-            pEffect->ForceFlying(); 
+            pEffect->ForceFlying();
             if( pEffect->GetNbrAmmoFired() )
                 return eFinished;
             else
@@ -144,11 +144,11 @@ void PHY_RoleAction_IndirectFiring::FireSuspended()
 int PHY_RoleAction_IndirectFiring::ThrowSmoke( const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmo )
 {
 
-    
+
     PHY_SmokeData smokeData( pion_, PHY_IndirectFireDotationClass::fumigene_, nNbrAmmo );
     std::auto_ptr< WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer( pion_.GetAlgorithms().weaponAvailabilityComputerFactory_->Create( smokeData ) );
     pion_.Execute( *weaponAvailabilityComputer );
-    
+
     PHY_Weapon* pWeapon = smokeData.GetWeapon();
     if( !pWeapon )
         return eNoCapacity;
@@ -163,11 +163,11 @@ int PHY_RoleAction_IndirectFiring::ThrowSmoke( const MT_Vector2D& vTargetPositio
 // Created: NLD 2006-08-08
 // -----------------------------------------------------------------------------
 const PHY_DotationCategory* PHY_RoleAction_IndirectFiring::GetMunitionForIndirectFire( const PHY_IndirectFireDotationClass& indirectWeaponCategory, const MT_Vector2D& vTargetPosition )
-{  
+{
     PHY_MunitionForIndirectFireData fireData( pion_, indirectWeaponCategory, vTargetPosition );
     std::auto_ptr< WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer( pion_.GetAlgorithms().weaponAvailabilityComputerFactory_->Create( fireData ) );
     pion_.Execute( *weaponAvailabilityComputer );
-    
+
     return fireData.GetChoosenMunition();
 }
 

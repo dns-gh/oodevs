@@ -57,7 +57,7 @@
 #include "ENT/ENT_Tr.h"
 
 //-----------------------------------------------------------------------------
-// Internal Canvas connector 
+// Internal Canvas connector
 //-----------------------------------------------------------------------------
 class ADN_GC_Ph
     : public ADN_Connector_Vector_ABC
@@ -111,13 +111,13 @@ private:
 };
 
 
-class ADN_GC_PhSize 
+class ADN_GC_PhSize
     : public ADN_Connector_Graph_ABC
 {
     MT_COPYNOTALLOWED( ADN_GC_PhSize )
 
 public:
-    ADN_GC_PhSize( ADN_Graph& graph ) 
+    ADN_GC_PhSize( ADN_Graph& graph )
         : ADN_Connector_Graph_ABC( graph )
     {}
 
@@ -307,7 +307,7 @@ void ADN_Weapons_GUI::Build()
         pModifiersLayout->addWidget( pTargetPostureCombo );
         pModifiersLayout->addWidget( pExperienceCombo );
         pModifiersLayout->addWidget( pTirednessCombo );
-     
+
         QHBoxLayout* pSimulationLayout = new QHBoxLayout( pSimulation->layout(), 2 );
         pSimulationLayout->addWidget( pModifiersHolder );
 
@@ -433,7 +433,7 @@ ADN_Table* ADN_Weapons_GUI::CreatePHTable()
             // Make sure empty cells are non-editable.
             ADN_Weapons_Data::T_PhInfosVector& phs = (*it2)->vPhs_;
             for( int nn = 2; nn < 2 + (int)distancesSet.size(); ++nn )
-            {    
+            {
                 QTableItem* pNonEditableDummy = new QTableItem( pTable, QTableItem::Never );
                 pTable->setItem( nRow + nSubRow, nn, pNonEditableDummy );
             }

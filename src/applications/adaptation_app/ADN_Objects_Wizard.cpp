@@ -35,7 +35,7 @@ ADN_Objects_Wizard::ADN_Objects_Wizard( QWidget* pParent, const char* szName )
     pFirstPage->SetCaptions( qApp->translate( "ADN_Objects_Wizard", "New object creation" ), qApp->translate( "ADN_Objects_Wizard", "Object" ) );
     pFirstPage_ = pFirstPage;
 
-    new ADN_Wizard_LastPage( this, qApp->translate( "ADN_Objects_Wizard",  "Creation finished" ), 
+    new ADN_Wizard_LastPage( this, qApp->translate( "ADN_Objects_Wizard",  "Creation finished" ),
         qApp->translate( "ADN_Objects_Wizard", "Click \"Done\" to create the new object." ) );
 }
 

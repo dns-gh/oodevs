@@ -32,7 +32,7 @@ class TER_PathFindRequest_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    //! @name 
+    //! @name
     //@{
              TER_PathFindRequest_ABC() {};
     virtual ~TER_PathFindRequest_ABC() {};

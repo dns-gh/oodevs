@@ -31,10 +31,10 @@ class ADN_ObjectCreator_ABC;
 class ADN_ListView
 : public QListView
 , public ADN_Gfx_ABC
-{   
+{
     Q_OBJECT
     friend ADN_Connector_ListView_ABC;
-    
+
 public:
     explicit ADN_ListView( QWidget* pParent = 0, const char* szName = 0, WFlags f = 0 );
     virtual ~ADN_ListView();
@@ -57,7 +57,7 @@ public slots:
 
 protected:
     virtual void ConnectItem( bool /*bConnect*/ ){}// = 0;
-   
+
     void keyReleaseEvent( QKeyEvent* pEvent );
 
     virtual void OnContextMenu( const QPoint& pt );

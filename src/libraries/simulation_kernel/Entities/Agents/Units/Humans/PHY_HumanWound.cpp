@@ -259,7 +259,7 @@ unsigned int PHY_HumanWound::GetContaminatedRestingTime()
 {
     return nContaminatedRestingTime_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_HumanWound::GetMentalDiseasedHealingTime
 // Created: NLD 2005-01-12
@@ -305,7 +305,7 @@ const PHY_HumanWound* PHY_HumanWound::Find( Common::EnumHumanWound nAsnID )
 {
     CIT_HumanWoundMap it = std::find_if( humanWounds_.begin(), humanWounds_.end(), std::compose1( std::bind2nd( std::equal_to< Common::EnumHumanWound >(), nAsnID ), std::compose1( std::mem_fun( &PHY_HumanWound::GetAsnID ), std::select2nd< T_HumanWoundMap::value_type >() ) ) );
 
-    return it == humanWounds_.end() ? 0 : it->second;   
+    return it == humanWounds_.end() ? 0 : it->second;
 }
 
 // -----------------------------------------------------------------------------
@@ -316,7 +316,7 @@ const PHY_HumanWound* PHY_HumanWound::Find( unsigned int nID )
 {
     CIT_HumanWoundMap it = std::find_if( humanWounds_.begin(), humanWounds_.end(), std::compose1( std::bind2nd( std::equal_to< unsigned int >(), nID ), std::compose1( std::mem_fun( &PHY_HumanWound::GetID ), std::select2nd< T_HumanWoundMap::value_type >() ) ) );
 
-    return it == humanWounds_.end() ? 0 : it->second;    
+    return it == humanWounds_.end() ? 0 : it->second;
 }
 
 // -----------------------------------------------------------------------------

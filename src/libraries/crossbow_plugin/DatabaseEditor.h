@@ -35,7 +35,7 @@ public:
     virtual ~DatabaseEditor();
     //@}
 
-    //! @name 
+    //! @name
     //@{
     bool InTransaction() const;
     void BeginTransaction();

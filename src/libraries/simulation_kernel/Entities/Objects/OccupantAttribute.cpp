@@ -58,7 +58,7 @@ OccupantAttribute& OccupantAttribute::operator=( const OccupantAttribute& rhs )
 // Name: OccupantAttribute::serialize
 // Created: JCR 2008-07-03
 // -----------------------------------------------------------------------------
-template< typename Archive > 
+template< typename Archive >
 void OccupantAttribute::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectAttribute_ABC >( *this );
@@ -85,7 +85,7 @@ void OccupantAttribute::AddOccupant( const MIL_Agent_ABC& agent )
     else
         throw std::exception( "try to use an object already occupied" );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: OccupantAttribute::ReleaseOccupant
 // Created: JCR 2008-06-05

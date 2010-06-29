@@ -58,10 +58,10 @@ void MIL_KnowledgeGroupType::ReadKnowledgeGroup( xml::xistream& xis, double time
 {
     std::string strName;
     std::string strType;
-    
+
 
     xis >> xml::attribute( "name", strName );
-    
+
 
     const MIL_KnowledgeGroupType*& pType = knowledgeGroupTypes_[ strName ];
     if( pType )

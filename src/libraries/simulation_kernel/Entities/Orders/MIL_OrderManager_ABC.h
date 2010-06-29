@@ -34,15 +34,15 @@ public:
    // @name Main
     virtual void Update();
     //@}
- 
-    // @name Events 
+
+    // @name Events
     //@{
     void ReplaceMission( boost::shared_ptr< MIL_Mission_ABC > pMission  ); // asynchronous
     void CancelMission(); // asynchronous
     virtual void StopAllMissions(); // synchronous
     //@}
 
-    // @name Accessors 
+    // @name Accessors
     //@{
           virtual MIL_LimaOrder* FindLima             ( const MIL_LimaFunction& function ) const;
           virtual MIL_LimaOrder* FindLima             ( unsigned int nID ) const;

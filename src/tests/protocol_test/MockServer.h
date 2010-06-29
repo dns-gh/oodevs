@@ -105,7 +105,7 @@ public:
     mockpp::ChainableMockMethod< void, const std::string, const std::string > ConnectionFailed_mocker;
     mockpp::ChainableMockMethod< void, const std::string, const std::string > ConnectionError_mocker;
     //@}
-    
+
 private:
     //! @name Member data
     //@{

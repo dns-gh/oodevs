@@ -30,7 +30,7 @@ ObstacleAttribute::ObstacleAttribute( const Common::MsgObjectAttributes& message
 ObstacleAttribute::~ObstacleAttribute()
 {
     // NOTHING
-}  
+}
 
 // -----------------------------------------------------------------------------
 // Name: ObstacleAttribute::Update

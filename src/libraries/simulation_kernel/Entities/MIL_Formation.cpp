@@ -47,7 +47,7 @@ MIL_Formation::MIL_Formation( xml::xistream& xis, MIL_Army_ABC& army, MIL_Format
 
 
     xis >> xml::list( "formation", *this, &MIL_Formation::InitializeFormation, formationFactory )
-        >> xml::list( "automat", *this, &MIL_Formation::InitializeAutomate, automateFactory ); 
+        >> xml::list( "automat", *this, &MIL_Formation::InitializeAutomate, automateFactory );
 }
 
 // -----------------------------------------------------------------------------
@@ -109,7 +109,7 @@ namespace boost
         {
             split_free( file, map, version );
         }
-        
+
         template< typename Archive >
         void save( Archive& file, const std::map< unsigned int, MIL_Intelligence* >& map, const unsigned int )
         {
@@ -118,7 +118,7 @@ namespace boost
             for( std::map< unsigned int, MIL_Intelligence* >::const_iterator it = map.begin(); it != map.end(); ++it )
                 file << it->first << it->second;
         }
-        
+
         template< typename Archive >
         void load( Archive& file, std::map< unsigned int, MIL_Intelligence* >& map, const unsigned int )
         {

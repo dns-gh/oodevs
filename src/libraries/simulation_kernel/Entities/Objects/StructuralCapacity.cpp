@@ -109,7 +109,7 @@ void StructuralCapacity::ApplyIndirectFire( const MIL_Object_ABC& object, const 
     if( !urbanObjectArea )
         return;
     geometry::Polygon2f attritionPolygon;
-    attritionPolygon.Add( geometry::Point2f( float( attritionSurface.GetMajorAxisHighPoint().rX_ + attritionSurface.GetMinorAxisHighPoint().rX_ - attritionSurface.GetCenter().rX_ ), 
+    attritionPolygon.Add( geometry::Point2f( float( attritionSurface.GetMajorAxisHighPoint().rX_ + attritionSurface.GetMinorAxisHighPoint().rX_ - attritionSurface.GetCenter().rX_ ),
         float( attritionSurface.GetMajorAxisHighPoint().rY_ + attritionSurface.GetMinorAxisHighPoint().rY_ - attritionSurface.GetCenter().rY_ ) ) );
     attritionPolygon.Add( geometry::Point2f( float( attritionSurface.GetMajorAxisHighPoint().rX_ - attritionSurface.GetMinorAxisHighPoint().rX_ + attritionSurface.GetCenter().rX_ ),
         float( attritionSurface.GetMajorAxisHighPoint().rY_ - attritionSurface.GetMinorAxisHighPoint().rY_ + attritionSurface.GetCenter().rY_ ) ) );
@@ -127,7 +127,7 @@ void StructuralCapacity::ApplyIndirectFire( const MIL_Object_ABC& object, const 
     float modifier = float( dotation.GetAttrition( object.GetMaterial() ) );
 
     structuralState_ -= ratio * modifier;
-    if( structuralState_  < 0 ) 
+    if( structuralState_  < 0 )
         structuralState_ = 0;
 }
 

@@ -85,7 +85,7 @@ private:
     std::auto_ptr< svg::References >        references_;
     std::auto_ptr< svg::RenderingContext >  renderingContext_;
     std::auto_ptr< svg::ListLengthFactory > listLenghts_;
-    
+
     T_Lists                                 lists_;
     unsigned                                colorList_;
     geometry::Rectangle2f previousViewport_;

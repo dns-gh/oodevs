@@ -32,7 +32,7 @@ PHY_ActionDirectFirePion_ABC::PHY_ActionDirectFirePion_ABC( MIL_AgentPion& pion,
     , nComposanteFiringType_      ( nComposanteFiringType )
     , nComposanteFiredType_       ( nComposanteFiredType  )
     , pAmmoDotationClass_         ( 0 )
-    , pFireResult_                ( 0 )  
+    , pFireResult_                ( 0 )
 {
     if( ammoDotationClass != -1 ) // $$$$ LDC FIXME Varargs hidden here...
        pAmmoDotationClass_ = PHY_AmmoDotationClass::Find( ammoDotationClass );

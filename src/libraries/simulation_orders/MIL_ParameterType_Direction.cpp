@@ -21,7 +21,7 @@ MIL_ParameterType_Direction::MIL_ParameterType_Direction( const std::string& nam
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_Direction destructor
 // Created: SBO 2006-11-27
@@ -30,7 +30,7 @@ MIL_ParameterType_Direction::~MIL_ParameterType_Direction()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_Direction::Copy
 // Created: SBO 2006-11-27

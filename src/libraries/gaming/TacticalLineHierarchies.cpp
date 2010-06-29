@@ -46,7 +46,7 @@ TacticalLineHierarchies::TacticalLineHierarchies( Controller& controller, Entity
     superiorIsAutomat_ = dynamic_cast< const Automat_ABC* >( &superior ) != 0;
     SetSuperior( &superior );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: TacticalLineHierarchies destructor
 // Created: SBO 2006-11-14

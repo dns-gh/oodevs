@@ -46,7 +46,7 @@ public:
     const Karma& operator!() const;
     bool operator<( const Karma& rhs ) const;
     bool operator==( const Karma& rhs ) const;
-    
+
     static const Karma& ResolveId  ( const std::string& id );
     static const Karma& ResolveName( const QString& name );
     //@}

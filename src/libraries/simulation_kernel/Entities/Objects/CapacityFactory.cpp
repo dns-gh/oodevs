@@ -43,11 +43,11 @@
 #include <xeumeuleu/xml.h>
 #include <boost/bind.hpp>
 
-namespace 
+namespace
 {
     template< typename T >
     struct AddBuilder
-    {    
+    {
         static void Add( ObjectPrototype& prototype, xml::xistream& xis )
         {
             prototype.AddCapacity( new T( xis ) );
@@ -63,9 +63,9 @@ namespace
     void AddPropagation( ObjectPrototype& prototype, xml::xistream& xis, MIL_PropagationManager& propagation )
     {
         std::string model( xml::attribute( xis, "model", std::string() ) );
-        if ( model == "input" )
+        if( model == "input" )
             prototype.AddCapacity< PropagationCapacity_ABC >( new InputPropagationCapacity( xis ) );
-        if ( model == "fire" )
+        if( model == "fire" )
             prototype.AddCapacity< PropagationCapacity_ABC >( new FirePropagationCapacity( xis, propagation ) );
     }
 }
@@ -75,7 +75,7 @@ namespace
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 CapacityFactory::CapacityFactory()
-    : propagation_ ( new MIL_PropagationManager() ) 
+    : propagation_ ( new MIL_PropagationManager() )
 {
     Register( "activable", boost::bind( &AddBuilder< ActivableCapacity >::Add, _1, _2 ) );
     Register( "attrition", boost::bind( &AddBuilder< AttritionCapacity >::Add, _1, _2 ) );
@@ -122,7 +122,7 @@ CapacityFactory::~CapacityFactory()
 // -----------------------------------------------------------------------------
 void CapacityFactory::Register( const std::string& capacity, const T_CallBack& callback )
 {
-    if ( ! callbacks_.insert( std::make_pair( capacity, callback ) ).second )
+    if( ! callbacks_.insert( std::make_pair( capacity, callback ) ).second )
         throw std::invalid_argument( "capacity '" + capacity + "' already registered." );
 }
 
@@ -133,7 +133,7 @@ void CapacityFactory::Register( const std::string& capacity, const T_CallBack& c
 void CapacityFactory::Create( ObjectPrototype& prototype, const std::string& capacity, xml::xistream& xis )
 {
     const CIT_Callbacks it = callbacks_.find( capacity );
-    if ( it != callbacks_.end() )
+    if( it != callbacks_.end() )
         it->second( prototype, xis );
 }
 

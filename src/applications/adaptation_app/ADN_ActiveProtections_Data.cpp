@@ -64,7 +64,7 @@ void ADN_ActiveProtections_Data::FilesNeeded( T_StringList& vFiles) const
 {
    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szActiveProtections_.GetData() );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_ActiveProtections_Data::Reset
 // Created: LDC 2010-01-13
@@ -130,7 +130,7 @@ ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::ActiveProtectionsInfo
 void ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::ReadArchive( xml::xistream& xis )
 {
     std::string strAmmunition;
-    xis >> xml::attribute( "name", strAmmunition) 
+    xis >> xml::attribute( "name", strAmmunition)
         >> xml::attribute( "coefficient", coefficient_ );
 
     ADN_Equipement_Data::CategoryInfo* pWeapon = ADN_Workspace::GetWorkspace().GetEquipements().GetData().FindEquipementCategory( "munition", strAmmunition );
@@ -145,7 +145,7 @@ void ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::ReadArchive( xml
 // Created: FDS 2010-02-24
 // -----------------------------------------------------------------------------
 void ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::WriteArchive( xml::xostream& xos )
-{    
+{
     xos << xml::start( "weapon" )
         << xml::attribute( "name", ptrWeapon_.GetData()->strName_ )
         << xml::attribute( "coefficient", coefficient_)
@@ -214,7 +214,7 @@ void ADN_ActiveProtections_Data::ActiveProtectionsInfos::ReadArchive( xml::xistr
 
     ADN_Equipement_Data::CategoryInfo* pAmmo = ADN_Workspace::GetWorkspace().GetEquipements().GetData().FindEquipementCategory( "munition", strAmmunition );
     if( !pAmmo )
-		throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Active protection '%1' - Invalid ammunition type '%2'" ).arg( strName_.GetData().c_str() ,strAmmunition.c_str() ).ascii() );
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Active protection '%1' - Invalid ammunition type '%2'" ).arg( strName_.GetData().c_str() ,strAmmunition.c_str() ).ascii() );
     ptrAmmunition_ = (ADN_Equipement_Data::AmmoCategoryInfo*)pAmmo;
 }
 

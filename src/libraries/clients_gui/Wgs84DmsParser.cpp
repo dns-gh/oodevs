@@ -24,7 +24,7 @@ Wgs84DmsParser::Wgs84DmsParser( const kernel::CoordinateConverter_ABC& converter
 : converter_( converter )
 , numParameters_( 2 )
 {
-	// NOTHING
+    // NOTHING
 }
 // -----------------------------------------------------------------------------
 // Name: Wgs84DmsParser destructor
@@ -32,7 +32,7 @@ Wgs84DmsParser::Wgs84DmsParser( const kernel::CoordinateConverter_ABC& converter
 // -----------------------------------------------------------------------------
 Wgs84DmsParser::~Wgs84DmsParser()
 {
-	// NOTHING
+    // NOTHING
 }
 // -----------------------------------------------------------------------------
 // Name: Wgs84DmsParser::Parse
@@ -41,15 +41,15 @@ Wgs84DmsParser::~Wgs84DmsParser()
 bool Wgs84DmsParser::Parse( QString content, geometry::Point2f& result, QStringList& hint ) const
 {
     try
-    {  
+    {
         QStringList listValue = QStringList::split( ":", content );
         bool formatCoordX, formatCoordY = false;
         QString hintx, hinty;
         formatCoordX = FormatDmsCoordinate( listValue[ 0 ].stripWhiteSpace(), true, hintx );
-        if ( formatCoordX )
+        if( formatCoordX )
         formatCoordY = FormatDmsCoordinate( listValue[ 1 ].stripWhiteSpace(), false, hinty );
-    
-        if ( formatCoordX && formatCoordY )
+
+        if( formatCoordX && formatCoordY )
         {
             result = converter_.ConvertFromGeoDms( hintx.ascii(), hinty.ascii() );
             hint.append( hintx );
@@ -73,7 +73,7 @@ bool Wgs84DmsParser::FormatDmsCoordinate( const QString content, bool longitude,
     QString coordValue = content.stripWhiteSpace().upper();
     coordValue.replace('°',' ');
     coordValue.replace('\'',' ');
-    if ( coordValue.find( "S" ) >= 0 || coordValue.find( "W" ) >= 0 )
+    if( coordValue.find( "S" ) >= 0 || coordValue.find( "W" ) >= 0 )
       coordValue += "-";
     coordValue.replace( 'N', ' ' );
     coordValue.replace( 'S', ' ' );
@@ -81,12 +81,12 @@ bool Wgs84DmsParser::FormatDmsCoordinate( const QString content, bool longitude,
     coordValue.replace( 'W', ' ' );
 
     QStringList listParameters = QStringList::split( " ", coordValue );
-    if ( listParameters.count() != 3 )
+    if( listParameters.count() != 3 )
       return false;
 
     bool ok = true;
     int value;
-    if ( longitude )  value = 180; else value = 90;
+    if( longitude )  value = 180; else value = 90;
 
     int deg_lat = listParameters[0].toInt( &ok );
     if(!ok || deg_lat < -value || deg_lat > value ) return false;
@@ -96,17 +96,17 @@ bool Wgs84DmsParser::FormatDmsCoordinate( const QString content, bool longitude,
     if(!ok || sec_lat < 0 || sec_lat >= 60) return false;
 
     const char* finalParameter;
-    if ( longitude )
-      if ( deg_lat < 0 )
+    if( longitude )
+      if( deg_lat < 0 )
         finalParameter = "W";
       else
         finalParameter = "E";
     else
-      if ( deg_lat < 0 )
+      if( deg_lat < 0 )
         finalParameter = "S";
       else
         finalParameter = "N";
-      
+
     hint.sprintf( "%02d° %02d' %02d.%02d %s", abs(deg_lat), min_lat, (int)sec_lat, (int)(sec_lat - floor(sec_lat) )*100, finalParameter ) ;
     return true;
 }

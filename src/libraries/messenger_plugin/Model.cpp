@@ -82,11 +82,11 @@ namespace
 void Model::Save( const std::string& name ) const
 {
     const std::string directory = config_.GetCheckpointDirectory( name );
-    
+
     ::_mkdir( directory.c_str() );
 
     xml::xofstream xos( GetCheckPointFileName( directory ) );
-    
+
     std::map< unsigned int, std::set< const Entity_ABC* > > formations;
     std::map< unsigned int, std::set< const Entity_ABC* > > automats;
 

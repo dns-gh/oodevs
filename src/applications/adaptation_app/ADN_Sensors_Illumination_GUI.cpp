@@ -30,7 +30,7 @@ class ADN_CT_Sensors_Illuminations
 {
 public:
 
-    ADN_CT_Sensors_Illuminations(ADN_Sensors_Illumination_GUI& tab) 
+    ADN_CT_Sensors_Illuminations(ADN_Sensors_Illumination_GUI& tab)
     : ADN_Connector_Table_ABC(tab,false)
     {}
 
@@ -44,7 +44,7 @@ public:
         // add a new row & set new values
         tab_.setItem(i,0,pItemString=new ADN_TableItem_String(&tab_,obj));
         tab_.setItem(i,1,pItemDouble=new ADN_TableItem_Double(&tab_,obj));
-        
+
         // disable first column
         pItemString->setEnabled(false);
         std::string strTmp = ADN_Tr::ConvertFromTimeCategory(static_cast<ModificatorIlluminationInfos*>(obj)->eType_,ENT_Tr_ABC::eToTr);
@@ -56,7 +56,7 @@ public:
         // connect items & datas
         pItemDouble->GetConnector().Connect(&static_cast<ModificatorIlluminationInfos*>(obj)->rCoeff_);
     }
-    
+
 
 private:
     ADN_CT_Sensors_Illuminations& operator=( const ADN_CT_Sensors_Illuminations& );
@@ -76,17 +76,17 @@ ADN_Sensors_Illumination_GUI::ADN_Sensors_Illumination_GUI(QWidget * parent )
     setSelectionMode(QTable::NoSelection);
     setShowGrid(false);
     setLeftMargin(0);
-    
+
     // hide vertical header
     verticalHeader()->hide();
-    
+
     // tab with 2 columns
     setNumCols(2);
     setNumRows(0);
     setColumnStretchable(0,true);
     setColumnStretchable(1,true);
     setMaximumWidth( 300 );
-    
+
     horizontalHeader()->setLabel(0, tr( "Illumination" ) );
     horizontalHeader()->setLabel(1, tr( "Modifiers" ) );
 
@@ -115,5 +115,5 @@ void ADN_Sensors_Illumination_GUI::OnCurrentChanged()
 {
     if( ModificatorIlluminationInfos* data = static_cast< ModificatorIlluminationInfos* >( GetCurrentData() ) )
          emit IlluminationChanged( data->GetItemName(), data->rCoeff_.GetData() );
-        
+
 }

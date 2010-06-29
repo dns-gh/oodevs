@@ -21,7 +21,7 @@ namespace gui
 */
 // Created: SBO 2007-07-02
 // =============================================================================
-class GradientItem : public QCanvasLine 
+class GradientItem : public QCanvasLine
 {
 
 public:

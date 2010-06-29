@@ -23,7 +23,7 @@ namespace
     public:
         PopulationPathInserter( DEC_Path_KnowledgePopulation& container )
             : container_ ( container ) {}
-    
+
         void Visit( const MIL_PopulationElement_ABC& element )
         {
             if( ! element.IsDead() ) // only keep alive elements

@@ -68,7 +68,7 @@ public:
     void Update( const MsgsAuthenticationToClient::MsgAuthenticationResponse& message );
     void Update( const Model& model, const MsgsAuthenticationToClient::MsgProfileUpdate& message );
     //@}
-    
+
     //! @name Accessors
     //@{
     QString GetLogin() const;
@@ -121,7 +121,7 @@ private:
     virtual void NotifyDeleted( const kernel::Formation_ABC& formation );
     virtual void NotifyUpdated( const Simulation& simulation );
     virtual void NotifyUpdated( const Services& services );
-    
+
     void Add   ( const kernel::Entity_ABC& entity, const T_Ids& readIds, const T_Ids& readWriteIds );
     void Remove( const kernel::Entity_ABC& entity );
     static bool IsInHierarchy( const kernel::Entity_ABC& entity, const T_Entities& entities, bool childOnly );

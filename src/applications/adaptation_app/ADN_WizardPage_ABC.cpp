@@ -33,7 +33,7 @@ ADN_WizardPage_ABC::ADN_WizardPage_ABC( QWizard* pParent, const char* name, cons
 , pWizard_      ( pParent )
 {
     setSpacing( 30 );
-    
+
     pImage_ = new ADN_ImageViewer( imageName, true, this );
     pImage_->setFixedSize( 131, 324 );
 

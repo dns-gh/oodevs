@@ -35,7 +35,7 @@ NBCAttribute::NBCAttribute( xml::xistream& xis, const tools::Resolver_ABC< kerne
     : state_ ( "gaseous" )
 {
     xis >> xml::optional() >> xml::attribute( "state", state_ );
-    xis >> list( "nbc-agent", *this, &NBCAttribute::ReadNbcAgent, nbcAgents );        
+    xis >> list( "nbc-agent", *this, &NBCAttribute::ReadNbcAgent, nbcAgents );
     CreateDictionary( dico );
 }
 
@@ -104,7 +104,7 @@ void NBCAttribute::SetDanger( const unsigned int value )
 // Created: SBO 2006-09-15
 // -----------------------------------------------------------------------------
 void NBCAttribute::SerializeAttributes( xml::xostream& xos ) const
-{    
+{
     xos << start( "nbc-agents" );
     if( state_ != "" )
         xos << xml::attribute( "state", state_ );
@@ -124,5 +124,5 @@ void NBCAttribute::SerializeAttributes( xml::xostream& xos ) const
 void NBCAttribute::CreateDictionary( kernel::PropertiesDictionary& dico )
 {
     dico.Register( *this, tools::translate( "NBCAttribute", "Info/NBC attributes/NBC state" ), state_ );
-    dico.Register( *this, tools::translate( "NBCAttribute", "Info/NBC attributes/NBC agents" ), agents_ );    
+    dico.Register( *this, tools::translate( "NBCAttribute", "Info/NBC attributes/NBC agents" ), agents_ );
 }

@@ -56,7 +56,7 @@ DEC_PathPoint::~DEC_PathPoint()
 //-----------------------------------------------------------------------------
 bool DEC_PathPoint::IsInObject( const TerrainData& data ) const
 {
-    return nObjectTypes_.ContainsAll( data ); 
+    return nObjectTypes_.ContainsAll( data );
 }
 
 
@@ -66,7 +66,7 @@ bool DEC_PathPoint::IsInObject( const TerrainData& data ) const
 //-----------------------------------------------------------------------------
 bool DEC_PathPoint::WillBeInObject( const TerrainData& data ) const
 {
-    return nObjectTypesToNextPoint_.ContainsAll( data ); 
+    return nObjectTypesToNextPoint_.ContainsAll( data );
 }
 
 //-----------------------------------------------------------------------------
@@ -93,9 +93,9 @@ void DEC_PathPoint::RemoveFromDIA( boost::shared_ptr< DEC_PathPoint > self )
 // -----------------------------------------------------------------------------
 void DEC_PathPoint::Dump() const
 {
-    std::cout << "    PathPoint " << vPos_ 
-              << " - Type : " << nObjectTypes_.DumpToString() 
-              << " - TypeToNext " << nObjectTypesToNextPoint_.DumpToString() 
+    std::cout << "    PathPoint " << vPos_
+              << " - Type : " << nObjectTypes_.DumpToString()
+              << " - TypeToNext " << nObjectTypesToNextPoint_.DumpToString()
               << std::endl;
 }
 

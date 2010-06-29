@@ -21,7 +21,7 @@ MIL_ParameterType_EquipmentType::MIL_ParameterType_EquipmentType()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_EquipmentType destructor
 // Created: SBO 2006-11-27

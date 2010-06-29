@@ -59,7 +59,7 @@ crossbow::Area::~Area()
 OGRPolygon* crossbow::Area::Extract( OGRSpatialReference* spatialReference ) const
 {
     OGRPolygon* geometry = new OGRPolygon();
-    
+
     geometry->assignSpatialReference( spatialReference );
     OGRLinearRing* ring = static_cast< OGRLinearRing* >( PointCollection::Extract( new OGRLinearRing(), spatialReference ) );
     // ring->closeRing();

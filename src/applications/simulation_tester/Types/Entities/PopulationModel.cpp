@@ -32,7 +32,7 @@ PopulationModel::PopulationModel( const std::string& strName, XmlInputArchive& a
     : strName_      ( strName )
     , missionTypes_ ()
 {
-    try   
+    try
     {
         std::string strValue;
 

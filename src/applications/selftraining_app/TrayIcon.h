@@ -21,29 +21,29 @@ public:
     virtual ~TrayIcon();
 
     // Set a popup menu to handle RMB
-    void		setPopup( QPopupMenu * );
-    QPopupMenu*		popup() const;
+    void        setPopup( QPopupMenu * );
+    QPopupMenu*        popup() const;
 
-    QPixmap		icon() const;
-    QString		toolTip() const;
+    QPixmap        icon() const;
+    QString        toolTip() const;
 
 public slots:
-    void		setIcon( const QPixmap &icon );
-    void		setToolTip( const QString &tip );
+    void        setIcon( const QPixmap &icon );
+    void        setToolTip( const QString &tip );
 
-    void		show();
-    void		hide();
+    void        show();
+    void        hide();
 
 signals:
-    void		clicked( const QPoint& );
-    void		doubleClicked( const QPoint& );
+    void        clicked( const QPoint& );
+    void        doubleClicked( const QPoint& );
 
 protected:
-    bool		event( QEvent * );
-    virtual void	mouseMoveEvent( QMouseEvent *e );
-    virtual void	mousePressEvent( QMouseEvent *e );
-    virtual void	mouseReleaseEvent( QMouseEvent *e );
-    virtual void	mouseDoubleClickEvent( QMouseEvent *e );
+    bool        event( QEvent * );
+    virtual void    mouseMoveEvent( QMouseEvent *e );
+    virtual void    mousePressEvent( QMouseEvent *e );
+    virtual void    mouseReleaseEvent( QMouseEvent *e );
+    virtual void    mouseDoubleClickEvent( QMouseEvent *e );
 
 private:
     QPopupMenu *pop;

@@ -103,7 +103,7 @@ public:
     virtual bool ToMedicalPriorities( T_MedicalPriorityVector& ) const;
     virtual bool ToObjectiveList( std::vector< boost::shared_ptr< DEC_Objective > >& ) const;
     virtual bool ToUrbanBlock( boost::shared_ptr< DEC_Knowledge_Urban >& ) const;
-    
+
     virtual void Append( boost::shared_ptr< TER_Localisation > pLocation );
     virtual void Append( boost::shared_ptr< DEC_Knowledge_Object > pKnowledgeObject );
     virtual void Append( boost::shared_ptr< DEC_Gen_Object > pKnowledgeObject );

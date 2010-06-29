@@ -33,7 +33,7 @@ public:
     //@}
 
 public:
-    //! @name 
+    //! @name
     //@{
     static const PHY_Morale mauvais_;
     static const PHY_Morale moyen_;

@@ -56,7 +56,7 @@ StockAttribute::StockAttribute( const PHY_DotationCategory& dotation, uint nFull
 // -----------------------------------------------------------------------------
 void StockAttribute::LoadDotation( xml::xistream& xis )
 {
-    const PHY_DotationCategory* dotation = PHY_DotationType::FindDotationCategory( xml::attribute< std::string >( xis, "type" ) ); 
+    const PHY_DotationCategory* dotation = PHY_DotationType::FindDotationCategory( xml::attribute< std::string >( xis, "type" ) );
     if( dotation )
     {
         uint current = xml::attribute< uint >( xis, "current" );
@@ -119,12 +119,12 @@ void StockAttribute::load( MIL_CheckPointInArchive& ar, const uint )
         ar >> type
            >> current >> max;
         const PHY_DotationCategory* dotation = PHY_DotationType::FindDotationCategory( type );
-        if ( !dotation )
-           throw std::runtime_error( "Unknown dotation category - " + type + " - " ); 
+        if( !dotation )
+           throw std::runtime_error( "Unknown dotation category - " + type + " - " );
 
     }
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: StockAttribute::save
 // Created: JCR 2008-09-15
@@ -138,7 +138,7 @@ void StockAttribute::save( MIL_CheckPointOutArchive& ar, const uint ) const
     {
         ar << it->first->GetName()
            << it->second.first << it->second.second;
-    }    
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -146,7 +146,7 @@ void StockAttribute::save( MIL_CheckPointOutArchive& ar, const uint ) const
 // Created: JCR 2008-06-05
 // -----------------------------------------------------------------------------
 void StockAttribute::WriteODB( xml::xostream& xos ) const
-{    
+{
     xos << xml::start( "stock" );
     for ( CIT_DotationProgress it = stock_.begin(); it != stock_.end(); ++it )
     {
@@ -213,14 +213,14 @@ void StockAttribute::OnUpdate( const Common::MsgObjectAttributes& asn )
     }
 }
 
-namespace 
+namespace
 {
     struct IsFullPredicate
     {
-        template< typename T > 
+        template< typename T >
         bool operator()( const T& it ) const
         {
-            return it.second.first < it.second.second; 
+            return it.second.first < it.second.second;
         }
     };
 }
@@ -256,30 +256,30 @@ uint StockAttribute::Distribute( const PHY_DotationCategory& category, uint quan
     typedef T_DotationProgress::iterator IT_DotationProgress;
 
     IT_DotationProgress it = stock_.find( &category );
-    if ( it == stock_.end() )
+    if( it == stock_.end() )
         return 0;
-    
+
     uint stock = it->second.first;
     it->second.first = stock - std::min( quantity, stock );
     return it->second.first - stock;
 }
 
-namespace 
+namespace
 {
     struct SelectPredicate
     {
-        explicit SelectPredicate( std::vector< std::pair< const PHY_DotationCategory*, uint > >& selection, bool select_full ) 
+        explicit SelectPredicate( std::vector< std::pair< const PHY_DotationCategory*, uint > >& selection, bool select_full )
             : selection_ ( selection )
             , select_full_ ( select_full )
         {
         }
 
-        template< typename T > 
+        template< typename T >
         void operator()( const T& it ) const
         {
             IsFullPredicate is_full;
-            if ( select_full_ || ! is_full( it ) )
-                selection_.push_back( std::make_pair( it.first, it.second.second - it.second.first ) ); 
+            if( select_full_ || ! is_full( it ) )
+                selection_.push_back( std::make_pair( it.first, it.second.second - it.second.first ) );
         }
 
         std::vector< std::pair< const PHY_DotationCategory*, uint >>& selection_;

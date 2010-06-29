@@ -21,7 +21,7 @@
 // -----------------------------------------------------------------------------
 MIL_AgentTypePionLOGConvoy::MIL_AgentTypePionLOGConvoy( const std::string& strName, xml::xistream& xis )
     : MIL_AgentTypePionLOG_ABC( strName, xis )
-{ 
+{
     // $$$ ?? Checker que le type ne contient aucun equipement ?
 }
 

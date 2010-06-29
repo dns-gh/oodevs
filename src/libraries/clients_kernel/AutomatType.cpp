@@ -72,7 +72,7 @@ tools::Iterator< const AutomatComposition& > AutomatType::CreateIterator() const
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
 const AgentType* AutomatType::GetTypePC() const
-{   
+{
     return pcType_;
 }
 

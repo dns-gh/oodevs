@@ -50,7 +50,7 @@ public:
     //@}
 
 public slots:
-    //! @name 
+    //! @name
     //@{
     void SlotSpeedChange();
     //@}

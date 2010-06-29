@@ -156,7 +156,7 @@ void Formation::Accept( kernel::ModelVisitor_ABC& visitor ) const
 // -----------------------------------------------------------------------------
 const kernel::HierarchyLevel_ABC& Formation::GetLevel() const
 {
-    return level_; 
+    return level_;
 }
 
 // -----------------------------------------------------------------------------

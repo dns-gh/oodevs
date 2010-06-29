@@ -39,7 +39,7 @@ Lima::Lima( kernel::Controller& controller, Publisher_ABC& publisher, const kern
 {
     controller_.Create( *(kernel::TacticalLine_ABC*)this );
 }
- 
+
 // -----------------------------------------------------------------------------
 // Name: Lima destructor
 // Created: AGE 2006-03-15

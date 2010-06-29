@@ -176,7 +176,7 @@ ADN_Table* ADN_Automata_GUI::CreateAutomataCompositionsTable()
             }
             ADN_Units_Data::UnitInfos&    unit      = * pUnit;
             pTable->setNumRows( std::max( pTable->numRows(), nRow + nSubRow + 1 ) );
-            
+
             int nSubSubRow = 0;
             int nTroops = 0;
             for( ADN_Units_Data::IT_ComposanteInfos_Vector it3 = unit.vComposantes_.begin(); it3 != unit.vComposantes_.end(); ++it3, ++nSubSubRow )
@@ -231,7 +231,7 @@ ADN_Table* ADN_Automata_GUI::CreateAutomataCompositionsTable()
                 nAutoTroops    += nTroops - pUnit->nNbOfficer_.GetData() - pUnit->nNbNCOfficer_.GetData();
             }
             builder.AddTableCell( pTable, nRow + nSubRow, 1, nRowSpan, 1, strText );
-            
+
             if( nSubRow > 0 )
                 ++it2;
             nSubRow += nRowSpan;

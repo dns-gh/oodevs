@@ -13,13 +13,13 @@
 #include "ObjectAttributePrototypeFactory_ABC.h"
 #include <boost/function.hpp>
 
-namespace xml 
-{ 
-    class xistream; 
+namespace xml
+{
+    class xistream;
 }
 
 namespace kernel
-{    
+{
     class ObjectType;
 }
 
@@ -30,12 +30,12 @@ namespace gui
 // Name: ObjectAttributePrototypeFactory
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
-class ObjectAttributePrototypeFactory : public ObjectAttributePrototypeFactory_ABC        
-{   
+class ObjectAttributePrototypeFactory : public ObjectAttributePrototypeFactory_ABC
+{
 
 public:
     //! @name Types
-    //@{    
+    //@{
     typedef boost::function3< void, xml::xistream&, T_AttributeContainer&, QWidget* > T_CallBack;
     //@}
 
@@ -45,16 +45,16 @@ public:
              ObjectAttributePrototypeFactory();
     virtual ~ObjectAttributePrototypeFactory();
     //@}
-    
+
     //! @name Methods
     //@{
-    void Register( const std::string& capacity, const T_CallBack& callback );    
+    void Register( const std::string& capacity, const T_CallBack& callback );
     virtual void Create( const std::string& capacity, xml::xistream& xis, T_AttributeContainer& resolver, QWidget* parent ) const;
     //@}
-    
-private:    
+
+private:
     //! @name Types
-    //@{    
+    //@{
     typedef std::map< std::string, T_CallBack > T_CallBacks;
     //@}
 

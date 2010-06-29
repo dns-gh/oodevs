@@ -49,9 +49,9 @@ private:
         sPopulationElement( const MIL_PopulationElement_ABC& element )
             : location_  ( element.GetLocation() )
             , rDensity_  ( element.GetDensity() )
-            , pAttitude_ ( &element.GetAttitude() ) 
+            , pAttitude_ ( &element.GetAttitude() )
         {}
-    
+
               TER_Localisation        location_;
               MT_Float                rDensity_;
         const MIL_PopulationAttitude* pAttitude_;

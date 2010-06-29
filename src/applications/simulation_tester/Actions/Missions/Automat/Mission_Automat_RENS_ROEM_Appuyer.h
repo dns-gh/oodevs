@@ -21,7 +21,7 @@ namespace TEST {
     @brief  Mission_Automat_RENS_ROEM_Appuyer
 */
 // Created: SBO 2005-08-08
-// Generated: 
+// Generated:
 // =============================================================================
 class Mission_Automat_RENS_ROEM_Appuyer : public Mission_Automat_ABC
 {

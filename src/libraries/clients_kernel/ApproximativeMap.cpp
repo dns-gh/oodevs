@@ -66,25 +66,25 @@ namespace
         The matrix has 40 * 40 = 1600 entries.  This requires 200 bytes, or 50
         words.  Some operations are performed on words for more efficiency.
         */
-        union 
+        union
         {
             unsigned char b[200];
             unsigned long w[50];
         };
 
         CoMatrix()
-        { 
+        {
             ::memset( b, 0, 200 );
         }
         CoMatrix( const char* text )
         {
             char c = '\0', d;
             ::memset( b, 0, 200 );
-        
+
             while ( (d = *text) != '\0' )
             {
                 setCoocc( c, d );
-                if ( (c = *++text) != '\0' )
+                if( (c = *++text) != '\0' )
                 {
                     setCoocc( d, c );
                     text++;

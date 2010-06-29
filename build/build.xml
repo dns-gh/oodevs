@@ -916,7 +916,7 @@
             <arg value="/X!include sword-defense.nsh"/>
         </nsis>
     </target>
-    
+
     <!-- patch package -->
     <target name="package.patch" description="create a patch installer">
         <nsis todir="${dist.dir}/current/${platform}" name="sword-patch" script="resources/sword-patch.nsi" license="true">

@@ -75,7 +75,7 @@ private:
     std::auto_ptr< MT_Converter< std::string, MIL_Army_ABC::E_Diplomacy > > diplomacyConverter_; // LTO
     //@}
 
-   
+
 };
 
 BOOST_CLASS_EXPORT_KEY( ArmyFactory )

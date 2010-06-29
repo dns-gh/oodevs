@@ -40,7 +40,7 @@ public:
 public:
              PHY_RoleInterface_Surrender();
     virtual ~PHY_RoleInterface_Surrender();
-    
+
     //! @name Accessors
     //@{
     virtual const MIL_Army_ABC* GetArmySurrenderedTo() const = 0;
@@ -51,7 +51,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifySurrendered      () = 0;    
+    virtual void NotifySurrendered      () = 0;
     virtual void NotifySurrenderCanceled() = 0;
     virtual bool Capture ( const MIL_AgentPion& pionTakingPrisoner ) = 0;
     virtual bool Release () = 0;

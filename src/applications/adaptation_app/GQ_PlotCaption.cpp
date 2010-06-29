@@ -34,7 +34,7 @@
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotCaption constructor
-/** @param  pParent 
+/** @param  pParent
 */
 // Created: CBX 2003-11-25
 // -----------------------------------------------------------------------------
@@ -46,7 +46,7 @@ GQ_PlotCaption::GQ_PlotCaption( QWidget* pParent, GQ_Plot& plot )
 {
     connect( pPlot_, SIGNAL( DataTouched   () )
            , this,   SLOT  ( UpdateCaption () ) );
-    
+
     pEntryList_ = new QListBox( this );
     pEntryList_->setVariableWidth( true );
 }
@@ -102,8 +102,8 @@ void GQ_PlotCaption::Update()
         GQ_PlotData& plotData = *it;
 
         if( plotData.IsEmpty() )
-            continue; 
-        
+            continue;
+
         const QString dataName = plotData.Name();
         if( dataName.isEmpty() )
             continue;

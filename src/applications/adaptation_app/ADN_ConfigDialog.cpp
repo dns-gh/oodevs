@@ -36,7 +36,7 @@ ADN_ConfigDialog::ADN_ConfigDialog( ADN_Config& config )
     pSimPath_ = new QLineEdit( config.GetSimPath().c_str(), this );
     pGrid->addWidget( pSimPath_, 0, 1 );
     pSimPathBrowser_ = new QPushButton( tr( "Browse" ), this );
-    pGrid->addWidget( pSimPathBrowser_, 0, 2 );    
+    pGrid->addWidget( pSimPathBrowser_, 0, 2 );
 
     pGrid->addWidget( new QLabel( tr( "SIM parameters" ), this ), 1, 0 );
     pSimArguments_ = new QLineEdit( config.GetSimArguments().c_str(), this );
@@ -89,7 +89,7 @@ void ADN_ConfigDialog::OnCancel()
 void ADN_ConfigDialog::OnBrowsePath()
 {
     QString strSimPath = QFileDialog::getOpenFileName( pSimPath_->text(), tr( "Sword executable (*.exe)" ) , this, "", tr( "Select SIM to use for data test" ) );
-    if ( strSimPath == QString::null )
+    if( strSimPath == QString::null )
         return;
     pSimPath_->setText( strSimPath );
 }

@@ -30,7 +30,7 @@ HLA_FireInteraction::HLA_FireInteraction()
 {
     //NOTHING
 }
- 
+
 // -----------------------------------------------------------------------------
 // Name: HLA_FireInteraction constructor
 // Created: AGE 2004-11-29

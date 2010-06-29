@@ -46,7 +46,7 @@ SimulationNetworker::~SimulationNetworker()
 {
     // NOTHING
 }
-  
+
 // -----------------------------------------------------------------------------
 // Name: SimulationNetworker::ConnectionSucceeded
 // Created: AGE 2007-09-06
@@ -70,14 +70,14 @@ void SimulationNetworker::ConnectionFailed( const std::string& address, const st
     model_.Reset();
     clients_.DenyConnections();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: SimulationNetworker::ConnectionError
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
 void SimulationNetworker::ConnectionError( const std::string& address, const std::string& error )
 {
-    MT_LOG_INFO_MSG( "Connection to '" << address << "' lost (" << error << ")" );    
+    MT_LOG_INFO_MSG( "Connection to '" << address << "' lost (" << error << ")" );
     ClientNetworker::ConnectionError( address, error );
     simulation_.reset();
     model_.Reset();

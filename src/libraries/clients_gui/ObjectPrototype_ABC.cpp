@@ -34,12 +34,12 @@ using namespace gui;
 // Name: ObjectPrototype_ABC constructor
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
-ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controllers, const tools::Resolver_ABC< ObjectType, std::string >& resolver, 
+ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controllers, const tools::Resolver_ABC< ObjectType, std::string >& resolver,
                                          ParametersLayer& layer, const ObjectAttributePrototypeFactory_ABC& factory )
     : QGroupBox( 2, Qt::Horizontal, tr( "Information" ), parent )
     , controllers_( controllers )
     , resolver_  ( resolver )
-    , location_  ( 0 )    
+    , location_  ( 0 )
     , attributes_( new ObjectAttributePrototypeContainer( resolver, factory, new QGroupBox( 1, Qt::Horizontal, tr( "Attributes" ), parent ) ) )
 {
     new QLabel( tr( "Name:" ), this );
@@ -57,13 +57,13 @@ ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controll
     locationLabel_->setAlignment( Qt::AlignCenter );
     locationLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
 
-    locationCreator_ = new LocationCreator( position_, tr( "New object" ), layer, *this );  
+    locationCreator_ = new LocationCreator( position_, tr( "New object" ), layer, *this );
 
     // $$$$ AGE 2006-08-11: L'initialisation du reste est delayée... C'est pas terrible
 
     controllers.Register( *this );
 
-    connect( objectTypes_, SIGNAL( activated( int ) ), this, SLOT( OnTypeChanged() ) );    
+    connect( objectTypes_, SIGNAL( activated( int ) ), this, SLOT( OnTypeChanged() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -80,7 +80,7 @@ ObjectPrototype_ABC::~ObjectPrototype_ABC()
 // Created: AGE 2006-08-09
 // -----------------------------------------------------------------------------
 void ObjectPrototype_ABC::NotifyUpdated( const ModelLoaded& )
-{    
+{
     attributes_->NotifyUpdated();
     attributes_->Hide();
     FillObjectTypes();
@@ -101,7 +101,7 @@ void ObjectPrototype_ABC::NotifyUpdated( const kernel::ModelUnLoaded& )
 // Created: AGE 2006-04-21
 // -----------------------------------------------------------------------------
 void ObjectPrototype_ABC::showEvent( QShowEvent* e )
-{    
+{
     FillObjectTypes();
     OnTypeChanged();
     controllers_.Register( *locationCreator_ );

@@ -32,14 +32,14 @@ DEC_Knowledge_AgentDataRecognition::DEC_Knowledge_AgentDataRecognition()
     , pArmy_                    ( 0 )
     , bIsPC_                    ( false )
     , rOperationalState_        ( std::numeric_limits< MT_Float >::max() )
-    , rMajorOperationalState_   ( std::numeric_limits< MT_Float >::max() ) 
+    , rMajorOperationalState_   ( std::numeric_limits< MT_Float >::max() )
     , pAgentType_               ( 0 )
     , bOperationalStateChanged_ ( false )
     , bAgentTypeUpdated_        ( false )
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentDataRecognition destructor
 // Created: NLD 2004-11-09
@@ -61,11 +61,11 @@ void DEC_Knowledge_AgentDataRecognition::load( MIL_CheckPointInArchive& file, co
          >> composantes_
          >> const_cast< MIL_Army_ABC*& >( pArmy_ )
          >> bIsPC_;
-         
+
     unsigned int nID;
     file >> nID;
     pAgentType_ = MIL_AgentTypePion::Find( nID );
-    
+
     file >> bOperationalStateChanged_
          >> bAgentTypeUpdated_;
 }
@@ -184,7 +184,7 @@ void DEC_Knowledge_AgentDataRecognition::SendFullState( MsgsSimToClient::MsgUnit
 
     assert( pArmy_ );
     assert( pAgentType_ );
-    
+
     asnMsg.set_camp      ( pArmy_->GetID() );
     asnMsg.set_nature_pc ( bIsPC_ );
 }

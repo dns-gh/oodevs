@@ -39,8 +39,8 @@ public:
     //! @name Operations
     //@{
     virtual const weather::PHY_Lighting& GetLighting() const;
-    virtual void OnReceiveMsgGlobalMeteo( const MsgsSimToClient::MsgControlGlobalMeteo& message );    
-    virtual void OnReceiveMsgLocalMeteoDestruction( const MsgsSimToClient::MsgControlLocalMeteoDestruction& message );    
+    virtual void OnReceiveMsgGlobalMeteo( const MsgsSimToClient::MsgControlGlobalMeteo& message );
+    virtual void OnReceiveMsgLocalMeteoDestruction( const MsgsSimToClient::MsgControlLocalMeteoDestruction& message );
     virtual void OnReceiveMsgLocalMeteoCreation( const MsgsSimToClient::MsgControlLocalMeteoCreation& message );
     const weather::PHY_Meteo* GetMeteo( const geometry::Point2f& point ) const;
     void Purge();
@@ -72,7 +72,7 @@ private:
     //@{
     kernel::CoordinateConverter_ABC& converter_;
     std::auto_ptr< weather::PHY_Meteo > pGlobalMeteo_;
-    T_MeteoList                         meteos_; 
+    T_MeteoList                         meteos_;
     //@}
 };
 

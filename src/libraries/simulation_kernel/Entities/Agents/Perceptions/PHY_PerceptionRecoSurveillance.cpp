@@ -85,7 +85,7 @@ void PHY_PerceptionRecoSurveillance::ReadAlatTime( xml::xistream& xis )
     tools::ReadTimeAttribute( xis, "empty", rEmptySurveillanceTime_ );
     tools::ReadTimeAttribute( xis, "forest", rForestSurveillanceTime_ );
     tools::ReadTimeAttribute( xis, "urban", rUrbanSurveillanceTime_ );
-       
+
     rEmptySurveillanceTime_ = MIL_Tools::ConvertSecondsToSim( rEmptySurveillanceTime_ );                // second.hectare-1 => dT.hectare-1
     rEmptySurveillanceTime_ /= 10000.;                                                                  // dT.hectare-1     => dT.m-2
     rEmptySurveillanceTime_ = 1. / MIL_Tools::ConvertMeterSquareToSim( 1. / rEmptySurveillanceTime_ );  // dT.m-2           => dT.px-2
@@ -105,21 +105,21 @@ void PHY_PerceptionRecoSurveillance::ReadAlatTime( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 bool PHY_PerceptionRecoSurveillanceReco::IsInside( const MT_Vector2D& vPoint ) const
 {
-    if ( !localisation_.IsInside( vPoint ) )
+    if( !localisation_.IsInside( vPoint ) )
         return false;
 
-    const unsigned int                       nCurrentTime = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep(); 
+    const unsigned int                       nCurrentTime = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     const PHY_RawVisionData::envBits env          = MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetVisionObject( vPoint );
 
-    if ( env == PHY_RawVisionData::eVisionEmpty )
+    if( env == PHY_RawVisionData::eVisionEmpty )
         return nCurrentTime >= nEmptyDetectionTimeStep_;
 
     bool bResult = true;
 
-    if ( env & PHY_RawVisionData::eVisionUrban )
+    if( env & PHY_RawVisionData::eVisionUrban )
         bResult &= nCurrentTime >= nUrbanDetectionTimeStep_;
 
-    if ( env & PHY_RawVisionData::eVisionForest )
+    if( env & PHY_RawVisionData::eVisionForest )
         bResult &= nCurrentTime >= nForestDetectionTimeStep_;
 
     return bResult;
@@ -134,7 +134,7 @@ void PHY_PerceptionRecoSurveillanceReco::GetAgentsInside( TER_Agent_ABC::T_Agent
     TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( localisation_, result );
 
     for ( TER_Agent_ABC::IT_AgentPtrVector it = result.begin(); it != result.end(); )
-        if ( IsInside( (*it)->GetPosition() ) )
+        if( IsInside( (*it)->GetPosition() ) )
             ++it;
         else
             it = result.erase( it );
@@ -167,7 +167,7 @@ PHY_PerceptionRecoSurveillance::~PHY_PerceptionRecoSurveillance()
 // -----------------------------------------------------------------------------
 int PHY_PerceptionRecoSurveillance::AddLocalisation( const TER_Localisation& localisation )
 {
-    PHY_PerceptionRecoSurveillanceReco* pNewReco = new PHY_PerceptionRecoSurveillanceReco( localisation );    
+    PHY_PerceptionRecoSurveillanceReco* pNewReco = new PHY_PerceptionRecoSurveillanceReco( localisation );
     assert( pNewReco );
     return Add( pNewReco );
 }
@@ -190,7 +190,7 @@ const PHY_PerceptionLevel& PHY_PerceptionRecoSurveillance::Compute( const MT_Vec
 {
     for ( CIT_RecoVector itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
     {
-        if ( (*itReco)->IsInside( vPoint ) )
+        if( (*itReco)->IsInside( vPoint ) )
             return PHY_PerceptionLevel::recognized_;
     }
 
@@ -204,11 +204,11 @@ const PHY_PerceptionLevel& PHY_PerceptionRecoSurveillance::Compute( const MT_Vec
 void PHY_PerceptionRecoSurveillance::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/, const detection::DetectionComputerFactory_ABC& detectionComputerFactory )
 {
     TER_Agent_ABC::T_AgentPtrVector perceivableAgents;
-    
+
     for ( CIT_RecoVector itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
     {
         (*itReco)->GetAgentsInside( perceivableAgents );
-        
+
         for ( TER_Agent_ABC::CIT_AgentPtrVector it = perceivableAgents.begin(); it != perceivableAgents.end(); ++it )
         {
             MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent();

@@ -33,7 +33,7 @@
 
 // -----------------------------------------------------------------------------
 // Name: ADN_OpenMode_Dialog constructor
-/** @param  pParent 
+/** @param  pParent
 */
 // Created: AGN 2004-05-25
 // -----------------------------------------------------------------------------
@@ -44,7 +44,7 @@ ADN_OpenMode_Dialog::ADN_OpenMode_Dialog( QWidget* pParent )
 , pAdminMode_( 0 )
 {
     setCaption( qApp->translate("ADN_OpenMode_Dialog","Open mode configuration") );
-    
+
     QVBoxLayout* pMainLayout = new QVBoxLayout( this );
     pMainLayout->setSpacing( 10 );
     pMainLayout->setMargin( 10 );
@@ -85,7 +85,7 @@ ADN_OpenMode_Dialog::ADN_OpenMode_Dialog( QWidget* pParent )
     connect( pButton, SIGNAL( clicked() ), this, SLOT( reject() ) );
 
     pMainLayout->addWidget( pButtonLayout );
-    
+
     resize( QSize( 225, sizeHint().height() ) );
     setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
 }
@@ -96,12 +96,12 @@ ADN_OpenMode_Dialog::ADN_OpenMode_Dialog( QWidget* pParent )
 // -----------------------------------------------------------------------------
 ADN_OpenMode_Dialog::~ADN_OpenMode_Dialog()
 {
-    
+
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_OpenMode_Dialog::GetOpenMode
-/** @return 
+/** @return
 */
 // Created: AGN 2004-05-25
 // -----------------------------------------------------------------------------
@@ -121,7 +121,7 @@ E_OpenMode ADN_OpenMode_Dialog::GetOpenMode() const
 
 // -----------------------------------------------------------------------------
 // Name: ADN_OpenMode_Dialog::GetPassword
-/** @return 
+/** @return
 */
 // Created: AGN 2004-05-25
 // -----------------------------------------------------------------------------

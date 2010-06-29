@@ -58,7 +58,7 @@ public:
     //@{
     bool HasDelayedPerceptions() const;
     //@}
-    
+
     //! @name Events
     //@{
     // Called by ::Talk()
@@ -89,7 +89,7 @@ private:
     //@}
 
 public:
-    //! @name 
+    //! @name
     //@{
     typedef std::map< MIL_Agent_ABC*, const PHY_PerceptionLevel* > T_AgentPerceptionMap;
     typedef T_AgentPerceptionMap::const_iterator                   CIT_AgentPerceptionMap;

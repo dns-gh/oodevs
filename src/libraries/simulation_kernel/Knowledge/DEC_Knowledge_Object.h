@@ -58,11 +58,11 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
-    
+
     //! @name Collision
     //@{
     bool CanCollideWith( const MIL_Agent_ABC& agent ) const;
@@ -109,7 +109,7 @@ public:
     const MIL_ObjectType_ABC& GetType                    () const;
     const TER_Localisation&   GetLocalisation            () const;
     const TER_Localisation&   GetAvoidanceLocalisation   () const;
-    const MIL_Army_ABC&       GetArmy                    () const;    
+    const MIL_Army_ABC&       GetArmy                    () const;
           MT_Float            GetMaxInteractionHeight    () const;
     E_Tristate                IsAnEnemy                  ( const MIL_Army_ABC& army ) const;
     E_Tristate                IsAFriend                  ( const MIL_Army_ABC& army ) const;
@@ -121,13 +121,13 @@ public:
     template< typename Extension >  void              AttachExtension( Extension& extension );
     template< typename Extension >  const Extension*  Retrieve() const;
     //@}
-    
+
 protected:
     //! @name Types
     //@{
     enum E_Attributes
     {
-        eAttr_Nothing                        = 0x00000000,           
+        eAttr_Nothing                        = 0x00000000,
         eAttr_Localisation                   = 0x00000001,
         eAttr_EtatOps                        = 0x00000002,
         eAttr_ConstructionPercentage         = 0x00000004,
@@ -163,7 +163,7 @@ private:
     void UpdateCurrentPerceptionLevel( const PHY_PerceptionLevel& perceptionLevel );
     bool UpdateMaxPerceptionLevel    ( const PHY_PerceptionLevel& perceptionLevel );
     //@}
-    
+
     //! @name Internal network senders
     //@{
     void BuildMsgRealObject            ( MsgsSimToClient::MsgObjectKnowledgeUpdate& asnMsg ) const;
@@ -200,7 +200,7 @@ private:
     const MIL_Army_ABC*       pArmyKnowing_;
     const MIL_KnowledgeGroup* pGroupKnowing_;
           MIL_Object_ABC*     pObjectKnown_; // Objet réel (peut ne plus exister...)
-    const MIL_ObjectType_ABC* pObjectType_; 
+    const MIL_ObjectType_ABC* pObjectType_;
     const unsigned int                nID_;
 
     T_ObjectAttributeVector   attributes_;
@@ -215,7 +215,7 @@ private:
     const PHY_PerceptionLevel* pCurrentPerceptionLevel_;
     const PHY_PerceptionLevel* pPreviousPerceptionLevel_;
     const PHY_PerceptionLevel* pMaxPerceptionLevel_;
-    
+
     T_PerceptionSourceSet  perceptionPerAutomateSet_;
     T_PerceptionSourceSet  previousPerceptionPerAutomateSet_;
 
@@ -236,7 +236,7 @@ BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_Object )
 // Name: DEC_Knowledge_Object::Attach
 // Created: JCR 2008-08-12
 // -----------------------------------------------------------------------------
-template< typename Extension >  
+template< typename Extension >
 void DEC_Knowledge_Object::Attach( Extension& extension )
 {
     attributes_.push_back( &extension );
@@ -257,7 +257,7 @@ void DEC_Knowledge_Object::AttachExtension( Extension& extension )
 // Name: DEC_Knowledge_Object::Retrieve
 // Created: JCR 2008-08-12
 // -----------------------------------------------------------------------------
-template< typename Extension >  
+template< typename Extension >
 const Extension* DEC_Knowledge_Object::Retrieve() const
 {
     return tools::Extendable< DEC_Knowledge_ObjectAttribute_ABC >::Retrieve< Extension >();

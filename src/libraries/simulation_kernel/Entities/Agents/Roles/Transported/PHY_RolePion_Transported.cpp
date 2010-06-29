@@ -81,8 +81,8 @@ void PHY_RolePion_Transported::load( MIL_CheckPointInArchive& file, const unsign
          >> const_cast< MIL_Agent_ABC*& >( pTransporter_ )
          >> vLoadingPosition_
          >> vHumanTransporterPosition_;
-         
-//    if ( IsTransported() )
+
+//    if( IsTransported() )
 //        CancelTransport();
 }
 
@@ -110,7 +110,7 @@ void PHY_RolePion_Transported::CancelTransport( const MIL_Agent_ABC& transporter
     pion_.Apply( &location::LocationActionNotificationHandler_ABC::Show, vLoadingPosition_ );
     pTransporter_ = 0;
     bHasChanged_ = true;
-    vLoadingPosition_.Reset();  
+    vLoadingPosition_.Reset();
     return ;//true;
 }
 
@@ -131,7 +131,7 @@ void PHY_RolePion_Transported::LoadForTransport( const MIL_Agent_ABC& transporte
 
     pTransporter_ = &transporter;
 
-    pion_.Apply( &location::LocationActionNotificationHandler_ABC::Hide ); 
+    pion_.Apply( &location::LocationActionNotificationHandler_ABC::Hide );
     vLoadingPosition_= transporter.GetRole< PHY_RoleInterface_Location >().GetPosition();
     if( bTransportOnlyLoadable && vHumanTransporterPosition_.IsZero() )
         vHumanTransporterPosition_ = vLoadingPosition_;
@@ -169,7 +169,7 @@ void PHY_RolePion_Transported::UnloadFromTransport( const MIL_Agent_ABC& transpo
 void PHY_RolePion_Transported::DisableHumanTransporters( const MT_Vector2D& vPos )
 {
 
-    if ( vHumanTransporterPosition_.IsZero() )
+    if( vHumanTransporterPosition_.IsZero() )
     {
         pion_.Apply( &TransportNotificationHandler_ABC::ForceUnloadedState );
         vHumanTransporterPosition_ = vPos;
@@ -216,7 +216,7 @@ bool PHY_RolePion_Transported::HasHumanTransportersReady() const
     sTransporterComposantePresent func;
     std::auto_ptr< OnComponentComputer_ABC > computer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( func ) );
     pion_.Execute( *computer );
-    
+
     return vHumanTransporterPosition_.IsZero() && func.bComposantePresent_;
 }
 
@@ -265,7 +265,7 @@ void PHY_RolePion_Transported::SendChangedState( client::UnitAttributes& msg ) c
 {
     if( bHasChanged_ )
         SendFullState( msg );
-}   
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Transported::HasChanged

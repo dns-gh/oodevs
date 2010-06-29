@@ -76,12 +76,12 @@ void DEC_KS_ObjectKnowledgeSynthetizer::Prepare()
 inline
 boost::shared_ptr< DEC_Knowledge_Object > DEC_KS_ObjectKnowledgeSynthetizer::GetKnowledgeToUpdate( MIL_Object_ABC& objectKnown ) const
 {
-    assert( pBlackBoard_ );    
+    assert( pBlackBoard_ );
     boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = pBlackBoard_->GetKnowledgeObjectContainer().GetKnowledgeObject( objectKnown );
 
     if( pKnowledge && pKnowledge->IsValid() )
         return pKnowledge;
-    
+
     return pBlackBoard_->GetKnowledgeObjectContainer().CreateKnowledgeObject( pBlackBoard_->GetArmy(), objectKnown );
 }
 
@@ -113,7 +113,7 @@ void DEC_KS_ObjectKnowledgeSynthetizer::SynthetizeSubordinatesPerception()
 {
     class_mem_fun_void_const_t< DEC_KS_ObjectKnowledgeSynthetizer, DEC_Knowledge_ObjectPerception> methodUpdateKnowledgesFromObjectPerception( & DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgesFromObjectPerception, *this );
     class_mem_fun_void_const_t< DEC_KS_ObjectKnowledgeSynthetizer, DEC_Knowledge_ObjectCollision > methodUpdateKnowledgesFromObjectCollision ( & DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgesFromObjectCollision , *this );
-    
+
     const MIL_Army::T_KnowledgeGroupMap& knowledgeGroups = pBlackBoard_->GetArmy().GetKnowledgeGroups();
     for( MIL_Army::CIT_KnowledgeGroupMap itKnowledgeGroup = knowledgeGroups.begin(); itKnowledgeGroup != knowledgeGroups.end(); ++itKnowledgeGroup )
     {
@@ -128,7 +128,7 @@ void DEC_KS_ObjectKnowledgeSynthetizer::SynthetizeSubordinatesPerception()
                 DEC_KnowledgeBlackBoard_AgentPion& blackboard = pion.GetKnowledge();
                 DEC_BlackBoard_CanContainKnowledgeObjectPerception& perceptions = blackboard.GetKnowledgeObjectPerceptionContainer();
                 DEC_BlackBoard_CanContainKnowledgeObjectCollision& collisions = blackboard.GetKnowledgeObjectCollisionContainer ();
-                if ( communication.CanEmit() )
+                if( communication.CanEmit() )
                 {
                     perceptions.ApplyOnKnowledgesObjectPerception( methodUpdateKnowledgesFromObjectPerception );
                     collisions.ApplyOnKnowledgesObjectCollision ( methodUpdateKnowledgesFromObjectCollision  );
@@ -175,7 +175,7 @@ void DEC_KS_ObjectKnowledgeSynthetizer::ProcessObjectsToForget()
         if( pKnowledge && pKnowledge->IsValid() )
             pBlackBoard_->GetKnowledgeObjectContainer().DestroyKnowledgeObject( *pKnowledge );
     }
-    objectsToForget_.clear();    
+    objectsToForget_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -185,7 +185,7 @@ void DEC_KS_ObjectKnowledgeSynthetizer::ProcessObjectsToForget()
 void DEC_KS_ObjectKnowledgeSynthetizer::ProcessKnowledgesObjectToForget()
 {
     assert( pBlackBoard_ );
-    
+
     for( CIT_KnowledgeObjectVector itKnowledge = knowledgesObjectToForget_.begin(); itKnowledge != knowledgesObjectToForget_.end(); ++itKnowledge )
         pBlackBoard_->GetKnowledgeObjectContainer().DestroyKnowledgeObject( **itKnowledge );
     knowledgesObjectToForget_.clear();
@@ -212,12 +212,12 @@ void DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgeRelevance( boost::shared_
 // -----------------------------------------------------------------------------
 void DEC_KS_ObjectKnowledgeSynthetizer::Talk( int /*currentTimeStep*/ )
 {
-    // Synthesis of the perceptions of the subordinates 
+    // Synthesis of the perceptions of the subordinates
     SynthetizeSubordinatesPerception();
 
     // Ephemeral knowledges
     ProcessEphemeralKnowledges();
-    
+
     // Objects to forget
     ProcessObjectsToForget();
 
@@ -259,7 +259,7 @@ void DEC_KS_ObjectKnowledgeSynthetizer::Clean()
 // -----------------------------------------------------------------------------
 void DEC_KS_ObjectKnowledgeSynthetizer::AddEphemeralObjectKnowledge( MIL_Object_ABC& objectKnown )
 {
-    ephemeralKnowledges_.push_back( &objectKnown );    
+    ephemeralKnowledges_.push_back( &objectKnown );
 }
 
 // -----------------------------------------------------------------------------
@@ -269,7 +269,7 @@ void DEC_KS_ObjectKnowledgeSynthetizer::AddEphemeralObjectKnowledge( MIL_Object_
 void DEC_KS_ObjectKnowledgeSynthetizer::AddObjectKnowledgeToForget( MIL_Object_ABC& objectKnown )
 {
     if( std::find( objectsToForget_.begin(), objectsToForget_.end(), &objectKnown ) == objectsToForget_.end() )
-        objectsToForget_.push_back( &objectKnown );    
+        objectsToForget_.push_back( &objectKnown );
 }
 
 // -----------------------------------------------------------------------------

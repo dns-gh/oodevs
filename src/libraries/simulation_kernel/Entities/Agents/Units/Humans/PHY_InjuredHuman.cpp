@@ -218,7 +218,7 @@ void PHY_InjuredHuman::Update()
     if( IsAlive() && !isTreated_ )
     {
         float currentTime = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
-        
+
         //Update the characteristics of all injuries
         UpdateInjuriesInfo( currentTime );
 

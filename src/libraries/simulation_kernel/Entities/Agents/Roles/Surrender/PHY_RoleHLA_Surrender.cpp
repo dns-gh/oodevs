@@ -26,7 +26,7 @@ PHY_RoleHLA_Surrender::PHY_RoleHLA_Surrender()
 {
     // NOTHING
 }
-  
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleHLA_Surrender destructor
 // Created: NLD 2004-09-07
@@ -42,7 +42,7 @@ PHY_RoleHLA_Surrender::~PHY_RoleHLA_Surrender()
 // -----------------------------------------------------------------------------
 bool PHY_RoleHLA_Surrender::Capture( const MIL_AgentPion& /*pionTakingPrisoner*/ )
 {
-    // $$$$ _RC_ NLD 2005-03-10: 
+    // $$$$ _RC_ NLD 2005-03-10:
     return false;
 }
 
@@ -52,7 +52,7 @@ bool PHY_RoleHLA_Surrender::Capture( const MIL_AgentPion& /*pionTakingPrisoner*/
 // -----------------------------------------------------------------------------
 bool PHY_RoleHLA_Surrender::Release()
 {
-    // $$$$ _RC_ NLD 2005-03-10: 
+    // $$$$ _RC_ NLD 2005-03-10:
     return false;
 }
 
@@ -62,7 +62,7 @@ bool PHY_RoleHLA_Surrender::Release()
 // -----------------------------------------------------------------------------
 bool PHY_RoleHLA_Surrender::Imprison( const MIL_Object_ABC& /*camp*/ )
 {
-    // $$$$ _RC_ NLD 2005-03-10: 
+    // $$$$ _RC_ NLD 2005-03-10:
     return false;
 }
 
@@ -72,7 +72,7 @@ bool PHY_RoleHLA_Surrender::Imprison( const MIL_Object_ABC& /*camp*/ )
 // -----------------------------------------------------------------------------
 bool PHY_RoleHLA_Surrender::IsImprisoned( const MIL_Object_ABC& /*camp*/ )
 {
-    // $$$$ _RC_ NLD 2007-02-26: 
+    // $$$$ _RC_ NLD 2007-02-26:
     return false;
 }
 
@@ -94,7 +94,7 @@ bool PHY_RoleHLA_Surrender::IsSurrendered() const
 {
     return false;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleHLA_Surrender::IsPrisoner
 // Created: NLD 2005-02-24

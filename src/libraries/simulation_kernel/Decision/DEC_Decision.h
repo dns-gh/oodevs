@@ -50,7 +50,7 @@ public:
     void SetModel( const DEC_Model_ABC& model );
     virtual void UpdateDecision( float duration );
     virtual void Reset( std::string groupName = "" );
-    
+
     virtual void SetMission( boost::shared_ptr< MIL_Mission_ABC > pMission );
     virtual boost::shared_ptr< MIL_Mission_ABC > GetMission();
     virtual void RemoveCallback( unsigned int actionId );
@@ -59,9 +59,9 @@ public:
     virtual const std::string& GetDIAType() const;
     virtual MIL_AgentPion& GetPion() const;
     virtual MIL_Automate& GetAutomate() const;
-    
+
     virtual void GarbageCollect();
-    
+
     virtual void StartMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission );
     virtual void StopMissionBehavior ( const boost::shared_ptr< MIL_Mission_ABC > mission );
 
@@ -107,7 +107,7 @@ public:
     virtual void ClearListeEnisTirAutorise();
     virtual void ClearListePionsCoordination();
     virtual void ClearPlotsRavitaillement();
-   
+
     virtual std::vector< DEC_Decision_ABC* > GetPionsWithPC();
     virtual bool IsNeutralized() const;
     virtual bool IsMoving() const;
@@ -140,7 +140,7 @@ protected:
     void StartDefaultBehavior     ();
     void StopDefaultBehavior      ();
     void LogCrash                 ();
-    
+
     void ActivateOrder( const std::string& strBehavior, const boost::shared_ptr< MIL_Mission_ABC > mission );
     void StopMission( const std::string& strBehavior );
 
@@ -153,12 +153,12 @@ protected:
         pBrain_->RegisterFunction( strFunctionName, function );
     }
     //@}
-    
+
 private://! @name Helpers
     //@{
     void HandleUpdateDecisionError ();
     virtual directia::Brain& GetBrain();
-    
+
     virtual void RegisterSelf( directia::Brain& brain ) = 0;
     //@}
 
@@ -187,7 +187,7 @@ struct ScriptRefs
 {
 public:
     ScriptRefs( directia::Brain& brain );
-    
+
     directia::ScriptRef sendEvent_;
     directia::ScriptRef startEvent_;
     directia::ScriptRef stopEvents_;

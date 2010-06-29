@@ -61,7 +61,7 @@ private:
     //@{
     kernel::Controller& controller_;
     const tools::Resolver_ABC< kernel::Automat_ABC >& agentResolver_;
-public: // $$$$ AGE 2006-10-16: 
+public: // $$$$ AGE 2006-10-16:
     T_Agents detectingAutomats_;
     //@}
 };

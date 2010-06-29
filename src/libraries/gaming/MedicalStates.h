@@ -84,7 +84,7 @@ public:
 
     bool             bChainEnabled_;
     T_Availabilities dispoReleveAmbulances_;
-    T_Availabilities dispoRamassageAmbulances_;  
+    T_Availabilities dispoRamassageAmbulances_;
     T_Availabilities dispoDoctors_;
     T_Priorities     priorities_;
     T_Automats       tacticalPriorities_;

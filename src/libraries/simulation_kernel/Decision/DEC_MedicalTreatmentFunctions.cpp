@@ -46,7 +46,7 @@ int DEC_MedicalTreatmentFunctions::GetMedicalTreatmentTypes( MIL_AgentPion& call
 {
     assert( knowledge );
     MIL_Object_ABC* pObject = knowledge->GetObjectKnown();
-    
+
     if( !pObject || pObject->IsMarkedForDestruction() )
     {
         return 0;
@@ -66,5 +66,5 @@ int DEC_MedicalTreatmentFunctions::GetMedicalTreatmentTypes( MIL_AgentPion& call
 // -----------------------------------------------------------------------------
 void DEC_MedicalTreatmentFunctions::DoDiagnosis( MIL_AgentPion& /*callerAgent*/ )
 {
-    //Pour un injuredHUman, regarder le nom de sa blessure ou son ID    
+    //Pour un injuredHUman, regarder le nom de sa blessure ou son ID
 }

@@ -21,19 +21,19 @@
 // Created: NLD 2006-10-04
 // -----------------------------------------------------------------------------
 SIM_Dispatcher::SIM_Dispatcher( int argc, char** argv, int maxConnections )
-    : bRunning_  ( true ) 
+    : bRunning_  ( true )
     , dispatcher_( argc, argv, maxConnections )
 {
-    // thread_.reset( new boost::thread( boost::bind( &SIM_Dispatcher::Run, this ) ) ); 
+    // thread_.reset( new boost::thread( boost::bind( &SIM_Dispatcher::Run, this ) ) );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: SIM_Dispatcher destructor
 // Created: NLD 2006-10-04
 // -----------------------------------------------------------------------------
 SIM_Dispatcher::~SIM_Dispatcher()
 {
-    Stop(); 
+    Stop();
 }
 
 // =============================================================================
@@ -49,7 +49,7 @@ void SIM_Dispatcher::Run()
     while( bRunning_ )
     {
         dispatcher_.Update();
-        boost::this_thread::sleep( boost::posix_time::milliseconds( 25 ) ) ; 
+        boost::this_thread::sleep( boost::posix_time::milliseconds( 25 ) ) ;
     }
 }
 
@@ -59,6 +59,6 @@ void SIM_Dispatcher::Run()
 // -----------------------------------------------------------------------------
 void SIM_Dispatcher::Stop()
 {
-    bRunning_ = false ; 
+    bRunning_ = false ;
 }
 

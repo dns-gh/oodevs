@@ -103,7 +103,7 @@ bool HLA_Federate::Join( const std::string& strFederationName )
     }
 }
 
-namespace 
+namespace
 {
     struct UnitRegistration : public ObjectRegistration_ABC< HLA_RoleInterface >
     {
@@ -177,7 +177,7 @@ void HLA_Federate::InitializeClasses()
     pObjectClass_->Register( AttributeIdentifier( "contournement" ) );
     pObjectClass_->Register( AttributeIdentifier( "option" ) );
     pObjectClass_->Register( AttributeIdentifier( "extra" ) );
-    pFederate_->Register( ClassIdentifier( "Localisable.ObjetScipio" ), *pObjectClass_ );    
+    pFederate_->Register( ClassIdentifier( "Localisable.ObjetScipio" ), *pObjectClass_ );
     ::Sleep( 10000 );
 }
 

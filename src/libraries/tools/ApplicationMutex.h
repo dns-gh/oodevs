@@ -37,11 +37,11 @@ public:
     virtual ~ApplicationMutex();
     //@}
 
-    //! @name members 
+    //! @name members
     //@{
     bool IsOwned() const;
     //@}
-        
+
 private:
     //! @name Copy/Assignment
     //@{

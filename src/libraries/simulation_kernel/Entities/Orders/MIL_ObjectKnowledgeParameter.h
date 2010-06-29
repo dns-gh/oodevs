@@ -36,7 +36,7 @@ public:
     //@{
     virtual bool IsOfType( const MIL_ParameterType_ABC& type ) const;
     //@}
-    
+
     //! @name Conversions
     //@{
     virtual bool ToObjectKnowledge( Common::MsgObjectKnowledge& asn ) const;

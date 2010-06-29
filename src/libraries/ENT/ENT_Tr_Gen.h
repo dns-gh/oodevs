@@ -35,7 +35,7 @@ public:
     static void InitTranslations();
 
 public:
-    // ConvertFrom functions 
+    // ConvertFrom functions
     static const std::string& ConvertFromChangeHierarchyErrorCode( E_ChangeHierarchyErrorCode, E_Conversion = eToSim );
     static const std::string& ConvertFromLocationType( E_LocationType, E_Conversion = eToSim );
     static const std::string& ConvertFromDotationFamily( E_DotationFamily, E_Conversion = eToSim );
@@ -71,7 +71,7 @@ public:
     static const std::string& ConvertFromMsgLogSupplyChangeQuotasAck( E_MsgLogSupplyChangeQuotasAck, E_Conversion = eToSim );
     static const std::string& ConvertFromMsgLogSupplyPushFlowAck( E_MsgLogSupplyPushFlowAck, E_Conversion = eToSim );
     static const std::string& ConvertFromLogMedicalHandlingStatus( E_LogMedicalHandlingStatus, E_Conversion = eToSim );
-    static const std::string& ConvertFromDemolitionTargetType( E_DemolitionTargetType, E_Conversion = eToSim );    
+    static const std::string& ConvertFromDemolitionTargetType( E_DemolitionTargetType, E_Conversion = eToSim );
     static const std::string& ConvertFromObjectErrorCode( E_ObjectErrorCode, E_Conversion = eToSim );
 
     static const std::string& ConvertFromOrderErrorCode( E_OrderErrorCode, E_Conversion = eToSim );

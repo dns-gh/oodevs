@@ -13,5 +13,5 @@ BOOST_AUTO_TEST_CASE( TestDefaultTransportPermissionComputer )
     computer.AllowLoading( true );
     BOOST_CHECK_EQUAL( true, computer.CanBeLoaded() );
     computer.AllowLoading( false );
-    BOOST_CHECK_EQUAL( false, computer.CanBeLoaded() );      
+    BOOST_CHECK_EQUAL( false, computer.CanBeLoaded() );
 }

@@ -35,7 +35,7 @@ ElevationExtrema::~ElevationExtrema()
 
 struct ElevationExtrema::ExtremaFinder
 {
-    ExtremaFinder( const geometry::Rectangle2< int >& extent ) 
+    ExtremaFinder( const geometry::Rectangle2< int >& extent )
         : extent_( extent )
         , set_( false )
         , min_( 20000 )
@@ -141,16 +141,16 @@ std::pair< short, short > ElevationExtrema::AddExtrema( unsigned level, int x, i
     {
         const int hw = w / 2;
         const int hh = h / 2;
-        
+
         T_Bermuda sub;
-        sub = AddExtrema( level+1, x, y, hw, hh );   
-        result.first = std::min( result.first, sub.first ); result.second = std::max( result.second, sub.second ); 
+        sub = AddExtrema( level+1, x, y, hw, hh );
+        result.first = std::min( result.first, sub.first ); result.second = std::max( result.second, sub.second );
         sub = AddExtrema( level+1, x+hw, y, w-hw, hh );
-        result.first = std::min( result.first, sub.first ); result.second = std::max( result.second, sub.second ); 
+        result.first = std::min( result.first, sub.first ); result.second = std::max( result.second, sub.second );
         sub = AddExtrema( level+1, x, y+hh, hw, h-hh );
-        result.first = std::min( result.first, sub.first ); result.second = std::max( result.second, sub.second ); 
+        result.first = std::min( result.first, sub.first ); result.second = std::max( result.second, sub.second );
         sub = AddExtrema( level+1, x+hw, y+hh, w-hw, h-hh );
-        result.first = std::min( result.first, sub.first ); result.second = std::max( result.second, sub.second ); 
+        result.first = std::min( result.first, sub.first ); result.second = std::max( result.second, sub.second );
     }
     else
     {

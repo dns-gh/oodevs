@@ -70,12 +70,12 @@ void DEC_KS_UrbanKnowledgeSynthetizer::Prepare()
 inline
 boost::shared_ptr< DEC_Knowledge_Urban > DEC_KS_UrbanKnowledgeSynthetizer::GetKnowledgeToUpdate( const urban::TerrainObject_ABC& objectKnown ) const
 {
-    assert( pBlackBoard_ );    
+    assert( pBlackBoard_ );
     boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge = pBlackBoard_->GetKnowledgeUrbanContainer().GetKnowledgeUrban( objectKnown );
 
     if( pKnowledge && pKnowledge->IsValid() )
         return pKnowledge;
-    
+
     return pBlackBoard_->GetKnowledgeUrbanContainer().CreateKnowledgeUrban( pBlackBoard_->GetArmy(), objectKnown );
 }
 
@@ -96,7 +96,7 @@ void DEC_KS_UrbanKnowledgeSynthetizer::UpdateKnowledgesFromUrbanPerception( cons
 void DEC_KS_UrbanKnowledgeSynthetizer::SynthetizeSubordinatesPerception()
 {
     class_mem_fun_void_const_t< DEC_KS_UrbanKnowledgeSynthetizer, DEC_Knowledge_UrbanPerception> methodUpdateKnowledgesFromUrbanPerception( & DEC_KS_UrbanKnowledgeSynthetizer::UpdateKnowledgesFromUrbanPerception, *this );
-    
+
     const MIL_Army::T_KnowledgeGroupMap& knowledgeGroups = pBlackBoard_->GetArmy().GetKnowledgeGroups();
     for( MIL_Army::CIT_KnowledgeGroupMap itKnowledgeGroup = knowledgeGroups.begin(); itKnowledgeGroup != knowledgeGroups.end(); ++itKnowledgeGroup )
     {
@@ -130,7 +130,7 @@ void DEC_KS_UrbanKnowledgeSynthetizer::UpdateKnowledgeRelevance( boost::shared_p
 // -----------------------------------------------------------------------------
 void DEC_KS_UrbanKnowledgeSynthetizer::Talk( int /*currentTimeStep*/ )
 {
-    // Synthesis of the perceptions of the subordinates 
+    // Synthesis of the perceptions of the subordinates
     SynthetizeSubordinatesPerception();
 
     // Relevance

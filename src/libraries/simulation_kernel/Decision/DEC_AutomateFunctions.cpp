@@ -26,7 +26,7 @@
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
-    
+
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateFunctions::IsParentAutomateEngaged
@@ -124,7 +124,7 @@ DEC_Decision_ABC* DEC_AutomateFunctions::GetPionPC( const MIL_Automate& callerAu
 DEC_Decision_ABC* DEC_AutomateFunctions::GetPionPCOfAutomate( DEC_Decision_ABC* pAutomate )
 {
     assert( pAutomate );
-    
+
     return DEC_AutomateFunctions::GetPionPC( pAutomate->GetAutomate() );
 }
 

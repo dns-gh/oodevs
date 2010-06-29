@@ -32,7 +32,7 @@ namespace TEST
 // =============================================================================
 class NetworkManager
 {
-	MT_COPYNOTALLOWED( NetworkManager );
+    MT_COPYNOTALLOWED( NetworkManager );
 
 public:
     //! @name Constructors/Destructor
@@ -43,16 +43,16 @@ public:
 
     //! @name Operations
     //@{
-	void               Connect             ();
+    void               Connect             ();
     void               Disconnect          ();
     void               Update              ();
     //@}
 
     //! @name Accessors
     //@{
-	DIN::DIN_Engine&   GetDINEngine        ();
+    DIN::DIN_Engine&   GetDINEngine        ();
     ConnectionHandler& GetConnectionHandler() const;
-	MessageManager&    GetMessageMgr       () const;
+    MessageManager&    GetMessageMgr       () const;
     DIN::DIN_Link&     GetLink             () const;
     bool               IsConnected         () const;
     //@}
@@ -66,14 +66,14 @@ public:
 private:
     //! @name Member data
     //@{
-	std::string        strServerHost_;
-	unsigned int               nServerPort_;
+    std::string        strServerHost_;
+    unsigned int               nServerPort_;
 
-	DIN::DIN_Engine    dinEngine_;
+    DIN::DIN_Engine    dinEngine_;
     DIN::DIN_Link*     pLink_;
-    
+
     ConnectionHandler* pConnectionHandler_;
-	MessageManager*    pMessageMgr_;
+    MessageManager*    pMessageMgr_;
     //@}
 };
 

@@ -44,7 +44,7 @@ public:
 
 private:
     PHY_RoleAction_Objects& role_;
-    boost::shared_ptr< DEC_Knowledge_Object > object_;    
+    boost::shared_ptr< DEC_Knowledge_Object > object_;
 };
 
 #endif // __PHY_ActionSupplyObject_h_

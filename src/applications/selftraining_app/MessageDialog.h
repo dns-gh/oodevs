@@ -18,7 +18,7 @@
 // =============================================================================
 class MessageDialog : public QDialog
 {
-    
+
     Q_OBJECT;
 
 public:

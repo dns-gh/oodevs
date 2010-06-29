@@ -52,7 +52,7 @@ DEC_Knowledge_ObjectAttributeCrossingSite::DEC_Knowledge_ObjectAttributeCrossing
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectAttributeCrossingSite::~DEC_Knowledge_ObjectAttributeCrossingSite()
-{    
+{
 }
 
 // =============================================================================
@@ -93,9 +93,9 @@ void DEC_Knowledge_ObjectAttributeCrossingSite::Register( DEC_Knowledge_Object& 
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeCrossingSite::UpdateAttributes()
 {
-    if ( ! attr_ )
+    if( ! attr_ )
         return;
-    
+
     rWidth_         = attr_->GetWidth();
     rDepth_         = attr_->GetDepth();
     rCurrentSpeed_  = attr_->GetSpeed();

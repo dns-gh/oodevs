@@ -38,7 +38,7 @@ PHY_ZOPerceptionComputer::~PHY_ZOPerceptionComputer()
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& PHY_ZOPerceptionComputer::ComputePerception( const MIL_Agent_ABC& target ) const
 {
-    const PHY_RoleInterface_Perceiver& rolePerceiver = perceiver_.GetRole< PHY_RoleInterface_Perceiver >(); 
+    const PHY_RoleInterface_Perceiver& rolePerceiver = perceiver_.GetRole< PHY_RoleInterface_Perceiver >();
     const PHY_RoleInterface_Perceiver::T_SurfaceAgentMap& surfaces = rolePerceiver.GetSurfacesAgent();
     const PHY_PerceptionLevel* pBestLevel = &PHY_PerceptionLevel::notSeen_;
     for ( PHY_RoleInterface_Perceiver::CIT_SurfaceAgentMap itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
@@ -49,7 +49,7 @@ const PHY_PerceptionLevel& PHY_ZOPerceptionComputer::ComputePerception( const MI
             pBestLevel = &currentLevel;
             if( pBestLevel->IsBestLevel() )
                 return *pBestLevel;
-        }       
+        }
     }
     return *pBestLevel;
 }

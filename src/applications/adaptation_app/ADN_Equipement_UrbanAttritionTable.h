@@ -32,7 +32,7 @@ ADN_Equipement_UrbanAttritionTable;
 */
 // Created: SLG 2010-04-13
 // =============================================================================
-class ADN_Equipement_UrbanAttritionTable 
+class ADN_Equipement_UrbanAttritionTable
     : public ADN_Table2
 {
     MT_COPYNOTALLOWED( ADN_Equipement_UrbanAttritionTable )

@@ -58,7 +58,7 @@ public:
     //@}
 
 private:
-    
+
     //! @name Accessors
     //@{
     void CreateDictionary( kernel::Controller& controller );
@@ -73,8 +73,8 @@ private:
 private:
     //! @name Member data
     //@{
-    std::string delay_;    
-    std::string type_;    
+    std::string delay_;
+    std::string type_;
     bool activated_;
     //@}
     // LTO end

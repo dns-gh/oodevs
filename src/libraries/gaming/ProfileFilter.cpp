@@ -139,8 +139,8 @@ bool ProfileFilter::IsInHierarchy( const kernel::Entity_ABC& entity ) const
      || ( c && c->IsSubordinateOf( *entity_ ) )
      || ( i && i->IsSubordinateOf( *entity_ ) ) )
         return true;
-    
-    if ( cHierarchies_ && cHierarchies_->IsSubordinateOf( entity ) )
+
+    if( cHierarchies_ && cHierarchies_->IsSubordinateOf( entity ) )
          return true;
 
     return IsKnown( t, c, i, entity );
@@ -264,6 +264,6 @@ bool ProfileFilter::CanGetKnowledgeFrom( const kernel::Entity_ABC& entity ) cons
             return false;
         return( &hierarchy->GetEntity() == cHierarchies_->GetSuperior() );
     }
-    
+
     return IsKnown( entity );
 }

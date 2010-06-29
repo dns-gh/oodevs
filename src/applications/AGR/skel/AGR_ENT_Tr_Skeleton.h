@@ -35,7 +35,7 @@ public:
     static void InitTranslations();
 
 public:
-    // ConvertFrom functions 
+    // ConvertFrom functions
 $ConvertFromFunctions$
 
     // ConvertTo functions

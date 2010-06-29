@@ -18,7 +18,7 @@
 
 // =============================================================================
 /** @class  Tools
-    @brief  Crappy translation tools  
+    @brief  Crappy translation tools
 */
 // Created: AGE 2006-03-15
 // =============================================================================
@@ -58,11 +58,11 @@ namespace tools
     const char* GetXmlSection( E_UnitPosture nPosture );
     const char* GetXmlSection( kernel::E_WeatherType nWeatherType );
     const char* GetXmlSection( kernel::E_LightingType nLightingType );
-    
+
     E_DotationFamily        DotationFamilyFromString( const std::string& type );
     E_NatureLevel           NatureLevelFromString   ( const std::string& type );
     E_LocationType          LocationFromString      ( const std::string& type );
-    
+
     kernel::E_FuncLimaType  LimaTypeFromShortString ( const QString& type );
     kernel::E_FuncLimaType  LimaTypeFromXmlString   ( const QString& type );
     QString                 LimaTypeShortToXmlString( const QString& shortType );

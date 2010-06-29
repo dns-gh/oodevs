@@ -44,7 +44,7 @@ public:
     //! @name Constructors/Destructor
     //@{
             Agent( const MsgsSimToClient::MsgUnitCreation& message,
-                    kernel::Controller& controller, 
+                    kernel::Controller& controller,
                     const tools::Resolver_ABC< kernel::AgentType >& resolver );
     virtual ~Agent();
     //@}

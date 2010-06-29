@@ -61,10 +61,10 @@ AgentKnowledge::~AgentKnowledge()
     }
 
 #define SEND_ASN_ATTRIBUTE( MESSAGE, ASN, CPP )  \
-    if ( ##MESSAGE##.has_##ASN##() )    \
+    if( ##MESSAGE##.has_##ASN##() )    \
     {                                   \
         ##MESSAGE##.set_##ASN ( CPP );  \
-    }   
+    }
 
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledge::DoUpdate
@@ -80,7 +80,7 @@ void AgentKnowledge::DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeUpdate& me
 
     if( message.has_position() )
         position_.Set( message.position().latitude(), message.position().longitude() );
-   
+
     UPDATE_ASN_ATTRIBUTE( message ,  speed                    , nSpeed_                );
 
     if( message.has_direction() )
@@ -110,7 +110,7 @@ void AgentKnowledge::DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeUpdate& me
 void AgentKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::UnitKnowledgeCreation message;
-    
+
     message().set_oid                       ( GetId() );
     message().set_oid_groupe_possesseur     ( knowledgeGroup_.GetId() );
     message().set_oid_unite_reelle          ( agent_.GetId() );
@@ -126,7 +126,7 @@ void AgentKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
 void AgentKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     client::UnitKnowledgeUpdate message;
-    
+
     message().set_oid                   ( GetId() );
     message().set_oid_groupe_possesseur ( knowledgeGroup_.GetId() );
 

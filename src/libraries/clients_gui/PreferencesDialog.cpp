@@ -62,7 +62,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
     QWidgetStack* pages = new QWidgetStack( this );
     pages->setMargin( 5 );
     grid->addWidget( pages, 1, 1 );
-    
+
     box = new QHBox( this );
     box->setMargin( 5 );
     list_ = new PreferencesList( box, *pages );
@@ -74,7 +74,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
     AddPage( tr( "Coordinate System" ), *pCoordinateSystemsPanel_ );
     AddPage( tr( "Visualisation Scales" ), *new VisualisationScalesPanel( this, controllers ) );
     AddPage( tr( "3D" ), *new LightingPanel( this, lighting, controllers ) );
-    AddPage( tr( "2D" )        , *layersPanel_ ); 
+    AddPage( tr( "2D" )        , *layersPanel_ );
     AddPage( tr( "2D/Terrain" ), *pGraphicPrefPanel_ );
     // AddPage( tr( "General" ), *new OptionsPanel( this, controllers ) ); // $$$$ SBO 2008-08-12: options not used
 
@@ -91,7 +91,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
 
     hide();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PreferencesDialog destructor
 // Created: SBO 2006-05-03
@@ -157,10 +157,10 @@ GraphicPreferences& PreferencesDialog::GetPreferences() const
 void PreferencesDialog::OnOk()
 {
     for( IT_Pages it = pages_.begin(); it != pages_.end(); ++it )
-        (*it)->Commit();    
+        (*it)->Commit();
     hide();
 }
-  
+
 // -----------------------------------------------------------------------------
 // Name: PreferencesDialog::OnCancel
 // Created: SBO 2007-01-03

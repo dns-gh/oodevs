@@ -19,7 +19,7 @@
 class QPoint;
 class QString;
 
-namespace xml 
+namespace xml
 {
     class xostream;
 }
@@ -69,7 +69,7 @@ public:
     virtual void Activate( ActionController& controller ) const = 0;
 
     template< typename T >
-    void Update( const T& updateMessage ) 
+    void Update( const T& updateMessage )
     {
         const unsigned applied = Apply( & Updatable_ABC< T >::DoUpdate, updateMessage );
         if( ! applied )

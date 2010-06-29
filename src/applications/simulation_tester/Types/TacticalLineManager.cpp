@@ -53,7 +53,7 @@ void TacticalLineManager::LoadTacticalLines( const std::string& strConfigFile )
 
         archive.BeginList( "lines" );
         while( archive.NextListElement() )
-        { 
+        {
             if( archive.BeginList( "limit", XmlInputArchive::eNothing ) )
             {
                 Register( *new TacticalLine_Limit( archive ) );
@@ -66,7 +66,7 @@ void TacticalLineManager::LoadTacticalLines( const std::string& strConfigFile )
             }
         }
         archive.EndList(); // Lines
-            
+
         archive.Close     ();
 
         MT_ChangeDir      ( strCurrentDir );
@@ -182,7 +182,7 @@ T_EntityId TacticalLineManager::GetNextLimitId()
 T_EntityId TacticalLineManager::GetLimaByType( EnumLimaType eLimaType )
 {
     for( CIT_TacticalLineSet it = lines_.begin(); it != lines_.end(); ++it )
-        if( ( *it )->GetLineType() == TacticalLine_ABC::eLima && 
+        if( ( *it )->GetLineType() == TacticalLine_ABC::eLima &&
             static_cast< const TacticalLine_Lima* >( *it )->GetLimaType() == eLimaType )
             return ( *it )->GetId();
     return 0;

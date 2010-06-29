@@ -28,7 +28,7 @@ DEC_Knowledge_ObjectAttributeMedicalTreatment::DEC_Knowledge_ObjectAttributeMedi
     , availableBeds_       ( 0 )
     , availableDoctors_    ( 0 )
     , beds_                ( 0 )
-    , doctors_             ( 0 ) 
+    , doctors_             ( 0 )
 {
     // NOTHING
 }

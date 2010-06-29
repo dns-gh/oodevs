@@ -80,7 +80,7 @@ StatusBar::StatusBar( QStatusBar* parent, gui::TerrainPicker& picker, const Dete
 
     controllers_.Register( *this );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: StatusBar destructor
 // Created: SBO 2006-04-14
@@ -129,7 +129,7 @@ void StatusBar::NotifyUpdated( const Simulation::sStartTick& )
     pLagTimer_->stop();
     pTick_->setPixmap( tickon_ );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: StatusBar::NotifyUpdated
 // Created: SBO 2006-04-14

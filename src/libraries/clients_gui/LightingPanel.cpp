@@ -58,7 +58,7 @@ LightingPanel::LightingPanel( QWidget* parent, LightingProxy& lighting, kernel::
 
     controllers_.Register( *this );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: LightingPanel destructor
 // Created: SBO 2007-01-03
@@ -149,7 +149,7 @@ void LightingPanel::OptionChanged( const std::string& name, const kernel::Option
     const QStringList option = QStringList::split( "/", name.c_str() );
     if( !( option[0] == "Lighting" ) )
         return;
-    if ( option[1] == "Type" )
+    if( option[1] == "Type" )
     {
         lightingType_->setButton( value.To< int >());
         lightingType_->Commit();

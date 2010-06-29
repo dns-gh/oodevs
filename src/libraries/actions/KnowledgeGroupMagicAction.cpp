@@ -77,7 +77,7 @@ void KnowledgeGroupMagicAction::Polish()
 // -----------------------------------------------------------------------------
 void KnowledgeGroupMagicAction::Publish( Publisher_ABC& publisher ) const
 {
-    MsgsClientToSim::MsgKnowledgeMagicAction_Type type = 
+    MsgsClientToSim::MsgKnowledgeMagicAction_Type type =
         ( MsgsClientToSim::MsgKnowledgeMagicAction_Type ) GetType().GetId();
     simulation::KnowledgeMagicAction message;
     message().set_oid( GetEntity().GetId() );

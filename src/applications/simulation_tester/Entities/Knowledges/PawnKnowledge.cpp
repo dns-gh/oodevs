@@ -29,7 +29,7 @@ using namespace TEST;
 // -----------------------------------------------------------------------------
 PawnKnowledge::PawnKnowledge( const EntityManager& entityManager, const MsgUnitKnowledgeCreation& asnMsg, const KnowledgeGroup& knowledgeGroup )
     : owner_     ( knowledgeGroup )
-    , nId_       ( asnMsg.oid_connaissance() ) 
+    , nId_       ( asnMsg.oid_connaissance() )
     , pRealPawn_ ( asnMsg.oid_unite_reelle() == 0 ? 0 : entityManager.FindPawn( asnMsg.oid_unite_reelle() ) )
 {
     // NOTHING

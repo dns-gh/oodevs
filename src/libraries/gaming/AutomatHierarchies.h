@@ -70,7 +70,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const tools::Resolver_ABC< kernel::KnowledgeGroup_ABC >& groupResolver_; 
+    const tools::Resolver_ABC< kernel::KnowledgeGroup_ABC >& groupResolver_;
     QString level_;
     QString symbol_;
     //@}

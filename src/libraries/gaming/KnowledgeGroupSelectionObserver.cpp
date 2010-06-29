@@ -25,7 +25,7 @@ KnowledgeGroupSelectionObserver::KnowledgeGroupSelectionObserver()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroupSelectionObserver destructor
 // Created: AGE 2006-02-24
@@ -52,7 +52,7 @@ void KnowledgeGroupSelectionObserver::AfterSelection()
 {
     Select( static_cast< const kernel::KnowledgeGroup_ABC* >( selected_ ) );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroupSelectionObserver::Select
 // Created: AGE 2006-02-24

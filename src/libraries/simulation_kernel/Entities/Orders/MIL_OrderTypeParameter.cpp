@@ -44,7 +44,7 @@ MIL_OrderTypeParameter::MIL_OrderTypeParameter( const MIL_OrderType_ABC& /*order
         xis.error( "Unknown parameter type" );
     //$$$$ Checker type DIA si c possible
 }
-    
+
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderTypeParameter destructor
 // Created: NLD 2006-11-19

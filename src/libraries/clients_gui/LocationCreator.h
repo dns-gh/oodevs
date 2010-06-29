@@ -86,7 +86,7 @@ private:
     //@{
     ParametersLayer& layer_;
     ShapeHandler_ABC& handler_;
-    
+
     QString menu_;
     geometry::Point2f popupPoint_;
 

@@ -68,7 +68,7 @@ MedicalTreatmentAttribute::MedicalTreatmentAttribute( const Common::MsgMissionPa
 {
     const Common::MsgMissionParameter_Value& treatments = attributes.list( 1 );
     for( int i = 0; i < treatments.list_size(); ++i )
-    {                
+    {
         const MIL_MedicalTreatmentType* pType = MIL_MedicalTreatmentType::Find( treatments.list( i ).identifier() );
         if( !pType )
             throw std::runtime_error( "Unknown Medical treatment type for medical treatment attribute" );
@@ -114,9 +114,9 @@ void MedicalTreatmentAttribute::InitializePatientDiagnosisList( int occupiedBeds
 MedicalTreatmentAttribute& MedicalTreatmentAttribute::operator=( const MedicalTreatmentAttribute& rhs )
 {
     medicalTreatmentMap_ = rhs.medicalTreatmentMap_;
-    beds_                = rhs.beds_;           
-    availableBeds_       = rhs.availableBeds_;  
-    doctors_             = rhs.doctors_;        
+    beds_                = rhs.beds_;
+    availableBeds_       = rhs.availableBeds_;
+    doctors_             = rhs.doctors_;
     availableDoctors_    = rhs.availableDoctors_;
     initialBeds_         = rhs.initialBeds_;
     initialDoctors_      = rhs.initialDoctors_;
@@ -133,12 +133,12 @@ void MedicalTreatmentAttribute::load( MIL_CheckPointInArchive& ar, const unsigne
     int typeID;
     int sizeOfList, injuryCategory, sizeOfMap;
     float time;
-    
+
     ar >> boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     ar >> sizeOfMap;
     for ( int i = 0 ; i < sizeOfMap ; i++ )
     {
-        ar >> typeID;  
+        ar >> typeID;
         ar >> sizeOfList;
 
         T_PatientDiagnosisList *list = new T_PatientDiagnosisList( sizeOfList );
@@ -155,7 +155,7 @@ void MedicalTreatmentAttribute::load( MIL_CheckPointInArchive& ar, const unsigne
         medicalTreatmentMap_.insert( std::make_pair( typeID, list ) );
     }
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MedicalTreatmentAttribute::save
 // Created: RFT 2008-07-03
@@ -172,7 +172,7 @@ void MedicalTreatmentAttribute::save( MIL_CheckPointOutArchive& ar, const unsign
         sizeOfList = it->second->size();
         ar << sizeOfList;
         for( CIT_PatientDiagnosisList iter = it->second->begin() ; iter != it->second->end() ; ++iter )
-        {        
+        {
             ar << iter->first;
             ar << iter->second;
         }
@@ -210,17 +210,17 @@ void MedicalTreatmentAttribute::SendFullState( Common::MsgObjectAttributes& asn 
     //Get the list of the ID of each medical treatment
     for( CIT_MedicalTreatmentMap iter = medicalTreatmentMap_.begin() ; iter != medicalTreatmentMap_.end() ; ++iter )
         asn.mutable_medical_treatment()->mutable_type_id()->add_elem(  MIL_MedicalTreatmentType::Find( iter->first )->GetID() );
-}            
-    
+}
+
 // -----------------------------------------------------------------------------
 // Name: MedicalTreatmentAttribute::Send
 // Created: RFT 2008-06-09
 // -----------------------------------------------------------------------------
 void MedicalTreatmentAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
 {
-    if ( NeedUpdate() )
+    if( NeedUpdate() )
     {
-        SendFullState( asn );        
+        SendFullState( asn );
         Reset();
     }
 }
@@ -340,7 +340,7 @@ void MedicalTreatmentAttribute::UpdateAvailableBeds( bool bEmergencyPlan , float
             availableBeds_ -= ( beds_ - initialBeds_ );//If the number of beds decreases less than the number of available beds
             beds_           = initialBeds_;
         }
-    }   
+    }
 }
 
 // -----------------------------------------------------------------------------

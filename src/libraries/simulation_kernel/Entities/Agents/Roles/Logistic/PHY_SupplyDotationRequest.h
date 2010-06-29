@@ -25,11 +25,11 @@ public:
              PHY_SupplyDotationRequest();
     virtual ~PHY_SupplyDotationRequest();
 
-    //! @name 
+    //! @name
     //@{
     template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
-    
+
     //! @name Operations
     //@{
     void AddDotation( PHY_Dotation& dotation );

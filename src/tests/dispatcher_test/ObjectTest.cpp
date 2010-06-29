@@ -39,7 +39,7 @@ BOOST_AUTO_TEST_CASE( Object_IsCreatedUnderATeam )
     tools::Resolver< kernel::ObjectType, std::string > types;
     std::auto_ptr< kernel::ObjectType > type( MakeObjectType() );
     types.Register( type->GetType(), *type );
-    
+
     // sides
     tools::Resolver< dispatcher::Team_ABC > teams;
     MockSide team( 2 );
@@ -58,7 +58,7 @@ BOOST_AUTO_TEST_CASE( Object_IsCreatedUnderATeam )
         message.set_team( team.GetId() );
         message.mutable_location()->set_type( Common::MsgLocation::point );
         message.mutable_location()->mutable_coordinates()->add_elem();
-        message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_latitude( 42. ); 
+        message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_latitude( 42. );
         message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_longitude( 1. );
         message.mutable_attributes();
 

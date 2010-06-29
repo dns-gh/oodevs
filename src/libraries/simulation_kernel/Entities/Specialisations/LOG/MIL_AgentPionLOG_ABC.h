@@ -41,7 +41,7 @@ public:
     //@{
     template < typename Archive > void serialize( Archive&, const unsigned int );
     //@}
-    
+
     //! @name Accessors
     //@{
     virtual const MIL_AutomateLOG& GetLogAutomate() const;
@@ -50,7 +50,7 @@ public:
 
     //! @name Operations
     //@{
-    void UpdateLogistic(); // Called by the 'PHY_ActionLogistic' action 
+    void UpdateLogistic(); // Called by the 'PHY_ActionLogistic' action
     //@}
 
 private:

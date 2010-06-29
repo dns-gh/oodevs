@@ -27,10 +27,10 @@ class MIL_ObjectFilter : private boost::noncopyable
 
 public:
               MIL_ObjectFilter();
-     explicit MIL_ObjectFilter( const std::vector< std::string >& params ); 
+     explicit MIL_ObjectFilter( const std::vector< std::string >& params );
      virtual ~MIL_ObjectFilter();
 
-    //! @name 
+    //! @name
     //@{
             void Set  ( const std::string& type );
             void Reset( const std::string& type );
@@ -40,7 +40,7 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::set<std::string> T_ObjectStateMap; 
+    typedef std::set<std::string> T_ObjectStateMap;
     //@}
 
 private:

@@ -43,8 +43,8 @@ class ObjectKnowledge
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectKnowledge( const EntityManager&                    entityManager, 
-                              const MsgObjectKnowledgeCreation& asnMsg, 
+             ObjectKnowledge( const EntityManager&                    entityManager,
+                              const MsgObjectKnowledgeCreation& asnMsg,
                               const Team&                             team );
     virtual ~ObjectKnowledge();
     //@}

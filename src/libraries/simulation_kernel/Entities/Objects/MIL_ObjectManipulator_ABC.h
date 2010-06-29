@@ -34,7 +34,7 @@ public:
     virtual void Mine      ( MT_Float rDeltaPercentage ) = 0;
     virtual void Demine    ( MT_Float rDeltaPercentage ) = 0;
     virtual void Bypass    ( MT_Float rDeltaPercentage ) = 0;
-    
+
     virtual void Activate  () = 0;
     virtual void Construct () = 0;
     virtual void Destroy   () = 0;
@@ -48,9 +48,9 @@ public:
     virtual void AddCreator( const MIL_Agent_ABC& agent ) = 0;
     virtual void ReleaseAnimator( const MIL_Agent_ABC& agent ) = 0;
     //@}
-    
+
     //! @name Accessors
-    //@{    
+    //@{
     virtual bool CanBeConstructed          () const = 0;
     virtual bool CanBeMined                () const = 0;
     virtual bool CanBeDemined              () const = 0;
@@ -62,17 +62,17 @@ public:
     //@}
 
     //! @name Construction interface
-    //@{    
+    //@{
     virtual MT_Float GetSizeCoef() const = 0;
     //@}
 
-    //! @name Speed 
+    //! @name Speed
     //@{
     virtual bool     HasMobilityInfluence  () const = 0;
     virtual MT_Float ApplySpeedPolicy( MT_Float rAgentSpeedWithinObject, MT_Float rAgentSpeedWithinEnvironment, MT_Float rAgentMaxSpeed ) const = 0;
     //@}
 
-    //! @name 
+    //! @name
     //@{
     virtual bool IsBypassed() const = 0;
     virtual bool IsMined() const = 0;

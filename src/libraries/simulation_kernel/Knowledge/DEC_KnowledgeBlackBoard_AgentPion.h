@@ -29,9 +29,9 @@ class DEC_BlackBoard_CanContainKnowledgePopulationPerception;
 class DEC_BlackBoard_CanContainKnowledgePopulationCollision;
 class DEC_BlackBoard_CanContainKnowledgeUrbanPerception;
 class DEC_Knowledge_RapForLocal;
-class DEC_KS_ObjectInteraction; 
+class DEC_KS_ObjectInteraction;
 class DEC_KS_PopulationInteraction;
-class DEC_KS_Fire;            
+class DEC_KS_Fire;
 class DEC_KS_Perception;
 class MIL_Object_ABC;
 class MIL_PopulationConcentration;
@@ -124,14 +124,14 @@ public:
 
     // Population
     bool IsIdentified           ( const MIL_PopulationConcentration& concentration ) const;
-    bool IsPerceived            ( const MIL_Population&              population    ) const;    
+    bool IsPerceived            ( const MIL_Population&              population    ) const;
     void GetPopulationsColliding( T_KnowledgePopulationCollisionVector& container ) const;
     void GetPopulationsColliding( T_KnowledgePopulationDiaIDVector&     container ) const;
     void GetPopulationsAttacking( T_KnowledgePopulationDiaIDVector&     container ) const;
 
     //Urban
     bool IsIdentified( const urban::TerrainObject_ABC& object ) const;
-    //@}   
+    //@}
 
 private:
     MIL_Agent_ABC* pPion_;

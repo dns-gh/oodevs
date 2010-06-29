@@ -51,7 +51,7 @@ namespace
         "</urbanObjects>"
         "</urban>" );
 
-    xml::xistringstream flux2( 
+    xml::xistringstream flux2(
         "<urbanObject id='9' name='Blokosolo'>"
         "<footprint>"
         "<point location='31TCM1272691661'/>"

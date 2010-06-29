@@ -44,12 +44,12 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
-    
+
     //! @name Operations
     //@{
     virtual void Update        ( bool bIsDead );
@@ -62,7 +62,7 @@ public:
     virtual void ChangePriorities( const T_MaintenancePriorityVector& priorities );
     virtual void ChangePriorities( const T_AutomateVector&            priorities );
     virtual void ChangeWorkRate  ( const PHY_MaintenanceWorkRate&     workRate   );
-    
+
     virtual PHY_MaintenanceComposanteState* HandleComposanteForTransport    ( MIL_Agent_ABC& pion, PHY_ComposantePion& composante );
     virtual bool                            HandleComposanteForTransport    ( PHY_MaintenanceComposanteState& composanteState );
     virtual int                             GetAvailabilityScoreForTransport( const PHY_ComposantePion& composante );
@@ -75,7 +75,7 @@ public:
 
     //! @name Tools
     //@{
-    virtual PHY_ComposantePion* GetAvailableHauler      ( const PHY_ComposanteTypePion& composanteType ) const;          
+    virtual PHY_ComposantePion* GetAvailableHauler      ( const PHY_ComposanteTypePion& composanteType ) const;
     virtual PHY_ComposantePion* GetAvailableRepairer    ( const PHY_Breakdown& breakdown ) const;
     virtual bool                HasUsableRepairer       ( const PHY_Breakdown& breakdown ) const;
     virtual bool                ConsumePartsForBreakdown( const PHY_Breakdown& breakdown );
@@ -102,7 +102,7 @@ private:
     typedef std::list< PHY_MaintenanceConsign_ABC* >  T_MaintenanceConsignList;
     typedef T_MaintenanceConsignList::iterator        IT_MaintenanceConsignList;
     typedef T_MaintenanceConsignList::const_iterator  CIT_MaintenanceConsignList;
-    
+
     typedef std::vector< std::pair< const MIL_Automate*, T_MaintenanceConsignList > > T_MaintenanceConsigns;
     typedef T_MaintenanceConsigns::iterator                                           IT_MaintenanceConsigns;
     typedef T_MaintenanceConsigns::const_iterator                                     CIT_MaintenanceConsigns;
@@ -117,7 +117,7 @@ private:
     bool     HasUsableHauler                      ( const PHY_ComposanteTypePion& composanteType ) const;
     unsigned int     GetNbrAvailableRepairersAllowedToWork( const PHY_Breakdown& breakdown ) const;
     MT_Float GetAvailabilityRatio                 ( PHY_ComposanteUsePredicate& predicate, const PHY_MaintenanceWorkRate* pWorkRate = 0 ) const;
-    //@}    
+    //@}
 
 private:
           MIL_AgentPionLOG_ABC&       pion_;

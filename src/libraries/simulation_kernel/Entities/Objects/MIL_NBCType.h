@@ -27,7 +27,7 @@ namespace xml
 //*****************************************************************************
 class MIL_NBCType
 {
-    
+
 public:
     //!@name Enum
     enum E_Form
@@ -50,7 +50,7 @@ public:
 
 private:
     //!@ Constructor and destructor
-    //@{   
+    //@{
     MIL_NBCType( const std::string& strName, xml::xistream& xis );
     ~MIL_NBCType();
     //@}
@@ -58,7 +58,7 @@ private:
 private:
     //! @name Helpers
     //@{
-    static void ReadAgent( xml::xistream& xis );    
+    static void ReadAgent( xml::xistream& xis );
            void ReadEffects( xml::xistream& xis );
     //@}
 

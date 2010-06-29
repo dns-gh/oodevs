@@ -31,7 +31,7 @@ ConstructionAttribute::ConstructionAttribute( kernel::Controller& controller, co
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ConstructionAttribute destructor
 // Created: SBO 2007-02-08
@@ -48,8 +48,8 @@ ConstructionAttribute::~ConstructionAttribute()
 void ConstructionAttribute::Display( kernel::Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "Object", "Information" ) )
-             .Display( tools::translate( "Object", "Construction:" ), rConstructionPercentage_ * Units::percentage ); 
-    if ( !construction_ )
+             .Display( tools::translate( "Object", "Construction:" ), rConstructionPercentage_ * Units::percentage );
+    if( !construction_ )
         return;
     displayer.Group( tools::translate( "Object", "Information" ) )
              .Item( tools::translate( "Object", "Construction dotation:" ) )
@@ -101,7 +101,7 @@ void ConstructionAttribute::DoUpdate( const MsgsSimToClient::MsgObjectCreation& 
 {
     UpdateData( message.attributes() );
 }
-   
+
 // -----------------------------------------------------------------------------
 // Name: ConstructionAttribute::UpdateData
 // Created: SBO 2007-02-08
@@ -113,9 +113,9 @@ void ConstructionAttribute::UpdateData( const T& message )
     {
         if( ! construction_ && message.construction().has_dotation_type()  )
             construction_ = resolver_.Find( message.construction().dotation_type() );
-        if ( message.construction().has_dotation_nbr()  )
+        if( message.construction().has_dotation_nbr()  )
             nDotationConstruction_ = message.construction().dotation_nbr();
-        if ( message.construction().has_percentage()  )
+        if( message.construction().has_percentage()  )
             rConstructionPercentage_ = float( message.construction().percentage() );
         controller_.Update( *(ConstructionAttribute_ABC*)this );
     }
@@ -130,7 +130,7 @@ void ConstructionAttribute::Draw( const geometry::Point2f& where, const Viewport
     if( rConstructionPercentage_.IsSet() && viewport.IsVisible( where ) )
     {
         // $$$$ SBO 2007-05-04: hard coded icon positions
-        glPushAttrib( GL_CURRENT_BIT );    
+        glPushAttrib( GL_CURRENT_BIT );
             glColor3f( 1, 1, 1 );
             tools.DrawLife( where - geometry::Vector2f( 0.f, 250.f ), rConstructionPercentage_ / 100.f );
         glPopAttrib();

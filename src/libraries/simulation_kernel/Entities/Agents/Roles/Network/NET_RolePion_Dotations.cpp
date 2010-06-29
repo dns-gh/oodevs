@@ -130,20 +130,20 @@ void NET_RolePion_Dotations::SendChangedState() const
     client::UnitAttributes msg;
     msg().set_oid( pion_.GetID() );
     pion_.Apply( &network::NetworkUnitMessageNotificationHandler_ABC::SendChangedState, msg );
- 
+
     bool bIsDead = pion_.IsDead();
     if( bLastStateDead_ != bIsDead )
     {
         msg().set_mort( bIsDead );
-        bLastStateDead_ = bIsDead;        
+        bLastStateDead_ = bIsDead;
     }
 
     bool bIsNeutralized = pion_.IsNeutralized();
     if( bLastStateNeutralized_ != bIsNeutralized )
     {
         msg().set_neutralise( bIsNeutralized );
-        bLastStateNeutralized_              = bIsNeutralized;        
-    }       
+        bLastStateNeutralized_              = bIsNeutralized;
+    }
 
     SendMsg( msg );
 }

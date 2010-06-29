@@ -34,6 +34,6 @@ int main( int argc, char* argv[] )
 
 int WINAPI WinMain( HINSTANCE /*hinstance */, HINSTANCE /* hPrevInstance */ ,LPSTR lpCmdLine, int /* nCmdShow */ )
 {
-    WinArguments winArgs(lpCmdLine) ; 
-    return main( winArgs.Argc(), const_cast<char**>( winArgs.Argv() ) ); 
+    WinArguments winArgs(lpCmdLine) ;
+    return main( winArgs.Argc(), const_cast<char**>( winArgs.Argv() ) );
 }

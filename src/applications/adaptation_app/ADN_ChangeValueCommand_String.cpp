@@ -26,9 +26,9 @@
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ChangeValueCommand_String constructor
-/** @param  modifiedData 
-    @param  nOldValue 
-    @param  nNewValue 
+/** @param  modifiedData
+    @param  nOldValue
+    @param  nNewValue
 */
 // Created: AGN 2004-05-13
 // -----------------------------------------------------------------------------
@@ -47,7 +47,7 @@ ADN_ChangeValueCommand_String::ADN_ChangeValueCommand_String( ADN_Type_String& m
 // -----------------------------------------------------------------------------
 ADN_ChangeValueCommand_String::~ADN_ChangeValueCommand_String()
 {
-    
+
 }
 
 // -----------------------------------------------------------------------------
@@ -61,8 +61,8 @@ void ADN_ChangeValueCommand_String::undo()
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ChangeValueCommand_String::mergeMeWith
-/** @param  other 
-    @return 
+/** @param  other
+    @return
 */
 // Created: AGN 2004-05-13
 // -----------------------------------------------------------------------------
@@ -76,7 +76,7 @@ bool ADN_ChangeValueCommand_String::mergeMeWith( QtCommand* other )
         return true;
     }
     else
-        return false;    
+        return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -99,10 +99,10 @@ void ADN_ChangeValueCommand_String::UpdateDescription()
         }
         pParent = pParent->GetParentNode();
     }
-    
+
     strDescription += qApp->translate("ADN_ChangeValueCommand"," from ");
     strDescription += oldValue_.c_str();
     strDescription += qApp->translate("ADN_ChangeValueCommand"," to ");
     strDescription += newValue_.c_str();
-    setDescription( strDescription );    
+    setDescription( strDescription );
 }

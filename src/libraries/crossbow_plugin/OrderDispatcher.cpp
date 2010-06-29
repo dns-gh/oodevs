@@ -104,7 +104,7 @@ namespace
         return ssError.str();
     }
 
-    template< typename AsnType > 
+    template< typename AsnType >
     class scoped_asn : public boost::noncopyable
     {
     public:
@@ -113,11 +113,11 @@ namespace
         {
             CleanParameters( asn_().parametres );
         }
-        typename AsnType::T_AsnMsgType& operator()() 
+        typename AsnType::T_AsnMsgType& operator()()
         {
             return asn_();
         }
-        
+
         void Send( dispatcher::SimulationPublisher_ABC& publisher )
         {
             asn_.Send( publisher );
@@ -156,7 +156,7 @@ void OrderDispatcher::DispatchMission( dispatcher::SimulationPublisher_ABC& publ
     }
 
     simulation::UnitOrder message;
-    try  
+    try
     {
         const long orderId = GetField< long >( row, "id" );
         message().set_oid( agent.GetId() );
@@ -265,7 +265,7 @@ void OrderDispatcher::SetParameters( Common::MsgMissionParameters& parameters, u
         SetParameter( *parameters.add_elem(), *result, type );
         result = params_->GetNextRow();
     }
-    // TODO : if ( i < parameters.elem_size() )
+    // TODO : if( i < parameters.elem_size() )
 }
 
 namespace
@@ -292,7 +292,7 @@ void OrderDispatcher::SetParameter( Common::MsgMissionParameter& parameter, cons
 {
     const std::string name( GetField< std::string >( row, "name" ) );
     const long parameterId = GetField< long >( row, "id" ); // OBJECTID
-    try 
+    try
     {
         const kernel::OrderParameter* param = GetParameterByName( type, name );
         parameter.set_null_value( param ? 0 : 1 );

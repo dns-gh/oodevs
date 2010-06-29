@@ -72,7 +72,7 @@ SpawnCapacity::~SpawnCapacity()
 // Name: template< typename Archive > void SpawnCapacity::serialize
 // Created: SLG 2010-02-17
 // -----------------------------------------------------------------------------
-template< typename Archive > 
+template< typename Archive >
 void SpawnCapacity::serialize( Archive& file, const uint )
 {
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
@@ -96,7 +96,7 @@ void SpawnCapacity::Register( MIL_Object_ABC& object )
 // Created: MGD 2009-03-05
 // -----------------------------------------------------------------------------
 void SpawnCapacity::Instanciate( MIL_Object_ABC& object ) const
-{    
+{
     SpawnCapacity* capacity = new SpawnCapacity( *this );
     object.AddCapacity( capacity );
     TER_Localisation location = object.GetLocalisation();
@@ -104,7 +104,7 @@ void SpawnCapacity::Instanciate( MIL_Object_ABC& object ) const
     try
     {
         Object* childObject= static_cast< Object* >( MIL_Singletons::GetEntityManager().CreateObject( childType_, *object.GetArmy(), location ) );
-        object.GetAttribute< ChildObjectAttribute >().AddChildObject( *childObject );    
+        object.GetAttribute< ChildObjectAttribute >().AddChildObject( *childObject );
         object.Register( static_cast< MIL_InteractiveContainer_ABC *>( capacity ) );
     }
     catch( std::exception& e )

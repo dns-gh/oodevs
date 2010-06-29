@@ -62,7 +62,7 @@ BOOST_AUTO_TEST_CASE( crossbow_test_serialize_bool )
     MockModel mockModel;
 
     OrderParameterSerializer serializer( mockDatabase, mockModel );
-    ASN1T_MissionParameter asn;    
+    ASN1T_MissionParameter asn;
     kernel::OrderParameter parameter( "param", "bool", false );
     serializer.Serialize( asn, parameter, 0, "true" );
     BOOST_CHECK_EQUAL( asn.value.t, T_MissionParameter_value_aBool );
@@ -75,14 +75,14 @@ BOOST_AUTO_TEST_CASE( crossbow_test_serialize_real )
     MockModel mockModel;
 
     OrderParameterSerializer serializer( mockDatabase, mockModel );
-    ASN1T_MissionParameter asn;    
+    ASN1T_MissionParameter asn;
     kernel::OrderParameter parameter( "param", "real", false );
     serializer.Serialize( asn, parameter, 0, "42.5" );
     BOOST_CHECK_EQUAL( asn.value.t, T_MissionParameter_value_aReal );
     BOOST_CHECK_EQUAL( asn.value.u.aReal, static_cast< asn::ASN1REAL >( 42.5 ) );
 }
 
-/* 
+/*
 // Need real database
 // Parameter 32 must be registered in db orderparameters_point
 */
@@ -100,20 +100,20 @@ INSERT INTO sword.sessions (id, exercise_id) VALUES (4242, 4242 );
 INSERT INTO sword.orders (id, unit_id, session_id) VALUES (321, 42, 4242 );
 
 INSERT INTO sword.orderparameters (id, order_id, value) VALUES (321, 321, 'orderparameters_point' );
-INSERT INTO sword.orderparameters_point (id, parameter_id, shape) VALUES 
-	(nextval('sword.tacticalobject_point_id_seq'::regclass), 321, sde.st_point( 0.14297806372070312, 49.53863960876465, 1 ) );
+INSERT INTO sword.orderparameters_point (id, parameter_id, shape) VALUES
+    (nextval('sword.tacticalobject_point_id_seq'::regclass), 321, sde.st_point( 0.14297806372070312, 49.53863960876465, 1 ) );
 
 INSERT INTO sword.orderparameters (id, order_id, value) VALUES (322, 321, 'orderparameters_line' );
-INSERT INTO sword.orderparameters_line (id, parameter_id, shape) VALUES 
-	(nextval('sword.tacticalobject_line_id_seq'::regclass), 322, 
-		sde.st_linestring( 'linestring( 0.1283868466796875 49.52336174621582, 0.11705719580078125 49.52353340759277 )', 1 ) );
+INSERT INTO sword.orderparameters_line (id, parameter_id, shape) VALUES
+    (nextval('sword.tacticalobject_line_id_seq'::regclass), 322,
+        sde.st_linestring( 'linestring( 0.1283868466796875 49.52336174621582, 0.11705719580078125 49.52353340759277 )', 1 ) );
 
 INSERT INTO sword.orderparameters (id, order_id, value) VALUES (323, 321, 'orderparameters_area' );
-INSERT INTO sword.orderparameters_area (id, parameter_id, shape) VALUES 
-	(nextval('sword.tacticalobject_area_id_seq'::regclass), 323, 
-		sde.st_polygon( 'polygon(( 0.1283868466796875 49.52336174621582, 
-					  0.11705719580078125 49.52353340759277, 
-					  0.12169205297851562 49.51735359802246, 0.1283868466796875 49.52336174621582 ))', 1 ) );
+INSERT INTO sword.orderparameters_area (id, parameter_id, shape) VALUES
+    (nextval('sword.tacticalobject_area_id_seq'::regclass), 323,
+        sde.st_polygon( 'polygon(( 0.1283868466796875 49.52336174621582,
+                      0.11705719580078125 49.52353340759277,
+                      0.12169205297851562 49.51735359802246, 0.1283868466796875 49.52336174621582 ))', 1 ) );
 */
 
 namespace
@@ -143,7 +143,7 @@ template< typename T >
         {
             for ( unsigned i = 0; i < list->n; ++i )
                 CleanLocationElem( list->elem[ i ] );
-            if ( list->n > 0 )
+            if( list->n > 0 )
                 delete [] list->elem;
             delete list;
             list = 0;
@@ -155,7 +155,7 @@ template< typename T >
     {
         if( list )
         {
-            if ( list->n > 0 )
+            if( list->n > 0 )
                 delete [] list->elem;
             delete list;
             list = 0;
@@ -180,7 +180,7 @@ BOOST_AUTO_TEST_CASE( crossbow_test_serialize_point_lehavre )
         std::auto_ptr< crossbow::Database_ABC > db( factory.Create( config, "sde://sword:sword@sword-test.dmz.masagroup.net:6789/sword_crossbow_db.sword" ) );
 
         OrderParameterSerializer serializer( *db, mockModel );
-        ASN1T_MissionParameter asn;    
+        ASN1T_MissionParameter asn;
         kernel::OrderParameter parameter( "param", "point", false );
         serializer.Serialize( asn, parameter, 321, "orderparameters_point_test" ); // point is registered with sql script
         BOOST_CHECK_EQUAL( asn.value.t, T_MissionParameter_value_point );
@@ -204,7 +204,7 @@ BOOST_AUTO_TEST_CASE( crossbow_test_serialize_point_monterey )
         std::auto_ptr< crossbow::Database_ABC > db( factory.Create( config, "sde://sword:sword@sword-test.dmz.masagroup.net:6789/sword_crossbow_db.sword" ) );
 
         OrderParameterSerializer serializer( *db, mockModel );
-        ASN1T_MissionParameter asn;    
+        ASN1T_MissionParameter asn;
         kernel::OrderParameter parameter( "param", "point", false );
         serializer.Serialize( asn, parameter, 325, "orderparameters_point_test" ); // point is registered with sql script
         BOOST_CHECK_EQUAL( asn.value.t, T_MissionParameter_value_point );
@@ -228,7 +228,7 @@ BOOST_AUTO_TEST_CASE( crossbow_test_serialize_pointlist )
         std::auto_ptr< crossbow::Database_ABC > db( factory.Create( config, "sde://sword:sword@sword-test.dmz.masagroup.net:6789/sword_crossbow_db.sword" ) );
 
         OrderParameterSerializer serializer( *db, mockModel );
-        ASN1T_MissionParameter asn;    
+        ASN1T_MissionParameter asn;
         kernel::OrderParameter parameter( "param", "pointlist", false );
         serializer.Serialize( asn, parameter, 324, "orderparameters_point_test" ); // point is registered with sql script
         BOOST_CHECK_EQUAL( asn.value.t, T_MissionParameter_value_pointList );
@@ -264,7 +264,7 @@ BOOST_AUTO_TEST_CASE( crossbow_test_charge_memory_orderparameter_point_serializa
         for ( int i = 1000; i > 0; --i )
         {
             OrderParameterSerializer serializer( *db, mockModel );
-            ASN1T_MissionParameter asn;    
+            ASN1T_MissionParameter asn;
             kernel::OrderParameter parameter( "param", "point", false );
             serializer.Serialize( asn, parameter, 321, "orderparameters_point_test" ); // point is registered with sql script
             CleanAsnLocation( asn.value.u.point );
@@ -286,7 +286,7 @@ BOOST_AUTO_TEST_CASE( crossbow_test_charge_memory_orderparameter_pointlist_seria
         for ( int i = 1000; i > 0; --i )
         {
             OrderParameterSerializer serializer( *db, mockModel );
-            ASN1T_MissionParameter asn;    
+            ASN1T_MissionParameter asn;
             kernel::OrderParameter parameter( "param", "pointlist", false );
             serializer.Serialize( asn, parameter, 324, "orderparameters_point_test" ); // point is registered with sql script
             CleanAsnLocationList( asn.value.u.pointList );
@@ -307,7 +307,7 @@ BOOST_AUTO_TEST_CASE( crossbow_test_serialize_line )
         std::auto_ptr< crossbow::Database_ABC > db( factory.Create( config, "sde://sword:sword@sword-test.dmz.masagroup.net:6789/sword_crossbow_db.sword" ) );
 
         OrderParameterSerializer serializer( *db, mockModel );
-        ASN1T_MissionParameter asn;    
+        ASN1T_MissionParameter asn;
         kernel::OrderParameter parameter( "param", "path", false );
         serializer.Serialize( asn, parameter, 322, "orderparameters_line_test" ); // point is registered with sql script
         BOOST_CHECK_EQUAL( asn.value.t, T_MissionParameter_value_path );
@@ -333,7 +333,7 @@ BOOST_AUTO_TEST_CASE( crossbow_test_serialize_area )
         std::auto_ptr< crossbow::Database_ABC > db( factory.Create( config, "sde://sword:sword@sword-test.dmz.masagroup.net:6789/sword_crossbow_db.sword" ) );
 
         OrderParameterSerializer serializer( *db, mockModel );
-        ASN1T_MissionParameter asn;    
+        ASN1T_MissionParameter asn;
         kernel::OrderParameter parameter( "param", "polygon", false );
         serializer.Serialize( asn, parameter, 323, "orderparameters_area_test" ); // point is registered with sql script
         BOOST_CHECK_EQUAL( asn.value.t, T_MissionParameter_value_polygon );
@@ -356,11 +356,11 @@ BOOST_AUTO_TEST_CASE( CrossbowTest_OrderSerialize_Agent )
 {
     MockDatabase mockDatabase;
     MockModel mockModel;
-    
+
     MOCK_EXPECT( mockModel, agents ).once();
-    
+
     OrderParameterSerializer serializer( mockDatabase, mockModel );
-    ASN1T_MissionParameter asn;    
+    ASN1T_MissionParameter asn;
     kernel::OrderParameter parameter( "param", "Agent", false );
     serializer.Serialize( asn, parameter, 0, "5" );
     BOOST_CHECK_EQUAL( asn.value.t, T_MissionParameter_value_unit );
@@ -375,7 +375,7 @@ BOOST_AUTO_TEST_CASE( CrossbowTest_OrderSerialize_AgentList_0 )
     MOCK_EXPECT( mockModel, agents ).never();
 
     OrderParameterSerializer serializer( mockDatabase, mockModel );
-    ASN1T_MissionParameter asn;    
+    ASN1T_MissionParameter asn;
     kernel::OrderParameter parameter( "param", "AgentList", false );
     serializer.Serialize( asn, parameter, 0, "" );
     BOOST_CHECK_EQUAL( asn.value.t, T_MissionParameter_value_unitList );
@@ -391,7 +391,7 @@ BOOST_AUTO_TEST_CASE( CrossbowTest_OrderSerialize_AgentList_1 )
     MOCK_EXPECT( mockModel, agents ).once();
 
     OrderParameterSerializer serializer( mockDatabase, mockModel );
-    ASN1T_MissionParameter asn;    
+    ASN1T_MissionParameter asn;
     kernel::OrderParameter parameter( "param", "AgentList", false );
     serializer.Serialize( asn, parameter, 0, "12" );
     BOOST_CHECK_EQUAL( asn.value.t, T_MissionParameter_value_unitList );
@@ -407,11 +407,11 @@ BOOST_AUTO_TEST_CASE( CrossbowTest_OrderSerialize_AgentList_5 )
     MOCK_EXPECT( mockModel, agents ).exactly( 5 );
 
     OrderParameterSerializer serializer( mockDatabase, mockModel );
-    ASN1T_MissionParameter asn;    
+    ASN1T_MissionParameter asn;
     kernel::OrderParameter parameter( "param", "AgentList", false );
     serializer.Serialize( asn, parameter, 0, "12,35468,56,5,3" );
     BOOST_CHECK_EQUAL( asn.value.t, T_MissionParameter_value_unitList );
-    BOOST_CHECK_EQUAL( asn.value.u.unitList->n, 5u );    
+    BOOST_CHECK_EQUAL( asn.value.u.unitList->n, 5u );
     BOOST_CHECK_EQUAL( asn.value.u.unitList->elem[ 0 ], 12 );
     BOOST_CHECK_EQUAL( asn.value.u.unitList->elem[ 1 ], 35468 );
     BOOST_CHECK_EQUAL( asn.value.u.unitList->elem[ 2 ], 56 );
@@ -430,7 +430,7 @@ BOOST_AUTO_TEST_CASE( CrossbowTest_OrderSerialize_AgentList_5 )
                 .Register( "bool", T_MissionParameter_value_aBool )
                 .Register( "real", T_MissionParameter_value_aReal )
                 .Register( "enumeration", T_MissionParameter_value_enumeration )
-                .Register( "string", T_MissionParameter_value_aCharStr ) 
+                .Register( "string", T_MissionParameter_value_aCharStr )
 
                 .Register( "automate", T_MissionParameter_value_automat )
                 .Register( "automatelist", T_MissionParameter_value_automatList )

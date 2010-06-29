@@ -80,7 +80,7 @@ void WeatherWidget::Commit( Common::MsgMeteoAttributes& att ) const
 // Created: JSR 2010-04-12
 // -----------------------------------------------------------------------------
 void WeatherWidget::Commit( Common::MsgMissionParameters& att ) const
-{    
+{
     att.add_elem()->mutable_value()->set_areal( 0 ); // Temperature
     att.add_elem()->mutable_value()->set_areal( ( float) windSpeed_->value() );
     att.add_elem()->mutable_value()->mutable_heading()->set_heading( windDirection_->value() );

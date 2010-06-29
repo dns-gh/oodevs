@@ -61,7 +61,7 @@ AgentFactory::AgentFactory( Controllers& controllers, Model& model, const Static
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: AgentFactory destructor
 // Created: AGE 2006-02-13
@@ -162,7 +162,7 @@ Entity_ABC* AgentFactory::FindorCreateKnowledgeGroup( const kernel::Entity_ABC& 
     }
     // LTO begin
     Team_ABC* teamtop = dynamic_cast< Team_ABC* >( const_cast< Entity_ABC* >(&team) );
-    if ( teamtop )
+    if( teamtop )
         return knowledgeGroupFactory_.Create( *teamtop );
     // LTO end
     return const_cast< Entity_ABC* >( &team );
@@ -188,7 +188,7 @@ kernel::Agent_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Automat_ABC
     result->Polish();
     return result;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: AgentFactory::Create
 // Created: SBO 2006-10-05

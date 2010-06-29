@@ -68,9 +68,9 @@ struct DispatcherFactory
 
     boost::shared_ptr< ModelFunction_ABC > operator()( ValueHandler_ABC< K >& keyHandler, ValueHandler_ABC< T >& valueHandler ) const
     {
-        return DispatcherFactoryHelper< KeyValue >()( 
+        return DispatcherFactoryHelper< KeyValue >()(
                    boost::bind< boost::shared_ptr< ModelFunction_ABC > >(
-                       DispatchedFunctionFactory(), 
+                       DispatchedFunctionFactory(),
                        _1,
                        boost::ref( keyHandler ),
                        boost::protect( boost::bind< boost::shared_ptr< ModelFunction_ABC > >( ValueFunctionFactory< Value >( value_ ), boost::ref( valueHandler ) ) )

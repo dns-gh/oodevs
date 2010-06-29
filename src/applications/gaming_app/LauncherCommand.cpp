@@ -11,7 +11,7 @@
 #include "LauncherCommand.h"
 #include "gaming/Command.h"
 #include "gaming/CommandHandler.h"
-#include "tools/ExerciseConfig.h" 
+#include "tools/ExerciseConfig.h"
 #include "clients_gui/LinkInterpreter_ABC.h"
 #include <qprocess.h>
 
@@ -21,7 +21,7 @@
 // -----------------------------------------------------------------------------
 LauncherCommand::LauncherCommand( CommandHandler& handler, tools::ExerciseConfig& config, gui::LinkInterpreter_ABC& interpreter )
     : handler_( handler )
-    , config_ ( config ) 
+    , config_ ( config )
     , interpreter_( interpreter )
 {
     handler_.Register( "launch", *this );
@@ -42,7 +42,7 @@ LauncherCommand::~LauncherCommand()
 // -----------------------------------------------------------------------------
 void LauncherCommand::Receive( const Command& command )
 {
-    QProcess process(0); 
-    process.addArgument( config_.BuildExerciseChildFile( command.Argument( 1 ) ).c_str() ) ; 
-    process.start(); 
+    QProcess process(0);
+    process.addArgument( config_.BuildExerciseChildFile( command.Argument( 1 ) ).c_str() ) ;
+    process.start();
 }

@@ -62,7 +62,7 @@ enum E_ConsumptionType
 {
     eEngineStopped  = 0,
     eEngineStarted  = 1,
-    eMoving         = 2,  
+    eMoving         = 2,
     eWorking        = 3,
     eNbrConsumptionType
 };
@@ -162,10 +162,10 @@ enum E_AgentTypeAutomate
 enum E_NatureAtlasType
 {
     eNatureAtlas_PC,
-    eNatureAtlas_Armored,       
-    eNatureAtlas_ASS,           
-    eNatureAtlas_Log,           
-    eNatureAtlas_Mortar,        
+    eNatureAtlas_Armored,
+    eNatureAtlas_ASS,
+    eNatureAtlas_Log,
+    eNatureAtlas_Mortar,
     eNatureAtlas_RocketLauncher,
     eNatureAtlas_None,
     eNatureAtlas_Vehicule,
@@ -176,7 +176,7 @@ enum E_NatureAtlasType
     eNbrNatureAtlas
 };
 
-enum 
+enum
 {
     ePostureNeedTimeStart = 3
 };
@@ -392,7 +392,7 @@ enum E_MissionParameterType
     eMissionParameterTypeString,
     eMissionParameterTypeDirection,
     eMissionParameterTypeDirectionBM,
-    eMissionParameterTypeGDH, // $$$$ SBO 2007-05-24: 
+    eMissionParameterTypeGDH, // $$$$ SBO 2007-05-24:
     eMissionParameterTypeEnumeration,
     eMissionParameterTypeNatureAtlas,
     eMissionParameterTypeAgentKnowledge,

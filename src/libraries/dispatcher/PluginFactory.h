@@ -46,7 +46,7 @@ class PluginFactory
 public:
     //! @name Constructors/Destructor
     //@{
-             PluginFactory( const Config& config, Model& model, const kernel::StaticModel& staticModel, SimulationPublisher_ABC& simulation, ClientsNetworker& clients, 
+             PluginFactory( const Config& config, Model& model, const kernel::StaticModel& staticModel, SimulationPublisher_ABC& simulation, ClientsNetworker& clients,
                             CompositePlugin& handler, CompositeRegistrable& registrables, const Services& services, int maxConnections );
     virtual ~PluginFactory();
     //@}

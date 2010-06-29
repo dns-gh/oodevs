@@ -37,7 +37,7 @@ ReportFactory::ReportFactory( const dispatcher::Config& config, const dispatcher
         >> xml::list( "report", *this, &ReportFactory::ReadReport )
         >> end();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ReportFactory destructor
 // Created: SBO 2006-12-07
@@ -102,7 +102,7 @@ std::string ReportFactory::RenderParameter( const MsgMissionParameter& value ) c
 //        ss << value.value().tirindirect();
 //    else if( value.value().has_acharstr() )
 //        ss << value.value().acharstr();
-    else 
+    else
         return "[unhandled]";
     return ss.str();
 }

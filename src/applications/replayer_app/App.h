@@ -32,13 +32,13 @@ class App
 public:
     //! @name Constructors/Destructor
     //@{
-             App( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdShow );  
+             App( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdShow );
     virtual ~App();
     //@}
 
     //! @name Operations
     //@{
-    void Execute(); 
+    void Execute();
     //@}
 
 private:
@@ -51,11 +51,11 @@ private:
 private:
     //! @name Helpers
     //@{
-    void RunGUI( HINSTANCE hinstance ); 
-    void StartIconAnimation(); 
+    void RunGUI( HINSTANCE hinstance );
+    void StartIconAnimation();
     void StopIconAnimation();
-    void AnimateIcon(); 
-    static LRESULT CALLBACK MainWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam); 
+    void AnimateIcon();
+    static LRESULT CALLBACK MainWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
     //@}
 
 private:
@@ -65,12 +65,12 @@ private:
     std::auto_ptr< dispatcher::Replayer > replayer_;
     //@}
 
-    //! @name GUI Member data 
+    //! @name GUI Member data
     //@{
     HWND                           hWnd_ ;
-    HINSTANCE                      hInstance_ ; 
+    HINSTANCE                      hInstance_ ;
     NOTIFYICONDATA                 TrayIcon_;
-    unsigned int                   nIconIndex_; 
+    unsigned int                   nIconIndex_;
     std::auto_ptr< boost::thread > guiThread_ ;
     //@}
 

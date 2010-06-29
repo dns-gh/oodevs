@@ -90,7 +90,7 @@ namespace
 actions::Action_ABC* ActionFactory::CreateAction( const kernel::Entity_ABC& target, const kernel::MissionType& mission ) const
 {
     std::auto_ptr< actions::Action_ABC > action;
-    if( target.GetTypeName() == kernel::Agent_ABC::typeName_ ) 
+    if( target.GetTypeName() == kernel::Agent_ABC::typeName_ )
         action.reset( new actions::AgentMission( target, mission, controller_, true ) );
     else if( target.GetTypeName() == kernel::Automat_ABC::typeName_ )
         action.reset( new actions::AutomatMission( target, mission, controller_, true ) );

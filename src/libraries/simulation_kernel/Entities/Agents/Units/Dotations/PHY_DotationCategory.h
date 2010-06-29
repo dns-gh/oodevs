@@ -51,7 +51,7 @@ public:
           bool                      IsGuided            () const;
           float                     GetGuidanceRange    () const;
           bool                      IsIlluminating      ( float range, bool permanent ) const;
-		  float						GetIlluminatingRange() const;
+          float                        GetIlluminatingRange() const;
           double                    GetAttrition        ( unsigned materialId ) const;
     //@}
 
@@ -115,13 +115,13 @@ private:
 
 private:
     const PHY_DotationType&         type_;
-    const PHY_AmmoDotationClass*    pAmmoDotationClass_;      
+    const PHY_AmmoDotationClass*    pAmmoDotationClass_;
     const PHY_DotationLogisticType* pLogisticType_;
     const PHY_DotationNature*       pNature_;
 
     std::string strName_;
     unsigned int        nMosID_;
-        
+
     // Packaging
     MT_Float rWeight_;
     MT_Float rVolume_;

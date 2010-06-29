@@ -68,11 +68,11 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
-    
+
     //! @name Main
     //@{
     void Update();
@@ -89,7 +89,7 @@ public:
           bool           CanHaul     ( const PHY_ComposanteTypePion& composanteType ) const;
           bool           CanRepair   () const;
           bool           CanRepair   ( const PHY_Breakdown& breakdown ) const;
-          
+
           void           StartUsingForLogistic      ();
           void           StopUsingForLogistic       ();
           void           NotifyHandledByMaintenance ();
@@ -155,7 +155,7 @@ public:
     //@}
 
     //! @name Accessors
-    //@{    
+    //@{
       const PHY_RoleInterface_Composantes&  GetRole            () const;
             double                          GetWeight          () const;
             bool                            IsMajor            () const;
@@ -164,17 +164,17 @@ public:
             double                          GetMaxSpeed        ( const TerrainData& data ) const;
             double                          GetMaxSpeed        ( const MIL_Object_ABC& object ) const;
             bool                            CanMove            () const;
-            bool                            IsUsable           () const;            
+            bool                            IsUsable           () const;
             bool                            IsLoadable         () const;
             bool                            CanPerceive        () const;
             bool                            CanBeFired         () const;
             bool                            CanBeLent          () const;
     virtual bool                            CanFire            () const;
-    virtual bool                            CanFireWhenUnloaded() const;            
-            
+    virtual bool                            CanFireWhenUnloaded() const;
+
     virtual const PHY_ComposanteTypePion&   GetType        () const;
-	virtual float						    GetIdentificationMaxRange () const;
-	virtual float						    GetReconnoissanceMaxRange () const;
+    virtual float                            GetIdentificationMaxRange () const;
+    virtual float                            GetReconnoissanceMaxRange () const;
     virtual unsigned int                    GetMajorScore  () const;
     //@}
 
@@ -203,14 +203,14 @@ public:
     //@{
     bool CanBeLoaded       () const;
     bool CanTransportHumans() const;
-    
+
     bool     CanBeTransported                           () const;
     bool     CanTransportPion                           () const;
     MT_Float GetPionTransporterWeightCapacity           () const;
     MT_Float GetPionTransporterWeightLoadedPerTimeStep  () const;
     MT_Float GetPionTransporterWeightUnloadedPerTimeStep() const;
     //@}
-    
+
     //! @name PHY_RoleInterface_ActiveProtection
     //@{
     virtual void UseAmmunition( const PHY_DotationCategory& category, MIL_Agent_ABC& pion );
@@ -269,7 +269,7 @@ private:
 
     // Breakdowns
           unsigned int                            nAutoRepairTimeStep_;
-    const PHY_Breakdown*                  pBreakdown_;             
+    const PHY_Breakdown*                  pBreakdown_;
           PHY_MaintenanceComposanteState* pMaintenanceState_;
 
     // Random breakdowns

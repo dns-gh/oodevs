@@ -147,9 +147,9 @@ void MIL_OrderContext::ReadLimits( const Common::MsgMissionParameter& limit1, co
         throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_limit );
     if( limit1.null_value() )
         return;
-    
+
     T_PointVector limit1Data, limit2Data;
-    if(    !NET_ASN_Tools::ReadLine( limit1.value().line(), limit1Data )
+    if( !NET_ASN_Tools::ReadLine( limit1.value().line(), limit1Data )
         || !NET_ASN_Tools::ReadLine( limit2.value().line(), limit2Data ) )
         throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_limit );
 
@@ -235,7 +235,7 @@ void MIL_OrderContext::WriteLimits( Common::MsgMissionParameter& limit1, Common:
 // -----------------------------------------------------------------------------
 void MIL_OrderContext::WriteDirection( Common::MsgMissionParameter& asn ) const
 {
-    asn.set_null_value( 0 );    
+    asn.set_null_value( 0 );
     NET_ASN_Tools::WriteDirection( dirDanger_, *asn.mutable_value()->mutable_heading() );
 }
 
@@ -268,7 +268,7 @@ const MT_Vector2D& MIL_OrderContext::GetDirDanger() const
 {
     return dirDanger_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderContext::GetFuseau
 // Created: NLD 2006-11-14

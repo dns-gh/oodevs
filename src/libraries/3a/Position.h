@@ -32,7 +32,7 @@ class Position
 
 public:
     //! @name Constructors/Destructor
-    //@{     
+    //@{
              Position();
     explicit Position( const std::string& coord );
     explicit Position( const MsgCoordLatLong& coord );

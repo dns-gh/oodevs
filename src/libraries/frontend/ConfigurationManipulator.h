@@ -21,7 +21,7 @@ namespace xml
 
 namespace tools
 {
-    class GeneralConfig ; 
+    class GeneralConfig ;
 }
 
 namespace frontend
@@ -41,7 +41,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit ConfigurationManipulator( const std::string& filename );
-    explicit ConfigurationManipulator( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session ); 
+    explicit ConfigurationManipulator( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session );
     virtual ~ConfigurationManipulator();
     //@}
 
@@ -63,7 +63,7 @@ private:
 
     //! @name Helpers
     //@{
-    static std::string GetSessionXml( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session ); 
+    static std::string GetSessionXml( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session );
     //@}
 
 
@@ -93,7 +93,7 @@ void ConfigurationManipulator::SetValue( const std::string& path, const T& value
 template< typename T >
 T ConfigurationManipulator::GetValue( const std::string& path ) const
 {
-    return document_->GetValue<T>(path); 
+    return document_->GetValue<T>(path);
 }
 
 

@@ -60,7 +60,7 @@ template< typename Archive >
 void save_construct_data( Archive& archive, const DEC_DataBase* database, const unsigned int /*version*/ )
 {
     archive << database->libPaths_
-            << database->knowledges_; 
+            << database->knowledges_;
 }
 
 template< typename Archive >

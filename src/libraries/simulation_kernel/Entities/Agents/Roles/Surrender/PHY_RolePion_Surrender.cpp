@@ -121,7 +121,7 @@ void PHY_RolePion_Surrender::NotifySurrenderCanceled()
     MIL_Report::PostEvent( pion_, MIL_Report::eReport_CancelSurrender );
     bHasChanged_ = true;
 }
-            
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Surrender::Capture
 // Created: NLD 2005-03-04
@@ -154,7 +154,7 @@ bool PHY_RolePion_Surrender::Release()
     pion_.Apply(&SurrenderNotificationHandler_ABC::NotifyReleased);
     return pion_.GetAutomate().NotifyReleased();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Surrender::Imprison
 // Created: NLD 2007-02-14
@@ -164,7 +164,7 @@ bool PHY_RolePion_Surrender::Imprison( const MIL_Object_ABC& camp )
     if( !IsSurrendered() || !bPrisoner_ )
         return false;
     pPrison_ = &camp;
-    pion_.GetAutomate().NotifyImprisoned( camp );    
+    pion_.GetAutomate().NotifyImprisoned( camp );
     return true;
 }
 
@@ -188,7 +188,7 @@ bool PHY_RolePion_Surrender::IsSurrendered() const
 
     return pion_.GetAutomate().IsSurrendered();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Surrender::GetArmySurrenderedTo
 // Created: NLD 2007-02-14

@@ -25,9 +25,9 @@ class DEC_Rep_PathPoint_Special : public DEC_Rep_PathPoint
 public:
     enum E_TypePointParticulier
     {
-        eTypePointParticulierPont       = 1,     
+        eTypePointParticulierPont       = 1,
         eTypePointParticulierCarrefour  = 2,
-        eTypePointParticulierVillage    = 4,  
+        eTypePointParticulierVillage    = 4,
         eTypePointParticulierPointRoute = 8,
         eTypePointParticulierForet      = 16
     };

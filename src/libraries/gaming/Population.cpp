@@ -179,7 +179,7 @@ void Population::DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationDest
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const MsgsSimToClient::MsgPopulationUpdate& message )
 {
-    if( message.has_etat_domination()  ) 
+    if( message.has_etat_domination()  )
         nDomination_ = message.etat_domination();
 }
 
@@ -251,7 +251,7 @@ float Population::GetHeight() const
 {
     return 0;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Population::IsAt
 // Created: AGE 2006-04-10

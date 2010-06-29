@@ -28,14 +28,14 @@ public:
 
     ADN_ComboBoxItem* CreateItem(void * obj)
     {
-        // create new combo item 
+        // create new combo item
         ADN_ComboBoxItem* pItem = new ADN_ComboBoxItem(*pCombo_,obj);
-        
+
         // connect it with armor name
         pItem->GetConnector().Connect( (DotationNatureInfos*)obj );
-        
-        // return    
-        return pItem; 
+
+        // return
+        return pItem;
     }
 
 };

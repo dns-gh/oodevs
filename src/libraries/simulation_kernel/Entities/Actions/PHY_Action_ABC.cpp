@@ -51,7 +51,7 @@ unsigned int PHY_Action_ABC::GetId() const
 // -----------------------------------------------------------------------------
 void PHY_Action_ABC::Suspend()
 {
-    bSuspended_ = true;    
+    bSuspended_ = true;
 }
 
 // -----------------------------------------------------------------------------

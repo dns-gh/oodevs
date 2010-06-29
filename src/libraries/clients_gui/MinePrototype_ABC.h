@@ -47,7 +47,7 @@ private:
 
 protected:
     //! @name Member data
-    //@{    
+    //@{
     QLineEdit* density_;
     QLabel*    densityLabel_;
     QHBox*     densityBox_;

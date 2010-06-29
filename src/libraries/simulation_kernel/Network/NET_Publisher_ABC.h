@@ -21,7 +21,7 @@ namespace MsgsSimToClient
 */
 // Created: AGE 2007-08-10
 // =============================================================================
-class NET_Publisher_ABC 
+class NET_Publisher_ABC
 {
 
 public:

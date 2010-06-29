@@ -27,11 +27,11 @@ class MT_Droite
 //    MT_BOOSTPOOLING_MEMBERS( MT_Droite )
 
 public:
-    //! @name Types 
+    //! @name Types
     //@{
     enum E_Side
     {
-        eOnNegativeSide = -1, 
+        eOnNegativeSide = -1,
         eOnPositiveSide = 0,
         eOnBoundary     = 1
     };
@@ -43,7 +43,7 @@ public:
      MT_Droite( MT_Float rX1, MT_Float rY1, MT_Float rX2, MT_Float rY2 );
      MT_Droite( const MT_Droite& );
     virtual ~MT_Droite();
-    
+
     MT_Droite& operator = ( const MT_Droite& );
 
     //! @name Operations
@@ -52,7 +52,7 @@ public:
     E_Side           GetSide           ( MT_Float rX, MT_Float rY )  const;
     bool             IsInside          ( const MT_Vector2D& vPoint ) const;
     E_CollisionState Intersect2D       ( const MT_Line& segment , MT_Vector2D& vPosIntersect ) const;
-    E_CollisionState Intersect2D       ( const MT_Droite& droite, MT_Vector2D& vPosIntersect ) const; 
+    E_CollisionState Intersect2D       ( const MT_Droite& droite, MT_Vector2D& vPosIntersect ) const;
     MT_Float         GetDistanceToPoint( const MT_Vector2D& vPoint ) const;
     //@}
 

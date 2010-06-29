@@ -37,7 +37,7 @@ public:
     /*//! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}*/
@@ -94,11 +94,11 @@ public:
     //@}
 
     //! @name Accessors
-    //@{    
+    //@{
     virtual unsigned int              GetID() const;
     const urban::TerrainObject_ABC&   GetObject();
     const urban::TerrainObject_ABC&   GetObject() const;
-    virtual unsigned int  GetMaterial() const; 
+    virtual unsigned int  GetMaterial() const;
     //@}
 
 protected:
@@ -116,7 +116,7 @@ private:
     typedef std::vector< MIL_InteractiveContainer_ABC* >    T_InteractiveCapacities;
     //@}
 
-private: 
+private:
     //! @name Member data
     //@{
     const urban::TerrainObject_ABC& object_;

@@ -25,7 +25,7 @@ CrossingSiteAttribute::CrossingSiteAttribute( xml::xistream& xis )
     : rWidth_           ( 0. )
     , rDepth_           ( 0. )
     , rCurrentSpeed_    ( 0. )
-    , bBanksToFitOut_   ( true )   
+    , bBanksToFitOut_   ( true )
 {
     xis >> xml::content( "width", rWidth_ )
         >> xml::content( "depth", rDepth_ )
@@ -50,7 +50,7 @@ CrossingSiteAttribute::CrossingSiteAttribute()
     : rWidth_           ( 0. )
     , rDepth_           ( 0. )
     , rCurrentSpeed_    ( 0. )
-    , bBanksToFitOut_   ( true )   
+    , bBanksToFitOut_   ( true )
 {
     // NOTHING
 }
@@ -86,7 +86,7 @@ CrossingSiteAttribute::~CrossingSiteAttribute()
 // -----------------------------------------------------------------------------
 template < typename Archive >
 void CrossingSiteAttribute::serialize( Archive& file, const unsigned int )
-{   
+{
     file & boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     file & rWidth_
          & rDepth_
@@ -188,7 +188,7 @@ MT_Float CrossingSiteAttribute::GetWidth() const
 {
     return rWidth_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: CrossingSiteAttribute::GetDepth
 // Created: JCR 2008-06-19
@@ -197,7 +197,7 @@ MT_Float CrossingSiteAttribute::GetDepth() const
 {
     return rDepth_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: CrossingSiteAttribute::GetSpeed
 // Created: JCR 2008-06-19
@@ -206,7 +206,7 @@ MT_Float CrossingSiteAttribute::GetSpeed() const
 {
     return rCurrentSpeed_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: CrossingSiteAttribute::IsBanksToFitOut
 // Created: JCR 2008-06-19

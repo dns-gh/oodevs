@@ -29,7 +29,7 @@
 // Created: APE 2004-12-06
 // =============================================================================
 template< class DATA, class GUI >
-class ADN_WorkspaceElement 
+class ADN_WorkspaceElement
 : public ADN_WorkspaceElement_ABC
 {
     MT_COPYNOTALLOWED( ADN_WorkspaceElement )

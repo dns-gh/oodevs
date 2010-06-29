@@ -28,7 +28,7 @@ namespace
     {
     public:
         BrainFixture()
-        : brain( BOOST_RESOLVE( "." ) ) 
+        : brain( BOOST_RESOLVE( "." ) )
         {
             brain.RegisterFunction< boost::function< void( double, double ) > >( "check", boost::bind( &Check, _1, _2 ) );
             brain.RegisterFunction< boost::function< void( double, double ) > >( "checkClose", boost::bind( &CheckClose, _1, _2 ) );

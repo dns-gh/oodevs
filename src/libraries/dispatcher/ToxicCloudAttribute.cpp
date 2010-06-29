@@ -19,7 +19,7 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 ToxicCloudAttribute::ToxicCloudAttribute( const Common::MsgObjectAttributes& message )
 {
-    Update( message );    
+    Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -29,7 +29,7 @@ ToxicCloudAttribute::ToxicCloudAttribute( const Common::MsgObjectAttributes& mes
 ToxicCloudAttribute::~ToxicCloudAttribute()
 {
     // NOTHING
-}  
+}
 
 // -----------------------------------------------------------------------------
 // Name: ToxicCloudAttribute::Update

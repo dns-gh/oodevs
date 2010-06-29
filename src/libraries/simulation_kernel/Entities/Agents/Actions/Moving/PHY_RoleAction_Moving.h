@@ -97,13 +97,13 @@ public:
     //@{
     MT_Vector2D ExtrapolatePosition( const double rTime, const bool bBoundOnPath ) const;
     //@}
-                
+
 private:
-    //! @name 
+    //! @name
     //@{
     virtual const MT_Vector2D& GetPosition () const;
     virtual const MT_Vector2D& GetDirection() const;
-    
+
     virtual void ApplyMove( const MT_Vector2D& position, const MT_Vector2D& direction, double rSpeed, double rWalkedDistance );
     //@}
 
@@ -117,7 +117,7 @@ private:
     virtual void NotifyCurrentPathChanged       ();
     //@}
 
-    //! @name 
+    //! @name
     //@{
     virtual bool CanMove              () const;
     virtual bool CanObjectInteractWith( const MIL_Object_ABC& object ) const;

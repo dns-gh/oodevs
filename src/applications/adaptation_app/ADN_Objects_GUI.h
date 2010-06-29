@@ -25,7 +25,7 @@ class ADN_Objects_Data;
 */
 // Created: APE 2004-12-06
 // =============================================================================
-class ADN_Objects_GUI 
+class ADN_Objects_GUI
 : public ADN_GUI_ABC
 {
     Q_OBJECT
@@ -39,7 +39,7 @@ public:
 
         eActivableCapacityPresent,
 
-		eAttritionCapacityPresent,
+        eAttritionCapacityPresent,
         eAttritionDotation,
         eAttritionCapacityUseDotation,
 
@@ -58,19 +58,19 @@ public:
         eConstructorCapacity_DefaultConsumption,
         eConstructorCapacity_UnitType,
 
-		eContaminationCapacityPresent,
+        eContaminationCapacityPresent,
         eContaminationCapacity_MaxToxic,
 
-		eDecontaminationCapacityPresent,
+        eDecontaminationCapacityPresent,
 
-		eExtinguishableCapacityPresent,
+        eExtinguishableCapacityPresent,
 
-		eHealableCapacityPresent,    
+        eHealableCapacityPresent,
 
-        eImprovableCapacityPresent,        
+        eImprovableCapacityPresent,
         eImprovableCapacity_Dotation,
 
-		eInterferenceCapacityPresent,
+        eInterferenceCapacityPresent,
 
         eInteractWithEnemyCapacityPresent,
 
@@ -84,25 +84,25 @@ public:
         eMobilityCapacity_SpeedModifier,
         eMobilityCapacity_MaxAgentSpeed,
 
-		eOccupableCapacityPresent,
+        eOccupableCapacityPresent,
 
-		ePropagationCapacityPresent,
+        ePropagationCapacityPresent,
         ePropagationCapacity_ModelType,
 
-		eProtectionCapacityPresent,
+        eProtectionCapacityPresent,
         eProtectionCapacity_MaxSize,
         eProtectionCapacity_GeniePrepared,
- 
+
         eSupplyCapacityPresent,
 
         eSupplyRouteCapacityPresent,
 
-		eTerrainHeuristicCapacityPresent,
+        eTerrainHeuristicCapacityPresent,
         eTerrainHeuristicCapacity_LocationScore,
 
         eTimeLimitedCapacityPresent,
 
-		eWorkableCapacityPresent,
+        eWorkableCapacityPresent,
         eWorkableCapacity_Size,
 
         eDetectionCapacityPresent,

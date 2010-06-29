@@ -29,7 +29,7 @@ ADN_FragOrder_Wizard::ADN_FragOrder_Wizard( ADN_Missions_Data::T_FragOrder_Vecto
     new ADN_Wizard_LastPage( this, qApp->translate( "ADN_FragOrder_Wizard", "Creation completed" ),
         qApp->translate( "ADN_FragOrder_Wizard", "Click \"Done\" to create the new fragmentary order." ) );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_FragOrder_Wizard destructor
 // Created: SBO 2006-12-04

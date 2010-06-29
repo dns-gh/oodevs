@@ -38,7 +38,7 @@ public:
 public:
              PHY_RoleInterface_NBC();
     virtual ~PHY_RoleInterface_NBC();
-    
+
     //! @name Operations
     //@{
     virtual bool IsContaminated() const = 0;
@@ -46,7 +46,7 @@ public:
     virtual void Contaminate   ( const MIL_ToxicEffectManipulator& contamination ) = 0;
     virtual void Decontaminate () = 0;
     virtual void Decontaminate ( MT_Float rRatioAgentsWorking ) = 0;
-    virtual MT_Float GetContaminationQuantity() const = 0;  
+    virtual MT_Float GetContaminationQuantity() const = 0;
 
     //@}
 

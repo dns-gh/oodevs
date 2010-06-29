@@ -61,15 +61,15 @@ class CrossbowPlugin : public dispatcher::Plugin_ABC
 
 public:
     //! @name Constructors/Destructor
-    //@{             
+    //@{
              CrossbowPlugin( const dispatcher::Config& config, xml::xistream& xis, dispatcher::Model& model, dispatcher::SimulationPublisher_ABC& publisher, dispatcher::ClientPublisher_ABC& clients, tools::MessageDispatcher_ABC& client, dispatcher::LinkResolver_ABC& links, dispatcher::CompositeRegistrable& registrables );
     virtual ~CrossbowPlugin();
     //@}
 
     //! @name Operations
-    //@{    
+    //@{
     virtual void Receive( const MsgsSimToClient::MsgSimToClient& asnMsg );
-    virtual void Send   ( const MsgsMessengerToClient::MsgMessengerToClient& msg ); 
+    virtual void Send   ( const MsgsMessengerToClient::MsgMessengerToClient& msg );
     virtual void Update();
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
     virtual void NotifyClientLeft         ( dispatcher::ClientPublisher_ABC& client );

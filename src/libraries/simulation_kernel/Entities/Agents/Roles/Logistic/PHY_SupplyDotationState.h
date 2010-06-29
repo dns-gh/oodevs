@@ -40,12 +40,12 @@ public:
           void          AddRequest            ( const PHY_SupplyDotationRequest& request );
     const MIL_Automate& GetSuppliedAutomate   () const;
           bool          IsSupplying           ( const PHY_DotationCategory& dotationCategory ) const;
-          
+
           void          GetMerchandiseToConvoy              ( T_MerchandiseToConvoyMap& container ) const;
           void          RemoveConvoyedMerchandise           ( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations );
           void          AddConvoyedMerchandise              ( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations );
           void          CancelMerchandiseOverheadReservation();
-          
+
           void          Supply() const;
     //@}
 

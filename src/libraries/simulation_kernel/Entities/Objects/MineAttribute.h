@@ -34,7 +34,7 @@ class MineAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MineAttribute();    
+             MineAttribute();
              MineAttribute( const PHY_DotationCategory& category, unsigned int nFullNbrDotation );
     explicit MineAttribute( const Common::MsgMissionParameter_Value& attributes );
     virtual ~MineAttribute();
@@ -47,7 +47,7 @@ public:
 
     //! @name CheckPoints
     //@{
-    BOOST_SERIALIZATION_SPLIT_MEMBER()    
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
@@ -60,7 +60,7 @@ public:
     virtual void SendUpdate( Common::MsgObjectAttributes& asn ) const;
     virtual void OnUpdate( const Common::MsgMissionParameter_Value& attribute );
     virtual void Serialize( HLA_UpdateFunctor& functor ) const;
-    virtual void Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer );    
+    virtual void Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer );
     virtual void WriteODB( xml::xostream& xos ) const;
     //@}
 
@@ -70,7 +70,7 @@ public:
     //@}
 
     //! @name Accessors
-    //@{    
+    //@{
     unsigned int        GetDotationNeededForConstruction( MT_Float rDeltaPercentage ) const;
     unsigned int        GetDotationRecoveredWhenDestroying( MT_Float rDeltaPercentage ) const;
     MT_Float            GetState() const;
@@ -84,7 +84,7 @@ public:
     //@}
 
 private:
-    //! @name 
+    //! @name
     //@{
     void Set( MT_Float percentage );
     //@}

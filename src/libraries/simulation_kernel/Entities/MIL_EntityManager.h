@@ -109,11 +109,11 @@ public:
     MIL_AgentPion&  CreatePion( const MIL_AgentTypePion& type, MIL_Automate&  automate , xml::xistream& xis );
     MIL_AgentPion&  CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition );
 
-    void                        CreateObject( xml::xistream& xis, MIL_Army_ABC& army ); 
-    MIL_Object_ABC*             CreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation* pLocalisation, Common::ObstacleType_DemolitionTargetType obstacleType );    
+    void                        CreateObject( xml::xistream& xis, MIL_Army_ABC& army );
+    MIL_Object_ABC*             CreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation* pLocalisation, Common::ObstacleType_DemolitionTargetType obstacleType );
     MIL_Object_ABC*             CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation );
     MIL_Object_ABC*             CreateObject( MIL_Army_ABC& army, const MIL_ObjectBuilder_ABC& builder );
-    MIL_Object_ABC*             CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation, const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass );        
+    MIL_Object_ABC*             CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation, const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass );
     //@}
 
     //! @name Accessors
@@ -123,7 +123,7 @@ public:
     virtual       MIL_AgentPion*      FindAgentPion ( uint nID ) const;
                   MIL_Object_ABC*     FindObject    ( uint nID ) const;
     virtual const MIL_ObjectType_ABC& FindObjectType( const std::string& type ) const;
-        
+
     const tools::Resolver< MIL_Army_ABC >& MIL_EntityManager::GetArmies() const;
     const bool HasInfiniteDotations() const;
     //@}
@@ -150,12 +150,12 @@ public:
     //@}
 
     //! @name Network
-    //@{  
-    void OnReceiveMsgUnitMagicAction             ( const MsgsClientToSim::MsgUnitMagicAction&               message, unsigned int nCtx ); 
+    //@{
+    void OnReceiveMsgUnitMagicAction             ( const MsgsClientToSim::MsgUnitMagicAction&               message, unsigned int nCtx );
     void OnReceiveMsgObjectMagicAction           ( const MsgsClientToSim::MsgObjectMagicAction&             message, unsigned int nCtx );
-    void OnReceiveMsgUnitOrder                   ( const Common::MsgUnitOrder&                              message, unsigned int nCtx ); 
+    void OnReceiveMsgUnitOrder                   ( const Common::MsgUnitOrder&                              message, unsigned int nCtx );
     void OnReceiveMsgAutomatOrder                ( const Common::MsgAutomatOrder&                           message, unsigned int nCtx );
-    void OnReceiveMsgPopulationOrder             ( const Common::MsgPopulationOrder&                        message, unsigned int nCtx );  
+    void OnReceiveMsgPopulationOrder             ( const Common::MsgPopulationOrder&                        message, unsigned int nCtx );
     void OnReceiveMsgFragOrder                   ( const MsgsClientToSim::MsgFragOrder&                     message, unsigned int nCtx );
     void OnReceiveMsgSetAutomateMode             ( const MsgsClientToSim::MsgSetAutomatMode&                message, unsigned int nCtx );
     void OnReceiveMsgUnitCreationRequest         ( const MsgsClientToSim::MsgUnitCreationRequest&           message, unsigned int nCtx );
@@ -174,7 +174,7 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_EntityManager* role, const unsigned int /*version*/ );
@@ -182,7 +182,7 @@ public:
 
     void WriteODB( xml::xostream& xos ) const;
     //@}
-    
+
 private:
     //! @name Helpers
     //@{
@@ -261,7 +261,7 @@ private:
     MT_Profiler   profiler_;
     MT_Float      rKnowledgesTime_;
     MT_Float      rAutomatesDecisionTime_;
-    MT_Float      rPionsDecisionTime_;    
+    MT_Float      rPionsDecisionTime_;
     MT_Float      rPopulationsDecisionTime_;
     MT_Float      rActionsTime_;
     MT_Float      rEffectsTime_;

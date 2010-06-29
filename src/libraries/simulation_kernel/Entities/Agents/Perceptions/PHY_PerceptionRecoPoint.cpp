@@ -74,19 +74,19 @@ void PHY_PerceptionRecoPoint::Update()
     {
         PHY_PerceptionRecoPointReco& reco = **it;
 
-        if ( !reco.bProcessed_ )
+        if( !reco.bProcessed_ )
         {
             // Agrandissement de la zone de reconnaissance
-            if ( reco.rCurrentSize_ < reco.rFinalSize_ )
+            if( reco.rCurrentSize_ < reco.rFinalSize_ )
                 reco.rCurrentSize_ += reco.rGrowthSpeed_;
-            if ( reco.rCurrentSize_ >= reco.rFinalSize_ )
+            if( reco.rCurrentSize_ >= reco.rFinalSize_ )
             {
                 reco.rCurrentSize_ = reco.rFinalSize_;
                 reco.callerAgent_.CallbackPerception( (*it)->Id() );
                 reco.bProcessed_ = true;
             }
         }
-    }  
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -96,7 +96,7 @@ void PHY_PerceptionRecoPoint::Update()
 const PHY_PerceptionLevel& PHY_PerceptionRecoPoint::Compute( const MT_Vector2D& vPoint ) const
 {
     for ( CIT_RecoVector it = recos_.begin(); it != recos_.end(); ++it )
-        if ( (*it)->vCenter_.SquareDistance( vPoint ) <= (*it)->rCurrentSize_ * (*it)->rCurrentSize_ )
+        if( (*it)->vCenter_.SquareDistance( vPoint ) <= (*it)->rCurrentSize_ * (*it)->rCurrentSize_ )
             return PHY_PerceptionLevel::recognized_;
     return PHY_PerceptionLevel::notSeen_;
 }
@@ -153,7 +153,7 @@ const PHY_PerceptionLevel& PHY_PerceptionRecoPoint::Compute( const DEC_Knowledge
 const PHY_PerceptionLevel& PHY_PerceptionRecoPoint::Compute( const MIL_Object_ABC& object ) const
 {
     for ( CIT_RecoVector it = recos_.begin(); it != recos_.end(); ++it )
-        if ( object.Intersect2DWithCircle( (*it)->vCenter_, (*it)->rCurrentSize_ ) )
+        if( object.Intersect2DWithCircle( (*it)->vCenter_, (*it)->rCurrentSize_ ) )
             return PHY_PerceptionLevel::recognized_;
     return PHY_PerceptionLevel::notSeen_;
 }
@@ -165,7 +165,7 @@ const PHY_PerceptionLevel& PHY_PerceptionRecoPoint::Compute( const MIL_Object_AB
 const PHY_PerceptionLevel& PHY_PerceptionRecoPoint::Compute( const DEC_Knowledge_Object& knowledge ) const
 {
     for ( CIT_RecoVector it = recos_.begin(); it != recos_.end(); ++it )
-        if ( knowledge.GetLocalisation().Intersect2DWithCircle( (*it)->vCenter_, (*it)->rCurrentSize_ ) )
+        if( knowledge.GetLocalisation().Intersect2DWithCircle( (*it)->vCenter_, (*it)->rCurrentSize_ ) )
             return PHY_PerceptionLevel::recognized_;
     return PHY_PerceptionLevel::notSeen_;
 }
@@ -185,7 +185,7 @@ void PHY_PerceptionRecoPoint::Execute( const TER_Object_ABC::T_ObjectVector& /*p
         TER_World::GetWorld().GetObjectManager().GetListWithinCircle( (*itReco)->vCenter_, (*itReco)->rCurrentSize_, perceivableObjects );
         for ( TER_Object_ABC::CIT_ObjectVector it = perceivableObjects.begin(); it != perceivableObjects.end(); ++it )
         {
-            MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **it );    
+            MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **it );
             if( object().CanBePerceived() )
                 perceiver_.NotifyPerception( object, PHY_PerceptionLevel::identified_ ); // Identifié ou not seen pour les objets
         }

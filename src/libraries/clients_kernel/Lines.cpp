@@ -42,7 +42,7 @@ void Lines::PopPoint()
     if( ! points_.empty() )
         points_.pop_back();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Lines::AddPoint
 // Created: AGE 2006-08-09
@@ -95,7 +95,7 @@ void Lines::Accept( LocationVisitor_ABC& visitor ) const
 {
     visitor.VisitLines( points_ );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Lines::GetName
 // Created: AGE 2006-08-09

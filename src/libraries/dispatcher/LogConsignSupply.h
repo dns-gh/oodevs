@@ -72,7 +72,7 @@ private:
     const Model&               model_;
     const kernel::Automat_ABC& automat_;
     const unsigned long        nTickCreation_;
-          
+
     const kernel::Automat_ABC*        pTreatingAutomat_;
     const kernel::Automat_ABC*        pConvoyingAutomat_;
     const kernel::Agent_ABC*          pConvoy_;

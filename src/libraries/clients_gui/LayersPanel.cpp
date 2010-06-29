@@ -60,7 +60,7 @@ LayersPanel::LayersPanel( QWidget* parent, kernel::Controllers& controllers )
         down->setFixedSize( 32, 32 );
         QToolTip::add( down, tr( "Move the selected layer backwards" ) );
         connect( down, SIGNAL( clicked() ), SLOT( OnDown() ) );
-        
+
         transparencyLabel_ = new QLabel( tr( "Transparency " ), vBox );
         transparency_ = new QSlider( 0, 100, 1, 100, Qt::Horizontal, vBox );
         transparency_->setMaximumWidth( 258 );
@@ -181,7 +181,7 @@ void LayersPanel::OnSelectionChanged( QListViewItem* i )
     currentLayer_ = -1;
     ValuedListItem* item = static_cast< ValuedListItem* >( i );
     T_Layers::const_iterator it = std::find( layers_.begin(), layers_.end(), item->GetValue< Layer_ABC >() );
-    
+
     QString transparencyLabelText( tr( "Transparency " ) );
     if( it != layers_.end() )
     {

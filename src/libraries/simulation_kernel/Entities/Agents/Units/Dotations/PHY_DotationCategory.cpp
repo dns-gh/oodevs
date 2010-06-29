@@ -41,7 +41,7 @@ PHY_DotationCategory::PHY_DotationCategory( const PHY_DotationType& type, const 
     , attritions_           ()
     , urbanAttritionFactors_( UrbanType::GetUrbanType().GetStaticModel().Resolver< urban::MaterialCompositionType, std::string >::Count(), 0.9 )
     , rWeight_              ( 0. )
-    , rVolume_              ( 0. ) 
+    , rVolume_              ( 0. )
     , bIlluminating_        ( false )
     , fRange_               ( 0.)
     , bMaintainIllumination_( false )
@@ -70,7 +70,7 @@ PHY_DotationCategory::PHY_DotationCategory( const PHY_DotationType& type, const 
     {
         std::string strTmp; // $$$$ Check validity
         xis >> xml::optional() >> xml::attribute( "type", strTmp );
-        if ( strTmp != "" )
+        if( strTmp != "" )
         {
             pAmmoDotationClass_ = PHY_AmmoDotationClass::Find( strTmp );
             if( !pAmmoDotationClass_ )
@@ -243,7 +243,7 @@ void PHY_DotationCategory::InitializeIllumination( xml::xistream& xis )
     if( xis.has_child("illuminating") )
     {
         bIlluminating_ = true;
-        xis >> xml::start("illuminating") 
+        xis >> xml::start("illuminating")
                 >> xml::attribute( "range", fRange_ )
                 >> xml::attribute( "maintain", bMaintainIllumination_ )
             >> xml::end();
@@ -259,8 +259,8 @@ void PHY_DotationCategory::InitializeGuidance( xml::xistream& xis )
     if( xis.has_child("guided") )
     {
         bGuided_ = true;
-        xis >> xml::start("guided") 
-                >> xml::attribute( "maintain", bMaintainGuidance_ ) 
+        xis >> xml::start("guided")
+                >> xml::attribute( "maintain", bMaintainGuidance_ )
                 >> xml::attribute( "range", rGuidanceRange_ )
             >> xml::end();
     }
@@ -489,7 +489,7 @@ double PHY_DotationCategory::GetAttrition( unsigned materialId ) const
 {
     if (materialId < urbanAttritionFactors_.size() )
         return urbanAttritionFactors_[ materialId ];
-    else 
+    else
         return 0.;
 }
 
@@ -504,7 +504,7 @@ double PHY_DotationCategory::FindUrbanProtection( unsigned materialId )
         CIT_UrbanMaterialAttritionMap it = urbanBestValue_.find( materialId );
         if( it == urbanBestValue_.end() )
             throw std::runtime_error( "Unknown material" );
-        return it->second;    
+        return it->second;
     }
     else
         return -1.0;

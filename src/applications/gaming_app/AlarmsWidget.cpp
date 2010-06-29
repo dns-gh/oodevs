@@ -179,7 +179,7 @@ namespace
                 text_->setText( item_->text( 1 ) );
                 exec();
             }
-            else 
+            else
                 hide();
         }
 

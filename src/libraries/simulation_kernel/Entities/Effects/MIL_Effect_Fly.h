@@ -30,7 +30,7 @@ public:
     //! @name Operations
     //@{
     virtual bool Execute();
-    
+
     void SetFlyingHeight( MT_Float rHeight );
     //@}
 

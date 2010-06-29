@@ -59,26 +59,26 @@ public:
     template< typename T > static void DebugDrawPoints            ( const T& caller, std::vector< boost::shared_ptr< MT_Vector2D > > points );
     template< typename T > static void DebugDrawPoint             ( const T& caller, const MT_Vector2D* pPoint  );
     static std::string                 GetPointXY                 ( boost::shared_ptr< MT_Vector2D > point );
-  
+
     // Reinforcement
     static std::vector<DEC_Decision_ABC*> GetReinforcements  ( const MIL_AgentPion& callerAgent );
-    static bool Reinforce          ( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pTarget );            
-    static void CancelReinforcement( MIL_AgentPion& callerAgent );           
+    static bool Reinforce          ( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pTarget );
+    static void CancelReinforcement( MIL_AgentPion& callerAgent );
 
     // Misc
     static void SetCurrentSpeedModificator( MIL_AgentPion& callerAgent, MT_Float rFactor );
     static void SetMaxSpeedModificator    ( MIL_AgentPion& callerAgent, MT_Float rFactor );
-    
+
     // Representations
     static std::vector< boost::shared_ptr< MIL_FragOrder > > GetOrdersCategory ( MIL_Entity_ABC& callerAgent );
     static std::vector< boost::shared_ptr< DEC_PathPoint > > GetPointsCategory ( MIL_Entity_ABC& callerAgent );
     static void RemoveFromOrdersCategory                 ( MIL_Entity_ABC& callerAgent, boost::shared_ptr< MIL_FragOrder > pOrder );
     static void DeleteOrderRepresentation                ( MIL_Entity_ABC& callerAgent, boost::shared_ptr< MIL_FragOrder > pOrder );
     static void RemoveFromPointsCategory                 ( MIL_Entity_ABC& callerAgent, boost::shared_ptr< DEC_PathPoint > pPoint );
-    
+
     //
     static void FillMissionParameters                         ( const directia::Brain& brain, directia::ScriptRef& initTaskFunction, const directia::ScriptRef& refMission, boost::shared_ptr< MIL_Mission_ABC > mission );
-    
+
     static std::string  GetName                               ( DEC_Decision_ABC* pEntity );
     static DEC_Decision_ABC* GetAutomate                      ( DEC_Decision_ABC* pAgent );
     static boost::shared_ptr< MT_Vector2D > GetDirectionEnnemi( boost::shared_ptr< MIL_Mission_ABC > pMission );

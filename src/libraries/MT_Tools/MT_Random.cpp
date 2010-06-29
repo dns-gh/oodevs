@@ -26,7 +26,7 @@ MT_Random::MT_Random( unsigned long nSeed )
     state_[0] = nSeed & 0xffffffffUL;
     for ( unsigned int j = 1; j < N; ++j )
     {
-        state_[j] = ( 1812433253UL * ( state_[j - 1] ^ ( state_[j - 1] >> 30 ) ) + j ); 
+        state_[j] = ( 1812433253UL * ( state_[j - 1] ^ ( state_[j - 1] >> 30 ) ) + j );
         state_[j] &= 0xffffffffUL;  /* for >32 bit machines */
     }
 }
@@ -53,13 +53,13 @@ MT_Random::MT_Random( const std::vector< unsigned long >& init_key )
     unsigned int i = 1;
     unsigned int j = 0;
     unsigned int k = __max(  N, init_key.size() );
-    
-    for (; k; --k) 
+
+    for (; k; --k)
     {
         state_[i] = ( state_[i] ^ ( ( state_[i - 1] ^ ( state_[i - 1] >> 30 ) ) * 1664525UL ) ) + init_key[j] + j;
         state_[i] &= 0xffffffffUL; /* for WORDSIZE > 32 machines */
         ++i; ++j;
-        if ( i >= N )
+        if( i >= N )
         {
             state_[0] = state_[N - 1];
             i = 1;
@@ -72,12 +72,12 @@ MT_Random::MT_Random( const std::vector< unsigned long >& init_key )
         state_[i] = ( state_[i] ^ ( ( state_[i - 1] ^ ( state_[i - 1] >> 30 ) ) * 1566083941UL ) ) - i;
         state_[i] &= 0xffffffffUL; /* for WORDSIZE > 32 machines */
         ++i;
-        if ( i >= N ) 
-        { 
-            state_[0] = state_[N - 1]; 
+        if( i >= N )
+        {
+            state_[0] = state_[N - 1];
             i = 1;
         }
     }
 
-    state_[0] = 0x80000000UL; /* MSB is 1; assuring non-zero initial array */ 
+    state_[0] = 0x80000000UL; /* MSB is 1; assuring non-zero initial array */
 }

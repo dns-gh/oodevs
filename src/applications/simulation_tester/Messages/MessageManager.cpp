@@ -60,8 +60,8 @@ MessageManager::MessageManager( Workspace& workspace, NetworkManager& networkMan
     messageService_.RegisterReceivedMessage( eMsgArmy            , *this, & MessageManager::OnReceiveMsgTeam                  );
     messageService_.RegisterReceivedMessage( eMsgEnvironmentType , *this, & MessageManager::OnReceiveMsgPawnTerrainType       );
     messageService_.RegisterReceivedMessage( eMsgDebugDrawPoints , *this, & MessageManager::OnReceiveMsgDebugDrawPoints       );
-	messageService_.RegisterReceivedMessage( eMsgOutSim          , *this, & MessageManager::OnReceiveMsgOutSim                );
-	
+    messageService_.RegisterReceivedMessage( eMsgOutSim          , *this, & MessageManager::OnReceiveMsgOutSim                );
+
     messageService_.SetCbkOnError( & MessageManager::OnError );
 }
 
@@ -126,10 +126,10 @@ DIN::DIN_BufferedMessage MessageManager::BuildMessage()
 //-----------------------------------------------------------------------------
 void MessageManager::SendMsgInSim( MsgsClientToSim& asnMsg )
 {
-	if ( !workspace_.GetNetworkManager().IsConnected() )
+    if( !workspace_.GetNetworkManager().IsConnected() )
         return;
 
-    
+
     asnMsg.SerializeToString( aASNEncodeBuffer_ );
 
     ASN1PEREncodeBuffer asnPEREncodeBuffer( aASNEncodeBuffer_, sizeof(aASNEncodeBuffer_), TRUE );
@@ -170,7 +170,7 @@ void MessageManager::OnReceiveMsgKnowledgeGroup( DIN::DIN_Link& /*linkFrom*/, DI
     uint32 nTeamId;
     uint32 nGroupId;
     input >> nTeamId >> nGroupId;
-    
+
     Team* team = workspace_.GetEntityManager().FindTeam( nTeamId );
     if( team )
     {
@@ -245,72 +245,72 @@ void MessageManager::OnReceiveMsgOutSim( DIN_Link& /*linkFrom*/, DIN_Input& inpu
         OnReceiveMsgChangeAutomateAck      ( *asnMsg.msg().msg_change_automate_ack()           , nCtx );
     if (asnMsg.msg().has_msg_change_diplomatie_ack() )
         OnReceiveMsgChangeTeamRelationAck  ( *asnMsg.msg().msg_change_diplomatie_ack()         , nCtx );
-    if (asnMsg.msg().has_msg_change_groupe_connaissance_ack() ) 
+    if (asnMsg.msg().has_msg_change_groupe_connaissance_ack() )
         OnReceiveMsgChangeKnowledgeGroupAck( *asnMsg.msg().msg_change_groupe_connaissance_ack,() nCtx );
-    if (asnMsg.msg().has_msg_automate_order_ack() )             
+    if (asnMsg.msg().has_msg_automate_order_ack() )
         OnReceiveMsgAutomatOrderAck        ( *asnMsg.msg().msg_automate_order_ack()            , nCtx );
-    if (asnMsg.msg().has_msg_pion_order_ack() )                 
+    if (asnMsg.msg().has_msg_pion_order_ack() )
         OnReceiveMsgUnitOrderAck           ( *asnMsg.msg().msg_pion_order_ack()                , nCtx );
-    if (asnMsg.msg().has_msg_set_automate_mode_ack() )          
+    if (asnMsg.msg().has_msg_set_automate_mode_ack() )
         OnReceiveMsgSetAutomatModeAck      ( *asnMsg.msg().msg_set_automate_mode_ack()         , nCtx );
 
-	if (asnMsg.msg().has_msg_ctrl_info() )                     
+    if (asnMsg.msg().has_msg_ctrl_info() )
         OnReceiveMsgControlInformation           ( *asnMsg.msg().msg_ctrl_info()                    );
-    if (asnMsg.msg().has_msg_ctrl_begin_tick() )               
+    if (asnMsg.msg().has_msg_ctrl_begin_tick() )
         OnReceiveMsgControlBeginTick             (  asnMsg.msg().msg_ctrl_begin_tick()              );
-    if (asnMsg.msg().has_msg_ctrl_end_tick() )                 
+    if (asnMsg.msg().has_msg_ctrl_end_tick() )
         OnReceiveMsgControlEndTick               ( *asnMsg.msg().msg_ctrl_end_tick()                );
-    if (asnMsg.msg().has_msg_ctrl_change_time_factor_ack() )   
+    if (asnMsg.msg().has_msg_ctrl_change_time_factor_ack() )
         OnReceiveMsgControlChangeTimeFactorAck   ( *asnMsg.msg().msg_ctrl_change_time_factor_ack()  );
-    if (asnMsg.msg().has_msg_ctrl_send_current_state_begin() ) 
+    if (asnMsg.msg().has_msg_ctrl_send_current_state_begin() )
         OnReceiveMsgControlSendCurrentStateBegin ();
-    if (asnMsg.msg().has_msg_ctrl_send_current_state_end() )   
+    if (asnMsg.msg().has_msg_ctrl_send_current_state_end() )
         OnReceiveMsgControlSendCurrentStateEnd   ();
 
-    if (asnMsg.msg().has_msg_unit_attributes() )               
+    if (asnMsg.msg().has_msg_unit_attributes() )
         OnReceiveMsgUnitAttributes            ( *asnMsg.msg().msg_unit_attributes()              );
-    if (asnMsg.msg().has_msg_unit_pathfind() )                 
+    if (asnMsg.msg().has_msg_unit_pathfind() )
         OnReceiveMsgPawnPathFind              ( *asnMsg.msg().msg_unit_pathfind()                );
 
-    if (asnMsg.msg().has_msg_change_automate() )               
+    if (asnMsg.msg().has_msg_change_automate() )
         OnReceiveMsgChangeAutomat             ( *asnMsg.msg().msg_change_automate()              );
-    if (asnMsg.msg().has_msg_pion_creation() )                 
+    if (asnMsg.msg().has_msg_pion_creation() )
         OnReceiveMsgPawnCreation              ( *asnMsg.msg().msg_pion_creation()                );
-    if (asnMsg.msg().has_msg_automate_creation() )             
+    if (asnMsg.msg().has_msg_automate_creation() )
         OnReceiveMsgAutomatCreation           ( *asnMsg.msg().msg_automate_creation()            );
-	if (asnMsg.msg().has_msg_change_diplomatie() )             
-        OnReceiveMsgChangeTeamRelation        ( *asnMsg.msg().msg_change_diplomatie()            );  
+    if (asnMsg.msg().has_msg_change_diplomatie() )
+        OnReceiveMsgChangeTeamRelation        ( *asnMsg.msg().msg_change_diplomatie()            );
 
-    if (asnMsg.msg().has_msg_unit_knowledge_creation() )       
+    if (asnMsg.msg().has_msg_unit_knowledge_creation() )
         OnReceiveMsgUnitKnowledgeCreation     ( *asnMsg.msg().msg_unit_knowledge_creation()      );
-    if (asnMsg.msg().has_msg_unit_knowledge_update() )         
+    if (asnMsg.msg().has_msg_unit_knowledge_update() )
         OnReceiveMsgUnitKnowledgeUpdate       ( *asnMsg.msg().msg_unit_knowledge_update()        );
-    if (asnMsg.msg().has_msg_unit_knowledge_destruction() )    
+    if (asnMsg.msg().has_msg_unit_knowledge_destruction() )
         OnReceiveMsgUnitKnowledgeDestruction  ( *asnMsg.msg().msg_unit_knowledge_destruction()   );
 
-    if (asnMsg.msg().has_msg_population_knowledge_creation() )       
+    if (asnMsg.msg().has_msg_population_knowledge_creation() )
         OnReceiveMsgPopulationKnowledgeCreation     ( *asnMsg.msg().msg_population_knowledge_creation()      );
-    if (asnMsg.msg().has_msg_population_knowledge_update() )         
+    if (asnMsg.msg().has_msg_population_knowledge_update() )
         OnReceiveMsgPopulationKnowledgeUpdate       ( *asnMsg.msg().msg_population_knowledge_update()        );
-    if (asnMsg.msg().has_msg_population_knowledge_destruction() )    
+    if (asnMsg.msg().has_msg_population_knowledge_destruction() )
         OnReceiveMsgPopulationKnowledgeDestruction  ( *asnMsg.msg().msg_population_knowledge_destruction()   );
 
-    if (asnMsg.msg().has_msg_object_creation() )               
+    if (asnMsg.msg().has_msg_object_creation() )
         OnReceiveMsgObjectCreation            ( *asnMsg.msg().msg_object_creation()              );
-    if (asnMsg.msg().has_msg_object_update() )                 
+    if (asnMsg.msg().has_msg_object_update() )
         OnReceiveMsgObjectUpdate              ( *asnMsg.msg().msg_object_update()                );
-    if (asnMsg.msg().has_msg_object_destruction() )            
+    if (asnMsg.msg().has_msg_object_destruction() )
         OnReceiveMsgObjectDestruction         ( asnMsg.msg().msg_object_destruction()            );
-    if (asnMsg.msg().has_msg_object_knowledge_creation() )     
-        OnReceiveMsgObjectKnowledgeCreation   ( *asnMsg.msg().msg_object_knowledge_creation()    ); 
-    if (asnMsg.msg().has_msg_object_knowledge_update() )       
-        OnReceiveMsgObjectKnowledgeUpdate     ( *asnMsg.msg().msg_object_knowledge_update()      ); 
-    if (asnMsg.msg().has_msg_object_knowledge_destruction() )  
-        OnReceiveMsgObjectKnowledgeDestruction( *asnMsg.msg().msg_object_knowledge_destruction() ); 
+    if (asnMsg.msg().has_msg_object_knowledge_creation() )
+        OnReceiveMsgObjectKnowledgeCreation   ( *asnMsg.msg().msg_object_knowledge_creation()    );
+    if (asnMsg.msg().has_msg_object_knowledge_update() )
+        OnReceiveMsgObjectKnowledgeUpdate     ( *asnMsg.msg().msg_object_knowledge_update()      );
+    if (asnMsg.msg().has_msg_object_knowledge_destruction() )
+        OnReceiveMsgObjectKnowledgeDestruction( *asnMsg.msg().msg_object_knowledge_destruction() );
 
-    if (asnMsg.msg().has_msg_population_creation() )           
+    if (asnMsg.msg().has_msg_population_creation() )
         OnReceiveMsgPopulationCreation        ( *asnMsg.msg().msg_population_creation()          );
-    if (asnMsg.msg().has_msg_population_update() )             
+    if (asnMsg.msg().has_msg_population_update() )
         OnReceiveMsgPopulationUpdate          ( *asnMsg.msg().msg_population_update()            );
 }
 
@@ -325,14 +325,14 @@ void MessageManager::OnReceiveMsgOutSim( DIN_Link& /*linkFrom*/, DIN_Input& inpu
 void MessageManager::OnReceiveMsgControlInformation( const MsgControlInformation& asnMsg )
 {
     std::stringstream strOutputMsg;
-    strOutputMsg << "ControlInformation - Current Tick: " << asnMsg.current_tick() 
+    strOutputMsg << "ControlInformation - Current Tick: " << asnMsg.current_tick()
                  << " - Tick duration : "       << asnMsg.tick_duration
                  << " - Time factor : "         << asnMsg.time_factor;
 
     workspace_.SetTickDuration( asnMsg.tick_duration() );
     workspace_.SetTick        ( asnMsg.current_tick()  );
     //workspace_.SetTimeFactor  ( asnMsg.time_factor()   );
-    
+
     MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
 }
 
@@ -454,7 +454,7 @@ void MessageManager::OnReceiveMsgChangeAutomat( const MsgChangeAutomate& asnMsg 
 
     Automat* pAutomat = workspace_.GetEntityManager().FindAutomat( asnMsg.oid_automate() );
     assert( pAutomat );
-    
+
     pPawn->OnAutomatChanged( *pAutomat );
 }
 
@@ -472,7 +472,7 @@ void MessageManager::OnReceiveMsgChangeAutomateAck( const MsgChangeAutomateAck& 
 
         Automat* pAutomat = workspace_.GetEntityManager().FindAutomat( asnMsg.oid_automate() );
         assert( pAutomat );
-        
+
         pPawn->OnAutomatChanged( *pAutomat );
     }
 }
@@ -605,7 +605,7 @@ void MessageManager::OnReceiveMsgObjectUpdate( const MsgObjectUpdate& /*asnMsg*/
 void MessageManager::OnReceiveMsgObjectDestruction( const MsgObjectDestruction& asnMsg )
 {
     Object* pObject = workspace_.GetEntityManager().FindObject( asnMsg );
-    
+
     if( pObject )
     {
         workspace_.GetEntityManager().Unregister( *pObject );
@@ -633,7 +633,7 @@ void MessageManager::OnReceiveMsgPopulationCreation( const MsgPopulationCreation
     else
         MT_LOG_ERROR_MSG( "TEST -> MM - Population with ID#" << asnMsg.oid_population() << " already created" );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MessageManager::OnReceiveMsgPopulationUpdate
 // Created: SBO 2005-11-24
@@ -655,7 +655,7 @@ void MessageManager::OnReceiveMsgPopulationConcentrationCreation( const MsgPopul
     assert( pPopulation );
     pPopulation->OnConcentrationCreated( asnMsg );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MessageManager::OnReceiveMsgPopulationConcentrationUpdate
 // Created: SBO 2005-11-24
@@ -666,7 +666,7 @@ void MessageManager::OnReceiveMsgPopulationConcentrationUpdate( const MsgPopulat
     assert( pPopulation );
     pPopulation->OnConcentrationUpdated( asnMsg );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MessageManager::OnReceiveMsgPopulationConcentrationDestruction
 // Created: SBO 2005-11-24
@@ -688,7 +688,7 @@ void MessageManager::OnReceiveMsgPopulationFlowCreation( const MsgPopulationFlow
     assert( pPopulation );
     pPopulation->OnFlowCreated( asnMsg );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MessageManager::OnReceiveMsgPopulationFlowUpdate
 // Created: SBO 2005-11-24
@@ -699,7 +699,7 @@ void MessageManager::OnReceiveMsgPopulationFlowUpdate( const MsgPopulationFlowUp
     assert( pPopulation );
     pPopulation->OnFlowUpdated( asnMsg );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MessageManager::OnReceiveMsgPopulationFlowDestruction
 // Created: SBO 2005-11-24
@@ -758,7 +758,7 @@ void MessageManager::OnReceiveMsgPopulationKnowledgeCreation( const MsgPopulatio
     assert( pKGroup );
     pKGroup->OnReceiveMsgPopulationKnowledgeCreation( asnMsg );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MessageManager::OnReceiveMsgPopulationKnowledgeUpdate
 // Created: SBO 2006-01-03
@@ -769,7 +769,7 @@ void MessageManager::OnReceiveMsgPopulationKnowledgeUpdate( const MsgPopulationK
     assert( pKGroup );
     pKGroup->OnReceiveMsgPopulationKnowledgeUpdate( asnMsg );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MessageManager::OnReceiveMsgPopulationKnowledgeDestruction
 // Created: SBO 2006-01-03

@@ -10,8 +10,8 @@
 #include "selftraining_app_pch.h"
 #include "ReplayPage.h"
 #include "moc_ReplayPage.cpp"
-#include "ExerciseList.h" 
-#include "DirectoryExerciseLister.h" 
+#include "ExerciseList.h"
+#include "DirectoryExerciseLister.h"
 #include "CompositeProcessWrapper.h"
 #include "ProcessDialogs.h"
 #include "ProgressPage.h"
@@ -22,7 +22,7 @@
 #include "frontend/StartReplay.h"
 #include "frontend/JoinAnalysis.h"
 #include "clients_gui/Tools.h"
-#include "clients_kernel/Controllers.h" 
+#include "clients_kernel/Controllers.h"
 
 // -----------------------------------------------------------------------------
 // Name: ReplayPage constructor
@@ -31,7 +31,7 @@
 ReplayPage::ReplayPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const tools::GeneralConfig& config )
     : ContentPage( pages, tools::translate( "ReplayPage", "Replay" ), previous, eButtonBack | eButtonStart )
     , config_( config )
-    , controllers_( controllers ) 
+    , controllers_( controllers )
     , progressPage_( new ProgressPage( pages, *this, tools::translate( "ReplayPage", "Starting replay session" ), controllers ) )
     , lister_( new DirectoryExerciseLister( config ) )
 {
@@ -96,7 +96,7 @@ void ReplayPage::StartExercise( const QString& exercise )
 void ReplayPage::OnStart()
 {
     if( exercise_ != "" )
-        StartExercise( exercise_ ) ; 
+        StartExercise( exercise_ ) ;
 }
 
 // -----------------------------------------------------------------------------
@@ -134,7 +134,7 @@ void ReplayPage::ConfigureSession( const QString& exercise, const QString& sessi
     frontend::CreateSession action( config_, exercise.ascii(), session.ascii() );
     action.SetDefaultValues(); // $$$$ SBO 2008-10-16: erases specific parameters
     {
-        // force the networklogger to be used 
+        // force the networklogger to be used
         action.SetOption( "session/config/simulation/debug/@networklogger"     , true );
         action.SetOption( "session/config/simulation/debug/@networkloggerport" , 20000 );
     }

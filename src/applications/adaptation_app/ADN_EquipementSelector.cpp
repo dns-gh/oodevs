@@ -64,8 +64,8 @@ void ADN_EquipementSelector::OnButtonPressed()
     QPopupMenu* pPopup = new QPopupMenu( this );
 
     // Get the dotation list.
-    ADN_Equipement_Data::T_DotationInfos_Vector& dotations 
-        = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotations(); 
+    ADN_Equipement_Data::T_DotationInfos_Vector& dotations
+        = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotations();
 
     // Fill the popup menu with submenus, one for each dotation.
     for( ADN_Equipement_Data::IT_DotationInfos_Vector it = dotations.begin(); it != dotations.end(); ++it )

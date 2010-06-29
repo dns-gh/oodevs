@@ -25,7 +25,7 @@ AfterActionModel::AfterActionModel( kernel::Controller& controller, Publisher_AB
     : controller_( controller )
     , requests_( new IndicatorRequests( controller, publisher ) )
 {
-    Load( "functions.xml" ); // $$$$ AGE 2007-10-10: 
+    Load( "functions.xml" ); // $$$$ AGE 2007-10-10:
 }
 
 // -----------------------------------------------------------------------------
@@ -43,7 +43,7 @@ AfterActionModel::~AfterActionModel()
 // -----------------------------------------------------------------------------
 void AfterActionModel::Update( const MsgsAarToClient::MsgAarInformation& /*message*/ )
 {
-    // $$$$ AGE 2007-10-10: 
+    // $$$$ AGE 2007-10-10:
     controller_.Update( *this );
 }
 

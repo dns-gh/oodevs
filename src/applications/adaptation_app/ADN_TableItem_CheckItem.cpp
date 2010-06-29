@@ -66,11 +66,11 @@ QWidget* ADN_TableItem_CheckItem::createEditor() const
     ((ADN_TableItem_CheckItem*)(this))->pEditor_ = new ADN_BoolEditor( table()->viewport(), bIsChecked_ );
 //    ((ADN_TableItem_CheckItem*)(this))->pEditor_ = new ADN_BoolEditor( table()->viewport(), bIsChecked_ );
     pEditor_->SetState( bIsChecked_ );
-	QObject::connect( pEditor_, SIGNAL( StateChanged( bool ) ), table(), SLOT( doValueChanged() ) );
+    QObject::connect( pEditor_, SIGNAL( StateChanged( bool ) ), table(), SLOT( doValueChanged() ) );
 
 //    ((ADN_TableItem_CheckItem*)(this))->pEditor_ = new QCheckBox( table()->viewport() );
-//	pEditor_->setChecked( bIsChecked_ );
-//	QObject::connect( pEditor_, SIGNAL( toggled( bool ) ), table(), SLOT( doValueChanged() ) );
+//    pEditor_->setChecked( bIsChecked_ );
+//    QObject::connect( pEditor_, SIGNAL( toggled( bool ) ), table(), SLOT( doValueChanged() ) );
 
     return pEditor_;
 }
@@ -90,13 +90,13 @@ void ADN_TableItem_CheckItem::setContentFromEditor( QWidget *w )
         setChecked( pEditor->GetState() );
     }
     else
-	if( w->inherits( "QCheckBox" ) )
-	{
+    if( w->inherits( "QCheckBox" ) )
+    {
         QCheckBox* pEditor = ( QCheckBox* )w;
         setChecked( pEditor->isChecked() );
-	}
-	else
-	    QTableItem::setContentFromEditor( w );
+    }
+    else
+        QTableItem::setContentFromEditor( w );
 }
 
 // -----------------------------------------------------------------------------
@@ -142,7 +142,7 @@ void ADN_TableItem_CheckItem::paint( QPainter *pPainter, const QColorGroup &cg, 
 // -----------------------------------------------------------------------------
 void ADN_TableItem_CheckItem::setChecked( bool b )
 {
-	bIsChecked_ = b;
+    bIsChecked_ = b;
 }
 
 // -----------------------------------------------------------------------------

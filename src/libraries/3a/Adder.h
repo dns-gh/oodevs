@@ -35,9 +35,9 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             Adder( xml::xistream&, Function1_ABC< K, T >& handler ) 
+             Adder( xml::xistream&, Function1_ABC< K, T >& handler )
                  : handler_( handler ), sum_() {}
-    explicit Adder( Function1_ABC< K, T >& handler ) 
+    explicit Adder( Function1_ABC< K, T >& handler )
                 : handler_( handler ), sum_() {}
     virtual ~Adder() {}
     //@}

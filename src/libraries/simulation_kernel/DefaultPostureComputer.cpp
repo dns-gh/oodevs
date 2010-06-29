@@ -121,7 +121,7 @@ void DefaultPostureComputer::Update()
         return;
     }
 
-    if( bForceStop_ && ( &params_->posture_ == &PHY_Posture::mouvement_ 
+    if( bForceStop_ && ( &params_->posture_ == &PHY_Posture::mouvement_
                       || &params_->posture_ == &PHY_Posture::mouvementDiscret_ ) )
             results_.newPosture_ = &PHY_Posture::arret_;
 

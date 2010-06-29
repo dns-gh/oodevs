@@ -39,7 +39,7 @@ public:
     virtual ~KnowledgeGroupFactory_ABC() {};
     //@}
 
-    //! @name Operations 
+    //! @name Operations
     //@{
     virtual kernel::KnowledgeGroup_ABC* CreateKnowledgeGroup( const MsgsSimToClient::MsgKnowledgeGroupCreation& message ) = 0; // LTO
     //@}

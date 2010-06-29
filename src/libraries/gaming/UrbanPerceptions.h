@@ -63,7 +63,7 @@ private:
     //@{
     kernel::Controller& controller_;
     const tools::Resolver_ABC< kernel::Automat_ABC >& agentResolver_;
-public: 
+public:
     T_Agents detectingAutomats_;
     //@}
 };

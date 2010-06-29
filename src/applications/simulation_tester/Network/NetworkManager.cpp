@@ -29,7 +29,7 @@ NetworkManager::NetworkManager( Workspace& workspace, const std::string& strHost
     , nServerPort_   ( nPort )
 {
     pConnectionHandler_ = new ConnectionHandler( *this );
-	pMessageMgr_        = new MessageManager   ( workspace, *this );
+    pMessageMgr_        = new MessageManager   ( workspace, *this );
 }
 
 //-----------------------------------------------------------------------------
@@ -62,7 +62,7 @@ void NetworkManager::Connect()
 //-----------------------------------------------------------------------------
 void NetworkManager::Disconnect()
 {
-    pConnectionHandler_->DisconnectFromServer();   
+    pConnectionHandler_->DisconnectFromServer();
 }
 
 //-----------------------------------------------------------------------------

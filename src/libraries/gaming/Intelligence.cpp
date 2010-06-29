@@ -38,7 +38,7 @@ namespace
             return Karma::enemy_;
         case Common::neutral_diplo:
             return Karma::neutral_;
-        default:         
+        default:
             return Karma::unknown_;
         }
     }

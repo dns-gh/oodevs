@@ -13,7 +13,7 @@
 #include "MT_Tools/Role_ABC.h"
 
 namespace hla {
-    class AttributeIdentifier;    
+    class AttributeIdentifier;
     class Deserializer;
     class ObjectIdentifier;
     class UpdateFunctor_ABC;

@@ -48,10 +48,10 @@ class UrbanLayer : public Layer_ABC
 {
 public:
     //! @name Constructors/Destructor
-    //@{    
+    //@{
              UrbanLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools );
     virtual ~UrbanLayer();
-    //@}    
+    //@}
 
     //! @name Operations
     //@{
@@ -62,7 +62,7 @@ public:
 
 protected:
     //! @name Events
-    //@{    
+    //@{
     virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );
     virtual bool HandleMouseMove ( QMouseEvent* event, const geometry::Point2f& point );
     virtual bool HandleKeyPress  ( QKeyEvent* input );

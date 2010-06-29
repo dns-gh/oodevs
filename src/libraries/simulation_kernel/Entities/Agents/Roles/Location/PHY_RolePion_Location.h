@@ -46,11 +46,11 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
-    
+
     //! @name Operations
     //@{
     virtual void Update( bool bIsDead );
@@ -88,7 +88,7 @@ public:
     virtual MIL_Agent_ABC&      GetAgent          () const;
     virtual MT_Float            GetCurrentSpeed   () const;
     virtual bool                HasDoneMagicMove  () const;
-    virtual bool                HasSpeedChanged   () const; // Position or direction or height has changed 
+    virtual bool                HasSpeedChanged   () const; // Position or direction or height has changed
     virtual bool                HasLocationChanged() const;
     //@}
 

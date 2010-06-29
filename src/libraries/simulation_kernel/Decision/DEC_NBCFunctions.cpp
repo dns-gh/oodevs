@@ -26,7 +26,7 @@ int DEC_NbcFunctions::AnalyzeNbcAgent( MIL_AgentPion& callerAgent, boost::shared
 {
     assert( knowledge );
     MIL_Object_ABC* pObject = knowledge->GetObjectKnown();
-    
+
     if( !pObject || pObject->IsMarkedForDestruction() )
     {
         return 0;

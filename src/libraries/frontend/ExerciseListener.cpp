@@ -18,11 +18,11 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/thread.hpp>
 #pragma warning( pop )
-#include <string.h> 
+#include <string.h>
 
 const size_t max_length = 1024;
 
-using namespace frontend; 
+using namespace frontend;
 
 // -----------------------------------------------------------------------------
 // Name: ExerciseListener constructor

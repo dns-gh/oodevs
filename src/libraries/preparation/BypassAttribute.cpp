@@ -22,7 +22,7 @@ using namespace xml;
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
 BypassAttribute::BypassAttribute( kernel::PropertiesDictionary& dico )
-    : rBypassConstructionPercentage_ ( 0., Units::percentage )    
+    : rBypassConstructionPercentage_ ( 0., Units::percentage )
 {
     CreateDictionary( dico );
 }
@@ -35,7 +35,7 @@ BypassAttribute::BypassAttribute( xml::xistream& xis, kernel::PropertiesDictiona
     : rBypassConstructionPercentage_ ( 0., Units::percentage )
 {
     std::string density;
-    xis >> attribute( "value", rBypassConstructionPercentage_.value_ );    
+    xis >> attribute( "value", rBypassConstructionPercentage_.value_ );
     CreateDictionary( dico );
 }
 
@@ -53,7 +53,7 @@ BypassAttribute::~BypassAttribute()
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
 void BypassAttribute::Display( kernel::Displayer_ABC& displayer ) const
-{    
+{
     displayer.Group( tools::translate( "Object", "Information" ) )
              .Display( tools::translate( "Object", "Bypass:" ), rBypassConstructionPercentage_ );
 }
@@ -74,7 +74,7 @@ void BypassAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const
 void BypassAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << start( "bypass" )
-            << attribute( "value", rBypassConstructionPercentage_.value_ )                           
+            << attribute( "value", rBypassConstructionPercentage_.value_ )
         << end();
 }
 

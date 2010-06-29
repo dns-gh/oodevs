@@ -55,7 +55,7 @@ public:
 
     static int  EquipLogisticRoute                ( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static bool IsStockSupplied                   ( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
-    
+
     static int   IsAnEnemy                        ( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static int   IsAFriend                        ( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static int   GetCurrentPerceptionLevel        ( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );

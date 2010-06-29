@@ -72,7 +72,7 @@ void BurnCapacity::InitializeData( xml::xistream& xis )
 template< typename Archive >
 void BurnCapacity::serialize( Archive& file, const uint )
 {
-    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );        
+    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
 }
 
 // -----------------------------------------------------------------------------

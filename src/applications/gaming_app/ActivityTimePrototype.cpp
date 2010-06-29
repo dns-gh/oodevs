@@ -28,7 +28,7 @@ ActivityTimePrototype::ActivityTimePrototype( QWidget* parent, actions::paramete
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ActivityTimePrototype destructor
 // Created: SBO 2006-04-19
@@ -37,14 +37,14 @@ ActivityTimePrototype::~ActivityTimePrototype()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ActivityTimePrototype::Commit
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
 void ActivityTimePrototype::Commit()
 {
-    int time = 3600 * activityTime_->time().hour() + 
+    int time = 3600 * activityTime_->time().hour() +
                60 * activityTime_->time().minute() +
                activityTime_->time().second();
     actions::parameters::ParameterList& list = attributesList_->AddList( "ActivityTime" );

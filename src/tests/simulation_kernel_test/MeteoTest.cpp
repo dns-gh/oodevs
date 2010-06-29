@@ -20,7 +20,7 @@
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( UpdateMeteoPatch )
 {
-    
+
    /* xml::xistringstream xis( "<local bottom-right='31TCM3740970227' end-time='20091126T180000' start-time='20091126T170000' top-left='31TCM1890188682'>"
         "<wind direction='1' speed='5'/>"
         "<cloud-cover ceiling='9900' density='1' floor='900'/>"
@@ -38,5 +38,5 @@ BOOST_AUTO_TEST_CASE( UpdateMeteoPatch )
     localMeteo.UpdateMeteoPatch( 20, mockRawVisionData );
 
     PHY_Lighting::Terminate();*/
-    
+
 }

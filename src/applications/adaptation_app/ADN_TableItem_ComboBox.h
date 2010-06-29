@@ -76,7 +76,7 @@ public:
     ADN_TableItem_ComboBoxItem*           GetItem( int ndx );
     //@}
 
-    
+
 protected:
 
     virtual void        DoValueChanged();

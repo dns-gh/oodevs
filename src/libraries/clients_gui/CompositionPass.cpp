@@ -68,7 +68,7 @@ void CompositionPass::Render( MapWidget_ABC& )
     glClear( GL_COLOR_BUFFER_BIT );
     if( !ignoreShader_ && !program_.get() )
         Initialize();
-    
+
     if( program_.get() )
     {
         program_->Use();
@@ -141,7 +141,7 @@ geometry::Rectangle2f CompositionPass::Viewport() const
 
 namespace
 {
-    static const char* shagger = 
+    static const char* shagger =
 
     "uniform sampler2D mainTexture;"
     "uniform sampler2D fogTexture;"
@@ -168,7 +168,7 @@ namespace
 void CompositionPass::Initialize()
 {
     gl::Initialize();
-    try 
+    try
     {
         fragment_.reset( new gl::FragmentShader( shagger ) );
         program_.reset( new gl::ShaderProgram() );

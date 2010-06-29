@@ -27,23 +27,23 @@ MOCK_BASE_CLASS( MockRoleInterface_Posture, PHY_RoleInterface_Posture )
     MOCK_METHOD( SetPosturePostePrepareGenie, 0 );
     MOCK_METHOD( UnsetPosturePostePrepareGenie, 0 );
     MOCK_METHOD( SetTimingFactor, 1 );
-    
+
     MOCK_METHOD( Update, 1 );
     MOCK_METHOD( Clean, 0 );
     MOCK_METHOD( HasChanged, 0 );
 
     MOCK_METHOD( EnableDiscreteMode, 0 );
     MOCK_METHOD( DisableDiscreteMode, 0 );
-    
+
     MOCK_METHOD( IsInstalled, 0 );
     MOCK_METHOD( IsUninstalled, 0 );
     MOCK_METHOD( Install, 0 );
-    
+
     MOCK_METHOD( SetStealthFactor, 1 );
-    
+
     MOCK_METHOD( SetElongationFactor, 1 );
     MOCK_METHOD( GetElongationFactor, 0 );
-    
+
     MOCK_METHOD( IsStealth, 0 );
 
     MOCK_METHOD( Serialize, 1 );

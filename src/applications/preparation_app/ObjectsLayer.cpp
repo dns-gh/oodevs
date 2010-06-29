@@ -21,7 +21,7 @@ ObjectsLayer::ObjectsLayer( kernel::Controllers& controllers, const kernel::GlTo
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ObjectsLayer destructor
 // Created: SBO 2006-10-16

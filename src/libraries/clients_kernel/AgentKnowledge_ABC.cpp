@@ -58,7 +58,7 @@ void AgentKnowledge_ABC::Select( ActionController& controller ) const
 void AgentKnowledge_ABC::ContextMenu( ActionController& controller, const QPoint& where ) const
 {
     controller.ContextMenu( *this, *( const Knowledge_ABC*)this, *( const Entity_ABC*)this, where );
-}   
+}
 
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledge_ABC::Activate

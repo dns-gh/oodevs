@@ -22,7 +22,7 @@ MedicalStates::MedicalStates( kernel::Controller& controller, kernel::Entity_ABC
 {
     CreateDictionary( dico, entity );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MedicalStates destructor
 // Created: SBO 2006-10-24
@@ -31,7 +31,7 @@ MedicalStates::~MedicalStates()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MedicalStates::CreateDictionary
 // Created: SBO 2006-10-24

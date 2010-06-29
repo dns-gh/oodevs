@@ -57,7 +57,7 @@ void FolkModel::Update( const MsgsSimToClient::MsgFolkCreation& creation )
         profiles_.push_back( creation.profiles().elem( i ).data() );
     edgeCount_ = creation.edge_number();
     edgeSize_ = activities_.size() * profiles_.size() * containers_.size();
-    
+
     boost::array< T_Values::index, 4 > shape = { edgeCount_, containers_.size(), profiles_.size(), activities_.size() };
     values_.reset( new T_Values( shape ) );
     ratios_.resize( edgeCount_ );
@@ -194,7 +194,7 @@ const FolkModel::T_Names& FolkModel::Profiles() const
 {
     return profiles_;
 }
- 
+
 // -----------------------------------------------------------------------------
 // Name: FolkModel::Activities
 // Created: AGE 2007-09-05

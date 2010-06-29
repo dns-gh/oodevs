@@ -68,7 +68,7 @@ public:
     { return map_ ? map_->SubExtent( x, y, width, height ) : geometry::Rectangle2f(); };
     geometry::Point2f               Map( unsigned x, unsigned y ) const
     { return map_ ? map_->Map( x, y ) : geometry::Point2f(); };
-    std::pair< unsigned, unsigned > Unmap( const geometry::Point2f& point ) const 
+    std::pair< unsigned, unsigned > Unmap( const geometry::Point2f& point ) const
     { return map_ ? map_->Unmap( point ) : std::pair< unsigned, unsigned >(); };
     const short*                    Data( unsigned x, unsigned y ) const
     { return map_ ? map_->Data( x, y ) : 0; };

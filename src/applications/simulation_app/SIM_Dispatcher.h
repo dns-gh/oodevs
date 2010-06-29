@@ -20,7 +20,7 @@ class SIM_Config;
 */
 // Created: NLD 2006-10-04
 // =============================================================================
-class SIM_Dispatcher 
+class SIM_Dispatcher
 {
 public:
     //! @name Constructors/Destructor
@@ -29,10 +29,10 @@ public:
     virtual ~SIM_Dispatcher();
     //@}
 
-    //! @name Operations 
+    //! @name Operations
     //@{
     void Run();
-    void Stop(); 
+    void Stop();
     //@}
 
 private:
@@ -44,10 +44,10 @@ private:
 
 private:
 
-    //! @name 
+    //! @name
     //@{
-    DispatcherFacade               dispatcher_;    //!< embedded dispatcher 
-    bool                           bRunning_ ;  //!< running status 
+    DispatcherFacade               dispatcher_;    //!< embedded dispatcher
+    bool                           bRunning_ ;  //!< running status
     //@}
 };
 

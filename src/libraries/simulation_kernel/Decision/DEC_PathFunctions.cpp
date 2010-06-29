@@ -65,7 +65,7 @@ bool DEC_PathFunctions::ShouldEmbark( MIL_AgentPion& callerAgent, boost::shared_
 boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPoint( MIL_AgentPion& callerAgent, MT_Vector2D* pEnd, int pathType )
 {
     assert( pEnd );
-    
+
     const DEC_PathType* pPathType = DEC_PathType::Find( pathType );
     assert( pPathType );
 
@@ -81,7 +81,7 @@ boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPoint( MIL_Agen
 boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPoint( MIL_AgentPion& callerAgent, MT_Vector2D* pEnd, int pathType, bool loaded )
 {
     assert( pEnd );
-    
+
     const DEC_PathType* pPathType = DEC_PathType::Find( pathType );
     assert( pPathType );
 
@@ -137,11 +137,11 @@ boost::shared_ptr< MT_Vector2D > DEC_PathFunctions::ExtrapolatePosition( const M
 std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > DEC_PathFunctions::GetNextObjectOnPath( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > /*oId*/, float /*oDistance*/, const std::vector< std::string >& params )
 {
     MIL_ObjectFilter filter( params );
-    
+
     std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > result;
-    
+
     boost::shared_ptr< DEC_Knowledge_Object > pObjectColliding;
-    
+
     MT_Float rDistanceCollision = 0.;
 
     const PHY_RoleInterface_Location& roleLocation = callerAgent.GetRole< PHY_RoleInterface_Location >();
@@ -212,7 +212,7 @@ bool DEC_PathFunctions::IsPoint( boost::shared_ptr< DEC_PathPoint > pPoint )
 {
     return pPoint->GetType() == DEC_PathPoint::eTypePointSpecial;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::GetTypePoint
 // Created: LDC 2009-04-22
@@ -221,16 +221,16 @@ int DEC_PathFunctions::GetTypePoint( boost::shared_ptr< DEC_PathPoint > pPoint )
 {
     return static_cast< int >( pPoint->GetTypePoint() );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::GetDestPoint
 // Created: LDC 2009-04-22
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_PathPoint > DEC_PathFunctions::GetDestPoint( boost::shared_ptr< DEC_PathPoint > pPoint )
-{      
+{
     return pPoint->GetDestPoint();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::GetTypeLimaPoint
 // Created: LDC 2009-04-22
@@ -239,7 +239,7 @@ int DEC_PathFunctions::GetTypeLimaPoint( boost::shared_ptr< DEC_PathPoint > pPoi
 {
     return pPoint->GetTypeLima();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::GetLimaPoint
 // Created: LDC 2009-04-22

@@ -60,7 +60,7 @@ void LimitsLayer::Delete( const kernel::TacticalLine_ABC& l )
     if( superior && profile_.CanBeOrdered( *superior ) )
     {
         kernel::TacticalLine_ABC& line = const_cast< kernel::TacticalLine_ABC& >( l );
-        static_cast< ::TacticalLine_ABC& >( line ).Delete();// $$$$ SBO 2006-11-07: 
+        static_cast< ::TacticalLine_ABC& >( line ).Delete();// $$$$ SBO 2006-11-07:
     }
 }
 

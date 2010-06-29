@@ -37,7 +37,7 @@ namespace TEST
 // =============================================================================
 class EntityManager
 {
-	MT_COPYNOTALLOWED( EntityManager );
+    MT_COPYNOTALLOWED( EntityManager );
 
 public:
     //! @name Constructors/Destructor
@@ -80,22 +80,22 @@ private:
     //! @name Types
     //@{
     typedef std::map< T_EntityId, Automat* > T_AutomatMap;
-	typedef T_AutomatMap::const_iterator     CIT_AutomatMap;
+    typedef T_AutomatMap::const_iterator     CIT_AutomatMap;
 
     typedef std::map< T_EntityId, Pawn* >    T_PawnMap;
-	typedef T_PawnMap::const_iterator        CIT_PawnMap;
+    typedef T_PawnMap::const_iterator        CIT_PawnMap;
 
     typedef std::map< T_EntityId, Population* >    T_PopulationMap;
-	typedef T_PopulationMap::const_iterator        CIT_PopulationMap;
+    typedef T_PopulationMap::const_iterator        CIT_PopulationMap;
 
-	typedef std::map< T_EntityId, Team* >    T_TeamMap;
-	typedef T_TeamMap::const_iterator        CIT_TeamMap;
+    typedef std::map< T_EntityId, Team* >    T_TeamMap;
+    typedef T_TeamMap::const_iterator        CIT_TeamMap;
 
-    typedef std::map< T_EntityId, KnowledgeGroup* >	T_KnowledgeGroupMap;
-	typedef T_KnowledgeGroupMap::const_iterator		CIT_KnowledgeGroupMap;
+    typedef std::map< T_EntityId, KnowledgeGroup* >    T_KnowledgeGroupMap;
+    typedef T_KnowledgeGroupMap::const_iterator        CIT_KnowledgeGroupMap;
 
     typedef std::map< T_EntityId, Object* >  T_ObjectMap;
-	typedef T_ObjectMap::const_iterator	     CIT_ObjectMap;
+    typedef T_ObjectMap::const_iterator         CIT_ObjectMap;
     //@}
 
 private:

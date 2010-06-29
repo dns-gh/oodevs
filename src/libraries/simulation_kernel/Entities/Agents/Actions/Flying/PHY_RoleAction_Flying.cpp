@@ -66,7 +66,7 @@ PHY_RoleAction_Flying::~PHY_RoleAction_Flying()
 // Name: PHY_RoleAction_Flying::serialize
 // Created: JVT 2005-04-14
 // -----------------------------------------------------------------------------
-template< typename Archive > 
+template< typename Archive >
 void PHY_RoleAction_Flying::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< PHY_RoleAction_InterfaceFlying >( *this )
@@ -93,7 +93,7 @@ bool PHY_RoleAction_Flying::TakeOff()
 // -----------------------------------------------------------------------------
 bool PHY_RoleAction_Flying::Land()
 {
-    if( !pActionFly_ ) 
+    if( !pActionFly_ )
         return false;
 
     entity_.UnregisterAction( pActionFly_->GetId() );
@@ -111,7 +111,7 @@ void PHY_RoleAction_Flying::SetFlyingHeight( double rHeight )
 {
     effectFly_.SetFlyingHeight( std::max( 0., rHeight ) );
 
-    if ( rHeight > 0. )
+    if( rHeight > 0. )
         TakeOff();
     else
         Land();
@@ -138,7 +138,7 @@ void PHY_RoleAction_Flying::Apply( double rHeight )
             entity_.GetAlgorithms().consumptionComputerFactory_->CreateConsumptionModeChangeRequest( PHY_ConsumptionType::moving_ );
     entity_.Apply( &dotation::ConsumptionChangeRequestHandler_ABC::ChangeConsumptionMode, *request ); // automatic rollback
 
-    if ( !request->AllChanged() || rHeight <= 0. )
+    if( !request->AllChanged() || rHeight <= 0. )
         Land();
     else
         rHeight_ = rHeight;

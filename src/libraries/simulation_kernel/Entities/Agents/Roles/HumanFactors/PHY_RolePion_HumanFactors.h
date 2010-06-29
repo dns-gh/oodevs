@@ -63,12 +63,12 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
-    
+
     //! @name Operations
     //@{
     void Update    ( bool bIsDead );
@@ -92,7 +92,7 @@ public:
     const PHY_Morale&     GetMorale    () const;
     const PHY_Tiredness&  GetTiredness () const;
     //@}
-            
+
      //! @name Operations
      //@{
     MT_Float ModifyPH                    ( MT_Float rPH       ) const;
@@ -105,7 +105,7 @@ public:
     void SendFullState   ( client::UnitAttributes& msg ) const;
     //@}
 
-private: 
+private:
     bool bHasChanged_;
 
     const PHY_Morale*     pMorale_;

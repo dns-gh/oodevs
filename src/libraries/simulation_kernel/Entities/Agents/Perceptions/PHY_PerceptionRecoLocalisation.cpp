@@ -34,7 +34,7 @@ PHY_PerceptionRecoLocalisationReco::PHY_PerceptionRecoLocalisationReco( const TE
 {
     const MT_Rect& boundingBox = localisation_.GetBoundingBox();
     rRadius_ = boundingBox.GetCenter().Distance( boundingBox.GetPointUpLeft() );
-    
+
 }
 
 // -----------------------------------------------------------------------------
@@ -50,20 +50,20 @@ PHY_PerceptionRecoLocalisationReco::PHY_PerceptionRecoLocalisationReco( const TE
 {
     // NOTHING
 }
- 
+
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRecoLocalisationReco::IsInside
 // Created: JVT 2004-10-28
 // -----------------------------------------------------------------------------
 bool PHY_PerceptionRecoLocalisationReco::IsInside( const PHY_RoleInterface_Perceiver& perceiver, const MT_Vector2D& vPoint ) const
 {
-    if ( bShouldUseRadius_ )
+    if( bShouldUseRadius_ )
     {
         const float rRadius = rRadius_ < 0. ? perceiver.GetMaxAgentPerceptionDistance() : rRadius_;
-        if ( perceiver.GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition().SquareDistance( vPoint ) > rRadius * rRadius )
+        if( perceiver.GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition().SquareDistance( vPoint ) > rRadius * rRadius )
             return false;
     }
-    return localisation_.IsInside( vPoint );    
+    return localisation_.IsInside( vPoint );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,12 +77,12 @@ void PHY_PerceptionRecoLocalisationReco::GetAgentsInside( const PHY_RoleInterfac
     {
         const float rRadius = rRadius_ < 0. ? perceiver.GetMaxAgentPerceptionDistance() : rRadius_;
         TER_World::GetWorld().GetAgentManager().GetListWithinCircle( perceiver.GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition(), rRadius, result );
-        
+
         for ( TER_Agent_ABC::IT_AgentPtrVector it = result.begin(); it != result.end(); )
-            if ( localisation_.IsInside( (*it)->GetPosition() ) )
+            if( localisation_.IsInside( (*it)->GetPosition() ) )
                 ++it;
             else
-                it = result.erase( it ); 
+                it = result.erase( it );
     }
     else
         TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( localisation_, result );
@@ -159,10 +159,10 @@ const PHY_PerceptionLevel& PHY_PerceptionRecoLocalisation::Compute( const MT_Vec
 {
     for ( CIT_RecoVector it = recos_.begin(); it != recos_.end(); ++it )
     {
-        if ( (*it)->IsInside( perceiver_, vPoint ) )
+        if( (*it)->IsInside( perceiver_, vPoint ) )
             return PHY_PerceptionLevel::recognized_;
     }
-    
+
     return PHY_PerceptionLevel::notSeen_;
 }
 
@@ -173,11 +173,11 @@ const PHY_PerceptionLevel& PHY_PerceptionRecoLocalisation::Compute( const MT_Vec
 void PHY_PerceptionRecoLocalisation::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/, const detection::DetectionComputerFactory_ABC& detectionComputerFactory )
 {
     TER_Agent_ABC::T_AgentPtrVector perceivableAgents;
-    
+
     for ( CIT_RecoVector itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
     {
         (*itReco)->GetAgentsInside( perceiver_, perceivableAgents );
-        
+
         for ( TER_Agent_ABC::CIT_AgentPtrVector it = perceivableAgents.begin(); it != perceivableAgents.end(); ++it )
         {
             MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >(**it).GetAgent();
@@ -230,12 +230,12 @@ void PHY_PerceptionRecoLocalisation::Update()
         PHY_PerceptionRecoLocalisationReco& reco = **it;
 
         // Agrandissement de la zone de reconnaissance
-        if ( reco.rCurrentRadius_ < reco.rRadius_ )
+        if( reco.rCurrentRadius_ < reco.rRadius_ )
             reco.rCurrentRadius_ += reco.rGrowthSpeed_;
-        if ( reco.rCurrentRadius_ >= reco.rRadius_ )
+        if( reco.rCurrentRadius_ >= reco.rRadius_ )
         {
             reco.rCurrentRadius_ = reco.rRadius_;
             reco.callerAgent_.CallbackPerception( (*it)->Id() );
         }
-    }  
+    }
 }

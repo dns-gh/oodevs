@@ -23,7 +23,7 @@ using namespace kernel;
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
 Fires::Fires( Controller& controller, FireFactory& factory )
-    : controller_( controller ) 
+    : controller_( controller )
     , factory_( factory )
 {
     // NOTHING
@@ -52,7 +52,7 @@ void Fires::CreateFire( const T& message )
         controller_.Update( *this );
     }
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Fires::DestroyFire
 // Created: AGE 2006-03-10

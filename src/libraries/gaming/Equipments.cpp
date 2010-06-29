@@ -32,9 +32,9 @@ Equipments::Equipments( Controller& controller, const tools::Resolver_ABC< Equip
     , resolver_( resolver )
     , dico_( dico )
 {
-    // NOTHING   
+    // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Equipments destructor
 // Created: AGE 2006-02-13
@@ -50,7 +50,7 @@ Equipments::~Equipments()
 // -----------------------------------------------------------------------------
 void Equipments::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
 {
-    if ( message.has_dotation_eff_materiel()  != 1 )
+    if( message.has_dotation_eff_materiel()  != 1 )
         return;
 
     std::vector< Equipment > differences;

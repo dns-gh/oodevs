@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "CrossingSitePrototype.h"
 #include "clients_kernel/Units.h"
-#include "protocol/Protocol.h"       
+#include "protocol/Protocol.h"
 #include "actions/ParameterList.h"
 
 using namespace kernel;
@@ -26,7 +26,7 @@ CrossingSitePrototype::CrossingSitePrototype( QWidget* parent, actions::paramete
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: CrossingSitePrototype destructor
 // Created: SBO 2006-04-19
@@ -35,7 +35,7 @@ CrossingSitePrototype::~CrossingSitePrototype()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: CrossingSitePrototype::Commit
 // Created: SBO 2006-04-19

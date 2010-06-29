@@ -75,7 +75,7 @@ const std::string KnowledgeGroupType::ShowCommunicationDelay() const
     int communicationDelayHours = 0;
     int communicationDelayMins = 0;
     int communicationDelaySecs = 0;
-    
+
     double rCommunicationDelay = GetCommunicationDelay();
     communicationDelayHours = (int)( rCommunicationDelay / 3600. );
     rCommunicationDelay -= communicationDelayHours * 3600.;

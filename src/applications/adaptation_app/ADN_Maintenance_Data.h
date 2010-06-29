@@ -47,7 +47,7 @@ public:
         void WriteArchive( xml::xostream& output );
 
     public:
-        ADN_Type_Int  nIdx_; 
+        ADN_Type_Int  nIdx_;
         ADN_Type_Int  nWorkTime_;
         ADN_Type_Time warningDelay_;
     };

@@ -30,7 +30,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void ConnectItem( bool bConnect );    
+    void ConnectItem( bool bConnect );
     //@}
 };
 

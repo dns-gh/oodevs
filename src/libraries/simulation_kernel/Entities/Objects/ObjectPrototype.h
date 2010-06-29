@@ -65,7 +65,7 @@ private:
 // Name: template <typename Capacity> void ObjectPrototype::AddCapacity
 // Created: JCR 2008-06-05
 // -----------------------------------------------------------------------------
-template< typename Capacity > 
+template< typename Capacity >
 void ObjectPrototype::AddCapacity( Capacity* capacity )
 {
     Attach( *capacity );

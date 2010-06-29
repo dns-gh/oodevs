@@ -36,8 +36,8 @@ class PopulationKnowledge
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationKnowledge( const EntityManager&                        entityManager, 
-                                  const MsgPopulationKnowledgeCreation& asnMsg, 
+             PopulationKnowledge( const EntityManager&                        entityManager,
+                                  const MsgPopulationKnowledgeCreation& asnMsg,
                                   const KnowledgeGroup&                       knowledgeGroup );
     virtual ~PopulationKnowledge();
     //@}

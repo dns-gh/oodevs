@@ -22,7 +22,7 @@ using namespace kernel;
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
 Paths::Paths( const CoordinateConverter_ABC& converter )
-    : converter_( converter ) 
+    : converter_( converter )
     , pendingMagicMove_( false )
 {
     // NOTHING

@@ -278,7 +278,7 @@ void GlWidget::DrawTextLabel( const std::string& content, const geometry::Point2
     glVertex3f( rightTop.X(), rightTop.Y(), 0 );
     glVertex3f( rightTop.X(), leftBottom.Y(), 0 );
     glEnd();
-  
+
     // $$$$ JSR 2010-06-14: Changing font attributes does not seem to work with this version of Qt:
     // OpenGL display lists cannot be generated.
     //currentFont_.setPointSize( ( int ) adaptiveSize );
@@ -302,9 +302,9 @@ float GlWidget::GetAdaptiveZoomFactor() const
 {
     float zoom = Zoom();
     float pixels = Pixels();
-    if ( zoom <= .00024f )
+    if( zoom <= .00024f )
         return 1;
-    else if ( zoom <= .002f )
+    else if( zoom <= .002f )
     {
         return pixels / 15;
     }
@@ -437,7 +437,7 @@ void GlWidget::DrawConvexPolygon( const T_PointVector& points ) const
 // -----------------------------------------------------------------------------
 void GlWidget::DrawConvexPolygon( const T_PointVector& points, bool selected ) const
 {
-    if ( !selected )
+    if( !selected )
     {
         DrawConvexPolygon( points );
     }
@@ -475,7 +475,7 @@ void GlWidget::DrawConvexPolygon( const Polygon2f& polygon ) const
 void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const urban::UrbanDecoration* decoration ) const
 {
     //TEMP SLG
-    if ( polygon.Vertices().empty() )
+    if( polygon.Vertices().empty() )
         return;
     // TEMP SLG
     float color[ 4 ];
@@ -483,18 +483,18 @@ void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const u
     color[ 1 ] = 0.8f;
     color[ 2 ] = 0.8f;
     float baseAlpha =  0.5f;
-    if ( decoration->HasColor() )
+    if( decoration->HasColor() )
     {
         color[ 0 ] = decoration->Color().FloatRed();
         color[ 1 ] = decoration->Color().FloatGreen();
         color[ 2 ] = decoration->Color().FloatBlue();
-        if ( decoration->Color().TransparencyUsed() )
+        if( decoration->Color().TransparencyUsed() )
         {
             baseAlpha = decoration->Color().Alpha() * 0.9f;
         }
     }
     color[ 3 ] = baseAlpha;
-    if ( decoration == 0 )
+    if( decoration == 0 )
     {
         DrawConvexPolygon( polygon );
         return;
@@ -528,7 +528,7 @@ void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const u
     {
         face.clear();
         unsigned int next = i + 1;
-        if ( i == roofPoints.size() - 1 )
+        if( i == roofPoints.size() - 1 )
             next = 0;
         face.push_back( footprintPoints[ i ] );
         face.push_back( roofPoints[ i ] );
@@ -548,7 +548,7 @@ void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const u
     glVertexPointer( 2, GL_FLOAT, 0, ( const void* )( &roofPoints.front() ) );
     glDrawArrays( GL_POLYGON, 0, roofPoints.size() );
     glPopAttrib();
-    
+
     if( decoration->Selected() )
     {
         UpdateStipple();
@@ -562,7 +562,7 @@ void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const u
     glDrawArrays( GL_LINE_LOOP, 0, roofPoints.size() );
     glDisable (GL_LINE_STIPPLE);
     glPopAttrib();
-    if ( decoration->Name().length() > 0 )
+    if( decoration->Name().length() > 0 )
         ( ( GlWidget& ) ( *this ) ).DrawTextLabel( decoration->Name(), roofPolygon.BoundingBoxCenter(), 13 );
 }
 
@@ -808,7 +808,7 @@ void GlWidget::DrawApp6Symbol( const std::string& symbol, const std::string& sty
     const float svgDeltaY = -80;
     const float svgWidth = 360;
     float adaptiveFactor ( 1 );
-    if ( factor < 0 )   //zoom-adaptive view
+    if( factor < 0 )   //zoom-adaptive view
     {
         adaptiveFactor = GetAdaptiveZoomFactor();
         factor = - factor;
@@ -942,6 +942,6 @@ void GlWidget::OptionChanged( const std::string& name, const kernel::OptionVaria
         minVisuScale_ = value.To< int >();
     else if( name == "VisuScaleMax13" ) // see VisualisationScalesPanel.cpp
         maxVisuScale_ = value.To< int >();
-    else 
+    else
         GlToolsBase::OptionChanged( name, value );
 }

@@ -40,7 +40,7 @@ class ADN_Connector_SubUnitTable
     : public ADN_Connector_Table_ABC
 {
 public:
-    ADN_Connector_SubUnitTable( ADN_Automata_SubUnitsTable& tab ) 
+    ADN_Connector_SubUnitTable( ADN_Automata_SubUnitsTable& tab )
         : ADN_Connector_Table_ABC( tab, false, "ADN_Automata_SubUnitsTable" )
     {}
 
@@ -52,8 +52,8 @@ public:
         ADN_TableItem_Int* pItemMaxCount = new ADN_TableItem_Int( &tab_, pObj );
         // Add a new row.
         tab_.setItem( i, 0, pItemName );
-        tab_.setItem( i, 1, pItemMinCount ); 
-        tab_.setItem( i, 2, pItemMaxCount ); 
+        tab_.setItem( i, 1, pItemMinCount );
+        tab_.setItem( i, 2, pItemMaxCount );
 
         // connect items & datas
         pItemName->GetConnector().Connect( &static_cast<UnitInfos*>(pObj)->ptrUnit_.GetData()->strName_ );
@@ -145,7 +145,7 @@ void ADN_Automata_SubUnitsTable::OnContextMenu( int /*nRow*/, int /*nCol*/, cons
     {
         RemoveCurrentElement();
     }
-    else if(  bMenuListItemSelected_ )
+    else if( bMenuListItemSelected_ )
     {
         assert( listView.selectedItem() != 0 );
         MT_ValuedListViewItem<int>* pItem = (MT_ValuedListViewItem<int>*)listView.selectedItem();
@@ -165,7 +165,7 @@ void ADN_Automata_SubUnitsTable::AddNewElement( int n )
     pNewInfo->ptrUnit_ = (ADN_Units_Data::UnitInfos*)n;
         ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
         pCTable->AddItem( pNewInfo );
-        pCTable->AddItem( 0 );  
+        pCTable->AddItem( 0 );
     }
 
 

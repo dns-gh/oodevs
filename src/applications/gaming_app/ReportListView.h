@@ -34,7 +34,7 @@ class Reports;
 class ReportListView : public gui::ListDisplayer< ReportListView >
                      , public tools::Observer_ABC
                      , public AgentSelectionObserver
-                     , public tools::ElementObserver_ABC< Reports > 
+                     , public tools::ElementObserver_ABC< Reports >
                      , public tools::ElementObserver_ABC< Report >
 {
     Q_OBJECT

@@ -38,7 +38,7 @@ public:
     bool CheckCompatibility();
     static std::string GetCurrentProtocolVersion();
     //@}
-    
+
 private:
     //! @name Copy/Assignment
     //@{

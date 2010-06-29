@@ -139,7 +139,7 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     menu->insertItem( tools::translate( "Menu", "About" ), new AboutDialog( this, factory, tools::translate( "Application", "Preparation" ) + " " + QString( tools::AppVersion() ), license ), SLOT( exec() ) );
     insertItem( tools::translate( "Menu", "&?" ), menu );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Menu destructor
 // Created: SBO 2006-04-28

@@ -64,12 +64,12 @@ int main( int argc, char** argv )
     __except( MT_CrashHandler::ContinueSearch( GetExceptionInformation() ) )
     {
     }*/
-	try
+    try
     {
         return Run( argc, argv );
     }
     catch( std::exception& e )
     {
-		MT_LOG_ERROR_MSG( e.what() );
+        MT_LOG_ERROR_MSG( e.what() );
     }
 }

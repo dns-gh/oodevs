@@ -30,12 +30,12 @@ public:
              TransportComputerFactory();
     virtual ~TransportComputerFactory();
     //@}
-    
+
     //! @name Serialization
     //@{
     template< typename Archive > void serialize( Archive&, const uint ) {}
     //@}
-    
+
     //! @name Operations
     //@{
     virtual std::auto_ptr< TransportCapacityComputer_ABC > CreateCapacityComputer() const ;

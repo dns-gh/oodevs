@@ -33,7 +33,7 @@ public:
 
     //! @name CheckPoints
     //@{
-    BOOST_SERIALIZATION_SPLIT_MEMBER()   
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
@@ -41,7 +41,7 @@ public:
     //! @name Operations
     //@{
     const TER_LimitData& CreateLimitData ( const T_PointVector& points );
-    void  DestroyLimitData( const TER_LimitData& data );   
+    void  DestroyLimitData( const TER_LimitData& data );
     //@}
 
 private:
@@ -52,7 +52,7 @@ private:
     //@}
 
     //! @name Types
-    //@{    
+    //@{
     typedef std::map< T_PointVector, TER_LimitData* > T_LimitDataMap;
     typedef T_LimitDataMap::iterator                  IT_LimitDataMap;
     typedef T_LimitDataMap::const_iterator            CIT_LimitDataMap;

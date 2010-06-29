@@ -191,7 +191,7 @@ bool MIL_Injury_MentalDisease::IsInjured( const PHY_ComposantePion& /*pComposant
 // -----------------------------------------------------------------------------
 void MIL_Injury_MentalDisease::SetInjury( unsigned int /*nNbrAliveHumans*/ , MT_Float /*rDensity*/ )
 {
-    
+
 }
 
 // -----------------------------------------------------------------------------

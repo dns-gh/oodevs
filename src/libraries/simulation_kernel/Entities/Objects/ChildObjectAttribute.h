@@ -19,7 +19,7 @@
 // Created: SLG 2010-02-16
 // =============================================================================
 class ChildObjectAttribute : public ObjectAttribute_ABC
-{ 
+{
 
 public:
     //! @name Constructors/Destructor

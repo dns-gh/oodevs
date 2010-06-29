@@ -45,9 +45,9 @@ CrossbowPublisher::CrossbowPublisher( const dispatcher::Config& config, dispatch
     session_.reset( new WorkingSession( *workspace_, config ) );
     databaseUpdater_.reset( new DatabaseUpdater( *workspace_, model, *session_ ) );
     reportUpdater_.reset( new ReportUpdater( *workspace_, config, model, *session_ ) );
-	folkUpdater_.reset( new FolkUpdater( *workspace_, *session_ ) );
+    folkUpdater_.reset( new FolkUpdater( *workspace_, *session_ ) );
 
-	// activate listeners
+    // activate listeners
     listeners_.push_back( T_SharedListener( new OrderListener( *workspace_, model, *orderTypes_, publisher, *session_ ) ) );
     listeners_.push_back( T_SharedListener( new ObjectListener( *workspace_, publisher, *session_ ) ) );
     // listeners_.push_back( T_SharedListener( new StatusListener( workspace_->GetDatabase( "geodatabase" ), publisher ) ) );
@@ -96,9 +96,9 @@ bool CrossbowPublisher::IsRelevant( const MsgsSimToClient::MsgSimToClient& wrapp
 
     if( wrapper.message().has_automat_attributes() )
         return ( wrapper.message().automat_attributes().has_etat_automate() == 1 );
-    
+
     if( wrapper.message().has_unit_attributes() )
-    {        
+    {
         const MsgsSimToClient::MsgUnitAttributes& attributes = wrapper.message().unit_attributes();
         if( attributes.has_position() || attributes.has_vitesse() || attributes.has_etat_operationnel() )
             return true;
@@ -166,7 +166,7 @@ void CrossbowPublisher::UpdateOnTick( const MsgsSimToClient::MsgSimToClient& wra
     }
     else if( wrapper.message().has_control_begin_tick() )
     {
-        MT_LOG_INFO_MSG( "tick " << wrapper.message().control_begin_tick().current_tick() );        
+        MT_LOG_INFO_MSG( "tick " << wrapper.message().control_begin_tick().current_tick() );
         {
             UpdateListeners();
         }
@@ -178,7 +178,7 @@ void CrossbowPublisher::UpdateOnTick( const MsgsSimToClient::MsgSimToClient& wra
         databaseUpdater_->Flush();
     }
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: CrossbowPublisher::UpdateDatabase
 // Created: JCR 2008-01-11
@@ -210,20 +210,20 @@ void CrossbowPublisher::UpdateDatabase( const MsgsSimToClient::MsgSimToClient& w
         databaseUpdater_->Update( wrapper.message().object_knowledge_creation() );
     else if( wrapper.message().has_object_knowledge_update() )
         databaseUpdater_->Update( wrapper.message().object_knowledge_update() );
-	else if( wrapper.message().has_object_knowledge_destruction() )
+    else if( wrapper.message().has_object_knowledge_destruction() )
         databaseUpdater_->DestroyObjectKnowledge( wrapper.message().object_knowledge_destruction() );
 
-	else if( wrapper.message().has_object_creation() )
+    else if( wrapper.message().has_object_creation() )
         databaseUpdater_->Update( wrapper.message().object_creation() );
     // else if( wrapper.message().has__object_update() )
     //    databaseUpdater_->Update( wrapper.message().object_update() );
     else if( wrapper.message().has_object_destruction() )
         databaseUpdater_->DestroyObject( wrapper.message().object_destruction() );
-    
+
     else if( wrapper.message().has_report() )
         reportUpdater_->Update( wrapper.message().report() );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: CrossbowPublisher::UpdateDatabase
 // Created: RDS 2008-04-11

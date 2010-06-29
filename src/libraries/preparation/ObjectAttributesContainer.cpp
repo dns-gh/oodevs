@@ -24,7 +24,7 @@ ObjectAttributesContainer::ObjectAttributesContainer()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ObjectAttributesContainer::~AttributeContainer
 // Created: JCR 2008-07-09
@@ -34,7 +34,7 @@ ObjectAttributesContainer::~ObjectAttributesContainer()
     // NOTHING
 }
 
-namespace 
+namespace
 {
     tools::SortedInterfaceContainer< Extension_ABC >& Interface( const ObjectAttributesContainer& rhs )
     {
@@ -61,7 +61,7 @@ void ObjectAttributesContainer::Display( Displayer_ABC& displayer ) const
 {
     Interface( *this ).Apply( & Displayable_ABC::Display, displayer );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ObjectAttributesContainer::DisplayInList
 // Created: JCR 2008-07-09
@@ -70,7 +70,7 @@ void ObjectAttributesContainer::DisplayInList( Displayer_ABC& displayer ) const
 {
     Interface( *this ).Apply( & Displayable_ABC::DisplayInList, displayer );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ObjectAttributesContainer::DisplayInTooltip
 // Created: JCR 2008-07-09
@@ -79,7 +79,7 @@ void ObjectAttributesContainer::DisplayInTooltip( Displayer_ABC& displayer ) con
 {
     Interface( *this ).Apply( & Displayable_ABC::DisplayInTooltip, displayer );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ObjectAttributesContainer::DisplayInSummary
 // Created: JCR 2008-07-09

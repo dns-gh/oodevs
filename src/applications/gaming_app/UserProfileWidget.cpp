@@ -27,7 +27,7 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, kernel::Controllers& cont
     QGroupBox* group = new QGroupBox( 2,  Qt::Horizontal, tr( "Profile information" ), box );
     group->setMargin( 5 );
     new QLabel( tr( "Login:" ), group );
-    login_ = new QLineEdit( group ); 
+    login_ = new QLineEdit( group );
     new QLabel( tr( "Password:" ), group );
     password_ = new QLineEdit( group );
     addTab( box, tr( "General" ) );

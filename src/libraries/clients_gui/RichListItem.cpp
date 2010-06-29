@@ -137,19 +137,19 @@ RichListItem::~RichListItem()
 void RichListItem::AddColumns( const QString& label1, const QString& label2, const QString& label3, const QString& label4,  const QString& label5, const QString& label6, const QString& label7, const QString& label8 )
 {
     if( !label1.isNull() )
-        setText( 0, label1 ); 
+        setText( 0, label1 );
     if( !label2.isNull() )
-        setText( 1, label2 ); 
+        setText( 1, label2 );
     if( !label3.isNull() )
-        setText( 2, label3 ); 
+        setText( 2, label3 );
     if( !label4.isNull() )
         setText( 3, label4 );
     if( !label5.isNull() )
-        setText( 4, label5 ); 
+        setText( 4, label5 );
     if( !label6.isNull() )
-        setText( 5, label6 ); 
+        setText( 5, label6 );
     if( !label7.isNull() )
-        setText( 6, label7 ); 
+        setText( 6, label7 );
     if( !label8.isNull() )
         setText( 7, label8 );
 }
@@ -238,7 +238,7 @@ const QColor& RichListItem::GetBackgroundColor()
 // -----------------------------------------------------------------------------
 void RichListItem::paintCell( QPainter* pPainter, const QColorGroup& cg, int nColumn, int nWidth, int nAlign )
 {
-    if(  nColumn < 0 || nColumn >= ( int ) columns_.size() )
+    if( nColumn < 0 || nColumn >= ( int ) columns_.size() )
         return;
 
     QColorGroup colorGroup( cg );
@@ -293,7 +293,7 @@ int RichListItem::width( const QFontMetrics& /*fm*/, const QListView* /*lv*/, in
 // -----------------------------------------------------------------------------
 int RichListItem::Width( int nColumn ) const
 {
-    if(  nColumn < 0 || nColumn >= ( int )columns_.size() )
+    if( nColumn < 0 || nColumn >= ( int )columns_.size() )
         return 0;
     const QPixmap& pm = columns_[ nColumn ].pixMap;
     const int textWidth = columns_[ nColumn ].rich->widthUsed();
@@ -387,7 +387,7 @@ int RichListItem::rtti() const
 // -----------------------------------------------------------------------------
 QString RichListItem::GetAnchorAt( const QPoint globalPos, int nColumn ) const
 {
-    if(  nColumn < 0 || nColumn >= ( int ) columns_.size() || ! columns_[ nColumn ].rich )
+    if( nColumn < 0 || nColumn >= ( int ) columns_.size() || ! columns_[ nColumn ].rich )
         return QString::null;
 
     QListView* pListView = listView();

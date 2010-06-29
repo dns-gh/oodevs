@@ -85,10 +85,10 @@ OGRLineString* PointCollection::Extract( OGRLineString* points, OGRSpatialRefere
 void PointCollection::Serialize( std::ostream& geometry ) const
 {
     std::stringstream ss;
-    
+
     for( CIT_Points it = points_.begin(); it != points_.end(); ++it )
     {
-        it->SerializeCoordinates( ss, ' ' ); 
+        it->SerializeCoordinates( ss, ' ' );
         if( (it + 1) != points_.end() )
             ss << ",";
     }

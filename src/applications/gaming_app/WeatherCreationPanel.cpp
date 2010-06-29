@@ -44,7 +44,7 @@ WeatherCreationPanel::WeatherCreationPanel( QWidget* parent, gui::PanelStack_ABC
     , serializer_       ( model.coordinateConverter_ )
     , isGlobal_         ( false )
 {
-    
+
     QGroupBox* localGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Weather" ), this );
     QVBox* localWeatherBox = new QVBox( localGroup );
     weather_ = new WeatherWidget( localWeatherBox, tr( "Weather parameters" ) );
@@ -57,7 +57,7 @@ WeatherCreationPanel::WeatherCreationPanel( QWidget* parent, gui::PanelStack_ABC
 
     QCheckBox* weatherType = new QCheckBox( tr( "Set as global weather" ), parametersGroup );
     weatherType->setChecked( isGlobal_ );
-    
+
     positionBtn_ = new QPushButton( tr( "Set location" ), parametersGroup );
 
     QHBox* box = new QHBox( this );
@@ -118,9 +118,9 @@ void WeatherCreationPanel::StartEditingLocation()
 // -----------------------------------------------------------------------------
 bool WeatherCreationPanel::CheckValidity()
 {
-    if( isGlobal_ ) 
+    if( isGlobal_ )
         return true;
-    else if ( ( startTime_->dateTime() > endTime_->dateTime() ) || !startTime_->dateTime().isValid()  || !endTime_->dateTime().isValid() )
+    else if( ( startTime_->dateTime() > endTime_->dateTime() ) || !startTime_->dateTime().isValid()  || !endTime_->dateTime().isValid() )
     {
         startTimeLabel_->setPaletteForegroundColor( Qt::red );
         endTimeLabel_->setPaletteForegroundColor( Qt::red );
@@ -163,7 +163,7 @@ void WeatherCreationPanel::OnPosWarnStop()
 void WeatherCreationPanel::Commit()
 {
     if( CheckValidity() )
-    {      
+    {
         kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( model_.types_ ).Get( isGlobal_? "global_meteo" : "local_meteo" );
         MagicAction* action = new MagicAction( actionType, controllers_.controller_, true );
         tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();

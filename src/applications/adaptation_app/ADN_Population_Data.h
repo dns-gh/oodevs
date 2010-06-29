@@ -73,7 +73,7 @@ public:
             CmpRef(ADN_Categories_Data::ArmorInfos* val) : val_(val) {}
             ~CmpRef(){}
 
-            bool operator()( FireEffectProtectionInfos* tgtnfos ) const 
+            bool operator()( FireEffectProtectionInfos* tgtnfos ) const
             {   return tgtnfos->ptrProtection_.GetData() == val_;}
 
         private:
@@ -116,7 +116,7 @@ public:
             CmpAttitude(E_PopulationAttitude val) : val_(val) {}
             ~CmpAttitude(){}
 
-            bool operator()( FireEffectInfos* tgtnfos ) const 
+            bool operator()( FireEffectInfos* tgtnfos ) const
             {   return tgtnfos->nAttitude_ == val_;}
 
         private:
@@ -186,7 +186,7 @@ public:
             CmpRef(ADN_Categories_Data::SizeInfos* val) : val_(val) {}
             ~CmpRef(){}
 
-            bool operator()( SpeedEffectVolumeInfos* tgtnfos ) const 
+            bool operator()( SpeedEffectVolumeInfos* tgtnfos ) const
             {   return tgtnfos->ptrVolume_.GetData() == val_;}
 
         private:

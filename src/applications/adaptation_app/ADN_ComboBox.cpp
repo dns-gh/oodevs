@@ -43,7 +43,7 @@ ADN_ComboBox::~ADN_ComboBox()
 {
     disconnect(this,SIGNAL(activated(int)),this,SLOT(ItemSelected(int)));
     pCurData_=0;
-    
+
     MT_DELETEOWNED(vItems_);
     vItems_.clear();
 }
@@ -78,16 +78,16 @@ inline void SetAutoClear(T_ConnectorVector& v,bool b)
 //-----------------------------------------------------------------------------
 void ADN_ComboBox::SetCurrentData(void *data)
 {
-    if ( !data )
+    if( !data )
         SetAutoClear(vItemConnectors_,true);
-    
+
     DisconnectItem();
 
     pCurData_=data;
 
     ConnectItem();
 
-    if ( !data )
+    if( !data )
         SetAutoClear(vItemConnectors_,false);
 }
 
@@ -125,7 +125,7 @@ void ADN_ComboBox::ItemSelected( int ndx )
 
 
 //-----------------------------------------------------------------------------
-// Name: ADN_ComboBox::insertItem 
+// Name: ADN_ComboBox::insertItem
 // Created: JDY 03-09-10
 //-----------------------------------------------------------------------------
 void ADN_ComboBox::insertItem ( const QString& txt, int index )
@@ -148,12 +148,12 @@ void ADN_ComboBox::insertItem ( const QString& txt, int index )
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_ComboBox::insertItem 
+// Name: ADN_ComboBox::insertItem
 // Created: JDY 03-09-10
 //-----------------------------------------------------------------------------
 void ADN_ComboBox::insertItem ( ADN_ComboBoxItem* item, int index )
 {
-    if ( !item )
+    if( !item )
         return;
 
     int nRealIndex = index;
@@ -178,12 +178,12 @@ void ADN_ComboBox::insertItem ( ADN_ComboBoxItem* item, int index )
     QComboBox::insertItem( item->text(), nRealIndex );
 
     // insert item in list items
-    vItems_.insert(vItems_.begin() + nRealIndex, item );  
+    vItems_.insert(vItems_.begin() + nRealIndex, item );
 }
 
 
 //-----------------------------------------------------------------------------
-// Name: ADN_ComboBox::removeItem 
+// Name: ADN_ComboBox::removeItem
 // Created: JDY 03-09-10
 //-----------------------------------------------------------------------------
 void ADN_ComboBox::removeItem ( int index )
@@ -219,7 +219,7 @@ int ADN_ComboBox::FindNdx( const ADN_ComboBoxItem* item ) const
 {
     int ndx=0;
     for ( CIT_PtrComboBoxItem_Vector it=vItems_.begin();it!=vItems_.end();++it,++ndx)
-        if ( (*it)==item)
+        if( (*it)==item)
             return ndx;
     return -1;
 }
@@ -233,7 +233,7 @@ int ADN_ComboBox::FindNdx( void * data) const
 {
     int ndx=0;
     for ( CIT_PtrComboBoxItem_Vector it=vItems_.begin();it!=vItems_.end();++it,++ndx)
-        if ( (*it) && (*it)->GetData() == data)
+        if( (*it) && (*it)->GetData() == data)
             return ndx;
     return -1;
 }

@@ -78,7 +78,7 @@ void BridgingCapacity::Register( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void BridgingCapacity::Instanciate( MIL_Object_ABC& object ) const
 {
-    object.AddCapacity( new BridgingCapacity( *this ) );    
+    object.AddCapacity( new BridgingCapacity( *this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -87,7 +87,7 @@ void BridgingCapacity::Instanciate( MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 void BridgingCapacity::Finalize( MIL_Object_ABC& object )
 {
-    T_PointVector bridge; 
+    T_PointVector bridge;
     CreateBridgeGeometry( object.GetLocalisation().GetPoints(), bridge );
     handler_.Reset( new TER_DynamicData( bridge, TerrainData::Bridge() ) );
 }

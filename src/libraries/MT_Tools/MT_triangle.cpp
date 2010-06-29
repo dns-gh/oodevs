@@ -13,7 +13,7 @@
 #include "MT_Triangle.h"
 
 #ifdef  _DEBUG
-#   undef   INLINE                  
+#   undef   INLINE
 #   define  INLINE
 #   include "MT_Triangle.inl"
 #endif  // _DEBUG
@@ -40,7 +40,7 @@ MT_Triangle::MT_Triangle()
 ,    pPos2_()
 ,    pPos3_()
 {
-    
+
 }
 
 

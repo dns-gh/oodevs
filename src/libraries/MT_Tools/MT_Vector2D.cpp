@@ -28,7 +28,7 @@ MT_Vector2D MT_ComputeBarycenter( const T_PointVector& points )
     unsigned int            nNbrPoints = points.size();
     if( points.front() == points.back() )
     {
-        itEnd --; 
+        itEnd --;
         nNbrPoints--;
     }
 

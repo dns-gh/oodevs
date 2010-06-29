@@ -33,7 +33,7 @@ LogisticAttribute::LogisticAttribute( const Model_ABC& model, const Common::MsgO
 LogisticAttribute::~LogisticAttribute()
 {
     // NOTHING
-}  
+}
 
 // -----------------------------------------------------------------------------
 // Name: LogisticAttribute::Update
@@ -42,7 +42,7 @@ LogisticAttribute::~LogisticAttribute()
 void LogisticAttribute::Update( const Common::MsgObjectAttributes& asnMsg )
 {
     if( asnMsg.has_logistic() )
-        pTC2_ = &automats_.Get( asnMsg.logistic().tc2() );    
+        pTC2_ = &automats_.Get( asnMsg.logistic().tc2() );
 }
 
 // -----------------------------------------------------------------------------

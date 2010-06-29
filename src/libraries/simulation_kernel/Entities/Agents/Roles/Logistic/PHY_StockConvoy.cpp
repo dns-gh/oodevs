@@ -101,7 +101,7 @@ bool PHY_StockConvoy::Form()
     assert( pConvoyAgentType_ );
     assert( !pPionConvoy_ );
     assert( pConsign_ );
-    
+
     pPionConvoy_ = &pConsign_->GetConvoyingAutomate().CreatePion( *pConvoyAgentType_, pConsign_->GetConvoyingAutomate().GetPionPC().GetRole< PHY_RoleInterface_Location >().GetPosition() );
     pPionConvoy_->GetRole< PHY_RoleInterface_Supply >().AssignConvoy( *this );
     for( CIT_ConveyorMap it = conveyors_.begin(); it != conveyors_.end(); ++it )

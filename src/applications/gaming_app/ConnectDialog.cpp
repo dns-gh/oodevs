@@ -16,10 +16,10 @@
 
 //-----------------------------------------------------------------------------
 // Name: ConnectDialog constructor
-// Created:  NLD 2002-01-03 
+// Created:  NLD 2002-01-03
 //-----------------------------------------------------------------------------
 ConnectDialog::ConnectDialog( QWidget* pParent, Network& network, kernel::Logger_ABC& logger )
-    : QDialog ( pParent, 0, true, WStyle_Customize | WStyle_NormalBorder | WStyle_Title ) 
+    : QDialog ( pParent, 0, true, WStyle_Customize | WStyle_NormalBorder | WStyle_Title )
     , network_( network )
     , logger_ ( logger )
 {
@@ -30,7 +30,7 @@ ConnectDialog::ConnectDialog( QWidget* pParent, Network& network, kernel::Logger
     pMainLayout->setSpacing( 10 );
 
     uint nCurRow = 0;
-    
+
     // Host name
     pMainLayout->addWidget( new QLabel( tr("Host name"), this ), nCurRow, 0 );
     pHostNameComboBox_ = new QComboBox( TRUE, this );
@@ -61,7 +61,7 @@ ConnectDialog::ConnectDialog( QWidget* pParent, Network& network, kernel::Logger
 
 //-----------------------------------------------------------------------------
 // Name: ConnectDialog destructor
-// Created:  NLD 2002-01-03 
+// Created:  NLD 2002-01-03
 //-----------------------------------------------------------------------------
 ConnectDialog::~ConnectDialog()
 {
@@ -70,7 +70,7 @@ ConnectDialog::~ConnectDialog()
 
 //-----------------------------------------------------------------------------
 // Name: ConnectDialog::Validate
-// Created:  NLD 2002-01-03 
+// Created:  NLD 2002-01-03
 //-----------------------------------------------------------------------------
 void ConnectDialog::Validate()
 {
@@ -91,7 +91,7 @@ void ConnectDialog::Validate()
 
 //-----------------------------------------------------------------------------
 // Name: ConnectDialog::LoadDefaultConfig
-// Created:  NLD 2002-01-03 
+// Created:  NLD 2002-01-03
 //-----------------------------------------------------------------------------
 void ConnectDialog::LoadDefaultConfig()
 {
@@ -125,7 +125,7 @@ void ConnectDialog::SaveConfig()
     QSettings settings;
     settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
     settings.beginGroup( "/Common/Hosts" );
-    
+
     QStringList list;
     for( int n = 0; n < pHostNameComboBox_->count(); ++n )
         list.push_back( pHostNameComboBox_->text( n ) );

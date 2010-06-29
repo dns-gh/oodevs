@@ -38,7 +38,7 @@ public:
     //@}
 
 public:
-    //! @name 
+    //! @name
     //@{
     static const PHY_Tiredness normal_;
     static const PHY_Tiredness fatigue_;

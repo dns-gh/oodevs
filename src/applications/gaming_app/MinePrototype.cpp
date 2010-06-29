@@ -39,5 +39,5 @@ MinePrototype::~MinePrototype()
 // -----------------------------------------------------------------------------
 void MinePrototype::Commit()
 {
-	// NOTHING
+    // NOTHING
 }

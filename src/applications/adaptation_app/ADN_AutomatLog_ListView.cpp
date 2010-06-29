@@ -183,7 +183,7 @@ void ADN_AutomatLog_ListView::InsertCategory( QListViewItem&                    
                                               ADN_Composantes_Data::CategoryInfos&   category,
                                               ADN_Composantes_Data::ConsumptionItem& conso )
 {
-    if(    conso.nConsumptionType_ != eMoving 
+    if( conso.nConsumptionType_ != eMoving
         && conso.nConsumptionType_ != eEngineStopped
         && conso.nConsumptionType_ != eEngineStarted )
         return;
@@ -236,7 +236,7 @@ void ADN_AutomatLog_ListView::InsertCategory( QListViewItem&                    
         pItem->SetValueGreaterThan( eColumnEngineStartedAutonomy, rAutonomy, 2., 3., ADN_Rich_ListViewItem::eUnitHour );
         pItem->setText( eColumnEngineStartedConso, QString::number( conso.nQuantityUsedPerHour_.GetData() ) );
         compTotal_[ conso.ptrCategory_.GetData() ]->rEngineStartedAutonomy_ = std::min( compTotal_[ conso.ptrCategory_.GetData() ]->rEngineStartedAutonomy_, rAutonomy );
-        compTotal_[ conso.ptrCategory_.GetData() ]->rEngineStartedQuantityUsedPerHour_ = conso.nQuantityUsedPerHour_.GetData();        
+        compTotal_[ conso.ptrCategory_.GetData() ]->rEngineStartedQuantityUsedPerHour_ = conso.nQuantityUsedPerHour_.GetData();
     }
 }
 

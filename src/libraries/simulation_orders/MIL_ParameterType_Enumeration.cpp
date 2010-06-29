@@ -43,5 +43,5 @@ bool MIL_ParameterType_Enumeration::Copy( const MIL_MissionParameter_ABC& from, 
         return false;
     to.set_null_value( false );
     to.mutable_value()->set_enumeration( id );
-    return true;    
+    return true;
 }

@@ -19,7 +19,7 @@ namespace tools
 
 namespace kernel
 {
-    class Controllers; 
+    class Controllers;
 }
 
 class ProgressPage;

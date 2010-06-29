@@ -58,9 +58,9 @@ public:
     virtual const Automat*        GetAutomat       () const;
 
             const AutomatType&    GetType          () const;
-	        const Team&           GetTeam          () const;
-	        const KnowledgeGroup& GetKnowledgeGroup() const;
-	        const Pawn&	          GetPc            () const;
+            const Team&           GetTeam          () const;
+            const KnowledgeGroup& GetKnowledgeGroup() const;
+            const Pawn&              GetPc            () const;
     //@}
 
     //! @name Operations
@@ -72,7 +72,7 @@ public:
     //! @name Pawn management
     //@{
     void AttachPawn( Pawn& pawn );
-	void DetachPawn( Pawn& pawn );
+    void DetachPawn( Pawn& pawn );
     //@}
 
     //! @name Mission Scheduling
@@ -99,9 +99,9 @@ private:
     //! @name Member data
     //@{
     T_EntityId         nId_;
-	Team*              pTeam_;
+    Team*              pTeam_;
     KnowledgeGroup*    pKnowledgeGroup_;
-	Pawn*			   pPc_;
+    Pawn*               pPc_;
     const AutomatType* pType_;
     T_PawnSet          childPawns_;
     //@}

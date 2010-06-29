@@ -48,7 +48,7 @@ MIL_PointParameter::~MIL_PointParameter()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_PointParameter::IsOfType
 // Created: LDC 2009-05-22
@@ -57,7 +57,7 @@ bool MIL_PointParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
 {
     return dynamic_cast< const MIL_ParameterType_Point* >( &type ) != 0;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_PointParameter::ToPoint
 // Created: LDC 2009-05-22

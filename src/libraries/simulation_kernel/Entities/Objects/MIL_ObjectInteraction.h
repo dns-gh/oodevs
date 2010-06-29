@@ -104,7 +104,7 @@ private:
 // Name: template< typename T > void MIL_ObjectInteraction::ProcessInteraction
 // Created: JCR 2008-08-28
 // -----------------------------------------------------------------------------
-template< typename T > 
+template< typename T >
 void MIL_ObjectInteraction::ProcessInteraction( T functor ) const
 {
     std::for_each( agentInsideSet_.begin(), agentInsideSet_.end(), functor );

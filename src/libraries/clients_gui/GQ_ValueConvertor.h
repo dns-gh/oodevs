@@ -67,8 +67,8 @@ GQ_ValueConvertor< T_Input, T_Output >::~GQ_ValueConvertor()
 
 // -----------------------------------------------------------------------------
 // Name: GQ_ValueConvertor< T_Input, T_Output >::GetConversion
-/** @param  
-    @return 
+/** @param
+    @return
 */
 // Created: CBX 2003-08-19
 // -----------------------------------------------------------------------------

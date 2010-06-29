@@ -42,7 +42,7 @@ public:
 
     //@}
 
-    //! @Accessors 
+    //! @Accessors
     //@{
     virtual bool        IsValid() const = 0;
     virtual std::string GetSequence() const = 0;

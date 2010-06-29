@@ -23,7 +23,7 @@ Formation_ABC::Formation_ABC()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Formation_ABC destructor
 // Created: SBO 2006-09-20

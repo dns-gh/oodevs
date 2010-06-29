@@ -64,11 +64,11 @@ public slots:
 
     void AddItemNoEmit( void* pObj );
     void RemItemNoEmit( void* pObj );
-    
+
     void SwapItem( int i, int j );
     void Sort( ADN_BinaryPredicateWrapper& lessComp );
     void Clear( bool bInConnection = false );
-    
+
 signals:
     void ItemAdded( void* pObj );
     void ItemRemoved( void* pObj );

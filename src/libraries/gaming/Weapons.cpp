@@ -46,7 +46,7 @@ Weapons::~Weapons()
 // -----------------------------------------------------------------------------
 void Weapons::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
-    if(  tools.ShouldDisplay( "WeaponRanges" ) && viewport.IsVisible( where ) 
+    if( tools.ShouldDisplay( "WeaponRanges" ) && viewport.IsVisible( where )
       && ( efficientRange_ > 0 || maxRange_ > 0 || ( minRange_ > 0 && minRange_ < std::numeric_limits< unsigned int >::max() ) ) )
     {
         glPushAttrib( GL_ENABLE_BIT | GL_LINE_BIT );
@@ -83,7 +83,7 @@ void Weapons::OptionChanged( const std::string& name, const kernel::OptionVarian
 // -----------------------------------------------------------------------------
 void Weapons::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
 {
-    if ( message.has_dotation_eff_materiel()  != 1 )
+    if( message.has_dotation_eff_materiel()  != 1 )
         return;
     minRange_ = std::numeric_limits< unsigned int >::max();
     maxRange_ = 0;

@@ -37,11 +37,11 @@ public:
              DEC_Knowledge_UrbanPerception( const MIL_Agent_ABC& agentPerceiving, const urban::TerrainObject_ABC& object );
     virtual ~DEC_Knowledge_UrbanPerception();
     //@}
-    
+
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive&, const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;
     //@}

@@ -54,7 +54,7 @@ DEC_KS_PopulationInteraction::~DEC_KS_PopulationInteraction()
 // Name: template< typename Archive > void DEC_KS_PopulationInteraction::serialize
 // Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
-template< typename Archive > 
+template< typename Archive >
 void DEC_KS_PopulationInteraction::serialize( Archive& archive, const unsigned int )
 {
     archive & boost::serialization::base_object< DEC_KnowledgeSource_ABC >( *this )
@@ -80,7 +80,7 @@ void DEC_KS_PopulationInteraction::Prepare()
 DEC_Knowledge_PopulationCollision& DEC_KS_PopulationInteraction::GetKnowledgePopulationCollision( MIL_Population& population ) const
 {
     assert( pBlackBoard_ );
-    
+
     DEC_Knowledge_PopulationCollision* pKnowledge = pBlackBoard_->GetKnowledgePopulationCollisionContainer().GetKnowledgePopulationCollision( population );
     if( !pKnowledge )
         pKnowledge = &pBlackBoard_->GetKnowledgePopulationCollisionContainer().CreateKnowledgePopulationCollision( pBlackBoard_->GetPion(), population );
@@ -92,7 +92,7 @@ DEC_Knowledge_PopulationCollision& DEC_KS_PopulationInteraction::GetKnowledgePop
 // Created: NLD 2004-03-17
 // -----------------------------------------------------------------------------
 void DEC_KS_PopulationInteraction::Talk( int /*currentTimeStep*/ )
-{       
+{
     // Collisions
     for( CIT_PopulationFlowVector it = flowCollisions_.begin(); it != flowCollisions_.end(); ++it )
     {
@@ -134,8 +134,8 @@ void DEC_KS_PopulationInteraction::Clean()
 {
     // Remove all invalid knowledges
     assert( pBlackBoard_ );
-    class_mem_fun_void_t< DEC_KS_PopulationInteraction, DEC_Knowledge_PopulationCollision > method( & DEC_KS_PopulationInteraction::CleanKnowledgePopulationCollision, *this );        
-    pBlackBoard_->GetKnowledgePopulationCollisionContainer().ApplyOnKnowledgesPopulationCollision( method );    
+    class_mem_fun_void_t< DEC_KS_PopulationInteraction, DEC_Knowledge_PopulationCollision > method( & DEC_KS_PopulationInteraction::CleanKnowledgePopulationCollision, *this );
+    pBlackBoard_->GetKnowledgePopulationCollisionContainer().ApplyOnKnowledgesPopulationCollision( method );
 }
 
 // -----------------------------------------------------------------------------

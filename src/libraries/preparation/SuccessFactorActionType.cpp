@@ -17,7 +17,7 @@ namespace
     QString ReadDescription( xml::xistream& xis )
     {
         std::string desc;
-        xis >> xml::optional() >> xml::start( "description" ) 
+        xis >> xml::optional() >> xml::start( "description" )
                 >> desc
             >> xml::end();
         return desc.c_str();

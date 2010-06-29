@@ -33,7 +33,7 @@ public:
     //@{
     template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
-    
+
     //! @name Operations
     //@{
     bool AffectAutomate( MIL_AutomateLOG& supplyingAutomate );
@@ -69,7 +69,7 @@ protected:
     {
         T*          pRequest_;       // == le pion demandeur PHY_Dotation / PHY_DotationStock
         MT_Float    rRequestedValue_;
-        
+
         template< typename Archive > void serialize( Archive&, const unsigned int );
     };
     typedef typename std::vector< sIndividualRequest >    T_RequestVector;
@@ -78,11 +78,11 @@ protected:
     //@}
 
 protected:
-    T_RequestVector      requests_;    
+    T_RequestVector      requests_;
     PHY_RoleInterface_Supply* pStockPion_;
-    MT_Float             rTotalRequestedValue_;   
+    MT_Float             rTotalRequestedValue_;
     MIL_AutomateLOG*     pSupplyingAutomate_;
-    MT_Float             rTotalReservedValue_;   
+    MT_Float             rTotalReservedValue_;
     MT_Float             rTotalConvoyedValue_;
 };
 

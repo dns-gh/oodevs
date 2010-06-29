@@ -40,7 +40,7 @@ CheckBox::~CheckBox()
 // -----------------------------------------------------------------------------
 void CheckBox::setValue( int val )
 {
-    if ( val == 2 )
+    if( val == 2 )
         QCheckBox::setNoChange();
     else
         QCheckBox::setChecked( val == 1 );

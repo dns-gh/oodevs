@@ -143,7 +143,7 @@ TemplateElement_ABC* HierarchyTemplate::CreateElement( AgentsModel& agents, Form
 {
     std::string type, name;
     float x = 0, y = 0;
-    input >> xml::optional() 
+    input >> xml::optional()
           >> xml::start( "element" )
              >> xml::attribute( "type", type )
              >> xml::attribute( "x", x )
@@ -202,6 +202,6 @@ void HierarchyTemplate::SetBasePosition( geometry::Point2f center )
         (*it)->SetBasePosition( center );
     referencePosition_.Set( referencePosition_.X() - center.X(),
                             referencePosition_.Y() - center.Y() );
-    
+
 }
 

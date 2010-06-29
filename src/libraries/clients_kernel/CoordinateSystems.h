@@ -27,7 +27,7 @@ class CoordinateSystems
 {
 
 public:
-    
+
     typedef boost::ptr_map< int, std::string > T_spatialReference;
     typedef T_spatialReference::const_iterator CIT_spatialReference;
 
@@ -56,12 +56,12 @@ public:
      //! @name Member data
     //@{
     enum paramProj
-	{
+    {
         E_Mgrs,
-		E_Wgs84Dd,
-		E_Wgs84Dms,
-   		E_Local
-	};
+        E_Wgs84Dd,
+        E_Wgs84Dms,
+           E_Local
+    };
 
     int defaultCoordinateSystem_;
     T_spatialReference systems_;

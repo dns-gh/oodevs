@@ -29,7 +29,7 @@ public:
     virtual ~ADN_Connector_Table_ABC();
 
     virtual bool LessComparison( void* pL, void* pR ) const;
-    
+
     bool IsConnected() const;
 
 protected:

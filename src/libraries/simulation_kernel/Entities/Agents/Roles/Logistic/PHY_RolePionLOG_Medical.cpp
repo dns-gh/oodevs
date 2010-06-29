@@ -139,7 +139,7 @@ namespace boost
         {
             split_free( file, vector, nVersion );
         }
-        
+
         template< typename Archive >
         void save( Archive& file, const T_AutomateVector& vector, const unsigned int )
         {
@@ -148,7 +148,7 @@ namespace boost
             for ( CIT_AutomateVector it = vector.begin(); it != vector.end(); ++it )
                 file << *it;
         }
-        
+
         template< typename Archive >
         void load( Archive& file, T_AutomateVector& vector, const unsigned int )
         {
@@ -162,7 +162,7 @@ namespace boost
                 vector.push_back( pAutomate );
             }
         }
-         
+
         // =============================================================================
         // T_EvacuationAmbulancesMMap
         // =============================================================================
@@ -172,7 +172,7 @@ namespace boost
         {
             split_free( file, mmap, nVersion );
         }
-        
+
         template< typename Archive >
         void save( Archive& file, const PHY_RolePionLOG_Medical::T_EvacuationAmbulancesMMap& mmap, const unsigned int )
         {
@@ -184,7 +184,7 @@ namespace boost
                 file << it->second;
             }
         }
-        
+
         template< typename Archive >
         void load( Archive& file, PHY_RolePionLOG_Medical::T_EvacuationAmbulancesMMap& mmap, const unsigned int )
         {
@@ -194,10 +194,10 @@ namespace boost
             {
                 MIL_Automate*                   pAutomate;
                 PHY_MedicalEvacuationAmbulance* pAmbulance;
-                
+
                 file >> pAutomate;
                 file >> pAmbulance;
-                
+
                 mmap.insert( std::make_pair( pAutomate, pAmbulance ) );
             }
         }
@@ -211,7 +211,7 @@ namespace boost
         {
             split_free( file, set, nVersion );
         }
-        
+
         template< typename Archive >
         void save( Archive& file, const PHY_RolePionLOG_Medical::T_CollectionAmbulancesSet& set, const unsigned int )
         {
@@ -220,7 +220,7 @@ namespace boost
             for ( PHY_RolePionLOG_Medical::CIT_CollectionAmbulancesSet it = set.begin(); it != set.end(); ++it )
                 file << *it;
         }
-        
+
         template< typename Archive >
         void load( Archive& file, PHY_RolePionLOG_Medical::T_CollectionAmbulancesSet& set, const unsigned int )
         {
@@ -229,7 +229,7 @@ namespace boost
             while ( nNbr-- )
             {
                 PHY_MedicalCollectionAmbulance* pAmbulance;
-                
+
                 file >> pAmbulance;
                 set.insert( pAmbulance );
             }
@@ -283,7 +283,7 @@ void PHY_RolePionLOG_Medical::save( MIL_CheckPointOutArchive& file, const unsign
          << evacuationAmbulances_
          << collectionAmbulances_
          << reservations_;
-         
+
     unsigned size = consigns_.size();
     file << size;
     for ( CIT_MedicalConsigns it = consigns_.begin(); it != consigns_.end(); ++it )
@@ -301,12 +301,12 @@ void PHY_RolePionLOG_Medical::save( MIL_CheckPointOutArchive& file, const unsign
 // -----------------------------------------------------------------------------
 bool PHY_RolePionLOG_Medical::CanCollectionAmbulanceGo( const PHY_MedicalCollectionAmbulance& ambulance ) const
 {
-    if ( ambulance.IsAnEmergency() )
+    if( ambulance.IsAnEmergency() )
         return true;
 
     for ( CIT_MedicalConsigns it = consigns_.begin(); it != consigns_.end(); ++it )
         for ( CIT_MedicalConsignList it2 = it->second.begin(); it2 != it->second.end(); ++it2 )
-            if ( (*it2)->CouldNeedCollectionAmbulance() )
+            if( (*it2)->CouldNeedCollectionAmbulance() )
                 return false;
     return true;
 }
@@ -456,7 +456,7 @@ bool PHY_RolePionLOG_Medical::HasUsableDoctorForHealing( const Human_ABC& human,
     if( !bBypassPriorities && human.IsWounded() && std::find( priorities_.begin(), priorities_.end(), &human.GetWound() ) == priorities_.end() )
         return false;
 
-    PHY_ComposanteTypePredicate1< Human_ABC > predicate( &PHY_ComposanteTypePion::CanHealHuman, human );        
+    PHY_ComposanteTypePredicate1< Human_ABC > predicate( &PHY_ComposanteTypePion::CanHealHuman, human );
     HasUsableComponentFunctor functor( predicate );
     std::auto_ptr< OnComponentComputer_ABC > computer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
     pion_.Execute( *computer );
@@ -500,10 +500,10 @@ void PHY_RolePionLOG_Medical::ChangePriorities( const T_AutomateVector& prioriti
     for ( CIT_AutomateVector it = priorities.begin(); it != priorities.end(); ++it )
         consigns_.push_back( std::make_pair( *it, T_MedicalConsignList() ) );
     consigns_.push_back( std::make_pair( (const MIL_Automate*)0, T_MedicalConsignList() ) );
-    
+
     tacticalPriorities_ = priorities;
     bHasChanged_        = true;
-    
+
     InsertConsigns( oldConsigns );
 }
 
@@ -519,8 +519,8 @@ void PHY_RolePionLOG_Medical::ChangePriorities( const T_MedicalPriorityVector& p
         it->second.clear();
 
     priorities_  = priorities;
-    bHasChanged_ = true;    
-    
+    bHasChanged_ = true;
+
     InsertConsigns( oldConsigns );
 }
 
@@ -553,7 +553,7 @@ void PHY_RolePionLOG_Medical::InsertConsign( PHY_MedicalConsign_ABC& consign )
         itTact = consigns_.end() - 1;
         assert( itTact->first == 0 );
     }
-    
+
     IT_MedicalPriorityVector itPriorityLowerBound = std::find( priorities_.begin(), priorities_.end(), &consign.GetHumanState().GetHuman().GetWound() );
 
     if( itPriorityLowerBound == priorities_.end() )
@@ -760,7 +760,7 @@ void PHY_RolePionLOG_Medical::UpdateLogistic( bool /*bIsDead*/ )
     for( IT_EvacuationAmbulancesMMap itEvacuationAmbulance = evacuationAmbulances_.begin(); itEvacuationAmbulance != evacuationAmbulances_.end(); )
     {
         PHY_MedicalEvacuationAmbulance& ambulance = *itEvacuationAmbulance->second;
-        if ( ambulance.Update() )
+        if( ambulance.Update() )
         {
             delete &ambulance;
             itEvacuationAmbulance = evacuationAmbulances_.erase( itEvacuationAmbulance );
@@ -772,7 +772,7 @@ void PHY_RolePionLOG_Medical::UpdateLogistic( bool /*bIsDead*/ )
     for( IT_CollectionAmbulancesList itCollectionAmbulance = collectionAmbulances_.begin(); itCollectionAmbulance != collectionAmbulances_.end(); )
     {
         PHY_MedicalCollectionAmbulance& ambulance = **itCollectionAmbulance;
-        if(  ambulance.Update() )
+        if( ambulance.Update() )
         {
             delete &ambulance;
             itCollectionAmbulance = collectionAmbulances_.erase( itCollectionAmbulance );
@@ -889,7 +889,7 @@ void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, Msgs
         data.set_nbr_au_travail  ( itData->second.nNbrUsed_ );
         data.set_nbr_disponibles ( itData->second.nNbrAvailable_ - itData->second.nNbrUsed_ ); // nNbrAvailableAllowedToWork
         data.set_nbr_pretes      ( itData->second.nNbrLent_ );
-    }    
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -997,7 +997,7 @@ void PHY_RolePionLOG_Medical::DisableHealingFunction()
 void PHY_RolePionLOG_Medical::EnableSortingFunction()
 {
     bSortingFunctionEnabled_ = true;
-    // bHasChanged_    = true; 
+    // bHasChanged_    = true;
 }
 
 // -----------------------------------------------------------------------------

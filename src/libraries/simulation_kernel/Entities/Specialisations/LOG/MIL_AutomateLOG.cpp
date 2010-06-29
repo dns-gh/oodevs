@@ -425,7 +425,7 @@ PHY_MedicalHumanState* MIL_AutomateLOG::MedicalHandleHumanForEvacuation( MIL_Age
                 nScore               = nNewScore;
                 pSelectedRoleMedical = roleMedical;
             }
-        }    
+        }
     }
     return pSelectedRoleMedical ? pSelectedRoleMedical->HandleHumanForEvacuation( pion, human ) : 0;
 }
@@ -646,7 +646,7 @@ bool MIL_AutomateLOG::SupplyReturnStock( const PHY_DotationCategory& dotationCat
                 stockPion->RemoveStockReservation( dotationCategory, rReturnedValue );
                 return true;
             }
-        }       
+        }
     }
     return false;
 }
@@ -672,7 +672,7 @@ bool MIL_AutomateLOG::SupplyGetAvailableConvoyTransporter( PHY_ComposantePion*& 
                 pConvoyTransporterPion = *itPion;
                 return true;
             }
-        }        
+        }
     }
     return false;
 }
@@ -856,7 +856,7 @@ void MIL_AutomateLOG::SendQuotas() const
         }
     }
     else
-        asn().mutable_quotas();                    
+        asn().mutable_quotas();
     asn.Send( NET_Publisher_ABC::Publisher() );
 
     if( asn().quotas().elem_size() > 0 )

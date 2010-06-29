@@ -49,7 +49,7 @@ public:
 private slots:
     //! @name Slots
     //@{
-	void SelectParser( int index );
+    void SelectParser( int index );
     void GetSelectedItemInSubList( int index );
     //@}
 
@@ -74,16 +74,16 @@ private:
     const kernel::CoordinateSystems& coordinateSystems_;
     const kernel::CoordinateConverter_ABC& converter_;
     QLineEdit* latitude_;
-	QLineEdit* longitude_;
-	QLabel* latitudeLabel_;
-	QLabel* longitudeLabel_;
+    QLineEdit* longitude_;
+    QLabel* latitudeLabel_;
+    QLabel* longitudeLabel_;
     QToolButton* choiceParserButton_;
-	QPopupMenu* parserMenu_;
+    QPopupMenu* parserMenu_;
     QLineEdit* singleField_;
     QPopupMenu* subMenu_;
     QListBox* list_;
-	QHBox* coordBox_;
-	QHBox* valueBox_;
+    QHBox* coordBox_;
+    QHBox* valueBox_;
     int parserSelected_;
     //@}
 };

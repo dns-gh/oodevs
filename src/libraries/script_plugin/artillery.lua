@@ -4,7 +4,7 @@ dofile "resources/scripts/actions.lua"
 
 artillery =
 {
-	fragOrders =
+    fragOrders =
     {
         ["Pion Appliquer feux"] = 358,
     },
@@ -23,11 +23,11 @@ artillery =
         local dotation  = dotation or artillery.dotations["Obus 122 OE"]
         local iteration = iteration or 1
 
-		FragOrder.create( firerId, artillery.fragOrders["Pion Appliquer feux"] )
-					:With( { name = "Munitions", type = "DotationType", value = dotation } )
-					:With( { name = "Nb IT", type = "Numeric", value = iteration } )
-					:With( { name = "Cible", type = "Point", Point.create( target:GetPosition() ) } )
-					:Issue()
+        FragOrder.create( firerId, artillery.fragOrders["Pion Appliquer feux"] )
+                    :With( { name = "Munitions", type = "DotationType", value = dotation } )
+                    :With( { name = "Nb IT", type = "Numeric", value = iteration } )
+                    :With( { name = "Cible", type = "Point", Point.create( target:GetPosition() ) } )
+                    :Issue()
     end,
 
     _IsIn = function( team, teamList )

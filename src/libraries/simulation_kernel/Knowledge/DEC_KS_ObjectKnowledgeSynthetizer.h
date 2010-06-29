@@ -24,7 +24,7 @@ class MIL_Object_ABC;
 // =============================================================================
 /** @class  DEC_KS_ObjectKnowledgeSynthetizer
     @brief  This knowledge source (KS) is an 'IN/OUT', which is used :
-                - To synthetize the subordinate's perceptions of the objects 
+                - To synthetize the subordinate's perceptions of the objects
                   into knowledges for a army
                 - To add the 'global' army knowledges (magic actions on an object)
 */
@@ -60,7 +60,7 @@ public:
     virtual void Clean  ();
     //@}
 
-private:    
+private:
     //! @name Update
     //@{
     void                  UpdateKnowledgesFromObjectPerception( const DEC_Knowledge_ObjectPerception& perception );
@@ -84,7 +84,7 @@ private:
     typedef std::vector< MIL_Object_ABC* >  T_ObjectVector;
     typedef T_ObjectVector::const_iterator  CIT_ObjectVector;
     //@}
-    
+
 private:
     //! @name Members
     //@{
@@ -101,7 +101,7 @@ BOOST_CLASS_EXPORT_KEY( DEC_KS_ObjectKnowledgeSynthetizer )
 // Name: DEC_KS_ObjectKnowledgeSynthetizer::serialize
 // Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
-template< typename Archive > 
+template< typename Archive >
 void DEC_KS_ObjectKnowledgeSynthetizer::serialize( Archive& archive, const unsigned int )
 {
     archive & boost::serialization::base_object< DEC_KnowledgeSource_ABC >( *this )

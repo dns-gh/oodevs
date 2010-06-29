@@ -42,7 +42,7 @@ namespace
 UrbanModel::UrbanModel()
     : model_( new urban::Model() )
 {
-    if ( singleton )
+    if( singleton )
         throw std::runtime_error( "urbanModel already registered" );
     singleton = this;
 }
@@ -117,7 +117,7 @@ namespace
         {}
         virtual void VisitBlock( urban::TerrainObject_ABC& object )
         {
-            if ( object.GetId() == id_ )
+            if( object.GetId() == id_ )
                 foundObject_ = &object;
         }
         urban::TerrainObject_ABC* GetObject(){ return foundObject_; }

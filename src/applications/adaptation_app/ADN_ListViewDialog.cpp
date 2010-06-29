@@ -38,13 +38,13 @@ ADN_ListViewDialog::ADN_ListViewDialog( QWidget* pParent, const QString& strCapt
 
     pListView->reparent( this, QPoint(0,0) );
     connect( pListView, SIGNAL( contextMenuRequested( int, int, const QPoint& ) ), this, SLOT( OnContextMenu() ) );
-    
+
     QHBox* pHBox = new QHBox( this );
     QPushButton* pPrintButton = new QPushButton( tr( "Print" ), pHBox );
     QPushButton* pCloseButton = new QPushButton( tr( "Close" ), pHBox );
     connect( pPrintButton, SIGNAL( clicked() ), this, SLOT( PrintListView() ) );
     connect( pCloseButton, SIGNAL( clicked() ), this, SLOT( reject() ) );
-        
+
     QVBoxLayout* pLayout = new QVBoxLayout( this );
     pLayout->addWidget( pListView );
     pLayout->addWidget( pHBox );
@@ -91,13 +91,13 @@ void ADN_ListViewDialog::PrintListView()
     QPainter painter( &printer );
 
     // Check that there is a valid device to print to.
-    if ( !painter.device() )
+    if( !painter.device() )
         return;
 
     // Compute the printing rectangle.
     QPaintDeviceMetrics metrics( painter.device() );
 
-    const float rMarginInInches = 0.5f; 
+    const float rMarginInInches = 0.5f;
     int nXMargin = rMarginInInches * (float)metrics.logicalDpiX();
     int nYMargin = rMarginInInches * (float)metrics.logicalDpiY();
 

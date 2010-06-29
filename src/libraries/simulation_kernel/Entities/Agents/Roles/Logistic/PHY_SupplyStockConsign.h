@@ -33,10 +33,10 @@ public:
     //@{
     template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
-    
+
     //! @name Operations
     //@{
-    virtual bool Update(); 
+    virtual bool Update();
 
     // Scripts events
     bool IsLoadingDone   () const;

@@ -30,7 +30,7 @@ public:
     virtual void DoValueChanged() = 0;
 
     virtual QString key() const;
-    
+
 protected:
     void* pData_;
 };

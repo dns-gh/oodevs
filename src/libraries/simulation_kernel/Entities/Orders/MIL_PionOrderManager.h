@@ -38,7 +38,7 @@ public:
     explicit MIL_PionOrderManager( MIL_AgentPion& pion );
     virtual ~MIL_PionOrderManager();
 
-    // @name Events 
+    // @name Events
     //@{
     virtual void OnReceiveFragOrder( const MsgsClientToSim::MsgFragOrder& asn );
             void OnReceiveMission  ( const Common::MsgUnitOrder& asn );
@@ -47,7 +47,7 @@ public:
 
     //! @name Relieve
     //@{
-    bool RelievePion   ( const MIL_AgentPion& pion ); 
+    bool RelievePion   ( const MIL_AgentPion& pion );
     bool CanRelievePion( const MIL_AgentPion& pion ) const;
     //@}
 
@@ -59,9 +59,9 @@ public:
     virtual MIL_LimaOrder* FindLima             ( uint nID ) const;
     virtual MIL_LimaOrder* FindNextScheduledLima() const;
     //@}
-  
+
 private:
-    MIL_AgentPion& pion_;        
+    MIL_AgentPion& pion_;
 };
 
 #endif // __MIL_PionOrderManager_h_

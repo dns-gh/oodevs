@@ -33,7 +33,7 @@ QString TristateOption::OffName() {
     static const QString name = tools::translate( "Tristate", "Off" );
     return name;
 }
-    
+
 QString TristateOption::OnName() {
     static const QString name = tools::translate( "Tristate", "On" );
     return name;
@@ -56,7 +56,7 @@ TristateOption::TristateOption( const QString& state )
     else if( state == AutoName() || state == "a" )
         state_ = 'a';
 }
-            
+
 // -----------------------------------------------------------------------------
 // Name: TristateOption destructor
 // Created: AGE 2006-03-30

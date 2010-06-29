@@ -44,7 +44,7 @@ void Services::Update( const MsgsDispatcherToClient::MsgServicesDescription& mes
     services_.clear();
     for( int i = 0; i < message.services_size(); ++i )
         services_.insert( message.services(i) );
-                
+
     controller_.Update( *this );
 }
 

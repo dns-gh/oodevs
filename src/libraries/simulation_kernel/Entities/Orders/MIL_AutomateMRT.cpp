@@ -78,7 +78,7 @@ const MIL_Fuseau* MIL_AutomateMRT::GetFuseauForPion( MIL_AgentPion& pion ) const
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
 void MIL_AutomateMRT::Activate()
-{  
+{
     assert( !bActivated_ );
 
     // Affectation des fuseaux à chaque mission pion

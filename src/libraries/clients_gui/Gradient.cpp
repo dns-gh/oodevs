@@ -19,7 +19,7 @@
 
 using namespace gui;
 
-namespace 
+namespace
 {
     struct Less {
         template< typename T >
@@ -27,7 +27,7 @@ namespace
             return lhs.first < rhs.first;
         }
     };
-    
+
 }
 
 // -----------------------------------------------------------------------------
@@ -108,7 +108,7 @@ namespace
         float r, g, b, a;
     };
 
-    Color MakeColor( const QColor& cFrom, const QColor& cEnd, Color result, float ratio ) 
+    Color MakeColor( const QColor& cFrom, const QColor& cEnd, Color result, float ratio )
     {
         result.r = ( ( 1.f - ratio ) * cFrom.red() + ratio * cEnd.red() ) / 255.f;
         result.g = ( ( 1.f - ratio ) * cFrom.green() + ratio * cEnd.green() ) / 255.f;
@@ -207,7 +207,7 @@ void Gradient::LoadValue( xml::xistream& xis )
     QColor color( colorName.c_str() );
     if( color.isValid() )
         colors_.push_back( T_Color( ratio, color ) );
-    else 
+    else
         throw std::runtime_error( "Invalid color '" + colorName + "'" );
 }
 

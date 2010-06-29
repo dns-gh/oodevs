@@ -29,7 +29,7 @@
 DEC_Path_KnowledgeAgent::DEC_Path_KnowledgeAgent( const DEC_Agent_PathClass& pathClass, const DEC_Knowledge_Agent& knowledge, const MIL_Agent_ABC& pion )
     : vEnemyPosition_   ( knowledge.GetPosition() )
     , rSecurityDistance_( knowledge.GetMaxRangeToFireOn( pion, 0 ) )
-{ 
+{
     if( rSecurityDistance_ < 1000. )
         rSecurityDistance_ = 1000.;
 

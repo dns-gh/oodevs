@@ -94,7 +94,7 @@ void CreateExercisePanel::showEvent( QShowEvent* event )
 // -----------------------------------------------------------------------------
 void CreateExercisePanel::CreateExercise()
 {
-    if( terrainList_->selectedItem() && modelList_->selectedItem() 
+    if( terrainList_->selectedItem() && modelList_->selectedItem()
         && ( physicalList_->selectedItem() || ! physicalList_->isVisible() ) )
     {
         const std::string terrain  = terrainList_->selectedItem()->text().ascii();

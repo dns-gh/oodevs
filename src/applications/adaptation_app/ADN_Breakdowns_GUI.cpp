@@ -65,7 +65,7 @@ void ADN_Breakdowns_GUI::Build()
 
     // Create the main widget.
     pMainWidget_ = new QWidget( 0, "breakdowns main widget" );
-    
+
     // Breakdown list
     T_ConnectorVector vInfosConnectors( eNbrBreakdownGuiElements, (ADN_Connector_ABC*)0 );
     ADN_Breakdowns_ListView* pBreakdownsListView = new ADN_Breakdowns_ListView( pMainWidget_ );

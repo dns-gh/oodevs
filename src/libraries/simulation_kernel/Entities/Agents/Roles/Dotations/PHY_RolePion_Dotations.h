@@ -63,7 +63,7 @@ public:
 
     void WriteODB( xml::xostream& xos ) const;
     //@}
-    
+
     //! @name External operations
     //@{
     void ReadOverloading              ( xml::xistream& xis );
@@ -77,7 +77,7 @@ public:
     virtual void UnregisterDotationsCapacities( const PHY_DotationCapacities& capacities );
     //@}
 
-    //! @name Operations 
+    //! @name Operations
     //@{
     void Update    ( bool bIsDead );
     void Clean     ();
@@ -106,7 +106,7 @@ public:
     virtual double AddFireReservation( const PHY_DotationCategory& category, MT_Float rNbr );
     virtual double GetDotationNumber( const PHY_DotationCategory& category ) const;
     virtual const PHY_DotationCategory* GetIlluminationDotations( float range, bool permanent ) const;
-	virtual float GetIlluminatingRange( ) const;
+    virtual float GetIlluminatingRange( ) const;
     virtual void SetForbiddenDotation( const PHY_DotationCategory& category );
     virtual void RemoveForbiddenDotation( const PHY_DotationCategory& category );
     virtual void AllowAllDotations();
@@ -114,7 +114,7 @@ public:
 
     //! @name Network
     //@{
-    
+
     void SendChangedState( client::UnitAttributes& asn ) const;
     void SendFullState   ( client::UnitAttributes& asn ) const;
     //@}

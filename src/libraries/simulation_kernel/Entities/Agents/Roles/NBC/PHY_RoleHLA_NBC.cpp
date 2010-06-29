@@ -57,7 +57,7 @@ void PHY_RoleHLA_NBC::Contaminate( const MIL_ToxicEffectManipulator& /*nbcAgent*
 {
      // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleHLA_NBC::Decontaminate
 // Created: AGE 2004-11-09
@@ -66,7 +66,7 @@ void PHY_RoleHLA_NBC::Decontaminate()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleHLA_NBC::Decontaminate
 // Created: AGE 2004-11-09

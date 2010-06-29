@@ -25,7 +25,7 @@
 
 namespace TEST
 {
-    
+
     class Path;
 
     //! @name Types
@@ -49,7 +49,7 @@ namespace TEST
 class Path
 {
 public:
-	//! @name Constructors/Destructor
+    //! @name Constructors/Destructor
     //@{
              Path();
     virtual ~Path();
@@ -78,10 +78,10 @@ public:
     //@}
 
 private:
-	//! @name Global area list
+    //! @name Global area list
     //@{
     T_PositionVector path_;
-	//@}
+    //@}
 };
 
 } // end namespace TEST

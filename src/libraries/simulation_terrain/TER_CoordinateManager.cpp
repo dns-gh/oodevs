@@ -28,7 +28,7 @@
 // Created: AGE 2005-01-31
 // -----------------------------------------------------------------------------
 TER_CoordinateManager::TER_CoordinateManager( float rMiddleLatitude, float rMiddleLongitude, const MT_Rect& extent )
-    : parameters_( rMiddleLatitude * std::acos( -1. ) / 180., rMiddleLongitude * std::acos( -1. ) / 180. ) 
+    : parameters_( rMiddleLatitude * std::acos( -1. ) / 180., rMiddleLongitude * std::acos( -1. ) / 180. )
     , planar_( parameters_ )
     , extent_( extent )
     , translation_( extent.GetWidth() * 0.5, extent.GetHeight() * 0.5 )

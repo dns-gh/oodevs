@@ -127,7 +127,7 @@ void SimulationModel::Update( const MsgsSimToClient::MsgControlBeginTick& msg )
 void SimulationModel::Update( const MsgsSimToClient::MsgControlEndTick& msg )
 {
     nCurrentTick_ = msg.current_tick();
-    //$$$$ 
+    //$$$$
     /*
     tick-duration       INTEGER,    -- En millisecondes
     nb-pathfinds-longs  INTEGER,

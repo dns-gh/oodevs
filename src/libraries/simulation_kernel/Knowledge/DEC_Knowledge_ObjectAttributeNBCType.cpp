@@ -37,7 +37,7 @@ DEC_Knowledge_ObjectAttributeNBCType::DEC_Knowledge_ObjectAttributeNBCType()
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectAttributeNBCType::DEC_Knowledge_ObjectAttributeNBCType( const NBCTypeAttribute& attr )
     : attr_         ( &attr )
-    , pAgent_       ( &attr.GetAgentType() ) 
+    , pAgent_       ( &attr.GetAgentType() )
     , concentration_( attr.GetConcentration() )
     , sourceLifeDuration_( attr.GetSourceLifeDuration() )
 {
@@ -144,7 +144,7 @@ void DEC_Knowledge_ObjectAttributeNBCType::UpdateOnCollision( const DEC_Knowledg
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectAttributeNBCType::BuildMsgSpecificAttributes
 // Created: RFT 2004-05-04
-// ----------------------------------------------------------------------------- 
+// -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeNBCType::Send( Common::MsgObjectAttributes& message ) const
 {
     message.mutable_nbc_agent()->set_agent_id( pAgent_? pAgent_->GetID() : -1 );

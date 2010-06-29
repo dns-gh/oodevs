@@ -23,7 +23,7 @@ struct MT_LinearInterpolation
     {
         return (TypeOut)( y2 + ( y1 - y2 ) * ( x2 - x ) / ( x2 - x1 ) );
     }
-    
+
     TypeIn InverseInterpolation ( const TypeIn& x1, const TypeOut& y1, const TypeIn& x2, const TypeOut& y2, const TypeOut& y ) const
     {
         return y1 == y2 ? y == y1 ? x2 : 0  : (TypeIn)( x2 + ( x1 - x2 ) * ( y2 - y ) / ( y2 - y1 ) );

@@ -24,7 +24,7 @@ namespace urban
 */
 // Created: SLG 2010-04-29
 // =============================================================================
-class PHY_ZURBPerceptionComputer : public PHY_PerceptionComputer_ABC 
+class PHY_ZURBPerceptionComputer : public PHY_PerceptionComputer_ABC
 {
 public:
 
@@ -34,7 +34,7 @@ public:
         double identificationDist;
         double recognitionDist;
         double detectionDist;
-        
+
     };
 
     struct Polygons

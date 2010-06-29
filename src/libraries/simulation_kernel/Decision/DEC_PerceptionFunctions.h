@@ -46,7 +46,7 @@ public:
     static void DisableRecognitionUrbanBlock        ( MIL_Agent_ABC& callerAgent, int id );
     static int  EnableRecognitionPoint              ( DEC_Decision_ABC& callerAgent, MT_Vector2D* pCenter, MT_Float rSize, MT_Float rGrowthSpeed );
     static void DisableRecognitionPoint             ( MIL_Agent_ABC& callerAgent, int id );
-    
+
     static void EnableRadar                         ( MIL_Agent_ABC& callerAgent, int nRadarClass );
     static void DisableRadar                        ( MIL_Agent_ABC& callerAgent, int nRadarClass );
     static int  EnableRadarOnPointPtr               ( MIL_Agent_ABC& callerAgent, int nRadarClass, boost::shared_ptr< MT_Vector2D > point );

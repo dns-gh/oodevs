@@ -44,7 +44,7 @@ public:
     virtual void Serialize( Common::MsgLocation& message ) const = 0;
     //@}
 
-    //! @name 
+    //! @name
     //@{
     virtual OGRGeometry* Extract( OGRSpatialReference* spatialReference ) const = 0;
     //@}

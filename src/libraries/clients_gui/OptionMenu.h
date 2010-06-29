@@ -80,7 +80,7 @@ public:
     {
         options_.Register( *this );
     }
-    
+
     virtual ~OptionMenu()
     {
         options_.Unregister( *this );

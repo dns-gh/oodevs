@@ -30,7 +30,7 @@ DEC_Rep_PathPoint_Lima::DEC_Rep_PathPoint_Lima( const MT_Vector2D& vPos, const T
 // Created: JVT 02-12-10
 //-----------------------------------------------------------------------------
 DEC_Rep_PathPoint_Lima::~DEC_Rep_PathPoint_Lima()
-{   
+{
 }
 
 // -----------------------------------------------------------------------------
@@ -39,9 +39,9 @@ DEC_Rep_PathPoint_Lima::~DEC_Rep_PathPoint_Lima()
 // -----------------------------------------------------------------------------
 void DEC_Rep_PathPoint_Lima::Dump() const
 {
-    std::cout << "    DEC_Rep_PathPoint_Lima " << vPos_ 
-              << " - Type : " << nObjectTypes_.DumpToString() 
-              << " - TypeToNext " << nObjectTypesToNextPoint_.DumpToString() 
+    std::cout << "    DEC_Rep_PathPoint_Lima " << vPos_
+              << " - Type : " << nObjectTypes_.DumpToString()
+              << " - TypeToNext " << nObjectTypesToNextPoint_.DumpToString()
               << " - nTypePoint_ " << (unsigned int)GetTypePoint()
               << std::endl;
 }
@@ -54,7 +54,7 @@ int DEC_Rep_PathPoint_Lima::GetTypeLima()
 {
     return typeLima_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Rep_PathPoint_Lima::GetLimaID
 // Created: LDC 2009-04-22

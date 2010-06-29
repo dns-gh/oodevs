@@ -187,7 +187,7 @@ void ADN_Ref_ABC::InvalidatePrivate( void* pObj, bool bDel )
     emit Invalidated( pObj, false );
 
     // Del ptr if necessary
-    //$$$$ Unused ? 
+    //$$$$ Unused ?
     if( bDel )
         delete pObj;
 }
@@ -226,10 +226,10 @@ void ADN_Ref_ABC::AutoDelete()
     if( ! SlotsBlocked() )
     {
         BlockSlots( true );
-        
+
         // Warn others before self deleting.
         emit Invalidated( this, false );
-        
+
         // Self delete with a delay to prevent some wierd Qt bug.
         QTimer::singleShot( 0, this, SLOT( AutoDeleteEx() ) );
     }

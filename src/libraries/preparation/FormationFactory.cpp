@@ -29,7 +29,7 @@ FormationFactory::FormationFactory( Controllers& controllers, IdManager& idManag
 {
     //NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: FormationFactory destructor
 // Created: SBO 2006-09-19

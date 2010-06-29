@@ -75,7 +75,7 @@ private:
     bool                  hardKill_;
     const PHY_DotationCategory* pDotation_;
     T_CoefficientMap weapons_;
-    
+
     static T_ProtectionList protections_;
     static MT_Random randomGenerator_;
     //@}

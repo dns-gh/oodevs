@@ -32,7 +32,7 @@ class ADN_CT_Equipement_Postures
     MT_COPYNOTALLOWED( ADN_CT_Equipement_Postures )
 
 public:
-    ADN_CT_Equipement_Postures( ADN_Equipement_Postures_GUI& tab ) 
+    ADN_CT_Equipement_Postures( ADN_Equipement_Postures_GUI& tab )
     : ADN_Connector_Table_ABC( tab, false )
     {}
 
@@ -45,7 +45,7 @@ public:
         // Add a new row & set the new values.
         tab_.setItem( i, 0, pItemString );
         tab_.setItem( i, 1, pItemDouble );
-     
+
         // Setup the row header item.
         pItemString->setEnabled( false );
         pItemString->setText( ENT_Tr::ConvertFromUnitPosture( static_cast<ModificatorPostureInfos*>(pObj)->eType_, ENT_Tr_ABC::eToTr ).c_str() );
@@ -76,7 +76,7 @@ ADN_Equipement_Postures_GUI::ADN_Equipement_Postures_GUI( const QString& strColC
     setNumRows( 0 );
     setColumnStretchable( 0, true );
     setColumnStretchable( 1, true );
-    
+
     verticalHeader()->hide();
     horizontalHeader()->setLabel( 0, strColCaption );
     horizontalHeader()->setLabel( 1, tr( "PH factor" ) );

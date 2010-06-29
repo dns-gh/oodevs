@@ -72,7 +72,7 @@ private:
     //! @name Types
     //@{
     //$$$ bullshit
-    struct T_Optionals 
+    struct T_Optionals
     {
       unsigned nb_humains_vivantsPresent : 1;
       unsigned nb_humains_mortsPresent : 1;
@@ -90,7 +90,7 @@ private:
     const Common::MsgCoordLatLong              position_;
     unsigned long                              nNbrAliveHumans_;
     unsigned long                              nNbrDeadHumans_;
-    Common::EnumPopulationAttitude               nAttitude_;    
+    Common::EnumPopulationAttitude               nAttitude_;
     unsigned int                               nRelevance_;
     bool                                       bPerceived_;
     T_Optionals                                optionals_;

@@ -55,7 +55,7 @@ public:
     virtual hla::ObjectIdentifier GetId() const;
     //@}
 
-    //! @name Modifiers 
+    //! @name Modifiers
     //@{
     void SetId( const hla::ObjectIdentifier& objectId );
     //@}

@@ -23,7 +23,7 @@ class PHY_PerceptionLevel;
 
 // =============================================================================
 /** @class  DEC_Knowledge_AgentPerception
-    @brief  This class represents the perception of an agent 
+    @brief  This class represents the perception of an agent
 */
 // Created: NLD 2004-03-11
 // =============================================================================
@@ -41,7 +41,7 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
+
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
@@ -50,7 +50,7 @@ public:
     //@{
     void Prepare();
     void Update ( const PHY_PerceptionLevel& perceptionLevel, bool bRecordModeEnabled );
-    bool Clean  (); 
+    bool Clean  ();
     //@}
 
     //! @name Attacker
@@ -74,7 +74,7 @@ public:
     const PHY_PerceptionLevel& GetPreviousPerceptionLevel() const;
     const PHY_PerceptionLevel& GetMaxPerceptionLevel     () const;
           bool                 IsPerceived               () const; // Perception au tick courant
-          
+
           bool                 IsAvailable               () const;
           void                 MakeAvailable             ( unsigned int nDelay );
 

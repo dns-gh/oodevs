@@ -25,7 +25,7 @@ PHY_SupplyDotationConsign::PHY_SupplyDotationConsign( MIL_AutomateLOG& supplying
     , pSupplyState_        ( &supplyState )
     , pConvoy_             ( 0 )
 {
-    pConvoy_ = new PHY_DotationConvoy( *this ); 
+    pConvoy_ = new PHY_DotationConvoy( *this );
 
     pSupplyState_->SetConsign( this );
     EnterStateConvoyWaitingForTransporters();
@@ -195,7 +195,7 @@ void PHY_SupplyDotationConsign::EnterStateConvoyGoingBackToFormingPoint()
     SetState( eConvoyGoingBackToFormingPoint );
     DoSupply();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyDotationConsign::EnterStateFinished
 // Created: NLD 2005-01-24
@@ -204,7 +204,7 @@ void PHY_SupplyDotationConsign::EnterStateFinished()
 {
     assert( pConvoy_ );
     nTimer_ = 0;
-    SetState( eFinished );    
+    SetState( eFinished );
     pConvoy_->EmptyOut();
 }
 
@@ -216,7 +216,7 @@ bool PHY_SupplyDotationConsign::Update()
 {
     assert( pConvoy_ );
 
-    if ( --nTimer_ > 0 )
+    if( --nTimer_ > 0 )
         return GetState() == eFinished;
 
     switch( GetState() )

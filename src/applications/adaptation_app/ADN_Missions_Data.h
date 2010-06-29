@@ -64,7 +64,7 @@ public:
     public:
                  MissionParameter();
         virtual ~MissionParameter();
-        
+
         std::string GetItemName();
         MissionParameter* CreateCopy();
 
@@ -169,7 +169,7 @@ public:
     //@{
     void FilesNeeded( T_StringList& vFiles ) const;
     void Reset();
-    
+
     T_FragOrder_Vector& GetFragOrders();
     T_Mission_Vector&   GetUnitMissions();
     T_Mission_Vector&   GetAutomatMissions();

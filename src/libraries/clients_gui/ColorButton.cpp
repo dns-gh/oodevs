@@ -30,7 +30,7 @@ ColorButton::ColorButton( QWidget* parent /*= 0*/, const char* name /*= 0*/, QCo
     setMaximumWidth( height() * 4 / 3 );
     connect( this, SIGNAL( clicked() ), SLOT( OnClick() ) );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ColorButton destructor
 // Created: SBO 2006-04-04
@@ -81,7 +81,7 @@ QColor ColorButton::GetColor() const
 {
     return current_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ColorButton::Revert
 // Created: SBO 2006-04-04

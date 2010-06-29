@@ -35,7 +35,7 @@ Logger::Logger( QWidget* pParent, ItemFactory_ABC& factory )
     setResizeMode( QListView::LastColumn );
     setAllColumnsShowFocus ( true );
 
-    popupMenu_.insertItem( tr( "Clear list" ), this, SLOT( clear() ) ); 
+    popupMenu_.insertItem( tr( "Clear list" ), this, SLOT( clear() ) );
 
     connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
 }

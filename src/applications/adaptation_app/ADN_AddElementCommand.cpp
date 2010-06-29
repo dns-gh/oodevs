@@ -22,8 +22,8 @@
 
 // -----------------------------------------------------------------------------
 // Name: ADN_AddElementCommand constructor
-/** @param  modifiedData 
-    @param  pAddedObject 
+/** @param  modifiedData
+    @param  pAddedObject
 */
 // Created: AGN 2004-05-13
 // -----------------------------------------------------------------------------
@@ -41,7 +41,7 @@ ADN_AddElementCommand< ADN_Type_ABC< std::string > >::ADN_AddElementCommand( ADN
 // -----------------------------------------------------------------------------
 ADN_AddElementCommand< ADN_Type_ABC< std::string > >::~ADN_AddElementCommand()
 {
-    
+
 }
 
 // -----------------------------------------------------------------------------
@@ -64,7 +64,7 @@ void ADN_AddElementCommand< ADN_Type_ABC< std::string > >::UpdateDescription()
     strDescription += modifiedData_.GetItemTypeName().c_str();
     strDescription += tr( " to ");
     strDescription += modifiedData_.GetNodeName().c_str();
-    
+
     ADN_DataTreeNode_ABC* pParent = modifiedData_.GetParentNode();
     while( pParent != 0 )
     {
@@ -77,17 +77,17 @@ void ADN_AddElementCommand< ADN_Type_ABC< std::string > >::UpdateDescription()
         pParent = pParent->GetParentNode();
     }
 
-    setDescription( strDescription );    
+    setDescription( strDescription );
 }
 
 // =============================================================================
-// 
+//
 // =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: ADN_AddElementCommand constructor
-/** @param  modifiedData 
-    @param  pAddedObject 
+/** @param  modifiedData
+    @param  pAddedObject
 */
 // Created: AGN 2004-05-13
 // -----------------------------------------------------------------------------
@@ -105,7 +105,7 @@ ADN_AddElementCommand< ADN_Type_ABC< double > >::ADN_AddElementCommand( ADN_Type
 // -----------------------------------------------------------------------------
 ADN_AddElementCommand< ADN_Type_ABC< double > >::~ADN_AddElementCommand()
 {
-    
+
 }
 
 // -----------------------------------------------------------------------------
@@ -128,7 +128,7 @@ void ADN_AddElementCommand< ADN_Type_ABC< double > >::UpdateDescription()
     strDescription += modifiedData_.GetItemTypeName().c_str();
     strDescription += tr( " to " );
     strDescription += modifiedData_.GetNodeName().c_str();
-    
+
     ADN_DataTreeNode_ABC* pParent = modifiedData_.GetParentNode();
     while( pParent != 0 )
     {
@@ -141,5 +141,5 @@ void ADN_AddElementCommand< ADN_Type_ABC< double > >::UpdateDescription()
         pParent = pParent->GetParentNode();
     }
 
-    setDescription( strDescription );    
+    setDescription( strDescription );
 }

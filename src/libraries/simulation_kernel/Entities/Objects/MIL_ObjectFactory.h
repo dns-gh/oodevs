@@ -47,7 +47,7 @@ public:
     //@{
     explicit MIL_ObjectFactory( MIL_ObjectManager& manager );
     virtual ~MIL_ObjectFactory();
-    //@}    
+    //@}
 
     //! @name Methods
     //@{
@@ -65,7 +65,7 @@ public:
 
     //! @name Accessors
     //@{
-    static const MIL_ObjectType_ABC& FindType( const std::string& type );    
+    static const MIL_ObjectType_ABC& FindType( const std::string& type );
     //@}
 
 private:
@@ -76,7 +76,7 @@ private:
     //@}
 
 private:
-    //! @name 
+    //! @name
     //@{
     MIL_ObjectManager& manager_;
     //@}

@@ -68,7 +68,7 @@ void ADN_Maintenance_Data::WorkingSchemeInfo::WriteArchive( xml::xostream& outpu
     output << xml::start( "working-scheme" )
         << xml::attribute( "type", QString( "Regime" ).append( QString::number( nIdx_.GetData() ) ).ascii() )
         << xml::attribute( "working-time", nWorkTime_ );
-    if(  ! warningDelay_.GetData().empty()
+    if( ! warningDelay_.GetData().empty()
         && warningDelay_ != "0s"
         && warningDelay_ != "0m"
         && warningDelay_ != "0h" )

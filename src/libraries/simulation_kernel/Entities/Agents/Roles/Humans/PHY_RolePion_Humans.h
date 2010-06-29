@@ -39,7 +39,7 @@ public:
     template< typename Archive > void serialize( Archive&, const unsigned int );
     void WriteODB( xml::xostream& xos ) const;
     //@}
-    
+
     //! @name Accessors
     //@{
     virtual unsigned int GetNbrUsableHumans() const;
@@ -57,7 +57,7 @@ public:
     //! @name Medical
     //@{
     virtual void                   EvacuateWoundedHumans           ( MIL_AutomateLOG& destinationTC2 ) const;
-    virtual bool                   HasWoundedHumansToEvacuate      () const;   
+    virtual bool                   HasWoundedHumansToEvacuate      () const;
     virtual void                   ChangeEvacuationMode            ( E_EvacuationMode nMode );
     virtual void                   NotifyHumanEvacuatedByThirdParty( Human_ABC& human, MIL_AutomateLOG& destinationTC2 ); // Imex
     virtual void                   NotifyHumanWaitingForMedical    ( Human_ABC& human );
@@ -96,9 +96,9 @@ private:
     struct T_HumanData
     {
         T_HumanData();
-        
+
         template< typename Archive > void serialize( Archive&, const unsigned int );
-        
+
         unsigned int nNbrTotal_;
         unsigned int nNbrOperational_;
         unsigned int nNbrDead_;

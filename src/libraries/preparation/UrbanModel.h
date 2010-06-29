@@ -41,7 +41,7 @@ class UrbanModel : public urban::Model
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit UrbanModel( kernel::Controller& controller ); 
+    explicit UrbanModel( kernel::Controller& controller );
     virtual ~UrbanModel();
     //@}
 

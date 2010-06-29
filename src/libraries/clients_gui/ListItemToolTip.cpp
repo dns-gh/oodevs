@@ -39,10 +39,10 @@ ListItemToolTip::~ListItemToolTip()
 // -----------------------------------------------------------------------------
 void ListItemToolTip::maybeTip( const QPoint& pos )
 {
-    if ( !parentWidget() || !listView_.showToolTips() )
+    if( !parentWidget() || !listView_.showToolTips() )
         return;
     ValuedListItem* item = static_cast< ValuedListItem* >( listView_.itemAt( pos ) );
-    if ( !item )
+    if( !item )
         return;
     QRect rect = listView_.itemRect( item );
     tip( rect, item->GetToolTip() );

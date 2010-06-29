@@ -33,7 +33,7 @@ LogisticPrototype_ABC::LogisticPrototype_ABC( QWidget* parent, Controllers& cont
     connect( tc2s_, SIGNAL( activated( int ) ), this, SLOT( SelectionChanged() ) );
     controllers_.Register( *this );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: LogisticPrototype_ABC::~LogisticPrototype_ABC
 // Created: SBO 2006-04-19

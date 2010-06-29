@@ -37,7 +37,7 @@ class PopulationConcentrationKnowledge : public PopulationPartKnowledge_ABC
                                        , public kernel::Drawable_ABC
                                        , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate >
 {
-    
+
 public:
     //! @name Constructor/Destructor
     //@{
@@ -71,7 +71,7 @@ private:
     kernel::Controller& controller_;
     const kernel::Population_ABC& resolver_;
     const uint nID_;
-    
+
     const kernel::PopulationConcentration_ABC*         pConcentration_;
     geometry::Point2f                      position_;
     kernel::OptionalValue< uint >                  nNbrAliveHumans_;

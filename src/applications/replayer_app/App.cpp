@@ -10,8 +10,8 @@
 #include "App.h"
 #include "dispatcher/Replayer.h"
 #include "MT/MT_Logger/MT_Logger_Lib.h"
-#include "tools/WinArguments.h" 
-#include "resource.h" 
+#include "tools/WinArguments.h"
+#include "resource.h"
 #include "dispatcher/Config.h"
 #include "dispatcher/Loader.h"
 #include <boost/bind.hpp>
@@ -27,7 +27,7 @@ static int    IconResourceArray[NUM_ICON_FOR_ANIMATION] = { IDI_ICON2, IDI_ICON1
 // Name: App constructor
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-App::App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance*/ ,LPSTR lpCmdLine, int /* nCmdShow */ ) 
+App::App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance*/ ,LPSTR lpCmdLine, int /* nCmdShow */ )
     : config_( new dispatcher::Config() )
 {
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
@@ -57,7 +57,7 @@ App::~App()
 // -----------------------------------------------------------------------------
 void App::Execute()
 {
-    StartIconAnimation(); 
+    StartIconAnimation();
     try
     {
         for( ;; )
@@ -136,8 +136,8 @@ void App::RunGUI( HINSTANCE hinstance )
 
     if( !RegisterClass( &wc ) )
         return;
-    hWnd_ = CreateWindow( "MaWinClass", "Replay", WS_OVERLAPPEDWINDOW, 
-                          CW_USEDEFAULT, CW_USEDEFAULT, 400, 300, 
+    hWnd_ = CreateWindow( "MaWinClass", "Replay", WS_OVERLAPPEDWINDOW,
+                          CW_USEDEFAULT, CW_USEDEFAULT, 400, 300,
                           NULL, NULL, hInstance_, NULL );
     ::SetWindowLongPtr( hWnd_, GWLP_USERDATA, (LONG_PTR)this );
     ShowWindow( hWnd_ , SW_HIDE );

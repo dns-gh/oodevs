@@ -44,10 +44,10 @@ void AutomatOrder::Send( ClientPublisher_ABC& publisher )
 {
     client::AutomatOrder asn;
     asn().set_oid(automat_.GetId());
-    asn().set_mission( missionID_ );   
+    asn().set_mission( missionID_ );
     Order_ABC::Send( *asn().mutable_parametres() );
     asn.Send( publisher );
-    Delete( *asn().mutable_parametres() );    
+    Delete( *asn().mutable_parametres() );
 }
 
 // -----------------------------------------------------------------------------

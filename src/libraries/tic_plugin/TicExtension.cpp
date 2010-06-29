@@ -70,7 +70,7 @@ void TicExtension::DoUpdate( const MsgUnitAttributes& message )
 
     if( message.has_position()  )
         position_ = converter_.ConvertToXY( message.position() );
-    
+
     UpdateFormation();
 }
 

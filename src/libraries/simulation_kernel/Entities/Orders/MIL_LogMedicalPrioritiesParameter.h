@@ -32,7 +32,7 @@ public:
     //@{
     virtual bool IsOfType( const MIL_ParameterType_ABC& type ) const;
     //@}
-    
+
     //! @name Conversions
     //@{
     virtual bool ToMedicalPriorities( Common::MsgLogMedicalPriorities& ) const;

@@ -82,7 +82,7 @@ void ADN_Graph::OnSelectionChanged( const T_DataItemVector& selection )
         assert( selection.size() == 1 );
         int nDataIndex = selection.at(0).second;
         ADN_GraphData* pGraphData = (ADN_GraphData*)(selection.at(0).first);
-        bSlotsLocked_ = true;    
+        bSlotsLocked_ = true;
         emit ItemSelected( pGraphData->GetGraphValue( nDataIndex ).GetRelatedObject() );
         bSlotsLocked_ = false;
     }
