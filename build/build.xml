@@ -224,7 +224,7 @@
     </target>
 
     <target name="library.messenger_plugin" description="build messenger_plugin static library" depends="library.dispatcher">
-        <build-lib name="messenger_plugin" pattern="lib${ant.project.name}_messenger_plugin-${platform}-mt@{suffix}" suffix="-gd">
+        <build-lib name="messenger_plugin" pattern="lib${ant.project.name}_messenger_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt">
             <defineset define="XML_LIBRARY"/>  <!-- xerces static -->
         </build-lib>
     </target>
