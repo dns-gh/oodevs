@@ -91,7 +91,11 @@ void UrbanModel::Serialize( const std::string& filename ) const
     {
         xos << start( "block" );
             xos << attribute( "id", it->second->GetId() );
-            // rajouter capacités
+                xos << start( "capacities" );
+                    xos << start( "structural" );
+                        xos << attribute( "value", it->second->infrastructure_.structuralState_ );
+                    xos << end();
+                xos << end();
         xos << end();
     }
 
@@ -133,13 +137,13 @@ void UrbanModel::ReadBlock( xistream& xis )
 // Name: UrbanModel::ReadCapacity
 // Created: JSR 2010-06-22
 // -----------------------------------------------------------------------------
-void UrbanModel::ReadCapacity( const std::string& capacity, xistream& xis, gui::TerrainObjectProxy& /*proxy*/ )
+void UrbanModel::ReadCapacity( const std::string& capacity, xistream& xis, gui::TerrainObjectProxy& proxy )
 {
     if( capacity == "structural" )
     {
         unsigned int value;
         xis >> attribute( "value", value );
-        // proxy.setstructural(value)?
+        proxy.infrastructure_.structuralState_ = value;
     }
 }
 

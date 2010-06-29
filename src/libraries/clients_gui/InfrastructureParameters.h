@@ -25,7 +25,7 @@ class InfrastructureParameters
 public:
     //! @name Constructors/Destructor
     //@{
-    InfrastructureParameters() {};
+    InfrastructureParameters() : structuralState_( 100 ) {};
     virtual ~InfrastructureParameters() {};
     //@}
 
@@ -39,7 +39,7 @@ public:
 public:
     //! @name Member data
     //@{
-    float structuralState_;
+    unsigned int structuralState_;
     //@}
 };
 

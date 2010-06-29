@@ -64,7 +64,7 @@ void UrbanModel::Create( const MsgsSimToClient::MsgUrbanCreation& message )
     UrbanBlockDeserializer urbanBlockDeserializer( message );
     object->Accept( urbanBlockDeserializer );
     gui::InfrastructureParameters infrastructure;
-    infrastructure.structuralState_ = message.attributes().capacity().structuralstate();
+    infrastructure.structuralState_ = unsigned int( 100. * message.attributes().capacity().structuralstate() );
     gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( controller_, *object, message.oid(), QString( message.name().c_str() ) , infrastructure );
     object->InstanciateDecoration();
     controller_.Create( *pTerrainObject );
@@ -80,7 +80,7 @@ void UrbanModel::Create( const MsgsSimToClient::MsgUrbanCreation& message )
 void UrbanModel::Update( const MsgsSimToClient::MsgUrbanUpdate& message )
 {
     gui::InfrastructureParameters infrastructure;
-    infrastructure.structuralState_ = message.attributes().capacity().structuralstate();
+    infrastructure.structuralState_ = unsigned int( 100. * message.attributes().capacity().structuralstate() );
     GetObject( message.oid() ).Update( infrastructure );
 }
 
