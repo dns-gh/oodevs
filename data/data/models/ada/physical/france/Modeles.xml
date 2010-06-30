@@ -8,6 +8,7 @@
         <mission name="Appuyer"/>
         <mission name="DestroyAgents"/>
         <mission name="EngageAgents"/>
+        <mission name="FaireMouvement"/>
         <mission name="Flee"/>
         <mission name="IdentifyAgent"/>
         <mission name="Illuminate"/>
@@ -24,7 +25,6 @@
         <mission name="MoveToAutomate"/>
         <mission name="MoveToAgent"/>
         <mission name="MoveToAgentKnowledge"/>
-        <mission name="MoveAlong"/>
         <mission name="MoveToObjectKnowledge"/>
         <mission name="MoveToPointList"/>
         <mission name="MoveToPolygonList"/>
