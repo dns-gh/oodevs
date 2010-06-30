@@ -313,7 +313,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Constructor::ReadArchive( xml::xistream
 void ADN_Objects_Data::ADN_CapacityInfos_Constructor::WriteArchive( xml::xostream& xos )
 {
     xos << xml::attribute( "default-consumption-mode", ADN_Tr::ConvertFromConsumptionType( nDefaultConsumption_.GetData() ) )
-        << xml::attribute( "unit-type", unitType_.GetData() );
+        << xml::attribute( "unit-type", unitType_.GetData()==""?ADN_Objects_Data::ADN_CapacityInfos_Constructor::choices_[0]:unitType_.GetData() );
     if( ptrBuildable_->bPresent_.GetData() )
     {
         xos << xml::start( ADN_CapacityInfos_Buildable::TAG );
