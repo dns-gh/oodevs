@@ -61,8 +61,8 @@
         <mission name="Prendre En Compte Prisonniers BM"/>
         <mission name="Se Faire Transporter BM"/>
         <mission name="Decrocher BM"/>
-        <mission name="Monitor"/>
-        <mission name="MonitorUB"/>
+        <mission name="Surveiller"/>
+        <mission name="SurveillerBU"/>
       </missions>
     </unit>
     <unit dia-type="net.masagroup.sword.military.platoon.combat.support.artillery.roles.Artillery" file="BMPion.bms" name="net.masagroup.sword.military.platoon.combat.support.artillery.roles.Artillery">

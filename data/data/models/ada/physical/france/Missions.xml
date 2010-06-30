@@ -970,13 +970,13 @@
       <parameter dia-name="interventionType" name="type intervention" optional="false" type="Numeric"/>
       <parameter dia-name="allies" name="illuminateur allie" optional="true" type="AgentBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.military.platoon.combat.tasks.Monitor" dia-type="T_Mission_Pion_Surveiller" id="2069" name="Monitor">
-      <parameter dia-name="objectives" name="objectives" optional="false" type="PointListBM"/>
-      <parameter dia-name="positions" name="positions" optional="true" type="PointListBM"/>
+    <mission dia-behavior="net.masagroup.sword_france.military.platoon.tasks.Surveiller" dia-type="T_Mission_Pion_Surveiller" id="2069" name="Surveiller">
+      <parameter dia-name="objectives" name="objectifs" optional="false" type="PointListBM"/>
+      <parameter dia-name="positions" name="positions de surveillance" optional="true" type="PointListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.military.platoon.combat.tasks.Monitor" dia-type="T_Mission_Pion_SurveillerBU" id="2070" name="MonitorUB">
-      <parameter dia-name="objectives" name="objectives" optional="false" type="UrbanBlockBM"/>
-      <parameter dia-name="positions" name="positions" optional="true" type="PointListBM"/>
+    <mission dia-behavior="net.masagroup.sword_france.military.platoon.tasks.Surveiller" dia-type="T_Mission_Pion_SurveillerBU" id="2070" name="SurveillerBU">
+      <parameter dia-name="objectives" name="objectifs" optional="false" type="UrbanBlockBM"/>
+      <parameter dia-name="positions" name="positions de surveillance" optional="true" type="PointListBM"/>
     </mission>
   </units>
   <automats>
