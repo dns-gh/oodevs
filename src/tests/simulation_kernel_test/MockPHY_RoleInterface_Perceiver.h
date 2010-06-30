@@ -50,11 +50,11 @@ MOCK_BASE_CLASS( MockPHY_RoleInterface_Perceiver, PHY_RoleInterface_Perceiver )
     MOCK_METHOD( DisableCoupDeSonde, 0 );
     MOCK_METHOD( EnableRecoPoint, 4 );
     MOCK_METHOD( DisableRecoPoint, 1 );
-    MOCK_METHOD_EXT( EnableRecoLocalisation, 2, int( const TER_Localisation&, MT_Float ), EnableRecoLocalisationWithRadius );
-    MOCK_METHOD_EXT( EnableRecoLocalisation, 1, int( const TER_Localisation& ), EnableRecoLocalisation );
+    MOCK_METHOD_EXT( EnableRecoLocalisation, 3, int( const TER_Localisation&, float, DEC_Decision_ABC& callerAgent ), EnableRecoLocalisationWithRadius );
+    MOCK_METHOD_EXT( EnableRecoLocalisation, 2, int( const TER_Localisation&, DEC_Decision_ABC& callerAgent ), EnableRecoLocalisation );
     MOCK_METHOD( EnableRecoUrbanBlock, 1 );
     MOCK_METHOD( DisableRecoUrbanBlock, 1 );
-    MOCK_METHOD( EnableControlLocalisation, 1 );
+    MOCK_METHOD( EnableControlLocalisation, 2 );
     MOCK_METHOD( DisableRecoLocalisation, 1 );
     MOCK_METHOD( EnableSurveillanceLocalisation, 1 );
     MOCK_METHOD( DisableSurveillanceLocalisation, 1 );
