@@ -54,7 +54,6 @@
         <mission name="Seal Off"/>
         <mission name="SuivreAgent"/>
         <mission name="StationnerBM"/>
-        <mission name="SeRecompleter"/>
         <mission name="SoutenirSurPositionEnMesureDeBM"/>
         <mission name="Se Faire Decontaminer BM"/>
         <mission name="Orienter Guider Refugies BM"/>
@@ -79,7 +78,6 @@
         <mission name="SuivreAgent"/>
         <mission name="StayClose"/>
         <mission name="StationnerBM"/>
-        <mission name="SeRecompleter"/>
         <mission name="SoutenirSurPositionEnMesureDeBM"/>
         <mission name="MoveToPoint"/>
       </missions>
@@ -95,7 +93,6 @@
         <mission name="SuivreAgent"/>
         <mission name="StayClose"/>
         <mission name="StationnerBM"/>
-        <mission name="SeRecompleter"/>
         <mission name="SoutenirSurPositionEnMesureDeBM"/>
         <mission name="MoveToPoint"/>
       </missions>
