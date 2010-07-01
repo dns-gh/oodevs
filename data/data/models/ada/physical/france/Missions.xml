@@ -916,16 +916,16 @@
     <mission dia-behavior="net.masagroup.testSword.military.tasks.Advance" dia-type="T_Mission_Pion_Advance" id="2052" name="Advance">
       <parameter dia-name="objectives" name="objectives" optional="false" type="PointBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword_france.military.tasks.commun.SuivreAgent" dia-type="T_Mission_Pion_SuivreAgent" id="2053" name="SuivreAgent">
+    <mission dia-behavior="net.masagroup.sword_france.military.platoon.tasks.Suivre" dia-type="T_Mission_Pion_SuivreAgent" id="2053" name="SuivreAgent">
       <parameter dia-name="objective" name="unite a suivre" optional="false" type="AgentListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword_france.military.tasks.commun.Stationner" dia-type="T_Mission_Pion_StationnerBM" id="2054" name="StationnerBM">
+    <mission dia-behavior="net.masagroup.sword_france.military.platoon.tasks.Stationner" dia-type="T_Mission_Pion_StationnerBM" id="2054" name="StationnerBM">
       <parameter dia-name="position" name="position de stationnement" optional="false" type="PointBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword_france.military.tasks.commun.SeRecompleter" dia-type="T_Mission_Pion_SeRecompleter" id="2055" name="SeRecompleter">
+    <mission dia-behavior="net.masagroup.sword_france.military.platoon.tasks.SeRecompleter" dia-type="T_Mission_Pion_SeRecompleter" id="2055" name="SeRecompleter">
       <parameter dia-name="objectives" name="zone" optional="false" type="AreaBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword_france.military.tasks.commun.SeFaireDecontaminer" dia-type="T_Mission_Pion_SeFaireDecontaminerBM" id="2056" name="Se Faire Decontaminer BM">
+    <mission dia-behavior="net.masagroup.sword_france.military.platoon.tasks.SeFaireDecontaminer" dia-type="T_Mission_Pion_SeFaireDecontaminerBM" id="2056" name="Se Faire Decontaminer BM">
       <parameter dia-name="objectives" name="Sites de decontamination" optional="false" type="ObjectKnowledgeListBM"/>
       <parameter dia-name="destinations" name="destination" optional="false" type="PointBM"/>
     </mission>
