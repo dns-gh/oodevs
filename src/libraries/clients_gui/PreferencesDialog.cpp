@@ -12,7 +12,7 @@
 #include "clients_gui_pch.h"
 #include "PreferencesDialog.h"
 #include "moc_PreferencesDialog.cpp"
-//#include "OptionsPanel.h"
+#include "OptionsPanel.h"
 #include "GraphicsPanel.h"
 #include "GraphicPreferences.h"
 #include "PreferencesList.h"
@@ -76,7 +76,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
     AddPage( tr( "3D" ), *new LightingPanel( this, lighting, controllers ) );
     AddPage( tr( "2D" )        , *layersPanel_ );
     AddPage( tr( "2D/Terrain" ), *pGraphicPrefPanel_ );
-    // AddPage( tr( "General" ), *new OptionsPanel( this, controllers ) ); // $$$$ SBO 2008-08-12: options not used
+    AddPage( tr( "General" ), *new OptionsPanel( this, controllers ) );
 
     box = new QHBox( this );
     box->setMargin( 5 );
