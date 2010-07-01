@@ -961,7 +961,8 @@
       <parameter dia-name="obstacles" name="obstacles" optional="true" type="GenObjectListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.military.platoon.terrorism.tasks.Ambush" dia-type="T_Mission_Pion_Embuscade" id="2067" name="Embuscade">
-      <parameter dia-name="position" name="position" optional="false" type="PointBM"/>
+      <parameter dia-name="positions" name="positions de tir" optional="false" type="PointListBM"/>
+      <parameter dia-name="endPosition" name="position de regroupement" optional="false" type="PointBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.military.platoon.combat.support.artillery.tasks.CoordinateIllumination" dia-type="T_Mission_Pion_CoordinateIllumination" id="2068" name="Coordinate Illumination">
       <parameter dia-name="entities" name="cible" optional="false" type="AgentKnowledgeBM"/>
