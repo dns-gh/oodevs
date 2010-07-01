@@ -87,6 +87,8 @@ private:
 
     std::auto_ptr< tools::thread::ThreadPool > disk_;
     std::auto_ptr< tools::thread::ThreadPool > cpu_;
+
+    bool synchronisation_;
     //@}
 };
 

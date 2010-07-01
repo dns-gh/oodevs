@@ -72,6 +72,7 @@ bool MessageLoader::LoadFrame( unsigned int frameNumber, MessageHandler_ABC& han
 // -----------------------------------------------------------------------------
 unsigned int MessageLoader::LoadKeyFrame( unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback /*= T_Callback()*/ )
 {
+    synchronisation_ = frameNumber != 0;
     unsigned key = frameNumber / 100;
     if( key >= keyFrames_.size() )
         key = keyFrames_.size() - 1;
@@ -184,6 +185,22 @@ void MessageLoader::LoadSimToClientMessage( unsigned char*& input, MessageHandle
     MsgsSimToClient::MsgSimToClient message;
     if( ! message.ParseFromArray( input, messageSize ) )
         throw std::runtime_error( __FUNCTION__ ": message deserialization failed." );
+
+    // $$$$ JSR 2010-07-01: In synchronisation mode, we must not send order messages, as they were already sent,
+    // to avoid them to be displayed several times in timeline (mantis 3725)
+    if( synchronisation_ )
+    {
+        if( message.has_message() )
+        {
+            if( message.message().has_unit_order() )
+                message.mutable_message()->mutable_unit_order()->clear_mission();
+            else if( message.message().has_automat_order() )
+                message.mutable_message()->mutable_automat_order()->clear_mission();
+            else if( message.message().has_population_order() )
+                message.mutable_message()->mutable_population_order()->clear_mission();
+        }
+    }
+    
     handler.Receive( message );
 
     input += messageSize;

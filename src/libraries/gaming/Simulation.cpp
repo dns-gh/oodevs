@@ -62,6 +62,7 @@ void Simulation::Disconnect()
     if( !connected_ )
         return;
     time_ = 0;
+    currentTick_ = 0;
     profiling_.Clear();
     connected_ = false;
     initialized_ = false;
