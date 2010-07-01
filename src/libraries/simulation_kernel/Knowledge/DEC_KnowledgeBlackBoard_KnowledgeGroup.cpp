@@ -554,6 +554,15 @@ DEC_BlackBoard_CanContainKnowledgePopulation& DEC_KnowledgeBlackBoard_KnowledgeG
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgeObjectContainer
+// Created: JSR 2010-07-01
+// -----------------------------------------------------------------------------
+DEC_BlackBoard_CanContainKnowledgeObject* DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgeObjectContainer() const
+{
+    return pKnowledgeObjectContainer_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::Jam
 // Created: LDC 2010-04-06
 // -----------------------------------------------------------------------------

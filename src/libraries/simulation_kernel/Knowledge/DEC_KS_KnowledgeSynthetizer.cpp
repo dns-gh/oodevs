@@ -5,8 +5,10 @@
 
 #include "DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "DEC_BlackBoard_CanContainKnowledgeAgent.h"
+#include "DEC_BlackBoard_CanContainKnowledgeObject.h"
 #include "DEC_BlackBoard_CanContainKnowledgePopulation.h"
 #include "DEC_Knowledge_Agent.h"
+#include "DEC_Knowledge_Object.h"
 #include "DEC_Knowledge_Population.h"
 #include "MIL_KnowledgeGroup.h"
 #include <boost/bind.hpp>
@@ -108,6 +110,20 @@ void DEC_KS_KnowledgeSynthetizer::CleanKnowledgePopulation( DEC_Knowledge_Popula
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KS_KnowledgeSynthetizer::CleanKnowledgeObject
+// Created: JSR 2010-07-01
+// -----------------------------------------------------------------------------
+void DEC_KS_KnowledgeSynthetizer::CleanKnowledgeObject( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
+{
+    if( knowledge->Clean() )
+    {
+        assert( pBlackBoard_ );
+        if( pBlackBoard_->GetKnowledgeObjectContainer() )
+            pBlackBoard_->GetKnowledgeObjectContainer()->DestroyKnowledgeObject( *knowledge ); // The knowledge will be deleted
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KS_AgentKnowledgeSynthetizer::Clean
 // Created: NLD 2004-03-16
 // -----------------------------------------------------------------------------
@@ -120,4 +136,8 @@ void DEC_KS_KnowledgeSynthetizer::Clean()
 
     class_mem_fun_void_t< DEC_KS_KnowledgeSynthetizer, DEC_Knowledge_Population > methodPopulation( & DEC_KS_KnowledgeSynthetizer::CleanKnowledgePopulation, *this );
     pBlackBoard_->GetKnowledgePopulationContainer().ApplyOnKnowledgesPopulation( methodPopulation );
+
+    class_mem_fun_void_t< DEC_KS_KnowledgeSynthetizer, boost::shared_ptr< DEC_Knowledge_Object > > methodObject( & DEC_KS_KnowledgeSynthetizer::CleanKnowledgeObject, *this );
+    if( pBlackBoard_->GetKnowledgeObjectContainer() )
+        pBlackBoard_->GetKnowledgeObjectContainer()->ApplyOnKnowledgesObject( methodObject );
 }

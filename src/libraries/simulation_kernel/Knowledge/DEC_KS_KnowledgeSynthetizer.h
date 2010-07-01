@@ -43,8 +43,9 @@ public:
 private:
     //! @name Tools
     //@{
-    void                 CleanKnowledgeAgent                        ( DEC_Knowledge_Agent& knowledge );
-    void                      CleanKnowledgePopulation      ( DEC_Knowledge_Population& knowledge );
+    void CleanKnowledgeAgent     ( DEC_Knowledge_Agent& knowledge );
+    void CleanKnowledgePopulation( DEC_Knowledge_Population& knowledge );
+    void CleanKnowledgeObject    ( boost::shared_ptr< DEC_Knowledge_Object >& knowledge );
 
     //@}
 
