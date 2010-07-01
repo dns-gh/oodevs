@@ -27,7 +27,7 @@ using namespace dispatcher;
 PopulationConcentrationKnowledge::PopulationConcentrationKnowledge( const kernel::PopulationKnowledge_ABC& populationKnowledge, const MsgsSimToClient::MsgPopulationConcentrationKnowledgeCreation& msg )
     : SimpleEntity< >     ( msg.oid_connaissance_concentration() )
     , populationKnowledge_( populationKnowledge )
-    , pConcentration_     ( msg.oid_concentration_reelle() == 0 ? 0 : &populationKnowledge_.GetEntity()->GetConcentration( msg.oid_concentration_reelle() ) ) // $$$$ SBO 2008-07-11:
+    , concentrationId_    ( msg.oid_concentration_reelle() )
     , position_           ( msg.position() )
     , nNbrAliveHumans_    ( 0 )
     , nNbrDeadHumans_     ( 0 )
@@ -59,7 +59,7 @@ PopulationConcentrationKnowledge::~PopulationConcentrationKnowledge()
 void PopulationConcentrationKnowledge::Update( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate& msg )
 {
     if( msg.has_oid_concentration_reelle()  )
-        pConcentration_ = msg.oid_concentration_reelle() == 0 ? 0 : &populationKnowledge_.GetEntity()->GetConcentration( msg.oid_concentration_reelle() ); // $$$$ SBO 2008-07-11:
+        concentrationId_ = msg.oid_concentration_reelle();
 
     if( msg.has_attitude()  )
     {
@@ -98,7 +98,10 @@ void PopulationConcentrationKnowledge::SendCreation( ClientPublisher_ABC& publis
 
     asn().set_oid_connaissance_concentration( GetId() );
     asn().set_oid_connaissance_population( populationKnowledge_.GetId() );
-    asn().set_oid_concentration_reelle( pConcentration_ ? pConcentration_->GetId() : 0 );
+    if( populationKnowledge_.GetEntity()->FindConcentration( concentrationId_ ) )
+        asn().set_oid_concentration_reelle( concentrationId_ );
+    else
+        asn().set_oid_concentration_reelle( 0 );
     asn().set_oid_groupe_possesseur( populationKnowledge_.GetOwner().GetId() );
     *asn().mutable_position() = position_;
 
@@ -118,7 +121,10 @@ void PopulationConcentrationKnowledge::SendFullUpdate( ClientPublisher_ABC& publ
     asn().set_oid_groupe_possesseur( populationKnowledge_.GetOwner().GetId() );
 
 //    asn().set_oid_concentration_reellePresent( 1 );
-    asn().set_oid_concentration_reelle( pConcentration_ ? pConcentration_->GetId() : 0 );
+    if( populationKnowledge_.GetEntity()->FindConcentration( concentrationId_ ) )
+        asn().set_oid_concentration_reelle( concentrationId_ );
+    else
+        asn().set_oid_concentration_reelle( 0 );
 
     if( optionals_.nb_humains_mortsPresent )
     {

@@ -48,6 +48,7 @@ namespace MsgsSimToClient
     class MsgStartFireEffect;
     class MsgStartPopulationFire;
     class MsgChangeDiplomacyAck;
+    class MsgUrbanCreation;
     class MsgUrbanKnowledgeCreation;
 }
 
@@ -101,6 +102,7 @@ class ReplaySynchronisations : public kernel::Extension_ABC
                              , public kernel::Updatable_ABC< MsgsSimToClient::MsgStartPopulationFire >
                              , public kernel::Updatable_ABC< Common::MsgChangeDiplomacy >
                              , public kernel::Updatable_ABC< MsgsSimToClient::MsgChangeDiplomacyAck >
+                             , public kernel::Updatable_ABC< MsgsSimToClient::MsgUrbanCreation >
                              , public kernel::Updatable_ABC< MsgsSimToClient::MsgUrbanKnowledgeCreation >
 {
 
@@ -144,6 +146,7 @@ public:
 
     virtual void DoUpdate( const Common::MsgChangeDiplomacy& msg );
     virtual void DoUpdate( const MsgsSimToClient::MsgChangeDiplomacyAck& msg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUrbanCreation& msg );
     virtual void DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeCreation& msg );
     //@}
 

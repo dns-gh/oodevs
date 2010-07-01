@@ -29,13 +29,13 @@ using namespace kernel;
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
 PopulationConcentrationKnowledge::PopulationConcentrationKnowledge( Controller& controller, const CoordinateConverter_ABC& converter, const Population_ABC& resolver, const MsgsSimToClient::MsgPopulationConcentrationKnowledgeCreation& message )
-    : controller_    ( controller )
-    , resolver_      ( resolver )
-    , nID_           ( message.oid_connaissance_concentration() )
-    , pConcentration_( resolver_.FindConcentration( message.oid_concentration_reelle() ) )
-    , position_      ( converter.ConvertToXY( message.position() ) )
-    , radius_        ( 100.f )
-    , deadRadius_    ( 0 )
+    : controller_     ( controller )
+    , resolver_       ( resolver )
+    , nID_            ( message.oid_connaissance_concentration() )
+    , concentrationId_( message.oid_concentration_reelle() )
+    , position_       ( converter.ConvertToXY( message.position() ) )
+    , radius_         ( 100.f )
+    , deadRadius_     ( 0 )
 {
     controller_.Create( *this );
 }
@@ -65,11 +65,12 @@ void PopulationConcentrationKnowledge::DoUpdate( const MsgsSimToClient::MsgPopul
     if( message.has_nb_humains_morts()  )
         nNbrDeadHumans_ = ( uint )message.nb_humains_morts();
     if( message.has_oid_concentration_reelle()  )
-        pConcentration_ = resolver_.FindConcentration( message.oid_concentration_reelle() );
+        concentrationId_ = message.oid_concentration_reelle();
     if( message.has_pertinence()  )
         rRelevance_ = float( message.pertinence() );
 
-    const float density = pConcentration_ ? pConcentration_->GetDensity() : 0.f;
+    const kernel::PopulationConcentration_ABC* concentration = resolver_.FindConcentration( concentrationId_ );
+    const float density = concentration ? concentration->GetDensity() : 0.f;
     if( density > 0.f && nNbrAliveHumans_.IsSet() )
     {
         radius_     = std::sqrt( ( ( nNbrAliveHumans_ + nNbrDeadHumans_ ) / density ) * oneOnpi );
@@ -86,7 +87,7 @@ void PopulationConcentrationKnowledge::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "Population", "Concentration" ) )
                 .Display( tools::translate( "Population", "Identifier:" ), nID_ )
-                .Display( tools::translate( "Population", "Associated concentration:" ), pConcentration_ )
+                .Display( tools::translate( "Population", "Associated concentration:" ), resolver_.FindConcentration( concentrationId_ ) )
                 .Display( tools::translate( "Population", "Location:" ), position_ )
                 .Display( tools::translate( "Population", "Alive people:" ), nNbrAliveHumans_ )
                 .Display( tools::translate( "Population", "Dead people:" ), nNbrDeadHumans_ )
@@ -128,7 +129,7 @@ void PopulationConcentrationKnowledge::Draw( const geometry::Point2f&, const ker
 {
     if( !viewport.IsVisible( position_ ) )
         return;
-    if( pConcentration_ ) // $$$$ SBO 2007-02-27: isPerceived?
+    if( resolver_.FindConcentration( concentrationId_ ) ) // $$$$ SBO 2007-02-27: isPerceived?
     {
         float currentColor[4];
         glPushAttrib( GL_CURRENT_BIT );

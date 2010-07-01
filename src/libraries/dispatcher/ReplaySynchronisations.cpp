@@ -124,6 +124,7 @@ DO_UPDATE( MsgsSimToClient::MsgLogSupplyHandlingCreation );
 DO_UPDATE( MsgsSimToClient::MsgStartUnitFire );
 DO_UPDATE( MsgsSimToClient::MsgStartFireEffect );
 DO_UPDATE( MsgsSimToClient::MsgStartPopulationFire );
+DO_UPDATE( MsgsSimToClient::MsgUrbanCreation );
 DO_UPDATE( MsgsSimToClient::MsgUrbanKnowledgeCreation );
 
 // -----------------------------------------------------------------------------

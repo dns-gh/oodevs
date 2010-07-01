@@ -86,7 +86,7 @@ private:
     //! @name Member data
     //@{
     const kernel::PopulationKnowledge_ABC&     populationKnowledge_;
-    const kernel::PopulationConcentration_ABC* pConcentration_;
+    unsigned int                               concentrationId_;
     const Common::MsgCoordLatLong              position_;
     unsigned long                              nNbrAliveHumans_;
     unsigned long                              nNbrDeadHumans_;

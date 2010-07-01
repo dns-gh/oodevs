@@ -111,15 +111,16 @@ void UrbanObject::SendDestruction( ClientPublisher_ABC& /*publisher*/ ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Agent::Update
+// Name: UrbanObject::Update
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
 void UrbanObject::Update( const MsgsSimToClient::MsgUrbanCreation& msg )
 {
+    ApplyUpdate( msg );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Agent::Update
+// Name: UrbanObject::Update
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
 void UrbanObject::Update( const MsgsSimToClient::MsgUrbanUpdate& msg )

@@ -72,8 +72,8 @@ private:
     const kernel::Population_ABC& resolver_;
     const uint nID_;
 
-    const kernel::PopulationConcentration_ABC*         pConcentration_;
-    geometry::Point2f                      position_;
+    unsigned int                                   concentrationId_;
+    geometry::Point2f                              position_;
     kernel::OptionalValue< uint >                  nNbrAliveHumans_;
     kernel::OptionalValue< uint >                  nNbrDeadHumans_;
     kernel::OptionalValue< E_PopulationAttitude >  eAttitude_;
