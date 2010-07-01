@@ -1167,7 +1167,7 @@ const AlgorithmsFactories& MIL_AgentPion::GetAlgorithms() const
 // Name: MIL_AgentPion::GetDangerosity
 // Created: MGD 2010-02-04
 // -----------------------------------------------------------------------------
-double MIL_AgentPion::GetDangerosity( boost::shared_ptr< DEC_Knowledge_Agent > pTargetKnowledge ) const
+double MIL_AgentPion::GetDangerosity( boost::shared_ptr< DEC_Knowledge_Agent > pTargetKnowledge,  boost::shared_ptr< MT_Vector2D > position ) const
 {
     if( pTargetKnowledge->GetMaxPerceptionLevel() < PHY_PerceptionLevel::recognized_
         ||  GetArmy().IsAFriend( *pTargetKnowledge->GetArmy() ) == eTristate_True
@@ -1182,8 +1182,7 @@ double MIL_AgentPion::GetDangerosity( boost::shared_ptr< DEC_Knowledge_Agent > p
     float rDangerosity = 0.;
 
     // Fight score
-    const PHY_RoleInterface_Location& sourceLocation = GetRole< PHY_RoleInterface_Location >();
-    const MT_Vector3D sourcePosition( sourceLocation.GetPosition().rX_, sourceLocation.GetPosition().rY_, sourceLocation.GetAltitude() );
+    const MT_Vector3D sourcePosition( position->rX_, position->rY_, 0.);
     const MT_Vector3D targetPosition  ( pTargetKnowledge->GetPosition().rX_, pTargetKnowledge->GetPosition().rY_, pTargetKnowledge->GetAltitude() );
     const MT_Float    rDistBtwSourceAndTarget = sourcePosition.Distance( targetPosition );
 

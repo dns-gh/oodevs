@@ -532,7 +532,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_ConnaissanceAgent_Dangerosite",
         boost::function< float( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetDangerosity, boost::cref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_AttritionPotentielle",
-        boost::function< float( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetPotentialAttrition, boost::cref( GetPion() ), _1 ) ) );
+        boost::function< float( boost::shared_ptr< DEC_Knowledge_Agent >, boost::shared_ptr< MT_Vector2D > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetPotentialAttrition, boost::cref( GetPion() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_DangerositeSurPion",
         boost::function< float( boost::shared_ptr< DEC_Knowledge_Agent >, const DEC_Decision_ABC* ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetDangerosityOnPion, _1, _2 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_DangerositeSurConnaissance",
