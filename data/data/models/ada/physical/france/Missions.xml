@@ -951,6 +951,7 @@
     </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.SealOff" dia-type="T_Mission_Pion_SealOff" id="2064" name="Seal Off">
       <parameter dia-name="objectives" name="objectifs" optional="false" type="AreaBM"/>
+      <parameter dia-name="obstacles" name="obstacles" optional="true" type="GenObjectListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.military.tasks.Illuminate" dia-type="T_Mission_Pion_Illuminer" id="2065" name="Illuminate">
       <parameter dia-name="entities" name="cible" optional="false" type="AgentKnowledgeListBM"/>

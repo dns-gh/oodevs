@@ -423,6 +423,7 @@
   <report id="291" message="Silence Radio Partiel"/>
   <report id="292" message="Debut de reconnaissance de la zone"/>
   <report id="293" message="Fin de reconnaissance de la zone"/>
+  <report id="294" message="Travaux impossibles : pas de capacite de construction"/>
   <report id="3000" message="Embarquement - début"/>
   <report id="3001" message="Embarquement - interruption"/>
   <report id="3002" message="Embarquement - reprise"/>

@@ -87,7 +87,6 @@
     <unit dia-type="net.masagroup.sword.military.platoon.combat.support.engineer.roles.Engineer" file="BMPion.bms" name="net.masagroup.sword.military.platoon.combat.support.engineer.roles.Engineer">
       <missions>
         <mission name="GEN Realiser Travaux"/>
-        <mission name="Build"/>
         <mission name="Valorize"/>
         <mission name="Activate"/>
         <mission name="Bypass"/>
