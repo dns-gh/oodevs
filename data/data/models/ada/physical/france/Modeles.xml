@@ -6,10 +6,12 @@
         <mission name="Advance"/>
         <mission name="Animate"/>
         <mission name="Appuyer"/>
+        <mission name="Decrocher BM"/>
         <mission name="DestroyAgents"/>
         <mission name="EngageAgents"/>
         <mission name="FaireMouvement"/>
         <mission name="Flee"/>
+        <mission name="Franchir BM"/>
         <mission name="IdentifyAgent"/>
         <mission name="Illuminate"/>
         <mission name="Load"/>
@@ -59,7 +61,6 @@
         <mission name="Orienter Guider Refugies BM"/>
         <mission name="Prendre En Compte Prisonniers BM"/>
         <mission name="Se Faire Transporter BM"/>
-        <mission name="Decrocher BM"/>
         <mission name="Surveiller"/>
         <mission name="SurveillerBU"/>
       </missions>

@@ -936,8 +936,8 @@
       <parameter dia-name="refugees" name="objectifs" optional="false" type="AgentKnowledgeListBM"/>
       <parameter dia-name="camps" name="Camps de refugies" optional="false" type="ObjectKnowledgeListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword_france.military.tasks.commun.Decrocher" dia-type="T_Mission_Pion_DecrocherBM" id="2059" name="Decrocher BM">
-      <parameter dia-name="destinations" name="destination" optional="false" type="PointBM"/>
+    <mission dia-behavior="net.masagroup.sword_france.military.platoon.tasks.Decrocher" dia-type="T_Mission_Pion_DecrocherBM" id="2059" name="Decrocher BM">
+      <parameter dia-name="positions" name="positions" optional="false" type="PointBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword_france.military.tasks.commun.SoutenirSurPositionEnMesureDeBM" dia-type="T_Mission_Pion_SoutenirSurPositionEnMesureDeBM" id="2060" name="SoutenirSurPositionEnMesureDeBM">
       <parameter dia-name="position" name="position" optional="false" type="PointBM"/>
@@ -979,6 +979,10 @@
     <mission dia-behavior="net.masagroup.sword_france.military.platoon.tasks.Surveiller" dia-type="T_Mission_Pion_SurveillerBU" id="2070" name="SurveillerBU">
       <parameter dia-name="objectives" name="objectifs" optional="false" type="UrbanBlockBM"/>
       <parameter dia-name="positions" name="positions de surveillance" optional="true" type="PointListBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword_france.military.platoon.tasks.Franchir" dia-type="T_Mission_Pion_FranchirBM" id="2071" name="Franchir BM">
+      <parameter dia-name="siteDeFranchissements" name="siteDeFranchissements" optional="false" type="ObjectKnowledgeListBM"/>
+      <parameter dia-name="destinations" name="destinations" optional="false" type="PointListBM"/>
     </mission>
   </units>
   <automats>
