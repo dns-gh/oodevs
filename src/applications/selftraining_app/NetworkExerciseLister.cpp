@@ -18,6 +18,7 @@
 #include <boost/thread.hpp>
 #include <boost/tokenizer.hpp>
 #include <boost/lexical_cast.hpp>
+
 #pragma warning( pop )
 
 using namespace boost::asio;
@@ -42,9 +43,9 @@ NetworkExerciseLister::NetworkExerciseLister( const Config& config, const std::s
                                               placeholders::bytes_transferred ) );
     }
     catch( ... )
-    {
+    { 
         // $$$$ SBO 2008-10-31: throw exception to warn user
-    }
+    } 
 }
 
 // -----------------------------------------------------------------------------
@@ -96,7 +97,7 @@ void NetworkExerciseLister::OnReceive( const boost::system::error_code& error, s
     {
         const std::string exercises( answer_, bytes_received );
         typedef boost::tokenizer< boost::char_separator< char > > T_Tokenizer;
-        boost::char_separator< char > separator( "/" );
+        boost::char_separator< char > separator( "," );
         const T_Tokenizer tok( exercises, separator );
         for( T_Tokenizer::const_iterator it = tok.begin(); it != tok.end(); ++it )
         {

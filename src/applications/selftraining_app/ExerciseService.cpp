@@ -139,7 +139,7 @@ void ExerciseService::OnReceive( const boost::system::error_code& error, size_t 
         {
             std::stringstream stream;
             for( CIT_ExercicePortList it = exerciseList_.begin(); it != exerciseList_.end(); ++it )
-                stream << it->first << ":" << it->second << "/";
+                stream << it->first << ":" << it->second << ",";
             exerciseMessage_ = stream.str();
         }
         socket_->async_send_to( buffer( exerciseMessage_ ), remoteEndPoint_,

@@ -1074,7 +1074,7 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>General</source>
-        <translation type="obsolete">Général</translation>
+        <translation type="unfinished">Général</translation>
     </message>
     <message>
         <source>Ok</source>

@@ -19,7 +19,7 @@
 //-----------------------------------------------------------------------------
 int Run( int argc, char** argv )
 {
-    int maxConnections = 1;
+    int maxConnections = 10;
 #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
     std::auto_ptr< FlexLmLicense > license( FlexLmLicense::CheckLicense( "sword", 1.0f ) );
     try

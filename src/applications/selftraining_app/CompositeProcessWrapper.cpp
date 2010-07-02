@@ -64,7 +64,7 @@ void CompositeProcessWrapper::ThreadStart()
     {
         if( first_.get() )
         {
-            controller_.Update( shared_from_this() );
+            controller_.Update( shared_from_this() ); 
             boost::this_thread::interruption_point();
             first_->Start();
             boost::this_thread::interruption_point();

@@ -88,7 +88,7 @@ void SetLowFragmentationHeapAlgorithm()
 //-----------------------------------------------------------------------------
 int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdShow )
 {
-    int maxConnections = 1;
+    int maxConnections = 10;
 #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
     try
     {
