@@ -8,51 +8,13 @@
 // *****************************************************************************
 
 #include "simulation_kernel_test_pch.h"
-#include "protocol/protocol.h"
 #include "simulation_kernel/Entities/MIL_Army_ABC.h"
-#include "simulation_kernel/Entities/Objects/AvoidanceCapacity.h"
-#include "simulation_kernel/Entities/Objects/BypassableCapacity.h"
 #include "simulation_kernel/Entities/Objects/BuildableCapacity.h"
-#include "simulation_kernel/Entities/Objects/ConstructionAttribute.h"
-#include "simulation_kernel/Entities/Objects/ContaminationCapacity.h"
 #include "simulation_kernel/Entities/Objects/ImprovableCapacity.h"
-#include "simulation_kernel/Entities/Objects/MIL_Object_ABC.h"
 #include "simulation_kernel/Entities/Objects/MIL_ObjectLoader.h"
 #include "simulation_kernel/Entities/Objects/MIL_ObjectType_ABC.h"
-#include "simulation_kernel/Entities/Objects/MobilityCapacity.h"
 #include "simulation_kernel/Entities/Objects/SpawnCapacity.h"
-#include "simulation_kernel/Entities/Objects/TimeLimitedCapacity.h"
 #include <xeumeuleu/xml.h>
-
-namespace
-{
-    xml::xistringstream xis( "<objects>"
-        "<object type='object'>"
-            "<avoidable/>"
-            "<bypassable/>"
-            "<activable/>"
-            "<attrition/>"
-            "<bridging/>"
-            "<contamination/>"
-            "<intoxication/>"
-            "<decontamination/>"
-            "<workable/>"
-            "<mobility/>"
-            "<protection/>"
-            "<healable/>"
-            "<interference/>"
-            "<logistic/>"
-            "<time-limited/>"
-            "<heuristic/>"
-            "<propagation/>"
-            "<implantable/>"
-            "<supply/>"
-            "<supply-route/>"
-            "<detection/>"
-        "</object>"
-    "</objects>"
-    );
-}
 
 // -----------------------------------------------------------------------------
 // Name: BOOST_AUTO_TEST_CASE
@@ -74,11 +36,10 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Constructor )
 {
     MIL_ObjectLoader loader;
     xml::xistringstream xis( "<objects>"
-            "<object type='object'>"
-                "<constructor unit-type='raw' default-consumption-mode='EnTravaux'/>"
-            "</object>"
-        "</objects>"
-        );
+                             "    <object type='object'>"
+                             "        <constructor unit-type='raw' default-consumption-mode='EnTravaux'/>"
+                             "    </object>"
+                             "</objects>" );
     BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
 
     const MIL_ObjectType_ABC& type = loader.GetType( "object" );
@@ -94,13 +55,12 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_ConstructorBuildable )
 {
     MIL_ObjectLoader loader;
     xml::xistringstream xis( "<objects>"
-            "<object type='object'>"
-                "<constructor unit-type='raw' default-consumption-mode='EnTravaux'>"
-                    "<buildable/>"
-                "</constructor>"
-            "</object>"
-        "</objects>"
-        );
+                             "    <object type='object'>"
+                             "        <constructor unit-type='raw' default-consumption-mode='EnTravaux'>"
+                             "            <buildable/>"
+                             "        </constructor>"
+                             "    </object>"
+                             "</objects>" );
     BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
 
     const MIL_ObjectType_ABC& type = loader.GetType( "object" );
@@ -116,14 +76,13 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_ConstructorImprovable )
 {
     MIL_ObjectLoader loader;
     xml::xistringstream xis( "<objects>"
-            "<object type='object'>"
-                "<constructor unit-type='raw' default-consumption-mode='EnTravaux'>"
-                    "<buildable/>"
-                    "<improvable/>"
-                "</constructor>"
-            "</object>"
-        "</objects>"
-        );
+                             "    <object type='object'>"
+                             "        <constructor unit-type='raw' default-consumption-mode='EnTravaux'>"
+                             "            <buildable/>"
+                             "            <improvable/>"
+                             "        </constructor>"
+                             "    </object>"
+                             "</objects>" );
     BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
 
     const MIL_ObjectType_ABC& type = loader.GetType( "object" );
@@ -139,11 +98,10 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Spawn )
 {
     MIL_ObjectLoader loader;
     xml::xistringstream xis( "<objects>"
-        "<object type='object'>"
-        "<spawn object='toto' action-range='10'/>"
-        "</object>"
-        "</objects>"
-        );
+                             "    <object type='object'>"
+                             "        <spawn object='toto' action-range='10'/>"
+                             "    </object>"
+                             "</objects>" );
     BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
 
     const MIL_ObjectType_ABC& type = loader.GetType( "object" );

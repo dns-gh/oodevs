@@ -12,16 +12,8 @@
 #include "MockBuilder.h"
 #include "MockMIL_Time_ABC.h"
 #include "MockNET_Publisher_ABC.h"
-#include "simulation_kernel/Checkpoints/MIL_CheckPointInArchive.h"
-#include "simulation_kernel/Checkpoints/MIL_CheckPointOutArchive.h"
 #include "simulation_kernel/Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
-#include "simulation_kernel/Entities/Objects/BuildableCapacity.h"
-#include "simulation_kernel/Entities/Objects/ConstructionAttribute.h"
-#include "simulation_kernel/Entities/Objects/MIL_ObjectBuilder_ABC.h"
-#include "simulation_kernel/Entities/Objects/MIL_ObjectFactory.h"
 #include "simulation_kernel/Entities/Objects/MIL_ObjectLoader.h"
-#include "simulation_kernel/Entities/Objects/MIL_ObjectManager.h"
-#include "simulation_kernel/Entities/Objects/MIL_ObjectType_ABC.h"
 #include "simulation_kernel/Entities/Objects/Object.h"
 #include "simulation_kernel/Knowledge/DEC_Knowledge_Object.h"
 #include "simulation_terrain/TER_World.h"
@@ -77,13 +69,12 @@ BOOST_AUTO_TEST_CASE( VerifyObjectKnowledge_Serialization )
     MIL_ObjectLoader loader;
     {
         xml::xistringstream xis( "<objects>"
-                "<object type='object'>"
-                    "<constructor unit-type='raw' default-consumption-mode='EnTravaux'>"
-                        "<buildable/>"
-                    "</constructor>"
-                "</object>"
-            "</objects>"
-            );
+                                 "    <object type='object'>"
+                                 "        <constructor unit-type='raw' default-consumption-mode='EnTravaux'>"
+                                 "            <buildable/>"
+                                 "        </constructor>"
+                                 "    </object>"
+                                 "</objects>" );
         BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
     }
     const MIL_ObjectType_ABC& type = loader.GetType( "object" );
