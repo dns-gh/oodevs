@@ -22,9 +22,10 @@ MIL_IDManager PHY_Action_ABC::idManager_;
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
 PHY_Action_ABC::PHY_Action_ABC()
-: id_( idManager_.GetFreeId() )
-, bSuspended_( false )
+    : id_( idManager_.GetFreeId() )
+    , bSuspended_( false )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -33,8 +34,8 @@ PHY_Action_ABC::PHY_Action_ABC()
 // -----------------------------------------------------------------------------
 PHY_Action_ABC::~PHY_Action_ABC()
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Action_ABC::GetId

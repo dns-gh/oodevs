@@ -29,7 +29,6 @@ MIL_CheckPointManager::MIL_CheckPointManager()
     , nCheckPointsFrequency_( 0 )
     , nLastCheckPointTick_  ( 0 )
     , nNextCheckPointTick_  ( 0 )
-    , currentCheckPoints_   ()
 {
     // NOTHING
 }
@@ -43,7 +42,6 @@ MIL_CheckPointManager::MIL_CheckPointManager( const MIL_Config& config )
     , nCheckPointsFrequency_( config.GetCheckPointsFrequency() )
     , nLastCheckPointTick_  ( 0 )
     , nNextCheckPointTick_  ( 0 )
-    , currentCheckPoints_   ()
 {
     boost::filesystem::create_directories( config.BuildSessionChildFile( "checkpoints" ) );
     MT_LOG_INFO_MSG( MT_FormatString( "Automatic checkpoint every %d seconds", nCheckPointsFrequency_ ) );
@@ -224,7 +222,7 @@ namespace
     {
         void ReadCrc( xml::xistream& xis )
         {
-            std::string                    strFileName;
+            std::string strFileName;
             boost::crc_32_type::value_type nCRC;
             xis >> xml::attribute( "name", strFileName )
                 >> xml::attribute( "crc", nCRC );

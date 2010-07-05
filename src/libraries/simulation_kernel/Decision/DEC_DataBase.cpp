@@ -85,7 +85,5 @@ DEC_DataBase::~DEC_DataBase()
 void DEC_DataBase::InitKnowledges( directia::Brain& brain )
 {
     for( std::vector< const std::string >::const_iterator it = knowledges_.begin(); it!= knowledges_.end(); it++ )
-    {
         RegisterKnowledge( brain, *it );
-    }
 }

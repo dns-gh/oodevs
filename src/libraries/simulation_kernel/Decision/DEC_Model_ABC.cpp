@@ -25,8 +25,8 @@
 // Created: NLD 2003-11-24
 // -----------------------------------------------------------------------------
 DEC_Model_ABC::DEC_Model_ABC( const std::string& strModel, xml::xistream& xis, const std::string& strSourcePath, const std::string& /*strPrefix*/, const std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess >& missionTypes )
-    : strModel_            ( strModel )
-    , strIncludePath_      ( strSourcePath )
+    : strModel_      ( strModel )
+    , strIncludePath_( strSourcePath )
 {
     xis >> xml::attribute( "dia-type", strDIAType_ )
         >> xml::attribute( "file", strScript_ );
@@ -40,6 +40,7 @@ DEC_Model_ABC::DEC_Model_ABC( const std::string& strModel, xml::xistream& xis, c
 // -----------------------------------------------------------------------------
 DEC_Model_ABC::~DEC_Model_ABC()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
