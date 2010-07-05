@@ -47,7 +47,6 @@ private:
     template< typename F >
     void ReduceFunction( const std::string& name, xml::xistream& xis, Task& result ) const;
     struct ReduceDispatcher;
-    static void Error( const std::string& name );
     //@}
 };
 

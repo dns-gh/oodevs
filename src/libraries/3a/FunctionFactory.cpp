@@ -42,7 +42,7 @@ void FunctionFactory::Add( std::auto_ptr< ElementFactory_ABC > factory )
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< Task > FunctionFactory::CreateTask
+// Name: FunctionFactory::CreateTask
 // Created: AGE 2007-09-12
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Task > FunctionFactory::CreateTask( xml::xistream& xis )

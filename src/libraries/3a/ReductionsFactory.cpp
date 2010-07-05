@@ -62,7 +62,7 @@ void ReductionsFactory::Reduce( const std::string& name, xml::xistream& xis, Tas
     else if( functionName == "threshold" )
         ReduceFunction< Threshold< K, T > >( name, xis, result );
     else
-        Error( functionName );
+        throw std::runtime_error( "Unknown reduction '" + functionName + "'" );
 }
 
 // -----------------------------------------------------------------------------
@@ -95,13 +95,4 @@ void ReductionsFactory::CreateElement( const std::string& type, xml::xistream& x
     ReduceDispatcher functor( this );
     TypeDispatcher dispatcher( xis, result );
     dispatcher.Dispatch( functor );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ReductionsFactory::Error
-// Created: AGE 2008-08-04
-// -----------------------------------------------------------------------------
-void ReductionsFactory::Error( const std::string& name )
-{
-    throw std::runtime_error( "Unknown reduction '" + name + "'" );
 }

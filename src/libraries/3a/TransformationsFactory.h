@@ -42,7 +42,6 @@ private:
 
     //! @name Helpers
     //@{
-    static void Error( const std::string& name );
     template< typename T >
     void Compose( const std::string& name, xml::xistream& xis, Task& result ) const;
     template< typename T >

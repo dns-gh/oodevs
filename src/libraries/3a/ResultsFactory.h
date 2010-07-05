@@ -49,7 +49,6 @@ private:
     //@{
     template< typename T >
     void Result( const std::string& name, xml::xistream& xis, Task& result ) const;
-    static void Error( const std::string& name );
     struct ResultDispatcher;
     //@}
 

@@ -60,7 +60,7 @@ namespace
 // Created: AGE 2007-10-29
 // -----------------------------------------------------------------------------
 Equipments::Equipments( xml::xistream& xis )
-    : filter_( xis, "equipments" )
+    : filter_   ( xis, "equipments" )
     , stateMask_( ReadMask( xis ) )
 {
     // NOTHING

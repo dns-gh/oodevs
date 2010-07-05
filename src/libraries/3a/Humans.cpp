@@ -82,7 +82,7 @@ namespace
 // Created: AGE 2007-10-29
 // -----------------------------------------------------------------------------
 Humans::Humans( xml::xistream& xis )
-    : rankMask_( ReadRanks( xis ) )
+    : rankMask_ ( ReadRanks( xis ) )
     , stateMask_( ReadStates( xis ) )
 {
     humans_.resize( 3 );

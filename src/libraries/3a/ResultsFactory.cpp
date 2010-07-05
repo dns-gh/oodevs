@@ -20,7 +20,7 @@
 // -----------------------------------------------------------------------------
 ResultsFactory::ResultsFactory( dispatcher::ClientPublisher_ABC& publisher, int context )
     : publisher_( publisher )
-    , context_( context )
+    , context_  ( context )
 {
     // NOTHING
 }
@@ -39,7 +39,7 @@ ResultsFactory::~ResultsFactory()
 // Created: AGE 2008-08-04
 // -----------------------------------------------------------------------------
 template< typename T >
-void ResultsFactory::Result( const std::string& , xml::xistream& xis, Task& result ) const
+void ResultsFactory::Result( const std::string& /*name*/, xml::xistream& xis, Task& result ) const
 {
     const std::string function = xml::attribute< std::string >( xis, "function" );
     boost::shared_ptr< Result_ABC > f;
@@ -48,7 +48,7 @@ void ResultsFactory::Result( const std::string& , xml::xistream& xis, Task& resu
     else if( function == "indicator" )
         f.reset( new Indicator< NumericValue, T >( publisher_, xml::attribute< std::string >( xis, "name" ) ) );
     else
-        Error( function );
+        throw std::runtime_error( "Unknown result '" + function + "'" );
     result.SetResult( f );
 }
 
@@ -66,13 +66,4 @@ void ResultsFactory::CreateElement( const std::string& type, xml::xistream& xis,
     ResultDispatcher functor( this );
     TypeDispatcher dispatcher( "", xis, result );
     dispatcher.Dispatch( functor );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ResultsFactory::Error
-// Created: AGE 2008-08-04
-// -----------------------------------------------------------------------------
-void ResultsFactory::Error( const std::string& name )
-{
-    throw std::runtime_error( "Unknown result '" + name + "'" );
 }

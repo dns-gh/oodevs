@@ -83,7 +83,7 @@ void TransformationsFactory::Transform( const std::string& name, xml::xistream& 
     else if( function == "compose" )
         Compose< T >( name, xis, result ); // T ( T )
     else
-        Error( function );
+         throw std::runtime_error( "Unknown transformation '" + function + "'" );
 }
 
 // -----------------------------------------------------------------------------
@@ -135,13 +135,4 @@ void TransformationsFactory::CreateElement( const std::string& type, xml::xistre
     TransformDispatcher functor( this );
     TypeDispatcher dispatcher( xis, result, true );
     dispatcher.Dispatch( functor );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TransformationsFactory::Error
-// Created: AGE 2008-08-04
-// -----------------------------------------------------------------------------
-void TransformationsFactory::Error( const std::string& name )
-{
-    throw std::runtime_error( "Unknown transformation '" + name + "'" );
 }
