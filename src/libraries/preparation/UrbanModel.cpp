@@ -15,7 +15,7 @@
 #include <boost/bind.hpp>
 #include <urban/TerrainObject_ABC.h>
 #include <urban/TerrainObjectVisitor_ABC.h>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace tools;
 
