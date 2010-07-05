@@ -83,5 +83,5 @@ void ExtractorsFactory::CreateElement( const std::string& type, xml::xistream& x
     else if( value == "detecting-unit" )
         Extract< events::UnitDetection >( name, xis, result );
     else
-        throw std::runtime_error( "Unknown value to extract '" + name + "'" );
+        throw std::runtime_error( "Unknown value to extract '" + value + "'" );
 }
