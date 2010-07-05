@@ -31,8 +31,8 @@
 int DEC_KnowledgeAgentFunctions::GetNatureAtlas( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
     if( pKnowledge && pKnowledge->IsValid() )
-        return int( pKnowledge->GetNatureAtlas().GetID() );
-    return int( PHY_NatureAtlas::notDefined_.GetID() );
+        return static_cast< int >( pKnowledge->GetNatureAtlas().GetID() );
+    return static_cast< int >( PHY_NatureAtlas::notDefined_.GetID() );
 }
 
 // -----------------------------------------------------------------------------
@@ -43,7 +43,7 @@ float DEC_KnowledgeAgentFunctions::GetDangerosity( const MIL_AgentPion& callerAg
 {
     // For DIA, the dangerosity value is 1 <= dangerosity <= 2
     if( pKnowledge && pKnowledge->IsValid() )
-        return float( pKnowledge->GetDangerosity( callerAgent ) + 1.f );
+        return static_cast< float >( pKnowledge->GetDangerosity( callerAgent ) + 1.f );
     return 0.f;
 }
 
@@ -54,7 +54,7 @@ float DEC_KnowledgeAgentFunctions::GetDangerosity( const MIL_AgentPion& callerAg
 float DEC_KnowledgeAgentFunctions::GetPotentialAttrition( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, boost::shared_ptr< MT_Vector2D > position )
 {
     if( pKnowledge && pKnowledge->IsValid() )
-        return float( callerAgent.GetDangerosity( pKnowledge, position ) );
+        return static_cast< float >( callerAgent.GetDangerosity( pKnowledge, position ) );
     return 0.f;
 }
 
@@ -80,6 +80,7 @@ bool DEC_KnowledgeAgentFunctions::IsPerceivedByAgent( const MIL_AgentPion& calle
 {
     return pKnowledge && pKnowledge->IsValid() && callerAgent.GetKnowledge().IsPerceived( pKnowledge->GetAgentKnown() );
 }
+
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::IsAnEnemy
 // Created: NLD 2004-04-06
@@ -87,9 +88,10 @@ bool DEC_KnowledgeAgentFunctions::IsPerceivedByAgent( const MIL_AgentPion& calle
 int DEC_KnowledgeAgentFunctions::IsAnEnemy( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
     if( !pKnowledge || !pKnowledge->IsValid() )
-        return int( eTristate_DontKnow );
-    return int( pKnowledge->IsAnEnemy( callerAgent.GetArmy() ) );
+        return static_cast< int >( eTristate_DontKnow );
+    return static_cast< int >( pKnowledge->IsAnEnemy( callerAgent.GetArmy() ) );
 }
+
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::IsAFriend
 // Created: MGD 2010-01-26
@@ -97,8 +99,8 @@ int DEC_KnowledgeAgentFunctions::IsAnEnemy( const MIL_AgentPion& callerAgent, bo
 int DEC_KnowledgeAgentFunctions::IsAFriend( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
     if( !pKnowledge || !pKnowledge->IsValid() )
-        return int( eTristate_DontKnow );
-    return int( pKnowledge->IsAFriend( callerAgent.GetArmy() ) );
+        return static_cast< int >( eTristate_DontKnow );
+    return static_cast< int >( pKnowledge->IsAFriend( callerAgent.GetArmy() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -133,6 +135,7 @@ bool DEC_KnowledgeAgentFunctions::KillOfficers( boost::shared_ptr< DEC_Knowledge
     }
     return false;
 }
+
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::GetOperationalState
 // Created: NLD 2004-04-14
@@ -143,6 +146,7 @@ float DEC_KnowledgeAgentFunctions::GetOperationalState( boost::shared_ptr< DEC_K
         return float( pKnowledge->GetOperationalState() );
     return 0;
 }
+
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::GetMajorOperationalState
 // Created: NLD 2004-04-14
@@ -162,9 +166,7 @@ boost::shared_ptr< MT_Vector2D > DEC_KnowledgeAgentFunctions::GetPositionPtr( bo
 {
     boost::shared_ptr< MT_Vector2D > pos;
     if( pKnowledge.get() && pKnowledge->IsValid() )
-    {
         pos = pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Location >().GetSharedPosition();
-    }
     return pos;
 }
 
@@ -236,7 +238,7 @@ float DEC_KnowledgeAgentFunctions::GetDangerosityOnKnowledge( boost::shared_ptr<
 {
     // For DIA, the dangerosity value is 1 <= dangerosity <= 2
     if( pSource && pTarget && pSource->IsValid() && pTarget->IsValid() )
-            return float( pSource->GetDangerosity( *pTarget ) + 1. );
+        return static_cast< float >( pSource->GetDangerosity( *pTarget ) + 1. );
     return 0.f;
 }
 
@@ -249,7 +251,7 @@ float DEC_KnowledgeAgentFunctions::GetDangerosityOnPion( boost::shared_ptr< DEC_
     assert( pTarget );
     // For DIA, the dangerosity value is 1 <= dangerosity <= 2
     if( pKnowledge && pKnowledge->IsValid() )
-        return float( pKnowledge->GetDangerosity( pTarget->GetPion() ) + 1. );
+        return static_cast< float >( pKnowledge->GetDangerosity( pTarget->GetPion() ) + 1. );
     return 0.f;
 }
 
@@ -259,10 +261,9 @@ float DEC_KnowledgeAgentFunctions::GetDangerosityOnPion( boost::shared_ptr< DEC_
 // -----------------------------------------------------------------------------
 int DEC_KnowledgeAgentFunctions::GetMaxPerceptionLevelForKnowledgeGroup( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
-    if( pKnowledge.get() && pKnowledge->IsValid( ) )
-        return (int)pKnowledge->GetMaxPerceptionLevel().GetID();
-    else
-        return 0;
+    if( pKnowledge.get() && pKnowledge->IsValid() )
+        return static_cast< int >( pKnowledge->GetMaxPerceptionLevel().GetID() );
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -272,9 +273,8 @@ int DEC_KnowledgeAgentFunctions::GetMaxPerceptionLevelForKnowledgeGroup( boost::
 int DEC_KnowledgeAgentFunctions::GetCurrentPerceptionLevel( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
     if( pKnowledge.get() && pKnowledge->IsValid() )
-        return (int)pKnowledge->GetCurrentPerceptionLevel( callerAgent ).GetID();
-    else
-        return 0;
+        return static_cast< int >( pKnowledge->GetCurrentPerceptionLevel( callerAgent ).GetID() );
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -285,6 +285,7 @@ bool  DEC_KnowledgeAgentFunctions::IsIlluminated( boost::shared_ptr< DEC_Knowled
 {
     return pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Illumination >().IsIlluminated();
 }
+
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::IsIlluminated
 // Created: MGD 2010-02-15
@@ -301,18 +302,17 @@ bool  DEC_KnowledgeAgentFunctions::IsDefinitivelyIlluminated( boost::shared_ptr<
 bool DEC_KnowledgeAgentFunctions::CanBeIlluminate( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
     const dotation::PHY_RoleInterface_Dotations& roleDotations = callerAgent.GetRole< dotation::PHY_RoleInterface_Dotations >();
-    float range = pKnowledge->GetPosition().Distance( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition() );
-
-    if( roleDotations.GetIlluminationDotations( range, true ) || roleDotations.GetIlluminationDotations( range, false ) )
-        return true;
-    else
-        return false;
+    const float range = static_cast< float >( pKnowledge->GetPosition().Distance( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition() ) );
+    return roleDotations.GetIlluminationDotations( range, true ) || roleDotations.GetIlluminationDotations( range, false );
 }
 
-double DEC_KnowledgeAgentFunctions::GetMaterialComposantesProtectionLevel(boost::shared_ptr< DEC_Knowledge_Agent > pTarget, boost::shared_ptr< DEC_Knowledge_Urban > pUrbanBlock)
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeAgentFunctions::GetMaterialComposantesProtectionLevel
+// Created: DDA 2010-04-27
+// -----------------------------------------------------------------------------
+double DEC_KnowledgeAgentFunctions::GetMaterialComposantesProtectionLevel( boost::shared_ptr< DEC_Knowledge_Agent > pTarget, boost::shared_ptr< DEC_Knowledge_Urban > pUrbanBlock )
 {
     if( pUrbanBlock.get() && pUrbanBlock->IsValid() )
-        return 1.f - pTarget->GetMaterialComposantesAttritionLevel(pUrbanBlock);
-    else
-        throw std::exception( "urbanBlock not valid" );
+        return 1.f - pTarget->GetMaterialComposantesAttritionLevel( pUrbanBlock );
+    throw std::exception( "urbanBlock not valid" );
 }
