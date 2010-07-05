@@ -54,11 +54,11 @@ using namespace dispatcher;
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
 Model::Model( const tools::ExerciseConfig& config, const kernel::StaticModel& staticModel )
-    : staticModel_( staticModel )
-    , simulation_( new SimulationModel() )
+    : staticModel_     ( staticModel )
+    , simulation_      ( new SimulationModel() )
     , compositeFactory_( new CompositeFactory() )
-    , folk_( new FolkModel() )
-    , meteoModel_( new MeteoModel( config, *this ) )
+    , folk_            ( new FolkModel() )
+    , meteoModel_      ( new MeteoModel( config, *this ) )
 {
     // NOTHING
 }

@@ -54,10 +54,10 @@ AgentKnowledge::~AgentKnowledge()
     // NOTHING
 }
 
-#define UPDATE_ASN_ATTRIBUTE(MESSAGE, ASN, CPP ) \
-    if( ##MESSAGE##.has_##ASN##() )              \
-    {                                            \
-        CPP = ##MESSAGE##.##ASN();               \
+#define UPDATE_ASN_ATTRIBUTE( MESSAGE, ASN, CPP ) \
+    if( ##MESSAGE##.has_##ASN##() )               \
+    {                                             \
+        CPP = ##MESSAGE##.##ASN();                \
     }
 
 #define SEND_ASN_ATTRIBUTE( MESSAGE, ASN, CPP )  \
