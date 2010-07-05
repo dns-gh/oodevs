@@ -18,9 +18,8 @@ using namespace actions;
 // Name: ActionTasker constructor
 // Created: SBO 2010-05-03
 // -----------------------------------------------------------------------------
-ActionTasker::ActionTasker( const kernel::Entity_ABC* tasker, bool simulation )
+ActionTasker::ActionTasker( const kernel::Entity_ABC* tasker )
     : tasker_( tasker )
-    , simulation_( simulation )
 {
     // NOTHING
 }
@@ -41,15 +40,6 @@ ActionTasker::~ActionTasker()
 const kernel::Entity_ABC* ActionTasker::GetTasker() const
 {
     return tasker_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionTasker::IsSimulation
-// Created: SBO 2010-05-03
-// -----------------------------------------------------------------------------
-bool ActionTasker::IsSimulation() const
-{
-    return simulation_;
 }
 
 // -----------------------------------------------------------------------------
