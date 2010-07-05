@@ -42,7 +42,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     FormationLevels( const FormationLevels& );            //!< Copy constructor
     FormationLevels& operator=( const FormationLevels& ); //!< Assignment operator

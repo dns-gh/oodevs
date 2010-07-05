@@ -53,10 +53,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Lives( const Lives& );            //!< Copy constructor
-    Lives& operator=( const Lives& ); //!< Assignement operator
+    Lives& operator=( const Lives& ); //!< Assignment operator
     //@}
 
 private:

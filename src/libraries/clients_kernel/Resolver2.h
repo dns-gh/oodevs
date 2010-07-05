@@ -144,7 +144,7 @@ public:
     //@}
     // $$$$ AGE 2006-02-14:
 protected:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Resolver2( const Resolver2& );            //!< Copy constructor
     Resolver2& operator=( const Resolver2& ); //!< Assignment operator

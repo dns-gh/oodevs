@@ -154,10 +154,10 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     GQ_PlotAxis( const GQ_PlotAxis& rhs );            //!< Copy constructor
-    GQ_PlotAxis& operator=( const GQ_PlotAxis& rhs ); //!< Assignement operator
+    GQ_PlotAxis& operator=( const GQ_PlotAxis& rhs ); //!< Assignment operator
     //@}
 
 private:

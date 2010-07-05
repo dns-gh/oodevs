@@ -59,7 +59,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Controller( const Controller& );            //!< Copy constructor
     Controller& operator=( const Controller& ); //!< Assignment operator

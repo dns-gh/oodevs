@@ -59,10 +59,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     PopulationKnowledges( const PopulationKnowledges& );            //!< Copy constructor
-    PopulationKnowledges& operator=( const PopulationKnowledges& ); //!< Assignement operator
+    PopulationKnowledges& operator=( const PopulationKnowledges& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

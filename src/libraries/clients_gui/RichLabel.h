@@ -60,10 +60,10 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     RichLabel( const RichLabel& );            //!< Copy constructor
-    RichLabel& operator=( const RichLabel& ); //!< Assignement operator
+    RichLabel& operator=( const RichLabel& ); //!< Assignment operator
     //@}
 
 private:

@@ -77,7 +77,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ReportFactory( const ReportFactory& );            //!< Copy constructor
     ReportFactory& operator=( const ReportFactory& ); //!< Assignment operator

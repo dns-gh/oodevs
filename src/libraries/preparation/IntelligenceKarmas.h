@@ -34,10 +34,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     IntelligenceKarmas( const IntelligenceKarmas& );            //!< Copy constructor
-    IntelligenceKarmas& operator=( const IntelligenceKarmas& ); //!< Assignement operator
+    IntelligenceKarmas& operator=( const IntelligenceKarmas& ); //!< Assignment operator
     //@}
 };
 

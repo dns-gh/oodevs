@@ -64,10 +64,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Elevation3dLayer( const Elevation3dLayer& );            //!< Copy constructor
-    Elevation3dLayer& operator=( const Elevation3dLayer& ); //!< Assignement operator
+    Elevation3dLayer& operator=( const Elevation3dLayer& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

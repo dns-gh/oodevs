@@ -37,10 +37,10 @@ private:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ADN_ListView_FragOrderTypes( const ADN_ListView_FragOrderTypes& );            //!< Copy constructor
-    ADN_ListView_FragOrderTypes& operator=( const ADN_ListView_FragOrderTypes& ); //!< Assignement operator
+    ADN_ListView_FragOrderTypes& operator=( const ADN_ListView_FragOrderTypes& ); //!< Assignment operator
     //@}
 
 private:

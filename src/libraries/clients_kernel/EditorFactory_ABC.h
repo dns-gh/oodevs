@@ -47,7 +47,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     EditorFactory_ABC( const EditorFactory_ABC& );            //!< Copy constructor
     EditorFactory_ABC& operator=( const EditorFactory_ABC& ); //!< Assignment operator

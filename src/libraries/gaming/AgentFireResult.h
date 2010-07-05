@@ -45,10 +45,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     AgentFireResult( const AgentFireResult& );            //!< Copy constructor
-    AgentFireResult& operator=( const AgentFireResult& ); //!< Assignement operator
+    AgentFireResult& operator=( const AgentFireResult& ); //!< Assignment operator
     //@}
 
 public:

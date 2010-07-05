@@ -52,10 +52,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ExclusiveEventStrategy( const ExclusiveEventStrategy& );            //!< Copy constructor
-    ExclusiveEventStrategy& operator=( const ExclusiveEventStrategy& ); //!< Assignement operator
+    ExclusiveEventStrategy& operator=( const ExclusiveEventStrategy& ); //!< Assignment operator
     //@}
 
 private:

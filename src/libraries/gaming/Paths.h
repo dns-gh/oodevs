@@ -57,10 +57,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Paths( const Paths& );            //!< Copy constructor
-    Paths& operator=( const Paths& ); //!< Assignement operator
+    Paths& operator=( const Paths& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

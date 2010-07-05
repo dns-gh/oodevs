@@ -45,10 +45,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     MapLayerProxy( const MapLayerProxy& );            //!< Copy constructor
-    MapLayerProxy& operator=( const MapLayerProxy& ); //!< Assignement operator
+    MapLayerProxy& operator=( const MapLayerProxy& ); //!< Assignment operator
     //@}
 
 private:

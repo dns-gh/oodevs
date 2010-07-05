@@ -41,7 +41,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     MessageEncoder( const MessageEncoder& );            //!< Copy constructor
     MessageEncoder& operator=( const MessageEncoder& ); //!< Assignment operator

@@ -55,7 +55,7 @@ private:
     //! @name Copy/Assignment
     //@{
     ReplayerToolbar( const ReplayerToolbar& );            //!< Copy constructor
-    ReplayerToolbar& operator=( const ReplayerToolbar& ); //!< Assignement operator
+    ReplayerToolbar& operator=( const ReplayerToolbar& ); //!< Assignment operator
     //@}
 
 private:

@@ -71,7 +71,7 @@ private:
     //! @name Copy/Assignment
     //@{
     AgentHierarchies( const AgentHierarchies& );            //!< Copy constructor
-    AgentHierarchies& operator=( const AgentHierarchies& ); //!< Assignement operator
+    AgentHierarchies& operator=( const AgentHierarchies& ); //!< Assignment operator
     //@}
 
 

@@ -49,7 +49,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     AutomatComposition( const AutomatComposition& );            //!< Copy constructor
     AutomatComposition& operator=( const AutomatComposition& ); //!< Assignment operator

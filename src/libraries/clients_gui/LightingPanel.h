@@ -62,10 +62,10 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     LightingPanel( const LightingPanel& );            //!< Copy constructor
-    LightingPanel& operator=( const LightingPanel& ); //!< Assignement operator
+    LightingPanel& operator=( const LightingPanel& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

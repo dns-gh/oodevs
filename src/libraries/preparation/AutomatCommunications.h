@@ -44,10 +44,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     AutomatCommunications( const AutomatCommunications& );            //!< Copy constructor
-    AutomatCommunications& operator=( const AutomatCommunications& ); //!< Assignement operator
+    AutomatCommunications& operator=( const AutomatCommunications& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

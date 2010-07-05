@@ -36,10 +36,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     AboutDialog( const AboutDialog& );            //!< Copy constructor
-    AboutDialog& operator=( const AboutDialog& ); //!< Assignement operator
+    AboutDialog& operator=( const AboutDialog& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

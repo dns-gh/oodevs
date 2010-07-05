@@ -51,10 +51,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Profiling( const Profiling& );            //!< Copy constructor
-    Profiling& operator=( const Profiling& ); //!< Assignement operator
+    Profiling& operator=( const Profiling& ); //!< Assignment operator
     //@}
 
     //! @name Types

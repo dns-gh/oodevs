@@ -56,10 +56,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     InputToxicCloudAttribute( const InputToxicCloudAttribute& );            //!< Copy constructor
-    InputToxicCloudAttribute& operator=( const InputToxicCloudAttribute& ); //!< Assignement operator
+    InputToxicCloudAttribute& operator=( const InputToxicCloudAttribute& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

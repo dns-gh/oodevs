@@ -38,7 +38,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     BreakdownType( const BreakdownType& );            //!< Copy constructor
     BreakdownType& operator=( const BreakdownType& ); //!< Assignment operator

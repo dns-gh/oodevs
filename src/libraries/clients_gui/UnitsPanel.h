@@ -60,10 +60,10 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     UnitsPanel( const UnitsPanel& );            //!< Copy constructor
-    UnitsPanel& operator=( const UnitsPanel& ); //!< Assignement operator
+    UnitsPanel& operator=( const UnitsPanel& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

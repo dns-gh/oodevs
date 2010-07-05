@@ -50,10 +50,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Transports( const Transports& );            //!< Copy constructor
-    Transports& operator=( const Transports& ); //!< Assignement operator
+    Transports& operator=( const Transports& ); //!< Assignment operator
     //@}
 
     //! @name Types

@@ -49,7 +49,7 @@ private:
     //! @name Copy/Assignment
     //@{
     ObjectPerceptions( const ObjectPerceptions& );            //!< Copy constructor
-    ObjectPerceptions& operator=( const ObjectPerceptions& ); //!< Assignement operator
+    ObjectPerceptions& operator=( const ObjectPerceptions& ); //!< Assignment operator
     //@}
 
     //! @name Types

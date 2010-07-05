@@ -50,10 +50,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ParamAgentKnowledgeList( const ParamAgentKnowledgeList& );            //!< Copy constructor
-    ParamAgentKnowledgeList& operator=( const ParamAgentKnowledgeList& ); //!< Assignement operator
+    ParamAgentKnowledgeList& operator=( const ParamAgentKnowledgeList& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

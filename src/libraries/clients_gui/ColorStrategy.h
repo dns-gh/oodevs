@@ -66,10 +66,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ColorStrategy( const ColorStrategy& );            //!< Copy constructor
-    ColorStrategy& operator=( const ColorStrategy& ); //!< Assignement operator
+    ColorStrategy& operator=( const ColorStrategy& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

@@ -36,10 +36,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     MedicalStates( const MedicalStates& );            //!< Copy constructor
-    MedicalStates& operator=( const MedicalStates& ); //!< Assignement operator
+    MedicalStates& operator=( const MedicalStates& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

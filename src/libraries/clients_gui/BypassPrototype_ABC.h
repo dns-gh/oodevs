@@ -37,10 +37,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     BypassPrototype_ABC( const BypassPrototype_ABC& );            //!< Copy constructor
-    BypassPrototype_ABC& operator=( const BypassPrototype_ABC& ); //!< Assignement operator
+    BypassPrototype_ABC& operator=( const BypassPrototype_ABC& ); //!< Assignment operator
     //@}
 };
 

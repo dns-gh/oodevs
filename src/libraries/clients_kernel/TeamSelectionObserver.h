@@ -33,7 +33,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     TeamSelectionObserver( const TeamSelectionObserver& );            //!< Copy constructor
     TeamSelectionObserver& operator=( const TeamSelectionObserver& ); //!< Assignment operator

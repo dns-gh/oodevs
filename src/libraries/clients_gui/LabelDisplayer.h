@@ -42,10 +42,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     LabelDisplayer( const LabelDisplayer& );            //!< Copy constructor
-    LabelDisplayer& operator=( const LabelDisplayer& ); //!< Assignement operator
+    LabelDisplayer& operator=( const LabelDisplayer& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

@@ -60,10 +60,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     UrbanModel( const UrbanModel& );            //!< Copy constructor
-    UrbanModel& operator=( const UrbanModel& ); //!< Assignement operator
+    UrbanModel& operator=( const UrbanModel& ); //!< Assignment operator
     //@}
 
 public:

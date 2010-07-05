@@ -38,7 +38,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     NullDisplayer( const NullDisplayer& );            //!< Copy constructor
     NullDisplayer& operator=( const NullDisplayer& ); //!< Assignment operator

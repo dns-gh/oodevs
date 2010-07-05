@@ -54,10 +54,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ObjectKnowledgeFactory( const ObjectKnowledgeFactory& );            //!< Copy constructor
-    ObjectKnowledgeFactory& operator=( const ObjectKnowledgeFactory& ); //!< Assignement operator
+    ObjectKnowledgeFactory& operator=( const ObjectKnowledgeFactory& ); //!< Assignment operator
     //@}
 
 private:

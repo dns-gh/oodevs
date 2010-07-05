@@ -91,10 +91,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Simulation( const Simulation& );            //!< Copy constructor
-    Simulation& operator=( const Simulation& ); //!< Assignement operator
+    Simulation& operator=( const Simulation& ); //!< Assignment operator
     //@}
 
 private:

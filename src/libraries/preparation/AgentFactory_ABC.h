@@ -55,10 +55,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     AgentFactory_ABC( const AgentFactory_ABC& );            //!< Copy constructor
-    AgentFactory_ABC& operator=( const AgentFactory_ABC& ); //!< Assignement operator
+    AgentFactory_ABC& operator=( const AgentFactory_ABC& ); //!< Assignment operator
     //@}
 };
 

@@ -55,7 +55,7 @@ private:
     //! @name Copy/Assignment
     //@{
     AutomatTacticalHierarchies( const AutomatTacticalHierarchies& );            //!< Copy constructor
-    AutomatTacticalHierarchies& operator=( const AutomatTacticalHierarchies& ); //!< Assignement operator
+    AutomatTacticalHierarchies& operator=( const AutomatTacticalHierarchies& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

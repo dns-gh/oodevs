@@ -50,10 +50,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ADN_AvailabilityWarning( const ADN_AvailabilityWarning& );            //!< Copy constructor
-    ADN_AvailabilityWarning& operator=( const ADN_AvailabilityWarning& ); //!< Assignement operator
+    ADN_AvailabilityWarning& operator=( const ADN_AvailabilityWarning& ); //!< Assignment operator
     //@}
 
 public:

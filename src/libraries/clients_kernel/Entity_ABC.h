@@ -89,7 +89,7 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Entity_ABC( const Entity_ABC& );            //!< Copy constructor
     Entity_ABC& operator=( const Entity_ABC& ); //!< Assignment operator

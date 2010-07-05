@@ -54,10 +54,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     SupplyStates( const SupplyStates& );            //!< Copy constructor
-    SupplyStates& operator=( const SupplyStates& ); //!< Assignement operator
+    SupplyStates& operator=( const SupplyStates& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

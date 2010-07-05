@@ -42,10 +42,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     EntityCommunications( const EntityCommunications& );            //!< Copy constructor
-    EntityCommunications& operator=( const EntityCommunications& ); //!< Assignement operator
+    EntityCommunications& operator=( const EntityCommunications& ); //!< Assignment operator
     //@}
 };
 

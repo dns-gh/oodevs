@@ -39,10 +39,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     WeatherWidget( const WeatherWidget& );            //!< Copy constructor
-    WeatherWidget& operator=( const WeatherWidget& ); //!< Assignement operator
+    WeatherWidget& operator=( const WeatherWidget& ); //!< Assignment operator
     //@}
 
 private:

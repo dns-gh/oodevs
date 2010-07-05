@@ -48,7 +48,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Polygon& operator=( const Polygon& ); //!< Assignment operator
     //@}

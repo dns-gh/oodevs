@@ -41,7 +41,7 @@ public:
     //@}
 
 private:
-    //! @name Copy / Assignement
+    //! @name Copy / Assignment
     //@{
     Team( const Team& );
     Team& operator=( const Team& );

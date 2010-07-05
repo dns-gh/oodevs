@@ -29,10 +29,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ListItemToolTip( const ListItemToolTip& );            //!< Copy constructor
-    ListItemToolTip& operator=( const ListItemToolTip& ); //!< Assignement operator
+    ListItemToolTip& operator=( const ListItemToolTip& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

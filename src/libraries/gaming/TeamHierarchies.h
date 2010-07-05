@@ -54,7 +54,7 @@ private:
     //! @name Copy/Assignment
     //@{
     TeamHierarchies( const TeamHierarchies& );            //!< Copy constructor
-    TeamHierarchies& operator=( const TeamHierarchies& ); //!< Assignement operator
+    TeamHierarchies& operator=( const TeamHierarchies& ); //!< Assignment operator
     //@}
 
 private:

@@ -57,10 +57,10 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Application( const Application& );            //!< Copy constructor
-    Application& operator=( const Application& ); //!< Assignement operator
+    Application& operator=( const Application& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

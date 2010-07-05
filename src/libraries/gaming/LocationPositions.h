@@ -52,10 +52,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     LocationPositions( const LocationPositions& );            //!< Copy constructor
-    LocationPositions& operator=( const LocationPositions& ); //!< Assignement operator
+    LocationPositions& operator=( const LocationPositions& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

@@ -40,7 +40,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     SymbolCase( const SymbolCase& );            //!< Copy constructor
     SymbolCase& operator=( const SymbolCase& ); //!< Assignment operator

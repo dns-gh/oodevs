@@ -59,10 +59,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Diplomacies( const Diplomacies& );            //!< Copy constructor
-    Diplomacies& operator=( const Diplomacies& ); //!< Assignement operator
+    Diplomacies& operator=( const Diplomacies& ); //!< Assignment operator
     //@}
 
     //! @name Types

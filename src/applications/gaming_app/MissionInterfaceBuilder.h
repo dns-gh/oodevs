@@ -69,10 +69,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     MissionInterfaceBuilder( const MissionInterfaceBuilder& );            //!< Copy constructor
-    MissionInterfaceBuilder& operator=( const MissionInterfaceBuilder& ); //!< Assignement operator
+    MissionInterfaceBuilder& operator=( const MissionInterfaceBuilder& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

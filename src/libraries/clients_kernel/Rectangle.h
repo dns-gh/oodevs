@@ -47,7 +47,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Rectangle& operator=( const Rectangle& ); //!< Assignment operator
     //@}

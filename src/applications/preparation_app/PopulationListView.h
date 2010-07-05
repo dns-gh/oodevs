@@ -39,10 +39,10 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     PopulationListView( const PopulationListView& );            //!< Copy constructor
-    PopulationListView& operator=( const PopulationListView& ); //!< Assignement operator
+    PopulationListView& operator=( const PopulationListView& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

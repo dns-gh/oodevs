@@ -59,10 +59,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     FireResultListView( const FireResultListView& );            //!< Copy constructor
-    FireResultListView& operator=( const FireResultListView& ); //!< Assignement operator
+    FireResultListView& operator=( const FireResultListView& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

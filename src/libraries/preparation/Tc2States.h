@@ -36,10 +36,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Tc2States( const Tc2States& );            //!< Copy constructor
-    Tc2States& operator=( const Tc2States& ); //!< Assignement operator
+    Tc2States& operator=( const Tc2States& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

@@ -45,10 +45,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ListItemDisplayer( const ListItemDisplayer& );            //!< Copy constructor
-    ListItemDisplayer& operator=( const ListItemDisplayer& ); //!< Assignement operator
+    ListItemDisplayer& operator=( const ListItemDisplayer& ); //!< Assignment operator
     //@}
 
     //! @name Types

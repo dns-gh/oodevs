@@ -50,10 +50,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Stocks( const Stocks& );            //!< Copy constructor
-    Stocks& operator=( const Stocks& ); //!< Assignement operator
+    Stocks& operator=( const Stocks& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

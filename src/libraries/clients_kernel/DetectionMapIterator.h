@@ -44,7 +44,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     DetectionMapIterator( const DetectionMapIterator& );            //!< Copy constructor
     DetectionMapIterator& operator=( const DetectionMapIterator& ); //!< Assignment operator

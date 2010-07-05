@@ -39,10 +39,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     EditorFactory( const EditorFactory& );            //!< Copy constructor
-    EditorFactory& operator=( const EditorFactory& ); //!< Assignement operator
+    EditorFactory& operator=( const EditorFactory& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

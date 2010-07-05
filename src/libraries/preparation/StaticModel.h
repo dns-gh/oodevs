@@ -82,10 +82,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     StaticModel( const StaticModel& );            //!< Copy constructor
-    StaticModel& operator=( const StaticModel& ); //!< Assignement operator
+    StaticModel& operator=( const StaticModel& ); //!< Assignment operator
     //@}
 };
 

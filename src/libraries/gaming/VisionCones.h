@@ -60,10 +60,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     VisionCones( const VisionCones& );            //!< Copy constructor
-    VisionCones& operator=( const VisionCones& ); //!< Assignement operator
+    VisionCones& operator=( const VisionCones& ); //!< Assignment operator
     //@}
 
     //! @name Types

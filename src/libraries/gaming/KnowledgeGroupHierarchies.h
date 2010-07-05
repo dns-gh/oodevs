@@ -49,7 +49,7 @@ private:
     //! @name Copy/Assignment
     //@{
     KnowledgeGroupHierarchies( const KnowledgeGroupHierarchies& );            //!< Copy constructor
-    KnowledgeGroupHierarchies& operator=( const KnowledgeGroupHierarchies& ); //!< Assignement operator
+    KnowledgeGroupHierarchies& operator=( const KnowledgeGroupHierarchies& ); //!< Assignment operator
     //@}
 
 private:

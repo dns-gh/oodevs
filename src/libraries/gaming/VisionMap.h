@@ -47,10 +47,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     VisionMap( const VisionMap& );            //!< Copy constructor
-    VisionMap& operator=( const VisionMap& ); //!< Assignement operator
+    VisionMap& operator=( const VisionMap& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

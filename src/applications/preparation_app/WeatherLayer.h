@@ -55,10 +55,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     WeatherLayer( const WeatherLayer& );            //!< Copy constructor
-    WeatherLayer& operator=( const WeatherLayer& ); //!< Assignement operator
+    WeatherLayer& operator=( const WeatherLayer& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

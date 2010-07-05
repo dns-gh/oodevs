@@ -78,10 +78,10 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     UrbanLayer( const UrbanLayer& );            //!< Copy constructor
-    UrbanLayer& operator=( const UrbanLayer& ); //!< Assignement operator
+    UrbanLayer& operator=( const UrbanLayer& ); //!< Assignment operator
     //@}
 
 private:

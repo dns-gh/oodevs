@@ -75,7 +75,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ValuedListItem( const ValuedListItem& );            //!< Copy constructor
     ValuedListItem& operator=( const ValuedListItem& ); //!< Assignment operator

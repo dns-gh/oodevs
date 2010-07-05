@@ -62,10 +62,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     TerrainLayer( const TerrainLayer& );            //!< Copy constructor
-    TerrainLayer& operator=( const TerrainLayer& ); //!< Assignement operator
+    TerrainLayer& operator=( const TerrainLayer& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

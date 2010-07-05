@@ -39,10 +39,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     CrossingSitePrototype( const CrossingSitePrototype& );            //!< Copy constructor
-    CrossingSitePrototype& operator=( const CrossingSitePrototype& ); //!< Assignement operator
+    CrossingSitePrototype& operator=( const CrossingSitePrototype& ); //!< Assignment operator
     //@}
 
 private:

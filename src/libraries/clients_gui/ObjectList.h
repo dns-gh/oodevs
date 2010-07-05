@@ -37,10 +37,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ObjectList( const ObjectList& );            //!< Copy constructor
-    ObjectList& operator=( const ObjectList& ); //!< Assignement operator
+    ObjectList& operator=( const ObjectList& ); //!< Assignment operator
     //@}
 };
 

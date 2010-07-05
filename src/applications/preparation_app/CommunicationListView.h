@@ -48,10 +48,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     CommunicationListView( const CommunicationListView& );            //!< Copy constructor
-    CommunicationListView& operator=( const CommunicationListView& ); //!< Assignement operator
+    CommunicationListView& operator=( const CommunicationListView& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

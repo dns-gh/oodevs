@@ -161,10 +161,10 @@ protected:
     virtual int  GetBaseline( unsigned int ); //!< returns bottom position for histograms (default = yaxis)
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     GQ_PlotData( const GQ_PlotData& rhs );            //!< Copy constructor
-    GQ_PlotData& operator=( const GQ_PlotData& rhs ); //!< Assignement operator
+    GQ_PlotData& operator=( const GQ_PlotData& rhs ); //!< Assignment operator
     //@}
 
     //! @name Helpers

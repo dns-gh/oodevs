@@ -41,10 +41,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ObjectKnowledgePositions( const ObjectKnowledgePositions& );            //!< Copy constructor
-    ObjectKnowledgePositions& operator=( const ObjectKnowledgePositions& ); //!< Assignement operator
+    ObjectKnowledgePositions& operator=( const ObjectKnowledgePositions& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

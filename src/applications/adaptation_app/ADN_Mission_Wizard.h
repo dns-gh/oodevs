@@ -31,10 +31,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ADN_Mission_Wizard( const ADN_Mission_Wizard& );            //!< Copy constructor
-    ADN_Mission_Wizard& operator=( const ADN_Mission_Wizard& ); //!< Assignement operator
+    ADN_Mission_Wizard& operator=( const ADN_Mission_Wizard& ); //!< Assignment operator
     //@}
 };
 

@@ -54,7 +54,7 @@ private:
     //! @name Copy/Assignment
     //@{
     Quotas( const Quotas& );            //!< Copy constructor
-    Quotas& operator=( const Quotas& ); //!< Assignement operator
+    Quotas& operator=( const Quotas& ); //!< Assignment operator
     //@}
 
     //! @name Types

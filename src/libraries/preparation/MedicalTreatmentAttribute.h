@@ -58,10 +58,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     MedicalTreatmentAttribute( const MedicalTreatmentAttribute& );            //!< Copy constructor
-    MedicalTreatmentAttribute& operator=( const MedicalTreatmentAttribute& ); //!< Assignement operator
+    MedicalTreatmentAttribute& operator=( const MedicalTreatmentAttribute& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

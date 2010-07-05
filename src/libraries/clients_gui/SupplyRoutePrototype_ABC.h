@@ -36,10 +36,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     SupplyRoutePrototype_ABC( const SupplyRoutePrototype_ABC& );            //!< Copy constructor
-    SupplyRoutePrototype_ABC& operator=( const SupplyRoutePrototype_ABC& ); //!< Assignement operator
+    SupplyRoutePrototype_ABC& operator=( const SupplyRoutePrototype_ABC& ); //!< Assignment operator
     //@}
 
 protected:

@@ -44,10 +44,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     LogisticConsignFactory( const LogisticConsignFactory& );            //!< Copy constructor
-    LogisticConsignFactory& operator=( const LogisticConsignFactory& ); //!< Assignement operator
+    LogisticConsignFactory& operator=( const LogisticConsignFactory& ); //!< Assignment operator
     //@}
 
 private:

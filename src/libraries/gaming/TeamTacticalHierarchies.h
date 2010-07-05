@@ -33,7 +33,7 @@ private:
     //! @name Copy/Assignment
     //@{
     TeamTacticalHierarchies( const TeamTacticalHierarchies& );            //!< Copy constructor
-    TeamTacticalHierarchies& operator=( const TeamTacticalHierarchies& ); //!< Assignement operator
+    TeamTacticalHierarchies& operator=( const TeamTacticalHierarchies& ); //!< Assignment operator
     //@}
 
 private:

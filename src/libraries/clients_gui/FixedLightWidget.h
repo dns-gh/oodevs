@@ -45,7 +45,7 @@ private:
     //! @name Copy/Assignment
     //@{
     FixedLightWidget( const FixedLightWidget& );            //!< Copy constructor
-    FixedLightWidget& operator=( const FixedLightWidget& ); //!< Assignement operator
+    FixedLightWidget& operator=( const FixedLightWidget& ); //!< Assignment operator
     //@}
 
 private:

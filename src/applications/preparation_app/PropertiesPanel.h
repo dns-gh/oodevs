@@ -42,10 +42,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     PropertiesPanelBase( const PropertiesPanelBase& );            //!< Copy constructor
-    PropertiesPanelBase& operator=( const PropertiesPanelBase& ); //!< Assignement operator
+    PropertiesPanelBase& operator=( const PropertiesPanelBase& ); //!< Assignment operator
     //@}
 
 protected:
@@ -74,10 +74,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     PropertiesPanel( const PropertiesPanel& );            //!< Copy constructor
-    PropertiesPanel& operator=( const PropertiesPanel& ); //!< Assignement operator
+    PropertiesPanel& operator=( const PropertiesPanel& ); //!< Assignment operator
     //@}
 };
 

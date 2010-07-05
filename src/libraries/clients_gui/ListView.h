@@ -108,10 +108,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ListView( const ListView& );            //!< Copy constructor
-    ListView& operator=( const ListView& ); //!< Assignement operator
+    ListView& operator=( const ListView& ); //!< Assignment operator
     //@}
 
 private:

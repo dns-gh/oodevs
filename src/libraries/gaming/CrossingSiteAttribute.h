@@ -50,10 +50,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     CrossingSiteAttribute( const CrossingSiteAttribute& );            //!< Copy constructor
-    CrossingSiteAttribute& operator=( const CrossingSiteAttribute& ); //!< Assignement operator
+    CrossingSiteAttribute& operator=( const CrossingSiteAttribute& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

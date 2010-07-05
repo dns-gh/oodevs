@@ -40,7 +40,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ModelLoaded( const ModelLoaded& );            //!< Copy constructor
     ModelLoaded& operator=( const ModelLoaded& ); //!< Assignment operator

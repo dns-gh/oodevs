@@ -46,10 +46,10 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     InputPropagationPrototype_ABC( const InputPropagationPrototype_ABC& );            //!< Copy constructor
-    InputPropagationPrototype_ABC& operator=( const InputPropagationPrototype_ABC& ); //!< Assignement operator
+    InputPropagationPrototype_ABC& operator=( const InputPropagationPrototype_ABC& ); //!< Assignment operator
     //@}
 
 protected:

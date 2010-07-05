@@ -66,10 +66,10 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     PreferencesDialog( const PreferencesDialog& );            //!< Copy constructor
-    PreferencesDialog& operator=( const PreferencesDialog& ); //!< Assignement operator
+    PreferencesDialog& operator=( const PreferencesDialog& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

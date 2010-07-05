@@ -76,10 +76,10 @@ public:
     //@}
 
 public:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     TerrainObjectProxy ( const TerrainObjectProxy& );            //!< Copy constructor
-    TerrainObjectProxy& operator=( const TerrainObjectProxy& ); //!< Assignement operator
+    TerrainObjectProxy& operator=( const TerrainObjectProxy& ); //!< Assignment operator
     bool operator==( const TerrainObjectProxy& ) const;
     //@}
 };

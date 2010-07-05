@@ -55,7 +55,7 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ParamDotationTypeList( const ParamDotationTypeList& );
     ParamDotationTypeList& operator=( const ParamDotationTypeList& );

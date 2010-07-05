@@ -61,10 +61,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ADN_UserData_ListViewItem( const ADN_UserData_ListViewItem& );            //!< Copy constructor
-    ADN_UserData_ListViewItem& operator=( const ADN_UserData_ListViewItem& ); //!< Assignement operator
+    ADN_UserData_ListViewItem& operator=( const ADN_UserData_ListViewItem& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

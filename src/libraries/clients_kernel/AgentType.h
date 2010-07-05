@@ -65,7 +65,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     AgentType( const AgentType& );            //!< Copy constructor
     AgentType& operator=( const AgentType& ); //!< Assignment operator

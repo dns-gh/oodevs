@@ -90,10 +90,10 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     EntityLayerBase( const EntityLayerBase& );            //!< Copy constructor
-    EntityLayerBase& operator=( const EntityLayerBase& ); //!< Assignement operator
+    EntityLayerBase& operator=( const EntityLayerBase& ); //!< Assignment operator
     //@}
 
 private:
@@ -142,10 +142,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     EntityLayer( const EntityLayer& );            //!< Copy constructor
-    EntityLayer& operator=( const EntityLayer& ); //!< Assignement operator
+    EntityLayer& operator=( const EntityLayer& ); //!< Assignment operator
     //@}
 
 protected:

@@ -51,10 +51,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     LogisticAttribute( const LogisticAttribute& );            //!< Copy constructor
-    LogisticAttribute& operator=( const LogisticAttribute& ); //!< Assignement operator
+    LogisticAttribute& operator=( const LogisticAttribute& ); //!< Assignment operator
     //@}
 
     //! @name Types

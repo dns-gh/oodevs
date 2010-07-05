@@ -41,10 +41,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ParamAgent( const ParamAgent& );            //!< Copy constructor
-    ParamAgent& operator=( const ParamAgent& ); //!< Assignement operator
+    ParamAgent& operator=( const ParamAgent& ); //!< Assignment operator
     //@}
 
 private:

@@ -39,10 +39,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     TacticalLines( const TacticalLines& );            //!< Copy constructor
-    TacticalLines& operator=( const TacticalLines& ); //!< Assignement operator
+    TacticalLines& operator=( const TacticalLines& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

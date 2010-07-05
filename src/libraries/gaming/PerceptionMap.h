@@ -43,10 +43,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     PerceptionMap( const PerceptionMap& );            //!< Copy constructor
-    PerceptionMap& operator=( const PerceptionMap& ); //!< Assignement operator
+    PerceptionMap& operator=( const PerceptionMap& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

@@ -51,7 +51,7 @@ private:
     //! @name Copy/Assignment
     //@{
     UrbanPerceptions( const UrbanPerceptions& );            //!< Copy constructor
-    UrbanPerceptions& operator=( const UrbanPerceptions& ); //!< Assignement operator
+    UrbanPerceptions& operator=( const UrbanPerceptions& ); //!< Assignment operator
     //@}
 
     //! @name Types

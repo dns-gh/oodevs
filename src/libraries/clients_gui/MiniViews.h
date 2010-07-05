@@ -56,10 +56,10 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     MiniViews( const MiniViews& );            //!< Copy constructor
-    MiniViews& operator=( const MiniViews& ); //!< Assignement operator
+    MiniViews& operator=( const MiniViews& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

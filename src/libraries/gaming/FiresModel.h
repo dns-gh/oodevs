@@ -52,10 +52,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     FiresModel( const FiresModel& );            //!< Copy constructor
-    FiresModel& operator=( const FiresModel& ); //!< Assignement operator
+    FiresModel& operator=( const FiresModel& ); //!< Assignment operator
     //@}
 
 private:

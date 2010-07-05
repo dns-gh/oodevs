@@ -33,10 +33,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     LimitsLayer( const LimitsLayer& );            //!< Copy constructor
-    LimitsLayer& operator=( const LimitsLayer& ); //!< Assignement operator
+    LimitsLayer& operator=( const LimitsLayer& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

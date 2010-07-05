@@ -39,10 +39,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     PropertiesBase( const PropertiesBase& );            //!< Copy constructor
-    PropertiesBase& operator=( const PropertiesBase& ); //!< Assignement operator
+    PropertiesBase& operator=( const PropertiesBase& ); //!< Assignment operator
     //@}
 
 protected:
@@ -71,10 +71,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Properties( const Properties& );            //!< Copy constructor
-    Properties& operator=( const Properties& ); //!< Assignement operator
+    Properties& operator=( const Properties& ); //!< Assignment operator
     //@}
 };
 

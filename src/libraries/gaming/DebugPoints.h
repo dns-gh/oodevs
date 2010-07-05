@@ -46,10 +46,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     DebugPoints( const DebugPoints& );            //!< Copy constructor
-    DebugPoints& operator=( const DebugPoints& ); //!< Assignement operator
+    DebugPoints& operator=( const DebugPoints& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

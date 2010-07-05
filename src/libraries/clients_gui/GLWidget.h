@@ -115,10 +115,10 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     GlWidget( const GlWidget& );            //!< Copy constructor
-    GlWidget& operator=( const GlWidget& ); //!< Assignement operator
+    GlWidget& operator=( const GlWidget& ); //!< Assignment operator
     //@}
 
     //! @name Types

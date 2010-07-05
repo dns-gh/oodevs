@@ -67,10 +67,10 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ChangeLogisticLinksDialog( const ChangeLogisticLinksDialog& );            //!< Copy constructor
-    ChangeLogisticLinksDialog& operator=( const ChangeLogisticLinksDialog& ); //!< Assignement operator
+    ChangeLogisticLinksDialog& operator=( const ChangeLogisticLinksDialog& ); //!< Assignment operator
     //@}
 
 private:

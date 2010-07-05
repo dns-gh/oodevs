@@ -51,10 +51,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ObjectPrototype( const ObjectPrototype& );            //!< Copy constructor
-    ObjectPrototype& operator=( const ObjectPrototype& ); //!< Assignement operator
+    ObjectPrototype& operator=( const ObjectPrototype& ); //!< Assignment operator
     //@}
 
 private:

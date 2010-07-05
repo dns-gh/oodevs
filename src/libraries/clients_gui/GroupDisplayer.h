@@ -47,10 +47,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     GroupDisplayer( const GroupDisplayer& );            //!< Copy constructor
-    GroupDisplayer& operator=( const GroupDisplayer& ); //!< Assignement operator
+    GroupDisplayer& operator=( const GroupDisplayer& ); //!< Assignment operator
     //@}
 
     //! @name Types

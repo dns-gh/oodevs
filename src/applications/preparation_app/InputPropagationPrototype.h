@@ -39,10 +39,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     InputPropagationPrototype( const InputPropagationPrototype& );            //!< Copy constructor
-    InputPropagationPrototype& operator=( const InputPropagationPrototype& ); //!< Assignement operator
+    InputPropagationPrototype& operator=( const InputPropagationPrototype& ); //!< Assignment operator
     //@}
 
 private:

@@ -48,10 +48,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     AgentList( const AgentList& );            //!< Copy constructor
-    AgentList& operator=( const AgentList& ); //!< Assignement operator
+    AgentList& operator=( const AgentList& ); //!< Assignment operator
     //@}
 };
 

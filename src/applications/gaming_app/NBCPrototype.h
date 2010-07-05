@@ -45,10 +45,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     NBCPrototype( const NBCPrototype& );            //!< Copy constructor
-    NBCPrototype& operator=( const NBCPrototype& ); //!< Assignement operator
+    NBCPrototype& operator=( const NBCPrototype& ); //!< Assignment operator
     //@}
 
 private:

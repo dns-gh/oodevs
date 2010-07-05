@@ -93,10 +93,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     AgentsModel( const AgentsModel& );            //!< Copy constructor
-    AgentsModel& operator=( const AgentsModel& ); //!< Assignement operator
+    AgentsModel& operator=( const AgentsModel& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

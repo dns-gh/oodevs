@@ -30,10 +30,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Humans( const Humans& );            //!< Copy constructor
-    Humans& operator=( const Humans& ); //!< Assignement operator
+    Humans& operator=( const Humans& ); //!< Assignment operator
     //@}
 
 public:

@@ -60,10 +60,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     LogisticsModel( const LogisticsModel& );            //!< Copy constructor
-    LogisticsModel& operator=( const LogisticsModel& ); //!< Assignement operator
+    LogisticsModel& operator=( const LogisticsModel& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

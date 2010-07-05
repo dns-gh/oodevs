@@ -44,10 +44,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     GraphicsPanel( const GraphicsPanel& );            //!< Copy constructor
-    GraphicsPanel& operator=( const GraphicsPanel& ); //!< Assignement operator
+    GraphicsPanel& operator=( const GraphicsPanel& ); //!< Assignment operator
     //@}
 
 private:

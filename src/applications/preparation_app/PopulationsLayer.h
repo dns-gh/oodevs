@@ -46,10 +46,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     PopulationsLayer( const PopulationsLayer& );            //!< Copy constructor
-    PopulationsLayer& operator=( const PopulationsLayer& ); //!< Assignement operator
+    PopulationsLayer& operator=( const PopulationsLayer& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

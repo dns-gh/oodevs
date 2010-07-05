@@ -44,10 +44,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     MiniView( const MiniView& );            //!< Copy constructor
-    MiniView& operator=( const MiniView& ); //!< Assignement operator
+    MiniView& operator=( const MiniView& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

@@ -46,10 +46,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     PropertyTableItem( const PropertyTableItem& );            //!< Copy constructor
-    PropertyTableItem& operator=( const PropertyTableItem& ); //!< Assignement operator
+    PropertyTableItem& operator=( const PropertyTableItem& ); //!< Assignment operator
     //@}
 
 private:

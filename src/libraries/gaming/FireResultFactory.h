@@ -43,10 +43,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     FireResultFactory( const FireResultFactory& );            //!< Copy constructor
-    FireResultFactory& operator=( const FireResultFactory& ); //!< Assignement operator
+    FireResultFactory& operator=( const FireResultFactory& ); //!< Assignment operator
     //@}
 
 private:

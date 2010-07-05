@@ -45,10 +45,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     LimitsModel( const LimitsModel& );            //!< Copy constructor
-    LimitsModel& operator=( const LimitsModel& ); //!< Assignement operator
+    LimitsModel& operator=( const LimitsModel& ); //!< Assignment operator
     //@}
 
 private:

@@ -48,10 +48,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ObjectFactory( const ObjectFactory& );            //!< Copy constructor
-    ObjectFactory& operator=( const ObjectFactory& ); //!< Assignement operator
+    ObjectFactory& operator=( const ObjectFactory& ); //!< Assignment operator
     //@}
 
     //! @name

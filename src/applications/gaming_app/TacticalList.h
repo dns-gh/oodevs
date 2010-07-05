@@ -50,7 +50,7 @@ private:
     //! @name Copy/Assignment
     //@{
     TacticalList( const TacticalList& );            //!< Copy constructor
-    TacticalList& operator=( const TacticalList& ); //!< Assignement operator
+    TacticalList& operator=( const TacticalList& ); //!< Assignment operator
     //@}
 };
 

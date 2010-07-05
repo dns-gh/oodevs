@@ -47,10 +47,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     MagicOrders( const MagicOrders& );            //!< Copy constructor
-    MagicOrders& operator=( const MagicOrders& ); //!< Assignement operator
+    MagicOrders& operator=( const MagicOrders& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

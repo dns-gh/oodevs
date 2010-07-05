@@ -66,7 +66,7 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     SIMControlToolbar( const SIMControlToolbar& );
     SIMControlToolbar& operator=( const SIMControlToolbar& );

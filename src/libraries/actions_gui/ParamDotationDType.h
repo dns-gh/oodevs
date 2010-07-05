@@ -54,7 +54,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ParamDotationDType( const ParamDotationDType& );
     ParamDotationDType& operator=( const ParamDotationDType& );

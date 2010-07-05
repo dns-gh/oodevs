@@ -43,10 +43,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     EntitySearchItem( const EntitySearchItem& );            //!< Copy constructor
-    EntitySearchItem& operator=( const EntitySearchItem& ); //!< Assignement operator
+    EntitySearchItem& operator=( const EntitySearchItem& ); //!< Assignment operator
     //@}
 
 private:

@@ -64,7 +64,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ObjectTypes( const ObjectTypes& );            //!< Copy constructor
     ObjectTypes& operator=( const ObjectTypes& ); //!< Assignment operator

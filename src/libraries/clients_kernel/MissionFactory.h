@@ -45,7 +45,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     MissionFactory( const MissionFactory& );            //!< Copy constructor
     MissionFactory& operator=( const MissionFactory& ); //!< Assignment operator

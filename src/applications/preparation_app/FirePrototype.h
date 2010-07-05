@@ -39,10 +39,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     FirePrototype( const FirePrototype& );            //!< Copy constructor
-    FirePrototype& operator=( const FirePrototype& ); //!< Assignement operator
+    FirePrototype& operator=( const FirePrototype& ); //!< Assignment operator
     //@}
 
 private:

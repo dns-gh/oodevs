@@ -41,7 +41,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     EquipmentType( const EquipmentType& );            //!< Copy constructor
     EquipmentType& operator=( const EquipmentType& ); //!< Assignment operator

@@ -37,10 +37,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     EntitySearchBox( const EntitySearchBox& );            //!< Copy constructor
-    EntitySearchBox& operator=( const EntitySearchBox& ); //!< Assignement operator
+    EntitySearchBox& operator=( const EntitySearchBox& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

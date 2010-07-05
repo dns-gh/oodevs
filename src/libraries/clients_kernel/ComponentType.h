@@ -38,7 +38,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ComponentType( const ComponentType& );            //!< Copy constructor
     ComponentType& operator=( const ComponentType& ); //!< Assignment operator

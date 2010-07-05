@@ -100,7 +100,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     DetectionMap( const DetectionMap& );            //!< Copy constructor
     DetectionMap& operator=( const DetectionMap& ); //!< Assignment operator

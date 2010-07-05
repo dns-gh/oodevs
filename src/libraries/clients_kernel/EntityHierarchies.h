@@ -65,7 +65,7 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     EntityHierarchies( const EntityHierarchies& );            //!< Copy constructor
     EntityHierarchies& operator=( const EntityHierarchies& ); //!< Assignment operator

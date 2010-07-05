@@ -49,7 +49,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Level( const Level& );            //!< Copy constructor
     Level& operator=( const Level& ); //!< Assignment operator

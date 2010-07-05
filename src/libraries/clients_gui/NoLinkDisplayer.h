@@ -32,10 +32,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     NoLinkDisplayer( const NoLinkDisplayer& );            //!< Copy constructor
-    NoLinkDisplayer& operator=( const NoLinkDisplayer& ); //!< Assignement operator
+    NoLinkDisplayer& operator=( const NoLinkDisplayer& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

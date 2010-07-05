@@ -38,10 +38,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     LinkInterpreter( const LinkInterpreter& );            //!< Copy constructor
-    LinkInterpreter& operator=( const LinkInterpreter& ); //!< Assignement operator
+    LinkInterpreter& operator=( const LinkInterpreter& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

@@ -59,10 +59,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     UnitListView( const UnitListView& );            //!< Copy constructor
-    UnitListView& operator=( const UnitListView& ); //!< Assignement operator
+    UnitListView& operator=( const UnitListView& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

@@ -52,10 +52,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     PopulationTypesListView( const PopulationTypesListView& );            //!< Copy constructor
-    PopulationTypesListView& operator=( const PopulationTypesListView& ); //!< Assignement operator
+    PopulationTypesListView& operator=( const PopulationTypesListView& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

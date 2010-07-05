@@ -75,7 +75,7 @@ private:
     //! @name Copy/Assignment
     //@{
     GlSelector( const GlSelector& );            //!< Copy constructor
-    GlSelector& operator=( const GlSelector& ); //!< Assignement operator
+    GlSelector& operator=( const GlSelector& ); //!< Assignment operator
     //@}
 
 protected:

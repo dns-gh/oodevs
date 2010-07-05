@@ -55,7 +55,7 @@ private:
     //! @name Copy/Assignment
     //@{
     SymbolIcons( const SymbolIcons& );            //!< Copy constructor
-    SymbolIcons& operator=( const SymbolIcons& ); //!< Assignement operator
+    SymbolIcons& operator=( const SymbolIcons& ); //!< Assignment operator
     //@}
 
     //! @name Types

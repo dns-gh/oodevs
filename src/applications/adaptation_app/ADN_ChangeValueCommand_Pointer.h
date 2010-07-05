@@ -52,10 +52,10 @@ public:
 
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ADN_ChangeValueCommand_Pointer( const ADN_ChangeValueCommand_Pointer& );            //!< Copy constructor
-    ADN_ChangeValueCommand_Pointer& operator=( const ADN_ChangeValueCommand_Pointer& ); //!< Assignement operator
+    ADN_ChangeValueCommand_Pointer& operator=( const ADN_ChangeValueCommand_Pointer& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
@@ -92,10 +92,10 @@ public:
 
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ADN_ChangeValueCommand_Pointer( const ADN_ChangeValueCommand_Pointer& );            //!< Copy constructor
-    ADN_ChangeValueCommand_Pointer& operator=( const ADN_ChangeValueCommand_Pointer& ); //!< Assignement operator
+    ADN_ChangeValueCommand_Pointer& operator=( const ADN_ChangeValueCommand_Pointer& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

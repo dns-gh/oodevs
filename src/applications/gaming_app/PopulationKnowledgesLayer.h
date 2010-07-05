@@ -30,10 +30,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     PopulationKnowledgesLayer( const PopulationKnowledgesLayer& );            //!< Copy constructor
-    PopulationKnowledgesLayer& operator=( const PopulationKnowledgesLayer& ); //!< Assignement operator
+    PopulationKnowledgesLayer& operator=( const PopulationKnowledgesLayer& ); //!< Assignment operator
     //@}
 };
 

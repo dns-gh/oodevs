@@ -46,10 +46,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ObjectKnowledgeConverter( const ObjectKnowledgeConverter& );            //!< Copy constructor
-    ObjectKnowledgeConverter& operator=( const ObjectKnowledgeConverter& ); //!< Assignement operator
+    ObjectKnowledgeConverter& operator=( const ObjectKnowledgeConverter& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

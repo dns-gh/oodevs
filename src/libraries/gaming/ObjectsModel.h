@@ -53,10 +53,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ObjectsModel( const ObjectsModel& );            //!< Copy constructor
-    ObjectsModel& operator=( const ObjectsModel& ); //!< Assignement operator
+    ObjectsModel& operator=( const ObjectsModel& ); //!< Assignment operator
     //@}
 
 private:

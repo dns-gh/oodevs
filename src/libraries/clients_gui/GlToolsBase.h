@@ -66,10 +66,10 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     GlToolsBase( const GlToolsBase& );            //!< Copy constructor
-    GlToolsBase& operator=( const GlToolsBase& ); //!< Assignement operator
+    GlToolsBase& operator=( const GlToolsBase& ); //!< Assignment operator
     //@}
 
     //! @name Types

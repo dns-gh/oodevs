@@ -53,10 +53,10 @@ public:
 
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ADN_DataTreeNode_ABC( const ADN_DataTreeNode_ABC& );            //!< Copy constructor
-    ADN_DataTreeNode_ABC& operator=( const ADN_DataTreeNode_ABC& ); //!< Assignement operator
+    ADN_DataTreeNode_ABC& operator=( const ADN_DataTreeNode_ABC& ); //!< Assignment operator
     //@}
 
 private:

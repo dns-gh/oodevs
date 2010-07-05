@@ -44,7 +44,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Property_ABC( const Property_ABC& );            //!< Copy constructor
     Property_ABC& operator=( const Property_ABC& ); //!< Assignment operator

@@ -58,10 +58,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Explosions( const Explosions& );            //!< Copy constructor
-    Explosions& operator=( const Explosions& ); //!< Assignement operator
+    Explosions& operator=( const Explosions& ); //!< Assignment operator
     //@}
 
     //! @name Types

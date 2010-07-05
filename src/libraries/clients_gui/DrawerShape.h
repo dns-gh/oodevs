@@ -85,10 +85,10 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     DrawerShape( const DrawerShape& );            //!< Copy constructor
-    DrawerShape& operator=( const DrawerShape& ); //!< Assignement operator
+    DrawerShape& operator=( const DrawerShape& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

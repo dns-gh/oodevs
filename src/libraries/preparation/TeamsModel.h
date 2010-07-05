@@ -70,10 +70,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     TeamsModel( const TeamsModel& );            //!< Copy constructor
-    TeamsModel& operator=( const TeamsModel& ); //!< Assignement operator
+    TeamsModel& operator=( const TeamsModel& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

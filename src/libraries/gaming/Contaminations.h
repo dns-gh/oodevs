@@ -53,10 +53,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Contaminations( const Contaminations& );            //!< Copy constructor
-    Contaminations& operator=( const Contaminations& ); //!< Assignement operator
+    Contaminations& operator=( const Contaminations& ); //!< Assignment operator
     //@}
 
     //! @name Types

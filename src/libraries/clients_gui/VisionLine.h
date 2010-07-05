@@ -43,10 +43,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     VisionLine( const VisionLine& );            //!< Copy constructor
-    VisionLine& operator=( const VisionLine& ); //!< Assignement operator
+    VisionLine& operator=( const VisionLine& ); //!< Assignment operator
     //@}
 
 private:

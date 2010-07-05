@@ -46,10 +46,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     MiscLayer( const MiscLayer& );            //!< Copy constructor
-    MiscLayer& operator=( const MiscLayer& ); //!< Assignement operator
+    MiscLayer& operator=( const MiscLayer& ); //!< Assignment operator
     //@}
 
 private:

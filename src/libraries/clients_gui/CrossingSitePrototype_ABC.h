@@ -40,10 +40,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     CrossingSitePrototype_ABC( const CrossingSitePrototype_ABC& );            //!< Copy constructor
-    CrossingSitePrototype_ABC& operator=( const CrossingSitePrototype_ABC& ); //!< Assignement operator
+    CrossingSitePrototype_ABC& operator=( const CrossingSitePrototype_ABC& ); //!< Assignment operator
     //@}
 
 protected:

@@ -44,7 +44,7 @@ private:
     //! @name Copy/Assignment
     //@{
     FormationHierarchy( const FormationHierarchy& );            //!< Copy constructor
-    FormationHierarchy& operator=( const FormationHierarchy& ); //!< Assignement operator
+    FormationHierarchy& operator=( const FormationHierarchy& ); //!< Assignment operator
     //@}
 
 private:

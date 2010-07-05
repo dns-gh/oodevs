@@ -63,10 +63,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     StockAttribute( const StockAttribute& );            //!< Copy constructor
-    StockAttribute& operator=( const StockAttribute& ); //!< Assignement operator
+    StockAttribute& operator=( const StockAttribute& ); //!< Assignment operator
     //@}
 
     //! @name Types

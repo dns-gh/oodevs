@@ -49,7 +49,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Circle& operator=( const Circle& ); //!< Assignment operator
     //@}

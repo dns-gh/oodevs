@@ -38,7 +38,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     CommandPostAttributes( const CommandPostAttributes& );            //!< Copy constructor
     CommandPostAttributes& operator=( const CommandPostAttributes& ); //!< Assignment operator

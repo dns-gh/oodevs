@@ -41,10 +41,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     CheckBoxDisplayer( const CheckBoxDisplayer& );            //!< Copy constructor
-    CheckBoxDisplayer& operator=( const CheckBoxDisplayer& ); //!< Assignement operator
+    CheckBoxDisplayer& operator=( const CheckBoxDisplayer& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

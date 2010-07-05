@@ -35,10 +35,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     PreferencesList( const PreferencesList& );            //!< Copy constructor
-    PreferencesList& operator=( const PreferencesList& ); //!< Assignement operator
+    PreferencesList& operator=( const PreferencesList& ); //!< Assignment operator
     //@}
 
     //! @name Types

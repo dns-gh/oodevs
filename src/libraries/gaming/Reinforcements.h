@@ -49,10 +49,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Reinforcements( const Reinforcements& );            //!< Copy constructor
-    Reinforcements& operator=( const Reinforcements& ); //!< Assignement operator
+    Reinforcements& operator=( const Reinforcements& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

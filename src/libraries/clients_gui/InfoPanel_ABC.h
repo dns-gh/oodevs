@@ -43,10 +43,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     InfoPanel_ABC( const InfoPanel_ABC& );            //!< Copy constructor
-    InfoPanel_ABC& operator=( const InfoPanel_ABC& ); //!< Assignement operator
+    InfoPanel_ABC& operator=( const InfoPanel_ABC& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

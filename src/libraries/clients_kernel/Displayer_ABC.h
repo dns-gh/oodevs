@@ -70,7 +70,7 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Displayer_ABC( const Displayer_ABC& );            //!< Copy constructor
     Displayer_ABC& operator=( const Displayer_ABC& ); //!< Assignment operator

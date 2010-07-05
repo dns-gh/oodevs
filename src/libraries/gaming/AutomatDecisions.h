@@ -65,10 +65,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     AutomatDecisions( const AutomatDecisions& );            //!< Copy constructor
-    AutomatDecisions& operator=( const AutomatDecisions& ); //!< Assignement operator
+    AutomatDecisions& operator=( const AutomatDecisions& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

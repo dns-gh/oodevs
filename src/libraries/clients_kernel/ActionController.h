@@ -131,7 +131,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ActionController( const ActionController& );            //!< Copy constructor
     ActionController& operator=( const ActionController& ); //!< Assignment operator

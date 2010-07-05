@@ -45,10 +45,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     SupplyRoutePrototype( const SupplyRoutePrototype& );            //!< Copy constructor
-    SupplyRoutePrototype& operator=( const SupplyRoutePrototype& ); //!< Assignement operator
+    SupplyRoutePrototype& operator=( const SupplyRoutePrototype& ); //!< Assignment operator
     //@}
 
 private:

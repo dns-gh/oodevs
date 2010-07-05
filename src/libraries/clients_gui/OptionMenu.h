@@ -40,10 +40,10 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     OptionMenuBase( const OptionMenuBase& );            //!< Copy constructor
-    OptionMenuBase& operator=( const OptionMenuBase& ); //!< Assignement operator
+    OptionMenuBase& operator=( const OptionMenuBase& ); //!< Assignment operator
     //@}
 
 public:
@@ -122,10 +122,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     OptionMenu( const OptionMenu& );            //!< Copy constructor
-    OptionMenu& operator=( const OptionMenu& ); //!< Assignement operator
+    OptionMenu& operator=( const OptionMenu& ); //!< Assignment operator
     //@}
 
 private:

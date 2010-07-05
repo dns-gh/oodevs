@@ -68,10 +68,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     DrawingTemplate( const DrawingTemplate& );            //!< Copy constructor
-    DrawingTemplate& operator=( const DrawingTemplate& ); //!< Assignement operator
+    DrawingTemplate& operator=( const DrawingTemplate& ); //!< Assignment operator
     //@}
 
     //! @name Types

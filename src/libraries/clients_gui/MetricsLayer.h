@@ -46,10 +46,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     MetricsLayer( const MetricsLayer& );            //!< Copy constructor
-    MetricsLayer& operator=( const MetricsLayer& ); //!< Assignement operator
+    MetricsLayer& operator=( const MetricsLayer& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

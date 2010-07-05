@@ -66,10 +66,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ADN_OpenMode_Dialog( const ADN_OpenMode_Dialog& );            //!< Copy constructor
-    ADN_OpenMode_Dialog& operator=( const ADN_OpenMode_Dialog& ); //!< Assignement operator
+    ADN_OpenMode_Dialog& operator=( const ADN_OpenMode_Dialog& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

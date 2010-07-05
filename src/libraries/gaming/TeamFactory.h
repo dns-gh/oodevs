@@ -43,10 +43,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     TeamFactory( const TeamFactory& );            //!< Copy constructor
-    TeamFactory& operator=( const TeamFactory& ); //!< Assignement operator
+    TeamFactory& operator=( const TeamFactory& ); //!< Assignment operator
     //@}
 
 private:

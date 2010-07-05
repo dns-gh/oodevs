@@ -67,7 +67,7 @@ private:
     //! @name Copy/Assignment
     //@{
     Automat( const Automat& );            //!< Copy constructor
-    Automat& operator=( const Automat& ); //!< Assignement operator
+    Automat& operator=( const Automat& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

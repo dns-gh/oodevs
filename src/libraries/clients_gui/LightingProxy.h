@@ -61,7 +61,7 @@ private:
     //! @name Copy/Assignment
     //@{
     LightingProxy( const LightingProxy& );            //!< Copy constructor
-    LightingProxy& operator=( const LightingProxy& ); //!< Assignement operator
+    LightingProxy& operator=( const LightingProxy& ); //!< Assignment operator
     //@}
 
 private:

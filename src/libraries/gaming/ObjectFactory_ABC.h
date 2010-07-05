@@ -42,10 +42,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ObjectFactory_ABC( const ObjectFactory_ABC& );            //!< Copy constructor
-    ObjectFactory_ABC& operator=( const ObjectFactory_ABC& ); //!< Assignement operator
+    ObjectFactory_ABC& operator=( const ObjectFactory_ABC& ); //!< Assignment operator
     //@}
 };
 

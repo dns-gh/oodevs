@@ -49,10 +49,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     AgentKnowledgeConverter( const AgentKnowledgeConverter& );            //!< Copy constructor
-    AgentKnowledgeConverter& operator=( const AgentKnowledgeConverter& ); //!< Assignement operator
+    AgentKnowledgeConverter& operator=( const AgentKnowledgeConverter& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

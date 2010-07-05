@@ -50,10 +50,10 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     DiplomacyCell( const DiplomacyCell& );            //!< Copy constructor
-    DiplomacyCell& operator=( const DiplomacyCell& ); //!< Assignement operator
+    DiplomacyCell& operator=( const DiplomacyCell& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

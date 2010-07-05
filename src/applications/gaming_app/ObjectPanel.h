@@ -55,10 +55,10 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ObjectPanel( const ObjectPanel& );            //!< Copy constructor
-    ObjectPanel& operator=( const ObjectPanel& ); //!< Assignement operator
+    ObjectPanel& operator=( const ObjectPanel& ); //!< Assignment operator
     //@}
 
 private:

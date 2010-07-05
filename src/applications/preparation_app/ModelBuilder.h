@@ -75,10 +75,10 @@ public slots:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ModelBuilder( const ModelBuilder& );            //!< Copy constructor
-    ModelBuilder& operator=( const ModelBuilder& ); //!< Assignement operator
+    ModelBuilder& operator=( const ModelBuilder& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

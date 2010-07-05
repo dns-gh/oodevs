@@ -58,10 +58,10 @@ protected slots:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     RichItemFactory( const RichItemFactory& );            //!< Copy constructor
-    RichItemFactory& operator=( const RichItemFactory& ); //!< Assignement operator
+    RichItemFactory& operator=( const RichItemFactory& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

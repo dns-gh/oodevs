@@ -61,10 +61,10 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ParamLimaList( const ParamLimaList& );            //!< Copy constructor
-    ParamLimaList& operator=( const ParamLimaList& ); //!< Assignement operator
+    ParamLimaList& operator=( const ParamLimaList& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

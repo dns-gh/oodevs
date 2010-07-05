@@ -94,10 +94,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Gl3dWidget( const Gl3dWidget& );            //!< Copy constructor
-    Gl3dWidget& operator=( const Gl3dWidget& ); //!< Assignement operator
+    Gl3dWidget& operator=( const Gl3dWidget& ); //!< Assignment operator
     //@}
 
 protected:

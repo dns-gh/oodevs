@@ -40,10 +40,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     TableItemDisplayer( const TableItemDisplayer& );            //!< Copy constructor
-    TableItemDisplayer& operator=( const TableItemDisplayer& ); //!< Assignement operator
+    TableItemDisplayer& operator=( const TableItemDisplayer& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

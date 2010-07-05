@@ -44,10 +44,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     MSEllipse( const MSEllipse& );            //!< Copy constructor
-    MSEllipse& operator=( const MSEllipse& ); //!< Assignement operator
+    MSEllipse& operator=( const MSEllipse& ); //!< Assignment operator
     //@}
 
 private:

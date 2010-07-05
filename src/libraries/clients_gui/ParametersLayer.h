@@ -62,10 +62,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ParametersLayer( const ParametersLayer& );            //!< Copy constructor
-    ParametersLayer& operator=( const ParametersLayer& ); //!< Assignement operator
+    ParametersLayer& operator=( const ParametersLayer& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

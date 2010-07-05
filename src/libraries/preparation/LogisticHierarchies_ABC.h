@@ -59,7 +59,7 @@ private:
     //! @name Copy/Assignment
     //@{
     LogisticHierarchies_ABC( const LogisticHierarchies_ABC& );            //!< Copy constructor
-    LogisticHierarchies_ABC& operator=( const LogisticHierarchies_ABC& ); //!< Assignement operator
+    LogisticHierarchies_ABC& operator=( const LogisticHierarchies_ABC& ); //!< Assignment operator
     //@}
 };
 

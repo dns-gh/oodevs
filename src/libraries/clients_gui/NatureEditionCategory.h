@@ -55,7 +55,7 @@ private:
     //! @name Copy/Assignment
     //@{
     NatureEditionCategory( const NatureEditionCategory& );            //!< Copy constructor
-    NatureEditionCategory& operator=( const NatureEditionCategory& ); //!< Assignement operator
+    NatureEditionCategory& operator=( const NatureEditionCategory& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

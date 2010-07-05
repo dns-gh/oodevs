@@ -43,7 +43,7 @@ private:
     //! @name Copy/Assignment
     //@{
     PcAttributes( const PcAttributes& );            //!< Copy constructor
-    PcAttributes& operator=( const PcAttributes& ); //!< Assignement operator
+    PcAttributes& operator=( const PcAttributes& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

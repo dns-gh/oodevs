@@ -40,10 +40,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     AgentSelectionObserver( const AgentSelectionObserver& );            //!< Copy constructor
-    AgentSelectionObserver& operator=( const AgentSelectionObserver& ); //!< Assignement operator
+    AgentSelectionObserver& operator=( const AgentSelectionObserver& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

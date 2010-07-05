@@ -56,7 +56,7 @@ private:
     //! @name Copy/Assignment
     //@{
     NatureEditionWidget( const NatureEditionWidget& );            //!< Copy constructor
-    NatureEditionWidget& operator=( const NatureEditionWidget& ); //!< Assignement operator
+    NatureEditionWidget& operator=( const NatureEditionWidget& ); //!< Assignment operator
     //@}
 
 private:

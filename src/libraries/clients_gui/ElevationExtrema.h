@@ -42,7 +42,7 @@ private:
     //! @name Copy/Assignment
     //@{
     ElevationExtrema( const ElevationExtrema& );            //!< Copy constructor
-    ElevationExtrema& operator=( const ElevationExtrema& ); //!< Assignement operator
+    ElevationExtrema& operator=( const ElevationExtrema& ); //!< Assignment operator
     //@}
 
     //! @name Types

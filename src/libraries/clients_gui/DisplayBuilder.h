@@ -42,10 +42,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     DisplayBuilder( const DisplayBuilder& );            //!< Copy constructor
-    DisplayBuilder& operator=( const DisplayBuilder& ); //!< Assignement operator
+    DisplayBuilder& operator=( const DisplayBuilder& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

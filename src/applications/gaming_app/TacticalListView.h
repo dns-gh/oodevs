@@ -58,7 +58,7 @@ private:
     //! @name Copy/Assignment
     //@{
     TacticalListView( const TacticalListView& );            //!< Copy constructor
-    TacticalListView& operator=( const TacticalListView& ); //!< Assignement operator
+    TacticalListView& operator=( const TacticalListView& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

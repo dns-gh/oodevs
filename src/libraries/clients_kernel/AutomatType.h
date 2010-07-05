@@ -59,7 +59,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     AutomatType( const AutomatType& );            //!< Copy constructor
     AutomatType& operator=( const AutomatType& ); //!< Assignment operator

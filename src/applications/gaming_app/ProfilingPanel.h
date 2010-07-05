@@ -45,10 +45,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ProfilingPanel( const ProfilingPanel& );            //!< Copy constructor
-    ProfilingPanel& operator=( const ProfilingPanel& ); //!< Assignement operator
+    ProfilingPanel& operator=( const ProfilingPanel& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

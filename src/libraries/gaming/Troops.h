@@ -52,10 +52,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Troops( const Troops& );            //!< Copy constructor
-    Troops& operator=( const Troops& ); //!< Assignement operator
+    Troops& operator=( const Troops& ); //!< Assignment operator
     //@}
 
     //! @name Types

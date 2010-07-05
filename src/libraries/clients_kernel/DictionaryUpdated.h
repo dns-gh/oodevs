@@ -38,7 +38,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     DictionaryUpdated( const DictionaryUpdated& );            //!< Copy constructor
     DictionaryUpdated& operator=( const DictionaryUpdated& ); //!< Assignment operator

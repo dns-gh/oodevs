@@ -47,7 +47,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ObjectMessageService( const ObjectMessageService& );            //!< Copy constructor
     ObjectMessageService& operator=( const ObjectMessageService& ); //!< Assignment operator

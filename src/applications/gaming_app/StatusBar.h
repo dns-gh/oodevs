@@ -59,10 +59,10 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     StatusBar( const StatusBar& );            //!< Copy constructor
-    StatusBar& operator=( const StatusBar& ); //!< Assignement operator
+    StatusBar& operator=( const StatusBar& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

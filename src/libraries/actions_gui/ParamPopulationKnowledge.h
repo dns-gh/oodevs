@@ -48,10 +48,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ParamPopulationKnowledge( const ParamPopulationKnowledge& );            //!< Copy constructor
-    ParamPopulationKnowledge& operator=( const ParamPopulationKnowledge& ); //!< Assignement operator
+    ParamPopulationKnowledge& operator=( const ParamPopulationKnowledge& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

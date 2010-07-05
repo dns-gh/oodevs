@@ -81,7 +81,7 @@ private:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ClientNetworker( const ClientNetworker& );            //!< Copy constructor
     ClientNetworker& operator=( const ClientNetworker& ); //!< Assignment operator

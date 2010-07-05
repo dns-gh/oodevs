@@ -48,10 +48,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     SpinBoxDisplayer( const SpinBoxDisplayer& );            //!< Copy constructor
-    SpinBoxDisplayer& operator=( const SpinBoxDisplayer& ); //!< Assignement operator
+    SpinBoxDisplayer& operator=( const SpinBoxDisplayer& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

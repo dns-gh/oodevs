@@ -54,10 +54,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     TacticalLineFactory( const TacticalLineFactory& );            //!< Copy constructor
-    TacticalLineFactory& operator=( const TacticalLineFactory& ); //!< Assignement operator
+    TacticalLineFactory& operator=( const TacticalLineFactory& ); //!< Assignment operator
     //@}
 
 private:

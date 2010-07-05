@@ -51,10 +51,10 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     LocalWeathersList( const LocalWeathersList& );            //!< Copy constructor
-    LocalWeathersList& operator=( const LocalWeathersList& ); //!< Assignement operator
+    LocalWeathersList& operator=( const LocalWeathersList& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

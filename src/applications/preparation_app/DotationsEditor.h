@@ -54,10 +54,10 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     DotationsEditor( const DotationsEditor& );            //!< Copy constructor
-    DotationsEditor& operator=( const DotationsEditor& ); //!< Assignement operator
+    DotationsEditor& operator=( const DotationsEditor& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

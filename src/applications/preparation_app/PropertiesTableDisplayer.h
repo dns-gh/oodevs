@@ -51,10 +51,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     PropertiesTableDisplayer( const PropertiesTableDisplayer& );            //!< Copy constructor
-    PropertiesTableDisplayer& operator=( const PropertiesTableDisplayer& ); //!< Assignement operator
+    PropertiesTableDisplayer& operator=( const PropertiesTableDisplayer& ); //!< Assignment operator
     //@}
 
 private:

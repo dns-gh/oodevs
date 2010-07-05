@@ -41,7 +41,7 @@ private:
     //! @name Copy/Assignment
     //@{
     Viewport2d( const Viewport2d& );            //!< Copy constructor
-    Viewport2d& operator=( const Viewport2d& ); //!< Assignement operator
+    Viewport2d& operator=( const Viewport2d& ); //!< Assignment operator
     //@}
 
 private:

@@ -52,10 +52,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     PopulationDecisions( const PopulationDecisions& );            //!< Copy constructor
-    PopulationDecisions& operator=( const PopulationDecisions& ); //!< Assignement operator
+    PopulationDecisions& operator=( const PopulationDecisions& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

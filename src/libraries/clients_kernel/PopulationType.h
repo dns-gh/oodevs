@@ -45,7 +45,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     PopulationType( const PopulationType& );            //!< Copy constructor
     PopulationType& operator=( const PopulationType& ); //!< Assignment operator

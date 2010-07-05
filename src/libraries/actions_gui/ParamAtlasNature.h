@@ -55,10 +55,10 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ParamAtlasNature( const ParamAtlasNature& );            //!< Copy constructor
-    ParamAtlasNature& operator=( const ParamAtlasNature& ); //!< Assignement operator
+    ParamAtlasNature& operator=( const ParamAtlasNature& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

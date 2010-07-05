@@ -73,10 +73,10 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     FireCreationPanel( const FireCreationPanel& );            //!< Copy constructor
-    FireCreationPanel& operator=( const FireCreationPanel& ); //!< Assignement operator
+    FireCreationPanel& operator=( const FireCreationPanel& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

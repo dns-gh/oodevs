@@ -53,10 +53,10 @@ protected:
     bool mergeMeWith ( QtCommand* other );
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ADN_ChangeValueCommand_Double( const ADN_ChangeValueCommand_Double& );            //!< Copy constructor
-    ADN_ChangeValueCommand_Double& operator=( const ADN_ChangeValueCommand_Double& ); //!< Assignement operator
+    ADN_ChangeValueCommand_Double& operator=( const ADN_ChangeValueCommand_Double& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

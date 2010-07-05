@@ -61,10 +61,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ObjectPositions( const ObjectPositions& );            //!< Copy constructor
-    ObjectPositions& operator=( const ObjectPositions& ); //!< Assignement operator
+    ObjectPositions& operator=( const ObjectPositions& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

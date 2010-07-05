@@ -61,10 +61,10 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     WeatherPanel( const WeatherPanel& );            //!< Copy constructor
-    WeatherPanel& operator=( const WeatherPanel& ); //!< Assignement operator
+    WeatherPanel& operator=( const WeatherPanel& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

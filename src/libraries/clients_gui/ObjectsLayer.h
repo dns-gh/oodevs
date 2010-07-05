@@ -33,10 +33,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ObjectsLayer( const ObjectsLayer& );            //!< Copy constructor
-    ObjectsLayer& operator=( const ObjectsLayer& ); //!< Assignement operator
+    ObjectsLayer& operator=( const ObjectsLayer& ); //!< Assignment operator
     //@}
 
 private:

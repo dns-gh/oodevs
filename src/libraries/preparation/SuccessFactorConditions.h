@@ -63,7 +63,7 @@ private:
     //! @name Copy/Assignment
     //@{
     SuccessFactorConditions( const SuccessFactorConditions& );            //!< Copy constructor
-    SuccessFactorConditions& operator=( const SuccessFactorConditions& ); //!< Assignement operator
+    SuccessFactorConditions& operator=( const SuccessFactorConditions& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

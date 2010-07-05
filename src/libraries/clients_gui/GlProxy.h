@@ -97,10 +97,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     GlProxy( const GlProxy& );            //!< Copy constructor
-    GlProxy& operator=( const GlProxy& ); //!< Assignement operator
+    GlProxy& operator=( const GlProxy& ); //!< Assignment operator
     //@}
 
     //! @name Types

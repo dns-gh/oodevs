@@ -52,10 +52,10 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ParamDirection( const ParamDirection& );            //!< Copy constructor
-    ParamDirection& operator=( const ParamDirection& ); //!< Assignement operator
+    ParamDirection& operator=( const ParamDirection& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

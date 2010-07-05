@@ -31,10 +31,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ADN_Model_Wizard_FirstPage( const ADN_Model_Wizard_FirstPage& );            //!< Copy constructor
-    ADN_Model_Wizard_FirstPage& operator=( const ADN_Model_Wizard_FirstPage& ); //!< Assignement operator
+    ADN_Model_Wizard_FirstPage& operator=( const ADN_Model_Wizard_FirstPage& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

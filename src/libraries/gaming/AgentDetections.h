@@ -54,10 +54,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     AgentDetections( const AgentDetections& );            //!< Copy constructor
-    AgentDetections& operator=( const AgentDetections& ); //!< Assignement operator
+    AgentDetections& operator=( const AgentDetections& ); //!< Assignment operator
     //@}
 
     //! @name Types

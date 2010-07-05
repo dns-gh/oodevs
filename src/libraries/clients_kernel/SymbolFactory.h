@@ -41,7 +41,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     SymbolFactory( const SymbolFactory& );            //!< Copy constructor
     SymbolFactory& operator=( const SymbolFactory& ); //!< Assignment operator

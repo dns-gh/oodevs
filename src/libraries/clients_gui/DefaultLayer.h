@@ -42,10 +42,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     DefaultLayer( const DefaultLayer& );            //!< Copy constructor
-    DefaultLayer& operator=( const DefaultLayer& ); //!< Assignement operator
+    DefaultLayer& operator=( const DefaultLayer& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

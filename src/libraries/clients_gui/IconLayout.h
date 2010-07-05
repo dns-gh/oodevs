@@ -36,10 +36,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     IconLayout( const IconLayout& );            //!< Copy constructor
-    IconLayout& operator=( const IconLayout& ); //!< Assignement operator
+    IconLayout& operator=( const IconLayout& ); //!< Assignment operator
     //@}
 
     //! @name Types

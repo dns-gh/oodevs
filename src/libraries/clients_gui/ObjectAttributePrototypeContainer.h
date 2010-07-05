@@ -72,10 +72,10 @@ private:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ObjectAttributePrototypeContainer( const ObjectAttributePrototypeContainer& );            //!< Copy constructor
-    ObjectAttributePrototypeContainer& operator=( const ObjectAttributePrototypeContainer& ); //!< Assignement operator
+    ObjectAttributePrototypeContainer& operator=( const ObjectAttributePrototypeContainer& ); //!< Assignment operator
     //@}
 
     //! @name Helper

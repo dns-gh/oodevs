@@ -46,10 +46,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     EfficientRangeDialog( const EfficientRangeDialog& );            //!< Copy constructor
-    EfficientRangeDialog& operator=( const EfficientRangeDialog& ); //!< Assignement operator
+    EfficientRangeDialog& operator=( const EfficientRangeDialog& ); //!< Assignment operator
     //@}
 
 private slots:

@@ -52,7 +52,7 @@ private:
     //! @name Copy/Assignment
     //@{
     AutomatPositions( const AutomatPositions& );            //!< Copy constructor
-    AutomatPositions& operator=( const AutomatPositions& ); //!< Assignement operator
+    AutomatPositions& operator=( const AutomatPositions& ); //!< Assignment operator
     //@}
 
 private:

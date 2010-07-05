@@ -66,7 +66,7 @@ private:
     //! @name Copy/Assignment
     //@{
     LayersPanel( const LayersPanel& );            //!< Copy constructor
-    LayersPanel& operator=( const LayersPanel& ); //!< Assignement operator
+    LayersPanel& operator=( const LayersPanel& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

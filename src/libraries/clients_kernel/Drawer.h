@@ -40,7 +40,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Drawer( const Drawer& );            //!< Copy constructor
     Drawer& operator=( const Drawer& ); //!< Assignment operator

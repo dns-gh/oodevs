@@ -46,10 +46,10 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     GQ_PlotToolTip( const GQ_PlotToolTip& rhs );            //!< Copy constructor
-    GQ_PlotToolTip& operator=( const GQ_PlotToolTip& rhs ); //!< Assignement operator
+    GQ_PlotToolTip& operator=( const GQ_PlotToolTip& rhs ); //!< Assignment operator
     //@}
 
     //! @name Helpers

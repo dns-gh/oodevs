@@ -61,10 +61,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     MissionParameters( const MissionParameters& );            //!< Copy constructor
-    MissionParameters& operator=( const MissionParameters& ); //!< Assignement operator
+    MissionParameters& operator=( const MissionParameters& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

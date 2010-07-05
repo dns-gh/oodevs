@@ -50,7 +50,7 @@ private:
     //! @name Copy/Assignment
     //@{
     XPSPlayer( const XPSPlayer& );            //!< Copy constructor
-    XPSPlayer& operator=( const XPSPlayer& ); //!< Assignement operator
+    XPSPlayer& operator=( const XPSPlayer& ); //!< Assignment operator
     //@}
 
 private:

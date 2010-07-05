@@ -43,7 +43,7 @@ private:
     //! @name Copy/Assignment
     //@{
     SimplerRichText( const SimplerRichText& );            //!< Copy constructor
-    SimplerRichText& operator=( const SimplerRichText& ); //!< Assignement operator
+    SimplerRichText& operator=( const SimplerRichText& ); //!< Assignment operator
     //@}
 
     //! @name Types

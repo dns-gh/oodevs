@@ -54,10 +54,10 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     LinkInterpreter_ABC( const LinkInterpreter_ABC& );            //!< Copy constructor
-    LinkInterpreter_ABC& operator=( const LinkInterpreter_ABC& ); //!< Assignement operator
+    LinkInterpreter_ABC& operator=( const LinkInterpreter_ABC& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

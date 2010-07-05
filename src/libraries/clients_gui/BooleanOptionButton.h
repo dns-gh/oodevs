@@ -37,10 +37,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     BooleanOptionButton( const BooleanOptionButton& );            //!< Copy constructor
-    BooleanOptionButton& operator=( const BooleanOptionButton& ); //!< Assignement operator
+    BooleanOptionButton& operator=( const BooleanOptionButton& ); //!< Assignment operator
     //@}
 
 private slots:

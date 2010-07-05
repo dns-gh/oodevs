@@ -59,10 +59,10 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ColorButton( const ColorButton& );            //!< Copy constructor
-    ColorButton& operator=( const ColorButton& ); //!< Assignement operator
+    ColorButton& operator=( const ColorButton& ); //!< Assignment operator
     //@}
 
 private:

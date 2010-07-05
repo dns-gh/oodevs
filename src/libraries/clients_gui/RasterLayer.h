@@ -55,7 +55,7 @@ private:
     //! @name Copy/Assignment
     //@{
     RasterLayer( const RasterLayer& );            //!< Copy constructor
-    RasterLayer& operator=( const RasterLayer& ); //!< Assignement operator
+    RasterLayer& operator=( const RasterLayer& ); //!< Assignment operator
     //@}
 
 private:

@@ -100,10 +100,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     BaseDisplayer( const BaseDisplayer& );            //!< Copy constructor
-    BaseDisplayer& operator=( const BaseDisplayer& ); //!< Assignement operator
+    BaseDisplayer& operator=( const BaseDisplayer& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

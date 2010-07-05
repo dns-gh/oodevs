@@ -48,10 +48,10 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     SizeButton( const SizeButton& );            //!< Copy constructor
-    SizeButton& operator=( const SizeButton& ); //!< Assignement operator
+    SizeButton& operator=( const SizeButton& ); //!< Assignment operator
     //@}
 
 private:

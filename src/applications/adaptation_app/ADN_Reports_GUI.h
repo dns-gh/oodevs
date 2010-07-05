@@ -36,10 +36,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ADN_Reports_GUI( const ADN_Reports_GUI& );            //!< Copy constructor
-    ADN_Reports_GUI& operator=( const ADN_Reports_GUI& ); //!< Assignement operator
+    ADN_Reports_GUI& operator=( const ADN_Reports_GUI& ); //!< Assignment operator
     //@}
 
 private:

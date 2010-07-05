@@ -48,10 +48,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     KnowledgeGroupsModel( const KnowledgeGroupsModel& );            //!< Copy constructor
-    KnowledgeGroupsModel& operator=( const KnowledgeGroupsModel& ); //!< Assignement operator
+    KnowledgeGroupsModel& operator=( const KnowledgeGroupsModel& ); //!< Assignment operator
     //@}
 
 private:

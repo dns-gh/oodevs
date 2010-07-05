@@ -43,10 +43,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     SubItemDisplayer( const SubItemDisplayer& );            //!< Copy constructor
-    SubItemDisplayer& operator=( const SubItemDisplayer& ); //!< Assignement operator
+    SubItemDisplayer& operator=( const SubItemDisplayer& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

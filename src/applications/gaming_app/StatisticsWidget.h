@@ -42,10 +42,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     StatisticsWidget( const StatisticsWidget& );            //!< Copy constructor
-    StatisticsWidget& operator=( const StatisticsWidget& ); //!< Assignement operator
+    StatisticsWidget& operator=( const StatisticsWidget& ); //!< Assignment operator
     //@}
 
     //! @name Types

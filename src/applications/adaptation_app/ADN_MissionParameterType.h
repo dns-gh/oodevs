@@ -34,10 +34,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ADN_MissionParameterType( const ADN_MissionParameterType& );            //!< Copy constructor
-    ADN_MissionParameterType& operator=( const ADN_MissionParameterType& ); //!< Assignement operator
+    ADN_MissionParameterType& operator=( const ADN_MissionParameterType& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

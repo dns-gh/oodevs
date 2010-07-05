@@ -62,10 +62,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Agent( const Agent& );            //!< Copy constructor
-    Agent& operator=( const Agent& ); //!< Assignement operator
+    Agent& operator=( const Agent& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

@@ -48,7 +48,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Lines& operator=( const Lines& ); //!< Assignment operator
     //@}

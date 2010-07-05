@@ -45,10 +45,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ParamAutomatList( const ParamAutomatList& );            //!< Copy constructor
-    ParamAutomatList& operator=( const ParamAutomatList& ); //!< Assignement operator
+    ParamAutomatList& operator=( const ParamAutomatList& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

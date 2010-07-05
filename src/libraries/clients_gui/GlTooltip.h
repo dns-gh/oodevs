@@ -59,10 +59,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     GlTooltip( const GlTooltip& );            //!< Copy constructor
-    GlTooltip& operator=( const GlTooltip& ); //!< Assignement operator
+    GlTooltip& operator=( const GlTooltip& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

@@ -46,10 +46,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     GLSymbols( const GLSymbols& );            //!< Copy constructor
-    GLSymbols& operator=( const GLSymbols& ); //!< Assignement operator
+    GLSymbols& operator=( const GLSymbols& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

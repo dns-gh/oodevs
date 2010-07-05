@@ -85,7 +85,7 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     UnitMagicOrdersInterface( const UnitMagicOrdersInterface& );            //!< Copy constructor
     UnitMagicOrdersInterface& operator=( const UnitMagicOrdersInterface& ); //!< Assignment operator

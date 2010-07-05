@@ -63,10 +63,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     NBCAttribute( const NBCAttribute& );            //!< Copy constructor
-    NBCAttribute& operator=( const NBCAttribute& ); //!< Assignement operator
+    NBCAttribute& operator=( const NBCAttribute& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

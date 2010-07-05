@@ -48,7 +48,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     DecisionalModel( const DecisionalModel& );            //!< Copy constructor
     DecisionalModel& operator=( const DecisionalModel& ); //!< Assignment operator

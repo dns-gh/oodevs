@@ -46,7 +46,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     PopulationConcentration_ABC( const PopulationConcentration_ABC& );            //!< Copy constructor
     PopulationConcentration_ABC& operator=( const PopulationConcentration_ABC& ); //!< Assignment operator

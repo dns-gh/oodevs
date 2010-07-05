@@ -73,10 +73,10 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     LimitParameter( const LimitParameter& );            //!< Copy constructor
-    LimitParameter& operator=( const LimitParameter& ); //!< Assignement operator
+    LimitParameter& operator=( const LimitParameter& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

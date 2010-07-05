@@ -39,10 +39,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     MedicalTreatmentPrototype( const MedicalTreatmentPrototype& );            //!< Copy constructor
-    MedicalTreatmentPrototype& operator=( const MedicalTreatmentPrototype& ); //!< Assignement operator
+    MedicalTreatmentPrototype& operator=( const MedicalTreatmentPrototype& ); //!< Assignment operator
     //@}
 
 private:

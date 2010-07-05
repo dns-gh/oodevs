@@ -69,10 +69,10 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     DrawerPanel( const DrawerPanel& );            //!< Copy constructor
-    DrawerPanel& operator=( const DrawerPanel& ); //!< Assignement operator
+    DrawerPanel& operator=( const DrawerPanel& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

@@ -90,7 +90,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     GQ_PlotDataBBox( const GQ_PlotDataBBox& rhs );            //!< Copy constructor
     //@}

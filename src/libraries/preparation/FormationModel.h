@@ -57,10 +57,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     FormationModel( const FormationModel& );            //!< Copy constructor
-    FormationModel& operator=( const FormationModel& ); //!< Assignement operator
+    FormationModel& operator=( const FormationModel& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

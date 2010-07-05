@@ -51,10 +51,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     SurfaceFactory( const SurfaceFactory& );            //!< Copy constructor
-    SurfaceFactory& operator=( const SurfaceFactory& ); //!< Assignement operator
+    SurfaceFactory& operator=( const SurfaceFactory& ); //!< Assignment operator
     //@}
 
 private:

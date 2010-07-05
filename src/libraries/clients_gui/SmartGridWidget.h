@@ -30,10 +30,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     SmartGridWidget( const SmartGridWidget& );            //!< Copy constructor
-    SmartGridWidget& operator=( const SmartGridWidget& ); //!< Assignement operator
+    SmartGridWidget& operator=( const SmartGridWidget& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

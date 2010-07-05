@@ -57,7 +57,7 @@ private:
     //! @name Copy/Assignment
     //@{
     LoginDialog( const LoginDialog& );            //!< Copy constructor
-    LoginDialog& operator=( const LoginDialog& ); //!< Assignement operator
+    LoginDialog& operator=( const LoginDialog& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

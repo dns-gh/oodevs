@@ -31,10 +31,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     KnowledgeLayer( const KnowledgeLayer& );            //!< Copy constructor
-    KnowledgeLayer& operator=( const KnowledgeLayer& ); //!< Assignement operator
+    KnowledgeLayer& operator=( const KnowledgeLayer& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

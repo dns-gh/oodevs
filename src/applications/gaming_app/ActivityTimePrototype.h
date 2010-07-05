@@ -42,10 +42,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ActivityTimePrototype( const ActivityTimePrototype& );            //!< Copy constructor
-    ActivityTimePrototype& operator=( const ActivityTimePrototype& ); //!< Assignement operator
+    ActivityTimePrototype& operator=( const ActivityTimePrototype& ); //!< Assignment operator
     //@}
 
 private:

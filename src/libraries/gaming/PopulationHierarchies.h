@@ -33,7 +33,7 @@ private:
     //! @name Copy/Assignment
     //@{
     PopulationHierarchies( const PopulationHierarchies& );            //!< Copy constructor
-    PopulationHierarchies& operator=( const PopulationHierarchies& ); //!< Assignement operator
+    PopulationHierarchies& operator=( const PopulationHierarchies& ); //!< Assignment operator
     //@}
 };
 

@@ -61,10 +61,10 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     GQ_PlotCaption( const GQ_PlotCaption& );            //!< Copy constructor
-    GQ_PlotCaption& operator=( const GQ_PlotCaption& ); //!< Assignement operator
+    GQ_PlotCaption& operator=( const GQ_PlotCaption& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

@@ -52,10 +52,10 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ParamBool( const ParamBool& );            //!< Copy constructor
-    ParamBool& operator=( const ParamBool& ); //!< Assignement operator
+    ParamBool& operator=( const ParamBool& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

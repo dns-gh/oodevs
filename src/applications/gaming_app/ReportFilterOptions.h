@@ -51,10 +51,10 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ReportFilterOptions( const ReportFilterOptions& );            //!< Copy constructor
-    ReportFilterOptions& operator=( const ReportFilterOptions& ); //!< Assignement operator
+    ReportFilterOptions& operator=( const ReportFilterOptions& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

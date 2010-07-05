@@ -39,10 +39,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ADN_Mission_CheckItem( const ADN_Mission_CheckItem& );            //!< Copy constructor
-    ADN_Mission_CheckItem& operator=( const ADN_Mission_CheckItem& ); //!< Assignement operator
+    ADN_Mission_CheckItem& operator=( const ADN_Mission_CheckItem& ); //!< Assignment operator
     //@}
 
 private:

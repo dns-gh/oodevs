@@ -57,10 +57,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     HumanFactors( const HumanFactors& );            //!< Copy constructor
-    HumanFactors& operator=( const HumanFactors& ); //!< Assignement operator
+    HumanFactors& operator=( const HumanFactors& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

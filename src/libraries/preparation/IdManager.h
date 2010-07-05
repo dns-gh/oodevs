@@ -34,10 +34,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     IdManager( const IdManager& );            //!< Copy constructor
-    IdManager& operator=( const IdManager& ); //!< Assignement operator
+    IdManager& operator=( const IdManager& ); //!< Assignment operator
     //@}
 
 private:

@@ -67,7 +67,7 @@ private:
     //! @name Copy/Assignment
     //@{
     ElevationPanel( const ElevationPanel& );            //!< Copy constructor
-    ElevationPanel& operator=( const ElevationPanel& ); //!< Assignement operator
+    ElevationPanel& operator=( const ElevationPanel& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

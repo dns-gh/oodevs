@@ -56,10 +56,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     RcEntityResolver( const RcEntityResolver& );            //!< Copy constructor
-    RcEntityResolver& operator=( const RcEntityResolver& ); //!< Assignement operator
+    RcEntityResolver& operator=( const RcEntityResolver& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

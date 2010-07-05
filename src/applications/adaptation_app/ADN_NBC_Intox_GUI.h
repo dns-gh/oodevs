@@ -46,10 +46,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ADN_NBC_Intox_GUI( const ADN_NBC_Intox_GUI& );            //!< Copy constructor
-    ADN_NBC_Intox_GUI& operator=( const ADN_NBC_Intox_GUI& ); //!< Assignement operator
+    ADN_NBC_Intox_GUI& operator=( const ADN_NBC_Intox_GUI& ); //!< Assignment operator
     //@}
 
 private:

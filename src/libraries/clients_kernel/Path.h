@@ -51,7 +51,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Path& operator=( const Path& ); //!< Assignment operator
     //@}

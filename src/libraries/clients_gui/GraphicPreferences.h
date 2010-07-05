@@ -54,10 +54,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     GraphicPreferences( const GraphicPreferences& );            //!< Copy constructor
-    GraphicPreferences& operator=( const GraphicPreferences& ); //!< Assignement operator
+    GraphicPreferences& operator=( const GraphicPreferences& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

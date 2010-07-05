@@ -39,10 +39,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     TeamKarmas( const TeamKarmas& );            //!< Copy constructor
-    TeamKarmas& operator=( const TeamKarmas& ); //!< Assignement operator
+    TeamKarmas& operator=( const TeamKarmas& ); //!< Assignment operator
     //@}
 
 private:

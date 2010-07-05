@@ -106,10 +106,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     EntityParameter( const EntityParameter& );            //!< Copy constructor
-    EntityParameter& operator=( const EntityParameter& ); //!< Assignement operator
+    EntityParameter& operator=( const EntityParameter& ); //!< Assignment operator
     //@}
 
 protected:

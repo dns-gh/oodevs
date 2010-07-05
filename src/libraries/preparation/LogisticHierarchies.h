@@ -40,10 +40,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     LogisticHierarchies( const LogisticHierarchies& );            //!< Copy constructor
-    LogisticHierarchies& operator=( const LogisticHierarchies& ); //!< Assignement operator
+    LogisticHierarchies& operator=( const LogisticHierarchies& ); //!< Assignment operator
     //@}
 
 protected:

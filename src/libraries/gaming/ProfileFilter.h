@@ -58,7 +58,7 @@ private:
     //! @name Copy/Assignment
     //@{
     ProfileFilter( const ProfileFilter& );            //!< Copy constructor
-    ProfileFilter& operator=( const ProfileFilter& ); //!< Assignement operator
+    ProfileFilter& operator=( const ProfileFilter& ); //!< Assignment operator
    //@}
 
     //! @name Helpers

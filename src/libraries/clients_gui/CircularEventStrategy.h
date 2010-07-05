@@ -53,10 +53,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     CircularEventStrategy( const CircularEventStrategy& );            //!< Copy constructor
-    CircularEventStrategy& operator=( const CircularEventStrategy& ); //!< Assignement operator
+    CircularEventStrategy& operator=( const CircularEventStrategy& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

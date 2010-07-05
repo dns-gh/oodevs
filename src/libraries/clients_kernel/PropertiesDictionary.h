@@ -70,7 +70,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     PropertiesDictionary( const PropertiesDictionary& );            //!< Copy constructor
     PropertiesDictionary& operator=( const PropertiesDictionary& ); //!< Assignment operator

@@ -62,10 +62,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ADN_ChangeValueCommand_Enum( const ADN_ChangeValueCommand_Enum& );            //!< Copy constructor
-    ADN_ChangeValueCommand_Enum& operator=( const ADN_ChangeValueCommand_Enum& ); //!< Assignement operator
+    ADN_ChangeValueCommand_Enum& operator=( const ADN_ChangeValueCommand_Enum& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

@@ -48,7 +48,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Point& operator=( const Point& ); //!< Assignment operator
     //@}

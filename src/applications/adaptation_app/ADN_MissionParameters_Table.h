@@ -41,10 +41,10 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ADN_MissionParameters_Table( const ADN_MissionParameters_Table& );            //!< Copy constructor
-    ADN_MissionParameters_Table& operator=( const ADN_MissionParameters_Table& ); //!< Assignement operator
+    ADN_MissionParameters_Table& operator=( const ADN_MissionParameters_Table& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

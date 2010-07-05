@@ -52,10 +52,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     WeatherModel( const WeatherModel& );            //!< Copy constructor
-    WeatherModel& operator=( const WeatherModel& ); //!< Assignement operator
+    WeatherModel& operator=( const WeatherModel& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

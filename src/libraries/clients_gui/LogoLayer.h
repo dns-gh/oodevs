@@ -47,7 +47,7 @@ private:
     //! @name Copy/Assignment
     //@{
     LogoLayer( const LogoLayer& );            //!< Copy constructor
-    LogoLayer& operator=( const LogoLayer& ); //!< Assignement operator
+    LogoLayer& operator=( const LogoLayer& ); //!< Assignment operator
     //@}
 
 private:

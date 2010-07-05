@@ -80,10 +80,10 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ChangeHumanFactorsDialog( const ChangeHumanFactorsDialog& );            //!< Copy constructor
-    ChangeHumanFactorsDialog& operator=( const ChangeHumanFactorsDialog& ); //!< Assignement operator
+    ChangeHumanFactorsDialog& operator=( const ChangeHumanFactorsDialog& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

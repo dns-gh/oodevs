@@ -42,7 +42,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     AgentNature( const AgentNature& );            //!< Copy constructor
     AgentNature& operator=( const AgentNature& ); //!< Assignment operator

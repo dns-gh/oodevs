@@ -37,10 +37,10 @@ private:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ADN_ListView_MissionTypes( const ADN_ListView_MissionTypes& );            //!< Copy constructor
-    ADN_ListView_MissionTypes& operator=( const ADN_ListView_MissionTypes& ); //!< Assignement operator
+    ADN_ListView_MissionTypes& operator=( const ADN_ListView_MissionTypes& ); //!< Assignment operator
     //@}
 
 private:

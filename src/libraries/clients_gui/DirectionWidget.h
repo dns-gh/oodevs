@@ -56,7 +56,7 @@ private:
     //! @name Copy/Assignment
     //@{
     DirectionWidget( const DirectionWidget& );            //!< Copy constructor
-    DirectionWidget& operator=( const DirectionWidget& ); //!< Assignement operator
+    DirectionWidget& operator=( const DirectionWidget& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

@@ -38,7 +38,7 @@ private:
     //! @name Copy/Assignment
     //@{
     ADN_Nature_GUI( const ADN_Nature_GUI& );            //!< Copy constructor
-    ADN_Nature_GUI& operator=( const ADN_Nature_GUI& ); //!< Assignement operator
+    ADN_Nature_GUI& operator=( const ADN_Nature_GUI& ); //!< Assignment operator
     //@}
 
 private slots:

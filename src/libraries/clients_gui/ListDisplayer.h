@@ -108,10 +108,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ListDisplayer( const ListDisplayer& );            //!< Copy constructor
-    ListDisplayer& operator=( const ListDisplayer& ); //!< Assignement operator
+    ListDisplayer& operator=( const ListDisplayer& ); //!< Assignment operator
     //@}
 
 private:

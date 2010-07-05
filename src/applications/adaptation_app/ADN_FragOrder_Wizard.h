@@ -31,10 +31,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ADN_FragOrder_Wizard( const ADN_FragOrder_Wizard& );            //!< Copy constructor
-    ADN_FragOrder_Wizard& operator=( const ADN_FragOrder_Wizard& ); //!< Assignement operator
+    ADN_FragOrder_Wizard& operator=( const ADN_FragOrder_Wizard& ); //!< Assignment operator
     //@}
 };
 

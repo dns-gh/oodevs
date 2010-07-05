@@ -54,10 +54,10 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ObstaclePrototype_ABC( const ObstaclePrototype_ABC& );            //!< Copy constructor
-    ObstaclePrototype_ABC& operator=( const ObstaclePrototype_ABC& ); //!< Assignement operator
+    ObstaclePrototype_ABC& operator=( const ObstaclePrototype_ABC& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

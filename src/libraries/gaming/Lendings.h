@@ -45,10 +45,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Lendings( const Lendings& );            //!< Copy constructor
-    Lendings& operator=( const Lendings& ); //!< Assignement operator
+    Lendings& operator=( const Lendings& ); //!< Assignment operator
     //@}
 
     typedef std::vector< Loan > T_Lendings;

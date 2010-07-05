@@ -42,10 +42,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     FormationFactory( const FormationFactory& );            //!< Copy constructor
-    FormationFactory& operator=( const FormationFactory& ); //!< Assignement operator
+    FormationFactory& operator=( const FormationFactory& ); //!< Assignment operator
     //@}
 
 private:

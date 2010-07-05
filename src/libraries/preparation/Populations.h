@@ -40,10 +40,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Populations( const Populations& );            //!< Copy constructor
-    Populations& operator=( const Populations& ); //!< Assignement operator
+    Populations& operator=( const Populations& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

@@ -62,10 +62,10 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ToolListButtonBase( const ToolListButtonBase& );            //!< Copy constructor
-    ToolListButtonBase& operator=( const ToolListButtonBase& ); //!< Assignement operator
+    ToolListButtonBase& operator=( const ToolListButtonBase& ); //!< Assignment operator
     //@}
 
 private:
@@ -126,10 +126,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ToolListButton( const ToolListButton& );            //!< Copy constructor
-    ToolListButton& operator=( const ToolListButton& ); //!< Assignement operator
+    ToolListButton& operator=( const ToolListButton& ); //!< Assignment operator
     //@}
 
     //! @name Operations

@@ -49,10 +49,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     AgentKnowledgePositions( const AgentKnowledgePositions& );            //!< Copy constructor
-    AgentKnowledgePositions& operator=( const AgentKnowledgePositions& ); //!< Assignement operator
+    AgentKnowledgePositions& operator=( const AgentKnowledgePositions& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

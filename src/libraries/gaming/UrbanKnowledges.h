@@ -58,10 +58,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     UrbanKnowledges( const UrbanKnowledges& );            //!< Copy constructor
-    UrbanKnowledges& operator=( const UrbanKnowledges& ); //!< Assignement operator
+    UrbanKnowledges& operator=( const UrbanKnowledges& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

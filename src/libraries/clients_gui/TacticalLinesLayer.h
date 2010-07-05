@@ -96,7 +96,7 @@ private:
     //! @name Copy/Assignment
     //@{
     TacticalLinesLayer( const TacticalLinesLayer& );            //!< Copy constructor
-    TacticalLinesLayer& operator=( const TacticalLinesLayer& ); //!< Assignement operator
+    TacticalLinesLayer& operator=( const TacticalLinesLayer& ); //!< Assignment operator
     //@}
 
 private:

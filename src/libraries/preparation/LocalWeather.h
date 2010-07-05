@@ -55,9 +55,9 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
-    LocalWeather& operator=( const LocalWeather& ); //!< Assignement operator
+    LocalWeather& operator=( const LocalWeather& ); //!< Assignment operator
     //@}
 
 private:

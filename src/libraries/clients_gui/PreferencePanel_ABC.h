@@ -36,10 +36,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     PreferencePanel_ABC( const PreferencePanel_ABC& );            //!< Copy constructor
-    PreferencePanel_ABC& operator=( const PreferencePanel_ABC& ); //!< Assignement operator
+    PreferencePanel_ABC& operator=( const PreferencePanel_ABC& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

@@ -58,10 +58,10 @@ public slots:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     PropertiesTable( const PropertiesTable& );            //!< Copy constructor
-    PropertiesTable& operator=( const PropertiesTable& ); //!< Assignement operator
+    PropertiesTable& operator=( const PropertiesTable& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

@@ -49,10 +49,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     GridLayer( const GridLayer& );            //!< Copy constructor
-    GridLayer& operator=( const GridLayer& ); //!< Assignement operator
+    GridLayer& operator=( const GridLayer& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

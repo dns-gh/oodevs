@@ -59,7 +59,7 @@ private:
     //@{
     PropertiesWidget( kernel::Controller& controller, PropertiesWidget* parent, const QString& name, kernel::EditorFactory_ABC& factory, TableItemDisplayer& displayer );
     PropertiesWidget( const PropertiesWidget& );            //!< Copy constructor
-    PropertiesWidget& operator=( const PropertiesWidget& ); //!< Assignement operator
+    PropertiesWidget& operator=( const PropertiesWidget& ); //!< Assignment operator
     //@}
 
     //! @name Types

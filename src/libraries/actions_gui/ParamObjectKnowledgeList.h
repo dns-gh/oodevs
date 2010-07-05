@@ -48,10 +48,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ParamObjectKnowledgeList( const ParamObjectKnowledgeList& );            //!< Copy constructor
-    ParamObjectKnowledgeList& operator=( const ParamObjectKnowledgeList& ); //!< Assignement operator
+    ParamObjectKnowledgeList& operator=( const ParamObjectKnowledgeList& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

@@ -29,10 +29,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ObjectListView( const ObjectListView& );            //!< Copy constructor
-    ObjectListView& operator=( const ObjectListView& ); //!< Assignement operator
+    ObjectListView& operator=( const ObjectListView& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

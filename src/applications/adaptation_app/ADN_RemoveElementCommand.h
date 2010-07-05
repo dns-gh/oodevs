@@ -50,10 +50,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ADN_RemoveElementCommand( const ADN_RemoveElementCommand& );            //!< Copy constructor
-    ADN_RemoveElementCommand& operator=( const ADN_RemoveElementCommand& ); //!< Assignement operator
+    ADN_RemoveElementCommand& operator=( const ADN_RemoveElementCommand& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
@@ -92,10 +92,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ADN_RemoveElementCommand( const ADN_RemoveElementCommand& );            //!< Copy constructor
-    ADN_RemoveElementCommand& operator=( const ADN_RemoveElementCommand& ); //!< Assignement operator
+    ADN_RemoveElementCommand& operator=( const ADN_RemoveElementCommand& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
@@ -132,10 +132,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ADN_RemoveElementCommand( const ADN_RemoveElementCommand& );            //!< Copy constructor
-    ADN_RemoveElementCommand& operator=( const ADN_RemoveElementCommand& ); //!< Assignement operator
+    ADN_RemoveElementCommand& operator=( const ADN_RemoveElementCommand& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

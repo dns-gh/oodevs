@@ -60,10 +60,10 @@ public:
     //@{
     //@}
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ADN_Mission_ConfigurationDlg( const ADN_Mission_ConfigurationDlg& );            //!< Copy constructor
-    ADN_Mission_ConfigurationDlg& operator=( const ADN_Mission_ConfigurationDlg& ); //!< Assignement operator
+    ADN_Mission_ConfigurationDlg& operator=( const ADN_Mission_ConfigurationDlg& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

@@ -45,10 +45,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     AmmoEffect( const AmmoEffect& );            //!< Copy constructor
-    AmmoEffect& operator=( const AmmoEffect& ); //!< Assignement operator
+    AmmoEffect& operator=( const AmmoEffect& ); //!< Assignment operator
     //@}
 
 private:

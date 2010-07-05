@@ -48,10 +48,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     DotationsItem( const DotationsItem& );            //!< Copy constructor
-    DotationsItem& operator=( const DotationsItem& ); //!< Assignement operator
+    DotationsItem& operator=( const DotationsItem& ); //!< Assignment operator
     //@}
 
 private:

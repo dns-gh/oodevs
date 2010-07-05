@@ -59,10 +59,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     SupplyRouteAttribute( const SupplyRouteAttribute& );            //!< Copy constructor
-    SupplyRouteAttribute& operator=( const SupplyRouteAttribute& ); //!< Assignement operator
+    SupplyRouteAttribute& operator=( const SupplyRouteAttribute& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

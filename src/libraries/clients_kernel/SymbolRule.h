@@ -40,7 +40,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     SymbolRule( const SymbolRule& );            //!< Copy constructor
     SymbolRule& operator=( const SymbolRule& ); //!< Assignment operator

@@ -42,7 +42,7 @@ private:
     //! @name Copy/Assignment
     //@{
     Viewport3d( const Viewport3d& );            //!< Copy constructor
-    Viewport3d& operator=( const Viewport3d& ); //!< Assignement operator
+    Viewport3d& operator=( const Viewport3d& ); //!< Assignment operator
     //@}
 
 private:

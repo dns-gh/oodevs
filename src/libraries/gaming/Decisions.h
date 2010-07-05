@@ -60,10 +60,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Decisions( const Decisions& );            //!< Copy constructor
-    Decisions& operator=( const Decisions& ); //!< Assignement operator
+    Decisions& operator=( const Decisions& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

@@ -212,10 +212,10 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     GQ_Plot( const GQ_Plot& rhs );            //!< Copy constructor
-    GQ_Plot& operator=( const GQ_Plot& rhs ); //!< Assignement operator
+    GQ_Plot& operator=( const GQ_Plot& rhs ); //!< Assignment operator
     //@}
 
     //! @name Helpers

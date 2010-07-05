@@ -117,10 +117,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ADN_Reports_Data( const ADN_Reports_Data& );            //!< Copy constructor
-    ADN_Reports_Data& operator=( const ADN_Reports_Data& ); //!< Assignement operator
+    ADN_Reports_Data& operator=( const ADN_Reports_Data& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

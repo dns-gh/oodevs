@@ -41,9 +41,9 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
-    Weather& operator=( const Weather& ); //!< Assignement operator
+    Weather& operator=( const Weather& ); //!< Assignment operator
     //@}
 
 public:

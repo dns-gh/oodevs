@@ -40,10 +40,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     FireFactory( const FireFactory& );            //!< Copy constructor
-    FireFactory& operator=( const FireFactory& ); //!< Assignement operator
+    FireFactory& operator=( const FireFactory& ); //!< Assignment operator
     //@}
 
 private:

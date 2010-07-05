@@ -64,10 +64,10 @@ protected:
     void    resizeEvent( QResizeEvent * );
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ADN_ImageViewer( const ADN_ImageViewer& );            //!< Copy constructor
-    ADN_ImageViewer& operator=( const ADN_ImageViewer& ); //!< Assignement operator
+    ADN_ImageViewer& operator=( const ADN_ImageViewer& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

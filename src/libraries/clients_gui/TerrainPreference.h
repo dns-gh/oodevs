@@ -58,10 +58,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     TerrainPreference( const TerrainPreference& );            //!< Copy constructor
-    TerrainPreference& operator=( const TerrainPreference& ); //!< Assignement operator
+    TerrainPreference& operator=( const TerrainPreference& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

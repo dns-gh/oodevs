@@ -52,10 +52,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ParamNumericField( const ParamNumericField& );            //!< Copy constructor
-    ParamNumericField& operator=( const ParamNumericField& ); //!< Assignement operator
+    ParamNumericField& operator=( const ParamNumericField& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

@@ -44,7 +44,7 @@ private:
     //! @name Copy/Assignment
     //@{
     AutomatLives( const AutomatLives& );            //!< Copy constructor
-    AutomatLives& operator=( const AutomatLives& ); //!< Assignement operator
+    AutomatLives& operator=( const AutomatLives& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

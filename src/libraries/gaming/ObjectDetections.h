@@ -48,10 +48,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ObjectDetections( const ObjectDetections& );            //!< Copy constructor
-    ObjectDetections& operator=( const ObjectDetections& ); //!< Assignement operator
+    ObjectDetections& operator=( const ObjectDetections& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

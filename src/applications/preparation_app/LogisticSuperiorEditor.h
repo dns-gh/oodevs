@@ -42,10 +42,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     LogisticSuperiorEditor( const LogisticSuperiorEditor& );            //!< Copy constructor
-    LogisticSuperiorEditor& operator=( const LogisticSuperiorEditor& ); //!< Assignement operator
+    LogisticSuperiorEditor& operator=( const LogisticSuperiorEditor& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

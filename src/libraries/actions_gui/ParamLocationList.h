@@ -49,10 +49,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ParamLocationList( const ParamLocationList& );            //!< Copy constructor
-    ParamLocationList& operator=( const ParamLocationList& ); //!< Assignement operator
+    ParamLocationList& operator=( const ParamLocationList& ); //!< Assignment operator
     //@}
 
 protected:

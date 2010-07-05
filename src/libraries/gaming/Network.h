@@ -61,10 +61,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Network( const Network& );            //!< Copy constructor
-    Network& operator=( const Network& ); //!< Assignement operator
+    Network& operator=( const Network& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

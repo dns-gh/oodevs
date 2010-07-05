@@ -55,10 +55,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     LocationSerializer( const LocationSerializer& );            //!< Copy constructor
-    LocationSerializer& operator=( const LocationSerializer& ); //!< Assignement operator
+    LocationSerializer& operator=( const LocationSerializer& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

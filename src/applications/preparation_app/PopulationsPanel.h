@@ -52,10 +52,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     PopulationsPanel( const PopulationsPanel& );            //!< Copy constructor
-    PopulationsPanel& operator=( const PopulationsPanel& ); //!< Assignement operator
+    PopulationsPanel& operator=( const PopulationsPanel& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
