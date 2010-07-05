@@ -12,9 +12,8 @@
 #include "clients_kernel/AtlasNatures.h"
 #include "protocol/Protocol.h"
 #include <boost/bind.hpp>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
-using namespace xml;
 using namespace actions;
 using namespace parameters;
 
@@ -43,7 +42,7 @@ AtlasNature::AtlasNature( const kernel::OrderParameter& parameter, const Common:
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
 AtlasNature::AtlasNature( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::AtlasNatures& natures )
-    : Parameter< kernel::AtlasNature >( parameter, natures.MakeNature( attribute< unsigned short >( xis, "value" ) ) )
+    : Parameter< kernel::AtlasNature >( parameter, natures.MakeNature( xml::attribute< unsigned short >( xis, "value" ) ) )
 {
     // NOTHING
 }
@@ -64,7 +63,7 @@ AtlasNature::~AtlasNature()
 void AtlasNature::Serialize( xml::xostream& xos ) const
 {
     Parameter< kernel::AtlasNature >::Serialize( xos );
-    xos << attribute( "value", GetValue().GetValue() );
+    xos << xml::attribute( "value", GetValue().GetValue() );
 }
 
 // -----------------------------------------------------------------------------
