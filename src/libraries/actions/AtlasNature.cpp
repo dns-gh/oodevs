@@ -32,7 +32,7 @@ AtlasNature::AtlasNature( const kernel::OrderParameter& parameter, const kernel:
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
 AtlasNature::AtlasNature( const kernel::OrderParameter& parameter, const Common::MsgAtlasNature& message, const kernel::AtlasNatures& natures )
-    : Parameter< kernel::AtlasNature >( parameter, natures.MakeNature( message.nature() ) )
+    : Parameter< kernel::AtlasNature >( parameter, natures.MakeNature( static_cast< unsigned short >( message.nature() ) ) )
 {
     // NOTHING
 }
