@@ -70,7 +70,7 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadAction( xml::xistream& xis, bool readonly, std::string& errors );
+    void ReadAction( xml::xistream& xis, std::string& errors );
     //@}
 
 private:

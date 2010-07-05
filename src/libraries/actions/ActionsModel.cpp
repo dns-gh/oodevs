@@ -100,12 +100,12 @@ void ActionsModel::Destroy( const Action_ABC& action )
 // Name: ActionsModel::Load
 // Created: SBO 2007-04-24
 // -----------------------------------------------------------------------------
-void ActionsModel::Load( const std::string& filename, bool readonly /*= false*/ )
+void ActionsModel::Load( const std::string& filename, bool /*readonly = false*/ )
 {
     std::string errors;
     xml::xifstream xis( filename );
     xis >> xml::start( "actions" )
-            >> xml::list( "action", *this, &ActionsModel::ReadAction, readonly, errors )
+            >> xml::list( "action", *this, &ActionsModel::ReadAction, errors )
         >> xml::end();
     if( !errors.empty() )
         throw std::exception( tools::translate( "ActionsModel", "The order file contains error(s), some actions could not be loaded:\n%1" ).arg( errors.c_str() ) );
@@ -115,11 +115,11 @@ void ActionsModel::Load( const std::string& filename, bool readonly /*= false*/ 
 // Name: ActionsModel::ReadAction
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
-void ActionsModel::ReadAction( xml::xistream& xis, bool readonly, std::string& errors )
+void ActionsModel::ReadAction( xml::xistream& xis, std::string& errors )
 {
     try
     {
-        std::auto_ptr< Action_ABC > action( factory_.CreateAction( xis, readonly ) );
+        std::auto_ptr< Action_ABC > action( factory_.CreateAction( xis ) );
         Register( action->GetId(), *action );
         action.release();
     }
