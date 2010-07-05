@@ -690,9 +690,9 @@ void MIL_EntityManager::SendStateToNewClient() const
 {
     armyFactory_->Apply( boost::bind( &MIL_Army_ABC::SendCreation, _1 ) );
     armyFactory_->Apply( boost::bind( &MIL_Army_ABC::SendFullState, _1 ) );
-    armyFactory_->Apply( boost::bind( &MIL_Army_ABC::SendKnowledge, _1 ) );
     pObjectManager_->SendCreation();
     pObjectManager_->SendFullState();
+    armyFactory_->Apply( boost::bind( &MIL_Army_ABC::SendKnowledge, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
