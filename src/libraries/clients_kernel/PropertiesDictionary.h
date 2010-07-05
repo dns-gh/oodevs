@@ -73,7 +73,7 @@ private:
     //! @name Copy/Assignement
     //@{
     PropertiesDictionary( const PropertiesDictionary& );            //!< Copy constructor
-    PropertiesDictionary& operator=( const PropertiesDictionary& ); //!< Assignement operator
+    PropertiesDictionary& operator=( const PropertiesDictionary& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

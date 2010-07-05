@@ -48,7 +48,7 @@ private:
     //! @name Copy/Assignement
     //@{
     MIL_TacticalLineManager( const MIL_TacticalLineManager& );            //!< Copy constructor
-    MIL_TacticalLineManager& operator=( const MIL_TacticalLineManager& ); //!< Assignement operator
+    MIL_TacticalLineManager& operator=( const MIL_TacticalLineManager& ); //!< Assignment operator
     //@}
 
     //! @name Types

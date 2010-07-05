@@ -66,7 +66,7 @@ private:
     //! @name Copy/Assignement
     //@{
     Simulation( const Simulation& );            //!< Copy constructor
-    Simulation& operator=( const Simulation& ); //!< Assignement operator
+    Simulation& operator=( const Simulation& ); //!< Assignment operator
     //@}
 
 private:

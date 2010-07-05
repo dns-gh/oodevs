@@ -65,7 +65,7 @@ private:
     //! @name Copy/Assignement
     //@{
     Object( const Object& );            //!< Copy constructor
-    Object& operator=( const Object& ); //!< Assignement operator
+    Object& operator=( const Object& ); //!< Assignment operator
     //@}
 
     //! @name Attributes

@@ -49,7 +49,7 @@ private:
     //! @name Copy/Assignment
     //@{
     Synchroniser( const Synchroniser& );            //!< Copy constructor
-    Synchroniser& operator=( const Synchroniser& ); //!< Assignement operator
+    Synchroniser& operator=( const Synchroniser& ); //!< Assignment operator
     //@}
 
     //! @name Types

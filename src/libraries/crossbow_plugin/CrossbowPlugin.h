@@ -79,7 +79,7 @@ private:
     //! @name Copy/Assignement
     //@{
     CrossbowPlugin( const CrossbowPlugin& );            //!< Copy constructor
-    CrossbowPlugin& operator=( const CrossbowPlugin& ); //!< Assignement operator
+    CrossbowPlugin& operator=( const CrossbowPlugin& ); //!< Assignment operator
     //@}
 
     //! @name Copy/Assignement

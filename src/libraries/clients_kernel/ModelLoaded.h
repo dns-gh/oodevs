@@ -43,7 +43,7 @@ private:
     //! @name Copy/Assignement
     //@{
     ModelLoaded( const ModelLoaded& );            //!< Copy constructor
-    ModelLoaded& operator=( const ModelLoaded& ); //!< Assignement operator
+    ModelLoaded& operator=( const ModelLoaded& ); //!< Assignment operator
     //@}
 };
 

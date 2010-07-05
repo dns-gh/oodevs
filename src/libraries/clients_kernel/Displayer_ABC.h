@@ -73,7 +73,7 @@ private:
     //! @name Copy/Assignement
     //@{
     Displayer_ABC( const Displayer_ABC& );            //!< Copy constructor
-    Displayer_ABC& operator=( const Displayer_ABC& ); //!< Assignement operator
+    Displayer_ABC& operator=( const Displayer_ABC& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

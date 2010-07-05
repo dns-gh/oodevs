@@ -101,7 +101,7 @@ private:
     //! @name Copy/Assignement
     //@{
     MIL_PopulationConcentration( const MIL_PopulationConcentration& );            //!< Copy constructor
-    MIL_PopulationConcentration& operator=( const MIL_PopulationConcentration& ); //!< Assignement operator
+    MIL_PopulationConcentration& operator=( const MIL_PopulationConcentration& ); //!< Assignment operator
     //@}
 
     //! @name Tools

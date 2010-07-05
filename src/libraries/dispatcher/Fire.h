@@ -65,7 +65,7 @@ private:
     //! @name Copy/Assignment
     //@{
     Fire( const Fire& );            //!< Copy constructor
-    Fire& operator=( const Fire& ); //!< Assignement operator
+    Fire& operator=( const Fire& ); //!< Assignment operator
     //@}
 
 private:

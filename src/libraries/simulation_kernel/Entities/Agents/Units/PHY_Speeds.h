@@ -55,7 +55,7 @@ private:
     //! @name Copy/Assignement
     //@{
     PHY_Speeds( const PHY_Speeds& );            //!< Copy constructor
-    PHY_Speeds& operator=( const PHY_Speeds& ); //!< Assignement operator
+    PHY_Speeds& operator=( const PHY_Speeds& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

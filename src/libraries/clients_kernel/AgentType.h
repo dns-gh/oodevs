@@ -68,7 +68,7 @@ private:
     //! @name Copy/Assignement
     //@{
     AgentType( const AgentType& );            //!< Copy constructor
-    AgentType& operator=( const AgentType& ); //!< Assignement operator
+    AgentType& operator=( const AgentType& ); //!< Assignment operator
     //@}
 
     //! @name Types

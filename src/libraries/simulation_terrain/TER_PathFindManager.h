@@ -71,7 +71,7 @@ private:
     //! @name Copy/Assignement
     //@{
     TER_PathFindManager( const TER_PathFindManager& );            //!< Copy constructor
-    TER_PathFindManager& operator=( const TER_PathFindManager& ); //!< Assignement operator
+    TER_PathFindManager& operator=( const TER_PathFindManager& ); //!< Assignment operator
     //@}
 
     //! @name Types

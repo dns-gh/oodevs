@@ -50,7 +50,7 @@ private:
     //! @name Copy/Assignement
     //@{
     DEC_Agent_PathfinderRule( const DEC_Agent_PathfinderRule& );            //!< Copy constructor
-    DEC_Agent_PathfinderRule& operator=( const DEC_Agent_PathfinderRule& ); //!< Assignement operator
+    DEC_Agent_PathfinderRule& operator=( const DEC_Agent_PathfinderRule& ); //!< Assignment operator
     //@}
 
     //! @name Initialization

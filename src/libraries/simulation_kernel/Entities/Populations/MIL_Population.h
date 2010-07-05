@@ -185,7 +185,7 @@ private:
     //! @name Copy/Assignement
     //@{
     MIL_Population( const MIL_Population& );            //!< Copy constructor
-    MIL_Population& operator=( const MIL_Population& ); //!< Assignement operator
+    MIL_Population& operator=( const MIL_Population& ); //!< Assignment operator
     //@}
 
     //! @name Magic actions

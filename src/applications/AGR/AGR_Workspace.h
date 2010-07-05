@@ -54,7 +54,7 @@ private:
     //! @name Copy/Assignement
     //@{
     AGR_Workspace( const AGR_Workspace& );            //!< Copy constructor
-    AGR_Workspace& operator=( const AGR_Workspace& ); //!< Assignement operator
+    AGR_Workspace& operator=( const AGR_Workspace& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

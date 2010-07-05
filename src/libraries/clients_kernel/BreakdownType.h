@@ -41,7 +41,7 @@ private:
     //! @name Copy/Assignement
     //@{
     BreakdownType( const BreakdownType& );            //!< Copy constructor
-    BreakdownType& operator=( const BreakdownType& ); //!< Assignement operator
+    BreakdownType& operator=( const BreakdownType& ); //!< Assignment operator
     //@}
 
 private:

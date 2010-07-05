@@ -50,7 +50,7 @@ private:
     //! @name Copy/Assignement
     //@{
     StatusListener( const StatusListener& );            //!< Copy constructor
-    StatusListener& operator=( const StatusListener& ); //!< Assignement operator
+    StatusListener& operator=( const StatusListener& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

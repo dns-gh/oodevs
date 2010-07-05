@@ -41,7 +41,7 @@ private:
     //! @name Copy/Assignement
     //@{
     DictionaryUpdated( const DictionaryUpdated& );            //!< Copy constructor
-    DictionaryUpdated& operator=( const DictionaryUpdated& ); //!< Assignement operator
+    DictionaryUpdated& operator=( const DictionaryUpdated& ); //!< Assignment operator
     //@}
 
 private:

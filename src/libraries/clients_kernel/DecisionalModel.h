@@ -51,7 +51,7 @@ private:
     //! @name Copy/Assignement
     //@{
     DecisionalModel( const DecisionalModel& );            //!< Copy constructor
-    DecisionalModel& operator=( const DecisionalModel& ); //!< Assignement operator
+    DecisionalModel& operator=( const DecisionalModel& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

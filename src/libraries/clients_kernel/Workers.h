@@ -59,7 +59,7 @@ private:
     //! @name Copy/Assignement
     //@{
     Workers( const Workers& );            //!< Copy constructor
-    Workers& operator=( const Workers& ); //!< Assignement operator
+    Workers& operator=( const Workers& ); //!< Assignment operator
     //@}
 
     //! @name Types

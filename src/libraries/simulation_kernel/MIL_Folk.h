@@ -59,7 +59,7 @@ private:
     //! @name Copy/Assignement
     //@{
     MIL_Folk( const MIL_Folk& );            //!< Copy constructor
-    MIL_Folk& operator=( const MIL_Folk& ); //!< Assignement operator
+    MIL_Folk& operator=( const MIL_Folk& ); //!< Assignment operator
     //@}
 
 private:

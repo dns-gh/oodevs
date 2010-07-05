@@ -69,7 +69,7 @@ private:
     //! @name Copy/Assignment
     //@{
     MessageFilter( const MessageFilter& );            //!< Copy constructor
-    MessageFilter& operator=( const MessageFilter& ); //!< Assignement operator
+    MessageFilter& operator=( const MessageFilter& ); //!< Assignment operator
     //@}
 };
 

@@ -73,7 +73,7 @@ private:
     //! @name Copy/Assignement
     //@{
     HLA_Federate( const HLA_Federate& );            //!< Copy constructor
-    HLA_Federate& operator=( const HLA_Federate& ); //!< Assignement operator
+    HLA_Federate& operator=( const HLA_Federate& ); //!< Assignment operator
     //@}
 
     //! @name Types

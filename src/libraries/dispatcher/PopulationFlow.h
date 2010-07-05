@@ -66,7 +66,7 @@ private:
     //! @name Copy/Assignement
     //@{
     PopulationFlow( const PopulationFlow& );            //!< Copy constructor
-    PopulationFlow& operator=( const PopulationFlow& ); //!< Assignement operator
+    PopulationFlow& operator=( const PopulationFlow& ); //!< Assignment operator
     //@}
 
 private:

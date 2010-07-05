@@ -65,7 +65,7 @@ private:
     //! @name Copy/Assignement
     //@{
     PointCollection( const PointCollection& );            //!< Copy constructor
-    PointCollection& operator=( const PointCollection& ); //!< Assignement operator
+    PointCollection& operator=( const PointCollection& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

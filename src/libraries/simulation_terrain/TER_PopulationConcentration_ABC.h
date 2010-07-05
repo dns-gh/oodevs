@@ -68,7 +68,7 @@ private:
     //! @name Copy/Assignement
     //@{
     TER_PopulationConcentration_ABC( const TER_PopulationConcentration_ABC& );            //!< Copy constructor
-    TER_PopulationConcentration_ABC& operator=( const TER_PopulationConcentration_ABC& ); //!< Assignement operator
+    TER_PopulationConcentration_ABC& operator=( const TER_PopulationConcentration_ABC& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

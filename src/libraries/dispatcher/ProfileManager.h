@@ -82,7 +82,7 @@ private:
     //! @name Copy/Assignement
     //@{
     ProfileManager( const ProfileManager& );            //!< Copy constructor
-    ProfileManager& operator=( const ProfileManager& ); //!< Assignement operator
+    ProfileManager& operator=( const ProfileManager& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

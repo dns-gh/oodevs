@@ -46,7 +46,7 @@ private:
     //! @name Copy/Assignment
     //@{
     SimulationDispatcher( const SimulationDispatcher& );            //!< Copy constructor
-    SimulationDispatcher& operator=( const SimulationDispatcher& ); //!< Assignement operator
+    SimulationDispatcher& operator=( const SimulationDispatcher& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

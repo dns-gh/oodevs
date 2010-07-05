@@ -52,7 +52,7 @@ private:
     //! @name Copy/Assignement
     //@{
     AutomatComposition( const AutomatComposition& );            //!< Copy constructor
-    AutomatComposition& operator=( const AutomatComposition& ); //!< Assignement operator
+    AutomatComposition& operator=( const AutomatComposition& ); //!< Assignment operator
     //@}
 
 private:

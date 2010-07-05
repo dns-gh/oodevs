@@ -100,7 +100,7 @@ private:
     //! @name Copy/Assignement
     //@{
     Profile( const Profile& );            //!< Copy constructor
-    Profile& operator=( const Profile& ); //!< Assignement operator
+    Profile& operator=( const Profile& ); //!< Assignment operator
     //@}
 
     //! @name Types

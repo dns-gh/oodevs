@@ -50,7 +50,7 @@ private:
     //! @name Copy/Assignement
     //@{
     EditorFactory_ABC( const EditorFactory_ABC& );            //!< Copy constructor
-    EditorFactory_ABC& operator=( const EditorFactory_ABC& ); //!< Assignement operator
+    EditorFactory_ABC& operator=( const EditorFactory_ABC& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

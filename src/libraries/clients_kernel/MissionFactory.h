@@ -48,7 +48,7 @@ private:
     //! @name Copy/Assignement
     //@{
     MissionFactory( const MissionFactory& );            //!< Copy constructor
-    MissionFactory& operator=( const MissionFactory& ); //!< Assignement operator
+    MissionFactory& operator=( const MissionFactory& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

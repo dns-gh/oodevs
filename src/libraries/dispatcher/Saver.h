@@ -45,7 +45,7 @@ private:
     //! @name Copy/Assignment
     //@{
     Saver( const Saver& );            //!< Copy constructor
-    Saver& operator=( const Saver& ); //!< Assignement operator
+    Saver& operator=( const Saver& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

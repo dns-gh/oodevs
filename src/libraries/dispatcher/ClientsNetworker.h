@@ -66,7 +66,7 @@ private:
     //! @name Copy/Assignement
     //@{
     ClientsNetworker( const ClientsNetworker& );            //!< Copy constructor
-    ClientsNetworker& operator=( const ClientsNetworker& ); //!< Assignement operator
+    ClientsNetworker& operator=( const ClientsNetworker& ); //!< Assignment operator
     //@}
 
     //! @name Connection callbacks

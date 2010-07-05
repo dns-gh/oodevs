@@ -49,7 +49,7 @@ private:
     //! @name Copy/Assignement
     //@{
     TER_PopulationConcentrationManager( const TER_PopulationConcentrationManager& );            //!< Copy constructor
-    TER_PopulationConcentrationManager& operator=( const TER_PopulationConcentrationManager& ); //!< Assignement operator
+    TER_PopulationConcentrationManager& operator=( const TER_PopulationConcentrationManager& ); //!< Assignment operator
     //@}
 
     //! @name Types

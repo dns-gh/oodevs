@@ -100,7 +100,7 @@ private:
     //! @name Copy/Assignement
     //@{
     DatabaseUpdater( const DatabaseUpdater& );            //!< Copy constructor
-    DatabaseUpdater& operator=( const DatabaseUpdater& ); //!< Assignement operator
+    DatabaseUpdater& operator=( const DatabaseUpdater& ); //!< Assignment operator
     //@}
 
     //! @name

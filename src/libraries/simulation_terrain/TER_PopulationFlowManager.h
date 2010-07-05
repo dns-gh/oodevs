@@ -49,7 +49,7 @@ private:
     //! @name Copy/Assignement
     //@{
     TER_PopulationFlowManager( const TER_PopulationFlowManager& );            //!< Copy constructor
-    TER_PopulationFlowManager& operator=( const TER_PopulationFlowManager& ); //!< Assignement operator
+    TER_PopulationFlowManager& operator=( const TER_PopulationFlowManager& ); //!< Assignment operator
     //@}
 
     //! @name Types

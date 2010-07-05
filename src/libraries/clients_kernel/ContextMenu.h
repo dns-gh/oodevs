@@ -67,7 +67,7 @@ private:
     //! @name Copy/Assignement
     //@{
     ContextMenu( const ContextMenu& );            //!< Copy constructor
-    ContextMenu& operator=( const ContextMenu& ); //!< Assignement operator
+    ContextMenu& operator=( const ContextMenu& ); //!< Assignment operator
     //@}
 
     //! @name Types

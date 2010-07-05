@@ -36,7 +36,7 @@ private:
     //! @name Copy/Assignement
     //@{
     ObjectHierarchies( const ObjectHierarchies& );            //!< Copy constructor
-    ObjectHierarchies& operator=( const ObjectHierarchies& ); //!< Assignement operator
+    ObjectHierarchies& operator=( const ObjectHierarchies& ); //!< Assignment operator
     //@}
 };
 

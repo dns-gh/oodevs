@@ -52,7 +52,7 @@ private:
     //! @name Copy/Assignement
     //@{
     Level( const Level& );            //!< Copy constructor
-    Level& operator=( const Level& ); //!< Assignement operator
+    Level& operator=( const Level& ); //!< Assignment operator
     //@}
 
 private:

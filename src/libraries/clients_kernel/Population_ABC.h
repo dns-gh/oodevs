@@ -79,7 +79,7 @@ private:
     //! @name Copy/Assignement
     //@{
     Population_ABC( const Population_ABC& );            //!< Copy constructor
-    Population_ABC& operator=( const Population_ABC& ); //!< Assignement operator
+    Population_ABC& operator=( const Population_ABC& ); //!< Assignment operator
     //@}
 };
 

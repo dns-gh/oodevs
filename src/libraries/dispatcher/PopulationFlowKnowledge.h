@@ -64,7 +64,7 @@ private:
     //! @name Copy/Assignement
     //@{
     PopulationFlowKnowledge( const PopulationFlowKnowledge& );            //!< Copy constructor
-    PopulationFlowKnowledge& operator=( const PopulationFlowKnowledge& ); //!< Assignement operator
+    PopulationFlowKnowledge& operator=( const PopulationFlowKnowledge& ); //!< Assignment operator
     //@}
 
     //! @name Types

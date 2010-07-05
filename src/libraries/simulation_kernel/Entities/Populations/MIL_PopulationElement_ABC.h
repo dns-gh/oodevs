@@ -110,7 +110,7 @@ protected:
     //! @name Copy/Assignement
     //@{
     MIL_PopulationElement_ABC( const MIL_PopulationElement_ABC& );            //!< Copy constructor
-    MIL_PopulationElement_ABC& operator=( const MIL_PopulationElement_ABC& ); //!< Assignement operator
+    MIL_PopulationElement_ABC& operator=( const MIL_PopulationElement_ABC& ); //!< Assignment operator
     //@}
 
     //! @name Tools

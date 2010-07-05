@@ -62,7 +62,7 @@ public:
 private:
     //! @name Copy/Assignement
     //@{
-    MIL_OrderContext& operator=( const MIL_OrderContext& ); //!< Assignement operator
+    MIL_OrderContext& operator=( const MIL_OrderContext& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

@@ -50,7 +50,7 @@ private:
     //! @name Copy/Assignment
     //@{
     MergingTacticalHierarchies( const MergingTacticalHierarchies& );            //!< Copy constructor
-    MergingTacticalHierarchies& operator=( const MergingTacticalHierarchies& ); //!< Assignement operator
+    MergingTacticalHierarchies& operator=( const MergingTacticalHierarchies& ); //!< Assignment operator
     //@}
 
 private:

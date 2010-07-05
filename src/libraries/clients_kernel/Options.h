@@ -56,7 +56,7 @@ private:
     //! @name Copy/Assignement
     //@{
     Options( const Options& );            //!< Copy constructor
-    Options& operator=( const Options& ); //!< Assignement operator
+    Options& operator=( const Options& ); //!< Assignment operator
     //@}
 
     //! @name Types

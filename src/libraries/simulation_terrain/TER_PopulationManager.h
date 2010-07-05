@@ -47,7 +47,7 @@ private:
     //! @name Constructors/Destructor
     //@{
     TER_PopulationManager( const TER_PopulationManager& );            //!< Copy constructor
-    TER_PopulationManager& operator=( const TER_PopulationManager& ); //!< Assignement operator
+    TER_PopulationManager& operator=( const TER_PopulationManager& ); //!< Assignment operator
     //@}
 
 private:

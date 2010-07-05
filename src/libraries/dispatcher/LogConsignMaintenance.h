@@ -65,7 +65,7 @@ private:
     //! @name Copy/Assignement
     //@{
     LogConsignMaintenance( const LogConsignMaintenance& );            //!< Copy constructor
-    LogConsignMaintenance& operator=( const LogConsignMaintenance& ); //!< Assignement operator
+    LogConsignMaintenance& operator=( const LogConsignMaintenance& ); //!< Assignment operator
     //@}
 
 private:

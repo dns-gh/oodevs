@@ -76,7 +76,7 @@ private:
     //! @name Copy/Assignement
     //@{
     MIL_Formation( const MIL_Formation& );            //!< Copy constructor
-    MIL_Formation& operator=( const MIL_Formation& ); //!< Assignement operator
+    MIL_Formation& operator=( const MIL_Formation& ); //!< Assignment operator
     //@}
 
     //! @name Tools

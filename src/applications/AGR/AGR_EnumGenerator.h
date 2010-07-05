@@ -37,7 +37,7 @@ private:
     //! @name Copy/Assignement
     //@{
     AGR_EnumGenerator( const AGR_EnumGenerator& );            //!< Copy constructor
-    AGR_EnumGenerator& operator=( const AGR_EnumGenerator& ); //!< Assignement operator
+    AGR_EnumGenerator& operator=( const AGR_EnumGenerator& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

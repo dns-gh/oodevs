@@ -61,7 +61,7 @@ private:
     //! @name Copy/Assignement
     //@{
     UrbanObject( const UrbanObject& );            //!< Copy constructor
-    UrbanObject& operator=( const UrbanObject& ); //!< Assignement operator
+    UrbanObject& operator=( const UrbanObject& ); //!< Assignment operator
     //@}
 
     //! @name Attributes

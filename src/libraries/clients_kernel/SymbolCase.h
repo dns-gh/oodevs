@@ -43,7 +43,7 @@ private:
     //! @name Copy/Assignement
     //@{
     SymbolCase( const SymbolCase& );            //!< Copy constructor
-    SymbolCase& operator=( const SymbolCase& ); //!< Assignement operator
+    SymbolCase& operator=( const SymbolCase& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

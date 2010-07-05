@@ -55,7 +55,7 @@ private:
 private:
     //! @name Member data
     //@{
-    DEC_Decision_ABC&    decision_;
+    DEC_Decision_ABC& decision_;
     //@}
 };
 

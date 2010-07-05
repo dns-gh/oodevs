@@ -45,7 +45,7 @@ private:
     //! @name Copy/Assignement
     //@{
     AgentNature( const AgentNature& );            //!< Copy constructor
-    AgentNature& operator=( const AgentNature& ); //!< Assignement operator
+    AgentNature& operator=( const AgentNature& ); //!< Assignment operator
     //@}
 
 private:

@@ -62,7 +62,7 @@ private:
     //! @name Copy/Assignement
     //@{
     Controller( const Controller& );            //!< Copy constructor
-    Controller& operator=( const Controller& ); //!< Assignement operator
+    Controller& operator=( const Controller& ); //!< Assignment operator
     //@}
 };
 

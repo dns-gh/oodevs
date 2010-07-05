@@ -37,7 +37,7 @@ private:
     //! @name Copy/Assignement
     //@{
     AGR_Generator_ABC( const AGR_Generator_ABC& );            //!< Copy constructor
-    AGR_Generator_ABC& operator=( const AGR_Generator_ABC& ); //!< Assignement operator
+    AGR_Generator_ABC& operator=( const AGR_Generator_ABC& ); //!< Assignment operator
     //@}
 };
 

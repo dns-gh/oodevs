@@ -48,7 +48,7 @@ private:
     //! @name Copy/Assignement
     //@{
     DotationType( const DotationType& );            //!< Copy constructor
-    DotationType& operator=( const DotationType& ); //!< Assignement operator
+    DotationType& operator=( const DotationType& ); //!< Assignment operator
     //@}
 
 private:

@@ -60,7 +60,7 @@ private:
     //! @name Copy/Assignement
     //@{
     TER_CoordinateManager( const TER_CoordinateManager& );            //!< Copy constructor
-    TER_CoordinateManager& operator=( const TER_CoordinateManager& ); //!< Assignement operator
+    TER_CoordinateManager& operator=( const TER_CoordinateManager& ); //!< Assignment operator
     //@}
 
 private:

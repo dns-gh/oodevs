@@ -60,7 +60,7 @@ private:
     //! @name Copy/Assignement
     //@{
     PopulationConcentration( const PopulationConcentration& );            //!< Copy constructor
-    PopulationConcentration& operator=( const PopulationConcentration& ); //!< Assignement operator
+    PopulationConcentration& operator=( const PopulationConcentration& ); //!< Assignment operator
     //@}
 
 private:

@@ -52,7 +52,7 @@ private:
     //! @name Copy/Assignment
     //@{
     Loader( const Loader& );            //!< Copy constructor
-    Loader& operator=( const Loader& ); //!< Assignement operator
+    Loader& operator=( const Loader& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

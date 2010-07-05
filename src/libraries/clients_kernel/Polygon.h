@@ -50,7 +50,7 @@ public:
 private:
     //! @name Copy/Assignement
     //@{
-    Polygon& operator=( const Polygon& ); //!< Assignement operator
+    Polygon& operator=( const Polygon& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

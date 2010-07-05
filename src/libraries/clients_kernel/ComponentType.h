@@ -41,7 +41,7 @@ private:
     //! @name Copy/Assignement
     //@{
     ComponentType( const ComponentType& );            //!< Copy constructor
-    ComponentType& operator=( const ComponentType& ); //!< Assignement operator
+    ComponentType& operator=( const ComponentType& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

@@ -57,7 +57,7 @@ private:
     ~MIL_LimaFunction();
 
      MIL_LimaFunction( const MIL_LimaFunction& );            //!< Copy constructor
-     MIL_LimaFunction& operator=( const MIL_LimaFunction& ); //!< Assignement operator
+     MIL_LimaFunction& operator=( const MIL_LimaFunction& ); //!< Assignment operator
     //@}
 
 private:

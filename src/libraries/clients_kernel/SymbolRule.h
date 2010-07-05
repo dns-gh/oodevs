@@ -43,7 +43,7 @@ private:
     //! @name Copy/Assignement
     //@{
     SymbolRule( const SymbolRule& );            //!< Copy constructor
-    SymbolRule& operator=( const SymbolRule& ); //!< Assignement operator
+    SymbolRule& operator=( const SymbolRule& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

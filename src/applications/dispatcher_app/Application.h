@@ -40,7 +40,7 @@ private:
     //! @name Copy/Assignement
     //@{
     Application( const Application& );            //!< Copy constructor
-    Application& operator=( const Application& ); //!< Assignement operator
+    Application& operator=( const Application& ); //!< Assignment operator
     //@}
 
 private:

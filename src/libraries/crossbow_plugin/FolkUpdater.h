@@ -57,7 +57,7 @@ private:
     //! @name Copy/Assignement
     //@{
     FolkUpdater( const FolkUpdater& );            //!< Copy constructor
-    FolkUpdater& operator=( const FolkUpdater& ); //!< Assignement operator
+    FolkUpdater& operator=( const FolkUpdater& ); //!< Assignment operator
     //@}
 
     //! @name Types

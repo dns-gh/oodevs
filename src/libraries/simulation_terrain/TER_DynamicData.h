@@ -46,7 +46,7 @@ public:
 
 private:
      TER_DynamicData( const TER_DynamicData& );            //!< Copy constructor
-     TER_DynamicData& operator=( const TER_DynamicData& ); //!< Assignement operator
+     TER_DynamicData& operator=( const TER_DynamicData& ); //!< Assignment operator
     ~TER_DynamicData();
 
 private:

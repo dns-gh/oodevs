@@ -35,7 +35,7 @@ public:
     //! @name Copy/Assignement
     //@{
     DEC_Path_KnowledgeObject( const DEC_Path_KnowledgeObject& );            //!< Copy constructor
-    DEC_Path_KnowledgeObject& operator=( const DEC_Path_KnowledgeObject& ); //!< Assignement operator
+    DEC_Path_KnowledgeObject& operator=( const DEC_Path_KnowledgeObject& ); //!< Assignment operator
     //@}
 
     //! @name Operations

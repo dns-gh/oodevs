@@ -59,7 +59,7 @@ private:
     //! @name Copy/Assignement
     //@{
     DEC_KnowledgeResolver_ABC( const DEC_KnowledgeResolver_ABC& );            //!< Copy constructor
-    DEC_KnowledgeResolver_ABC& operator=( const DEC_KnowledgeResolver_ABC& ); //!< Assignement operator
+    DEC_KnowledgeResolver_ABC& operator=( const DEC_KnowledgeResolver_ABC& ); //!< Assignment operator
     //@}
 
 private:

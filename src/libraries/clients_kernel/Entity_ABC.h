@@ -92,7 +92,7 @@ private:
     //! @name Copy/Assignement
     //@{
     Entity_ABC( const Entity_ABC& );            //!< Copy constructor
-    Entity_ABC& operator=( const Entity_ABC& ); //!< Assignement operator
+    Entity_ABC& operator=( const Entity_ABC& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

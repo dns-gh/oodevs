@@ -39,7 +39,7 @@ private:
     //! @name Copy/Assignement
     //@{
     MessageDecoder( const MessageDecoder& );            //!< Copy constructor
-    MessageDecoder& operator=( const MessageDecoder& ); //!< Assignement operator
+    MessageDecoder& operator=( const MessageDecoder& ); //!< Assignment operator
     //@}
 
 private:

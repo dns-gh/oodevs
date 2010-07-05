@@ -59,7 +59,7 @@ private:
     //! @name Copy/Assignement
     //@{
     AgentLogMedical( const AgentLogMedical& );            //!< Copy constructor
-    AgentLogMedical& operator=( const AgentLogMedical& ); //!< Assignement operator
+    AgentLogMedical& operator=( const AgentLogMedical& ); //!< Assignment operator
     //@}
 
     //! @name Types

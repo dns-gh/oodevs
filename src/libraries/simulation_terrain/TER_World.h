@@ -100,7 +100,7 @@ private:
     explicit TER_World( const std::string& rootFile );
              TER_World( const TER_World& );            //!< Copy constructor
     virtual ~TER_World();
-    TER_World& operator=( const TER_World& ); //!< Assignement operator
+    TER_World& operator=( const TER_World& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

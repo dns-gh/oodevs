@@ -34,9 +34,9 @@ public:
     //@}
 
 private:
-          MIL_PopulationElement_ABC& target_;
-    const unsigned int                       nNbrAmmoFired_;
-          PHY_FireResults_ABC&       fireResult_;
+    MIL_PopulationElement_ABC& target_;
+    const unsigned int nNbrAmmoFired_;
+    PHY_FireResults_ABC& fireResult_;
 };
 
 #endif // __MIL_Effect_DirectFirePopulation_h_

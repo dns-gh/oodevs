@@ -43,7 +43,7 @@ private:
     //! @name Copy/Assignement
     //@{
     Drawer( const Drawer& );            //!< Copy constructor
-    Drawer& operator=( const Drawer& ); //!< Assignement operator
+    Drawer& operator=( const Drawer& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

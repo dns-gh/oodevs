@@ -61,7 +61,7 @@ private:
     //! @name Copy/Assignment
     //@{
     FireEffect( const FireEffect& );            //!< Copy constructor
-    FireEffect& operator=( const FireEffect& ); //!< Assignement operator
+    FireEffect& operator=( const FireEffect& ); //!< Assignment operator
     //@}
 
 private:

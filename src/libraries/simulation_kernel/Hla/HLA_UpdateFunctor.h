@@ -54,7 +54,7 @@ private:
     //! @name Copy/Assignement
     //@{
     HLA_UpdateFunctor( const HLA_UpdateFunctor& );            //!< Copy constructor
-    HLA_UpdateFunctor& operator=( const HLA_UpdateFunctor& ); //!< Assignement operator
+    HLA_UpdateFunctor& operator=( const HLA_UpdateFunctor& ); //!< Assignment operator
     //@}
 
 private:

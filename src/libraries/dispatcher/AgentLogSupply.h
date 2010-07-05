@@ -55,7 +55,7 @@ private:
     //! @name Copy/Assignement
     //@{
     AgentLogSupply( const AgentLogSupply& );            //!< Copy constructor
-    AgentLogSupply& operator=( const AgentLogSupply& ); //!< Assignement operator
+    AgentLogSupply& operator=( const AgentLogSupply& ); //!< Assignment operator
     //@}
 
     //! @name Types

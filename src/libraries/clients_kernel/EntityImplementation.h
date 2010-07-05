@@ -50,7 +50,7 @@ private:
     //! @name Copy/Assignment
     //@{
     EntityImplementation( const EntityImplementation& );            //!< Copy constructor
-    EntityImplementation& operator=( const EntityImplementation& ); //!< Assignement operator
+    EntityImplementation& operator=( const EntityImplementation& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

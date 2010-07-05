@@ -67,7 +67,7 @@ private:
     //! @name Copy/Assignement
     //@{
     ObjectTypes( const ObjectTypes& );            //!< Copy constructor
-    ObjectTypes& operator=( const ObjectTypes& ); //!< Assignement operator
+    ObjectTypes& operator=( const ObjectTypes& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

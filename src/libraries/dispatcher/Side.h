@@ -73,7 +73,7 @@ private:
     //! @name Copy/Assignement
     //@{
     Side( const Side& );            //!< Copy constructor
-    Side& operator=( const Side& ); //!< Assignement operator
+    Side& operator=( const Side& ); //!< Assignment operator
     //@}
 
     //! @name Types

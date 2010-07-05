@@ -65,7 +65,7 @@ private:
     //! @name Copy/Assignement
     //@{
     TER_ObjectManager( const TER_ObjectManager& );            //!< Copy constructor
-    TER_ObjectManager& operator=( const TER_ObjectManager& ); //!< Assignement operator
+    TER_ObjectManager& operator=( const TER_ObjectManager& ); //!< Assignment operator
     //@}
 
     //! @name Types

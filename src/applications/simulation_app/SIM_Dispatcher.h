@@ -39,7 +39,7 @@ private:
     //! @name Copy/Assignement
     //@{
     SIM_Dispatcher( const SIM_Dispatcher& );            //!< Copy constructor
-    SIM_Dispatcher& operator=( const SIM_Dispatcher& ); //!< Assignement operator
+    SIM_Dispatcher& operator=( const SIM_Dispatcher& ); //!< Assignment operator
     //@}
 
 private:

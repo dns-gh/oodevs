@@ -84,7 +84,7 @@ private:
     //! @name Copy/Assignement
     //@{
     ClientNetworker( const ClientNetworker& );            //!< Copy constructor
-    ClientNetworker& operator=( const ClientNetworker& ); //!< Assignement operator
+    ClientNetworker& operator=( const ClientNetworker& ); //!< Assignment operator
     //@}
 
 private:

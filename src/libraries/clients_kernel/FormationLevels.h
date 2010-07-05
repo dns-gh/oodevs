@@ -45,7 +45,7 @@ private:
     //! @name Copy/Assignement
     //@{
     FormationLevels( const FormationLevels& );            //!< Copy constructor
-    FormationLevels& operator=( const FormationLevels& ); //!< Assignement operator
+    FormationLevels& operator=( const FormationLevels& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

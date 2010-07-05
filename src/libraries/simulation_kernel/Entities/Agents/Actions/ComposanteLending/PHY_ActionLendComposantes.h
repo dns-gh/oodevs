@@ -55,7 +55,7 @@ private:
     //! @name Copy/Assignement
     //@{
     PHY_ActionLendComposantes( const PHY_ActionLendComposantes& );              //!< Copy constructor
-    PHY_ActionLendComposantes& operator = ( const PHY_ActionLendComposantes& ); //!< Assignement operator
+    PHY_ActionLendComposantes& operator = ( const PHY_ActionLendComposantes& ); //!< Assignment operator
     //@}
 
 private:

@@ -57,7 +57,7 @@ private:
     //! @name Copy/Assignement
     //@{
     ReportFactory( const ReportFactory& );            //!< Copy constructor
-    ReportFactory& operator=( const ReportFactory& ); //!< Assignement operator
+    ReportFactory& operator=( const ReportFactory& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

@@ -40,7 +40,7 @@ private:
     //! @name Copy/Assignement
     //@{
     DEC_PathFactory( const DEC_PathFactory& );            //!< Copy constructor
-    DEC_PathFactory& operator=( const DEC_PathFactory& ); //!< Assignement operator
+    DEC_PathFactory& operator=( const DEC_PathFactory& ); //!< Assignment operator
     //@}
 
 private:

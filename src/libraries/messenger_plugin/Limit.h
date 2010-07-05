@@ -70,7 +70,7 @@ private:
     //! @name Copy/Assignement
     //@{
     Limit( const Limit& );            //!< Copy constructor
-    Limit& operator=( const Limit& ); //!< Assignement operator
+    Limit& operator=( const Limit& ); //!< Assignment operator
     //@}
 };
 

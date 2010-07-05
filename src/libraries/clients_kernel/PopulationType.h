@@ -48,7 +48,7 @@ private:
     //! @name Copy/Assignement
     //@{
     PopulationType( const PopulationType& );            //!< Copy constructor
-    PopulationType& operator=( const PopulationType& ); //!< Assignement operator
+    PopulationType& operator=( const PopulationType& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

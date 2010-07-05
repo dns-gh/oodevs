@@ -115,7 +115,7 @@ private:
     //! @name Copy/Assignement
     //@{
     Agent( const Agent& );            //!< Copy constructor
-    Agent& operator=( const Agent& ); //!< Assignement operator
+    Agent& operator=( const Agent& ); //!< Assignment operator
     //@}
 
 private:

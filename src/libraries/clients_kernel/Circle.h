@@ -51,7 +51,7 @@ public:
 private:
     //! @name Copy/Assignement
     //@{
-    Circle& operator=( const Circle& ); //!< Assignement operator
+    Circle& operator=( const Circle& ); //!< Assignment operator
     //@}
 
 private:

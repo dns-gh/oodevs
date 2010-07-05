@@ -50,7 +50,7 @@ private:
     //! @name Copy/Assignement
     //@{
     ObjectMessageService( const ObjectMessageService& );            //!< Copy constructor
-    ObjectMessageService& operator=( const ObjectMessageService& ); //!< Assignement operator
+    ObjectMessageService& operator=( const ObjectMessageService& ); //!< Assignment operator
     //@}
 
     //! @name Operations

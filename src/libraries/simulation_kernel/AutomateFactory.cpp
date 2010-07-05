@@ -27,7 +27,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( AutomateFactory )
 // -----------------------------------------------------------------------------
 AutomateFactory::AutomateFactory( MIL_IDManager& idManager, DEC_DataBase& database )
     : idManager_( idManager )
-    , database_( database )
+    , database_ ( database )
 {
     //NOTHING
 }

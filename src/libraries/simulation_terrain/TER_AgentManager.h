@@ -70,7 +70,7 @@ private:
     //! @name Copy/Assignement
     //@{
     TER_AgentManager( const TER_AgentManager& );            //!< Copy constructor
-    TER_AgentManager& operator=( const TER_AgentManager& ); //!< Assignement operator
+    TER_AgentManager& operator=( const TER_AgentManager& ); //!< Assignment operator
     //@}
 
 private:

@@ -153,9 +153,7 @@ bool MIL_Effect_IndirectFire::Execute()
         return true;
 
     if( MIL_Singletons::GetTime().GetCurrentTick() < rImpactTimeStep_ )
-    {
         return true;
-    }
 
     if( nNbrAmmoFired_ > 0 )
     {
@@ -272,18 +270,15 @@ const PHY_DotationCategory_IndirectFire_ABC& MIL_Effect_IndirectFire::GetIndirec
 // -----------------------------------------------------------------------------
 bool MIL_Effect_IndirectFire::IsTargetValid() const
 {
-    if( indirectDotationCategory_.GetDotationCategory().IsGuided() )
+    if( indirectDotationCategory_.GetDotationCategory().IsGuided() && nTargetKnowledgeID_ != 0 )
     {
-        if( nTargetKnowledgeID_ != 0 )
+        boost::shared_ptr< DEC_Knowledge_Agent > pTargetKnowledge = firer_.GetKnowledgeGroup().GetKnowledge().GetKnowledgeAgentFromID( nTargetKnowledgeID_ );
+        if( pTargetKnowledge && pTargetKnowledge->IsValid() )
         {
-            boost::shared_ptr< DEC_Knowledge_Agent > pTargetKnowledge = firer_.GetKnowledgeGroup().GetKnowledge().GetKnowledgeAgentFromID( nTargetKnowledgeID_ );
-            if( pTargetKnowledge && pTargetKnowledge->IsValid() )
+            if( pTargetKnowledge->GetPosition().Distance( firer_.GetRole< PHY_RoleInterface_Location >().GetPosition() ) > indirectDotationCategory_.GetDotationCategory().GetGuidanceRange()
+            || !pTargetKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Illumination >().IsIlluminated() )
             {
-                if( pTargetKnowledge->GetPosition().Distance( firer_.GetRole< PHY_RoleInterface_Location >().GetPosition() ) > indirectDotationCategory_.GetDotationCategory().GetGuidanceRange()
-                || !pTargetKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Illumination >().IsIlluminated() )
-                {
-                    return false;
-                }
+                return false;
             }
         }
     }

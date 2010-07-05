@@ -134,7 +134,7 @@ private:
     //! @name Copy/Assignement
     //@{
     ActionController( const ActionController& );            //!< Copy constructor
-    ActionController& operator=( const ActionController& ); //!< Assignement operator
+    ActionController& operator=( const ActionController& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

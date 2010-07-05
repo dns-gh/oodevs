@@ -101,7 +101,7 @@ private:
     //! @name Copy/Assignement
     //@{
     QueryDatabaseUpdater( const QueryDatabaseUpdater& );            //!< Copy constructor
-    QueryDatabaseUpdater& operator=( const QueryDatabaseUpdater& ); //!< Assignement operator
+    QueryDatabaseUpdater& operator=( const QueryDatabaseUpdater& ); //!< Assignment operator
     //@}
 
     //! @name Helper

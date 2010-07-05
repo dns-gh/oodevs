@@ -44,7 +44,7 @@ private:
     //! @name Copy/Assignment
     //@{
     Creatable( const Creatable& );            //!< Copy constructor
-    Creatable& operator=( const Creatable& ); //!< Assignement operator
+    Creatable& operator=( const Creatable& ); //!< Assignment operator
     //@}
 
 private:

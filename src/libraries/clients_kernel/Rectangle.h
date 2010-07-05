@@ -49,7 +49,7 @@ public:
 private:
     //! @name Copy/Assignement
     //@{
-    Rectangle& operator=( const Rectangle& ); //!< Assignement operator
+    Rectangle& operator=( const Rectangle& ); //!< Assignment operator
     //@}
 
 protected:

@@ -64,7 +64,7 @@ private:
     //! @name Copy/Assignement
     //@{
     TER_PathFinderThread( const TER_PathFinderThread& );            //!< Copy constructor
-    TER_PathFinderThread& operator=( const TER_PathFinderThread& ); //!< Assignement operator
+    TER_PathFinderThread& operator=( const TER_PathFinderThread& ); //!< Assignment operator
     //@}
 
     //! @name Tools

@@ -95,7 +95,7 @@ private:
     //! @name Copy/Assignement
     //@{
     TacticalLinesModel( const TacticalLinesModel& );            //!< Copy constructor
-    TacticalLinesModel& operator=( const TacticalLinesModel& ); //!< Assignement operator
+    TacticalLinesModel& operator=( const TacticalLinesModel& ); //!< Assignment operator
     //@}
 
 private:

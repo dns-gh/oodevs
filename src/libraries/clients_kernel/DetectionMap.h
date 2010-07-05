@@ -103,7 +103,7 @@ private:
     //! @name Copy/Assignement
     //@{
     DetectionMap( const DetectionMap& );            //!< Copy constructor
-    DetectionMap& operator=( const DetectionMap& ); //!< Assignement operator
+    DetectionMap& operator=( const DetectionMap& ); //!< Assignment operator
     //@}
 
 private:

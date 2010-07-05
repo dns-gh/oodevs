@@ -54,7 +54,7 @@ private:
     //! @name Copy/Assignement
     //@{
     Area( const Area& );            //!< Copy constructor
-    Area& operator=( const Area& ); //!< Assignement operator
+    Area& operator=( const Area& ); //!< Assignment operator
     //@}
 };
 

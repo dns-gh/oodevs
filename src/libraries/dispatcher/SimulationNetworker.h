@@ -57,7 +57,7 @@ private:
     //! @name Copy/Assignement
     //@{
     SimulationNetworker( const SimulationNetworker& );            //!< Copy constructor
-    SimulationNetworker& operator=( const SimulationNetworker& ); //!< Assignement operator
+    SimulationNetworker& operator=( const SimulationNetworker& ); //!< Assignment operator
     //@}
 
     //! @name Connection callbacks

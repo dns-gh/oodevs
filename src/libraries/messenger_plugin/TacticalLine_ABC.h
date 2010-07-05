@@ -86,7 +86,7 @@ private:
     //! @name Copy/Assignement
     //@{
     TacticalLine_ABC( const TacticalLine_ABC& );            //!< Copy constructor
-    TacticalLine_ABC& operator=( const TacticalLine_ABC& ); //!< Assignement operator
+    TacticalLine_ABC& operator=( const TacticalLine_ABC& ); //!< Assignment operator
     //@}
 
     //! @name Member data

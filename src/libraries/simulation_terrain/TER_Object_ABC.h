@@ -86,7 +86,7 @@ private:
     //! @name Copy/Assignement
     //@{
     TER_Object_ABC( const TER_Object_ABC& );            //!< Copy constructor
-    TER_Object_ABC& operator=( const TER_Object_ABC& ); //!< Assignement operator
+    TER_Object_ABC& operator=( const TER_Object_ABC& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

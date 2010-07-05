@@ -51,7 +51,7 @@ private:
     //! @name Copy/Assignment
     //@{
     PopulationFire( const PopulationFire& );            //!< Copy constructor
-    PopulationFire& operator=( const PopulationFire& ); //!< Assignement operator
+    PopulationFire& operator=( const PopulationFire& ); //!< Assignment operator
     //@}
 
 private:

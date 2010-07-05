@@ -49,7 +49,7 @@ private:
     //! @name Copy/Assignment
     //@{
     SaverFacade( const SaverFacade& );            //!< Copy constructor
-    SaverFacade& operator=( const SaverFacade& ); //!< Assignement operator
+    SaverFacade& operator=( const SaverFacade& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

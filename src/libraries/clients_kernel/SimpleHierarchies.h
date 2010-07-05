@@ -60,7 +60,7 @@ private:
     //! @name Copy/Assignment
     //@{
     SimpleHierarchies( const SimpleHierarchies& );            //!< Copy constructor
-    SimpleHierarchies& operator=( const SimpleHierarchies& ); //!< Assignement operator
+    SimpleHierarchies& operator=( const SimpleHierarchies& ); //!< Assignment operator
     //@}
 
 private:

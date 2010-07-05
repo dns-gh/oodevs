@@ -69,7 +69,7 @@ private:
     //! @name Copy/Assignement
     //@{
     CrossbowPublisher( const CrossbowPublisher& );            //!< Copy constructor
-    CrossbowPublisher& operator=( const CrossbowPublisher& ); //!< Assignement operator
+    CrossbowPublisher& operator=( const CrossbowPublisher& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

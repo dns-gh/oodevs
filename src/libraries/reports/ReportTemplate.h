@@ -52,7 +52,7 @@ private:
     //! @name Copy/Assignement
     //@{
     ReportTemplate( const ReportTemplate& );            //!< Copy constructor
-    ReportTemplate& operator=( const ReportTemplate& ); //!< Assignement operator
+    ReportTemplate& operator=( const ReportTemplate& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

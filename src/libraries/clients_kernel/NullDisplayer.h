@@ -41,7 +41,7 @@ private:
     //! @name Copy/Assignement
     //@{
     NullDisplayer( const NullDisplayer& );            //!< Copy constructor
-    NullDisplayer& operator=( const NullDisplayer& ); //!< Assignement operator
+    NullDisplayer& operator=( const NullDisplayer& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

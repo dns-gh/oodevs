@@ -147,7 +147,7 @@ protected:
     //! @name Copy/Assignement
     //@{
     Resolver2( const Resolver2& );            //!< Copy constructor
-    Resolver2& operator=( const Resolver2& ); //!< Assignement operator
+    Resolver2& operator=( const Resolver2& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

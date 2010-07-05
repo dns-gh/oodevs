@@ -92,7 +92,7 @@ private:
     //! @name Copy/Assignement
     //@{
     MIL_PopulationFlow( const MIL_PopulationFlow& );            //!< Copy constructor
-    MIL_PopulationFlow& operator=( const MIL_PopulationFlow& ); //!< Assignement operator
+    MIL_PopulationFlow& operator=( const MIL_PopulationFlow& ); //!< Assignment operator
     //@}
 
     //! @name

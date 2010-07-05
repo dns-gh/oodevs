@@ -68,7 +68,7 @@ private:
     //! @name Copy/Assignement
     //@{
     EntityHierarchies( const EntityHierarchies& );            //!< Copy constructor
-    EntityHierarchies& operator=( const EntityHierarchies& ); //!< Assignement operator
+    EntityHierarchies& operator=( const EntityHierarchies& ); //!< Assignment operator
     //@}
 
 private:

@@ -69,7 +69,7 @@ private:
     //! @name Copy/Assignement
     //@{
     HLA_DistantObject( const HLA_DistantObject& );            //!< Copy constructor
-    HLA_DistantObject& operator=( const HLA_DistantObject& ); //!< Assignement operator
+    HLA_DistantObject& operator=( const HLA_DistantObject& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

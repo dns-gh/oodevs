@@ -40,7 +40,7 @@ private:
     //! @name Copy/Assignement
     //@{
     DEC_Population_PathfinderRule( const DEC_Population_PathfinderRule& );            //!< Copy constructor
-    DEC_Population_PathfinderRule& operator=( const DEC_Population_PathfinderRule& ); //!< Assignement operator
+    DEC_Population_PathfinderRule& operator=( const DEC_Population_PathfinderRule& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

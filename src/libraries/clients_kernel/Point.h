@@ -50,7 +50,7 @@ public:
 private:
     //! @name Copy/Assignement
     //@{
-    Point& operator=( const Point& ); //!< Assignement operator
+    Point& operator=( const Point& ); //!< Assignment operator
     //@}
 
 private:
