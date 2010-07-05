@@ -18,7 +18,7 @@
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
 DEC_KnowledgeSource_ABC::DEC_KnowledgeSource_ABC( DEC_KnowledgeBlackBoard_ABC& blackBoard, unsigned int nPriority )
-    : nPriority_  ( nPriority   )
+    : nPriority_  ( nPriority )
     , pBlackBoard_( &blackBoard )
 {
     blackBoard.AddToScheduler( *this );
@@ -43,7 +43,6 @@ DEC_KnowledgeSource_ABC::~DEC_KnowledgeSource_ABC()
 {
     pBlackBoard_->RemoveFromScheduler( *this );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeSource_ABC::GetPriority

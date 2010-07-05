@@ -22,8 +22,8 @@
 // Created: HBD 2010-03-25
 // -----------------------------------------------------------------------------
 PHY_GlobalMeteo::PHY_GlobalMeteo( unsigned int id, xml::xistream& xis, const weather::PHY_Lighting& light, int conversionFactor )
-    : PHY_Meteo( id, xis, light, conversionFactor ),
-    _isChanged( false )
+    : PHY_Meteo( id, xis, light, conversionFactor )
+    , isChanged_( false )
 {
     // NOTHING
 }
@@ -53,7 +53,7 @@ PHY_GlobalMeteo::~PHY_GlobalMeteo()
 // -----------------------------------------------------------------------------
 void PHY_GlobalMeteo::Update( const Common::MsgMissionParameters& asn )
 {
-    _isChanged = true;
+    isChanged_ = true;
     PHY_Meteo::Update( asn );
 }
 
@@ -63,9 +63,9 @@ void PHY_GlobalMeteo::Update( const Common::MsgMissionParameters& asn )
 // -----------------------------------------------------------------------------
 void PHY_GlobalMeteo::UpdateMeteoPatch( int /*date*/, weather::PHY_RawVisionData_ABC& /*dataVision*/ )
 {
-    if( _isChanged )
+    if( isChanged_ )
     {
-        _isChanged = false;
+        isChanged_ = false;
         SendCreation();
     }
 }

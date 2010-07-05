@@ -39,15 +39,6 @@ private:
     KnowledgeVisitor_ABC( const KnowledgeVisitor_ABC& );            //!< Copy constructor
     KnowledgeVisitor_ABC& operator=( const KnowledgeVisitor_ABC& ); //!< Assignment operator
     //@}
-
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    //@}
 };
 
 #endif // __KnowledgeVisitor_ABC_h_

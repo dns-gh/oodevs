@@ -61,7 +61,7 @@ private:
 private:
     //! @name Member data
     //@{
-    bool _isChanged;
+    bool isChanged_;
     //@}
 };
 

@@ -53,7 +53,7 @@ public:
     //@}
 
 private:
-    unsigned int                         nPriority_;
+    unsigned int nPriority_;
     DEC_KnowledgeBlackBoard_ABC* pBlackBoard_;
 };
 
