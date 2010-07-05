@@ -41,20 +41,20 @@ boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPointBM( MIL_Ag
 }
 
 // -----------------------------------------------------------------------------
-// Name: bool DEC_PathFunctions::ShouldEmbark
+// Name: DEC_PathFunctions::ShouldEmbark
 // Created: LMT 2010-05-04
 // -----------------------------------------------------------------------------
 bool DEC_PathFunctions::ShouldEmbark( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Path_ABC > path )
 {
-    double length = path->GetLength();
-    double MaxSpeedUnloaded = callerAgent.GetRole< moving::PHY_RoleAction_Moving >().GetTheoricMaxSpeed( false );
-    if( MaxSpeedUnloaded == 0 )
-            return true;
-    double timeUnloaded = length / MaxSpeedUnloaded;
-    double speed = callerAgent.GetRole< moving::PHY_RoleAction_Moving >().GetTheoricMaxSpeed( true );
+    const double length = path->GetLength();
+    const double maxSpeedUnloaded = callerAgent.GetRole< moving::PHY_RoleAction_Moving >().GetTheoricMaxSpeed( false );
+    if( maxSpeedUnloaded == 0 )
+        return true;
+    const double timeUnloaded = length / maxSpeedUnloaded;
+    const double speed = callerAgent.GetRole< moving::PHY_RoleAction_Moving >().GetTheoricMaxSpeed( true );
     if( !speed )
         return false;
-    double timeLoaded = ( length / speed ) + DEC_AgentFunctions::GetLoadingTime( callerAgent ) * 60 + DEC_AgentFunctions::GetUnloadingTime( callerAgent ) * 60; //Conversion minutes into hours
+    const double timeLoaded = ( length / speed ) + DEC_AgentFunctions::GetLoadingTime( callerAgent ) * 60 + DEC_AgentFunctions::GetUnloadingTime( callerAgent ) * 60; //Conversion minutes into hours
     return ( timeLoaded < timeUnloaded );
 }
 
@@ -90,7 +90,6 @@ boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPoint( MIL_Agen
     return pPath;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::CreatePathToPointList
 // Created: NLD 2004-09-23
@@ -125,7 +124,7 @@ int DEC_PathFunctions::GetPathState( MIL_AgentPion& /*callerAgent*/, DEC_Path_AB
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_PathFunctions::ExtrapolatePosition( const MIL_AgentPion& callerAgent, const MT_Float time, bool bBoundOnPath )
 {
-    MT_Float simulationTime        = MIL_Tools::ConvertMinutesToSim( time );
+    MT_Float simulationTime = MIL_Tools::ConvertMinutesToSim( time );
     boost::shared_ptr< MT_Vector2D > pPos( new MT_Vector2D( callerAgent.GetRole< moving::PHY_RoleAction_Moving >().ExtrapolatePosition( simulationTime, bBoundOnPath ) ) );
     return pPos;
 }
@@ -257,4 +256,3 @@ double DEC_PathFunctions::GetDistancePath( const boost::shared_ptr< DEC_Path_ABC
 {
    return pPath->GetLength();
 }
-
