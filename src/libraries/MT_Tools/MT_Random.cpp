@@ -16,6 +16,8 @@
 
 using namespace MT_RandomConsts;
 
+MT_Random* MT_Random::pInstance_ = 0;
+
 //-----------------------------------------------------------------------------
 // Name: MT_Random constructor
 // Created: JVT 03-10-15

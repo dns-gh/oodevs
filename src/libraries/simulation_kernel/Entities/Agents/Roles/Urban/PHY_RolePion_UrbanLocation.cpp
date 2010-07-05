@@ -47,7 +47,6 @@ void load_construct_data( Archive& archive, PHY_RolePion_UrbanLocation* role, co
     ::new( role )PHY_RolePion_UrbanLocation( *pion );
 }
 
-MT_Random PHY_RolePion_UrbanLocation::randomGenerator_;
 using namespace urbanLocation;
 
 // -----------------------------------------------------------------------------

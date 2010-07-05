@@ -55,10 +55,6 @@
 #include "Tools/MIL_Tools.h"
 #include <xeumeuleu/xml.h>
 
-
-
-MT_Random PHY_WeaponDataType_DirectFire::randomGenerator_;
-
 // -----------------------------------------------------------------------------
 // Name: PHY_WeaponDataType_DirectFire constructor
 // Created: NLD 2004-08-05
@@ -321,7 +317,7 @@ void PHY_WeaponDataType_DirectFire::Fire( MIL_Agent_ABC& firer, MIL_Agent_ABC& t
 
         const MT_Float rPH = GetPH( firer, target, targetVolume, firerPosition, targetPosition );
         target.GetRole< PHY_RoleInterface_ActiveProtection >().UseAmmunition( weaponType_.GetDotationCategory() );
-        if( !( randomGenerator_.rand_oi() <= rPH ) )
+        if( !( 1. - MIL_Random::rand_io( MIL_Random::eFire ) <= rPH ) )
         {
             const UrbanObjectWrapper* urbanObject = target.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
             if( urbanObject )
@@ -375,7 +371,7 @@ void PHY_WeaponDataType_DirectFire::Fire( MIL_Agent_ABC& firer, MIL_PopulationEl
 
     unsigned int nHit = 0;
     for( unsigned int i = 1; i <= nNbrAmmoReserved; ++i )
-        if( randomGenerator_.rand_oi() <= rPH )
+        if( 1. - MIL_Random::rand_io() <= rPH )
             ++nHit;
 
     MIL_Effect_DirectFirePopulation* pEffect = new MIL_Effect_DirectFirePopulation( target, nHit, fireResult );

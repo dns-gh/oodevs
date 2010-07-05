@@ -13,7 +13,7 @@
 #define __PHY_DotationCategory_IndirectFire_h_
 
 #include "PHY_DotationCategory_IndirectFire_ABC.h"
-#include "MT_Tools/MT_Random.h"
+#include "MIL_Random.h"
 
 namespace xml
 {
@@ -57,9 +57,6 @@ private:
 private:
     MT_Float   rNeutralizationCoef_;
     T_PhVector phs_;
-
-private:
-    static MT_Random random_;
 };
 
 #endif // __PHY_DotationCategory_IndirectFire_h_

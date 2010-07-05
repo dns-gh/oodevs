@@ -14,14 +14,12 @@
 #include "Knowledge/DEC_Knowledge_ObjectAttributeMedicalTreatment.h"
 #include "MIL.h"
 #include "MIL_AgentServer.h"
-#include "MT_Tools/MT_Random.h"
+#include "MIL_Random.h"
 #include "MIL_MedicalTreatmentType.h"
 #include "protocol/protocol.h"
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MedicalTreatmentAttribute )
-
-MT_Random MedicalTreatmentAttribute::randomGenerator_;
 
 // -----------------------------------------------------------------------------
 // Name: MedicalTreatmentAttribute constructor
@@ -98,12 +96,12 @@ void MedicalTreatmentAttribute::InitializePatientDiagnosisList( int occupiedBeds
 
     for( int i = 0 ; i < occupiedDoctors ; i++ )
     {
-        it->second->push_back( std::make_pair( time - ( float ) randomGenerator_.rand_ii( 0 , MIL_MedicalTreatmentType::Find( it->first )->GetTreatmentTime( iter->second ) ) , ( int ) randomGenerator_.rand32_ii( 0 , 1 ) ) );
+        it->second->push_back( std::make_pair( time - ( float ) MIL_Random::rand_ii( 0 , MIL_MedicalTreatmentType::Find( it->first )->GetTreatmentTime( iter->second ) ) , ( int ) MIL_Random::rand32_ii( 0 , 1 ) ) );
     }
 
     for( int i = 0 ; i < occupiedBeds - occupiedDoctors ; i++ )
     {
-        it->second->push_back( std::make_pair( time - ( float ) randomGenerator_.rand_ii( 0 , MIL_MedicalTreatmentType::Find( it->first )->GetHospitalisationTime( iter->second ) ) , ( int ) randomGenerator_.rand32_ii( 0 , 1 ) ) );
+        it->second->push_back( std::make_pair( time - ( float ) MIL_Random::rand_ii( 0 , MIL_MedicalTreatmentType::Find( it->first )->GetHospitalisationTime( iter->second ) ) , ( int ) MIL_Random::rand32_ii( 0 , 1 ) ) );
     }
 }
 

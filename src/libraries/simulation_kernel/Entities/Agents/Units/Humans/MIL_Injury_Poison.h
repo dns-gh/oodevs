@@ -73,7 +73,6 @@ public:
 private:
     //! @name Member data
     //@{
-    static MT_Random                             randomGenerator_;
     int                                          agentConcentration_;
     const std::string                            NBCAgent_;
     int                                          injuryID_;

@@ -100,7 +100,6 @@ public:
 private:
     //! @name Member data
     //@{
-    static MT_Random      randomGenerator_;
     T_MedicalTreatmentMap medicalTreatmentMap_;
     int                   beds_;
     int                   availableBeds_;

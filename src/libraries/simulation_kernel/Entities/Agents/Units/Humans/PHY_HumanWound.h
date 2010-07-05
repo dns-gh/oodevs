@@ -12,7 +12,7 @@
 #ifndef __PHY_HumanWound_h_
 #define __PHY_HumanWound_h_
 
-#include "MT_Tools/MT_Random.h"
+#include "MIL_Random.h"
 
 namespace Common
 {
@@ -131,7 +131,6 @@ private:
 
 private:
     static T_HumanWoundMap humanWounds_;
-    static MT_Random       randomGenerator_;
     static unsigned int            nDiagnosticTime_;
     static unsigned int            nSortingTime_;
 

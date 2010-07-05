@@ -48,6 +48,7 @@ MIL_Config::MIL_Config()
     , bDeleteCheckpointTestMode_( false )
     , bFrozenMode_              ( false )
     , bEmbeddedDispatcher_      ( false )
+    , randomSeed_               ( 0 )
 {
     po::options_description desc( "Simulation options" );
     desc.add_options()
@@ -124,7 +125,21 @@ void MIL_Config::ReadSessionFile( const std::string& file )
                     >> xml::attribute( "enabled"   , bHLAEnabled_ )
                     >> xml::attribute( "federation", hlaFederation_ )
                     >> xml::attribute( "federate"  , hlaFederate_ )
+                >> xml::end()
+                >> xml::optional() >> xml::start( "random" )
+                    >> xml::attribute( "seed", randomSeed_ )
                 >> xml::end();
+    for( int i = 0; i < MIL_Random::eContextsNbr; ++i )
+    {
+        std::stringstream stream;
+        stream << "random";
+        stream << i;
+            xis >> xml::optional() >> xml::start( stream.str() )
+                    >> xml::attribute( "distribution", randomGaussian_[ i ] )
+                    >> xml::attribute( "deviation", randomDeviation_[ i ] )
+                    >> xml::attribute( "mean", randomMean_[ i ] )
+                >> xml::end();
+    }
 
     ReadCheckPointConfiguration( xis );
     ReadDebugConfiguration     ( xis );

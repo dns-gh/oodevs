@@ -84,9 +84,6 @@ private:
     float roll_;
     unsigned int tick_;
     //@}
-
-private:
-    static MT_Random randomGenerator_;
 };
 
 #endif // __PHY_ZURBPerceptionComputer_h_

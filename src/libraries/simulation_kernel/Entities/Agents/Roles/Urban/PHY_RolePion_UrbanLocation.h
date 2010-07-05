@@ -14,7 +14,7 @@
 #include "PHY_RoleInterface_UrbanLocation.h"
 #include "ObjectCollisionNotificationHandler_ABC.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
-#include "MT_Tools/MT_Random.h"
+#include "MIL_Random.h"
 
 namespace posture
 {
@@ -111,10 +111,6 @@ private:
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_UrbanLocation* role, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_UrbanLocation* role, const unsigned int /*version*/ );
-
-private:
-    static MT_Random randomGenerator_;
-
 };
 
 #endif // __PHY_RolePion_UrbanLocation_h_

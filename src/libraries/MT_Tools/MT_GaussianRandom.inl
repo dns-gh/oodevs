@@ -31,3 +31,78 @@ double MT_GaussianRandom::GetVariance() const
     return rVariance_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MT_GaussianRandom::gaussian_ii
+// Created: JSR 2010-07-05
+// -----------------------------------------------------------------------------
+inline
+double MT_GaussianRandom::gaussian_ii()
+{
+    if( rVariance_ == 0. && rMean_ == 0. )
+        return 0.;
+
+    if( rVariance_ == 0. && rMean_ == 1. )
+        return 1.;
+
+    double r = rand();
+    while( r < 0. || r > 1. )
+        r = rand();
+    return r;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MT_GaussianRandom::gaussian_io
+// Created: JSR 2010-07-05
+// -----------------------------------------------------------------------------
+inline
+double MT_GaussianRandom::gaussian_io()
+{
+    if( rVariance_ == 0. && rMean_ == 0. )
+        return 0.;
+
+    if( rVariance_ == 0. && rMean_ == 1. )
+        return 1. - ( 1. / 4294967295. );
+
+    double r = rand();
+    while( r < 0. || r >= 1. )
+        r = rand();
+    return r;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MT_GaussianRandom::gaussian_oo
+// Created: JSR 2010-07-05
+// -----------------------------------------------------------------------------
+inline
+double MT_GaussianRandom::gaussian_oo()
+{
+    if( rVariance_ == 0. && rMean_ == 0. )
+        return 1. / 4294967295.;
+
+    if( rVariance_ == 0. && rMean_ == 1. )
+        return 1. - ( 1. / 4294967295. );
+
+    double r = rand();
+    while( r <= 0. || r >= 1. )
+        r = rand();
+    return r;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MT_GaussianRandom::gaussian_oi
+// Created: JSR 2010-07-05
+// -----------------------------------------------------------------------------
+inline
+double MT_GaussianRandom::gaussian_oi()
+{
+    if( rVariance_ == 0. && rMean_ == 0. )
+        return 1. / 4294967295.;
+
+    if( rVariance_ == 0. && rMean_ == 1. )
+        return 1.;
+
+    double r = rand();
+    while( r <= 0. || r > 1. )
+        r = rand();
+    return r;
+}

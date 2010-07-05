@@ -9,6 +9,54 @@
 //
 //*****************************************************************************
 
+// -----------------------------------------------------------------------------
+// Name: MT_Random::GetInstance
+// Created: JSR 2010-07-01
+// -----------------------------------------------------------------------------
+inline
+MT_Random& MT_Random::GetInstance()
+{
+    if( !pInstance_ )
+        pInstance_ = new MT_Random();
+
+    return *pInstance_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MT_Random::Initialize
+// Created: JSR 2010-07-01
+// -----------------------------------------------------------------------------
+inline
+void MT_Random::Initialize( unsigned long nSeed )
+{
+    if( pInstance_ )
+        delete pInstance_;
+    pInstance_ = new MT_Random( nSeed );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MT_Random::Initialize
+// Created: JSR 2010-07-01
+// -----------------------------------------------------------------------------
+inline
+void MT_Random::Initialize( const std::vector< unsigned long >& key )
+{
+    if( pInstance_ )
+        delete pInstance_;
+    pInstance_ = new MT_Random( key );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MT_Random::DeleteInstance
+// Created: JSR 2010-07-01
+// -----------------------------------------------------------------------------
+inline
+void MT_Random::DeleteInstance()
+{
+    delete pInstance_;
+    pInstance_ = 0;
+}
+
 //-----------------------------------------------------------------------------
 // Name: MT_Random::nextState
 // Created: JVT 03-10-15

@@ -20,8 +20,6 @@
 #include "simulation_kernel/DetectionComputer_ABC.h"
 #include "simulation_kernel/DetectionComputerFactory_ABC.h"
 
-MT_Random PHY_PerceptionView::randomGenerator_;
-
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionView constructor
 // Created: NLD 2004-08-20
@@ -115,7 +113,7 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_Agent_ABC& tar
     {
         CIT_PerceptionTickMap it = perceptionsUnderway_.find( &target );
         unsigned int tick = 0;
-        float roll = static_cast< float >( randomGenerator_.rand_ii() );
+        float roll = static_cast< float >( MIL_Random::rand_ii( MIL_Random::ePerception ) );
         if( it != perceptionsUnderway_.end() )
         {
             tick = it->second.first;
@@ -406,9 +404,9 @@ void PHY_PerceptionView::TransfertPerception()
             {
                 T_PerceptionTickMap::iterator it2 = perceptionsBuffer_.find( it->first );
                 if( it2 != perceptionsBuffer_.end() )
-                    perceptionsBuffer_[ it2->first ] = std::pair< unsigned int, float >( std::max( it2->second.first, it->second ), static_cast< float >( randomGenerator_.rand_ii() )  );
+                    perceptionsBuffer_[ it2->first ] = std::pair< unsigned int, float >( std::max( it2->second.first, it->second ), static_cast< float >( MIL_Random::rand_ii( MIL_Random::ePerception ) )  );
                 else
-                    perceptionsBuffer_[ it->first ] = std::pair< unsigned int, float >( it->second, static_cast< float >( randomGenerator_.rand_ii() )  );
+                    perceptionsBuffer_[ it->first ] = std::pair< unsigned int, float >( it->second, static_cast< float >( MIL_Random::rand_ii( MIL_Random::ePerception ) )  );
             }
         }
 

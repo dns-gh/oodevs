@@ -50,7 +50,6 @@ public:
 private:
     //! @name Member data
     //@{
-    static MT_Random                             randomGenerator_;
     const NBCTypeAttribute*                          pInjuryAttribute_;
     int                                          injuryID_;
     MIL_MedicalTreatmentType::E_InjuryCategories injuryCategory_;

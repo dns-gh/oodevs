@@ -37,8 +37,6 @@
 #include <urban/TerrainObject_ABC.h>
 #include <xeumeuleu/xml.h>
 
-MT_Random PHY_DotationCategory_IndirectFire::random_;
-
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory_IndirectFire::Create
 // Created: NLD 2004-10-08
@@ -265,5 +263,5 @@ bool PHY_DotationCategory_IndirectFire::HasHit( const MIL_Agent_ABC& target, MT_
     const MT_Float rPH =   phs_[ targetPosture.GetCurrentPosture().GetID() ] *        targetPosture.GetPostureCompletionPercentage()
                          + phs_[ targetPosture.GetLastPosture   ().GetID() ] * ( 1. - targetPosture.GetPostureCompletionPercentage() );
 
-    return random_.rand_oi() <= (rPH * ratio ) ;
+    return ( 1. - MIL_Random::rand_io( MIL_Random::eFire ) ) <= (rPH * ratio ) ;
 }

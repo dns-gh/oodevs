@@ -71,7 +71,6 @@ public:
 private:
     //! @name Member data
     //@{
-    static MT_Random                             randomGenerator_;
     int                                          heat_;
     const std::string                            fireClass_;
     int                                          injuryID_;

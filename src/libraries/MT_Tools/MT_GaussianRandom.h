@@ -21,9 +21,7 @@ class MT_GaussianRandom
 {
 public:
     explicit MT_GaussianRandom();
-    explicit MT_GaussianRandom( unsigned long nSeed );
              MT_GaussianRandom( double rMean, double rVariance );
-             MT_GaussianRandom( double rMean, double rVariance, unsigned long nSeed );
     explicit MT_GaussianRandom( const MT_GaussianRandom& );
     virtual ~MT_GaussianRandom() {}
 
@@ -31,14 +29,17 @@ public:
 
     double rand();
 
+    double gaussian_ii();
+    double gaussian_io();
+    double gaussian_oo();
+    double gaussian_oi();
+
     double GetMean()     const;
     double GetVariance() const;
 
 private:
     double    rMean_;
     double    rVariance_;
-
-    MT_Random linearRandom_;
 
     double    rAlreadyComputed_;
     bool      bAlreadyComputed_;

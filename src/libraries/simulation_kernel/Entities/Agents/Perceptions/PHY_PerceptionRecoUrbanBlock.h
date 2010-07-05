@@ -30,8 +30,6 @@ private:
 private:
     boost::shared_ptr< DEC_Knowledge_Urban > urbanBlock_;
     TER_Localisation localisation_;
-private:
-    static MT_Random randomGenerator_;
 };
 
 // =============================================================================

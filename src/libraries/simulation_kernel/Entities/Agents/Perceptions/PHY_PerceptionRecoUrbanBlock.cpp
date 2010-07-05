@@ -19,8 +19,6 @@
 #include "simulation_kernel/DetectionComputer_ABC.h"
 #include "simulation_kernel/DetectionComputerFactory_ABC.h"
 
-MT_Random PHY_PerceptionRecoUrbanBlockReco::randomGenerator_;
-
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRecoUrbanBlockReco constructor
 // Created: MGD 2010-02-11
@@ -60,7 +58,7 @@ void PHY_PerceptionRecoUrbanBlockReco::GetAgentsInside( const PHY_RoleInterface_
 // -----------------------------------------------------------------------------
 bool PHY_PerceptionRecoUrbanBlockReco::CanSeeIt() const
 {
-    return urbanBlock_->GetProgress() >= randomGenerator_.rand_ii();
+    return urbanBlock_->GetProgress() >= MIL_Random::rand_ii( MIL_Random::ePerception );
 }
 
 // -----------------------------------------------------------------------------

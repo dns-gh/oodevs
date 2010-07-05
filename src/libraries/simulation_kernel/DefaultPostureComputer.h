@@ -27,7 +27,7 @@ class DefaultPostureComputer : public PostureComputer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DefaultPostureComputer( MT_Random& random, Parameters& param );
+             DefaultPostureComputer( Parameters& param );
     virtual ~DefaultPostureComputer();
     //@}
 
@@ -57,8 +57,6 @@ private:
     bool bForceStop_;
     bool bIsLoaded_;
     Results results_;
-
-    MT_Random& random_;
     //@}
 
 };

@@ -19,13 +19,12 @@ using namespace posture;
 // Name: DefaultPostureComputer::DefaultPostureComputer
 // Created: MGD 2009-09-21
 // -----------------------------------------------------------------------------
-DefaultPostureComputer::DefaultPostureComputer( MT_Random& random, Parameters& params )
+DefaultPostureComputer::DefaultPostureComputer( Parameters& params )
     : params_( &params )
     , bForceMovement_( false )
     , bForceStop_( false )
     , bIsLoaded_( false )
     , results_( params.rCompletionPercentage_ )
-    , random_( random )
 {
     // NOTHING
 }
@@ -126,7 +125,7 @@ void DefaultPostureComputer::Update()
             results_.newPosture_ = &PHY_Posture::arret_;
 
     // Mode furtif
-    results_.bIsStealth_ = !( random_.rand_oi( 0., 1. ) <= params_->rStealthFactor_ );
+    results_.bIsStealth_ = !( MIL_Random::rand_oi( 0., 1., MIL_Random::ePerception ) <= params_->rStealthFactor_ );
 
     if( results_.postureCompletionPercentage_ == 1. )
     {

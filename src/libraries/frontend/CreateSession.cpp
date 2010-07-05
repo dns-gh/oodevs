@@ -20,10 +20,51 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )
 
+#include <qsettings.h>
+
 namespace bfs = boost::filesystem;
 namespace bpt = boost::posix_time;
 
 using namespace frontend;
+
+// random configuration
+namespace
+{
+    bool ReadGaussian( int index )
+    {
+        QSettings settings;
+        settings.setPath( "MASA Group", "SWORD" );
+        return settings.readBoolEntry( QString( "/Common/RandomDistribution" ) + QString::number( index ), false );
+    }
+
+    int ReadDeviation( int index )
+    {
+        QSettings settings;
+        settings.setPath( "MASA Group", "SWORD" );
+        return settings.readNumEntry( QString( "/Common/RandomDeviation" ) + QString::number( index ), 5 );
+    }
+
+    int ReadMean( int index )
+    {
+        QSettings settings;
+        settings.setPath( "MASA Group", "SWORD" );
+        return settings.readNumEntry( QString( "/Common/RandomMean" ) + QString::number( index ), 5 );
+    }
+
+    bool ReadHasSeed()
+    {
+        QSettings settings;
+        settings.setPath( "MASA Group", "SWORD" );
+        return settings.readBoolEntry( "/Common/RandomHasSeed", false );
+    }
+
+    int ReadSeed()
+    {
+        QSettings settings;
+        settings.setPath( "MASA Group", "SWORD" );
+        return settings.readNumEntry( "/Common/RandomSeed", 1 );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: CreateSession constructor
@@ -81,6 +122,16 @@ void CreateSession::SetDefaultValues()
         setter_->SetValue( "session/config/simulation/profiling/@enabled"          , false );
         setter_->SetValue( "session/config/simulation/time/@step"                  , 10 );
         setter_->SetValue( "session/config/simulation/time/@factor"                , 10 );
+        setter_->SetValue( "session/config/simulation/random/@seed"                , ReadHasSeed() ? ReadSeed() : 0 );
+        for( int i = 0; i < 4; ++i ) // Fire, Wounds, Perception, Breakdowns
+        {
+            std::stringstream stream;
+            stream << "session/config/simulation/random";
+            stream << i;
+            setter_->SetValue( stream.str() + "/@distribution", ReadGaussian( i ) );
+            setter_->SetValue( stream.str() + "/@deviation"   , ReadDeviation( i ) );
+            setter_->SetValue( stream.str() + "/@mean"        , ReadMean( i ) );
+        }
         setter_->SetValue( "session/config/simulation/pathfinder/@threads"         , 1 );
         setter_->SetValue( "session/config/simulation/hla/@enabled"                , false );
         setter_->SetValue( "session/config/simulation/hla/@federation"             , "MyFederation" );

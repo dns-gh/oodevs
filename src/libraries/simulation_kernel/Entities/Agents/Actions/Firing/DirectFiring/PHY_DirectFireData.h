@@ -12,7 +12,7 @@
 #ifndef __PHY_DirectFireData_h_
 #define __PHY_DirectFireData_h_
 
-#include "MT_Tools/MT_Random.h"
+#include "MIL_Random.h"
 #include "simulation_kernel/FireData_ABC.h"
 
 class PHY_Composante_ABC;
@@ -127,9 +127,6 @@ private:
           bool                   bHasWeaponsReady_;
           bool                   bHasWeaponsNotReady_;
           bool                   bHasWeaponsAndNoAmmo_;
-
-private:
-    static MT_Random randomGenerator_;
 };
 
 } // namespace firing

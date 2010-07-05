@@ -32,8 +32,6 @@
 #include "Entities/MIL_Army.h"
 #include "Entities/Agents/Units/Humans/MIL_Injury_ABC.h"
 
-MT_Random MIL_PopulationElement_ABC::randomGenerator_;
-
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationElement_ABC constructor
 // Created: NLD 2005-09-28
@@ -101,7 +99,7 @@ void MIL_PopulationElement_ABC::FireOnPion( MT_Float rIntensity, MIL_Agent_ABC& 
     target.NotifyAttackedBy( *pPopulation_ );
 
     const MT_Float rPH = GetPopulation().GetType().GetPH( *pAttitude_, rDensity_ );
-    if( !( randomGenerator_.rand_oi() <= rPH * rIntensity ) )
+    if( !( 1. - MIL_Random::rand_io( MIL_Random::eFire ) <= rPH * rIntensity ) )
         return;
 
     MIL_Effect_PopulationFire* pEffect = new MIL_Effect_PopulationFire( GetPopulation().GetType(), GetAttitude(), target, *compTargets.front(), fireResult );
@@ -171,7 +169,7 @@ void MIL_PopulationElement_ABC::ApplyExplosion( const AttritionCapacity& capacit
     const MT_Float rPH = capacity.GetAttritionPH();
     unsigned int nHit = 0;
     for( unsigned int i = 0; i < nNbrTarget; ++i )
-        if( randomGenerator_.rand_oi() <= rPH )
+        if( 1. - MIL_Random::rand_io( MIL_Random::eFire ) <= rPH )
             ++nHit;
 
     nNbrDeadHumans_  += nHit;

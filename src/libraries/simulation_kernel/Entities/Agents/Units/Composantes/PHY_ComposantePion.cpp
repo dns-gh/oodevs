@@ -50,7 +50,6 @@
 
 #include "simulation_kernel/WeaponAvailabilityComputer_ABC.h"
 
-MT_Random PHY_ComposantePion::random_;
 double  PHY_ComposantePion::rOpStateWeightHumans_ = 0.;
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_ComposantePion )
@@ -577,12 +576,12 @@ void PHY_ComposantePion::PreprocessRandomBreakdowns( unsigned int nEndDayTimeSte
     if( pType_->GetProtection().CanRandomlyBreaksDownEva() )
     {
         pRandomBreakdownState_        = &PHY_ComposanteState::repairableWithEvacuation_;
-        nRandomBreakdownNextTimeStep_ = random_.rand32_oo( time_.GetCurrentTick(), nEndDayTimeStep );
+        nRandomBreakdownNextTimeStep_ = MIL_Random::rand32_oo( time_.GetCurrentTick(), nEndDayTimeStep );
     }
     else if( pType_->GetProtection().CanRandomlyBreaksDownNeva() )
     {
         pRandomBreakdownState_        = &PHY_ComposanteState::repairableWithoutEvacuation_;
-        nRandomBreakdownNextTimeStep_ = random_.rand32_oo( time_.GetCurrentTick(), nEndDayTimeStep );
+        nRandomBreakdownNextTimeStep_ = MIL_Random::rand32_oo( time_.GetCurrentTick(), nEndDayTimeStep );
     }
 }
 

@@ -15,7 +15,7 @@
 #include "MIL.h"
 
 #include "PHY_RoleInterface_Posture.h"
-#include "MT_Tools/MT_Random.h"
+#include "MIL_Random.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 #include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 
@@ -155,8 +155,6 @@ private:
     mutable MT_Float     rLastInstallationStateSent_;
 
 private:
-    static MT_Random  random_;
-
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Posture* role, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Posture* role, const unsigned int /*version*/ );
 

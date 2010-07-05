@@ -15,7 +15,6 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 
-MT_Random PHY_ActiveProtection::randomGenerator_;
 PHY_ActiveProtection::T_ProtectionList PHY_ActiveProtection::protections_;
 
 // -----------------------------------------------------------------------------
@@ -132,7 +131,7 @@ double PHY_ActiveProtection::GetPHModifier( const PHY_DotationCategory& category
 // -----------------------------------------------------------------------------
 bool PHY_ActiveProtection::CounterIndirectFire( const PHY_DotationCategory& category, MIL_Agent_ABC& pion ) const
 {
-    return HasAmmo( pion ) ? ( !hardKill_ && randomGenerator_.rand_oi() > GetCoefficient( category ) ) : false;
+    return HasAmmo( pion ) ? ( !hardKill_ && MIL_Random::rand_oi( MIL_Random::eFire ) > GetCoefficient( category ) ) : false;
 }
 
 // -----------------------------------------------------------------------------
@@ -141,7 +140,7 @@ bool PHY_ActiveProtection::CounterIndirectFire( const PHY_DotationCategory& cate
 // -----------------------------------------------------------------------------
 bool PHY_ActiveProtection::DestroyIndirectFire( const PHY_DotationCategory& category, MIL_Agent_ABC& pion ) const
 {
-    return HasAmmo( pion ) ? ( hardKill_ && randomGenerator_.rand_oi() > GetCoefficient( category ) ) : false;
+    return HasAmmo( pion ) ? ( hardKill_ && MIL_Random::rand_oi( MIL_Random::eFire ) > GetCoefficient( category ) ) : false;
 }
 
 // -----------------------------------------------------------------------------

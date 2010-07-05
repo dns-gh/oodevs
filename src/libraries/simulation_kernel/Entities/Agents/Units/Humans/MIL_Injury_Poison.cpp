@@ -16,15 +16,13 @@
 
 #include "PHY_InjuredHuman.h"
 
-#include "MT_Tools/MT_Random.h"
+#include "MIL_Random.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 
 #include "Entities/Objects/NBCTypeAttribute.h"
 #include "Entities/Objects/MIL_MedicalTreatmentType.h"
 
 #include "Entities/Agents/Units/Humans/PHY_HumanProtection.h"
-
-MT_Random MIL_Injury_Poison::randomGenerator_;
 
 //BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Injury_Poison )
 
@@ -152,7 +150,7 @@ float MIL_Injury_Poison::GetAgentDose() const
 // -----------------------------------------------------------------------------
 float MIL_Injury_Poison::SetLifeExpectancy() const
 {
-    return MIL_MedicalTreatmentType::Find( injuryID_ )->GetLifeExpectancy( injuryCategory_ )*( 1 + 0.1*randomGenerator_.rand_ii( -1 , 1 ) );
+    return MIL_MedicalTreatmentType::Find( injuryID_ )->GetLifeExpectancy( injuryCategory_ )*( 1 + 0.1*MIL_Random::rand_ii( -1 , 1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -243,7 +241,7 @@ bool MIL_Injury_Poison::IsInjured( const PHY_ComposantePion& pComposante )
     //Ne pas oublier de prendre en compte le temps d'exposition
     PHY_PoisonProtectionFunctor protection( agentConcentration_ , NBCAgent_ , injuryID_ );
     protection( pComposante );
-    unsigned int injuryThreshold = ( unsigned int )( ( 1 + 0.2*randomGenerator_.rand_ii( 0 , 1 ) ) * agentConcentration_ * ( 1 - protection.GetProtectionValue() ) );
+    unsigned int injuryThreshold = ( unsigned int )( ( 1 + 0.2*MIL_Random::rand_ii( 0 , 1, MIL_Random::eWounds ) ) * agentConcentration_ * ( 1 - protection.GetProtectionValue() ) );
     if( injuryThreshold > MIL_MedicalTreatmentType::Find( injuryID_ )->GetDeathThreshold() )
     {
         PHY_InjuredHuman::InitializeInjuredHuman( *this , pComposante );
@@ -280,7 +278,7 @@ void MIL_Injury_Poison::SetInjury( unsigned int nNbrAliveHumans , MT_Float rDens
     //For, each of them, we will compute if they're going to be injured, and how
     for( unsigned int i = 0; i < nNbrOfPossibleCasualties; ++i )
     {
-        unsigned int injuryThreshold = ( unsigned int )( ( 1 + 0.2*randomGenerator_.rand_ii( 0 , 1 ) )*agentConcentration_ );
+        unsigned int injuryThreshold = ( unsigned int )( ( 1 + 0.2*MIL_Random::rand_ii( 0 , 1, MIL_Random::eWounds ) )*agentConcentration_ );
         if( injuryThreshold > MIL_MedicalTreatmentType::Find( injuryID_ )->GetDeathThreshold() )
         {
             PHY_InjuredHuman::InitializeInjuredHuman( *this );
@@ -305,7 +303,7 @@ void MIL_Injury_Poison::SetInjury( unsigned int nNbrAliveHumans , MT_Float rDens
 // -----------------------------------------------------------------------------
 void MIL_Injury_Poison::Injure( PHY_InjuredHuman& injuredHuman )
 {
-    unsigned int injuryThreshold = ( unsigned int )( ( 1 + 0.2*randomGenerator_.rand_ii( 0 , 1 ) ) * agentConcentration_ );
+    unsigned int injuryThreshold = ( unsigned int )( ( 1 + 0.2*MIL_Random::rand_ii( 0 , 1, MIL_Random::eWounds ) ) * agentConcentration_ );
     //If injuredHuman has a protection, we compute its protection effect
     if( injuredHuman.GetComposantePion() != 0 )
     {

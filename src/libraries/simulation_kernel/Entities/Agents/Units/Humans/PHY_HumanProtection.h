@@ -15,7 +15,7 @@
 #include "MIL.h"
 
 #include "MT_Tools/MT_GaussianRandom.h"
-#include "MT_Tools/MT_Random.h"
+#include "MIL_Random.h"
 
 namespace xml
 {
@@ -109,7 +109,6 @@ private:
     //! @name static members
     static T_HumanProtectionMap protections_;
     static uint                 nNextID_;
-    static MT_Random            random_;
     //@}
 };
 

@@ -24,8 +24,6 @@
 
 using namespace firing;
 
-MT_Random PHY_DirectFireData::randomGenerator_;
-
 // -----------------------------------------------------------------------------
 // Name: PHY_DirectFireData::sComposanteWeapons::sComposanteWeapons
 // Created: NLD 2004-10-05
@@ -203,7 +201,7 @@ bool PHY_DirectFireData::sComposanteWeapons::GetBestWeapon( MT_Float& rBestScore
 // -----------------------------------------------------------------------------
 bool PHY_DirectFireData::sComposanteWeapons::GetRandomWeapon( const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_Composante_ABC& compTarget, PHY_Weapon*& pRandomWeapon ) const
 {
-    const unsigned int nRnd = randomGenerator_.rand32_ii( 0, weaponsReady_.size() - 1 );
+    const unsigned int nRnd = MIL_Random::rand32_ii( 0, weaponsReady_.size() - 1 );
 
     CIT_WeaponVector it = weaponsReady_.begin();
     std::advance( it, nRnd );
@@ -249,7 +247,7 @@ void PHY_DirectFireData::ChooseBestWeapon( const MIL_Agent_ABC& target, const PH
 // -----------------------------------------------------------------------------
 void PHY_DirectFireData::ChooseRandomWeapon( const MIL_Agent_ABC& target, const PHY_Composante_ABC& compTarget, const PHY_ComposantePion*& pRandomFirer, PHY_Weapon*& pRandomWeapon ) const
 {
-    const unsigned int nRnd = randomGenerator_.rand32_ii( 0, composantesWeapons_.size() - 1 );
+    const unsigned int nRnd = MIL_Random::rand32_ii( 0, composantesWeapons_.size() - 1 );
 
     CIT_ComposanteWeaponsMap it = composantesWeapons_.begin();
     std::advance( it, nRnd );

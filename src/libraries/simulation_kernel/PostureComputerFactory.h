@@ -35,12 +35,6 @@ public:
     //@{
     virtual std::auto_ptr< PostureComputer_ABC > Create( PostureComputer_ABC::Parameters& params ) const;
     //@}
-
-private:
-    //! @name Attribute
-    //@{
-    mutable MT_Random random_;
-    //@}
 };
 
 }

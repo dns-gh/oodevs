@@ -29,9 +29,12 @@ class MT_Random
     MT_COPYNOTALLOWED( MT_Random )
 
 public:
-             MT_Random();
-    explicit MT_Random( unsigned long nSeed );
-    explicit MT_Random( const std::vector< unsigned long >& key );
+    static MT_Random& GetInstance();
+    static void Initialize( unsigned long nSeed );
+    static void Initialize( const std::vector< unsigned long >& key );
+    static void DeleteInstance();
+
+public:
     virtual ~MT_Random() {}
 
     unsigned long rand32();                            // [ 0  , 0xffffffff ]
@@ -52,6 +55,11 @@ public:
     double rand_oi( double min, double max );   // ] min., max. ]
 
 private:
+             MT_Random();
+    explicit MT_Random( unsigned long nSeed );
+    explicit MT_Random( const std::vector< unsigned long >& key );
+
+private:
     inline static unsigned long twist( unsigned long u, unsigned long v )
     {
         return ( ( ( ( ( (u) & 0x80000000UL ) | ( (v) & 0x7fffffffUL ) ) ) >> 1 ) ^ ( (v) & 1UL ? 0x9908b0dfUL : 0UL ) );
@@ -63,6 +71,9 @@ private:
     unsigned long   state_[ MT_RandomConsts::N ];
     unsigned long * next_;
     unsigned int     left_;
+
+private:
+    static MT_Random* pInstance_;
 };
 
 #include "MT_Random.inl"

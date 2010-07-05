@@ -18,6 +18,7 @@
 #include "SIM_Dispatcher.h"
 
 #include "simulation_kernel/MIL_AgentServer.h"
+#include "simulation_kernel/MIL_Random.h"
 #include "simulation_kernel/CheckPoints/MIL_CheckPointManager.h"
 #include "MT_Tools/MT_Version.h"
 #include "MT_Tools/MT_ScipioException.h"
@@ -111,6 +112,8 @@ void SIM_App::Initialize()
     }
 
     MT_Profiler::Initialize();
+
+    MIL_Random::Initialize( startupConfig_.GetRandomSeed(), startupConfig_.GetRandomGaussian(), startupConfig_.GetRandomDeviation(), startupConfig_.GetRandomMean() );
 
     MIL_AgentServer::CreateWorkspace( startupConfig_ );
 }

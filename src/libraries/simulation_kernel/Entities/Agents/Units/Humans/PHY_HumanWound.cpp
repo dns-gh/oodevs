@@ -17,7 +17,6 @@
 #include <xeumeuleu/xml.h>
 
 PHY_HumanWound::T_HumanWoundMap PHY_HumanWound::humanWounds_;
-MT_Random                       PHY_HumanWound::randomGenerator_;
 
 unsigned int     PHY_HumanWound::nDiagnosticTime_           = 0;
 unsigned int     PHY_HumanWound::nSortingTime_              = 0;
@@ -210,7 +209,7 @@ PHY_HumanWound::~PHY_HumanWound()
 // -----------------------------------------------------------------------------
 const PHY_HumanWound& PHY_HumanWound::ChooseRandomWound()
 {
-    const MT_Float rRand = randomGenerator_.rand_oi();
+    const MT_Float rRand = MIL_Random::rand_oi( MIL_Random::eWounds);
 
     MT_Float rSumFactors = 0.;
     for( CIT_HumanWoundMap itWound = humanWounds_.begin(); itWound != humanWounds_.end(); ++itWound )
@@ -424,5 +423,5 @@ unsigned int PHY_HumanWound::GetRestingTime() const
 // -----------------------------------------------------------------------------
 bool PHY_HumanWound::ChooseMentalDisease()
 {
-    return randomGenerator_.rand_oi( 0., 1. ) <= rMentalDiseaseFactor_;
+    return MIL_Random::rand_oi( 0., 1. ) <= rMentalDiseaseFactor_;
 }

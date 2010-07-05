@@ -278,3 +278,44 @@ const std::string& MIL_Config::GetCheckpointNameTestMode() const
 {
     return strCheckPointNameTestMode_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Config::GetRandomSeed
+// Created: JSR 2010-07-02
+// -----------------------------------------------------------------------------
+inline
+int MIL_Config::GetRandomSeed() const
+{
+    return randomSeed_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Config::GetRandomGaussian
+// Created: JSR 2010-07-02
+// -----------------------------------------------------------------------------
+inline
+const bool* MIL_Config::GetRandomGaussian() const
+{
+    return randomGaussian_;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Config::GetRandomDeviation
+// Created: JSR 2010-07-02
+// -----------------------------------------------------------------------------
+inline
+const int* MIL_Config::GetRandomDeviation() const
+{
+    return randomDeviation_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Config::GetRandomMean
+// Created: JSR 2010-07-02
+// -----------------------------------------------------------------------------
+inline
+const int* MIL_Config::GetRandomMean() const
+{
+    return randomMean_;
+}

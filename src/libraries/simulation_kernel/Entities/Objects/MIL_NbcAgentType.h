@@ -14,7 +14,7 @@
 
 #include "MIL.h"
 
-#include "MT_Tools/MT_Random.h"
+#include "MIL_Random.h"
 
 namespace xml
 {
@@ -117,7 +117,6 @@ private:
     static MT_Float          rMinPropagationSpeed_;
     static MT_Float          rContaminationDistance_;
     static MT_Float          rContaminationQuantityGiven_;
-    static MT_Random         randomGenerator_;
 };
 
 #include "MIL_NbcAgentType.inl"

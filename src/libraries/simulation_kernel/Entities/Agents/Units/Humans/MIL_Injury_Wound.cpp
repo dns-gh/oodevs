@@ -16,14 +16,12 @@
 
 #include "PHY_InjuredHuman.h"
 
-#include "MT_Tools/MT_Random.h"
+#include "MIL_Random.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 
 #include "Entities/Objects/MIL_MedicalTreatmentType.h"
 
 #include "Entities/Agents/Units/Humans/PHY_HumanProtection.h"
-
-MT_Random MIL_Injury_Wound::randomGenerator_;
 
 //BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Injury_Wound )
 
@@ -141,7 +139,7 @@ float MIL_Injury_Wound::GetAgentDose() const
 // -----------------------------------------------------------------------------
 float MIL_Injury_Wound::SetLifeExpectancy() const
 {
-    return MIL_MedicalTreatmentType::Find( injuryID_ )->GetLifeExpectancy( injuryCategory_ )*( 1 + 0.1*randomGenerator_.rand_ii( -1 , 1 ) );
+    return MIL_MedicalTreatmentType::Find( injuryID_ )->GetLifeExpectancy( injuryCategory_ )*( 1 + 0.1*MIL_Random::rand_ii( -1 , 1 ) );
 }
 
 // -----------------------------------------------------------------------------

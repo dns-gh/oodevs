@@ -38,6 +38,6 @@ PostureComputerFactory::~PostureComputerFactory()
 // -----------------------------------------------------------------------------
 std::auto_ptr< PostureComputer_ABC > PostureComputerFactory::Create( PostureComputer_ABC::Parameters& params ) const
 {
-    std::auto_ptr< PostureComputer_ABC > pPostureComputer( new DefaultPostureComputer( random_, params ) );
+    std::auto_ptr< PostureComputer_ABC > pPostureComputer( new DefaultPostureComputer( params ) );
     return pPostureComputer;
 }

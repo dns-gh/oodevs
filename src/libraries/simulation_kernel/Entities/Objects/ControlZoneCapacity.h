@@ -12,7 +12,7 @@
 
 #include "MIL.h"
 #include "ObjectCapacity_ABC.h"
-#include "MT_Tools/MT_Random.h"
+#include "MIL_Random.h"
 
 namespace xml
 {
@@ -86,11 +86,6 @@ private:
     T_FirePercentageVector vFirePercentages_;
     const MIL_Agent_ABC* controller_;
     const MT_Vector2D* vFirerPosition_;
-    //@}
-
-    //! @name Statics
-    //@{
-    static MT_Random randomGenerator_;
     //@}
 };
 

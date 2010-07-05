@@ -19,25 +19,10 @@
 MT_GaussianRandom::MT_GaussianRandom()
     : rMean_            ( 0. )
     , rVariance_        ( 1. )
-    , linearRandom_     ()
     , bAlreadyComputed_ ( false )
 {
 
 }
-
-
-//-----------------------------------------------------------------------------
-// Name: MT_GaussianRandom constructor
-// Created: JVT 04-03-04
-//-----------------------------------------------------------------------------
-MT_GaussianRandom::MT_GaussianRandom( unsigned long nSeed )
-    : rMean_            ( 0. )
-    , rVariance_        ( 1. )
-    , linearRandom_     ( nSeed )
-    , bAlreadyComputed_ ( false )
-{
-}
-
 
 
 //-----------------------------------------------------------------------------
@@ -47,24 +32,9 @@ MT_GaussianRandom::MT_GaussianRandom( unsigned long nSeed )
 MT_GaussianRandom::MT_GaussianRandom( double rMean, double rVariance )
     : rMean_            ( rMean )
     , rVariance_        ( rVariance )
-    , linearRandom_     ()
     , bAlreadyComputed_ ( false )
 {
 }
-
-
-//-----------------------------------------------------------------------------
-// Name: MT_GaussianRandom constructor
-// Created: JVT 04-03-04
-//-----------------------------------------------------------------------------
-MT_GaussianRandom::MT_GaussianRandom( double rMean, double rVariance, unsigned long nSeed )
-    : rMean_            ( rMean )
-    , rVariance_        ( rVariance )
-    , linearRandom_     ( nSeed )
-    , bAlreadyComputed_ ( false )
-{
-}
-
 
 
 //-----------------------------------------------------------------------------
@@ -74,7 +44,6 @@ MT_GaussianRandom::MT_GaussianRandom( double rMean, double rVariance, unsigned l
 MT_GaussianRandom::MT_GaussianRandom( const MT_GaussianRandom& rand)
     : rMean_            ( rand.rMean_ )
     , rVariance_        ( rand.rVariance_ )
-    , linearRandom_     ()
     , bAlreadyComputed_ ( false )
 {
 }
@@ -109,14 +78,14 @@ double MT_GaussianRandom::rand()
         return rAlreadyComputed_ + rMean_;
     }
 
-    double rX         = linearRandom_.rand_ii( -1., 1. );
-    rAlreadyComputed_ = linearRandom_.rand_ii( -1., 1. );
+    double rX         = MT_Random::GetInstance().rand_ii( -1., 1. );
+    rAlreadyComputed_ = MT_Random::GetInstance().rand_ii( -1., 1. );
     double rSqLength  = rX * rX + rAlreadyComputed_ * rAlreadyComputed_;
 
     while ( rSqLength >= 1. || rSqLength == 0. )
     {
-        rX                = linearRandom_.rand_ii( -1., 1. );
-        rAlreadyComputed_ = linearRandom_.rand_ii( -1., 1. );
+        rX                = MT_Random::GetInstance().rand_ii( -1., 1. );
+        rAlreadyComputed_ = MT_Random::GetInstance().rand_ii( -1., 1. );
         rSqLength         = rX * rX + rAlreadyComputed_ * rAlreadyComputed_;
     }
 

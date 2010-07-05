@@ -16,15 +16,13 @@
 
 #include "PHY_InjuredHuman.h"
 
-#include "MT_Tools/MT_Random.h"
+#include "MIL_Random.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 
 #include "Entities/Objects/MIL_NBCType.h"
 #include "Entities/Objects/MIL_MedicalTreatmentType.h"
 
 #include "Entities/Agents/Units/Humans/PHY_HumanProtection.h"
-
-MT_Random MIL_Injury_Contamination::randomGenerator_;
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Injury_Contamination )
 
@@ -235,7 +233,7 @@ bool MIL_Injury_Contamination::IsInjured( const PHY_ComposantePion& pComposante 
     //pComposante.GetType().GetProtection().Get...
     PHY_ContaminationProtectionFunctor protection( agentConcentration_ , NBCAgent_ , injuryID_ );
     protection( pComposante );
-    unsigned int injuryThreshold = ( unsigned int )( ( 1 + 0.2 * randomGenerator_.rand_ii( 0 , 1 ) ) * agentConcentration_ *( 1 - protection.GetProtectionValue() ) );
+    unsigned int injuryThreshold = ( unsigned int )( ( 1 + 0.2 * MIL_Random::rand_ii( 0 , 1, MIL_Random::eWounds ) ) * agentConcentration_ *( 1 - protection.GetProtectionValue() ) );
     if( injuryThreshold > MIL_MedicalTreatmentType::Find( injuryID_ )->GetInjuryThreshold( MIL_MedicalTreatmentType::eUA ) )
     {
         PHY_InjuredHuman::InitializeInjuredHuman( *this , pComposante );
@@ -265,7 +263,7 @@ void MIL_Injury_Contamination::SetInjury( unsigned int nNbrAliveHumans , MT_Floa
     //For, each of them, we will compute if they're going to be injured, and how
     for( unsigned int i = 0; i < nNbrOfPossibleCasualties; ++i )
     {
-        unsigned int injuryThreshold = ( unsigned int )( ( 1 + 0.2*randomGenerator_.rand_ii( 0 , 1 ) )*agentConcentration_ );
+        unsigned int injuryThreshold = ( unsigned int )( ( 1 + 0.2*MIL_Random::rand_ii( 0 , 1, MIL_Random::eWounds ) )*agentConcentration_ );
         if( injuryThreshold > MIL_MedicalTreatmentType::Find( injuryID_ )->GetInjuryThreshold( MIL_MedicalTreatmentType::eUA ) )
         {
             PHY_InjuredHuman::InitializeInjuredHuman( *this );
@@ -285,7 +283,7 @@ void MIL_Injury_Contamination::SetInjury( unsigned int nNbrAliveHumans , MT_Floa
 // -----------------------------------------------------------------------------
 void MIL_Injury_Contamination::Injure( PHY_InjuredHuman& injuredHuman )
 {
-    unsigned int injuryThreshold = ( unsigned int )( ( 1 + 0.2 * randomGenerator_.rand_ii( 0 , 1 ) ) * agentConcentration_ );
+    unsigned int injuryThreshold = ( unsigned int )( ( 1 + 0.2 * MIL_Random::rand_ii( 0 , 1, MIL_Random::eWounds ) ) * agentConcentration_ );
     //If injuredHuman has a protection, we compute its protection effect
     if( injuredHuman.GetComposantePion() != 0 )
     {

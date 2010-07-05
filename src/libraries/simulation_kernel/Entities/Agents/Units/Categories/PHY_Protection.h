@@ -13,7 +13,6 @@
 #define __PHY_Protection_h_
 
 #include "MT_Tools/MT_GaussianRandom.h"
-#include "MT_Tools/MT_Random.h"
 
 namespace xml
 {
@@ -112,7 +111,6 @@ private:
 private:
     static T_ProtectionMap protections_;
     static unsigned int            nNextID_;
-    static MT_Random       random_;
 };
 
 #endif // __PHY_Protection_h_

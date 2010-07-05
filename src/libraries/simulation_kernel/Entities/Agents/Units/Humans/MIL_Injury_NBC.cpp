@@ -16,13 +16,11 @@
 
 #include "PHY_InjuredHuman.h"
 
-#include "MT_Tools/MT_Random.h"
+#include "MIL_Random.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 
 #include "Entities/Objects/NBCAttribute.h"
 #include "Entities/Objects/MIL_MedicalTreatmentType.h"
-
-MT_Random MIL_Injury_NBC::randomGenerator_;
 
 //BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Injury_NBC )
 
@@ -105,7 +103,7 @@ float MIL_Injury_NBC::GetLifeExpectancy( MIL_MedicalTreatmentType::E_InjuryCateg
 // -----------------------------------------------------------------------------
 float MIL_Injury_NBC::SetLifeExpectancy() const
 {
-    return MIL_MedicalTreatmentType::Find( injuryID_ )->GetLifeExpectancy( injuryCategory_ )*( 1 + 0.1*randomGenerator_.rand_ii( -1 , 1 ) );
+    return MIL_MedicalTreatmentType::Find( injuryID_ )->GetLifeExpectancy( injuryCategory_ )*( 1 + 0.1*MIL_Random::rand_ii( -1 , 1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -126,7 +124,7 @@ bool MIL_Injury_NBC::IsInjured( const PHY_ComposantePion& /*pComposante*/ )
     //Ne pas oublier de prendre en compte la protection avec:
     //pComposante.GetType().GetProtection().Get...
     //Ne pas oublier de prendre en compte le temps d'exposition
-    unsigned int injuryThreshold = ( unsigned int )( ( 1 + 0.2*randomGenerator_.rand_ii( 0 , 1 ) )*pInjuryAttribute_->GetHeat() );
+    unsigned int injuryThreshold = ( unsigned int )( ( 1 + 0.2*MIL_Random::rand_ii( 0 , 1, MIL_Random::eWounds ) )*pInjuryAttribute_->GetHeat() );
     if( injuryThreshold > MIL_MedicalTreatmentType::Find( injuryID_ )->GetDeathThreshold() )
     {
         PHY_InjuredHuman::InitializeInjuredHuman( *this , pComposante );
@@ -163,7 +161,7 @@ void MIL_Injury_NBC::SetInjury( unsigned int /*nNbrAliveHumans*/ , MT_Float /*rD
     //For, each of them, we will compute if they're going to be injured, and how
     for( unsigned int i = 0; i < nNbrOfPossibleCasualties; ++i )
     {
-        unsigned int injuryThreshold = ( unsigned int )( ( 1 + 0.2*randomGenerator_.rand_ii( 0 , 1 ) )*pInjuryAttribute_->GetHeat() );
+        unsigned int injuryThreshold = ( unsigned int )( ( 1 + 0.2*MIL_Random::rand_ii( 0 , 1, MIL_Random::eWounds ) )*pInjuryAttribute_->GetHeat() );
         if( injuryThreshold > MIL_MedicalTreatmentType::Find( injuryID_ )->GetDeathThreshold() )
         {
             PHY_InjuredHuman::InitializeInjuredHuman( *this );

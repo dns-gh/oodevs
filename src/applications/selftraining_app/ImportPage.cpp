@@ -52,7 +52,7 @@ void ImportPage::AddModelChoice( QGroupBox* box )
     QLabel* label = new QLabel( tools::translate( "ImportPage", "Model: " ), hbox );
     label->setBackgroundOrigin( QWidget::WindowOrigin );
     QComboBox* editModelList = new QComboBox( hbox );
-    connect( editModelList, SIGNAL( currentIndexChanged ( const QString & ) ), SLOT( OnModelChanged( const QString & ) ) );
+    connect( editModelList, SIGNAL( activated ( const QString & ) ), SLOT( OnModelChanged( const QString & ) ) );
     editModelList->insertItem( tools::translate( "ImportPage", "Model:" ) );
     QStringList decisionalModels = frontend::commands::ListModels( config_ );
     for( QStringList::const_iterator it = decisionalModels.begin(); it != decisionalModels.end(); ++it )

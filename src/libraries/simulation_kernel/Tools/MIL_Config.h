@@ -14,6 +14,7 @@
 
 #include "MIL.h"
 
+#include "MIL_Random.h"
 #include "tools/SessionConfig.h"
 
 #pragma warning ( push )
@@ -31,6 +32,7 @@ namespace xml
 // =============================================================================
 class MIL_Config : public virtual tools::SessionConfig
 {
+
 public:
      MIL_Config();
     virtual ~MIL_Config();
@@ -66,6 +68,11 @@ public:
     const std::string& GetHLAFederation          () const;
     const std::string& GetHLAFederate            () const;
     const std::string& GetCheckpointNameTestMode () const;
+
+    int                GetRandomSeed             () const;
+    const bool*        GetRandomGaussian         () const;
+    const int*         GetRandomDeviation        () const;
+    const int*         GetRandomMean             () const;
     //@}
 
     //! @name Operations
@@ -139,6 +146,10 @@ private:
     std::string                hlaFederate_;
     std::string                strCheckPointNameTestMode_;
     T_CRCMap                   CRCMap_;
+    int                        randomSeed_;
+    bool                       randomGaussian_[ MIL_Random::eContextsNbr ];
+    int                        randomDeviation_[ MIL_Random::eContextsNbr ];
+    int                        randomMean_[ MIL_Random::eContextsNbr ];
     //@}
 };
 

@@ -41,7 +41,7 @@
 #include "MT_Tools/MT_Circle.h"
 #include "MT_Tools/MT_Ellipse.h"
 #include "MT_Tools/MT_ScipioException.h"
-#include "MT_Tools/MT_Random.h"
+#include "MIL_Random.h"
 
 #include "simulation_terrain/TER.h"
 #include "simulation_terrain/TER_Localisation.h"

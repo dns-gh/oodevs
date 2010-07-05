@@ -77,7 +77,6 @@ private:
     T_CoefficientMap weapons_;
 
     static T_ProtectionList protections_;
-    static MT_Random randomGenerator_;
     //@}
 };
 

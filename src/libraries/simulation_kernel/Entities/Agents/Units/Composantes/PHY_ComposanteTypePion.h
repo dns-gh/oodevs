@@ -16,7 +16,7 @@
 #include "PHY_ComposanteType_ABC.h"
 #include "Entities/Agents/Units/PHY_Speeds.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCapacities.h"
-#include "MT_Tools/MT_Random.h"
+#include "MIL_Random.h"
 
 
 namespace Common
@@ -376,7 +376,6 @@ private:
 
 private:
     static T_ComposanteTypeMap composantesTypes_;
-    static MT_Random           randomGenerator_;
 };
 
 #include "PHY_ComposanteTypePion.inl"

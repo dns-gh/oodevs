@@ -14,8 +14,6 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteState.h"
 #include <xeumeuleu/xml.h>
 
-MT_Random PHY_AttritionData::randomGenerator_;
-
 // -----------------------------------------------------------------------------
 // Name: PHY_AttritionData constructor
 // Created: NLD 2004-08-05
@@ -83,7 +81,7 @@ const PHY_ComposanteState& PHY_AttritionData::ComputeComposanteState( MT_Float u
 {
     assert( urbanProtection < 1.f );
     // Tirage de l'état opérationnel
-    MT_Float rRand = randomGenerator_.rand_ii();
+    MT_Float rRand = 1. - MIL_Random::rand_ii( MIL_Random::eFire );
 
     MT_Float rReductionDestroyed = rDestroyed_ * urbanProtection;
     MT_Float rNewDestroyed = rDestroyed_ - rReductionDestroyed;

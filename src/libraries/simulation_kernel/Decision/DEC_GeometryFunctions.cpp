@@ -27,7 +27,7 @@
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Tools/MIL_Tools.h"
 #include "simulation_terrain/TER_Localisation.h"
-#include "MT_Tools/MT_Random.h"
+#include "MIL_Random.h"
 
 #define PRECISION 0.0000001
 
@@ -1100,10 +1100,8 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeCoverPosition( co
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeRandomPointOnCircle( MT_Vector2D* pCenter, float radius )
 {
-    static MT_Random rand;
-
     boost::shared_ptr< MT_Vector2D > pResult( new MT_Vector2D( 0., 1. ) );
-    pResult->Rotate( rand.rand_io( 0., 2. * MT_PI ) );
+    pResult->Rotate( MIL_Random::rand_io( 0., 2. * MT_PI ) );
     *pResult *= ( MIL_Tools::ConvertMeterToSim( radius ) );
     *pResult += *pCenter;
     TER_World::GetWorld().ClipPointInsideWorld( *pResult );
@@ -1116,13 +1114,12 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeRandomPointOnCirc
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeRandomPointInCircle( MT_Vector2D* pCenter, float radius )
 {
-    static MT_Random randomGenerator;
     MT_Float     rRadius_ = MIL_Tools::ConvertMeterToSim( radius );
     assert( pCenter );
 
     // retrieve a random position in the circle (vCenter_,rRadius_)
-    MT_Float rAlpha = randomGenerator.rand_ii( -MT_PI, MT_PI );
-    MT_Float rMod   = randomGenerator.rand_oi();
+    MT_Float rAlpha = MIL_Random::rand_ii( -MT_PI, MT_PI );
+    MT_Float rMod   = MIL_Random::rand_oi();
 
     boost::shared_ptr< MT_Vector2D > pRandomPosition( new MT_Vector2D( *pCenter ) );
     (*pRandomPosition) += MT_Vector2D( rMod * rRadius_ * cos( rAlpha ), rMod * rRadius_ * sin( rAlpha ) );

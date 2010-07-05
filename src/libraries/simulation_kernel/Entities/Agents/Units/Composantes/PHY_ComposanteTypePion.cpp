@@ -39,7 +39,6 @@
 #include <xeumeuleu/xml.h>
 
 PHY_ComposanteTypePion::T_ComposanteTypeMap PHY_ComposanteTypePion::composantesTypes_;
-MT_Random                                   PHY_ComposanteTypePion::randomGenerator_;
 
 // =============================================================================
 // STATIC INITIALIZATION (MANAGER)
@@ -1035,7 +1034,7 @@ const PHY_ConsumptionType& PHY_ComposanteTypePion::GetConsumptionMode( const MIL
 // -----------------------------------------------------------------------------
 const PHY_BreakdownType& PHY_ComposanteTypePion::GetBreakdownType( const T_BreakdownTypeProbabilityVector& probasVector ) const
 {
-    const MT_Float rRandomValue = randomGenerator_.rand_ii( 0., 1. );
+    const MT_Float rRandomValue = 1. - MIL_Random::rand_ii( 0., 1., MIL_Random::eBreakdowns );
 
     for ( CIT_BreakdownTypeProbabilityVector it = probasVector.begin(); it != probasVector.end(); ++it )
     {

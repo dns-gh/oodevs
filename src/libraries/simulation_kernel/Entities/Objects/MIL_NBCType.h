@@ -14,7 +14,7 @@
 
 #include "MIL.h"
 
-#include "MT_Tools/MT_Random.h"
+#include "MIL_Random.h"
 
 namespace xml
 {

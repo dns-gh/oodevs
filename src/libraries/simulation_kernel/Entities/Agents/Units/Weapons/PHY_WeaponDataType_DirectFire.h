@@ -13,7 +13,7 @@
 #define __PHY_WeaponDataType_DirectFire_h_
 
 #include "MT_Tools/MT_InterpolatedFunction.h"
-#include "MT_Tools/MT_Random.h"
+#include "MIL_Random.h"
 
 namespace xml
 {
@@ -87,9 +87,6 @@ private:
     const PHY_WeaponType& weaponType_;
           T_PhVector      phs_;
     //@}
-
-private:
-    static MT_Random randomGenerator_;
 };
 
 #endif // __PHY_WeaponDataType_DirectFire_h_

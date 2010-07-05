@@ -20,11 +20,8 @@
 
 #include "Entities/Objects/MIL_MedicalTreatmentType.h"
 
-
-
 PHY_HumanProtection::T_HumanProtectionMap   PHY_HumanProtection::protections_;
 uint                                        PHY_HumanProtection::nNextID_;
-MT_Random                                   PHY_HumanProtection::random_;
 
 // -----------------------------------------------------------------------------
 // Name: PHY_HumanProtection::Initialize

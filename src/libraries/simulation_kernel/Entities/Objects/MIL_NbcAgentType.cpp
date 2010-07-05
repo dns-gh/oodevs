@@ -24,7 +24,6 @@ MT_Float                            MIL_NbcAgentType::rCoefMaxSpeedModificator_ 
 MT_Float                            MIL_NbcAgentType::rCoefReloadingTimeModificator_ = 1.;
 MT_Float                            MIL_NbcAgentType::rMinPropagationSpeed_          = 0.;
 MT_Float                            MIL_NbcAgentType::rContaminationDistance_        = 100.;
-MT_Random                           MIL_NbcAgentType::randomGenerator_;
 MT_Float                            MIL_NbcAgentType::rContaminationQuantityGiven_    = 0.5;
 
 
@@ -238,7 +237,7 @@ void MIL_NbcAgentType::ReadEffect( xml::xistream& xis, T_HumanPoisonousVector& d
 // -----------------------------------------------------------------------------
 const PHY_HumanWound& MIL_NbcAgentType::GetRandomWound( const T_HumanPoisonousVector& data ) const
 {
-    const MT_Float rRand = randomGenerator_.rand_ii();
+    const MT_Float rRand = MIL_Random::rand_ii( MIL_Random::eWounds );
 
     MT_Float rSumCoefs = 0.;
     const PHY_HumanWound::T_HumanWoundMap& humanWounds = PHY_HumanWound::GetHumanWounds();

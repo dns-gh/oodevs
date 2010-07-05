@@ -17,7 +17,6 @@
 
 PHY_Protection::T_ProtectionMap PHY_Protection::protections_;
 unsigned int                    PHY_Protection::nNextID_ = 0;
-MT_Random                       PHY_Protection::random_;
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Protection::T_HumanEffect constructor
@@ -184,7 +183,7 @@ PHY_Protection::~PHY_Protection()
 // -----------------------------------------------------------------------------
 bool PHY_Protection::CanRandomlyBreaksDownEva() const
 {
-    return ( random_.rand_oi( 0., 1. ) <= rBreakdownProbabilityEva_ );
+    return ( 1. - MIL_Random::rand_oi( 0., 1., MIL_Random::eBreakdowns ) <= rBreakdownProbabilityEva_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -193,7 +192,7 @@ bool PHY_Protection::CanRandomlyBreaksDownEva() const
 // -----------------------------------------------------------------------------
 bool PHY_Protection::CanRandomlyBreaksDownNeva() const
 {
-    return ( random_.rand_oi( 0., 1. ) <= rBreakdownProbabilityNeva_ );
+    return ( 1. - MIL_Random::rand_oi( 0., 1., MIL_Random::eBreakdowns ) <= rBreakdownProbabilityNeva_ );
 }
 
 // -----------------------------------------------------------------------------

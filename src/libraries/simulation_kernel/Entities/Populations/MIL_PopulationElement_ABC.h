@@ -13,7 +13,7 @@
 #include "MIL.h"
 
 #include "simulation_terrain/TER_PopulationConcentration_ABC.h"
-#include "MT_Tools/MT_Random.h"
+#include "MIL_Random.h"
 
 class MIL_Population;
 class MIL_PopulationFlow;
@@ -151,9 +151,6 @@ private:
           // Network
           bool                    bAttitudeUpdated_;
           bool                    bHumansUpdated_;
-
-private:
-    static MT_Random randomGenerator_;
 };
 
 #endif // __MIL_PopulationElement_ABC_h_

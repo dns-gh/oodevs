@@ -44,14 +44,13 @@ PHY_ObjectExplosionFireResult::~PHY_ObjectExplosionFireResult()
     }
 
     // $$$ Merde pour VABF Popu
-    static MT_Random randomGenerator;
     const T_PopulationDamagesMap& populationDamages = GetPopulationDamages();
     for( CIT_PopulationDamagesMap it = populationDamages.begin(); it != populationDamages.end(); ++it )
     {
         const MIL_Population&               population = *it->first;
         const PHY_FireDamages_Population&   damages    =  it->second;
 
-        MIL_Report::PostEvent( population, MIL_Report::eReport_MineExplosionOnPopulation, damages.GetNbrKilledHumans(), damages.GetNbrKilledHumans() * randomGenerator.rand_ii( 0.6, 0.75 ) );
+        MIL_Report::PostEvent( population, MIL_Report::eReport_MineExplosionOnPopulation, damages.GetNbrKilledHumans(), damages.GetNbrKilledHumans() * MIL_Random::rand_ii( 0.6, 0.75, MIL_Random::eWounds ) );
     }
 }
 

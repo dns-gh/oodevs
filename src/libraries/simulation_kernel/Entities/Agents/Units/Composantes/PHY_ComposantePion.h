@@ -19,7 +19,7 @@
 #include "PHY_ComposanteState.h"
 #include "PHY_ComposanteTypePion.h"
 
-#include "MT_Tools/MT_Random.h"
+#include "MIL_Random.h"
 
 class AttritionCapacity;
 class DEC_Knowledge_AgentComposante;
@@ -275,9 +275,6 @@ private:
     // Random breakdowns
           unsigned int                 nRandomBreakdownNextTimeStep_;
     const PHY_ComposanteState* pRandomBreakdownState_;
-
-private:
-    static MT_Random random_;
 
 public:
     static MT_Float rOpStateWeightHumans_;

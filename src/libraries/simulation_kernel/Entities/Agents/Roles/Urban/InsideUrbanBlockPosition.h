@@ -61,9 +61,6 @@ private:
     //@{
     const urban::TerrainObject_ABC* urbanObject_;
     //@}
-
-private:
-    static MT_Random randomGenerator_;
 };
 
 #endif // __InsideUrbanBlockPosition_h_

@@ -70,10 +70,6 @@ private:
     T_PerceptionTickMap perceptionsBuffer_;
     T_PerceptionTickMap perceptionsUnderway_;
     bool wasInCity_;
-
-private:
-    static MT_Random randomGenerator_;
-
 };
 
 #endif // __PHY_PerceptionView_h_

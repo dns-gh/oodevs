@@ -88,14 +88,13 @@ PHY_FireResults_Pion::~PHY_FireResults_Pion()
     }
 
     // $$$ Merde pour VABF Popu
-    static MT_Random randomGenerator;
     const T_PopulationDamagesMap& populationDamages = GetPopulationDamages();
     for( CIT_PopulationDamagesMap it = populationDamages.begin(); it != populationDamages.end(); ++it )
     {
         const MIL_Population&               population = *it->first;
         const PHY_FireDamages_Population&   damages    =  it->second;
 
-        unsigned int rNbrWounded = static_cast< unsigned int >( damages.GetNbrKilledHumans() * randomGenerator.rand_ii( 0.6, 0.75 ) );
+        unsigned int rNbrWounded = static_cast< unsigned int >( damages.GetNbrKilledHumans() * MIL_Random::rand_ii( 0.6, 0.75, MIL_Random::eFire ) );
 
         MIL_Report::PostEvent( population, MIL_Report::eReport_ConfrontationWithPopulation, damages.GetNbrKilledHumans(), rNbrWounded );
         MIL_Report::PostEvent( firer_    , MIL_Report::eReport_ConfrontationWithPopulation, damages.GetNbrKilledHumans(), rNbrWounded );
