@@ -58,14 +58,14 @@ namespace
         {}
         virtual ~DummyClientNetworker() {}
 
-        virtual void Send( const MsgsClientToSim::MsgClientToSim& message ) {}
+        virtual void Send( const MsgsClientToSim::MsgClientToSim& /*message*/ ) {}
         virtual void Send( const MsgsClientToAuthentication::MsgClientToAuthentication& message )
         {
             MessageSender_ABC::Send( endpoint_, message );
         }
-        virtual void Send( const MsgsClientToReplay::MsgClientToReplay& message ) {}
-        virtual void Send( const MsgsClientToAar::MsgClientToAar& message ) {}
-        virtual void Send( const MsgsClientToMessenger::MsgClientToMessenger& message ) {}
+        virtual void Send( const MsgsClientToReplay::MsgClientToReplay& /*message*/ ) {}
+        virtual void Send( const MsgsClientToAar::MsgClientToAar& /*message*/ ) {}
+        virtual void Send( const MsgsClientToMessenger::MsgClientToMessenger& /*message*/ ) {}
 
     protected:
         virtual void ConnectionSucceeded( const std::string& endpoint )

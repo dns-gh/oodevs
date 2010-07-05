@@ -62,8 +62,8 @@ namespace
     void Update( std::vector< std::string >& list, const Message& msg )
     {
         list.resize( msg.elem_size() );
-        for( unsigned i = 0; i < msg.elem_size(); ++i )
-            list[i] = (const char*)msg.elem( i ).data(); // $$$$ SBO 2007-09-26: length ?
+        for( int i = 0; i < msg.elem_size(); ++i )
+            list[i] = static_cast< const char* >( msg.elem( i ).data() ); // $$$$ SBO 2007-09-26: length ?
     }
 }
 
@@ -87,7 +87,7 @@ void FolkUpdater::Update( const MsgsSimToClient::MsgFolkGraphUpdate& msg )
 {
     if( edges_.size() == 0 )
         throw std::runtime_error( "Trying to update population graph before its creation." );
-    for( unsigned int i = 0; i < msg.elem_size(); ++i )
+    for( int i = 0; i < msg.elem_size(); ++i )
         Update( msg.elem( i ) );
 }
 
@@ -98,7 +98,7 @@ void FolkUpdater::Update( const MsgsSimToClient::MsgFolkGraphUpdate& msg )
 void FolkUpdater::Drop()
 {
     // LockedScopeEditor   lock( database_ );
-//    database_.ReleaseTable( "Population" );
+    // database_.ReleaseTable( "Population" );
 }
 
 // -----------------------------------------------------------------------------
@@ -168,7 +168,7 @@ void FolkUpdater::Update( Edge& edge, const MsgsSimToClient::MsgFolkGraphEdgeUpd
     const unsigned size = activities_.size() * profiles_.size();
     int c = -1;
     edge.population_ = 0;
-    for ( unsigned i = 0; i < msg.population_occupation_size(); ++i )
+    for( int i = 0; i < msg.population_occupation_size(); ++i )
     {
         const int individuals = msg.population_occupation( i );
         if( i % size == 0 )
