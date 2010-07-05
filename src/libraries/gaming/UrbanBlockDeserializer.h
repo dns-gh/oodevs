@@ -21,13 +21,12 @@ namespace MsgsSimToClient
 
 // =============================================================================
 /** @class  UrbanBlockDeserializer
-@brief  UrbanBlockDeserializer
+    @brief  UrbanBlockDeserializer
 */
 // Created: SLG 2009-12-04
 // =============================================================================
 class UrbanBlockDeserializer : public urban::UrbanBlockDeserializer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -41,10 +40,8 @@ public:
     virtual unsigned int GetArchitectureFloorNumber         () const;
     virtual std::string  GetArchitectureRoofShape           () const;
     virtual std::string  GetArchitectureMaterial            () const;
-    virtual float        GetArchitectureOccupation                  () const;
-    virtual float        GetArchitectureTrafficability              () const;
-
-
+    virtual float        GetArchitectureOccupation          () const;
+    virtual float        GetArchitectureTrafficability      () const;
     std::auto_ptr< ColorRGBA >  GetColor                    () const;
 
     virtual bool HasColor()         const;

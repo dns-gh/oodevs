@@ -30,11 +30,11 @@ using namespace kernel;
 // Created: MGD 2009-12-10
 // -----------------------------------------------------------------------------
 UrbanKnowledge::UrbanKnowledge( const Team_ABC& owner, const MsgsSimToClient::MsgUrbanKnowledgeCreation& message, Controller& controller,
-                               const tools::Resolver_ABC< urban::TerrainObject_ABC >& terrainObjectResolver )
+                                const tools::Resolver_ABC< urban::TerrainObject_ABC >& terrainObjectResolver )
     : EntityImplementation< UrbanKnowledge_ABC >( controller, message.oid(), "" )
-    , owner_         ( owner )
+    , owner_                ( owner )
     , terrainObjectResolver_( terrainObjectResolver )
-    , pRealUrban_   ( 0 )
+    , pRealUrban_           ( 0 )
 {
     RegisterSelf( *this );
     pRealUrban_ = terrainObjectResolver_.Find( message.real_urban() );
@@ -57,20 +57,14 @@ void UrbanKnowledge::DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeUpdate& m
 {
     if( message.has_real_urban() )
         pRealUrban_ = terrainObjectResolver_.Find( message.real_urban() );
-
     if( message.has_relevance() )
         nRelevance_ = message.relevance();
-
     if( message.has_perceived() )
         bIsPerceived_ = message.perceived();
-
     if( message.has_identification_level() )
         nCurrrentPerceptionLevel_ = (E_PerceptionResult)( 3 - message.identification_level() );//@TODO MGD Fix enum
-
     if( message.has_progress() )
         nProgress_ = message.progress();
-
-
     Touch();
 }
 

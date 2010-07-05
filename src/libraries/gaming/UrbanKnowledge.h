@@ -44,16 +44,16 @@ namespace MsgsSimToClient
 // Created: MGD 2009-12-10
 // =============================================================================
 class UrbanKnowledge : public kernel::EntityImplementation< kernel::UrbanKnowledge_ABC >
-                      , public kernel::Extension_ABC
-                      , public kernel::Updatable_ABC< MsgsSimToClient::MsgUrbanKnowledgeUpdate >
-                      , public kernel::Displayable_ABC
+                     , public kernel::Extension_ABC
+                     , public kernel::Updatable_ABC< MsgsSimToClient::MsgUrbanKnowledgeUpdate >
+                     , public kernel::Displayable_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
              UrbanKnowledge( const kernel::Team_ABC& owner, const MsgsSimToClient::MsgUrbanKnowledgeCreation& message,
-                              kernel::Controller& controller,
-                              const tools::Resolver_ABC< urban::TerrainObject_ABC >& terrainObjectResolver );
+                             kernel::Controller& controller,
+                             const tools::Resolver_ABC< urban::TerrainObject_ABC >& terrainObjectResolver );
     virtual ~UrbanKnowledge();
     //@}
 
@@ -71,10 +71,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     UrbanKnowledge( const UrbanKnowledge& );            //!< Copy constructor
-    UrbanKnowledge& operator=( const UrbanKnowledge& ); //!< Assignement operator
+    UrbanKnowledge& operator=( const UrbanKnowledge& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
@@ -90,8 +90,8 @@ private:
 
     urban::TerrainObject_ABC* pRealUrban_;
 
-    kernel::OptionalValue< bool >           bIsPerceived_;
-    kernel::OptionalValue< unsigned int >   nRelevance_;
+    kernel::OptionalValue< bool > bIsPerceived_;
+    kernel::OptionalValue< unsigned int > nRelevance_;
     kernel::OptionalValue< kernel::E_PerceptionResult > nCurrrentPerceptionLevel_;
     kernel::OptionalValue< unsigned int > nProgress_;
     //@}

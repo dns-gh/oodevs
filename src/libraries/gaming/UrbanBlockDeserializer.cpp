@@ -21,9 +21,9 @@ using namespace urban;
 // Created: SLG 2009-12-04
 // -----------------------------------------------------------------------------
 UrbanBlockDeserializer::UrbanBlockDeserializer( const MsgsSimToClient::MsgUrbanCreation& message )
-    : message_                  ( message )
+    : message_( message )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -32,7 +32,7 @@ UrbanBlockDeserializer::UrbanBlockDeserializer( const MsgsSimToClient::MsgUrbanC
 // -----------------------------------------------------------------------------
 UrbanBlockDeserializer::~UrbanBlockDeserializer()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -71,7 +71,6 @@ std::string UrbanBlockDeserializer::GetArchitectureMaterial() const
     return message_.attributes().architecture().material();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: UrbanBlockDeserializer::GetArchitectureOccupation
 // Created: SLG 2009-12-07
@@ -96,10 +95,10 @@ float UrbanBlockDeserializer::GetArchitectureTrafficability() const
 // -----------------------------------------------------------------------------
 std::auto_ptr< ColorRGBA > UrbanBlockDeserializer::GetColor() const
 {
-    std::auto_ptr< ColorRGBA > color ( new ColorRGBA( message_.attributes().color().red(),
-                                message_.attributes().color().green(),
-                                message_.attributes().color().blue(),
-                                message_.attributes().color().alpha() ) );
+    std::auto_ptr< ColorRGBA > color ( new ColorRGBA( static_cast< unsigned short >( message_.attributes().color().red() ),
+                                                      static_cast< unsigned short >( message_.attributes().color().green() ),
+                                                      static_cast< unsigned short >( message_.attributes().color().blue() ),
+                                                      message_.attributes().color().alpha() ) );
     return color;
 }
 
