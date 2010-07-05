@@ -17,7 +17,6 @@
 #include <urban/TerrainObjectVisitor_ABC.h>
 #include <xeumeuleu/xml.h>
 
-using namespace xml;
 using namespace tools;
 
 // -----------------------------------------------------------------------------
@@ -69,7 +68,6 @@ bool UrbanModel::Load( const std::string& directoryPath, urban::WorldParameters&
     {
         UrbanSendingCreationVisitor visitor( *this );
         Accept( visitor );
-
     }
     return ret;
 }
@@ -82,25 +80,22 @@ void UrbanModel::Serialize( const std::string& filename ) const
 {
     if( filename.empty() )
         return;
-
     xml::xofstream xos( filename, xml::encoding( "ISO-8859-1" ) );
-    xos << start( "urban-state" )
-            << start( "blocks" );
-
+    xos << xml::start( "urban-state" )
+            << xml::start( "blocks" );
     for( Resolver< gui::TerrainObjectProxy >::CIT_Elements it = Resolver< gui::TerrainObjectProxy >::elements_.begin(); it != Resolver< gui::TerrainObjectProxy >::elements_.end(); ++it )
     {
-        xos << start( "block" );
-            xos << attribute( "id", it->second->GetId() );
-                xos << start( "capacities" );
-                    xos << start( "structural" );
-                        xos << attribute( "value", it->second->infrastructure_.structuralState_ );
-                    xos << end();
-                xos << end();
-        xos << end();
+        xos << xml::start( "block" )
+                << xml::attribute( "id", it->second->GetId() )
+                << xml::start( "capacities" )
+                    << xml::start( "structural" )
+                        << xml::attribute( "value", it->second->infrastructure_.structuralState_ )
+                    << xml::end()
+                << xml::end()
+            << xml::end();
     }
-
-    xos     << end()
-        << end();
+    xos     << xml::end()
+        << xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -109,27 +104,28 @@ void UrbanModel::Serialize( const std::string& filename ) const
 // -----------------------------------------------------------------------------
 void UrbanModel::LoadUrbanState( xml::xistream& xis )
 {
-    xis >> start( "urban-state" )
-            >> start( "blocks" )
+    xis >> xml::start( "urban-state" )
+            >> xml::start( "blocks" )
                 >> xml::list( "block", boost::bind( &UrbanModel::ReadBlock, boost::ref( *this ), _1 ) )
-            >> end()
-        >> end();
+            >> xml::end()
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
 // Name: UrbanModel::ReadBlock
 // Created: JSR 2010-06-22
 // -----------------------------------------------------------------------------
-void UrbanModel::ReadBlock( xistream& xis )
+void UrbanModel::ReadBlock( xml::xistream& xis )
 {
     unsigned int id;
-    xis >> attribute( "id", id );
+    xis >> xml::attribute( "id", id );
     gui::TerrainObjectProxy* proxy = Resolver< gui::TerrainObjectProxy >::Find( id );
     if( proxy )
     {
-        xis >> optional() >> start( "capacities" )
+        xis >> xml::optional()
+            >> xml::start( "capacities" )
                 >> xml::list( *this, &UrbanModel::ReadCapacity, *proxy )
-            >> end();
+            >> xml::end();
     }
 }
 
@@ -137,12 +133,12 @@ void UrbanModel::ReadBlock( xistream& xis )
 // Name: UrbanModel::ReadCapacity
 // Created: JSR 2010-06-22
 // -----------------------------------------------------------------------------
-void UrbanModel::ReadCapacity( const std::string& capacity, xistream& xis, gui::TerrainObjectProxy& proxy )
+void UrbanModel::ReadCapacity( const std::string& capacity, xml::xistream& xis, gui::TerrainObjectProxy& proxy )
 {
     if( capacity == "structural" )
     {
         unsigned int value;
-        xis >> attribute( "value", value );
+        xis >> xml::attribute( "value", value );
         proxy.infrastructure_.structuralState_ = value;
     }
 }

@@ -37,7 +37,6 @@ namespace xml
 class UrbanModel : public urban::Model
                  , public tools::Resolver< gui::TerrainObjectProxy >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -61,10 +60,10 @@ private:
     void ReadCapacity( const std::string& capacity, xml::xistream& xis, gui::TerrainObjectProxy& proxy );
     //@}
 
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     UrbanModel( const UrbanModel& );            //!< Copy constructor
-    UrbanModel& operator=( const UrbanModel& ); //!< Assignement operator
+    UrbanModel& operator=( const UrbanModel& ); //!< Assignment operator
     //@}
 
 private:
