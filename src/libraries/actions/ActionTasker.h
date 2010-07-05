@@ -39,13 +39,14 @@ class ActionTasker : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ActionTasker( const kernel::Entity_ABC* tasker );
+    explicit ActionTasker( const kernel::Entity_ABC* tasker, bool simulation = true );
     virtual ~ActionTasker();
     //@}
 
     //! @name Operations
     //@{
     const kernel::Entity_ABC* GetTasker() const;
+    bool IsSimulation() const;
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     //@}
 
@@ -64,6 +65,7 @@ private:
     //! @name Member data
     //@{
     const kernel::Entity_ABC* tasker_;
+    const bool simulation_;
     //@}
 };
 
