@@ -27,10 +27,10 @@ Application_ABC::Application_ABC( int& argc, char** argv )
 // -----------------------------------------------------------------------------
 void Application_ABC::AddTranslator( const QString& locale, const char* t )
 {
-    QTranslator* trans = new QTranslator( this );
+    std::auto_ptr< QTranslator > trans( new QTranslator( this ) );
     const QString file = QString( "%1_%2" ).arg( t ).arg( locale );
     if( trans->load( file, "." ) || trans->load( file, "resources/locales" ) )
-        installTranslator( trans );
+        installTranslator( trans.release() );
 }
 
 // -----------------------------------------------------------------------------

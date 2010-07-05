@@ -33,13 +33,13 @@ Application::Application( int argc, char** argv )
     : Application_ABC ( argc, argv )
 {
     const QString locale = ReadLang();
-    AddTranslator( "qt", locale );
-    AddTranslator( "ENT", locale );
-    AddTranslator( "frontend", locale );
-    AddTranslator( "frontend_app", locale );
-    AddTranslator( "clients_kernel", locale );
-    AddTranslator( "clients_gui", locale );
-    AddTranslator( "tools", locale );
+    AddTranslator( locale, "qt" );
+    AddTranslator( locale, "ENT" );
+    AddTranslator( locale, "frontend" );
+    AddTranslator( locale, "frontend_app" );
+    AddTranslator( locale, "clients_kernel" );
+    AddTranslator( locale, "clients_gui" );
+    AddTranslator( locale, "tools" );
     ENT_Tr::InitTranslations();
     QMainWindow* mainWindow = new MainWindow();
     mainWindow->show();

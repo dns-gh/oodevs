@@ -104,10 +104,10 @@ namespace
 bool ADN_App::Initialize( const std::string& inputFile, const std::string& outputFile )
 {
     const QString locale = ReadLang();
-    AddTranslator( "adaptation", locale );
-    AddTranslator( "adaptation_app", locale );
-    AddTranslator( "ENT", locale );
-    AddTranslator( "tools", locale );
+    AddTranslator( locale, "adaptation" );
+    AddTranslator( locale, "adaptation_app" );
+    AddTranslator( locale, "ENT" );
+    AddTranslator( locale, "tools" );
 
     // Initialize all the translations.
     ADN_Tr::InitTranslations();
