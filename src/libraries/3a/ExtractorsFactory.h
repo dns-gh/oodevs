@@ -42,7 +42,6 @@ private:
 
     //! @name Helpers
     //@{
-    static void Error( const std::string& name );
     template< typename Value >
     void Extract( const std::string& name, xml::xistream& xis, Task& result ) const;
     //@}

@@ -83,14 +83,5 @@ void ExtractorsFactory::CreateElement( const std::string& type, xml::xistream& x
     else if( value == "detecting-unit" )
         Extract< events::UnitDetection >( name, xis, result );
     else
-        Error( value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExtractorsFactory::Error
-// Created: AGE 2008-08-04
-// -----------------------------------------------------------------------------
-void ExtractorsFactory::Error( const std::string& name )
-{
-    throw std::runtime_error( "Unknown value to extract '" + name + "'" );
+        throw std::runtime_error( "Unknown value to extract '" + name + "'" );
 }

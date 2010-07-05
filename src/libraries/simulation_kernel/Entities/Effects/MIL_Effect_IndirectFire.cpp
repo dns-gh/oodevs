@@ -301,9 +301,7 @@ bool MIL_Effect_IndirectFire::IsInterventionTypeFired() const
 bool MIL_Effect_IndirectFire::MustWaitImpact() const
 {
     if( indirectDotationCategory_.GetDotationCategory().IsGuided() )
-    {
         return bFired_ && !bArrived_;
-    }
     return false;
 }
 
@@ -344,6 +342,3 @@ unsigned int MIL_Effect_IndirectFire::GetNbrAmmoFired() const
 {
     return nNbrAmmoFired_;
 }
-
-
-

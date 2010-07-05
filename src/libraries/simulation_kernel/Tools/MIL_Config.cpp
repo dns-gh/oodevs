@@ -24,8 +24,6 @@
 namespace po = boost::program_options;
 namespace bfs = boost::filesystem;
 
-
-
 // -----------------------------------------------------------------------------
 // Name: MIL_Config constructor
 // Created: NLD 2003-12-04

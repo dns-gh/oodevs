@@ -40,7 +40,7 @@ private:
     //! @name Copy/Assignement
     //@{
     MIL_Effect_HLAIndirectFire( const MIL_Effect_HLAIndirectFire& );            //!< Copy constructor
-    MIL_Effect_HLAIndirectFire& operator=( const MIL_Effect_HLAIndirectFire& ); //!< Assignement operator
+    MIL_Effect_HLAIndirectFire& operator=( const MIL_Effect_HLAIndirectFire& ); //!< Assignment operator
     //@}
 
 private:
