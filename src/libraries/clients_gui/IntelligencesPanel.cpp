@@ -36,9 +36,9 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 IntelligencesPanel::IntelligencesPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, const FormationLevels& levels, SymbolIcons& icons )
     : InfoPanel_ABC( parent, panel, tr( "Intelligence" ), "IntelligencesPanel" )
-    , controllers_( controllers )
-    , icons_( icons )
-    , symbolFactory_( new SymbolFactory() )
+    , controllers_   ( controllers )
+    , icons_         ( icons )
+    , symbolFactory_ ( new SymbolFactory() )
     , selectedEntity_( controllers )
 {
     layout()->setAlignment( Qt::AlignTop );

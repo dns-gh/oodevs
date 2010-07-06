@@ -18,7 +18,7 @@
 #include "clients_kernel/LocationProxy.h"
 #include "clients_kernel/Positions.h"
 #include <svgl/svgl.h>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace gui;
 

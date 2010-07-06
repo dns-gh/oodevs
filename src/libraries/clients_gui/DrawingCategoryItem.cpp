@@ -64,7 +64,6 @@ void DrawingCategoryItem::AddStyle( const DrawingTemplate& style )
     button->setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Preferred );
     button->setFlat( true );
     QToolTip::add( button, style.GetDescription() );
-
     const int id = insert( button );
     styles_[id] = &style;
 }

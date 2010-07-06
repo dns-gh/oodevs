@@ -25,7 +25,7 @@ using namespace gui;
 NBCPrototype_ABC::NBCPrototype_ABC( QWidget* parent, const tools::Resolver_ABC< NBCAgent >& resolver, int maxToxic )
     : ObjectAttributePrototype_ABC( parent, tools::translate( "NBCPrototype_ABC", "NBC parameters" ) )
     , resolver_( resolver )
-    , maxToxic_ ( maxToxic )
+    , maxToxic_( maxToxic )
 {
     new QLabel( tools::translate( "NBCPrototype_ABC", "Danger level:" ), this );
     danger_ = new QSpinBox( 0, 10, 1, this );

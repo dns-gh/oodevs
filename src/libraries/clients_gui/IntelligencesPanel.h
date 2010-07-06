@@ -56,10 +56,6 @@ public:
     virtual ~IntelligencesPanel();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
 private slots:
     //! @name Slots
     //@{

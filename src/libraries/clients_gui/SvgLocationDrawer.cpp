@@ -36,10 +36,10 @@ namespace
 // Created: SBO 2008-05-30
 // -----------------------------------------------------------------------------
 SvgLocationDrawer::SvgLocationDrawer( const DrawingTemplate& style )
-    : context_( new svg::RenderingContext() )
-    , style_( style )
+    : context_  ( new svg::RenderingContext() )
+    , style_    ( style )
     , overlined_( false )
-    , tools_( 0 )
+    , tools_    ( 0 )
 {
     // NOTHING
 }

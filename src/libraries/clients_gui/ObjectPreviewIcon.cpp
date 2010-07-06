@@ -25,9 +25,9 @@ using namespace gui;
 // Created: SBO 2007-10-16
 // -----------------------------------------------------------------------------
 ObjectPreviewIcon::ObjectPreviewIcon( QWidget* parent, kernel::Controllers& controllers, SymbolIcons& icons )
-    : QHBox        ( parent )
-    , icons_       ( icons )
-    , controllers_ ( controllers )
+    : QHBox( parent )
+    , icons_      ( icons )
+    , controllers_( controllers )
 {
     setFrameStyle( QFrame::Plain | QFrame::Box );
     setPaletteBackgroundColor( Qt::white );
@@ -83,4 +83,3 @@ void ObjectPreviewIcon::UpdateSymbol()
         icon_->setPixmap( blank );
     }
 }
-

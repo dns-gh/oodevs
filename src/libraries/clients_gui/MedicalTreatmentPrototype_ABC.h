@@ -63,11 +63,11 @@ protected:
     //! @name Member data
     //@{
     const tools::Resolver_ABC< kernel::MedicalTreatmentType >& resolver_;
-    QListView*   treatmentTypes_;
-    QSpinBox*    beds_;
-    QSpinBox*    availableBeds_;
-    QSpinBox*    doctors_;
-    QSpinBox*    availableDoctors_;
+    QListView* treatmentTypes_;
+    QSpinBox* beds_;
+    QSpinBox* availableBeds_;
+    QSpinBox* doctors_;
+    QSpinBox* availableDoctors_;
     //@}
 };
 

@@ -10,12 +10,10 @@
 #include "clients_gui_pch.h"
 #include "ObjectAttributePrototypeContainer.h"
 #include "ObjectAttributePrototype_ABC.h"
-
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "tools/Iterator.h"
-
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
 
 using namespace kernel;
@@ -27,9 +25,9 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 ObjectAttributePrototypeContainer::ObjectAttributePrototypeContainer( const tools::Resolver_ABC< ObjectType, std::string >& resolver, const ObjectAttributePrototypeFactory_ABC& factory, QWidget* parent )
     : factory_ ( factory )
-    , resolver_ ( resolver )
+    , resolver_( resolver )
     , current_ ()
-    , parent_ ( parent )
+    , parent_  ( parent )
 {
     // NOTHING
 }

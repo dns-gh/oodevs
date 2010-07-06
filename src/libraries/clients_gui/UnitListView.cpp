@@ -34,7 +34,7 @@ using namespace gui;
 UnitListView::UnitListView( QWidget* parent, Controllers& controllers, const AgentTypes& list, ItemFactory_ABC& factory )
     : ListView< UnitListView >( parent, *this, factory )
     , controllers_( controllers )
-    , types_( list )
+    , types_      ( list )
 {
     setMinimumSize( 1, 1 );
     addColumn( tools::translate( "UnitListView", "Unit type" ) );

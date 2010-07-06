@@ -26,7 +26,7 @@ using namespace gui;
 LogisticPrototype_ABC::LogisticPrototype_ABC( QWidget* parent, Controllers& controllers )
     : ObjectAttributePrototype_ABC( parent, tr( "Camp" ) )
     , controllers_( controllers )
-    , selected_( controllers )
+    , selected_   ( controllers )
 {
     new QLabel( tr( "TC2:" ), this );
     tc2s_ = new ValuedComboBox< const Automat_ABC* >( this );

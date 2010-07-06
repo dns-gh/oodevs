@@ -11,9 +11,8 @@
 #include "NatureSelectionWidget.h"
 #include "moc_NatureSelectionWidget.cpp"
 #include "clients_kernel/SymbolRule.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
-using namespace xml;
 using namespace gui;
 
 // -----------------------------------------------------------------------------
@@ -23,16 +22,16 @@ using namespace gui;
 NatureSelectionWidget::NatureSelectionWidget( QWidget* parent, const std::string& symbolFile )
     : QListView( parent )
     , category_( 0 )
-    , current_( 0 )
+    , current_ ( 0 )
 {
     addColumn( "" );
     header()->hide();
     setRootIsDecorated( true );
     setResizeMode( QListView::LastColumn );
-    xifstream xis( symbolFile );
-    xis >> start( "app6" )
-            >> start( "symbols" )
-                >> start( "choice" );
+    xml::xifstream xis( symbolFile );
+    xis >> xml::start( "app6" )
+            >> xml::start( "symbols" )
+                >> xml::start( "choice" );
     kernel::SymbolRule root( xis );
     root.Accept( *this );
     connect( this, SIGNAL( selectionChanged( QListViewItem* ) ), SLOT( OnSelectionChanged( QListViewItem* ) ) );

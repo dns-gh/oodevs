@@ -90,7 +90,8 @@ private:
     ColorStrategy_ABC& colorStrategy_;
     kernel::SafePointer< kernel::Entity_ABC > selectedParent_;
     QLabel* icon_;
-    std::string symbol_, level_;
+    std::string symbol_;
+    std::string level_;
     //@}
 };
 
