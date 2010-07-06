@@ -20,9 +20,9 @@ using namespace gui;
 CheckBox::CheckBox( const QString & text, QWidget* parent, const char* name /* = 0 */ )
     : QCheckBox( text, parent, name )
     , previousValue_( 0 )
-    , currentValue_( 0 )
+    , currentValue_ ( 0 )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -31,7 +31,7 @@ CheckBox::CheckBox( const QString & text, QWidget* parent, const char* name /* =
 // -----------------------------------------------------------------------------
 CheckBox::~CheckBox()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

@@ -25,9 +25,9 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 FormationFactory::FormationFactory( Controllers& controllers, IdManager& idManager )
     : controllers_( controllers )
-    , idManager_( idManager )
+    , idManager_  ( idManager )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -70,4 +70,3 @@ kernel::Formation_ABC* FormationFactory::Create( xml::xistream& xis, kernel::Ent
     formation->Polish();
     return formation;
 }
-

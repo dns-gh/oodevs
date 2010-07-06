@@ -39,7 +39,7 @@ ReportFilterOptions::ReportFilterOptions( QWidget* pParent )
 // -----------------------------------------------------------------------------
 ReportFilterOptions::~ReportFilterOptions()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

@@ -10,7 +10,6 @@
 #ifndef __TerrainObjectProxy_h_
 #define __TerrainObjectProxy_h_
 
-
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Extension_ABC.h"
@@ -20,6 +19,7 @@ namespace kernel
 {
     class PropertiesDictionary;
 }
+
 namespace urban
 {
     class Drawer_ABC;
@@ -30,7 +30,7 @@ namespace gui
 {
 // =============================================================================
 /** @class  UrbanModel
-@brief  UrbanModel
+    @brief  Urban model
 */
 // Created: SLG 2009-02-10
 // =============================================================================
@@ -38,11 +38,11 @@ class TerrainObjectProxy : public kernel::Extension_ABC
                          , public kernel::EntityImplementation< kernel::Entity_ABC >
                          , public kernel::Updatable_ABC< InfrastructureParameters >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
-             TerrainObjectProxy( kernel::Controller& controller, urban::TerrainObject_ABC& object, unsigned int id, const QString& name, const InfrastructureParameters& parameters );
+             TerrainObjectProxy( kernel::Controller& controller, urban::TerrainObject_ABC& object,
+                                 unsigned int id, const QString& name, const InfrastructureParameters& parameters );
              TerrainObjectProxy( kernel::Controller& controller, urban::TerrainObject_ABC& object );
     virtual ~TerrainObjectProxy();
     //@}
@@ -55,7 +55,6 @@ public:
     virtual void Select     ( kernel::ActionController& /*controller*/ ) const {};
     virtual void ContextMenu( kernel::ActionController& /*controller*/,  const QPoint& /*where*/) const {};
     virtual void Activate   ( kernel::ActionController& /*controller*/ ) const {};
-
 
     virtual void SetSelected( bool selected )                            const;
     virtual void Draw       ( urban::Drawer_ABC& drawer )                const;
@@ -78,7 +77,7 @@ public:
 public:
     //! @name Copy/Assignment
     //@{
-    TerrainObjectProxy ( const TerrainObjectProxy& );            //!< Copy constructor
+    TerrainObjectProxy ( const TerrainObjectProxy& );           //!< Copy constructor
     TerrainObjectProxy& operator=( const TerrainObjectProxy& ); //!< Assignment operator
     bool operator==( const TerrainObjectProxy& ) const;
     //@}

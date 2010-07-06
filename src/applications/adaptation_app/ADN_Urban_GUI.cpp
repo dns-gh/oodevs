@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-08-27 $
-// $Archive: /MVW_v10/Build/SDK/ADN2/src/ADN_Categories_GUI.cpp $
-// $Author: Nld $
-// $Modtime: 27/04/05 15:56 $
-// $Revision: 14 $
-// $Workfile: ADN_Urban_GUI.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_Urban_GUI.h"
 
@@ -32,19 +30,18 @@
 #include <qpushbutton.h>
 #include <qwhatsthis.h>
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Urban_GUI constructor
 // Created: SLG 2010-03-08
 //-----------------------------------------------------------------------------
 ADN_Urban_GUI::ADN_Urban_GUI( ADN_Urban_Data& data )
-: ADN_GUI_ABC       ( "ADN_Urban_GUI" )
-, data_             ( data )
-, pListMaterial_    ( 0 )
-, pListFacade_      ( 0 )
-, pListRoofShape_   ( 0 )
+    : ADN_GUI_ABC( "ADN_Urban_GUI" )
+    , data_         ( data )
+    , pListMaterial_( 0 )
+    , pListFacade_  ( 0 )
+    , pListRoofShape( 0 )
 {
-    //NOTHING
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -53,7 +50,7 @@ ADN_Urban_GUI::ADN_Urban_GUI( ADN_Urban_Data& data )
 //-----------------------------------------------------------------------------
 ADN_Urban_GUI::~ADN_Urban_GUI()
 {
-    //NOTHING
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -133,5 +130,4 @@ void ADN_Urban_GUI::Build()
     pListMaterial_->SetItemConnectors( vMaterialInfosConnectors );
     pListFacade_  ->SetItemConnectors( vFacadeInfosConnectors );
     pListRoofShape_->SetItemConnectors( vRoofShapeInfosConnectors );
-
 }

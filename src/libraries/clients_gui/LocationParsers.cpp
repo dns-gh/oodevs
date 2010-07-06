@@ -24,11 +24,12 @@ using namespace gui;
 // Created: AME 2010-03-11
 // -----------------------------------------------------------------------------
 LocationParsers::LocationParsers( kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter )
-: controllers_( controllers )
-, converter_( converter )
+    : controllers_( controllers )
+    , converter_  ( converter )
 {
     FillParsers();
 }
+
 // -----------------------------------------------------------------------------
 // Name: LocationParsers::FillParsers
 // Created: AME 2010-03-12
@@ -40,14 +41,16 @@ void LocationParsers::FillParsers()
     parsers_[ kernel::CoordinateSystems::E_Wgs84Dd ] = new Wgs84DdParser( converter_ );
     parsers_[ kernel::CoordinateSystems::E_Wgs84Dms ] = new Wgs84DmsParser( converter_ );
 }
+
 // -----------------------------------------------------------------------------
 // Name: LocationParsers destructor
 // Created: AME 2010-03-11
 // -----------------------------------------------------------------------------
 LocationParsers::~LocationParsers()
 {
-    //NOTHING
+    // NOTHING
 }
+
 // -----------------------------------------------------------------------------
 // Name: LocationParsers::Parse
 // Created: AME 2010-03-11
@@ -56,7 +59,6 @@ bool LocationParsers::Parse( int parserId, QString content, geometry::Point2f& r
 {
     if( parsers_.find( parserId ) == parsers_.end() || parsers_[ parserId ]->GetNumberOfParameters() != 1 )
          throw std::runtime_error( __FUNCTION__ );
-
     return parsers_[ parserId ]->Parse( content, result, hint );
 }
 
@@ -68,9 +70,9 @@ bool LocationParsers::Parse( int parserId, QString contentX, QString contentY, g
 {
     if( parsers_.find( parserId ) == parsers_.end() || parsers_[ parserId ]->GetNumberOfParameters() != 2 )
         throw std::runtime_error( __FUNCTION__ );
-
     return parsers_[ parserId ]->Parse( contentX + ":" + contentY, result, hint );
 }
+
 // -----------------------------------------------------------------------------
 // Name: LocationParsers::GetParser
 // Created: AME 2010-03-11
@@ -79,8 +81,7 @@ LocationParser_ABC& LocationParsers::GetParser( int parserId )
 {
     if( parsers_.find( parserId ) == parsers_.end() )
         throw std::runtime_error( __FUNCTION__ );
-    else
-        return **parsers_.find( parserId )->second;
+    return **parsers_.find( parserId )->second;
 }
 
 // -----------------------------------------------------------------------------

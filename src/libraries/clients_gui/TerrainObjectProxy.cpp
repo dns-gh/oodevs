@@ -20,9 +20,10 @@ using namespace gui;
 // Name: TerrainObjectProxy constructor
 // Created: SLG 2009-10-20
 // -----------------------------------------------------------------------------
-TerrainObjectProxy::TerrainObjectProxy( kernel::Controller& controller, urban::TerrainObject_ABC& object, unsigned int id, const QString& name, const InfrastructureParameters& infrastructure )
+TerrainObjectProxy::TerrainObjectProxy( kernel::Controller& controller, urban::TerrainObject_ABC& object,
+                                        unsigned int id, const QString& name, const InfrastructureParameters& infrastructure )
     : EntityImplementation< kernel::Entity_ABC >( controller, id, name )
-    , object_( &object )
+    , object_        ( &object )
     , infrastructure_( infrastructure )
 {
     RegisterSelf( *this );
@@ -47,7 +48,7 @@ TerrainObjectProxy::TerrainObjectProxy( kernel::Controller& controller, urban::T
 // -----------------------------------------------------------------------------
 TerrainObjectProxy::~TerrainObjectProxy()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -56,7 +57,7 @@ TerrainObjectProxy::~TerrainObjectProxy()
 // -----------------------------------------------------------------------------
 bool TerrainObjectProxy::operator==( const TerrainObjectProxy& object ) const
 {
-        return object_ == object.object_;
+    return object_ == object.object_;
 }
 
 // -----------------------------------------------------------------------------
@@ -98,7 +99,6 @@ void TerrainObjectProxy::CreateDictionary( kernel::Controller& controller )
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "Info/Identifier" ), EntityImplementation< kernel::Entity_ABC >::id_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "Info/Name" ), EntityImplementation< kernel::Entity_ABC >::name_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "Info/StructuralState" ), infrastructure_.structuralState_ );
-
     AddDictionaryForArchitecture( dictionary );
 }
 
@@ -122,8 +122,6 @@ void TerrainObjectProxy::AddDictionaryForArchitecture( kernel::PropertiesDiction
 
 // -----------------------------------------------------------------------------
 // Name: TerrainObjectProxy::SetSelected
-//** @param  selected
-//*/
 // Created: FDS 2010-01-15
 // -----------------------------------------------------------------------------
 void TerrainObjectProxy::SetSelected( bool selected ) const
@@ -133,8 +131,6 @@ void TerrainObjectProxy::SetSelected( bool selected ) const
 
 // -----------------------------------------------------------------------------
 // Name: TerrainObjectProxy::Draw
-//** @param  drawer
-//*/
 // Created: FDS 2010-01-15
 // -----------------------------------------------------------------------------
 void TerrainObjectProxy::Draw( urban::Drawer_ABC& drawer ) const
@@ -144,9 +140,6 @@ void TerrainObjectProxy::Draw( urban::Drawer_ABC& drawer ) const
 
 // -----------------------------------------------------------------------------
 // Name: TerrainObjectProxy::IsInside
-//** @param  point
-//    @return
-//*/
 // Created: FDS 2010-01-15
 // -----------------------------------------------------------------------------
 bool TerrainObjectProxy::IsInside( const geometry::Point2f& point ) const

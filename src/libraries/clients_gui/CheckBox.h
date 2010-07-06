@@ -14,10 +14,9 @@
 
 namespace gui
 {
-
 // =============================================================================
 /** @class  CheckBox
-    @brief  CheckBox
+    @brief  Check box
 */
 // Created: RPD 2008-08-21
 // =============================================================================
@@ -45,10 +44,6 @@ private:
     //@{
     CheckBox( const CheckBox& );            //!< Copy constructor
     CheckBox& operator=( const CheckBox& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
     //@}
 
 private:

@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-08-27 $
-// $Archive: /MVW_v10/Build/SDK/ADN2/src/ADN_Categories_GUI.h $
-// $Author: Nld $
-// $Modtime: 27/04/05 15:56 $
-// $Revision: 8 $
-// $Workfile: ADN_Categories_GUI.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #ifndef __ADN_Urban_GUI_h_
 #define __ADN_Urban_GUI_h_
@@ -18,10 +16,9 @@
 class ADN_Urban_Data;
 class ADN_ListView_Urban_Type;
 
-
 // =============================================================================
 /** @class  ADN_Categories_GUI
-@brief  ADN_Categories_GUI
+    @brief  ADN categories gui
 */
 // Created: APE 2004-12-06
 // =============================================================================
@@ -39,7 +36,7 @@ public:
     };
 
 public:
-             ADN_Urban_GUI( ADN_Urban_Data& data );
+    explicit ADN_Urban_GUI( ADN_Urban_Data& data );
     virtual ~ADN_Urban_GUI();
 
     void Build();

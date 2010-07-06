@@ -28,13 +28,14 @@ using namespace actions::gui;
 // Created: MGD 2009-11-03
 // -----------------------------------------------------------------------------
 ParamUrbanBlock::ParamUrbanBlock( QObject* parent, const kernel::OrderParameter& parameter, ::gui::ParametersLayer& layer )
-: QObject( parent )
-, Param_ABC  ( parameter.GetName().c_str() )
-, parameter_ ( parameter )
-, layer_     ( layer )
-, pLabel_    ( 0 )
-, selected_  ( 0 )
+    : QObject( parent )
+    , Param_ABC( parameter.GetName().c_str() )
+    , parameter_( parameter )
+    , layer_    ( layer )
+    , pLabel_   ( 0 )
+    , selected_ ( 0 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -43,6 +44,7 @@ ParamUrbanBlock::ParamUrbanBlock( QObject* parent, const kernel::OrderParameter&
 // -----------------------------------------------------------------------------
 ParamUrbanBlock::~ParamUrbanBlock()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -59,7 +61,6 @@ void ParamUrbanBlock::BuildInterface( QWidget* parent )
     pBlockLabel_->setAlignment( Qt::AlignCenter );
     pBlockLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ParamUrbanBlock::CheckValidity
@@ -93,9 +94,9 @@ void ParamUrbanBlock::CommitTo( actions::ParameterContainer_ABC& action ) const
 // Name: ParamUrbanBlock::Draw
 // Created: MGD 2009-11-03
 // -----------------------------------------------------------------------------
-void ParamUrbanBlock::Draw( const geometry::Point2f& , const kernel::Viewport_ABC& , const kernel::GlTools_ABC& /*tools*/ ) const
+void ParamUrbanBlock::Draw( const geometry::Point2f&, const kernel::Viewport_ABC&, const kernel::GlTools_ABC& /*tools*/ ) const
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -130,7 +131,7 @@ void ParamUrbanBlock::MenuItemValidated()
         if( selected_->GetName().isEmpty() )
             pBlockLabel_->setText( tr( "Untitled block [" ) + QString::number( selected_->GetId() ) + tr( "]" ) );
         else
-            pBlockLabel_->setText(  selected_->object_->GetName().c_str() );
+            pBlockLabel_->setText( selected_->object_->GetName().c_str() );
     }
     else
         pBlockLabel_->setText(  "---" );

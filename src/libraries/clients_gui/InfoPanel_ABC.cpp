@@ -20,8 +20,8 @@ using namespace gui;
 InfoPanel_ABC::InfoPanel_ABC( QWidget* parent, PanelStack_ABC& panel, const QString& name, const char* qtName )
     : QScrollView( parent, qtName )
     , stack_( panel )
-    , name_( name )
-    , pBox_( new QVBox( viewport() ) )
+    , name_ ( name )
+    , pBox_ ( new QVBox( viewport() ) )
 {
     setHScrollBarMode( QScrollView::AlwaysOff );
     setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
@@ -39,7 +39,7 @@ InfoPanel_ABC::InfoPanel_ABC( QWidget* parent, PanelStack_ABC& panel, const QStr
 // -----------------------------------------------------------------------------
 InfoPanel_ABC::~InfoPanel_ABC()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

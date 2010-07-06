@@ -36,7 +36,7 @@ namespace gui
     class RichLabel;
 // =============================================================================
 /** @class  ParamUrbanBlock
-    @brief  ParamUrbanBlock
+    @brief  Param urban block
 */
 // Created: MGD 2009-11-03
 // =============================================================================
@@ -49,7 +49,7 @@ class ParamUrbanBlock : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-    ParamUrbanBlock( QObject* parent, const kernel::OrderParameter& parameter, ::gui::ParametersLayer& layer );
+             ParamUrbanBlock( QObject* parent, const kernel::OrderParameter& parameter, ::gui::ParametersLayer& layer );
     virtual ~ParamUrbanBlock();
     //@}
 
@@ -76,7 +76,7 @@ private:
     virtual bool IsOptional() const;
     //@}
 
-    private slots:
+private slots:
     //! @name Slots
     //@{
     virtual void MenuItemValidated();
@@ -94,8 +94,8 @@ private:
     //@}
 };
 
-} //namespace gui
+}
 
-} //namespace action
+}
 
 #endif // __ParamUrbanBlock_h_

@@ -29,15 +29,15 @@ namespace gui
     class Wgs84DdParser;
     class Wgs84DmsParser;
     class XyParser;
+
 // =============================================================================
 /** @class  LocationParsers
-    @brief  LocationParsers
+    @brief  Location parsers
 */
 // Created: AME 2010-03-10
 // =============================================================================
 class LocationParsers
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -47,10 +47,11 @@ public:
 
     //! @name Operations
     //@{
-        LocationParser_ABC& GetParser( int parserId );
-        bool Parse( int parserId, QString content, geometry::Point2f& result, QStringList& hint );
-        bool Parse( int parserId, QString contentX, QString contentY, geometry::Point2f& result, QStringList& hint );
-        void AddParser( LocationParser_ABC& parser, int id );
+    LocationParser_ABC& GetParser( int parserId );
+    bool Parse( int parserId, QString content, geometry::Point2f& result, QStringList& hint );
+    bool Parse( int parserId, QString contentX, QString contentY, geometry::Point2f& result, QStringList& hint );
+    void AddParser( LocationParser_ABC& parser, int id );
+    //@}
 
 public:
     enum paramPos
@@ -74,8 +75,11 @@ private:
     //@}
 
 private:
+    //! @name Types
+    //@{
     typedef boost::ptr_map< int, LocationParser_ABC* > T_parsers;
-    typedef T_parsers::const_iterator CIT_parsers;
+    typedef T_parsers::const_iterator                CIT_parsers;
+    //@}
 
     //! @name Member data
     //@{
@@ -84,5 +88,6 @@ private:
     T_parsers parsers_;
     //@}
 };
+
 }
 #endif // __LocationParsers_h_
