@@ -19,8 +19,8 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 LayersRenderPass::LayersRenderPass( MapWidget_ABC& widget, const std::string& name, bool clear )
     : widget_( widget )
-    , name_( name )
-    , clear_( clear )
+    , name_  ( name )
+    , clear_ ( clear )
 {
     // NOTHING
 }

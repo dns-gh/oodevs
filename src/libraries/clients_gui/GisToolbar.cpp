@@ -31,13 +31,13 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: GisToolbar constructor
+// Name: GisToolbar constructor 
 // Created: SBO 2010-03-23
 // -----------------------------------------------------------------------------
 GisToolbar::GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, const kernel::DetectionMap& detection, TerrainProfilerLayer& layer )
     : QToolBar( parent, "gis tools" )
-    , controllers_( controllers )
-    , detection_( detection )
+    , controllers_    ( controllers )
+    , detection_      ( detection )
     , terrainProfiler_( new TerrainProfiler( parent, controllers, detection, layer ) )
 {
     setLabel( tools::translate( "GisToolBar", "GIS tools" ) );

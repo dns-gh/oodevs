@@ -27,7 +27,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 AutomatsLayer::AutomatsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const Profile_ABC& profile, AgentsLayer& agents )
     : EntityLayer< Automat_ABC >( controllers, tools, strategy, view, profile )
-    , agents_( agents )
+    , agents_  ( agents )
     , selected_( controllers )
 {
     // NOTHING

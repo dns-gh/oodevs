@@ -25,8 +25,8 @@ namespace
 // -----------------------------------------------------------------------------
 TerrainProfilerLayer::TerrainProfilerLayer( const kernel::GlTools_ABC& tools )
     : tools_( tools )
-    , from_( notSet )
-    , to_( notSet )
+    , from_ ( notSet )
+    , to_   ( notSet )
 {
     SetAlpha( 0 );
 }

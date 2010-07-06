@@ -81,19 +81,17 @@ private:
     //@{
     kernel::Controller& controller_;
     const kernel::DetectionMap& elevation_;
-    std::auto_ptr< ElevationExtrema >    extrema_;
-    std::auto_ptr< ElevationShader >     shader_;
-    std::auto_ptr< TextureSet >          layer_;
+    std::auto_ptr< ElevationExtrema > extrema_;
+    std::auto_ptr< ElevationShader > shader_;
+    std::auto_ptr< TextureSet > layer_;
     bool reset_;
     bool modelLoaded_;
     bool ignore_;
-
     Gradient gradient_;
     bool updateGradient_;
     unsigned gradientTexture_;
     float hsx_, hsy_;
     float hsStrength_;
-
     bool enabled_;
     short minElevation_, maxElevation_;
     geometry::Rectangle2f lastViewport_;

@@ -19,11 +19,11 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 VisionLine::VisionLine( const kernel::DetectionMap& map, const geometry::Point2f& from, const geometry::Point2f& to, float height )
     : kernel::DetectionMapIterator( map, from, to )
-    , fromAltitude_( map.ElevationAt( from ) + height )
-    , toAltitude_( map.ElevationAt( to ) + 2.f )
-    , totalDistance_( from.Distance( to ) + 0.1f )
+    , fromAltitude_    ( map.ElevationAt( from ) + height )
+    , toAltitude_      ( map.ElevationAt( to ) + 2.f )
+    , totalDistance_   ( from.Distance( to ) + 0.1f )
     , advancedDistance_( 0 )
-    , length_( 0 )
+    , length_          ( 0 )
 {
     // NOTHING
 }

@@ -55,7 +55,7 @@ private:
     //! @name Helpers
     //@{
     void Toggle( const kernel::Automat_ABC& automat, bool aggregate );
-    virtual void Select     ( const kernel::Entity_ABC&, bool );
+    virtual void Select ( const kernel::Entity_ABC&, bool );
     //@}
 };
 

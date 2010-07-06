@@ -31,8 +31,8 @@ using namespace gui;
 MiniViews::MiniViews( QMainWindow* parent, Controllers& controllers )
     : QDockWindow( parent, "miniviews" )
     , controllers_( controllers )
-    , widget_( 0 )
-    , selected_( controllers_ )
+    , widget_     ( 0 )
+    , selected_    ( controllers_ )
 {
     setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
     setResizeEnabled( false );

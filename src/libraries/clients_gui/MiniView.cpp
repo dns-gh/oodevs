@@ -24,10 +24,10 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 MiniView::MiniView( QWidget* parent, Controllers& controllers, const Entity_ABC& agent )
     : QFrame( parent, "MiniView", WRepaintNoErase )
-    , actions_( controllers.actions_ )
-    , agent_( agent )
+    , actions_ ( controllers.actions_ )
+    , agent_   ( agent )
     , position_( agent.Get< Positions >() )
-    , pixmap_( 128, 128, 32 )
+    , pixmap_  ( 128, 128, 32 )
 {
     setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
     setFrameStyle( Box | Plain );

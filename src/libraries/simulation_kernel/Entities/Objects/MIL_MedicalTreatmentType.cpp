@@ -177,7 +177,7 @@ const MIL_MedicalTreatmentType* MIL_MedicalTreatmentType::Find( unsigned int nID
 // -----------------------------------------------------------------------------
 MIL_MedicalTreatmentType::~MIL_MedicalTreatmentType()
 {
-    //Nothing
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

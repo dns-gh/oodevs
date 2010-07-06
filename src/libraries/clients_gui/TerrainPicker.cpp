@@ -27,7 +27,7 @@ TerrainPicker::TerrainPicker( QObject* parent )
     : QObject( parent )
     , terrain_( 0 )
     , weather_( 0 )
-    , timer_( new QTimer( parent ) )
+    , timer_  ( new QTimer( parent ) )
 {
     connect( timer_, SIGNAL( timeout() ), SLOT( OnTimeOut() ) );
 }

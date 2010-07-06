@@ -36,10 +36,10 @@
 //-----------------------------------------------------------------------------
 ADN_Urban_GUI::ADN_Urban_GUI( ADN_Urban_Data& data )
     : ADN_GUI_ABC( "ADN_Urban_GUI" )
-    , data_         ( data )
-    , pListMaterial_( 0 )
-    , pListFacade_  ( 0 )
-    , pListRoofShape( 0 )
+    , data_          ( data )
+    , pListMaterial_ ( 0 )
+    , pListFacade_   ( 0 )
+    , pListRoofShape_( 0 )
 {
     // NOTHING
 }

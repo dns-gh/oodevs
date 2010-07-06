@@ -187,7 +187,7 @@ const MIL_FireClass* MIL_FireClass::Find( unsigned int nID )
 // -----------------------------------------------------------------------------
 MIL_FireClass::~MIL_FireClass()
 {
-    //Nothing
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

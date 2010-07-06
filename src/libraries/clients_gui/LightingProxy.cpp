@@ -27,8 +27,8 @@ using namespace gui;
 LightingProxy::LightingProxy( QObject* parent )
     : QObject( parent )
     , camera_( false )
-    , fixed_( new FixedLighting() )
-    , time_ ( new TimeLighting() )
+    , fixed_ ( new FixedLighting() )
+    , time_  ( new TimeLighting() )
 {
     current_ = fixed_.get();
 }

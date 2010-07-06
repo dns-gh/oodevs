@@ -28,8 +28,8 @@ using namespace gui;
 TerrainProfiler::TerrainProfiler( QMainWindow* parent, kernel::Controllers& controllers, const kernel::DetectionMap& detection, TerrainProfilerLayer& layer )
     : QDockWindow( parent, "terrain-profiler" )
     , controllers_( controllers )
-    , detection_( detection )
-    , layer_( layer )
+    , detection_  ( detection )
+    , layer_      ( layer )
 {
     setCaption( tools::translate( "TerrainProfiler", "Terrain profile" ) );
     {

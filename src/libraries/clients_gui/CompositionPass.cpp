@@ -25,14 +25,14 @@ using namespace gui;
 // Created: SBO 2008-04-14
 // -----------------------------------------------------------------------------
 CompositionPass::CompositionPass( TextureRenderPass& first, TextureRenderPass& second, kernel::Controllers& controllers, const std::string& option /*= ""*/ )
-    : controllers_( controllers )
-    , first_( first )
-    , second_( second )
+    : controllers_ ( controllers )
+    , first_       ( first )
+    , second_      ( second )
     , noiseTexture_( 0 )
     , ignoreShader_( false )
-    , option_( option )
-    , enabled_( option_.empty() )
-    , time_( 0 )
+    , option_      ( option )
+    , enabled_     ( option_.empty() )
+    , time_        ( 0 )
 {
     controllers_.Register( *this );
 }

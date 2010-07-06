@@ -22,9 +22,9 @@ using namespace gui;
 TextureRenderPass::TextureRenderPass( MapWidget_ABC& widget, const std::string& name, kernel::Controllers& controllers, const std::string& option /*= ""*/ )
     : LayersRenderPass( widget, name, true )
     , controllers_( controllers )
-    , texture_( 0 )
-    , option_( option )
-    , enabled_( option.empty() )
+    , texture_    ( 0 )
+    , option_     ( option )
+    , enabled_    ( option.empty() )
 {
     controllers_.Register( *this );
 }

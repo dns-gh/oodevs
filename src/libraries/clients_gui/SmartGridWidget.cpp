@@ -18,8 +18,8 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 SmartGridWidget::SmartGridWidget( QWidget* parent, int strips, Orientation o, const char* name )
     : QWidget( parent, name )
-    , strips_( strips )
-    , o_( o )
+    , strips_    ( strips )
+    , o_         ( o )
     , childCount_( 0 )
 {
     if( strips_ <= 0 )

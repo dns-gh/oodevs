@@ -21,8 +21,8 @@ using namespace gui;
 TerrainProfile::TerrainProfile( QWidget* parent, const kernel::DetectionMap& detection )
     : gui::GQ_Plot( parent )
     , detection_( detection )
-    , data_( new GQ_PlotData( 0, *this ) ) // $$$$ _RC_ PHC 2010-06-25: code smell
-    , vision_( new GQ_PlotData( 1, *this ) ) // $$$$ _RC_ PHC 2010-06-25: code smell
+    , data_     ( new GQ_PlotData( 0, *this ) ) // $$$$ _RC_ PHC 2010-06-25: code smell
+    , vision_   ( new GQ_PlotData( 1, *this ) ) // $$$$ _RC_ PHC 2010-06-25: code smell
 {
     setFocusPolicy( QWidget::ClickFocus );
     YAxis().ShowAxis( true );

@@ -28,7 +28,7 @@ using namespace gui;
 DiplomacyDialog_ABC::DiplomacyDialog_ABC( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile )
     : QDialog( parent, "ChangeDiplomacyDialog", true )
     , controllers_( controllers )
-    , profile_( profile )
+    , profile_    ( profile )
 {
     setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
     setCaption( tools::translate( "DiplomacyDialog_ABC", "Diplomacy" ) );

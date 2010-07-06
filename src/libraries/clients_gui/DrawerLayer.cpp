@@ -21,8 +21,8 @@ using namespace gui;
 DrawerLayer::DrawerLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, ParametersLayer& parameters, View_ABC& view, const kernel::Profile_ABC& profile )
     : EntityLayer< Drawing_ABC >( controllers, tools, strategy, view, profile )
     , parameters_( parameters )
-    , tools_( tools )
-    , selected_( 0 )
+    , tools_     ( tools )
+    , selected_  ( 0 )
 {
     controllers.Update( *this );
 }
