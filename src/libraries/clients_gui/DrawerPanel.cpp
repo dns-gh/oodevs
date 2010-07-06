@@ -33,7 +33,7 @@ using namespace gui;
 // Created: AGE 2006-09-01
 // -----------------------------------------------------------------------------
 DrawerPanel::DrawerPanel( QWidget* parent, PanelStack_ABC& panel, ParametersLayer& layer, kernel::Controllers& controllers, DrawerModel& model )
-    : InfoPanel_ABC   ( parent, panel, tr( "Drawings" ) )
+    : InfoPanel_ABC( parent, panel, tr( "Drawings" ) )
     , controllers_    ( controllers )
     , layer_          ( layer )
     , model_          ( model )

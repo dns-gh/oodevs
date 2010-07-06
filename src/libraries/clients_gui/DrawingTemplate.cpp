@@ -118,7 +118,7 @@ QPixmap DrawingTemplate::GetPixmap() const
     return type_ == "line"    ? linePixmap_ :
            type_ == "point"   ? pointPixmap_ :
            type_ == "polygon" ? polygonPixmap_ :
-            QPixmap();
+           QPixmap();
 }
 
 // -----------------------------------------------------------------------------

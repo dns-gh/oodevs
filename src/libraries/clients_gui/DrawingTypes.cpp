@@ -11,7 +11,7 @@
 #include "DrawingTypes.h"
 #include "DrawingCategory.h"
 #include <svgl/TextRenderer.h>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace gui;
 
@@ -21,7 +21,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 DrawingTypes::DrawingTypes( kernel::Controller& controller )
     : controller_( controller )
-    , renderer_( new svg::TextRenderer() )
+    , renderer_  ( new svg::TextRenderer() )
 {
     // NOTHING
 }
@@ -44,7 +44,7 @@ void DrawingTypes::Load( const std::string& filename )
     xml::xifstream input( filename );
     input >> xml::start( "templates" )
             >> xml::list( "category", *this, &DrawingTypes::ReadCategory )
-        >> xml::end();
+          >> xml::end();
 }
 
 // -----------------------------------------------------------------------------

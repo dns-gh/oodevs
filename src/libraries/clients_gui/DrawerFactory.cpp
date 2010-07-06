@@ -13,7 +13,7 @@
 #include "DrawingTypes.h"
 #include "DrawingTemplate.h"
 #include "DrawingPositions.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace gui;
 
@@ -25,7 +25,7 @@ unsigned long DrawerFactory::idManager_ = 0; // $$$$ SBO 2008-06-10: bof
 // -----------------------------------------------------------------------------
 DrawerFactory::DrawerFactory( kernel::Controller& controller, const DrawingTypes& types )
     : controller_( controller )
-    , types_( types )
+    , types_     ( types )
 {
     // NOTHING
 }

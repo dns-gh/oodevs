@@ -13,7 +13,7 @@
 #include "DrawerShape.h"
 #include "clients_kernel/Controllers.h"
 #include <boost/bind.hpp>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace gui;
 
@@ -23,7 +23,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 DrawerModel::DrawerModel( kernel::Controllers& controllers, const DrawingFactory_ABC& factory )
     : controllers_( controllers )
-    , factory_( factory )
+    , factory_    ( factory )
 {
     controllers_.Register( *this );
 }

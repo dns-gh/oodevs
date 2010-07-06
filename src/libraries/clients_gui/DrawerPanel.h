@@ -94,7 +94,6 @@ private:
     kernel::Controllers& controllers_;
     ParametersLayer& layer_;
     DrawerModel& model_;
-
     ColorButton* color_;
     QToolBox* toolBox_;
     const DrawingTemplate* selectedStyle_;
