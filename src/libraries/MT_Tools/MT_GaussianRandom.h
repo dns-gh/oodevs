@@ -45,7 +45,4 @@ private:
     bool      bAlreadyComputed_;
 };
 
-#include "MT_GaussianRandom.inl"
-
-
 #endif // __MT_GaussianRandom_h_
