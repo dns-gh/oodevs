@@ -94,13 +94,13 @@ private:
     const kernel::OrderParameter& parameter_;
     const kernel::CoordinateConverter_ABC& converter_;
     ::gui::RichLabel* pLabel_;
-    QLabel*         entityLabel_; // $$$$ AGE 2006-03-14: LabelDisplayer ?
+    QLabel* entityLabel_; // $$$$ AGE 2006-03-14: LabelDisplayer ?
     const kernel::TacticalLine_ABC* potential_;
     const kernel::TacticalLine_ABC* selected_;
     //@}
 };
 
-    }
+}
 }
 
 #endif // __LimitParameter_h_

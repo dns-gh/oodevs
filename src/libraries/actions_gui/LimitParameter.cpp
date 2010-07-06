@@ -25,14 +25,14 @@ using namespace actions::gui;
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
 LimitParameter::LimitParameter( QObject* parent, const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, kernel::Controller& controller )
-    : QObject     ( parent )
-    , Param_ABC   ( parameter.GetName().c_str() )
-    , controller_ ( controller )
-    , parameter_  ( parameter )
-    , converter_  ( converter )
-    , pLabel_     ( 0 )
-    , potential_  ( 0 )
-    , selected_   ( 0 )
+    : QObject( parent )
+    , Param_ABC( parameter.GetName().c_str() )
+    , controller_( controller )
+    , parameter_ ( parameter )
+    , converter_ ( converter )
+    , pLabel_    ( 0 )
+    , potential_ ( 0 )
+    , selected_  ( 0 )
 {
     controller_.Register( *this );
 }

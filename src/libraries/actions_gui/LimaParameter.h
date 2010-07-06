@@ -83,8 +83,7 @@ private:
     ParamDateTime* schedule_;
     //@}
 };
-
-    }
+}
 }
 
 #endif // __LimaParameter_h_

@@ -74,14 +74,14 @@ using namespace tools;
 // Created: NLD 2002-07-12
 //-----------------------------------------------------------------------------
 AgentServerMsgMgr::AgentServerMsgMgr( MessageDispatcher_ABC& dispatcher, MessageSender_ABC& sender, Services& services, Simulation& simu, kernel::Logger_ABC& logger, CommandHandler& commands )
-    : dispatcher_      ( dispatcher )
-    , sender_          ( sender )
-    , model_           ( 0 )
-    , profile_         ( 0 )
-    , services_        ( services )
-    , simulation_      ( simu )
-    , logger_          ( logger )
-    , commands_        ( commands )
+    : dispatcher_( dispatcher )
+    , sender_    ( sender )
+    , model_     ( 0 )
+    , profile_   ( 0 )
+    , services_  ( services )
+    , simulation_( simu )
+    , logger_    ( logger )
+    , commands_  ( commands )
 {
     dispatcher.RegisterMessage( *this, &AgentServerMsgMgr::OnReceiveMsgSimToClient );
     dispatcher.RegisterMessage( *this, &AgentServerMsgMgr::OnReceiveMsgAuthenticationToClient );

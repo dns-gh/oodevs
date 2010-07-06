@@ -73,7 +73,9 @@ private:
     //@{
     kernel::Controllers& controllers_;
     Publisher_ABC& publisher_;
-    bool displayCones_, displaySurfaces_, displayFog_;
+    bool displayCones_;
+    bool displaySurfaces_;
+    bool displayFog_;
     bool simulation_;
     //@}
 };

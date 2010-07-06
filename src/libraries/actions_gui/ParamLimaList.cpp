@@ -25,12 +25,12 @@ using namespace actions::gui;
 // ----------------------------------------------------------------------------
 ParamLimaList::ParamLimaList( QObject* parent, const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, kernel::ActionController& actions, kernel::Controller& controller, const QDateTime& currentDate )
     : ListParameter( parent, parameter.GetName().c_str(), actions, parameter.IsOptional() )
-    , controller_( controller )
-    , parameter_( parameter )
-    , converter_( converter )
+    , controller_ ( controller )
+    , parameter_  ( parameter )
+    , converter_  ( converter )
     , currentDate_( currentDate )
-    , count_( 0 )
-    , potential_( 0 )
+    , count_      ( 0 )
+    , potential_  ( 0 )
 {
     controller_.Register( *this );
 }

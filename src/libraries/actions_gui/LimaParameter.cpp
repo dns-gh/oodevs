@@ -28,10 +28,10 @@ using namespace actions::gui;
 LimaParameter::LimaParameter( QObject* parent, const QString& name, const kernel::CoordinateConverter_ABC& converter, const QDateTime& currentDate, const kernel::TacticalLine_ABC& line )
     : QObject( parent )
     , Param_ABC( name )
-    , converter_( converter )
+    , converter_  ( converter )
     , currentDate_( currentDate )
-    , line_( &line )
-    , schedule_( 0 )
+    , line_       ( &line )
+    , schedule_   ( 0 )
 {
     // NOTHING
 }

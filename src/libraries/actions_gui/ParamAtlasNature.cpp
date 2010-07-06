@@ -27,7 +27,7 @@ ParamAtlasNature::ParamAtlasNature( QObject* parent, const kernel::OrderParamete
     : QObject( parent )
     , Param_ABC( parameter.GetName().c_str() )
     , parameter_( parameter )
-    , natures_( natures )
+    , natures_  ( natures )
 {
     // NOTHING
 }

@@ -23,8 +23,8 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 VisionConesToggler::VisionConesToggler( Controllers& controllers, Publisher_ABC& publisher, QObject* parent )
     : QObject( parent )
-    , controllers_( controllers )
-    , publisher_( publisher )
+    , controllers_    ( controllers )
+    , publisher_      ( publisher )
     , displayCones_   ( false )
     , displaySurfaces_( false )
     , displayFog_     ( false )
