@@ -45,11 +45,13 @@ private:
     void AddModelChoice( QGroupBox* box );
     void AddScenarioOutput( QGroupBox* box );
     void AddScenarioInput( QGroupBox* box );
+    void AddTerrainChoice( QGroupBox* box );
     void ShowErrors();
-    QString GenerateAndAskForTerrain();
 
 private slots:
     void OnModelChanged( const QString & );
+    void OnTerrainChanged( const QString& );
+    void OnOutputName( const QString& );
     void OnChangeScenario();
     virtual void OnEdit();
 

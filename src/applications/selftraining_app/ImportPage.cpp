@@ -39,6 +39,7 @@ ImportPage::ImportPage( QWidgetStack* pages, Page_ABC& previous, const tools::Ge
     AddModelChoice( box );
     AddScenarioOutput( box );
     AddScenarioInput( box );
+    AddTerrainChoice( box );
     AddContent( mainBox );
 }
 
@@ -77,6 +78,7 @@ void ImportPage::AddScenarioOutput( QGroupBox* box )
     label->setBackgroundOrigin( QWidget::WindowOrigin );
     QLineEdit* editName = new QLineEdit( tools::translate( "ImportPage", "Scenario Name" ), scenarioBox );
     editName->setBackgroundOrigin( QWidget::WindowOrigin );
+    connect( editName, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnOutputName( const QString& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -91,6 +93,19 @@ void ImportPage::AddScenarioInput( QGroupBox* box )
     label->setBackgroundOrigin( QWidget::WindowOrigin );
     browse_ = new QPushButton( tools::translate( "ImportPage", "..." ), hbox );
     connect( browse_, SIGNAL( clicked() ), SLOT( OnChangeScenario() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ImportPage::AddTerrainChoice
+// Created: LDC 2010-07-06
+// -----------------------------------------------------------------------------
+void ImportPage::AddTerrainChoice( QGroupBox* box )
+{
+    QComboBox* editTerrainList = new QComboBox( box );
+    connect( editTerrainList, SIGNAL( activated( const QString& ) ), SLOT( OnTerrainChanged( const QString& ) ) );
+    editTerrainList->clear();
+    editTerrainList->insertItem( tools::translate( "ScenarioEditPage", "Terrain:" ) );
+    editTerrainList->insertStringList( frontend::commands::ListTerrains( config_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -112,6 +127,24 @@ void ImportPage::OnModelChanged( const QString & model )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ImportPage::OnTerrainChanged
+// Created: LDC 2010-07-06
+// -----------------------------------------------------------------------------
+void ImportPage::OnTerrainChanged( const QString& terrain )
+{
+    terrain_ = terrain;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ImportPage::OnOutputName
+// Created: LDC 2010-07-06
+// -----------------------------------------------------------------------------
+void ImportPage::OnOutputName( const QString& scenario )
+{
+    outputScenario_ = scenario;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ImportPage::OnChangeScenario
 // Created: LDC 2010-06-21
 // -----------------------------------------------------------------------------
@@ -129,11 +162,10 @@ void ImportPage::OnEdit()
 {
     // Either spawn a single process that will spawn Preparation afterwards or handle the steps here:
     // Spawn translation of scenario_ with model_ and if successful ask for a terrain:
-    terrain_ = GenerateAndAskForTerrain();
     // Show errors
     ShowErrors();
     // Launch prepa
-    if( !terrain_.isEmpty() )
+    if( !terrain_.isEmpty() && !outputScenario_.isEmpty() )
     {
         const QStringList model = QStringList::split( "/", model_ );
         frontend::CreateExercise( config_, outputScenario_.ascii(), terrain_.ascii(), model.front().ascii(), model.back().ascii() );
@@ -153,11 +185,3 @@ void ImportPage::ShowErrors()
 
 }
 
-// -----------------------------------------------------------------------------
-// Name: ImportPage::GenerateAndAskForTerrain
-// Created: LDC 2010-06-21
-// -----------------------------------------------------------------------------
-QString ImportPage::GenerateAndAskForTerrain()
-{
-    return QString::null;
-}
