@@ -9,9 +9,7 @@
 
 #include "clients_test_pch.h"
 #include "indicators/GaugeNormalizer.h"
-#include <xeumeuleu/xml.h>
-
-using namespace mockpp;
+#include <xeumeuleu/xml.hpp>
 
 namespace
 {
@@ -31,12 +29,18 @@ namespace
     };
 }
 
-BOOST_AUTO_TEST_CASE( XmlTest_ThrowInList )
+BOOST_AUTO_TEST_CASE( XmlTest_ThrowInList ) // $$$$ _RC_ LGY 2010-07-06: useless
 {
-    const std::string init = "<root><tests><test><blabla/></test><test/></tests></root>";
-    xml::xistringstream xis( init ); xis >> xml::start( "root" );
+    xml::xistringstream xis( "<root>"
+                             "    <tests>"
+                             "        <test>"
+                             "            <blabla/>"
+                             "        </test>"
+                             "        <test/>"
+                             "    </tests>"
+                             "</root>" );
     std::auto_ptr< TestReader > reader;
-    BOOST_CHECK_THROW( reader.reset( new TestReader( xis ) ), std::runtime_error );
+    BOOST_CHECK_THROW( reader.reset( new TestReader( xis >> xml::start( "root" ) ) ), std::runtime_error );
 }
 
 // -----------------------------------------------------------------------------
@@ -45,15 +49,13 @@ BOOST_AUTO_TEST_CASE( XmlTest_ThrowInList )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Gauge_TestNormalizationIntervalBoundariesAreImplicit )
 {
-    const std::string initialisation =
-        "<root>"
-            "<interval max='25' key='0'/>"
-            "<interval min='25' key='1'/>"
-        "</root>";
-    xml::xistringstream xis( initialisation ); xis >> xml::start( "root" );
-    indicators::GaugeNormalizer normalizer( xis );
-    BOOST_CHECK_EQUAL( 0, normalizer.Normalize( 10.f ) );
-    BOOST_CHECK_EQUAL( 1, normalizer.Normalize( 30.f ) );
+    xml::xistringstream xis( "<root>"
+                             "    <interval max='25' key='0'/>"
+                             "    <interval min='25' key='1'/>"
+                             "</root>" );
+    indicators::GaugeNormalizer normalizer( xis >> xml::start( "root" ) );
+    BOOST_CHECK_EQUAL( 0.f, normalizer.Normalize( 10.f ) );
+    BOOST_CHECK_EQUAL( 1.f, normalizer.Normalize( 30.f ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,14 +64,12 @@ BOOST_AUTO_TEST_CASE( Gauge_TestNormalizationIntervalBoundariesAreImplicit )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Gauge_TestNormalizationIntervalsMatchLessOrEqual )
 {
-    const std::string initialisation =
-        "<root>"
-            "<interval max='25' key='0'/>"
-            "<interval min='25' key='1'/>"
-        "</root>";
-    xml::xistringstream xis( initialisation ); xis >> xml::start( "root" );
-    indicators::GaugeNormalizer normalizer( xis );
-    BOOST_CHECK_EQUAL( 0, normalizer.Normalize( 25.f ) );
+    xml::xistringstream xis( "<root>"
+                             "    <interval max='25' key='0'/>"
+                             "    <interval min='25' key='1'/>"
+                             "</root>" );
+    indicators::GaugeNormalizer normalizer( xis >> xml::start( "root" ) );
+    BOOST_CHECK_EQUAL( 0.f, normalizer.Normalize( 25.f ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,14 +78,12 @@ BOOST_AUTO_TEST_CASE( Gauge_TestNormalizationIntervalsMatchLessOrEqual )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Gauge_TestNormalizationIntervalsCanBeDiscontinuous )
 {
-    const std::string initialisation =
-        "<root>"
-            "<interval max='10' key='0'/>"
-            "<interval min='25' max='75' key='2'/>"
-            "<interval min='80' key='1'/>"
-        "</root>";
-    xml::xistringstream xis( initialisation ); xis >> xml::start( "root" );
-    indicators::GaugeNormalizer normalizer( xis );
+    xml::xistringstream xis( "<root>"
+                             "    <interval max='10' key='0'/>"
+                             "    <interval min='25' max='75' key='2'/>"
+                             "    <interval min='80' key='1'/>"
+                             "</root>") ;
+    indicators::GaugeNormalizer normalizer( xis >> xml::start( "root" ) );
     BOOST_CHECK_EQUAL( 2, normalizer.Normalize( 50.f ) );
     BOOST_CHECK_EQUAL( 25.f, normalizer.Normalize( 25.f ) );
     BOOST_CHECK_EQUAL( 80.f, normalizer.Normalize( 80.f ) );

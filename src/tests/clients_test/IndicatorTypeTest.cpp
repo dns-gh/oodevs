@@ -11,10 +11,9 @@
 #include "indicators/DataType_ABC.h"
 #include "indicators/ElementTypeResolver.h"
 #include "indicators/DataTypeFactory.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace indicators;
-using namespace mockpp;
 
 // -----------------------------------------------------------------------------
 // Name: IndicatorTypeResolver_TestResolveNoTemplate
