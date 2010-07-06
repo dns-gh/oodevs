@@ -5,6 +5,8 @@
       <missions>
         <mission name="MELEE Appuyer"/>
         <mission name="MELEE Reconnaitre Itineraire"/>
+        <mission name="MELEE Surveiller"/>
+        <mission name="MELEE SurveillerBlocUrbain"/>
         <mission name="COMMUNE Decrocher"/>
         <mission name="COMMUNE Faire Mouvement">
           <fragorder name="Illuminate"/>
@@ -78,8 +80,8 @@
         <mission name="COMMUNE Orienter Guider Refugies"/>
         <mission name="COMMUNE Prendre En Compte Prisonniers"/>
         <mission name="COMMUNE Se Faire Transporter"/>
-        <mission name="Surveiller"/>
-        <mission name="SurveillerBU"/>
+        <mission name="MELEE Surveiller"/>
+        <mission name="MELEE SurveillerBlocUrbain"/>
         <mission name="TakeCover"/>
       </missions>
     </unit>

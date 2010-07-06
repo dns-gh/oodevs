@@ -74,6 +74,7 @@ public:
     const MT_Float             ComputeIdentificationDist( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const;
     const MT_Float             ComputeRecognitionDist   ( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const;
     const MT_Float             ComputeDetectionDist     ( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const;
+    const MT_Float             RayTrace                 ( const MT_Vector2D& vSource , const MT_Vector2D& vTarget     ) const;  
     //@}
 
 public:

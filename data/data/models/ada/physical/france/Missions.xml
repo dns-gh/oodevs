@@ -972,13 +972,13 @@
       <parameter dia-name="interventionType" name="type intervention" optional="false" type="Numeric"/>
       <parameter dia-name="allies" name="illuminateur allie" optional="true" type="AgentBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Surveiller" dia-type="T_Mission_Pion_Surveiller" id="2069" name="Surveiller">
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Surveiller" dia-type="T_Mission_Pion_Surveiller" id="2069" name="MELEE Surveiller">
       <parameter dia-name="objectives" name="objectifs" optional="false" type="PointListBM"/>
-      <parameter dia-name="positions" name="positions de surveillance" optional="true" type="PointListBM"/>
+      <parameter dia-name="positions" name="positions de surveillance" optional="false" type="PointListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Surveiller" dia-type="T_Mission_Pion_SurveillerBU" id="2070" name="SurveillerBU">
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Surveiller" dia-type="T_Mission_Pion_SurveillerBU" id="2070" name="MELEE SurveillerBlocUrbain">
       <parameter dia-name="objectives" name="objectifs" optional="false" type="UrbanBlockBM"/>
-      <parameter dia-name="positions" name="positions de surveillance" optional="true" type="PointListBM"/>
+      <parameter dia-name="positions" name="positions de surveillance" optional="false" type="PointListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Franchir" dia-type="T_Mission_Pion_FranchirBM" id="2071" name="COMMUNE Franchir">
       <parameter dia-name="siteDeFranchissements" name="siteDeFranchissements" optional="false" type="ObjectKnowledgeListBM"/>

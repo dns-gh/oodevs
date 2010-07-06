@@ -14,11 +14,19 @@
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
+#include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
+#include "Entities/Agents/Units/Sensors/PHY_Sensor.h"
+#include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
+#include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Urban.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
+#include "AlgorithmsFactories.h"
+#include "OnComponentComputer_ABC.h"
+#include "OnComponentFunctorComputerFactory_ABC.h"
+#include "OnComponentFunctor_ABC.h"
 #include "urban/MaterialCompositionType.h"
 #include "urban/TerrainObject_ABC.h"
 #include "urban/Architecture.h"
@@ -115,4 +123,73 @@ float DEC_KnowledgeUrbanFunctions::GetRapForLocal( const MIL_AgentPion& callerAg
         rRapForValue = 5.0;
 
     return (float)rRapForValue;
+}
+
+
+namespace
+{
+    class SensorFunctor
+    {
+    public:
+        SensorFunctor(const MIL_Agent_ABC& perceiver, const MT_Vector2D& point, const MT_Vector2D& target )
+            : perceiver_( perceiver ), point_( point ), target_( target), NRJ_( 0 )
+        {}
+        ~SensorFunctor()
+        {}
+        void operator() ( const PHY_Sensor& sensor )
+        {
+            const PHY_SensorTypeAgent* sensorTypeAgent = sensor.GetType().GetTypeAgent();
+            if( sensorTypeAgent )
+            {
+                NRJ_ = std::max( NRJ_, sensorTypeAgent->RayTrace( point_, target_ ) );
+            }
+        }
+        double GetNRJ(){ return NRJ_; }
+    private:
+        const MIL_Agent_ABC& perceiver_;
+        const MT_Vector2D& point_;
+        const MT_Vector2D& target_;
+        double NRJ_; 
+
+    };
+
+    class Functor : public OnComponentFunctor_ABC
+    {
+        public:
+            Functor( const MIL_Agent_ABC& perceiver, const MT_Vector2D& point, const MT_Vector2D& target )
+                : perceiver_( perceiver ), point_( point ), target_( target ), NRJ_( 0 )
+            {}
+            ~Functor()
+            {}
+
+        void operator() ( PHY_ComposantePion& composante )
+        {
+            if( !composante.CanPerceive() )
+                return;
+            SensorFunctor dataFunctor( perceiver_, point_, target_ );
+            composante.ApplyOnSensors( dataFunctor );
+            NRJ_ = std::max( NRJ_, dataFunctor.GetNRJ() );
+         }
+        double GetNRJ(){ return NRJ_; }
+    private:
+        const MIL_Agent_ABC& perceiver_;
+        const MT_Vector2D& point_;
+        const MT_Vector2D& target_;
+        double NRJ_; 
+
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeUrbanFunctions::GetPerception
+// Created: LMT 2010-07-02
+// -----------------------------------------------------------------------------
+double DEC_KnowledgeUrbanFunctions::GetPerception( const MIL_AgentPion& callerAgent, boost::shared_ptr< MT_Vector2D > pPoint, boost::shared_ptr< MT_Vector2D > pTarget )
+{
+    Functor dataFunctor( callerAgent, *pPoint, *pTarget );
+    std::auto_ptr< OnComponentComputer_ABC > dataComputer( callerAgent.GetAlgorithms().onComponentFunctorComputerFactory_->Create( dataFunctor ) );
+    const_cast< MIL_AgentPion&>( callerAgent ).Execute( *dataComputer );
+    double bestVisionNRJ =  dataFunctor.GetNRJ();
+    return bestVisionNRJ;
+    
 }

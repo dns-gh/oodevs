@@ -580,6 +580,31 @@ const MT_Float PHY_SensorTypeAgent::ReconnoissanceDistance() const
 {
     return rRecognitionDist_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorTypeAgent::RayTrace
+// Created: LMT 2010-07-02
+// -----------------------------------------------------------------------------
+const MT_Float PHY_SensorTypeAgent::RayTrace( const MT_Vector2D& vSource , const MT_Vector2D& vTarget  ) const
+{
+    if( vSource.Distance( vTarget ) > GetMaxDistance() )
+        return 0.;
+
+    const MT_Vector3D vSource3D( vSource.rX_, vSource.rY_, 0 );
+    const MT_Vector3D vTarget3D( vTarget.rX_, vTarget.rY_, 0 );
+
+    MT_Float rVisionNRJ = rDetectionDist_;
+    bool bIsAroundBU = ComputeUrbanExtinction( vSource, vTarget, rVisionNRJ );
+
+    PHY_RawVisionDataIterator it( vSource3D, vTarget3D );
+    if( rVisionNRJ > 0 )
+        rVisionNRJ = it.End() ? std::numeric_limits< MT_Float >::max() : ComputeExtinction( it, 1, rVisionNRJ, bIsAroundBU );
+
+    while ( rVisionNRJ > 0 && !(++it).End() )
+        rVisionNRJ = ComputeExtinction( it, 1, rVisionNRJ, bIsAroundBU );
+
+    return rVisionNRJ;
+}
 // -----------------------------------------------------------------------------
 // Name: PHY_SensorTypeAgent::RayTrace
 // Created: NLD 2004-10-14
