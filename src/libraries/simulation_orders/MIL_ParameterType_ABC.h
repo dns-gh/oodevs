@@ -21,7 +21,7 @@ class MIL_MissionParameter_ABC;
 
 // =============================================================================
 /** @class  MIL_ParameterType_ABC
-    @brief  MIL_ParameterType_ABC
+    @brief  MIL Parameter type definition
 */
 // Created: NLD 2006-11-14
 // =============================================================================
@@ -32,7 +32,6 @@ public:
     //@{
     static void                         Initialize();
     static const MIL_ParameterType_ABC* Find      ( const std::string& strName );
-
     //@}
 
     //! @name Accessors
@@ -63,14 +62,20 @@ private:
     //! @name Types
     //@{
     typedef std::map< std::string, const MIL_ParameterType_ABC*, sCaseInsensitiveLess > T_ParameterMap;
-    typedef T_ParameterMap::const_iterator                                              CIT_ParameterMap;
+    typedef T_ParameterMap::const_iterator                                            CIT_ParameterMap;
     //@}
 
 private:
+    //! @name Member data
+    //@{
     const std::string strName_;
+    //@}
 
 private:
+    //! @name Member data
+    //@{
     static T_ParameterMap parameters_;
+    //@}
 };
 
 #endif // __MIL_ParameterType_ABC_h_

@@ -14,7 +14,7 @@
 
 // =============================================================================
 /** @class  MIL_ParameterType_Agent
-    @brief  MIL_ParameterType_Agent
+    @brief  MIL Parameter type agent
 */
 // Created: NLD 2006-11-14
 // =============================================================================

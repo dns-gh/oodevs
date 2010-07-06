@@ -14,7 +14,7 @@
 
 // =============================================================================
 /** @class  MIL_ParameterType_UrbanBlock
-    @brief  MIL_ParameterType_UrbanBlock
+    @brief  MIL Parameter type urban block
 */
 // Created: MGD 2009-11-02
 // =============================================================================

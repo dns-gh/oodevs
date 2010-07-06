@@ -50,13 +50,12 @@
 MIL_ParameterType_ABC::T_ParameterMap MIL_ParameterType_ABC::parameters_;
 
 // -----------------------------------------------------------------------------
-// Name: template< typename T > void MIL_ParameterType_ABC::RegisterParameterType
+// Name: MIL_ParameterType_ABC::RegisterParameterType
 // Created: NLD 2006-12-05
 // -----------------------------------------------------------------------------
 template< typename T > void MIL_ParameterType_ABC::RegisterParameterType()
 {
     const MIL_ParameterType_ABC* pParameter = new T();
-
     const MIL_ParameterType_ABC*& pTmp = parameters_[ pParameter->GetName() ];
     if( pTmp )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Parameter type %s already defined", pParameter->GetName() ) );
@@ -64,13 +63,12 @@ template< typename T > void MIL_ParameterType_ABC::RegisterParameterType()
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename T > void MIL_ParameterType_ABC::RegisterParameterType
+// Name: MIL_ParameterType_ABC::RegisterParameterType
 // Created: MGD 2009-10-21
 // -----------------------------------------------------------------------------
 template< typename T > void MIL_ParameterType_ABC::RegisterParameterType( const std::string& name)
 {
     const MIL_ParameterType_ABC* pParameter = new T( name );
-
     const MIL_ParameterType_ABC*& pTmp = parameters_[ pParameter->GetName() ];
     if( pTmp )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Parameter type %s already defined", pParameter->GetName() ) );
@@ -133,7 +131,6 @@ void MIL_ParameterType_ABC::Initialize()
     RegisterParameterType< MIL_ParameterType_String                >();
     RegisterParameterType< MIL_ParameterType_ObjectiveList         >();
     RegisterParameterType< MIL_ParameterType_UrbanBlock            >(std::string("UrbanBlockBM") );
-
 }
 
 // =============================================================================
@@ -147,6 +144,7 @@ void MIL_ParameterType_ABC::Initialize()
 MIL_ParameterType_ABC::MIL_ParameterType_ABC( const std::string& strName )
     : strName_( strName )
 {
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
