@@ -10,18 +10,27 @@
 #ifndef __MIL_MissionParameterVisitor_ABC_h_
 #define __MIL_MissionParameterVisitor_ABC_h_
 
+#include <boost/noncopyable.hpp>
+
 // =============================================================================
 /** @class  MIL_MissionParameterVisitor_ABC
-    @brief  MIL_MissionParameterVisitor_ABC
+    @brief  MIL Mission parameter visitor definition
 */
 // Created: LDC 2009-08-11
 // =============================================================================
-class MIL_MissionParameterVisitor_ABC
+class MIL_MissionParameterVisitor_ABC : private boost::noncopyable
 {
 public:
+    //! @name Constructors/Destructor
+    //@{
              MIL_MissionParameterVisitor_ABC() {}
     virtual ~MIL_MissionParameterVisitor_ABC() {}
+    //@}
+
+    //! @name Operations
+    //@{
     virtual void Accept( const std::string& dianame, const MIL_ParameterType_ABC& type, MIL_MissionParameter_ABC& element ) = 0;
+    //@}
 };
 
 #endif // __MIL_MissionParameterVisitor_ABC_h_
