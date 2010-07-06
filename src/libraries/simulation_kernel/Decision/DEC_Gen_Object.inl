@@ -33,7 +33,7 @@ const TER_Localisation& DEC_Gen_Object::GetLocalisation() const
 // -----------------------------------------------------------------------------
 inline
 DEC_Gen_Object::E_DemolitionTargetType DEC_Gen_Object::GetObstacleType() const
-{    
+{
     return pObstacleType_;
 }
 
@@ -66,4 +66,3 @@ unsigned int DEC_Gen_Object::GetMinesActivityTime() const
 {
     return nMinesActivityTime_;
 }
-

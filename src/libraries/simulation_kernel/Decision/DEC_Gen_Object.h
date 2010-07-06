@@ -26,9 +26,12 @@ class DEC_AutomateDecision;
 class MIL_ObjectType_ABC;
 class MIL_EntityManager_ABC;
 
-//*****************************************************************************
+// =============================================================================
+/** @class  DEC_Gen_Object
+    @brief  DEC Gen object
+*/
 // Created: AGN 03-08-27
-//*****************************************************************************
+// =============================================================================
 class DEC_Gen_Object
 {
 public:
@@ -39,10 +42,13 @@ public:
     //@}
 
 public:
+    //! @name Constructors/Destructor
+    //@{
              DEC_Gen_Object( const Common::MsgPlannedWork& asn, const MIL_EntityManager_ABC& entityManager );
              DEC_Gen_Object( std::string type, boost::shared_ptr< TER_Localisation > location, bool preliminary );
              DEC_Gen_Object( const DEC_Gen_Object& rhs );
     virtual ~DEC_Gen_Object();
+    //@}
 
     //! @name Accessors
     //@{
@@ -63,12 +69,12 @@ public:
 private:
     //! @name Data members
     //@{
-          std::string               type_;
-          TER_Localisation          localisation_;
-          E_DemolitionTargetType    pObstacleType_;
-          MT_Float                  rDensity_;
-          unsigned int              nMinesActivityTime_;
-    const MIL_Automate*             pTC2_;
+    std::string type_;
+    TER_Localisation localisation_;
+    E_DemolitionTargetType pObstacleType_;
+    MT_Float rDensity_;
+    unsigned int nMinesActivityTime_;
+    const MIL_Automate* pTC2_;
     //@}
 };
 

@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: AGN 03-08-27 $
-// $Archive: /MVW_v10/Build/SDK/MIL/Src/Decision/Genie/DEC_Gen_Object.cpp $
-// $Author: Nld $
-// $Modtime: 11/03/05 17:00 $
-// $Revision: 3 $
-// $Workfile: DEC_Gen_Object.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2003 MASA Group
+//
+// *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Gen_Object.h"
@@ -24,19 +22,17 @@
 // Created: NLD 2007-05-14
 // -----------------------------------------------------------------------------
 DEC_Gen_Object::DEC_Gen_Object( const Common::MsgPlannedWork& asn, const MIL_EntityManager_ABC& entityManager )
-    : type_             ( &entityManager.FindObjectType( asn.type() )? asn.type(): "" )
+    : type_              ( &entityManager.FindObjectType( asn.type() )? asn.type(): "" )
     , localisation_      ()
     , pObstacleType_     ( asn.type_obstacle() )
     , rDensity_          ( asn.densite() )
     , nMinesActivityTime_( asn.activity_time() )
     , pTC2_              ( 0 )
 {
-    if( type_ == "" )
+    if( type_.empty() )
         throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission_parameters );
-
     if( !NET_ASN_Tools::ReadLocation( asn.position(), localisation_ ) )
         throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission_parameters );
-
     if( asn.tc2() != 0 )
     {
         pTC2_ = entityManager.FindAutomate( asn.tc2() );
@@ -57,7 +53,7 @@ DEC_Gen_Object::DEC_Gen_Object( std::string type, boost::shared_ptr< TER_Localis
     , nMinesActivityTime_( 0 )
     , pTC2_              ( 0 )
 {
-    if( type_ == "" )
+    if( type_.empty() )
         throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission_parameters );
 }
 
@@ -73,7 +69,7 @@ DEC_Gen_Object::DEC_Gen_Object( const DEC_Gen_Object& rhs )
     , nMinesActivityTime_( rhs.nMinesActivityTime_ )
     , pTC2_              ( rhs.pTC2_ )
 {
-
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
