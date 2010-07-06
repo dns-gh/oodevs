@@ -61,6 +61,14 @@ include "Common/Pions/Actions/Actions - Transport.bms"
         --[[//on commence le transport quand toutes les unites sont pretes
 ]]self.listeUnitesMissionTransporter = {}
         self.listeUnitesMissionTransporter = S_Cherche_Filtre_TypeMission( self.sUnitesATransporter, "T_Mission_Pion_SeFaireTransporter" )
+        listeUnitesMissionTransporterBM = {}
+        listeUnitesMissionTransporterBM = S_Cherche_Filtre_TypeMission( self.sUnitesATransporter, "T_Mission_Pion_SeFaireTransporterBM" )
+        for _,x in pairs( listeUnitesMissionTransporterBM or {} ) do
+        local _continue = true
+            DIA_PushBack( self.listeUnitesMissionTransporter, x )
+
+        end
+
          do
             local _continue = true
             local switch_1 = self.ePhase
