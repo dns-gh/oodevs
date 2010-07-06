@@ -31,7 +31,7 @@ public:
     //! @name Types
     //@{
     typedef std::map< std::string, const PHY_Lighting*, sCaseInsensitiveLess > T_LightingMap;
-    typedef T_LightingMap::const_iterator                                       CIT_LightingMap;
+    typedef T_LightingMap::const_iterator                                    CIT_LightingMap;
     //@}
 
 public:

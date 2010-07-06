@@ -19,7 +19,7 @@
 #include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/ActionController.h"
 #include "protocol/Protocol.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace actions;
 
@@ -32,9 +32,9 @@ const QString Action_ABC::typeName_ = "action";
 // -----------------------------------------------------------------------------
 Action_ABC::Action_ABC( kernel::Controller& controller, const kernel::OrderType& type )
     : controller_( controller )
-    , type_( type )
-    , id_( ++idManager_ )
-    , name_( type_.GetName().c_str() )
+    , type_      ( type )
+    , id_        ( ++idManager_ )
+    , name_      ( type_.GetName().c_str() )
 {
     // NOTHING
 }
@@ -45,9 +45,9 @@ Action_ABC::Action_ABC( kernel::Controller& controller, const kernel::OrderType&
 // -----------------------------------------------------------------------------
 Action_ABC::Action_ABC( xml::xistream& xis, kernel::Controller& controller, const kernel::OrderType& type )
     : controller_( controller )
-    , type_( type )
-    , id_( ++idManager_ )
-    , name_( xml::attribute< std::string >( xis, "name", type_.GetName() ).c_str() )
+    , type_      ( type )
+    , id_        ( ++idManager_ )
+    , name_      ( xml::attribute< std::string >( xis, "name", type_.GetName() ).c_str() )
 {
     // NOTHING
 }

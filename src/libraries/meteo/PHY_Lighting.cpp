@@ -73,8 +73,9 @@ PHY_Lighting::PHY_Lighting( const std::string& strName, E_Lighting nType, const 
     : strName_              ( strName )
     , nType_                ( nType   )
     , pNextDegradedLighting_( pNextDegradedLighting )
-    , nAsnID_ ( nAsnID  )
+    , nAsnID_               ( nAsnID  )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -83,6 +84,7 @@ PHY_Lighting::PHY_Lighting( const std::string& strName, E_Lighting nType, const 
 // -----------------------------------------------------------------------------
 PHY_Lighting::~PHY_Lighting()
 {
+    // NOTHING
 }
 
 // =============================================================================

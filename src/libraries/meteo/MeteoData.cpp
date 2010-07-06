@@ -10,11 +10,8 @@
 #include "MeteoData.h"
 #include "MeteoModel_ABC.h"
 #include "PHY_Precipitation.h"
-#include "PHY_Lighting.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
-#include "protocol/ClientSenders.h"
-#include "protocol/protocol.h"
 
 using namespace weather;
 
@@ -25,7 +22,7 @@ using namespace weather;
 MeteoData::MeteoData( unsigned int id, const geometry::Point2f& upLeft, const geometry::Point2f& downRight, const Common::MsgMeteoAttributes& attributes, MeteoModel_ABC& model, kernel::CoordinateConverter_ABC& converter )
     : PHY_Meteo( id, attributes, &model )
     , converter_( converter )
-    , rect_( upLeft.X(), downRight.Y(), downRight.X(), upLeft.Y() )
+    , rect_     ( upLeft.X(), downRight.Y(), downRight.X(), upLeft.Y() )
 {
     // NOTHING
 }

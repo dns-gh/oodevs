@@ -51,8 +51,8 @@ public:
     //! @name Operations
     //@{
     virtual bool IsInside( const geometry::Point2f& point ) const;
-    virtual void SendCreation( dispatcher::ClientPublisher_ABC& publisher) const;
-    virtual void SendDestruction( dispatcher::ClientPublisher_ABC& publisher) const;
+    virtual void SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const;
+    virtual void SendDestruction( dispatcher::ClientPublisher_ABC& publisher ) const;
     //@}
 
 private:
