@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Units/Humans/PHY_HumanRank.h $
-// $Author: Jvt $
-// $Modtime: 14/04/05 17:05 $
-// $Revision: 3 $
-// $Workfile: PHY_HumanRank.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2004 MASA Group
 //
 // *****************************************************************************
 
@@ -23,12 +21,11 @@ namespace Common
 // =============================================================================
 class PHY_HumanRank : private boost::noncopyable
 {
-
 public:
     //! @name Types
     //@{
     typedef std::map< std::string, const PHY_HumanRank*, sCaseInsensitiveLess > T_HumanRankMap;
-    typedef T_HumanRankMap::const_iterator                                      CIT_HumanRankMap;
+    typedef T_HumanRankMap::const_iterator                                    CIT_HumanRankMap;
     //@}
 
 public:
@@ -51,8 +48,8 @@ public:
     //! @name Accessors
     //@{
     const std::string&  GetName    () const;
-    unsigned int                GetID      () const;
-    Common::EnumHumanRank GetAsnID   () const;
+    unsigned int        GetID      () const;
+    Common::EnumHumanRank GetAsnID () const;
     bool                IsCommander() const;
     //@}
 
@@ -74,14 +71,20 @@ private:
     //@}
 
 private:
+    //! @name Constructors/Destructor
+    //@{
      PHY_HumanRank( const std::string& strName, E_Rank nRank, Common::EnumHumanRank nAsnID, bool bIsCommander );
     ~PHY_HumanRank();
+    //@}
 
 private:
-    const std::string         strName_;
-    const E_Rank              nRank_;
+    //! @name Member data
+    //@{
+    const std::string strName_;
+    const E_Rank nRank_;
     const Common::EnumHumanRank nAsnID_;
-    const bool                bIsCommander_;
+    const bool bIsCommander_;
+    //@}
 
 private:
     static T_HumanRankMap humanRanks_;

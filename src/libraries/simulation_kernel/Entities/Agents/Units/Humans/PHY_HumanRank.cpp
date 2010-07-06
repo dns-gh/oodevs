@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/Src/Entities/Agents/Units/Humans/PHY_HumanRank.cpp $
-// $Author: Nld $
-// $Modtime: 29/12/04 14:01 $
-// $Revision: 2 $
-// $Workfile: PHY_HumanRank.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2004 MASA Group
 //
 // *****************************************************************************
 
@@ -14,9 +12,9 @@
 #include "protocol/protocol.h"
 
 PHY_HumanRank::T_HumanRankMap PHY_HumanRank::humanRanks_;
-const PHY_HumanRank           PHY_HumanRank::officier_       ( "Officier"       , eOfficier       , Common::EnumHumanRank::officier    , true  );
-const PHY_HumanRank           PHY_HumanRank::sousOfficier_   ( "SousOfficier"   , eSousOfficier   , Common::EnumHumanRank::sous_officer, true  );
-const PHY_HumanRank           PHY_HumanRank::militaireDuRang_( "MilitaireDuRang", eMilitaireDuRang, Common::EnumHumanRank::mdr         , false );
+const PHY_HumanRank           PHY_HumanRank::officier_       ( "Officier"       , eOfficier       , Common::officier    , true  );
+const PHY_HumanRank           PHY_HumanRank::sousOfficier_   ( "SousOfficier"   , eSousOfficier   , Common::sous_officer, true  );
+const PHY_HumanRank           PHY_HumanRank::militaireDuRang_( "MilitaireDuRang", eMilitaireDuRang, Common::mdr         , false );
 
 // -----------------------------------------------------------------------------
 // Name: PHY_HumanRank::Initialize
@@ -77,7 +75,6 @@ const PHY_HumanRank::T_HumanRankMap& PHY_HumanRank::GetHumanRanks()
 const PHY_HumanRank* PHY_HumanRank::Find( const std::string& strName )
 {
     CIT_HumanRankMap it = humanRanks_.find( strName );
-
     return it == humanRanks_.end() ? 0 : it->second;
 }
 
@@ -125,7 +122,7 @@ Common::EnumHumanRank PHY_HumanRank::GetAsnID() const
 // -----------------------------------------------------------------------------
 unsigned int PHY_HumanRank::GetID() const
 {
-    return (unsigned int)nRank_;
+    return static_cast< unsigned int >( nRank_ );
 }
 
 // -----------------------------------------------------------------------------
