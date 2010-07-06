@@ -10,9 +10,7 @@
 #ifndef __MIL_Injury_Contamination_h_
 #define __MIL_Injury_Contamination_h_
 
-#include "MIL.h"
 #include "MIL_Injury_ABC.h"
-
 #include "Entities/Objects/MIL_MedicalTreatmentType.h"
 
 class PHY_ComposantePion;

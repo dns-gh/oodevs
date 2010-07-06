@@ -149,9 +149,7 @@ public:
 
     virtual PHY_MaintenanceComposanteState* NotifyComposanteWaitingForMaintenance( PHY_ComposantePion& composante );
     virtual void                            NotifyComposanteBackFromMaintenance  ( PHY_MaintenanceComposanteState& composanteState );
-
-    //! @name Logistic - Supply
-    //@{
+    //@}
 
     //! @name Prisoners
     //@{
