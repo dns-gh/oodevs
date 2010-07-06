@@ -48,7 +48,7 @@ DEC_Gen_Object::DEC_Gen_Object( const Common::MsgPlannedWork& asn, const MIL_Ent
 DEC_Gen_Object::DEC_Gen_Object( std::string type, boost::shared_ptr< TER_Localisation > location, bool preliminary )
     : type_              ( type )
     , localisation_      ( *location )
-    , pObstacleType_     ( preliminary ? E_DemolitionTargetType::ObstacleType_DemolitionTargetType_preliminary : E_DemolitionTargetType::ObstacleType_DemolitionTargetType_reserved )
+    , pObstacleType_     ( preliminary ? Common::ObstacleType_DemolitionTargetType_preliminary : Common::ObstacleType_DemolitionTargetType_reserved )
     , rDensity_          ( 0 )
     , nMinesActivityTime_( 0 )
     , pTC2_              ( 0 )
@@ -109,7 +109,7 @@ void DEC_Gen_Object::Serialize( Common::MsgPlannedWork& asn ) const
     asn.set_type( type_.c_str() );
     asn.set_type_obstacle( pObstacleType_ );
     asn.set_tc2( pTC2_ ? pTC2_->GetID() : 0 );
-    asn.set_densite( rDensity_ );
+    asn.set_densite( static_cast< float >( rDensity_ ) );
     asn.set_activity_time( nMinesActivityTime_ );
     NET_ASN_Tools::WriteLocation( localisation_, *asn.mutable_position() );
 }
