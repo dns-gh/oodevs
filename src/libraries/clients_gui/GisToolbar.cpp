@@ -31,7 +31,7 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: GisToolbar constructor 
+// Name: GisToolbar constructor
 // Created: SBO 2010-03-23
 // -----------------------------------------------------------------------------
 GisToolbar::GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, const kernel::DetectionMap& detection, TerrainProfilerLayer& layer )
