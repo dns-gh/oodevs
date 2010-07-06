@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: RFT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Specialisations/Log/Medical/MIL_AgentInjuredHumanPion.cpp $
-// $Author: Rft $
-// $Modtime: 6/04/05 11:48 $
-// $Revision: 4 $
-// $Workfile: MIL_AgentInjuredHumanPion.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2004 MASA Group
 //
 // *****************************************************************************
 
@@ -18,18 +16,17 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AgentInjuredHumanPion )
 
-
 template< typename Archive >
 void save_construct_data( Archive& archive, const MIL_AgentInjuredHumanPion* unit, const unsigned int /*version*/ )
 {
-    unsigned int nTypeID = unit->GetType().GetID();
-    unsigned int nID = unit->GetID() ;
+    const unsigned int nTypeID = unit->GetType().GetID();
+    const unsigned int nID = unit->GetID() ;
     const MIL_Automate* const pAutomate = &unit->GetAutomate();
     const AlgorithmsFactories* const algorithmFactories = &unit->GetAlgorithms();
     archive << nTypeID
-        << nID
-        << pAutomate
-        << algorithmFactories;
+            << nID
+            << pAutomate
+            << algorithmFactories;
 }
 
 template< typename Archive >
@@ -39,9 +36,9 @@ void load_construct_data( Archive& archive, MIL_AgentInjuredHumanPion* unit, con
     MIL_Automate* pAutomate = 0;
     AlgorithmsFactories* algorithmFactories = 0;
     archive >> nTypeID
-        >> nID
-        >> pAutomate
-        >> algorithmFactories;
+            >> nID
+            >> pAutomate
+            >> algorithmFactories;
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( nTypeID );
     assert( pType );
     ::new( unit )MIL_AgentInjuredHumanPion( *pType, *pAutomate, *algorithmFactories );

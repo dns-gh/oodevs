@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Units/Dotations/PHY_Dotation.h $
-// $Author: Jvt $
-// $Modtime: 31/03/05 17:31 $
-// $Revision: 7 $
-// $Workfile: PHY_Dotation.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2004 MASA Group
 //
 // *****************************************************************************
 
@@ -30,12 +28,11 @@ class MIL_AutomateLOG;
 // =============================================================================
 class PHY_Dotation : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
-     PHY_Dotation( const PHY_DotationCategory& category, PHY_DotationGroup& group, bool bInfiniteDotations );
-     PHY_Dotation();
+             PHY_Dotation( const PHY_DotationCategory& category, PHY_DotationGroup& group, bool bInfiniteDotations );
+             PHY_Dotation();
     virtual ~PHY_Dotation();
     //@}
 
@@ -89,16 +86,16 @@ private:
 private:
     //! @name Member data
     //@{
-    static const MT_Float       maxCapacity_;
+    static const MT_Float maxCapacity_;
     const PHY_DotationCategory* pCategory_;
-          PHY_DotationGroup*    pGroup_;
-          MT_Float              rValue_;
-          MT_Float              rCapacity_;
-          MT_Float              rConsumptionReservation_;
-          MT_Float              rFireReservation_;
-          MT_Float              rSupplyThreshold_;
-          bool                  bDotationBlocked_; // Prisoner
-          bool                  bInfiniteDotations_;
+    PHY_DotationGroup* pGroup_;
+    MT_Float rValue_;
+    MT_Float rCapacity_;
+    MT_Float rConsumptionReservation_;
+    MT_Float rFireReservation_;
+    MT_Float rSupplyThreshold_;
+    bool bDotationBlocked_; // Prisoner
+    bool bInfiniteDotations_;
     //@}
 };
 

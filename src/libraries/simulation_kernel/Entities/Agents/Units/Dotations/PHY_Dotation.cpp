@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Units/Dotations/PHY_Dotation.cpp $
-// $Author: Nld $
-// $Modtime: 13/05/05 16:08 $
-// $Revision: 10 $
-// $Workfile: PHY_Dotation.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2004 MASA Group
 //
 // *****************************************************************************
 
@@ -16,7 +14,7 @@
 #include "PHY_DotationType.h"
 #include "PHY_DotationCategory.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_Dotation )
 
@@ -35,7 +33,7 @@ PHY_Dotation::PHY_Dotation( const PHY_DotationCategory& category, PHY_DotationGr
     , rFireReservation_       ( 0. )
     , rSupplyThreshold_       ( 0. )
     , bDotationBlocked_       ( false )
-    , bInfiniteDotations_      ( bInfiniteDotations )
+    , bInfiniteDotations_     ( bInfiniteDotations )
 {
     // NOTHING
 }
@@ -53,7 +51,7 @@ PHY_Dotation::PHY_Dotation()
     , rFireReservation_       ( 0. )
     , rSupplyThreshold_       ( 0. )
     , bDotationBlocked_       ( false )
-    , bInfiniteDotations_      ( false )
+    , bInfiniteDotations_     ( false )
 {
     // NOTHING
 }
@@ -74,10 +72,8 @@ PHY_Dotation::~PHY_Dotation()
 void PHY_Dotation::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     unsigned int nID;
-
     file >> nID;
     pCategory_ = PHY_DotationType::FindDotationCategory( nID );
-
     file >> pGroup_
          >> rValue_
          >> rCapacity_
@@ -116,7 +112,6 @@ void PHY_Dotation::ReadValue( xml::xistream& xis )
     xis >> xml::attribute( "quantity", rValue );
     if( rValue < 0. )
         xis.error( "rValue is not greater or equal to 0." );
-
     if( rValue > rCapacity_ )
     {
         rValue = rCapacity_;
@@ -133,28 +128,20 @@ void PHY_Dotation::SetValue( MT_Float rValue )
 {
     if( bDotationBlocked_ )
         return;
-
-    //assert( rValue <= rCapacity_ ); $$$ precision de merde
-
     if( bInfiniteDotations_ && rValue < rSupplyThreshold_ )
         rValue = rCapacity_;
-
     rValue = std::min( rValue, maxCapacity_ );
-
     if( (unsigned int)rValue_ != (unsigned int)rValue )
     {
         assert( pGroup_ );
         pGroup_->NotifyDotationChanged( *this );
     }
-
     const bool bSupplyThresholdAlreadyReached = HasReachedSupplyThreshold();
     rValue_ = rValue;
-
     if( HasReachedSupplyThreshold() )
     {
         assert( pGroup_ );
         assert( pCategory_ );
-
         pGroup_->NotifySupplyNeeded( *pCategory_, !bSupplyThresholdAlreadyReached );
     }
 }
@@ -166,7 +153,6 @@ void PHY_Dotation::SetValue( MT_Float rValue )
 void PHY_Dotation::AddCapacity( const PHY_DotationCapacity& capacity )
 {
     assert( rValue_ <= rCapacity_ );
-
     if( bInfiniteDotations_ && MT_IsZero( rCapacity_ ) )
     {
         rCapacity_ = maxCapacity_;
@@ -179,12 +165,9 @@ void PHY_Dotation::AddCapacity( const PHY_DotationCapacity& capacity )
         if( !bDotationBlocked_ )
             rValue_ += capacity.GetCapacity();
     }
-
     rCapacity_ = std::min( rCapacity_, maxCapacity_ );
     rValue_ = std::min( rValue_, maxCapacity_ );
-
     rSupplyThreshold_ += capacity.GetSupplyThreshold();
-
     assert( pGroup_ );
     pGroup_->NotifyDotationChanged( *this );
 }
@@ -196,10 +179,8 @@ void PHY_Dotation::AddCapacity( const PHY_DotationCapacity& capacity )
 void PHY_Dotation::RemoveCapacity( const PHY_DotationCapacity& capacity )
 {
     assert( rCapacity_ >= capacity.GetCapacity() );
-    //assert( (float)rSupplyThreshold_ >= (float)capacity.GetSupplyThreshold() ); // pb débile de précision
     rCapacity_        -= capacity.GetCapacity();
     rSupplyThreshold_ -= capacity.GetSupplyThreshold();
-
     if( rFireReservation_ > rCapacity_ )
     {
         rFireReservation_ = rCapacity_;
@@ -235,7 +216,6 @@ void PHY_Dotation::NotifyCaptured()
     rConsumptionReservation_ = 0;
     rFireReservation_        = 0;
     bDotationBlocked_        = true;
-
     assert( pGroup_ );
     pGroup_->NotifyDotationChanged( *this );
 }
@@ -282,7 +262,6 @@ void PHY_Dotation::ChangeValueUsingTC2( MT_Float rCapacityFactor, MIL_AutomateLO
     MT_Float rValueDiff = ( rCapacity_ * rCapacityFactor ) - rValue_;
     if( MT_IsZero( rValueDiff ) )
         return;
-
     assert( pCategory_ );
     if( rValueDiff > 0 )
         rValueDiff = tc2.SupplyGetStock( *pCategory_, rValueDiff );
@@ -401,7 +380,6 @@ MT_Float PHY_Dotation::Supply( MT_Float rSupply )
 {
     if( bDotationBlocked_ )
         return 0.;
-
     const MT_Float rNewSupply = std::min( rSupply, rCapacity_ - rConsumptionReservation_ - rFireReservation_ - rValue_ );
     SetValue( rValue_ + rNewSupply );
     return rNewSupply;

@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: RFT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Specialisations/Log/Medical/MIL_AgentInjuredHumanPion.h $
-// $Author: Jvt $
-// $Modtime: 30/03/05 11:15 $
-// $Revision: 3 $
-// $Workfile: MIL_AgentInjuredHumanPion.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2004 MASA Group
 //
 // *****************************************************************************
 
@@ -13,7 +11,6 @@
 #define __MIL_AgentInjuredHumanPion_h_
 
 #include "MIL.h"
-
 #include "Entities/Agents/MIL_AgentPion.h"
 
 namespace xml
@@ -30,9 +27,12 @@ class MIL_AgentInjuredHumanPion : public MIL_AgentPion
     MT_COPYNOTALLOWED( MIL_AgentInjuredHumanPion )
 
 public:
+    //! @name Constructors/Destructor
+    //@{
              MIL_AgentInjuredHumanPion( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis );
              MIL_AgentInjuredHumanPion( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories );
     virtual ~MIL_AgentInjuredHumanPion();
+    //@}
 
     //! @name CheckPoints
     //@{
@@ -43,7 +43,6 @@ public:
     //@}
 
     private:
-
     //! @name Serialization
     //@{
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_AgentInjuredHumanPion* unit, const unsigned int /*version*/ );

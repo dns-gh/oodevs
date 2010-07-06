@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Units/Dotations/PHY_DotationGroupContainer.h $
-// $Author: Nld $
-// $Modtime: 11/05/05 18:18 $
-// $Revision: 7 $
-// $Workfile: PHY_DotationGroupContainer.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2004 MASA Group
 //
 // *****************************************************************************
 
@@ -38,17 +36,17 @@ namespace dotation
 {
     class PHY_RoleInterface_Dotations;
 }
+
 // =============================================================================
 // @class  PHY_DotationGroupContainer
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_DotationGroupContainer : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PHY_DotationGroupContainer( dotation::PHY_RoleInterface_Dotations& roleDotation, bool bInfiniteDotations );
+             PHY_DotationGroupContainer( dotation::PHY_RoleInterface_Dotations& roleDotation, bool bInfiniteDotations );
              PHY_DotationGroupContainer();
             ~PHY_DotationGroupContainer();
     //@}
@@ -125,19 +123,19 @@ public:
     //! @name Types
     //@{
     typedef std::map< const PHY_DotationType*, PHY_DotationGroup* > T_DotationGroupMap;
-    typedef T_DotationGroupMap::const_iterator                      CIT_DotationGroupMap;
+    typedef T_DotationGroupMap::const_iterator                    CIT_DotationGroupMap;
 
     typedef std::set< const PHY_Dotation* > T_DotationSet;
-    typedef T_DotationSet::const_iterator   CIT_DotationSet;
+    typedef T_DotationSet::const_iterator CIT_DotationSet;
     //@}
 
 private:
     //! @name Member data
     //@{
     dotation::PHY_RoleInterface_Dotations* pRoleDotation_;
-    T_DotationGroupMap      dotationGroups_;
-    T_DotationSet           dotationsChanged_;
-    bool                    bInfiniteDotations_;
+    T_DotationGroupMap dotationGroups_;
+    T_DotationSet dotationsChanged_;
+    bool bInfiniteDotations_;
     //@}
 };
 

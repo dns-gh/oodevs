@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Units/Dotations/PHY_DotationGroupContainer.cpp $
-// $Author: Nld $
-// $Modtime: 11/05/05 18:18 $
-// $Revision: 10 $
-// $Workfile: PHY_DotationGroupContainer.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2004 MASA Group
 //
 // *****************************************************************************
 
@@ -18,7 +16,7 @@
 #include "PHY_Dotation.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "protocol/ClientSenders.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_DotationGroupContainer )
 
@@ -27,7 +25,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_DotationGroupContainer )
 // Created: NLD 2004-08-04
 // -----------------------------------------------------------------------------
 PHY_DotationGroupContainer::PHY_DotationGroupContainer( dotation::PHY_RoleInterface_Dotations& roleDotation, bool bInfiniteDotations )
-    : pRoleDotation_( &roleDotation )
+    : pRoleDotation_     ( &roleDotation )
     , bInfiniteDotations_( bInfiniteDotations )
 {
     // NOTHING
@@ -38,7 +36,7 @@ PHY_DotationGroupContainer::PHY_DotationGroupContainer( dotation::PHY_RoleInterf
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
 PHY_DotationGroupContainer::PHY_DotationGroupContainer()
-    : pRoleDotation_( 0 )
+    : pRoleDotation_     ( 0 )
     , bInfiniteDotations_( false )
 {
     // NOTHING
@@ -165,11 +163,9 @@ void PHY_DotationGroupContainer::ReadDotation( xml::xistream& xis )
     const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( strType );
     if( !pDotationCategory )
         xis.error( "Unknown dotation type" );
-
     PHY_DotationGroup* pGroup = GetDotationGroup( pDotationCategory->GetType() ); //$$$$$ TEMPORAIRE : merger PHY_DotationGroupContainer et PHY_DotationGroup
     if( !pGroup )
         xis.error( "Dotation type cannot be overloaded: not in types" );
-
     pGroup->ReadValues( xis, *pDotationCategory );
 }
 
@@ -431,7 +427,6 @@ void PHY_DotationGroupContainer::SendChangedState( client::UnitAttributes& asn )
 {
     if( dotationsChanged_.empty() )
         return;
-
     for( CIT_DotationSet itDotation = dotationsChanged_.begin(); itDotation != dotationsChanged_.end(); ++itDotation )
     {
         const PHY_Dotation& dotation = **itDotation;
@@ -453,10 +448,8 @@ void PHY_DotationGroupContainer::SendFullState( client::UnitAttributes& asn ) co
         const PHY_DotationGroup::T_DotationMap& dotations = itDotationGroup->second->GetDotations();
         nNbrDotations += dotations.size();
     }
-
     if( nNbrDotations == 0 )
         return;
-
     for( CIT_DotationGroupMap itDotationGroup = dotationGroups_.begin(); itDotationGroup != dotationGroups_.end(); ++itDotationGroup )
     {
         const PHY_DotationGroup::T_DotationMap& dotations = itDotationGroup->second->GetDotations();
