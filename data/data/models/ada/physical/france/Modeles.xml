@@ -25,6 +25,8 @@
         <mission name="Animate"/>
         <mission name="MELEE Appuyer"/>
         <mission name="COMMUNE Decrocher"/>
+        <mission name="Deny Position"/>
+        <mission name="Deny Urban Block"/>
         <mission name="DestroyAgents"/>
         <mission name="EngageAgents"/>
         <mission name="Flee"/>
@@ -62,14 +64,12 @@
         <mission name="MELEE Reconnaitre Itineraire"/>
         <mission name="ReconnoiterPoint"/>
         <mission name="ReconnoiterUrbanBlock"/>
+        <mission name="Seal Off"/>
+        <mission name="SemparerDUnBlocUrbain"/>
         <mission name="SeekAndDestroy"/>
         <mission name="SelfProtect"/>
         <mission name="StayClose"/>
         <mission name="Support"/>
-        <mission name="TakeCover"/>
-        <mission name="Deny Position"/>
-        <mission name="Deny Urban Block"/>
-        <mission name="Seal Off"/>
         <mission name="COMMUNE Faire Mouvement"/>
         <mission name="COMMUNE Suivre"/>
         <mission name="COMMUNE Stationner"/>
@@ -80,6 +80,7 @@
         <mission name="COMMUNE Se Faire Transporter"/>
         <mission name="Surveiller"/>
         <mission name="SurveillerBU"/>
+        <mission name="TakeCover"/>
       </missions>
     </unit>
     <unit dia-type="net.masagroup.sword.military.platoon.combat.support.artillery.roles.Artillery" file="BMPion.bms" name="net.masagroup.sword.military.platoon.combat.support.artillery.roles.Artillery">

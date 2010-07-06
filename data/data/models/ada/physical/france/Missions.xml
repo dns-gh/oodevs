@@ -984,6 +984,9 @@
       <parameter dia-name="siteDeFranchissements" name="siteDeFranchissements" optional="false" type="ObjectKnowledgeListBM"/>
       <parameter dia-name="destinations" name="destinations" optional="false" type="PointListBM"/>
     </mission>
+    <mission dia-behavior="net.masagroup.testSword.military.tasks.Seize" dia-type="T_Mission_Pion_Emparer_BU" id="2072" name="SemparerDUnBlocUrbain">
+      <parameter dia-name="objectives" name="bloc urbain" optional="false" type="UrbanBlockBM"/>
+    </mission>
   </units>
   <automats>
     <context>
@@ -1816,6 +1819,6 @@
       <parameter dia-name="nbIT_" name="Shells number" optional="false" type="Numeric"/>
       <parameter dia-name="pointCible_" name="target" optional="false" type="PointBM"/>
     </fragorder>
-    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_PasserEnSilenceRadioPartiel" id="2064" name="Passer En Silence Radio Partiel"/>
+    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_PasserEnSilenceRadioPartiel" id="389" name="Passer En Silence Radio Partiel"/>
   </fragorders>
 </missions>
