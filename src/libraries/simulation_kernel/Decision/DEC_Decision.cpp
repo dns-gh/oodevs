@@ -627,7 +627,7 @@ public:
         std::map< std::string, T_Function >::iterator itFind = functors.find( type.GetName() );
         if( itFind != functors.end() )
             functors[ type.GetName() ]( refMission_, dianame, element );
-        else
+        else if( !!knowledgeCreateFunction_ )
             functorsBM[ type.GetName() ]( brain_, knowledgeCreateFunction_, refMission_, dianame, element );
     }
 
