@@ -10,7 +10,6 @@
 #include "clients_gui_pch.h"
 #include "GlSelector.h"
 #include "moc_GlSelector.cpp"
-
 #include "GlPlaceHolder.h"
 #include "GlWidget.h"
 #include "Gl3dWidget.h"
@@ -31,19 +30,19 @@ using namespace kernel;
 // Created: AGE 2007-03-09
 // -----------------------------------------------------------------------------
 GlSelector::GlSelector( QMainWindow* parent, GlProxy& proxy, Controllers& controllers, const tools::ExerciseConfig& config, DetectionMap& map, EventStrategy_ABC& strategy )
-    : QObject       ( parent )
-    , parent_       ( parent )
-    , proxy_        ( proxy )
-    , controllers_  ( controllers )
-    , config_       ( config )
-    , map_          ( map )
-    , strategy_     ( strategy )
-    , iconLayout_   ( new IconLayout() )
-    , widget2d_     ( 0 )
-    , widget3d_     ( 0 )
-    , glPlaceHolder_( 0 )
-    , b3d_          ( false )
-    , bDragMapWithWheel      ( false )
+    : QObject( parent )
+    , parent_           ( parent )
+    , proxy_            ( proxy )
+    , controllers_      ( controllers )
+    , config_           ( config )
+    , map_              ( map )
+    , strategy_         ( strategy )
+    , iconLayout_       ( new IconLayout() )
+    , widget2d_         ( 0 )
+    , widget3d_         ( 0 )
+    , glPlaceHolder_    ( 0 )
+    , b3d_              ( false )
+    , bDragMapWithWheel_( false )
 
 {
     displayTimer_ = new QTimer( this );
@@ -85,7 +84,7 @@ void GlSelector::Load()
     parent_->setCentralWidget( widget2d_ );
     b3d_ = false;
     controllers_.options_.Change( "3D", b3d_ );
-    controllers_.options_.Change( "MapDraggingType", static_cast <int> ( !bDragMapWithWheel ));
+    controllers_.options_.Change( "MapDraggingType", static_cast <int> ( !bDragMapWithWheel_ ));
     connect( displayTimer_, SIGNAL(timeout()), widget2d_, SLOT(updateGL()) );
     displayTimer_->start( 50 );
     connect( widget2d_, SIGNAL( MouseMove( const geometry::Point2f& ) ), this, SIGNAL( MouseMove( const geometry::Point2f& ) ) );
@@ -163,7 +162,7 @@ void GlSelector::OptionChanged( const std::string& name, const OptionVariant& va
     }
     else if( name == "MapDraggingType" )
     {
-        bDragMapWithWheel = value.To< int >() == 0 ? false : true;
+        bDragMapWithWheel_ = value.To< int >() == 0 ? false : true;
     }
 }
 

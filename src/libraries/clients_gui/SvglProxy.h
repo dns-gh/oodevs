@@ -49,8 +49,8 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< std::string, svg::Node_ABC* >     T_Symbols;
-    typedef T_Symbols::const_iterator                 CIT_Symbols;
+    typedef std::map< std::string, svg::Node_ABC* > T_Symbols;
+    typedef T_Symbols::const_iterator             CIT_Symbols;
     //@}
 
 private:

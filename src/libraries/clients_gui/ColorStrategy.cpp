@@ -39,9 +39,9 @@ using namespace gui;
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
 ColorStrategy::ColorStrategy( Controllers& controllers, GlTools_ABC& tools )
-    : controllers_       ( controllers )
-    , tools_             ( tools )
-    , alpha_             ( 1 )
+    : controllers_( controllers )
+    , tools_      ( tools )
+    , alpha_      ( 1 )
 {
     InitializeColors();
     controllers_.Register( *this );

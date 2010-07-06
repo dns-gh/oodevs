@@ -73,10 +73,8 @@ private:
     //@{
     T_MapLayers layers_;
     MapLayer_ABC* default_;
-
     bool reverse_;
     bool exclusive_;
-
     CIT_MapLayers last_;
     CRIT_MapLayers rlast_;
     //@}

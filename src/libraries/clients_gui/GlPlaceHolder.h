@@ -21,7 +21,6 @@ namespace gui
 // =============================================================================
 class GlPlaceHolder : public QVBox
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -74,8 +74,8 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< const char**, unsigned >            T_Icons;
-    typedef T_Icons::const_iterator                     CIT_Icons;
+    typedef std::map< const char**, unsigned int > T_Icons;
+    typedef T_Icons::const_iterator              CIT_Icons;
 
     typedef std::map< std::string, kernel::FourStateOption > T_Options;
     typedef T_Options::iterator                             IT_Options;
@@ -88,15 +88,12 @@ private:
     kernel::Controllers& controllers_;
     mutable bool selected_;
     mutable bool superiorSelected_;
-
-    T_Icons         icons_;
+    T_Icons icons_;
     std::auto_ptr< SvglRenderer > renderer_;
-    std::auto_ptr< GLSymbols >    symbols_;
-    std::auto_ptr< SvglProxy >    svgl_;
+    std::auto_ptr< GLSymbols > symbols_;
+    std::auto_ptr< SvglProxy > svgl_;
     std::auto_ptr< TacticalGraphics > graphics_;
-
-    unsigned billboard_;
-
+    unsigned int billboard_;
     mutable T_Options options_;
     //@}
 };

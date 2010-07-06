@@ -18,8 +18,8 @@ using namespace gui;
 // Created: SBO 2008-02-12
 // -----------------------------------------------------------------------------
 CursorStrategy::CursorStrategy( kernel::GlTools_ABC& tools )
-    : tools_( tools )
-    , selectedTool_( Qt::ArrowCursor )
+    : tools_          ( tools )
+    , selectedTool_   ( Qt::ArrowCursor )
     , selectedContext_( Qt::ArrowCursor )
 {
     // NOTHING

@@ -16,7 +16,7 @@
 #include "svgl/ListLengthFactory.h"
 #include "svgl/PropertyFactory.h"
 #include "svgl/Style.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace geometry;
 using namespace gui;
@@ -27,14 +27,14 @@ using namespace svg;
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
 SvglRenderer::SvglRenderer()
-    : current_( new Color( "black" ) )
-    , opacity_( new Opacity() )
-    , renderer_( new TextRenderer() )
-    , references_( new References() )
+    : current_         ( new Color( "black" ) )
+    , opacity_         ( new Opacity() )
+    , renderer_        ( new TextRenderer() )
+    , references_      ( new References() )
     , renderingContext_( new RenderingContext() )
-    , listLenghts_( new ListLengthFactory() )
-    , colorList_  ( 0 )
-    , colorDirty_ ( true )
+    , listLenghts_     ( new ListLengthFactory() )
+    , colorList_       ( 0 )
+    , colorDirty_      ( true )
 {
     r_ = g_ = b_ = a_ = 1;
 }
@@ -148,9 +148,7 @@ void SvglRenderer::ConfigureColorList()
 // -----------------------------------------------------------------------------
 void SvglRenderer::ConfigureWidthList( const geometry::Rectangle2f& viewport, unsigned vWidth, unsigned vHeight )
 {
-    if( viewport != previousViewport_
-     || vWidth   != previousWidth_
-     || vHeight  != previousHeight_ )
+    if( viewport != previousViewport_ || vWidth   != previousWidth_ || vHeight  != previousHeight_ )
     {
         const BoundingBox box( viewport.Left(), viewport.Bottom(), viewport.Right(), viewport.Top() );
         listLenghts_->SetViewport( box, vWidth, vHeight );

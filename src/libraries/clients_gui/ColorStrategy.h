@@ -100,7 +100,6 @@ private:
     //@{
     kernel::Controllers& controllers_;
     kernel::GlTools_ABC& tools_;
-
     T_Modifiers  modifiers_;
     T_TeamColors teamColors_;
     T_Colors     friendlyAvailable_;

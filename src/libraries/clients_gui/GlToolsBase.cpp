@@ -28,12 +28,12 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 GlToolsBase::GlToolsBase( Controllers& controllers )
     : controllers_( controllers )
-    , selected_( false )
-    , renderer_( new SvglRenderer() )
-    , symbols_ ( new GLSymbols( *renderer_ ) )
-    , svgl_    ( new SvglProxy( *renderer_ ) )
-    , graphics_( new TacticalGraphics( controllers ) )
-    , billboard_( 0 )
+    , selected_   ( false )
+    , renderer_   ( new SvglRenderer() )
+    , symbols_    ( new GLSymbols( *renderer_ ) )
+    , svgl_       ( new SvglProxy( *renderer_ ) )
+    , graphics_   ( new TacticalGraphics( controllers ) )
+    , billboard_  ( 0 )
 {
     controllers_.Register( *this );
 }

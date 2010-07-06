@@ -24,7 +24,6 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 TacticalGraphics::TacticalGraphics( kernel::Controllers& controllers )
     : controllers_( controllers )
-    , color_()
 {
     controllers_.Register( *this );
 }

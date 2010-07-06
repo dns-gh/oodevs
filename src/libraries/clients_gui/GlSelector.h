@@ -106,11 +106,12 @@ private:
 
     QTimer* displayTimer_;
 
-    GlWidget*                 widget2d_;
+    GlWidget* widget2d_;
     Gl3dWidget*               widget3d_;
     GlPlaceHolder*            glPlaceHolder_;
 
-    bool b3d_, bDragMapWithWheel;
+    bool b3d_;
+    bool bDragMapWithWheel_;
     //@}
 };
 

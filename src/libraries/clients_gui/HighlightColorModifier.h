@@ -53,7 +53,7 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void Highlight  ();
+    void Highlight();
     void Unhighlight();
     void OnBlink();
     //@}
@@ -68,7 +68,7 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyContextMenu( const kernel::Entity_ABC&, kernel::ContextMenu& );
-    virtual void NotifyDeleted    ( const kernel::Entity_ABC& );
+    virtual void NotifyDeleted( const kernel::Entity_ABC& );
     QColor Highlight( const QColor& base );
     //@}
 

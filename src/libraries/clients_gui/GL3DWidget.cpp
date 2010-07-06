@@ -30,10 +30,10 @@ Gl3dWidget::Gl3dWidget( QWidget* pParent, Controllers& controllers, const tools:
     , SetGlOptions()
     , Widget3D( context_, pParent )
     , GlToolsBase( controllers )
-    , elevation_( elevation )
-    , strategy_( strategy )
-    , zRatio_( 5 )
-    , frame_( 0 )
+    , elevation_    ( elevation )
+    , strategy_     ( strategy )
+    , zRatio_       ( 5 )
+    , frame_        ( 0 )
     , isInitialized_( false )
 {
     // NOTHING

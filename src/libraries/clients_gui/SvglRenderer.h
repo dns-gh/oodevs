@@ -63,8 +63,8 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< svg::Node_ABC*, unsigned int >  T_Lists;
-    typedef T_Lists::const_iterator                 CIT_Lists;
+    typedef std::map< svg::Node_ABC*, unsigned int > T_Lists;
+    typedef T_Lists::const_iterator                CIT_Lists;
     //@}
 
     //! @name Helpers
@@ -86,10 +86,11 @@ private:
     std::auto_ptr< svg::RenderingContext >  renderingContext_;
     std::auto_ptr< svg::ListLengthFactory > listLenghts_;
 
-    T_Lists                                 lists_;
-    unsigned                                colorList_;
+    T_Lists lists_;
+    unsigned int colorList_;
     geometry::Rectangle2f previousViewport_;
-    unsigned previousWidth_, previousHeight_;
+    unsigned int previousWidth_;
+    unsigned int previousHeight_;
     float r_, g_, b_, a_;
     bool colorDirty_;
     //@}

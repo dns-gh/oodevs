@@ -34,7 +34,6 @@ namespace gui
 class GlProxy : public View_ABC
               , public kernel::GlTools_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -114,7 +113,6 @@ private:
     //@{
     View_ABC*    view_;
     kernel::GlTools_ABC* tools_;
-
     T_Layers layers_;
     TooltipsLayer_ABC* tooltipLayer_;
     //@}

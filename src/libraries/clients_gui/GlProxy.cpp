@@ -24,8 +24,8 @@ using namespace gui;
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
 GlProxy::GlProxy()
-    : view_   ( 0 )
-    , tools_  ( 0 )
+    : view_        ( 0 )
+    , tools_       ( 0 )
     , tooltipLayer_( 0 )
 {
     // NOTHING

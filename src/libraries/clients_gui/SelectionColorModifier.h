@@ -36,7 +36,7 @@ class SelectionColorModifier : public ColorModifier_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit SelectionColorModifier( kernel::Controllers& controllers, kernel::GlTools_ABC& tools );
+             SelectionColorModifier( kernel::Controllers& controllers, kernel::GlTools_ABC& tools );
     virtual ~SelectionColorModifier();
     //@}
 

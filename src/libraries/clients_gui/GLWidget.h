@@ -145,13 +145,13 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void    paintGL();
-    virtual void    initializeGL();
-    virtual void    resizeGL( int w, int h );
-    virtual void    updateGL();
-    unsigned int    GenerateCircle();
-    void            UpdateStipple() const;
-    void            DrawTextLabel( const std::string& message, const geometry::Point2f& where, int baseSize = 12);
+    virtual void paintGL();
+    virtual void initializeGL();
+    virtual void resizeGL( int w, int h );
+    virtual void updateGL();
+    unsigned int GenerateCircle();
+    void UpdateStipple() const;
+    void DrawTextLabel( const std::string& message, const geometry::Point2f& where, int baseSize = 12);
 
     void RenderPass( GlRenderPass_ABC& pass );
     //@}
@@ -164,18 +164,14 @@ private:
     unsigned int circle_;
     int minVisuScale_;
     int maxVisuScale_;
-
     geometry::Rectangle2f viewport_;
     unsigned int frame_;
-
     IconLayout& iconLayout_;
-
     T_RenderPasses passes_;
-    std::string    currentPass_;
-
-    T_Fonts     fonts_;
-    int         baseFont_;
-    QFont       currentFont_;
+    std::string currentPass_;
+    T_Fonts fonts_;
+    int baseFont_;
+    QFont currentFont_;
     //@}
 };
 

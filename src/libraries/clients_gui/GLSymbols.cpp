@@ -16,7 +16,7 @@
 #pragma warning( disable : 4996 )
 #include "zipstream/zipstream.h"
 #pragma warning( pop )
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace geometry;
 using namespace gui;
