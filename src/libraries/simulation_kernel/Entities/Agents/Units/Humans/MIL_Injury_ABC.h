@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: RFT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Units/Humans/MIL_Injury_ABC.h $
-// $Author: RFT $
-// $Modtime: 28/04/05 16:04 $
-// $Revision: 6 $
-// $Workfile: MIL_Injury_ABC.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2008 MASA Group
 //
 // *****************************************************************************
 
@@ -23,7 +21,7 @@ class MIL_Injury_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-            MIL_Injury_ABC() {}
+             MIL_Injury_ABC() {}
     virtual ~MIL_Injury_ABC() {}
     //@}
 

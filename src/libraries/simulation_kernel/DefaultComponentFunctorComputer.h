@@ -14,13 +14,12 @@
 
 // =============================================================================
 /** @class  DefaultDotationcomputer
-    @brief  DefaultDotationcomputer
+    @brief  Default dotation computer
 */
 // Created: MGD 2009-09-24
 // =============================================================================
 class DefaultComponentFunctorComputer : public OnComponentFunctorComputer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

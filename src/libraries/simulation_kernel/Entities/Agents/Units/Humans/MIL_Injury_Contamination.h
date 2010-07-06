@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: RFT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Units/Humans/MIL_Injury_Contamination.h $
-// $Author: RFT $
-// $Modtime: 28/04/05 16:04 $
-// $Revision: 6 $
-// $Workfile: MIL_Injury_Contamination.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2008 MASA Group
 //
 // *****************************************************************************
 
@@ -20,15 +18,14 @@
 class PHY_ComposantePion;
 class PHY_InjuredHuman;
 
-
 class MIL_Injury_Contamination : public MIL_Injury_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    MIL_Injury_Contamination();
+             MIL_Injury_Contamination();
     explicit MIL_Injury_Contamination( int agentConcentration, const std::string& NBCAgent, int injuryID );
-    MIL_Injury_Contamination( const MIL_Injury_Contamination& rhs );
+             MIL_Injury_Contamination( const MIL_Injury_Contamination& rhs );
     virtual ~MIL_Injury_Contamination();
     //@}
 

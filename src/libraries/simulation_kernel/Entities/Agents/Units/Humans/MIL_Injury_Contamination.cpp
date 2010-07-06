@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: RFT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Units/Humans/PHY_HumanPopulation.cpp $
-// $Author: RFT $
-// $Modtime: 29/04/05 11:15 $
-// $Revision: 13 $
-// $Workfile: PHY_HumanPopulation.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2008 MASA Group
 //
 // *****************************************************************************
 
@@ -31,25 +29,25 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Injury_Contamination )
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
 MIL_Injury_Contamination::MIL_Injury_Contamination()
-    : agentConcentration_   ( 0 )
-    , NBCAgent_             ( 0 )
-    , injuryID_             ( 0 )
-    , injuryCategory_       ( MIL_MedicalTreatmentType::eNone )
+    : agentConcentration_( 0 )
+    , NBCAgent_          ( 0 )
+    , injuryID_          ( 0 )
+    , injuryCategory_    ( MIL_MedicalTreatmentType::eNone )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Injury_Contamination::constructor
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
-MIL_Injury_Contamination::MIL_Injury_Contamination( int agentConcentration , const std::string& NBCAgent , int injuryID )
-    : agentConcentration_   ( agentConcentration )
-    , NBCAgent_             ( NBCAgent )
-    , injuryID_             ( injuryID )
-    , injuryCategory_       ( MIL_MedicalTreatmentType::eNone )
+MIL_Injury_Contamination::MIL_Injury_Contamination( int agentConcentration, const std::string& NBCAgent, int injuryID )
+    : agentConcentration_( agentConcentration )
+    , NBCAgent_          ( NBCAgent )
+    , injuryID_          ( injuryID )
+    , injuryCategory_    ( MIL_MedicalTreatmentType::eNone )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -57,12 +55,12 @@ MIL_Injury_Contamination::MIL_Injury_Contamination( int agentConcentration , con
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
 MIL_Injury_Contamination::MIL_Injury_Contamination( const MIL_Injury_Contamination& rhs )
-    : agentConcentration_   ( rhs.agentConcentration_ )
-    , NBCAgent_             ( rhs.NBCAgent_ )
-    , injuryID_             ( rhs.injuryID_ )
-    , injuryCategory_       ( rhs.injuryCategory_ )
+    : agentConcentration_( rhs.agentConcentration_ )
+    , NBCAgent_          ( rhs.NBCAgent_ )
+    , injuryID_          ( rhs.injuryID_ )
+    , injuryCategory_    ( rhs.injuryCategory_ )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -70,9 +68,8 @@ MIL_Injury_Contamination::MIL_Injury_Contamination( const MIL_Injury_Contaminati
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
 MIL_Injury_Contamination::~MIL_Injury_Contamination( )
-
 {
-    //NOTHING
+    // NOTHING
 }
 
 // =============================================================================
@@ -86,7 +83,7 @@ MIL_Injury_Contamination::~MIL_Injury_Contamination( )
 void MIL_Injury_Contamination::load( MIL_CheckPointInArchive& file, const uint )
 {
     file >> agentConcentration_
-        >> const_cast < std::string &>( NBCAgent_ )
+         >> const_cast< std::string& >( NBCAgent_ )
          >> injuryID_
          >> injuryCategory_;
 }
@@ -172,7 +169,7 @@ bool  MIL_Injury_Contamination::CanInjuryBeDeadly()
 // -----------------------------------------------------------------------------
 void MIL_Injury_Contamination::UpdateLifeExpectancy( float /*time*/ )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -181,7 +178,7 @@ void MIL_Injury_Contamination::UpdateLifeExpectancy( float /*time*/ )
 // -----------------------------------------------------------------------------
 void MIL_Injury_Contamination::UpdateInjuryCategory()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // =============================================================================
@@ -192,23 +189,23 @@ namespace
     //Be careful: do not confuse contamination and poisoning!
     struct PHY_ContaminationProtectionFunctor
     {
-        PHY_ContaminationProtectionFunctor( int agentConcentration , const std::string NBCAgent , int injuryID )
-            : agentConcentration_   ( agentConcentration )
-            , injuryID_             ( injuryID )
-            , NBCAgent_             ( NBCAgent )
-            , protectionValue_      ( 0 )
+        PHY_ContaminationProtectionFunctor( int agentConcentration, const std::string NBCAgent, int injuryID )
+            : agentConcentration_( agentConcentration )
+            , injuryID_          ( injuryID )
+            , NBCAgent_          ( NBCAgent )
+            , protectionValue_   ( 0 )
         {
-            //NOTHING
+            // NOTHING
         }
 
-        void operator() ( const PHY_ComposantePion& composantePion )
+        void operator()( const PHY_ComposantePion& composantePion )
         {
             composantePion.ApplyOnHumanProtection( *this );
         }
 
         void operator()( const PHY_ComposantePion& /*composantePion*/, const PHY_HumanProtection& humanProtection )
         {
-            protectionValue_ += humanProtection.ComputeProtectionValue( injuryID_ , agentConcentration_ , NBCAgent_ );
+            protectionValue_ += humanProtection.ComputeProtectionValue( injuryID_, agentConcentration_, NBCAgent_ );
         }
 
         float GetProtectionValue()
@@ -216,10 +213,10 @@ namespace
             return protectionValue_;
         }
 
-        int                 agentConcentration_;
-        int                 injuryID_;
-        const std::string   NBCAgent_;
-        float               protectionValue_;
+        int               agentConcentration_;
+        int               injuryID_;
+        const std::string NBCAgent_;
+        float             protectionValue_;
     };
 }
 
@@ -231,9 +228,9 @@ bool MIL_Injury_Contamination::IsInjured( const PHY_ComposantePion& pComposante 
 {
     //Ne pas oublier de prendre en compte la protection avec:
     //pComposante.GetType().GetProtection().Get...
-    PHY_ContaminationProtectionFunctor protection( agentConcentration_ , NBCAgent_ , injuryID_ );
+    PHY_ContaminationProtectionFunctor protection( agentConcentration_, NBCAgent_, injuryID_ );
     protection( pComposante );
-    unsigned int injuryThreshold = ( unsigned int )( ( 1 + 0.2 * MIL_Random::rand_ii( 0 , 1, MIL_Random::eWounds ) ) * agentConcentration_ *( 1 - protection.GetProtectionValue() ) );
+    const unsigned int injuryThreshold = static_cast< unsigned int >( ( 1 + 0.2 * MIL_Random::rand_ii( 0 , 1, MIL_Random::eWounds ) ) * agentConcentration_ *( 1 - protection.GetProtectionValue() ) );
     if( injuryThreshold > MIL_MedicalTreatmentType::Find( injuryID_ )->GetInjuryThreshold( MIL_MedicalTreatmentType::eUA ) )
     {
         PHY_InjuredHuman::InitializeInjuredHuman( *this , pComposante );
@@ -242,7 +239,7 @@ bool MIL_Injury_Contamination::IsInjured( const PHY_ComposantePion& pComposante 
     }
     else if( injuryThreshold > MIL_MedicalTreatmentType::Find( injuryID_ )->GetInjuryThreshold( MIL_MedicalTreatmentType::eUR ) )
     {
-        PHY_InjuredHuman::InitializeInjuredHuman( *this , pComposante );
+        PHY_InjuredHuman::InitializeInjuredHuman( *this, pComposante );
         injuryCategory_ = MIL_MedicalTreatmentType::eUR;
         return true;
     }
@@ -283,7 +280,7 @@ void MIL_Injury_Contamination::SetInjury( unsigned int nNbrAliveHumans , MT_Floa
 // -----------------------------------------------------------------------------
 void MIL_Injury_Contamination::Injure( PHY_InjuredHuman& injuredHuman )
 {
-    unsigned int injuryThreshold = ( unsigned int )( ( 1 + 0.2 * MIL_Random::rand_ii( 0 , 1, MIL_Random::eWounds ) ) * agentConcentration_ );
+    unsigned int injuryThreshold = static_cast< unsigned int >( ( 1 + 0.2 * MIL_Random::rand_ii( 0 , 1, MIL_Random::eWounds ) ) * agentConcentration_ );
     //If injuredHuman has a protection, we compute its protection effect
     if( injuredHuman.GetComposantePion() != 0 )
     {
@@ -291,7 +288,6 @@ void MIL_Injury_Contamination::Injure( PHY_InjuredHuman& injuredHuman )
         protection( *injuredHuman.GetComposantePion() );
         injuryThreshold *= ( 1 - protection.GetProtectionValue() );
     }
-
     //If injuredHuman isn't already injured by this kind of injury, add possibly an injury of this kind
     if( ! injuredHuman.FindInjury( injuryID_ ) )
     {
@@ -306,7 +302,6 @@ void MIL_Injury_Contamination::Injure( PHY_InjuredHuman& injuredHuman )
             injuryCategory_ = MIL_MedicalTreatmentType::eUR;
         }
     }
-
     //Check if the injury isn't worse than the one which already exists. If so, modified it! (c est d'un cynisme!)
     else
     {
