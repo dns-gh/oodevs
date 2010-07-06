@@ -3,15 +3,31 @@
   <units>
     <unit dia-type="net.masagroup.sword.military.roles.Platoon" file="BMPion.bms" name="net.masagroup.sword.military.roles.Platoon">
       <missions>
+        <mission name="MELEE Appuyer"/>
+        <mission name="MELEE Reconnaitre Itineraire"/>
+        <mission name="COMMUNE Decrocher"/>
+        <mission name="COMMUNE Faire Mouvement">
+          <fragorder name="Illuminate"/>
+          <fragorder name="UseALR"/>
+        </mission>
+        <mission name="COMMUNE Franchir"/>
+        <mission name="COMMUNE Orienter Guider Refugies"/>
+        <mission name="COMMUNE Prendre En Compte Prisonniers"/>
+        <mission name="COMMUNE Se Faire Decontaminer"/>
+        <mission name="COMMUNE Se Faire Transporter"/>
+        <mission name="COMMUNE Stationner"/>
+        <mission name="COMMUNE Suivre"/>
+      </missions>
+    </unit>
+    <unit dia-type="net.masagroup.sword.military.roles.Platoon" file="BMPion.bms" name="test pion">
+      <missions>
         <mission name="Advance"/>
         <mission name="Animate"/>
-        <mission name="Appuyer"/>
-        <mission name="Decrocher BM"/>
+        <mission name="MELEE Appuyer"/>
+        <mission name="COMMUNE Decrocher"/>
         <mission name="DestroyAgents"/>
         <mission name="EngageAgents"/>
-        <mission name="FaireMouvement"/>
         <mission name="Flee"/>
-        <mission name="Franchir BM"/>
         <mission name="IdentifyAgent"/>
         <mission name="Illuminate"/>
         <mission name="Load"/>
@@ -43,7 +59,7 @@
         <mission name="ObserveUrbanBlock"/>
         <mission name="ObserveAgent"/>
         <mission name="ObserveObject"/>
-        <mission name="ReconnoiterRoute"/>
+        <mission name="MELEE Reconnaitre Itineraire"/>
         <mission name="ReconnoiterPoint"/>
         <mission name="ReconnoiterUrbanBlock"/>
         <mission name="SeekAndDestroy"/>
@@ -54,56 +70,67 @@
         <mission name="Deny Position"/>
         <mission name="Deny Urban Block"/>
         <mission name="Seal Off"/>
-        <mission name="SuivreAgent"/>
-        <mission name="StationnerBM"/>
-        <mission name="SoutenirSurPositionEnMesureDeBM"/>
-        <mission name="Se Faire Decontaminer BM"/>
-        <mission name="Orienter Guider Refugies BM"/>
-        <mission name="Prendre En Compte Prisonniers BM"/>
-        <mission name="Se Faire Transporter BM"/>
+        <mission name="COMMUNE Faire Mouvement"/>
+        <mission name="COMMUNE Suivre"/>
+        <mission name="COMMUNE Stationner"/>
+        <mission name="COMMUNE SoutenirSurPositionEnMesureDe"/>
+        <mission name="COMMUNE Se Faire Decontaminer"/>
+        <mission name="COMMUNE Orienter Guider Refugies"/>
+        <mission name="COMMUNE Prendre En Compte Prisonniers"/>
+        <mission name="COMMUNE Se Faire Transporter"/>
         <mission name="Surveiller"/>
         <mission name="SurveillerBU"/>
       </missions>
     </unit>
     <unit dia-type="net.masagroup.sword.military.platoon.combat.support.artillery.roles.Artillery" file="BMPion.bms" name="net.masagroup.sword.military.platoon.combat.support.artillery.roles.Artillery">
       <missions>
-        <mission name="DeployOnPosition">
+        <mission name="ASS DeployOnPosition">
           <fragorder name="ApplyFire"/>
           <fragorder name="ApplyGuidedFire"/>
         </mission>
-        <mission name="Deploy">
+        <mission name="ASS Deploy">
           <fragorder name="ApplyFire"/>
           <fragorder name="ApplyGuidedFire"/>
         </mission>
-        <mission name="Coordinate Illumination"/>
-        <mission name="SuivreAgent"/>
-        <mission name="StayClose"/>
-        <mission name="StationnerBM"/>
-        <mission name="SoutenirSurPositionEnMesureDeBM"/>
-        <mission name="MoveToPoint"/>
+        <mission name="ASS Coordinate Illumination"/>
+        <mission name="COMMUNE Decrocher"/>
+        <mission name="COMMUNE Faire Mouvement"/>
+        <mission name="COMMUNE Franchir"/>
+        <mission name="COMMUNE Orienter Guider Refugies"/>
+        <mission name="COMMUNE Prendre En Compte Prisonniers"/>
+        <mission name="COMMUNE Se Faire Decontaminer"/>
+        <mission name="COMMUNE Se Faire Transporter"/>
+        <mission name="COMMUNE Stationner"/>
+        <mission name="COMMUNE Suivre"/>
       </missions>
     </unit>
     <unit dia-type="net.masagroup.sword.military.platoon.combat.support.engineer.roles.Engineer" file="BMPion.bms" name="net.masagroup.sword.military.platoon.combat.support.engineer.roles.Engineer">
       <missions>
         <mission name="GEN Realiser Travaux"/>
-        <mission name="Valorize"/>
-        <mission name="Activate"/>
-        <mission name="Bypass"/>
-        <mission name="RemoveObstacle"/>
-        <mission name="OpenRoute"/>
-        <mission name="SuivreAgent"/>
-        <mission name="StayClose"/>
-        <mission name="StationnerBM"/>
-        <mission name="SoutenirSurPositionEnMesureDeBM"/>
-        <mission name="MoveToPoint"/>
+        <mission name="GEN OuvrirItineraire"/>
+        <mission name="COMMUNE Decrocher"/>
+        <mission name="COMMUNE Faire Mouvement"/>
+        <mission name="COMMUNE Franchir"/>
+        <mission name="COMMUNE Orienter Guider Refugies"/>
+        <mission name="COMMUNE Prendre En Compte Prisonniers"/>
+        <mission name="COMMUNE Se Faire Decontaminer"/>
+        <mission name="COMMUNE Se Faire Transporter"/>
+        <mission name="COMMUNE Stationner"/>
+        <mission name="COMMUNE Suivre"/>
       </missions>
     </unit>
     <unit dia-type="BMPion" file="BMPion.bms" name="net.masagroup.sword.military.platoon.terrorism.roles.Sniper">
       <missions>
-        <mission name="MoveToPoint"/>
-        <mission name="MoveToUrbanBlock"/>
         <mission name="Embuscade"/>
-        <mission name="DestroyAgents"/>
+        <mission name="COMMUNE Decrocher"/>
+        <mission name="COMMUNE Faire Mouvement"/>
+        <mission name="COMMUNE Franchir"/>
+        <mission name="COMMUNE Orienter Guider Refugies"/>
+        <mission name="COMMUNE Prendre En Compte Prisonniers"/>
+        <mission name="COMMUNE Se Faire Decontaminer"/>
+        <mission name="COMMUNE Se Faire Transporter"/>
+        <mission name="COMMUNE Stationner"/>
+        <mission name="COMMUNE Suivre"/>
       </missions>
     </unit>
     <unit dia-type="PatrouilleAIR" file="Air\Pions\Patrouille Assaut\model.bms" name="Patrouille AIR Assaut">

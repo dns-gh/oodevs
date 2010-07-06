@@ -1015,12 +1015,12 @@
   <automat decisional-model="GTIA" id="654" name="GTIA" type="Automate ABC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="Peloton LECLERC CDT ESC"/>
   </automat>
-  <automat decisional-model="net.masagroup.sword.military.roles.Company" id="655" name="Proto SGTIA" type="Automate SGTIA">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="Proto Section CBT INF VAB CDS OFF"/>
-    <unit max-occurs="2" min-occurs="2" type="Proto Section CDT CIE INF VAB"/>
-    <unit max-occurs="2" min-occurs="2" type="Proto Peloton LECLERC CDP OFF"/>
-    <unit max-occurs="2" type="Proto Section de Tir AUF1 CDS OFF"/>
-    <unit max-occurs="2" type="Proto Groupe EBG"/>
+  <automat decisional-model="net.masagroup.sword.military.roles.Company" id="655" name="SGTIA" type="Automate SGTIA">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="Section . CBT INF VAB CDS OFF"/>
+    <unit max-occurs="2" min-occurs="2" type="Section . CDT CIE INF VAB"/>
+    <unit max-occurs="2" min-occurs="2" type="Peloton . LECLERC CDP OFF"/>
+    <unit max-occurs="2" type="Section de Tir . AUF1 CDS OFF"/>
+    <unit max-occurs="2" type="Groupe GEN . EBG"/>
   </automat>
   <automat decisional-model="Batterie Tir AUF1" id="656" name="LTO Test Capteurs" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="LTO PC Batterie Test Capteur"/>
@@ -1032,9 +1032,9 @@
     <unit max-occurs="3" min-occurs="3" type="Section CBT INF VAB CDS OFF"/>
     <unit max-occurs="1" min-occurs="1" type="Section CBT INF VAB CDS SOFF"/>
   </automat>
-  <automat decisional-model="net.masagroup.sword.military.company.combat.support.artillery.roles.Company" id="658" name="Proto ASS" type="Automate ASS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="Proto PC Batterie ASS"/>
-    <unit max-occurs="2" min-occurs="2" type="Proto Section de Tir AUF1 CDS OFF"/>
+  <automat decisional-model="net.masagroup.sword.military.company.combat.support.artillery.roles.Company" id="658" name="Batterie ASS . AUF1" type="Automate ASS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="PC . Batterie ASS"/>
+    <unit max-occurs="2" min-occurs="2" type="Section de Tir . AUF1 CDS OFF"/>
   </automat>
   <automat decisional-model="net.masagroup.sword.military.company.terrorism.roles.SniperCompany" id="659" name="Tireurs" type="Automate ASY">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="Tireur"/>
