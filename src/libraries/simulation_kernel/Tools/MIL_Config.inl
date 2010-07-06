@@ -305,7 +305,7 @@ const bool* MIL_Config::GetRandomGaussian() const
 // Created: JSR 2010-07-02
 // -----------------------------------------------------------------------------
 inline
-const int* MIL_Config::GetRandomDeviation() const
+const double* MIL_Config::GetRandomDeviation() const
 {
     return randomDeviation_;
 }
@@ -315,7 +315,7 @@ const int* MIL_Config::GetRandomDeviation() const
 // Created: JSR 2010-07-02
 // -----------------------------------------------------------------------------
 inline
-const int* MIL_Config::GetRandomMean() const
+const double* MIL_Config::GetRandomMean() const
 {
     return randomMean_;
 }

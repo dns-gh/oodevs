@@ -71,8 +71,8 @@ public:
 
     int                GetRandomSeed             () const;
     const bool*        GetRandomGaussian         () const;
-    const int*         GetRandomDeviation        () const;
-    const int*         GetRandomMean             () const;
+    const double*      GetRandomDeviation        () const;
+    const double*      GetRandomMean             () const;
     //@}
 
     //! @name Operations
@@ -148,8 +148,8 @@ private:
     T_CRCMap                   CRCMap_;
     int                        randomSeed_;
     bool                       randomGaussian_[ MIL_Random::eContextsNbr ];
-    int                        randomDeviation_[ MIL_Random::eContextsNbr ];
-    int                        randomMean_[ MIL_Random::eContextsNbr ];
+    double                     randomDeviation_[ MIL_Random::eContextsNbr ];
+    double                     randomMean_[ MIL_Random::eContextsNbr ];
     //@}
 };
 

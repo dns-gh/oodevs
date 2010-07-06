@@ -17,10 +17,8 @@ namespace tools
     class GeneralConfig;
 }
 
-namespace {
-    class DecimalSpinBox;
-}
 class QCheckBox;
+class QLineEdit;
 class QSpinBox;
 
 // =============================================================================
@@ -57,8 +55,8 @@ private slots:
     void OnChangeDataDirectory();
     void OnContextChanged( int index );
     void OnDistributionChanged( int index );
-    void OnDeviationChanged( int value );
-    void OnMeanChanged( int value );
+    void OnDeviationChanged( const QString& );
+    void OnMeanChanged( const QString& );
     void OnSeedToggled();
     //@}
 
@@ -88,13 +86,13 @@ private:
     QLineEdit* dataDirectory_;
     QComboBox* contextList_;
     QComboBox* distributionList_;
-    DecimalSpinBox* deviation_;
-    DecimalSpinBox* mean_;
+    QLineEdit* deviation_;
+    QLineEdit* mean_;
     QCheckBox* hasSeed_;
     QSpinBox* seed_;
     bool bDistributions_[ eContextsNbr ];
-    int nDeviations_[ eContextsNbr ];
-    int nMeans_[ eContextsNbr ];
+    double rDeviations_[ eContextsNbr ];
+    double rMeans_[ eContextsNbr ];
     //@}
 };
 

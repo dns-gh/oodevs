@@ -37,18 +37,18 @@ namespace
         return settings.readBoolEntry( QString( "/Common/RandomDistribution" ) + QString::number( index ), false );
     }
 
-    int ReadDeviation( int index )
+    double ReadDeviation( int index )
     {
         QSettings settings;
         settings.setPath( "MASA Group", "SWORD" );
-        return settings.readNumEntry( QString( "/Common/RandomDeviation" ) + QString::number( index ), 5 );
+        return settings.readDoubleEntry( QString( "/Common/RandomDeviation" ) + QString::number( index ), 0.5 );
     }
 
-    int ReadMean( int index )
+    double ReadMean( int index )
     {
         QSettings settings;
         settings.setPath( "MASA Group", "SWORD" );
-        return settings.readNumEntry( QString( "/Common/RandomMean" ) + QString::number( index ), 5 );
+        return settings.readDoubleEntry( QString( "/Common/RandomMean" ) + QString::number( index ), 0.5 );
     }
 
     bool ReadHasSeed()

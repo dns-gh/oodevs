@@ -129,9 +129,9 @@ void MIL_Config::ReadSessionFile( const std::string& file )
                 >> xml::end();
     for( int i = 0; i < MIL_Random::eContextsNbr; ++i )
     {
-        randomGaussian_[ i ] =false;
-        randomDeviation_[ i ] =false;
-        randomMean_[ i ] =false;
+        randomGaussian_[ i ] = false;
+        randomDeviation_[ i ] = 0.;
+        randomMean_[ i ] = 0.;
         std::stringstream stream;
         stream << "random";
         stream << i;

@@ -13,12 +13,13 @@
 #include "Application.h"
 #include "clients_gui/Tools.h"
 #include "tools/GeneralConfig.h"
+#include <qcheckbox.h>
 #include <qcombobox.h>
 #include <qfiledialog.h>
 #include <qsettings.h>
-#include <qtextcodec.h>
-#include <qcheckbox.h>
 #include <qspinbox.h>
+#include <qtextcodec.h>
+#include <qvalidator.h>
 #include <boost/foreach.hpp>
 
 namespace
@@ -38,20 +39,20 @@ namespace
             distributions[ i ] = settings.readBoolEntry( QString( "/Common/RandomDistribution" ) + QString::number( i ), false );
     }
 
-    void ReadDeviation( int* deviations )
+    void ReadDeviation( double* deviations )
     {
         QSettings settings;
         settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD" ) );
         for( int i = 0; i < OptionsPage::eContextsNbr; ++i )
-            deviations[ i ] = settings.readNumEntry( QString( "/Common/RandomDeviation" ) + QString::number( i ), 5 );
+            deviations[ i ] = settings.readDoubleEntry( QString( "/Common/RandomDeviation" ) + QString::number( i ), 0.5 );
     }
 
-    void ReadMean( int* means )
+    void ReadMean( double* means )
     {
         QSettings settings;
         settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD" ) );
         for( int i = 0; i < OptionsPage::eContextsNbr; ++i )
-            means[ i ] = settings.readNumEntry( QString( "/Common/RandomMean" ) + QString::number( i ), 5 );
+            means[ i ] = settings.readDoubleEntry( QString( "/Common/RandomMean" ) + QString::number( i ), 0.5 );
     }
 
     bool ReadHasSeed()
@@ -68,25 +69,50 @@ namespace
         return settings.readNumEntry( "/Common/RandomSeed", 1 );
     }
 
-    class DecimalSpinBox : public QSpinBox
+    class Validator : public QDoubleValidator
     {
     public:
-        DecimalSpinBox( int minValue, int maxValue, int step, QWidget* parent )
-            : QSpinBox( minValue, maxValue, step, parent ) {}
+        Validator( QObject* pParent )
+            : QDoubleValidator( 0., 1., 10, pParent ) {}
 
-    private:
-        virtual QString	mapValueToText( int value )
+        QValidator::State validate( QString& input, int& nPos ) const
         {
-            if( value == 0 )
-                return QString( "0" );
-            if( value == 10 )
-                return QString( "1" );
-            return QString( "0.%1" ).arg( value );
-        }
+            double b = bottom();
+            double t = top();
+            int d = decimals();
 
-        virtual int mapTextToValue( bool* /*ok*/ )
-        {
-            return (int) ( 10 * text().toFloat() );
+            QRegExp empty( QString::fromLatin1(" *-?\\.? *") );
+            if( b >= 0 &&
+                input.stripWhiteSpace().startsWith(QString::fromLatin1("-")) )
+                return Invalid;
+            if( empty.exactMatch(input) )
+                return Intermediate;
+            bool ok = TRUE;
+            double entered = input.toDouble( &ok );
+            if( !ok )
+                return Invalid;
+
+            int i = input.find( '.' );
+            if( i >= 0 )
+                if( d==0 )
+                    return Invalid;
+                else
+                {
+                    // has decimal point (but no E), now count digits after that
+                    i++;
+                    int j = i;
+                    while( input[j].isDigit() )
+                        j++;
+                    if( j - i > d )
+                        return Invalid;
+                }
+
+            if( entered > t )
+                return Invalid;
+            else if( entered < b )
+                return Intermediate;
+            else
+               return Acceptable;
         }
     };
 }
@@ -162,13 +188,15 @@ OptionsPage::OptionsPage( QWidgetStack* pages, Page_ABC& previous, const tools::
 
         QLabel* label3 = new QLabel( tools::translate( "OptionsPage", "Standard deviation:" ), hbox );
         label3->setBackgroundOrigin( QWidget::WindowOrigin );
-        deviation_ = new DecimalSpinBox( 0, 10, 1, hbox );
-        connect( deviation_, SIGNAL( valueChanged( int ) ), SLOT( OnDeviationChanged( int ) ) );
+        deviation_ = new QLineEdit( hbox );
+        deviation_->setValidator( new Validator( deviation_ ) );
+        connect( deviation_, SIGNAL( textChanged( const QString& ) ), SLOT( OnDeviationChanged( const QString& ) ) );
 
         QLabel* label4 = new QLabel( tools::translate( "OptionsPage", "Mean:" ), hbox );
         label4->setBackgroundOrigin( QWidget::WindowOrigin );
-        mean_ = new DecimalSpinBox( 0, 10, 1, hbox );
-        connect( mean_, SIGNAL( valueChanged( int ) ), SLOT( OnMeanChanged( int ) ) );
+        mean_ = new QLineEdit( hbox );
+        mean_->setValidator( new Validator( mean_ ) );
+        connect( mean_, SIGNAL( textChanged( const QString& ) ), SLOT( OnMeanChanged( const QString& ) ) );
     }
     ReadRandomValues();
     OnContextChanged( 0 );
@@ -209,8 +237,8 @@ void OptionsPage::Commit()
     for( int i = 0; i < eContextsNbr; ++i )
     {
         settings.writeEntry( QString( "/Common/RandomDistribution" ) + QString::number( i ), bDistributions_[ i ] );
-        settings.writeEntry( QString( "/Common/RandomDeviation" ) + QString::number( i ), nDeviations_[ i ] );
-        settings.writeEntry( QString( "/Common/RandomMean" ) + QString::number( i ), nMeans_[ i ] );
+        settings.writeEntry( QString( "/Common/RandomDeviation" ) + QString::number( i ), rDeviations_[ i ] );
+        settings.writeEntry( QString( "/Common/RandomMean" ) + QString::number( i ), rMeans_[ i ] );
     }
     settings.writeEntry( "/Common/RandomHasSeed", hasSeed_->isChecked() );
     settings.writeEntry( "/Common/RandomSeed", seed_->value() );
@@ -223,8 +251,8 @@ void OptionsPage::Commit()
 void OptionsPage::ReadRandomValues()
 {
     ReadGaussian( bDistributions_ );
-    ReadDeviation( nDeviations_ );
-    ReadMean( nMeans_ );
+    ReadDeviation( rDeviations_ );
+    ReadMean( rMeans_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -250,8 +278,8 @@ void OptionsPage::OnContextChanged( int index )
     if( context >= eFire && context < eContextsNbr )
     {
         distributionList_->setCurrentItem( bDistributions_[ context ] ? 1 : 0 );
-        deviation_->setValue( nDeviations_[ context ] );
-        mean_->setValue( nMeans_[ context ] );
+        deviation_->setText( QString::number( rDeviations_[ context ] ) );
+        mean_->setText( QString::number( rMeans_[ context ] ) );
         deviation_->setEnabled( bDistributions_[ context ] );
         mean_->setEnabled( bDistributions_[ context ] );
     }
@@ -276,22 +304,28 @@ void OptionsPage::OnDistributionChanged( int index )
 // Name: OptionsPage::OnDeviationChanged
 // Created: JSR 2010-07-05
 // -----------------------------------------------------------------------------
-void OptionsPage::OnDeviationChanged( int )
+void OptionsPage::OnDeviationChanged( const QString& )
 {
-    ERandomContexts context = ( ERandomContexts ) contextList_->currentItem();
-    if( context >= eFire && context < eContextsNbr )
-        nDeviations_[ context ] = deviation_->value();
+    if( deviation_->hasAcceptableInput() )
+    {
+        ERandomContexts context = ( ERandomContexts ) contextList_->currentItem();
+        if( context >= eFire && context < eContextsNbr )
+            rDeviations_[ context ] = deviation_->text().toDouble();
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: OptionsPage::OnMeanChanged
 // Created: JSR 2010-07-05
 // -----------------------------------------------------------------------------
-void OptionsPage::OnMeanChanged( int )
+void OptionsPage::OnMeanChanged( const QString& )
 {
-    ERandomContexts context = ( ERandomContexts ) contextList_->currentItem();
-    if( context >= eFire && context < eContextsNbr )
-        nMeans_[ context ] = mean_->value();
+    if( mean_->hasAcceptableInput() )
+    {
+        ERandomContexts context = ( ERandomContexts ) contextList_->currentItem();
+        if( context >= eFire && context < eContextsNbr )
+            rMeans_[ context ] = mean_->text().toDouble();
+    }
 }
 
 // -----------------------------------------------------------------------------
