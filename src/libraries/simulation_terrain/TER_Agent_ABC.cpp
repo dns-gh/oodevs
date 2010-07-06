@@ -31,7 +31,7 @@ TER_Agent_ABC::TER_Agent_ABC()
     : hint_         ( 0 )
     , pAgentManager_( 0 )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

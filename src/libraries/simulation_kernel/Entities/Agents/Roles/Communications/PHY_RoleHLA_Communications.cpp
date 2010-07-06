@@ -19,7 +19,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RoleHLA_Communications )
 PHY_RoleHLA_Communications::PHY_RoleHLA_Communications()
     : bJammed_( false )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -28,7 +28,7 @@ PHY_RoleHLA_Communications::PHY_RoleHLA_Communications()
 // -----------------------------------------------------------------------------
 PHY_RoleHLA_Communications::~PHY_RoleHLA_Communications()
 {
-    //NOTHING
+    // NOTHING
 }
 
 

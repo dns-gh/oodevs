@@ -29,7 +29,7 @@
 HLA_ObjectInteraction::HLA_ObjectInteraction()
     : objectId_( unsigned int( -1 ) )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -39,7 +39,7 @@ HLA_ObjectInteraction::HLA_ObjectInteraction()
 HLA_ObjectInteraction::HLA_ObjectInteraction( const HLA_Object_ABC& target )
     : objectId_( target.GetId() )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -48,7 +48,7 @@ HLA_ObjectInteraction::HLA_ObjectInteraction( const HLA_Object_ABC& target )
 // -----------------------------------------------------------------------------
 HLA_ObjectInteraction::~HLA_ObjectInteraction()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

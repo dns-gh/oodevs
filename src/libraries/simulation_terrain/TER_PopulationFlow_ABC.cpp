@@ -21,7 +21,7 @@
 TER_PopulationFlow_ABC::TER_PopulationFlow_ABC()
     : hint_     ( 0 )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

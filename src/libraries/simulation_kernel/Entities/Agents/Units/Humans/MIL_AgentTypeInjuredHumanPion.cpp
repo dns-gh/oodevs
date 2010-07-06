@@ -35,7 +35,7 @@ MIL_AgentTypeInjuredHumanPion::MIL_AgentTypeInjuredHumanPion( const std::string&
 // -----------------------------------------------------------------------------
 MIL_AgentTypeInjuredHumanPion::~MIL_AgentTypeInjuredHumanPion()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // =============================================================================

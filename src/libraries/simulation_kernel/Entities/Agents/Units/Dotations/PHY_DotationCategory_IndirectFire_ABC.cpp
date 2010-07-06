@@ -99,5 +99,5 @@ bool PHY_DotationCategory_IndirectFire_ABC::HasHit( const MIL_Agent_ABC& /*targe
 // -----------------------------------------------------------------------------
 void PHY_DotationCategory_IndirectFire_ABC::ApplyEffect( const MIL_Agent_ABC& firer, MIL_Agent_ABC& target, MT_Float rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const
 {
-    //NOTHING
+    // NOTHING
 }

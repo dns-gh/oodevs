@@ -61,7 +61,7 @@ MIL_AgentHLA::MIL_AgentHLA( const ObjectIdentifier& objectId, HLA_InteractionMan
 // -----------------------------------------------------------------------------
 MIL_AgentHLA::~MIL_AgentHLA()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

@@ -18,7 +18,7 @@
 // -----------------------------------------------------------------------------
 OnComponentFunctorComputerFactory::OnComponentFunctorComputerFactory()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

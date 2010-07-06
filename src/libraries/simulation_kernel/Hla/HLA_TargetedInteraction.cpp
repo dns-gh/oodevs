@@ -31,7 +31,7 @@ using namespace hla;
 HLA_TargetedInteraction::HLA_TargetedInteraction()
     : target_( unsigned int(-1) )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -41,7 +41,7 @@ HLA_TargetedInteraction::HLA_TargetedInteraction()
 HLA_TargetedInteraction::HLA_TargetedInteraction( const HLA_RoleInterface& hlaRole )
     : target_( hlaRole.GetId() )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -50,7 +50,7 @@ HLA_TargetedInteraction::HLA_TargetedInteraction( const HLA_RoleInterface& hlaRo
 // -----------------------------------------------------------------------------
 HLA_TargetedInteraction::~HLA_TargetedInteraction()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

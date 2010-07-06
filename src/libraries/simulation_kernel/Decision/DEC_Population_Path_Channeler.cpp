@@ -27,7 +27,7 @@ DEC_Population_Path_Channeler::DEC_Population_Path_Channeler( const DEC_Populati
 // -----------------------------------------------------------------------------
 DEC_Population_Path_Channeler::~DEC_Population_Path_Channeler()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

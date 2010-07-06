@@ -250,7 +250,7 @@ void PHY_Meteo::SetListener( MeteoManager_ABC* listener )
 // -----------------------------------------------------------------------------
 void PHY_Meteo::UpdateMeteoPatch( int /*date*/, PHY_RawVisionData_ABC& /*dataVision_ */)
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -279,7 +279,7 @@ void PHY_Meteo::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void PHY_Meteo::SendFullUpdate( dispatcher::ClientPublisher_ABC& ) const
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -288,7 +288,7 @@ void PHY_Meteo::SendFullUpdate( dispatcher::ClientPublisher_ABC& ) const
 // -----------------------------------------------------------------------------
 void PHY_Meteo::Select( kernel::ActionController& ) const
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -297,7 +297,7 @@ void PHY_Meteo::Select( kernel::ActionController& ) const
 // -----------------------------------------------------------------------------
 void PHY_Meteo::ContextMenu( kernel::ActionController& , const QPoint& ) const
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -306,7 +306,7 @@ void PHY_Meteo::ContextMenu( kernel::ActionController& , const QPoint& ) const
 // -----------------------------------------------------------------------------
 void PHY_Meteo::Activate( kernel::ActionController& ) const
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -333,7 +333,7 @@ unsigned long PHY_Meteo::GetId() const
 // -----------------------------------------------------------------------------
 void PHY_Meteo::SendCreation() const
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -342,7 +342,7 @@ void PHY_Meteo::SendCreation() const
 // -----------------------------------------------------------------------------
 void PHY_Meteo::SendDestruction( dispatcher::ClientPublisher_ABC& ) const
 {
-    //NOTHING
+    // NOTHING
 }
 
 

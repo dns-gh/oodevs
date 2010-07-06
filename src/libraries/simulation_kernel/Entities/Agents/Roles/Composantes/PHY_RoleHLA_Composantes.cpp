@@ -43,7 +43,7 @@ PHY_RoleHLA_Composantes::PHY_RoleHLA_Composantes( MIL_Entity_ABC& entity, HLA_In
     , interactionManager_( interactionManager )
     , bNeutralized_( false )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

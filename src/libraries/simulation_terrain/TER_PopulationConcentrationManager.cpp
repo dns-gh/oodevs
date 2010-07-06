@@ -28,7 +28,7 @@ TER_PopulationConcentrationManager::TER_PopulationConcentrationManager( const MT
 // -----------------------------------------------------------------------------
 TER_PopulationConcentrationManager::~TER_PopulationConcentrationManager()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

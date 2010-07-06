@@ -19,7 +19,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RoleHLA_NBC )
 PHY_RoleHLA_NBC::PHY_RoleHLA_NBC()
     : bContaminated_( false )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -28,7 +28,7 @@ PHY_RoleHLA_NBC::PHY_RoleHLA_NBC()
 // -----------------------------------------------------------------------------
 PHY_RoleHLA_NBC::~PHY_RoleHLA_NBC()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

@@ -82,5 +82,5 @@ void PHY_Action_ABC::Update()
 // -----------------------------------------------------------------------------
 void PHY_Action_ABC::Stop()
 {
-    //NOTHING
+    // NOTHING
 }

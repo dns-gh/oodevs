@@ -36,7 +36,7 @@ void load_construct_data( Archive& /*archive*/, KnowledgeGroupFactory* factory, 
 // -----------------------------------------------------------------------------
 KnowledgeGroupFactory::KnowledgeGroupFactory()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

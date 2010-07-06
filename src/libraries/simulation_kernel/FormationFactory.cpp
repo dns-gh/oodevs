@@ -37,7 +37,7 @@ void load_construct_data( Archive& archive, FormationFactory* factory, const uns
 FormationFactory::FormationFactory( AutomateFactory_ABC& automateFactory )
     : automateFactory_( automateFactory )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

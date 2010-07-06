@@ -62,5 +62,5 @@ void CapacityAttribute::Send( MsgsSimToClient::MsgUrbanAttributes& message ) con
 // -----------------------------------------------------------------------------
 void CapacityAttribute::AsnDelete( MsgsSimToClient::MsgUrbanAttributes& /*message*/ ) const
 {
-    //NOTHING
+    // NOTHING
 }

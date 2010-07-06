@@ -37,7 +37,7 @@ using namespace hla;
 // -----------------------------------------------------------------------------
 HLA_DirectFire::HLA_DirectFire()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -49,7 +49,7 @@ HLA_DirectFire::HLA_DirectFire( const HLA_RoleInterface& role, const PHY_Composa
     , HLA_FireInteraction( ammunition )
     , strTargetComposante_( composante.GetType().GetName() )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -58,7 +58,7 @@ HLA_DirectFire::HLA_DirectFire( const HLA_RoleInterface& role, const PHY_Composa
 // -----------------------------------------------------------------------------
 HLA_DirectFire::~HLA_DirectFire()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

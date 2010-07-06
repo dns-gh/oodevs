@@ -28,7 +28,7 @@ TER_PopulationFlowManager::TER_PopulationFlowManager( const MT_Rect& extent )
 // -----------------------------------------------------------------------------
 TER_PopulationFlowManager::~TER_PopulationFlowManager()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

@@ -19,7 +19,7 @@
 HLA_RoleInterface::HLA_RoleInterface( MIL_Agent_ABC& agent )
     : pAgent_( &agent )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -28,7 +28,7 @@ HLA_RoleInterface::HLA_RoleInterface( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 HLA_RoleInterface::~HLA_RoleInterface()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

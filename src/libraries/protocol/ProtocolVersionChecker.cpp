@@ -17,7 +17,7 @@
 ProtocolVersionChecker::ProtocolVersionChecker( const Version::ProtocolVersion& version )
     : protocolVersion_ ( version.value() )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -26,7 +26,7 @@ ProtocolVersionChecker::ProtocolVersionChecker( const Version::ProtocolVersion& 
 // -----------------------------------------------------------------------------
 ProtocolVersionChecker::~ProtocolVersionChecker()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

@@ -79,7 +79,7 @@ PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, const Common::MsgMissionParamet
 // -----------------------------------------------------------------------------
 PHY_LocalMeteo::~PHY_LocalMeteo()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

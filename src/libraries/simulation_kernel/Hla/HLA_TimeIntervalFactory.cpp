@@ -29,7 +29,7 @@ using namespace hla;
 // -----------------------------------------------------------------------------
 HLA_TimeIntervalFactory::HLA_TimeIntervalFactory()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -38,7 +38,7 @@ HLA_TimeIntervalFactory::HLA_TimeIntervalFactory()
 // -----------------------------------------------------------------------------
 HLA_TimeIntervalFactory::~HLA_TimeIntervalFactory()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

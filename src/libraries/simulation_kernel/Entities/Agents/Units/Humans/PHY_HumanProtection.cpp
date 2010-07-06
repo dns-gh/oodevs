@@ -139,7 +139,7 @@ PHY_HumanProtection::PHY_HumanProtection( const PHY_HumanProtection& humanProtec
     , nID_                  ( humanProtection.nID_ )
     , protectionDescription_( humanProtection.protectionDescription_ )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

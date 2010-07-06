@@ -33,7 +33,7 @@ PHY_InjuredHuman::PHY_InjuredHuman()
     , pComposantePion_  ( 0 )
     , timeOfLastUpdate_ ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -49,7 +49,7 @@ PHY_InjuredHuman::PHY_InjuredHuman( const PHY_InjuredHuman& rhs )
     , pComposantePion_  ( rhs.pComposantePion_ )
     , timeOfLastUpdate_ ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

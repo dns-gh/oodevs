@@ -41,7 +41,7 @@ TER_PathFindManager::TER_PathFindManager( const std::string& strGraphArchive, co
     , strNodeArchive_ ( strNodeArchive  )
     , strLinkArchive_ ( strLinkArchive  )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

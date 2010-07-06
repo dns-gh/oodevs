@@ -18,7 +18,7 @@ using namespace posture;
 // -----------------------------------------------------------------------------
 PostureComputerFactory_ABC::PostureComputerFactory_ABC()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

@@ -19,7 +19,7 @@ using namespace firing;
 // -----------------------------------------------------------------------------
 WeaponAvailabilityComputerFactory::WeaponAvailabilityComputerFactory()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

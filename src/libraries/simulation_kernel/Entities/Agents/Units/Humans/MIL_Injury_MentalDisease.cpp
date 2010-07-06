@@ -34,7 +34,7 @@ MIL_Injury_MentalDisease::MIL_Injury_MentalDisease()
     : injuryID_        ( 0 )
     , injuryCategory_  ( MIL_MedicalTreatmentType::eNone )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -45,7 +45,7 @@ MIL_Injury_MentalDisease::MIL_Injury_MentalDisease( int injuryID )
     : injuryID_        ( injuryID )
     , injuryCategory_  ( MIL_MedicalTreatmentType::eNone )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -56,7 +56,7 @@ MIL_Injury_MentalDisease::MIL_Injury_MentalDisease( const MIL_Injury_MentalDisea
     : injuryID_        ( rhs.injuryID_ )
     , injuryCategory_  ( rhs.injuryCategory_ )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -66,7 +66,7 @@ MIL_Injury_MentalDisease::MIL_Injury_MentalDisease( const MIL_Injury_MentalDisea
 MIL_Injury_MentalDisease::~MIL_Injury_MentalDisease( )
 
 {
-    //NOTHING
+    // NOTHING
 }
 
 // =============================================================================
@@ -162,7 +162,7 @@ bool  MIL_Injury_MentalDisease::CanInjuryBeDeadly()
 // -----------------------------------------------------------------------------
 void MIL_Injury_MentalDisease::UpdateLifeExpectancy( float /*time*/ )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -171,7 +171,7 @@ void MIL_Injury_MentalDisease::UpdateLifeExpectancy( float /*time*/ )
 // -----------------------------------------------------------------------------
 void MIL_Injury_MentalDisease::UpdateInjuryCategory()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

@@ -115,7 +115,7 @@ DEC_Knowledge_PopulationFlow::DEC_Knowledge_PopulationFlow()
     , pCurrentPerceptionLevel_ ( &PHY_PerceptionLevel::notSeen_ )
     , bReconAttributesValid_   ( false )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

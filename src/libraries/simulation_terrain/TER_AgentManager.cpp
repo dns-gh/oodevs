@@ -41,7 +41,7 @@ TER_AgentManager::TER_AgentManager( const MT_Rect& extent )
 // -----------------------------------------------------------------------------
 TER_AgentManager::~TER_AgentManager()
 {
-    //NOTHING
+    // NOTHING
 }
 
 namespace

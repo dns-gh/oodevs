@@ -67,7 +67,7 @@ UrbanObjectWrapper::~UrbanObjectWrapper()
 // -----------------------------------------------------------------------------
 void UrbanObjectWrapper::WriteODB( xml::xostream& xos ) const
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -223,7 +223,7 @@ void UrbanObjectWrapper::SetHLAView( HLA_Object_ABC& view )
 // -----------------------------------------------------------------------------
 void UrbanObjectWrapper::Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -232,7 +232,7 @@ void UrbanObjectWrapper::Deserialize( const hla::AttributeIdentifier& attributeI
 // -----------------------------------------------------------------------------
 void UrbanObjectWrapper::Serialize( HLA_UpdateFunctor& functor ) const
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -297,7 +297,7 @@ void UrbanObjectWrapper::SendCreation() const
 // -----------------------------------------------------------------------------
 void UrbanObjectWrapper::SendDestruction() const
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -306,7 +306,7 @@ void UrbanObjectWrapper::SendDestruction() const
 // -----------------------------------------------------------------------------
 void UrbanObjectWrapper::SendFullState() const
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

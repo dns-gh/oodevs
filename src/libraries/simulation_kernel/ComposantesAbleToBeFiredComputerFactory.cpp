@@ -19,7 +19,7 @@ using namespace firing;
 // -----------------------------------------------------------------------------
 ComposantesAbleToBeFiredComputerFactory::ComposantesAbleToBeFiredComputerFactory()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

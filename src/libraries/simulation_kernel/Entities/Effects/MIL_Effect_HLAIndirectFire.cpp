@@ -21,7 +21,7 @@ MIL_Effect_HLAIndirectFire::MIL_Effect_HLAIndirectFire( const PHY_DotationCatego
     : ammunition_( ammunition )
     , target_    ( target )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -30,7 +30,7 @@ MIL_Effect_HLAIndirectFire::MIL_Effect_HLAIndirectFire( const PHY_DotationCatego
 // -----------------------------------------------------------------------------
 MIL_Effect_HLAIndirectFire::~MIL_Effect_HLAIndirectFire()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

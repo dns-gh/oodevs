@@ -31,7 +31,7 @@ using namespace hla;
 // -----------------------------------------------------------------------------
 HLA_Construction::HLA_Construction()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -42,7 +42,7 @@ HLA_Construction::HLA_Construction( const HLA_Object_ABC& targetObject, double r
     : HLA_ObjectInteraction( targetObject )
     , rDelta_( rDelta )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -51,7 +51,7 @@ HLA_Construction::HLA_Construction( const HLA_Object_ABC& targetObject, double r
 // -----------------------------------------------------------------------------
 HLA_Construction::~HLA_Construction()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

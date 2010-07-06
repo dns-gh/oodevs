@@ -29,7 +29,7 @@ AutomateFactory::AutomateFactory( MIL_IDManager& idManager, DEC_DataBase& databa
     : idManager_( idManager )
     , database_ ( database )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

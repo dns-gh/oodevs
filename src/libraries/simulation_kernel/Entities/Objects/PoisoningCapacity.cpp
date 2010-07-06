@@ -102,7 +102,7 @@ void PoisoningCapacity::Instanciate( MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 void PoisoningCapacity::Update( MIL_Object_ABC& /*object*/, float /*time*/ )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -139,7 +139,7 @@ void PoisoningCapacity::ProcessPopulationInside( MIL_Object_ABC& object, MIL_Pop
 // -----------------------------------------------------------------------------
 void PoisoningCapacity::ProcessAgentInside( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& /*agent*/ )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -148,5 +148,5 @@ void PoisoningCapacity::ProcessAgentInside( MIL_Object_ABC& /*object*/, MIL_Agen
 // -----------------------------------------------------------------------------
 void PoisoningCapacity::ProcessAgentEntering( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& /*agent*/ )
 {
-    //NOTHING
+    // NOTHING
 }

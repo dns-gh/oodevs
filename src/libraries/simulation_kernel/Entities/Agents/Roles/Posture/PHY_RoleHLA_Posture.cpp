@@ -28,7 +28,7 @@ PHY_RoleHLA_Posture::PHY_RoleHLA_Posture( const MIL_Agent_ABC& pion )
     , bIsStealth_( false )
     , bTransported_( false )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -37,7 +37,7 @@ PHY_RoleHLA_Posture::PHY_RoleHLA_Posture( const MIL_Agent_ABC& pion )
 // -----------------------------------------------------------------------------
 PHY_RoleHLA_Posture::~PHY_RoleHLA_Posture()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -75,7 +75,7 @@ MT_Float PHY_RoleHLA_Posture::GetPostureCompletionPercentage() const
 // -----------------------------------------------------------------------------
 void PHY_RoleHLA_Posture::SetPosturePostePrepareGenie()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -84,7 +84,7 @@ void PHY_RoleHLA_Posture::SetPosturePostePrepareGenie()
 // -----------------------------------------------------------------------------
 void PHY_RoleHLA_Posture::UnsetPosturePostePrepareGenie()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

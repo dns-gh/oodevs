@@ -49,7 +49,7 @@ HealableCapacity::HealableCapacity()
     , entranceWaitingList_   ()
     , deadsList_             ()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -67,7 +67,7 @@ HealableCapacity::HealableCapacity( const HealableCapacity& /*from*/ )
 // -----------------------------------------------------------------------------
 HealableCapacity::~HealableCapacity()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

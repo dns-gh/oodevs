@@ -23,7 +23,7 @@ namespace dotation
 PHY_RoleHLA_Dotations::PHY_RoleHLA_Dotations( MIL_Entity_ABC& entity )
 : entity_( entity )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -32,7 +32,7 @@ PHY_RoleHLA_Dotations::PHY_RoleHLA_Dotations( MIL_Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 PHY_RoleHLA_Dotations::~PHY_RoleHLA_Dotations()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

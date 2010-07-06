@@ -21,7 +21,7 @@
 TER_PopulationConcentration_ABC::TER_PopulationConcentration_ABC()
     : hint_     ( 0 )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

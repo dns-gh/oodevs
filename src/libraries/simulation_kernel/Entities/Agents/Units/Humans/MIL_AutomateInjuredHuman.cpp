@@ -75,7 +75,7 @@ MIL_AutomateInjuredHuman::MIL_AutomateInjuredHuman(     const MIL_AutomateTypeIn
 MIL_AutomateInjuredHuman::MIL_AutomateInjuredHuman( const MIL_AutomateTypeInjuredHuman& type, unsigned int nID )
     : MIL_Automate( type, nID )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -84,7 +84,7 @@ MIL_AutomateInjuredHuman::MIL_AutomateInjuredHuman( const MIL_AutomateTypeInjure
 // -----------------------------------------------------------------------------
 MIL_AutomateInjuredHuman::~MIL_AutomateInjuredHuman()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // =============================================================================

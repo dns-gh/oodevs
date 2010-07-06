@@ -75,7 +75,7 @@ DEC_Knowledge_PopulationConcentration::DEC_Knowledge_PopulationConcentration()
     , pCurrentPerceptionLevel_  ( &PHY_PerceptionLevel::notSeen_ )
     , bReconAttributesValid_    ( false )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

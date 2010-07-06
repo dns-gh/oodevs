@@ -88,7 +88,7 @@
 // -----------------------------------------------------------------------------
 MIL_EntityManagerStaticMethods::MIL_EntityManagerStaticMethods()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -97,7 +97,7 @@ MIL_EntityManagerStaticMethods::MIL_EntityManagerStaticMethods()
 // -----------------------------------------------------------------------------
 MIL_EntityManagerStaticMethods::~MIL_EntityManagerStaticMethods()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

@@ -42,7 +42,7 @@ TER_CoordinateManager::TER_CoordinateManager( float rMiddleLatitude, float rMidd
 // -----------------------------------------------------------------------------
 TER_CoordinateManager::~TER_CoordinateManager()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

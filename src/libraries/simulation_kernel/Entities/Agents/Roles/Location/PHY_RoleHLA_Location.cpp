@@ -38,7 +38,7 @@ PHY_RoleHLA_Location::PHY_RoleHLA_Location( MIL_AgentHLA& pion )
 // -----------------------------------------------------------------------------
 PHY_RoleHLA_Location::~PHY_RoleHLA_Location()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

@@ -49,7 +49,7 @@ AlgorithmsFactories::AlgorithmsFactories()
     , weaponReloadingComputerFactory_( new firing::WeaponReloadingComputerFactory() )
     , urbanLocationComputerFactory_( new urbanLocation::UrbanLocationComputerFactory() )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

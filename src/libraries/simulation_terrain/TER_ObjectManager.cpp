@@ -37,7 +37,7 @@ TER_ObjectManager::TER_ObjectManager( const MT_Rect& extent )
 // -----------------------------------------------------------------------------
 TER_ObjectManager::~TER_ObjectManager()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

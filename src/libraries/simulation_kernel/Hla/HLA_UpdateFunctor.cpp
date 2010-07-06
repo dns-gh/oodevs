@@ -29,7 +29,7 @@ HLA_UpdateFunctor::HLA_UpdateFunctor( UpdateFunctor_ABC& functor, bool bUpdateAl
     : functor_( functor )
     , bUpdateAll_( bUpdateAll )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -38,7 +38,7 @@ HLA_UpdateFunctor::HLA_UpdateFunctor( UpdateFunctor_ABC& functor, bool bUpdateAl
 // -----------------------------------------------------------------------------
 HLA_UpdateFunctor::~HLA_UpdateFunctor()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

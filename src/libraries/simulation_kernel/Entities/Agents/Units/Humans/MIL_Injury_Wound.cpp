@@ -58,7 +58,7 @@ MIL_Injury_Wound::MIL_Injury_Wound( const MIL_Injury_Wound& rhs )
     , injuryCategory_  ( rhs.injuryCategory_ )
     , lifeExpectancy_  ( rhs.lifeExpectancy_ )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -68,7 +68,7 @@ MIL_Injury_Wound::MIL_Injury_Wound( const MIL_Injury_Wound& rhs )
 MIL_Injury_Wound::~MIL_Injury_Wound( )
 
 {
-    //NOTHING
+    // NOTHING
 }
 
 // =============================================================================
@@ -196,7 +196,7 @@ bool MIL_Injury_Wound::IsInjured( const PHY_ComposantePion& /*pComposante*/ )
 // -----------------------------------------------------------------------------
 void MIL_Injury_Wound::SetInjury( unsigned int /*nNbrAliveHumans*/ , MT_Float /*rDensity*/ )
 {
-    //NOTHING YET!!
+    // NOTHING YET!!
 }
 
 // -----------------------------------------------------------------------------
@@ -207,6 +207,6 @@ void MIL_Injury_Wound::Injure( PHY_InjuredHuman& injuredHuman )
 {
     if( ! injuredHuman.FindInjury( injuryID_ ) )
     {
-        //NOTHING YET!!!!
+        // NOTHING YET!!!!
     }
 }

@@ -32,7 +32,7 @@ using namespace hla;
 // -----------------------------------------------------------------------------
 HLA_IndirectFire::HLA_IndirectFire()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -43,7 +43,7 @@ HLA_IndirectFire::HLA_IndirectFire( const HLA_RoleInterface& role, const PHY_Dot
     : HLA_TargetedInteraction( role       )
     , HLA_FireInteraction    ( ammunition )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -52,7 +52,7 @@ HLA_IndirectFire::HLA_IndirectFire( const HLA_RoleInterface& role, const PHY_Dot
 // -----------------------------------------------------------------------------
 HLA_IndirectFire::~HLA_IndirectFire()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

@@ -115,7 +115,7 @@ BOOST_CLASS_EXPORT_KEY( AlgorithmsFactories )
 template< typename Archive >
 void save_construct_data( Archive& /*archive*/, const AlgorithmsFactories* /*role*/, const unsigned int /*version*/ )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -134,7 +134,7 @@ void load_construct_data( Archive& /*archive*/, AlgorithmsFactories* factories, 
 // -----------------------------------------------------------------------------
 template< typename Archive > void AlgorithmsFactories::serialize( Archive&, const unsigned int )
 {
-    //NOTHING
+    // NOTHING
 }
 
 #endif // __AlgorithmsFactories_h_

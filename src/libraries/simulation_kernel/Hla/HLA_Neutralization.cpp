@@ -32,7 +32,7 @@ using namespace hla;
 // -----------------------------------------------------------------------------
 HLA_Neutralization::HLA_Neutralization()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -42,7 +42,7 @@ HLA_Neutralization::HLA_Neutralization()
 HLA_Neutralization::HLA_Neutralization( const HLA_RoleInterface& role )
     : HLA_TargetedInteraction( role )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -51,7 +51,7 @@ HLA_Neutralization::HLA_Neutralization( const HLA_RoleInterface& role )
 // -----------------------------------------------------------------------------
 HLA_Neutralization::~HLA_Neutralization()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

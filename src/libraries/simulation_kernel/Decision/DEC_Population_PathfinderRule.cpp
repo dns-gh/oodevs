@@ -39,7 +39,7 @@ DEC_Population_PathfinderRule::DEC_Population_PathfinderRule( const DEC_Populati
 // -----------------------------------------------------------------------------
 DEC_Population_PathfinderRule::~DEC_Population_PathfinderRule()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // =============================================================================

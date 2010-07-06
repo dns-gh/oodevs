@@ -18,7 +18,7 @@
 // -----------------------------------------------------------------------------
 OnComponentLendedFunctorComputerFactory::OnComponentLendedFunctorComputerFactory()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

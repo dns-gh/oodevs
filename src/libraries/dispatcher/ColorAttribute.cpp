@@ -61,5 +61,5 @@ void ColorAttribute::Send( MsgsSimToClient::MsgUrbanAttributes& message ) const
 // -----------------------------------------------------------------------------
 void ColorAttribute::AsnDelete( MsgsSimToClient::MsgUrbanAttributes& /*message*/ ) const
 {
-    //NOTHING
+    // NOTHING
 }

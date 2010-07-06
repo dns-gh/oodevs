@@ -31,7 +31,7 @@ using namespace hla;
 // -----------------------------------------------------------------------------
 HLA_Mining::HLA_Mining()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -42,7 +42,7 @@ HLA_Mining::HLA_Mining( const HLA_Object_ABC& object, double rDelta )
     : HLA_ObjectInteraction( object )
     , rDelta_( rDelta )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -51,7 +51,7 @@ HLA_Mining::HLA_Mining( const HLA_Object_ABC& object, double rDelta )
 // -----------------------------------------------------------------------------
 HLA_Mining::~HLA_Mining()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

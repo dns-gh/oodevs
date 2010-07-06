@@ -32,7 +32,7 @@ using namespace hla;
 // -----------------------------------------------------------------------------
 HLA_Bypassing::HLA_Bypassing()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -43,7 +43,7 @@ HLA_Bypassing::HLA_Bypassing( const HLA_Object_ABC& targetObject, double rDelta 
     : HLA_ObjectInteraction( targetObject )
     , rDelta_( rDelta )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -52,7 +52,7 @@ HLA_Bypassing::HLA_Bypassing( const HLA_Object_ABC& targetObject, double rDelta 
 // -----------------------------------------------------------------------------
 HLA_Bypassing::~HLA_Bypassing()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

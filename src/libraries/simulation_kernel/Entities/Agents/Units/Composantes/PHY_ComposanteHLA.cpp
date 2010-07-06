@@ -19,7 +19,7 @@ PHY_ComposanteHLA::PHY_ComposanteHLA( const PHY_ComposanteType_ABC& type, unsign
     , nCurrentElements_   ( nElements )
     , nMaxElements_( nElements )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -28,7 +28,7 @@ PHY_ComposanteHLA::PHY_ComposanteHLA( const PHY_ComposanteType_ABC& type, unsign
 // -----------------------------------------------------------------------------
 PHY_ComposanteHLA::~PHY_ComposanteHLA()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

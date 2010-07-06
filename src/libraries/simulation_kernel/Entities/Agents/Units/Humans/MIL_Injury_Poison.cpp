@@ -65,7 +65,7 @@ MIL_Injury_Poison::MIL_Injury_Poison( const MIL_Injury_Poison& rhs )
     , injuryCategory_    ( rhs.injuryCategory_ )
     , lifeExpectancy_    ( rhs.lifeExpectancy_ )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -75,7 +75,7 @@ MIL_Injury_Poison::MIL_Injury_Poison( const MIL_Injury_Poison& rhs )
 MIL_Injury_Poison::~MIL_Injury_Poison( )
 
 {
-    //NOTHING
+    // NOTHING
 }
 
 // =============================================================================
@@ -205,7 +205,7 @@ namespace
             , NBCAgent_             ( NBCAgent )
             , protectionValue_      ( 0 )
         {
-            //NOTHING
+            // NOTHING
         }
 
         void operator() ( const PHY_ComposantePion& composantePion )

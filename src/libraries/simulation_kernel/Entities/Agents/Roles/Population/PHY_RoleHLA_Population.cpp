@@ -19,7 +19,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RoleHLA_Population )
 PHY_RoleHLA_Population::PHY_RoleHLA_Population()
     : bInvulnerable_              ( false )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -28,7 +28,7 @@ PHY_RoleHLA_Population::PHY_RoleHLA_Population()
 // -----------------------------------------------------------------------------
 PHY_RoleHLA_Population::~PHY_RoleHLA_Population()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

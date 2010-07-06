@@ -17,7 +17,7 @@
 // -----------------------------------------------------------------------------
 OnComponentFunctorComputerFactory_ABC::OnComponentFunctorComputerFactory_ABC()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

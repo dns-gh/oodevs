@@ -28,7 +28,7 @@
 HLA_FireInteraction::HLA_FireInteraction()
     : strAmmunition_( "" )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -38,7 +38,7 @@ HLA_FireInteraction::HLA_FireInteraction()
 HLA_FireInteraction::HLA_FireInteraction( const PHY_DotationCategory& ammunition )
 : strAmmunition_( ammunition.GetName() )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -47,7 +47,7 @@ HLA_FireInteraction::HLA_FireInteraction( const PHY_DotationCategory& ammunition
 // -----------------------------------------------------------------------------
 HLA_FireInteraction::~HLA_FireInteraction()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

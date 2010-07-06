@@ -24,7 +24,7 @@
 MIL_AutomateTypeInjuredHuman::MIL_AutomateTypeInjuredHuman( const std::string& strName, xml::xistream& xis )
     : MIL_AutomateType( strName, xis )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -33,7 +33,7 @@ MIL_AutomateTypeInjuredHuman::MIL_AutomateTypeInjuredHuman( const std::string& s
 // -----------------------------------------------------------------------------
 MIL_AutomateTypeInjuredHuman::~MIL_AutomateTypeInjuredHuman()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // =============================================================================

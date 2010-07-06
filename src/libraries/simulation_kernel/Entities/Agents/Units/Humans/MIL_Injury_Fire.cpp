@@ -1,27 +1,20 @@
 // *****************************************************************************
 //
-// $Created: RFT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Units/Humans/PHY_HumanPopulation.cpp $
-// $Author: RFT $
-// $Modtime: 29/04/05 11:15 $
-// $Revision: 13 $
-// $Workfile: PHY_HumanPopulation.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2008 MASA Group
 //
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL.h"
 #include "MIL_Injury_Fire.h"
-
-#include "PHY_InjuredHuman.h"
-
 #include "MIL_Random.h"
+#include "PHY_InjuredHuman.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
-
 #include "Entities/Objects/MIL_FireClass.h"
 #include "Entities/Objects/MIL_MedicalTreatmentType.h"
-
 #include "Entities/Agents/Units/Humans/PHY_HumanProtection.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Injury_Fire )
@@ -31,13 +24,13 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Injury_Fire )
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
 MIL_Injury_Fire::MIL_Injury_Fire()
-    : MIL_Injury_ABC   ()
-    , heat_            ( 0 )
-    , fireClass_       ( 0 )
-    , injuryID_        ( 0 )
-    , injuryCategory_  ( MIL_MedicalTreatmentType::eNone )
+    : MIL_Injury_ABC ()
+    , heat_          ( 0 )
+    , fireClass_     ( 0 )
+    , injuryID_      ( 0 )
+    , injuryCategory_( MIL_MedicalTreatmentType::eNone )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -51,7 +44,7 @@ MIL_Injury_Fire::MIL_Injury_Fire( int heat , const std::string fireClass_ , int 
     , injuryID_        ( injuryID )
     , injuryCategory_  ( MIL_MedicalTreatmentType::eNone )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -65,7 +58,7 @@ MIL_Injury_Fire::MIL_Injury_Fire( const MIL_Injury_Fire& rhs )
     , injuryID_        ( rhs.injuryID_ )
     , injuryCategory_  ( rhs.injuryCategory_ )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -74,7 +67,7 @@ MIL_Injury_Fire::MIL_Injury_Fire( const MIL_Injury_Fire& rhs )
 // -----------------------------------------------------------------------------
 MIL_Injury_Fire::~MIL_Injury_Fire()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // =============================================================================
@@ -88,7 +81,7 @@ MIL_Injury_Fire::~MIL_Injury_Fire()
 void MIL_Injury_Fire::load( MIL_CheckPointInArchive& file, const uint )
 {
     file >> heat_
-         >> const_cast < std::string &>( fireClass_ )
+         >> const_cast < std::string& >( fireClass_ )
          >> injuryID_
          >> injuryCategory_
          >> lifeExpectancy_;
@@ -204,7 +197,7 @@ namespace
             , fireClass_      ( fireClass )
             , protectionValue_( 0 )
         {
-            //NOTHING
+            // NOTHING
         }
 
         void operator() ( const PHY_ComposantePion& composantePion )

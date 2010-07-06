@@ -32,7 +32,7 @@ const double HLA_TimeInterval::rEpsilon_ = 0.000000001;
 HLA_TimeInterval::HLA_TimeInterval()
     : rInterval_( 0 )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -42,7 +42,7 @@ HLA_TimeInterval::HLA_TimeInterval()
 HLA_TimeInterval::HLA_TimeInterval( double rInterval )
     : rInterval_( rInterval )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -51,7 +51,7 @@ HLA_TimeInterval::HLA_TimeInterval( double rInterval )
 // -----------------------------------------------------------------------------
 HLA_TimeInterval::~HLA_TimeInterval()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

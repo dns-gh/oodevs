@@ -31,7 +31,7 @@ using namespace hla;
 // -----------------------------------------------------------------------------
 HLA_Activation::HLA_Activation()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -42,7 +42,7 @@ HLA_Activation::HLA_Activation( const HLA_Object_ABC& targetObject, bool bActiva
     : HLA_ObjectInteraction( targetObject )
     , bActivate_( bActivate )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -51,7 +51,7 @@ HLA_Activation::HLA_Activation( const HLA_Object_ABC& targetObject, bool bActiva
 // -----------------------------------------------------------------------------
 HLA_Activation::~HLA_Activation()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

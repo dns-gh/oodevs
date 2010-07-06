@@ -33,7 +33,7 @@ MIL_Injury_NBC::MIL_Injury_NBC()
     , injuryID_        ( 0 )
     , injuryCategory_  ( MIL_MedicalTreatmentType::eNone )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -45,7 +45,7 @@ MIL_Injury_NBC::MIL_Injury_NBC( NBCTypeAttribute& attr , int injuryID )
     , injuryID_        ( injuryID )
     , injuryCategory_  ( MIL_MedicalTreatmentType::eNone )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -57,7 +57,7 @@ MIL_Injury_NBC::MIL_Injury_NBC( const MIL_Injury_NBC& rhs )
     , injuryID_        ( rhs.injuryID_ )
     , injuryCategory_  ( rhs.injuryCategory_ )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -67,7 +67,7 @@ MIL_Injury_NBC::MIL_Injury_NBC( const MIL_Injury_NBC& rhs )
 MIL_Injury_NBC::~MIL_Injury_NBC( )
 
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

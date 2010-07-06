@@ -178,7 +178,7 @@ DEC_Agent_PathClass::DEC_Agent_PathClass( xml::xistream& xis, const DEC_Agent_Pa
 // -----------------------------------------------------------------------------
 DEC_Agent_PathClass::~DEC_Agent_PathClass()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // =============================================================================

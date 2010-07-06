@@ -25,7 +25,7 @@
 // -----------------------------------------------------------------------------
 HLA_InteractionManager_ABC::HLA_InteractionManager_ABC()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -34,5 +34,5 @@ HLA_InteractionManager_ABC::HLA_InteractionManager_ABC()
 // -----------------------------------------------------------------------------
 HLA_InteractionManager_ABC::~HLA_InteractionManager_ABC()
 {
-    //NOTHING
+    // NOTHING
 }

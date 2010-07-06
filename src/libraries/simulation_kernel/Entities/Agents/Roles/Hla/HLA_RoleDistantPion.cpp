@@ -25,7 +25,7 @@ HLA_RoleDistantPion::HLA_RoleDistantPion( MIL_AgentHLA& pion, const ObjectIdenti
     , pion_ ( pion )
     , objectId_( objectId )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -34,7 +34,7 @@ HLA_RoleDistantPion::HLA_RoleDistantPion( MIL_AgentHLA& pion, const ObjectIdenti
 // -----------------------------------------------------------------------------
 HLA_RoleDistantPion::~HLA_RoleDistantPion()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

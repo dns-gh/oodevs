@@ -47,7 +47,7 @@ HLA_DistantObject::HLA_DistantObject( const ObjectIdentifier& objectId, HLA_Inte
     , id_( objectId )
     , interactionManager_( interactionManager )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

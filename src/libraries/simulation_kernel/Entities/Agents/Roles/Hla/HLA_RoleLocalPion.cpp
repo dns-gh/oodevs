@@ -26,7 +26,7 @@ HLA_RoleLocalPion::HLA_RoleLocalPion( MIL_AgentPion& pion )
     : HLA_RoleInterface( pion )
     , pObjectId_( 0 )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

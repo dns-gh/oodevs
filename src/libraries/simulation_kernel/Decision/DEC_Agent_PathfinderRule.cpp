@@ -111,7 +111,7 @@ DEC_Agent_PathfinderRule::DEC_Agent_PathfinderRule( const DEC_Agent_Path& path, 
 // -----------------------------------------------------------------------------
 DEC_Agent_PathfinderRule::~DEC_Agent_PathfinderRule()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // =============================================================================
