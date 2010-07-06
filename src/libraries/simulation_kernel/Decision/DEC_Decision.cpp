@@ -1,5 +1,13 @@
-#include "simulation_kernel_pch.h"
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2009 MASA Group
+//
+// *****************************************************************************
 
+#include "simulation_kernel_pch.h"
 #include "DEC_Decision.h"
 #include "DEC_Tools.h"
 #include "simulation_orders/MIL_MissionParameter_ABC.h"
@@ -25,7 +33,7 @@
 #include "geometry/Point2.h"
 
 #include <boost/bind.hpp>
-#include <directia/ScriptRef.h>
+#include <directia/Brain.h>
 
 // -----------------------------------------------------------------------------
 // Name: ScriptRefs
@@ -33,8 +41,8 @@
 // -----------------------------------------------------------------------------
 ScriptRefs::ScriptRefs( directia::Brain& brain  )
     : sendEvent_       ( brain.GetScriptFunction( "SendEvent" ) )
-, startEvent_      ( brain.GetScriptFunction( "StartEvent" ) )
-, stopEvents_      ( brain.GetScriptFunction( "StopEvents" ) )
+    , startEvent_      ( brain.GetScriptFunction( "StartEvent" ) )
+    , stopEvents_      ( brain.GetScriptFunction( "StopEvents" ) )
     , setStateVariable_( brain.GetScriptFunction( "SetStateVariable" ) )
     , collectgarbage_  ( brain.GetScriptFunction( "collectgarbage" ) )
     , step_            ( brain.RegisterObject( std::string( "step" ) ) )
@@ -252,17 +260,13 @@ void PointFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowled
 {
     boost::shared_ptr< MT_Vector2D > value;
     if( element.ToPoint( value ) && value.get() )
-    {
         knowledgeCreateFunction( refMission,  brain.GetScriptVariable( "net.masagroup.sword.military.world.Point" ) , name, value, false );
-    }
 }
 void PointListFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< boost::shared_ptr< MT_Vector2D > > value;
     if( element.ToPointList( value ) )
-    {
         knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Point" ), name, value, true );
-    }
 }
 void PolygonFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -280,17 +284,13 @@ void AreaFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledg
 {
     boost::shared_ptr< TER_Localisation > value;
     if( element.ToPolygon( value ) && value.get() )
-    {
         knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Area" ), name, value, false );
-    }
 }
 void AreaListFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< boost::shared_ptr< TER_Localisation > > value;
     if( element.ToPolygonList( value ) )
-    {
         knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Area" ), name, value, true );
-    }
 }
 void LocationFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -330,9 +330,7 @@ void DirectionFunctionBM( const directia::Brain& brain, directia::ScriptRef& kno
 {
     boost::shared_ptr< MT_Vector2D > value;
     if( element.ToDirection( value ) && value.get() )
-    {
         knowledgeCreateFunction( refMission,  brain.GetScriptVariable( "net.masagroup.sword.military.world.Direction" ) , name, value, false );
-    }
 }
 void NatureAtlasFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -350,9 +348,7 @@ void AutomatFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowl
 {
     DEC_Decision_ABC* value = 0;
     if( element.ToAutomat( value ) )
-    {
         knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Company" ), name, value, false );
-    }
 }
 void AutomatListFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -364,9 +360,7 @@ void AutomatListFunctionBM( const directia::Brain& brain, directia::ScriptRef& k
 {
     std::vector< DEC_Decision_ABC* > value;
     if( element.ToAutomatList( value ) )
-    {
         knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Company" ), name, value, true );
-    }
 }
 void AgentFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -390,9 +384,7 @@ void AgentListFunctionBM( const directia::Brain& brain, directia::ScriptRef& kno
 {
     std::vector< DEC_Decision_ABC* > value;
     if( element.ToAgentList( value ) )
-    {
         knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.PlatoonAlly" ), name, value, true );
-    }
 }
 void AgentKnowledgeFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -416,9 +408,7 @@ void AgentKnowledgeListFunctionBM( const directia::Brain& brain, directia::Scrip
 {
     std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > value;
     if( element.ToAgentKnowledgeList( value ) )
-    {
         knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Platoon" ), name, value, true );
-    }
 }
 void ObjectKnowledgeFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -442,9 +432,7 @@ void ObjectKnowledgeListFunctionBM( const directia::Brain& brain, directia::Scri
 {
     std::vector< boost::shared_ptr< DEC_Knowledge_Object > > value;
     if( element.ToObjectKnowledgeList( value ) )
-    {
         knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Object" ), name, value, true );
-    }
 }
 void PopulationKnowledgeFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -463,9 +451,7 @@ void UrbanBlockFunctionBM( const directia::Brain& brain, directia::ScriptRef& kn
 {
     boost::shared_ptr< DEC_Knowledge_Urban > value;
     if( element.ToUrbanBlock( value ) && value )
-    {
         knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.UrbanBlock" ), name, value, false );
-    }
 }
 
 void DotationTypeFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
@@ -610,13 +596,12 @@ void InitFunctions()
     }
 }
 
-
 class RegisterMissionParameterVisitor : public MIL_MissionParameterVisitor_ABC
 {
 public:
     RegisterMissionParameterVisitor( const directia::Brain& brain, const directia::ScriptRef& refMission, directia::ScriptRef& knowledgeCreateFunction )
-        : brain_( brain )
-        , refMission_( refMission )
+        : brain_                  ( brain )
+        , refMission_             ( refMission )
         , knowledgeCreateFunction_( knowledgeCreateFunction )
     {}
     virtual ~RegisterMissionParameterVisitor()

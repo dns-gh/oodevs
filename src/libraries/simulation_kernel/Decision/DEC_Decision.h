@@ -13,7 +13,6 @@
 #include "MIL.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
-#include <directia/Brain.h>
 
 class DEC_DataBase;
 class DEC_Knowledge_Object;
@@ -29,15 +28,14 @@ namespace directia
 
 // =============================================================================
 /** @class  DEC_Decision
-    @brief  DEC_Decision
-    Template T must be a subcless of MIL_Entity_ABC
+    @brief  DEC decision
+    Template T must be a subclass of MIL_Entity_ABC
 */
 // Created: LDC 2009-02-27
 // =============================================================================
-template <class T >
+template < class T >
 class DEC_Decision : public DEC_Decision_ABC
 {
-
 public:
     //! @name Constructor
     //@{
@@ -128,7 +126,6 @@ public:
     {
         ar & boost::serialization::base_object< DEC_Decision_ABC >( *this );
     }
-
     //@}
 
 protected:
@@ -165,10 +162,10 @@ private://! @name Helpers
 protected:
     //!@name Data
     //@{
-    T*                              pEntity_;
-    boost::shared_ptr< MIL_Mission_ABC >                pMission_;
-    std::string                     diaType_;
-    DEC_DataBase&                   database_;
+    T*                                   pEntity_;
+    boost::shared_ptr< MIL_Mission_ABC > pMission_;
+    std::string                          diaType_;
+    DEC_DataBase&                        database_;
     //@}
 
 private:
@@ -178,7 +175,6 @@ private:
     std::auto_ptr< struct ScriptRefs > pRefs_;
     std::string                        brainFile_;
     std::string                        includePath_;
-
     std::string                        modelName_;
     //@}
 };

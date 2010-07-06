@@ -1,17 +1,14 @@
 // *****************************************************************************
 //
-// $Created: NLD 2004-03-31 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Functions/DEC_AutomateFunctions.cpp $
-// $Author: Jvt $
-// $Modtime: 11/05/05 11:03 $
-// $Revision: 20 $
-// $Workfile: DEC_AutomateFunctions.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2004 MASA Group
 //
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 #include "DEC_AutomateFunctions.h"
-
 #include "DEC_GeometryFunctions.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Entities/Automates/MIL_Automate.h"
@@ -26,7 +23,6 @@
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateFunctions::IsParentAutomateEngaged
@@ -124,7 +120,6 @@ DEC_Decision_ABC* DEC_AutomateFunctions::GetPionPC( const MIL_Automate& callerAu
 DEC_Decision_ABC* DEC_AutomateFunctions::GetPionPCOfAutomate( DEC_Decision_ABC* pAutomate )
 {
     assert( pAutomate );
-
     return DEC_AutomateFunctions::GetPionPC( pAutomate->GetAutomate() );
 }
 
@@ -174,7 +169,6 @@ bool DEC_AutomateFunctions::IsPionInAutomate( const MIL_Automate& automate, cons
     const MIL_Automate::T_PionVector& pions = automate.GetPions();
     return std::find( pions.begin(), pions.end(), &pion ) != pions.end();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateFunctions::CanPionConstructObject
@@ -271,7 +265,6 @@ bool DEC_AutomateFunctions::MakePionRelievePion( const MIL_Automate& callerAutom
     assert( relieving && relieved );
     assert( IsPionInAutomate( callerAutomate, relieving->GetPion() ) );
     assert( IsPionInAutomate( callerAutomate, relieved->GetPion() ) );
-
     if( relieving->GetPion().GetOrderManager().RelievePion( relieved->GetPion() ) )
     {
         relieved->GetPion().GetOrderManager().CancelMission();
