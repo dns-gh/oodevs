@@ -10,6 +10,8 @@
 #ifndef __MIL_ParameterType_ABC_h_
 #define __MIL_ParameterType_ABC_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace Common
 {
     class MsgMissionParameter;
@@ -25,13 +27,13 @@ class MIL_MissionParameter_ABC;
 */
 // Created: NLD 2006-11-14
 // =============================================================================
-class MIL_ParameterType_ABC
+class MIL_ParameterType_ABC : private boost::noncopyable
 {
 public:
     //! @name Factory
     //@{
-    static void                         Initialize();
-    static const MIL_ParameterType_ABC* Find      ( const std::string& strName );
+    static void Initialize();
+    static const MIL_ParameterType_ABC* Find ( const std::string& strName );
     //@}
 
     //! @name Accessors
