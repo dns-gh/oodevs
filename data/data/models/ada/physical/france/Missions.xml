@@ -929,8 +929,8 @@
       <parameter dia-name="objectives" name="Sites de decontamination" optional="false" type="ObjectKnowledgeListBM"/>
       <parameter dia-name="destinations" name="destination" optional="false" type="PointBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.tasks.commun.SeFaireTransporter" dia-type="T_Mission_Pion_SeFaireTransporterBM" id="2057" name="COMMUNE Se Faire Transporter">
-      <parameter dia-name="positions" name="destination" optional="false" type="PointBM"/>
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.SeFaireTransporter" dia-type="T_Mission_Pion_SeFaireTransporterBM" id="2057" name="COMMUNE Se Faire Transporter">
+      <parameter dia-name="position" name="Point embarquement" optional="false" type="PointBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.OrienterRefugies" dia-type="T_Mission_Pion_OrienterGuiderRefugiesBM" id="2058" name="COMMUNE Orienter Guider Refugies">
       <parameter dia-name="refugees" name="objectifs" optional="false" type="AgentKnowledgeListBM"/>
