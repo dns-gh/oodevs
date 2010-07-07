@@ -40,7 +40,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-     MIL_PopulationElement_ABC( MIL_Population& population, unsigned int nID );
+             MIL_PopulationElement_ABC( MIL_Population& population, unsigned int nID );
     virtual ~MIL_PopulationElement_ABC();
     //@}
 

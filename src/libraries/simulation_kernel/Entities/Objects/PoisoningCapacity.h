@@ -19,13 +19,12 @@ class MIL_Agent_ABC;
 
 // =============================================================================
 /** @class  PoisoningCapacity
-    @brief  PoisoningCapacity
+    @brief  Poisoning capacity
 */
 // Created: RFT 2008-06-02
 // =============================================================================
-class PoisoningCapacity
-    : public ObjectCapacity_ABC
-    , public MIL_InteractiveContainer_ABC
+class PoisoningCapacity : public ObjectCapacity_ABC
+                        , public MIL_InteractiveContainer_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -58,7 +57,6 @@ public:
     virtual void ProcessAgentEntering( MIL_Object_ABC& object, MIL_Agent_ABC& agent );
     virtual void ProcessAgentMovingInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent );
     virtual void ProcessPopulationInside( MIL_Object_ABC& object, MIL_PopulationElement_ABC& agent );
-
     //@}
 
 private:

@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: NLD 2005-09-28 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 #include "MIL_PopulationElement_ABC.h"
@@ -26,11 +17,11 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Population/PHY_RoleInterface_Population.h"
+#include "Entities/Agents/Units/Humans/MIL_Injury_ABC.h"
 #include "Entities/Objects/AttritionCapacity.h"
 #include "Entities/Effects/MIL_Effect_PopulationFire.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/MIL_Army.h"
-#include "Entities/Agents/Units/Humans/MIL_Injury_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationElement_ABC constructor
@@ -200,7 +191,6 @@ void MIL_PopulationElement_ABC::UpdateCollisions()
     {
         MIL_Agent_ABC& agent = static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent();
         collidingAgents_.push_back( &agent );
-
         NotifyCollision( agent );
     }
 }

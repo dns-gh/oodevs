@@ -22,7 +22,7 @@
 class PropagationCapacity_ABC : public ObjectCapacity_ABC
                               , public MIL_InteractiveContainer_ABC
 {
-    public:
+public:
     //! @name Constructors/Destructor
     //@{
     virtual ~PropagationCapacity_ABC() {}
