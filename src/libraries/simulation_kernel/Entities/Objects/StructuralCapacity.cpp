@@ -33,8 +33,8 @@ StructuralCapacity::StructuralCapacity()
 // Created: JSR 2010-06-22
 // -----------------------------------------------------------------------------
 StructuralCapacity::StructuralCapacity( xml::xistream& xis )
-    : structuralState_( 0.01f * xml::attribute< int >( xis, "value" ) )
 {
+    Load( xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -66,7 +66,7 @@ void StructuralCapacity::Load( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename Archive > void StructuralCapacity::serialize
+// Name: void StructuralCapacity::serialize
 // Created: JSR 2010-06-23
 // -----------------------------------------------------------------------------
 template< typename Archive >
@@ -84,7 +84,7 @@ void StructuralCapacity::serialize( Archive& file, const unsigned int )
 void StructuralCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
-    object.Register( static_cast< MIL_InteractiveContainer_ABC *>( this ) );
+    object.Register( static_cast< MIL_InteractiveContainer_ABC* >( this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -95,7 +95,7 @@ void StructuralCapacity::Instanciate( MIL_Object_ABC& object ) const
 {
     StructuralCapacity* capacity = new StructuralCapacity( *this );
     object.AddCapacity( capacity );
-    object.Register( static_cast< MIL_InteractiveContainer_ABC *>( capacity ) );
+    object.Register( static_cast< MIL_InteractiveContainer_ABC* >( capacity ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -104,7 +104,7 @@ void StructuralCapacity::Instanciate( MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 void StructuralCapacity::ApplyIndirectFire( const MIL_Object_ABC& object, const MT_Ellipse& attritionSurface, const PHY_DotationCategory& dotation )
 {
-    float urbanObjectArea = object.GetLocalisation().GetArea();
+    const float urbanObjectArea = object.GetLocalisation().GetArea();
 
     if( !urbanObjectArea )
         return;
@@ -117,15 +117,12 @@ void StructuralCapacity::ApplyIndirectFire( const MIL_Object_ABC& object, const 
         float( 3 * attritionSurface.GetCenter().rY_ - attritionSurface.GetMajorAxisHighPoint().rY_ - attritionSurface.GetMinorAxisHighPoint().rY_ ) ) );
     attritionPolygon.Add( geometry::Point2f( float( attritionSurface.GetCenter().rX_ - attritionSurface.GetMajorAxisHighPoint().rX_ + attritionSurface.GetMinorAxisHighPoint().rX_ ),
         float( attritionSurface.GetCenter().rY_ - attritionSurface.GetMajorAxisHighPoint().rY_ + attritionSurface.GetMinorAxisHighPoint().rY_ ) ) );
-
     geometry::Polygon2f p;
     CT_PointVector points = object.GetLocalisation().GetPoints();
     for( T_PointVector::const_iterator it = points.begin(); it != points.end(); ++it )
         p.Add( geometry::Point2f( it->rX_, it->rY_ ) );
-    float ratio = MIL_Geometry::IntersectionArea( attritionPolygon, p ) / urbanObjectArea;
-
-    float modifier = float( dotation.GetAttrition( object.GetMaterial() ) );
-
+    const float ratio = MIL_Geometry::IntersectionArea( attritionPolygon, p ) / urbanObjectArea;
+    const float modifier = static_cast< float >( dotation.GetAttrition( object.GetMaterial() ) );
     structuralState_ -= ratio * modifier;
     if( structuralState_  < 0 )
         structuralState_ = 0;
@@ -137,11 +134,10 @@ void StructuralCapacity::ApplyIndirectFire( const MIL_Object_ABC& object, const 
 // -----------------------------------------------------------------------------
 void StructuralCapacity::ApplyDirectFire( const MIL_Object_ABC& object, const PHY_DotationCategory& dotation )
 {
-
-    float area = object.GetLocalisation().GetArea();
+    const float area = object.GetLocalisation().GetArea();
     if( area )
     {
-        float modifier = float( dotation.GetAttrition( object.GetMaterial() ) );
+        const float modifier = static_cast< float >( dotation.GetAttrition( object.GetMaterial() ) );
         structuralState_-= modifier / area;
     }
 }

@@ -22,14 +22,13 @@ namespace MsgsSimToClient
 
 // =============================================================================
 /** @class  StructuralCapacity
-    @brief  StructuralCapacity
+    @brief  Structural capacity
 */
 // Created: SLG 2010-06-17
 // =============================================================================
 class StructuralCapacity : public ObjectCapacity_ABC
                          , public MIL_InteractiveContainer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -57,7 +56,7 @@ public:
 
     //! @name Operations on population
     //@{
-    virtual void ProcessPopulationInside ( MIL_Object_ABC& /*object*/, MIL_PopulationElement_ABC& /*population*/ ) {};
+    virtual void ProcessPopulationInside( MIL_Object_ABC& /*object*/, MIL_PopulationElement_ABC& /*population*/ ) {};
     //@}
 
 private:
