@@ -85,7 +85,7 @@ float DEC_KnowledgeUrbanFunctions::GetRapForLocal( const MIL_AgentPion& callerAg
     {
         if( (*it)->IsInUrbanBlock( pKnowledge->GetTerrainObjectKnown() ) )
         {
-            rTotalFightScoreEnemy += (float)(*it)->GetDangerosity( callerAgent );
+            rTotalFightScoreEnemy += static_cast< float >( (*it)->GetDangerosity( callerAgent ) );
             dangerousEnemies_.push_back( *it );
         }
     }
@@ -109,13 +109,8 @@ float DEC_KnowledgeUrbanFunctions::GetRapForLocal( const MIL_AgentPion& callerAg
     // Add bonus if the pion is posted in this urbanbloc
     const UrbanObjectWrapper* urbanBlock = callerAgent.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
     if( urbanBlock && &pKnowledge->GetTerrainObjectKnown() == &urbanBlock->GetObject() && callerAgent.GetRole< PHY_RoleInterface_Posture >().IsInstalled() )
-        rRapForValue *= 1.20;
-
-    if( rRapForValue < 0.2 )
-        rRapForValue = 0.2;
-    if( rRapForValue > 5.0 )
-        rRapForValue = 5.0;
-
+        rRapForValue *= 1.2;
+    rRapForValue = std::max( 0.2, std::min( 5., rRapForValue ) );
     return static_cast< float >( rRapForValue );
 }
 
