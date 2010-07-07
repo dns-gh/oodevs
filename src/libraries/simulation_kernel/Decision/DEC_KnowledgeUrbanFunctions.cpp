@@ -9,6 +9,10 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_KnowledgeUrbanFunctions.h"
+#include "AlgorithmsFactories.h"
+#include "OnComponentComputer_ABC.h"
+#include "OnComponentFunctorComputerFactory_ABC.h"
+#include "OnComponentFunctor_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
@@ -22,10 +26,6 @@
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Urban.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
-#include "AlgorithmsFactories.h"
-#include "OnComponentComputer_ABC.h"
-#include "OnComponentFunctorComputerFactory_ABC.h"
-#include "OnComponentFunctor_ABC.h"
 #include "urban/MaterialCompositionType.h"
 #include "urban/TerrainObject_ABC.h"
 #include "urban/Architecture.h"
@@ -38,7 +38,7 @@
 int DEC_KnowledgeUrbanFunctions::GetCurrentPerceptionLevel( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge )
 {
     if( pKnowledge.get() && pKnowledge->IsValid() )
-        return (int)pKnowledge->GetCurrentPerceptionLevel( callerAgent ).GetID();
+        return static_cast< int >( pKnowledge->GetCurrentPerceptionLevel( callerAgent ).GetID() );
     return 0;
 }
 
@@ -64,7 +64,7 @@ boost::shared_ptr< MT_Vector2D > DEC_KnowledgeUrbanFunctions::GetCurrentBarycent
 float DEC_KnowledgeUrbanFunctions::GetPathfindCost( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge )
 {
     if( pKnowledge.get() && pKnowledge->IsValid() )
-        return pKnowledge->GetPathfindCost( (float)callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight() );
+        return pKnowledge->GetPathfindCost( static_cast< float >( callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight() ) );
     return -1;
 }
 
@@ -116,7 +116,7 @@ float DEC_KnowledgeUrbanFunctions::GetRapForLocal( const MIL_AgentPion& callerAg
     if( rRapForValue > 5.0 )
         rRapForValue = 5.0;
 
-    return (float)rRapForValue;
+    return static_cast< float >( rRapForValue );
 }
 
 namespace
@@ -124,51 +124,59 @@ namespace
     class SensorFunctor
     {
     public:
-        SensorFunctor(const MIL_Agent_ABC& perceiver, const MT_Vector2D& point, const MT_Vector2D& target )
-            : perceiver_( perceiver ), point_( point ), target_( target), NRJ_( 0 )
+         SensorFunctor( const MIL_Agent_ABC& perceiver, const MT_Vector2D& point, const MT_Vector2D& target )
+            : perceiver_( perceiver )
+            , point_    ( point )
+            , target_   ( target )
+            , energy_   ( 0 )
         {}
         ~SensorFunctor()
         {}
-
-        void operator() ( const PHY_Sensor& sensor )
+        void operator()( const PHY_Sensor& sensor )
         {
             const PHY_SensorTypeAgent* sensorTypeAgent = sensor.GetType().GetTypeAgent();
             if( sensorTypeAgent )
-            {
-                NRJ_ = std::max( NRJ_, sensorTypeAgent->RayTrace( point_, target_ ) );
-            }
+                energy_ = std::max( energy_, sensorTypeAgent->RayTrace( point_, target_ ) );
         }
-        double GetNRJ(){ return NRJ_; }
+        double GetEnergy() const
+        {
+            return energy_;
+        }
     private:
         const MIL_Agent_ABC& perceiver_;
         const MT_Vector2D& point_;
         const MT_Vector2D& target_;
-        double NRJ_; 
+        double energy_;
     };
 
     class Functor : public OnComponentFunctor_ABC
     {
         public:
-            Functor( const MIL_Agent_ABC& perceiver, const MT_Vector2D& point, const MT_Vector2D& target )
-                : perceiver_( perceiver ), point_( point ), target_( target ), NRJ_( 0 )
+             Functor( const MIL_Agent_ABC& perceiver, const MT_Vector2D& point, const MT_Vector2D& target )
+                : perceiver_( perceiver )
+                , point_    ( point )
+                , target_   ( target )
+                , energy_   ( 0 )
             {}
             ~Functor()
             {}
-
-        void operator() ( PHY_ComposantePion& composante )
+        void operator()( PHY_ComposantePion& composante )
         {
             if( !composante.CanPerceive() )
                 return;
             SensorFunctor dataFunctor( perceiver_, point_, target_ );
             composante.ApplyOnSensors( dataFunctor );
-            NRJ_ = std::max( NRJ_, dataFunctor.GetNRJ() );
+            energy_ = std::max( energy_, dataFunctor.GetEnergy() );
          }
-        double GetNRJ(){ return NRJ_; }
+        double GetEnergy() const
+        {
+            return energy_;
+        }
     private:
         const MIL_Agent_ABC& perceiver_;
         const MT_Vector2D& point_;
         const MT_Vector2D& target_;
-        double NRJ_;
+        double energy_;
     };
 }
 
@@ -181,6 +189,5 @@ double DEC_KnowledgeUrbanFunctions::GetPerception( const MIL_AgentPion& callerAg
     Functor dataFunctor( callerAgent, *pPoint, *pTarget );
     std::auto_ptr< OnComponentComputer_ABC > dataComputer( callerAgent.GetAlgorithms().onComponentFunctorComputerFactory_->Create( dataFunctor ) );
     const_cast< MIL_AgentPion& >( callerAgent ).Execute( *dataComputer );
-    double bestVisionNRJ = dataFunctor.GetNRJ();
-    return bestVisionNRJ;
+    return dataFunctor.GetEnergy();
 }

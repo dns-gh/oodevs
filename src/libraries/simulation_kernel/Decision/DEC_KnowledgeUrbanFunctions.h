@@ -16,13 +16,12 @@ class MIL_AgentPion;
 
 // =============================================================================
 /** @class  DEC_KnowledgeUrbanFunctions
-    @brief  DEC_KnowledgeUrbanFunctions
+    @brief  DEC Knowledge urban functions
 */
 // Created: SLG 2010-02-01
 // =============================================================================
 class DEC_KnowledgeUrbanFunctions
 {
-
 public:
     //! @name Functions
     //@{
