@@ -166,7 +166,7 @@ void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objec
 
     db.Execute( builder );
 }
-void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::MsgObjectAttributeToxicCloud& toxic_cloud ){
+void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::MsgObjectAttributeToxicCloud& /*toxic_cloud*/ ){
     InsertQueryBuilder builder( db.GetTableName( "TacticalObject_Attribute_Toxic_Cloud" ) );
 
     builder.SetId( "id" );
@@ -217,7 +217,7 @@ void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objec
     db.Execute( builder );
 }
 
-void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::MsgObjectAttributeStock& stock ){
+void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::MsgObjectAttributeStock& /*stock*/ ){
     InsertQueryBuilder builder( db.GetTableName( "TacticalObject_Attribute_Stock" ) );
 
     builder.SetId( "id" );

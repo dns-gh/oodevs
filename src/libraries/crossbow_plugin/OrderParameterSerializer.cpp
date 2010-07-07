@@ -544,7 +544,7 @@ void OrderParameterSerializer::SerializeObjectKnowledge( Common::MsgObjectKnowle
 // Name: OrderParameterSerializer::SerializeMissionObjective
 // Created: JCR 2009-10-15
 // -----------------------------------------------------------------------------
-void OrderParameterSerializer::SerializeMissionObjective( Common::MsgMissionObjective& message, const std::string& /*value*/ ) const
+void OrderParameterSerializer::SerializeMissionObjective( Common::MsgMissionObjective& /*message*/, const std::string& /*value*/ ) const
 {
    // message = new Common::MsgMissionObjective;
 }

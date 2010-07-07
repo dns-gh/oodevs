@@ -37,7 +37,7 @@ ColorAttribute::~ColorAttribute()
 // Name: ColorAttribute::Update
 // Created: RPD 2010-01-06
 // -----------------------------------------------------------------------------
-void ColorAttribute::Update( const MsgsSimToClient::MsgUrbanAttributes& message )
+void ColorAttribute::Update( const MsgsSimToClient::MsgUrbanAttributes& /*message*/ )
 {
    // NOTHING
 }
