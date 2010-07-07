@@ -894,7 +894,7 @@
     <mission dia-behavior="net.masagroup.testSword.military.tasks.RemoveObstacle" dia-type="T_Mission_Pion_RemoveObstacle" id="2045" name="RemoveObstacle">
       <parameter dia-name="entities" name="entities" optional="false" type="ObjectKnowledgeListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.FaireMouvement" dia-type="T_Mission_Pion_MoveAlong" id="2046" name="COMMUNESS Faire Mouvement">
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.FaireMouvement" dia-type="T_Mission_Pion_MoveAlong" id="2046" name="COMMUNES Faire Mouvement">
       <parameter dia-name="objectives" name="objectives" optional="false" type="PathBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.OpenRoute" dia-type="T_Mission_Pion_OpenRoute" id="2047" name="GEN OuvrirItineraire">
