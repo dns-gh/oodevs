@@ -20,7 +20,7 @@ class NBCPropagationCapacity : public PropagationCapacity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit NBCPropagationCapacity( xml::xistream& xis, MIL_PropagationManager& manager );
+    explicit NBCPropagationCapacity( MIL_PropagationManager& manager );
              NBCPropagationCapacity();
     virtual ~NBCPropagationCapacity();
     //@}

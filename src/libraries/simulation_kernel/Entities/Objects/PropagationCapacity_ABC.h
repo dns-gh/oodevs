@@ -15,7 +15,7 @@
 
 // =============================================================================
 /** @class  PropagationCapacity_ABC
-    @brief  PropagationCapacity_ABC
+    @brief  Propagation capacity definition
 */
 // Created: JCR 2008-06-02
 // =============================================================================
@@ -23,7 +23,10 @@ class PropagationCapacity_ABC : public ObjectCapacity_ABC
                               , public MIL_InteractiveContainer_ABC
 {
     public:
+    //! @name Constructors/Destructor
+    //@{
     virtual ~PropagationCapacity_ABC() {}
+    //@}
 };
 
 #endif // PropagationCapacity_ABC

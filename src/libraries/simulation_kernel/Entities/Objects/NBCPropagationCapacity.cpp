@@ -26,7 +26,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( NBCPropagationCapacity )
 // Name: NBCPropagationCapacity constructor
 // Created: RFT 2008-05-22
 // -----------------------------------------------------------------------------
-NBCPropagationCapacity::NBCPropagationCapacity( xml::xistream& xis, MIL_PropagationManager& manager )
+NBCPropagationCapacity::NBCPropagationCapacity( MIL_PropagationManager& manager )
     : pManager_        ( &manager )
     , timeOfLastUpdate_( 0 )
 {
