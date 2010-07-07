@@ -12,10 +12,6 @@
 #ifndef __PHY_DotationCategory_IndirectFire_ABC_h_
 #define __PHY_DotationCategory_IndirectFire_ABC_h_
 
-namespace xml
-{
-}
-
 class MIL_AgentPion;
 class MIL_Agent_ABC;
 class MIL_EntityManager_ABC;
@@ -50,11 +46,14 @@ public:
     //@}
 
 protected:
+    //! @name Member data
+    //@{
     const PHY_IndirectFireDotationClass& category_;
     const PHY_DotationCategory&          dotationCategory_;
           unsigned int                   nInterventionType_;
           MT_Float                       rDispersionX_;
           MT_Float                       rDispersionY_;
+    //@}
 };
 
 #endif // __PHY_DotationCategory_IndirectFire_ABC_h_
