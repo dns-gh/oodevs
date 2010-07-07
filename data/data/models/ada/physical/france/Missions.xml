@@ -932,7 +932,7 @@
     <mission dia-behavior="net.masagroup.sword.france.military.tasks.commun.SeFaireTransporter" dia-type="T_Mission_Pion_SeFaireTransporterBM" id="2057" name="COMMUNE Se Faire Transporter">
       <parameter dia-name="positions" name="destination" optional="false" type="PointBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.tasks.commun.OrienterRefugies" dia-type="T_Mission_Pion_OrienterGuiderRefugiesBM" id="2058" name="COMMUNE Orienter Guider Refugies">
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.OrienterRefugies" dia-type="T_Mission_Pion_OrienterGuiderRefugiesBM" id="2058" name="COMMUNE Orienter Guider Refugies">
       <parameter dia-name="refugees" name="objectifs" optional="false" type="AgentKnowledgeListBM"/>
       <parameter dia-name="camps" name="Camps de refugies" optional="false" type="ObjectKnowledgeListBM"/>
     </mission>
@@ -945,7 +945,7 @@
     <mission dia-behavior="net.masagroup.sword.france.military.tasks.commun.Appuyer" dia-type="T_Mission_Pion_Appuyer" id="2062" name="MELEE Appuyer">
       <parameter dia-name="objectives" name="objectives" optional="false" type="AgentListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.tasks.commun.PrendreEnComptePrisonniers" dia-type="T_Mission_Pion_PrendreEnComptePrisonniersBM" id="2063" name="COMMUNE Prendre En Compte Prisonniers">
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.PrendreEnComptePrisonniers" dia-type="T_Mission_Pion_PrendreEnComptePrisonniersBM" id="2063" name="COMMUNE Prendre En Compte Prisonniers">
       <parameter dia-name="prisoners" name="objectifs" optional="false" type="AgentKnowledgeListBM"/>
       <parameter dia-name="camps" name="Camps de prisonniers" optional="false" type="ObjectKnowledgeListBM"/>
     </mission>
