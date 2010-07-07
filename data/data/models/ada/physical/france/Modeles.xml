@@ -7,18 +7,18 @@
         <mission name="MELEE Reconnaitre Itineraire"/>
         <mission name="MELEE Surveiller"/>
         <mission name="MELEE SurveillerBlocUrbain"/>
-        <mission name="COMMUNE Decrocher"/>
-        <mission name="COMMUNE Faire Mouvement">
+        <mission name="COMMUNES Decrocher"/>
+        <mission name="COMMUNES Faire Mouvement">
           <fragorder name="Illuminate"/>
           <fragorder name="UseALR"/>
         </mission>
-        <mission name="COMMUNE Franchir"/>
-        <mission name="COMMUNE Orienter Guider Refugies"/>
-        <mission name="COMMUNE Prendre En Compte Prisonniers"/>
-        <mission name="COMMUNE Se Faire Decontaminer"/>
-        <mission name="COMMUNE Se Faire Transporter"/>
-        <mission name="COMMUNE Stationner"/>
-        <mission name="COMMUNE Suivre"/>
+        <mission name="COMMUNES Franchir"/>
+        <mission name="COMMUNES Orienter Guider Refugies"/>
+        <mission name="COMMUNES Prendre En Compte Prisonniers"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
+        <mission name="COMMUNES Se Faire Transporter"/>
+        <mission name="COMMUNES Stationner"/>
+        <mission name="COMMUNES Suivre"/>
       </missions>
     </unit>
     <unit dia-type="net.masagroup.sword.military.roles.Platoon" file="BMPion.bms" name="test pion">
@@ -72,14 +72,14 @@
         <mission name="SelfProtect"/>
         <mission name="StayClose"/>
         <mission name="Support"/>
-        <mission name="COMMUNE Faire Mouvement"/>
-        <mission name="COMMUNE Suivre"/>
-        <mission name="COMMUNE Stationner"/>
-        <mission name="COMMUNE SoutenirSurPositionEnMesureDe"/>
-        <mission name="COMMUNE Se Faire Decontaminer"/>
-        <mission name="COMMUNE Orienter Guider Refugies"/>
-        <mission name="COMMUNE Prendre En Compte Prisonniers"/>
-        <mission name="COMMUNE Se Faire Transporter"/>
+        <mission name="COMMUNES Faire Mouvement"/>
+        <mission name="COMMUNES Suivre"/>
+        <mission name="COMMUNES Stationner"/>
+        <mission name="COMMUNES SoutenirSurPositionEnMesureDe"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
+        <mission name="COMMUNES Orienter Guider Refugies"/>
+        <mission name="COMMUNES Prendre En Compte Prisonniers"/>
+        <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="MELEE Surveiller"/>
         <mission name="MELEE SurveillerBlocUrbain"/>
         <mission name="TakeCover"/>
@@ -96,44 +96,44 @@
           <fragorder name="ApplyGuidedFire"/>
         </mission>
         <mission name="ASS Coordinate Illumination"/>
-        <mission name="COMMUNE Decrocher"/>
-        <mission name="COMMUNE Faire Mouvement"/>
-        <mission name="COMMUNE Franchir"/>
-        <mission name="COMMUNE Orienter Guider Refugies"/>
-        <mission name="COMMUNE Prendre En Compte Prisonniers"/>
-        <mission name="COMMUNE Se Faire Decontaminer"/>
-        <mission name="COMMUNE Se Faire Transporter"/>
-        <mission name="COMMUNE Stationner"/>
-        <mission name="COMMUNE Suivre"/>
+        <mission name="COMMUNES Decrocher"/>
+        <mission name="COMMUNES Faire Mouvement"/>
+        <mission name="COMMUNES Franchir"/>
+        <mission name="COMMUNES Orienter Guider Refugies"/>
+        <mission name="COMMUNES Prendre En Compte Prisonniers"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
+        <mission name="COMMUNES Se Faire Transporter"/>
+        <mission name="COMMUNES Stationner"/>
+        <mission name="COMMUNES Suivre"/>
       </missions>
     </unit>
     <unit dia-type="net.masagroup.sword.military.platoon.combat.support.engineer.roles.Engineer" file="BMPion.bms" name="net.masagroup.sword.military.platoon.combat.support.engineer.roles.Engineer">
       <missions>
         <mission name="GEN Realiser Travaux"/>
         <mission name="GEN OuvrirItineraire"/>
-        <mission name="COMMUNE Decrocher"/>
-        <mission name="COMMUNE Faire Mouvement"/>
-        <mission name="COMMUNE Franchir"/>
-        <mission name="COMMUNE Orienter Guider Refugies"/>
-        <mission name="COMMUNE Prendre En Compte Prisonniers"/>
-        <mission name="COMMUNE Se Faire Decontaminer"/>
-        <mission name="COMMUNE Se Faire Transporter"/>
-        <mission name="COMMUNE Stationner"/>
-        <mission name="COMMUNE Suivre"/>
+        <mission name="COMMUNES Decrocher"/>
+        <mission name="COMMUNES Faire Mouvement"/>
+        <mission name="COMMUNES Franchir"/>
+        <mission name="COMMUNES Orienter Guider Refugies"/>
+        <mission name="COMMUNES Prendre En Compte Prisonniers"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
+        <mission name="COMMUNES Se Faire Transporter"/>
+        <mission name="COMMUNES Stationner"/>
+        <mission name="COMMUNES Suivre"/>
       </missions>
     </unit>
     <unit dia-type="BMPion" file="BMPion.bms" name="net.masagroup.sword.military.platoon.terrorism.roles.Sniper">
       <missions>
         <mission name="Embuscade"/>
-        <mission name="COMMUNE Decrocher"/>
-        <mission name="COMMUNE Faire Mouvement"/>
-        <mission name="COMMUNE Franchir"/>
-        <mission name="COMMUNE Orienter Guider Refugies"/>
-        <mission name="COMMUNE Prendre En Compte Prisonniers"/>
-        <mission name="COMMUNE Se Faire Decontaminer"/>
-        <mission name="COMMUNE Se Faire Transporter"/>
-        <mission name="COMMUNE Stationner"/>
-        <mission name="COMMUNE Suivre"/>
+        <mission name="COMMUNES Decrocher"/>
+        <mission name="COMMUNES Faire Mouvement"/>
+        <mission name="COMMUNES Franchir"/>
+        <mission name="COMMUNES Orienter Guider Refugies"/>
+        <mission name="COMMUNES Prendre En Compte Prisonniers"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
+        <mission name="COMMUNES Se Faire Transporter"/>
+        <mission name="COMMUNES Stationner"/>
+        <mission name="COMMUNES Suivre"/>
       </missions>
     </unit>
     <unit dia-type="PatrouilleAIR" file="Air\Pions\Patrouille Assaut\model.bms" name="Patrouille AIR Assaut">
