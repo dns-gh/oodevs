@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: NLD 2003-07-22 $
-// $Archive: /MVW_v10/Build/SDK/ter/src/TER_Localisation.inl $
-// $Author: Age $
-// $Modtime: 24/02/05 11:16 $
-// $Revision: 1 $
-// $Workfile: TER_Localisation.inl $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2003 MASA Group
+//
+// *****************************************************************************
 
 // $$$$ RDS 2008-04-02: beurk 
 #include "../../src/libraries/simulation_kernel/CheckPoints/MIL_CheckPointSerializationHelpers.h"
@@ -31,7 +29,6 @@ TER_Localisation::E_LocationType TER_Localisation::GetType() const
 {
     return nType_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: TER_Localisation::operator==
@@ -95,13 +92,13 @@ bool TER_Localisation::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, 
 {
     switch( nType_ )
     {
-        case ePoint:   
-        case ePolygon: 
+        case ePoint:
+        case ePolygon:
             {
-                assert( false ); 
+                assert( false );
                 return false;
             }
-        case eLine:    return polyline_.Intersect2DWithCircle( vCircleCenter, rRadius, shape );
+        case eLine: return polyline_.Intersect2DWithCircle( vCircleCenter, rRadius, shape );
         default:
             return false;
     }
@@ -168,7 +165,6 @@ bool TER_Localisation::Intersect2D( const MT_Line& orientedLine, T_PointSet& col
         default:
             return false;
     }
-
 }
 
 //-----------------------------------------------------------------------------
@@ -263,11 +259,10 @@ template<class Archive>
 void TER_Localisation::load( Archive& ar, const unsigned int )
 {
     ar >> nType_
-         >> pointVector_
-         >> bWasCircle_
-         >> vCircleCenter_
-         >> rCircleRadius_;
-
+       >> pointVector_
+       >> bWasCircle_
+       >> vCircleCenter_
+       >> rCircleRadius_;
     Initialize();
 }
 
@@ -278,10 +273,9 @@ void TER_Localisation::load( Archive& ar, const unsigned int )
 template<class Archive>
 void TER_Localisation::save( Archive& ar, const unsigned int ) const
 {
-    ar  << nType_
-         << pointVector_
-         << bWasCircle_
-         << vCircleCenter_
-         << rCircleRadius_;
+    ar << nType_
+       << pointVector_
+       << bWasCircle_
+       << vCircleCenter_
+       << rCircleRadius_;
 }
-

@@ -64,9 +64,9 @@ public:
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
 
-    template<class Archive>
+    template< class Archive >
     void load( Archive&, const unsigned int );
-    template<class Archive>
+    template< class Archive >
     void save( Archive&, const unsigned int ) const;
     //@}
 
@@ -84,7 +84,6 @@ public:
     void Read ( xml::xistream& xis ) ;
     void Write( xml::xostream& xos ) const;
     //@}
-
 
     //-------------------------------------------------------------------------
     /** @name Operators */
