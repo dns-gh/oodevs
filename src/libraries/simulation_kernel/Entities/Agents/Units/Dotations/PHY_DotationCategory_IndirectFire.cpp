@@ -117,7 +117,8 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC& firer,
         TER_World::GetWorld().GetObjectManager().GetListWithinCircle( vTargetPosition, rInterventionTypeFired * rDispersionX_ , objects );
 
         std::vector< const urban::TerrainObject_ABC* > urbanList;
-        UrbanModel::GetSingleton().GetModel().GetListWithinCircle( geometry::Point2f( static_cast< float >( vTargetPosition.rX_ ), static_cast< float >( vTargetPosition.rY_ ) ), static_cast< float >( rInterventionTypeFired * rDispersionX_ ), urbanList );
+        UrbanModel::GetSingleton().GetModel().GetListWithinCircle( geometry::Point2f( static_cast< float >( vTargetPosition.rX_ ), static_cast< float >( vTargetPosition.rY_ ) ),
+                                                                   static_cast< float >( rInterventionTypeFired * rDispersionX_ ), urbanList );
 
         for( std::vector< TER_Object_ABC* >::iterator it = objects.begin(); it != objects.end(); ++it )
         {

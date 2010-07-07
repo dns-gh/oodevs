@@ -94,7 +94,7 @@ const kernel::PopulationKnowledge_ABC* AgentKnowledgeConverter::FindPopulation( 
 // Name: AgentKnowledgeConverter::Find
 // Created: SBO 2010-05-11
 // -----------------------------------------------------------------------------
-const kernel::AgentKnowledge_ABC* AgentKnowledgeConverter::Find( const kernel::AgentKnowledge_ABC& base, const kernel::Entity_ABC& owner )
+const kernel::AgentKnowledge_ABC* AgentKnowledgeConverter::Find( const kernel::AgentKnowledge_ABC& /*base*/, const kernel::Entity_ABC& /*owner*/ )
 {
     throw std::runtime_error( __FUNCTION__ " not implemented" );
 }
@@ -103,7 +103,7 @@ const kernel::AgentKnowledge_ABC* AgentKnowledgeConverter::Find( const kernel::A
 // Name: AgentKnowledgeConverter::Find
 // Created: SBO 2010-05-11
 // -----------------------------------------------------------------------------
-const kernel::PopulationKnowledge_ABC* AgentKnowledgeConverter::Find( const kernel::PopulationKnowledge_ABC& base, const kernel::Entity_ABC& owner )
+const kernel::PopulationKnowledge_ABC* AgentKnowledgeConverter::Find( const kernel::PopulationKnowledge_ABC& /*base*/, const kernel::Entity_ABC& /*owner*/ )
 {
     throw std::runtime_error( __FUNCTION__ " not implemented" );
 }

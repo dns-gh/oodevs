@@ -18,13 +18,12 @@ namespace dispatcher
 
 // =============================================================================
 /** @class  AgentKnowledgeConverter
-    @brief  AgentKnowledgeConverter
+    @brief  Agent knowledge converter
 */
 // Created: SBO 2010-05-11
 // =============================================================================
 class AgentKnowledgeConverter : public kernel::AgentKnowledgeConverter_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

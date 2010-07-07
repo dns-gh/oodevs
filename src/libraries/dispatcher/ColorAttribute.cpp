@@ -20,8 +20,12 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 ColorAttribute::ColorAttribute( const Model& model, const MsgsSimToClient::MsgUrbanAttributes& message )
     : UrbanObjectAttribute_ABC( model, message )
-    , color_ ( new ColorRGBA( message.color().red(), message.color().green(), message.color().blue(), message.color().alpha() ) )
+    , color_( new ColorRGBA( static_cast< unsigned short >( message.color().red() ),
+                             static_cast< unsigned short >( message.color().green() ),
+                             static_cast< unsigned short >( message.color().blue() ),
+                             message.color().alpha() ) )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
