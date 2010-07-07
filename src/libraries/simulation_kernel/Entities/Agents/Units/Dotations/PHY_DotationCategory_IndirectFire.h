@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/Src/Entities/Agents/Units/Dotations/PHY_DotationCategory_IndirectFire.h $
-// $Author: Nld $
-// $Modtime: 17/03/05 14:53 $
-// $Revision: 3 $
-// $Workfile: PHY_DotationCategory_IndirectFire.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
@@ -26,10 +24,12 @@ namespace xml
 // =============================================================================
 class PHY_DotationCategory_IndirectFire : public PHY_DotationCategory_IndirectFire_ABC
 {
-
 public:
+    //! @name Constructors/Destructor
+    //@{
              PHY_DotationCategory_IndirectFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis );
     virtual ~PHY_DotationCategory_IndirectFire();
+    //@}
 
     //! @name
     //@{
@@ -46,17 +46,21 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::vector< MT_Float >     T_PhVector;
+    typedef std::vector< MT_Float >       T_PhVector;
     typedef T_PhVector::const_iterator  CIT_PhVector;
     //@}
+
     //! @name Helpers
     //@{
     void ReadPh( xml::xistream& xis );
     //@}
 
 private:
+    //! @name Member data
+    //@{
     MT_Float   rNeutralizationCoef_;
     T_PhVector phs_;
+    //@}
 };
 
 #endif // __PHY_DotationCategory_IndirectFire_h_

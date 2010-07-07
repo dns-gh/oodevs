@@ -1,17 +1,16 @@
 // *****************************************************************************
 //
-// $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Units/Dotations/PHY_DotationCategory_IndirectFire.cpp $
-// $Author: Nld $
-// $Modtime: 29/03/05 14:16 $
-// $Revision: 5 $
-// $Workfile: PHY_DotationCategory_IndirectFire.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2004 MASA Group
 //
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 #include "PHY_DotationCategory_IndirectFire.h"
 #include "PHY_DotationCategory.h"
+#include "UrbanModel.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -32,10 +31,9 @@
 #include "simulation_terrain/TER_PopulationManager.h"
 #include "simulation_terrain/TER_World.h"
 #include "tools/MIL_Geometry.h"
-#include "UrbanModel.h"
 #include <urban/Model.h>
 #include <urban/TerrainObject_ABC.h>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory_IndirectFire::Create
@@ -52,15 +50,13 @@ PHY_DotationCategory_IndirectFire_ABC& PHY_DotationCategory_IndirectFire::Create
 // -----------------------------------------------------------------------------
 PHY_DotationCategory_IndirectFire::PHY_DotationCategory_IndirectFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis )
     : PHY_DotationCategory_IndirectFire_ABC( type, dotationCategory, xis )
-    , phs_                                 ( PHY_Posture::GetPostures().size(), 1. )
+    , phs_( PHY_Posture::GetPostures().size(), 1. )
 {
     xis >> xml::attribute( "neutralization-ratio", rNeutralizationCoef_ );
     if( rNeutralizationCoef_ < 1. )
         xis.error( "neutralization-ratio < 1" );
-
     if( !dotationCategory.HasAttritions() )
         xis.error( "Dotation has no attritions defined" );
-
     xis >> xml::list( "ph", *this, &PHY_DotationCategory_IndirectFire::ReadPh );
 }
 
@@ -72,9 +68,7 @@ void PHY_DotationCategory_IndirectFire::ReadPh( xml::xistream& xis )
 {
     const PHY_Posture::T_PostureMap& postures = PHY_Posture::GetPostures();
     std::string postureType;
-
     xis >> xml::attribute( "target-posture", postureType );
-
     PHY_Posture::CIT_PostureMap it = postures.find( postureType );
     const PHY_Posture& posture = *it->second;
     assert( phs_.size() > posture.GetID() );
@@ -123,7 +117,7 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC& firer,
         TER_World::GetWorld().GetObjectManager().GetListWithinCircle( vTargetPosition, rInterventionTypeFired * rDispersionX_ , objects );
 
         std::vector< const urban::TerrainObject_ABC* > urbanList;
-        UrbanModel::GetSingleton().GetModel().GetListWithinCircle( geometry::Point2f( vTargetPosition.rX_, vTargetPosition.rY_ ) , rInterventionTypeFired * rDispersionX_, urbanList );
+        UrbanModel::GetSingleton().GetModel().GetListWithinCircle( geometry::Point2f( static_cast< float >( vTargetPosition.rX_ ), static_cast< float >( vTargetPosition.rY_ ) ), static_cast< float >( rInterventionTypeFired * rDispersionX_ ), urbanList );
 
         for( std::vector< TER_Object_ABC* >::iterator it = objects.begin(); it != objects.end(); ++it )
         {
