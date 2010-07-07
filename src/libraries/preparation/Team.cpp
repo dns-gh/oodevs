@@ -83,8 +83,15 @@ Object_ABC* Team::CreateObject( const kernel::ObjectType& type, const QString& n
 // -----------------------------------------------------------------------------
 void Team::CreateObject( xml::xistream& xis )
 {
-    Object_ABC* object = objectFactory_.CreateObject( xis, *this );
-    tools::Resolver< Object_ABC >::Register( object->GetId(), *object );
+    try
+    {
+        Object_ABC* object = objectFactory_.CreateObject( xis, *this );
+        tools::Resolver< Object_ABC >::Register( object->GetId(), *object );
+    }
+    catch( std::exception& e )
+    {
+        // Unknown object type, skip it
+    }
 }
 
 // -----------------------------------------------------------------------------
