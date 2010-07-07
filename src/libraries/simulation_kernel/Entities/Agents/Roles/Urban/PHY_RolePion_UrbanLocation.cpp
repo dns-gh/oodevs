@@ -75,7 +75,7 @@ PHY_RolePion_UrbanLocation::~PHY_RolePion_UrbanLocation()
 // Name: PHY_RolePion_UrbanLocation::load
 // Created: SLG 2010-04-08
 // -----------------------------------------------------------------------------
-void PHY_RolePion_UrbanLocation::load( MIL_CheckPointInArchive& file, const unsigned int )
+void PHY_RolePion_UrbanLocation::load( MIL_CheckPointInArchive& /*file*/, const unsigned int )
 {
     //TODO
 }
@@ -84,7 +84,7 @@ void PHY_RolePion_UrbanLocation::load( MIL_CheckPointInArchive& file, const unsi
 // Name: PHY_RolePion_UrbanLocation::save
 // Created: SLG 2010-04-08
 // -----------------------------------------------------------------------------
-void PHY_RolePion_UrbanLocation::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+void PHY_RolePion_UrbanLocation::save( MIL_CheckPointOutArchive& /*file*/, const unsigned int ) const
 {
     //TODO
 }

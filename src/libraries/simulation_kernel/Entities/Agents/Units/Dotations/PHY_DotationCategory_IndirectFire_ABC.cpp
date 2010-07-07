@@ -97,7 +97,7 @@ bool PHY_DotationCategory_IndirectFire_ABC::HasHit( const MIL_Agent_ABC& /*targe
 // Name: PHY_DotationCategory_IndirectFire_ABC::ApplyEffect
 // Created: MGD 2010-02-16
 // -----------------------------------------------------------------------------
-void PHY_DotationCategory_IndirectFire_ABC::ApplyEffect( const MIL_Agent_ABC& firer, MIL_Agent_ABC& target, MT_Float rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const
+void PHY_DotationCategory_IndirectFire_ABC::ApplyEffect( const MIL_Agent_ABC& /*firer*/, MIL_Agent_ABC& target, MT_Float /*rInterventionTypeFired*/, PHY_FireResults_ABC& /*fireResult*/ ) const
 {
     // NOTHING
 }

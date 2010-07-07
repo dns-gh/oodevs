@@ -90,7 +90,7 @@ void PHY_SupplyConsign_ABC::SendDefaultState( client::LogSupplyHandlingUpdate& a
     asn().set_oid_pion_convoyant( 0 );
     asn().set_oid_automate_log_fournissant_moyens_convoi( 0 );
     asn().set_oid_automate_log_traitant( 0 );
-    asn().set_etat( MsgsSimToClient::EnumLogSupplyHandlingStatus::termine );
+    asn().set_etat( MsgsSimToClient::termine );
 }
 
 // -----------------------------------------------------------------------------

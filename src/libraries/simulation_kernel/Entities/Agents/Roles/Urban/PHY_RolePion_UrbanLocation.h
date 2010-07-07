@@ -73,8 +73,8 @@ public:
     //@{
     virtual void NotifyMovingInsideObject( MIL_Object_ABC& urbanObject );
     virtual void NotifyMovingOutsideObject( MIL_Object_ABC& urbanObject );
-    virtual void NotifyPutInsideObject( MIL_Object_ABC& object ) {};
-    virtual void NotifyPutOutsideObject( MIL_Object_ABC& object ) {};
+    virtual void NotifyPutInsideObject( MIL_Object_ABC& /*object*/ ) {};
+    virtual void NotifyPutOutsideObject( MIL_Object_ABC& /*object*/ ) {};
     //@}
 
     //! @name Accessors

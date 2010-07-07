@@ -15,10 +15,10 @@
 
 PHY_Morale::T_MoraleMap PHY_Morale::morales_;
 
-const PHY_Morale PHY_Morale::mauvais_  ( "Mauvais"  , eMauvais  , Common::EnumUnitMorale::mauvais  , 0.5  );
-const PHY_Morale PHY_Morale::moyen_    ( "Moyen"    , eMoyen    , Common::EnumUnitMorale::moyen    , 0.75 );
-const PHY_Morale PHY_Morale::bon_      ( "Bon"      , eBon      , Common::EnumUnitMorale::bon      , 1    );
-const PHY_Morale PHY_Morale::fanatique_( "Fanatique", eFanatique, Common::EnumUnitMorale::fanatique, 1.25 );
+const PHY_Morale PHY_Morale::mauvais_  ( "Mauvais"  , eMauvais  , Common::mauvais  , 0.5  );
+const PHY_Morale PHY_Morale::moyen_    ( "Moyen"    , eMoyen    , Common::moyen    , 0.75 );
+const PHY_Morale PHY_Morale::bon_      ( "Bon"      , eBon      , Common::bon      , 1    );
+const PHY_Morale PHY_Morale::fanatique_( "Fanatique", eFanatique, Common::fanatique, 1.25 );
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Morale::Initialize

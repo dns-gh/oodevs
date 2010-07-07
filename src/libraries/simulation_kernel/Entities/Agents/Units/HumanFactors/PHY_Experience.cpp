@@ -16,9 +16,9 @@
 
 PHY_Experience::T_ExperienceMap PHY_Experience::experiences_;
 
-const PHY_Experience PHY_Experience::conscrit_   ( "Conscrit"   , eConscrit   , Common::EnumUnitExperience::conscrit   , 1.);
-const PHY_Experience PHY_Experience::experimente_( "Experimente", eExperimente, Common::EnumUnitExperience::experimente, 1.);
-const PHY_Experience PHY_Experience::veteran_    ( "Veteran"    , eVeteran    , Common::EnumUnitExperience::veteran    , 1. );
+const PHY_Experience PHY_Experience::conscrit_   ( "Conscrit"   , eConscrit   , Common::conscrit   , 1.);
+const PHY_Experience PHY_Experience::experimente_( "Experimente", eExperimente, Common::experimente, 1.);
+const PHY_Experience PHY_Experience::veteran_    ( "Veteran"    , eVeteran    , Common::veteran    , 1. );
 
 struct PHY_Experience::LoadingWrapper
 {

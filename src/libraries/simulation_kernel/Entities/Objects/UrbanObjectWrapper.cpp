@@ -65,7 +65,7 @@ UrbanObjectWrapper::~UrbanObjectWrapper()
 // Name: UrbanObjectWrapper::WriteODB
 // Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
-void UrbanObjectWrapper::WriteODB( xml::xostream& xos ) const
+void UrbanObjectWrapper::WriteODB( xml::xostream& /*xos*/ ) const
 {
     // NOTHING
 }
@@ -166,7 +166,7 @@ void UrbanObjectWrapper::Finalize()
 // Name: boost::shared_ptr< DEC_Knowledge_Object > UrbanObjectWrapper::CreateKnowledge
 // Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Object > UrbanObjectWrapper::CreateKnowledge( const MIL_Army_ABC& team )
+boost::shared_ptr< DEC_Knowledge_Object > UrbanObjectWrapper::CreateKnowledge( const MIL_Army_ABC& /*team*/ )
 {
     return boost::shared_ptr< DEC_Knowledge_Object >();
 }
@@ -175,7 +175,7 @@ boost::shared_ptr< DEC_Knowledge_Object > UrbanObjectWrapper::CreateKnowledge( c
 // Name: boost::shared_ptr< DEC_Knowledge_Object > UrbanObjectWrapper::CreateKnowledge
 // Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Object > UrbanObjectWrapper::CreateKnowledge( const MIL_KnowledgeGroup& group )
+boost::shared_ptr< DEC_Knowledge_Object > UrbanObjectWrapper::CreateKnowledge( const MIL_KnowledgeGroup& /*group*/ )
 {
     return boost::shared_ptr< DEC_Knowledge_Object >();
 }
@@ -221,7 +221,7 @@ void UrbanObjectWrapper::SetHLAView( HLA_Object_ABC& view )
 // Name: UrbanObjectWrapper::Deserialize
 // Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
-void UrbanObjectWrapper::Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer )
+void UrbanObjectWrapper::Deserialize( const hla::AttributeIdentifier& /*attributeID*/, hla::Deserializer /*deserializer*/ )
 {
     // NOTHING
 }
@@ -230,7 +230,7 @@ void UrbanObjectWrapper::Deserialize( const hla::AttributeIdentifier& attributeI
 // Name: UrbanObjectWrapper::Serialize
 // Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
-void UrbanObjectWrapper::Serialize( HLA_UpdateFunctor& functor ) const
+void UrbanObjectWrapper::Serialize( HLA_UpdateFunctor& /*functor*/ ) const
 {
     // NOTHING
 }
@@ -239,7 +239,7 @@ void UrbanObjectWrapper::Serialize( HLA_UpdateFunctor& functor ) const
 // Name: UrbanObjectWrapper::OnUpdate
 // Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
-MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode UrbanObjectWrapper::OnUpdate( const Common::MsgMissionParameter_Value& asn )
+MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode UrbanObjectWrapper::OnUpdate( const Common::MsgMissionParameter_Value& /*asn*/ )
 {
     return MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode_no_error;
 }
@@ -363,9 +363,9 @@ void UrbanObjectWrapper::Update( unsigned int time )
 // Name: UrbanObjectWrapper::Register
 // Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
-void UrbanObjectWrapper::Register( ObjectAttribute_ABC* attribute )
+void UrbanObjectWrapper::Register( ObjectAttribute_ABC* /*attribute*/ )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
