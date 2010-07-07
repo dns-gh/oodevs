@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2005-08-04 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #ifndef __DEC_PathClass_h_
 #define __DEC_PathClass_h_
@@ -33,7 +24,7 @@ class MIL_PopulationAttitude;
 
 // =============================================================================
 /** @class  DEC_Agent_PathClass
-    @brief  DEC_Agent_PathClass
+    @brief  DEC Agent path class
 */
 // Created: AGE 2005-08-04
 // =============================================================================

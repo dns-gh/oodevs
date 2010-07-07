@@ -15,9 +15,7 @@
 #include "Entities/Objects/MIL_ObjectFactory.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Populations/MIL_PopulationAttitude.h"
-#include <xeumeuleu/xml.h>
-
-
+#include <xeumeuleu/xml.hpp>
 
 DEC_Agent_PathClass::T_Rules       DEC_Agent_PathClass::rules_;
 
@@ -60,11 +58,9 @@ void DEC_Agent_PathClass::CheckRulesExistence()
 void DEC_Agent_PathClass::Initialize( xml::xistream& xis )
 {
     LoadingWrapper loader;
-
     xis >> xml::start( "unit-rules" )
             >> xml::list( "rule", loader, &LoadingWrapper::ReadUnitRule )
         >> xml::end();
-
     CheckRulesExistence();
 }
 
@@ -77,11 +73,9 @@ void DEC_Agent_PathClass::ReadUnitRule( xml::xistream& xis )
     std::string strType;
     bool        bFlying;
     bool        bAutonomous;
-
     xis >> xml::attribute( "type"      , strType     )
         >> xml::attribute( "flying"    , bFlying     )
         >> xml::attribute( "autonomous", bAutonomous );
-
     std::string strBase;
     const DEC_Agent_PathClass* pBase = 0;
     strBase = "nothing";
@@ -140,35 +134,32 @@ DEC_Agent_PathClass::DEC_Agent_PathClass( xml::xistream& xis, const DEC_Agent_Pa
 {
     if( pCopyFrom )
         *this = *pCopyFrom;
+    xis >> xml::optional()
+        >> xml::start( "optimisation" )
+            >> xml::attribute( "shortest", bShort_ )
+        >> xml::end()
 
-    xis >> xml::optional() >> xml::start( "optimisation" )
-                        >> xml::attribute( "shortest", bShort_ )
-                    >> xml::end()
+        >> xml::optional()
+        >> xml::start( "preferred-terrains" )
+            >> xml::optional() >> xml::attribute( "strength", rPreferedTerrainCost_ )
+            >> xml::list( "preferred-terrain", *this, &DEC_Agent_PathClass::ReadPrefferedTerrains, preferedTerrain_ )
+        >> xml::end()
 
-        >> xml::optional() >> xml::start( "preferred-terrains" )
-                          >> xml::optional() >> xml::attribute( "strength", rPreferedTerrainCost_ )
-                          >> xml::list( "preferred-terrain", *this, &DEC_Agent_PathClass::ReadPrefferedTerrains, preferedTerrain_ )
-                      >> xml::end()
+        >> xml::optional()
+        >> xml::start( "avoided-terrains" )
+            >> xml::optional() >> xml::attribute( "strength", rAvoidedTerrainCost_ )
+            >> xml::list( "avoided-terrain", *this, &DEC_Agent_PathClass::ReadAvoidedTerrain, avoidedTerrain_ )
+        >> xml::end()
 
-        >> xml::optional() >> xml::start( "avoided-terrains" )
-                          >> xml::optional() >> xml::attribute( "strength", rAvoidedTerrainCost_ )
-                          >> xml::list( "avoided-terrain", *this, &DEC_Agent_PathClass::ReadAvoidedTerrain, avoidedTerrain_ )
-                      >> xml::end()
-
-        >> xml::optional() >> xml::start( "preferred-altitude" )
-                          >> xml::attribute( "value", rAltitudePreference_ )
-                      >> xml::end()
-
+        >> xml::optional()
+        >> xml::start( "preferred-altitude" )
+            >> xml::attribute( "value", rAltitudePreference_ )
+        >> xml::end()
         >> xml::list( "zone", *this, &DEC_Agent_PathClass::ReadFuseau )
-
         >> xml::list( "automat-zone", *this, &DEC_Agent_PathClass::ReadAutomataFuseau )
-
         >> xml::list( "danger-direction", *this, &DEC_Agent_PathClass::ReadDangerDirection )
-
         >> xml::list( "enemies", *this, &DEC_Agent_PathClass::ReadEnemiesCost )
-
         >> xml::list( "object-costs", *this, &DEC_Agent_PathClass::ReadObjectsCost )
-
         >> xml::list( "population-costs", *this, &DEC_Agent_PathClass::ReadPopulationsCost );
 }
 
@@ -203,14 +194,12 @@ void DEC_Agent_PathClass::ReadObjectsCost( xml::xistream& xis )
 void DEC_Agent_PathClass::ReadObject( xml::xistream& xis )
 {
     std::string strType( xml::attribute( xis, "type", std::string() ) );
-
     try
     {
         const MIL_ObjectType_ABC& objectType = MIL_ObjectFactory::FindType( strType );
         unsigned int id = objectType.GetID();
         if( objectCosts_.size() <= id )
             objectCosts_.resize( id + 1, 0 );
-
         assert( objectCosts_.size() > id );
         xis >> xml::attribute( "value", objectCosts_[ id ] );
     }
@@ -260,16 +249,17 @@ void DEC_Agent_PathClass::ReadTerrain( xml::xistream& xis, TerrainData& destinat
 // -----------------------------------------------------------------------------
 void DEC_Agent_PathClass::ReadFuseau( xml::xistream& xis )
 {
-    xis >> xml::optional() >> xml::start( "outter-tolerance" )
-                          >> xml::optional() >> xml::attribute( "cost-per-meter", rFuseauCostPerMeterOut_ )
-                          >> xml::optional() >> xml::attribute( "without-automat", rMaximumFuseauDistance_ )
-                          >> xml::optional() >> xml::attribute( "with-automat", rMaximumFuseauDistanceWithAutomata_ )
-                      >> xml::end()
-
-        >> xml::optional() >> xml::start( "inner-comfort" )
-                          >> xml::optional() >> xml::attribute( "cost-per-meter", rFuseauCostPerMeterIn_ )
-                          >> xml::attribute( "distance", rComfortFuseauDistance_ )
-                     >> xml::end();
+    xis >> xml::optional()
+        >> xml::start( "outter-tolerance" )
+            >> xml::optional() >> xml::attribute( "cost-per-meter", rFuseauCostPerMeterOut_ )
+            >> xml::optional() >> xml::attribute( "without-automat", rMaximumFuseauDistance_ )
+            >> xml::optional() >> xml::attribute( "with-automat", rMaximumFuseauDistanceWithAutomata_ )
+        >> xml::end()
+        >> xml::optional()
+        >> xml::start( "inner-comfort" )
+            >> xml::optional() >> xml::attribute( "cost-per-meter", rFuseauCostPerMeterIn_ )
+            >> xml::attribute( "distance", rComfortFuseauDistance_ )
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -278,12 +268,12 @@ void DEC_Agent_PathClass::ReadFuseau( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void DEC_Agent_PathClass::ReadAutomataFuseau( xml::xistream& xis )
 {
-    xis >> xml::optional() >> xml::start( "outter-tolerance " )
-                          >> xml::optional() >> xml::attribute( "cost-per-meter" ,rAutomataFuseauCostPerMeterOut_ )
-                          >> xml::attribute( "distance", rMaximumAutomataFuseauDistance_ )
-                      >> xml::end();
-    if( rMaximumAutomataFuseauDistance_ < 10 )
-        rMaximumAutomataFuseauDistance_ = 10;
+    xis >> xml::optional()
+        >> xml::start( "outter-tolerance " )
+            >> xml::optional() >> xml::attribute( "cost-per-meter" ,rAutomataFuseauCostPerMeterOut_ )
+            >> xml::attribute( "distance", rMaximumAutomataFuseauDistance_ )
+        >> xml::end();
+    rMaximumAutomataFuseauDistance_ = std::max( 10., rMaximumAutomataFuseauDistance_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -317,7 +307,7 @@ void DEC_Agent_PathClass::ReadPopulationsCost( xml::xistream& xis )
     xis >> xml::optional() >> xml::attribute( "security-range", rPopulationSecurityRange_ )
         >> xml::optional() >> xml::attribute( "maximum", rPopulationMaximumCost_ )
         >> xml::optional() >> xml::attribute( "outside-of-population", rCostOutsideOfPopulation_ )
-            >> xml::list( "population-cost", *this, &DEC_Agent_PathClass::ReadPopulation );
+        >> xml::list( "population-cost", *this, &DEC_Agent_PathClass::ReadPopulation );
 }
 
 // -----------------------------------------------------------------------------
@@ -349,7 +339,6 @@ const DEC_Agent_PathClass& DEC_Agent_PathClass::GetPathClass( const DEC_PathType
 {
     const bool bCanFly     = pion.GetType().GetUnitType().CanFly();
     const bool bAutonomous = pion.IsAutonomous();
-
     const DEC_Agent_PathClass* pClass = rules_[ T_RuleType( pathType.GetName(), T_BooleanPair( bCanFly, bAutonomous ) ) ];
     assert( pClass );
     return *pClass;
