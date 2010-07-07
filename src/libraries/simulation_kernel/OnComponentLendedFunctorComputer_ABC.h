@@ -12,15 +12,15 @@
 
 class OnComponentFunctor_ABC;
 class PHY_ComposantePion;
+
 // =============================================================================
 /** @class  Dotationcomputer_ABC
-@brief  Dotationcomputer_ABC
+    @brief  Dotationcomputer_ABC
 */
 // Created: MGD 2009-09-15
 // =============================================================================
 class OnComponentLendedFunctorComputer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
