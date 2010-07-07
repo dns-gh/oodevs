@@ -9,18 +9,16 @@
 
 #include "simulation_kernel_pch.h"
 #include "NBCPropagationCapacity.h"
-#include "MIL_Object_ABC.h"
 #include "NBCTypeAttribute.h"
-#include "MIL_ObjectBuilder_ABC.h"
 #include "ContaminationCapacity.h"
+#include "MIL_Object_ABC.h"
 #include "MIL_PropagationManager.h"
+#include "MIL_ObjectBuilder_ABC.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Objects/MIL_ObjectLoader.h"
 #include "Entities/Objects/CapacityFactory.h"
-
 #include "Tools/MIL_Tools.h"
-
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( NBCPropagationCapacity )
 
@@ -45,7 +43,6 @@ NBCPropagationCapacity::NBCPropagationCapacity()
 {
     // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: NBCPropagationCapacity constructor
@@ -84,7 +81,7 @@ void NBCPropagationCapacity::serialize( Archive& file, const uint )
 void NBCPropagationCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
-    object.Register( static_cast< MIL_InteractiveContainer_ABC *>( this ) );
+    object.Register( static_cast< MIL_InteractiveContainer_ABC* >( this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -107,7 +104,6 @@ void NBCPropagationCapacity::Instanciate( MIL_Object_ABC& object ) const
     object.UpdateLocalisation( GetLocalisation( vOrigin ) );
     pManager_->Flag( vOrigin , attr.GetLength() , attr.GetWidth() );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: NBCPropagationCapacity::Update
@@ -141,12 +137,11 @@ void NBCPropagationCapacity::Update( MIL_Object_ABC& object, float time )
     //Compute the nbc agents concentration in accordance with wind data
     if( ! attr.IsSource() )
     {
-        bool bHasASource = UpdateState( object , vNormalizedWind , vPerpendicularToWind , wind.rWindSpeed_ );
+        const bool bHasASource = UpdateState( object , vNormalizedWind , vPerpendicularToWind , wind.rWindSpeed_ );
         attr.ComputeAgentConcentrationEvolution( bHasASource );
     }
     else
         attr.UpdateSourceLifeDuration( time , timeOfLastUpdate_ );
-
     timeOfLastUpdate_ = time;
 }
 
@@ -161,12 +156,8 @@ void NBCPropagationCapacity::UpdateShape( MIL_Object_ABC& object , MT_Vector2D v
 
     MT_Float seq = windSpeed / attr.GetLength();
     for( int i = 0 ; i <= seq; i ++ )
-    {
-        for( int j = - ( int )( attr.GetPropagationAngle() / 2 ) ; j <= ( int )( attr.GetPropagationAngle() / 2 ) ; j++ )
-        {
+        for( int j = - static_cast< int >( attr.GetPropagationAngle() / 2 ) ; j <= static_cast< int >( attr.GetPropagationAngle() / 2 ) ; j++ )
             Propagate( vOrigin + i * vNormalizedWind + j * vPerpendicularToWind , object );
-        }
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -177,16 +168,11 @@ bool NBCPropagationCapacity::UpdateState( MIL_Object_ABC& object , MT_Vector2D v
 {
     NBCTypeAttribute& attr = object.GetAttribute< NBCTypeAttribute >();
     MT_Vector2D vOrigin( object.GetLocalisation().ComputeBarycenter() );
-
     MT_Float seq = windSpeed / attr.GetLength();
     for( int i = 0 ; i <= seq; i ++ )
-    {
-        for( int j = -( int )( attr.GetPropagationAngle()/2 ) ; j <= ( int )( attr.GetPropagationAngle()/2 ) ; j++ )
-        {
-            if( pManager_->IsFlagged( GetLocalisation( vOrigin - i * vNormalizedWind + j * vPerpendicularToWind ) , attr.GetLength() , attr.GetWidth() ) )
+        for( int j = -static_cast< int >( attr.GetPropagationAngle()/2 ) ; j <= static_cast< int >( attr.GetPropagationAngle() / 2 ) ; j++ )
+            if( pManager_->IsFlagged( GetLocalisation( vOrigin - i * vNormalizedWind + j * vPerpendicularToWind ), attr.GetLength() , attr.GetWidth() ) )
                 return true;
-        }
-    }
     return false;
 }
 
@@ -196,9 +182,10 @@ namespace
     {
     public:
         MIL_NBCBuilder( const MIL_Object_ABC& object, const TER_Localisation& location )
-            : object_ ( object )
-            , location_ ( location )
+            : object_  ( object )
+            , location_( location )
         {
+            // NOTHING
         }
 
         const MIL_ObjectType_ABC& GetType() const
@@ -214,8 +201,8 @@ namespace
         }
 
     private:
-        const MIL_Object_ABC&           object_;
-        const TER_Localisation&    location_;
+        const MIL_Object_ABC& object_;
+        const TER_Localisation& location_;
     };
 }
 
