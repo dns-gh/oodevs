@@ -24,8 +24,9 @@ BOOST_CLASS_EXPORT_IMPLEMENT( ScatteringCapacity )
 // Created: MGD 2010-03-12
 // -----------------------------------------------------------------------------
 ScatteringCapacity::ScatteringCapacity( xml::xistream& xis )
-:  humanByTimeStep_( xml::attribute< float >( xis, "human-by-time-step" ) )
+    : humanByTimeStep_( xml::attribute< unsigned int >( xis, "human-by-time-step" ) )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -74,7 +75,7 @@ void ScatteringCapacity::serialize( Archive& file, const unsigned int )
 void ScatteringCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
-    object.Register( static_cast< MIL_InteractiveContainer_ABC *>( this ) );
+    object.Register( static_cast< MIL_InteractiveContainer_ABC* >( this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,7 +86,7 @@ void ScatteringCapacity::Instanciate( MIL_Object_ABC& object ) const
 {
     ScatteringCapacity* capacity = new ScatteringCapacity( *this );
     object.AddCapacity( capacity );
-    object.Register( static_cast< MIL_InteractiveContainer_ABC *>( capacity ) );
+    object.Register( static_cast< MIL_InteractiveContainer_ABC* >( capacity ) );
 }
 
 // -----------------------------------------------------------------------------

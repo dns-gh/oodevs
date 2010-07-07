@@ -15,7 +15,7 @@
 
 // =============================================================================
 /** @class  ScatteringCapacity
-    @brief  ScatteringCapacity
+    @brief  Scattering capacity
 */
 // Created: MGD 2010-03-12
 // =============================================================================
@@ -46,7 +46,7 @@ private:
 
     //! @name Attribute
     //@
-    float humanByTimeStep_;
+    unsigned int humanByTimeStep_;
     //@}
 };
 
