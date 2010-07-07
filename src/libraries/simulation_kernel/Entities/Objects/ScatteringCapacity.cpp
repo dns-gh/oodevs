@@ -92,7 +92,7 @@ void ScatteringCapacity::Instanciate( MIL_Object_ABC& object ) const
 // Name: AttitudeModifierCapacity::ProcessAgentInside
 // Created: MGD 2010-03-15
 // -----------------------------------------------------------------------------
-void ScatteringCapacity::ProcessPopulationInside( MIL_Object_ABC& object, MIL_PopulationElement_ABC& population )
+void ScatteringCapacity::ProcessPopulationInside( MIL_Object_ABC& /*object*/, MIL_PopulationElement_ABC& population )
 {
     population.PullHumans( humanByTimeStep_ );
 }

@@ -197,7 +197,7 @@ void InputToxicCloudAttribute::ReadFiles( xml::xistream& xis )
 // Name: InputToxicCloudAttribute::Instanciate
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void InputToxicCloudAttribute::Instanciate( DEC_Knowledge_Object& object ) const
+void InputToxicCloudAttribute::Instanciate( DEC_Knowledge_Object& /*object*/ ) const
 {
     // NOTHING
 }
