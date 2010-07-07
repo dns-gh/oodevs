@@ -12,20 +12,20 @@
 
 class OnComponentFunctor_ABC;
 class OnComponentComputer_ABC;
+
 // =============================================================================
 /** @class  DotationComputerFactory_ABC
-    @brief  DotationComputerFactory_ABC
+    @brief  Dotation computer factory definition
 */
 // Created: MGD 2009-08-13
 // =============================================================================
 class OnComponentFunctorComputerFactory_ABC : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
-             OnComponentFunctorComputerFactory_ABC();
-    virtual ~OnComponentFunctorComputerFactory_ABC();
+             OnComponentFunctorComputerFactory_ABC() {}
+    virtual ~OnComponentFunctorComputerFactory_ABC() {}
     //@}
 
     //! @name Operations
