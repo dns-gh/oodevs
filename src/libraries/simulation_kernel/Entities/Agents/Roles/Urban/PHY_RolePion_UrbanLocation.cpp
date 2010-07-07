@@ -114,7 +114,6 @@ void PHY_RolePion_UrbanLocation::MagicMove( MT_Vector2D vPosition )
         }
     }
     delegate_.reset( new OutsideUrbanBlockPosition() );
-
 }
 
 

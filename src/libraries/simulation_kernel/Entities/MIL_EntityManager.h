@@ -221,6 +221,8 @@ private:
     //@{
     void CreateUrbanObject( const urban::TerrainObject_ABC& object );
     void LoadUrbanStates( const MIL_Config& config );
+    void NotifyPionsInsideUrbanObject();
+
     //@}
 
     //! @name Update

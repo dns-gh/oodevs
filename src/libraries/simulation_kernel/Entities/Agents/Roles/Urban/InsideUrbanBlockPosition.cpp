@@ -62,7 +62,7 @@ geometry::Point2f InsideUrbanBlockPosition::GetFirerPosition( MIL_Agent_ABC& tar
 
     std::vector< geometry::Point2f > points = urbanObject_->GetFootprint()->Intersect( geometry::Segment2f( firerResult.position_, targetResult.position_ ) );
     if( points.empty() )
-        throw std::exception( "error in urbanBlock intersection for firer" );
+        return firerResult.position_; //// $$$$ _RC_ SBO 2010-07-07: devrait etre throw std::exception( "error in urbanBlock intersection for firer" );
     return GetNearestUrbanBlockPoint( targetResult.position_, points );
 }
 
@@ -79,7 +79,7 @@ geometry::Point2f InsideUrbanBlockPosition::GetTargetPosition(MIL_Agent_ABC& fir
     geometry::Line2f lineTmp( firerResult.position_, targetResult.position_ );
     std::vector< geometry::Point2f > points = urbanObject_->GetFootprint()->Intersect( lineTmp );
     if( points.size() < 2 )
-        throw std::exception( " error in urbanBlock intersection for target" );
+        return targetResult.position_;  // $$$$ _RC_ SBO 2010-07-07: devrait etre throw std::exception( " error in urbanBlock intersection for target" ); 
     geometry::Point2f pfirst = GetNearestUrbanBlockPoint( firerResult.position_, points );
     geometry::Point2f pSecond = GetFurthestUrbanBlockPoint( firerResult.position_, points );
     geometry::Vector2f vector( pfirst, pSecond );

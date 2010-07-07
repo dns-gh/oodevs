@@ -84,6 +84,8 @@
 #include "simulation_kernel/FormationFactory.h"
 #include "simulation_kernel/PopulationFactory.h"
 #include "simulation_kernel/Knowledge/KnowledgeGroupFactory.h"
+#include "simulation_kernel/Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
+#include "simulation_kernel/Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "simulation_kernel/UrbanModel.h"
 #include "simulation_kernel/UrbanType.h"
 #include "Tools/MIL_IDManager.h"
@@ -271,6 +273,7 @@ void MIL_EntityManager::CreateUrbanObjects( UrbanModel& urbanModel, const MIL_Co
     UrbanWrapperVisitor visitor( *this );
     urbanModel.Accept( visitor );
     LoadUrbanStates( config );
+    NotifyPionsInsideUrbanObject();
 }
 
 // -----------------------------------------------------------------------------
@@ -301,6 +304,23 @@ void MIL_EntityManager::LoadUrbanStates( const MIL_Config& config )
                 >> xml::list( "block", boost::bind( &MIL_ObjectManager::ReadUrbanState, boost::ref( *pObjectManager_ ), _1 ) )
             >> xml::end()
         >> xml::end();
+}
+
+namespace
+{
+    void UrbanNotificationFunctor( MIL_Agent_ABC& agent )
+    {
+        MT_Vector2D position = agent.GetRole< PHY_RoleInterface_Location >().GetPosition();
+        agent.GetRole< PHY_RoleInterface_UrbanLocation >().MagicMove( position );
+    }
+}
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::NotifyPionsInsideUrbanObject
+// Created: SBO 2010-07-07
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::NotifyPionsInsideUrbanObject()
+{
+    agentFactory_->Apply( boost::bind( &UrbanNotificationFunctor, _1 )  );
 }
 
 // -----------------------------------------------------------------------------

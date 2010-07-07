@@ -79,6 +79,7 @@ public:
     //! @name Types
     //@{
     typedef std::vector< MT_Float > T_FactorVector;
+    typedef std::map< unsigned, MT_Float > T_FactorMap;
     //@}
 
 private:
@@ -117,7 +118,7 @@ private:
     //@{
     void ReadDistance            ( xml::xistream& xis );
     void ReadLimitedToSensorsList( xml::xistream& xis ); // LTO
-    void ReadTerrainModifier     ( xml::xistream& xis, unsigned int& visionObject );
+    void ReadTerrainModifier     ( xml::xistream& xis );
     void ReadUrbanBlockModifier  ( xml::xistream& xis, unsigned int& visionUrbanBlockMaterial );
     //@}
 
@@ -140,7 +141,7 @@ private:
     T_FactorVector lightingFactors_;
     T_FactorVector postureSourceFactors_;
     T_FactorVector postureTargetFactors_;
-    T_FactorVector environmentFactors_;
+    T_FactorMap    environmentFactors_;
     T_FactorVector urbanBlockFactors_;
 
     // Population

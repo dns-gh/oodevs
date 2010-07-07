@@ -121,6 +121,15 @@ namespace
                 >> xml::list( "distance-modifier", loader, &T_Loader::ReadFactor, factors )
             >> xml::end();
     }
+
+    std::map< std::string, PHY_RawVisionData::E_VisionObject > environmentAssociation;
+    void InitializeEnvironmentAssociation()
+    {
+        environmentAssociation[ "Sol"    ] = PHY_RawVisionData::E_VisionObject::eVisionGround;
+        environmentAssociation[ "Vide"   ] = PHY_RawVisionData::E_VisionObject::eVisionEmpty;
+        environmentAssociation[ "Foret"  ] = PHY_RawVisionData::E_VisionObject::eVisionForest;
+        environmentAssociation[ "Urbain" ] = PHY_RawVisionData::E_VisionObject::eVisionUrban;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -134,7 +143,6 @@ PHY_SensorTypeAgent::PHY_SensorTypeAgent( const PHY_SensorType& type, xml::xistr
     , lightingFactors_     ( weather::PHY_Lighting     ::GetLightings     ().size(), 0. )
     , postureSourceFactors_( PHY_Posture      ::GetPostures      ().size(), 0. )
     , postureTargetFactors_( PHY_Posture      ::GetPostures      ().size(), 0. )
-    , environmentFactors_  ( PHY_RawVisionData::eNbrVisionObjects         , 0. )
     , urbanBlockFactors_   ( UrbanType::GetUrbanType().GetStaticModel().Resolver< urban::MaterialCompositionType, std::string >::Count(), 1. )
     , rPopulationDensity_  ( 1. )
     , rPopulationFactor_   ( 1. )
@@ -152,6 +160,7 @@ PHY_SensorTypeAgent::PHY_SensorTypeAgent( const PHY_SensorType& type, xml::xistr
     InitializeFactors( PHY_Posture      ::GetPostures       (), "source-posture-modifiers", postureSourceFactors_, xis );
     InitializeFactors( PHY_Posture      ::GetPostures       (), "target-posture-modifiers" , postureTargetFactors_, xis );
 
+    InitializeEnvironmentAssociation();
     InitializeEnvironmentFactors( xis );
     InitializePopulationFactors ( xis );
     InitializeUrbanBlockFactors( xis );
@@ -263,9 +272,8 @@ void PHY_SensorTypeAgent::ReadLimitedToSensorsList( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_SensorTypeAgent::InitializeEnvironmentFactors( xml::xistream& xis )
 {
-    unsigned int visionObject = 0;
     xis >> xml::start( "terrain-modifiers" )
-            >> xml::list( "distance-modifier", *this, &PHY_SensorTypeAgent::ReadTerrainModifier, visionObject )
+            >> xml::list( "distance-modifier", *this, &PHY_SensorTypeAgent::ReadTerrainModifier )
         >> xml::end();
 }
 
@@ -273,16 +281,15 @@ void PHY_SensorTypeAgent::InitializeEnvironmentFactors( xml::xistream& xis )
 // Name: PHY_SensorTypeAgent::ReadTerrainModifier
 // Created: ABL 2007-07-25
 // -----------------------------------------------------------------------------
-void PHY_SensorTypeAgent::ReadTerrainModifier( xml::xistream& xis, unsigned int& visionObject )
+void PHY_SensorTypeAgent::ReadTerrainModifier( xml::xistream& xis )
 {
-    assert( environmentFactors_.size() > visionObject );  // $$$$ _RC_ ABL 2007-07-27: use exception instead
-    MT_Float& rFactor = environmentFactors_[ visionObject ];
     std::string terrainType;
-    xis >> xml::attribute( "type", terrainType )
-        >> xml::attribute( "value", rFactor );
+    xis >> xml::attribute( "type", terrainType );
+    MT_Float rFactor;
+    xis >> xml::attribute( "value", rFactor );
     if( rFactor < 0 || rFactor > 1 )
         xis.error( "terrain-modifier: value not in [0..1]" );
-    ++visionObject;
+    environmentFactors_.insert( std::pair< unsigned, MT_Float >( environmentAssociation[ terrainType ], rFactor ) ); 
 }
 
 // -----------------------------------------------------------------------------
@@ -459,11 +466,11 @@ bool PHY_SensorTypeAgent::ContainsSensorFromLimitedList( const MIL_Agent_ABC& ta
 inline
 MT_Float PHY_SensorTypeAgent::ComputeEnvironementFactor( PHY_RawVisionData::envBits nEnv ) const
 {
-    MT_Float res = nEnv & PHY_RawVisionData::eVisionEmpty ? environmentFactors_[ 0 ] : 1.;
+    MT_Float res = nEnv & PHY_RawVisionData::eVisionEmpty ? environmentFactors_.find( 0 )->second : 1.;
 
     for( unsigned int mask = 1, idx = 1; idx < PHY_RawVisionData::eNbrVisionObjects; mask <<= 1, ++idx )
         if( mask & nEnv )
-            res *= environmentFactors_[ idx ];
+            res *= environmentFactors_.find( mask )->second;
     return res;
 }
 
