@@ -1345,7 +1345,7 @@ float DEC_GeometryFunctions::ComputeAutomatDelayFromSchedule( const MIL_Fuseau* 
 // Name: DEC_GeometryFunctions::ComputeDelayFromSchedule
 // Created: LDC 2009-07-06
 // -----------------------------------------------------------------------------
-float DEC_GeometryFunctions::ComputeDelayFromSchedule( const MIL_Fuseau* /*pFuseau*/, const std::vector< DEC_Decision_ABC* >& automates, float rDistanceFromScheduled, int nSchedule )
+float DEC_GeometryFunctions::ComputeDelayFromSchedule( const MIL_Fuseau* pFuseau, const std::vector< DEC_Decision_ABC* >& automates, float rDistanceFromScheduled, int nSchedule )
 {
     assert( pFuseau );
     // Calcul vitesse moyenne de l'automate
