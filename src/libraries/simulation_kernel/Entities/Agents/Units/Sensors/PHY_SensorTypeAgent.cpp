@@ -45,7 +45,7 @@
 #include <urban/MaterialCompositionType.h>
 #include <urban/TerrainObjectVisitor_ABC.h>
 
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 namespace
 {
@@ -605,6 +605,7 @@ const MT_Float PHY_SensorTypeAgent::RayTrace( const MT_Vector2D& vSource , const
 
     return rVisionNRJ;
 }
+
 // -----------------------------------------------------------------------------
 // Name: PHY_SensorTypeAgent::RayTrace
 // Created: NLD 2004-10-14
@@ -759,7 +760,6 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Age
     return RayTrace( vSourcePos, rSourceAltitude, vTargetPos, rTargetAltitude, rDistanceMaxModificator );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PHY_SensorTypeAgent::ComputeIdentificationDist
 // Created: SLG 2010-04-30
@@ -768,6 +768,7 @@ const MT_Float PHY_SensorTypeAgent::ComputeIdentificationDist( const MIL_Agent_A
 {
     return rIdentificationDist_ * ComputeDistanceModificator( perceiver, target );
 }
+
 // -----------------------------------------------------------------------------
 // Name: PHY_SensorTypeAgent::ComputeRecognitionDist
 // Created: SLG 2010-04-30
@@ -776,6 +777,7 @@ const MT_Float PHY_SensorTypeAgent::ComputeRecognitionDist( const MIL_Agent_ABC&
 {
     return rRecognitionDist_ * ComputeDistanceModificator( perceiver, target );
 }
+
 // -----------------------------------------------------------------------------
 // Name: PHY_SensorTypeAgent::ComputeDetectionDist
 // Created: SLG 2010-04-30
@@ -854,8 +856,7 @@ MT_Float PHY_SensorTypeAgent::GetUrbanBlockFactor( const urban::TerrainObject_AB
     const urban::Architecture* architecture = block.RetrievePhysicalFeature< urban::Architecture >();
     if( architecture )
         return urbanBlockFactors_[ UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( architecture->GetMaterial() )->GetId() ];
-    else
-        return 1.f;
+    return 1.f;
 }
 
 // -----------------------------------------------------------------------------
