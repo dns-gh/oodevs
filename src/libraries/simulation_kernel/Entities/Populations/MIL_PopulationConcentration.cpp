@@ -71,7 +71,7 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     if( nNbrHumans <= 0 )
         xis.error( "nNbrHumans is not greater than 0." );
 
-    PushHumans( T_Humans( nNbrHumans, 0. ) );
+    PushHumans( T_Humans( nNbrHumans, 0 ) );
 
     UpdateLocation();
     UpdateDensity ();
