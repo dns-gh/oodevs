@@ -12,7 +12,7 @@
 #include "Circle.h"
 #include "Polygon.h"
 
-#pragma warning (disable : 4100 4127 4511 4512 4702 )
+#pragma warning (disable : 4100 4127 4511 4512 4702 4996 )
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>
 #include <vector>

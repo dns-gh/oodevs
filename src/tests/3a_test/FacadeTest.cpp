@@ -14,7 +14,7 @@
 #include "3a/AarFacade.h"
 #include "3a/Task.h"
 #include "protocol/ClientPublisher_ABC.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #include <geocoord/geodetic.h>
 #include <geocoord/mgrs.h>
 #include <boost/lexical_cast.hpp>
@@ -111,14 +111,11 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Facade_TestOperationalState )
 {
-    const std::string input =
-    "<indicator>"
-        "<extract function='operational-state' id='opstate'/>"
-        "<reduce type='float' function='select' input='opstate' key='2' id='myopstate'/>"
-        "<result function='plot' input='myopstate' type='float'/>"
-    "</indicator>";
-    xml::xistringstream xis( input );
-
+    xml::xistringstream xis( "<indicator>"
+                             "    <extract function='operational-state' id='opstate'/>"
+                             "    <reduce type='float' function='select' input='opstate' key='2' id='myopstate'/>"
+                             "    <result function='plot' input='myopstate' type='float'/>"
+                             " </indicator>" );
     MockPublisher publisher;
     AarFacade facade( publisher, 42 );
     boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
@@ -156,15 +153,12 @@ BOOST_AUTO_TEST_CASE( Facade_TestOperationalState )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Facade_TestOperationalStateNormalized )
 {
-    const std::string input =
-    "<indicator>"
-        "<extract function='operational-state' id='opstate'/>"
-        "<reduce type='float' function='select' input='opstate' key='2' id='myopstate'/>"
-        "<reduce type='float' function='threshold' input='myopstate' thresholds='0.5' values='0,1' id='mynormalizedopstate'/>"
-        "<result function='plot' input='mynormalizedopstate' type='float'/>"
-    "</indicator>";
-    xml::xistringstream xis( input );
-
+    xml::xistringstream xis( "<indicator>"
+                             "    <extract function='operational-state' id='opstate'/>"
+                             "    <reduce type='float' function='select' input='opstate' key='2' id='myopstate'/>"
+                             "    <reduce type='float' function='threshold' input='myopstate' thresholds='0.5' values='0,1' id='mynormalizedopstate'/>"
+                             "    <result function='plot' input='mynormalizedopstate' type='float'/>"
+                             "</indicator>" );
     MockPublisher publisher;
     AarFacade facade( publisher, 42 );
     boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
@@ -221,16 +215,13 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Facade_TestDistanceBetweenTwoUnits )
 {
-    const std::string input =
-    "<indicator>"
-        "<extract function='position' id='position'/>"
-        "<reduce type='position' function='select' input='position' key='1' id='position1'/>"
-        "<reduce type='position' function='select' input='position' key='2' id='position2'/>"
-        "<transform function='distance' input='position1,position2' id='distance'/>"
-        "<result function='plot' input='distance' type='float'/>"
-    "</indicator>";
-    xml::xistringstream xis( input );
-
+    xml::xistringstream xis( "<indicator>"
+                             "    <extract function='position' id='position'/>"
+                             "    <reduce type='position' function='select' input='position' key='1' id='position1'/>"
+                             "    <reduce type='position' function='select' input='position' key='2' id='position2'/>"
+                             "    <transform function='distance' input='position1,position2' id='distance'/>"
+                             "    <result function='plot' input='distance' type='float'/>"
+                             "</indicator>" ) ;
     MockPublisher publisher;
     AarFacade facade( publisher, 42 );
     boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
@@ -261,12 +252,10 @@ BOOST_AUTO_TEST_CASE( Facade_TestDistanceBetweenTwoUnits )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Facade_TestTypeInstanciationIsVerifiedAtRuntime )
 {
-    const std::string input =
-    "<indicator>"
-        "<extract function='position' id='position'/>"
-        "<reduce type='position' function='sum' input='position' id='position2'/>" // summing positions
-    "</indicator>";
-    xml::xistringstream xis( input );
+    xml::xistringstream xis( "<indicator>"
+                             "    <extract function='position' id='position'/>"
+                             "    <reduce type='position' function='sum' input='position' id='position2'/>" // summing positions
+                             "</indicator>" );
     MockPublisher publisher;
     AarFacade facade( publisher, 42 );
     BOOST_CHECK_THROW( facade.CreateTask( UnWrap( xis ) ), std::invalid_argument );
@@ -307,13 +296,11 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Facade_TestNumberOfBreakdowns )
 {
-    const std::string input =
-    "<indicator>"
-        "<extract function='maintenance-handling-unit' id='consigns'/>"
-        "<reduce type='unsigned long' function='count' input='consigns' id='count'/>"
-        "<result function='plot' input='count' type='unsigned'/>"
-    "</indicator>";
-    xml::xistringstream xis( input );
+     xml::xistringstream xis( "<indicator>"
+                              "    <extract function='maintenance-handling-unit' id='consigns'/>"
+                              "    <reduce type='unsigned long' function='count' input='consigns' id='count'/>"
+                              "    <result function='plot' input='count' type='unsigned'/>"
+                              "</indicator>" );
 
     MockPublisher publisher;
     AarFacade facade( publisher, 42 );
@@ -345,15 +332,13 @@ BOOST_AUTO_TEST_CASE( Facade_TestNumberOfBreakdowns )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Facade_TestNumberOfBreakdownsWithUnitFilter )
 {
-    const std::string input =
-    "<indicator>"
-        "<extract function='maintenance-handling-unit' id='consigns'/>"
-        "<transform function='is-one-of' type='unsigned long' select='12,42' input='consigns' id='selected-consigns'/>"
-        "<transform function='filter' type='unsigned long' input='selected-consigns,consigns' id='the-consigns'/>"
-        "<reduce type='unsigned long' function='count' input='the-consigns' id='count'/>"
-        "<result function='plot' input='count' type='unsigned'/>"
-    "</indicator>";
-    xml::xistringstream xis( input );
+    xml::xistringstream xis( "<indicator>"
+                             "    <extract function='maintenance-handling-unit' id='consigns'/>"
+                             "    <transform function='is-one-of' type='unsigned long' select='12,42' input='consigns' id='selected-consigns'/>"
+                             "    <transform function='filter' type='unsigned long' input='selected-consigns,consigns' id='the-consigns'/>"
+                             "    <reduce type='unsigned long' function='count' input='the-consigns' id='count'/>"
+                             "    <result function='plot' input='count' type='unsigned'/>"
+                             "</indicator>" );
 
     MockPublisher publisher;
     AarFacade facade( publisher, 42 );
@@ -419,15 +404,13 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Facade_TestNumberOfDirectFiresWithUnitFilter )
 {
-    const std::string input =
-    "<indicator>"
-        "<extract function='direct-fire-unit' id='fires'/>"
-        "<transform function='is-one-of' type='unsigned long' select='12,42' input='fires' id='selected-fires'/>"
-        "<transform function='filter' type='unsigned long' input='selected-fires,fires' id='the-fires'/>"
-        "<reduce type='unsigned long' function='count' input='the-fires' id='count'/>"
-        "<result function='plot' input='count' type='unsigned'/>"
-    "</indicator>";
-    xml::xistringstream xis( input );
+    xml::xistringstream xis( "<indicator>"
+                             "    <extract function='direct-fire-unit' id='fires'/>"
+                             "    <transform function='is-one-of' type='unsigned long' select='12,42' input='fires' id='selected-fires'/>"
+                             "    <transform function='filter' type='unsigned long' input='selected-fires,fires' id='the-fires'/>"
+                             "    <reduce type='unsigned long' function='count' input='the-fires' id='count'/>"
+                             "    <result function='plot' input='count' type='unsigned'/>"
+                             "</indicator>" );
 
     MockPublisher publisher;
     AarFacade facade( publisher, 42 );
@@ -478,16 +461,14 @@ BOOST_AUTO_TEST_CASE( Facade_TestNumberOfDirectFiresWithUnitFilter )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Facade_TestInflictedComponentDamagesFromDirectFire )
 {
-    const std::string input =
-    "<indicator>"
-        "<extract function='fire-component-damage' id='damages'/>"
-        "<extract function='direct-fire-unit' id='units'/>"
-        "<transform function='is-one-of' type='unsigned long' select='12,42' input='units' id='selected-fires'/>"
-        "<transform function='filter' type='float' input='selected-fires,damages' id='the-damages'/>"
-        "<reduce type='float' function='sum' input='the-damages' id='sum'/>"
-        "<result function='plot' input='sum' type='float'/>"
-    "</indicator>";
-    xml::xistringstream xis( input );
+    xml::xistringstream xis( "<indicator>"
+                             "    <extract function='fire-component-damage' id='damages'/>"
+                             "    <extract function='direct-fire-unit' id='units'/>"
+                             "    <transform function='is-one-of' type='unsigned long' select='12,42' input='units' id='selected-fires'/>"
+                             "    <transform function='filter' type='float' input='selected-fires,damages' id='the-damages'/>"
+                             "    <reduce type='float' function='sum' input='the-damages' id='sum'/>"
+                             "    <result function='plot' input='sum' type='float'/>"
+                             "</indicator>" );
 
     MockPublisher publisher;
     AarFacade facade( publisher, 42 );
@@ -531,19 +512,18 @@ BOOST_AUTO_TEST_CASE( Facade_TestInflictedComponentDamagesFromDirectFire )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Facade_TestInflictedComponentDamagesFromDirectFireWithComposedFilterOfHell )
 {
-    const std::string input =
-    "<indicator>"
-        "<extract function='fire-component-damage' id='damages'/>"
-        "<extract function='direct-fire-unit' id='units'/>"
-        "<extract function='position' id='positions'/>"
-        "<constant type='zone' value='circle(31TBN7728449218,31TBN7728449222)' id='circle'/>"
-        "<transform function='compose' type='position' input='positions,units' id='fire-positions'/>"
-        "<transform function='contains' input='circle,fire-positions' id='selected-fires'/>"
-        "<transform function='filter' type='float' input='selected-fires,damages' id='the-damages'/>"
-        "<reduce type='float' function='sum' input='the-damages' id='sum'/>"
-        "<result function='plot' input='sum' type='float'/>"
-    "</indicator>";
-    xml::xistringstream xis( input );
+
+    xml::xistringstream xis( "<indicator>"
+                             "    <extract function='fire-component-damage' id='damages'/>"
+                             "    <extract function='direct-fire-unit' id='units'/>"
+                             "    <extract function='position' id='positions'/>"
+                             "    <constant type='zone' value='circle(31TBN7728449218,31TBN7728449222)' id='circle'/>"
+                             "    <transform function='compose' type='position' input='positions,units' id='fire-positions'/>"
+                             "    <transform function='contains' input='circle,fire-positions' id='selected-fires'/>"
+                             "    <transform function='filter' type='float' input='selected-fires,damages' id='the-damages'/>"
+                             "    <reduce type='float' function='sum' input='the-damages' id='sum'/>"
+                             "    <result function='plot' input='sum' type='float'/>"
+                             "</indicator>" );
 
     MockPublisher publisher;
     AarFacade facade( publisher, 42 );
@@ -606,13 +586,12 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Facade_TestAllResources )
 {
-    const std::string input =
-    "<indicator>"
-        "<extract function='resources' id='resources'/>"
-        "<reduce type='int' function='sum' input='resources' id='sum'/>"
-        "<result function='plot' input='sum' type='int'/>"
-    "</indicator>";
-    xml::xistringstream xis( input );
+
+    xml::xistringstream xis( "<indicator>"
+                             "    <extract function='resources' id='resources'/>"
+                             "    <reduce type='int' function='sum' input='resources' id='sum'/>"
+                             "    <result function='plot' input='sum' type='int'/>"
+                             "</indicator>" );
 
     MockPublisher publisher;
     AarFacade facade( publisher, 42 );
@@ -650,17 +629,15 @@ BOOST_AUTO_TEST_CASE( Facade_TestAllResources )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Facade_TestInstantaneousResourceConsumptionsWithResourceFilter )
 {
-    const std::string input =
-    "<indicator>"
-        "<extract function='resources' id='resources' dotations='42'/>"
-        "<transform type='int' function='derivate' input='resources' id='resources-var' period='1'/>"
-        "<constant type='int' value='0' id='zero'/>"
-        "<transform function='compare' type='bool' operator='less' input='resources-var,zero' id='test'/>"
-        "<transform function='filter' type='int' input='test,resources-var' id='consumptions'/>"
-        "<reduce type='int' function='sum' input='consumptions' id='sum'/>"
-        "<result function='plot' input='sum' type='int'/>"
-    "</indicator>";
-    xml::xistringstream xis( input );
+    xml::xistringstream xis( "<indicator>"
+                             "    <extract function='resources' id='resources' dotations='42'/>"
+                             "    <transform type='int' function='derivate' input='resources' id='resources-var' period='1'/>"
+                             "    <constant type='int' value='0' id='zero'/>"
+                             "    <transform function='compare' type='bool' operator='less' input='resources-var,zero' id='test'/>"
+                             "    <transform function='filter' type='int' input='test,resources-var' id='consumptions'/>"
+                             "    <reduce type='int' function='sum' input='consumptions' id='sum'/>"
+                             "    <result function='plot' input='sum' type='int'/>"
+                             "</indicator>" );
 
     MockPublisher publisher;
     AarFacade facade( publisher, 42 );
@@ -699,18 +676,16 @@ BOOST_AUTO_TEST_CASE( Facade_TestInstantaneousResourceConsumptionsWithResourceFi
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Facade_TestResourceConsumptionsWithResourceFilter )
 {
-    const std::string input =
-    "<indicator>"
-        "<extract function='resources' id='resources' dotations='42'/>"
-        "<transform type='int' function='derivate' input='resources' id='resources-var' period='1'/>"
-        "<constant type='int' value='0' id='zero'/>"
-        "<transform function='compare' type='bool' operator='less' input='resources-var,zero' id='test'/>"
-        "<transform function='filter' type='int' input='test,resources-var' id='consumptions'/>"
-        "<reduce type='int' function='sum' input='consumptions' id='sum'/>"
-        "<transform function='integrate' id='total' input='sum' type='int'/>"
-        "<result function='plot' input='total' type='int'/>"
-    "</indicator>";
-    xml::xistringstream xis( input );
+    xml::xistringstream xis( "<indicator>"
+                             "    <extract function='resources' id='resources' dotations='42'/>"
+                             "    <transform type='int' function='derivate' input='resources' id='resources-var' period='1'/>"
+                             "    <constant type='int' value='0' id='zero'/>"
+                             "    <transform function='compare' type='bool' operator='less' input='resources-var,zero' id='test'/>"
+                             "    <transform function='filter' type='int' input='test,resources-var' id='consumptions'/>"
+                             "    <reduce type='int' function='sum' input='consumptions' id='sum'/>"
+                             "    <transform function='integrate' id='total' input='sum' type='int'/>"
+                             "    <result function='plot' input='total' type='int'/>"
+                             "</indicator>" );
 
     MockPublisher publisher;
     AarFacade facade( publisher, 42 );
@@ -767,13 +742,11 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Facade_TestEquipments )
 {
-    const std::string input =
-    "<indicator>"
-        "<extract function='equipments' states='available,prisoner' equipments='12,42' id='equipments'/>"
-        "<reduce type='int' function='sum' input='equipments' id='sum'/>"
-        "<result function='plot' input='sum' type='int'/>"
-    "</indicator>";
-    xml::xistringstream xis( input );
+    xml::xistringstream xis( "<indicator>"
+                             "    <extract function='equipments' states='available,prisoner' equipments='12,42' id='equipments'/>"
+                             "    <reduce type='int' function='sum' input='equipments' id='sum'/>"
+                             "    <result function='plot' input='sum' type='int'/>"
+                             "</indicator>" );
 
     MockPublisher publisher;
     AarFacade facade( publisher, 42 );
@@ -816,20 +789,18 @@ BOOST_AUTO_TEST_CASE( Facade_TestEquipments )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Facade_TestHumans )
 {
-    const std::string input =
-    "<indicator>"
-        "<extract function='humans' states='operational,nbc' ranks='troopers' id='humans'/>"
-        "<reduce type='int' function='sum' input='humans' id='sum'/>"
-        "<result function='plot' input='sum' type='int'/>"
-    "</indicator>";
-    xml::xistringstream xis( input );
+    xml::xistringstream xis( "<indicator>"
+                             "    <extract function='humans' states='operational,nbc' ranks='troopers' id='humans'/>"
+                             "    <reduce type='int' function='sum' input='humans' id='sum'/>"
+                             "    <result function='plot' input='sum' type='int'/>"
+                             "</indicator>" );
 
     MockPublisher publisher;
     AarFacade facade( publisher, 42 );
     boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
 
-    BOOST_TODO;
-
+// $$$$ _RC_ LGY 2010-07-07: TODO
+ 
 //    MockPublisher publisher;
 //    double expectedResult[] = { 0, -54, 0, 0, -100 };
 //    MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
@@ -843,13 +814,11 @@ BOOST_AUTO_TEST_CASE( Facade_TestHumans )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Facade_TestTypeAdaptation )
 {
-    const std::string input =
-    "<indicator>"
-        "<extract function='operational-state' id='opstate'/>"
-        "<reduce type='int' function='select' input='opstate' key='2' id='myopstate'/>"
-        "<result function='plot' input='myopstate' type='int'/>"
-    "</indicator>";
-    xml::xistringstream xis( input );
+    xml::xistringstream xis( "<indicator>"
+                             "    <extract function='operational-state' id='opstate'/>"
+                             "    <reduce type='int' function='select' input='opstate' key='2' id='myopstate'/>"
+                             "    <result function='plot' input='myopstate' type='int'/>"
+                             "</indicator>" );
 
     MockPublisher publisher;
     AarFacade facade( publisher, 42 );
@@ -864,15 +833,13 @@ BOOST_AUTO_TEST_CASE( Facade_TestTypeAdaptation )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Facade_TestBadLexicalCast )
 {
-    const std::string input =
-    "<indicator>"
-        "<extract function='maintenance-handling-unit' id='1'/>"
-        "<transform function='is-one-of' id='2' input='1' select='13,67,68,69,71,74,75,76,78,79,80,55,81,82,197,198,199,90,91,92,93,147,56,148,149,150,151,173,174,175,176,177,178,58,59,60,61,63,66' type='bool'/>"
-        "<extract function='maintenance-handling-unit' id='3'/>"
-        "<transform function='filter' id='4' input='2,3' type='unsigned long'/>"
-        "<reduce function='count' id='5' input='4' type='unsigned'/>"
-    "</indicator>";
-    xml::xistringstream xis( input );
+    xml::xistringstream xis( "<indicator>"
+                             "    <extract function='maintenance-handling-unit' id='1'/>"
+                             "    <transform function='is-one-of' id='2' input='1' select='13,67,68,69,71,74,75,76,78,79,80,55,81,82,197,198,199,90,91,92,93,147,56,148,149,150,151,173,174,175,176,177,178,58,59,60,61,63,66' type='bool'/>"
+                             "    <extract function='maintenance-handling-unit' id='3'/>"
+                             "    <transform function='filter' id='4' input='2,3' type='unsigned long'/>"
+                             "    <reduce function='count' id='5' input='4' type='unsigned'/>"
+                             "</indicator>" );
 
     MockPublisher publisher;
     AarFacade facade( publisher, 42 );
@@ -885,17 +852,15 @@ BOOST_AUTO_TEST_CASE( Facade_TestBadLexicalCast )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Facade_TestConflicts )
 {
-    const std::string input =
-    "<indicator>"
-        "<extract function='direct-fire-unit' id='1'/>"
-        "<transform function='is-one-of' id='2' input='1' select='55,56' type='unsigned long'/>"
-        "<extract function='direct-fire-unit' id='3'/>"
-        "<transform function='filter' id='4' input='2,3' type='unsigned long'/>"
-        "<reduce function='count' id='5' input='4' type='unsigned long'/>"
-        "<transform function='integrate' id='6' input='5' type='unsigned long'/>"
-        "<result function='plot' input='6' type='int'/>"
-    "</indicator>";
-    xml::xistringstream xis( input );
+    xml::xistringstream xis( "<indicator>"
+                             "    <extract function='direct-fire-unit' id='1'/>"
+                             "    <transform function='is-one-of' id='2' input='1' select='55,56' type='unsigned long'/>"
+                             "    <extract function='direct-fire-unit' id='3'/>"
+                             "    <transform function='filter' id='4' input='2,3' type='unsigned long'/>"
+                             "    <reduce function='count' id='5' input='4' type='unsigned long'/>"
+                             "    <transform function='integrate' id='6' input='5' type='unsigned long'/>"
+                             "    <result function='plot' input='6' type='int'/>"
+                             "</indicator>" );
 
     MockPublisher publisher;
     AarFacade facade( publisher, 42 );
@@ -944,14 +909,12 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Facade_TestUnitDetection )
 {
-    const std::string input =
-    "<indicator>"
-        "<extract function='detecting-unit' id='1' detected='69' visibility='detected,recognized,identified'/>"
-        "<transform function='domain' id='2' input='1' select='42,51' type='unsigned long'/>"
-        "<reduce type='int' function='sum' input='2' id='sum'/>"
-        "<result function='plot' input='sum' type='int'/>"
-    "</indicator>";
-    xml::xistringstream xis( input );
+    xml::xistringstream xis( "<indicator>"
+                             "    <extract function='detecting-unit' id='1' detected='69' visibility='detected,recognized,identified'/>"
+                             "    <transform function='domain' id='2' input='1' select='42,51' type='unsigned long'/>"
+                             "    <reduce type='int' function='sum' input='2' id='sum'/>"
+                             "     <result function='plot' input='sum' type='int'/>"
+                             "</indicator>" );
 
     MockPublisher publisher;
     AarFacade facade( publisher, 42 );
