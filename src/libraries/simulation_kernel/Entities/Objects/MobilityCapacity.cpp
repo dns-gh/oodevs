@@ -11,7 +11,7 @@
 #include "MobilityCapacity.h"
 #include "Object.h"
 #include "Tools/MIL_Tools.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MobilityCapacity )
 
@@ -42,7 +42,7 @@ void MobilityCapacity::InitializeSpeed( xml::xistream& xis )
 {
     xis >> xml::attribute( "default-speed", rDefaultSpeed_ );
     if( rDefaultSpeed_ >= 0. )
-        rDefaultSpeed_ = MIL_Tools::ConvertSpeedMosToSim( rDefaultSpeed_ );
+        rDefaultSpeed_ = static_cast< float >( MIL_Tools::ConvertSpeedMosToSim( rDefaultSpeed_ ) );
     else
         rDefaultSpeed_ = std::numeric_limits< float >::max();
 }
@@ -73,9 +73,9 @@ void MobilityCapacity::InitializeSpeedPolicy( xml::xistream& xis )
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 MobilityCapacity::MobilityCapacity( const MobilityCapacity& from )
-    : nSpeedPolicy_ ( from.nSpeedPolicy_ )
-    , rDefaultSpeed_ ( from.rDefaultSpeed_ )
-    , rSpeedPolicyMaxSpeedAgentFactor_ ( from.rSpeedPolicyMaxSpeedAgentFactor_ )
+    : nSpeedPolicy_                   ( from.nSpeedPolicy_ )
+    , rDefaultSpeed_                  ( from.rDefaultSpeed_ )
+    , rSpeedPolicyMaxSpeedAgentFactor_( from.rSpeedPolicyMaxSpeedAgentFactor_ )
 {
     // NOTHING
 }
