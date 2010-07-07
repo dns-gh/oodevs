@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: AGE 2004-11-09 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/MIL_AgentHLA.h $
-// $Author: Jvt $
-// $Modtime: 25/03/05 12:39 $
-// $Revision: 7 $
-// $Workfile: MIL_AgentHLA.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
@@ -31,7 +29,6 @@ class HLA_InteractionManager_ABC;
 // =============================================================================
 class MIL_AgentHLA : public MIL_Agent_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

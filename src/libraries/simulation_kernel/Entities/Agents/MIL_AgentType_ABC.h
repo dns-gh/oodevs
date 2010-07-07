@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/entities/agents/MIL_AgentType_ABC.h $
-// $Author: Jvt $
-// $Modtime: 14/04/05 17:47 $
-// $Revision: 7 $
-// $Workfile: MIL_AgentType_ABC.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
@@ -34,14 +32,16 @@ namespace directia
 // =============================================================================
 class MIL_AgentType_ABC : private boost::noncopyable
 {
-
 public:
+    //! @name Constructors/Desctructor
+    //@{
              MIL_AgentType_ABC( const std::string& strName, xml::xistream& xis );
     virtual ~MIL_AgentType_ABC();
+    //@}
 
-    //! @name Types
+    //! @name Getters/Setters
     //@{
-          unsigned int             GetID         () const;
+          unsigned int     GetID         () const;
     const std::string&     GetName       () const;
     const PHY_NatureLevel& GetNatureLevel() const;
     const PHY_NatureAtlas& GetNatureAtlas() const;
@@ -68,10 +68,13 @@ private:
     //@}
 
 private:
+    //! @name Member data
+    //@{
           unsigned int             nID_;
     const std::string      strName_;
     const PHY_NatureLevel* pNatureLevel_;
     const PHY_NatureAtlas* pNatureAtlas_;
+    //@}
 };
 
 #endif // __MIL_AgentType_ABC_h_

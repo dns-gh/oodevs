@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Actions/PHY_Action_ABC.h $
-// $Author: Nld $
-// $Modtime: 19/10/04 13:55 $
-// $Revision: 1 $
-// $Workfile: PHY_Action_ABC.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
@@ -23,10 +21,12 @@ class PHY_Actor;
 // =============================================================================
 class PHY_Action_ABC : private boost::noncopyable
 {
-
 public:
-    explicit PHY_Action_ABC();
+    //! @name Constructors/Destructor
+    //@{
+             PHY_Action_ABC();
     virtual ~PHY_Action_ABC();
+    //@}
 
     //! @name Operations
     //@{
@@ -45,11 +45,12 @@ protected:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     unsigned int id_;
     bool bSuspended_;
-
     static MIL_IDManager idManager_;
-
+    //@}
 };
 
 namespace directia

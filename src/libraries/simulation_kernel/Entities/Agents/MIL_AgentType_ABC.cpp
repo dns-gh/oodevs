@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/MIL_AgentType_ABC.cpp $
-// $Author: Jvt $
-// $Modtime: 14/04/05 17:50 $
-// $Revision: 8 $
-// $Workfile: MIL_AgentType_ABC.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
@@ -13,7 +11,7 @@
 #include "MIL_AgentType_ABC.h"
 #include "Entities/Agents/Units/Categories/PHY_NatureLevel.h"
 #include "Entities/Agents/Units/Categories/PHY_NatureAtlas.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentType_ABC constructor
@@ -60,7 +58,6 @@ void MIL_AgentType_ABC::InitializeNature( xml::xistream& xis )
     pNatureLevel_ = PHY_NatureLevel::Find( strBuf );
     if( !pNatureLevel_ )
         xis.error( "Unknown nature level type" );
-
     xis >> xml::attribute( "atlas-nature", strBuf );
     pNatureAtlas_ = PHY_NatureAtlas::Find( strBuf );
     if( !pNatureAtlas_ )

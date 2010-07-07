@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/MIL_AgentTypePion.cpp $
-// $Author: Jvt $
-// $Modtime: 23/05/05 16:34 $
-// $Revision: 86 $
-// $Workfile: MIL_AgentTypePion.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2008 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
@@ -101,7 +99,6 @@ struct MIL_AgentTypePion::LoadingWrapper
 void MIL_AgentTypePion::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing agent types" );
-
     pionTypeAllocators_[ "Pion INF"                    ] = &MIL_AgentTypePion               ::Create;
     pionTypeAllocators_[ "Pion ASA"                    ] = &MIL_AgentTypePionASA            ::Create;
     pionTypeAllocators_[ "Pion ALAT"                   ] = &MIL_AgentTypePionALAT           ::Create;
@@ -125,9 +122,7 @@ void MIL_AgentTypePion::Initialize( xml::xistream& xis )
     pionTypeAllocators_[ "Pion ASY"                    ] = &MIL_AgentTypePionASY            ::Create;
     pionTypeAllocators_[ "Pion REFUGIE"                ] = &MIL_AgentTypePionREFUGIE        ::Create;
     pionTypeAllocators_[ "Pion Emergency"              ] = &MIL_AgentTypePion               ::Create;
-
     LoadingWrapper loader;
-
     xis >> xml::start( "units" )
             >> xml::list( "unit", loader, &LoadingWrapper::ReadUnit )
         >> xml::end();
@@ -142,20 +137,15 @@ void MIL_AgentTypePion::ReadUnit( xml::xistream& xis )
     std::set< unsigned int > ids_;
     std::string strName;
     std::string strType;
-
     xis >> xml::attribute( "name", strName )
         >> xml::attribute( "type", strType );
-
     CIT_PionTypeAllocatorMap itPionAllocator = pionTypeAllocators_.find( strType );
     if( itPionAllocator == pionTypeAllocators_.end() )
         xis.error( "Unknown pion type" );
-
     const MIL_AgentTypePion*& pType = pionTypes_[ strName ];
     if( pType )
         xis.error( "Pion type already defined" );
-
     pType = (*itPionAllocator->second)( strName, xis );
-
     if( !ids_.insert( pType->GetID() ).second )
         xis.error( "Pion type ID already used" );
 }
@@ -218,9 +208,9 @@ MIL_AgentTypePion::~MIL_AgentTypePion()
 void MIL_AgentTypePion::InitializeDistancesAvantPoints( xml::xistream& xis )
 {
     xis >> xml::optional()
-            >> xml::start( "distance-before-points" )
-                >> xml::list( "distance-before-point", *this, &MIL_AgentTypePion::ReadPoint )
-            >> xml::end();
+        >> xml::start( "distance-before-points" )
+            >> xml::list( "distance-before-point", *this, &MIL_AgentTypePion::ReadPoint )
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -231,7 +221,6 @@ void MIL_AgentTypePion::ReadPoint( xml::xistream& xis )
 {
     std::string strTypePoint;
     xis >> xml::attribute( "type", strTypePoint );
-
     // Cas particulier : limas ( point n'appartenant pas à TER ! )
     if( sCaseInsensitiveEqual()( strTypePoint, "lima" ) )
     {
@@ -241,13 +230,10 @@ void MIL_AgentTypePion::ReadPoint( xml::xistream& xis )
     else
     {
         const TerrainData nType = MIL_Tools::ConvertLandType( strTypePoint );
-
         if( nType.Area() == 0xFF )
             xis.error( "Unknown land type" );
-
         if( distancesAvantPoints_.find( nType ) != distancesAvantPoints_.end() )
             xis.error( "Unknown 'distance avant point'" );
-
         MT_Float& rDistance = distancesAvantPoints_[ nType ];
         xis >> xml::attribute( "value", rDistance );
         rDistance = MIL_Tools::ConvertMeterToSim( rDistance );
@@ -283,7 +269,6 @@ void MIL_AgentTypePion::InitializeModel( xml::xistream& xis )
 {
     std::string strModel;
     xis >> xml::attribute( "decisional-model", strModel );
-
     pModel_ = MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModelPion( strModel );
     if( !pModel_ )
         xis.error( "Unknown pawn model " + strModel );
@@ -295,6 +280,7 @@ void MIL_AgentTypePion::InitializeModel( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_AgentTypePion::InitializeDiaFunctions()
 {
+    // NOTHING
 }
 
 // =============================================================================
@@ -357,7 +343,6 @@ void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion, DEC_DataBase& databa
     pion.RegisterRole( *new PHY_RoleAction_FolkInfluence() );
     pion.RegisterRole( *new DEC_Representations() );
     pion.RegisterRole( *new PHY_RolePion_TerrainAnalysis( pion ) );
-
     if( pion.GetType().GetUnitType().CanFly() )
         pion.RegisterRole( *new PHY_RoleAction_Flying( pion ) );
     else
@@ -370,5 +355,5 @@ void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion, DEC_DataBase& databa
 // -----------------------------------------------------------------------------
 void MIL_AgentTypePion::RegisterFunctions( directia::Brain& /*brain*/, MIL_Agent_ABC& /*agent*/ ) const
 {
-
+    // NOTHING
 }

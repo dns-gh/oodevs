@@ -1,28 +1,25 @@
 // *****************************************************************************
 //
-// $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/Src/Entities/Agents/Actions/PHY_Action_ABC.cpp $
-// $Author: Nld $
-// $Modtime: 21/10/04 10:19 $
-// $Revision: 2 $
-// $Workfile: PHY_Action_ABC.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_Action_ABC.h"
-
 #include "PHY_Actor.h"
 #include "Decision/DEC_Tools.h"
 
 MIL_IDManager PHY_Action_ABC::idManager_;
+
 // -----------------------------------------------------------------------------
 // Name: PHY_Action_ABC constructor
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
 PHY_Action_ABC::PHY_Action_ABC()
-    : id_( idManager_.GetFreeId() )
+    : id_        ( idManager_.GetFreeId() )
     , bSuspended_( false )
 {
     // NOTHING

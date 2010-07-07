@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/MIL_AgentTypePion.inl $
-// $Author: Jvt $
-// $Modtime: 10/05/05 16:36 $
-// $Revision: 8 $
-// $Workfile: MIL_AgentTypePion.inl $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
@@ -61,7 +59,6 @@ inline
 MT_Float MIL_AgentTypePion::GetDistanceAvantPoint( const TerrainData& nType ) const
 {
     CIT_DistanceAvantPointMap it = distancesAvantPoints_.find( nType );
-    
     return it == distancesAvantPoints_.end() ? 0. : it->second;
 }
 
@@ -104,7 +101,6 @@ MIL_AgentTypePion::MIL_AgentTypePion( const std::string& strName, xml::xistream&
     : MIL_AgentType_ABC( strName, xis )
 {
     pUnitType_ = new T( xis );
-
     InitializeRapFor              ( xis );
     InitializeDistancesAvantPoints( xis );
     InitializeModel               ( xis );

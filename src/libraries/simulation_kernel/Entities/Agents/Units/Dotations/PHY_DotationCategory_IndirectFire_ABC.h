@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Units/Dotations/PHY_DotationCategory_IndirectFire_ABC.h $
-// $Author: Jvt $
-// $Modtime: 2/05/05 14:37 $
-// $Revision: 5 $
-// $Workfile: PHY_DotationCategory_IndirectFire_ABC.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
@@ -25,7 +23,6 @@ class PHY_IndirectFireDotationClass;
 // =============================================================================
 class PHY_DotationCategory_IndirectFire_ABC : private boost::noncopyable
 {
-
 public:
              PHY_DotationCategory_IndirectFire_ABC( const PHY_IndirectFireDotationClass& category, const PHY_DotationCategory& dotationCategory, xml::xistream& xis );
     virtual ~PHY_DotationCategory_IndirectFire_ABC();

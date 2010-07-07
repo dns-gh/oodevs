@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/MIL_AgentTypePion.h $
-// $Author: Jvt $
-// $Modtime: 10/05/05 16:36 $
-// $Revision: 10 $
-// $Workfile: MIL_AgentTypePion.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
@@ -13,7 +11,6 @@
 #define __MIL_AgentTypePion_h_
 
 #include "MIL.h"
-
 #include "MIL_AgentType_ABC.h"
 
 namespace xml
@@ -33,17 +30,18 @@ class MIL_Automate;
 class MIL_AgentPion;
 class PHY_UnitType;
 
-
 // =============================================================================
 // @class  MIL_AgentTypePion
 // Created: JVT 2004-08-03
 // =============================================================================
 class MIL_AgentTypePion : public MIL_AgentType_ABC
 {
-
 public:
+    //! @name Constructors/Destructor
+    //@{
              MIL_AgentTypePion( const std::string& strName, xml::xistream& xis );
     virtual ~MIL_AgentTypePion();
+    //@}
 
     //! @name Manager
     //@{
@@ -84,21 +82,21 @@ public:
 protected:
     explicit MIL_AgentTypePion( const DEC_Model_ABC* pModel );
     template< typename T >
-        MIL_AgentTypePion( const std::string& strName, xml::xistream& xis, T* pUnitTypeType /*Used only to determine T type*/ );
+    MIL_AgentTypePion( const std::string& strName, xml::xistream& xis, T* pUnitTypeType /*Used only to determine T type*/ );
 
 private:
     //! @name Types
     //@{
     typedef std::map< std::string, const MIL_AgentTypePion*, sCaseInsensitiveLess > T_PionTypeMap;
-    typedef T_PionTypeMap::const_iterator                                           CIT_PionTypeMap;
+    typedef T_PionTypeMap::const_iterator                                         CIT_PionTypeMap;
 
     typedef const MIL_AgentTypePion* (*T_PionTypeAllocator)( const std::string& strName, xml::xistream& xis );
 
     typedef std::map< std::string, T_PionTypeAllocator, sCaseInsensitiveLess > T_PionTypeAllocatorMap;
-    typedef T_PionTypeAllocatorMap::const_iterator                             CIT_PionTypeAllocatorMap;
+    typedef T_PionTypeAllocatorMap::const_iterator                           CIT_PionTypeAllocatorMap;
 
-    typedef std::map< TerrainData, MT_Float >             T_DistanceAvantPointMap;
-    typedef T_DistanceAvantPointMap::const_iterator     CIT_DistanceAvantPointMap;
+    typedef std::map< TerrainData, MT_Float >         T_DistanceAvantPointMap;
+    typedef T_DistanceAvantPointMap::const_iterator CIT_DistanceAvantPointMap;
     //@}
 
 private:
@@ -109,6 +107,7 @@ private:
     void InitializeModel               ( xml::xistream& xis );
     void InitializeDiaFunctions        ();
     //@}
+
     //! @name Helpers
     //@{
     struct LoadingWrapper;
@@ -118,15 +117,16 @@ private:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     const DEC_Model_ABC*    pModel_;
     const PHY_UnitType*     pUnitType_;
     T_DistanceAvantPointMap distancesAvantPoints_;
     MT_Float                rDistanceAvantLimas_;
     MT_Float                rRapForIncreasePerTimeStepValue_;
-
-private:
     static T_PionTypeAllocatorMap  pionTypeAllocators_;
     static T_PionTypeMap           pionTypes_;
+    //@}
 };
 
 #include "MIL_AgentTypePion.inl"

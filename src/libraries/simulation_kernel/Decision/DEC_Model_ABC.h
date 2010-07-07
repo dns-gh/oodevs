@@ -27,7 +27,6 @@ class MIL_FragOrderType;
 // =============================================================================
 class DEC_Model_ABC : private boost::noncopyable
 {
-
 public:
     //! @name Accessors
     //@{
@@ -75,20 +74,22 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::set< const MIL_MissionType_ABC* >                            T_MissionSet ;
-    typedef std::set< const MIL_FragOrderType* >                            T_FragOrderSet ;
+    typedef std::set< const MIL_MissionType_ABC* > T_MissionSet;
+    typedef std::set< const MIL_FragOrderType* > T_FragOrderSet;
     typedef std::map< const MIL_MissionType_ABC*, T_FragOrderSet > T_FragOrderPerMissionMap;
-    typedef T_FragOrderPerMissionMap::const_iterator               CIT_FragOrderPerMissionMap;
+    typedef T_FragOrderPerMissionMap::const_iterator             CIT_FragOrderPerMissionMap;
     //@}
 
 private:
-    const std::string     strModel_;
-          std::string     strDIAType_;
-          std::string     strScript_;
-          std::string     strIncludePath_;
-
-          T_MissionSet                availableMissions_ ;
-          T_FragOrderPerMissionMap  availableFragOrdersPerMission_;
+    //! @name Member data
+    //@{
+    const std::string strModel_;
+    std::string strDIAType_;
+    std::string strScript_;
+    std::string strIncludePath_;
+    T_MissionSet availableMissions_;
+    T_FragOrderPerMissionMap availableFragOrdersPerMission_;
+    //@}
 };
 
 #endif // __DEC_Model_ABC_h_
