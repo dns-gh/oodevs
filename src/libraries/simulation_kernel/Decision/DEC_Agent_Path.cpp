@@ -1,17 +1,14 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: AGN 02-11-25 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Path/DEC_Agent_Path.cpp $
-// $Author: Age $
-// $Modtime: 16/06/05 15:23 $
-// $Revision: 28 $
-// $Workfile: DEC_Agent_Path.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2002 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Agent_Path.h"
-
 #include "DEC_Agent_PathSection.h"
 #include "DEC_Agent_PathClass.h"
 #include "MIL_AgentServer.h"
@@ -61,7 +58,6 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const T_PointVe
 {
     fuseau_         = queryMaker.GetOrderManager().GetFuseau();
     automateFuseau_ = queryMaker.GetAutomate().GetOrderManager().GetFuseau();
-
     pathPoints_.reserve( 1 + points.size() );
     pathPoints_.push_back( queryMaker_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
     std::copy( points.begin(), points.end(), std::back_inserter( pathPoints_ ) );
@@ -124,7 +120,6 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const MT_Vector
 {
     fuseau_         = queryMaker.GetOrderManager().GetFuseau();
     automateFuseau_ = queryMaker.GetAutomate().GetOrderManager().GetFuseau();
-
     pathPoints_.reserve( 2 );
     pathPoints_.push_back( queryMaker_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
     pathPoints_.push_back( vPosEnd );
@@ -136,26 +131,25 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const MT_Vector
 // Created: LMT 2010-05-04
 // -----------------------------------------------------------------------------
 DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const MT_Vector2D& vPosEnd, const DEC_PathType& pathType, bool loaded )
-    : DEC_PathResult            ()
-    , queryMaker_               ( queryMaker )
-    , bRefine_                  ( queryMaker.GetType().GetUnitType().CanFly() && !queryMaker.IsAutonomous() )
-    , fuseau_                   () //$$$ Debile
-    , automateFuseau_           () //$$$ Debile
-    , vDirDanger_               ( queryMaker.GetOrderManager().GetDirDanger() )
-    , unitSpeeds_               ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >(), loaded )
-    , rMaxSlope_                ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSlope() )
-    , pathKnowledgeAgents_      ()
-    , pathKnowledgeObjects_     ( )
+    : DEC_PathResult           ()
+    , queryMaker_              ( queryMaker )
+    , bRefine_                 ( queryMaker.GetType().GetUnitType().CanFly() && !queryMaker.IsAutonomous() )
+    , fuseau_                  () //$$$ Debile
+    , automateFuseau_          () //$$$ Debile
+    , vDirDanger_              ( queryMaker.GetOrderManager().GetDirDanger() )
+    , unitSpeeds_              ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >(), loaded )
+    , rMaxSlope_               ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSlope() )
+    , pathKnowledgeAgents_     ()
+    , pathKnowledgeObjects_    ( )
     , rCostOutsideOfAllObjects_( 0. )
-    , pathKnowledgePopulations_ ()
-    , pathType_                 ( pathType )
-    , pathClass_                ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
-    , bDecPointsInserted_       ( false )
-    , pathPoints_               ()
+    , pathKnowledgePopulations_()
+    , pathType_                ( pathType )
+    , pathClass_               ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
+    , bDecPointsInserted_      ( false )
+    , pathPoints_              ()
 {
     fuseau_         = queryMaker.GetOrderManager().GetFuseau();
     automateFuseau_ = queryMaker.GetAutomate().GetOrderManager().GetFuseau();
-
     pathPoints_.reserve( 2 );
     pathPoints_.push_back( queryMaker_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
     pathPoints_.push_back( vPosEnd );
@@ -187,7 +181,6 @@ DEC_Agent_Path::DEC_Agent_Path( const DEC_Agent_Path& rhs )
 {
     fuseau_         = rhs.fuseau_;
     automateFuseau_ = rhs.automateFuseau_;
-
     Initialize( pathPoints_ );
 }
 
@@ -258,10 +251,8 @@ bool IsObjectInsidePathPoint( const DEC_Knowledge_Object& knowledge, const T_Poi
 {
     const TER_Localisation& loc = knowledge.GetLocalisation();
     for( CIT_PointVector it = pathPoints.begin(); it != pathPoints.end(); ++it )
-    {
         if( loc.IsInside( *it ) )
             return true;
-    }
     return false;
 }
 
@@ -357,12 +348,9 @@ inline
 DEC_Agent_Path::IT_PathPointList DEC_Agent_Path::GetPreviousPathPointOnDifferentLocation( IT_PathPointList itCurrent )
 {
     assert( itCurrent != resultList_.end() );
-
     const MT_Vector2D& vPosition = (*itCurrent)->GetPos();
-
     while ( itCurrent != resultList_.begin() && (*itCurrent)->GetPos() == vPosition )
         --itCurrent;
-
     return itCurrent;
 }
 
@@ -420,7 +408,6 @@ void DEC_Agent_Path::InsertPointAvant( const boost::shared_ptr< DEC_PathPoint > 
             resultList_.insert( itCurrent, pNewPoint );
             break;
         }
-
         // tant pis, ça sera peut-être pour le prochain segment
         itCurrent = itPrev;
     }
@@ -453,10 +440,7 @@ bool DEC_Agent_Path::InsertPoint( boost::shared_ptr< DEC_PathPoint > spottedPath
         rDistSinceLastPoint = 0.;
         return true;
     }
-    else
-    {
-        return false;
-    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -586,13 +570,10 @@ void DEC_Agent_Path::InsertDecPoints()
 {
     if( bDecPointsInserted_ )
         return;
-
     bDecPointsInserted_ = true;
-
     // Points avants
     if( queryMaker_.GetRole< PHY_RoleInterface_Location >().GetHeight() == 0 )
         InsertPointAvants();
-
     // Limas
     InsertLimas();
 }

@@ -1,19 +1,16 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-02-11 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Path/DEC_Agent_Path.h $
-// $Author: Age $
-// $Modtime: 16/06/05 15:09 $
-// $Revision: 10 $
-// $Workfile: DEC_Agent_Path.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2003 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #ifndef __DEC_Agent_Path_h_
 #define __DEC_Agent_Path_h_
 
 #include "MIL.h"
-
 #include "DEC_Path_KnowledgeAgent.h"
 #include "DEC_Path_KnowledgeObject.h"
 #include "DEC_Path_KnowledgePopulation.h"
@@ -38,16 +35,16 @@ class DEC_Agent_Path : public DEC_PathResult
 public:
     //! @name Types
     //@{
-    typedef std::vector< DEC_Path_KnowledgeAgent >     T_PathKnowledgeAgentVector;
+    typedef std::vector< DEC_Path_KnowledgeAgent >       T_PathKnowledgeAgentVector;
     typedef T_PathKnowledgeAgentVector::const_iterator CIT_PathKnowledgeAgentVector;
 
-    typedef std::vector< DEC_Path_KnowledgeObject >     T_PathKnowledgeObjectVector;
+    typedef std::vector< DEC_Path_KnowledgeObject >       T_PathKnowledgeObjectVector;
     typedef T_PathKnowledgeObjectVector::const_iterator CIT_PathKnowledgeObjectVector;
 
-    typedef std::vector< T_PathKnowledgeObjectVector >         T_PathKnowledgeObjectByTypesVector;
+    typedef std::vector< T_PathKnowledgeObjectVector >           T_PathKnowledgeObjectByTypesVector;
     typedef T_PathKnowledgeObjectByTypesVector::const_iterator CIT_PathKnowledgeObjectByTypesVector;
 
-    typedef std::vector< DEC_Path_KnowledgePopulation >     T_PathKnowledgePopulationVector;
+    typedef std::vector< DEC_Path_KnowledgePopulation >       T_PathKnowledgePopulationVector;
     typedef T_PathKnowledgePopulationVector::const_iterator CIT_PathKnowledgePopulationVector;
     //@}
 
@@ -115,8 +112,9 @@ private:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     const MIL_Agent_ABC& queryMaker_;
-
     // Path calculation parameters
     const DEC_PathType&                      pathType_; //$$$ A VIRER
     const DEC_Agent_PathClass&               pathClass_;
@@ -131,12 +129,8 @@ private:
           T_PathKnowledgeObjectByTypesVector pathKnowledgeObjects_;
           MT_Float                           rCostOutsideOfAllObjects_;
           T_PathKnowledgePopulationVector    pathKnowledgePopulations_;
-
           MT_Profiler                        profiler_;
-
-    //! @name
-    //@{
-    bool bDecPointsInserted_;
+          bool bDecPointsInserted_;
     //@}
 };
 

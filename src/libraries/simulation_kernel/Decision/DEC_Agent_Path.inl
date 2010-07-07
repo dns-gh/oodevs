@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: AGN 02-11-25 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Path/DEC_Agent_Path.inl $
-// $Author: Age $
-// $Modtime: 13/04/05 18:34 $
-// $Revision: 3 $
-// $Workfile: DEC_Agent_Path.inl $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2002 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Agent_Path::GetPathClass

@@ -26,11 +26,10 @@ class TER_Localisation;
 // =============================================================================
 class DEC_Path_KnowledgePopulation
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
-    DEC_Path_KnowledgePopulation( const DEC_Agent_PathClass& pathClass, const DEC_Knowledge_Population& knowledge, bool avoidPolicy );
+             DEC_Path_KnowledgePopulation( const DEC_Agent_PathClass& pathClass, const DEC_Knowledge_Population& knowledge, bool avoidPolicy );
     virtual ~DEC_Path_KnowledgePopulation();
     //@}
 
@@ -51,7 +50,6 @@ private:
             , rDensity_  ( element.GetDensity() )
             , pAttitude_ ( &element.GetAttitude() )
         {}
-
               TER_Localisation        location_;
               MT_Float                rDensity_;
         const MIL_PopulationAttitude* pAttitude_;

@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Path_KnowledgePopulation.h"
-
 #include "DEC_Agent_PathClass.h"
 #include "Entities/MIL_EntityVisitor_ABC.h"
 #include "Entities/Populations/MIL_Population.h"
@@ -29,7 +28,6 @@ namespace
             if( ! element.IsDead() ) // only keep alive elements
                 container_.AddElement( element );
         }
-
     private:
         DEC_Path_KnowledgePopulation& container_;
     };
@@ -40,9 +38,9 @@ namespace
 // Created: SBO 2006-02-23
 // -----------------------------------------------------------------------------
 DEC_Path_KnowledgePopulation::DEC_Path_KnowledgePopulation( const DEC_Agent_PathClass& pathClass, const DEC_Knowledge_Population& knowledge, bool avoidPolicy )
-    : elements_       ()
-    , pPathClass_     ( &pathClass )
-    , bAvoidPolicy_   ( avoidPolicy )
+    : elements_    ()
+    , pPathClass_  ( &pathClass )
+    , bAvoidPolicy_( avoidPolicy )
 {
     elements_.reserve( 10 );
     PopulationPathInserter pathInserter( *this );
@@ -76,11 +74,10 @@ MT_Float DEC_Path_KnowledgePopulation::ComputeCost( const MT_Vector2D& /*from*/,
     const MT_Float rMaxRange = pPathClass_->GetPopulationSecurityRange();
     const sPopulationElement* pClosestElement = 0;
     const MT_Float rDistance = ComputeClosestElementInRange( to, rMaxRange, pClosestElement );
-
     if( bAvoidPolicy_ ) // avoiding policy (non-terrorist)
     {
         if( !pClosestElement )
-            return 0.0f;
+            return 0.f;
         const MT_Float rElementCost = pPathClass_->GetPopulationAttitudeCost( *pClosestElement->pAttitude_ ) * pClosestElement->rDensity_;
         return rElementCost * ( rMaxRange - rDistance ) / rMaxRange;
     }
@@ -100,7 +97,6 @@ MT_Float DEC_Path_KnowledgePopulation::ComputeClosestElementInRange( const MT_Ve
 {
     pResult = 0;
     MT_Float rMinDistance = std::numeric_limits< MT_Float >::max();
-
     for( CIT_PopulationElements it = elements_.begin(); it != elements_.end(); ++it )
     {
         MT_Vector2D nearestPoint;
