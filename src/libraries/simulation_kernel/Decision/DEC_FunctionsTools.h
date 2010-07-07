@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: NLD 2004-03-31 $
-// $Archive: /MVW_v10/Build/SDK/MIL/Src/Decision/Functions/DEC_FunctionsTools.h $
-// $Author: Nld $
-// $Modtime: 22/10/04 16:32 $
-// $Revision: 2 $
-// $Workfile: DEC_FunctionsTools.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2004 MASA Group
 //
 // *****************************************************************************
 
@@ -24,7 +22,7 @@ class DEC_FunctionsTools
 public:
     //! @name Functions
     //@{
-    static MIL_Object_ABC*           GetPopulationKnowledgeObjectFromDia( unsigned int nID );
+    static MIL_Object_ABC* GetPopulationKnowledgeObjectFromDia( unsigned int nID );
     //@}
 };
 

@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: NLD 2004-03-31 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Functions/DEC_KnowledgeFunctions.h $
-// $Author: Nld $
-// $Modtime: 11/05/05 16:03 $
-// $Revision: 7 $
-// $Workfile: DEC_KnowledgeFunctions.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2004 MASA Group
 //
 // *****************************************************************************
 

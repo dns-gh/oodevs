@@ -16,13 +16,12 @@ class TER_Localisation;
 
 // =============================================================================
 /** @class  DEC_IntelligenceFunctions
-    @brief  DEC_IntelligenceFunctions
+    @brief  DEC Intelligence functions
 */
 // Created: SBO 2007-11-12
 // =============================================================================
 class DEC_IntelligenceFunctions
 {
-
 public:
     //! @name Operations
     //@{

@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: NLD 2004-03-31 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Functions/DEC_KnowledgeFunctions.cpp $
-// $Author: Nld $
-// $Modtime: 23/03/05 18:22 $
-// $Revision: 7 $
-// $Workfile: DEC_KnowledgeFunctions.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2004 MASA Group
 //
 // *****************************************************************************
 
@@ -193,12 +191,8 @@ void DEC_KnowledgeFunctions::GetUrbanBlockKnowledgeInCercle( const directia::Bra
         if( (*it)->GetTerrainObjectKnown().GetFootprint()->Intersect( geoCenter, radius ) )
             result.push_back( (*it) );
     }
-
-
     knowledgeCreateFunction( table, brain.GetScriptVariable( "net.masagroup.sword.military.world.UrbanBlock" ), result, true );
-
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetDestroyableKnowledge

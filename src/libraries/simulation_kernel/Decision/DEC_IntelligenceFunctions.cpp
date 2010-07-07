@@ -22,7 +22,13 @@ namespace
     struct IntelligenceStatusAccumulator : public MIL_IntelligenceOrdersVisitor_ABC
     {
         IntelligenceStatusAccumulator( const T& boundaries, bool loaded )
-            : boundaries_( &boundaries ), loaded_( loaded ), count_( 0 ), sum_( 0 ) {}
+            : boundaries_( &boundaries )
+            , loaded_    ( loaded )
+            , count_     ( 0 )
+            , sum_       ( 0 )
+        {
+            // NOTHING
+        }
 
         virtual void Visit( const MIL_IntelligenceOrder& intelligence )
         {
@@ -34,7 +40,6 @@ namespace
                     sum_ += factor;
             }
         }
-
         const T* boundaries_;
         const bool loaded_;
         unsigned int count_;
@@ -46,7 +51,7 @@ namespace
     {
         IntelligenceStatusAccumulator< T > accu( boundaries, embarked );
         caller.GetOrderManager().Accept( accu );
-        return accu.count_ == 0 ? 0.f : float( accu.sum_ ) / float( accu.count_ );
+        return accu.count_ == 0 ? 0.f : static_cast< float >( accu.sum_ ) / static_cast< float >( accu.count_ );
     }
 }
 
@@ -95,7 +100,12 @@ namespace
     template< typename T >
     struct CompareBoundariesEnemies
     {
-        CompareBoundariesEnemies( const MIL_Automate& caller, bool loaded ) : pCaller_( &caller ), loaded_( loaded ) {}
+        CompareBoundariesEnemies( const MIL_Automate& caller, bool loaded )
+            : pCaller_( &caller )
+            , loaded_ ( loaded )
+        {
+            // NOTHING
+        }
         bool operator()( boost::shared_ptr< T > lhs, boost::shared_ptr< T > rhs )
         {
             return ComputeEnemiesRatio( *pCaller_, *lhs, loaded_ ) < ComputeEnemiesRatio( *pCaller_, *rhs, loaded_ );
@@ -151,6 +161,7 @@ namespace
             , handler_   ( &handler )
             , result_    ( false )
         {
+            // NOTHING
         }
 
         virtual void Visit( const MIL_IntelligenceOrder& intelligence )

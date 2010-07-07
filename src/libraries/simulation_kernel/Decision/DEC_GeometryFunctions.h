@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: NLD 2003-08-20 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Functions/DEC_GeometryFunctions.h $
-// $Author: Jvt $
-// $Modtime: 23/05/05 15:48 $
-// $Revision: 23 $
-// $Workfile: DEC_GeometryFunctions.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2003 MASA Group
 //
 // *****************************************************************************
 
