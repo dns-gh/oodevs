@@ -47,9 +47,9 @@ protected slots:
 protected:
     //! @name Types
     //@{
-    typedef std::vector< EntitySearchItem* >    T_Items;
-    typedef T_Items::iterator                  IT_Items;
-    typedef T_Items::const_iterator           CIT_Items;
+    typedef std::vector< EntitySearchItem* > T_Items;
+    typedef T_Items::iterator               IT_Items;
+    typedef T_Items::const_iterator        CIT_Items;
     //@}
 
     //! @name Helpers

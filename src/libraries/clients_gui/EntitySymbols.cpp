@@ -24,7 +24,7 @@ using namespace gui;
 // Created: SBO 2007-02-21
 // -----------------------------------------------------------------------------
 EntitySymbols::EntitySymbols( SymbolIcons& icons, ColorStrategy_ABC& strategy )
-    : icons_( icons )
+    : icons_   ( icons )
     , strategy_( strategy )
 {
     // NOTHING

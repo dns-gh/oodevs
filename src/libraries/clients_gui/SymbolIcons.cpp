@@ -21,7 +21,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 SymbolIcons::SymbolIcons( QObject* parent, kernel::GlTools_ABC& tools )
     : QObject( parent )
-    , widget_( 0 )
+    , widget_    ( 0 )
     , renderPass_( new IconsRenderPass( tools ) )
 {
     // NOTHING

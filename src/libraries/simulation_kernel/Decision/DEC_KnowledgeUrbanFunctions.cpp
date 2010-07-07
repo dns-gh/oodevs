@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_KnowledgeUrbanFunctions.h"
-
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
@@ -30,9 +29,7 @@
 #include "urban/MaterialCompositionType.h"
 #include "urban/TerrainObject_ABC.h"
 #include "urban/Architecture.h"
-
 #include "MT_Tools/MT_LinearInterpolation.h"
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeUrbanFunctions::GetCurrentPerceptionLevel
@@ -42,10 +39,8 @@ int DEC_KnowledgeUrbanFunctions::GetCurrentPerceptionLevel( const MIL_AgentPion&
 {
     if( pKnowledge.get() && pKnowledge->IsValid() )
         return (int)pKnowledge->GetCurrentPerceptionLevel( callerAgent ).GetID();
-    else
-        return 0;
+    return 0;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeUrbanFunctions::GetCurrentBarycenter
@@ -68,10 +63,9 @@ boost::shared_ptr< MT_Vector2D > DEC_KnowledgeUrbanFunctions::GetCurrentBarycent
 // -----------------------------------------------------------------------------
 float DEC_KnowledgeUrbanFunctions::GetPathfindCost( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge )
 {
-     if( pKnowledge.get() && pKnowledge->IsValid() )
+    if( pKnowledge.get() && pKnowledge->IsValid() )
         return pKnowledge->GetPathfindCost( (float)callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight() );
-     else
-        return -1;
+    return -1;
 }
 
 // -----------------------------------------------------------------------------
@@ -125,7 +119,6 @@ float DEC_KnowledgeUrbanFunctions::GetRapForLocal( const MIL_AgentPion& callerAg
     return (float)rRapForValue;
 }
 
-
 namespace
 {
     class SensorFunctor
@@ -136,6 +129,7 @@ namespace
         {}
         ~SensorFunctor()
         {}
+
         void operator() ( const PHY_Sensor& sensor )
         {
             const PHY_SensorTypeAgent* sensorTypeAgent = sensor.GetType().GetTypeAgent();
@@ -150,7 +144,6 @@ namespace
         const MT_Vector2D& point_;
         const MT_Vector2D& target_;
         double NRJ_; 
-
     };
 
     class Functor : public OnComponentFunctor_ABC
@@ -175,8 +168,7 @@ namespace
         const MIL_Agent_ABC& perceiver_;
         const MT_Vector2D& point_;
         const MT_Vector2D& target_;
-        double NRJ_; 
-
+        double NRJ_;
     };
 }
 
@@ -188,8 +180,7 @@ double DEC_KnowledgeUrbanFunctions::GetPerception( const MIL_AgentPion& callerAg
 {
     Functor dataFunctor( callerAgent, *pPoint, *pTarget );
     std::auto_ptr< OnComponentComputer_ABC > dataComputer( callerAgent.GetAlgorithms().onComponentFunctorComputerFactory_->Create( dataFunctor ) );
-    const_cast< MIL_AgentPion&>( callerAgent ).Execute( *dataComputer );
-    double bestVisionNRJ =  dataFunctor.GetNRJ();
+    const_cast< MIL_AgentPion& >( callerAgent ).Execute( *dataComputer );
+    double bestVisionNRJ = dataFunctor.GetNRJ();
     return bestVisionNRJ;
-    
 }

@@ -31,7 +31,7 @@ namespace
 // Created: AGE 2006-06-29
 // -----------------------------------------------------------------------------
 GlTooltip::GlTooltip( TooltipsLayer_ABC& layer )
-    : layer_( layer )
+    : layer_      ( layer )
     , frameDrawer_( boost::bind( &::DrawFrame, _1, _2 ) )
 {
     // NOTHING

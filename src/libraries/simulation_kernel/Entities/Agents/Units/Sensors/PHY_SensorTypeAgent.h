@@ -34,7 +34,6 @@ namespace urban
 {
     class TerrainObject_ABC;
 }
-
 // =============================================================================
 // @class  PHY_SensorTypeAgent
 // Created: JVT 2004-08-03
@@ -42,7 +41,6 @@ namespace urban
 // =============================================================================
 class PHY_SensorTypeAgent : private boost::noncopyable
 {
-
 public:
      PHY_SensorTypeAgent( const PHY_SensorType& type, xml::xistream& xis );
     virtual ~PHY_SensorTypeAgent();
@@ -74,7 +72,7 @@ public:
     const MT_Float             ComputeIdentificationDist( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const;
     const MT_Float             ComputeRecognitionDist   ( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const;
     const MT_Float             ComputeDetectionDist     ( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const;
-    const MT_Float             RayTrace                 ( const MT_Vector2D& vSource , const MT_Vector2D& vTarget     ) const;  
+    const MT_Float             RayTrace                 ( const MT_Vector2D& vSource, const MT_Vector2D& vTarget     ) const;
     //@}
 
 public:

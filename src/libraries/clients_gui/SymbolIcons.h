@@ -60,9 +60,10 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< SymbolIcon, QPixmap >       T_Icons;
-    typedef std::set< SymbolIcon >                T_PendingIcons;
-    typedef T_PendingIcons::const_iterator      CIT_PendingIcons;
+    typedef std::map< SymbolIcon, QPixmap > T_Icons;
+
+    typedef std::set< SymbolIcon >           T_PendingIcons;
+    typedef T_PendingIcons::const_iterator CIT_PendingIcons;
     //@}
 
     //! @name Helpers

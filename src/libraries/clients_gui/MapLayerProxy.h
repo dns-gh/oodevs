@@ -23,7 +23,6 @@ namespace gui
 // =============================================================================
 class MapLayerProxy : public Layer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

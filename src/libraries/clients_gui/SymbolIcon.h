@@ -46,7 +46,8 @@ public:
 public:
     //! @name Member data
     //@{
-    std::string symbol_, level_;
+    std::string symbol_;
+    std::string level_;
     QColor color_;
     QSize size_;
     //@}

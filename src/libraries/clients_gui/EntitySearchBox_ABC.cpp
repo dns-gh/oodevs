@@ -22,7 +22,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 EntitySearchBox_ABC::EntitySearchBox_ABC( QWidget* parent, ActionController& actions )
     : QHBox( parent, "EntitySearchBox" )
-    , actions_( actions )
+    , actions_ ( actions )
     , lastItem_( items_.end() )
 {
     setMargin( 2 );
@@ -127,6 +127,3 @@ void EntitySearchBox_ABC::FindNext()
         lastItem_ = items_.begin();
     Find();
 }
-
-
-    

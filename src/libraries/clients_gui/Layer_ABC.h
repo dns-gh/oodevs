@@ -67,10 +67,10 @@ public:
 private:
     //! @name Member data
     //@{
-    GlWidget*     currentWidget_;
+    GlWidget* currentWidget_;
     MapLayer_ABC* currentProxy_;
-    float         alpha_;
-    std::string   passes_;
+    float alpha_;
+    std::string passes_;
     //@}
 };
 
