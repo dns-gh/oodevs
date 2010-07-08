@@ -5,7 +5,6 @@
       <missions>
         <mission name="MELEE Appuyer"/>
         <mission name="MELEE Reconnaitre Itineraire"/>
-        <mission name="MELEE Surveiller"/>
         <mission name="MELEE SurveillerBlocUrbain"/>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement">
