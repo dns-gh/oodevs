@@ -514,8 +514,8 @@ void DEC_CommunicationFunctions::F_Pion_SetbPasserSurLC( DEC_Decision_ABC* pPion
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_CommunicationFunctions::
-//F_Pion_GetpionEnEscorte Created: LDC 2009-05-11
+// Name: DEC_CommunicationFunctions::F_Pion_GetpionEnEscorte
+// Created: LDC 2009-05-11
 // -----------------------------------------------------------------------------
 DEC_Decision_ABC* DEC_CommunicationFunctions::F_Pion_GetpionEnEscorte( DEC_Decision_ABC* pPion )
 {
@@ -532,8 +532,8 @@ void DEC_CommunicationFunctions::F_Pion_SetpionEnEscorte( DEC_Decision_ABC* pPio
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_CommunicationFunctions::
-//F_Pion_GetitMvt Created: LDC 2009-05-11
+// Name: DEC_CommunicationFunctions::F_Pion_GetitMvt
+// Created: LDC 2009-05-11
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Path_ABC > DEC_CommunicationFunctions::F_Pion_GetitMvt( DEC_Decision_ABC* pPion )
 {
@@ -550,8 +550,8 @@ void DEC_CommunicationFunctions::F_Pion_SetitMvt( DEC_Decision_ABC* pPion, const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_CommunicationFunctions::
-//F_Pion_GetobjectifEsquive Created: LDC 2009-05-11
+// Name: DEC_CommunicationFunctions::F_Pion_GetobjectifEsquive
+// Created: LDC 2009-05-11
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_CommunicationFunctions::F_Pion_GetobjectifEsquive( DEC_Decision_ABC* pPion )
 {
@@ -568,8 +568,8 @@ void DEC_CommunicationFunctions::F_Pion_SetobjectifEsquive( DEC_Decision_ABC* pP
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_CommunicationFunctions::
-//F_Pion_GeteniEnCours Created: LDC 2009-05-11
+// Name: DEC_CommunicationFunctions::F_Pion_GeteniEnCours
+// Created: LDC 2009-05-11
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Agent > DEC_CommunicationFunctions::F_Pion_GeteniEnCours( DEC_Decision_ABC* pPion )
 {
@@ -606,7 +606,7 @@ void DEC_CommunicationFunctions::F_Pion_SetmissionPrecedente( DEC_Decision_ABC* 
 // -----------------------------------------------------------------------------
 // Name: DEC_CommunicationFunctions::F_Pion_GetrTenir
 // Created: LDC 2009-05-11
-// return pPion->etrTenir-----------------------------------();
+// -----------------------------------------------------------------------------
 float DEC_CommunicationFunctions::F_Pion_GetrTenir( DEC_Decision_ABC* pPion )
 {
     return dynamic_cast< DEC_RolePion_Decision* >( pPion )->GetrTenir();
@@ -730,8 +730,8 @@ void DEC_CommunicationFunctions::F_Automat_SetrDestruction( DEC_Decision_ABC* pA
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_CommunicationFunctions::
-//F_Automat_Getfuseau Created: LDC 2009-05-11
+// Name: DEC_CommunicationFunctions::F_Automat_Getfuseau
+// Created: LDC 2009-05-11
 // -----------------------------------------------------------------------------
 MIL_Fuseau* DEC_CommunicationFunctions::F_Automat_Getfuseau( DEC_Decision_ABC* pAutomat )
 {

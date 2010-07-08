@@ -238,7 +238,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
 {
     directia::ScriptRef initQueryFunction = brain.GetScriptFunction( "InitQueryReturn" );
 
-// Missions
+    // Missions
     brain.RegisterFunction( "DEC_CreerMissionPion",
         boost::function< boost::shared_ptr< MIL_Mission_ABC >( const std::string& ) >( boost::bind( &DEC_OrdersFunctions::CreatePionMissionBM, boost::ref( GetPion().GetAutomate() ), this, _1 ) ) );
     brain.RegisterFunction( "DEC_CreerMissionPionVersPion",
@@ -957,10 +957,9 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
 // Name: DEC_RolePion_Decision::StartMissionBehavior
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
-void DEC_RolePion_Decision::StartMissionBehavior(const boost::shared_ptr< MIL_Mission_ABC > mission )
+void DEC_RolePion_Decision::StartMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission )
 {
     const std::string& strBehavior = mission->GetType().GetDIABehavior();
-
     ActivateOrder( strBehavior, mission );
 }
 
@@ -993,7 +992,7 @@ void DEC_RolePion_Decision::NotifyRoePopulationChanged( const PHY_RoePopulation&
     assert( pRoePopulation_ );
     if( roe != *pRoePopulation_ )
     {
-        pRoePopulation_   = &roe;
+        pRoePopulation_ = &roe;
         NotifyHasChanged();
     }
 }

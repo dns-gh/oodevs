@@ -24,13 +24,12 @@ class TER_Localisation;
 
 // =============================================================================
 /** @class  DEC_CommunicationFunctions
-    @brief  DEC_CommunicationFunctions
+    @brief  DEC Communication functions
 */
 // Created: LDC 2009-05-11
 // =============================================================================
 class DEC_CommunicationFunctions
 {
-
 public:
     static void Register( directia::Brain& brain );
 
@@ -116,7 +115,6 @@ public:
     static void F_Automat_SetbOrdrePoursuivre( DEC_Decision_ABC* pAutomat, bool value );
     static bool F_Automat_GetbOrdreRalentir( DEC_Decision_ABC* pAutomat );
     static void F_Automat_SetbOrdreRalentir( DEC_Decision_ABC* pAutomat, bool value );
-
 };
 
 
