@@ -43,7 +43,6 @@ GenObject::GenObject()
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: GenObject destructor
 // Created: NLD 2007-04-23
@@ -59,10 +58,10 @@ GenObject::~GenObject()
 // -----------------------------------------------------------------------------
 void GenObject::Send( Common::MsgPlannedWork& message ) const
 {
-    message.set_type         ( type_ );
+    message.set_type( type_ );
     message.set_type_obstacle( typeObstacle_ );
-    message.set_densite      ( density_ );
-    message.set_tc2          ( tc2_ );
+    message.set_densite( density_ );
+    message.set_tc2( tc2_ );
     message.set_activity_time( delaiActiviteMines_ );
     location_.Send( *message.mutable_position() );
 }

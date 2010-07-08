@@ -15,7 +15,6 @@
 namespace Common
 {
     enum ObstacleType_DemolitionTargetType;
-
     class MsgPlannedWork;
 }
 
@@ -30,7 +29,6 @@ namespace dispatcher
 // =============================================================================
 class GenObject
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -47,12 +45,12 @@ public:
 private:
     //! @name Member data
     //@{
-    std::string                                 type_;
-    Localisation                                location_;
-    Common::ObstacleType_DemolitionTargetType   typeObstacle_;
-    double                                      density_;
-    unsigned int                                tc2_;
-    unsigned int                                delaiActiviteMines_;
+    std::string type_;
+    Localisation location_;
+    Common::ObstacleType_DemolitionTargetType typeObstacle_;
+    float density_;
+    unsigned int tc2_;
+    unsigned int delaiActiviteMines_;
     //@}
 };
 
