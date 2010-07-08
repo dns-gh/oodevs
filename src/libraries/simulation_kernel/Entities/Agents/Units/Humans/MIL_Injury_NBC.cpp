@@ -64,7 +64,7 @@ MIL_Injury_NBC::MIL_Injury_NBC( const MIL_Injury_NBC& rhs )
 // Name: MIL_Injury_NBC::destructor
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
-MIL_Injury_NBC::~MIL_Injury_NBC( )
+MIL_Injury_NBC::~MIL_Injury_NBC()
 
 {
     // NOTHING

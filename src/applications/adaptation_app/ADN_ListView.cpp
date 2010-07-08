@@ -11,13 +11,11 @@
 #include "adaptation_app_pch.h"
 #include "ADN_ListView.h"
 #include "moc_ADN_ListView.cpp"
-
 #include <qpopupmenu.h>
 #include <qtooltip.h>
 #include <qpainter.h>
 #include <qprinter.h>
 #include <qpaintdevicemetrics.h>
-
 #include "ADN_ListViewItem.h"
 #include "ADN_Workspace.h"
 #include "ADN_Enums.h"
@@ -34,12 +32,12 @@
 // Created: JDY 03-06-26
 //-----------------------------------------------------------------------------
 ADN_ListView::ADN_ListView( QWidget* pParent, const char* szName, WFlags f )
-: QListView         ( pParent, szName, f )
-, ADN_Gfx_ABC       ()
-, pCurData_         ( 0 )
-, pObjectCreator_   ( 0 )
-, bDeletionEnabled_ ( false )
-, bPrinting_        ( false )
+    : QListView         ( pParent, szName, f )
+    , ADN_Gfx_ABC       ()
+    , pCurData_         ( 0 )
+    , pObjectCreator_   ( 0 )
+    , bDeletionEnabled_ ( false )
+    , bPrinting_        ( false )
 {
     connect( this, SIGNAL( onItem( QListViewItem* ) ), this, SLOT( OnOnItem( QListViewItem* ) ) );
 
@@ -57,8 +55,8 @@ ADN_ListView::ADN_ListView( QWidget* pParent, const char* szName, WFlags f )
 //-----------------------------------------------------------------------------
 ADN_ListView::~ADN_ListView()
 {
+    // NOTHING
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView::FindNdx
@@ -114,7 +112,6 @@ ADN_ListViewItem* ADN_ListView::FindItem(void* data)
     return 0;
 }
 
-
 inline void SetAutoClear(T_ConnectorVector& v,bool b)
 {
     for ( T_ConnectorVector::iterator itConnector=v.begin();itConnector!=v.end();++itConnector)
@@ -157,8 +154,8 @@ void  ADN_ListView::SetCurrentItem( void* pData )
 //-----------------------------------------------------------------------------
 void ADN_ListView::OnContextMenu( const QPoint& /*pt*/ )
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView::FillContextMenuWithDefault
@@ -171,7 +168,6 @@ void ADN_ListView::FillContextMenuWithDefault( QPopupMenu& popupMenu, ADN_Object
     if( pCurData_ != 0 )
         popupMenu.insertItem( tr( "Delete" ), this, SLOT( ContextMenuDelete() ) );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView::ContextMenuNew
@@ -201,7 +197,6 @@ void ADN_ListView::ContextMenuNew()
     pObjectCreator_ = 0;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView::ContextMenuDelete
 // Created: APE 2005-01-27
@@ -223,7 +218,6 @@ void ADN_ListView::ContextMenuDelete()
     //$$$$ delete it?
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView::SetCurrentItem
 // Created: JDY 03-07-02
@@ -236,7 +230,6 @@ void  ADN_ListView::SetCurrentItem( QListViewItem* pItem )
         SetCurrentItem( (void*)0 );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView::OnContextMenuRequested
 // Created: JDY 03-07-28
@@ -245,7 +238,6 @@ void ADN_ListView::OnContextMenuRequested( QListViewItem* /*pItem*/, const QPoin
 {
     OnContextMenu( pt );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView::setEnabled
@@ -259,7 +251,6 @@ void ADN_ListView::setEnabled( bool b )
         QListView::setEnabled( b );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView::UpdateEnableState
 // Created: AGN 2004-05-25
@@ -269,7 +260,6 @@ void ADN_ListView::UpdateEnableState()
     if( bEnabledOnlyInAdminMode_ && IsAutoEnabled() )
         setEnabled( static_cast< ADN_Connector_ListView_ABC* >( pConnector_ )->IsConnected() );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView::keyReleaseEvent
@@ -291,7 +281,6 @@ void ADN_ListView::keyReleaseEvent( QKeyEvent* pEvent )
         static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurrentData );
     }
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView::OnOnItem
@@ -318,11 +307,10 @@ void ADN_ListView::OnOnItem( QListViewItem* pItem )
 // -----------------------------------------------------------------------------
 int ADN_ListView::ComputeNbrPrintPages( const QSize& painterSize ) const
 {
-    int nWidthInPages = ceil( (float)this->contentsWidth() / painterSize.width() );
-    int nHeightInPages = ceil( (float)this->contentsHeight() / painterSize.height() );
+    int nWidthInPages = static_cast< int >( ceil( ( float ) this->contentsWidth() / painterSize.width() ) );
+    int nHeightInPages = static_cast< int >( ceil( ( float ) this->contentsHeight() / painterSize.height() ) );
     return nWidthInPages * nHeightInPages;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView::Print
@@ -334,9 +322,9 @@ void ADN_ListView::Print( int nPage, QPainter& painter, const QSize& painterSize
     // Ready the table.
     clearSelection();
 
-    int nWidthInPages = ceil( (float)this->contentsWidth() / painterSize.width() );
+    int nWidthInPages = static_cast< int >( ceil( ( float ) this->contentsWidth() / painterSize.width() ) );
 
-    int nY = floor( (float)nPage / nWidthInPages );
+    int nY = static_cast< int >( floor( ( float ) nPage / nWidthInPages ) );
     int nX = nPage % nWidthInPages;
 
     painter.save();

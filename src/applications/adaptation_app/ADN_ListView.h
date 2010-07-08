@@ -28,9 +28,7 @@ class ADN_ObjectCreator_ABC;
 */
 // Created: AGN 2003-11-18
 // =============================================================================
-class ADN_ListView
-: public QListView
-, public ADN_Gfx_ABC
+class ADN_ListView : public QListView, public ADN_Gfx_ABC
 {
     Q_OBJECT
     friend ADN_Connector_ListView_ABC;

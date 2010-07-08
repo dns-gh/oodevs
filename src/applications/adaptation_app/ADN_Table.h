@@ -19,9 +19,7 @@
 //*****************************************************************************
 // Created: JDY 03-07-07
 //*****************************************************************************
-class ADN_Table
-: public QTable
-, public ADN_Gfx_ABC
+class ADN_Table : public QTable, public ADN_Gfx_ABC
 {
     Q_OBJECT
 
@@ -71,7 +69,6 @@ protected:
     bool bPrinting_;
 };
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Table::EnableRefreshing
 // Created: JDY 03-07-08
@@ -81,7 +78,6 @@ void ADN_Table::EnableRefreshing( bool b )
 {
     bRefreshingEnabled_ = b;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Table::AddBoldGridRow
@@ -93,7 +89,6 @@ void ADN_Table::AddBoldGridRow( int nIndex )
     vBoldGridRowIndexes_.insert( nIndex );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Table::AddBoldGridCol
 // Created: APE 2005-04-04
@@ -103,8 +98,6 @@ void ADN_Table::AddBoldGridCol( int nIndex )
 {
     vBoldGridColIndexes_.insert( nIndex );
 }
-
-
 
 class ADN_Table2 : public ADN_Table
 {

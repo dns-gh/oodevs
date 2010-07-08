@@ -98,8 +98,8 @@ void ADN_ListViewDialog::PrintListView()
     QPaintDeviceMetrics metrics( painter.device() );
 
     const float rMarginInInches = 0.5f;
-    int nXMargin = rMarginInInches * (float)metrics.logicalDpiX();
-    int nYMargin = rMarginInInches * (float)metrics.logicalDpiY();
+    int nXMargin = rMarginInInches * metrics.logicalDpiX();
+    int nYMargin = rMarginInInches * metrics.logicalDpiY();
 
     QRect pageRect( nXMargin, nYMargin, metrics.width() - nXMargin * 2, metrics.height() - nYMargin * 2 );
     painter.setClipRect( pageRect, QPainter::CoordDevice );

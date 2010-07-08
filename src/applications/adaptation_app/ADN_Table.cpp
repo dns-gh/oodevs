@@ -12,12 +12,10 @@
 #include  "adaptation_app_pch.h"
 #include "ADN_Table.h"
 #include "moc_ADN_Table.cpp"
-
 #include <qpainter.h>
 #include <qprinter.h>
 #include <qpaintdevicemetrics.h>
 #include <qlineedit.h>
-
 #include "ADN_TableItem_ABC.h"
 #include "ADN_Workspace.h"
 #include "ADN_Enums.h"
@@ -31,10 +29,10 @@
 // Created: JDY 03-07-07
 //-----------------------------------------------------------------------------
 ADN_Table::ADN_Table( QWidget* pParent, const char* szName )
-: QTable             ( pParent, szName )
-, ADN_Gfx_ABC        ()
-, bRefreshingEnabled_( true )
-, bPrinting_         ( false )
+    : QTable             ( pParent, szName )
+    , ADN_Gfx_ABC        ()
+    , bRefreshingEnabled_( true )
+    , bPrinting_         ( false )
 {
     connect( this, SIGNAL( valueChanged( int, int) ), this, SLOT( doValueChanged( int, int ) ) );
 
@@ -50,8 +48,8 @@ ADN_Table::ADN_Table( QWidget* pParent, const char* szName )
 //-----------------------------------------------------------------------------
 ADN_Table::~ADN_Table()
 {
+    // NOTHING
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Table::paintCell
@@ -63,7 +61,6 @@ void ADN_Table::paintCell( QPainter* p, int nRow, int nCol, const QRect& cr, boo
         QTable::paintCell( p, nRow, nCol, cr, bSelected, cg );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Table::paintCell
 // Created: JDY 03-07-08
@@ -74,7 +71,6 @@ void ADN_Table::paintCell( QPainter* p, int nRow, int nCol, const QRect& cr, boo
         QTable::paintCell( p, nRow, nCol, cr, bSelected );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Table::doValueChanged
 // Created: JDY 03-07-09
@@ -84,15 +80,14 @@ void ADN_Table::doValueChanged ( int row, int col )
     static_cast<ADN_TableItem_ABC*>( item(row,col) )->DoValueChanged();
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Table::OnContextMenu
 // Created: JDY 03-07-29
 //-----------------------------------------------------------------------------
 void ADN_Table::OnContextMenu( int /*row*/, int /*col*/, const QPoint& /*pt*/ )
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Table::paintEmptyArea
@@ -104,7 +99,6 @@ void ADN_Table::paintEmptyArea( QPainter* pPainter, int nX, int nY, int nWidth, 
     if( ! bPrinting_ )
         QTable::paintEmptyArea( pPainter, nX, nY, nWidth, nHeight );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Table::AdjustColumns
@@ -119,7 +113,6 @@ void ADN_Table::AdjustColumns( int nMinWidth )
     }
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Table::StopEditing
 // Created: JDY 03-07-10
@@ -131,7 +124,6 @@ void ADN_Table::StopEditing()
         QTable::endEdit( currEditRow(), currEditCol(), false, false );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Table::sortColumn
 // Created: JDY 03-07-15
@@ -140,7 +132,6 @@ void ADN_Table::sortColumn( int nCol, bool bAscending, bool /*wholerows*/ )
 {
     QTable::sortColumn( nCol, bAscending, true );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Table::GetCurrentData
@@ -157,10 +148,8 @@ void* ADN_Table::GetCurrentData()
     ADN_TableItem_ABC* pItem = (ADN_TableItem_ABC*)item( nRow, nCol );
     if( pItem != 0 )
         return pItem->GetData();
-    else
-        return 0;
+    return 0;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Table::setEnabled
@@ -174,7 +163,6 @@ void ADN_Table::setEnabled( bool b )
         QTable::setEnabled( b );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Table::UpdateEnableState
 // Created: AGN 2004-05-25
@@ -184,7 +172,6 @@ void ADN_Table::UpdateEnableState()
     if( bEnabledOnlyInAdminMode_ && IsAutoEnabled() )
         setEnabled( static_cast< ADN_Connector_Table_ABC* >( pConnector_ )->IsConnected() );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Table::drawContents
@@ -209,18 +196,16 @@ void ADN_Table::drawContents( QPainter * p, int cx, int cy, int cw, int ch )
     p->setPen( pen );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Table::ComputeNbrPrintPages
 // Created: APE 2005-04-04
 // -----------------------------------------------------------------------------
 int ADN_Table::ComputeNbrPrintPages( const QSize& painterSize ) const
 {
-    int nWidthInPages = ceil( (float)this->contentsWidth() / painterSize.width() );
-    int nHeightInPages = ceil( (float)this->contentsHeight() / painterSize.height() );
+    int nWidthInPages = static_cast< int >( ceil( ( float ) this->contentsWidth() / painterSize.width() ) );
+    int nHeightInPages = static_cast< int >( ceil( ( float ) this->contentsHeight() / painterSize.height() ) );
     return nWidthInPages * nHeightInPages;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Table::Print
@@ -233,9 +218,9 @@ void ADN_Table::Print( int nPage, QPainter& painter, const QSize& painterSize )
     this->clearSelection( true );
     this->setCurrentCell( -1, -1 );
 
-    int nWidthInPages = ceil( (float)this->contentsWidth() / painterSize.width() );
+    int nWidthInPages = static_cast< int >( ceil( ( float ) this->contentsWidth() / painterSize.width() ) );
 
-    int nY = floor( (float)nPage / nWidthInPages );
+    int nY = static_cast< int >( floor( ( float ) nPage / nWidthInPages ) );
     int nX = nPage % nWidthInPages;
 
     painter.save();
@@ -244,7 +229,6 @@ void ADN_Table::Print( int nPage, QPainter& painter, const QSize& painterSize )
     painter.restore();
     bPrinting_ = false;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Table::Print
@@ -270,7 +254,6 @@ QWidget *ADN_Table::createEditor( int nRow, int nCol, bool bInitFromCell ) const
                 return 0;
         }
     }
-
     // no contents in the cell yet, so open the default editor
     if( !e ) {
         if( i ) {
@@ -287,6 +270,5 @@ QWidget *ADN_Table::createEditor( int nRow, int nCol, bool bInitFromCell ) const
             ( (QLineEdit*)e )->setFrame( FALSE );
         }
     }
-
     return e;
 }

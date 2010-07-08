@@ -19,7 +19,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_TableDialog.h"
 #include "moc_ADN_TableDialog.cpp"
-
 #include <qpopupmenu.h>
 #include <qcursor.h>
 #include <qlayout.h>
@@ -29,7 +28,6 @@
 #include <qpaintdevicemetrics.h>
 #include <qhbox.h>
 #include <qpushbutton.h>
-
 #include "ADN_Table.h"
 #include "ADN_App.h"
 #include "ADN_MainWindow.h"
@@ -39,8 +37,8 @@
 // Created: APE 2005-04-04
 // -----------------------------------------------------------------------------
 ADN_TableDialog::ADN_TableDialog( QWidget* pParent, const QString& strCaption, ADN_Table* pTable )
-: QDialog( pParent, strCaption )
-, pTable_( pTable )
+    : QDialog( pParent, strCaption )
+    , pTable_( pTable )
 {
     assert( pTable != 0 );
     this->setCaption( strCaption );
