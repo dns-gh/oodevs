@@ -27,7 +27,7 @@ int Run( int argc, char** argv )
         std::auto_ptr< FlexLmLicense > license( FlexLmLicense::CheckLicense( "sword-dispatcher", 1.0f ) );
         maxConnections = license->GetAuthorisedUsers();
     }
-    catch( FlexLmLicense::LicenseError& error )
+    catch( FlexLmLicense::LicenseError& /*error*/ )
     {
         maxConnections = 1;
     }
