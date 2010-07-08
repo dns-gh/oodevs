@@ -30,12 +30,12 @@ class PHY_DotationCapacities : private boost::noncopyable
 {
 
 public:
-     PHY_DotationCapacities( const std::string& strParentTagName, xml::xistream& xis );
+             PHY_DotationCapacities( const std::string& strParentTagName, xml::xistream& xis );
     virtual ~PHY_DotationCapacities();
 
     //! @name Operations
     //@{
-    void RegisterCapacities  ( PHY_DotationGroupContainer& container ) const;
+    void RegisterCapacities ( PHY_DotationGroupContainer& container ) const;
     void UnregisterCapacities( PHY_DotationGroupContainer& container ) const;
     //@}
 
@@ -43,16 +43,13 @@ private:
     //! @name Types
     //@{
     typedef std::map< const PHY_DotationCategory*, PHY_DotationCapacity* > T_DotationCapacityMap;
-    typedef T_DotationCapacityMap::const_iterator                          CIT_DotationCapacityMap;
+    typedef T_DotationCapacityMap::const_iterator                        CIT_DotationCapacityMap;
     //@}
 
 private:
-    //! @name Init
-    //@{
-    void ReadDotationCategories( xml::xistream& xis, const PHY_DotationType& dotationType );
-    //@}
     //! @name Helpers
     //@{
+    void ReadDotationCategories( xml::xistream& xis, const PHY_DotationType& dotationType );
     void ReadCategory( xml::xistream& xis );
     void ReadDotation( xml::xistream& xis, const PHY_DotationType& dotationType );
     //@}

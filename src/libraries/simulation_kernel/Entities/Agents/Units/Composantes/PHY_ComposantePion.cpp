@@ -1043,7 +1043,7 @@ float PHY_ComposantePion::GetIdentificationMaxRange() const
     MT_Float distance = numeric_limits< MT_Float >::max();
     for( CIT_SensorVector itSensor = sensors_.begin(); itSensor != sensors_.end(); ++itSensor )
         distance = std::min( distance, (*itSensor)->GetType().GetTypeAgent()->IdentificationDistance() );
-    return distance;
+    return static_cast< float >( distance );
 }
 
 // -----------------------------------------------------------------------------
@@ -1055,7 +1055,7 @@ float PHY_ComposantePion::GetReconnoissanceMaxRange() const
     MT_Float distance = numeric_limits< MT_Float >::max();
     for( CIT_SensorVector itSensor = sensors_.begin(); itSensor != sensors_.end(); ++itSensor )
         distance = std::min( distance, (*itSensor)->GetType().GetTypeAgent()->ReconnoissanceDistance() );
-    return distance;
+    return static_cast< float >( distance );
 }
 
 // -----------------------------------------------------------------------------

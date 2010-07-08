@@ -10,15 +10,11 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_DotationCapacities.h"
-
 #include "PHY_DotationType.h"
 #include "PHY_DotationCapacity.h"
 #include "PHY_DotationGroupContainer.h"
-#include <xeumeuleu/xml.h>
-
-
+#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCapacities constructor
@@ -61,12 +57,12 @@ void PHY_DotationCapacities::ReadDotationCategories( xml::xistream& xis, const P
 // Name: PHY_DotationCapacities::ReadDotation
 // Created: ABL 2007-07-23
 // -----------------------------------------------------------------------------
-void PHY_DotationCapacities::ReadDotation( xml::xistream& xis, const PHY_DotationType& dotationType )
+void PHY_DotationCapacities::ReadDotation( xml::xistream& xis, const PHY_DotationType& /*dotationType*/ )
 {
     std::string strCategoryName;
     xis >> xml::attribute( "name", strCategoryName );
 
-    const PHY_DotationCategory* pDotationCategory = dotationType.FindDotationCategory( strCategoryName );
+    const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( strCategoryName );
     if( !pDotationCategory )
         xis.error( "Unknown dotation category" );
 
