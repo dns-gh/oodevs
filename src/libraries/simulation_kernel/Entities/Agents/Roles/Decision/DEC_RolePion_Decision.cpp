@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Decision/DEC_RolePion_Decision.cpp $
-// $Author: Nld $
-// $Modtime: 23/06/05 10:28 $
-// $Revision: 19 $
-// $Workfile: DEC_RolePion_Decision.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2004 MASA Group
 //
 // *****************************************************************************
 
@@ -75,7 +73,6 @@
 #include "Entities/Agents/Actions/Emergency/PHY_ActionTriggerActivityInArea.h"
 #include "Entities/Agents/Actions/Emergency/PHY_ActionUnloadActivity.h"
 
-
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 
@@ -87,41 +84,41 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_RolePion_Decision )
 // -----------------------------------------------------------------------------
 DEC_RolePion_Decision::DEC_RolePion_Decision( MIL_AgentPion& pion, DEC_DataBase& database )
     : DEC_Decision              ( pion, database )
-    , nForceRatioState_         ( eForceRatioStateNone         )
-    , nRulesOfEngagementState_  ( eRoeStateFreeFire            )
-    , nCloseCombatState_        ( eCloseCombatStateNone        )
-    , nOperationalState_        ( eOpStateOperational          )
-    , nIndirectFireAvailability_( eFireAvailabilityNone        )
-    , pRoePopulation_           ( &PHY_RoePopulation::none_    )
-    , bStateHasChanged_         ( true                         )
-    , eEtatDec_                 ( 0                            )
-    , eEtatDecPrudence_         ( 0                            )
-    , eEtatLima_                ( 0                            )
-    , eEtatNbc_                 ( 0                            )
-    , eEtatDestruction_         ( 0                            )
-    , eEtatFeu_                 ( 0                            )
-    , eEtatAmbiance_            ( 0                            )
-    , eEtatRadio_               ( 0                            )
-    , eEtatRadar_               ( 0                            )
-    , eEtatDeplacement_         ( 0                            )
-    , eEtatOrdreCoordination_   ( 0                            )
-    , eConsigneTir_             ( 0                            )
-    , eConsigneTirPopulation_   ( 0                            )
-    , eEtatEchelon_             ( 0                            )
-    , eEtatSoutien_             ( 0                            )
-    , eEtatSituationEnnemi_     ( 0                            )
-    , eEtatPhaseMission_        ( 0                            )
-    , bOrdreInterrompreMission_ ( false                        )
-    , bOrdreDecrocher_          ( false                        )
-    , bOrdreTenirSurLR_         ( false                        )
-    , bOrdreTenir_              ( false                        )
-    , bPasserSurLC_             ( false                        )
-    , pionEnEscorte_            ( 0                            )
-    , rTenir_                   ( 0.f                          )
-    , eTypeContact_             ( 0                            )
-    , eNiveauAction_            ( 0                            )
-    , bDefenseStatique_Mobile_  ( false                        )
-    , pAutomate_                ( 0                            )
+    , nForceRatioState_         ( eForceRatioStateNone )
+    , nRulesOfEngagementState_  ( eRoeStateFreeFire )
+    , nCloseCombatState_        ( eCloseCombatStateNone )
+    , nOperationalState_        ( eOpStateOperational )
+    , nIndirectFireAvailability_( eFireAvailabilityNone )
+    , pRoePopulation_           ( &PHY_RoePopulation::none_ )
+    , bStateHasChanged_         ( true )
+    , eEtatDec_                 ( 0 )
+    , eEtatDecPrudence_         ( 0 )
+    , eEtatLima_                ( 0 )
+    , eEtatNbc_                 ( 0 )
+    , eEtatDestruction_         ( 0 )
+    , eEtatFeu_                 ( 0 )
+    , eEtatAmbiance_            ( 0 )
+    , eEtatRadio_               ( 0 )
+    , eEtatRadar_               ( 0 )
+    , eEtatDeplacement_         ( 0 )
+    , eEtatOrdreCoordination_   ( 0 )
+    , eConsigneTir_             ( 0 )
+    , eConsigneTirPopulation_   ( 0 )
+    , eEtatEchelon_             ( 0 )
+    , eEtatSoutien_             ( 0 )
+    , eEtatSituationEnnemi_     ( 0 )
+    , eEtatPhaseMission_        ( 0 )
+    , bOrdreInterrompreMission_ ( false )
+    , bOrdreDecrocher_          ( false )
+    , bOrdreTenirSurLR_         ( false )
+    , bOrdreTenir_              ( false )
+    , bPasserSurLC_             ( false )
+    , pionEnEscorte_            ( 0 )
+    , rTenir_                   ( 0.f )
+    , eTypeContact_             ( 0 )
+    , eNiveauAction_            ( 0 )
+    , bDefenseStatique_Mobile_  ( false )
+    , pAutomate_                ( 0 )
 {
     const DEC_Model_ABC& model = pion.GetType().GetModel();
     try
@@ -134,7 +131,6 @@ DEC_RolePion_Decision::DEC_RolePion_Decision( MIL_AgentPion& pion, DEC_DataBase&
     {
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, e.what() );
     }
-
     // Parameters list for calling default behavior
     StartDefaultBehavior();
 }
@@ -145,8 +141,8 @@ DEC_RolePion_Decision::DEC_RolePion_Decision( MIL_AgentPion& pion, DEC_DataBase&
 // -----------------------------------------------------------------------------
 DEC_RolePion_Decision::~DEC_RolePion_Decision()
 {
+    // NOTHING
 }
-
 
 // =============================================================================
 // CHECKPOINTS
@@ -206,7 +202,6 @@ void DEC_RolePion_Decision::save( MIL_CheckPointOutArchive& file, const unsigned
 {
     unsigned roe  = pRoePopulation_->GetID(),
              type = pEntity_->GetType().GetID();
-
     file << boost::serialization::base_object< DEC_Decision< MIL_AgentPion > >( *this )
          << pEntity_
          << nForceRatioState_
@@ -818,7 +813,6 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_Fire_GetRangeToExtinguish",
         boost::function< float ( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_DynamicFireFunctions::GetRangeToExtinguish, boost::cref( GetPion() ), _1 ) ) );
 
-
     // RC
     brain.RegisterFunction( "DEC_RC1",
         boost::function< void ( int, int ) >( boost::bind( &DEC_MiscFunctions::Report< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2 ) ) );
@@ -1015,7 +1009,6 @@ void DEC_RolePion_Decision::NotifyRoePopulationChanged( const PHY_RoePopulation&
 void DEC_RolePion_Decision::SendFullState( client::UnitAttributes& msg ) const
 {
     assert( pRoePopulation_ );
-
     msg().set_rapport_de_force              ( MsgsSimToClient::ForceRatio_Value( nForceRatioState_ ) );
     msg().set_combat_de_rencontre           ( Common::EnumMeetingEngagementStatus( nCloseCombatState_ ) );
     msg().set_etat_operationnel             ( Common::EnumOperationalStatus( nOperationalState_ ) );
@@ -1808,7 +1801,6 @@ void DEC_RolePion_Decision::NotifyRulesOfEngagementStateChanged( E_RulesOfEngage
     }
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: DEC_RolePion_Decision::GetRulesOfEngagementState
 // Created: DDA 2010-02-03
@@ -1817,7 +1809,6 @@ int DEC_RolePion_Decision::GetRulesOfEngagementState() const
 {
     return nRulesOfEngagementState_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_RolePion_Decision::NotifyCloseCombatStateChanged
@@ -1873,7 +1864,7 @@ const std::string& DEC_RolePion_Decision::GetDIAType() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: std::vector< DEC_Decision_ABC* > DEC_RolePion_Decision::GetPionsWithPC
+// Name: DEC_RolePion_Decision::GetPionsWithPC
 // Created: HBD 2010-05-27
 // -----------------------------------------------------------------------------
 std::vector< DEC_Decision_ABC* > DEC_RolePion_Decision::GetPionsWithPC()

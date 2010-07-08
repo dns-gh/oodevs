@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h $
-// $Author: Nld $
-// $Modtime: 23/06/05 10:29 $
-// $Revision: 10 $
-// $Workfile: DEC_RolePion_Decision.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2004 MASA Group
 //
 // *****************************************************************************
 
@@ -46,8 +44,11 @@ class DEC_RolePion_Decision : public DEC_Decision< MIL_AgentPion >
 {
 
 public:
+    //! @name Constructors/Destructor
+    //@{
              DEC_RolePion_Decision( MIL_AgentPion& pion, DEC_DataBase& database );
     virtual ~DEC_RolePion_Decision();
+    //@}
 
     //! @name CheckPoints
     //@{
@@ -167,7 +168,6 @@ protected:
     //! @name Helpers
     //@{
     virtual void EndCleanStateAfterCrash  ();
-
     virtual void RegisterUserFunctions( directia::Brain& brain );
     //@}
 
@@ -198,6 +198,8 @@ private:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     // Etat décisionnel
           E_ForceRatioState        nForceRatioState_;
           E_RulesOfEngagementState nRulesOfEngagementState_;
@@ -244,6 +246,7 @@ private:
 
     std::string              name_;
     DEC_AutomateDecision*    pAutomate_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_RolePion_Decision )
