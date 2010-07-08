@@ -27,7 +27,6 @@ class TER_DynamicData;
 // =============================================================================
 class TER_PathFinderThread : public tools::thread::RequestProcessor_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -61,7 +60,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     TER_PathFinderThread( const TER_PathFinderThread& );            //!< Copy constructor
     TER_PathFinderThread& operator=( const TER_PathFinderThread& ); //!< Assignment operator
