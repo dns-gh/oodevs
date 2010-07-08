@@ -25,13 +25,12 @@ namespace dispatcher
 
 // =============================================================================
 /** @class  ColorAttribute
-    @brief  ColorAttribute
+    @brief  Color attribute
 */
 // Created: RPD 2010-01-06
 // =============================================================================
 class ColorAttribute : public UrbanObjectAttribute_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -51,10 +50,6 @@ private:
     //@{
     ColorAttribute( const ColorAttribute& );            //!< Copy constructor
     ColorAttribute& operator=( const ColorAttribute& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
     //@}
 
 private:
