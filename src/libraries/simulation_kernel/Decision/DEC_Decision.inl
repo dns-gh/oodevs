@@ -70,7 +70,7 @@ void DEC_Decision< T >::InitBrain( const std::string& brainFile, const std::stri
     
     database_.InitKnowledges( *pBrain_ );//@TODO MGD Find a better way to merge dia4/dia5
     RegisterSelf( *pBrain_ );
-    pBrain_->GetScriptFunction( "include" )( brainFile ,includePath, type, groupName );   
+    pBrain_->GetScriptFunction( "include" )( brainFile ,includePath, type, groupName );
     
     pRefs_.reset( new ScriptRefs( *pBrain_) );
 }
@@ -94,7 +94,7 @@ template < class T >
 const std::string& DEC_Decision< T >::GetDIAType() const
 {
     return diaType_;
-}   
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision::UpdateDecision
@@ -132,7 +132,7 @@ template < class T >
 void DEC_Decision< T >::Reset( std::string groupName )
 {
     StopDefaultBehavior();
-    if( groupName != "" )
+    if( !groupName.empty() )
         pBrain_->GetScriptFunction( "CleanBrainBeforeDeletion" )( groupName );
     InitBrain( brainFile_, modelName_, includePath_, groupName );
     StartDefaultBehavior();
@@ -146,7 +146,7 @@ template < class T >
 void DEC_Decision< T >::CleanStateAfterCrash()
 {    
     assert( false ); // To allow debugging ...
-    assert( pEntity_ );   
+    assert( pEntity_ );
     _clearfp();
 //    DEC_Tools::DisplayDiaStack( GetCurrentInstance(), GetCurrentDebugInfo() ); // $$$$ LDC: Is there a way to dump lua state?
 //    Reset();
@@ -260,7 +260,7 @@ void DEC_Decision< T >::StopMission( const std::string& strBehavior )
 {
     try
     {
-        pRefs_->stopEvents_.operator ()< const std::string& >( strBehavior );
+        pRefs_->stopEvents_.operator()< const std::string& >( strBehavior );
         pMission_.reset();
     }
     catch( std::runtime_error& )

@@ -30,11 +30,11 @@ using namespace weather;
 // Created: JVT 03-08-05
 //-----------------------------------------------------------------------------
 PHY_Meteo::PHY_Meteo( unsigned int id, xml::xistream& xis, const PHY_Lighting& light, int conversionFactor )
-    : pLighting_        ( &PHY_Lighting::jourSansNuage_ )
-    , pPrecipitation_   ( &PHY_Precipitation::none_ )
-    , nRefCount_        ( 0 )
-    , conversionFactor_ ( conversionFactor )
-    , id_               ( id )
+    : pLighting_       ( &PHY_Lighting::jourSansNuage_ )
+    , pPrecipitation_  ( &PHY_Precipitation::none_ )
+    , nRefCount_       ( 0 )
+    , conversionFactor_( conversionFactor )
+    , id_              ( id )
 {
     unsigned int nVal;
     xis >> xml::start( "cloud-cover" )
@@ -262,11 +262,11 @@ void PHY_Meteo::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
     client::ControlGlobalMeteo msg;
     Common::MsgMeteoAttributes* att = msg().mutable_attributes();
     msg().set_oid( id_ );
-    att->set_wind_speed( int( wind_.rWindSpeed_ / conversionFactor_ ) );
+    att->set_wind_speed( static_cast< int >( wind_.rWindSpeed_ / conversionFactor_ ) );
     att->mutable_wind_direction()->set_heading( 0 );
     att->set_cloud_floor( nPlancherCouvertureNuageuse_ );
     att->set_cloud_ceiling( nPlafondCouvertureNuageuse_ );
-    att->set_cloud_density( int( rDensiteCouvertureNuageuse_ * 100. + 0.01 ) );
+    att->set_cloud_density( static_cast< int >( rDensiteCouvertureNuageuse_ * 100. + 0.01 ) );
     att->set_precipitation( pPrecipitation_->GetAsnID() );
     att->set_temperature( 0 );
     att->set_lighting( pLighting_->GetAsnID() );
@@ -295,7 +295,7 @@ void PHY_Meteo::Select( kernel::ActionController& ) const
 // Name: PHY_Meteo::ContextMenu
 // Created: HBD 2010-03-31
 // -----------------------------------------------------------------------------
-void PHY_Meteo::ContextMenu( kernel::ActionController& , const QPoint& ) const
+void PHY_Meteo::ContextMenu( kernel::ActionController&, const QPoint& ) const
 {
     // NOTHING
 }
