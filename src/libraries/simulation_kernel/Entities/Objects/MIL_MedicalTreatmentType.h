@@ -67,7 +67,7 @@ private:
     //! @name Types
     //@{
     typedef std::map< std::string, const MIL_MedicalTreatmentType*, sCaseInsensitiveLess > T_MedicalTreatmentTypeMap;
-    typedef T_MedicalTreatmentTypeMap::const_iterator                                      CIT_MedicalTreatmentTypeMap;
+    typedef T_MedicalTreatmentTypeMap::const_iterator                                    CIT_MedicalTreatmentTypeMap;
 
     struct T_InjuryDescription {
         T_InjuryDescription() : treatmentTime_( 0 ), hospitalisationTime_( 0 ), lifeExpectancy_( -1 ), injuryThreshold_( eNone ) {}
@@ -78,7 +78,7 @@ private:
     };
 
     typedef std::map< E_InjuryCategories, T_InjuryDescription > T_MedicalTreatmentEffectMap;
-    typedef T_MedicalTreatmentEffectMap::const_iterator         CIT_MedicalTreatmentEffectMap;
+    typedef T_MedicalTreatmentEffectMap::const_iterator       CIT_MedicalTreatmentEffectMap;
     //@}
 
 private:
@@ -89,12 +89,12 @@ private:
     //@}
 
 private:
-    const std::string           strName_;
-    unsigned int                nID_;
-    int                         deathThreshold_;
+    const std::string strName_;
+    unsigned int nID_;
+    int deathThreshold_;
     T_MedicalTreatmentEffectMap medicalTreatmentEffect_;
 
-    static T_MedicalTreatmentTypeMap    types_;
+    static T_MedicalTreatmentTypeMap types_;
 };
 
 #endif // __MIL_MedicalTreatmentType_h_

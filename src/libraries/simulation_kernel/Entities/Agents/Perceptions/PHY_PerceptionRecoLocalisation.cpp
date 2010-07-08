@@ -18,7 +18,6 @@
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "simulation_terrain/TER_World.h"
-
 #include "simulation_kernel/DetectionComputer_ABC.h"
 #include "simulation_kernel/DetectionComputerFactory_ABC.h"
 
@@ -29,12 +28,11 @@
 PHY_PerceptionRecoLocalisationReco::PHY_PerceptionRecoLocalisationReco( const TER_Localisation& localisation, float rGrowthSpeed, DEC_Decision_ABC& callerAgent )
     : localisation_    ( localisation )
     , bShouldUseRadius_( rGrowthSpeed > 0. ? true : false )
-    , rGrowthSpeed_( rGrowthSpeed )
-    , callerAgent_( callerAgent )
+    , rGrowthSpeed_    ( rGrowthSpeed )
+    , callerAgent_     ( callerAgent )
 {
     const MT_Rect& boundingBox = localisation_.GetBoundingBox();
-    rRadius_ = boundingBox.GetCenter().Distance( boundingBox.GetPointUpLeft() );
-
+    rRadius_ = static_cast< float >( boundingBox.GetCenter().Distance( boundingBox.GetPointUpLeft() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,7 +57,7 @@ bool PHY_PerceptionRecoLocalisationReco::IsInside( const PHY_RoleInterface_Perce
 {
     if( bShouldUseRadius_ )
     {
-        const float rRadius = rRadius_ < 0. ? perceiver.GetMaxAgentPerceptionDistance() : rRadius_;
+        const float rRadius = rRadius_ < 0. ? static_cast< float >( perceiver.GetMaxAgentPerceptionDistance() ) : rRadius_;
         if( perceiver.GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition().SquareDistance( vPoint ) > rRadius * rRadius )
             return false;
     }
@@ -75,7 +73,7 @@ void PHY_PerceptionRecoLocalisationReco::GetAgentsInside( const PHY_RoleInterfac
     result.clear();
     if( bShouldUseRadius_ )
     {
-        const float rRadius = rRadius_ < 0. ? perceiver.GetMaxAgentPerceptionDistance() : rRadius_;
+        const float rRadius = rRadius_ < 0. ? static_cast< float >( perceiver.GetMaxAgentPerceptionDistance() ) : rRadius_;
         TER_World::GetWorld().GetAgentManager().GetListWithinCircle( perceiver.GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition(), rRadius, result );
 
         for ( TER_Agent_ABC::IT_AgentPtrVector it = result.begin(); it != result.end(); )
@@ -87,7 +85,6 @@ void PHY_PerceptionRecoLocalisationReco::GetAgentsInside( const PHY_RoleInterfac
     else
         TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( localisation_, result );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRecoLocalisationReco::GetRadius

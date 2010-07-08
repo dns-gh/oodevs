@@ -7,14 +7,6 @@
 //
 // *****************************************************************************
 
-
-// -----------------------------------------------------------------------------
-// Created: RFT 24/04/2008
-// Name: MIL_MedicalTreatmentType.cpp
-// Modified: RFT 14/05/2008
-// -----------------------------------------------------------------------------
-
-
 #include "simulation_kernel_pch.h"
 #include "MIL_MedicalTreatmentType.h"
 #include <xeumeuleu/xml.h>
@@ -22,12 +14,6 @@
 #include "tools/xmlcodecs.h"
 
 MIL_MedicalTreatmentType::T_MedicalTreatmentTypeMap MIL_MedicalTreatmentType::types_;
-
-// =============================================================================
-// FACTORY
-// Created: RFT 19/05/2008
-// Modified: none
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_MedicalTreatmentType::ReadClass
@@ -37,9 +23,7 @@ MIL_MedicalTreatmentType::T_MedicalTreatmentTypeMap MIL_MedicalTreatmentType::ty
 void MIL_MedicalTreatmentType::ReadMedicalTreatment( xml::xistream& xis )
 {
     std::string strName;
-
     xis >> xml::attribute( "name", strName );
-
     const MIL_MedicalTreatmentType*& pType = types_[ strName ];
     if( pType )
         throw std::runtime_error( "Medical Treatment of Type " + strName + " already exists" );
@@ -55,11 +39,9 @@ void MIL_MedicalTreatmentType::Initialize( xml::xistream& xis )
 {
     std::set< unsigned int > ids;
     MT_LOG_INFO_MSG( "Initializing Medical Treatment Types" );
-
     xis >> xml::start( "medical-treatments" )
             >> xml::list( "medical-treatment", &ReadMedicalTreatment )
         >> xml::end();
-
     for( CIT_MedicalTreatmentTypeMap it = types_.begin(); it != types_.end(); ++it )
         if( ! ids.insert( it->second->GetID() ).second )
             throw std::runtime_error( "Medical treatment type id of " + it->second->GetName() + " already exists" );
@@ -71,9 +53,9 @@ void MIL_MedicalTreatmentType::Initialize( xml::xistream& xis )
 // Modified: RFT 14/05/2008
 // -----------------------------------------------------------------------------
 MIL_MedicalTreatmentType::MIL_MedicalTreatmentType( const std::string& strName, xml::xistream& xis )
-    : strName_               ( strName )
-    , nID_                   ( 0 )
-    , deathThreshold_        ( 0 )
+    : strName_       ( strName )
+    , nID_           ( 0 )
+    , deathThreshold_( 0 )
 {
     xis >> xml::attribute( "id", nID_ )
         >> xml::attribute( "death-threshold", deathThreshold_ )
@@ -109,25 +91,20 @@ void MIL_MedicalTreatmentType::ReadMedicalTreatmentEffect( xml::xistream& xis )
 {
     std::string injuryCategory;
     T_InjuryDescription injuryDescription;
-
     //ReadTimeAttribute already includes a the xml optional function
     tools::ReadTimeAttribute( xis , "life-expectancy" , injuryDescription.lifeExpectancy_ );
     //No test here to check if the life expectancy is negative because a non-deadly injury sets life expectancy to "-1"
-    injuryDescription.lifeExpectancy_ = MIL_Tools::ConvertSecondsToSim( injuryDescription.lifeExpectancy_ );
-
+    injuryDescription.lifeExpectancy_ = static_cast< float >( MIL_Tools::ConvertSecondsToSim( injuryDescription.lifeExpectancy_ ) );
     xis >> xml::attribute( "threshold", injuryDescription.injuryThreshold_ );
     xis >> xml::attribute( "category" , injuryCategory );
-
     tools::ReadTimeAttribute( xis , "treatment-time" , injuryDescription.treatmentTime_ );
     if( injuryDescription.treatmentTime_ <= 0 )
         xis.error( "treatment-time <= 0" );
-    injuryDescription.treatmentTime_ = MIL_Tools::ConvertSecondsToSim( injuryDescription.treatmentTime_ );
-
+    injuryDescription.treatmentTime_ = static_cast< float >( MIL_Tools::ConvertSecondsToSim( injuryDescription.treatmentTime_ ) );
     tools::ReadTimeAttribute( xis , "hospitalisation-time" , injuryDescription.hospitalisationTime_ );
     if( injuryDescription.hospitalisationTime_ <= 0 )
         xis.error( "hospitalisation-time <= 0" );
-    injuryDescription.hospitalisationTime_ = MIL_Tools::ConvertSecondsToSim( injuryDescription.hospitalisationTime_ );
-
+    injuryDescription.hospitalisationTime_ = static_cast< float >( MIL_Tools::ConvertSecondsToSim( injuryDescription.hospitalisationTime_ ) );
     medicalTreatmentEffect_.insert( std::make_pair( StringToE_InjuryCategories( injuryCategory ), injuryDescription ) );
 }
 

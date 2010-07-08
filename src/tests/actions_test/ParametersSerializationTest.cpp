@@ -27,7 +27,6 @@
 #include "actions/Path.h"
 #include "actions/Polygon.h"
 #include "actions/PopulationKnowledge.h"
-
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentKnowledgeConverter_ABC.h"
 #include "clients_kernel/AtlasNatures.h"
@@ -40,7 +39,6 @@
 #include "clients_kernel/OrderParameter.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Team_ABC.h"
-
 #include "protocol/protocol.h"
 #include "tools/Resolver.h"
 #include <boost/lambda/bind.hpp>

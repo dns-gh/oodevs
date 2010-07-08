@@ -56,17 +56,17 @@ void load_construct_data( Archive& archive, PHY_RolePion_Location* role, const u
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RolePion_Location::PHY_RolePion_Location( MIL_AgentPion& pion )
-    : pion_                     ( pion    )
-    , vDirection_               (  0.,  0. )
-    , pvPosition_               ( new MT_Vector2D ( -1., -1. ) )   //$$$ Devrait être 'NULL'
-    , rHeight_                  ( -1.      )
-    , rCurrentSpeed_            ( -1.      )
-    , bHasDoneMagicMove_        ( false    )
-    , bHasMove_                 ( false    )
-    , bPositionHasChanged_      ( true     )
-    , bDirectionHasChanged_     ( true     )
-    , bCurrentSpeedHasChanged_  ( true     )
-    , bHeightHasChanged_        ( true     )
+    : pion_                   ( pion )
+    , vDirection_             (  0.,  0. )
+    , pvPosition_             ( new MT_Vector2D ( -1., -1. ) )   //$$$ Devrait être 'NULL'
+    , rHeight_                ( -1. )
+    , rCurrentSpeed_          ( -1. )
+    , bHasDoneMagicMove_      ( false )
+    , bHasMove_               ( false )
+    , bPositionHasChanged_    ( true )
+    , bDirectionHasChanged_   ( true )
+    , bCurrentSpeedHasChanged_( true )
+    , bHeightHasChanged_      ( true )
 {
     // NOTHING
 }
@@ -518,6 +518,6 @@ void PHY_RolePion_Location::NotifyTerrainPutOutsideObject( MIL_Object_ABC& objec
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::Execute( urbanLocation::UrbanLocationComputer_ABC& algorithm ) const
 {
-    geometry::Point2f position( pvPosition_->rX_, pvPosition_->rY_ );
+    geometry::Point2f position( static_cast< float >( pvPosition_->rX_ ), static_cast< float >( pvPosition_->rY_ ) );
     algorithm.SetPosition( position );
 }
