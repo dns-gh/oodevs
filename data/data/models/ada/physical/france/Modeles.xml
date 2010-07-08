@@ -18,6 +18,8 @@
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
+        <mission name="MELEE Illuminate"/>
+        <mission name="MELEE S'emparer d'un bloc urbain"/>
       </missions>
     </unit>
     <unit dia-type="net.masagroup.sword.military.roles.Platoon" file="BMPion.bms" name="test pion">
@@ -32,7 +34,7 @@
         <mission name="EngageAgents"/>
         <mission name="Flee"/>
         <mission name="IdentifyAgent"/>
-        <mission name="Illuminate"/>
+        <mission name="MELEE Illuminate"/>
         <mission name="Load"/>
         <mission name="Mount"/>
         <mission name="MoveAndObserve"/>
@@ -66,7 +68,7 @@
         <mission name="ReconnoiterPoint"/>
         <mission name="ReconnoiterUrbanBlock"/>
         <mission name="Seal Off"/>
-        <mission name="SemparerDUnBlocUrbain"/>
+        <mission name="MELEE S'emparer d'un bloc urbain"/>
         <mission name="SeekAndDestroy"/>
         <mission name="SelfProtect"/>
         <mission name="StayClose"/>

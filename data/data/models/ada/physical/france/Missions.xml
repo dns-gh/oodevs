@@ -953,7 +953,7 @@
       <parameter dia-name="objectives" name="objectifs" optional="false" type="AreaBM"/>
       <parameter dia-name="obstacles" name="obstacles" optional="true" type="GenObjectListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.military.tasks.Illuminate" dia-type="T_Mission_Pion_Illuminer" id="2065" name="Illuminate">
+    <mission dia-behavior="net.masagroup.sword.military.tasks.Illuminate" dia-type="T_Mission_Pion_Illuminer" id="2065" name="MELEE Illuminate">
       <parameter dia-name="entities" name="cible" optional="false" type="AgentKnowledgeListBM"/>
       <parameter dia-name="allies" name="tireur allie" optional="false" type="AgentListBM"/>
     </mission>
@@ -984,7 +984,7 @@
       <parameter dia-name="siteDeFranchissements" name="siteDeFranchissements" optional="false" type="ObjectKnowledgeListBM"/>
       <parameter dia-name="destinations" name="destinations" optional="false" type="PointListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.testSword.military.tasks.Seize" dia-type="T_Mission_Pion_Emparer_BU" id="2072" name="SemparerDUnBlocUrbain">
+    <mission dia-behavior="net.masagroup.testSword.military.tasks.Seize" dia-type="T_Mission_Pion_Emparer_BU" id="2072" name="MELEE S'emparer d'un bloc urbain">
       <parameter dia-name="objectives" name="bloc urbain" optional="false" type="UrbanBlockBM"/>
     </mission>
   </units>
