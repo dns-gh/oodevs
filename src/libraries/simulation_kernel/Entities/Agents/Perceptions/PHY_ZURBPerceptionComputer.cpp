@@ -65,9 +65,9 @@ const PHY_PerceptionLevel& PHY_ZURBPerceptionComputer::ComputePerception( const 
     BestSensorsParameters bestSensorParameters;
     const Polygons perceptionPolygons = ComputePerceptionPolygon( target, bestSensorParameters );
 
-    float identificationPercentage =  target.GetRole< PHY_RoleInterface_UrbanLocation >().ComputeRatioPionInside( perceptionPolygons.identificationPolygon, roll_ );
-    float recognitionPercentage    =  target.GetRole< PHY_RoleInterface_UrbanLocation >().ComputeRatioPionInside( perceptionPolygons.recognitionPolygon, roll_ );
-    float detectionPercentage      =  target.GetRole< PHY_RoleInterface_UrbanLocation >().ComputeRatioPionInside( perceptionPolygons.detectionPolygon, roll_ );
+    float identificationPercentage = target.GetRole< PHY_RoleInterface_UrbanLocation >().ComputeRatioPionInside( perceptionPolygons.identificationPolygon, roll_ );
+    float recognitionPercentage = target.GetRole< PHY_RoleInterface_UrbanLocation >().ComputeRatioPionInside( perceptionPolygons.recognitionPolygon, roll_ );
+    float detectionPercentage  = target.GetRole< PHY_RoleInterface_UrbanLocation >().ComputeRatioPionInside( perceptionPolygons.detectionPolygon, roll_ );
 
     unsigned int delay = bestSensorParameters.delay;
     if( roll_ < identificationPercentage )

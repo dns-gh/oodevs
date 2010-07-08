@@ -47,7 +47,7 @@ public:
 private:
     //!@ Constructor and destructor
     //@{
-    MIL_MedicalTreatmentType( const std::string& strName, xml::xistream& xis );
+     MIL_MedicalTreatmentType( const std::string& strName, xml::xistream& xis );
     ~MIL_MedicalTreatmentType();
     //@}
 

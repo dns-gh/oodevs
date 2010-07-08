@@ -103,7 +103,7 @@ float MIL_Injury_NBC::GetLifeExpectancy( MIL_MedicalTreatmentType::E_InjuryCateg
 // -----------------------------------------------------------------------------
 float MIL_Injury_NBC::SetLifeExpectancy() const
 {
-    return MIL_MedicalTreatmentType::Find( injuryID_ )->GetLifeExpectancy( injuryCategory_ )*( 1 + 0.1*MIL_Random::rand_ii( -1 , 1 ) );
+    return static_cast< float >( MIL_MedicalTreatmentType::Find( injuryID_ )->GetLifeExpectancy( injuryCategory_ )*( 1 + 0.1*MIL_Random::rand_ii( -1 , 1 ) ) );
 }
 
 // -----------------------------------------------------------------------------
