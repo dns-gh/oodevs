@@ -14,9 +14,7 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Populations/MIL_PopulationAttitude.h"
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
-
-
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( AttitudeModifierCapacity )
 
@@ -49,6 +47,7 @@ AttitudeModifierCapacity::AttitudeModifierCapacity()
 AttitudeModifierCapacity::AttitudeModifierCapacity( const AttitudeModifierCapacity& from )
     : attitude_( from.attitude_ )
 {
+    // NOTHING
 }
 
 
@@ -97,7 +96,7 @@ void AttitudeModifierCapacity::Instanciate( MIL_Object_ABC& object ) const
 // Name: AttitudeModifierCapacity::ProcessAgentInside
 // Created: MGD 2010-03-15
 // -----------------------------------------------------------------------------
-void AttitudeModifierCapacity::ProcessPopulationInside( MIL_Object_ABC& object, MIL_PopulationElement_ABC& population )
+void AttitudeModifierCapacity::ProcessPopulationInside( MIL_Object_ABC& /*object*/, MIL_PopulationElement_ABC& population )
 {
     population.SetAttitude( *attitude_ );
 }

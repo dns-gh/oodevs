@@ -9,7 +9,7 @@
 // Created: JCR 2008-08-18
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectAttributeInputToxicCloud::DEC_Knowledge_ObjectAttributeInputToxicCloud()
-    : attr_ ( 0 )
+    : attr_( 0 )
 {
     // NOTHING
 }

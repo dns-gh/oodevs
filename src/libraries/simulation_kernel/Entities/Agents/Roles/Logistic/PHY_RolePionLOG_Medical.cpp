@@ -896,7 +896,7 @@ void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, Msgs
 // Name: PHY_RolePionLOG_Medical::SendFullState
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Medical::SendFullState( client::UnitAttributes& asnUnit ) const
+void PHY_RolePionLOG_Medical::SendFullState( client::UnitAttributes& /*asnUnit*/ ) const
 {
     client::LogMedicalState asn;
     asn().set_oid_pion( pion_.GetID() );
