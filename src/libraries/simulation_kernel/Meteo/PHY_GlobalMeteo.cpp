@@ -78,7 +78,6 @@ void PHY_GlobalMeteo::SendCreation() const
 {
     client::ControlGlobalMeteo msg;
     msg().set_oid( id_ );
-
     Common::MsgMeteoAttributes* att = msg().mutable_attributes();
     att->set_wind_speed( int( wind_.rWindSpeed_ / conversionFactor_ ) );
     NET_ASN_Tools::WriteDirection( wind_.vWindDirection_, *( att->mutable_wind_direction() ) );
@@ -90,4 +89,3 @@ void PHY_GlobalMeteo::SendCreation() const
     att->set_lighting( GetLighting().GetAsnID() );
     msg.Send( NET_Publisher_ABC::Publisher() );
 }
-

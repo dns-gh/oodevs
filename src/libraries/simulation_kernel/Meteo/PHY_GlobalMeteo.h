@@ -29,13 +29,12 @@ class Publisher_ABC;
 
 // =============================================================================
 /** @class  PHY_GlobalMeteo
-    @brief  PHY_GlobalMeteo
+    @brief  PHY Global meteo
 */
 // Created: HBD 2010-03-25
 // =============================================================================
 class PHY_GlobalMeteo : public weather::PHY_Meteo
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

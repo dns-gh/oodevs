@@ -1,6 +1,11 @@
-//*****************************************************************************
-// Created: DFT 02-02-28
-//*****************************************************************************
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2002 MASA Group
+//
+// *****************************************************************************
 
 #ifndef __MIL_AgentServer_h_
 #define __MIL_AgentServer_h_
@@ -16,7 +21,6 @@ namespace xml
 {
     class xostream;
 }
-
 
 class DEC_Workspace;
 class DEC_PathFind_Manager;
@@ -42,7 +46,6 @@ class MIL_AgentServer : public MT_Timer_ABC
                       , public MIL_Time_ABC
                       , private boost::noncopyable
 {
-
 public:
     //! @name Type
     //@{
@@ -148,22 +151,20 @@ private:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     E_SimState nSimState_;
-
     MIL_Config& config_;
-
     unsigned int nTimeStepDuration_; /* const */
     unsigned int nTimeFactor_;
     unsigned int nCurrentTimeStep_;
     unsigned int nSimTime_;
     unsigned int nInitialRealTime_;
     unsigned int nRealTime_;
-
     MIL_EffectManager*           pEffectManager_;
     MIL_EntityManager*           pEntityManager_;
     DEC_Workspace*               pWorkspaceDIA_;
     PHY_MeteoDataManager*        pMeteoDataManager_;
-
     MT_TimerManager              timerManager_;
     MIL_TacticalLineManager*     pTacticalLineManager_;
     DEC_PathFind_Manager*        pPathFindManager_;
@@ -171,14 +172,11 @@ private:
     MIL_CheckPointManager*       pCheckPointManager_;
     NET_AgentServer*             pAgentServer_;
     HLA_Federate*                pFederate_;
-
     MIL_Folk*                    pFolk_;
-
     UrbanModel*                  pUrbanModel_;
-
     ProcessMonitor*              pProcessMonitor_;
-
     long lastStep_;
+    //@}
 
 private:
     static MIL_AgentServer*      pTheAgentServer_;

@@ -1,16 +1,13 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: NLD 2002-08-06 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Tools/MIL_Tools.inl $
-// $Author: Nld $
-// $Modtime: 23/03/05 10:16 $
-// $Revision: 10 $
-// $Workfile: MIL_Tools.inl $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2002 MASA Group
+//
+// *****************************************************************************
 
 #include "MIL_AgentServer.h"
-
 
 //-----------------------------------------------------------------------------
 // Name: MIL_Tools::ConvertSpeedMosToSim

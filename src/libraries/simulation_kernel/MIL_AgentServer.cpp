@@ -3,9 +3,7 @@
 //*****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_AgentServer.h"
-
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Decision/DEC_Workspace.h"
@@ -15,7 +13,6 @@
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "MIL_Folk.h"
 #include "UrbanModel.h"
-
 #include "CheckPoints/MIL_CheckPointManager.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Network/NET_AgentServer.h"
@@ -24,20 +21,15 @@
 #include "Tools/MIL_ProfilerMgr.h"
 #include "Tools/MIL_Tools.h"
 #include "Hla/HLA_Federate.h"
-
 #include "simulation_terrain/TER_World.h"
-
 #include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_Profiler.h"
 #include "MT/MT_Archive/MT_InputArchive_ABC.h"
-
 #include "tools/thread/Thread.h"
 #include "tools/win32/ProcessMonitor.h"
-#include <xeumeuleu/xml.h>
-
 #include "protocol/simulationsenders.h"
 #include "protocol/clientsenders.h"
-
+#include <xeumeuleu/xml.hpp>
 
 MIL_AgentServer* MIL_AgentServer::pTheAgentServer_ = 0;
 
@@ -47,8 +39,7 @@ MIL_AgentServer* MIL_AgentServer::pTheAgentServer_ = 0;
 // Last modified: JVT 03-09-24
 //-----------------------------------------------------------------------------
 MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
-    : MT_Timer_ABC         ()
-    , nSimState_           ( eSimLoading )
+    : nSimState_           ( eSimLoading )
     , config_              ( config )
     , nTimeStepDuration_   ( 1 )
     , nTimeFactor_         ( 1 )
@@ -59,7 +50,6 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     , pEntityManager_      ( 0 )
     , pWorkspaceDIA_       ( 0 )
     , pMeteoDataManager_   ( 0 )
-    , timerManager_        ()
     , pTacticalLineManager_( new MIL_TacticalLineManager() )
     , pPathFindManager_    ( 0 )
     , pProfilerMgr_        ( new MIL_ProfilerMgr( config.IsProfilingEnabled() ) )
@@ -72,11 +62,8 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
 {
     assert( !pTheAgentServer_ );
     pTheAgentServer_ = this;
-
     config_.AddFileToCRC( config_.GetExerciseFile() );
-
     ReadStaticData();
-
     if( config_.HasCheckpoint() )
         pCheckPointManager_->LoadCheckPoint( config_ );
     else
@@ -89,9 +76,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
         pEntityManager_->CreateUrbanObjects( *pUrbanModel_, config_ );
         Resume();
     }
-
     timerManager_.Register( *this );
-
     MT_LOG_STARTUP_MESSAGE( "-------------------------" );
     MT_LOG_STARTUP_MESSAGE( "---- SIM Initialized ----" );
     MT_LOG_STARTUP_MESSAGE( "-------------------------" );
@@ -105,7 +90,6 @@ MIL_AgentServer::~MIL_AgentServer()
 {
     MT_LOG_INFO_MSG( "Terminating Simulation..." );
     timerManager_.Unregister( *this );
-
     MT_LOG_INFO_MSG( "Terminating HLA" );
     delete pFederate_;
     MT_LOG_INFO_MSG( "Terminating pathfind threads" );
@@ -141,15 +125,11 @@ void MIL_AgentServer::ReadStaticData()
     nTimeFactor_       = config_.GetTimeFactor();
     MT_LOG_INFO_MSG( MT_FormatString( "Simulation tick duration : %d seconds", nTimeStepDuration_ ) );
     MT_LOG_INFO_MSG( MT_FormatString( "Simulation acceleration factor : %d", nTimeFactor_ ) );
-
     pAgentServer_ = new NET_AgentServer( config_, *this, *this );
-
     ReadTerData();
     pMeteoDataManager_ = new PHY_MeteoDataManager( config_ );
     pWorkspaceDIA_     = new DEC_Workspace       ( config_ );
-
     MIL_EntityManager::Initialize( config_, *this );
-
     if( !config_.IsDataTestMode() )
         pPathFindManager_ = new DEC_PathFind_Manager( config_ );
     ReadHLA();
@@ -176,9 +156,7 @@ void MIL_AgentServer::ReadHLA()
 {
     if( !config_.IsHLAEnabled() )
         return;
-
     MT_LOG_INFO_MSG( "Initializing HLA" );
-
     pFederate_ = new HLA_Federate( config_.GetHLAFederate(), nTimeStepDuration_ );
     if( ! pFederate_->Join( config_.GetHLAFederation() ) )
     {
@@ -189,10 +167,6 @@ void MIL_AgentServer::ReadHLA()
     else
         MT_LOG_INFO_MSG( "Connected to federation '" << config_.GetHLAFederation() << "'" );
 }
-
-//=============================================================================
-// MAIN LOOPS
-//=============================================================================
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AgentServer::Update
@@ -216,7 +190,6 @@ void MIL_AgentServer::WaitForNextStep()
     pPathFindManager_->Update();
     if( pFederate_ )
         pFederate_->Tick();
-
     long sleepTime = 100;
     if( nSimState_ == eSimRunning )
     {
@@ -225,7 +198,6 @@ void MIL_AgentServer::WaitForNextStep()
         if( ( lastStep_ + sleepTime ) > nextStep )
             sleepTime = 100;
     }
-
     if( sleepTime > 25 )
         tools::thread::Thread::Sleep( sleepTime / 2 ); // $$$$ AGE 2004-12-13:
     else
@@ -242,7 +214,7 @@ void MIL_AgentServer::OnTimer()
     nRealTime_ += nTimeStepDuration_;
     lastStep_ = clock();
     MainSimLoop();
-    ++ nCurrentTimeStep_;
+    ++nCurrentTimeStep_;
     if( config_.GetEndTick() == nCurrentTimeStep_ )
         nSimState_ = eSimStopped;
 }
@@ -256,15 +228,12 @@ void MIL_AgentServer::MainSimLoop()
 {
     pProfilerMgr_->NotifyTickBegin( GetCurrentTimeStep() );
     SendMsgBeginTick();
-
-    pEntityManager_   ->Update();
-    pFolk_            ->Update( nCurrentTimeStep_ * nTimeStepDuration_, nTimeStepDuration_ );
+    pEntityManager_->Update();
+    pFolk_->Update( nCurrentTimeStep_ * nTimeStepDuration_, nTimeStepDuration_ );
     pMeteoDataManager_->Update( nRealTime_ );
-    pPathFindManager_ ->UpdateInSimulationThread();
-
+    pPathFindManager_->UpdateInSimulationThread();
     if( pProcessMonitor_->MonitorProcess() )
     {
-
         MT_LOG_INFO_MSG( MT_FormatString( "**************** Time tick %d - Profiling (K/D/A/E/S) : %.2fms %.2fms (A:%.2f P:%.2f Pop:%.2f) %.2fms %.2fms %.2fms - PathFind : %d short %d long %d done - RAM : %.3f MB / %.3f MB (VM)",
             nCurrentTimeStep_, pEntityManager_->GetKnowledgesTime(), pEntityManager_->GetDecisionsTime(), pEntityManager_->GetAutomatesDecisionTime(), pEntityManager_->GetPionsDecisionTime(),
             pEntityManager_->GetPopulationsDecisionTime(), pEntityManager_->GetActionsTime(), pEntityManager_->GetEffectsTime(), pEntityManager_->GetStatesTime(), pPathFindManager_->GetNbrShortRequests(),
@@ -277,21 +246,13 @@ void MIL_AgentServer::MainSimLoop()
             pEntityManager_->GetPopulationsDecisionTime(), pEntityManager_->GetActionsTime(), pEntityManager_->GetEffectsTime(), pEntityManager_->GetStatesTime(), pPathFindManager_->GetNbrShortRequests(),
             pPathFindManager_->GetNbrLongRequests(), pPathFindManager_->GetNbrTreatedRequests() ) );
     }
-
     pProfilerMgr_->NotifyTickEnd( GetCurrentTimeStep() );
     SendMsgEndTick();
-
     if( pFederate_ )
         pFederate_->Step();
-
     pEntityManager_->Clean();
-
     pCheckPointManager_->Update();
 }
-
-//=============================================================================
-// NETWORK
-//=============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentServer::SendMsgBeginTick
@@ -312,7 +273,6 @@ void MIL_AgentServer::SendMsgBeginTick() const
 void MIL_AgentServer::SendMsgEndTick() const
 {
     assert( pProcessMonitor_ );
-
     client::ControlEndTick msgEndTick;
     msgEndTick().set_current_tick      ( GetCurrentTimeStep() );
     msgEndTick().set_tick_duration     ( (int)pProfilerMgr_->GetLastTickDuration() );
@@ -333,10 +293,6 @@ void MIL_AgentServer::SendStateToNewClient() const
     pFolk_->SendStateToNewClient();
     pMeteoDataManager_->SendStateToNewClient();
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentServer::save
@@ -359,8 +315,7 @@ void MIL_AgentServer::save( MIL_CheckPointOutArchive& file ) const
 //         << pAgentServer_         // moi-même ( static )
 //         << pFederate_            // reloadé à la main ( cf. MIL_AgentServer::Initialize )
          << nInitialRealTime_
-         << nRealTime_
-    ;
+         << nRealTime_;
 }
 
 // -----------------------------------------------------------------------------
@@ -370,7 +325,6 @@ void MIL_AgentServer::save( MIL_CheckPointOutArchive& file ) const
 void MIL_AgentServer::load( MIL_CheckPointInArchive& file )
 {
     E_SimState nSimState;
-
     file >> nSimState
          >> nTimeFactor_
          >> nCurrentTimeStep_
@@ -386,11 +340,8 @@ void MIL_AgentServer::load( MIL_CheckPointInArchive& file )
 //         >> pAgentServer_
 //         >> pFederate_
          >> nInitialRealTime_
-         >> nRealTime_
-    ;
-
+         >> nRealTime_;
     MT_LOG_INFO_MSG( MT_FormatString( "Simulation acceleration factor : %d", nTimeFactor_ ) );
-
     nSimState_ = eSimPaused;
     if( nSimState == eSimRunning )
         Resume();
@@ -475,7 +426,7 @@ void MIL_AgentServer::Resume()
     else
     {
         nSimState_ = eSimRunning;
-        MT_Timer_ABC::Start( MT_TimeSpan( (int)( 1000 * nTimeStepDuration_ / nTimeFactor_ ) ) );
+        MT_Timer_ABC::Start( MT_TimeSpan( static_cast< int >( 1000 * nTimeStepDuration_ / nTimeFactor_ ) ) );
         MT_LOG_INFO_MSG( "Simulation resumed" );
         msg().set_error_code( MsgsSimToClient::ControlAck_ErrorCode_no_error );
     }
@@ -496,7 +447,7 @@ void MIL_AgentServer::SetTimeFactor( unsigned timeFactor )
         nTimeFactor_ = timeFactor;
         if( nSimState_ == eSimRunning )
         {
-            MT_Timer_ABC::Start( MT_TimeSpan( (int)( 1000 * nTimeStepDuration_ / nTimeFactor_ ) ) );
+            MT_Timer_ABC::Start( MT_TimeSpan( static_cast< int >( 1000 * nTimeStepDuration_ / nTimeFactor_ ) ) );
             MT_LOG_INFO_MSG( MT_FormatString( "Time factor set to %d", nTimeFactor_ ).c_str() )
         }
         msg().set_error_code( MsgsSimToClient::ControlAck_ErrorCode_no_error );
