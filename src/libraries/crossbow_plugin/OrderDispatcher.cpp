@@ -34,9 +34,9 @@ using namespace plugins::crossbow;
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
 OrderDispatcher::OrderDispatcher( Workspace_ABC& workspace, const OrderTypes& types, const dispatcher::Model& model )
-    : types_( types )
-    , model_( model )
-    , database_ ( workspace.GetDatabase( "flat" ) )
+    : types_     ( types )
+    , model_     ( model )
+    , database_  ( workspace.GetDatabase( "flat" ) )
     , serializer_( new OrderParameterSerializer( workspace, model ) )
 {
     // Clean();
@@ -48,20 +48,18 @@ OrderDispatcher::OrderDispatcher( Workspace_ABC& workspace, const OrderTypes& ty
 // -----------------------------------------------------------------------------
 void OrderDispatcher::Clean()
 {
-    try
-    {
-        /*
-        std::string clause( "session_id=" + boost::lexical_cast< std::string >( session_.GetId() ) );
-        database_.Execute( DeleteQueryBuilder( database_.GetTableName( "OrderParameters_Area" ), clause ) );
-        database_.Execute( DeleteQueryBuilder( database_.GetTableName( "OrderParameters_Line" ), clause ) );
-        database_.Execute( DeleteQueryBuilder( database_.GetTableName( "OrderParameters_Point" ), clause ) );
-        database_.Execute( DeleteQueryBuilder( database_.GetTableName( "OrderParameters" ), clause ) );
-        */
-    }
-    catch ( std::exception& e )
-    {
-        MT_LOG_ERROR_MSG( "OrderListener is not correctly loaded : " + std::string( e.what() ) );
-    }
+//    try
+//    {
+//        std::string clause( "session_id=" + boost::lexical_cast< std::string >( session_.GetId() ) );
+//        database_.Execute( DeleteQueryBuilder( database_.GetTableName( "OrderParameters_Area" ), clause ) );
+//        database_.Execute( DeleteQueryBuilder( database_.GetTableName( "OrderParameters_Line" ), clause ) );
+//        database_.Execute( DeleteQueryBuilder( database_.GetTableName( "OrderParameters_Point" ), clause ) );
+//        database_.Execute( DeleteQueryBuilder( database_.GetTableName( "OrderParameters" ), clause ) );
+//    }
+//    catch ( std::exception& e )
+//    {
+//        MT_LOG_ERROR_MSG( "OrderListener is not correctly loaded : " + std::string( e.what() ) );
+//    }
 }
 
 // -----------------------------------------------------------------------------

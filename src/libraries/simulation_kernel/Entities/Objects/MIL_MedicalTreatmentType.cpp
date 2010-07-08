@@ -259,5 +259,5 @@ unsigned int MIL_MedicalTreatmentType::GetInjuryThreshold( E_InjuryCategories in
     CIT_MedicalTreatmentEffectMap iter = medicalTreatmentEffect_.find( injuryCategory );
     if( iter != medicalTreatmentEffect_.end() )
         return iter->second.injuryThreshold_;
-    return -1;//IF THERE IS AN ERROR
+    throw std::runtime_error( __FUNCTION__ );
 }

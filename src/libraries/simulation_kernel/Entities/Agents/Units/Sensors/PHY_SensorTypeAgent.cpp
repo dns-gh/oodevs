@@ -125,10 +125,10 @@ namespace
     std::map< std::string, PHY_RawVisionData::E_VisionObject > environmentAssociation;
     void InitializeEnvironmentAssociation()
     {
-        environmentAssociation[ "Sol"    ] = PHY_RawVisionData::E_VisionObject::eVisionGround;
-        environmentAssociation[ "Vide"   ] = PHY_RawVisionData::E_VisionObject::eVisionEmpty;
-        environmentAssociation[ "Foret"  ] = PHY_RawVisionData::E_VisionObject::eVisionForest;
-        environmentAssociation[ "Urbain" ] = PHY_RawVisionData::E_VisionObject::eVisionUrban;
+        environmentAssociation[ "Sol"    ] = PHY_RawVisionData::eVisionGround;
+        environmentAssociation[ "Vide"   ] = PHY_RawVisionData::eVisionEmpty;
+        environmentAssociation[ "Foret"  ] = PHY_RawVisionData::eVisionForest;
+        environmentAssociation[ "Urbain" ] = PHY_RawVisionData::eVisionUrban;
     }
 }
 

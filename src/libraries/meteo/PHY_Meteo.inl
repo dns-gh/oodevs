@@ -14,7 +14,7 @@
 // Created: JVT 03-08-05
 //-----------------------------------------------------------------------------
 inline
-const PHY_Lighting& PHY_Meteo::GetLighting()   const
+const PHY_Lighting& PHY_Meteo::GetLighting() const
 {
     assert( pLighting_ );
     return *pLighting_;
