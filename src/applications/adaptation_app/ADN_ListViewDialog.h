@@ -23,15 +23,13 @@
 
 class ADN_ListView;
 
-
 // =============================================================================
 /** @class  ADN_ListViewDialog
     @brief  ADN_ListViewDialog
 */
 // Created: APE 2005-04-04
 // =============================================================================
-class ADN_ListViewDialog
-: public QDialog
+class ADN_ListViewDialog : public QDialog
 {
     Q_OBJECT
     MT_COPYNOTALLOWED( ADN_ListViewDialog )
@@ -39,7 +37,7 @@ class ADN_ListViewDialog
 public:
     //! @name Constructors/Destructor
     //@{
-     ADN_ListViewDialog( QWidget* pParent, const QString& strCaption, ADN_ListView* pListView );
+             ADN_ListViewDialog( QWidget* pParent, const QString& strCaption, ADN_ListView* pListView );
     virtual ~ADN_ListViewDialog();
     //@}
 

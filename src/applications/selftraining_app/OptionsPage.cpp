@@ -75,7 +75,7 @@ namespace
         Validator( QObject* pParent )
             : QDoubleValidator( 0., 1., 10, pParent ) {}
 
-        QValidator::State validate( QString& input, int& nPos ) const
+        QValidator::State validate( QString& input, int& /*nPos*/ ) const
         {
             double b = bottom();
             double t = top();

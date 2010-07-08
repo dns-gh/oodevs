@@ -57,8 +57,8 @@ ADN_TableDialog::ADN_TableDialog( QWidget* pParent, const QString& strCaption, A
     pLayout->addWidget( pHBox );
 
     QMainWindow* pMainWindow = ADN_App::pApplication_->GetMainWindow();
-    this->resize( pMainWindow->width() * 0.8, pMainWindow->height() * 0.8 );
-    this->move( pMainWindow->x() + pMainWindow->width() * 0.1, pMainWindow->y() + pMainWindow->height() * 0.1 );
+    this->resize( static_cast< int >( pMainWindow->width() * 0.8 ), static_cast< int >( pMainWindow->height() * 0.8 ) );
+    this->move( pMainWindow->x() + static_cast< int >( pMainWindow->width() * 0.1 ), pMainWindow->y() +  static_cast< int >( pMainWindow->height() * 0.1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -113,8 +113,8 @@ void ADN_TableDialog::PrintTable()
     QPaintDeviceMetrics metrics( painter.device() );
 
     const float rMarginInInches = 0.5f;
-    int nXMargin = rMarginInInches * (float)metrics.logicalDpiX();
-    int nYMargin = rMarginInInches * (float)metrics.logicalDpiY();
+    const int nXMargin = static_cast< int >( rMarginInInches * metrics.logicalDpiX() );
+    const int nYMargin = static_cast< int >( rMarginInInches * metrics.logicalDpiY() );
 
     QRect pageRect( nXMargin, nYMargin, metrics.width() - nXMargin * 2, metrics.height() - nYMargin * 2 );
     painter.setClipRect( pageRect, QPainter::CoordDevice );
@@ -122,9 +122,9 @@ void ADN_TableDialog::PrintTable()
 
     const double rScale = 1;
     painter.scale( rScale, rScale );
-    QSize painterSize( (int)(pageRect.width() / rScale) + 1, (int)(pageRect.height() / rScale) + 1 );
+    QSize painterSize( static_cast< int >( pageRect.width() / rScale ) + 1, static_cast< int >( pageRect.height() / rScale ) + 1 );
 
-    int nNbrPages = pTable_->ComputeNbrPrintPages( painterSize );
+    const int nNbrPages = pTable_->ComputeNbrPrintPages( painterSize );
 
     for( int n = 0; n < nNbrPages; ++n )
     {

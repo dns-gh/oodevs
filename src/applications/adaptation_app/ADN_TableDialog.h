@@ -23,15 +23,13 @@
 
 class ADN_Table;
 
-
 // =============================================================================
 /** @class  ADN_TableDialog
     @brief  ADN_TableDialog
 */
 // Created: APE 2005-04-04
 // =============================================================================
-class ADN_TableDialog
-: public QDialog
+class ADN_TableDialog : public QDialog
 {
     Q_OBJECT
     MT_COPYNOTALLOWED( ADN_TableDialog )

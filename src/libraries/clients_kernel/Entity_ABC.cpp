@@ -79,8 +79,6 @@ tools::SortedInterfaceContainer< Extension_ABC >& Entity_ABC::Interface() const
     return *const_cast< Entity_ABC* >( this );
 }
 
-// $$$$ AGE 2006-10-12:
-
 // -----------------------------------------------------------------------------
 // Name: Entity_ABC::CheckUpdate
 // Created: AGE 2006-10-12
