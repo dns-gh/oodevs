@@ -44,6 +44,7 @@ public:
     //@{
     virtual void Instanciate( MIL_Object_ABC& object ) const;
     virtual void Register( MIL_Object_ABC& object );
+    virtual void Update( MIL_Object_ABC& object, unsigned int time );
     void Activate( MIL_Object_ABC& object );
     //@}
 
@@ -56,6 +57,12 @@ private:
     //! @name Copy/Assignment
     //@{
     ActivableCapacity& operator=( const ActivableCapacity& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Members
+    //@{
+    unsigned int timeOfCreation_;
     //@}
 };
 

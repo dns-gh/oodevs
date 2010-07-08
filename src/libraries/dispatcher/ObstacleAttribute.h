@@ -45,6 +45,8 @@ private:
     //! @name Member data
     //@{
     Common::ObstacleType_DemolitionTargetType obstacle_;
+    bool isActivated_;
+    int activationTime_;
     //@}
 };
 

@@ -18,6 +18,7 @@
 #include "CrossingSiteAttribute.h"
 #include "LogisticAttribute.h"
 #include "ActivityTimeAttribute.h"
+#include "DelayAttribute.h"
 #include "NBCAttribute.h"
 #include "FireAttribute.h"
 #include "MedicalTreatmentAttribute.h"
@@ -107,6 +108,9 @@ void ObjectFactory::Register( kernel::Object_ABC& result, const Common::MsgObjec
 
     if( attributes.has_activity_time()  )
         result.Attach< kernel::ActivityTimeAttribute_ABC >( *new ActivityTimeAttribute( controllers_.controller_ ) );
+
+    if( attributes.has_effect_delay()  )
+        result.Attach< kernel::DelayAttribute_ABC >( *new DelayAttribute( controllers_.controller_ ) );
 
     if( attributes.has_toxic_cloud()  )
         result.Attach< kernel::ToxicCloudAttribute_ABC >( *new ToxicCloudAttribute( controllers_.controller_, static_.coordinateConverter_ ) );

@@ -38,14 +38,16 @@ public:
     //! @name Operations on agent
     //@{
     virtual void CanInteractWith         ( const MIL_Object_ABC& /*object*/, const MIL_Agent_ABC& /*agent*/, bool& /*canInteract*/ ) {}
-    virtual void ProcessAgentEntering    ( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& /*agent*/ ) { }
-    virtual void ProcessAgentExiting     ( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& /*agent*/ ) { }
-    virtual void ProcessAgentMovingInside( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& /*agent*/ ) { }
-    virtual void ProcessAgentInside      ( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& /*agent*/ ) { }
+    virtual void PreprocessAgent         ( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& /*agent*/ ) {}
+    virtual void ProcessAgentEntering    ( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& /*agent*/ ) {}
+    virtual void ProcessAgentExiting     ( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& /*agent*/ ) {}
+    virtual void ProcessAgentMovingInside( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& /*agent*/ ) {}
+    virtual void ProcessAgentInside      ( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& /*agent*/ ) {}
     //@}
 
     //! @name Operations on population
     //@{
+    virtual void PreprocessPopulation    ( MIL_Object_ABC& /*object*/, MIL_PopulationElement_ABC& /*population*/ ) {}
     virtual void ProcessPopulationInside ( MIL_Object_ABC& /*object*/, MIL_PopulationElement_ABC& /*population*/ ) {}
     //@}
 

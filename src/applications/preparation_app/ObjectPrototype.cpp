@@ -28,6 +28,7 @@
 #include "SupplyRoutePrototype.h"
 #include "InputPropagationPrototype.h"
 #include "ActivityTimePrototype.h"
+#include "DelayPrototype.h"
 
 #include <xeumeuleu/xml.h>
 #include <boost/bind.hpp>
@@ -105,6 +106,7 @@ namespace
         factory->Register( "time-limited"       , boost::bind( &Capacity< ActivityTimePrototype >::Build, _2, _3, boost::ref( object ) ) );
         factory->Register( "supply-route"       , boost::bind( &Capacity< SupplyRoutePrototype >::Build, _2, _3, boost::ref( object ) ) );
         factory->Register( "bridging"           , boost::bind( &Capacity< CrossingSitePrototype >::Build, _2, _3, boost::ref( object ) ) );
+        factory->Register( "delay"              , boost::bind( &Capacity< DelayPrototype >::Build, _2, _3, boost::ref( object ) ) );
 
         factory->Register( "logistic"           , boost::bind( &::LogisticAttribute, _2, _3, boost::ref( controllers ), boost::ref( object ) ) );
         factory->Register( "interact-with-enemy", boost::bind( &::InteractWithEnemyAttribute, _2, _3, boost::ref( object ) ) );

@@ -1267,6 +1267,10 @@
         <source>Fire temperature:</source>
         <translation>Température du feu:</translation>
     </message>
+    <message>
+        <source>Delay time:</source>
+        <translation>Temps de retard:</translation>
+    </message>
 </context>
 <context>
     <name>Population</name>

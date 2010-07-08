@@ -5671,6 +5671,10 @@ du tireur</translation>
         <source>Scattering</source>
         <translation>Dispersant</translation>
     </message>
+    <message>
+        <source>Delay time</source>
+        <translation>Temps de retard</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Objects_Wizard</name>

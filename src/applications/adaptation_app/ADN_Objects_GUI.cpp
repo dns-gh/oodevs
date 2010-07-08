@@ -330,6 +330,11 @@ void ADN_Objects_GUI::Build()
         builder.SetValidator( new ADN_IntValidator( 1, INT_MAX, this ) );
     }
 
+    ADN_GroupBox* delay = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Delay time" ), hBox );
+    {
+        vInfosConnectors[ eDelayCapacityPresent ] = & delay->GetConnector();
+    }
+
     // Connect the list to the interface.
     pList->SetItemConnectors( vInfosConnectors );
 

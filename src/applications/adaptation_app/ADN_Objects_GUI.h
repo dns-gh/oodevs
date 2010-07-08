@@ -126,6 +126,8 @@ public:
         eScatteringCapacityPresent,
         eHumanByTimeStep,
 
+        eDelayCapacityPresent,
+
         eNbrGuiElements
     };
 

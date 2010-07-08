@@ -56,6 +56,7 @@ public:
 
     //! @name
     //@{
+    int GetActivationTime() const;
     bool IsActivable() const;
     bool IsActivated() const;
     void Activate();
@@ -72,6 +73,7 @@ private:
     //@{
     Common::ObstacleType_DemolitionTargetType obstacle_;
     bool bActivated_;
+    int activationTime_;
     //@}
 };
 

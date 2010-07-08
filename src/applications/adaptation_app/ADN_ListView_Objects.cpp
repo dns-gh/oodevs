@@ -201,6 +201,8 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Objects_GUI::eScatteringCapacityPresent]->Connect( &scattering.bPresent_, bConnect );
     vItemConnectors_[ADN_Objects_GUI::eHumanByTimeStep]->Connect( &scattering.humanByTimeStep_, bConnect );
 
+    builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Delay >( ADN_Objects_GUI::eDelayCapacityPresent );
+
     ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Objects_GUI::eNbrGuiElements );
 }
 

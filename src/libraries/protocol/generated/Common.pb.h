@@ -111,6 +111,7 @@ class MsgObjectAttributeInteractionHeight;
 class MsgObjectAttributeObstacle;
 class MsgObjectAttributeActivityTime;
 class MsgObjectAttributeBypass;
+class MsgObjectAttributeEffectDelay;
 class MsgObjectAttributeNBC;
 class StockResource;
 class MsgObjectAttributeStock;
@@ -8545,17 +8546,25 @@ class MsgObjectAttributeObstacle : public ::google::protobuf::Message {
   inline bool activated() const;
   inline void set_activated(bool value);
   
+  // optional int32 activation_time = 3;
+  inline bool has_activation_time() const;
+  inline void clear_activation_time();
+  static const int kActivationTimeFieldNumber = 3;
+  inline ::google::protobuf::int32 activation_time() const;
+  inline void set_activation_time(::google::protobuf::int32 value);
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
   int type_;
   bool activated_;
+  ::google::protobuf::int32 activation_time_;
   friend void  protobuf_AddDesc_Common_2eproto();
   friend void protobuf_AssignDesc_Common_2eproto();
   friend void protobuf_ShutdownFile_Common_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -8744,6 +8753,93 @@ class MsgObjectAttributeBypass : public ::google::protobuf::Message {
   
   void InitAsDefaultInstance();
   static MsgObjectAttributeBypass* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgObjectAttributeEffectDelay : public ::google::protobuf::Message {
+ public:
+  MsgObjectAttributeEffectDelay();
+  virtual ~MsgObjectAttributeEffectDelay();
+  
+  MsgObjectAttributeEffectDelay(const MsgObjectAttributeEffectDelay& from);
+  
+  inline MsgObjectAttributeEffectDelay& operator=(const MsgObjectAttributeEffectDelay& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgObjectAttributeEffectDelay& default_instance();
+  void Swap(MsgObjectAttributeEffectDelay* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgObjectAttributeEffectDelay* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgObjectAttributeEffectDelay& from);
+  void MergeFrom(const MsgObjectAttributeEffectDelay& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required int32 value = 1;
+  inline bool has_value() const;
+  inline void clear_value();
+  static const int kValueFieldNumber = 1;
+  inline ::google::protobuf::int32 value() const;
+  inline void set_value(::google::protobuf::int32 value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::google::protobuf::int32 value_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgObjectAttributeEffectDelay* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -10012,6 +10108,13 @@ class MsgObjectAttributes : public ::google::protobuf::Message {
   inline const ::Common::MsgObjectAttributeNBCType& nbc_agent() const;
   inline ::Common::MsgObjectAttributeNBCType* mutable_nbc_agent();
   
+  // optional .Common.MsgObjectAttributeEffectDelay effect_delay = 16;
+  inline bool has_effect_delay() const;
+  inline void clear_effect_delay();
+  static const int kEffectDelayFieldNumber = 16;
+  inline const ::Common::MsgObjectAttributeEffectDelay& effect_delay() const;
+  inline ::Common::MsgObjectAttributeEffectDelay* mutable_effect_delay();
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -10031,11 +10134,12 @@ class MsgObjectAttributes : public ::google::protobuf::Message {
   ::Common::MsgObjectAttributeInteractionHeight* interaction_height_;
   ::Common::MsgObjectAttributeStock* stock_;
   ::Common::MsgObjectAttributeNBCType* nbc_agent_;
+  ::Common::MsgObjectAttributeEffectDelay* effect_delay_;
   friend void  protobuf_AddDesc_Common_2eproto();
   friend void protobuf_AssignDesc_Common_2eproto();
   friend void protobuf_ShutdownFile_Common_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(15 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(16 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -14046,6 +14150,22 @@ inline void MsgObjectAttributeObstacle::set_activated(bool value) {
   activated_ = value;
 }
 
+// optional int32 activation_time = 3;
+inline bool MsgObjectAttributeObstacle::has_activation_time() const {
+  return _has_bit(2);
+}
+inline void MsgObjectAttributeObstacle::clear_activation_time() {
+  activation_time_ = 0;
+  _clear_bit(2);
+}
+inline ::google::protobuf::int32 MsgObjectAttributeObstacle::activation_time() const {
+  return activation_time_;
+}
+inline void MsgObjectAttributeObstacle::set_activation_time(::google::protobuf::int32 value) {
+  _set_bit(2);
+  activation_time_ = value;
+}
+
 // -------------------------------------------------------------------
 
 // MsgObjectAttributeActivityTime
@@ -14084,6 +14204,26 @@ inline ::google::protobuf::int32 MsgObjectAttributeBypass::percentage() const {
 inline void MsgObjectAttributeBypass::set_percentage(::google::protobuf::int32 value) {
   _set_bit(0);
   percentage_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// MsgObjectAttributeEffectDelay
+
+// required int32 value = 1;
+inline bool MsgObjectAttributeEffectDelay::has_value() const {
+  return _has_bit(0);
+}
+inline void MsgObjectAttributeEffectDelay::clear_value() {
+  value_ = 0;
+  _clear_bit(0);
+}
+inline ::google::protobuf::int32 MsgObjectAttributeEffectDelay::value() const {
+  return value_;
+}
+inline void MsgObjectAttributeEffectDelay::set_value(::google::protobuf::int32 value) {
+  _set_bit(0);
+  value_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -14874,6 +15014,23 @@ inline ::Common::MsgObjectAttributeNBCType* MsgObjectAttributes::mutable_nbc_age
   _set_bit(14);
   if (nbc_agent_ == NULL) nbc_agent_ = new ::Common::MsgObjectAttributeNBCType;
   return nbc_agent_;
+}
+
+// optional .Common.MsgObjectAttributeEffectDelay effect_delay = 16;
+inline bool MsgObjectAttributes::has_effect_delay() const {
+  return _has_bit(15);
+}
+inline void MsgObjectAttributes::clear_effect_delay() {
+  if (effect_delay_ != NULL) effect_delay_->::Common::MsgObjectAttributeEffectDelay::Clear();
+  _clear_bit(15);
+}
+inline const ::Common::MsgObjectAttributeEffectDelay& MsgObjectAttributes::effect_delay() const {
+  return effect_delay_ != NULL ? *effect_delay_ : *default_instance_->effect_delay_;
+}
+inline ::Common::MsgObjectAttributeEffectDelay* MsgObjectAttributes::mutable_effect_delay() {
+  _set_bit(15);
+  if (effect_delay_ == NULL) effect_delay_ = new ::Common::MsgObjectAttributeEffectDelay;
+  return effect_delay_;
 }
 
 // -------------------------------------------------------------------

@@ -3,22 +3,20 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2010 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __ObstacleAttribute_h_
-#define __ObstacleAttribute_h_
+#ifndef __DelayAttribute_h_
+#define __DelayAttribute_h_
 
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/Units.h"
-#include "EnumTypes.h"
 
 namespace kernel
 {
     class Displayer_ABC;
-    class NBCAgent;
     class PropertiesDictionary;
 }
 
@@ -28,22 +26,22 @@ namespace xml
 }
 
 // =============================================================================
-/** @class  ObstacleAttribute
-    @brief  ObstacleAttribute
+/** @class  DelayAttribute
+    @brief  DelayAttribute
 */
-// Created: SBO 2007-02-08
+// Created: JSR 2010-07-06
 // =============================================================================
-class ObstacleAttribute : public kernel::ObstacleAttribute_ABC
-                        , public kernel::Serializable_ABC
+class DelayAttribute : public kernel::DelayAttribute_ABC
+                     , public kernel::Serializable_ABC
+
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ObstacleAttribute( kernel::PropertiesDictionary& dico );
-             ObstacleAttribute( kernel::PropertiesDictionary& dico, Enum_DemolitionTargetType type );
-             ObstacleAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dico );
-    virtual ~ObstacleAttribute();
+    explicit DelayAttribute( kernel::PropertiesDictionary& dico );
+             DelayAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dico );
+    virtual ~DelayAttribute();
     //@}
 
     //! @name Operations
@@ -53,17 +51,16 @@ public:
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     //@}
 
-    //! @name Operations
+    //! @name Modifiers
     //@{
-    void Activate( bool activate );
-    void SetActivationTime( int time );
+    void SetDelay( unsigned int time );
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    ObstacleAttribute( const ObstacleAttribute& );            //!< Copy constructor
-    ObstacleAttribute& operator=( const ObstacleAttribute& ); //!< Assignment operator
+    DelayAttribute( const DelayAttribute& );            //!< Copy constructor
+    DelayAttribute& operator=( const DelayAttribute& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
@@ -74,10 +71,8 @@ private:
 private:
     //! @name Member data
     //@{
-    Enum_DemolitionTargetType type_;
-    bool                      bActivated_;
-    int                       activationTime_;
+    kernel::UnitedValue< unsigned int > delay_;
     //@}
 };
 
-#endif // __ObstacleAttribute_h_
+#endif // __DelayAttribute_h_

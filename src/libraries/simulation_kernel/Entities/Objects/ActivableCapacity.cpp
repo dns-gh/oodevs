@@ -9,8 +9,10 @@
 
 #include "simulation_kernel_pch.h"
 #include "ActivableCapacity.h"
+#include "MIL_AgentServer.h"
 #include "MIL_Object_ABC.h"
 #include "ObstacleAttribute.h"
+#include "Tools/MIL_Tools.h"
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( ActivableCapacity )
@@ -20,6 +22,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( ActivableCapacity )
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 ActivableCapacity::ActivableCapacity( xml::xistream& /*xis*/ )
+    : timeOfCreation_ ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
 {
     // NOTHING
 }
@@ -29,6 +32,7 @@ ActivableCapacity::ActivableCapacity( xml::xistream& /*xis*/ )
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 ActivableCapacity::ActivableCapacity()
+    : timeOfCreation_ ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
 {
     // NOTHING
 }
@@ -38,6 +42,7 @@ ActivableCapacity::ActivableCapacity()
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 ActivableCapacity::ActivableCapacity( const ActivableCapacity& /*from*/ )
+    : timeOfCreation_ ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
 {
     // NOTHING
 }
@@ -57,7 +62,8 @@ ActivableCapacity::~ActivableCapacity()
 // -----------------------------------------------------------------------------
 template< typename Archive > void ActivableCapacity::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
+    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
+         & timeOfCreation_;
 }
 
 // -----------------------------------------------------------------------------
@@ -95,4 +101,17 @@ void ActivableCapacity::Activate( MIL_Object_ABC& object )
 bool ActivableCapacity::IsActivated( MIL_Object_ABC& object ) const
 {
     return object.GetAttribute< ObstacleAttribute >().IsActivated();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActivableCapacity::Update
+// Created: JSR 2010-07-07
+// -----------------------------------------------------------------------------
+void ActivableCapacity::Update( MIL_Object_ABC& object, unsigned int time )
+{
+    ObstacleAttribute& attr = object.GetAttribute< ObstacleAttribute >();
+    
+    if( attr.GetActivationTime() > 0 && !attr.IsActivated()
+        && static_cast< int >( time - timeOfCreation_ ) > MIL_Tools::ConvertSecondsToSim( attr.GetActivationTime() ) )
+        attr.Activate();
 }

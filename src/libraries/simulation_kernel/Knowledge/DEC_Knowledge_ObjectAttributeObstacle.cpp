@@ -25,6 +25,7 @@ DEC_Knowledge_ObjectAttributeObstacle::DEC_Knowledge_ObjectAttributeObstacle()
     : attr_ ( 0 )
     , obstacle_ ( Common::ObstacleType_DemolitionTargetType_preliminary )
     , bActivated_( true )
+    , activationTime_( 0 )
 {
     // NOTHING
 }
@@ -37,6 +38,7 @@ DEC_Knowledge_ObjectAttributeObstacle::DEC_Knowledge_ObjectAttributeObstacle( co
     : attr_ ( &attr )
     , obstacle_ ( ( attr.IsActivable() ) ? Common::ObstacleType_DemolitionTargetType_reserved : Common::ObstacleType_DemolitionTargetType_preliminary )
     , bActivated_( attr.IsActivable() ? false : true )
+    , activationTime_( attr.GetActivationTime() )
 {
     // NOTHING
 }
@@ -60,7 +62,8 @@ void DEC_Knowledge_ObjectAttributeObstacle::serialize( Archive& file, const unsi
     file & boost::serialization::base_object< DEC_Knowledge_ObjectAttribute_ABC >( *this );
     file & const_cast< ObstacleAttribute*& >( attr_ )
          & obstacle_
-         & bActivated_;
+         & bActivated_
+         & activationTime_;
 }
 
 // -----------------------------------------------------------------------------
@@ -117,6 +120,7 @@ void DEC_Knowledge_ObjectAttributeObstacle::Send( Common::MsgObjectAttributes& a
 {
     asn.mutable_obstacle()->set_type( obstacle_ );
     asn.mutable_obstacle()->set_activated( bActivated_ );
+    asn.mutable_obstacle()->set_activation_time( activationTime_ );
 }
 
 // -----------------------------------------------------------------------------

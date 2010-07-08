@@ -255,6 +255,16 @@ bool Object::CanInteractWith( const MIL_Agent_ABC& agent ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Object::PreprocessAgent
+// Created: JSR 2010-07-07
+// -----------------------------------------------------------------------------
+void Object::PreprocessAgent( MIL_Agent_ABC& agent )
+{
+    std::for_each( interactives_.begin(), interactives_.end(),
+                   boost::bind( &MIL_InteractiveContainer_ABC::PreprocessAgent, _1, boost::ref( *this ), boost::ref( agent ) ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Object::ProcessAgentEntering
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
@@ -294,6 +304,16 @@ void Object::ProcessAgentInside( MIL_Agent_ABC& agent )
     agent.GetRole< PHY_RoleInterface_Location >().NotifyTerrainObjectCollision( *this );
     std::for_each( interactives_.begin(), interactives_.end(),
                    boost::bind( &MIL_InteractiveContainer_ABC::ProcessAgentInside, _1, boost::ref( *this ), boost::ref( agent ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Object::PreprocessPopulation
+// Created: JSR 2010-07-07
+// -----------------------------------------------------------------------------
+void Object::PreprocessPopulation( MIL_PopulationElement_ABC& population )
+{
+    std::for_each( interactives_.begin(), interactives_.end(),
+                   boost::bind( &MIL_InteractiveContainer_ABC::PreprocessPopulation, _1, boost::ref( *this ), boost::ref( population ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -448,7 +468,7 @@ void Object::SendMsgUpdate() const
         || attr.has_logistic() || attr.has_nbc() || attr.has_crossing_site()
         || attr.has_supply_route() || attr.has_toxic_cloud() || attr.has_fire()
         || attr.has_medical_treatment() || attr.has_interaction_height() || attr.has_stock()
-        || attr.has_nbc_agent() )
+        || attr.has_nbc_agent() || attr.has_effect_delay() )
         asn.Send( NET_Publisher_ABC::Publisher() );
 
     xAttrToUpdate_ = 0;

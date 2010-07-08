@@ -3,47 +3,51 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2010 MASA Group
 //
 // *****************************************************************************
 
 #include "gaming_app_pch.h"
-#include "ObstaclePrototype.h"
+#include "DelayPrototype.h"
+#include "clients_kernel/Units.h"
 #include "protocol/Protocol.h"
 #include "actions/ParameterList.h"
 
+using namespace Common;
+
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
-// Name: ObstaclePrototype constructor
-// Created: SBO 2007-02-08
+// Name: DelayPrototype constructor
+// Created: JSR 2010-07-06
 // -----------------------------------------------------------------------------
-ObstaclePrototype::ObstaclePrototype( QWidget* parent, actions::parameters::ParameterList*& attributesList )
-    : ObstaclePrototype_ABC( parent )
+DelayPrototype::DelayPrototype( QWidget* parent, actions::parameters::ParameterList*& attributesList )
+    : DelayPrototype_ABC ( parent )
     , attributesList_( attributesList )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObstaclePrototype destructor
-// Created: SBO 2007-02-08
+// Name: DelayPrototype destructor
+// Created: JSR 2010-07-06
 // -----------------------------------------------------------------------------
-ObstaclePrototype::~ObstaclePrototype()
+DelayPrototype::~DelayPrototype()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObstaclePrototype::Commit
-// Created: SBO 2007-02-08
+// Name: DelayPrototype::Commit
+// Created: JSR 2010-07-06
 // -----------------------------------------------------------------------------
-void ObstaclePrototype::Commit()
+void DelayPrototype::Commit()
 {
-    if( types_ )
-    {
-        actions::parameters::ParameterList& list = attributesList_->AddList( "Obstacle" );
-        list.AddIdentifier( "AttributeId", MsgsClientToSim::MsgObjectMagicAction_Attribute_obstacle );
-        list.AddIdentifier( "TargetType", types_->GetValue() );
-        list.AddBool( "Activation", IsActivated() );
-        list.AddQuantity( "ActivationTime", GetActivationTime() );
-    }
+    int time = 3600 * delayTime_->time().hour() +
+               60 * delayTime_->time().minute() +
+               delayTime_->time().second();
+    actions::parameters::ParameterList& list = attributesList_->AddList( "Delay" );
+    list.AddIdentifier( "AttributeId", MsgsClientToSim::MsgObjectMagicAction_Attribute_effect_delay );
+    list.AddQuantity( "Time", time );
 }

@@ -12,6 +12,7 @@ BypassAttribute.cpp \
 ConstructionAttribute.cpp \
 Contaminations.cpp \
 CrossingSiteAttribute.cpp \
+DelayAttribute.cpp \
 Decisions.cpp \
 Dotations.cpp \
 Equipments.cpp \

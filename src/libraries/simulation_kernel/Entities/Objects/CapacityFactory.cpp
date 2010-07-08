@@ -20,6 +20,7 @@
 #include "ConstructionCapacity.h"
 #include "ContaminationCapacity.h"
 #include "DecontaminationCapacity.h"
+#include "DelayCapacity.h"
 #include "DetectionCapacity.h"
 #include "ExtinguishableCapacity.h"
 #include "FirePropagationCapacity.h"
@@ -85,6 +86,7 @@ CapacityFactory::CapacityFactory()
     Register( "constructor", boost::bind( &AddConstructor, _1, _2 ) );
     Register( "contamination", boost::bind( &AddBuilder< ContaminationCapacity >::Add, _1, _2 ) );
     Register( "decontamination", boost::bind( &AddBuilder< DecontaminationCapacity >::Add, _1, _2 ) );
+    Register( "delay", boost::bind( &AddBuilder< DelayCapacity >::Add, _1, _2 ) );
     Register( "extinguishable", boost::bind( &AddBuilder< ExtinguishableCapacity >::Add, _1, _2 ) );
     Register( "healable", boost::bind( &AddBuilder< HealableCapacity >::Add, _1, _2 ) );
     Register( "heuristic", boost::bind( &AddBuilder< TerrainHeuristicCapacity >::Add, _1, _2 ) );

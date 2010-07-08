@@ -113,10 +113,12 @@ public:
     //! @name InteractiveContainer
     //@{
     virtual void Register                ( MIL_InteractiveContainer_ABC* capacity ) = 0;
+    virtual void PreprocessAgent         ( MIL_Agent_ABC& agent ) = 0;
     virtual void ProcessAgentEntering    ( MIL_Agent_ABC& agent ) = 0;
     virtual void ProcessAgentExiting     ( MIL_Agent_ABC& agent ) = 0;
     virtual void ProcessAgentMovingInside( MIL_Agent_ABC& agent ) = 0;
     virtual void ProcessAgentInside      ( MIL_Agent_ABC& agent ) = 0;
+    virtual void PreprocessPopulation    ( MIL_PopulationElement_ABC& population ) = 0;
     virtual void ProcessPopulationInside ( MIL_PopulationElement_ABC& population ) = 0;
     //@}
 

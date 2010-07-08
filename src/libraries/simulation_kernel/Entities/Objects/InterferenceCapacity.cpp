@@ -93,8 +93,7 @@ void InterferenceCapacity::Instanciate( MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 void InterferenceCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent )
 {
-    if( object.GetType().GetCapacity< InteractWithEnemyCapacity >() == 0 || object.GetArmy()->IsAnEnemy( agent.GetArmy() ) == eTristate_True )
-        agent.GetRole< PHY_RoleInterface_Communications >().Jam( object );
+    agent.GetRole< PHY_RoleInterface_Communications >().Jam( object );
 }
 
 // -----------------------------------------------------------------------------

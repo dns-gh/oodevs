@@ -89,6 +89,7 @@ private:
     T_AgentSet agentEnteringSet_;
     T_AgentSet agentExitingSet_;
     T_AgentSet agentMovingInsideSet_;
+    T_AgentSet agentDelayedEnteringSet_;
 
     // link with population
     T_PopulationSet populationInsideSet_;

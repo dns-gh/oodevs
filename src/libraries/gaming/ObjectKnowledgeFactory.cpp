@@ -19,6 +19,7 @@
 #include "CrossingSiteAttribute.h"
 #include "LogisticAttribute.h"
 #include "ActivityTimeAttribute.h"
+#include "DelayAttribute.h"
 #include "NBCAttribute.h"
 #include "FireAttribute.h"
 #include "MedicalTreatmentAttribute.h"
@@ -93,6 +94,9 @@ void ObjectKnowledgeFactory::Register( kernel::ObjectKnowledge_ABC& knowledge, c
 
     if( attributes.has_crossing_site() && knowledge.Retrieve< kernel::CrossingSiteAttribute_ABC >() == 0 )
         knowledge.Attach< kernel::CrossingSiteAttribute_ABC >( *new CrossingSiteAttribute( controllers_.controller_ ) );
+
+    if( attributes.has_effect_delay() && knowledge.Retrieve< kernel::DelayAttribute_ABC >() == 0 )
+        knowledge.Attach< kernel::DelayAttribute_ABC >( *new DelayAttribute( controllers_.controller_ ) );
 
     if( attributes.has_supply_route() && knowledge.Retrieve< kernel::SupplyRouteAttribute_ABC >() == 0 )
         knowledge.Attach< kernel::SupplyRouteAttribute_ABC >( *new SupplyRouteAttribute( controllers_.controller_ ) );

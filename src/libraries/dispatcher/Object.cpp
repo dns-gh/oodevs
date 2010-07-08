@@ -12,6 +12,7 @@
 #include "Model.h"
 #include "Side.h"
 #include "ConstructionAttribute.h"
+#include "DelayAttribute.h"
 #include "ObstacleAttribute.h"
 #include "BypassAttribute.h"
 #include "CrossingSiteAttribute.h"
@@ -77,6 +78,7 @@ void Object::Initialize( Model_ABC& model, const Common::MsgObjectAttributes& at
     MSG_ASN_CREATION( toxic_cloud       , ToxicCloudAttribute );
     MSG_ASN_CREATION( fire              , FireAttribute );
     MSG_ASN_CREATION( medical_treatment , MedicalTreatmentAttribute );
+    MSG_ASN_CREATION( effect_delay      , DelayAttribute );
 }
 
 // -----------------------------------------------------------------------------

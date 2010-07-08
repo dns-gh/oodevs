@@ -24,6 +24,7 @@ using namespace xml;
 ObstacleAttribute::ObstacleAttribute( kernel::PropertiesDictionary& dico )
     : type_ ( eDemolitionTargetType_Preliminary )
     , bActivated_ ( true )
+    , activationTime_ ( 0 )
 {
     CreateDictionary( dico );
 }
@@ -68,6 +69,8 @@ void ObstacleAttribute::Display( kernel::Displayer_ABC& displayer ) const
     displayer.Group( tools::translate( "Object", "Mine parameters" ) )
              .Display( tools::translate( "Object", "Obstacle type:" ), type_.GetValue() )
              .Display( tools::translate( "Object", "Reserved obstacle activated:" ), bActivated_ );
+    if( !bActivated_ )
+        displayer.Display( tools::translate( "Object", "Activation time:" ), activationTime_ / 3600. * Units::hours );
 }
 
 // -----------------------------------------------------------------------------
@@ -79,6 +82,8 @@ void ObstacleAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const
     displayer.Display( tools::translate( "Object", "Obstacle type:" ), type_.GetValue() );
     if( type_.GetValue() == eDemolitionTargetType_Reserved )
         displayer.Display( tools::translate( "Object", "Reserved obstacle activated:" ), bActivated_ );
+    if( !bActivated_ )
+        displayer.Display( tools::translate( "Object", "Activation time:" ), activationTime_ / 3600. * Units::hours );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,6 +95,9 @@ void ObstacleAttribute::SerializeAttributes( xml::xostream& xos ) const
     xos << start( "obstacle" )
             << attribute( "type", type_.ToXml() )
             << attribute( "activated", bActivated_ )
+            << start( "activation-time" )
+                << attribute( "value", activationTime_ )
+            << end()
         << end();
 }
 
@@ -101,6 +109,7 @@ void ObstacleAttribute::CreateDictionary( kernel::PropertiesDictionary& dico )
 {
     dico.Register( *this, tools::translate( "Object", "Info/Demolition target parameters/Obstacle type" ), type_ );
     dico.Register( *this, tools::translate( "Object", "Info/Demolition target parameters/Obstacle activated" ), bActivated_ );
+    dico.Register( *this, tools::translate( "Object", "Info/Demolition target parameters/Activation time" ), activationTime_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -111,4 +120,13 @@ void ObstacleAttribute::Activate( bool activate )
 {
     if( type_.GetValue() == eDemolitionTargetType_Reserved )
         bActivated_ = activate;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObstacleAttribute::SetActivationTime
+// Created: JSR 2010-07-07
+// -----------------------------------------------------------------------------
+void ObstacleAttribute::SetActivationTime( int time )
+{
+    activationTime_ = time;
 }

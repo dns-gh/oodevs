@@ -19,6 +19,8 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 ObstacleAttribute::ObstacleAttribute( const Common::MsgObjectAttributes& message )
     : obstacle_( Common::ObstacleType_DemolitionTargetType_preliminary )
+    , isActivated_( true )
+    , activationTime_ ( 0 )
 {
     Update( message );
 }
@@ -39,7 +41,13 @@ ObstacleAttribute::~ObstacleAttribute()
 void ObstacleAttribute::Update( const Common::MsgObjectAttributes& message )
 {
     if( message.has_obstacle() )
+    {
         obstacle_ = message.obstacle().type();
+        if( message.obstacle().has_activated() )
+            isActivated_ = message.obstacle().activated();
+        if( message.obstacle().has_activation_time() )
+            activationTime_ = message.obstacle().activation_time();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -49,4 +57,6 @@ void ObstacleAttribute::Update( const Common::MsgObjectAttributes& message )
 void ObstacleAttribute::Send( Common::MsgObjectAttributes& message ) const
 {
     message.mutable_obstacle()->set_type( obstacle_ );
+    message.mutable_obstacle()->set_activated( isActivated_ );
+    message.mutable_obstacle()->set_activation_time( activationTime_ );
 }

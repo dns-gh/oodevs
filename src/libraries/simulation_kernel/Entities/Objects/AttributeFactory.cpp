@@ -12,6 +12,7 @@
 #include "Object.h"
 #include "ConstructionAttribute.h"
 #include "CrossingSiteAttribute.h"
+#include "DelayAttribute.h"
 #include "FireAttribute.h"
 #include "InteractionHeightAttribute.h"
 #include "InputToxicCloudAttribute.h"
@@ -99,6 +100,7 @@ AttributeFactory::AttributeFactory()
     Register( "population-filter", boost::bind( &AddBuilder< PopulationAttribute >::Add, _1, _2 ) );
     Register( "stock", boost::bind( &AddBuilder< StockAttribute >::Add, _1, _2 ) );
     Register( "max-size", boost::bind( &AddBuilder< OccupantAttribute >::Add, _1, _2 ) );
+    Register( "delay", boost::bind( &AddBuilder< DelayAttribute >::Add, _1, _2 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -161,6 +163,9 @@ void AttributeFactory::Create( Object& object, const Common::MsgMissionParameter
             break;
         case MsgObjectMagicAction_Attribute_bypass:
             object.GetAttribute< BypassAttribute >() = BypassAttribute( attribute );
+            break;
+        case MsgObjectMagicAction_Attribute_effect_delay:
+            object.GetAttribute< DelayAttribute >() = DelayAttribute( attribute );
             break;
         case MsgObjectMagicAction_Attribute_logistic:
             object.GetAttribute< LogisticAttribute >() = LogisticAttribute( attribute );

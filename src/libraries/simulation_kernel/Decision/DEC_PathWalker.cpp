@@ -210,9 +210,6 @@ void DEC_PathWalker::ComputeObjectsCollision( const MT_Vector2D& vStart, const M
     {
         MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **itObject );
 
-        if( !movingEntity_.CanObjectInteractWith( object ) )
-            continue;
-
         // Ajout des points de collision dans moveStepSet
         if( object.Intersect2D( lineTmp, collisions ) )
         {
@@ -279,7 +276,8 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
 
         if( !bFirstMove ) //// $$$$$ !bFirstMove A REVOIR - PERMET DE SORTIR D'UN OBSTACLE PONCTUEL
         {
-            movingEntity_.NotifyMovingInsideObject( object );
+            if( movingEntity_.CanObjectInteractWith( object ) )
+                movingEntity_.NotifyMovingInsideObject( object );
             if( rSpeedWithinObject == 0. )
             {
                 rCurrentSpeed_ = 0;
@@ -295,7 +293,8 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
     for( itObject = itCurMoveStep->objectsToNextPointSet_.begin(); itObject != itCurMoveStep->objectsToNextPointSet_.end(); ++itObject )
     {
         MIL_Object_ABC& object = const_cast< MIL_Object_ABC& >( **itObject );
-        movingEntity_.NotifyMovingInsideObject( object );
+        if( movingEntity_.CanObjectInteractWith( object ) )
+            movingEntity_.NotifyMovingInsideObject( object );
 
         rMaxSpeedForStep = std::min( rMaxSpeedForStep, movingEntity_.GetSpeedWithReinforcement( environment_, object) );
         if( rMaxSpeedForStep == 0. )

@@ -137,6 +137,7 @@ void MIL_ObjectInteraction::NotifyAgentMovingOutside( MIL_Agent_ABC& agent )
 {
     if( agentInsideSet_.erase ( &agent ) == 1 )
         agentExitingSet_.insert( &agent );
+    agentDelayedEnteringSet_.erase( &agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -156,6 +157,7 @@ void MIL_ObjectInteraction::NotifyAgentPutOutside( MIL_Agent_ABC& agent )
 {
     if( agentInsideSet_ .erase( &agent ) == 1 )
         agentExitingSet_.insert( &agent );
+    agentDelayedEnteringSet_.erase( &agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -176,20 +178,45 @@ void MIL_ObjectInteraction::ProcessInteractionEvents( MIL_Object_ABC& object )
 {
     CIT_AgentSet itAgent;
 
+    for( itAgent = agentInsideSet_.begin(); itAgent != agentInsideSet_.end(); ++itAgent )
+        object.PreprocessAgent( **itAgent );
+
+    T_AgentSet agentProcessedSet;
+    for( itAgent = agentDelayedEnteringSet_.begin(); itAgent != agentDelayedEnteringSet_.end(); ++itAgent )
+        if( object.CanInteractWith( **itAgent ) )
+        {
+            agentProcessedSet.insert( *itAgent );
+            object.ProcessAgentEntering( **itAgent );
+            if( agentMovingInsideSet_.find( *itAgent ) ==  agentMovingInsideSet_.end() )
+                object.ProcessAgentMovingInside( **itAgent );
+        }
+
+    for( itAgent = agentProcessedSet.begin(); itAgent != agentProcessedSet.end(); ++itAgent )
+        agentDelayedEnteringSet_.erase( *itAgent );
+
     for( itAgent = agentEnteringSet_.begin(); itAgent != agentEnteringSet_.end(); ++itAgent )
-        object.ProcessAgentEntering( **itAgent );
+        if( object.CanInteractWith( **itAgent ) )
+            object.ProcessAgentEntering( **itAgent );
+        else
+            agentDelayedEnteringSet_.insert( *itAgent );
 
     for( itAgent = agentExitingSet_.begin(); itAgent != agentExitingSet_.end(); ++itAgent )
         object.ProcessAgentExiting( **itAgent );
 
     for( itAgent = agentMovingInsideSet_.begin(); itAgent != agentMovingInsideSet_.end(); ++itAgent )
-        object.ProcessAgentMovingInside( **itAgent );
+        if( object.CanInteractWith( **itAgent ) )
+            object.ProcessAgentMovingInside( **itAgent );
 
     for( itAgent = agentInsideSet_.begin(); itAgent != agentInsideSet_.end(); ++itAgent )
-        object.ProcessAgentInside( **itAgent );
+        if( object.CanInteractWith( **itAgent ) )
+            object.ProcessAgentInside( **itAgent );
 
     for( CIT_PopulationSet it = populationInsideSet_.begin(); it != populationInsideSet_.end(); ++it )
-        object.ProcessPopulationInside( **it );
+    {
+        object.PreprocessPopulation( **it );
+        if( object.CanInteractWith( **it ) )
+            object.ProcessPopulationInside( **it );
+    }
 
     agentEnteringSet_    .clear();
     agentExitingSet_     .clear();

@@ -100,6 +100,13 @@
     </message>
 </context>
 <context>
+    <name>DelayAttribute</name>
+    <message>
+        <source>Info/Delay parameters/Delay</source>
+        <translation>Info/Paramètres du retard/Retard</translation>
+    </message>
+</context>
+<context>
     <name>Dotations</name>
     <message>
         <source>Dotations</source>
@@ -589,6 +596,18 @@
     <message>
         <source>Fire class:</source>
         <translation>Classe de feu:</translation>
+    </message>
+    <message>
+        <source>Delay time:</source>
+        <translation>Temps de retard:</translation>
+    </message>
+    <message>
+        <source>Activation time:</source>
+        <translation>Délai avant activation</translation>
+    </message>
+    <message>
+        <source>Info/Demolition target parameters/Activation time</source>
+        <translation>Info/Attributs de destruction/Délai avant activation</translation>
     </message>
 </context>
 <context>

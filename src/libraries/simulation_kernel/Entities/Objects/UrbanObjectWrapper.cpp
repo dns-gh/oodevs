@@ -94,6 +94,16 @@ void UrbanObjectWrapper::UpdateCapacities( const std::string& capacity, xml::xis
 }
 
 // -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::PreprocessAgent
+// Created: JSR 2010-07-07
+// -----------------------------------------------------------------------------
+void UrbanObjectWrapper::PreprocessAgent( MIL_Agent_ABC& agent )
+{
+    std::for_each( interactives_.begin(), interactives_.end(),
+        boost::bind( &MIL_InteractiveContainer_ABC::PreprocessAgent, _1, boost::ref( *this ), boost::ref( agent ) ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: UrbanObjectWrapper::ProcessAgentEntering
 // Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
@@ -131,6 +141,16 @@ void UrbanObjectWrapper::ProcessAgentInside( MIL_Agent_ABC& agent )
 {
     std::for_each( interactives_.begin(), interactives_.end(),
         boost::bind( &MIL_InteractiveContainer_ABC::ProcessAgentInside, _1, boost::ref( *this ), boost::ref( agent ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::PreprocessPopulation
+// Created: JSR 2010-07-07
+// -----------------------------------------------------------------------------
+void UrbanObjectWrapper::PreprocessPopulation( MIL_PopulationElement_ABC& population )
+{
+    std::for_each( interactives_.begin(), interactives_.end(),
+        boost::bind( &MIL_InteractiveContainer_ABC::PreprocessPopulation, _1, boost::ref( *this ), boost::ref( population ) ) );
 }
 
 // -----------------------------------------------------------------------------

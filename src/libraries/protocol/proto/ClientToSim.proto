@@ -97,6 +97,7 @@ message MsgObjectMagicAction {
         interaction_height = 12;
         stock              = 13;
         nbc_agent          = 14;
+        effect_delay       = 15;
    }
    
    required uint32                      oid        = 1;

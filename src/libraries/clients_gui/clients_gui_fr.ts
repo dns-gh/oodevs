@@ -90,6 +90,17 @@
     </message>
 </context>
 <context>
+    <name>DelayPrototype_ABC</name>
+    <message>
+        <source>Delay time</source>
+        <translation>Temps de retard</translation>
+    </message>
+    <message>
+        <source>Delay time:</source>
+        <translation>Temps de retard:</translation>
+    </message>
+</context>
+<context>
     <name>DiplomacyDialog_ABC</name>
     <message>
         <source>Diplomacy</source>
@@ -420,6 +431,10 @@
     <message>
         <source>Reserved obstacle activated:</source>
         <translation>Obstacle de manoeuvre activé:</translation>
+    </message>
+    <message>
+        <source>Activation time:</source>
+        <translation>Délai avant activation:</translation>
     </message>
 </context>
 <context>

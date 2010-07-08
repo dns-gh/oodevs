@@ -17,6 +17,8 @@
 #include "protocol/protocol.h"
 #include <xeumeuleu/xml.h>
 
+using namespace xml;
+
 BOOST_CLASS_EXPORT_IMPLEMENT( ObstacleAttribute )
 
 // -----------------------------------------------------------------------------
@@ -26,6 +28,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( ObstacleAttribute )
 ObstacleAttribute::ObstacleAttribute()
     : obstacle_ ( Common::ObstacleType_DemolitionTargetType_preliminary )
     , bActivated_ ( true )
+    , activationTime_( 0 )
 {
     // NOTHING
 }
@@ -37,6 +40,7 @@ ObstacleAttribute::ObstacleAttribute()
 ObstacleAttribute::ObstacleAttribute( bool reserved )
     : obstacle_( reserved ? Common::ObstacleType_DemolitionTargetType_reserved : Common::ObstacleType_DemolitionTargetType_preliminary )
     , bActivated_( !reserved )
+    , activationTime_( 0 )
 {
     // NOTHING
 }
@@ -68,9 +72,12 @@ namespace
 // -----------------------------------------------------------------------------
 ObstacleAttribute::ObstacleAttribute( xml::xistream& xis )
     : obstacle_ ( ExtractObstacle( xml::attribute( xis, "type", std::string() ) ) )
-    , bActivated_ ( obstacle_ == Common::ObstacleType_DemolitionTargetType_preliminary )
+    , bActivated_ ( xml::attribute( xis, "activated", false ) )
+    , activationTime_( 0 )
 {
-    // NOTHING
+    xis >> optional() >> start( "activation-time" )
+        >> attribute( "value", activationTime_ )
+        >> end();
 }
 
 // -----------------------------------------------------------------------------
@@ -80,6 +87,7 @@ ObstacleAttribute::ObstacleAttribute( xml::xistream& xis )
 ObstacleAttribute::ObstacleAttribute( const Common::MsgMissionParameter_Value& attributes )
     : obstacle_  ( ( Common::ObstacleType_DemolitionTargetType ) attributes.list( 1 ).identifier() )
     , bActivated_ ( attributes.list( 2 ).abool() )
+    , activationTime_ ( attributes.list( 3 ).quantity() )
 {
     // NOTHING
 }
@@ -101,7 +109,8 @@ template < typename Archive > void ObstacleAttribute::serialize( Archive& file, 
 {
     file & boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     file & obstacle_
-         & bActivated_;
+         & bActivated_
+         & activationTime_;
 }
 
 // -----------------------------------------------------------------------------
@@ -113,6 +122,15 @@ void ObstacleAttribute::SetType( Common::ObstacleType_DemolitionTargetType obsta
     obstacle_ = obstacleType;
     if( Common::ObstacleType_DemolitionTargetType_preliminary == obstacleType )
         bActivated_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObstacleAttribute::GetActivationTime
+// Created: JSR 2010-07-08
+// -----------------------------------------------------------------------------
+int ObstacleAttribute::GetActivationTime() const
+{
+    return activationTime_;
 }
 
 // -----------------------------------------------------------------------------
@@ -142,9 +160,9 @@ void ObstacleAttribute::Activate()
     if( ! bActivated_ && IsActivable() )
     {
         bActivated_ = true;
+        activationTime_ = 0;
         NotifyAttributeUpdated( eOnUpdate );
     }
-
 }
 
 // -----------------------------------------------------------------------------
@@ -173,6 +191,7 @@ void ObstacleAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
 {
     asn.mutable_obstacle()->set_type( obstacle_ );
     asn.mutable_obstacle()->set_activated( bActivated_ );
+    asn.mutable_obstacle()->set_activation_time( activationTime_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -185,6 +204,7 @@ void ObstacleAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
     {
         asn.mutable_obstacle()->set_activated( bActivated_ );
         asn.mutable_obstacle()->set_type( Common::ObstacleType_DemolitionTargetType_reserved );
+        asn.mutable_obstacle()->set_activation_time( activationTime_ );
         Reset();
     }
 }
@@ -208,6 +228,7 @@ ObstacleAttribute& ObstacleAttribute::operator=( const ObstacleAttribute& rhs )
 {
     obstacle_ = rhs.obstacle_;
     bActivated_ = rhs.bActivated_;
+    activationTime_ = rhs.activationTime_;
     return *this;
 }
 

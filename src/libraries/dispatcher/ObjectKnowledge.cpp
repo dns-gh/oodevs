@@ -12,6 +12,7 @@
 #include "BypassAttribute.h"
 #include "ConstructionAttribute.h"
 #include "CrossingSiteAttribute.h"
+#include "DelayAttribute.h"
 #include "FireAttribute.h"
 #include "LogisticAttribute.h"
 #include "KnowledgeGroup.h"
@@ -118,6 +119,7 @@ void ObjectKnowledge::Initialize( const Model_ABC& model, const Common::MsgObjec
     CHECK_ASN_ATTRIBUTE_CREATION( nbc               , NBCAttribute );
     CHECK_ASN_ATTRIBUTE_CREATION( fire              , FireAttribute );
     CHECK_ASN_ATTRIBUTE_CREATION( medical_treatment , MedicalTreatmentAttribute );
+    CHECK_ASN_ATTRIBUTE_CREATION( effect_delay      , DelayAttribute );
 }
 
 // -----------------------------------------------------------------------------
@@ -192,6 +194,8 @@ void ObjectKnowledge::Update( const MsgsSimToClient::MsgObjectKnowledgeUpdate& a
         CreateOrUpdate< FireAttribute >( asnMsg.attributes() );
     if( asnMsg.attributes().has_medical_treatment() )
         CreateOrUpdate< MedicalTreatmentAttribute >( asnMsg.attributes() );
+    if( asnMsg.attributes().has_effect_delay() )
+        CreateOrUpdate< DelayAttribute >( asnMsg.attributes() );
 }
 
 // -----------------------------------------------------------------------------

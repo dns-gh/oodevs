@@ -1062,6 +1062,7 @@ INIT_DATA( ADN_CapacityInfos_Bypassable,       "Bypassable",        "bypassable"
 INIT_DATA( ADN_CapacityInfos_Constructor,      "Constructor",       "constructor" );
 INIT_DATA( ADN_CapacityInfos_Contamination,    "Contamination",     "contamination" );
 INIT_DATA( ADN_CapacityInfos_Decontamination,  "Decontamination",   "decontamination" );
+INIT_DATA( ADN_CapacityInfos_Delay,            "Delay",             "delay" );
 INIT_DATA( ADN_CapacityInfos_Detection,        "Detection",         "detection" );
 INIT_DATA( ADN_CapacityInfos_Extinguishable,   "Extinguishable",    "extinguishable" );
 INIT_DATA( ADN_CapacityInfos_Healable,         "Healable",          "healable" );
@@ -1138,6 +1139,7 @@ void ADN_Objects_Data::ObjectInfos::InitializeCapacities()
     capacities_[ ADN_CapacityInfos_Constructor::TAG ].reset( new ADN_CapacityInfos_Constructor() );
     capacities_[ ADN_CapacityInfos_Contamination::TAG ].reset( new ADN_CapacityInfos_Contamination() );
     capacities_[ ADN_CapacityInfos_Decontamination::TAG ].reset( new ADN_CapacityInfos_Decontamination() );
+    capacities_[ ADN_CapacityInfos_Delay::TAG ].reset( new ADN_CapacityInfos_Delay() );
     capacities_[ ADN_CapacityInfos_Detection::TAG ].reset( new ADN_CapacityInfos_Detection() );
     capacities_[ ADN_CapacityInfos_Extinguishable::TAG ].reset( new ADN_CapacityInfos_Extinguishable() );
     capacities_[ ADN_CapacityInfos_Healable::TAG ].reset( new ADN_CapacityInfos_Healable() );

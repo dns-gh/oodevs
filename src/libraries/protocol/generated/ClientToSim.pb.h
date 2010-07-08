@@ -141,11 +141,12 @@ enum MsgObjectMagicAction_Attribute {
   MsgObjectMagicAction_Attribute_medical_treatment = 11,
   MsgObjectMagicAction_Attribute_interaction_height = 12,
   MsgObjectMagicAction_Attribute_stock = 13,
-  MsgObjectMagicAction_Attribute_nbc_agent = 14
+  MsgObjectMagicAction_Attribute_nbc_agent = 14,
+  MsgObjectMagicAction_Attribute_effect_delay = 15
 };
 bool MsgObjectMagicAction_Attribute_IsValid(int value);
 const MsgObjectMagicAction_Attribute MsgObjectMagicAction_Attribute_Attribute_MIN = MsgObjectMagicAction_Attribute_construction;
-const MsgObjectMagicAction_Attribute MsgObjectMagicAction_Attribute_Attribute_MAX = MsgObjectMagicAction_Attribute_nbc_agent;
+const MsgObjectMagicAction_Attribute MsgObjectMagicAction_Attribute_Attribute_MAX = MsgObjectMagicAction_Attribute_effect_delay;
 
 const ::google::protobuf::EnumDescriptor* MsgObjectMagicAction_Attribute_descriptor();
 inline const ::std::string& MsgObjectMagicAction_Attribute_Name(MsgObjectMagicAction_Attribute value) {
@@ -1024,6 +1025,7 @@ class MsgObjectMagicAction : public ::google::protobuf::Message {
   static const Attribute interaction_height = MsgObjectMagicAction_Attribute_interaction_height;
   static const Attribute stock = MsgObjectMagicAction_Attribute_stock;
   static const Attribute nbc_agent = MsgObjectMagicAction_Attribute_nbc_agent;
+  static const Attribute effect_delay = MsgObjectMagicAction_Attribute_effect_delay;
   static inline bool Attribute_IsValid(int value) {
     return MsgObjectMagicAction_Attribute_IsValid(value);
   }

@@ -29,10 +29,12 @@ public:
     //@}
 
     MOCK_METHOD( WriteODB, 1 );
+    MOCK_METHOD( PreprocessAgent, 1 );
     MOCK_METHOD( ProcessAgentEntering, 1 );
     MOCK_METHOD( ProcessAgentExiting, 1 );
     MOCK_METHOD( ProcessAgentMovingInside, 1 );
     MOCK_METHOD( ProcessAgentInside, 1 );
+    MOCK_METHOD( PreprocessPopulation, 1 );
     MOCK_METHOD( ProcessPopulationInside, 1 );
     MOCK_METHOD_EXT( CreateKnowledge, 1, boost::shared_ptr< DEC_Knowledge_Object >( const MIL_Army_ABC& ) , CreateKnowledgeArmy );
     MOCK_METHOD_EXT( CreateKnowledge, 1, boost::shared_ptr< DEC_Knowledge_Object >( const MIL_KnowledgeGroup& ) , CreateKnowledgeKnowledgeGroup );

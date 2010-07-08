@@ -162,7 +162,8 @@ public:
         eStructuralCapacity,
         eAttitudeModifierCapacity,
         ePerceptionCapacity,
-        eScatteringCapacity
+        eScatteringCapacity,
+        eDelayCapacity
     };
 
     template< E_Capacities T, typename DefaultFieldsHolderType = NullType >
@@ -187,6 +188,7 @@ public:
     };
 
     typedef ADN_CapacityInfos_Default< eActivableCapacity >         ADN_CapacityInfos_Activable;
+    typedef ADN_CapacityInfos_Default< eDelayCapacity >             ADN_CapacityInfos_Delay;
     typedef ADN_CapacityInfos_Default< eExtinguishableCapacity >    ADN_CapacityInfos_Extinguishable;
     typedef ADN_CapacityInfos_Default< eInteractWithEnemyCapacity > ADN_CapacityInfos_InteractWithEnemy;
     typedef ADN_CapacityInfos_Default< eInterferenceCapacity >      ADN_CapacityInfos_Interference;

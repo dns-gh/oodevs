@@ -637,8 +637,9 @@ message MsgObjectAttributeInteractionHeight {
 }
 
 message MsgObjectAttributeObstacle {
-   required ObstacleType.DemolitionTargetType type      = 1;
-   optional bool                              activated = 2;
+   required ObstacleType.DemolitionTargetType type            = 1;
+   optional bool                              activated       = 2;
+   optional int32                             activation_time = 3;
 }
 
 message MsgObjectAttributeActivityTime {
@@ -647,6 +648,10 @@ message MsgObjectAttributeActivityTime {
 
 message MsgObjectAttributeBypass {
    optional int32                       percentage          = 1 [default = 0];
+}
+
+message MsgObjectAttributeEffectDelay {
+   required int32                       value               = 1;
 }
 
 message MsgObjectAttributeNBC {
@@ -726,7 +731,8 @@ message MsgObjectAttributes {
    optional MsgObjectAttributeMedicalTreatment  medical_treatment   = 12;
    optional MsgObjectAttributeInteractionHeight interaction_height  = 13;
    optional MsgObjectAttributeStock             stock               = 14;
-   optional MsgObjectAttributeNBCType           nbc_agent           = 15;   
+   optional MsgObjectAttributeNBCType           nbc_agent           = 15;
+   optional MsgObjectAttributeEffectDelay       effect_delay        = 16;
 }
 
 // LTO Begin

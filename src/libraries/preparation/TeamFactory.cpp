@@ -25,6 +25,7 @@
 #include "BypassAttribute.h"
 #include "ConstructionAttribute.h"
 #include "CrossingSiteAttribute.h"
+#include "DelayAttribute.h"
 #include "FireAttribute.h"
 #include "InputToxicCloudAttribute.h"
 #include "LogisticAttribute.h"
@@ -161,6 +162,7 @@ void TeamFactory::Initialize()
     factory->Register( "bypass"             , BIND_ATTACH_ATTRIBUTE( BypassAttribute, _1, _2, _3 ) );
     factory->Register( "construction"       , BIND_ATTACH_ATTRIBUTE( ConstructionAttribute, _1, _2, _3 ) );
     factory->Register( "crossing-site"      , BIND_ATTACH_ATTRIBUTE( CrossingSiteAttribute, _1, _2, _3 ) );
+    factory->Register( "delay"              , BIND_ATTACH_ATTRIBUTE( DelayAttribute, _1, _2, _3 ) );
     factory->Register( "fire"               , BIND_ATTACH_ATTRIBUTE_STRING_HELPER( FireAttribute, kernel::FireClass, _1, _2, boost::cref( staticModel_.objectTypes_ ), _3 ) );
     factory->Register( "input-toxic-cloud"  ,
                        boost::bind( &AttributeBuilder< ToxicCloudAttribute_ABC >::Attach< InputToxicCloudAttribute >, _1, _2, _3 ) );

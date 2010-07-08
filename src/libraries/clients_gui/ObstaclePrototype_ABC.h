@@ -69,6 +69,7 @@ protected:
     //! @name Helpers
     //@{
     bool IsActivated() const;
+    int GetActivationTime() const;
     //@}
 
 protected:
@@ -76,6 +77,7 @@ protected:
     //@{
     ValuedComboBox< E_DemolitionTargetType >* types_;
     QCheckBox*                                activation_;
+    QTimeEdit*                                activationTime_;
     //@}
 };
 

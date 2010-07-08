@@ -96,11 +96,13 @@ public:
     //@{
     virtual bool CanInteractWith( const MIL_Agent_ABC& agent ) const;
 
-    void ProcessAgentEntering    ( MIL_Agent_ABC& agent );
-    void ProcessAgentExiting     ( MIL_Agent_ABC& agent );
-    void ProcessAgentMovingInside( MIL_Agent_ABC& agent );
-    void ProcessAgentInside      ( MIL_Agent_ABC& agent );
-    void ProcessPopulationInside ( MIL_PopulationElement_ABC& population );
+    virtual void PreprocessAgent         ( MIL_Agent_ABC& agent );
+    virtual void ProcessAgentEntering    ( MIL_Agent_ABC& agent );
+    virtual void ProcessAgentExiting     ( MIL_Agent_ABC& agent );
+    virtual void ProcessAgentMovingInside( MIL_Agent_ABC& agent );
+    virtual void ProcessAgentInside      ( MIL_Agent_ABC& agent );
+    virtual void PreprocessPopulation         ( MIL_PopulationElement_ABC& population );
+    virtual void ProcessPopulationInside ( MIL_PopulationElement_ABC& population );
     //@}
 
     //! @name Network

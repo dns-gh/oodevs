@@ -67,6 +67,7 @@ private:
     const ObstacleAttribute* attr_;
     Common::ObstacleType_DemolitionTargetType obstacle_;
     bool            bActivated_;
+    int             activationTime_;
     //@}
 };
 
