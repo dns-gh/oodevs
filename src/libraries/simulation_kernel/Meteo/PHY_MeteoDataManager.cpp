@@ -1,6 +1,11 @@
-//*****************************************************************************
-// Created: JVT 02-10-21
-//*****************************************************************************
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2002 MASA Group
+//
+// *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 #include "PHY_MeteoDataManager.h"
@@ -14,35 +19,29 @@
 #include "protocol/SimulationSenders.h"
 #include "RawVisionData/PHY_RawVisionData.h"
 #include "Tools/MIL_Tools.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 MIL_IDManager PHY_MeteoDataManager::idManager_;
 
 //-----------------------------------------------------------------------------
 // Name: PHY_MeteoDataManager constructor
 // Created: JVT 02-10-21
-// Last modified: JVT 04-03-24
 //-----------------------------------------------------------------------------
 PHY_MeteoDataManager::PHY_MeteoDataManager( MIL_Config& config )
     : pEphemeride_ ( 0 )
     , pGlobalMeteo_( 0 )
-    , meteos_      ()
     , pRawData_    ( 0 )
 {
     weather::PHY_Precipitation::Initialize();
-    weather::PHY_Lighting     ::Initialize();
-
-    std::string fileName = config.GetWeatherFile();
-
+    weather::PHY_Lighting::Initialize();
+    const std::string fileName = config.GetWeatherFile();
     xml::xifstream xisWeather( fileName );
     config.AddFileToCRC( fileName );
-
     xisWeather >> xml::start( "weather" );
-    pEphemeride_  = new PHY_Ephemeride( xisWeather );
+    pEphemeride_ = new PHY_Ephemeride( xisWeather );
     InitializeGlobalMeteo( xisWeather );
-    pRawData_     = new PHY_RawVisionData( *pGlobalMeteo_, config );
+    pRawData_ = new PHY_RawVisionData( *pGlobalMeteo_, config );
     InitializeLocalMeteos( xisWeather );
-
     xisWeather >> xml::end();
 }
 
@@ -55,8 +54,7 @@ PHY_MeteoDataManager::~PHY_MeteoDataManager()
     delete pRawData_;
     pGlobalMeteo_->DecRef();
     assert( meteos_.size() == 1 );
-
-    weather::PHY_Lighting     ::Terminate();
+    weather::PHY_Lighting::Terminate();
     weather::PHY_Precipitation::Terminate();
 }
 
@@ -67,7 +65,7 @@ PHY_MeteoDataManager::~PHY_MeteoDataManager()
 void PHY_MeteoDataManager::InitializeGlobalMeteo( xml::xistream& xis )
 {
     xis >> xml::start( "theater" );
-    pGlobalMeteo_ = new PHY_GlobalMeteo( idManager_.GetFreeId(), xis, pEphemeride_->GetLightingBase(), MIL_Tools::ConvertSpeedMosToSim( 1. ) );
+    pGlobalMeteo_ = new PHY_GlobalMeteo( idManager_.GetFreeId(), xis, pEphemeride_->GetLightingBase(), static_cast< int >( MIL_Tools::ConvertSpeedMosToSim( 1. ) ) );
     pGlobalMeteo_->IncRef();
     pGlobalMeteo_->SetListener( this );
     RegisterMeteo( *pGlobalMeteo_ );
@@ -80,9 +78,10 @@ void PHY_MeteoDataManager::InitializeGlobalMeteo( xml::xistream& xis )
 //-----------------------------------------------------------------------------
 void PHY_MeteoDataManager::InitializeLocalMeteos( xml::xistream& xis )
 {
-    xis >> xml::optional() >> xml::start( "local-weather" )
-                          >> xml::list( "local", *this, &PHY_MeteoDataManager::ReadPatchLocal )
-                      >> xml::end();
+    xis >> xml::optional()
+        >> xml::start( "local-weather" )
+            >> xml::list( "local", *this, &PHY_MeteoDataManager::ReadPatchLocal )
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -91,13 +90,9 @@ void PHY_MeteoDataManager::InitializeLocalMeteos( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_MeteoDataManager::ReadPatchLocal( xml::xistream& xis )
 {
-    weather::PHY_Meteo* pMeteo = new PHY_LocalMeteo( idManager_.GetFreeId(), xis, pEphemeride_->GetLightingBase(), MIL_Tools::ConvertSpeedMosToSim( 1. ) );
+    weather::PHY_Meteo* pMeteo = new PHY_LocalMeteo( idManager_.GetFreeId(), xis, pEphemeride_->GetLightingBase(), static_cast< int >( MIL_Tools::ConvertSpeedMosToSim( 1. ) ) );
     RegisterMeteo( *pMeteo );
 }
-
-// =============================================================================
-// NETWORK
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MeteoDataManager::OnReceiveMsgGlobalMeteo
@@ -121,10 +116,6 @@ void PHY_MeteoDataManager::OnReceiveMsgMeteo( const MsgsClientToSim::MsgMagicAct
         replyMsg.Send( NET_Publisher_ABC::Publisher() );
     }
 }
-
-//=============================================================================
-// SPECIAL AMMO EFFECTS
-//=============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MeteoDataManager::RegisterWeatherEffect

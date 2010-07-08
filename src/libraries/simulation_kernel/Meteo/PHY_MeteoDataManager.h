@@ -1,6 +1,11 @@
-//*****************************************************************************
-// Created: JVT 02-10-21
-//*****************************************************************************
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
 
 #ifndef __PHY_MeteoDataManager_h_
 #define __PHY_MeteoDataManager_h_
@@ -38,8 +43,11 @@ class PHY_MeteoDataManager : private boost::noncopyable
     friend class PHY_Meteo; // For UnregisterMeteo
 
 public:
+    //! @name Constructor/Destructor
+    //@{
     explicit PHY_MeteoDataManager( MIL_Config& config );
     virtual ~PHY_MeteoDataManager();
+    //@}
 
     //! @name Raw Data management
     //@{
@@ -90,11 +98,14 @@ private:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     PHY_Ephemeride*          pEphemeride_;
     PHY_GlobalMeteo*         pGlobalMeteo_;
     T_MeteoSet               meteos_;
     PHY_RawVisionData*       pRawData_;
     static MIL_IDManager idManager_;
+    //@}
 };
 
 
