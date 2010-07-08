@@ -14,28 +14,27 @@
 
 // =============================================================================
 /** @class  MIL_RealParameter
-    @brief  MIL_RealParameter
+    @brief  MIL real parameter
 */
 // Created: LDC 2009-05-22
 // =============================================================================
 class MIL_RealParameter : public MIL_BaseParameter
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_RealParameter( double );
+    explicit MIL_RealParameter( float value );
     virtual ~MIL_RealParameter();
     //@}
 
     //! @name Type checking
     //@{
-    virtual bool IsOfType( const MIL_ParameterType_ABC& ) const;
+    virtual bool IsOfType( const MIL_ParameterType_ABC& type ) const;
     //@}
 
     //! @name Conversions
     //@{
-    virtual bool ToNumeric( float& ) const;
+    virtual bool ToNumeric( float& value ) const;
     //@}
 
 private:
@@ -48,7 +47,7 @@ private:
 private:
     //! @name Member data
     //@{
-    double value_;
+    float value_;
     //@}
 };
 

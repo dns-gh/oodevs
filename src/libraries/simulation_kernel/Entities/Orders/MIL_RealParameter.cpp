@@ -15,7 +15,7 @@
 // Name: MIL_RealParameter constructor
 // Created: LDC 2009-05-22
 // -----------------------------------------------------------------------------
-MIL_RealParameter::MIL_RealParameter( double value )
+MIL_RealParameter::MIL_RealParameter( float value )
     : value_( value )
 {
     // NOTHING

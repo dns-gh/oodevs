@@ -149,12 +149,12 @@ public:
     //! @name Types
     //@{
     typedef std::map< const MIL_Automate*, const PHY_PerceptionLevel* > T_PerceptionAutomateSourceMap;
-    typedef T_PerceptionAutomateSourceMap::iterator                             IT_PerceptionAutomateSourceMap;
-    typedef T_PerceptionAutomateSourceMap::const_iterator                       CIT_PerceptionAutomateSourceMap;
+    typedef T_PerceptionAutomateSourceMap::iterator                    IT_PerceptionAutomateSourceMap;
+    typedef T_PerceptionAutomateSourceMap::const_iterator             CIT_PerceptionAutomateSourceMap;
 
     typedef std::map< const MIL_Agent_ABC*, const PHY_PerceptionLevel* > T_PerceptionAgentSourceMap;
-    typedef T_PerceptionAgentSourceMap::iterator                             IT_PerceptionAgentSourceMap;
-    typedef T_PerceptionAgentSourceMap::const_iterator                       CIT_PerceptionAgentSourceMap;
+    typedef T_PerceptionAgentSourceMap::iterator                        IT_PerceptionAgentSourceMap;
+    typedef T_PerceptionAgentSourceMap::const_iterator                 CIT_PerceptionAgentSourceMap;
     //@}
 
 private:

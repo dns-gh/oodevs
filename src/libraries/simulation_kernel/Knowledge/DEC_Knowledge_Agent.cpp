@@ -954,7 +954,7 @@ const MT_Vector2D& DEC_Knowledge_Agent::GetPosition() const
 bool DEC_Knowledge_Agent::IsInUrbanBlock( const urban::TerrainObject_ABC& urban ) const
 {
     const MT_Vector2D& pos = GetPosition();
-    return urban.GetFootprint()->IsInside( geometry::Point2f( pos.rX_, pos.rY_ ) );
+    return urban.GetFootprint()->IsInside( geometry::Point2f( static_cast< float >( pos.rX_ ), static_cast< float >( pos.rY_ ) ) );
 }
 
 // -----------------------------------------------------------------------------

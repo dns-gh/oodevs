@@ -207,7 +207,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( float param )
 {
-    boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_RealParameter( double( param ) ) );
+    boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_RealParameter( param ) );
     return result;
 }
 
