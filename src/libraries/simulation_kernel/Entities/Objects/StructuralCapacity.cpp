@@ -14,7 +14,7 @@
 #include "geometry/Types.h"
 #include "tools/MIL_Geometry.h"
 #include "protocol/ClientSenders.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( StructuralCapacity )
 
@@ -104,8 +104,7 @@ void StructuralCapacity::Instanciate( MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 void StructuralCapacity::ApplyIndirectFire( const MIL_Object_ABC& object, const MT_Ellipse& attritionSurface, const PHY_DotationCategory& dotation )
 {
-    const float urbanObjectArea = object.GetLocalisation().GetArea();
-
+    const float urbanObjectArea = static_cast< float >( object.GetLocalisation().GetArea() );
     if( !urbanObjectArea )
         return;
     geometry::Polygon2f attritionPolygon;
@@ -120,11 +119,11 @@ void StructuralCapacity::ApplyIndirectFire( const MIL_Object_ABC& object, const 
     geometry::Polygon2f p;
     CT_PointVector points = object.GetLocalisation().GetPoints();
     for( T_PointVector::const_iterator it = points.begin(); it != points.end(); ++it )
-        p.Add( geometry::Point2f( it->rX_, it->rY_ ) );
+        p.Add( geometry::Point2f( static_cast< float >( it->rX_ ), static_cast< float >( it->rY_ ) ) );
     const float ratio = MIL_Geometry::IntersectionArea( attritionPolygon, p ) / urbanObjectArea;
     const float modifier = static_cast< float >( dotation.GetAttrition( object.GetMaterial() ) );
     structuralState_ -= ratio * modifier;
-    if( structuralState_  < 0 )
+    if( structuralState_ < 0 )
         structuralState_ = 0;
 }
 
@@ -134,7 +133,7 @@ void StructuralCapacity::ApplyIndirectFire( const MIL_Object_ABC& object, const 
 // -----------------------------------------------------------------------------
 void StructuralCapacity::ApplyDirectFire( const MIL_Object_ABC& object, const PHY_DotationCategory& dotation )
 {
-    const float area = object.GetLocalisation().GetArea();
+    const float area = static_cast< float >( object.GetLocalisation().GetArea() );
     if( area )
     {
         const float modifier = static_cast< float >( dotation.GetAttrition( object.GetMaterial() ) );

@@ -43,11 +43,11 @@ public:
     template< typename Archive > void serialize( Archive& file, const unsigned int );
     virtual void Register( MIL_Object_ABC& object );
     virtual void Instanciate( MIL_Object_ABC& object ) const;
-    virtual void CanInteractWith         ( const MIL_Object_ABC& /*object*/, const MIL_Agent_ABC& /*agent*/, bool& /*canInteract*/ ){};
-    virtual void ProcessAgentEntering    ( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& /*agent*/ ){};
-    virtual void ProcessAgentExiting     ( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& /*agent*/ ){};
+    virtual void CanInteractWith( const MIL_Object_ABC& /*object*/, const MIL_Agent_ABC& /*agent*/, bool& /*canInteract*/ ){};
+    virtual void ProcessAgentEntering( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& /*agent*/ ){};
+    virtual void ProcessAgentExiting( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& /*agent*/ ){};
     virtual void ProcessAgentMovingInside( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& /*agent*/ ){};
-    virtual void ProcessAgentInside      ( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& /*agent*/ ){};
+    virtual void ProcessAgentInside( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& /*agent*/ ){};
     void ApplyIndirectFire( const MIL_Object_ABC& object, const MT_Ellipse& attritionSurface, const PHY_DotationCategory& dotation );
     void ApplyDirectFire( const MIL_Object_ABC& object, const PHY_DotationCategory& dotation );
     void SendState( MsgsSimToClient::MsgUrbanAttributes& message ) const;
@@ -64,10 +64,6 @@ private:
     //@{
     StructuralCapacity( const StructuralCapacity& );            //!< Copy constructor
     StructuralCapacity& operator=( const StructuralCapacity& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
     //@}
 
 private:

@@ -15,21 +15,13 @@
 #include "tools/xmlcodecs.h"
 #include "xeumeuleu/xml.h"
 
-
-MIL_NBCType::T_NBCTypeMap  MIL_NBCType::nbcAgentTypes_;
-unsigned int               MIL_NBCType::length_;
-unsigned int               MIL_NBCType::width_;
-unsigned int               MIL_NBCType::propagationAngle_;
-MT_Float                   MIL_NBCType::concentrationIncreaseRate_;
-MT_Float                   MIL_NBCType::concentrationDecreaseRate_;
-MT_Float                   MIL_NBCType::edgeEffects_;
-
-
-// =============================================================================
-// FACTORY
-// Created: RFT 19/05/2008
-// Modified: none
-// =============================================================================
+MIL_NBCType::T_NBCTypeMap MIL_NBCType::nbcAgentTypes_;
+unsigned int MIL_NBCType::length_;
+unsigned int MIL_NBCType::width_;
+unsigned int MIL_NBCType::propagationAngle_;
+MT_Float MIL_NBCType::concentrationIncreaseRate_;
+MT_Float MIL_NBCType::concentrationDecreaseRate_;
+MT_Float MIL_NBCType::edgeEffects_;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_FireClass::Initialize
@@ -40,26 +32,23 @@ void MIL_NBCType::Initialize( xml::xistream& xis )
 {
     std::set< uint > ids;
     MT_LOG_INFO_MSG( "Initializing nbc agents" );
-
     xis >> xml::start( "nbc" )
             >> xml::start( "nbc-cell" )
-                >> xml::attribute( "length"                     , length_ )
-                >> xml::attribute( "width"                      , width_ )
+                >> xml::attribute( "length", length_ )
+                >> xml::attribute( "width", width_ )
             >> xml::end()
             >> xml::start("propagation")
-                >> xml::attribute("propagation-angle"           , propagationAngle_ )
+                >> xml::attribute("propagation-angle", propagationAngle_ )
                 >> xml::attribute("concentration-increase-rate" , concentrationIncreaseRate_ )
                 >> xml::attribute("concentration-decrease-rate" , concentrationDecreaseRate_ )
-                >> xml::attribute("edge-effects"                , edgeEffects_ )
+                >> xml::attribute("edge-effects", edgeEffects_ )
             >> xml::end()
             >> xml::start( "agents" )
-                >> xml::list( "agent"                           , &ReadAgent )
+                >> xml::list( "agent", &ReadAgent )
             >> xml::end()
         >> xml::end();
-
     //We set the propagation angle in radian
     propagationAngle_ *= unsigned int( MT_PI / 180. );
-
     for( CIT_NBCTypeMap it = nbcAgentTypes_.begin(); it != nbcAgentTypes_.end(); ++it )
         if( ! ids.insert( it->second->GetID() ).second )
             throw std::runtime_error( "NBC agent id of " + it->second->GetName() + " already exists" );
@@ -73,9 +62,7 @@ void MIL_NBCType::Initialize( xml::xistream& xis )
 void MIL_NBCType::ReadAgent( xml::xistream& xis )
 {
     std::string strName;
-
     xis >> xml::attribute( "name", strName );
-
     const MIL_NBCType*& pAgent = nbcAgentTypes_[ strName ];
     if( pAgent )
         throw std::runtime_error( "NBC agent " + strName + " already exists" );
@@ -115,7 +102,6 @@ namespace
     MIL_NBCType::E_Form StringToE_Form( const std::string& type )
     {
         MIL_NBCType::E_Form form = MIL_NBCType::eLiquid;
-
         if( type == "liquid" )
             form = MIL_NBCType::eLiquid;
         else if( type == "gaseous" )
@@ -132,9 +118,9 @@ namespace
 void MIL_NBCType::ReadEffects( xml::xistream& xis )
 {
     std::string type;
-    xis >> xml::attribute( "type"       , type )
+    xis >> xml::attribute( "type" , type )
         >> xml::attribute( "contaminate", bCanContaminate_ )
-        >> xml::attribute( "poison"     , bCanPoison_ );
+        >> xml::attribute( "poison", bCanPoison_ );
     form_ = StringToE_Form( type );
 }
 
@@ -153,7 +139,6 @@ MIL_NBCType::~MIL_NBCType()
 // Created: RFT 19/05/2008
 // Modified: none
 // -----------------------------------------------------------------------------
-
 const MIL_NBCType* MIL_NBCType::Find( const std::string& strName )
 {
     CIT_NBCTypeMap it = nbcAgentTypes_.find( strName );
@@ -177,12 +162,11 @@ const MIL_NBCType* MIL_NBCType::Find( uint nID )
     return 0;
 }
 
-int MIL_NBCType::ComputeAgentConcentrationEvolution( bool bHasASource , int concentration ) const
+int MIL_NBCType::ComputeAgentConcentrationEvolution( bool bHasASource, int concentration ) const
 {
     if( bHasASource )
         return int( concentration + concentrationIncreaseRate_ );
-    else
-        return int( concentration - concentrationDecreaseRate_ );
+    return int( concentration - concentrationDecreaseRate_ );
 }
 
 // -----------------------------------------------------------------------------

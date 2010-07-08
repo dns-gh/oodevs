@@ -170,7 +170,7 @@ bool DEC_Knowledge_PopulationFlowPart::UpdateRelevance( const MT_Float rMaxLifeT
 void DEC_Knowledge_PopulationFlowPart::Serialize( MsgsSimToClient::MsgFlowPart& asn )
 {
     NET_ASN_Tools::WritePath( shape_, *asn.mutable_forme() );
-    asn.set_pertinence( rRelevance_ * 100. );
+    asn.set_pertinence( static_cast< int >( rRelevance_ * 100 ) );
     rLastRelevanceSent_ = rRelevance_;
 }
 
