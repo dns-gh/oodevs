@@ -16,7 +16,7 @@
 #include "Tools.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
 
@@ -88,7 +88,7 @@ void Team::CreateObject( xml::xistream& xis )
         Object_ABC* object = objectFactory_.CreateObject( xis, *this );
         tools::Resolver< Object_ABC >::Register( object->GetId(), *object );
     }
-    catch( std::exception& e )
+    catch( std::exception& /*e*/ )
     {
         // Unknown object type, skip it
     }

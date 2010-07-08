@@ -19,6 +19,7 @@
 UrbanBlockDetectionMap::UrbanBlockDetectionMap( const kernel::DetectionMap& map )
     : map_( map )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -27,6 +28,7 @@ UrbanBlockDetectionMap::UrbanBlockDetectionMap( const kernel::DetectionMap& map 
 // -----------------------------------------------------------------------------
 UrbanBlockDetectionMap::~UrbanBlockDetectionMap()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -38,14 +40,14 @@ void UrbanBlockDetectionMap::AddUrbanBlock( urban::TerrainObject_ABC& object )
     float cellsize = map_.GetCellSize();
     const geometry::Polygon2f* footprint = object.GetFootprint();
     geometry::Rectangle2f boundingBox = footprint->BoundingBox();
-    unsigned imin = boundingBox.Left()/cellsize;
-    unsigned jmin = boundingBox.Bottom()/cellsize;
-    unsigned imax = boundingBox.Right()/cellsize;
-    unsigned jmax = boundingBox.Top()/cellsize;
+    const unsigned int imin = static_cast< unsigned int >( boundingBox.Left()/cellsize );
+    const unsigned int jmin = static_cast< unsigned int >( boundingBox.Bottom()/cellsize );
+    const unsigned int imax = static_cast< unsigned int >( boundingBox.Right()/cellsize );
+    const unsigned int jmax = static_cast< unsigned int >( boundingBox.Top()/cellsize );
 
-    for( unsigned j = jmin; j < jmax; ++j )
+    for( unsigned int j = jmin; j < jmax; ++j )
     {
-        for( unsigned i = imin; i < imax; ++i )
+        for( unsigned int i = imin; i < imax; ++i )
         {
             geometry::Point2f cellCenter( i * cellsize + cellsize/2, j * cellsize + cellsize/2 );
             if( footprint->IsInside( cellCenter ) )
@@ -61,10 +63,10 @@ void UrbanBlockDetectionMap::AddUrbanBlock( urban::TerrainObject_ABC& object )
 const urban::TerrainObject_ABC* UrbanBlockDetectionMap::GetUrbanBlock( const geometry::Point2f& point ) const
 {
     float cellsize = map_.GetCellSize();
-    unsigned nCellX = point.X() / cellsize;
-    unsigned nCellY = point.Y() / cellsize;
-    std::map<std::pair<int, int>, UrbanBlockEnvironment>::const_iterator it = urbanBlockEnvironment_.find( std::pair<int, int>( nCellX, nCellY ) );
+    const unsigned int nCellX = static_cast< unsigned int >( point.X() / cellsize );
+    const unsigned int nCellY = static_cast< unsigned int >( point.Y() / cellsize );
+    std::map< std::pair< int, int >, UrbanBlockEnvironment>::const_iterator it = urbanBlockEnvironment_.find( std::pair< int, int >( nCellX, nCellY ) );
     if( it != urbanBlockEnvironment_.end() )
-        return urbanBlockEnvironment_.find( std::pair<int, int>( nCellX, nCellY ) )->second.data_;
+        return urbanBlockEnvironment_.find( std::pair< int, int >( nCellX, nCellY ) )->second.data_;
     return 0;
 }

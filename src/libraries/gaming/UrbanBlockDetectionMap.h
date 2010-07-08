@@ -22,7 +22,7 @@ namespace urban
 
 // =============================================================================
 /** @class  UrbanBlockDetectionMap
-    @brief  UrbanBlockDetectionMap
+    @brief  Urban block detection map
 */
 // Created: SLG 2010-03-12
 // =============================================================================
@@ -58,15 +58,11 @@ private:
     UrbanBlockDetectionMap& operator=( const UrbanBlockDetectionMap& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{
     const kernel::DetectionMap& map_;
-    std::map<std::pair<int, int>, UrbanBlockEnvironment> urbanBlockEnvironment_;
+    std::map< std::pair< int, int >, UrbanBlockEnvironment > urbanBlockEnvironment_;
     //@}
 };
 
