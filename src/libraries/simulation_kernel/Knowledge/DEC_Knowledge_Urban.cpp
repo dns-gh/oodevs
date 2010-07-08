@@ -343,14 +343,14 @@ void DEC_Knowledge_Urban::SendFullState()
     message().set_team( army_.GetID() );
     message().set_real_urban( object_.GetId() );
 
-    message().set_relevance( int( rRelevance_ * 100. ) );
+    message().set_relevance( static_cast< int >( rRelevance_ * 100. ) );
     rLastRelevanceSent_ = rRelevance_;
 
     MsgsSimToClient::EnumUnitIdentificationLevel level( message().identification_level() );
     pCurrentPerceptionLevel_->Serialize( level );
     message().set_identification_level( level );
 
-    message().set_progress( int( rProgressPercent_ * 100. ) );
+    message().set_progress( static_cast< int >( rProgressPercent_ * 100. ) );
     rLastProgressSent_ = rProgressPercent_;
 
     message().set_perceived( bLastPerceived_ );

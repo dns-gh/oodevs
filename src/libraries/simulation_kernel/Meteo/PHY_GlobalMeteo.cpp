@@ -79,11 +79,11 @@ void PHY_GlobalMeteo::SendCreation() const
     client::ControlGlobalMeteo msg;
     msg().set_oid( id_ );
     Common::MsgMeteoAttributes* att = msg().mutable_attributes();
-    att->set_wind_speed( int( wind_.rWindSpeed_ / conversionFactor_ ) );
+    att->set_wind_speed( static_cast< int >( wind_.rWindSpeed_ / conversionFactor_ ) );
     NET_ASN_Tools::WriteDirection( wind_.vWindDirection_, *( att->mutable_wind_direction() ) );
     att->set_cloud_floor( nPlancherCouvertureNuageuse_ );
     att->set_cloud_ceiling( nPlafondCouvertureNuageuse_ );
-    att->set_cloud_density( int( rDensiteCouvertureNuageuse_ * 100. + 0.01 ) );
+    att->set_cloud_density( static_cast< int >( rDensiteCouvertureNuageuse_ * 100. + 0.01 ) );
     att->set_precipitation( pPrecipitation_->GetAsnID() );
     att->set_temperature( 0 );
     att->set_lighting( GetLighting().GetAsnID() );

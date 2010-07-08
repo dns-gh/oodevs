@@ -435,7 +435,7 @@ void DEC_AgentFunctions::NotifyRulesOfEngagementStateChanged( MIL_Agent_ABC& cal
 // -----------------------------------------------------------------------------
 int DEC_AgentFunctions::GetRulesOfEngagementState( const MIL_Agent_ABC& callerAgent )
 {
-   return int( callerAgent.GetRole< DEC_RolePion_Decision >().GetRulesOfEngagementState() );
+   return static_cast< int >( callerAgent.GetRole< DEC_RolePion_Decision >().GetRulesOfEngagementState() );
 }
 
 // -----------------------------------------------------------------------------
@@ -638,7 +638,7 @@ boost::shared_ptr< MT_Vector2D > DEC_AgentFunctions::GetInterceptionPoint( const
 // -----------------------------------------------------------------------------
 int DEC_AgentFunctions::GetRoePopulation( const MIL_Agent_ABC& callerAgent )
 {
-    return int( callerAgent.GetRole< DEC_RolePion_Decision >().GetRoePopulation().GetID() );
+    return static_cast< int >( callerAgent.GetRole< DEC_RolePion_Decision >().GetRoePopulation().GetID() );
 }
 
 // -----------------------------------------------------------------------------

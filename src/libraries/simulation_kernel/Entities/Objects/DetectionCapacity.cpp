@@ -82,7 +82,7 @@ void DetectionCapacity::ReadAcquisitionTime( xml::xistream& xis )
             if( rDetectionTime_ < 0 )
                 xis.error( "detection acquisition-time: base-time < 0" );
             else
-                rDetectionTime_ = MIL_Tools::ConvertSecondsToSim( rDetectionTime_ );
+                rDetectionTime_ = static_cast< float >( MIL_Tools::ConvertSecondsToSim( rDetectionTime_ ) );
         }
     }
     else if( acquisitionType == "recognition" )
@@ -92,7 +92,7 @@ void DetectionCapacity::ReadAcquisitionTime( xml::xistream& xis )
             if( rRecognitionTime_ < 0 )
                 xis.error( "recognition acquisition-time: base-time < 0" );
             else
-                rRecognitionTime_ = MIL_Tools::ConvertSecondsToSim( rRecognitionTime_ );
+                rRecognitionTime_ = static_cast< float >( MIL_Tools::ConvertSecondsToSim( rRecognitionTime_ ) );
         }
     }
     else if( acquisitionType == "identification" )
@@ -102,7 +102,7 @@ void DetectionCapacity::ReadAcquisitionTime( xml::xistream& xis )
             if( rIdentificationTime_ < 0 )
                 xis.error( "identification acquisition-time: base-time < 0" );
             else
-                rIdentificationTime_ = MIL_Tools::ConvertSecondsToSim( rIdentificationTime_ );
+                rIdentificationTime_ = static_cast< float >( MIL_Tools::ConvertSecondsToSim( rIdentificationTime_ ) );
         }
     }
     else

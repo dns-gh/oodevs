@@ -54,11 +54,11 @@ void MeteoData::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
     client::ControlLocalMeteoCreation msg;
     Common::MsgMeteoAttributes* att = msg().mutable_attributes();
     msg().set_oid( id_ );
-    att->set_wind_speed( int( wind_.rWindSpeed_ / conversionFactor_ ) );
+    att->set_wind_speed( static_cast< int >( wind_.rWindSpeed_ / conversionFactor_ ) );
     att->mutable_wind_direction()->set_heading( 0 );
     att->set_cloud_floor (nPlancherCouvertureNuageuse_ );
     att->set_cloud_ceiling( nPlafondCouvertureNuageuse_ );
-    att->set_cloud_density( int( rDensiteCouvertureNuageuse_ ) );
+    att->set_cloud_density( static_cast< int >( rDensiteCouvertureNuageuse_ ) );
     att->set_precipitation( pPrecipitation_->GetAsnID() );
     att->set_temperature( 0 );
     att->set_lighting(Common::globalMeteoType_ );

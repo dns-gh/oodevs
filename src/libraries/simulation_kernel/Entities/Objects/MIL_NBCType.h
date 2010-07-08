@@ -26,7 +26,6 @@ namespace xml
 //*****************************************************************************
 class MIL_NBCType
 {
-
 public:
     //!@name Enum
     enum E_Form
@@ -91,7 +90,7 @@ private:
     //! @name members Data
     //@{
     const std::string strName_;
-    unsigned int  nID_;
+    unsigned int nID_;
     E_Form form_;
     bool bCanContaminate_;
     bool bCanPoison_;

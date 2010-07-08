@@ -17,7 +17,7 @@
 #include "HLA/HLA_UpdateFunctor.h"
 #include "protocol/protocol.h"
 #include <hla/AttributeIdentifier.h>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MineAttribute )
 
@@ -26,12 +26,12 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MineAttribute )
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
 MineAttribute::MineAttribute()
-    : dotation_( 0 )
-    , nFullNbrDotation_( 0 )
+    : dotation_           ( 0 )
+    , nFullNbrDotation_   ( 0 )
     , nCurrentNbrDotation_( 0 )
-    , rMiningPercentage_( 0 )
-    , nMinesActivityTime_( 0 )
-    , nDeathTimeStep_( 0 )
+    , rMiningPercentage_  ( 0 )
+    , nMinesActivityTime_ ( 0 )
+    , nDeathTimeStep_     ( 0 )
 {
     // NOTHING
 }
@@ -41,12 +41,12 @@ MineAttribute::MineAttribute()
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
 MineAttribute::MineAttribute( const PHY_DotationCategory& dotation, unsigned int nDefaultMaxNbrDotation )
-    : dotation_( &dotation )
-    , nFullNbrDotation_( nDefaultMaxNbrDotation )
+    : dotation_           ( &dotation )
+    , nFullNbrDotation_   ( nDefaultMaxNbrDotation )
     , nCurrentNbrDotation_( nDefaultMaxNbrDotation )
-    , rMiningPercentage_( 1. )
-    , nMinesActivityTime_( 0 )
-    , nDeathTimeStep_( 0 )
+    , rMiningPercentage_  ( 1. )
+    , nMinesActivityTime_ ( 0 )
+    , nDeathTimeStep_     ( 0 )
 {
     // NOTHING
 }
@@ -56,18 +56,18 @@ MineAttribute::MineAttribute( const PHY_DotationCategory& dotation, unsigned int
 // Created: RPD 2009-10-19
 // -----------------------------------------------------------------------------
 MineAttribute::MineAttribute( const Common::MsgMissionParameter_Value& attributes  )
-    : dotation_( 0 )
-    , nFullNbrDotation_( 0 )
+    : dotation_           ( 0 )
+    , nFullNbrDotation_   ( 0 )
     , nCurrentNbrDotation_( 0 )
-    , rMiningPercentage_( 0 )
-    , nMinesActivityTime_( 0 )
-    , nDeathTimeStep_( 0 )
+    , rMiningPercentage_  ( 0 )
+    , nMinesActivityTime_ ( 0 )
+    , nDeathTimeStep_     ( 0 )
 {
     dotation_ = PHY_DotationType::FindDotationCategory( attributes.list( 1 ).identifier() );
     if( !dotation_ )
         throw std::runtime_error( "Unknown 'Dotation Type' for mine attribute" );
     nCurrentNbrDotation_ = attributes.list( 2 ).quantity();
-    nFullNbrDotation_ = unsigned int( attributes.list( 3 ).areal() );
+    nFullNbrDotation_ = static_cast< unsigned int >( attributes.list( 3 ).areal() );
     rMiningPercentage_ = attributes.list( 4 ).quantity();
     //nMinesActivityTime_;
     //nDeathTimeStep_;
@@ -84,7 +84,7 @@ void MineAttribute::Load( xml::xistream& xis )
     const MT_Float completion = xml::attribute< MT_Float >( xis, "completion", 1.f );
     if( completion > 0. && completion <= 1. )
         rMiningPercentage_ = completion;
-    nCurrentNbrDotation_ = unsigned int( rMiningPercentage_ * nFullNbrDotation_ );
+    nCurrentNbrDotation_ = static_cast< unsigned int >( rMiningPercentage_ * nFullNbrDotation_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -256,7 +256,7 @@ unsigned int MineAttribute::GetDotationRecoveredWhenDestroying( MT_Float rDeltaP
 // -----------------------------------------------------------------------------
 void MineAttribute::Serialize( HLA_UpdateFunctor& functor ) const
 {
-    functor.Serialize( "valorisation",  NeedUpdate( eOnHLAUpdate ), rMiningPercentage_ );
+    functor.Serialize( "valorisation", NeedUpdate( eOnHLAUpdate ), rMiningPercentage_ );
     Reset( eOnHLAUpdate );
 }
 

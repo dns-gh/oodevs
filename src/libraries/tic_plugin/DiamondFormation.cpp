@@ -39,8 +39,8 @@ void DiamondFormation::Start( const geometry::Point2f& at, const geometry::Vecto
 {
     points_.resize( 0 );
     const float baseAngle = std::atan2( towards.Y(), towards.X() );
-    unsigned level = 0;
-    unsigned platformCount = 0;
+    unsigned int level = 0;
+    unsigned int platformCount = 0;
     while( count-- )
         AddPlatform( at, baseAngle, level, platformCount );
     Sort( points_, at, -towards );
@@ -48,7 +48,7 @@ void DiamondFormation::Start( const geometry::Point2f& at, const geometry::Vecto
 
 namespace
 {
-    void NextPlatform( unsigned& level, unsigned& platformCount )
+    void NextPlatform( unsigned int& level, unsigned& platformCount )
     {
         ++platformCount;
         if( platformCount >= 4 * level )
@@ -65,8 +65,8 @@ namespace
 // -----------------------------------------------------------------------------
 void DiamondFormation::AddPlatform( const geometry::Point2f& center, float baseAngle, unsigned& level, unsigned& platformCount )
 {
-    const float radius = level ? std::pow( 1.414f, int( level ) ) : 0;
-    const float angle  = level ? baseAngle + 2 * std::acos( -1.f ) * float( platformCount ) / float( 4 * level ) : 0;
+    const float radius = level ? std::pow( 1.414f, static_cast< int >( level ) ) : 0;
+    const float angle = level ? baseAngle + 2 * std::acos( -1.f ) * static_cast< float >( platformCount ) / static_cast< float >( 4 * level ) : 0;
     const float distanceBetweenPlatforms = 20.f;
 
     const geometry::Vector2f direction( std::cos( angle ), std::sin( angle ) );

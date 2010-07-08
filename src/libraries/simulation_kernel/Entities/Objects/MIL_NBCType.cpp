@@ -165,8 +165,8 @@ const MIL_NBCType* MIL_NBCType::Find( uint nID )
 int MIL_NBCType::ComputeAgentConcentrationEvolution( bool bHasASource, int concentration ) const
 {
     if( bHasASource )
-        return int( concentration + concentrationIncreaseRate_ );
-    return int( concentration - concentrationDecreaseRate_ );
+        return static_cast< int >( concentration + concentrationIncreaseRate_ );
+    return static_cast< int >( concentration - concentrationDecreaseRate_ );
 }
 
 // -----------------------------------------------------------------------------
