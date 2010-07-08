@@ -5,21 +5,21 @@
       <missions>
         <mission name="MELEE Appuyer"/>
         <mission name="MELEE Reconnaitre Itineraire"/>
-        <mission name="MELEE SurveillerBlocUrbain"/>
+        <mission name="MELEE Surveiller un Bloc Urbain"/>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement">
-          <fragorder name="Illuminate"/>
-          <fragorder name="UseALR"/>
+          <fragorder name="Illuminer"/>
+          <fragorder name="Utiliser ALR"/>
         </mission>
         <mission name="COMMUNES Franchir"/>
-        <mission name="COMMUNES Orienter Guider Refugies"/>
+        <mission name="COMMUNES Orienter Refugies"/>
         <mission name="COMMUNES Prendre En Compte Prisonniers"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
-        <mission name="MELEE Illuminate"/>
-        <mission name="MELEE S'emparer d'un bloc urbain"/>
+        <mission name="MELEE Illuminer"/>
+        <mission name="MELEE S'emparer d'un Bloc Urbain"/>
       </missions>
     </unit>
     <unit dia-type="net.masagroup.sword.military.roles.Platoon" file="BMPion.bms" name="test pion">
@@ -34,15 +34,15 @@
         <mission name="EngageAgents"/>
         <mission name="Flee"/>
         <mission name="IdentifyAgent"/>
-        <mission name="MELEE Illuminate"/>
+        <mission name="MELEE Illuminer"/>
         <mission name="Load"/>
         <mission name="Mount"/>
         <mission name="MoveAndObserve"/>
         <mission name="MoveObserveReconnoiter"/>
         <mission name="MoveOnRoute"/>
         <mission name="MoveToPoint">
-          <fragorder name="Illuminate"/>
-          <fragorder name="UseALR"/>
+          <fragorder name="Illuminer"/>
+          <fragorder name="Utiliser ALR"/>
         </mission>
         <mission name="MoveToPolygon"/>
         <mission name="MoveToAutomate"/>
@@ -68,7 +68,7 @@
         <mission name="ReconnoiterPoint"/>
         <mission name="ReconnoiterUrbanBlock"/>
         <mission name="Seal Off"/>
-        <mission name="MELEE S'emparer d'un bloc urbain"/>
+        <mission name="MELEE S'emparer d'un Bloc Urbain"/>
         <mission name="SeekAndDestroy"/>
         <mission name="SelfProtect"/>
         <mission name="StayClose"/>
@@ -78,11 +78,11 @@
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES SoutenirSurPositionEnMesureDe"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
-        <mission name="COMMUNES Orienter Guider Refugies"/>
+        <mission name="COMMUNES Orienter Refugies"/>
         <mission name="COMMUNES Prendre En Compte Prisonniers"/>
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="MELEE Surveiller"/>
-        <mission name="MELEE SurveillerBlocUrbain"/>
+        <mission name="MELEE Surveiller un Bloc Urbain"/>
         <mission name="TakeCover"/>
       </missions>
     </unit>
@@ -100,7 +100,7 @@
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
         <mission name="COMMUNES Franchir"/>
-        <mission name="COMMUNES Orienter Guider Refugies"/>
+        <mission name="COMMUNES Orienter Refugies"/>
         <mission name="COMMUNES Prendre En Compte Prisonniers"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
         <mission name="COMMUNES Se Faire Transporter"/>
@@ -115,7 +115,7 @@
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
         <mission name="COMMUNES Franchir"/>
-        <mission name="COMMUNES Orienter Guider Refugies"/>
+        <mission name="COMMUNES Orienter Refugies"/>
         <mission name="COMMUNES Prendre En Compte Prisonniers"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
         <mission name="COMMUNES Se Faire Transporter"/>
@@ -129,7 +129,7 @@
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
         <mission name="COMMUNES Franchir"/>
-        <mission name="COMMUNES Orienter Guider Refugies"/>
+        <mission name="COMMUNES Orienter Refugies"/>
         <mission name="COMMUNES Prendre En Compte Prisonniers"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
         <mission name="COMMUNES Se Faire Transporter"/>
