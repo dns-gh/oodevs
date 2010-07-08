@@ -840,6 +840,19 @@ void PHY_RolePion_Perceiver::PrepareRadarData()
     pion_.Execute( *componentComputer );
 }
 
+namespace
+{
+    template< typename T >
+    void Reset( T*& perception )
+    {
+        if( perception )
+        {
+            delete perception;
+            perception = 0;
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver::DisableAllPerceptions
 // Created: NLD 2005-04-01
@@ -848,51 +861,15 @@ void PHY_RolePion_Perceiver::DisableAllPerceptions()
 {
     activePerceptions_.clear();
     activePerceptions_.push_back( pPerceptionView_ );
-    if( pPerceptionCoupDeSonde_ )
-    {
-        delete pPerceptionCoupDeSonde_;
-        pPerceptionCoupDeSonde_ = 0;
-    }
-    if( pPerceptionRecoPoint_ )
-    {
-        delete pPerceptionRecoPoint_;
-        pPerceptionRecoPoint_ = 0;
-    }
-    if( pPerceptionRecoLocalisation_ )
-    {
-        delete pPerceptionRecoLocalisation_;
-        pPerceptionRecoLocalisation_ = 0;
-    }
-    if( pPerceptionRecoUrbanBlock_ )
-    {
-        delete pPerceptionRecoUrbanBlock_;
-        pPerceptionRecoUrbanBlock_ = 0;
-    }
-    if( pPerceptionRecoObjects_ )
-    {
-        delete pPerceptionRecoObjects_;
-        pPerceptionRecoObjects_ = 0;
-    }
-    if( pPerceptionSurveillance_ )
-    {
-        delete pPerceptionSurveillance_;
-        pPerceptionSurveillance_ = 0;
-    }
-    if( pPerceptionRadar_ )
-    {
-        delete pPerceptionRadar_;
-        pPerceptionRadar_ = 0;
-    }
-    if( pPerceptionAlat_ )
-    {
-        delete pPerceptionAlat_;
-        pPerceptionAlat_ = 0;
-    }
-    if( pPerceptionFlyingShell_ )
-    {
-        delete pPerceptionFlyingShell_;
-        pPerceptionFlyingShell_ = 0;
-    }
+    Reset( pPerceptionCoupDeSonde_ );
+    Reset( pPerceptionRecoPoint_ );
+    Reset( pPerceptionRecoLocalisation_ );
+    Reset( pPerceptionRecoUrbanBlock_ );
+    Reset( pPerceptionRecoObjects_ );
+    Reset( pPerceptionSurveillance_ );
+    Reset( pPerceptionRadar_ );
+    Reset( pPerceptionAlat_ );
+    Reset( pPerceptionFlyingShell_ );
 }
 
 // =============================================================================
