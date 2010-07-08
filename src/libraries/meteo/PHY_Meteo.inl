@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JVT 03-08-05 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Meteo/PHY_Meteo.inl $
-// $Author: Jvt $
-// $Modtime: 29/10/04 10:35 $
-// $Revision: 2 $
-// $Workfile: PHY_Meteo.inl $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2003 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 //-----------------------------------------------------------------------------
 // Name: PHY_Meteo::GetEclairement
@@ -20,7 +18,6 @@ const PHY_Lighting& PHY_Meteo::GetLighting() const
     return *pLighting_;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: PHY_Meteo::GetPrecipitation
 // Created: JVT 03-08-05
@@ -31,7 +28,6 @@ const PHY_Precipitation& PHY_Meteo::GetPrecipitation() const
     assert( pPrecipitation_ );
     return *pPrecipitation_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Meteo::GetWind
@@ -53,7 +49,6 @@ void PHY_Meteo::IncRef()
     ++nRefCount_;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: PHY_Meteo::IncRef
 // Created: JVT 03-08-06
@@ -63,7 +58,6 @@ void PHY_Meteo::IncRef( unsigned int nNbrRef )
 {
     nRefCount_ += nNbrRef;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: PHY_Meteo::DecRef
@@ -76,7 +70,6 @@ void PHY_Meteo::DecRef()
     --nRefCount_;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: PHY_Meteo::DecRef
 // Created: JVT 03-08-06
@@ -88,4 +81,3 @@ void PHY_Meteo::DecRef( unsigned int nNbrRef )
     if ( !( nRefCount_ -= nNbrRef ) )
         delete this;
 }
-

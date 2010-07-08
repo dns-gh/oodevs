@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JVT 03-08-05 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Meteo/PHY_Meteo.h $
-// $Author: Jvt $
-// $Modtime: 29/10/04 10:33 $
-// $Revision: 2 $
-// $Workfile: PHY_Meteo.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2003 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #ifndef __PHY_Meteo_h_
 #define __PHY_Meteo_h_
@@ -50,14 +48,13 @@ namespace weather
 
 // =============================================================================
 /** @class  PHY_Meteo
-    @brief  PHY_Meteo
+    @brief  PHY Meteo
 */
 // Created: JVT 03-08-05
 // =============================================================================
 class PHY_Meteo : public kernel::Entity_ABC
                 , private boost::noncopyable
 {
-
 public:
     struct sWindData
     {
@@ -66,7 +63,7 @@ public:
     };
 
 public:
-    //! @name Constructors/Destructors
+    //! @name Constructors/Destructor
     //@{
              PHY_Meteo( unsigned int id, xml::xistream& xis, const PHY_Lighting& light, int conversionFactor );
              PHY_Meteo( unsigned int id, const Common::MsgMeteoAttributes&, MeteoManager_ABC* listener );

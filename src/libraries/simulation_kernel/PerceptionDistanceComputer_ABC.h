@@ -18,21 +18,23 @@ class PHY_ComposantePion;
 
 namespace detection
 {
-
 // =============================================================================
 /** @class  PerceptionDistanceComputer_ABC
-    @brief  PerceptionDistanceComputer_ABC
+    @brief  Perception distance computer declaration
 */
 // Created: MGD 2009-09-15
 // =============================================================================
 class PerceptionDistanceComputer_ABC
 {
-
 public:
+    //! @name Constructors/Destructor
+    //@{
+             PerceptionDistanceComputer_ABC() {}
+    virtual ~PerceptionDistanceComputer_ABC() {}
+    //@}
+
     //! @name Operations
     //@{
-    PerceptionDistanceComputer_ABC() {}
-    virtual ~PerceptionDistanceComputer_ABC() {}
     virtual void AddModifier( double modifier ) = 0;
     virtual void AddElongationFactor( double modifier ) = 0;
     virtual double GetElongationFactor() const = 0;

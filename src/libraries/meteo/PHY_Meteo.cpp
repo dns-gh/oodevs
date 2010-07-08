@@ -3,7 +3,7 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2010 MASA Group
+// Copyright (c) 2003 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
@@ -21,7 +21,7 @@
 #pragma warning( push, 0 )
 #include <qstring.h>
 #pragma warning( pop )
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace weather;
 
@@ -42,7 +42,7 @@ PHY_Meteo::PHY_Meteo( unsigned int id, xml::xistream& xis, const PHY_Lighting& l
             >> xml::attribute( "ceiling", nPlafondCouvertureNuageuse_ )
             >> xml::attribute( "density", nVal )
         >> xml::end();
-    rDensiteCouvertureNuageuse_ = std::min( nVal, (unsigned int)100 ) / 100.;
+    rDensiteCouvertureNuageuse_ = std::min( nVal, 100u ) / 100.;
 
     unsigned int nAngle;
     Common::MsgHeading heading;
@@ -344,7 +344,6 @@ void PHY_Meteo::SendDestruction( dispatcher::ClientPublisher_ABC& ) const
 {
     // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Meteo::IsInside

@@ -42,13 +42,12 @@ namespace crossbow
 
 // =============================================================================
 /** @class  OrderDispatcher
-    @brief  OrderDispatcher
+    @brief  Order dispatcher
 */
 // Created: SBO 2007-05-31
 // =============================================================================
 class OrderDispatcher
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

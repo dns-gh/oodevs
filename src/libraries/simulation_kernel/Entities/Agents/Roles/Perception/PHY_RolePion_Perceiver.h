@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h $
-// $Author: Jvt $
-// $Modtime: 24/05/05 10:18 $
-// $Revision: 24 $
-// $Workfile: PHY_RolePion_Perceiver.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2004 MASA Group
 //
 // *****************************************************************************
 
@@ -37,6 +35,7 @@ namespace detection
 {
     class DetectionComputer_ABC;
 }
+
 // =============================================================================
 // @class  PHY_RolePion_Perceiver
 // Created: JVT 2004-08-03
@@ -51,28 +50,30 @@ class PHY_RolePion_Perceiver : public PHY_RoleInterface_Perceiver
                              , public transport::TransportChangeNotificationHandler_ABC
                              , public transport::LoadingChangeNotificationHandler_ABC
 {
-
 public:
     //! @name Types
     //@{
-    typedef std::pair< const PHY_SensorTypeAgent* , MT_Float /*height*/ > T_SurfaceAgentKeyPair;
-    typedef std::map< T_SurfaceAgentKeyPair, PHY_PerceptionSurfaceAgent > T_SurfaceAgentMap;
-    typedef T_SurfaceAgentMap::const_iterator                             CIT_SurfaceAgentMap;
+    typedef std::pair< const PHY_SensorTypeAgent* , MT_Float /*height*/ >    T_SurfaceAgentKeyPair;
+    typedef std::map< T_SurfaceAgentKeyPair, PHY_PerceptionSurfaceAgent >    T_SurfaceAgentMap;
+    typedef T_SurfaceAgentMap::const_iterator                              CIT_SurfaceAgentMap;
 
     typedef std::pair< const PHY_SensorTypeObject* , MT_Float /*height*/ >     T_SurfaceObjectKeyPair;
     typedef std::map< T_SurfaceObjectKeyPair, PHY_PerceptionSurfaceObject >    T_SurfaceObjectMap;
-    typedef T_SurfaceObjectMap::const_iterator                                 CIT_SurfaceObjectMap;
+    typedef T_SurfaceObjectMap::const_iterator                               CIT_SurfaceObjectMap;
 
-    typedef std::set< const PHY_RadarType* > T_RadarSet;
+    typedef std::set< const PHY_RadarType* >   T_RadarSet;
     typedef T_RadarSet::const_iterator       CIT_RadarSet;
 
-    typedef std::map< const PHY_RadarClass*, T_RadarSet > T_RadarsPerClassMap;
+    typedef std::map< const PHY_RadarClass*, T_RadarSet >   T_RadarsPerClassMap;
     typedef T_RadarsPerClassMap::const_iterator           CIT_RadarsPerClassMap;
     //@}
 
 public:
+    //! @name Constructors/Destructor
+    //@{
              PHY_RolePion_Perceiver( MIL_Agent_ABC& pion, const MT_Vector2D* perceiverPosition, const MT_Vector2D* perceiverDirection );
     virtual ~PHY_RolePion_Perceiver();
+    //@}
 
     //! @name CheckPoints
     //@{
@@ -213,21 +214,23 @@ private:
     void UpdatePeriphericalVisionState ();
     void ComputeMainPerceptionDirection( MT_Vector2D& vMainPerceptionDirection ) const;
 
-    MT_Float    GetMaxObjectPerceptionDistance() const;
+    MT_Float GetMaxObjectPerceptionDistance() const;
 
     void EnsurePerceptionRecoLocalisation();
     //@}
 
 private:
+    //! @name Member data
+    //@{
     MIL_Agent_ABC& pion_;
     const MT_Vector2D* perceiverPosition_;
     const MT_Vector2D* perceiverDirection_;
 
     MT_Vector2D lastPerceiverPosition_;
 
-    bool           bPeriphericalVisionEnabled_;
-    unsigned int           nNextPeriphericalVisionStep_;
-    bool           bRecordModeEnabled_;
+    bool          bPeriphericalVisionEnabled_;
+    unsigned int  nNextPeriphericalVisionStep_;
+    bool          bRecordModeEnabled_;
 
     // Perceptions
     T_RadarsPerClassMap radars_;
@@ -257,6 +260,7 @@ private:
     bool bExternalCanPerceive_;
     bool bExternalMustUpdateVisionCones_;
     bool bRadarStateHasChanged_;
+    //@}
 
 private:
     static const unsigned int nNbrStepsBetweenPeriphericalVision_;

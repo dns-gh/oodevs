@@ -145,14 +145,12 @@ void OrderDispatcher::DispatchMission( dispatcher::SimulationPublisher_ABC& publ
         DispatchMission( publisher, agent.GetSuperior(), row );
         return;
     }
-
     const kernel::OrderType* type = GetAgentMission( row );
     if( !type )
     {
         // DispatchFragOrder( publisher, agent.GetId(), row );
         return;
     }
-
     simulation::UnitOrder message;
     try
     {
@@ -181,7 +179,6 @@ void OrderDispatcher::DispatchMission( dispatcher::SimulationPublisher_ABC& publ
         // DispatchFragOrder( publisher, automat.GetId(), row );
         return;
     }
-
     simulation::AutomatOrder message;
     try
     {
@@ -206,7 +203,6 @@ void OrderDispatcher::DispatchFragOrder( dispatcher::SimulationPublisher_ABC& pu
     const kernel::OrderType* type = types_.FindFragOrder( GetField< std::string >( row, "OrderName" ) );
     if( !type )
         return; // $$$$ SBO 2007-06-07:
-
     simulation::FragOrder message;
     message().set_oid( targetId );
     message().set_frag_order( type->GetId() );
@@ -256,7 +252,6 @@ const kernel::OrderType* OrderDispatcher::GetAutomatMission( const Row_ABC& row 
 void OrderDispatcher::SetParameters( Common::MsgMissionParameters& parameters, unsigned long orderId, const kernel::OrderType& type )
 {
     std::auto_ptr< Table_ABC > params_( database_.OpenTable( "OrderParameters" ) );
-
     Row_ABC* result = params_->Find( "order_id=" + boost::lexical_cast< std::string >( orderId ) );
     for( unsigned long i = 0; result != 0 && i < type.Count(); ++i )
     {
