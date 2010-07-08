@@ -14,18 +14,17 @@ class MIL_KnowledgeGroup;
 
 // =============================================================================
 /** @class  KnowledgeVisitor_ABC
-    @brief  KnowledgeVisitor_ABC
+    @brief  Knowledge visitor declaration
 */
 // Created: SLG 2010-04-07
 // =============================================================================
 class KnowledgeVisitor_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeVisitor_ABC(){}
-    virtual ~KnowledgeVisitor_ABC(){}
+             KnowledgeVisitor_ABC() {}
+    virtual ~KnowledgeVisitor_ABC() {}
     //@}
 
     //! @name Operations

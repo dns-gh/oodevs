@@ -24,18 +24,20 @@ namespace xml
 }
 // =============================================================================
 /** @class  KnowledgeGroupFactory_ABC
-@brief  KnowledgeGroupFactory_ABC
+    @brief  Knowledge group factory declaration
 */
 // Created: MGD 2009-10-22
 // =============================================================================
 class KnowledgeGroupFactory_ABC : public tools::Resolver< MIL_KnowledgeGroup >
                                 , private boost::noncopyable
 {
-
 public:
     //! @name Destructor
     //@{
-    virtual ~KnowledgeGroupFactory_ABC() { DeleteAll(); };
+    virtual ~KnowledgeGroupFactory_ABC()
+    {
+        DeleteAll();
+    };
     //@}
 
     //! @name Operations
@@ -60,10 +62,16 @@ protected:
 
 // BOOST_SERIALIZATION_ASSUME_ABSTRACT should be used for this
 // but it seems to be buggy : inherits boost::is_abstract<T> instead of boost::true_type
-namespace boost {
-namespace serialization {
+namespace boost
+{
+namespace serialization
+{
     template<>
-    struct is_abstract<const KnowledgeGroupFactory_ABC> : boost::true_type { } ;
+    struct is_abstract< const KnowledgeGroupFactory_ABC >
+        : boost::true_type
+    {
+        // NOTHING
+    };
 } // namespace serialization
 }
 

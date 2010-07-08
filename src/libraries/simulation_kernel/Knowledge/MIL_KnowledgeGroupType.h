@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/knowledge/MIL_KnowledgeGroupType.h $
-// $Author: Nld $
-// $Modtime: 21/04/05 19:07 $
-// $Revision: 5 $
-// $Workfile: MIL_KnowledgeGroupType.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
@@ -26,9 +24,11 @@ class MIL_Army_ABC;
 // =============================================================================
 class MIL_KnowledgeGroupType : private boost::noncopyable
 {
-
 public:
+    //! @name Destructor
+    //@{
     virtual ~MIL_KnowledgeGroupType();
+    //@}
 
     //! @name Manager
     //@{
@@ -40,7 +40,7 @@ public:
     static const MIL_KnowledgeGroupType* FindType( unsigned int nID );
     //@}
 
-    //! @name Instanciation
+    //! @name Instantiation
     //@{
     MIL_KnowledgeGroup& InstanciateKnowledgeGroup( unsigned int nID, MIL_Army_ABC& army ) const;
     //@}
@@ -57,7 +57,6 @@ public:
     //@}
 
 private:
-
     MIL_KnowledgeGroupType( const std::string& strName, xml::xistream& xis, double   timeFactor );
 
     //! @name Types
@@ -73,6 +72,8 @@ private:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     const std::string  strName_;
     const unsigned int nID_;
           double       rKnowledgeAgentMaxLifeTime_;
@@ -81,6 +82,7 @@ private:
 
           double       rKnowledgePopulationMaxLifeTime_;
           double       rCommunicationDelay_;
+    //@}
 
 private:
     static T_KnowledgeGroupTypeMap knowledgeGroupTypes_;

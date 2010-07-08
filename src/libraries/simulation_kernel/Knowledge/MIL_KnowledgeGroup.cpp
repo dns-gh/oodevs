@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Knowledge/MIL_KnowledgeGroup.cpp $
-// $Author: Jvt $
-// $Modtime: 14/04/05 18:07 $
-// $Revision: 9 $
-// $Workfile: MIL_KnowledgeGroup.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
@@ -36,7 +34,7 @@
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
 #include <boost/ref.hpp>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #include <boost/serialization/export.hpp>
 
 MIL_IDManager MIL_KnowledgeGroup::idManager_;
@@ -48,17 +46,16 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_KnowledgeGroup )
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
 MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, unsigned int id, MIL_Army_ABC& army )
-    : type_                   ( &type )
-    , id_                     ( id )
-    , army_                   ( &army )
-    , parent_                 ( 0 ) // LTO
-    , knowledgeBlackBoard_    ( new DEC_KnowledgeBlackBoard_KnowledgeGroup( *this ) )
-    , automates_           ()
-    , timeToDiffuse_       ( 0 ) // LTO
-    , isActivated_         ( true ) // LTO
-    , hasBeenUpdated_      ( false )
-    , isJammed_               ( false )
-    , jammedPion_             ( 0 )
+    : type_               ( &type )
+    , id_                 ( id )
+    , army_               ( &army )
+    , parent_             ( 0 ) // LTO
+    , knowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_KnowledgeGroup( *this ) )
+    , timeToDiffuse_      ( 0 ) // LTO
+    , isActivated_        ( true ) // LTO
+    , hasBeenUpdated_     ( false )
+    , isJammed_           ( false )
+    , jammedPion_         ( 0 )
 {
     idManager_.Lock( id_ );
     army_->RegisterKnowledgeGroup( *this );
@@ -70,17 +67,16 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, unsi
 // LTO
 // -----------------------------------------------------------------------------
 MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, MIL_KnowledgeGroup* parent, KnowledgeGroupFactory_ABC& knowledgeGroupFactory )
-    : id_                     ( xml::attribute< unsigned int >( xis, "id" ) )
-    , type_                   ( MIL_KnowledgeGroupType::FindType( xml::attribute< std::string >( xis, "type" ) ) )
-    , army_                   ( &army )
-    , parent_                 ( parent ) // LTO
-    , knowledgeBlackBoard_    ( new DEC_KnowledgeBlackBoard_KnowledgeGroup( *this ) )
-    , automates_            ()
-    , timeToDiffuse_        ( 0 ) // LTO
-    , isActivated_          ( true ) // LTO
-    , hasBeenUpdated_       ( true )
-    , isJammed_               ( false )
-    , jammedPion_             ( 0 )
+    : id_                 ( xml::attribute< unsigned int >( xis, "id" ) )
+    , type_               ( MIL_KnowledgeGroupType::FindType( xml::attribute< std::string >( xis, "type" ) ) )
+    , army_               ( &army )
+    , parent_             ( parent ) // LTO
+    , knowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_KnowledgeGroup( *this ) )
+    , timeToDiffuse_      ( 0 ) // LTO
+    , isActivated_        ( true ) // LTO
+    , hasBeenUpdated_     ( true )
+    , isJammed_           ( false )
+    , jammedPion_         ( 0 )
 {
     idManager_.Lock( id_ );
     if( parent_ )
@@ -90,7 +86,6 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, 
     }
     else
         army_->RegisterKnowledgeGroup( *this );
-
     xis >> xml::list( "knowledge-group", *this, &MIL_KnowledgeGroup::InitializeKnowledgeGroup, knowledgeGroupFactory );
 }
 
@@ -99,17 +94,16 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, 
 // Created: JVT 2005-03-15
 // -----------------------------------------------------------------------------
 MIL_KnowledgeGroup::MIL_KnowledgeGroup()
-    : type_                   ( 0 )
-    , id_                     ( 0 )
-    , army_                   ( 0 )
-    , parent_                 ( 0 ) // LTO
-    , knowledgeBlackBoard_    ( 0 )
-    , automates_           ()
-    , timeToDiffuse_        ( 0 ) // LTO
-    , isActivated_         ( true ) // LTO
-    , hasBeenUpdated_      ( false )
-    , isJammed_               ( false )
-    , jammedPion_             ( 0 )
+    : type_               ( 0 )
+    , id_                 ( 0 )
+    , army_               ( 0 )
+    , parent_             ( 0 ) // LTO
+    , knowledgeBlackBoard_( 0 )
+    , timeToDiffuse_      ( 0 ) // LTO
+    , isActivated_        ( true ) // LTO
+    , hasBeenUpdated_     ( false )
+    , isJammed_           ( false )
+    , jammedPion_         ( 0 )
 {
     // NOTHING
 }
@@ -119,17 +113,16 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup()
 // Created: FDS 2010-03-17
 // -----------------------------------------------------------------------------
 MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source, const MIL_Agent_ABC& pion, MIL_KnowledgeGroup* parent )
-    : type_                   ( source.type_ )
-    , id_                     ( idManager_.GetFreeId() )
-    , army_                   ( source.army_ )
-    , parent_                 ( parent ) // LTO
-    , knowledgeBlackBoard_    ( new DEC_KnowledgeBlackBoard_KnowledgeGroup( *this ) )
-    , automates_           ()
-    , timeToDiffuse_        ( 0 ) // LTO
-    , isActivated_         ( true ) // LTO
-    , hasBeenUpdated_      ( true )
-    , isJammed_               ( true )
-    , jammedPion_             ( &pion )
+    : type_               ( source.type_ )
+    , id_                 ( idManager_.GetFreeId() )
+    , army_               ( source.army_ )
+    , parent_             ( parent ) // LTO
+    , knowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_KnowledgeGroup( *this ) )
+    , timeToDiffuse_      ( 0 ) // LTO
+    , isActivated_        ( true ) // LTO
+    , hasBeenUpdated_     ( true )
+    , isJammed_           ( true )
+    , jammedPion_         ( &pion )
 {
     if( parent )
     {
@@ -139,10 +132,8 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source, const 
     else
         army_->RegisterKnowledgeGroup( *this );
     SendCreation();
-
     source.ApplyOnKnowledgesAgent( boost::bind( &MIL_KnowledgeGroup::CreateKnowledgeFromAgentPerception, this, _1 ) );
     source.ApplyOnKnowledgesPopulation( boost::bind( &MIL_KnowledgeGroup::CreateKnowledgeFromPopulationPerception, this, _1 ) );
-
     knowledgeBlackBoard_->Jam();
 }
 
@@ -183,7 +174,6 @@ MIL_KnowledgeGroup::~MIL_KnowledgeGroup()
         else if( army_ )
         // LTO end
             army_->UnregisterKnowledgeGroup( *this );
-
         delete knowledgeBlackBoard_;
     }
 }
@@ -202,15 +192,12 @@ void MIL_KnowledgeGroup::Destroy()
         else if( army_ )
         // LTO end
             army_->UnregisterKnowledgeGroup( *this );
-
         delete knowledgeBlackBoard_;
-
         // myself destruction
         client::KnowledgeGroupDestruction msg;
         msg().set_oid( id_ );
         msg().set_oid_camp( army_->GetID() );
         msg.Send( NET_Publisher_ABC::Publisher() );
-
         knowledgeBlackBoard_ = 0;
     }
 }
@@ -234,7 +221,6 @@ void MIL_KnowledgeGroup::load( MIL_CheckPointInArchive& file, const unsigned int
     unsigned int typeId;
     file >> typeId;
     type_ = MIL_KnowledgeGroupType::FindType( typeId );
-
     file >> id_
          >> army_
          >> parent_ // LTO
@@ -244,11 +230,8 @@ void MIL_KnowledgeGroup::load( MIL_CheckPointInArchive& file, const unsigned int
          >> timeToDiffuse_ // LTO
          >> isActivated_ // LTO
          >> isJammed_;
-
     idManager_.Lock( id_ );
-
 //    ids_.insert( id_ );
-
     hasBeenUpdated_ = true;
 }
 
@@ -260,7 +243,6 @@ void MIL_KnowledgeGroup::save( MIL_CheckPointOutArchive& file, const unsigned in
 {
     if( ! type_ )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "imposible to save knowledge group with undefined type. Knowledge group Id : '%d' ", id_ ) );
-
     unsigned int type = type_->GetID();
     file << type
          << id_
@@ -285,7 +267,6 @@ void MIL_KnowledgeGroup::WriteODB( xml::xostream& xos ) const
             << xml::attribute( "id", id_ )
             << xml::attribute( "type", type_->GetName() )
         << xml::end();
-
     for( CIT_KnowledgeGroupVector it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it ) // LTO
         (**it).WriteODB( boost::ref(xos) );     // LTO
 }
@@ -298,13 +279,10 @@ void MIL_KnowledgeGroup::UpdateKnowledges(int currentTimeStep)
 {
     for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
         (**it).UpdateKnowledges(currentTimeStep);
-
     for( CIT_KnowledgeGroupVector it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it ) // LTO
         (**it).UpdateKnowledges(currentTimeStep); // LTO
-
     if( jammedPion_ )
         jammedPion_->GetKnowledge().Update(currentTimeStep);
-
     assert( knowledgeBlackBoard_ );
     knowledgeBlackBoard_->Update(currentTimeStep);
 }
@@ -317,13 +295,10 @@ void MIL_KnowledgeGroup::CleanKnowledges()
 {
     assert( knowledgeBlackBoard_ );
     knowledgeBlackBoard_->Clean();
-
     for( CIT_KnowledgeGroupVector it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it ) // LTO
         (**it).CleanKnowledges(); // LTO
-
     for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
         (**it).CleanKnowledges();
-
     if( jammedPion_ )
         jammedPion_->GetKnowledge().Clean();
 }
@@ -339,7 +314,6 @@ bool MIL_KnowledgeGroup::IsPerceived( const DEC_Knowledge_Agent& knowledge ) con
     //     unité réelle se trouvent au même endroit
     if( knowledge.GetPosition() == knowledge.GetAgentKnown().GetRole< PHY_RoleInterface_Location >().GetPosition() )
         return false;
-
     for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
         if( (*it)->IsPerceived( knowledge ) )
             return true;
@@ -365,7 +339,6 @@ bool MIL_KnowledgeGroup::IsPerceived( const DEC_Knowledge_Object& knowledge ) co
 void MIL_KnowledgeGroup::SendCreation() const
 {
     assert( army_ );
-
     client::KnowledgeGroupCreation msg;
     msg().set_oid( id_ );
     msg().set_oid_camp( army_->GetID() );
@@ -414,12 +387,9 @@ void MIL_KnowledgeGroup::UpdateKnowledgeGroup()
         message().set_enabled( IsEnabled() );
         message.Send( NET_Publisher_ABC::Publisher() );
     }
-
     for( CIT_KnowledgeGroupVector it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
         (**it).UpdateKnowledgeGroup();
-
     hasBeenUpdated_ = false;
-
 }
 
 // -----------------------------------------------------------------------------
@@ -446,10 +416,8 @@ void MIL_KnowledgeGroup::SendKnowledge() const
 {
     assert( knowledgeBlackBoard_ );
     knowledgeBlackBoard_->SendFullState();
-
     for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
         (**it).SendKnowledge();
-
     for( CIT_KnowledgeGroupVector it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it ) // LTO
         (**it).SendKnowledge(); // LTO
 }
@@ -672,7 +640,6 @@ void MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupUpdate( const MsgsClientToSim
     default:
         break;
     }
-
     UpdateKnowledgeGroup();
 }
 
@@ -695,12 +662,11 @@ bool MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupChangeSuperior( const Common:
     MIL_Army_ABC* pTargetArmy = armies.Find( message.elem( 0 ).value().army().oid() );
     if( !pTargetArmy || *pTargetArmy != GetArmy() )
         throw NET_AsnException< MsgsSimToClient::KnowledgeGroupAck_ErrorCode >( MsgsSimToClient::KnowledgeGroupAck_ErrorCode_error_invalid_camp );
-
     MIL_KnowledgeGroup* pNewParent = 0;
     if( hasParent )
     {
         pNewParent = pTargetArmy->FindKnowledgeGroup( message.elem( 1 ).value().knowledgegroup().oid() );
-        if( !pNewParent  )
+        if( !pNewParent )
             throw NET_AsnException< MsgsSimToClient::KnowledgeGroupAck_ErrorCode >( MsgsSimToClient::KnowledgeGroupAck_ErrorCode_error_invalid_superior );
     }
     if( pNewParent )
@@ -772,7 +738,7 @@ bool MIL_KnowledgeGroup::IsJammed() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< DEC_Knowledge_Object > MIL_KnowledgeGroup::CreateKnowledgeObject
+// Name: MIL_KnowledgeGroup::CreateKnowledgeObject
 // Created: LDC 2010-04-07
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > MIL_KnowledgeGroup::CreateKnowledgeObject( const MIL_Army_ABC& teamKnowing, MIL_Object_ABC& objectKnown )
@@ -822,7 +788,6 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesPopulationPerception( int currentTimeS
             knowledgeBlackboard.GetKnowledgePopulationCollisionContainer ().ApplyOnKnowledgesPopulationCollision ( boost::bind( & MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromCollision, this, _1, boost::ref(currentTimeStep)  )  );
         }
     }
-
    // knowledgeBlackBoard_->SendFullState();
 }
 
@@ -849,7 +814,6 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
                 }
             }
         }
-
         // mis à jour des groupes de connaissances parents
         for( MIL_KnowledgeGroup::CIT_KnowledgeGroupVector itKG( GetKnowledgeGroups().begin() ); itKG != GetKnowledgeGroups().end(); ++itKG )
         {
@@ -857,7 +821,6 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
             if( innerKg.IsEnabled() && IsEnabled() )
                 innerKg.GetKnowledge().GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( boost::bind( &MIL_KnowledgeGroup::UpdateAgentKnowledgeFromParentKnowledgeGroup, this, _1, boost::ref(currentTimeStep) ) );
         }
-
         // LTO begin
         //mis à jour des groupes de connaissances fils avec un délai
         MIL_KnowledgeGroup* parent = GetParent();
@@ -875,9 +838,7 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
     else
     {
         if( jammedPion_ )
-        {
             jammedPion_->GetKnowledge().GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( boost::bind( & MIL_KnowledgeGroup::UpdateAgentKnowledgeFromAgentPerception, this, _1, boost::ref(currentTimeStep) ) );
-        }
     }
 }
 
@@ -890,7 +851,6 @@ DEC_Knowledge_Population& MIL_KnowledgeGroup::GetPopulationKnowledgeToUpdate( MI
     DEC_Knowledge_Population* pKnowledge = GetKnowledge().GetKnowledgePopulationContainer().GetKnowledgePopulation( populationKnown );
     if( pKnowledge )
         return *pKnowledge;
-
     return CreateKnowledgePopulation( populationKnown );
 }
 
@@ -944,7 +904,6 @@ DEC_Knowledge_Agent& MIL_KnowledgeGroup::GetAgentKnowledgeToUpdate( MIL_Agent_AB
     boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge = GetKnowledge().GetKnowledgeAgentContainer().GetKnowledgeAgent( agentKnown );
     if( pKnowledge.get() )
         return *pKnowledge;
-
     return CreateKnowledgeAgent( agentKnown );
 }
 

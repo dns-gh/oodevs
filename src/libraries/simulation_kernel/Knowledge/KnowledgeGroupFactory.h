@@ -4,7 +4,6 @@
 // Refer to the included end-user license agreement for restrictions.
 //
 // Copyright (c) 2009 MASA Group
-// LTO
 //
 // *****************************************************************************
 
@@ -15,13 +14,12 @@
 
 // =============================================================================
 /** @class  FormationFactory
-@brief  FormationFactory
+    @brief  Formation factory
 */
 // Created: MGD 2009-10-22
 // =============================================================================
 class KnowledgeGroupFactory : public KnowledgeGroupFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

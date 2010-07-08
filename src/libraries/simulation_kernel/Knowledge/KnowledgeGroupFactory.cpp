@@ -12,8 +12,7 @@
 #include "KnowledgeGroupFactory.h"
 #include "MIL_KnowledgeGroup.h"
 #include "simulation_kernel/AutomateFactory_ABC.h"
-
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( KnowledgeGroupFactory )
 
@@ -23,6 +22,7 @@ void save_construct_data( Archive& /*archive*/, const KnowledgeGroupFactory* /*f
 {
     // NOTHING
 }
+
 template< typename Archive >
 void load_construct_data( Archive& /*archive*/, KnowledgeGroupFactory* factory, const unsigned int /*version*/ )
 {

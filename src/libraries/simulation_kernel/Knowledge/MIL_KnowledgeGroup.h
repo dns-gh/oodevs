@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Knowledge/MIL_KnowledgeGroup.h $
-// $Author: Jvt $
-// $Modtime: 30/03/05 11:15 $
-// $Revision: 9 $
-// $Workfile: MIL_KnowledgeGroup.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
@@ -65,25 +63,25 @@ namespace MsgsClientToSim
 // =============================================================================
 class MIL_KnowledgeGroup : private boost::noncopyable
 {
-
 public:
     //! @name Types
     //@{
-    typedef std::vector< MIL_Automate* >     T_AutomateVector;
-    typedef T_AutomateVector::iterator       IT_AutomateVector;
+    typedef std::vector< MIL_Automate* >       T_AutomateVector;
+    typedef T_AutomateVector::iterator        IT_AutomateVector;
     typedef T_AutomateVector::const_iterator CIT_AutomateVector;
 
-    typedef std::vector< MIL_KnowledgeGroup* >      T_KnowledgeGroupVector;
-    typedef T_KnowledgeGroupVector::iterator        IT_KnowledgeGroupVector;
+    typedef std::vector< MIL_KnowledgeGroup* >        T_KnowledgeGroupVector;
+    typedef T_KnowledgeGroupVector::iterator         IT_KnowledgeGroupVector;
     typedef T_KnowledgeGroupVector::const_iterator  CIT_KnowledgeGroupVector;
     //@}
 
 public:
-    MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, unsigned int id, MIL_Army_ABC& army );
-    MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, MIL_KnowledgeGroup* parent, KnowledgeGroupFactory_ABC& knowledgeGroupFactory ); // LTO
-    MIL_KnowledgeGroup();
-    MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source, const MIL_Agent_ABC& pion, MIL_KnowledgeGroup* parent );
-
+    //! @name Constructors/Destructor
+    //@{
+             MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, unsigned int id, MIL_Army_ABC& army );
+             MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, MIL_KnowledgeGroup* parent, KnowledgeGroupFactory_ABC& knowledgeGroupFactory ); // LTO
+             MIL_KnowledgeGroup();
+             MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source, const MIL_Agent_ABC& pion, MIL_KnowledgeGroup* parent );
     virtual ~MIL_KnowledgeGroup();
     //@}
 
@@ -125,7 +123,6 @@ public:
     void OnReceiveMsgKnowledgeGroupUpdate     ( const MsgsClientToSim::MsgKnowledgeMagicAction& message, const tools::Resolver< MIL_Army_ABC >& armies );
     void Destroy();
     //@}
-
 
     //! @name Accessors
     //@{
@@ -173,6 +170,8 @@ public:
     //@}
 
 private:
+    //! @name Helpers
+    //@{
     bool OnReceiveMsgKnowledgeGroupEnable        ( const Common::MsgMissionParameters& message );
     bool OnReceiveMsgKnowledgeGroupChangeSuperior( const Common::MsgMissionParameters& message, const tools::Resolver< MIL_Army_ABC >& armies, bool hasParent );
     bool OnReceiveMsgKnowledgeGroupSetType       ( const Common::MsgMissionParameters& message );
@@ -188,14 +187,15 @@ private:
     DEC_Knowledge_Agent& GetAgentKnowledgeToUpdate( MIL_Agent_ABC& agentKnown );
     void UpdateAgentKnowledgeFromAgentPerception( const DEC_Knowledge_AgentPerception& perception, int currentTimeStep );
     void UpdateAgentKnowledgeFromParentKnowledgeGroup( const DEC_Knowledge_Agent& agentKnowledge, int currentTimeStep );
-        //@}
+    //@}
 
 private:
+    //! @name Member data
+    //@{
     const MIL_KnowledgeGroupType* type_;
     uint                    id_;
     MIL_Army_ABC*           army_;
     MIL_KnowledgeGroup*     parent_; // LTO
-
     DEC_KnowledgeBlackBoard_KnowledgeGroup* knowledgeBlackBoard_;
     T_AutomateVector        automates_;
     T_KnowledgeGroupVector  knowledgeGroups_; // LTO
@@ -204,8 +204,8 @@ private:
     bool                    hasBeenUpdated_;
     bool                    isJammed_;
     const MIL_Agent_ABC*    jammedPion_;
-
     static MIL_IDManager idManager_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( MIL_KnowledgeGroup )
