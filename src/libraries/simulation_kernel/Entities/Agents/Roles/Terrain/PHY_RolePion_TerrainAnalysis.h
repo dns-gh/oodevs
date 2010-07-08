@@ -16,14 +16,13 @@
 class MIL_Agent_ABC;
 // =============================================================================
 /** @class  PHY_RolePion_TerrainAnalysis
-    @brief  PHY_RolePion_TerrainAnalysis
+    @brief  PHY Role pion terrain analysis
 */
 // Created: MGD 2010-04-20
 // =============================================================================
 class PHY_RolePion_TerrainAnalysis : public PHY_RoleInterface_TerrainAnalysis
                                    , public location::MovementHandler_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -43,7 +42,6 @@ private:
     PHY_RolePion_TerrainAnalysis( const PHY_RolePion_TerrainAnalysis& );            //!< Copy constructor
     PHY_RolePion_TerrainAnalysis& operator=( const PHY_RolePion_TerrainAnalysis& ); //!< Assignment operator
     //@}
-
 
 private:
     //! @name Member data
