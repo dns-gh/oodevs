@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2005-02-23 $
-// $Archive: /MVW_v10/Build/SDK/TER/src/TER_PathFinderThread.cpp $
-// $Author: Nld $
-// $Modtime: 3/06/05 17:46 $
-// $Revision: 5 $
-// $Workfile: TER_PathFinderThread.cpp $
-//
-// *****************************************************************************
 
 #include "simulation_terrain_pch.h"
 #include "TER_PathFinderThread.h"
@@ -42,7 +33,7 @@ using namespace pathfind;
 // -----------------------------------------------------------------------------
 TER_PathFinderThread::TER_PathFinderThread( const std::string& strGraphArchive, const std::string& strNodeArchive, const std::string& strLinkArchive, tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >& queue, bool bUseSameThread )
     : tools::thread::RequestProcessor_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >( queue )
-    , pPathfinder_( 0 )
+    , pPathfinder_   ( 0 )
     , bUseSameThread_( bUseSameThread )
 {
     pPathfinder_ = new TerrainPathfinder( strGraphArchive, strNodeArchive, strLinkArchive );
@@ -71,11 +62,9 @@ void TER_PathFinderThread::ProcessDynamicData()
     T_DynamicDataVector tmpDynamicDataToUnregister;
     {
         boost::mutex::scoped_lock locker( dynamicDataMutex_ );
-
         tmpDynamicDataToRegister  .swap( dynamicDataToRegister_   );
         tmpDynamicDataToUnregister.swap( dynamicDataToUnregister_ );
     }
-
     if( !tmpDynamicDataToRegister.empty() )
     {
         MT_Profiler profiler;
@@ -87,11 +76,9 @@ void TER_PathFinderThread::ProcessDynamicData()
             assert( pData );
             pData->RegisterDynamicData( *this );
         }
-
         MT_LOG_INFO_MSG( MT_FormatString( "Register %d dynamic data - %.2f ms", tmpDynamicDataToRegister.size(), profiler.Stop() ) );
         tmpDynamicDataToRegister.clear();
     }
-
     if( !tmpDynamicDataToUnregister.empty() )
     {
         MT_Profiler profiler;
@@ -103,7 +90,6 @@ void TER_PathFinderThread::ProcessDynamicData()
             assert( pData );
             pData->UnregisterDynamicData( *this );
         }
-
         MT_LOG_INFO_MSG( MT_FormatString( "Unregister %d dynamic data - %.2f ms", tmpDynamicDataToUnregister.size(), profiler.Stop() ) );
         tmpDynamicDataToUnregister.clear();
     }
@@ -118,7 +104,6 @@ void TER_PathFinderThread::Process( const boost::shared_ptr< TER_PathFindRequest
     try
     {
         ProcessDynamicData();
-
         if( pRequest.get() )
         {
             pRequest->Execute( *pPathfinder_ );
@@ -143,7 +128,7 @@ namespace
     inline
     geometry::Point2f MakePoint( const MT_Vector2D& v )
     {
-        return geometry::Point2f( float( v.rX_ ), float( v.rY_ ) );
+        return geometry::Point2f( static_cast< float >( v.rX_ ), static_cast< float >( v.rY_ ) );
     };
 }
 
@@ -165,12 +150,19 @@ namespace
     class DataBuilder
     {
     public:
-        DataBuilder( TerrainData& data ) : data_( data ) {};
+        DataBuilder( TerrainData& data )
+            : data_( data )
+        {
+            // NOTHING
+        }
         void operator()( const Link< TerrainData >& link )
         {
             data_.Merge( link.GetUserData() );
         }
-        const TerrainData& Result() const { return data_; } ;
+        const TerrainData& Result() const
+        {
+            return data_;
+        }
     private:
         DataBuilder& operator=( const DataBuilder& );
         TerrainData& data_;
@@ -188,9 +180,12 @@ namespace
     {
     public:
         NodeCircleFinder( TER_NodeFunctor_ABC& functor, const MT_Vector2D& vCenter, MT_Float rRadius )
-            : functor_( functor )
-            , center_( vCenter )
-            , rSquareRadius_( rRadius * rRadius ) {};
+            : functor_      ( functor )
+            , center_       ( vCenter )
+            , rSquareRadius_( rRadius * rRadius )
+        {
+            // NOTHING
+        }
         bool operator()( const Node< TerrainData >& node )
         {
             const MT_Vector2D nodePos( node.X(), node.Y() );
@@ -213,7 +208,7 @@ namespace
 void TER_PathFinderThread::ApplyOnNodesWithinCircle( const MT_Vector2D& vCenter, MT_Float rRadius, TER_NodeFunctor_ABC& bestNodeFunction ) const
 {
     NodeCircleFinder finder( bestNodeFunction, vCenter, rRadius );
-    pPathfinder_->ApplyOnNodesInCircle( MakePoint( vCenter ), float( rRadius ), finder );
+    pPathfinder_->ApplyOnNodesInCircle( MakePoint( vCenter ), static_cast< float >( rRadius ), finder );
 }
 
 // -----------------------------------------------------------------------------
@@ -222,11 +217,10 @@ void TER_PathFinderThread::ApplyOnNodesWithinCircle( const MT_Vector2D& vCenter,
 // -----------------------------------------------------------------------------
 std::vector< boost::shared_ptr< MT_Vector2D > > TER_PathFinderThread::FindCrossroadsWithinCircle( const MT_Vector2D& vCenter, float rRadius )
 {
-    std::vector< pathfind::Node< TerrainData >* > result = pPathfinder_->FindCrossroadsWithinCircle( MakePoint( vCenter ), float( rRadius ) );
-
+    std::vector< pathfind::Node< TerrainData >* > result = pPathfinder_->FindCrossroadsWithinCircle( MakePoint( vCenter ), rRadius );
     std::vector< boost::shared_ptr< MT_Vector2D > > points;
     for( std::vector< pathfind::Node< TerrainData >* >::const_iterator it = result.begin(); it != result.end(); ++it )
-        points.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( ( MT_Float ) (*it)->X(), ( MT_Float ) (*it)->Y() ) ) );
+        points.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( static_cast< MT_Float >( (*it)->X() ), static_cast< MT_Float >( (*it)->Y() ) ) ) );
     return points;
 }
 
@@ -265,7 +259,6 @@ void TER_PathFinderThread::Dump( const std::string& strBaseArchiveName ) const
                         strBaseArchiveName + "Nodes.bin",
                         strBaseArchiveName + "Links.bin" );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: TER_PathFinderThread::AddDynamicDataToRegister
