@@ -37,7 +37,7 @@ public:
 
     } ;
 
-    //! @name Constructors / Destructors
+    //! @name Constructors/Destructor
     //@{
              SIM_App( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdShow, int maxConnections ); //!< win32
     virtual ~SIM_App();

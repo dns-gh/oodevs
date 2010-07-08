@@ -35,7 +35,7 @@ class StaticModel;
 class PropertiesPanelBase
 {
 public:
-    //! @name Constructors/Destructors
+    //! @name Constructors/Destructor
     //@{
              PropertiesPanelBase( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel );
     virtual ~PropertiesPanelBase();

@@ -22,7 +22,6 @@ namespace dispatcher
 {
 class Logger
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -40,10 +39,6 @@ private:
     //@{
     Logger( const Logger& );            //!< Copy constructor
     Logger& operator=( const Logger& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
     //@}
 
 private:

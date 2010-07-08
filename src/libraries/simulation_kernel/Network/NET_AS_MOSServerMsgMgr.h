@@ -43,7 +43,7 @@ class NET_AS_MOSServerMsgMgr : public NET_Publisher_ABC
 
 public:
 
-    //! @name Constructors/Destructors
+    //! @name Constructors/Destructor
     //@{
              NET_AS_MOSServerMsgMgr( NET_AgentServer& agentServer, NET_Simulation_ABC& simulation );
     virtual ~NET_AS_MOSServerMsgMgr();

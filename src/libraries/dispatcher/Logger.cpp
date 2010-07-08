@@ -20,7 +20,7 @@ using namespace dispatcher;
 // Created: LDC 2009-09-09
 // -----------------------------------------------------------------------------
 Logger::Logger()
-: nextMemoryDump_( 0 )
+    : nextMemoryDump_( 0 )
 {
     monitor_.MonitorProcess();
 }
@@ -43,7 +43,7 @@ void Logger::Update()
     time_t currentTime = time( 0 );
     if( currentTime > nextMemoryDump_ )
     {
-        nextMemoryDump_ = currentTime + 60;
+        nextMemoryDump_ = static_cast< int >( currentTime ) + 60;
         MT_LOG_INFO_MSG( "Memory: " << ( monitor_.GetMemory() / 1048576.) << " MB / " << ( monitor_.GetVirtualMemory() / 1048576.) << " MB (VM)" );
     }
 }

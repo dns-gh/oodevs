@@ -32,7 +32,7 @@ namespace gui
 class PropertiesBase
 {
 public:
-    //! @name Constructors/Destructors
+    //! @name Constructors/Destructor
     //@{
              PropertiesBase();
     virtual ~PropertiesBase();

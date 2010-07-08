@@ -77,7 +77,7 @@ private:
     //@}
 
 private:
-    //! @name Constructors/Destructors
+    //! @name Constructors/Destructor
     //@{
      PHY_Precipitation( const std::string& strName, E_Precipitation nType, Common::EnumPrecipitationType nAsnID );
     ~PHY_Precipitation();
