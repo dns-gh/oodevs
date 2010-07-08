@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: NLD 2004-03-11 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/knowledge/DEC_Knowledge_ABC.h $
-// $Author: Jvt $
-// $Modtime: 25/03/05 13:13 $
-// $Revision: 2 $
-// $Workfile: DEC_Knowledge_ABC.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 

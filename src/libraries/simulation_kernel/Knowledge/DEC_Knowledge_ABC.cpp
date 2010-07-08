@@ -1,17 +1,14 @@
 // *****************************************************************************
 //
-// $Created: NLD 2004-03-12 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Knowledge/DEC_Knowledge_ABC.cpp $
-// $Author: Jvt $
-// $Modtime: 31/03/05 12:13 $
-// $Revision: 2 $
-// $Workfile: DEC_Knowledge_ABC.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_ABC.h"
-#include "MIL_AgentServer.h"
 #include "MIL_Singletons.h"
 #include "MIL_Time_ABC.h"
 #include <boost/serialization/export.hpp>
