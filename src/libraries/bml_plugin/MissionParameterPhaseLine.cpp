@@ -110,7 +110,7 @@ void MissionParameterPhaseLine::Serialize( MsgLimaOrder& message ) const
 // Name: MissionParameterPhaseLine::Clean
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-void MissionParameterPhaseLine::Clean( MsgLimaOrder& asn ) const
+void MissionParameterPhaseLine::Clean( MsgLimaOrder& /*asn*/ ) const
 {
     // $$$$ SBO 2010-02-22: To be removed
 }

@@ -417,7 +417,7 @@ void OrderParameterSerializer::FillLocationlist( std::vector< Common::MsgLocatio
 // Name: OrderParameterSerializer::SerializePhaseLines
 // Created: SBO 2008-03-04
 // -----------------------------------------------------------------------------
-void OrderParameterSerializer::SerializePhaseLines( Common::MsgLimasOrder& message, unsigned long /*parameterId*/, const std::string& /*tablename*/ ) const
+void OrderParameterSerializer::SerializePhaseLines( Common::MsgLimasOrder& /*message*/, unsigned long /*parameterId*/, const std::string& /*tablename*/ ) const
 {
     // $$$$ SBO 2008-03-10: Not Supported
     //message = new Common::MsgLimasOrder();
@@ -466,7 +466,7 @@ namespace
 // Name: OrderParameterSerializer::SerializePhaseLine
 // Created: SBO 2008-03-10
 // -----------------------------------------------------------------------------
-void OrderParameterSerializer::SerializePhaseLine( Common::MsgLimaOrder& message, const std::string& /*value*/ ) const
+void OrderParameterSerializer::SerializePhaseLine( Common::MsgLimaOrder& /*message*/, const std::string& /*value*/ ) const
 {
     // $$$$ SBO 2008-03-10: value=id,func1,func2
     /*
