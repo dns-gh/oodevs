@@ -29,7 +29,6 @@ namespace kernel
 // =============================================================================
 class DrawingPositions : public gui::DrawingPositions
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

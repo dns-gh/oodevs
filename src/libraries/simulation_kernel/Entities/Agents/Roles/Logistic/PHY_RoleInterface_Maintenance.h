@@ -30,7 +30,6 @@ class MIL_AutomateLOG;
 class PHY_RoleInterface_Maintenance : public tools::Role_ABC
                                     , private boost::noncopyable
 {
-
 public:
     //! @name Types
     //@{

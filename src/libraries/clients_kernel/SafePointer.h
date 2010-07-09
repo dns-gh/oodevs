@@ -26,7 +26,6 @@ template< typename T >
 class SafePointer : public tools::Observer_ABC
                   , public tools::ElementObserver_ABC< T >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

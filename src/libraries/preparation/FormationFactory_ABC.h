@@ -31,7 +31,6 @@ namespace xml
 // =============================================================================
 class FormationFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

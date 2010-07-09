@@ -33,7 +33,6 @@ namespace gui
 // =============================================================================
 class Layer_ABC : public MapLayer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -82,7 +81,6 @@ private:
 // =============================================================================
 class Layer2d_ABC : public Layer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -108,7 +106,6 @@ public:
 // =============================================================================
 class Layer3d_ABC : public Layer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

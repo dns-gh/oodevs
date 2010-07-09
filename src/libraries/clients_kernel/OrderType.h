@@ -29,7 +29,6 @@ namespace kernel
 // =============================================================================
 class OrderType : public  tools::Resolver< OrderParameter >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -34,7 +34,6 @@ class StaticModel;
 // =============================================================================
 class AutomatsLayer : public gui::AutomatsLayer
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

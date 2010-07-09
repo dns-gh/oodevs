@@ -22,7 +22,6 @@ namespace kernel
 // =============================================================================
 class ModelVisitor_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

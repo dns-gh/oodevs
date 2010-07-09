@@ -41,7 +41,6 @@ class FormationModel : public tools::Resolver< kernel::Formation_ABC >
                      , public tools::Observer_ABC
                      , public tools::ElementObserver_ABC< kernel::Formation_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -35,7 +35,6 @@ namespace actions {
 // =============================================================================
 class AgentList : public Parameter< QString >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

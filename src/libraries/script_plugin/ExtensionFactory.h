@@ -43,7 +43,6 @@ class ExtensionFactory : public dispatcher::ExtensionFactory_ABC< dispatcher::Ag
                        , public dispatcher::ExtensionFactory_ABC< dispatcher::Automat >
                        , public dispatcher::ExtensionFactory_ABC< dispatcher::Population >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

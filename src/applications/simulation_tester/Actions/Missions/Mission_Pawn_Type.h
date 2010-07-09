@@ -38,7 +38,6 @@ namespace TEST {
 // =============================================================================
 class Mission_Pawn_Type
 {
-
 public:
     //! @name Operations
     //@{

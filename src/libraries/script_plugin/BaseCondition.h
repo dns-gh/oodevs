@@ -28,7 +28,6 @@ namespace script
 // =============================================================================
 class BaseCondition : public Condition_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -20,7 +20,6 @@
 // =============================================================================
 class DEC_Knowledge_ABC : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

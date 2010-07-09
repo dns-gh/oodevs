@@ -28,7 +28,6 @@ namespace actions {
 // =============================================================================
 class MedicalPriorities : public Parameter< QString >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

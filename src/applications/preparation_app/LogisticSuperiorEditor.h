@@ -28,7 +28,6 @@ class LogisticSuperiorEditor : public gui::ValuedComboBox< const kernel::Automat
                              , public tools::Observer_ABC
                              , public tools::ElementObserver_ABC< kernel::Automat_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

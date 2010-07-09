@@ -26,7 +26,6 @@ namespace tic
 // =============================================================================
 class Formation_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

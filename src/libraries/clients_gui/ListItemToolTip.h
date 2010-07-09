@@ -20,7 +20,6 @@
 // =============================================================================
 class ListItemToolTip : public QToolTip
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

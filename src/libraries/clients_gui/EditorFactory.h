@@ -30,7 +30,6 @@ class EditorFactory : public kernel::EditorFactory_ABC
                     , public tools::Caller< bool* >
                     , public tools::Caller< kernel::Unit* >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

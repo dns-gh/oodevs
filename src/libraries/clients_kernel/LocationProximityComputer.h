@@ -23,7 +23,6 @@ namespace kernel
 // =============================================================================
 class LocationProximityComputer : public LocationVisitor_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

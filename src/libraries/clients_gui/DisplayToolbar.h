@@ -26,7 +26,6 @@ namespace gui
 // =============================================================================
 class DisplayToolbar : public QToolBar
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -23,7 +23,6 @@ namespace urbanLocation
 // =============================================================================
 class UrbanLocationComputerFactory : public UrbanLocationComputerFactory_ABC
 {
-
 public:
     //! @name ConstructorsDestructor
     //@{

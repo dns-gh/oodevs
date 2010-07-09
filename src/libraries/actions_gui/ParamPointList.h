@@ -25,7 +25,6 @@ namespace actions
 // =============================================================================
 class ParamPointList : public ParamLocationList
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

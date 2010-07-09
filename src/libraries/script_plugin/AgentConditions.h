@@ -39,7 +39,6 @@ namespace script
 // =============================================================================
 class AgentConditions : public dispatcher::Registrable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

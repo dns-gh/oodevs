@@ -29,7 +29,6 @@ namespace actions {
 // =============================================================================
 class KnowledgeGroup : public Entity< kernel::KnowledgeGroup_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

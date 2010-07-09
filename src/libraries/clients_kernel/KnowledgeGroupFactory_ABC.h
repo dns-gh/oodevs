@@ -31,7 +31,6 @@ namespace kernel
 // =============================================================================
 class KnowledgeGroupFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

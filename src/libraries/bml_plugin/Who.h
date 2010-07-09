@@ -39,7 +39,6 @@ namespace bml
 // =============================================================================
 class Who
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

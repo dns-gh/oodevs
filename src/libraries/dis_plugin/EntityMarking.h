@@ -23,7 +23,6 @@ namespace dis
 // =============================================================================
 class EntityMarking
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

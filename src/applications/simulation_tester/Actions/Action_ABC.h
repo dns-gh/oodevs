@@ -22,7 +22,6 @@ namespace TEST {
 // =============================================================================
 class Action_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

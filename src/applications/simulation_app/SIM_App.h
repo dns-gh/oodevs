@@ -29,7 +29,6 @@ class MT_FileLogger;
 //=============================================================================
 class SIM_App : private boost::noncopyable
 {
-
 public:
 
     class QuitException : public std::exception

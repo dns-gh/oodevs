@@ -23,7 +23,6 @@ namespace actions {
 // =============================================================================
 class Enumeration : public Parameter< std::string >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

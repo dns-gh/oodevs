@@ -32,7 +32,6 @@ namespace kernel
 // =============================================================================
 class AutomatComposition
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -84,7 +84,6 @@ class InfoDialog : public InfoDialog_Base
                  , public tools::Observer_ABC
                  , public tools::SelectionObserver< kernel::Entity_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

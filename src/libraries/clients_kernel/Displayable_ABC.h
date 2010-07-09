@@ -22,7 +22,6 @@ namespace kernel
 // =============================================================================
 class Displayable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

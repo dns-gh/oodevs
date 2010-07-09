@@ -26,7 +26,6 @@ class MIL_KnowledgeGroup;
 // =============================================================================
 class PHY_ActionIllumination : public PHY_DecisionCallbackAction_ABC
 {
-
 public:
     typedef MIL_AgentPion ActorType;
 

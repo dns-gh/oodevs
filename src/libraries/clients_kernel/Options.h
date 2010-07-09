@@ -32,7 +32,6 @@ namespace kernel
 // =============================================================================
 class Options
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

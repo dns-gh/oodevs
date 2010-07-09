@@ -25,7 +25,6 @@ namespace kernel
 // =============================================================================
 class ConstructionPrototype : public gui::ConstructionPrototype_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -29,7 +29,6 @@ namespace kernel
 // =============================================================================
 class AmmoEffect
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

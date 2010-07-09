@@ -25,7 +25,6 @@ namespace dotation
 // =============================================================================
 class PHY_RoleHLA_Dotations : public PHY_RoleInterface_Dotations
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

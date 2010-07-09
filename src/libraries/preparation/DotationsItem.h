@@ -30,7 +30,6 @@ class Dotation;
 // =============================================================================
 class DotationsItem
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

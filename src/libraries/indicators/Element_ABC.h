@@ -31,7 +31,6 @@ namespace indicators
 // =============================================================================
 class Element_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -28,7 +28,6 @@ namespace firing
 class PHY_RoleAction_IndirectFiring : public tools::Role_ABC
                                     , private boost::noncopyable
 {
-
 public:
     //! @name Types
     //@{

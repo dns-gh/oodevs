@@ -21,7 +21,6 @@
 template< typename K, typename A >
 class MockFunction1 : public Function1_ABC< K, A >, public mockpp::ChainableMockObject
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -74,7 +73,6 @@ public:
 template< typename K, typename A1, typename A2 >
 class MockFunction2 : public Function2_ABC< K, A1, A2 >, public mockpp::ChainableMockObject
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

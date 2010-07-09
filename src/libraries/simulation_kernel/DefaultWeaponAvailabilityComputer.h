@@ -22,7 +22,6 @@ namespace firing
 // =============================================================================
 class DefaultWeaponAvailabilityComputer : public WeaponAvailabilityComputer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

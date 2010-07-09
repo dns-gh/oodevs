@@ -21,7 +21,6 @@ namespace transport
 // =============================================================================
 class TransportPermissionComputer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

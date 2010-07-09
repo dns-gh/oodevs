@@ -33,7 +33,6 @@ class DecisionalStates : public kernel::Extension_ABC
                        , public kernel::Displayable_ABC
                        , public kernel::Aggregatable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -22,7 +22,6 @@ class DEC_DataBase;
 // =============================================================================
 class PopulationFactory : public PopulationFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

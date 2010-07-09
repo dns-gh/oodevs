@@ -40,7 +40,6 @@ namespace TEST {
 // =============================================================================
 class ASN_Tools
 {
-
 public:
     //! @name Copy Operations
     //@{

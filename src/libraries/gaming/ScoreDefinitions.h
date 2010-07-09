@@ -34,7 +34,6 @@ class ScoreDefinition;
 // =============================================================================
 class ScoreDefinitions : public tools::Resolver< ScoreDefinition, QString >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

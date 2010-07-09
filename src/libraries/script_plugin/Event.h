@@ -27,7 +27,6 @@ namespace script
 // =============================================================================
 class Event
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

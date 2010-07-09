@@ -25,7 +25,6 @@ namespace kernel
 // =============================================================================
 class DelayPrototype : public gui::DelayPrototype_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

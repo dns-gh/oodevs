@@ -30,7 +30,6 @@ namespace gui
 // =============================================================================
 class Wgs84DmsParser : public LocationParser_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

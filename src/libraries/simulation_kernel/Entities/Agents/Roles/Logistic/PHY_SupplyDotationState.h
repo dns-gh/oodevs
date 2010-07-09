@@ -24,7 +24,6 @@ class PHY_SupplyConsign_ABC;
 // =============================================================================
 class PHY_SupplyDotationState : public PHY_SupplyState_ABC
 {
-
 public:
     explicit PHY_SupplyDotationState( MIL_Automate& suppliedAutomate );
              PHY_SupplyDotationState();

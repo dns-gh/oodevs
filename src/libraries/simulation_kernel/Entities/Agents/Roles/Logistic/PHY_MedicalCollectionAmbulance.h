@@ -24,7 +24,6 @@ class PHY_RoleInterface_Medical;
 // =============================================================================
 class PHY_MedicalCollectionAmbulance : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

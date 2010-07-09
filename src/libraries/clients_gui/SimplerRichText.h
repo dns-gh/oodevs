@@ -21,7 +21,6 @@ namespace gui
 // =============================================================================
 class SimplerRichText
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -25,7 +25,6 @@ namespace transport
 // =============================================================================
 class TransportNotificationHandler_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -22,7 +22,6 @@ typedef ADN_Wizard_ABC< ADN_Missions_Data::FragOrder > ADN_Wizard_ABC_ADN_Missio
 // =============================================================================
 class ADN_FragOrder_Wizard : public ADN_Wizard_ABC_ADN_Missions_Data_FragOrder_
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

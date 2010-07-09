@@ -27,7 +27,6 @@ namespace gui
 // =============================================================================
 class EntitySearchItem
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

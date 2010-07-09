@@ -38,7 +38,6 @@ namespace plugins
 // =============================================================================
 class IndicatorBuilder
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -26,7 +26,6 @@ namespace kernel
 template< typename Iface >
 class Creatable : public Updatable_ABC< InstanciationComplete >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

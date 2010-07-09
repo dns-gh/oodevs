@@ -25,7 +25,6 @@ namespace dis
 // =============================================================================
 class IdentifierFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

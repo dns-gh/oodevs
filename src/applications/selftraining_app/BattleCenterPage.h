@@ -28,7 +28,6 @@ class NetworkExerciseLister;
 // =============================================================================
 class BattleCenterPage : public MenuPage
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

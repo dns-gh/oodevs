@@ -133,7 +133,6 @@ class EntityLayer : public EntityLayerBase
                   , public tools::ElementObserver_ABC< ConcreteEntity >
                   , public kernel::ActivationObserver_ABC< ConcreteEntity >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

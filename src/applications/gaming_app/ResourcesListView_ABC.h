@@ -42,7 +42,6 @@ class ResourcesListView_ABC : public gui::ListDisplayer< ConcreteDisplayer >
                             , public tools::ElementObserver_ABC< Extension >
                             , public tools::SelectionObserver< kernel::Entity_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

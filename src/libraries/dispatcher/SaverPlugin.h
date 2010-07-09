@@ -26,7 +26,6 @@ namespace dispatcher
 // =============================================================================
 class SaverPlugin : public Plugin_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

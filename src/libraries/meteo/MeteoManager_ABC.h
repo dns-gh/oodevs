@@ -23,7 +23,6 @@ namespace weather
 // =============================================================================
 class MeteoManager_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

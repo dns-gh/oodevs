@@ -30,7 +30,6 @@ namespace crossbow
 // =============================================================================
 class Shape_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

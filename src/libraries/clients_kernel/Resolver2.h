@@ -28,7 +28,6 @@ template< typename T, typename Identifier1 = unsigned long, typename Identifier2
 class Resolver2 : public  tools::Resolver_ABC< T, Identifier1 >
                 , public  tools::Resolver_ABC< T, Identifier2 >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

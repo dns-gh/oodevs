@@ -59,7 +59,6 @@ class UrbanModel;
 // =============================================================================
 class StaticModel : public kernel::StaticModel
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -23,7 +23,6 @@ namespace dispatcher
 // =============================================================================
 class MissionParameter_DotationType : public MissionParameter_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

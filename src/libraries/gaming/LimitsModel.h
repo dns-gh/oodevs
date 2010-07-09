@@ -26,7 +26,6 @@ class TacticalLineFactory;
 // =============================================================================
 class LimitsModel : public tools::Resolver< TacticalLine_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

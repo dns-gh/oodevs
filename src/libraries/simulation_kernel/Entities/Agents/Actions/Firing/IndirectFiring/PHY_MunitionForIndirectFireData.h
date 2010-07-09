@@ -29,7 +29,6 @@ namespace firing
 // =============================================================================
 class PHY_MunitionForIndirectFireData : public FireData_ABC
 {
-
 public:
      PHY_MunitionForIndirectFireData( MIL_Agent_ABC& firer, const PHY_IndirectFireDotationClass& indirectWeaponCategory, const MT_Vector2D& vTargetPosition );
     virtual ~PHY_MunitionForIndirectFireData();

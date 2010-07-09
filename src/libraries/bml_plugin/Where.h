@@ -33,7 +33,6 @@ namespace bml
 // =============================================================================
 class Where
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

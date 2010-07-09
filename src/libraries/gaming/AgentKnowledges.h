@@ -40,7 +40,6 @@ class AgentKnowledges : public kernel::Extension_ABC
                       , public tools::Resolver< kernel::AgentKnowledge_ABC >
                       , public kernel::Creatable< AgentKnowledges >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

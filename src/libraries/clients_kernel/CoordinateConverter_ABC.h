@@ -23,7 +23,6 @@ namespace kernel
 // =============================================================================
 class CoordinateConverter_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

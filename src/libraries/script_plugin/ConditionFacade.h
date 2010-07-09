@@ -38,7 +38,6 @@ namespace script
 // =============================================================================
 class ConditionFacade : public dispatcher::CompositeRegistrable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

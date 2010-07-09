@@ -31,7 +31,6 @@ namespace kernel
 // =============================================================================
 class ScoreFactory : public ScoreFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

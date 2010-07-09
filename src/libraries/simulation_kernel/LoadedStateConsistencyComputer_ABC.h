@@ -21,7 +21,6 @@ namespace transport
 // =============================================================================
 class LoadedStateConsistencyComputer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

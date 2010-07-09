@@ -23,7 +23,6 @@ class OnComponentFunctorComputer_ABC;
 // =============================================================================
 class OnComponentFunctorComputerFactory : public OnComponentFunctorComputerFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -54,7 +54,6 @@ class ReportTemplate;
 // =============================================================================
 class ReportFactory : public tools::Resolver< ReportTemplate >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

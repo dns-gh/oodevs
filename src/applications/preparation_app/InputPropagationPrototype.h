@@ -25,7 +25,6 @@ namespace kernel
 // =============================================================================
 class InputPropagationPrototype : public gui::InputPropagationPrototype_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -35,7 +35,6 @@ namespace frontend
 // =============================================================================
 class ProcessWrapper : public frontend::Process_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

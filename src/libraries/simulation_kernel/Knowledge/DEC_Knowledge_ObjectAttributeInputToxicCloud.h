@@ -23,7 +23,6 @@ class MIL_NbcAgentType;
 // =============================================================================
 class DEC_Knowledge_ObjectAttributeInputToxicCloud : public DEC_Knowledge_ObjectAttribute_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -27,7 +27,6 @@ class QWidget;
 class ADN_Models_GUI
 : public ADN_GUI_ABC
 {
-
 public:
     enum E_GuiElements
     {

@@ -39,7 +39,6 @@ namespace gui
 // =============================================================================
 class DrawingCategory : public kernel::Resolver2< DrawingTemplate, QString, std::string >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

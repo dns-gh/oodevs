@@ -25,7 +25,6 @@ namespace TEST {
 // =============================================================================
 class Mission_Automat_ASA_HAWK_Surveiller : public Mission_Automat_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -28,7 +28,6 @@ class PHY_IndirectFireDotationClass;
 class PHY_RawVisionData : public weather::PHY_RawVisionData_ABC
                         , private boost::noncopyable
 {
-
 public:
     enum E_AlignType
     {

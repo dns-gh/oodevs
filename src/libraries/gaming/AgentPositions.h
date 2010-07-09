@@ -40,7 +40,6 @@ class AgentPositions : public kernel::Positions
                      , public kernel::Aggregatable_ABC
                      , public kernel::Displayable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

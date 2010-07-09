@@ -22,7 +22,6 @@ class MIL_Agent_ABC;
 // =============================================================================
 class DetectorAttribute : public ObjectAttribute_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -20,7 +20,6 @@
 // =============================================================================
 class MaintenanceHaulersListView : public MaintenanceAvailabilitiesListView_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

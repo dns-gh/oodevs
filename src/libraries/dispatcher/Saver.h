@@ -25,7 +25,6 @@ namespace dispatcher
 // =============================================================================
 class Saver
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

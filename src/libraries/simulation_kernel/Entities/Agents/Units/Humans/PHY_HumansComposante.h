@@ -34,7 +34,6 @@ class MIL_Injury_ABC;
 // =============================================================================
 class PHY_HumansComposante : public HumansComposante_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

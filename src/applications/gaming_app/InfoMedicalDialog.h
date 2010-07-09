@@ -31,7 +31,6 @@ namespace gui
 // =============================================================================
 class InfoMedicalDialog : public InfoDialog< MedicalStates >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

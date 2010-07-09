@@ -30,7 +30,6 @@ class SelectionCommand : public QObject
                        , public tools::Observer_ABC
                        , public tools::SelectionObserver< kernel::Entity_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

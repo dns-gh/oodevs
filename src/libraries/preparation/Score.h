@@ -38,7 +38,6 @@ namespace xml
 // =============================================================================
 class Score : public Score_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

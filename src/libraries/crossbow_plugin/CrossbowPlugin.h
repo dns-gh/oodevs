@@ -58,7 +58,6 @@ namespace crossbow
 class CrossbowPlugin : public dispatcher::Plugin_ABC
                      , public dispatcher::NoopClientPublisher
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

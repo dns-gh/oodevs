@@ -18,7 +18,6 @@
 // =============================================================================
 class PHY_MaintenanceLevel : private boost::noncopyable
 {
-
 public:
     //! @name Types
     //@{

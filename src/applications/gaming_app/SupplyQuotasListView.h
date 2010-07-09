@@ -20,7 +20,6 @@
 // =============================================================================
 class SupplyQuotasListView : public QuotasAvailabilitiesListView_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

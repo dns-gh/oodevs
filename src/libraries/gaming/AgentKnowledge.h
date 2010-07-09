@@ -41,7 +41,6 @@ class AgentKnowledge : public kernel::EntityImplementation< kernel::AgentKnowled
                      , public kernel::Drawable_ABC
                      , public kernel::Displayable_ABC
 {
-
 public:
     //! @name Constructor / Destructor
     //@{

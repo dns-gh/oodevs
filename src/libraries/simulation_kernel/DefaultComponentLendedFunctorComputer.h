@@ -20,7 +20,6 @@
 // =============================================================================
 class DefaultComponentLendedFunctorComputer : public OnComponentLendedFunctorComputer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

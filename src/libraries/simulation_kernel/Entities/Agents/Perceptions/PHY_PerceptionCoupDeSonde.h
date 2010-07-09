@@ -17,7 +17,6 @@ namespace detection
 //*****************************************************************************
 class PHY_PerceptionCoupDeSonde : public PHY_Perception_ABC
 {
-
 public:
     explicit PHY_PerceptionCoupDeSonde( PHY_RoleInterface_Perceiver& perceiver );
     virtual ~PHY_PerceptionCoupDeSonde();

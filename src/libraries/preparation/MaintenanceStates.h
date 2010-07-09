@@ -21,7 +21,6 @@
 // =============================================================================
 class MaintenanceStates : public LogisticHierarchies< MaintenanceSuperior, kernel::MaintenanceHierarchies >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -30,7 +30,6 @@ namespace actions
 // =============================================================================
 class FirePrototype : public gui::FirePrototype_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

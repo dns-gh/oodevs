@@ -23,7 +23,6 @@
 // =============================================================================
 class ADN_Mission_CheckItem : public QCheckListItem
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

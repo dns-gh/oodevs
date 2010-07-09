@@ -38,7 +38,6 @@ namespace score
 // =============================================================================
 class Score
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

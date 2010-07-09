@@ -57,7 +57,6 @@ class PHY_WeaponType;
 // =============================================================================
 class PHY_ComposanteTypePion : public PHY_ComposanteType_ABC
 {
-
 public:
              PHY_ComposanteTypePion( const MIL_Time_ABC& time, const std::string& strName, xml::xistream& xis );
     virtual ~PHY_ComposanteTypePion();

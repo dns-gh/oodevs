@@ -43,7 +43,6 @@ class TerrainLayer : public Layer2d_ABC
                    , public kernel::OptionsObserver_ABC
                    , public tools::ElementObserver_ABC< kernel::ModelLoaded >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

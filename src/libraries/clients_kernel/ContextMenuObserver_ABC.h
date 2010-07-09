@@ -25,7 +25,6 @@ namespace kernel
 template< typename Element >
 class ContextMenuObserver_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

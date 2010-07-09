@@ -21,7 +21,6 @@ namespace transport
 // =============================================================================
 class HumanLoadingTimeComputer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

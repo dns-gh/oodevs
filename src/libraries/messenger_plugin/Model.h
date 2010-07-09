@@ -45,7 +45,6 @@ namespace messenger
 // =============================================================================
 class Model
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

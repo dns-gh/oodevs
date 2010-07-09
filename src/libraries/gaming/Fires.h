@@ -42,7 +42,6 @@ class Fires : public kernel::Extension_ABC
             , public tools::Resolver< Fire_ABC >
             , public kernel::Drawable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

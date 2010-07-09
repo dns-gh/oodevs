@@ -19,7 +19,6 @@
 // =============================================================================
 class PHY_NatureAtlas : private boost::noncopyable
 {
-
 public:
     // default value
     static const PHY_NatureAtlas notDefined_;

@@ -40,7 +40,6 @@ class Publisher_ABC;
 // =============================================================================
 class AfterActionModel : public tools::Resolver< AfterActionFunction, QString >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

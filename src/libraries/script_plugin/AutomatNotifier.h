@@ -42,7 +42,6 @@ namespace script
 class AutomatNotifier : public kernel::Extension_ABC
                       , public kernel::Updatable_ABC< Common::MsgAutomatOrder >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

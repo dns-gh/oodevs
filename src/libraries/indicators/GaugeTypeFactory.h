@@ -27,7 +27,6 @@ namespace indicators
 // =============================================================================
 class GaugeTypeFactory
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

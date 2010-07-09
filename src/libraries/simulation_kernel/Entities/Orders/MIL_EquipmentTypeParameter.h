@@ -22,7 +22,6 @@ class PHY_ComposanteTypePion;
 // =============================================================================
 class MIL_EquipmentTypeParameter : public MIL_BaseParameter
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

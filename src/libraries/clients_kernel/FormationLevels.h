@@ -26,7 +26,6 @@ namespace kernel
 // =============================================================================
 class FormationLevels : public Resolver2< HierarchyLevel_ABC, unsigned long, QString >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

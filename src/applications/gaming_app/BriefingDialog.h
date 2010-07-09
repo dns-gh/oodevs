@@ -37,7 +37,6 @@ class QTextBrowser;
 class BriefingDialog : public QDialog
                      , public CommandHandler_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

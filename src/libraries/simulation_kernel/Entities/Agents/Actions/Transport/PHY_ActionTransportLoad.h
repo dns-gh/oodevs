@@ -26,7 +26,6 @@ class MIL_AgentPion;
 // =============================================================================
 class PHY_ActionTransportLoad : public PHY_DecisionCallbackAction_ABC
 {
-
 public:
     typedef MIL_AgentPion ActorType;
 

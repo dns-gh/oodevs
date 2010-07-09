@@ -36,7 +36,6 @@ class InfoEventsWidget : public QVBox
                        , public tools::ElementObserver_ABC< kernel::Attributes_ABC >
                        , public tools::ElementObserver_ABC< Contaminations >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

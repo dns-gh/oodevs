@@ -32,7 +32,6 @@ namespace logger
 // =============================================================================
 class Simulation : public kernel::Time_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

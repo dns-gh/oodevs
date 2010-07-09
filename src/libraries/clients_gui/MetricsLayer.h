@@ -30,7 +30,6 @@ namespace gui
 // =============================================================================
 class MetricsLayer : public Layer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

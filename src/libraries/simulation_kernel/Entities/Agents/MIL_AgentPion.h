@@ -55,7 +55,6 @@ class HLA_UpdateFunctor;
 // =============================================================================
 class MIL_AgentPion : public MIL_Agent_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

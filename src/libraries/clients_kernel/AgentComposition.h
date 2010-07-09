@@ -26,7 +26,6 @@ namespace kernel
 // =============================================================================
 class AgentComposition
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

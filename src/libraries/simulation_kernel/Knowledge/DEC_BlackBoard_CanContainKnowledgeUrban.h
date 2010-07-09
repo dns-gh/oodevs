@@ -26,7 +26,6 @@ namespace urban
 // =============================================================================
 class DEC_BlackBoard_CanContainKnowledgeUrban : private boost::noncopyable
 {
-
 public:
     //! @name Types
     //@{

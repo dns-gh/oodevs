@@ -27,7 +27,6 @@ namespace firing
 // =============================================================================
 class PHY_SmokeData : public FireData_ABC
 {
-
 public:
      PHY_SmokeData( MIL_Agent_ABC& firer, const PHY_IndirectFireDotationClass& indirectWeaponCategory, unsigned int nNbrAmmo );
     virtual ~PHY_SmokeData();

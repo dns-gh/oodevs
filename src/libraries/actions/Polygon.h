@@ -23,7 +23,6 @@ namespace actions {
 // =============================================================================
 class Polygon : public Location
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

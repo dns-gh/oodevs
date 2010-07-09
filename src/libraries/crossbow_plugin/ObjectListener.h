@@ -35,7 +35,6 @@ namespace crossbow
 // =============================================================================
 class ObjectListener : public Listener_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

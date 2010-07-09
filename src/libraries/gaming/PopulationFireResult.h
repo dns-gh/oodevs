@@ -28,7 +28,6 @@ namespace kernel
 // =============================================================================
 class PopulationFireResult
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

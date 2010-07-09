@@ -34,7 +34,6 @@ namespace bml
 // =============================================================================
 class ReportingData
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -42,7 +42,6 @@ class QStringList;
 // =============================================================================
 class GQ_PlotToolTip : public QToolTip
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

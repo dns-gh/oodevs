@@ -31,7 +31,6 @@ namespace kernel
 // =============================================================================
 class FiresModel : public tools::Resolver< kernel::Entity_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

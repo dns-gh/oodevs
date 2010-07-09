@@ -23,7 +23,6 @@ namespace dis
 // =============================================================================
 class DisHeader
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -25,7 +25,6 @@ class PHY_RoleInterface_Medical;
 // =============================================================================
 class PHY_MedicalHealingConsign : public PHY_MedicalConsign_ABC
 {
-
 public:
              PHY_MedicalHealingConsign( PHY_RoleInterface_Medical& medical, PHY_MedicalHumanState& humanState );
              PHY_MedicalHealingConsign();

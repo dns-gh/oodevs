@@ -34,7 +34,6 @@ namespace xml
 class SupplyRouteAttribute : public kernel::SupplyRouteAttribute_ABC
                               , public kernel::Serializable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

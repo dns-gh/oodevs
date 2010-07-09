@@ -24,7 +24,6 @@ class MIL_AgentPion;
 // =============================================================================
 class PHY_RoleAction_Objects_CapabilityComputer : public OnComponentFunctor_ABC
 {
-
 public:
     //! @name Types
     //@{

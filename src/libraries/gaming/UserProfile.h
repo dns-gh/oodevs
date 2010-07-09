@@ -39,7 +39,6 @@ class Publisher_ABC;
 class UserProfile : public kernel::Extension_ABC
                   , public kernel::Updatable_ABC< MsgsAuthenticationToClient::MsgProfileUpdate >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -30,7 +30,6 @@ namespace bml
 // =============================================================================
 class MissionParameterAgent : public MissionParameter_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

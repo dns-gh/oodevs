@@ -34,7 +34,6 @@ class MT_Vector2D;
 // =============================================================================
 class MIL_Agent_ABC : public MIL_Entity_ABC
 {
-
 public:
     explicit MIL_Agent_ABC( xml::xistream& xis );
     explicit MIL_Agent_ABC( const std::string& name );

@@ -28,7 +28,6 @@ namespace xml
 // =============================================================================
 class PHY_MaintenanceWorkRate : private boost::noncopyable
 {
-
 public:
     //! @name Types
     //@{

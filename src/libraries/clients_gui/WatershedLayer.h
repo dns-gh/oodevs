@@ -38,7 +38,6 @@ class WatershedLayer : public Layer2d_ABC
                      , public tools::ElementObserver_ABC< kernel::ModelLoaded >
                      , public kernel::OptionsObserver_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -29,7 +29,6 @@ class PHY_RoleAction_Moving;
 // =============================================================================
 class PHY_Speeds
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

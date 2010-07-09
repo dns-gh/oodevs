@@ -34,7 +34,6 @@ class LogisticsModel : public tools::Resolver< LogMaintenanceConsign >
                      , public tools::Resolver< LogMedicalConsign >
                      , public tools::Resolver< LogSupplyConsign >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -21,7 +21,6 @@ namespace human
 // =============================================================================
 class HealComputerFactory_ABC : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

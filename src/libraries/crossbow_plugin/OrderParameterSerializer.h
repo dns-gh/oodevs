@@ -61,7 +61,6 @@ namespace crossbow
 // =============================================================================
 class OrderParameterSerializer
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

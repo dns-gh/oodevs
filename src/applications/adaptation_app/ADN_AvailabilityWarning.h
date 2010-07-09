@@ -31,7 +31,6 @@ class ADN_AvailabilityWarning
         : public ADN_Ref_ABC
         , public ADN_DataTreeNode_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

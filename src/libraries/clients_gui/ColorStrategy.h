@@ -35,7 +35,6 @@ class ColorStrategy : public ColorStrategy_ABC
                     , public tools::Observer_ABC
                     , public tools::ElementObserver_ABC< kernel::Team_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

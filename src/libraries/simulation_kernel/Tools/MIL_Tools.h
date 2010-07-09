@@ -33,7 +33,6 @@ enum E_TerrainObjectTypeID;
 //=============================================================================
 class MIL_Tools : private boost::noncopyable
 {
-
 public:
     //-------------------------------------------------------------------------
     /** @name Units converters */

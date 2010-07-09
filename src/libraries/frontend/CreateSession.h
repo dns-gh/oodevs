@@ -28,7 +28,6 @@ namespace frontend
 // =============================================================================
 class CreateSession
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

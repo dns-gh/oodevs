@@ -22,7 +22,6 @@ class MIL_Agent_ABC;
 // =============================================================================
 class DecontaminationCapacity : public ObjectCapacity_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

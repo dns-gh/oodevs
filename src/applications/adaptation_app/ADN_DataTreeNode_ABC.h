@@ -32,7 +32,6 @@
 // =============================================================================
 class ADN_DataTreeNode_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

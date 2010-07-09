@@ -23,7 +23,6 @@ namespace actions {
 // =============================================================================
 class String : public Parameter< QString >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

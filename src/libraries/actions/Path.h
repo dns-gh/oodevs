@@ -37,7 +37,6 @@ namespace actions {
 class Path : public Parameter< QString >
            , public kernel::LocationVisitor_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

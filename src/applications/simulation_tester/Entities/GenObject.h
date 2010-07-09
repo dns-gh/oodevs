@@ -48,7 +48,6 @@ typedef T_GenObjectVector::const_reverse_iterator CRIT_GenObjectVector;
 // =============================================================================
 class GenObject
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

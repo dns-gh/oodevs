@@ -20,7 +20,6 @@
 // =============================================================================
 class ChildObjectAttribute : public ObjectAttribute_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

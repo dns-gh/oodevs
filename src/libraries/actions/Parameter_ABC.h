@@ -46,7 +46,6 @@ class ParameterVisitor_ABC;
 // =============================================================================
 class Parameter_ABC : public ParameterContainer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -29,7 +29,6 @@ namespace MsgsDispatcherToClient
 // =============================================================================
 class Services
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -41,7 +41,6 @@ class ActionTiming : public kernel::Extension_ABC
                    , public kernel::Serializable_ABC
                    , public kernel::Displayable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

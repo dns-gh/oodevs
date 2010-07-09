@@ -21,7 +21,6 @@ namespace kernel
 // =============================================================================
 class WorkerTask_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

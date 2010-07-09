@@ -30,7 +30,6 @@ class TerrainData;
 // =============================================================================
 class TER_NodeFunctor_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -53,7 +52,6 @@ public:
 template< typename F >
 class TER_NodeFunctor : public TER_NodeFunctor_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

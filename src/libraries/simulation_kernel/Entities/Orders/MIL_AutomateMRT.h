@@ -21,7 +21,6 @@ class MIL_Mission_ABC;
 //=============================================================================
 class MIL_AutomateMRT : private boost::noncopyable
 {
-
 public:
      MIL_AutomateMRT();
     virtual ~MIL_AutomateMRT();

@@ -30,7 +30,6 @@ class ElementFactory_ABC;
 // =============================================================================
 class FunctionFactory
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

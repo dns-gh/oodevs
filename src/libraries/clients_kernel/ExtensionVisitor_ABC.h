@@ -20,7 +20,6 @@
 template< typename T >
 class ExtensionVisitor_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

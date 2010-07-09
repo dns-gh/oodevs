@@ -25,7 +25,6 @@ namespace dispatcher
 // =============================================================================
 class Object_ABC : public Sendable< kernel::Object_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

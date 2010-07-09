@@ -33,7 +33,6 @@ namespace xml
 template< typename T >
 class RangeHelper
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

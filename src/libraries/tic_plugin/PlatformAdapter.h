@@ -35,7 +35,6 @@ namespace tic
 // =============================================================================
 class PlatformAdapter : public Platform_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

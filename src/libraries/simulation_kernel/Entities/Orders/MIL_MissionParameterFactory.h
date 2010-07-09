@@ -48,7 +48,6 @@ namespace urban
 // =============================================================================
 class MIL_MissionParameterFactory
 {
-
 public:
     //! @name Operations
     //@{

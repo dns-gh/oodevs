@@ -42,7 +42,6 @@ class ExtensionFactory : public dispatcher::ExtensionFactory_ABC< dispatcher::Ag
                        , public dispatcher::ExtensionFactory_ABC< dispatcher::Object >
                        , public dispatcher::ExtensionFactory_ABC< dispatcher::AgentKnowledge >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

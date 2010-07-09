@@ -36,7 +36,6 @@ namespace gui
 class Drawing_ABC : public kernel::Entity_ABC
                   , public ShapeHandler_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

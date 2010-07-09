@@ -37,7 +37,6 @@ namespace dispatcher
 // =============================================================================
 class MessageFilter
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

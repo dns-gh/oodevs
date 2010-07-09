@@ -21,7 +21,6 @@
 // =============================================================================
 class MedicalConsignsWidget : public LogisticConsignsWidget_ABC< MedicalConsignsWidget, LogMedicalConsign, LogMedicalConsigns >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

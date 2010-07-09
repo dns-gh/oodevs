@@ -21,7 +21,6 @@
 // =============================================================================
 class PHY_RoleHLA_Communications : public PHY_RoleInterface_Communications
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

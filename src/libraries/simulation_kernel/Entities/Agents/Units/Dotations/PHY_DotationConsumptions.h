@@ -27,7 +27,6 @@ class PHY_DotationGroupContainer;
 // =============================================================================
 class PHY_DotationConsumptions : private boost::noncopyable
 {
-
 public:
     //! @name types
     //@{

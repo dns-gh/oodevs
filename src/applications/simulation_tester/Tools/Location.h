@@ -48,7 +48,6 @@ typedef T_LocationVector::const_reverse_iterator CRIT_LocationVector;
 // =============================================================================
 class Location
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

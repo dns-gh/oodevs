@@ -34,7 +34,6 @@ class StaticModel;
 // =============================================================================
 class ObjectFactory : public ObjectFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

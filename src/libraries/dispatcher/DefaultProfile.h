@@ -26,7 +26,6 @@ namespace dispatcher
 // =============================================================================
 class DefaultProfile : public Profile_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

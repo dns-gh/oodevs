@@ -28,7 +28,6 @@ namespace xml
 class FormationFactory_ABC : public tools::Resolver< MIL_Formation >
                            , private boost::noncopyable
 {
-
 public:
     //! @name Destructor
     //@{

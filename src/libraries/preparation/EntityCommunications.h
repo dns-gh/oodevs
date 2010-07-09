@@ -27,7 +27,6 @@ namespace kernel
 // =============================================================================
 class EntityCommunications : public kernel::EntityHierarchies< kernel::CommunicationHierarchies >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

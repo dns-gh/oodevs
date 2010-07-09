@@ -49,7 +49,6 @@ class TeamKarmas;
 // =============================================================================
 class StaticModel
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -26,7 +26,6 @@ class MIL_Agent_ABC;
 // =============================================================================
 class DEC_BlackBoard_CanContainKnowledgeAgentPerception : private boost::noncopyable
 {
-
 public:
     //! @name Types
     //@{

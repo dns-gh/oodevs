@@ -20,7 +20,6 @@ namespace transport {
 // =============================================================================
 class LoadingChangeNotificationHandler_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

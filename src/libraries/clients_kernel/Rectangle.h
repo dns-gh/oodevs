@@ -22,7 +22,6 @@ namespace kernel
 // =============================================================================
 class Rectangle : public Location_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -23,7 +23,6 @@ class PHY_DotationCategory;
 // =============================================================================
 class UrbanBlockPosition_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

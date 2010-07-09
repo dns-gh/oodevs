@@ -35,7 +35,6 @@ namespace hla
 // =============================================================================
 class HLA_Object_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

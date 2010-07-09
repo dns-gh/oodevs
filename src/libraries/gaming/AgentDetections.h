@@ -40,7 +40,6 @@ class AgentDetections : public kernel::Extension_ABC
                       , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitDetection >
                       , public kernel::Drawable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

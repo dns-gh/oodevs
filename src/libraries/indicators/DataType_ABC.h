@@ -21,7 +21,6 @@ namespace indicators
 // =============================================================================
 class DataType_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

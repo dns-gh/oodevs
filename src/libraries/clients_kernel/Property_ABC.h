@@ -28,7 +28,6 @@ namespace kernel
 // =============================================================================
 class Property_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

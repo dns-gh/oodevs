@@ -25,7 +25,6 @@ namespace bml
 // =============================================================================
 class BmlPluginFactory : public dispatcher::PluginFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

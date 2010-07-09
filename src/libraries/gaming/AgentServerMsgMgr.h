@@ -227,7 +227,6 @@ class CommandHandler;
 //=============================================================================
 class AgentServerMsgMgr : public Publisher_ABC
 {
-
 public:
     //! @name Constructor/Destructor
     //@{

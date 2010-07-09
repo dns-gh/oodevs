@@ -45,7 +45,6 @@ class Logistics : public kernel::Extension_ABC
                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgLogMedicalState >
                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgLogSupplyState >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

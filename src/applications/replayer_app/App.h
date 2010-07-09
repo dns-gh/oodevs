@@ -28,7 +28,6 @@ namespace dispatcher
 // =============================================================================
 class App
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

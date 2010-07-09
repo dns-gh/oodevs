@@ -23,7 +23,6 @@ namespace firing
 // =============================================================================
 class ComposantesAbleToBeFiredComputerFactory : public ComposantesAbleToBeFiredComputerFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -25,7 +25,6 @@ namespace gui
 // =============================================================================
 class DisplayBuilder : public kernel::Displayer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

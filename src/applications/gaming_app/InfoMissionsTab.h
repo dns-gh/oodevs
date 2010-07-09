@@ -38,7 +38,6 @@ class InfoMissionsTab : public gui::ListDisplayer< InfoMissionsTab >
                       , public tools::SelectionObserver< kernel::Entity_ABC >
                       , public tools::ElementObserver_ABC< MissionParameters >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

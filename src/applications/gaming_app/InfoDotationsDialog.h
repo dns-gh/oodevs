@@ -32,7 +32,6 @@ namespace gui
 // =============================================================================
 class InfoDotationsDialog : public InfoDialog< kernel::Dotations_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

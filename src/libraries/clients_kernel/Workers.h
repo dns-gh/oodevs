@@ -34,7 +34,6 @@ namespace kernel
 // =============================================================================
 class Workers
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

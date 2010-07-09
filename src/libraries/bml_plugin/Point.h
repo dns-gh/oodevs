@@ -34,7 +34,6 @@ namespace bml
 // =============================================================================
 class Point
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

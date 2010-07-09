@@ -24,7 +24,6 @@ namespace kernel
 // =============================================================================
 class Dialogs : public QObject
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

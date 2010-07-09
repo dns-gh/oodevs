@@ -30,7 +30,6 @@ namespace xml
 // =============================================================================
 class PHY_LocalMeteo : public weather::PHY_Meteo
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

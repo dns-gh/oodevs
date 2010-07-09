@@ -27,7 +27,6 @@ namespace kernel
 class ConvexHulls : public kernel::Extension_ABC
                   , public kernel::Drawable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

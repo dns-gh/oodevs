@@ -21,7 +21,6 @@
 // =============================================================================
 class AgentKnowledgesLayer : public KnowledgeLayer< kernel::AgentKnowledge_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

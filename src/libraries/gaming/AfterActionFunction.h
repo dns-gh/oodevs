@@ -29,7 +29,6 @@ class AfterActionParameter;
 class AfterActionFunction : public IndicatorDefinition_ABC
                           , public tools::Resolver< AfterActionParameter, std::string >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

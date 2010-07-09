@@ -20,7 +20,6 @@ class PHY_SensorType;
 // =============================================================================
 class PHY_Sensor : private boost::noncopyable
 {
-
 public:
      PHY_Sensor( const PHY_SensorType& type, MT_Float rHeight );
     virtual ~PHY_Sensor();

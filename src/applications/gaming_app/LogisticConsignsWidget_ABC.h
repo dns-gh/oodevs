@@ -37,7 +37,6 @@ class LogisticConsignsWidget_ABC : public QVBox
                                  , public tools::ElementObserver_ABC< Consign >
                                  , public tools::SelectionObserver< kernel::Entity_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

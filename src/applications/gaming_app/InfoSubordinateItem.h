@@ -35,7 +35,6 @@ class InfoSubordinateItem : public QIconViewItem
                           , public tools::Observer_ABC
                           , public tools::ElementObserver_ABC< kernel::Attributes_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

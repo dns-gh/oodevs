@@ -20,7 +20,6 @@ class AGR_Workspace;
 // =============================================================================
 class AGR_Generator_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

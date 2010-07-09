@@ -28,7 +28,6 @@ class PHY_PerceptionLevel;
 // =============================================================================
 class DEC_Knowledge_PopulationFlowPart
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

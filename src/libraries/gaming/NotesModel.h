@@ -41,7 +41,6 @@ class NotesModel : public tools::Resolver< Note, unsigned int >
     , public tools::Observer_ABC
 
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

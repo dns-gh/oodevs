@@ -23,7 +23,6 @@ class PHY_FireResults_ABC;
 // =============================================================================
 class MIL_Effect_DirectFirePopulation : public MIL_Effect_ABC
 {
-
 public:
              MIL_Effect_DirectFirePopulation( MIL_PopulationElement_ABC& target, unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult );
     virtual ~MIL_Effect_DirectFirePopulation();

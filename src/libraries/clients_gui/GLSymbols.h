@@ -32,7 +32,6 @@ namespace gui
 // =============================================================================
 class GLSymbols
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

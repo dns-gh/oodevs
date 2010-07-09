@@ -38,7 +38,6 @@ class StaticModel;
 // =============================================================================
 class TacticalList : public QVBox
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

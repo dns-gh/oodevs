@@ -29,7 +29,6 @@ using namespace Common;
 // =============================================================================
 class Position
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -28,7 +28,6 @@
 // =============================================================================
 class MIL_PropagationManager : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

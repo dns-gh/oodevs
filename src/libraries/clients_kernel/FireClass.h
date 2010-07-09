@@ -23,7 +23,6 @@ namespace kernel
 // =============================================================================
 class FireClass
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

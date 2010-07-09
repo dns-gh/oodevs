@@ -39,7 +39,6 @@ namespace TEST
 // =============================================================================
 class Pawn : public Testable_Entity
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

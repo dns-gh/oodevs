@@ -26,7 +26,6 @@ namespace kernel
 // =============================================================================
 class Hierarchies : public Extension_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

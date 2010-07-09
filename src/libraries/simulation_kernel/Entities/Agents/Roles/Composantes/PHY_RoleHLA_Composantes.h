@@ -40,7 +40,6 @@ namespace hla {
 // =============================================================================
 class PHY_RoleHLA_Composantes : public PHY_RoleInterface_Composantes
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

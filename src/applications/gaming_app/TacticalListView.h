@@ -40,7 +40,6 @@ class StaticModel;
 class TacticalListView : public gui::HierarchyListView< kernel::TacticalHierarchies >
                        , public tools::ElementObserver_ABC< AutomatDecisions >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

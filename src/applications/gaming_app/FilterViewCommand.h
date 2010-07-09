@@ -23,7 +23,6 @@ class ProfileFilter;
 // =============================================================================
 class FilterViewCommand : public CommandHandler_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

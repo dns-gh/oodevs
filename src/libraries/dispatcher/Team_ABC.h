@@ -33,7 +33,6 @@ namespace dispatcher
 // =============================================================================
 class Team_ABC : public Sendable< kernel::Team_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

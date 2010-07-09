@@ -25,7 +25,6 @@ namespace TEST {
 // =============================================================================
 class Mission_Automat_Test_MoveTo : public Mission_Automat_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

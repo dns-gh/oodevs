@@ -22,7 +22,6 @@ namespace firing
 // =============================================================================
 class WeaponReloadingComputerFactory_ABC : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

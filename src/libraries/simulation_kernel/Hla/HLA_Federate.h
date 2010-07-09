@@ -38,7 +38,6 @@ class MIL_Object_ABC;
 // =============================================================================
 class HLA_Federate
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -23,7 +23,6 @@ namespace firing
 // =============================================================================
 class DefaultComposantesAbleToBeFiredComputer : public ComposantesAbleToBeFiredComputer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

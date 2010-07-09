@@ -45,7 +45,6 @@ class VisionCones : public kernel::Extension_ABC
                   , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
                   , public kernel::Drawable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

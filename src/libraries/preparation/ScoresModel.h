@@ -30,7 +30,6 @@ class ScoreFactory_ABC;
 // =============================================================================
 class ScoresModel : public tools::Resolver< Score_ABC, QString >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

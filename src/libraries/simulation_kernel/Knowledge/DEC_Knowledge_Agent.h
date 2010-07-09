@@ -49,7 +49,6 @@ class PHY_NatureAtlas;
 // =============================================================================
 class DEC_Knowledge_Agent : public DEC_Knowledge_ABC
 {
-
 public:
     // Parameters - $$$ Changer - ne devrait pas être public
     static MT_Float rMaxDangerosityDegradationByRelevance_;

@@ -27,7 +27,6 @@ namespace kernel
 // =============================================================================
 class VisionMap
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -35,7 +35,6 @@ class Event;
 // =============================================================================
 class FiniteStateMachine
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

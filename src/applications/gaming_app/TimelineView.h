@@ -46,7 +46,6 @@ class TimelineView : public QCanvasView
                    , public tools::ElementObserver_ABC< kernel::Entity_ABC >
                    , public tools::SelectionObserver< actions::Action_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

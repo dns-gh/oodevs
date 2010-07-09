@@ -26,7 +26,6 @@ namespace kernel
 // =============================================================================
 class Path : public Location_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

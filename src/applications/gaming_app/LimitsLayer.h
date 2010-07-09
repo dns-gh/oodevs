@@ -24,7 +24,6 @@ class LimitsLayer : public gui::TacticalLinesLayer
                   , public tools::SelectionObserver_Base< kernel::Automat_ABC >
                   , public tools::SelectionObserver_Base< kernel::Formation_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

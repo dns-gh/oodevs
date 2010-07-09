@@ -40,7 +40,6 @@ class ObjectKnowledges : public kernel::Extension_ABC
                        , public tools::Resolver< kernel::ObjectKnowledge_ABC >
                        , public kernel::Creatable< ObjectKnowledges >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

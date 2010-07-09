@@ -19,7 +19,6 @@ class DEC_Knowledge_Population;
 // =============================================================================
 class DEC_KS_KnowledgeSynthetizer : public DEC_KnowledgeSource_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

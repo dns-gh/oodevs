@@ -29,7 +29,6 @@ namespace dispatcher
 // =============================================================================
 class DecisionalState
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

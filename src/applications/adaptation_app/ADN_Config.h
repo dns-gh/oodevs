@@ -19,7 +19,6 @@ class ADN_ConfigDialog;
 //*****************************************************************************
 class ADN_Config
 {
-
 public:
     //! @name Constructor/Destructor
     //@{

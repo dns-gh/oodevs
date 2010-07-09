@@ -44,7 +44,6 @@ class Diplomacies : public kernel::Diplomacies_ABC
                   , public kernel::Updatable_ABC< MsgsSimToClient::MsgChangeDiplomacyAck >
                   , public kernel::Updatable_ABC< Common::MsgChangeDiplomacy >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

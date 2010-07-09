@@ -21,7 +21,6 @@
 class PHY_RoleInterface_Population : public tools::Role_ABC
                                    , private boost::noncopyable
 {
-
 public:
     typedef PHY_RoleInterface_Population RoleInterface;
 

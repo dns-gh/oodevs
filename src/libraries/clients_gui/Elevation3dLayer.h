@@ -48,7 +48,6 @@ class Elevation3dLayer : private kernel::WorldParameters
                        , public tools::ElementObserver_ABC< kernel::ModelLoaded >
 
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

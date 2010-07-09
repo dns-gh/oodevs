@@ -23,7 +23,6 @@ namespace gui
 // =============================================================================
 class LayersRenderPass : public GlRenderPass_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -21,7 +21,6 @@
 class MockIndicatorGrammarHandler : public indicators::GrammarHandler_ABC
                                   , public mockpp::ChainableMockObject
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -28,7 +28,6 @@ namespace gui
 // =============================================================================
 class TerrainProfile : public gui::GQ_Plot
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

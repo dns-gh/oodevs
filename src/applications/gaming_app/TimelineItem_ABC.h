@@ -20,7 +20,6 @@
 // =============================================================================
 class TimelineItem_ABC : public QCanvasRectangle
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

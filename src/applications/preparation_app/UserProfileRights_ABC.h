@@ -26,7 +26,6 @@ class UserProfile;
 // =============================================================================
 class UserProfileRights_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

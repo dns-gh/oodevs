@@ -32,7 +32,6 @@ namespace dispatcher
 // =============================================================================
 class IntelligenceOrder
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

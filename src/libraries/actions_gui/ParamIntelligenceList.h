@@ -33,7 +33,6 @@ namespace actions
 // =============================================================================
 class ParamIntelligenceList : public EntityListParameter< kernel::Intelligence_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

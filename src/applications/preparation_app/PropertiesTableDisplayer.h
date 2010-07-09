@@ -33,7 +33,6 @@ class PropertiesTableDisplayer : public gui::TableItemDisplayer
                                , public tools::Caller< geometry::Point2f >
                                , public tools::Caller< kernel::Moveable_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

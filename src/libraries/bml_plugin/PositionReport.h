@@ -40,7 +40,6 @@ namespace bml
 // =============================================================================
 class PositionReport
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

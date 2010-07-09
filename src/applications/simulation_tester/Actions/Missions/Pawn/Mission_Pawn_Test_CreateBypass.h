@@ -25,7 +25,6 @@ namespace TEST {
 // =============================================================================
 class Mission_Pawn_Test_CreateBypass : public Mission_Pawn_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

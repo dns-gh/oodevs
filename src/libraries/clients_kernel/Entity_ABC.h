@@ -41,7 +41,6 @@ namespace kernel
 class Entity_ABC : public tools::Extendable< Extension_ABC >
                  , public tools::SortedInterfaceContainer< Extension_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

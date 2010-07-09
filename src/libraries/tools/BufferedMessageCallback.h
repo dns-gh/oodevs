@@ -25,7 +25,6 @@ namespace tools
 // =============================================================================
 class BufferedMessageCallback : public MessageCallback_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

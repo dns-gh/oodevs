@@ -22,7 +22,6 @@ namespace kernel
 template< typename T >
 class Updatable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

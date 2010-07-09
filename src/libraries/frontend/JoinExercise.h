@@ -23,7 +23,6 @@ namespace frontend
 // =============================================================================
 class JoinExercise : public SpawnCommand
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

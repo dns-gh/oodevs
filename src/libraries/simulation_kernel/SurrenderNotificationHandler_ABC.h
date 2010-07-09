@@ -20,7 +20,6 @@ namespace surrender {
 // =============================================================================
 class SurrenderNotificationHandler_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -25,7 +25,6 @@ class TER_Localisation;
 // =============================================================================
 class PHY_ActionPrepareObject : public PHY_DecisionCallbackAction_ABC
 {
-
 public:
     typedef MIL_AgentPion ActorType;
 

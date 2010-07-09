@@ -21,7 +21,6 @@ namespace dispatcher
 // =============================================================================
 class Frame
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

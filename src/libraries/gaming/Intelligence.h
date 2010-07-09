@@ -44,7 +44,6 @@ class Intelligence : public kernel::EntityImplementation< kernel::Intelligence_A
                    , public kernel::Displayable_ABC
                    , public kernel::Updatable_ABC< MsgsMessengerToClient::MsgIntelligenceUpdate >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

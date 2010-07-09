@@ -26,7 +26,6 @@
 template< typename K, typename A >
 class HandlerToFunction
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

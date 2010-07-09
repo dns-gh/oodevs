@@ -26,7 +26,6 @@ namespace kernel {
 class PcAttributes : public kernel::Extension_ABC
                    , public kernel::Drawable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

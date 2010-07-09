@@ -28,7 +28,6 @@ class LightingProxy : public QObject
                     , public Lighting_ABC
 
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

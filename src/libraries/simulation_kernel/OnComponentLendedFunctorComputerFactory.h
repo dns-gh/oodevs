@@ -22,7 +22,6 @@ class OnComponentFunctor_ABC;
 // =============================================================================
 class OnComponentLendedFunctorComputerFactory : public OnComponentLendedFunctorComputerFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

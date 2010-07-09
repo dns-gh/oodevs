@@ -26,7 +26,6 @@ namespace TEST {
 template< typename T >
 class Action : public Action_ABC
 {
-
 public:
     static IDManager idManager_;
 

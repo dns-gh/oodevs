@@ -35,7 +35,6 @@ class PHY_RolePion_Surrender : public PHY_RoleInterface_Surrender
                              , public tools::AlgorithmModifier_ABC<moving::MoveComputer_ABC>
                              , public network::NetworkUnitMessageNotificationHandler_ABC
 {
-
 public:
     explicit PHY_RolePion_Surrender( MIL_AgentPion& pion );
     virtual ~PHY_RolePion_Surrender();

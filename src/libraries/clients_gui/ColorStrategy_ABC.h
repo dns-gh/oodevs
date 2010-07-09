@@ -35,7 +35,6 @@ namespace gui
 // =============================================================================
 class ColorStrategy_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

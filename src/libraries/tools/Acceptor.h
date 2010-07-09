@@ -24,7 +24,6 @@ namespace tools
 // =============================================================================
 class Acceptor
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

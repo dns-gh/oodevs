@@ -31,7 +31,6 @@ struct MsgObjectAttributesLogisticRoute;
 // =============================================================================
 class SupplyRoutePrototype : public gui::SupplyRoutePrototype_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

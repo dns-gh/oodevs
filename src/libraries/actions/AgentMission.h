@@ -23,7 +23,6 @@ namespace actions
 // =============================================================================
 class AgentMission : public Mission
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

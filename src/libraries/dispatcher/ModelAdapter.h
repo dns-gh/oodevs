@@ -24,7 +24,6 @@ namespace dispatcher
 // =============================================================================
 class ModelAdapter : public kernel::EntityResolver_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -30,7 +30,6 @@ namespace internal
 template< typename T >
 class ApproximativeMap
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

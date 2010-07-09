@@ -22,7 +22,6 @@ class PHY_DotationCategory;
 // =============================================================================
 class MIL_DotationTypeParameter : public MIL_BaseParameter
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

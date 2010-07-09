@@ -24,7 +24,6 @@
 template< typename K >
 class DispatchedFunction : public ModelFunction_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

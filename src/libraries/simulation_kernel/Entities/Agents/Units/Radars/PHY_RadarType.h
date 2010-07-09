@@ -29,7 +29,6 @@ class MIL_Time_ABC;
 // =============================================================================
 class PHY_RadarType : private boost::noncopyable
 {
-
 public:
     //! @name Manager
     //@{

@@ -26,7 +26,6 @@ namespace kernel
 // =============================================================================
 class OrderParameterValue
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

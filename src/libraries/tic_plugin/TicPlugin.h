@@ -40,7 +40,6 @@ namespace tic
 // =============================================================================
 class TicPlugin : public dispatcher::Plugin_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -18,7 +18,6 @@
 // =============================================================================
 class IdentifierFactory
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

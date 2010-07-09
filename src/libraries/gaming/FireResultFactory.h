@@ -28,7 +28,6 @@ class Simulation;
 // =============================================================================
 class FireResultFactory
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

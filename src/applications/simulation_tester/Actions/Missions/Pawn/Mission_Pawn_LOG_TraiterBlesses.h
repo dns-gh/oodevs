@@ -25,7 +25,6 @@ namespace TEST {
 // =============================================================================
 class Mission_Pawn_LOG_TraiterBlesses : public Mission_Pawn_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

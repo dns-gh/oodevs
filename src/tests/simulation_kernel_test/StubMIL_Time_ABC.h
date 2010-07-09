@@ -20,7 +20,6 @@
 // =============================================================================
 class StubMIL_Time_ABC : public MIL_Time_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

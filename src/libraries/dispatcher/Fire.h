@@ -45,7 +45,6 @@ namespace dispatcher
 // =============================================================================
 class Fire : public SimpleEntity< >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -31,7 +31,6 @@ class MIL_Population;
 // =============================================================================
 class DEC_KS_Fire : public DEC_KnowledgeSource_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

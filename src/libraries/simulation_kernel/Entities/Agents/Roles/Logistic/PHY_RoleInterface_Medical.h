@@ -33,7 +33,6 @@ class PHY_MedicalCollectionAmbulance;
 class PHY_RoleInterface_Medical : public tools::Role_ABC
                                 , private boost::noncopyable
 {
-
 public:
     //! @name Types
     //@{

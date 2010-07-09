@@ -20,7 +20,6 @@
 // =============================================================================
 class StubMIL_Object_ABC : public MIL_Object_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

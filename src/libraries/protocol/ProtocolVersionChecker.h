@@ -25,7 +25,6 @@ namespace Version
 // =============================================================================
 class ProtocolVersionChecker
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

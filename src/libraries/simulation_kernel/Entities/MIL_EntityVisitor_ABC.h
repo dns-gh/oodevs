@@ -19,7 +19,6 @@
 template< typename T >
 class MIL_EntityVisitor_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

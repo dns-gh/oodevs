@@ -37,7 +37,6 @@ template< class PointedClass >
 class ADN_ChangeValueCommand_Pointer
 : public QtCommand
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -77,7 +76,6 @@ template<>
 class ADN_ChangeValueCommand_Pointer< ADN_Type_ABC< std::string > >
 : public QtCommand
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

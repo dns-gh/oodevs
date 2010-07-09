@@ -21,7 +21,6 @@ class Network;
 // =============================================================================
 class Config : public tools::SessionConfig
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -20,7 +20,6 @@
 // =============================================================================
 class Config : public frontend::Config
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

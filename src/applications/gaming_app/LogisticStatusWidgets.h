@@ -23,7 +23,6 @@
 // =============================================================================
 class MaintenanceStatusWidget : public LogisticStatusWidget_ABC< MaintenanceStates >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -40,7 +39,6 @@ public:
 // =============================================================================
 class MedicalStatusWidget : public LogisticStatusWidget_ABC< MedicalStates >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -57,7 +55,6 @@ public:
 // =============================================================================
 class SupplyStatusWidget : public LogisticStatusWidget_ABC< SupplyStates >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

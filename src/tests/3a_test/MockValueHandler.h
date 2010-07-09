@@ -21,7 +21,6 @@
 template< typename T >
 class MockValueHandler : public ValueHandler_ABC< T >, public mockpp::ChainableMockObject
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -24,7 +24,6 @@ namespace kernel
 // =============================================================================
 class ObjectIcons
 {
-
 public:
     //! @name Operations
     //@{

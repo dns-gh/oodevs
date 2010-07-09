@@ -26,7 +26,6 @@ namespace urban
 // =============================================================================
 class InsideUrbanBlockPosition : public UrbanBlockPosition_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

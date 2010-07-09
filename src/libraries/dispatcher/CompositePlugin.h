@@ -24,7 +24,6 @@ namespace dispatcher
 // =============================================================================
 class CompositePlugin : public Plugin_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

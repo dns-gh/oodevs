@@ -21,7 +21,6 @@ class PHY_ComposantePion;
 // =============================================================================
 class OnComponentComputer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

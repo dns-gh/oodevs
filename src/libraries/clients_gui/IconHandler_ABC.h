@@ -22,7 +22,6 @@ namespace gui
 // =============================================================================
 class IconHandler_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

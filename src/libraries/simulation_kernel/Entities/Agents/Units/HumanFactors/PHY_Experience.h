@@ -29,7 +29,6 @@ namespace xml
 // =============================================================================
 class PHY_Experience : private boost::noncopyable
 {
-
 public:
     //! @name Types
     //@{

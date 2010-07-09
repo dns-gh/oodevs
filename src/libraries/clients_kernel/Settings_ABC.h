@@ -25,7 +25,6 @@ namespace kernel
 // =============================================================================
 class Settings_ABC
 {
-
 public:
     //! @name Constants
     //@{

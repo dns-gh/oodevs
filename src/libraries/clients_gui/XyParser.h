@@ -23,7 +23,6 @@ namespace gui
 // =============================================================================
 class XyParser : public LocationParser_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

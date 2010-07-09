@@ -25,7 +25,6 @@ namespace tools
 // =============================================================================
 class ProcessList
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

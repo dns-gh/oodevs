@@ -19,7 +19,6 @@ class DEC_Population_PathClass;
 // =============================================================================
 class DEC_Population_Path_Channeler
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

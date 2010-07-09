@@ -24,7 +24,6 @@ namespace TEST {
 // =============================================================================
 class Mission_Population_ABC : public Action< Population >
 {
-
 public:
     //! @name ID Managers
     //@{

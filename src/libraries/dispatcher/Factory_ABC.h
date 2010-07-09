@@ -21,7 +21,6 @@ namespace dispatcher
 // =============================================================================
 class Factory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

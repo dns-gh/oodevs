@@ -18,7 +18,6 @@
 // =============================================================================
 class DiamondFormation
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

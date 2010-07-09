@@ -28,7 +28,6 @@ namespace actions {
 // =============================================================================
 class PolygonList : public LocationList
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

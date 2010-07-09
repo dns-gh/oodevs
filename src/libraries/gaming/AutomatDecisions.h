@@ -40,7 +40,6 @@ class AutomatDecisions : public kernel::Extension_ABC
                        , public kernel::Displayable_ABC
                        , public Decisions_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -27,7 +27,6 @@ class ScoresModel;
 // =============================================================================
 class SuccessFactorCondition
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

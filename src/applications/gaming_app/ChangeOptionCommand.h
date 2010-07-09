@@ -27,7 +27,6 @@ class CommandHandler;
 // =============================================================================
 class ChangeOptionCommand : public CommandHandler_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

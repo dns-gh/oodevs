@@ -30,7 +30,6 @@ namespace frontend
 // =============================================================================
 class SpawnCommand : public Process_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

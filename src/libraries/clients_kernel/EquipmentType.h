@@ -26,7 +26,6 @@ namespace kernel
 // =============================================================================
 class EquipmentType : public  tools::Resolver< WeaponSystemType, std::string >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

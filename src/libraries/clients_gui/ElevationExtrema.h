@@ -25,7 +25,6 @@ namespace gui
 // =============================================================================
 class ElevationExtrema
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

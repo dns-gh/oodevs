@@ -33,7 +33,6 @@ namespace kernel
 // =============================================================================
 class AutomatType
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

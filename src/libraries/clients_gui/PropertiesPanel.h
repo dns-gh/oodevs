@@ -38,7 +38,6 @@ class PropertiesPanel : public QScrollView
                       , public tools::SelectionObserver< kernel::Entity_ABC >
                       , public tools::ElementObserver_ABC< kernel::Entity_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -27,7 +27,6 @@ class CommandHandler;
 // =============================================================================
 class CenterViewCommand : public CommandHandler_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

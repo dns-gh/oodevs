@@ -21,7 +21,6 @@ namespace gui
 // =============================================================================
 class PreferencePanel_ABC : public QScrollView
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

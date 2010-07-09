@@ -28,7 +28,6 @@ template< typename ConcreteEntity >
 class Knowledge_ABC : public Entity< ConcreteEntity >
                     , public kernel::KnowledgeListener_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

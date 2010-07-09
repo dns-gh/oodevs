@@ -22,7 +22,6 @@ class CrossingSiteAttribute;
 // =============================================================================
 class DEC_Knowledge_ObjectAttributeCrossingSite : public DEC_Knowledge_ObjectAttribute_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

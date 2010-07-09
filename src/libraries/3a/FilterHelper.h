@@ -31,7 +31,6 @@ namespace xml
 template< typename T >
 class FilterHelper
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

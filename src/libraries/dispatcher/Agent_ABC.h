@@ -30,7 +30,6 @@ namespace dispatcher
 // =============================================================================
 class Agent_ABC : public Sendable< kernel::Agent_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

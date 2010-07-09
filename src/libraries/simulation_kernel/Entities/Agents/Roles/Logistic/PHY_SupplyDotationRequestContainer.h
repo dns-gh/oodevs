@@ -26,7 +26,6 @@ class MIL_AutomateLOG;
 // =============================================================================
 class PHY_SupplyDotationRequestContainer : private boost::noncopyable
 {
-
 public:
      PHY_SupplyDotationRequestContainer( MIL_Automate& suppliedAutomate, bool bForceRequestActivation );
     virtual ~PHY_SupplyDotationRequestContainer();

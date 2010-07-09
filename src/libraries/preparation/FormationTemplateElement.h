@@ -26,7 +26,6 @@ namespace kernel
 // =============================================================================
 class FormationTemplateElement : public TemplateElement_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

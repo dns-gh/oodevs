@@ -22,7 +22,6 @@ class ADN_Reports_Data;
 // =============================================================================
 class ADN_Reports_GUI : public ADN_GUI_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

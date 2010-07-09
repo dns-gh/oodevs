@@ -37,7 +37,6 @@ class TacticalLinePositions : public kernel::Positions
                             , public kernel::Updatable_ABC< MsgsMessengerToClient::MsgLimaUpdate >
                             , public kernel::Updatable_ABC< MsgsMessengerToClient::MsgLimitUpdate >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

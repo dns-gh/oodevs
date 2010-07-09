@@ -26,7 +26,6 @@ class Task;
 // =============================================================================
 class Slot_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

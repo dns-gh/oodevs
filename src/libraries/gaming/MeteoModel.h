@@ -28,7 +28,6 @@ namespace kernel
 // =============================================================================
 class MeteoModel : public weather::MeteoModel_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

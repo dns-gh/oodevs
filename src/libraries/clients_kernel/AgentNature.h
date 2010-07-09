@@ -26,7 +26,6 @@ namespace kernel
 // =============================================================================
 class AgentNature
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

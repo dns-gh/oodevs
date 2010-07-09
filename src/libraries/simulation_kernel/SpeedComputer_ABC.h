@@ -27,7 +27,6 @@ class SpeedStrategy_ABC;
 // =============================================================================
 class SpeedComputer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

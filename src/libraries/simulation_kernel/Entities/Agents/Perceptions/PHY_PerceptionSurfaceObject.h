@@ -19,7 +19,6 @@ class DEC_Knowledge_Object;
 //*****************************************************************************
 class PHY_PerceptionSurfaceObject
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -28,7 +28,6 @@ namespace dispatcher
 // =============================================================================
 class Order_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

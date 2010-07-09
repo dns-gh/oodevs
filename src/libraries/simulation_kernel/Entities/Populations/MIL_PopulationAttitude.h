@@ -20,7 +20,6 @@
 // =============================================================================
 class MIL_PopulationAttitude : private boost::noncopyable
 {
-
 public:
     //! @name Types
     //@{

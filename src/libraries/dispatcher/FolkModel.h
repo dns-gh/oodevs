@@ -34,7 +34,6 @@ namespace dispatcher
 // =============================================================================
 class FolkModel : public SimpleEntity< >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -24,7 +24,6 @@ namespace dispatcher
 template< typename Entity >
 class ExtensionFactory_ABC : public virtual Factory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -28,7 +28,6 @@ class ListItemDisplayer : public BaseDisplayer
                         , public tools::Caller< QPixmap >
                         , public tools::Caller< kernel::Styles::Style >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

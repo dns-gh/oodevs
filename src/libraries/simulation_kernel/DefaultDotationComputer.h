@@ -23,7 +23,6 @@ namespace dotation
 // =============================================================================
 class DefaultDotationComputer : public DotationComputer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

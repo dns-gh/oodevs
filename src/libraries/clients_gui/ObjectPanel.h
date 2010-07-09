@@ -60,7 +60,6 @@ class ObjectPanel : public InfoPanel_ABC
                   , public tools::SelectionObserver< kernel::Object_ABC >
 
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

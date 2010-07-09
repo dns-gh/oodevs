@@ -32,7 +32,6 @@ namespace dispatcher
 // =============================================================================
 class SaverFacade : public MessageHandler_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

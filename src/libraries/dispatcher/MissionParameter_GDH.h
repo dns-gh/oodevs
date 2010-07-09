@@ -29,7 +29,6 @@ namespace dispatcher
 // =============================================================================
 class MissionParameter_GDH : public MissionParameter_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

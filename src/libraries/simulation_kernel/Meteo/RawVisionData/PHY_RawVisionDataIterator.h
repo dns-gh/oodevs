@@ -20,7 +20,6 @@
 //*****************************************************************************
 class PHY_RawVisionDataIterator : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

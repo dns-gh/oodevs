@@ -23,7 +23,6 @@ namespace dis
 // =============================================================================
 class Serializer
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -37,7 +37,6 @@ class TacticalLine_ABC : public kernel::TacticalLine_ABC
                        , public kernel::Updatable_ABC< MsgsMessengerToClient::MsgLimaUpdate >
                        , public kernel::Updatable_ABC< MsgsMessengerToClient::MsgLimitUpdate >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

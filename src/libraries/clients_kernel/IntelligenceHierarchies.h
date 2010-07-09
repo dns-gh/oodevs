@@ -24,7 +24,6 @@ namespace kernel
 // =============================================================================
 class IntelligenceHierarchies : public Hierarchies, public Symbol_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

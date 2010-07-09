@@ -24,7 +24,6 @@ namespace tic
 // =============================================================================
 class PlatformVisitor_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

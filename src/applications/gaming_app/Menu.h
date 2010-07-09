@@ -46,7 +46,6 @@ class Menu : public QMenuBar
            , public tools::Observer_ABC
            , public tools::ElementObserver_ABC< Profile >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

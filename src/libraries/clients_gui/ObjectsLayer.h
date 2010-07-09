@@ -24,7 +24,6 @@ namespace gui
 // =============================================================================
 class ObjectsLayer : public EntityLayer< kernel::Object_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

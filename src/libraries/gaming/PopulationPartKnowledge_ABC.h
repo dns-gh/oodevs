@@ -23,7 +23,6 @@ namespace kernel
 // =============================================================================
 class PopulationPartKnowledge_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -24,7 +24,6 @@ namespace kernel
 // =============================================================================
 class MissionType : public OrderType
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

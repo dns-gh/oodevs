@@ -38,7 +38,6 @@ public:
 // =============================================================================
 class OrderParameter
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

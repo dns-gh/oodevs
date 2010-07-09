@@ -22,7 +22,6 @@ class PHY_RoleAction_InterfaceFlying;
 // =============================================================================
 class MIL_Effect_Fly : public MIL_Effect_ABC
 {
-
 public:
     explicit MIL_Effect_Fly( PHY_RoleAction_InterfaceFlying& roleFlying );
     virtual ~MIL_Effect_Fly();

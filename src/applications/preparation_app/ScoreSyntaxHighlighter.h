@@ -36,7 +36,6 @@ class ScoreSyntaxHighlighter : public QSyntaxHighlighter
                              , public tools::ElementObserver_ABC< kernel::ModelLoaded >
                              , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

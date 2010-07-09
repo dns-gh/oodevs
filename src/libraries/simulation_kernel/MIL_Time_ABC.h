@@ -18,7 +18,6 @@
 // =============================================================================
 class MIL_Time_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

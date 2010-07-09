@@ -21,7 +21,6 @@
 // =============================================================================
 class ObjectKnowledgesLayer : public KnowledgeLayer< kernel::ObjectKnowledge_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

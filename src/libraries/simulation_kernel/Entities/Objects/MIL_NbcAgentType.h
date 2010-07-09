@@ -29,7 +29,6 @@ class PHY_HumanWound;
 //*****************************************************************************
 class MIL_NbcAgentType : private boost::noncopyable
 {
-
 public:
     //! @name Factory
     //@{

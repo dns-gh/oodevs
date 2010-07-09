@@ -41,7 +41,6 @@ class AutomatHierarchies : public kernel::EntityHierarchies< kernel::Communicati
                          , public kernel::Updatable_ABC< MsgsSimToClient::MsgAutomatCreation >
                          , public kernel::Updatable_ABC< Common::MsgAutomatChangeKnowledgeGroup >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

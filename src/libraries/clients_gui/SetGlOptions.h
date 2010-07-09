@@ -21,7 +21,6 @@ namespace gui
 // =============================================================================
 class SetGlOptions
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

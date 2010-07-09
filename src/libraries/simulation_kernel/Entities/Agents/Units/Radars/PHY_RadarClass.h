@@ -18,7 +18,6 @@
 // =============================================================================
 class PHY_RadarClass : private boost::noncopyable
 {
-
 public:
     //! @name Types
     //@{

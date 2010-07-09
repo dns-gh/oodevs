@@ -35,7 +35,6 @@ namespace xml
 // =============================================================================
 class AgentFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

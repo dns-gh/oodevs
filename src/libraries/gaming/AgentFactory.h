@@ -33,7 +33,6 @@ class RcEntityResolver_ABC;
 // =============================================================================
 class AgentFactory : public AgentFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

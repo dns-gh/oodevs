@@ -39,7 +39,6 @@ class StaticModel;
 // =============================================================================
 class AgentList : public QVBox
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

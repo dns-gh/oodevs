@@ -20,7 +20,6 @@
 // =============================================================================
 class MIL_MissionObjectiveListParameter : public MIL_BaseParameter
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

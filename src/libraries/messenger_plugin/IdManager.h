@@ -22,7 +22,6 @@ namespace messenger
 // =============================================================================
 class IdManager
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -33,7 +33,6 @@ namespace surrender
 class PHY_RoleInterface_Surrender : public tools::Role_ABC
                                   , private boost::noncopyable
 {
-
 public:
     typedef PHY_RoleInterface_Surrender RoleInterface;
 

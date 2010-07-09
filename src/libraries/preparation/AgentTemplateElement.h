@@ -28,7 +28,6 @@ namespace kernel
 // =============================================================================
 class AgentTemplateElement : public TemplateElement_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

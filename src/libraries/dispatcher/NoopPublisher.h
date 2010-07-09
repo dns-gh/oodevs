@@ -27,7 +27,6 @@ namespace dispatcher
 // =============================================================================
 class NoopClientPublisher : public ClientPublisher_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -59,7 +58,6 @@ public:
 // =============================================================================
 class NoopSimulationPublisher : public SimulationPublisher_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

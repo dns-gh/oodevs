@@ -38,7 +38,6 @@ class Troops : public kernel::Extension_ABC
              , public HierarchicExtension_ABC
              , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

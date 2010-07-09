@@ -23,7 +23,6 @@ namespace actions {
 // =============================================================================
 class Direction : public Parameter< int >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

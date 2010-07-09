@@ -25,7 +25,6 @@ namespace dis
 // =============================================================================
 class DisPluginFactory : public dispatcher::PluginFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

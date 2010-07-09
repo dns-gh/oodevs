@@ -23,7 +23,6 @@ class MIL_EntityManager_ABC;
 // =============================================================================
 class MIL_AgentParameter : public MIL_BaseParameter
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

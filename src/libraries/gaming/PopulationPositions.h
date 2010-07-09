@@ -21,7 +21,6 @@ class Population;
 // =============================================================================
 class PopulationPositions : public kernel::Positions
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

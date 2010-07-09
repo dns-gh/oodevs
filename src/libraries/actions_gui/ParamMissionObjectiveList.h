@@ -37,7 +37,6 @@ namespace actions
 // =============================================================================
 class ParamMissionObjectiveList : public ListParameter
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -26,7 +26,6 @@ namespace kernel
 // =============================================================================
 class ModelLoaded
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

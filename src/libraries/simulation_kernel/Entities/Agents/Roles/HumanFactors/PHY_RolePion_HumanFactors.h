@@ -55,7 +55,6 @@ class PHY_RolePion_HumanFactors : public PHY_RoleInterface_HumanFactors
                                 , public tools::AlgorithmModifier_ABC< detection::PerceptionDistanceComputer_ABC >
                                 , public network::NetworkUnitMessageNotificationHandler_ABC
 {
-
 public:
     explicit PHY_RolePion_HumanFactors( MIL_Entity_ABC& entity );
     virtual ~PHY_RolePion_HumanFactors();

@@ -39,7 +39,6 @@ class TeamKarmas;
 class Diplomacies : public kernel::Diplomacies_ABC
                   , public kernel::Serializable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

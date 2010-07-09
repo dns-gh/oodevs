@@ -22,7 +22,6 @@ namespace tools
 // =============================================================================
 class MessageCallback_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

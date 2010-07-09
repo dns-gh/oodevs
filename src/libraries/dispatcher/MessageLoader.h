@@ -36,7 +36,6 @@ namespace dispatcher
 // =============================================================================
 class MessageLoader : public MessageLoader_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -31,7 +31,6 @@ namespace frontend
 // =============================================================================
 class HlaPluginConfigPanel : public PluginConfig_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

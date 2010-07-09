@@ -38,7 +38,6 @@ namespace actions {
 // =============================================================================
 class PopulationKnowledge : public Knowledge_ABC< kernel::PopulationKnowledge_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

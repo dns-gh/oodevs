@@ -48,7 +48,6 @@ class ObjectTypes
     , public  tools::Resolver< BreakdownType >
     , public  tools::Resolver< VolumeType >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

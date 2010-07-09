@@ -23,7 +23,6 @@ namespace kernel
 // =============================================================================
 class VolumeType
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

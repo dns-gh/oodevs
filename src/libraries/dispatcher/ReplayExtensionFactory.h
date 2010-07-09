@@ -30,7 +30,6 @@ namespace dispatcher
 // =============================================================================
 class ReplayExtensionFactory : public ExtensionFactory_ABC< kernel::Entity_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

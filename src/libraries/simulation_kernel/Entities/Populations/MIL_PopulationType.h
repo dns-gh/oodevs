@@ -34,7 +34,6 @@ class PHY_RoePopulation;
 // =============================================================================
 class MIL_PopulationType : private boost::noncopyable
 {
-
 public:
     //! @name Manager
     //@{

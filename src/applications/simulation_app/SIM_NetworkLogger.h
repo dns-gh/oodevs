@@ -29,7 +29,6 @@ namespace boost
 class SIM_NetworkLogger : public MT_Logger_ABC
                         , private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

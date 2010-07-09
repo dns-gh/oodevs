@@ -25,7 +25,6 @@ class Parameter_ABC;
 // =============================================================================
 class ParameterContainer_ABC : public tools::Resolver< Parameter_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

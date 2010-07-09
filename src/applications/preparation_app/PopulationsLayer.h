@@ -29,7 +29,6 @@ class Model;
 class PopulationsLayer : public gui::PopulationsLayer
                        , public tools::SelectionObserver_Base< kernel::Entity_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

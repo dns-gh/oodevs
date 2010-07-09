@@ -30,7 +30,6 @@ class PHY_PerceptionLevel;
 // =============================================================================
 class PHY_SensorTypeObjectData : private boost::noncopyable
 {
-
 public:
     explicit PHY_SensorTypeObjectData( xml::xistream& xis );
     virtual ~PHY_SensorTypeObjectData();

@@ -33,7 +33,6 @@ class MIL_Population;
 class DEC_PopulationKnowledge : public DEC_KnowledgeResolver_ABC
                               , private boost::noncopyable
 {
-
 public:
     //! @name Types
     //@{

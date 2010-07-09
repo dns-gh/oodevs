@@ -29,7 +29,6 @@
 // =============================================================================
 class PHY_ComposanteHLA : public PHY_Composante_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

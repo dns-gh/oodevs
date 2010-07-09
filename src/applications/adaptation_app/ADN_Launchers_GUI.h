@@ -29,7 +29,6 @@ class ADN_HtmlBuilder;
 class ADN_Launchers_GUI
 : public ADN_GUI_ABC
 {
-
 public:
     enum E_GuiElements
     {

@@ -46,7 +46,6 @@ namespace messenger
 // =============================================================================
 class Intelligence : public Entity_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

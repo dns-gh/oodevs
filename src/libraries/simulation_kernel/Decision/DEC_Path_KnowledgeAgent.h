@@ -30,7 +30,6 @@ class MIL_Agent_ABC;
 // =============================================================================
 class DEC_Path_KnowledgeAgent
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

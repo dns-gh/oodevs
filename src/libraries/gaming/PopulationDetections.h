@@ -38,7 +38,6 @@ class PopulationDetections : public kernel::Extension_ABC
                            , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationFlowDetection >
                            , public kernel::Drawable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

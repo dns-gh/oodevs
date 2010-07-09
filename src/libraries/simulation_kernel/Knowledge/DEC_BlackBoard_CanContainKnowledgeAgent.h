@@ -24,7 +24,6 @@ class MIL_KnowledgeGroup;
 // =============================================================================
 class DEC_BlackBoard_CanContainKnowledgeAgent : private boost::noncopyable
 {
-
 public:
     //! @name Types
     //@{

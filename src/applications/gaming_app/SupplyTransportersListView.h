@@ -20,7 +20,6 @@
 // =============================================================================
 class SupplyTransportersListView : public SupplyAvailabilitiesListView_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

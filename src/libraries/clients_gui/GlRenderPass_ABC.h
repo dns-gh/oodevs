@@ -22,7 +22,6 @@ namespace gui
 // =============================================================================
 class GlRenderPass_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

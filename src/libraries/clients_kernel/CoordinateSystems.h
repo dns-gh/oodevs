@@ -25,7 +25,6 @@ namespace kernel
 // =============================================================================
 class CoordinateSystems
 {
-
 public:
 
     typedef boost::ptr_map< int, std::string > T_spatialReference;

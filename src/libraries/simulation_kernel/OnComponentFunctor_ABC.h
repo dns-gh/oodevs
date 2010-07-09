@@ -20,7 +20,6 @@ class PHY_ComposantePion;
 
 class OnComponentFunctor_ABC : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

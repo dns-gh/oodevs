@@ -42,7 +42,6 @@ namespace bml
 // =============================================================================
 class MissionParameterFactory
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

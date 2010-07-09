@@ -40,7 +40,6 @@ class Population : public kernel::EntityImplementation< kernel::Population_ABC >
                  , public kernel::Extension_ABC
                  , public kernel::Serializable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

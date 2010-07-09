@@ -28,7 +28,6 @@ class MIL_Army;
 class PopulationFactory_ABC : public tools::Resolver< MIL_Population >
                       , private boost::noncopyable
 {
-
 public:
     //! @name Destructor
     //@{

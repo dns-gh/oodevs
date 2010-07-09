@@ -21,7 +21,6 @@ namespace xml    { class xostream; class xistream; }
 // =============================================================================
 class TemplateElement_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

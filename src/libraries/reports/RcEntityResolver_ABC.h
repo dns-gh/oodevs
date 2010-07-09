@@ -22,7 +22,6 @@
 // =============================================================================
 class RcEntityResolver_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

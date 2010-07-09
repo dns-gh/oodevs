@@ -24,7 +24,6 @@ namespace dotation
 // =============================================================================
 class ConsumptionComputerFactory : public ConsumptionComputerFactory_ABC
 {
-
 public:
     //! @name ConstructorsDestructor
     //@{

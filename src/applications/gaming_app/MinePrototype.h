@@ -28,7 +28,6 @@ namespace actions
 // =============================================================================
 class MinePrototype : public gui::MinePrototype_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

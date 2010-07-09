@@ -28,7 +28,6 @@ class MIL_Object_ABC;
 class PHY_RoleInterface_Refugee : public tools::Role_ABC
                                 , private boost::noncopyable
 {
-
 public:
     typedef PHY_RoleInterface_Refugee RoleInterface;
 

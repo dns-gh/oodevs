@@ -38,7 +38,6 @@ public:
 // =============================================================================
 class Exercise
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

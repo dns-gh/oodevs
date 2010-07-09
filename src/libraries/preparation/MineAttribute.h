@@ -35,7 +35,6 @@ namespace xml
 class MineAttribute : public kernel::MineAttribute_ABC
                     , public kernel::Serializable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

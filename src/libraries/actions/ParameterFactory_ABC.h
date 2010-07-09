@@ -39,7 +39,6 @@ class Parameter_ABC;
 // =============================================================================
 class ParameterFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

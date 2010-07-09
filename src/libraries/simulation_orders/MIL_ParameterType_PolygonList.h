@@ -20,7 +20,6 @@
 // =============================================================================
 class MIL_ParameterType_PolygonList : public MIL_ParameterType_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

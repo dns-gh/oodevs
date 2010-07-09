@@ -37,7 +37,6 @@ class HLA_Object_ABC;
 // =============================================================================
 class HLA_ObjectInteraction
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

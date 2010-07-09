@@ -24,7 +24,6 @@ class DEC_Agent_PathClass;
 // =============================================================================
 class DEC_Path_KnowledgeObject
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

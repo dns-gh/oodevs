@@ -24,7 +24,6 @@ namespace Common
 // =============================================================================
 class PHY_Morale : private boost::noncopyable
 {
-
 public:
     //! @name Types
     //@{

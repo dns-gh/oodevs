@@ -21,7 +21,6 @@
 // =============================================================================
 class TacticalLineHierarchies : public kernel::SimpleHierarchies< kernel::TacticalHierarchies >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

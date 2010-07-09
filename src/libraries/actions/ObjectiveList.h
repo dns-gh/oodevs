@@ -34,7 +34,6 @@ namespace actions {
 // =============================================================================
 class ObjectiveList : public Parameter< QString >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

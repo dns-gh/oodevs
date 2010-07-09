@@ -29,7 +29,6 @@ class HLA_UpdateFunctor;
 class PHY_RoleInterface_Posture : public tools::Role_ABC
                                 , private boost::noncopyable
 {
-
 public:
     typedef PHY_RoleInterface_Posture RoleInterface;
 

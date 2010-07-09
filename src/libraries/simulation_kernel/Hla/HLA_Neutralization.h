@@ -36,7 +36,6 @@ namespace hla
 // =============================================================================
 class HLA_Neutralization : public HLA_Interaction_ABC, public HLA_TargetedInteraction
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

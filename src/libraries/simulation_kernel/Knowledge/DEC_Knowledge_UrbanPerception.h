@@ -30,7 +30,6 @@ namespace urban
 // =============================================================================
 class DEC_Knowledge_UrbanPerception : public DEC_Knowledge_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

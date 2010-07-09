@@ -23,7 +23,6 @@ class MIL_Agent_ABC;
 // =============================================================================
 class MIL_Effect_HLAIndirectFire : public MIL_Effect_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

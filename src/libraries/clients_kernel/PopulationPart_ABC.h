@@ -24,7 +24,6 @@ namespace kernel
 // =============================================================================
 class PopulationPart_ABC : public Entity_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

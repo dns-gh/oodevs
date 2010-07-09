@@ -28,7 +28,6 @@ namespace crossbow
 // =============================================================================
 class QueryBuilder : public QueryBuilder_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

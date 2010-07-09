@@ -28,7 +28,6 @@ namespace gui
 // =============================================================================
 class TerrainProfilerLayer : public Layer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

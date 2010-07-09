@@ -21,7 +21,6 @@ namespace frontend
 // =============================================================================
 class ExerciseListener
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

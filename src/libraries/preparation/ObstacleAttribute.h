@@ -36,7 +36,6 @@ namespace xml
 class ObstacleAttribute : public kernel::ObstacleAttribute_ABC
                         , public kernel::Serializable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

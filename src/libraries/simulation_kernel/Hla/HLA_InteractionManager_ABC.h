@@ -35,7 +35,6 @@ class HLA_Mining;
 // =============================================================================
 class HLA_InteractionManager_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

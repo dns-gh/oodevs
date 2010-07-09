@@ -28,7 +28,6 @@ namespace kernel
 // =============================================================================
 class ObjectFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

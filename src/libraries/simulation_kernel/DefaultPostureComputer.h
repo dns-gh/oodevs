@@ -23,7 +23,6 @@ namespace posture
 // =============================================================================
 class DefaultPostureComputer : public PostureComputer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

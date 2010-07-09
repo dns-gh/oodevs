@@ -29,7 +29,6 @@
 // =============================================================================
 class HLA_TimeFactory : public hla::TimeFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

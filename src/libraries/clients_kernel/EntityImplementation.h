@@ -23,7 +23,6 @@ namespace kernel
 template< typename I >
 class EntityImplementation : public I
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

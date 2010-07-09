@@ -51,7 +51,6 @@ class PHY_RoleAction_Moving : public tools::Role_ABC
                             , public tools::AlgorithmModifier_ABC<moving::SpeedComputer_ABC>
                             , public network::NetworkUnitMessageNotificationHandler_ABC
 {
-
 public:
     //! @name Types
     //@{

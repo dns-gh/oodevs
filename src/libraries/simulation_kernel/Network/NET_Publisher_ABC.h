@@ -23,7 +23,6 @@ namespace MsgsSimToClient
 // =============================================================================
 class NET_Publisher_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

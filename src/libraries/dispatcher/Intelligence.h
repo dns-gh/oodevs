@@ -29,7 +29,6 @@ namespace dispatcher
 // =============================================================================
 class Intelligence : public Entity_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

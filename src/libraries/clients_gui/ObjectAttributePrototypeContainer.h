@@ -37,7 +37,6 @@ namespace gui
 // =============================================================================
 class ObjectAttributePrototypeContainer
 {
-
 public:
     //! @name Types
     //@{

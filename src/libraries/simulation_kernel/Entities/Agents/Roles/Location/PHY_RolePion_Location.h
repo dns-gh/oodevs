@@ -38,7 +38,6 @@ class PHY_RolePion_Location : public PHY_RoleInterface_Location
                             , public location::LocationActionNotificationHandler_ABC
                             , public tools::AlgorithmModifier_ABC< urbanLocation::UrbanLocationComputer_ABC >
 {
-
 public:
     explicit PHY_RolePion_Location( MIL_AgentPion& pion );
     virtual ~PHY_RolePion_Location();

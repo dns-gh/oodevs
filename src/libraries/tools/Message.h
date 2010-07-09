@@ -31,7 +31,6 @@ namespace tools
 // =============================================================================
 class Message
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

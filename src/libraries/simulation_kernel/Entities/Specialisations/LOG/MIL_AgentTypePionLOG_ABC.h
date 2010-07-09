@@ -25,7 +25,6 @@ namespace xml
 // =============================================================================
 class MIL_AgentTypePionLOG_ABC : public MIL_AgentTypePion
 {
-
 public:
              MIL_AgentTypePionLOG_ABC( const std::string& strName, xml::xistream& xis );
     virtual ~MIL_AgentTypePionLOG_ABC();

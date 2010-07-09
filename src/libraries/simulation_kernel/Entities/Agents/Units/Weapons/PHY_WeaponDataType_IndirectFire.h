@@ -28,7 +28,6 @@ class PHY_WeaponType;
 // =============================================================================
 class PHY_WeaponDataType_IndirectFire : private boost::noncopyable
 {
-
 public:
              PHY_WeaponDataType_IndirectFire( const PHY_WeaponType& weaponType, xml::xistream& xis, double timeFactor );
     virtual ~PHY_WeaponDataType_IndirectFire();

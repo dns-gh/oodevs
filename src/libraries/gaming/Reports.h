@@ -42,7 +42,6 @@ class Reports : public kernel::Extension_ABC
               , public kernel::Updatable_ABC< MsgsSimToClient::MsgTrace >
               , public kernel::Displayable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

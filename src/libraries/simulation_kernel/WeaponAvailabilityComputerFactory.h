@@ -24,7 +24,6 @@ namespace firing
 // =============================================================================
 class WeaponAvailabilityComputerFactory : public WeaponAvailabilityComputerFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

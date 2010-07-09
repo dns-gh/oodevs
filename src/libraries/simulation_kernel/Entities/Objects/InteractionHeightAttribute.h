@@ -21,7 +21,6 @@
 // =============================================================================
 class InteractionHeightAttribute : public ObjectAttribute_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

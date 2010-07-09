@@ -30,7 +30,6 @@ namespace gui
 // =============================================================================
 class FirePrototype_ABC : public ObjectAttributePrototype_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

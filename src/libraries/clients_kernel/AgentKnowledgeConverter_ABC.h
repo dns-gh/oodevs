@@ -26,7 +26,6 @@ namespace kernel
 // =============================================================================
 class AgentKnowledgeConverter_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

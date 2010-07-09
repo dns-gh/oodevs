@@ -23,7 +23,6 @@ namespace gui
 // =============================================================================
 class ItemFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

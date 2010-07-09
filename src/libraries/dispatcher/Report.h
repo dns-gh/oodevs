@@ -36,7 +36,6 @@ namespace dispatcher
 // =============================================================================
 class Report : public SimpleEntity< >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

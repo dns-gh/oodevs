@@ -32,7 +32,6 @@ class FunctionFactory;
 // =============================================================================
 class AarFacade
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

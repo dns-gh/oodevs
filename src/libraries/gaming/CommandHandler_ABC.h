@@ -20,7 +20,6 @@ class Command;
 // =============================================================================
 class CommandHandler_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

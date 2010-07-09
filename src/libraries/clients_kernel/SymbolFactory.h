@@ -25,7 +25,6 @@ namespace kernel
 // =============================================================================
 class SymbolFactory
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

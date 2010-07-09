@@ -23,7 +23,6 @@ class MIL_Agent_ABC;
 // =============================================================================
 class OccupantAttribute : public ObjectAttribute_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

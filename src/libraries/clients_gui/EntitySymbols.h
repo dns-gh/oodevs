@@ -30,7 +30,6 @@ namespace gui
 // =============================================================================
 class EntitySymbols
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

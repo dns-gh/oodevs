@@ -51,7 +51,6 @@ class GlWidget : private kernel::WorldParameters
                , public GlToolsBase
                , public View_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

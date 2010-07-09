@@ -28,7 +28,6 @@ class DEC_Population_Path;
 // =============================================================================
 class DEC_Population_PathfinderRule : public TerrainRule_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

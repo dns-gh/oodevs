@@ -30,7 +30,6 @@ namespace TEST {
 // =============================================================================
 class TestSet_AllPopulationMissions : public TestSet_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

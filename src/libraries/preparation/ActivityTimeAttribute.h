@@ -34,7 +34,6 @@ namespace xml
 class ActivityTimeAttribute : public kernel::ActivityTimeAttribute_ABC
                             , public kernel::Serializable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

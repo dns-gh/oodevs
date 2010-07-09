@@ -26,7 +26,6 @@ namespace bg = boost::geometry;
 // =============================================================================
 class MIL_Geometry : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -32,7 +32,6 @@ namespace kernel
 class LocationPositions : public kernel::Positions
                         , public kernel::Drawable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

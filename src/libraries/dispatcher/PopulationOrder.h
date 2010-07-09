@@ -32,7 +32,6 @@ namespace dispatcher
 // =============================================================================
 class PopulationOrder : public Order_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

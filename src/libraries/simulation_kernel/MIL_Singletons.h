@@ -24,7 +24,6 @@ class MIL_EffectManager;
 // =============================================================================
 class MIL_Singletons
 {
-
 public:
     //! @name Operations
     //@{

@@ -24,7 +24,6 @@ namespace kernel
 // =============================================================================
 class ObjectHierarchies : public kernel::SimpleHierarchies< kernel::TacticalHierarchies >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

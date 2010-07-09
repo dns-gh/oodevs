@@ -20,7 +20,6 @@
 // =============================================================================
 class AgentsLayer : public gui::AgentsLayer
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

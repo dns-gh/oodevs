@@ -25,7 +25,6 @@ namespace kernel
 // =============================================================================
 class SymbolRule
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

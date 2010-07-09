@@ -23,7 +23,6 @@ namespace frontend
 // =============================================================================
 class Config : public tools::GeneralConfig
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

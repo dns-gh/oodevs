@@ -28,7 +28,6 @@ namespace actions {
 // =============================================================================
 class Limit : public Location
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

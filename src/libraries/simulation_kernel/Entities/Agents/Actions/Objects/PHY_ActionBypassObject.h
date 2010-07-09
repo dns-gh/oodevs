@@ -24,7 +24,6 @@ class PHY_RoleAction_Objects;
 // =============================================================================
 class PHY_ActionBypassObject : public PHY_DecisionCallbackAction_ABC
 {
-
 public:
     typedef MIL_AgentPion ActorType;
 

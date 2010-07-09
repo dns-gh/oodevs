@@ -19,7 +19,6 @@
 template< typename T >
 class ValueHandler_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

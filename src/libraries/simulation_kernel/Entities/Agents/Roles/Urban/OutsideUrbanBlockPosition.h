@@ -21,7 +21,6 @@
 // =============================================================================
 class OutsideUrbanBlockPosition : public UrbanBlockPosition_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

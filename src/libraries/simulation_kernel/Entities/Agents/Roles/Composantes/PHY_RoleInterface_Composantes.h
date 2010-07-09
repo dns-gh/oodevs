@@ -44,7 +44,6 @@ namespace firing
 class PHY_RoleInterface_Composantes : public tools::Role_ABC
                                     , private boost::noncopyable
 {
-
 public:
     //! @name Types
     //@{

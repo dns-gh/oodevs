@@ -30,7 +30,6 @@ namespace gui
 // =============================================================================
 class PropertyTableItem : public QTableItem
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

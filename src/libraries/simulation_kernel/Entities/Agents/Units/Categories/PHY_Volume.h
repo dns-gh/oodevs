@@ -23,7 +23,6 @@ namespace xml
 // =============================================================================
 class PHY_Volume : private boost::noncopyable
 {
-
 public:
     //! @name Types
     //@{

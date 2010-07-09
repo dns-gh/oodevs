@@ -32,7 +32,6 @@ class Model;
 // =============================================================================
 class UrbanKnowledgeFactory
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

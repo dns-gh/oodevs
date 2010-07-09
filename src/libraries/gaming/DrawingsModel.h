@@ -25,7 +25,6 @@ class DrawingFactory;
 // =============================================================================
 class DrawingsModel : public gui::DrawerModel
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

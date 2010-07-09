@@ -22,7 +22,6 @@
 template <class T>
 class MT_V3D
 {
-
 public:
 
     explicit        MT_V3D( void );                                 // Constructor : les valeurs XYZ sont mises a 0

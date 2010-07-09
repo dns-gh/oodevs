@@ -48,7 +48,6 @@ class TicExtension : public TicExtension_ABC
                    , public kernel::Updatable_ABC< MsgUnitEnvironmentType >
                    , public kernel::Updatable_ABC< MsgUnitPathFind >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

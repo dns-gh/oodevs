@@ -24,7 +24,6 @@ class MIL_AutomateLOG;
 // =============================================================================
 class DEC_Knowledge_ObjectAttributeLogistic : public DEC_Knowledge_ObjectAttribute_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

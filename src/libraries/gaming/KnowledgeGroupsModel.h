@@ -32,7 +32,6 @@ class KnowledgeGroupFactory_ABC;
 // =============================================================================
 class KnowledgeGroupsModel : public tools::Resolver< kernel::KnowledgeGroup_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

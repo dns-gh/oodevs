@@ -31,7 +31,6 @@ namespace gui
 // =============================================================================
 class InfoSupplyDialog : public InfoDialog< SupplyStates >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

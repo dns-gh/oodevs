@@ -29,7 +29,6 @@ namespace logger
 // =============================================================================
 class RcEntityResolver : public RcEntityResolver_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

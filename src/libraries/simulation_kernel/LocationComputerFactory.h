@@ -23,7 +23,6 @@ namespace location
 // =============================================================================
 class LocationComputerFactory : public LocationComputerFactory_ABC
 {
-
 public:
     //! @name ConstructorsDestructor
     //@{

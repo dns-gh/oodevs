@@ -21,7 +21,6 @@
 // =============================================================================
 class PopulationKnowledgesLayer : public KnowledgeLayer< kernel::PopulationKnowledge_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

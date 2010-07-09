@@ -22,7 +22,6 @@ namespace location
 // =============================================================================
 class LocationComputerFactory_ABC : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -23,7 +23,6 @@ namespace surrender
 // =============================================================================
 class PHY_RoleHLA_Surrender : public PHY_RoleInterface_Surrender
 {
-
 public:
              PHY_RoleHLA_Surrender();
     virtual ~PHY_RoleHLA_Surrender();

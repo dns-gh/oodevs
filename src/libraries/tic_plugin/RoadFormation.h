@@ -26,7 +26,6 @@ namespace tic
 // =============================================================================
 class RoadFormation : public Formation_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

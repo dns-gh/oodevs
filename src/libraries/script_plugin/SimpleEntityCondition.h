@@ -51,7 +51,6 @@ class SimpleEntityCondition : public EventCondition
                             , public EntityConditionBase
                             , public tools::ElementObserver_ABC< E >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

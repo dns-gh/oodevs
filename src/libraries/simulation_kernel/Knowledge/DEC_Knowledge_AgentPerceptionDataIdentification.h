@@ -25,7 +25,6 @@ class MIL_AgentType_ABC;
 // =============================================================================
 class DEC_Knowledge_AgentPerceptionDataIdentification : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

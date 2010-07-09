@@ -28,7 +28,6 @@ class SuccessFactorActionTypes;
 // =============================================================================
 class SuccessFactorFactory : public SuccessFactorFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

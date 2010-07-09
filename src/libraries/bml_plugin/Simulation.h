@@ -28,7 +28,6 @@ namespace bml
 // =============================================================================
 class Simulation
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

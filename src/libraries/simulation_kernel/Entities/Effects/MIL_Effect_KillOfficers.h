@@ -22,7 +22,6 @@ class MIL_Agent_ABC;
 // =============================================================================
 class MIL_Effect_KillOfficers : public MIL_Effect_ABC
 {
-
 public:
     explicit MIL_Effect_KillOfficers( MIL_Agent_ABC& target );
     virtual ~MIL_Effect_KillOfficers();

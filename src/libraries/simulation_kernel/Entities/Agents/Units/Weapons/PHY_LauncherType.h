@@ -26,7 +26,6 @@ class PHY_RoleInterface_Posture;
 // =============================================================================
 class PHY_LauncherType : private boost::noncopyable
 {
-
 public:
     //! @name Manager
     //@{

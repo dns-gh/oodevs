@@ -34,7 +34,6 @@ namespace xml
 class AutomatCommunications : public EntityCommunications
                             , public kernel::Serializable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

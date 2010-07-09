@@ -26,7 +26,6 @@ class DEC_KnowledgeBlackBoard_ABC;
 // =============================================================================
 class DEC_KnowledgeSource_ABC : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

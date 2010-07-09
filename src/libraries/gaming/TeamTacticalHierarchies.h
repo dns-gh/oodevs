@@ -21,7 +21,6 @@
 // =============================================================================
 class TeamTacticalHierarchies : public kernel::EntityHierarchies< kernel::TacticalHierarchies >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

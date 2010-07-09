@@ -21,7 +21,6 @@ namespace kernel
 // =============================================================================
 class Extension_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

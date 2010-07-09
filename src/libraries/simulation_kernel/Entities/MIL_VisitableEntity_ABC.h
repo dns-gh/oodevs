@@ -21,7 +21,6 @@ template< typename T > class MIL_EntityVisitor_ABC;
 template< typename T >
 class MIL_VisitableEntity_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

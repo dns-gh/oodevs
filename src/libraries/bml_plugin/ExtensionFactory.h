@@ -36,7 +36,6 @@ namespace bml
 class ExtensionFactory : public dispatcher::ExtensionFactory_ABC< dispatcher::Agent >
                        , public dispatcher::ExtensionFactory_ABC< dispatcher::Automat >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

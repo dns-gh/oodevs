@@ -28,7 +28,6 @@ class KnowledgeGroupFactory_ABC;
 // =============================================================================
 class ArmyFactory : public ArmyFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

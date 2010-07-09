@@ -22,7 +22,6 @@
 class TeamCommunications : public EntityCommunications
                          , public kernel::Serializable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

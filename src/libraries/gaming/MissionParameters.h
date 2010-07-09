@@ -46,7 +46,6 @@ class MissionParameters : public kernel::Extension_ABC
                         , public tools::Resolver< actions::Action_ABC >
                         , public kernel::Drawable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

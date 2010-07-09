@@ -23,7 +23,6 @@ namespace kernel
 // =============================================================================
 class NBCAgent
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

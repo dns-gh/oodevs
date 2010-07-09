@@ -23,7 +23,6 @@ namespace kernel
 // =============================================================================
 class MedicalTreatmentType
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

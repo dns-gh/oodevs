@@ -25,7 +25,6 @@ class AGR_RC;
 // =============================================================================
 class AGR_Workspace
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

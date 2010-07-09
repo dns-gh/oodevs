@@ -29,7 +29,6 @@ namespace actions {
 // =============================================================================
 class DotationType : public Parameter< std::string >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

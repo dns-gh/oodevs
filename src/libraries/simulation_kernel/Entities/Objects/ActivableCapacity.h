@@ -25,7 +25,6 @@ namespace xml
 // =============================================================================
 class ActivableCapacity : public ObjectCapacity_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

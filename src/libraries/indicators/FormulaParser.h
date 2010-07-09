@@ -31,7 +31,6 @@ namespace indicators
 // =============================================================================
 class FormulaParser : public boost::spirit::classic::grammar< FormulaParser >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

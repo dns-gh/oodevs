@@ -49,7 +49,6 @@ class AgentExtension : public BmlExtension_ABC
                      , public kernel::Updatable_ABC< Common::MsgUnitOrder >
                      , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitDetection >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

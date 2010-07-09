@@ -24,7 +24,6 @@ namespace human
 // =============================================================================
 class DefaultHealComputer : public HealComputer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

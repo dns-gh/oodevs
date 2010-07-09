@@ -26,7 +26,6 @@ namespace dispatcher
 // =============================================================================
 class Registrable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

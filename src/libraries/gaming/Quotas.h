@@ -36,7 +36,6 @@ namespace kernel
 class Quotas  : public kernel::Extension_ABC
               , public kernel::Updatable_ABC< MsgsSimToClient::MsgLogSupplyQuotas >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -34,7 +34,6 @@ namespace dispatcher
 // =============================================================================
 class DispatcherPlugin : public Plugin_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

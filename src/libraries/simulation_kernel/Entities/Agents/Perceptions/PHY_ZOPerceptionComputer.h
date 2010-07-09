@@ -19,7 +19,6 @@
 // =============================================================================
 class PHY_ZOPerceptionComputer : public PHY_PerceptionComputer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

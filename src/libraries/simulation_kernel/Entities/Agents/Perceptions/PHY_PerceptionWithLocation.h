@@ -20,7 +20,6 @@
 // =============================================================================
 template <typename T > class PHY_PerceptionWithLocation : public PHY_Perception_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

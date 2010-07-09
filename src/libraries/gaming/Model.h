@@ -73,7 +73,6 @@ class MeteoModel;
 // =============================================================================
 class Model : public EntityResolverFacade
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

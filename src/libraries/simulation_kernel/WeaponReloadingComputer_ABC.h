@@ -27,7 +27,6 @@ namespace firing
 // =============================================================================
 class WeaponReloadingComputer_ABC
 {
-
 public:
     virtual ~WeaponReloadingComputer_ABC() {}
     //! @name Operations

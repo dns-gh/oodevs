@@ -24,7 +24,6 @@ class ScoreDefinitions;
 // =============================================================================
 class ReplayScore : public Score
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

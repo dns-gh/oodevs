@@ -34,7 +34,6 @@ class AgentsLayer : public gui::AgentsLayer
                   , public tools::SelectionObserver_Base< kernel::Formation_ABC >
                   , public tools::SelectionObserver_Base< kernel::Team_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

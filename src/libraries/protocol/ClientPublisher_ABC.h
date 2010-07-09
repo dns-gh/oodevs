@@ -76,7 +76,6 @@ namespace dispatcher
 // =============================================================================
 class ClientPublisher_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

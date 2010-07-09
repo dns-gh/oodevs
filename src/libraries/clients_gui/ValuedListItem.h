@@ -35,7 +35,6 @@ namespace gui
 // =============================================================================
 class ValuedListItem : public RichListItem
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

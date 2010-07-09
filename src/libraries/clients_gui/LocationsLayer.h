@@ -28,7 +28,6 @@ namespace gui
 // =============================================================================
 class LocationsLayer : public Layer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

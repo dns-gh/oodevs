@@ -30,7 +30,6 @@ class MIL_AgentPion;
 // =============================================================================
 class DEC_KS_PopulationInteraction : public DEC_KnowledgeSource_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

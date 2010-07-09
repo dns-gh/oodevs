@@ -24,7 +24,6 @@ namespace dispatcher
 // =============================================================================
 class FormationSymbols : public EntitySymbols_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

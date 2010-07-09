@@ -29,7 +29,6 @@ namespace indicators
 // =============================================================================
 class Variable : public Constant< std::string >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

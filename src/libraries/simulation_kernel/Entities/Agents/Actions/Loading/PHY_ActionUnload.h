@@ -25,7 +25,6 @@ namespace transport
 // =============================================================================
 class PHY_ActionUnload : public PHY_DecisionCallbackAction_ABC
 {
-
 public:
     typedef MIL_AgentPion ActorType;
 

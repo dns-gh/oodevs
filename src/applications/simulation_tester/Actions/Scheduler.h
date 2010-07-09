@@ -23,7 +23,6 @@ namespace TEST {
 // =============================================================================
 class Scheduler
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

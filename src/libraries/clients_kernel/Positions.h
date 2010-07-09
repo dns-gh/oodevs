@@ -24,7 +24,6 @@ namespace kernel
 // =============================================================================
 class Positions : public Extension_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

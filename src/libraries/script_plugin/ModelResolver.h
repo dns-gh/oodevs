@@ -34,7 +34,6 @@ namespace script
 // =============================================================================
 class ModelResolver
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

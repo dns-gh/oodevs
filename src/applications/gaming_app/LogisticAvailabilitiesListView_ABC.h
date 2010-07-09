@@ -29,7 +29,6 @@
 template< typename ConcreteDisplayer, typename Extension >
 class LogisticAvailabilitiesListView_ABC : public ResourcesListView_ABC< ConcreteDisplayer, Extension >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -74,7 +73,6 @@ private:
 // =============================================================================
 class MaintenanceAvailabilitiesListView_ABC : public LogisticAvailabilitiesListView_ABC< MaintenanceAvailabilitiesListView_ABC, MaintenanceStates >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -100,7 +98,6 @@ private:
 // =============================================================================
 class MedicalAvailabilitiesListView_ABC : public LogisticAvailabilitiesListView_ABC< MedicalAvailabilitiesListView_ABC, MedicalStates >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -126,7 +123,6 @@ private:
 // =============================================================================
 class SupplyAvailabilitiesListView_ABC : public LogisticAvailabilitiesListView_ABC< SupplyAvailabilitiesListView_ABC, SupplyStates >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -152,7 +148,6 @@ private:
 // =============================================================================
 class QuotasAvailabilitiesListView_ABC : public LogisticAvailabilitiesListView_ABC< QuotasAvailabilitiesListView_ABC, Quotas >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

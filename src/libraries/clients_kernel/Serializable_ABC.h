@@ -26,7 +26,6 @@ namespace kernel
 // =============================================================================
 class Serializable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

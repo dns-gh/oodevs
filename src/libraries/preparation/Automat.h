@@ -43,7 +43,6 @@ class Automat : public kernel::EntityImplementation< kernel::Automat_ABC >
               , public kernel::Drawable_ABC
               , public kernel::Serializable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

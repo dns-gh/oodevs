@@ -39,7 +39,6 @@ class DrawerModel : public tools::Observer_ABC
                   , public tools::ElementObserver_ABC< Drawing_ABC >
                   , public tools::Resolver< Drawing_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -30,7 +30,6 @@ namespace xml
 class AgentFactory_ABC : public tools::Resolver< MIL_AgentPion >
                        , private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -26,7 +26,6 @@ namespace kernel
 // =============================================================================
 class IntelligencePrototype
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

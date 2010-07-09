@@ -27,7 +27,6 @@ class MIL_Automate;
 // =============================================================================
 class MIL_AutomateMission : public MIL_Mission_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

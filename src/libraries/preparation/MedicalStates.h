@@ -21,7 +21,6 @@
 // =============================================================================
 class MedicalStates : public LogisticHierarchies< MedicalSuperior, kernel::MedicalHierarchies >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

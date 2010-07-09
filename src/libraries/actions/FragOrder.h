@@ -34,7 +34,6 @@ namespace actions
 // =============================================================================
 class FragOrder : public ActionWithTarget_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

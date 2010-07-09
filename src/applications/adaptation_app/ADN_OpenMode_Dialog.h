@@ -39,7 +39,6 @@ enum E_OpenMode;
 class ADN_OpenMode_Dialog
 : public QDialog
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

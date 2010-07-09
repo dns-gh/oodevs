@@ -24,7 +24,6 @@ class PHY_PerceptionLevel;
 // =============================================================================
 class DEC_Knowledge_PopulationFlowPerception : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

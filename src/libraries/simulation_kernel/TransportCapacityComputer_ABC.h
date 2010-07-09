@@ -22,7 +22,6 @@ namespace transport {
 // =============================================================================
 class TransportCapacityComputer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

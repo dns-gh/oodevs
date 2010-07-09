@@ -31,7 +31,6 @@ namespace gui
 // =============================================================================
 class InfoLendingsDialog : public InfoDialog< Lendings >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

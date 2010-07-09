@@ -35,7 +35,6 @@ namespace xml
 class InputToxicCloudAttribute : public kernel::ToxicCloudAttribute_ABC
                                , public kernel::Serializable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -48,7 +48,6 @@ class HierarchicExtension_ABC : public kernel::Updatable_ABC< MsgsSimToClient::M
                               , public kernel::Updatable_ABC< Common::MsgUnitChangeSuperior >
                               , public kernel::Updatable_ABC< Common::MsgAutomatChangeSuperior >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

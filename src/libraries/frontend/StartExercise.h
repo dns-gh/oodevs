@@ -25,7 +25,6 @@ namespace frontend
 // =============================================================================
 class StartExercise : public SpawnCommand
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

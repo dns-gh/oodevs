@@ -33,7 +33,6 @@ namespace script
 // =============================================================================
 class ScriptConditions : public dispatcher::Registrable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -23,7 +23,6 @@ namespace actions
 // =============================================================================
 class AutomatMission : public Mission
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

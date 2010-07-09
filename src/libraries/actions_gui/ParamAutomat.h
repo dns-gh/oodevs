@@ -26,7 +26,6 @@ namespace actions
 // =============================================================================
 class ParamAutomat : public EntityParameter< kernel::Automat_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

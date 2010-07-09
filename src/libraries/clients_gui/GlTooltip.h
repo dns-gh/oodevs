@@ -35,7 +35,6 @@ class GlTooltip : public kernel::GlTooltip_ABC
                 , public tools::Caller< E_ForceRatioStatus >
                 , public tools::Caller< E_MeetingEngagementStatus >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -24,7 +24,6 @@ namespace dispatcher
 // =============================================================================
 class MissionParameter_GenObject : public MissionParameter_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

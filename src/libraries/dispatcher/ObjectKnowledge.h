@@ -47,7 +47,6 @@ namespace dispatcher
 // =============================================================================
 class ObjectKnowledge : public SimpleEntity< kernel::ObjectKnowledge_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

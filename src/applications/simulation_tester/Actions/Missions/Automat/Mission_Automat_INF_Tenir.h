@@ -25,7 +25,6 @@ namespace TEST {
 // =============================================================================
 class Mission_Automat_INF_Tenir : public Mission_Automat_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

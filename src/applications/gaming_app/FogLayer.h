@@ -21,7 +21,6 @@
 class FogLayer : public gui::EntityLayerBase
                , public tools::ElementObserver_ABC< kernel::Agent_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

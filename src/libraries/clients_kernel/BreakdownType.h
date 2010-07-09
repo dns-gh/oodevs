@@ -23,7 +23,6 @@ namespace kernel
 // =============================================================================
 class BreakdownType
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

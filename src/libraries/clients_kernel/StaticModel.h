@@ -32,7 +32,6 @@ namespace kernel
 // =============================================================================
 class StaticModel
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

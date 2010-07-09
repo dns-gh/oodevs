@@ -35,7 +35,6 @@ namespace actions
 // =============================================================================
 class Mission : public ActionWithTarget_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

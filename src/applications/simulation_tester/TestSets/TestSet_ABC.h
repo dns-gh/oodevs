@@ -35,7 +35,6 @@ namespace TEST {
 // =============================================================================
 class TestSet_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

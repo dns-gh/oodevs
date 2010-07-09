@@ -36,7 +36,6 @@ class VisionConesToggler : public QObject
                          , public tools::ElementObserver_ABC< kernel::Profile_ABC >
                          , public tools::ElementObserver_ABC< Services >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

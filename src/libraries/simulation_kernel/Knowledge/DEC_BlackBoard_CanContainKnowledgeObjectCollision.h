@@ -27,7 +27,6 @@ class MIL_Agent_ABC;
 // =============================================================================
 class DEC_BlackBoard_CanContainKnowledgeObjectCollision : private boost::noncopyable
 {
-
 public:
     //! @name Types
     //@{

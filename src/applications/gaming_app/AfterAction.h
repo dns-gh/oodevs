@@ -40,7 +40,6 @@ class AfterAction : public QObject
                   , public tools::ElementObserver_ABC< Services >
                   , public tools::ElementObserver_ABC< AfterActionRequest >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

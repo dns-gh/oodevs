@@ -29,7 +29,6 @@ namespace kernel
 // =============================================================================
 class ObjectType
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

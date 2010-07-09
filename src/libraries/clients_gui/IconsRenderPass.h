@@ -30,7 +30,6 @@ namespace gui
 // =============================================================================
 class IconsRenderPass : public GlRenderPass_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

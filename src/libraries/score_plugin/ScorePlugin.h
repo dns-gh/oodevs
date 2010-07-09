@@ -46,7 +46,6 @@ using namespace MsgsClientToAar;
 // =============================================================================
 class ScorePlugin : public dispatcher::Plugin_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

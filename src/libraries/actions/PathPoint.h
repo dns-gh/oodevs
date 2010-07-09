@@ -28,7 +28,6 @@ namespace actions {
 // =============================================================================
 class PathPoint : public Location
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

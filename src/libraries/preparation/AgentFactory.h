@@ -31,7 +31,6 @@ class IdManager;
 // =============================================================================
 class AgentFactory : public AgentFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

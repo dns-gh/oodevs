@@ -18,7 +18,6 @@
 // =============================================================================
 class ExerciseLister_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

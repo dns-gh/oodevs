@@ -36,7 +36,6 @@ class PHY_RolePion_Population : public PHY_RoleInterface_Population
                               , public tools::AlgorithmModifier_ABC<moving::SpeedComputer_ABC>
                               , public tools::AlgorithmModifier_ABC< firing::WeaponReloadingComputer_ABC >
 {
-
 public:
     explicit PHY_RolePion_Population( MIL_Agent_ABC& pion );
     virtual ~PHY_RolePion_Population();

@@ -23,7 +23,6 @@ namespace dis
 // =============================================================================
 class Time_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

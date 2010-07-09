@@ -24,7 +24,6 @@ namespace kernel
 template< typename BaseType, typename NewType, typename Identifier = unsigned long >
 class ResolverAdapter : public  tools::Resolver_ABC< NewType, Identifier >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

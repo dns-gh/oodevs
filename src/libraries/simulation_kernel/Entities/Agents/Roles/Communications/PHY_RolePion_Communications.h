@@ -42,7 +42,6 @@ class PHY_RolePion_Communications : public PHY_RoleInterface_Communications
                                   , public tools::AlgorithmModifier_ABC<moving::SpeedComputer_ABC>
                                   , public network::NetworkUnitMessageNotificationHandler_ABC
 {
-
 public:
     //! @name Static
     //@{

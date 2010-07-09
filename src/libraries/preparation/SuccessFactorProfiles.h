@@ -37,7 +37,6 @@ class SuccessFactorProfiles : public tools::Resolver< const UserProfile, QString
                             , public tools::Observer_ABC
                             , public tools::ElementObserver_ABC< UserProfile >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

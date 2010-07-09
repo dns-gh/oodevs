@@ -34,7 +34,6 @@ namespace xml
 class AutomatDecisions : public kernel::Extension_ABC
                        , public kernel::Serializable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

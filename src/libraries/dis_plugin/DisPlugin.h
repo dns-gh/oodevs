@@ -51,7 +51,6 @@ namespace dis
 // =============================================================================
 class DisPlugin : public dispatcher::Plugin_ABC, public Time_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

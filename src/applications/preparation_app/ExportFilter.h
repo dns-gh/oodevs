@@ -28,7 +28,6 @@ namespace xml
 // =============================================================================
 class ExportFilter
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

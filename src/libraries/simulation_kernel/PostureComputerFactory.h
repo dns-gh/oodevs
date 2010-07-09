@@ -23,7 +23,6 @@ namespace posture
 // =============================================================================
 class PostureComputerFactory : public PostureComputerFactory_ABC
 {
-
 public:
     //! @name ConstructorsDestructor
     //@{

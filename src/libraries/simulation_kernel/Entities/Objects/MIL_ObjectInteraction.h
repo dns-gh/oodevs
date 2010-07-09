@@ -25,7 +25,6 @@ class MIL_PopulationElement_ABC;
 // =============================================================================
 class MIL_ObjectInteraction
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -22,7 +22,6 @@ class PHY_RolePion_Composantes;
 // =============================================================================
 class PHY_RolePion_ActiveProtection : public PHY_RoleInterface_ActiveProtection
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

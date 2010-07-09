@@ -25,7 +25,6 @@ class Score_ABC;
 // =============================================================================
 class ScoreFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -38,7 +38,6 @@ namespace crossbow
 // =============================================================================
 class OrderListener : public Listener_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

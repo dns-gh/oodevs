@@ -33,7 +33,6 @@ class SpinBoxDisplayer : public kernel::Displayer_ABC
                        , public tools::Caller< kernel::Unit >
                        , public tools::Caller< kernel::ValueNotSet >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

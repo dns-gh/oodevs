@@ -19,7 +19,6 @@
 // =============================================================================
 class PHY_DotationLogisticType : private boost::noncopyable
 {
-
 public:
     //! @name Types
     //@{

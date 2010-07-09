@@ -25,7 +25,6 @@ namespace kernel
 // =============================================================================
 class IntelligenceKarmas : public tools::Resolver< kernel::Karma, QString >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

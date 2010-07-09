@@ -42,7 +42,6 @@ class FireResultListView : public gui::ListDisplayer< FireResultListView >
                          , public tools::SelectionObserver< kernel::Entity_ABC >
                          , public tools::ElementObserver_ABC< Explosions >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

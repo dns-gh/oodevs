@@ -38,7 +38,6 @@ class SuccessFactorConditions : public tools::Resolver< SuccessFactorCondition >
                               , public tools::Observer_ABC
                               , public tools::ElementObserver_ABC< Score_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

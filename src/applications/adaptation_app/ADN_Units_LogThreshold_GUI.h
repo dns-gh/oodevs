@@ -23,7 +23,6 @@
 class ADN_Units_LogThreshold_GUI
 : public ADN_Table2
 {
-
 public:
     explicit ADN_Units_LogThreshold_GUI( QWidget* pParent = 0 );
     virtual ~ADN_Units_LogThreshold_GUI();

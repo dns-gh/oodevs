@@ -25,7 +25,6 @@ namespace indicators
 // =============================================================================
 class DataTypeFactory
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

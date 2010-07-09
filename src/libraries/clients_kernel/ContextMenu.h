@@ -29,7 +29,6 @@ namespace kernel
 // =============================================================================
 class ContextMenu
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

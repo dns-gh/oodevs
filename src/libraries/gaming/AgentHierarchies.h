@@ -44,7 +44,6 @@ class AgentHierarchies : public kernel::EntityHierarchies< I  >
                        , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitCreation >
                        , public kernel::Updatable_ABC< Common::MsgUnitChangeSuperior >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -30,7 +30,6 @@ namespace dispatcher
 // =============================================================================
 class Loader
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -27,7 +27,6 @@ namespace firing
 // =============================================================================
 class ComposantesAbleToBeFiredComputer_ABC : public OnComponentComputer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

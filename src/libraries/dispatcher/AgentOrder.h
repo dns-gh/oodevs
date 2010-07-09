@@ -33,7 +33,6 @@ namespace dispatcher
 // =============================================================================
 class AgentOrder : public Order_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

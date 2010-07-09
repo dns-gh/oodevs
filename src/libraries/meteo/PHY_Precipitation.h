@@ -26,7 +26,6 @@ namespace weather
 // =============================================================================
 class PHY_Precipitation : private boost::noncopyable
 {
-
 public:
     //! @name Types
     //@{

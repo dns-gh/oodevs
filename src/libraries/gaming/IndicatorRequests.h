@@ -31,7 +31,6 @@ class Score;
 // =============================================================================
 class IndicatorRequests
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

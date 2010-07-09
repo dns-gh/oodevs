@@ -22,7 +22,6 @@ class MIL_Fuseau;
 // =============================================================================
 class MIL_IntelligenceOrder
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

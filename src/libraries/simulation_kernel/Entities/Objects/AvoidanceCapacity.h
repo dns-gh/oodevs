@@ -25,7 +25,6 @@ class TER_DynamicData;
 // =============================================================================
 class AvoidanceCapacity : public ObjectCapacity_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -24,7 +24,6 @@ namespace kernel
 // =============================================================================
 class TeamSelectionObserver : public tools::SelectionObserver_Base< Team_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

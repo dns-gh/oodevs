@@ -24,7 +24,6 @@ namespace gui
 // =============================================================================
 class MiniViewsRenderPass : public GlRenderPass_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

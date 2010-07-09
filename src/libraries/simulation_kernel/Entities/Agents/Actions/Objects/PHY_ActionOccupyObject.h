@@ -24,7 +24,6 @@ class DEC_Knowledge_Object;
 // =============================================================================
 class PHY_ActionOccupyObject : public PHY_Action_ABC
 {
-
 public:
     typedef MIL_AgentPion ActorType;
 

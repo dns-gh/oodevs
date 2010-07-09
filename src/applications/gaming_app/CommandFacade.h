@@ -41,7 +41,6 @@ class ProfileFilter;
 // =============================================================================
 class CommandFacade : public QObject
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

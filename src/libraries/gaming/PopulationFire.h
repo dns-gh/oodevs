@@ -29,7 +29,6 @@ namespace kernel
 // =============================================================================
 class PopulationFire : public Fire_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

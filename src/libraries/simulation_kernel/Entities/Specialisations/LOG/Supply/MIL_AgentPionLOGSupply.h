@@ -21,7 +21,6 @@
 // =============================================================================
 class MIL_AgentPionLOGSupply : public MIL_AgentPionLOG_ABC
 {
-
 public:
              MIL_AgentPionLOGSupply( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis );
              MIL_AgentPionLOGSupply( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories );

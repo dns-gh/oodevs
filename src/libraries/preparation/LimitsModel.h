@@ -35,7 +35,6 @@ class IdManager;
 // =============================================================================
 class LimitsModel : public tools::Resolver< TacticalLine_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

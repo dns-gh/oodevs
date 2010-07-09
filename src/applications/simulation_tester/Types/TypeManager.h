@@ -36,7 +36,6 @@ namespace TEST {
 // =============================================================================
 class TypeManager
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

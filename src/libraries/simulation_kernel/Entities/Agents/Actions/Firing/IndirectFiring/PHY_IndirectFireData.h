@@ -27,7 +27,6 @@ namespace firing
 // =============================================================================
 class PHY_IndirectFireData : public FireData_ABC
 {
-
 public:
      PHY_IndirectFireData( MIL_Agent_ABC& firer, MIL_Effect_IndirectFire& effect );
     virtual ~PHY_IndirectFireData();

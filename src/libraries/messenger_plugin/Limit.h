@@ -42,7 +42,6 @@ namespace messenger
 // =============================================================================
 class Limit : public TacticalLine_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -45,7 +45,6 @@ class Equipments : public kernel::Extension_ABC
                  , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
                  , public tools::Resolver< Equipment >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

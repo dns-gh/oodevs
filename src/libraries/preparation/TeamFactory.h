@@ -40,7 +40,6 @@ class ObjectAttributeFactory_ABC;
 class TeamFactory : public TeamFactory_ABC
                   , public ObjectFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

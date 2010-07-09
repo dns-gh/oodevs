@@ -22,7 +22,6 @@ class MIL_Agent_ABC;
 // =============================================================================
 class MIL_Effect_Suicide : public MIL_Effect_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

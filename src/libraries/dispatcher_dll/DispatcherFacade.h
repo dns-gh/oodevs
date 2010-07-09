@@ -30,7 +30,6 @@ namespace dispatcher
 // =============================================================================
 class DISPATCHER_DLL_API DispatcherFacade
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

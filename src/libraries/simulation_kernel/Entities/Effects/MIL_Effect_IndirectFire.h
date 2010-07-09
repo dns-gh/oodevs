@@ -26,7 +26,6 @@ class MIL_Agent_ABC;
 // =============================================================================
 class MIL_Effect_IndirectFire : public MIL_Effect_ABC
 {
-
 public:
              MIL_Effect_IndirectFire( const MIL_Agent_ABC& firer, unsigned int nTargetKnowledgeID   , const PHY_DotationCategory_IndirectFire_ABC& indirectDotationCategory, MT_Float rInterventionTypeToFire );
              MIL_Effect_IndirectFire( const MIL_Agent_ABC& firer, const MT_Vector2D& vTargetPosition, const PHY_DotationCategory_IndirectFire_ABC& indirectDotationCategory, MT_Float rInterventionTypeToFire );

@@ -39,7 +39,6 @@ class LogisticLinks : public kernel::LogisticLinks_ABC
                     , public kernel::Updatable_ABC< Common::MsgAutomatChangeLogisticLinks >
                     , public kernel::Drawable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

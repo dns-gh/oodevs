@@ -33,7 +33,6 @@ namespace messenger
 // =============================================================================
 class Entity_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

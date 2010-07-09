@@ -21,7 +21,6 @@
 // =============================================================================
 class Config : public tools::ExerciseConfig
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

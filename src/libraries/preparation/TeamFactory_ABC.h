@@ -28,7 +28,6 @@ namespace xml
 // =============================================================================
 class TeamFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

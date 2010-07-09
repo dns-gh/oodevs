@@ -28,7 +28,6 @@ namespace gui
 // =============================================================================
 class DefaultLayer : public Layer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

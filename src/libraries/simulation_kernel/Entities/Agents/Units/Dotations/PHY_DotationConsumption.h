@@ -25,7 +25,6 @@ class PHY_DotationCategory;
 // =============================================================================
 class PHY_DotationConsumption : private boost::noncopyable
 {
-
 public:
      PHY_DotationConsumption( const PHY_DotationCategory& category, xml::xistream& xis );
     virtual ~PHY_DotationConsumption();

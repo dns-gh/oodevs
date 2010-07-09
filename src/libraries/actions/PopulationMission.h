@@ -23,7 +23,6 @@ namespace actions
 // =============================================================================
 class PopulationMission : public Mission
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

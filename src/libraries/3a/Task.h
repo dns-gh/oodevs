@@ -47,7 +47,6 @@ using namespace MsgsSimToClient;
 class Task : public dispatcher::MessageHandler_ABC
            , public boost::enable_shared_from_this< Task >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

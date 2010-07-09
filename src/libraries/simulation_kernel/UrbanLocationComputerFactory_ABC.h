@@ -27,7 +27,6 @@ namespace urbanLocation
 // =============================================================================
 class UrbanLocationComputerFactory_ABC : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

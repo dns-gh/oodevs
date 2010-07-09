@@ -41,7 +41,6 @@ class PHY_FireResults_ABC;
 // =============================================================================
 class HLA_DirectFire : public HLA_Interaction_ABC, public HLA_TargetedInteraction, public HLA_FireInteraction
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

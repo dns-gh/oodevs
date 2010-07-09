@@ -37,7 +37,6 @@ namespace actions
 // =============================================================================
 class ActionParameterFactory : public actions::ParameterFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -54,7 +54,6 @@ class EditorFactory : public gui::EditorFactory
                     , public tools::Caller< DotationsItem** >
                     , public tools::Caller< kernel::Moveable_ABC** >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

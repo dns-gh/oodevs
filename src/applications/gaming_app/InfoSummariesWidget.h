@@ -34,7 +34,6 @@ class InfoSummariesWidget : public QVBox
                           , public tools::ElementObserver_ABC< kernel::Entity_ABC >
                           , public tools::ElementObserver_ABC< kernel::Attributes_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

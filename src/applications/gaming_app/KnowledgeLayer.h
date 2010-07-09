@@ -22,7 +22,6 @@
 template< typename KnowledgeType >
 class KnowledgeLayer : public gui::EntityLayer< KnowledgeType >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

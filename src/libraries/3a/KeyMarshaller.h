@@ -25,7 +25,6 @@
 template< typename K, typename A1, typename A2 >
 class KeyMarshaller : public Slot_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

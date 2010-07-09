@@ -22,7 +22,6 @@
 // =============================================================================
 class Player : public tools::thread::Processor_ABC< Melody >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

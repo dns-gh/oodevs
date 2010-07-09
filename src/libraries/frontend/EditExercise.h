@@ -23,7 +23,6 @@ namespace frontend
 // =============================================================================
 class EditExercise : public SpawnCommand
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

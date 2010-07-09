@@ -21,7 +21,6 @@
 // =============================================================================
 class PHY_SupplyState_ABC : private boost::noncopyable
 {
-
 public:
              PHY_SupplyState_ABC();
     virtual ~PHY_SupplyState_ABC();

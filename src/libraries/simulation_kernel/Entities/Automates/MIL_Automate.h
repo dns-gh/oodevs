@@ -63,7 +63,6 @@ class DEC_KnowledgeBlackBoard_Automate;
 // =============================================================================
 class MIL_Automate : public MIL_Entity_ABC
 {
-
 public:
     //! @name Types
     //@{

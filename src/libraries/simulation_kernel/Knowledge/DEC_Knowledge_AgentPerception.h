@@ -29,7 +29,6 @@ class PHY_PerceptionLevel;
 // =============================================================================
 class DEC_Knowledge_AgentPerception : public DEC_Knowledge_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

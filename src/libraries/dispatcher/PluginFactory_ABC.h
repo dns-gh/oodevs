@@ -45,7 +45,6 @@ namespace dispatcher
 // =============================================================================
 class PluginFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

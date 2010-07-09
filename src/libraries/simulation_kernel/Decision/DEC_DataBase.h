@@ -30,7 +30,6 @@ namespace xml
 // =============================================================================
 class DEC_DataBase : public directia5::Library
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

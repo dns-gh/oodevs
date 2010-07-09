@@ -21,7 +21,6 @@ class ModelChecker_ABC;
 // =============================================================================
 class AgentsModelChecker
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

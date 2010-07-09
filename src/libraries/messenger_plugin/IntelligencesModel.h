@@ -50,7 +50,6 @@ namespace messenger
 // =============================================================================
 class IntelligencesModel : public tools::Resolver< Intelligence >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

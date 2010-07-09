@@ -22,7 +22,6 @@ namespace gui
 // =============================================================================
 class RichListItem : public QListViewItem
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

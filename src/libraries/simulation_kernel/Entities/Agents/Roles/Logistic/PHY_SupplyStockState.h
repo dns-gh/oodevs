@@ -24,7 +24,6 @@ class PHY_SupplyConsign_ABC;
 // =============================================================================
 class PHY_SupplyStockState : public PHY_SupplyState_ABC
 {
-
 public:
              PHY_SupplyStockState( MIL_AutomateLOG& suppliedAutomate, bool bPushedFlow );
              PHY_SupplyStockState();

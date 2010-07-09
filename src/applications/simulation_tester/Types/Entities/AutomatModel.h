@@ -39,7 +39,6 @@ namespace TEST {
 // =============================================================================
 class AutomatModel
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

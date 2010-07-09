@@ -27,7 +27,6 @@ class Model;
 // =============================================================================
 class KnowledgeGroupFactory : public KnowledgeGroupFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -23,7 +23,6 @@ namespace dispatcher
 // =============================================================================
 class MissionParameter_IndirectFire : public MissionParameter_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

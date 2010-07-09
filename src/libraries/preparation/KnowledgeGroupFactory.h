@@ -30,7 +30,6 @@ class IdManager;
 // =============================================================================
 class KnowledgeGroupFactory : public kernel::KnowledgeGroupFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

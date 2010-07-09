@@ -32,7 +32,6 @@ namespace gui
 // -----------------------------------------------------------------------------
 class ObjectAttributePrototypeFactory : public ObjectAttributePrototypeFactory_ABC
 {
-
 public:
     //! @name Types
     //@{

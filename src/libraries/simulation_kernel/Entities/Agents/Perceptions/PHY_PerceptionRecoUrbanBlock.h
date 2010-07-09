@@ -38,7 +38,6 @@ private:
 // =============================================================================
 class PHY_PerceptionRecoUrbanBlock : public PHY_PerceptionWithLocation< PHY_PerceptionRecoUrbanBlockReco >
 {
-
 public:
     explicit PHY_PerceptionRecoUrbanBlock( PHY_RoleInterface_Perceiver& perceiver );
     virtual ~PHY_PerceptionRecoUrbanBlock();

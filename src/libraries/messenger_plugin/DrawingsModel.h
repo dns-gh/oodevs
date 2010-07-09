@@ -52,7 +52,6 @@ namespace messenger
 class DrawingsModel : public tools::Resolver< Drawing >
                     , public dispatcher::Registrable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

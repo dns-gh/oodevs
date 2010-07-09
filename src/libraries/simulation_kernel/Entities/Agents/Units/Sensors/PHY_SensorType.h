@@ -27,7 +27,6 @@ class PHY_Sensor;
 // =============================================================================
 class PHY_SensorType : private boost::noncopyable
 {
-
 public:
     //! @name Manager
     //@{

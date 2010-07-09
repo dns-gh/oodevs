@@ -64,7 +64,6 @@ namespace script
 class ScriptPlugin : public dispatcher::Plugin_ABC
                    , public dispatcher::Registrable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -21,7 +21,6 @@
 //*****************************************************************************
 class DEC_Rep_PathPoint_Special : public DEC_Rep_PathPoint
 {
-
 public:
     enum E_TypePointParticulier
     {

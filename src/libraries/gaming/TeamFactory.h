@@ -27,7 +27,6 @@ class Model;
 // =============================================================================
 class TeamFactory : public TeamFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

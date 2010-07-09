@@ -39,7 +39,6 @@ class LogisticHierarchies_ABC : public kernel::EntityHierarchies< I >
                               , public kernel::Serializable_ABC
                               , public kernel::Drawable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

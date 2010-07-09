@@ -19,7 +19,6 @@ class MIL_Fuseau;
 //=============================================================================
 class TER_LimitData : private boost::noncopyable
 {
-
 public:
      TER_LimitData( const T_PointVector& points );
     virtual ~TER_LimitData();

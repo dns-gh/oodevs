@@ -47,7 +47,6 @@ namespace logger
 // =============================================================================
 class LoggerPlugin : public dispatcher::Plugin_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

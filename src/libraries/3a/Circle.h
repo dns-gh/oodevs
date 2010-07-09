@@ -26,7 +26,6 @@
 // =============================================================================
 class Circle : public Zone_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

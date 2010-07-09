@@ -34,7 +34,6 @@ class ObjectDetections : public kernel::Extension_ABC
                        , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectDetection >
                        , public kernel::Drawable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

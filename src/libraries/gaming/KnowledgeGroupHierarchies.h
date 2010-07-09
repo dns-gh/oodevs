@@ -30,7 +30,6 @@ namespace kernel
 class KnowledgeGroupHierarchies : public kernel::EntityHierarchies< kernel::CommunicationHierarchies >
                                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgKnowledgeGroupUpdate >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

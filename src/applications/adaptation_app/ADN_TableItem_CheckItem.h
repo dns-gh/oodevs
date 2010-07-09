@@ -40,7 +40,6 @@ class QCheckBox;
 class ADN_TableItem_CheckItem
 : public ADN_TableItem_ABC
 {
-
 public:
 
     explicit ADN_TableItem_CheckItem(ADN_Table* parent,void *data);

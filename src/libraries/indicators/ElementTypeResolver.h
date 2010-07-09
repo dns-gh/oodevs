@@ -24,7 +24,6 @@ namespace indicators
 // =============================================================================
 class ElementTypeResolver
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

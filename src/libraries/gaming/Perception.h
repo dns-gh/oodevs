@@ -25,7 +25,6 @@ namespace kernel
 // =============================================================================
 class Perception
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

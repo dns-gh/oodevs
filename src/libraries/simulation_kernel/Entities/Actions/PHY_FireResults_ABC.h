@@ -31,7 +31,6 @@ class MIL_Population;
 // =============================================================================
 class PHY_FireResults_ABC : private boost::noncopyable
 {
-
 public:
              PHY_FireResults_ABC();
     virtual ~PHY_FireResults_ABC();

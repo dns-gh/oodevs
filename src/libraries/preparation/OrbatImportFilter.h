@@ -18,7 +18,6 @@
 // =============================================================================
 class OrbatImportFilter
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

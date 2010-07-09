@@ -32,7 +32,6 @@ namespace transport
 class PHY_RoleInterface_Transported : public tools::Role_ABC
                                     , private boost::noncopyable
 {
-
 public:
     typedef PHY_RoleInterface_Transported RoleInterface;
 

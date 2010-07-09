@@ -30,7 +30,6 @@ class MIL_AutomateLOG;
 // =============================================================================
 class MIL_AgentPionLOG_ABC : public MIL_AgentPion
 {
-
 public:
              MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis );
              MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories );

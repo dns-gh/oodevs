@@ -29,7 +29,6 @@ class MIL_Agent_ABC;
 // =============================================================================
 class DEC_Knowledge_PopulationFlow : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

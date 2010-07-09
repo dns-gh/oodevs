@@ -27,7 +27,6 @@
 // =============================================================================
 class HLA_Interaction_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

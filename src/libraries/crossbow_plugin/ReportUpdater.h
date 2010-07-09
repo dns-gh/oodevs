@@ -38,7 +38,6 @@ namespace crossbow
 // =============================================================================
 class ReportUpdater
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

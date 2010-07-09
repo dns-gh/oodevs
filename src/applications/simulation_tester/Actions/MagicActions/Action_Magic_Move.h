@@ -26,7 +26,6 @@ namespace TEST {
 // =============================================================================
 class Action_Magic_Move : public Action< Pawn >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

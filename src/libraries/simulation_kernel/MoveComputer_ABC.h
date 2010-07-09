@@ -21,7 +21,6 @@ namespace moving
 // =============================================================================
 class MoveComputer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

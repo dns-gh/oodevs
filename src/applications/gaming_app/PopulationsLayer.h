@@ -20,7 +20,6 @@
 // =============================================================================
 class PopulationsLayer : public gui::PopulationsLayer
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

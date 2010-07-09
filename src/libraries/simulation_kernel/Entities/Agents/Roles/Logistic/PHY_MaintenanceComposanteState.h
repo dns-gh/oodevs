@@ -26,7 +26,6 @@ class MIL_Agent_ABC;
 // =============================================================================
 class PHY_MaintenanceComposanteState : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

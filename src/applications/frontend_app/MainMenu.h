@@ -24,7 +24,6 @@ class QPopupMenu;
 // =============================================================================
 class MainMenu : public QObject
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

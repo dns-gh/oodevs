@@ -23,7 +23,6 @@ namespace frontend
 // =============================================================================
 class CreateTerrain : public SpawnCommand
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

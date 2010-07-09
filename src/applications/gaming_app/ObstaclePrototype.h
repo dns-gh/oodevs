@@ -28,7 +28,6 @@ namespace actions
 // =============================================================================
 class ObstaclePrototype : public gui::ObstaclePrototype_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

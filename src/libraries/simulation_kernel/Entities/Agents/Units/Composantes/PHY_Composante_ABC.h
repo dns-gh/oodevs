@@ -20,7 +20,6 @@ class PHY_ComposanteType_ABC;
 // =============================================================================
 class PHY_Composante_ABC : private boost::noncopyable
 {
-
 public:
     //! @name Types
     //@{

@@ -22,7 +22,6 @@ class DEC_Representations;
 //*****************************************************************************
 class DEC_Rep_PathPoint : public DEC_PathPoint
 {
-
 public:
              DEC_Rep_PathPoint( const MT_Vector2D& vPos, E_TypePoint nTypePoint, const TerrainData& nTypeTerrain, const char* szDIARepType = "Rep_Point" );
     virtual ~DEC_Rep_PathPoint();

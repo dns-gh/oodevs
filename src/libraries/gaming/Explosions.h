@@ -45,7 +45,6 @@ class Explosions : public kernel::Extension_ABC
                  , public kernel::Updatable_ABC< MsgsSimToClient::MsgStopUnitFire >
                  , public kernel::Updatable_ABC< MsgsSimToClient::MsgStopPopulationFire >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

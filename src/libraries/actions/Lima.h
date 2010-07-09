@@ -36,7 +36,6 @@ class Location;
 // =============================================================================
 class Lima : public Parameter< QString >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -24,7 +24,6 @@ namespace MsgsClientToMessenger      { class MsgClientToMessenger; }
 // =============================================================================
 class Publisher_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -40,7 +40,6 @@ class IntelligencePositions : public kernel::Positions
                             , public kernel::Updatable_ABC< MsgsMessengerToClient::MsgIntelligenceUpdate >
                             , public kernel::Drawable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

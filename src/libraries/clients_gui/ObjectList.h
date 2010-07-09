@@ -28,7 +28,6 @@ namespace gui
 // =============================================================================
 class ObjectList : public QVBox
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

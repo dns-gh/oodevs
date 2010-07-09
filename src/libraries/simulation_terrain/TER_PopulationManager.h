@@ -29,7 +29,6 @@ class MT_Rect;
 // =============================================================================
 class TER_PopulationManager
 {
-
 public:
     //! @name Constructor/destructor
     //@{

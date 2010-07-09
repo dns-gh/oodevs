@@ -36,7 +36,6 @@ enum E_CloseCombatState;
 class DEC_AutomateDecision : public DEC_Decision< MIL_Automate >
                            , private boost::noncopyable
 {
-
 public:
              DEC_AutomateDecision( MIL_Automate& automate, DEC_DataBase& database );
     virtual ~DEC_AutomateDecision();

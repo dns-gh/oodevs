@@ -31,7 +31,6 @@ namespace actions
 // =============================================================================
 class ParamNumericField : public Param_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

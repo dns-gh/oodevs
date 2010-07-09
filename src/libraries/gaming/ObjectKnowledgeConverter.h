@@ -28,7 +28,6 @@ class ObjectKnowledgeConverter : public kernel::ObjectKnowledgeConverter_ABC
                                , public tools::Observer_ABC
                                , public tools::ElementObserver_ABC< kernel::ObjectKnowledge_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

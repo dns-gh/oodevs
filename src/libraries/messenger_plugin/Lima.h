@@ -43,7 +43,6 @@ namespace messenger
 // =============================================================================
 class Lima : public TacticalLine_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

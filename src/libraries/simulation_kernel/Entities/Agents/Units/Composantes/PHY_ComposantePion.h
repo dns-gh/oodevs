@@ -54,7 +54,6 @@ namespace firing
 // =============================================================================
 class PHY_ComposantePion : public PHY_Composante_ABC
 {
-
 public:
     typedef std::vector< PHY_ComposantePion* >       T_ComposantePionVector;
     typedef T_ComposantePionVector::iterator         IT_ComposantePionVector;

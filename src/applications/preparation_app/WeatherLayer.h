@@ -37,7 +37,6 @@ class LocalWeather;
 // =============================================================================
 class WeatherLayer : public gui::Layer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

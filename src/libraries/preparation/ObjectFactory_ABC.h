@@ -33,7 +33,6 @@ struct Enum_ObstacleType;
 // =============================================================================
 class ObjectFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

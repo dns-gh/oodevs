@@ -33,7 +33,6 @@ namespace detection
 //*****************************************************************************
 class PHY_Perception_ABC : private boost::noncopyable
 {
-
 public:
     explicit PHY_Perception_ABC( PHY_RoleInterface_Perceiver& perceiver );
     virtual ~PHY_Perception_ABC();

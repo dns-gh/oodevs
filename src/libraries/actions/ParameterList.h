@@ -27,7 +27,6 @@ namespace actions {
 // =============================================================================
 class ParameterList : public Parameter_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

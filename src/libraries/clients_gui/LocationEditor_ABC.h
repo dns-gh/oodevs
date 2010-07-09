@@ -22,7 +22,6 @@ namespace gui
 // =============================================================================
 class LocationEditor_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

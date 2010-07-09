@@ -20,7 +20,6 @@
 // =============================================================================
 class AGR_EnumGenerator : public AGR_Generator_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

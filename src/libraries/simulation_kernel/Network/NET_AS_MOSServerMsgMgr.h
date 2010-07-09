@@ -40,7 +40,6 @@ class NET_Simulation_ABC;
 class NET_AS_MOSServerMsgMgr : public NET_Publisher_ABC
                              , private boost::noncopyable
 {
-
 public:
 
     //! @name Constructors/Destructor

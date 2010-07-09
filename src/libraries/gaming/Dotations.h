@@ -43,7 +43,6 @@ class Dotations : public kernel::Dotations_ABC
                 , public tools::Resolver< Dotation >
                 , public kernel::Drawable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

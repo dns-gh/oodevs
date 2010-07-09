@@ -36,7 +36,6 @@ template< class ObjectType >
 class ADN_AddElementCommand
 : public QtCommand
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -78,7 +77,6 @@ template<>
 class ADN_AddElementCommand< ADN_Type_ABC< std::string > >
 : public QtCommand
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -118,7 +116,6 @@ template<>
 class ADN_AddElementCommand< ADN_Type_ABC< double > >
 : public QtCommand
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

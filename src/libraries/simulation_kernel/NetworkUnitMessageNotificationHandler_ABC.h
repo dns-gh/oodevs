@@ -26,7 +26,6 @@ namespace network
 // =============================================================================
 class NetworkUnitMessageNotificationHandler_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

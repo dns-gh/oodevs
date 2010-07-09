@@ -42,7 +42,6 @@ namespace actions {
 // =============================================================================
 class LocationBase : public kernel::LocationVisitor_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

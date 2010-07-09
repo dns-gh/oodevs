@@ -20,7 +20,6 @@
 // =============================================================================
 class ADN_MissionParameterType : public ADN_TableItem_ComboBox
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

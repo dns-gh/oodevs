@@ -36,7 +36,6 @@ class UrbanBlockDetectionMap;
 // =============================================================================
 class SurfaceFactory
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -25,7 +25,6 @@ namespace kernel
 // =============================================================================
 class Limit : public TacticalLine_ABC
 {
-
 public:
     //! @name Constructor/Destructor
     //@{

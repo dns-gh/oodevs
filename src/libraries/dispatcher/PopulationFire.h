@@ -30,7 +30,6 @@ namespace dispatcher
 // =============================================================================
 class PopulationFire : public SimpleEntity< >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

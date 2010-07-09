@@ -23,7 +23,6 @@ class MIL_EntityManager_ABC;
 // =============================================================================
 class MIL_PlannedWorkParameter : public MIL_BaseParameter
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

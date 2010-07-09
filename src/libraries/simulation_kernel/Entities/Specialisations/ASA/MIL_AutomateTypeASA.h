@@ -25,7 +25,6 @@ namespace xml
 // =============================================================================
 class MIL_AutomateTypeASA : public MIL_AutomateType
 {
-
 public:
              MIL_AutomateTypeASA( const std::string& strName, xml::xistream& xis );
     virtual ~MIL_AutomateTypeASA();

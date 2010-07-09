@@ -33,7 +33,6 @@ class SimulationLighting : public gui::LightingProxy
                          , public tools::ElementObserver_ABC< kernel::ModelLoaded >
                          , public tools::ElementObserver_ABC< Simulation >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

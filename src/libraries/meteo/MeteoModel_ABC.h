@@ -30,7 +30,6 @@ namespace weather
 // =============================================================================
 class MeteoModel_ABC : public MeteoManager_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

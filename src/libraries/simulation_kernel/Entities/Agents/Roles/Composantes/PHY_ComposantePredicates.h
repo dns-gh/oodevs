@@ -98,7 +98,6 @@ private:
 // =============================================================================
 class GetComponentFunctor : public OnComponentFunctor_ABC
 {
-
 public:
     GetComponentFunctor( ComponentPredicate_ABC& functor )
         : functor_( functor )
@@ -194,7 +193,6 @@ private:
 // =============================================================================
 class HasUsableComponentFunctor : public OnComponentFunctor_ABC
 {
-
 public:
     HasUsableComponentFunctor( ComponentTypePredicate_ABC& functor )
         : functor_( functor )
@@ -306,7 +304,6 @@ private:
 // =============================================================================
 class GetComponentUseFunctor : public OnComponentFunctor_ABC
 {
-
 public:
     GetComponentUseFunctor( ComposanteUsePredicate_ABC& functor, PHY_Composante_ABC::T_ComposanteUseMap& result )
         : functor_( functor )
@@ -341,7 +338,6 @@ public:
 // =============================================================================
 class GetComponentLendedUseFunctor : public OnComponentFunctor_ABC
 {
-
 public:
     GetComponentLendedUseFunctor( ComposanteUsePredicate_ABC& functor, PHY_Composante_ABC::T_ComposanteUseMap& result )
         : functor_( functor )

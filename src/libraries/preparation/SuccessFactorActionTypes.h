@@ -27,7 +27,6 @@ class SuccessFactorActionType;
 // =============================================================================
 class SuccessFactorActionTypes : public tools::Resolver< SuccessFactorActionType, QString >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -29,7 +29,6 @@ class PHY_Breakdown;
 // =============================================================================
 class PHY_MaintenanceConsign_ABC : private boost::noncopyable
 {
-
 public:
              PHY_MaintenanceConsign_ABC( MIL_Agent_ABC& maintenanceAgent, PHY_MaintenanceComposanteState& composanteState );
              PHY_MaintenanceConsign_ABC();

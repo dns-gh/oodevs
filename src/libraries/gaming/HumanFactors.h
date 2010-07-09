@@ -36,7 +36,6 @@ namespace kernel
 class HumanFactors : public kernel::HumanFactors_ABC
                    , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

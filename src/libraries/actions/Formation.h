@@ -29,7 +29,6 @@ namespace actions {
 // =============================================================================
 class Formation : public Entity< kernel::Formation_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

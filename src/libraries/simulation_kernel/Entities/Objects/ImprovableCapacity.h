@@ -30,7 +30,6 @@ class PHY_ConsumptionType;
 // =============================================================================
 class ImprovableCapacity : public ObjectCapacity_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

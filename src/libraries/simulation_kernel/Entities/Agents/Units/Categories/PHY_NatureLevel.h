@@ -23,7 +23,6 @@ namespace Common
 // =============================================================================
 class PHY_NatureLevel : private boost::noncopyable
 {
-
 public:
     //! @name Manager
     //@{

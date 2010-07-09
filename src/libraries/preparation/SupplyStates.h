@@ -31,7 +31,6 @@ class DotationsItem;
 class SupplyStates : public LogisticHierarchies< SupplySuperior, kernel::SupplyHierarchies >
                    , public tools::Resolver< Dotation >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -85,7 +85,6 @@ private:
 template< typename T >
 class ToolListButton : public ToolListButtonBase, public tools::Observer_ABC, public kernel::OptionsObserver_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

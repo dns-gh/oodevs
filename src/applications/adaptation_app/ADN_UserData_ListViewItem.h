@@ -35,7 +35,6 @@ template< class PointerType >
 class ADN_UserData_ListViewItem
 : public QListViewItem
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

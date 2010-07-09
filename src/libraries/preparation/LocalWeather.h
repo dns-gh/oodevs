@@ -31,7 +31,6 @@ namespace xml
 // =============================================================================
 class LocalWeather : public Weather
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -33,7 +33,6 @@ namespace gui
 // =============================================================================
 class FormationLayer : public EntityLayer< kernel::Formation_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

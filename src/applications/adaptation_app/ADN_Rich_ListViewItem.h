@@ -26,7 +26,6 @@ class QColorGroup;
 class ADN_Rich_ListViewItem
 :   public QListViewItem
 {
-
 public:
     //! @name Enums
     //@{

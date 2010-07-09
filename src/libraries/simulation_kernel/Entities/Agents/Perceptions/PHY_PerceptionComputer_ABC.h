@@ -20,7 +20,6 @@ class PHY_PerceptionLevel;
 // =============================================================================
 class PHY_PerceptionComputer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

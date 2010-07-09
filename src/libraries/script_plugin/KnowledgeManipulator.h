@@ -37,7 +37,6 @@ namespace script
 // =============================================================================
 class KnowledgeManipulator : public kernel::Extension_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

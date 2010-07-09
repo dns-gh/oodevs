@@ -20,7 +20,6 @@
 // =============================================================================
 class PHY_DotationCategory_IndirectObjectCreationFire : public PHY_DotationCategory_IndirectFire_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

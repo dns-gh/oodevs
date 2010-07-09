@@ -26,7 +26,6 @@ namespace xml
 // =============================================================================
 class Weather
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

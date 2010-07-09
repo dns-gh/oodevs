@@ -21,7 +21,6 @@
 // =============================================================================
 class PHY_Breakdown : private boost::noncopyable
 {
-
 public:
     //! @name Contructors/Destructor
     //@{

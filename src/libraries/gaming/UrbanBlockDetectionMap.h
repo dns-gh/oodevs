@@ -28,7 +28,6 @@ namespace urban
 // =============================================================================
 class UrbanBlockDetectionMap
 {
-
 public:
     //! @name Types
     //@{

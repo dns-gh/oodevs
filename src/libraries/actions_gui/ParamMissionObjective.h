@@ -41,7 +41,6 @@ namespace actions
 // =============================================================================
 class ParamMissionObjective : public Param_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

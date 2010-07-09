@@ -22,7 +22,6 @@ class QAction;
 // =============================================================================
 class ActionItem : public QToolButton
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

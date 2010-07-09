@@ -43,7 +43,6 @@ class PHY_RolePionLOG_Medical : public PHY_RoleInterface_Medical
                               , public component::ComponentsChangedNotificationHandler_ABC
                               , public network::NetworkUnitMessageNotificationHandler_ABC
 {
-
 public:
     explicit PHY_RolePionLOG_Medical( MIL_AgentPionLOG_ABC& pion );
     virtual ~PHY_RolePionLOG_Medical();

@@ -31,7 +31,6 @@ namespace xml
 // =============================================================================
 class LocationSerializer : public kernel::LocationVisitor_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

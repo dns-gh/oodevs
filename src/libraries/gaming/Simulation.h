@@ -28,7 +28,6 @@ namespace kernel
 // =============================================================================
 class Simulation : public kernel::Time_ABC
 {
-
 public:
     struct sStartTick{};
     struct sEndTick{};

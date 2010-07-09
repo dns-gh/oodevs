@@ -32,7 +32,6 @@ namespace indicators
 class GaugeTypes : public tools::Resolver< GaugeType, QString >
                  , public GaugeFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

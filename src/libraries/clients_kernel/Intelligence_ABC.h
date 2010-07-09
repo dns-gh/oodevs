@@ -25,7 +25,6 @@ namespace kernel
 // =============================================================================
 class Intelligence_ABC : public kernel::Entity_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

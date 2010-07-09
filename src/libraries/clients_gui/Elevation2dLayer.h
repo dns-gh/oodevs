@@ -38,7 +38,6 @@ class Elevation2dLayer : public Layer2d_ABC
                        , public tools::Observer_ABC
                        , public tools::ElementObserver_ABC< kernel::ModelLoaded >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

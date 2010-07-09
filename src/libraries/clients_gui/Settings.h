@@ -29,7 +29,6 @@ namespace gui
 // =============================================================================
 class Settings : public QSettings, public kernel::Settings_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

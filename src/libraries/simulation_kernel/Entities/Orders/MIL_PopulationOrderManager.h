@@ -31,7 +31,6 @@ class MIL_MissionType_ABC;
 //=============================================================================
 class MIL_PopulationOrderManager : public MIL_OrderManager_ABC
 {
-
 public:
     explicit MIL_PopulationOrderManager( MIL_Population& population );
     virtual ~MIL_PopulationOrderManager();

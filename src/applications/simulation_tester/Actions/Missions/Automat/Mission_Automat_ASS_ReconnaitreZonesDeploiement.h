@@ -25,7 +25,6 @@ namespace TEST {
 // =============================================================================
 class Mission_Automat_ASS_ReconnaitreZonesDeploiement : public Mission_Automat_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

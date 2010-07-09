@@ -23,7 +23,6 @@ class PHY_DotationCategory;
 // =============================================================================
 class PHY_ActiveProtection
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -44,7 +44,6 @@ namespace bml
 // =============================================================================
 class UpdateListener : private ResponseHandler_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -29,7 +29,6 @@ namespace detection
 // =============================================================================
 class PHY_PerceptionRadar : public PHY_Perception_ABC
 {
-
 public:
     explicit PHY_PerceptionRadar( PHY_RoleInterface_Perceiver& perceiver );
     virtual ~PHY_PerceptionRadar();

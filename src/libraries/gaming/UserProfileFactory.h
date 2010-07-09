@@ -28,7 +28,6 @@ class Publisher_ABC;
 // =============================================================================
 class UserProfileFactory : public UserProfileFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

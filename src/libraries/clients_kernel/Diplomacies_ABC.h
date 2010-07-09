@@ -25,7 +25,6 @@ namespace kernel
 // =============================================================================
 class Diplomacies_ABC : public kernel::Extension_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

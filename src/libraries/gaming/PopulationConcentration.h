@@ -31,7 +31,6 @@ class PopulationConcentration : public kernel::PopulationConcentration_ABC
                               , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationConcentrationUpdate >
                               , public kernel::Drawable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

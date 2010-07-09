@@ -24,7 +24,6 @@ template< typename K, typename T >
 class Indicator : public Function1_ABC< K, T >
                 , public Result_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

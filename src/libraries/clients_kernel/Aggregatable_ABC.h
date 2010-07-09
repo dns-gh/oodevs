@@ -21,7 +21,6 @@ namespace kernel
 // =============================================================================
 class Aggregatable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

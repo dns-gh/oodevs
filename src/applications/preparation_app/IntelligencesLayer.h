@@ -20,7 +20,6 @@
 // =============================================================================
 class IntelligencesLayer : public gui::IntelligencesLayer
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

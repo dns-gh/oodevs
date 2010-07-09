@@ -49,7 +49,6 @@ class ActionsModel;
 class Action_ABC : public kernel::Entity_ABC
                  , public ParameterContainer_ABC
 {
-
 public:
     //! @name Static
     //@{

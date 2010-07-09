@@ -47,7 +47,6 @@ class TER_Polygon;
 // =============================================================================
 class DEC_KnowledgeBlackBoard_KnowledgeGroup : public DEC_KnowledgeBlackBoard_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

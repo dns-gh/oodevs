@@ -33,7 +33,6 @@ namespace frontend
 // =============================================================================
 class MainWindow : public QMainWindow
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

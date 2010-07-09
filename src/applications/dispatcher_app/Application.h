@@ -23,7 +23,6 @@ class DispatcherFacade;
 // =============================================================================
 class Application
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

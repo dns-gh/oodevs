@@ -25,7 +25,6 @@ namespace actions
 // =============================================================================
 class ParamPolygon : public ParamLocation
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

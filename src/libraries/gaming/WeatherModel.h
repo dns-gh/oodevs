@@ -34,7 +34,6 @@ class Model;
 // =============================================================================
 class WeatherModel : public tools::Resolver< AmmoEffect >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

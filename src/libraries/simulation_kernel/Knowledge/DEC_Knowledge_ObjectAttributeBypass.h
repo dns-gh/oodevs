@@ -22,7 +22,6 @@ class BypassAttribute;
 // =============================================================================
 class DEC_Knowledge_ObjectAttributeBypass : public DEC_Knowledge_ObjectAttribute_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

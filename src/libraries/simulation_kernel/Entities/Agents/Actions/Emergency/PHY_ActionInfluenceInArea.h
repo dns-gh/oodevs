@@ -30,7 +30,6 @@ namespace population
 // =============================================================================
 class PHY_ActionInfluenceInArea : public PHY_DecisionCallbackAction_ABC
 {
-
 public:
     //! @name Types
     //@{

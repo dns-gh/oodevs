@@ -25,7 +25,6 @@ namespace tools
 // =============================================================================
 class Connector
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

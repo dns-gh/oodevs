@@ -20,7 +20,6 @@ class PHY_Action_ABC;
 // =============================================================================
 class PHY_Actor : private boost::noncopyable
 {
-
 public:
     PHY_Actor();
     virtual ~PHY_Actor();

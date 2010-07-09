@@ -21,7 +21,6 @@ namespace transport
 // =============================================================================
 class TransportStrategy_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -43,7 +42,6 @@ public:
 // =============================================================================
 class TransportWeightComputer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

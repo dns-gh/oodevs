@@ -22,7 +22,6 @@ namespace MsgsAuthenticationToClient
 // =============================================================================
 class AvailableProfile
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

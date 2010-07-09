@@ -26,7 +26,6 @@ namespace TEST {
 // =============================================================================
 class TacticalLine_Lima : public TacticalLine_ABC
 {
-
 public:
     //! @name ID Managers
     //@{

@@ -39,7 +39,6 @@ namespace crossbow
 // =============================================================================
 class OrderTypes
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

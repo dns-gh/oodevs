@@ -86,7 +86,6 @@ class BaseDisplayer : public kernel::Displayer_ABC
                     , public tools::Caller< kernel::ObjectKnowledge_ABC >
                     , public tools::Caller< kernel::KnowledgeGroup_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

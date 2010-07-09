@@ -29,7 +29,6 @@ namespace gui
 // =============================================================================
 class DrawerFactory : public DrawingFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

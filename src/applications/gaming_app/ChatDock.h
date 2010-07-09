@@ -26,7 +26,6 @@ class CommandHandler;
 // =============================================================================
 class ChatDock : public QDockWindow
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

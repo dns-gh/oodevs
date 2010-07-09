@@ -20,7 +20,6 @@
 // =============================================================================
 class PopulationPartPositionsProxy : public kernel::Positions
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

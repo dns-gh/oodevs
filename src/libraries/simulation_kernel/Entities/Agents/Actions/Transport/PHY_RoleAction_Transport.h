@@ -40,7 +40,6 @@ class PHY_RoleAction_Transport : public tools::Role_ABC
                                , public transport::TransportNotificationHandler_ABC
                                , public network::NetworkUnitMessageNotificationHandler_ABC
 {
-
 public:
     //! @name Types
     //@{

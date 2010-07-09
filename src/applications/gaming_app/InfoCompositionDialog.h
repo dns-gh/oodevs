@@ -31,7 +31,6 @@ namespace gui
 // =============================================================================
 class InfoCompositionDialog : public InfoDialog< Equipments >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -36,7 +36,6 @@ namespace plugins
 // =============================================================================
 class NotesModel : public tools::Resolver< Note >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

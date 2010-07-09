@@ -27,7 +27,6 @@ class CommandHandler;
 // =============================================================================
 class ZoomViewCommand : public CommandHandler_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

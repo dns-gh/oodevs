@@ -20,7 +20,6 @@
 // =============================================================================
 class AgentCommunications : public EntityCommunications
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

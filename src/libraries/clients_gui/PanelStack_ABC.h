@@ -24,7 +24,6 @@ namespace gui
 // =============================================================================
 class PanelStack_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -21,7 +21,6 @@ namespace gui
 // =============================================================================
 class InfrastructureParameters
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

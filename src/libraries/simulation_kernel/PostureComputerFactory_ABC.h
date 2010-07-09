@@ -23,7 +23,6 @@ namespace posture
 // =============================================================================
 class PostureComputerFactory_ABC : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -33,7 +33,6 @@ namespace urban
 // =============================================================================
 class MIL_UrbanBlockParameter : public MIL_BaseParameter
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

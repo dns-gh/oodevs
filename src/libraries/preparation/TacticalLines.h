@@ -25,7 +25,6 @@ class TacticalLines : public kernel::Extension_ABC
                     , public kernel::Serializable_ABC
                     , public tools::Resolver< TacticalLine_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

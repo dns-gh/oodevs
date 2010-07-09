@@ -22,7 +22,6 @@
 // =============================================================================
 class PHY_ActionDirectFirePionUsingOnlyLoadable : public PHY_ActionDirectFirePion_ABC
 {
-
 public:
     PHY_ActionDirectFirePionUsingOnlyLoadable( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Agent > pEnemy, MT_Float percentage, int firingMode );
     virtual ~PHY_ActionDirectFirePionUsingOnlyLoadable();

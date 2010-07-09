@@ -25,7 +25,6 @@ namespace kernel
 // =============================================================================
 class Mission : public  tools::Resolver< FragOrder >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

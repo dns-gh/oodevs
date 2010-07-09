@@ -20,7 +20,6 @@
 // =============================================================================
 class ADN_AvailabilityWarningTable : public ADN_Table2
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

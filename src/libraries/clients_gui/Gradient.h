@@ -42,7 +42,6 @@ public:
 // =============================================================================
 class Gradient
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

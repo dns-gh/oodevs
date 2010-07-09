@@ -34,7 +34,6 @@ class PHY_Conveyor;
 // =============================================================================
 class PHY_Convoy_ABC : private boost::noncopyable
 {
-
 public:
     //! @name
     //@{

@@ -23,7 +23,6 @@ class InteractionHeightAttribute;
 // =============================================================================
 class DEC_Knowledge_ObjectAttributeInteractionHeight : public DEC_Knowledge_ObjectAttribute_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

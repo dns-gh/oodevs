@@ -23,7 +23,6 @@ namespace kernel
 // =============================================================================
 class Circle : public Location_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

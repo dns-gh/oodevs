@@ -22,7 +22,6 @@ class Model;
 // =============================================================================
 class EntityResolverFacade : public kernel::EntityResolver_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

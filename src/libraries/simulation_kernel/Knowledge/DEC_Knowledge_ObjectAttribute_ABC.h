@@ -25,7 +25,6 @@ class DEC_Knowledge_ObjectCollision;
 // =============================================================================
 class DEC_Knowledge_ObjectAttribute_ABC : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

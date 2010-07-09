@@ -27,7 +27,6 @@ class IdManager;
 // =============================================================================
 class FormationFactory : public FormationFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

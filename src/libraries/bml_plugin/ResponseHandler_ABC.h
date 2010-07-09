@@ -23,7 +23,6 @@ namespace bml
 // =============================================================================
 class ResponseHandler_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

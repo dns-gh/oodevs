@@ -24,7 +24,6 @@ class MIL_EntityManager_ABC;
 // =============================================================================
 class MIL_PlannedWorkListParameter : public MIL_BaseParameter
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

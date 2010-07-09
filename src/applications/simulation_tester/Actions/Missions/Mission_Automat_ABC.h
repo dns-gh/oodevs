@@ -27,7 +27,6 @@ namespace TEST {
 // =============================================================================
 class Mission_Automat_ABC : public Action< Automat >
 {
-
 public:
     //! @name ID Managers
     //@{

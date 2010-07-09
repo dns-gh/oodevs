@@ -28,7 +28,6 @@ namespace population
 class PHY_RoleAction_FolkInfluence : public tools::Role_ABC
                                    , private boost::noncopyable
 {
-
 public:
     //! @name Types
     //@{

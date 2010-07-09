@@ -25,7 +25,6 @@ class Model;
 // =============================================================================
 class FireFactory
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -28,7 +28,6 @@ namespace actions
 // =============================================================================
 class ActivityTimePrototype : public gui::ActivityTimePrototype_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

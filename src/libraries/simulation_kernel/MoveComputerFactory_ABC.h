@@ -25,7 +25,6 @@ namespace moving
 // =============================================================================
 class MoveComputerFactory_ABC : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

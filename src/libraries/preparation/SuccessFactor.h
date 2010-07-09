@@ -37,7 +37,6 @@ class SuccessFactorProfiles;
 // =============================================================================
 class SuccessFactor
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

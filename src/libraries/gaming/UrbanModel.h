@@ -41,7 +41,6 @@ class UrbanBlockDetectionMap;
 // =============================================================================
 class UrbanModel : public tools::Resolver< kernel::Entity_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

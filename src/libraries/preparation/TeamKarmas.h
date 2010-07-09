@@ -25,7 +25,6 @@ namespace kernel
 // =============================================================================
 class TeamKarmas : public tools::Resolver< kernel::Karma, QString >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

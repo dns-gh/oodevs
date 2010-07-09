@@ -22,7 +22,6 @@ namespace TEST {
 // =============================================================================
 class Config
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -29,7 +29,6 @@ namespace gui
 // =============================================================================
 class MiniView : public QFrame
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

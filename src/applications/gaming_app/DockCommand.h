@@ -24,7 +24,6 @@ class QMainWindow;
 // =============================================================================
 class DockCommand : public CommandHandler_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

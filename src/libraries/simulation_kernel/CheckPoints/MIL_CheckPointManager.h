@@ -39,7 +39,6 @@ class MIL_Config;
 // =============================================================================
 class MIL_CheckPointManager : private boost::noncopyable
 {
-
 public:
               MIL_CheckPointManager();
      explicit MIL_CheckPointManager( const MIL_Config& config );

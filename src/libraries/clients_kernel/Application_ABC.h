@@ -20,7 +20,6 @@
 // =============================================================================
 class Application_ABC : public QApplication
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

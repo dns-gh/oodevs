@@ -22,7 +22,6 @@ namespace tools
 // =============================================================================
 class Role_ABC
 {
-
 public:
     //! @name Constructor/Destructor
     //@{

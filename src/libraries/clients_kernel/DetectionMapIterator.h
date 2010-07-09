@@ -22,7 +22,6 @@ namespace kernel
 // =============================================================================
 class DetectionMapIterator
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

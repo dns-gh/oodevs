@@ -27,7 +27,6 @@ class PHY_DotationCategory_IndirectFire_ABC;
 // =============================================================================
 class PHY_IndirectFireDotationClass : private boost::noncopyable
 {
-
 public:
     //! @name Statics
     //@{

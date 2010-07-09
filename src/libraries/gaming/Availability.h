@@ -29,7 +29,6 @@ namespace kernel
 // =============================================================================
 class Availability
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

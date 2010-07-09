@@ -25,7 +25,6 @@ class CheckBoxDisplayer : public kernel::Displayer_ABC
                         , public tools::Caller< bool >
                         , public tools::Caller< kernel::ValueNotSet >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

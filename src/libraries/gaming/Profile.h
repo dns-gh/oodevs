@@ -53,7 +53,6 @@ class Profile : public kernel::Profile_ABC
               , public tools::ElementObserver_ABC< Simulation >
               , public tools::ElementObserver_ABC< Services >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

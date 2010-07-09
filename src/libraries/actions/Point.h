@@ -30,7 +30,6 @@ namespace actions {
 // =============================================================================
 class Point : public Location
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

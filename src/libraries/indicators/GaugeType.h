@@ -31,7 +31,6 @@ namespace indicators
 // =============================================================================
 class GaugeType
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

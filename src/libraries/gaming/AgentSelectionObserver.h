@@ -31,7 +31,6 @@ class AgentSelectionObserver : public tools::SelectionObserver_ABC
                              , public tools::SelectionObserver_Base< kernel::Agent_ABC >
                              , public tools::SelectionObserver_Base< kernel::Automat_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

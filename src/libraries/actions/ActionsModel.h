@@ -42,7 +42,6 @@ class ActionsFilter_ABC;
 // =============================================================================
 class ActionsModel : public tools::Resolver< Action_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

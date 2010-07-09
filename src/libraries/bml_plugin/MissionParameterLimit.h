@@ -31,7 +31,6 @@ namespace bml
 // =============================================================================
 class MissionParameterLimit : public MissionParameter_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

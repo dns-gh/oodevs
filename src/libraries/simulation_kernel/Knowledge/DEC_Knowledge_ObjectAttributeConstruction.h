@@ -22,7 +22,6 @@ class ConstructionAttribute;
 // =============================================================================
 class DEC_Knowledge_ObjectAttributeConstruction : public DEC_Knowledge_ObjectAttribute_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

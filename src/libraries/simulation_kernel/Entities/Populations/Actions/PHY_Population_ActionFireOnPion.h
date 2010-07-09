@@ -24,7 +24,6 @@ class MIL_Population;
 // =============================================================================
 class PHY_Population_ActionFireOnPion : public PHY_Action_ABC
 {
-
 public:
     typedef MIL_Population ActorType;
 

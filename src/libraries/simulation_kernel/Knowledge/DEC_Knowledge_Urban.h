@@ -39,7 +39,6 @@ namespace MsgsSimToClient
 // =============================================================================
 class DEC_Knowledge_Urban : public DEC_Knowledge_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

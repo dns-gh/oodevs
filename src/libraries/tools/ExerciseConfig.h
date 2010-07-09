@@ -23,7 +23,6 @@ namespace tools
 // =============================================================================
 class ExerciseConfig : public GeneralConfig
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

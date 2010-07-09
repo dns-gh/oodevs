@@ -43,7 +43,6 @@ namespace TEST
 // =============================================================================
 class Automat : public Testable_Entity
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

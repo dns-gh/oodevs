@@ -32,7 +32,6 @@ namespace kernel
 class ObjectPerceptions : public kernel::Extension_ABC
                         , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectKnowledgeUpdate >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -23,7 +23,6 @@ namespace TEST {
 // =============================================================================
 class TacticalLine_ABC
 {
-
 public:
     //! @name Enumerations
     //@{

@@ -25,7 +25,6 @@ namespace xml
 // =============================================================================
 class MIL_AutomateTypeLOG : public MIL_AutomateType
 {
-
 public:
              MIL_AutomateTypeLOG( const std::string& strName, xml::xistream& xis );
     virtual ~MIL_AutomateTypeLOG();

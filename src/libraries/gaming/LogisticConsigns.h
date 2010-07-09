@@ -32,7 +32,6 @@ template< typename ConcreteExtension, typename Consign >
 class LogisticConsigns_ABC : public kernel::Extension_ABC
                            , public kernel::Drawable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

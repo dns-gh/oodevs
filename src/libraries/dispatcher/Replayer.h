@@ -38,7 +38,6 @@ namespace dispatcher
 // =============================================================================
 class Replayer
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

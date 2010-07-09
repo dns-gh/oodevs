@@ -25,7 +25,6 @@ namespace xml
 // =============================================================================
 class MIL_AgentTypePionCirculation : public MIL_AgentTypePion
 {
-
 public:
              MIL_AgentTypePionCirculation( const std::string& strName, xml::xistream& xis );
     virtual ~MIL_AgentTypePionCirculation();

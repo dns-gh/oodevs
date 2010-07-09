@@ -35,7 +35,6 @@ class DelayAttribute : public kernel::DelayAttribute_ABC
                      , public kernel::Serializable_ABC
 
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

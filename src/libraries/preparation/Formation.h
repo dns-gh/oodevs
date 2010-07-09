@@ -37,7 +37,6 @@ class Formation : public kernel::EntityImplementation< kernel::Formation_ABC >
                 , public kernel::Extension_ABC
                 , public kernel::Serializable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

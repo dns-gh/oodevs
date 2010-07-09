@@ -23,7 +23,6 @@ namespace script
 // =============================================================================
 class CommandString
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

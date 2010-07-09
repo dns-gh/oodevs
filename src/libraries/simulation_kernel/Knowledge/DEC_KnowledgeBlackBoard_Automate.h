@@ -31,7 +31,6 @@ class MIL_Automate;
 // =============================================================================
 class DEC_KnowledgeBlackBoard_Automate : public DEC_KnowledgeBlackBoard_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -32,7 +32,6 @@ class ActionsLayer : public gui::Layer_ABC
                    , public tools::Observer_ABC
                    , public tools::SelectionObserver< actions::Action_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -31,7 +31,6 @@ namespace TEST {
 // =============================================================================
 class Mission_Population_Type
 {
-
 public:
     //! @name Operations
     //@{

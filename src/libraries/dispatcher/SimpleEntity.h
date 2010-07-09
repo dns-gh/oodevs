@@ -27,7 +27,6 @@ namespace dispatcher
 template< typename B = kernel::Entity_ABC >
 class SimpleEntity : public B
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

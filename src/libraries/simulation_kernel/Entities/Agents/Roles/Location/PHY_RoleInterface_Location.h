@@ -34,7 +34,6 @@ class PHY_RoleInterface_Location : public tools::Role_ABC
                                  , public TER_Agent_ABC
                                  , private boost::noncopyable
 {
-
 public:
     typedef PHY_RoleInterface_Location RoleInterface;
 

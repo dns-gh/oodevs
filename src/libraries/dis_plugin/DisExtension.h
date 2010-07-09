@@ -49,7 +49,6 @@ class DisExtension : public kernel::Extension_ABC
                    , public kernel::Updatable_ABC< MsgUnitAttributes >
                    , private tic::PlatformVisitor_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

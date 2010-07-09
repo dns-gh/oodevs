@@ -36,7 +36,6 @@ class MIL_Config;
 class DEC_PathFind_Manager : private tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >
                            , private boost::noncopyable
 {
-
 public:
     explicit DEC_PathFind_Manager( MIL_Config& config );
     virtual ~DEC_PathFind_Manager();

@@ -25,7 +25,6 @@ namespace tic
 // =============================================================================
 class TicPluginFactory : public dispatcher::PluginFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

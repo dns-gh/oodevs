@@ -18,7 +18,6 @@
 // =============================================================================
 class MIL_Effect_ABC : private boost::noncopyable
 {
-
 public:
              MIL_Effect_ABC() {}
     virtual ~MIL_Effect_ABC() {}

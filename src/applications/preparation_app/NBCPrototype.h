@@ -25,7 +25,6 @@ namespace kernel
 // =============================================================================
 class NBCPrototype : public gui::NBCPrototype_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

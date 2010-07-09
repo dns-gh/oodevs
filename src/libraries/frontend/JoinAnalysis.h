@@ -23,7 +23,6 @@ namespace frontend
 // =============================================================================
 class JoinAnalysis : public SpawnCommand
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -43,7 +43,6 @@ class AgentNotifier : public kernel::Extension_ABC
                     , public kernel::Updatable_ABC< MsgUnitAttributes >
                     , public kernel::Updatable_ABC< MsgUnitOrder >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

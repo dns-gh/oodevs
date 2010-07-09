@@ -35,7 +35,6 @@ namespace gui
 // =============================================================================
 class GradientPreferences : public tools::Resolver< Gradient, QString >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

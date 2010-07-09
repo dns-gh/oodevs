@@ -37,7 +37,6 @@ namespace hla
 // =============================================================================
 class HLA_IndirectFire : public HLA_Interaction_ABC, public HLA_TargetedInteraction, public HLA_FireInteraction
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

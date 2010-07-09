@@ -26,7 +26,6 @@ namespace actions
 // =============================================================================
 class ParamAgent : public EntityParameter< kernel::Agent_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

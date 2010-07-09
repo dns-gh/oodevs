@@ -31,7 +31,6 @@
 class ADN_DataException
 : public ADN_Exception_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

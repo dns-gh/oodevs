@@ -25,7 +25,6 @@ namespace kernel
 // =============================================================================
 class OptionsObserver_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -31,7 +31,6 @@ namespace dispatcher
 // =============================================================================
 class SimulationPublisher_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

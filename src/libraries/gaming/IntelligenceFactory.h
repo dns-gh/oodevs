@@ -41,7 +41,6 @@ class Publisher_ABC;
 // =============================================================================
 class IntelligenceFactory : public kernel::IntelligenceFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

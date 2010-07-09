@@ -31,7 +31,6 @@ namespace script
 // =============================================================================
 class PopulationManipulator : public kernel::Extension_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

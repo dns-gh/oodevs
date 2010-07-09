@@ -25,7 +25,6 @@
 template< typename Superior, typename I >
 class LogisticHierarchies : public LogisticHierarchies_ABC< I >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -28,7 +28,6 @@ class MIL_Agent_ABC;
 // =============================================================================
 class DEC_Knowledge_AgentComposante
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -25,7 +25,6 @@ namespace dispatcher
 // =============================================================================
 class Services
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

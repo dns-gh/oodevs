@@ -23,7 +23,6 @@ class MIL_IDManager;
 // =============================================================================
 class AutomateFactory : public AutomateFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -30,7 +30,6 @@ class MIL_Agent_ABC;
 // =============================================================================
 class PHY_ComposanteType_ABC : private boost::noncopyable
 {
-
 public:
              PHY_ComposanteType_ABC( const std::string& strName, xml::xistream& xis );
     virtual ~PHY_ComposanteType_ABC();

@@ -29,7 +29,6 @@ public:
 // =============================================================================
 class ApplicationMutex : public ApplicationMutex_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

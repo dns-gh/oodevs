@@ -26,7 +26,6 @@ namespace kernel {
 class FormationHierarchies : public kernel::MergingTacticalHierarchies
                            , public kernel::Serializable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -24,7 +24,6 @@ class QString;
 // =============================================================================
 class ActionsContext
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

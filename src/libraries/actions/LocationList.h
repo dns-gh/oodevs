@@ -35,7 +35,6 @@ namespace actions {
 // =============================================================================
 class LocationList : public Parameter< QString >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

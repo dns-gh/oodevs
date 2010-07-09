@@ -20,7 +20,6 @@ namespace kernel {
 // =============================================================================
 class KnowledgeListener_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

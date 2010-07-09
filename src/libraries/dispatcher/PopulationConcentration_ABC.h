@@ -29,7 +29,6 @@ namespace dispatcher
 // =============================================================================
 class PopulationConcentration_ABC : public Sendable< kernel::PopulationConcentration_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -38,7 +38,6 @@ namespace actions {
 // =============================================================================
 class AgentKnowledge : public Knowledge_ABC< kernel::AgentKnowledge_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -18,7 +18,6 @@
 // =============================================================================
 class PHY_ComposanteState : private boost::noncopyable
 {
-
 public:
     //! @name
     //@{

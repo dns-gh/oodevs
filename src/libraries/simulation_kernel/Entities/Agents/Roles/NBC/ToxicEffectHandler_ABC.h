@@ -21,7 +21,6 @@ namespace nbc
 // =============================================================================
 class ToxicEffectHandler_ABC
 {
-
 public:
     //! @name Constructors/Desctructor
     //@{

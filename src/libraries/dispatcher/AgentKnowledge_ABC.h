@@ -29,7 +29,6 @@ namespace dispatcher
 // =============================================================================
 class AgentKnowledge_ABC : public Sendable< kernel::AgentKnowledge_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

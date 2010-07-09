@@ -23,7 +23,6 @@ namespace gui
 // =============================================================================
 class VisionLine : public kernel::DetectionMapIterator
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

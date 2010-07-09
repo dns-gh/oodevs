@@ -32,7 +32,6 @@ class MIL_AgentPion;
 class PHY_RoleAction_Objects : public tools::Role_ABC
                              , private boost::noncopyable
 {
-
 public:
     //! @name Types
     //@{

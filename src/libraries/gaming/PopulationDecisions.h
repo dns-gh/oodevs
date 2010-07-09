@@ -34,7 +34,6 @@ class PopulationDecisions : public kernel::Extension_ABC
     , public kernel::Updatable_ABC< Common::MsgPopulationOrder >
                           , public Decisions_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

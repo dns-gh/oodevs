@@ -34,7 +34,6 @@ class HLA_InteractionManager_ABC;
 // =============================================================================
 class HLA_DistantObject : public HLA_Object_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

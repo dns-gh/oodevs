@@ -20,7 +20,6 @@
 // =============================================================================
 class SupplyStocksListView : public SupplyAvailabilitiesListView_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

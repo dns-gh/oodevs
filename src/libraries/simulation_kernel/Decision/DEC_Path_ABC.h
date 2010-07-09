@@ -24,7 +24,6 @@ class DEC_PathSection_ABC;
 class DEC_Path_ABC : public TER_PathFindRequest_ABC
                    , private boost::noncopyable
 {
-
 public:
     //! @name Types
     //@{

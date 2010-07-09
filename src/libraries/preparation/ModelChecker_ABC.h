@@ -18,7 +18,6 @@
 // =============================================================================
 class ModelChecker_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

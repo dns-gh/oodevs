@@ -27,7 +27,6 @@ namespace messenger
 // =============================================================================
 class DrawingProxy
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

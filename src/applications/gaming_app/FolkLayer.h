@@ -22,7 +22,6 @@ class FolkModel;
 // =============================================================================
 class FolkLayer : public gui::FolkLayer
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

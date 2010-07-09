@@ -22,7 +22,6 @@ class DEC_PathWalker;
 // =============================================================================
 class MIL_Effect_Move : public MIL_Effect_ABC
 {
-
 public:
     explicit MIL_Effect_Move( DEC_PathWalker& roleMoving );
     virtual ~MIL_Effect_Move();

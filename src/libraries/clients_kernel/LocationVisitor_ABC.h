@@ -23,7 +23,6 @@ namespace kernel
 // =============================================================================
 class LocationVisitor_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -26,7 +26,6 @@ namespace kernel
 // =============================================================================
 class WorldParameters
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -25,7 +25,6 @@ namespace xml
 // =============================================================================
 class MIL_AgentTypePionREFUGIE : public MIL_AgentTypePion
 {
-
 public:
              MIL_AgentTypePionREFUGIE( const std::string& strName, xml::xistream& xis );
     virtual ~MIL_AgentTypePionREFUGIE();

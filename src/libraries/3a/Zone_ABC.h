@@ -20,7 +20,6 @@ class Position;
 // =============================================================================
 class Zone_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

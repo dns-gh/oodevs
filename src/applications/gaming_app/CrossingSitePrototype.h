@@ -28,7 +28,6 @@ namespace actions
 // =============================================================================
 class CrossingSitePrototype : public gui::CrossingSitePrototype_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

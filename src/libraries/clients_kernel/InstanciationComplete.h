@@ -21,7 +21,6 @@ namespace kernel
 // =============================================================================
 class InstanciationComplete
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

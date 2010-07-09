@@ -27,7 +27,6 @@ namespace gui
 class LabelDisplayer : public BaseDisplayer
                      , public tools::Caller< kernel::Styles::Style >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

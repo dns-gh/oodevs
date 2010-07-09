@@ -24,7 +24,6 @@ namespace dotation
 // =============================================================================
 class ConsumptionComputerFactory_ABC : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

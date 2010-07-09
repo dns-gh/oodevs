@@ -22,7 +22,6 @@ namespace detection
 // =============================================================================
 class DetectionComputer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

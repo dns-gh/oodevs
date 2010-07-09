@@ -25,7 +25,6 @@ namespace kernel
 // =============================================================================
 class MedicalTreatmentPrototype : public gui::MedicalTreatmentPrototype_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

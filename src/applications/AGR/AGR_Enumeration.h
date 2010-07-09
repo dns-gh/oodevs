@@ -23,7 +23,6 @@ namespace xml
 // =============================================================================
 class AGR_Enumeration
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

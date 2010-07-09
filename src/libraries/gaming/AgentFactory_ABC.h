@@ -32,7 +32,6 @@ namespace kernel
 // =============================================================================
 class AgentFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

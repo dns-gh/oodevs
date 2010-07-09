@@ -24,7 +24,6 @@ namespace weather
 // =============================================================================
 class PHY_RawVisionData_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -23,7 +23,6 @@ namespace dotation
 // =============================================================================
 class DotationComputerFactory : public DotationComputerFactory_ABC
 {
-
 public:
     //! @name ConstructorsDestructor
     //@{

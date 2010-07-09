@@ -28,7 +28,6 @@ class SessionTray;
 // =============================================================================
 class Application : public QApplication
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

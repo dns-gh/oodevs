@@ -50,7 +50,6 @@ namespace urban
 // =============================================================================
 class DEC_KnowledgeBlackBoard_AgentPion : public DEC_KnowledgeBlackBoard_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

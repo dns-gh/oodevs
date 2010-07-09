@@ -31,7 +31,6 @@ namespace dispatcher
 // =============================================================================
 class AutomatOrder : public Order_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

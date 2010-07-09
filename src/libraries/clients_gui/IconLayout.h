@@ -21,7 +21,6 @@ namespace gui
 // =============================================================================
 class IconLayout
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

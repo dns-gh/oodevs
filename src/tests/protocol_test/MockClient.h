@@ -22,7 +22,6 @@
 class MockClient : public mockpp::ChainableMockObject
                  , public tools::ClientNetworker
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

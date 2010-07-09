@@ -28,7 +28,6 @@ namespace kernel
 // =============================================================================
 class OptionVariant
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

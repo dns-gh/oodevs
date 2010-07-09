@@ -26,7 +26,6 @@ class MIL_IntelligenceOrdersVisitor_ABC;
 //=============================================================================
 class MIL_OrderManager_ABC : private boost::noncopyable
 {
-
 public:
              MIL_OrderManager_ABC();
     virtual ~MIL_OrderManager_ABC();

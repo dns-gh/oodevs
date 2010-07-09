@@ -50,7 +50,6 @@ namespace bml
 // =============================================================================
 class Mission
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

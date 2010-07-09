@@ -35,7 +35,6 @@ class CrossingSiteAttribute : public kernel::CrossingSiteAttribute_ABC
                              , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectUpdate >
                              , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectCreation >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

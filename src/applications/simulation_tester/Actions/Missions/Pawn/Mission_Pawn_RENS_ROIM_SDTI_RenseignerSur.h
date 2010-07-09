@@ -25,7 +25,6 @@ namespace TEST {
 // =============================================================================
 class Mission_Pawn_RENS_ROIM_SDTI_RenseignerSur : public Mission_Pawn_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

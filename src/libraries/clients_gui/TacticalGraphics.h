@@ -35,7 +35,6 @@ namespace gui
 class TacticalGraphics : public tools::Observer_ABC
                        , public tools::ElementObserver_ABC< DrawingCategory >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -23,7 +23,6 @@ namespace gui
 // =============================================================================
 class ConstructionPrototype_ABC : public ObjectAttributePrototype_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -38,7 +38,6 @@ namespace actions {
 // =============================================================================
 class EngineerConstructionList : public Parameter< std::string >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

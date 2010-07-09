@@ -22,7 +22,6 @@ typedef ADN_Wizard_ABC< ADN_Missions_Data::Mission >  ADN_Wizard_ABC_ADN_Mission
 // =============================================================================
 class ADN_Mission_Wizard : public ADN_Wizard_ABC_ADN_Missions_Data_Mission_
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

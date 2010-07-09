@@ -27,7 +27,6 @@ namespace kernel
 // =============================================================================
 class TacticalHierarchies : public kernel::EntityHierarchies< kernel::TacticalHierarchies >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

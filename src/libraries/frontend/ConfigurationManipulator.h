@@ -36,7 +36,6 @@ namespace frontend
 // =============================================================================
 class ConfigurationManipulator
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

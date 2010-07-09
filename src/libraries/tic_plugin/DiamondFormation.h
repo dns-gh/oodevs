@@ -26,7 +26,6 @@ namespace tic
 // =============================================================================
 class DiamondFormation : public Formation_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -39,7 +39,6 @@ class StaticModel;
 // =============================================================================
 class ObjectKnowledgeFactory
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

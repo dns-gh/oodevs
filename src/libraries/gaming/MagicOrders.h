@@ -32,7 +32,6 @@ namespace kernel
 class MagicOrders : public kernel::Extension_ABC
                   , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

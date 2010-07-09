@@ -41,7 +41,6 @@ namespace dispatcher
 // =============================================================================
 class AarPlugin : public Plugin_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

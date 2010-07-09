@@ -36,7 +36,6 @@ namespace hla
 // =============================================================================
 class HLA_Activation : public HLA_Interaction_ABC, public HLA_ObjectInteraction
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

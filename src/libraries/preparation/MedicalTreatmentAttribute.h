@@ -36,7 +36,6 @@ namespace xml
 class MedicalTreatmentAttribute : public kernel::MedicalTreatmentAttribute_ABC
                     , public kernel::Serializable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -24,7 +24,6 @@ namespace gui
 // =============================================================================
 class PopulationsLayer : public EntityLayer< kernel::Population_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

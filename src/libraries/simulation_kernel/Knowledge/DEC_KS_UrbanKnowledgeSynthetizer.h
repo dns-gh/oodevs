@@ -30,7 +30,6 @@ namespace urban
 // =========================================================================
 class DEC_KS_UrbanKnowledgeSynthetizer : public DEC_KnowledgeSource_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

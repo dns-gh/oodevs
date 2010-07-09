@@ -28,7 +28,6 @@ class MIL_Agent_ABC;
 // =============================================================================
 class DEC_Knowledge_ObjectCollision : public DEC_Knowledge_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

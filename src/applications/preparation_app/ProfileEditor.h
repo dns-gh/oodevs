@@ -22,7 +22,6 @@ class ProfilesModel;
 // =============================================================================
 class ProfileEditor : public UserProfile
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

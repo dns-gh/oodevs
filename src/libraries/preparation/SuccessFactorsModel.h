@@ -35,7 +35,6 @@ class SuccessFactorFactory_ABC;
 // =============================================================================
 class SuccessFactorsModel : public tools::Resolver< SuccessFactor, QString >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

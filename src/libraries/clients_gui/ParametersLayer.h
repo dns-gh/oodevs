@@ -33,7 +33,6 @@ namespace gui
 // =============================================================================
 class ParametersLayer : public Layer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

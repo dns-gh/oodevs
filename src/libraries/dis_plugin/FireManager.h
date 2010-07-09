@@ -31,7 +31,6 @@ namespace dis
 // =============================================================================
 class FireManager
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

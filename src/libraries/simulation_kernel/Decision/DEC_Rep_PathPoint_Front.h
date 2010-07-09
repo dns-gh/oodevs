@@ -23,7 +23,6 @@ class DEC_Representations;
 //*****************************************************************************
 class DEC_Rep_PathPoint_Front  : public DEC_PathPoint
 {
-
 public:
              DEC_Rep_PathPoint_Front( const MT_Vector2D& vPos, boost::shared_ptr< DEC_PathPoint > dest );
     virtual ~DEC_Rep_PathPoint_Front();

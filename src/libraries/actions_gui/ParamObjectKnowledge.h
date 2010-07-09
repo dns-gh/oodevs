@@ -34,7 +34,6 @@ namespace actions
 class ParamObjectKnowledge : public EntityParameter< kernel::ObjectKnowledge_ABC >
                            , public kernel::ContextMenuObserver_ABC< kernel::Object_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

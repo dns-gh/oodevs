@@ -29,7 +29,6 @@ namespace gui
 // =============================================================================
 class IntelligenceList : public QVBox
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

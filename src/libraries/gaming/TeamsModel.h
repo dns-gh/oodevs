@@ -38,7 +38,6 @@ class TeamFactory_ABC;
 class TeamsModel : public tools::Resolver< kernel::Team_ABC >
                  , public tools::Resolver< kernel::Formation_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

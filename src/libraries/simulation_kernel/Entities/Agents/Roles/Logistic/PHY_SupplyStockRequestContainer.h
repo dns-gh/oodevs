@@ -32,7 +32,6 @@ class MIL_AutomateLOG;
 // =============================================================================
 class PHY_SupplyStockRequestContainer : private boost::noncopyable
 {
-
 public:
     explicit PHY_SupplyStockRequestContainer( MIL_AutomateLOG& suppliedAutomate );
              PHY_SupplyStockRequestContainer( MIL_AutomateLOG& suppliedAutomate, const Common::MsgMissionParameter& asnStocks );

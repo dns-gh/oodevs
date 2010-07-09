@@ -18,7 +18,6 @@
 // =============================================================================
 class InputBinaryWrapper
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

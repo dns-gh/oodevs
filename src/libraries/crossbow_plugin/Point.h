@@ -31,7 +31,6 @@ namespace crossbow
 // =============================================================================
 class Point : public Shape_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

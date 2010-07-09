@@ -25,7 +25,6 @@ namespace urban
 // =============================================================================
 class MIL_BaseParameter : public MIL_MissionParameter_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

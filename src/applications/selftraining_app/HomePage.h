@@ -30,7 +30,6 @@ class QuitPage;
 // =============================================================================
 class HomePage : public MenuPage
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

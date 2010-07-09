@@ -28,7 +28,6 @@ namespace kernel
 // =============================================================================
 class DetectionMap
 {
-
 public:
     //! @name Types
     //@{

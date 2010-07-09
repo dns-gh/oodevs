@@ -32,7 +32,6 @@ namespace indicators
 // =============================================================================
 class PrimitiveParameter
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -26,7 +26,6 @@ namespace kernel
 // =============================================================================
 class PopulationType
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

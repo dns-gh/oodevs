@@ -65,7 +65,6 @@ class OnComponentLendedFunctorComputerFactory_ABC;
 // =============================================================================
 class AlgorithmsFactories : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

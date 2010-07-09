@@ -32,7 +32,6 @@ namespace TEST
 // =============================================================================
 class KnowledgeGroup
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -25,7 +25,6 @@ namespace dispatcher
 // =============================================================================
 class EntityPublisher_ABC : public kernel::Extension_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

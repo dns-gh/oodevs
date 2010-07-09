@@ -21,7 +21,6 @@ namespace gui
 // =============================================================================
 class GraphicPreference_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

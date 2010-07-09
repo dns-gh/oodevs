@@ -36,7 +36,6 @@ namespace script
 // =============================================================================
 class ClientCommands : public dispatcher::Registrable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

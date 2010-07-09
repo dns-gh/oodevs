@@ -29,7 +29,6 @@
 // =============================================================================
 class Connector_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -53,7 +52,6 @@ template< typename K, typename A >
 class FunctionConnector : public Function1_ABC< K, A >
                         , public Connector_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

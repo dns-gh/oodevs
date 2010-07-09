@@ -34,7 +34,6 @@ namespace kernel
 class PerceptionMap : public kernel::Extension_ABC
                     , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitKnowledgeUpdate >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

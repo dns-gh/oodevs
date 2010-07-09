@@ -40,7 +40,6 @@ namespace crossbow
 // =============================================================================
 class ReportFactory
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

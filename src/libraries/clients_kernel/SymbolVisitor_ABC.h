@@ -22,7 +22,6 @@ namespace kernel
 // =============================================================================
 class SymbolVisitor_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

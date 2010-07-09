@@ -46,7 +46,6 @@ namespace messenger
 // =============================================================================
 class Drawing
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

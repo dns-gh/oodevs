@@ -26,7 +26,6 @@ class Populations : public kernel::Extension_ABC
                   , public kernel::Serializable_ABC
                   , public tools::Resolver< Population >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

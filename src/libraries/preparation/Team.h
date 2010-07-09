@@ -43,7 +43,6 @@ class Team : public kernel::EntityImplementation< kernel::Team_ABC >
            , public kernel::Serializable_ABC
            , public tools::Resolver< kernel::Object_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

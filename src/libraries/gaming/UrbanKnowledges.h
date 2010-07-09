@@ -45,7 +45,6 @@ class UrbanKnowledges : public kernel::Extension_ABC
     , public tools::Resolver< kernel::UrbanKnowledge_ABC >
     , public kernel::Creatable< UrbanKnowledges >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -28,7 +28,6 @@ namespace actions {
 template< typename T >
 class Parameter : public Parameter_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

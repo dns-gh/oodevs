@@ -23,7 +23,6 @@ namespace detection
 // =============================================================================
 class DefaultPerceptionDistanceComputer : public PerceptionDistanceComputer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

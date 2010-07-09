@@ -67,7 +67,6 @@ namespace logger
 // =============================================================================
 class ActionsLogger
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

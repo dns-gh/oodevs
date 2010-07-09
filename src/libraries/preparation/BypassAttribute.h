@@ -35,7 +35,6 @@ namespace xml
 class BypassAttribute : public kernel::BypassAttribute_ABC
                       , public kernel::Serializable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

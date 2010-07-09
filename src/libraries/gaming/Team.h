@@ -27,7 +27,6 @@ namespace MsgsSimToClient
 // =============================================================================
 class Team : public kernel::EntityImplementation< kernel::Team_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

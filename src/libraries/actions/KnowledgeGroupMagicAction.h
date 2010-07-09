@@ -29,7 +29,6 @@ namespace actions
 // =============================================================================
 class KnowledgeGroupMagicAction : public ActionWithTarget_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

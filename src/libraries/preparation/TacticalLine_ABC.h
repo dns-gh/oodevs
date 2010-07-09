@@ -41,7 +41,6 @@ class TacticalLine_ABC : public kernel::EntityImplementation< kernel::TacticalLi
                        , public kernel::Drawable_ABC
                        , public kernel::Serializable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

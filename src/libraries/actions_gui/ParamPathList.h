@@ -38,7 +38,6 @@ namespace actions
 // =============================================================================
 class ParamPathList : public ListParameter
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

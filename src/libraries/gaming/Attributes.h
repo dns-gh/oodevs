@@ -43,7 +43,6 @@ class Attributes : public kernel::Attributes_ABC
                  , public kernel::Drawable_ABC
                  , public kernel::Aggregatable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

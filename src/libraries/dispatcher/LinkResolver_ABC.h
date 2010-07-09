@@ -23,7 +23,6 @@ namespace dispatcher
 // =============================================================================
 class LinkResolver_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

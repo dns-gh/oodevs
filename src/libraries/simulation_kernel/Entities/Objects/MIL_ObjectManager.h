@@ -56,7 +56,6 @@ class UrbanObjectWrapper;
 // =============================================================================
 class MIL_ObjectManager : private boost::noncopyable
 {
-
 public:
      MIL_ObjectManager();
     virtual ~MIL_ObjectManager();

@@ -39,7 +39,6 @@ namespace TEST {
 // =============================================================================
 class PawnModel
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

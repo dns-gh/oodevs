@@ -27,7 +27,6 @@
 // =============================================================================
 class HLA_ObjectView_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

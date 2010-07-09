@@ -23,7 +23,6 @@ namespace gui
 // =============================================================================
 class View_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

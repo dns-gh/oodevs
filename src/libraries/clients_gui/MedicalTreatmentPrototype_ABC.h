@@ -32,7 +32,6 @@ namespace gui
 // =============================================================================
 class MedicalTreatmentPrototype_ABC : public ObjectAttributePrototype_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

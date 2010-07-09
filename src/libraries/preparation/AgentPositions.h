@@ -39,7 +39,6 @@ class AgentPositions : public kernel::Moveable_ABC
                      , public kernel::Aggregatable_ABC
                      , public kernel::Serializable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

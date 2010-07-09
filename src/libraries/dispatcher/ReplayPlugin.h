@@ -43,7 +43,6 @@ namespace dispatcher
 class ReplayPlugin : public Plugin_ABC
                    , private MT_Timer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

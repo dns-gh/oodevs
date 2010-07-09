@@ -30,7 +30,6 @@ class ActionsContext;
 // =============================================================================
 class Panel_ABC : public QVBox
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

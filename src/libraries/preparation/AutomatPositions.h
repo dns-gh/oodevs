@@ -27,7 +27,6 @@ namespace kernel
 class AutomatPositions : public kernel::Moveable_ABC
                        , public kernel::Drawable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

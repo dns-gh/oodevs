@@ -31,7 +31,6 @@ namespace kernel {
 // =============================================================================
 class ProfileFilter : public kernel::Profile_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

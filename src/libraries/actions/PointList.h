@@ -28,7 +28,6 @@ namespace actions {
 // =============================================================================
 class PointList : public LocationList
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

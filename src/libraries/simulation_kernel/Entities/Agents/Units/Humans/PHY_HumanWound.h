@@ -30,7 +30,6 @@ namespace xml
 // =============================================================================
 class PHY_HumanWound : private boost::noncopyable
 {
-
 public:
     //! @name Types
     //@{

@@ -29,7 +29,6 @@
 // =============================================================================
 class HLA_Time : public hla::Time_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

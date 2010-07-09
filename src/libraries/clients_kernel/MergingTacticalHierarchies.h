@@ -24,7 +24,6 @@ namespace kernel
 // =============================================================================
 class MergingTacticalHierarchies : public EntityHierarchies< TacticalHierarchies >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

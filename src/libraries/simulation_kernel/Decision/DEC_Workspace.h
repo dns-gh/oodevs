@@ -30,7 +30,6 @@ namespace directia
 //*****************************************************************************
 class DEC_Workspace : private boost::noncopyable
 {
-
 public:
      DEC_Workspace( MIL_Config& config );
     virtual ~DEC_Workspace();

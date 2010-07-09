@@ -25,7 +25,6 @@ namespace TEST {
 // =============================================================================
 class Mission_Pawn_ABC_ArmerPIA : public Mission_Pawn_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

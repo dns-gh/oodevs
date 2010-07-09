@@ -25,7 +25,6 @@ namespace kernel {
 // =============================================================================
 class FormationHierarchy : public kernel::MergingTacticalHierarchies
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

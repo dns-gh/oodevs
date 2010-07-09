@@ -23,7 +23,6 @@ namespace kernel
 // =============================================================================
 class ComponentType
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

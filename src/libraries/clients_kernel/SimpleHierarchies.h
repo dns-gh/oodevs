@@ -25,7 +25,6 @@ namespace kernel
 template< typename I >
 class SimpleHierarchies : public I
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

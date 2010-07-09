@@ -34,7 +34,6 @@ namespace script
 // =============================================================================
 class Script
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -30,7 +30,6 @@ namespace kernel
 class EntityIntelligences : public kernel::EntityHierarchies< kernel::IntelligenceHierarchies >
                           , public kernel::Serializable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

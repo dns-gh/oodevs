@@ -21,7 +21,6 @@ class MIL_Effect_IndirectFire;
 // =============================================================================
 class MIL_EffectManager : private boost::noncopyable
 {
-
 public:
     //! @name Types
     //@{

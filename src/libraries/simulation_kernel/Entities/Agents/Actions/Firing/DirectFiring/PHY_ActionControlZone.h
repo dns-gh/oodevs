@@ -33,7 +33,6 @@ class TER_Localisation;
 // =============================================================================
 class PHY_ActionControlZone : public PHY_Action_ABC
 {
-
 public:
     typedef MIL_AgentPion ActorType;
 

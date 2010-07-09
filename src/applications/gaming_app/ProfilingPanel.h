@@ -32,7 +32,6 @@ class ProfilingPanel : public QTabWidget
                      , public tools::Observer_ABC
                      , public tools::ElementObserver_ABC< Simulation::sEndTick >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

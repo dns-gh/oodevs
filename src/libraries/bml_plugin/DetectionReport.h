@@ -34,7 +34,6 @@ namespace bml
 // =============================================================================
 class DetectionReport
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

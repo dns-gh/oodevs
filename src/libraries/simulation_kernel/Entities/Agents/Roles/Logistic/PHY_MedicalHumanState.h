@@ -27,7 +27,6 @@ class PHY_ComposantePion;
 // =============================================================================
 class PHY_MedicalHumanState : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

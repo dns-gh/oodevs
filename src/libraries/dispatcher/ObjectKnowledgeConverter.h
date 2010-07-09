@@ -24,7 +24,6 @@ namespace dispatcher
 // =============================================================================
 class ObjectKnowledgeConverter : public kernel::ObjectKnowledgeConverter_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

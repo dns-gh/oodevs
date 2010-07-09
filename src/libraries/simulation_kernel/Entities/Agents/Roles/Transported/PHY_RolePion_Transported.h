@@ -38,7 +38,6 @@ class PHY_RolePion_Transported : public PHY_RoleInterface_Transported,
     public TransportNotificationHandler_ABC,
     public network::NetworkUnitMessageNotificationHandler_ABC
 {
-
 public:
     explicit PHY_RolePion_Transported( MIL_AgentPion& pion );
     virtual ~PHY_RolePion_Transported();

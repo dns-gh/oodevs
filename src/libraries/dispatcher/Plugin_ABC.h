@@ -26,7 +26,6 @@ namespace dispatcher
 // =============================================================================
 class Plugin_ABC : public MessageHandler_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

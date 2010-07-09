@@ -36,7 +36,6 @@ class TacticalLinePositions : public kernel::Positions
                             , public kernel::Serializable_ABC
                             , public kernel::Drawable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

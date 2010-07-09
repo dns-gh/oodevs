@@ -20,7 +20,6 @@
 // =============================================================================
 class PHY_RoleHLA_Refugee : public PHY_RoleInterface_Refugee
 {
-
 public:
              PHY_RoleHLA_Refugee();
     virtual ~PHY_RoleHLA_Refugee();

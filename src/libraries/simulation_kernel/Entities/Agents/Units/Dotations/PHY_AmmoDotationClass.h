@@ -23,7 +23,6 @@ namespace Common
 // =============================================================================
 class PHY_AmmoDotationClass : private boost::noncopyable
 {
-
 public:
     //! @name Statics
     //@{

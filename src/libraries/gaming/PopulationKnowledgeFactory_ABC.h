@@ -30,7 +30,6 @@ namespace kernel
 // =============================================================================
 class PopulationKnowledgeFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -26,7 +26,6 @@ namespace indicators
 // =============================================================================
 class Tendency
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

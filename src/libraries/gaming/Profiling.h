@@ -28,7 +28,6 @@ namespace MsgsSimToClient
 // =============================================================================
 class Profiling
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

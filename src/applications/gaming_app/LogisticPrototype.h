@@ -28,7 +28,6 @@ namespace actions
 // =============================================================================
 class LogisticPrototype : public gui::LogisticPrototype_ABC
 {
-
 public:
     //! @name Constructor/Destructor
     //@{

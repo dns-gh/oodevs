@@ -29,7 +29,6 @@ namespace kernel
 // =============================================================================
 class MSEllipse
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

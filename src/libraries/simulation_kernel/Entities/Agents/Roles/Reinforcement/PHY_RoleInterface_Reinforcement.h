@@ -28,7 +28,6 @@ class MIL_AgentPion;
 class PHY_RoleInterface_Reinforcement : public tools::Role_ABC
                                       , private boost::noncopyable
 {
-
 public:
     typedef PHY_RoleInterface_Reinforcement RoleInterface;
     typedef std::set< MIL_AgentPion* > T_PionSet;

@@ -24,7 +24,6 @@ namespace xml
 // =============================================================================
 class SuccessFactorActionParameter
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

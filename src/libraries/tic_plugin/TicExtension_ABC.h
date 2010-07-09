@@ -26,7 +26,6 @@ namespace tic
 // =============================================================================
 class TicExtension_ABC : public kernel::Extension_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

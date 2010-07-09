@@ -33,7 +33,6 @@ namespace actions {
 // =============================================================================
 class LimaList : public Parameter< QString >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

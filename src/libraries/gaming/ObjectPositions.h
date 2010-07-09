@@ -29,7 +29,6 @@ class ObjectPositions : public LocationPositions
                       , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectUpdate >
                       , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectCreation >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -30,7 +30,6 @@ namespace kernel
 // =============================================================================
 class IndirectFire : public Fire_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

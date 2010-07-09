@@ -41,7 +41,6 @@ class Decisions : public kernel::Extension_ABC
                 , public kernel::Drawable_ABC
                 , public Decisions_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

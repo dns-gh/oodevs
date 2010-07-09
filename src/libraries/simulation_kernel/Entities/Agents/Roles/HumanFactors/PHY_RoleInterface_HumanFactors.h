@@ -30,7 +30,6 @@ class PHY_Tiredness;
 class PHY_RoleInterface_HumanFactors : public tools::Role_ABC
                                      , private boost::noncopyable
 {
-
 public:
     typedef PHY_RoleInterface_HumanFactors RoleInterface;
 

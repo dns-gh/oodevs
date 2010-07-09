@@ -34,7 +34,6 @@ class CommunicationListView : public gui::HierarchyListView< kernel::Communicati
                             , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
                             , public kernel::ContextMenuObserver_ABC< kernel::KnowledgeGroup_ABC > // LTO
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

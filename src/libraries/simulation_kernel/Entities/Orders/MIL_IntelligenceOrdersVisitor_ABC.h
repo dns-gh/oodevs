@@ -18,7 +18,6 @@
 // =============================================================================
 class MIL_IntelligenceOrdersVisitor_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

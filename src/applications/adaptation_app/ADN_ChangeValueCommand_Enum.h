@@ -36,7 +36,6 @@ template< class EnumType, int nb >
 class ADN_ChangeValueCommand_Enum
 : public QtCommand
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

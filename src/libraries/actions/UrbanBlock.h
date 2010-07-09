@@ -29,7 +29,6 @@ namespace parameters {
 // =============================================================================
 class UrbanBlock : public Parameter< unsigned long >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

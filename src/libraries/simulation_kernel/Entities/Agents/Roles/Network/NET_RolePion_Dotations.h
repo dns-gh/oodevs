@@ -33,7 +33,6 @@ namespace network
 class NET_RolePion_Dotations : public NET_RoleInterface_Dotations
                              , public NetworkNotificationHandler_ABC
 {
-
 public:
     explicit NET_RolePion_Dotations( MIL_AgentPion& pion );
     virtual ~NET_RolePion_Dotations();

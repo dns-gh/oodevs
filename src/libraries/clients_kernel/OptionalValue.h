@@ -22,7 +22,6 @@ namespace kernel
 template< typename T >
 class OptionalValue
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

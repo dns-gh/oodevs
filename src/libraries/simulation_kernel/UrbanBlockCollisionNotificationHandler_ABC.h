@@ -26,7 +26,6 @@ namespace terrain
 // =============================================================================
 class UrbanBlockCollisionNotificationHandler_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

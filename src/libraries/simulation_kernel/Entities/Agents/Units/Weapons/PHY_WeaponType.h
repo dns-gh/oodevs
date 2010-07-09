@@ -40,7 +40,6 @@ class MIL_EffectManager;
 // =============================================================================
 class PHY_WeaponType : private boost::noncopyable
 {
-
 public:
     //! @name Manager
     //@{

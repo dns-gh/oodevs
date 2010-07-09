@@ -23,7 +23,6 @@ namespace dispatcher
 // =============================================================================
 class EntitySymbols_ABC : public kernel::Extension_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

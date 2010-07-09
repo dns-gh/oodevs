@@ -28,7 +28,6 @@ namespace kernel
 // =============================================================================
 class ActionController : private tools::SortedInterfaceContainer< tools::Observer_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

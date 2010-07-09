@@ -21,7 +21,6 @@
 // =============================================================================
 class ChangeDiplomacyDialog : public gui::DiplomacyDialog_ABC
 {
-
 public:
     //! @name Constructor/Destructor
     //@{

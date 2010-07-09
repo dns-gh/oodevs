@@ -27,7 +27,6 @@ namespace refugee
 class PHY_RolePion_Refugee : public PHY_RoleInterface_Refugee
                            , public refugee::RefugeeActionsNotificationHandler_ABC
 {
-
 public:
     explicit PHY_RolePion_Refugee( MIL_AgentPion& pion );
     virtual ~PHY_RolePion_Refugee();

@@ -67,7 +67,6 @@ class UrbanModel;
 // =============================================================================
 class Model
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

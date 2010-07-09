@@ -29,7 +29,6 @@ namespace actions
 // =============================================================================
 class MagicAction : public Action_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

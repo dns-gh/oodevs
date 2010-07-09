@@ -36,7 +36,6 @@ namespace script
 // =============================================================================
 class SimulationCommands : public dispatcher::Registrable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

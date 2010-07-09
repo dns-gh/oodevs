@@ -25,7 +25,6 @@ namespace frontend
 // =============================================================================
 class Process_ABC : public boost::enable_shared_from_this< frontend::Process_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -35,7 +35,6 @@ namespace kernel
 // =============================================================================
 class AgentType
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

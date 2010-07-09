@@ -35,7 +35,6 @@ class ActionsScheduler : public QObject // $$$$ AGE 2008-05-19: why ?
                        , public tools::Observer_ABC
                        , public tools::ElementObserver_ABC< Simulation::sStartTick >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

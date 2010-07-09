@@ -34,7 +34,6 @@ namespace hla
 // =============================================================================
 class HLA_FireInteraction
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

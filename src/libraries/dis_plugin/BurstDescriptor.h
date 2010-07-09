@@ -25,7 +25,6 @@ namespace dis
 // =============================================================================
 class BurstDescriptor
 {
-
 public:
     //! @name Enums
     //@{

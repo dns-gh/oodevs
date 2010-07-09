@@ -29,7 +29,6 @@ namespace gui
 template< typename Panel >
 class MiscLayer : public Layer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

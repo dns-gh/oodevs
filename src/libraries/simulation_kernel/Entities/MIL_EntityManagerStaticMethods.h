@@ -23,7 +23,6 @@ class MIL_Time_ABC;
 // =============================================================================
 class MIL_EntityManagerStaticMethods
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

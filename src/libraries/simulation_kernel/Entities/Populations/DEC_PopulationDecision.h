@@ -29,7 +29,6 @@ class MIL_Mission_ABC;
 class DEC_PopulationDecision : public DEC_Decision< MIL_Population >
                              , private boost::noncopyable
 {
-
 public:
              DEC_PopulationDecision( MIL_Population& population, DEC_DataBase& database );
     virtual ~DEC_PopulationDecision();

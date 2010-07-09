@@ -36,7 +36,6 @@ class PHY_RolePionLOG_Maintenance : public PHY_RoleInterface_Maintenance
                                   , public component::ComponentsChangedNotificationHandler_ABC
                                   , public network::NetworkUnitMessageNotificationHandler_ABC
 {
-
 public:
     explicit PHY_RolePionLOG_Maintenance( MIL_AgentPionLOG_ABC& pion );
     virtual ~PHY_RolePionLOG_Maintenance();

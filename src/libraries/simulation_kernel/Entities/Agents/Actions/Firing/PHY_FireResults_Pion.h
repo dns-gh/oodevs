@@ -25,7 +25,6 @@ class PHY_DotationCategory;
 // =============================================================================
 class PHY_FireResults_Pion : public PHY_FireResults_ABC
 {
-
 public:
              PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target );
              PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MIL_Population& target );

@@ -41,7 +41,6 @@ namespace bml
 // =============================================================================
 class ReportFactory
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

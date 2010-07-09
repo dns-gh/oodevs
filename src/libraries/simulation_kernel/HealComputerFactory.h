@@ -22,7 +22,6 @@ namespace human
 // =============================================================================
 class HealComputerFactory : public HealComputerFactory_ABC
 {
-
 public:
     //! @name ConstructorsDestructor
     //@{

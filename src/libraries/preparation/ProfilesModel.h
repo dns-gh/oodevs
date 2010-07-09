@@ -33,7 +33,6 @@ class ModelChecker_ABC;
 // =============================================================================
 class ProfilesModel
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

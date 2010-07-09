@@ -20,7 +20,6 @@
 // =============================================================================
 class ADN_ListView_Categories_DotationNature : public ADN_ListView
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -25,7 +25,6 @@ class AtlasNature;
 // =============================================================================
 class AtlasNatures : public  tools::Resolver< AtlasNature >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

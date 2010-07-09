@@ -22,7 +22,6 @@ namespace kernel
 // =============================================================================
 class DictionaryUpdated
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

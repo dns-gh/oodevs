@@ -25,7 +25,6 @@ namespace gui
 // =============================================================================
 class StatisticsWidget : public gui::GQ_Plot
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

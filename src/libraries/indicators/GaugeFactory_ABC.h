@@ -28,7 +28,6 @@ namespace indicators
 // =============================================================================
 class GaugeFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

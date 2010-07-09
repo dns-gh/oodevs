@@ -30,7 +30,6 @@ class MIL_AgentPionLOG_ABC;
 class PHY_RoleInterface_Supply : public tools::Role_ABC
                                , private boost::noncopyable
 {
-
 public:
     //! @name Types
     //@{

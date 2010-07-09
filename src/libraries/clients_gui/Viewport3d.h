@@ -24,7 +24,6 @@ namespace gui
 // =============================================================================
 class Viewport3d : public kernel::Viewport_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

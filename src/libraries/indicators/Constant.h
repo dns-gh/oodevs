@@ -31,7 +31,6 @@ namespace indicators
 template< typename T >
 class Constant : public Element_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

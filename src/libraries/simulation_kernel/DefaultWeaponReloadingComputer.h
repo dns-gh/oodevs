@@ -23,7 +23,6 @@ namespace firing
 // =============================================================================
 class DefaultWeaponReloadingComputer : public WeaponReloadingComputer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

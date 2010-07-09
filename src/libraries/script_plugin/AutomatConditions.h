@@ -37,7 +37,6 @@ namespace script
 // =============================================================================
 class AutomatConditions : public dispatcher::Registrable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

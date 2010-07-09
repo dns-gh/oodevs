@@ -37,7 +37,6 @@ class Publisher_ABC;
 // =============================================================================
 class DrawingFactory : public gui::DrawingFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

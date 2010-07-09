@@ -27,7 +27,6 @@ class ModelBuilder;
 // =============================================================================
 class LimitsLayer : public gui::TacticalLinesLayer
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

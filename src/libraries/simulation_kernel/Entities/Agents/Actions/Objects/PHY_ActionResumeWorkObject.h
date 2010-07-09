@@ -24,7 +24,6 @@ class DEC_Knowledge_Object;
 // =============================================================================
 class PHY_ActionResumeWorkObject : public PHY_DecisionCallbackAction_ABC
 {
-
 public:
     typedef MIL_AgentPion ActorType;
 

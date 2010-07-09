@@ -21,7 +21,6 @@ class TrayMenu;
 // =============================================================================
 class SessionTray
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

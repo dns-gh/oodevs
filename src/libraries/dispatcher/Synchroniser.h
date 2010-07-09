@@ -28,7 +28,6 @@ namespace dispatcher
 // =============================================================================
 class Synchroniser
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -22,7 +22,6 @@ class TER_Localisation;
 // =============================================================================
 class MIL_LocationListParameter : public MIL_BaseParameter
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

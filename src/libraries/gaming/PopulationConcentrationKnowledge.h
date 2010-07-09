@@ -37,7 +37,6 @@ class PopulationConcentrationKnowledge : public PopulationPartKnowledge_ABC
                                        , public kernel::Drawable_ABC
                                        , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate >
 {
-
 public:
     //! @name Constructor/Destructor
     //@{

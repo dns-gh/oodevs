@@ -37,7 +37,6 @@ class MIL_Agent_ABC;
 // =============================================================================
 class HLA_TargetedInteraction
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

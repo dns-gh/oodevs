@@ -25,7 +25,6 @@ namespace TEST {
 // =============================================================================
 class Mission_Automat_RENS_ROEM_RenseignerSur : public Mission_Automat_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

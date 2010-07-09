@@ -33,7 +33,6 @@ class Services;
 // =============================================================================
 class Network : public tools::ClientNetworker
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

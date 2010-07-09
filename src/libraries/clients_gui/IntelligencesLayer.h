@@ -29,7 +29,6 @@ namespace gui
 // =============================================================================
 class IntelligencesLayer : public EntityLayer< kernel::Intelligence_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

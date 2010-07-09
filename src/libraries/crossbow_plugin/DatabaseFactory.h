@@ -31,7 +31,6 @@ namespace crossbow
 // =============================================================================
 class DatabaseFactory
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

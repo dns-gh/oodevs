@@ -25,7 +25,6 @@ namespace indicators
 // =============================================================================
 class CollectionDataType : public DataType_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -31,7 +31,6 @@ namespace gui
 // =============================================================================
 class GQ_PlotToolTip : public QToolTip
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

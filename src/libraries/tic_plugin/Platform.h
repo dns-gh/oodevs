@@ -39,7 +39,6 @@ class Platform : public dispatcher::SimpleEntity< >
                , public Movable_ABC
                , public Platform_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

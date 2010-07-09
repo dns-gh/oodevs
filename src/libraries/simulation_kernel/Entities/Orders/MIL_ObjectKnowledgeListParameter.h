@@ -23,7 +23,6 @@ class DEC_KnowledgeResolver_ABC;
 // =============================================================================
 class MIL_ObjectKnowledgeListParameter : public MIL_BaseParameter
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

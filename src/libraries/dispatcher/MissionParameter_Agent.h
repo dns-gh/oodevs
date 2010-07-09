@@ -23,7 +23,6 @@ namespace dispatcher
 // =============================================================================
 class MissionParameter_Agent : public MissionParameter_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

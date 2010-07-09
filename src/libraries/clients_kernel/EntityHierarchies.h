@@ -29,7 +29,6 @@ template< typename Interface >
 class EntityHierarchies : public Interface, public  tools::Resolver< Entity_ABC >
                         , public Creatable< Interface >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -28,7 +28,6 @@ namespace gui
 // =============================================================================
 class InfoButtonsWidget : public QGroupBox
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

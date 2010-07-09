@@ -23,7 +23,6 @@ namespace kernel
 // =============================================================================
 class Polygon : public Location_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

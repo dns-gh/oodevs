@@ -23,7 +23,6 @@ namespace transport
 // =============================================================================
 class LoadingComputerFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

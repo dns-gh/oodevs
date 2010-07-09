@@ -27,7 +27,6 @@ namespace TEST {
 // =============================================================================
 class Mission_Pawn_ABC : public Action< Pawn >
 {
-
 public:
     //! @name ID Managers
     //@{

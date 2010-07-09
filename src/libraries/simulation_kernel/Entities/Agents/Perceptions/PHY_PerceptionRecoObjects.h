@@ -47,7 +47,6 @@ private:
 // =============================================================================
 class PHY_PerceptionRecoObjects : public PHY_PerceptionWithLocation< PHY_PerceptionRecoObjectsReco >
 {
-
 public:
     explicit PHY_PerceptionRecoObjects( PHY_RoleInterface_Perceiver& perceiver );
     virtual ~PHY_PerceptionRecoObjects();

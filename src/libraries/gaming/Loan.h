@@ -24,7 +24,6 @@ namespace kernel
 // =============================================================================
 class Loan
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

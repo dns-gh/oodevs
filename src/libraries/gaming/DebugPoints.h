@@ -32,7 +32,6 @@ class DebugPoints : public kernel::Extension_ABC
                   , public kernel::Updatable_ABC< MsgsSimToClient::MsgDebugPoints >
                   , public kernel::Drawable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

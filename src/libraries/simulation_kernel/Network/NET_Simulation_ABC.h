@@ -18,7 +18,6 @@
 // =============================================================================
 class NET_Simulation_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

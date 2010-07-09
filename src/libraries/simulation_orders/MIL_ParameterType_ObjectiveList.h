@@ -20,7 +20,6 @@
 // =============================================================================
 class MIL_ParameterType_ObjectiveList : public MIL_ParameterType_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

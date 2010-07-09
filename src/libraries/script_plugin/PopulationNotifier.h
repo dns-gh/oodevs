@@ -41,7 +41,6 @@ namespace script
 class PopulationNotifier : public kernel::Extension_ABC
                          , public kernel::Updatable_ABC< MsgPopulationFlowUpdate >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

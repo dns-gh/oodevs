@@ -22,7 +22,6 @@ class MIL_Object_ABC;
 // =============================================================================
 class PHY_ObjectExplosionFireResult : public PHY_FireResults_ABC
 {
-
 public:
     explicit PHY_ObjectExplosionFireResult( const MIL_Object_ABC& object );
     virtual ~PHY_ObjectExplosionFireResult();

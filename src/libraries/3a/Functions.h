@@ -21,7 +21,6 @@
 // =============================================================================
 class Function_ABC : public Slot_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -40,7 +40,6 @@ namespace MsgsSimToClient
 class LogSupplyConsign : public tools::Resolver< DotationRequest >
                        , public kernel::Drawable_ABC
 {
-
 public:
     //! @name Constructor / Destructor
     //@{

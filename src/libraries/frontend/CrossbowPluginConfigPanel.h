@@ -32,7 +32,6 @@ namespace frontend
 // =============================================================================
 class CrossbowPluginConfigPanel : public PluginConfig_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

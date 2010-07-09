@@ -32,7 +32,6 @@ namespace TEST {
 // =============================================================================
 class PopulationKnowledge
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

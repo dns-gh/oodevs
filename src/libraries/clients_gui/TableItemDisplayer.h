@@ -25,7 +25,6 @@ namespace gui
 // =============================================================================
 class TableItemDisplayer : public NoLinkDisplayer
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

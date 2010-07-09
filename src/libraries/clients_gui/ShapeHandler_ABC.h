@@ -27,7 +27,6 @@ namespace gui
 // =============================================================================
 class ShapeHandler_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

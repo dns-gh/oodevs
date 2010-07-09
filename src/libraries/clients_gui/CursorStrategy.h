@@ -29,7 +29,6 @@ namespace gui
 // =============================================================================
 class CursorStrategy : public CursorStrategy_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

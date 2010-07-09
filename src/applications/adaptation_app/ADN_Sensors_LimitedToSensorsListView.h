@@ -22,7 +22,6 @@
 // =============================================================================
 class ADN_Sensors_LimitedToSensorsListView : public ADN_ListView
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -22,7 +22,6 @@ class MIL_Object_ABC;
 // =============================================================================
 class MIL_ObjectManipulator : public MIL_ObjectManipulator_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

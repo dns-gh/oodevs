@@ -33,7 +33,6 @@ struct ASN1T_MsgUnitOrder;
 //=============================================================================
 class MIL_PionOrderManager : public MIL_OrderManager_ABC
 {
-
 public:
     explicit MIL_PionOrderManager( MIL_AgentPion& pion );
     virtual ~MIL_PionOrderManager();

@@ -28,7 +28,6 @@ namespace gui
 // =============================================================================
 class WeatherLayer_ABC : public Layer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

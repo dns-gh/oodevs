@@ -29,7 +29,6 @@ class MIL_Time_ABC;
 // =============================================================================
 class PHY_Weapon : private boost::noncopyable
 {
-
 public:
              PHY_Weapon( const MIL_Time_ABC& time, const PHY_WeaponType& type, bool bMajor );
     virtual ~PHY_Weapon();

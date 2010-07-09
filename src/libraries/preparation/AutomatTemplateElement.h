@@ -28,7 +28,6 @@ class AgentsModel;
 // =============================================================================
 class AutomatTemplateElement : public TemplateElement_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

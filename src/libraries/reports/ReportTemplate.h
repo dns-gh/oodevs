@@ -34,7 +34,6 @@ namespace Common
 // =============================================================================
 class ReportTemplate
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

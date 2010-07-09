@@ -37,7 +37,6 @@ namespace plugins
 
 class Note
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -24,7 +24,6 @@ namespace kernel
 template< typename T >
 class ActivationObserver_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

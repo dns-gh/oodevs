@@ -28,7 +28,6 @@ namespace script
 // =============================================================================
 class Condition_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

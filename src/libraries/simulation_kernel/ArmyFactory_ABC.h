@@ -26,7 +26,6 @@ namespace xml
 class ArmyFactory_ABC : public tools::Resolver< MIL_Army_ABC >
                       , private boost::noncopyable
 {
-
 public:
     //! @name Destructor
     //@{

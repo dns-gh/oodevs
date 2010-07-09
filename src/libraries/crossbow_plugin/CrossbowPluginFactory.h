@@ -25,7 +25,6 @@ namespace crossbow
 // =============================================================================
 class CrossbowPluginFactory : public dispatcher::PluginFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

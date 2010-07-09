@@ -36,7 +36,6 @@ class MIL_PionMission;
 //=============================================================================
 class MIL_AutomateOrderManager : public MIL_OrderManager_ABC
 {
-
 public:
     explicit MIL_AutomateOrderManager( MIL_Automate& automate );
     virtual ~MIL_AutomateOrderManager();

@@ -28,7 +28,6 @@ namespace urban
 // =============================================================================
 class UrbanType : private boost::noncopyable
 {
-
 public:
 
     //! @name Manager

@@ -25,7 +25,6 @@
 // =============================================================================
 class LoggerApplication : public tools::ClientNetworker
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

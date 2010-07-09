@@ -23,7 +23,6 @@ namespace xml
 // =============================================================================
 class Side
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

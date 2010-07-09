@@ -24,7 +24,6 @@ namespace kernel
 // =============================================================================
 class SimpleLocationDrawer : public LocationVisitor_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

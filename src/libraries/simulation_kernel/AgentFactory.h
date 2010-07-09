@@ -25,7 +25,6 @@ class AlgorithmsFactories;
 // =============================================================================
 class AgentFactory : public AgentFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

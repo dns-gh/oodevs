@@ -45,7 +45,6 @@ class Config;
 class ExerciseService : public tools::Observer_ABC
                       , public tools::ElementObserver_ABC< boost::shared_ptr< frontend::Process_ABC > >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

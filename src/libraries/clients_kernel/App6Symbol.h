@@ -24,7 +24,6 @@ namespace kernel
 // =============================================================================
 class App6Symbol
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

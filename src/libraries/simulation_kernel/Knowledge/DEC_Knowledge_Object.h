@@ -44,7 +44,6 @@ class MIL_ObjectType_ABC;
 class DEC_Knowledge_Object : public DEC_Knowledge_ABC
                            , private tools::Extendable< DEC_Knowledge_ObjectAttribute_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

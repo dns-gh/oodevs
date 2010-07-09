@@ -26,7 +26,6 @@ namespace dispatcher
 // =============================================================================
 class KnowledgeGroup_ABC : public Sendable< kernel::KnowledgeGroup_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

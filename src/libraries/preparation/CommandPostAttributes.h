@@ -27,7 +27,6 @@ namespace kernel
 class CommandPostAttributes : public kernel::Extension_ABC
                             , public kernel::Drawable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -34,7 +34,6 @@ namespace actions {
 // =============================================================================
 class MaintenancePriorities : public Parameter< std::string >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

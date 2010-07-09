@@ -27,7 +27,6 @@ class UserProfileFactory_ABC;
 // =============================================================================
 class UserProfilesModel
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

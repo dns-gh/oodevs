@@ -32,7 +32,6 @@ namespace kernel
 class AgentConvexHulls : public ConvexHulls
                        , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -18,7 +18,6 @@
 // =============================================================================
 class IdManager
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -28,7 +28,6 @@ namespace tools
 // =============================================================================
 class SocketManager : public MessageSender_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

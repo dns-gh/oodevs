@@ -29,7 +29,6 @@ namespace gui
 // =============================================================================
 class GroupDisplayer : public kernel::Displayer_ABC, public QGroupBox
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

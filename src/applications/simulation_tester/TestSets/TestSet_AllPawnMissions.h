@@ -37,7 +37,6 @@ namespace TEST {
 // =============================================================================
 class TestSet_AllPawnMissions : public TestSet_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

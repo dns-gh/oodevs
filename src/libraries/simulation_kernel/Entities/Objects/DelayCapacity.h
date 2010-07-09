@@ -22,7 +22,6 @@
 class DelayCapacity : public ObjectCapacity_ABC
                     , public MIL_InteractiveContainer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

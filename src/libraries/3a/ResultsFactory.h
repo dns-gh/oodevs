@@ -25,7 +25,6 @@ namespace dispatcher
 // =============================================================================
 class ResultsFactory : public ElementFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

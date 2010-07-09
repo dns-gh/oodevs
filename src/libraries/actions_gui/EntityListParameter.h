@@ -81,7 +81,6 @@ class EntityListParameter : public EntityListParameterBase
                           , public tools::ElementObserver_ABC< ConcreteEntity >
                           , public kernel::ContextMenuObserver_ABC< ConcreteEntity >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -31,7 +31,6 @@ namespace indicators
 // =============================================================================
 class Serializer : public GrammarHandler_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

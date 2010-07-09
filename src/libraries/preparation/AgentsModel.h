@@ -52,7 +52,6 @@ class AgentsModel : public tools::Resolver< kernel::Agent_ABC >
                   , public tools::ElementObserver_ABC< kernel::Population_ABC >
                   , public tools::ElementObserver_ABC< kernel::ModelLoaded >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

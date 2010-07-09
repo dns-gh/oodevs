@@ -28,7 +28,6 @@ class MIL_Automate;
 // =============================================================================
 class PHY_SupplyConsign_ABC : private boost::noncopyable
 {
-
 public:
              PHY_SupplyConsign_ABC( MIL_AutomateLOG& supplyingAutomate, const MIL_Automate& suppliedAutomate, MIL_AutomateLOG& convoyingAutomate );
              PHY_SupplyConsign_ABC();

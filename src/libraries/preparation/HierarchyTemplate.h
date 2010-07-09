@@ -27,7 +27,6 @@ class FormationModel;
 // =============================================================================
 class HierarchyTemplate
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

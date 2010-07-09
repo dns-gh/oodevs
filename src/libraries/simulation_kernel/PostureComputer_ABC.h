@@ -23,7 +23,6 @@ namespace posture
 // =============================================================================
 class PostureComputer_ABC
 {
-
 public:
 
     struct Parameters

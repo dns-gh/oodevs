@@ -42,7 +42,6 @@ class Agent : public kernel::EntityImplementation< kernel::Agent_ABC >
             , public kernel::Drawable_ABC
             , public kernel::Serializable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

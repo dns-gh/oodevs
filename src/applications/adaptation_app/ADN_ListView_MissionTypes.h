@@ -21,7 +21,6 @@
 // =============================================================================
 class ADN_ListView_MissionTypes : public ADN_ListView
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

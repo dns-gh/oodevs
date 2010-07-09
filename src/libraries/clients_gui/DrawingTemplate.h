@@ -45,7 +45,6 @@ namespace gui
 // =============================================================================
 class DrawingTemplate
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

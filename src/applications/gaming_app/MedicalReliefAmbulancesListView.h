@@ -20,7 +20,6 @@
 // =============================================================================
 class MedicalReliefAmbulancesListView : public MedicalAvailabilitiesListView_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

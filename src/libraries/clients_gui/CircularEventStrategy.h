@@ -23,7 +23,6 @@ namespace gui
 // =============================================================================
 class CircularEventStrategy : public EventStrategy_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

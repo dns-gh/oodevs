@@ -23,7 +23,6 @@
 // =============================================================================
 class PHY_RoleHLA_Perceiver : public PHY_RoleInterface_Perceiver
 {
-
 public:
              PHY_RoleHLA_Perceiver();
     virtual ~PHY_RoleHLA_Perceiver();

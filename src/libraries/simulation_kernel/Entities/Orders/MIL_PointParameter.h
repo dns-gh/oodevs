@@ -20,7 +20,6 @@
 // =============================================================================
 class MIL_PointParameter : public MIL_BaseParameter
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

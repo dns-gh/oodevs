@@ -27,7 +27,6 @@ class Task;
 // =============================================================================
 class ElementFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

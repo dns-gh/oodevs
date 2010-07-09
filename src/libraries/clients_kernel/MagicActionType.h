@@ -24,7 +24,6 @@ namespace kernel
 // =============================================================================
 class MagicActionType : public OrderType
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

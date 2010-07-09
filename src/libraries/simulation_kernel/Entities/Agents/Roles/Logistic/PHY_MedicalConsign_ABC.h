@@ -26,7 +26,6 @@ class PHY_MedicalHumanState;
 // =============================================================================
 class PHY_MedicalConsign_ABC : private boost::noncopyable
 {
-
 public:
              PHY_MedicalConsign_ABC( PHY_RoleInterface_Medical& medical, PHY_MedicalHumanState& humanState );
              PHY_MedicalConsign_ABC();

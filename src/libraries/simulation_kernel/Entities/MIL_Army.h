@@ -52,7 +52,6 @@ class MIL_Army : public MIL_Army_ABC
                , public tools::Resolver< MIL_Object_ABC >
                , private boost::noncopyable
 {
-
 public:
     //! @name Types
     //@{

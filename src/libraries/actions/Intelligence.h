@@ -38,7 +38,6 @@ namespace actions {
 // =============================================================================
 class Intelligence : public Entity< kernel::Intelligence_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

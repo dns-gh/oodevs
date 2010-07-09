@@ -25,7 +25,6 @@ class SuccessFactor;
 // =============================================================================
 class SuccessFactorFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

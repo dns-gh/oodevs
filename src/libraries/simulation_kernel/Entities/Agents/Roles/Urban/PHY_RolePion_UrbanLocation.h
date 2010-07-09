@@ -40,7 +40,6 @@ class PHY_RolePion_UrbanLocation : public PHY_RoleInterface_UrbanLocation
                                  , public tools::AlgorithmModifier_ABC< posture::PostureComputer_ABC >
                                  , public tools::AlgorithmModifier_ABC< moving::SpeedComputer_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -22,7 +22,6 @@ class SupplyRouteAttribute;
 // =============================================================================
 class DEC_Knowledge_ObjectAttributeSupplyRoute : public DEC_Knowledge_ObjectAttribute_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

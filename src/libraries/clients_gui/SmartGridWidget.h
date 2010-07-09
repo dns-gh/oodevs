@@ -21,7 +21,6 @@ namespace gui
 // =============================================================================
 class SmartGridWidget : public QWidget
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -25,7 +25,6 @@ namespace kernel
 // =============================================================================
 class ObjectKnowledgeConverter_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

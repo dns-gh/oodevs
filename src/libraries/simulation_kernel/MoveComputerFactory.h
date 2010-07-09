@@ -24,7 +24,6 @@ namespace moving
 // =============================================================================
 class MoveComputerFactory : public MoveComputerFactory_ABC
 {
-
 public:
     //! @name ConstructorsDestructor
     //@{

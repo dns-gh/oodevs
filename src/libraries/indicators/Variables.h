@@ -32,7 +32,6 @@ namespace indicators
 // =============================================================================
 class Variables
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

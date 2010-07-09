@@ -23,7 +23,6 @@ class PHY_RoleInterface_Supply;
 // =============================================================================
 class PHY_ActionConvoyUnload : public PHY_DecisionCallbackAction_ABC
 {
-
 public:
     typedef MIL_Agent_ABC ActorType;
 

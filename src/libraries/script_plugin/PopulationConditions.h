@@ -39,7 +39,6 @@ namespace script
 // =============================================================================
 class PopulationConditions : public dispatcher::Registrable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -32,7 +32,6 @@ class ClockWidget : public QHBox
                   , public tools::Observer_ABC
                   , public tools::ElementObserver_ABC< Simulation >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

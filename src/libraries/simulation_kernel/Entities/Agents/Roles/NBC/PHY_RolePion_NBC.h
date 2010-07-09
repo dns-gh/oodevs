@@ -40,7 +40,6 @@ class PHY_RolePion_NBC : public PHY_RoleInterface_NBC
                        , public tools::AlgorithmModifier_ABC< firing::WeaponReloadingComputer_ABC >
                        , public network::NetworkUnitMessageNotificationHandler_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

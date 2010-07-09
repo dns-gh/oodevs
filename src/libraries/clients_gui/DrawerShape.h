@@ -45,7 +45,6 @@ namespace gui
 class DrawerShape : public kernel::EntityImplementation< Drawing_ABC >
                   , public kernel::Extension_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

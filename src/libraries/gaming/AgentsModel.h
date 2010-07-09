@@ -46,7 +46,6 @@ class AgentsModel : public tools::Resolver< kernel::Agent_ABC >
                   , public tools::Resolver< kernel::Automat_ABC >
                   , public tools::Resolver< kernel::Population_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

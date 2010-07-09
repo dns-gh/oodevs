@@ -24,7 +24,6 @@ class DotationType;
 // =============================================================================
 class Dotations_ABC : public kernel::Extension_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

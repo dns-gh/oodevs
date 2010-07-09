@@ -24,7 +24,6 @@ namespace dispatcher
 // =============================================================================
 class MissionParameter_PolygonList : public MissionParameter_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -24,7 +24,6 @@ namespace terrain
 // =============================================================================
 class ObjectCollisionNotificationHandler_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

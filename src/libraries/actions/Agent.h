@@ -29,7 +29,6 @@ namespace actions {
 // =============================================================================
 class Agent : public Entity< kernel::Agent_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

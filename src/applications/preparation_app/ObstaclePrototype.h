@@ -27,7 +27,6 @@ class ObjectsModel;
 // =============================================================================
 class ObstaclePrototype : public gui::ObstaclePrototype_ABC
 {
-
 public:
     //! @name Constructor/Destructor
     //@{

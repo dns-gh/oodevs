@@ -21,7 +21,6 @@
 // =============================================================================
 class Tc2States : public LogisticHierarchies< TC2, kernel::TC2Hierarchies >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

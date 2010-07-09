@@ -26,7 +26,6 @@ namespace gui
 // =============================================================================
 class ColorModifier_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -30,7 +30,6 @@ class SuccessFactorProfileList : public QListBox
                                , public tools::Observer_ABC
                                , public tools::ElementObserver_ABC< UserProfile >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -21,7 +21,6 @@ namespace tools
 // =============================================================================
 class ConnectionCallback_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

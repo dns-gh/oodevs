@@ -33,7 +33,6 @@ namespace crossbow
 // =============================================================================
 class StatusListener : public Listener_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

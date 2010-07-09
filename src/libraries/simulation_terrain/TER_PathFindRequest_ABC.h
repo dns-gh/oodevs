@@ -28,7 +28,6 @@ class TerrainPathfinder;
 // =============================================================================
 class TER_PathFindRequest_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

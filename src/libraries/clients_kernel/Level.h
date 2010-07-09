@@ -24,7 +24,6 @@ namespace kernel
 // =============================================================================
 class Level : public HierarchyLevel_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

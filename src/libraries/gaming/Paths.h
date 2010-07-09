@@ -43,7 +43,6 @@ class Paths : public kernel::Extension_ABC
             , public kernel::Updatable_ABC< MsgsClientToSim::MsgUnitMagicAction >
             , public kernel::Drawable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

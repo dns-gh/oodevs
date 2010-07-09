@@ -18,7 +18,6 @@
 // =============================================================================
 class Casualties
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

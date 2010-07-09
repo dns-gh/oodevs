@@ -24,7 +24,6 @@ namespace kernel
 // =============================================================================
 class FragOrderType : public OrderType
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

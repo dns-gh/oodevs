@@ -23,7 +23,6 @@ namespace frontend
 // =============================================================================
 class PluginConfig_ABC : public QHBox
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

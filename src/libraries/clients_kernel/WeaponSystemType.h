@@ -31,7 +31,6 @@ namespace kernel
 // =============================================================================
 class WeaponSystemType
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

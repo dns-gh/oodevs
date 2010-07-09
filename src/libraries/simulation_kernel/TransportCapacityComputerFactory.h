@@ -23,7 +23,6 @@ namespace transport
 // =============================================================================
 class TransportComputerFactory : public TransportComputerFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

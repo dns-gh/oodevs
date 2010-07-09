@@ -22,7 +22,6 @@ class MIL_AgentPion;
 // =============================================================================
 class HLA_RoleLocalPion : public HLA_RoleInterface
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

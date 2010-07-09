@@ -25,7 +25,6 @@ template< typename H >
 class HierarchyListView : public HierarchyListView_ABC
                         , public tools::ElementObserver_ABC< H >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

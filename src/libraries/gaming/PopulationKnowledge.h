@@ -49,7 +49,6 @@ class PopulationKnowledge : public kernel::EntityImplementation< kernel::Populat
                           , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationFlowKnowledgeDestruction >
                           , public kernel::Displayable_ABC
 {
-
 public:
     //! @name Constructor/Destructor
     //@{

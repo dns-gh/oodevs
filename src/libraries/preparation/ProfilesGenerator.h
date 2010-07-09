@@ -26,7 +26,6 @@ class ProfilesModel;
 // =============================================================================
 class ProfilesGenerator
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

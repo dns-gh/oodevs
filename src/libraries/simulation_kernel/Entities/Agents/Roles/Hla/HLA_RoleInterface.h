@@ -29,7 +29,6 @@ class MIL_Agent_ABC;
 // =============================================================================
 class HLA_RoleInterface : public tools::Role_ABC
 {
-
 public:
     //! @name Types
     //@{

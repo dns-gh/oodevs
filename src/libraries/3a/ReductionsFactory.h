@@ -20,7 +20,6 @@
 // =============================================================================
 class ReductionsFactory : public ElementFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

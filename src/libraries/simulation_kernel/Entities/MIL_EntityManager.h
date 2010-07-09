@@ -96,7 +96,6 @@ class MIL_EntityManager : public MIL_EntityManager_ABC,
                           public MIL_EntityManagerStaticMethods,
                           private boost::noncopyable
 {
-
 public:
              MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ProfilerMgr& profiler, HLA_Federate* hla, DEC_DataBase& database );
     virtual ~MIL_EntityManager();

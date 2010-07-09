@@ -22,7 +22,6 @@ namespace kernel
 // =============================================================================
 class Karma
 {
-
 public:
     static Karma friend_;
     static Karma enemy_;

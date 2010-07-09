@@ -31,7 +31,6 @@ namespace xml
 // =============================================================================
 class Dotation
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

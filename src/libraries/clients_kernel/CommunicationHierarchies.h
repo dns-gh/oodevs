@@ -24,7 +24,6 @@ namespace kernel
 // =============================================================================
 class CommunicationHierarchies : public Hierarchies
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

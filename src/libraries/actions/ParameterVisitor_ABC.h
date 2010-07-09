@@ -41,7 +41,6 @@ namespace actions
 // =============================================================================
 class ParameterVisitor_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

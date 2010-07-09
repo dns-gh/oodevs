@@ -22,7 +22,6 @@ class QGridLayout;
 // =============================================================================
 class ContentPage : public Page_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

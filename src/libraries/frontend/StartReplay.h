@@ -23,7 +23,6 @@ namespace frontend
 // =============================================================================
 class StartReplay : public SpawnCommand
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

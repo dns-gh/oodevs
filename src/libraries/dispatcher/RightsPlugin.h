@@ -46,7 +46,6 @@ namespace dispatcher
 class RightsPlugin : public Plugin_ABC
                    , public LinkResolver_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

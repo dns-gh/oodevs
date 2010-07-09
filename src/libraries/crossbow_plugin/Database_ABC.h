@@ -25,7 +25,6 @@ namespace crossbow
 // =============================================================================
 class Database_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

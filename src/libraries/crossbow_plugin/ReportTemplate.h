@@ -35,7 +35,6 @@ namespace crossbow
 // =============================================================================
 class ReportTemplate
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

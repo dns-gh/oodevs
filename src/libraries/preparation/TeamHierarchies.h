@@ -22,7 +22,6 @@
 class TeamHierarchies : public TacticalHierarchies
                       , public kernel::Serializable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

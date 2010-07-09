@@ -34,7 +34,6 @@ namespace xml
 class CrossingSiteAttribute : public kernel::CrossingSiteAttribute_ABC
                             , public kernel::Serializable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

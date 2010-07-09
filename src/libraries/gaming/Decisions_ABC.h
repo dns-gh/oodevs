@@ -27,7 +27,6 @@ namespace kernel
 // =============================================================================
 class Decisions_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

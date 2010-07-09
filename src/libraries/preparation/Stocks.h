@@ -40,7 +40,6 @@ class Stocks : public kernel::Extension_ABC
              , public tools::Resolver< Dotation >
              , public kernel::Serializable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

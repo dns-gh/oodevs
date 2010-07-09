@@ -24,7 +24,6 @@ namespace kernel {
 // =============================================================================
 class AgentHierarchies : public TacticalHierarchies
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

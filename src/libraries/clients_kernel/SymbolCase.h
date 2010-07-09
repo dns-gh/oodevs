@@ -25,7 +25,6 @@ namespace kernel
 // =============================================================================
 class SymbolCase
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

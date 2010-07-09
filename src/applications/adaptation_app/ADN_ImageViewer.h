@@ -35,7 +35,6 @@
 class ADN_ImageViewer
 : public QWidget
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

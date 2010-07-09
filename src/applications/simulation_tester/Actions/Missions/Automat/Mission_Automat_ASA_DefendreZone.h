@@ -25,7 +25,6 @@ namespace TEST {
 // =============================================================================
 class Mission_Automat_ASA_DefendreZone : public Mission_Automat_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

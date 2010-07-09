@@ -25,7 +25,6 @@ namespace tools
 // =============================================================================
 class DirectoryExerciseLister : public ExerciseLister_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

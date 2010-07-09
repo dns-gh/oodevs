@@ -34,7 +34,6 @@ namespace MsgsSimToClient
 class UrbanPerceptions : public kernel::Extension_ABC
     , public kernel::Updatable_ABC< MsgsSimToClient::MsgUrbanKnowledgeUpdate >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

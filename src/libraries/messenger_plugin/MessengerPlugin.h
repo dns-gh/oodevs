@@ -52,7 +52,6 @@ namespace messenger
 // =============================================================================
 class MessengerPlugin : public dispatcher::Plugin_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

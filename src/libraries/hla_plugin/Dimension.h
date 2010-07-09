@@ -23,7 +23,6 @@ namespace hla
 // =============================================================================
 class Dimension
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

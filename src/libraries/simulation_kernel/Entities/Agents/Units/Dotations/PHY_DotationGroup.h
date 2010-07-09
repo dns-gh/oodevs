@@ -35,7 +35,6 @@ class MIL_AutomateLOG;
 // =============================================================================
 class PHY_DotationGroup : private boost::noncopyable
 {
-
 public:
     //! @name Types
     //@{

@@ -23,7 +23,6 @@ namespace frontend
 // =============================================================================
 class StartAuthoring : public SpawnCommand
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

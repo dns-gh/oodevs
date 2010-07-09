@@ -17,7 +17,6 @@
 // =============================================================================
 class PHY_RoleHLA_Population : public PHY_RoleInterface_Population
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

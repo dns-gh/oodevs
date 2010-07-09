@@ -29,7 +29,6 @@ class PHY_RolePion_Humans : public PHY_RoleInterface_Humans
                           , public HumansActionsNotificationHandler_ABC
                           , public network::NetworkUnitMessageNotificationHandler_ABC
 {
-
 public:
     explicit PHY_RolePion_Humans( MIL_AgentPion& pion );
     virtual ~PHY_RolePion_Humans();

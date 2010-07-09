@@ -14,7 +14,6 @@ class MIL_PopulationFlow;
 //*****************************************************************************
 class PHY_PerceptionView : public PHY_Perception_ABC
 {
-
 public:
              PHY_PerceptionView( PHY_RoleInterface_Perceiver& perceiver, MIL_Agent_ABC& pion );
     virtual ~PHY_PerceptionView();

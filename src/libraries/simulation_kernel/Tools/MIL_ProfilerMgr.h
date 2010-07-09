@@ -25,7 +25,6 @@ class MIL_Population;
 //*****************************************************************************
 class MIL_ProfilerMgr : private boost::noncopyable
 {
-
 public:
     //! @name Constructor/Destructor
     //@{

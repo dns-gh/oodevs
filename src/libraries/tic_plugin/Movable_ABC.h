@@ -25,7 +25,6 @@ namespace tic
 // =============================================================================
 class Movable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -25,7 +25,6 @@ class MIL_CheckPointOutArchive;
 // =============================================================================
 class PHY_RolePion_Illumination : public PHY_RoleInterface_Illumination
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

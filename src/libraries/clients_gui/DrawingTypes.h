@@ -39,7 +39,6 @@ namespace gui
 // =============================================================================
 class DrawingTypes : public tools::Resolver< DrawingCategory, QString >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

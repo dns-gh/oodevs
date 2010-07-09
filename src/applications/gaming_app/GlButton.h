@@ -28,7 +28,6 @@ namespace gui
 // =============================================================================
 class GlButton
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

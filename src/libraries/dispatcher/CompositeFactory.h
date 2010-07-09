@@ -26,7 +26,6 @@ namespace dispatcher
 // =============================================================================
 class CompositeFactory : public tools::SortedInterfaceContainer< Factory_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

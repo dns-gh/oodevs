@@ -24,7 +24,6 @@ namespace tools
 // =============================================================================
 class BufferedConnectionCallback : public ConnectionCallback_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

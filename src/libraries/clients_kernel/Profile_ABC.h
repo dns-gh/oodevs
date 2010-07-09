@@ -22,7 +22,6 @@ namespace kernel
 // =============================================================================
 class Profile_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

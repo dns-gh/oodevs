@@ -20,7 +20,6 @@
 //*****************************************************************************
 class DEC_PathType : private boost::noncopyable
 {
-
 public:
     //! @name Types
     //@{

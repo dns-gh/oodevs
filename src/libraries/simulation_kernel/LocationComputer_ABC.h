@@ -21,7 +21,6 @@ namespace location
 // =============================================================================
 class LocationComputer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

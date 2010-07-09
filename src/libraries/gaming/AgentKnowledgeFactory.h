@@ -30,7 +30,6 @@ class Model;
 class AgentKnowledgeFactory : public AgentKnowledgeFactory_ABC
                             , public PopulationKnowledgeFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

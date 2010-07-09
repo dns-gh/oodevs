@@ -21,7 +21,6 @@ namespace gui
 // =============================================================================
 class ValuedDragObject : public QStoredDrag
 {
-
 public:
     //! @name Statics
     //@{

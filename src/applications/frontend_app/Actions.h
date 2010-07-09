@@ -20,7 +20,6 @@
 // =============================================================================
 class Actions : public QObject
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

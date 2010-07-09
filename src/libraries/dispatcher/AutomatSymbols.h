@@ -24,7 +24,6 @@ namespace dispatcher
 // =============================================================================
 class AutomatSymbols : public EntitySymbols_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

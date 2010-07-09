@@ -31,7 +31,6 @@ class Config;
 // =============================================================================
 class Application : public Application_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

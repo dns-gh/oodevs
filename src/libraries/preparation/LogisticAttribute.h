@@ -41,7 +41,6 @@ class LogisticAttribute : public kernel::LogisticAttribute_ABC
                         , public tools::Observer_ABC
                         , public tools::ElementObserver_ABC< kernel::Automat_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

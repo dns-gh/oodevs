@@ -30,7 +30,6 @@ class MIL_Injury_ABC;
 // =============================================================================
 class HumansComposante_ABC : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

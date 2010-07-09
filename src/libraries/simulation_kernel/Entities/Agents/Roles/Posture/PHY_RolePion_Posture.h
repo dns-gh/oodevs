@@ -49,7 +49,6 @@ class PHY_RolePion_Posture : public PHY_RoleInterface_Posture
                            , public tools::AlgorithmModifier_ABC< urbanLocation::UrbanLocationComputer_ABC >
                            , public network::NetworkUnitMessageNotificationHandler_ABC
 {
-
 public:
     explicit  PHY_RolePion_Posture( MIL_Agent_ABC& pion );
     virtual ~PHY_RolePion_Posture();

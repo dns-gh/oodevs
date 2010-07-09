@@ -27,7 +27,6 @@ namespace Common
 // =============================================================================
 class Formation : public kernel::EntityImplementation< kernel::Formation_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

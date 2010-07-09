@@ -37,7 +37,6 @@ class MIL_PopulationElement_ABC;
 // =============================================================================
 class PHY_WeaponDataType_DirectFire : private boost::noncopyable
 {
-
 public:
              PHY_WeaponDataType_DirectFire( const PHY_WeaponType& weaponType, xml::xistream& xis );
     virtual ~PHY_WeaponDataType_DirectFire();

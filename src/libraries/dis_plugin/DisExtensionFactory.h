@@ -51,7 +51,6 @@ class DisExtensionFactory : public dispatcher::ExtensionFactory_ABC< dispatcher:
                           , public dispatcher::ExtensionFactory_ABC< dispatcher::Side >
                           , private IdentifierFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

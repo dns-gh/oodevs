@@ -27,7 +27,6 @@ class PHY_IndirectFireDotationClass;
 //*****************************************************************************
 class PHY_AmmoEffect : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

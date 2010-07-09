@@ -28,7 +28,6 @@ class PHY_DotationGroupContainer;
 // =============================================================================
 class PHY_DotationCapacities : private boost::noncopyable
 {
-
 public:
              PHY_DotationCapacities( const std::string& strParentTagName, xml::xistream& xis );
     virtual ~PHY_DotationCapacities();

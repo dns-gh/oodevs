@@ -23,7 +23,6 @@ namespace gui
 // =============================================================================
 class GradientItem : public QCanvasLine
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -38,7 +38,6 @@ class IntelligencesModel : public tools::Resolver< kernel::Intelligence_ABC >
                          , public kernel::IntelligenceFactory_ABC
                          , public tools::ElementObserver_ABC< kernel::Intelligence_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

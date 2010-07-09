@@ -21,7 +21,6 @@ namespace gui
 // =============================================================================
 class LocationParser_ABC
 {
-
 public:
 
     //! @name Constructors/Destructor

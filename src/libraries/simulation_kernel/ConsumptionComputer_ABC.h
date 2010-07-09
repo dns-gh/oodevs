@@ -23,7 +23,6 @@ namespace dotation
 // =============================================================================
 class ConsumptionComputer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

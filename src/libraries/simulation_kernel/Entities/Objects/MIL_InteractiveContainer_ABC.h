@@ -22,7 +22,6 @@ class MIL_PopulationElement_ABC;
 // =============================================================================
 class MIL_InteractiveContainer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

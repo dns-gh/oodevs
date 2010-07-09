@@ -39,7 +39,6 @@ class ConstructionAttribute : public kernel::ConstructionAttribute_ABC
                      , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectCreation >
                      , public kernel::Drawable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

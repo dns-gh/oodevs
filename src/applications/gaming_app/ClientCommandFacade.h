@@ -26,7 +26,6 @@ class Publisher_ABC;
 // =============================================================================
 class ClientCommandFacade : public QObject
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

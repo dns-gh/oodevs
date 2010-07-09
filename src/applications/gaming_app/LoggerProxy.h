@@ -20,7 +20,6 @@
 // =============================================================================
 class LoggerProxy : public kernel::Logger_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -42,7 +42,6 @@ class Score : public IndicatorDefinition_ABC
             , public kernel::Displayable_ABC
 
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

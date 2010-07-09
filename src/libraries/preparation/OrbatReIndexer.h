@@ -27,7 +27,6 @@ class OrbatImportFilter;
 // =============================================================================
 class OrbatReIndexer
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

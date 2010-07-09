@@ -24,7 +24,6 @@ namespace kernel
 // =============================================================================
 class LocationProxy : public Location_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

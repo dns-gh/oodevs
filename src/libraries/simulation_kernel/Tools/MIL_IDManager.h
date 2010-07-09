@@ -18,7 +18,6 @@
 // =============================================================================
 class MIL_IDManager
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

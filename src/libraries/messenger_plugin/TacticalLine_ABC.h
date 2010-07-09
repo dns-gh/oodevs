@@ -39,7 +39,6 @@ namespace messenger
 // =============================================================================
 class TacticalLine_ABC : public Entity_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

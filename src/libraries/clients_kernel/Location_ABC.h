@@ -26,7 +26,6 @@ namespace kernel
 // =============================================================================
 class Location_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

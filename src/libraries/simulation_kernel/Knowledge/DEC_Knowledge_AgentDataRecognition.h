@@ -32,7 +32,6 @@ class PHY_NatureAtlas;
 // =============================================================================
 class DEC_Knowledge_AgentDataRecognition : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

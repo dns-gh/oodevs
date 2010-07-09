@@ -30,7 +30,6 @@ using namespace MsgsSimToClient;
 // =============================================================================
 class ModelFunctionComposite : public ModelFunction_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

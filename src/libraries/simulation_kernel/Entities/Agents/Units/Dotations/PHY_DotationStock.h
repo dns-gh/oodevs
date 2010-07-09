@@ -23,7 +23,6 @@ class PHY_DotationStockContainer;
 // =============================================================================
 class PHY_DotationStock : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

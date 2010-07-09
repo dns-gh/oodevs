@@ -22,7 +22,6 @@ namespace kernel
 template< typename T, typename U >
 class StrongType
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

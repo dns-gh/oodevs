@@ -28,7 +28,6 @@ namespace actions {
 // =============================================================================
 class DateTime : public Parameter< QString >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

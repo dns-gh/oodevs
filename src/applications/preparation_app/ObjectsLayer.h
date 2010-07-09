@@ -20,7 +20,6 @@
 // =============================================================================
 class ObjectsLayer : public gui::ObjectsLayer
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

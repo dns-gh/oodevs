@@ -30,7 +30,6 @@ namespace kernel
 class AgentKnowledgePositions : public kernel::Positions
                               , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitKnowledgeUpdate >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -25,7 +25,6 @@ namespace TEST {
 // =============================================================================
 class Mission_Automat_NBC_DecontaminerUneZone : public Mission_Automat_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

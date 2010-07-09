@@ -29,7 +29,6 @@ class TER_Localisation;
 // =============================================================================
 class MIL_EntityManager_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

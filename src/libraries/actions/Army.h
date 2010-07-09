@@ -29,7 +29,6 @@ namespace actions {
 // =============================================================================
 class Army : public Entity< kernel::Team_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -37,7 +37,6 @@ class StaticModel;
 // =============================================================================
 class ObjectPrototype : public gui::ObjectPrototype_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

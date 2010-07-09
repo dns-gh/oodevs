@@ -35,7 +35,6 @@ namespace xml
 class FireAttribute : public kernel::FireAttribute_ABC
                     , public kernel::Serializable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

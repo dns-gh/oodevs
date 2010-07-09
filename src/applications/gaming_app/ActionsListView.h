@@ -39,7 +39,6 @@ class ActionsListView : public ActionsListViewBase
                       , public tools::ElementObserver_ABC< actions::Action_ABC >
                       , public tools::SelectionObserver< actions::Action_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

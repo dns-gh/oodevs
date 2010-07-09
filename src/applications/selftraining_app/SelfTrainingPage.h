@@ -28,7 +28,6 @@ class NetworkExerciseLister;
 // =============================================================================
 class SelfTrainingPage : public MenuPage
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

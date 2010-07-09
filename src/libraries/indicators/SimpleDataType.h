@@ -25,7 +25,6 @@ namespace indicators
 // =============================================================================
 class SimpleDataType : public DataType_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

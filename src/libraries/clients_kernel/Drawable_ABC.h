@@ -23,7 +23,6 @@ namespace kernel
 // =============================================================================
 class Drawable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

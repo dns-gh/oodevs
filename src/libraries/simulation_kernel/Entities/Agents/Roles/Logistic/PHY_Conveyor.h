@@ -25,7 +25,6 @@ class PHY_SupplyConsign_ABC;
 // =============================================================================
 class PHY_Conveyor : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

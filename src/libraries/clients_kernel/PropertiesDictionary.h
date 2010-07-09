@@ -27,7 +27,6 @@ namespace kernel
 // =============================================================================
 class PropertiesDictionary : public Extension_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

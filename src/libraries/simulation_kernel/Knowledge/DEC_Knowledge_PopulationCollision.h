@@ -25,7 +25,6 @@ class DEC_Knowledge_Population;
 // =============================================================================
 class DEC_Knowledge_PopulationCollision : public DEC_Knowledge_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

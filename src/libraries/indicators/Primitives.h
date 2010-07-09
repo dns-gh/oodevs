@@ -33,7 +33,6 @@ namespace indicators
 // =============================================================================
 class Primitives : public tools::Resolver< Primitive, QString >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

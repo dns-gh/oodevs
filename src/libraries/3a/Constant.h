@@ -24,7 +24,6 @@
 template< typename T >
 class Constant : public ModelFunction< ConstantValue< T > >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

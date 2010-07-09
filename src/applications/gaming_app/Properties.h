@@ -62,7 +62,6 @@ protected:
 class Properties : private PropertiesBase
                  , public gui::PropertiesPanel
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

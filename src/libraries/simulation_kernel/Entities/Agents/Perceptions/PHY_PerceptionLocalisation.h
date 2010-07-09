@@ -18,7 +18,6 @@
 // =============================================================================
 class PHY_PerceptionLocalisation
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -34,7 +34,6 @@ namespace actions {
 // =============================================================================
 class AtlasNature : public Parameter< kernel::AtlasNature >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

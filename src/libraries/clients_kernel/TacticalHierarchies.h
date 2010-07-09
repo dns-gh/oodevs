@@ -44,7 +44,6 @@ public:
 // =============================================================================
 class TacticalHierarchies : public Hierarchies, public Symbol_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -26,7 +26,6 @@ namespace dispatcher
 // =============================================================================
 class SimulationDispatcher : public ReplayModel_ABC, public MessageHandler_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

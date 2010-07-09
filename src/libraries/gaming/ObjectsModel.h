@@ -34,7 +34,6 @@ namespace kernel
 // =============================================================================
 class ObjectsModel : public tools::Resolver< kernel::Object_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

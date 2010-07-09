@@ -33,7 +33,6 @@ namespace actions {
 // =============================================================================
 class PathList : public Parameter< QString >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

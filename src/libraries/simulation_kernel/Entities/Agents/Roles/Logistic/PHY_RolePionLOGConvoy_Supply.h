@@ -28,7 +28,6 @@ namespace moving
 // =============================================================================
 class PHY_RolePionLOGConvoy_Supply : public PHY_RoleInterface_Supply
 {
-
 public:
     explicit PHY_RolePionLOGConvoy_Supply( MIL_AgentPion& pion );
     virtual ~PHY_RolePionLOGConvoy_Supply();

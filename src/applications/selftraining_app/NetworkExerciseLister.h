@@ -35,7 +35,6 @@ class Config;
 // =============================================================================
 class NetworkExerciseLister : public ExerciseLister_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

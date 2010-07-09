@@ -38,7 +38,6 @@ namespace actions {
 // =============================================================================
 class ObjectKnowledge : public Knowledge_ABC< kernel::ObjectKnowledge_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

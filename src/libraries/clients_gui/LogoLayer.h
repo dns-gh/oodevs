@@ -28,7 +28,6 @@ namespace gui
 // =============================================================================
 class LogoLayer : public Layer2d_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

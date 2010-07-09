@@ -23,7 +23,6 @@ namespace kernel
 // =============================================================================
 class Point : public Location_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

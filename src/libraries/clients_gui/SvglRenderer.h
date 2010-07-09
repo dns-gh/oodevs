@@ -38,7 +38,6 @@ namespace gui
 // =============================================================================
 class SvglRenderer
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

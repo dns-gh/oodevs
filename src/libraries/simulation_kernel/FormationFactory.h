@@ -22,7 +22,6 @@ class AutomateFactory_ABC;
 // =============================================================================
 class FormationFactory : public FormationFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

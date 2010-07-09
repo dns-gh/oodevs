@@ -22,7 +22,6 @@ class MIL_Effect_IndirectFire;
 // =============================================================================
 class PHY_ActionIndirectFire_Position : public PHY_ActionIndirectFire_ABC
 {
-
 public:
              PHY_ActionIndirectFire_Position( MIL_Agent_ABC& pion, const PHY_DotationCategory* pDotationCategory, float rNbInterventionType, const MT_Vector2D* pTargetPosition );
     virtual ~PHY_ActionIndirectFire_Position();

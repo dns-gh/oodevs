@@ -43,7 +43,6 @@ class ActionProperties : public QVBox
                        , public tools::ElementObserver_ABC< actions::ActionTiming >
                        , public tools::SelectionObserver< actions::Action_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

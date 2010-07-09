@@ -36,7 +36,6 @@ class PHY_SupplyStockRequestContainer;
 // =============================================================================
 class PHY_DotationStockContainer : private boost::noncopyable
 {
-
 public:
              PHY_DotationStockContainer();
     explicit PHY_DotationStockContainer( PHY_RoleInterface_Supply& roleSupply, bool bInfiniteDotations );

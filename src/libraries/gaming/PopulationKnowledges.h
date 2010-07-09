@@ -46,7 +46,6 @@ class PopulationKnowledges : public kernel::Extension_ABC
                            , public tools::Resolver< kernel::PopulationKnowledge_ABC >
                            , public kernel::Creatable< PopulationKnowledges >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

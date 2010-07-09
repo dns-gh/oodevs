@@ -26,7 +26,6 @@ namespace kernel
 // =============================================================================
 class KnowledgeGroupType
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -41,7 +41,6 @@ class Publisher_ABC;
 class Drawing : public gui::DrawerShape
               , public kernel::Updatable_ABC< MsgsMessengerToClient::MsgShapeUpdate >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

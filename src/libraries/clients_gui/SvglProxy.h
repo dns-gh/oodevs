@@ -27,7 +27,6 @@ namespace gui
 // =============================================================================
 class SvglProxy
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

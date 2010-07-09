@@ -25,7 +25,6 @@ namespace tools
 // =============================================================================
 class MessageSender_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

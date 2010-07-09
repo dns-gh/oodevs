@@ -36,7 +36,6 @@ namespace hla
 // =============================================================================
 class HLA_Mining : public HLA_Interaction_ABC, public HLA_ObjectInteraction
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -40,7 +40,6 @@ namespace weather
 // =============================================================================
 class MeteoData: public PHY_Meteo
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -28,7 +28,6 @@ namespace dispatcher
 // =============================================================================
 class StaticModel : public kernel::StaticModel
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

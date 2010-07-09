@@ -34,7 +34,6 @@ namespace dispatcher
 // =============================================================================
 class UrbanKnowledge : public SimpleEntity< kernel::UrbanKnowledge_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

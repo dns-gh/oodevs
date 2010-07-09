@@ -25,7 +25,6 @@ class MIL_Agent_ABC;
 // =============================================================================
 class MIL_Effect_DirectFirePion : public MIL_Effect_ABC
 {
-
 public:
              MIL_Effect_DirectFirePion( const PHY_DotationCategory& dotationCategory, MIL_Agent_ABC& target, PHY_Composante_ABC& compTarget, PHY_FireResults_ABC& fireResult );
     virtual ~MIL_Effect_DirectFirePion();

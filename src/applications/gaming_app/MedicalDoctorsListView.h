@@ -20,7 +20,6 @@
 // =============================================================================
 class MedicalDoctorsListView : public MedicalAvailabilitiesListView_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

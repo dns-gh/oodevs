@@ -40,7 +40,6 @@ class PHY_RoleAction_Flying : public PHY_RoleAction_InterfaceFlying
                             , public tools::AlgorithmModifier_ABC< posture::PostureComputer_ABC >
                             , public tools::AlgorithmModifier_ABC< moving::MoveComputer_ABC >
 {
-
 public:
     explicit PHY_RoleAction_Flying( MIL_Agent_ABC& entity );
     virtual ~PHY_RoleAction_Flying();

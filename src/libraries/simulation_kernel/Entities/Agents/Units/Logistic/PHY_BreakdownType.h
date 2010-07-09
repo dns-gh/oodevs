@@ -28,7 +28,6 @@ class PHY_DotationCategory;
 // =============================================================================
 class PHY_BreakdownType : private boost::noncopyable
 {
-
 public:
     //! @name Types
     //@{

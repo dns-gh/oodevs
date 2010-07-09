@@ -25,7 +25,6 @@ namespace kernel
 // =============================================================================
 class Drawer
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

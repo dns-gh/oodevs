@@ -30,7 +30,6 @@ class MIL_Agent_ABC;
 // =============================================================================
 class DEC_Knowledge_ObjectPerception : public DEC_Knowledge_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -26,7 +26,6 @@ namespace gui
 // =============================================================================
 class SubItemDisplayer : public BaseDisplayer
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

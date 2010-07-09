@@ -22,7 +22,6 @@ namespace kernel
 // =============================================================================
 class FragOrder
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

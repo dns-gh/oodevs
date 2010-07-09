@@ -40,7 +40,6 @@ namespace script
 class KnowledgeNotifier : public kernel::Extension_ABC
                         , public kernel::Updatable_ABC< MsgUnitKnowledgeUpdate >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

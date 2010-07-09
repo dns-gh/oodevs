@@ -35,7 +35,6 @@ namespace kernel
 class EntityIntelligences : public kernel::EntityHierarchies< kernel::IntelligenceHierarchies >
                           , public kernel::Updatable_ABC< MsgsMessengerToClient::MsgIntelligenceCreation >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

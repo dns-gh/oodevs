@@ -22,7 +22,6 @@ class QLabel;
 // =============================================================================
 class InfoBubble : public QHGroupBox
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

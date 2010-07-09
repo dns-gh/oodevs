@@ -25,7 +25,6 @@ namespace MsgsSimToClient
 // =============================================================================
 class PHY_RoePopulation : private boost::noncopyable
 {
-
 public:
     //! @name Constants
     //@{

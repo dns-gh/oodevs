@@ -34,7 +34,6 @@ namespace MsgsSimToClient
 class TeamHierarchies : public kernel::EntityHierarchies< kernel::CommunicationHierarchies >
                       , public kernel::Updatable_ABC< MsgsSimToClient::MsgKnowledgeGroupUpdate > // LTO
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

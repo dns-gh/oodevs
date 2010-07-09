@@ -39,7 +39,6 @@ namespace actions
 // =============================================================================
         class ParamDotationDType : public ParamComboBox< int /*Common::MsgDotationType*/ >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

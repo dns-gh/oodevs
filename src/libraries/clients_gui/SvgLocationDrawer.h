@@ -35,7 +35,6 @@ namespace gui
 // =============================================================================
 class SvgLocationDrawer : public kernel::LocationVisitor_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

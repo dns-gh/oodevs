@@ -21,7 +21,6 @@ namespace kernel
 // =============================================================================
 class Viewport_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

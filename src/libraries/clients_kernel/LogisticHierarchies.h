@@ -30,7 +30,6 @@ namespace kernel
 // =============================================================================
 class LogisticHierarchiesBase : public Hierarchies
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -47,7 +46,6 @@ public:
 
 class MaintenanceHierarchies : public LogisticHierarchiesBase
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -63,7 +61,6 @@ public:
 
 class MedicalHierarchies : public LogisticHierarchiesBase
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -79,7 +76,6 @@ public:
 
 class SupplyHierarchies : public LogisticHierarchiesBase
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -95,7 +91,6 @@ public:
 
 class TC2Hierarchies : public LogisticHierarchiesBase
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

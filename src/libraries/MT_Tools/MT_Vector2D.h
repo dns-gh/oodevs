@@ -19,7 +19,6 @@
 //=============================================================================
 class MT_Vector2D
 {
-
 public:
      MT_Vector2D();                           // Constructor : les valeurs XYZ sont mises a 0
      MT_Vector2D( MT_Float rX, MT_Float rY ); // Constructor : X Y Z ne ser<T> rien ce commentaire !!!!

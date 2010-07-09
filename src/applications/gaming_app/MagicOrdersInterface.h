@@ -37,7 +37,6 @@ class StaticModel;
 // =============================================================================
 class MagicOrdersInterface
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

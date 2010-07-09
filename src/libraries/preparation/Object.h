@@ -42,7 +42,6 @@ class Object : public kernel::EntityImplementation< kernel::Object_ABC >
              , public kernel::Extension_ABC
              , public kernel::Serializable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

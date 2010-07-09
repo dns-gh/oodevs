@@ -33,7 +33,6 @@ namespace script
 class EventCondition : public BaseCondition
                      , public tools::Observer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

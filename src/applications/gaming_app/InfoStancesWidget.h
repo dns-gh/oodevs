@@ -34,7 +34,6 @@ class InfoStancesWidget : public QVBox
                         , public tools::SelectionObserver< kernel::Entity_ABC >
                         , public tools::ElementObserver_ABC< kernel::Attributes_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

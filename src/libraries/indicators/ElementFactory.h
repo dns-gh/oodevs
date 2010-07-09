@@ -27,7 +27,6 @@ namespace indicators
 // =============================================================================
 class ElementFactory : public ElementFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -29,7 +29,6 @@ namespace kernel
 // =============================================================================
 class Controllers
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

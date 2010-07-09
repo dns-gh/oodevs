@@ -27,7 +27,6 @@ class Model;
 // =============================================================================
 class ProfileFactory : public ProfileFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

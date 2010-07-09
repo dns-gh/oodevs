@@ -40,7 +40,6 @@ class LogisticStatusWidget_ABC : public QVBox
                                , public tools::ElementObserver_ABC< Extension >
                                , public tools::SelectionObserver< kernel::Entity_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

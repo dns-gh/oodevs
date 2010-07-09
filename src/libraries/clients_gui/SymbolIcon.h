@@ -21,7 +21,6 @@ namespace gui
 // =============================================================================
 class SymbolIcon
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

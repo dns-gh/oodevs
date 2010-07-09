@@ -42,7 +42,6 @@ class Weapons : public kernel::Extension_ABC
               , public tools::Observer_ABC
               , public kernel::OptionsObserver_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

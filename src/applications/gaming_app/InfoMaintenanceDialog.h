@@ -31,7 +31,6 @@ namespace gui
 // =============================================================================
 class InfoMaintenanceDialog : public InfoDialog< MaintenanceStates >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

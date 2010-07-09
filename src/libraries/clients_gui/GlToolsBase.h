@@ -31,7 +31,6 @@ class GlToolsBase : public kernel::GlTools_ABC
                   , public tools::Observer_ABC
                   , public kernel::OptionsObserver_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

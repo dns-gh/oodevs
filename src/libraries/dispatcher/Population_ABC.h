@@ -24,7 +24,6 @@ namespace dispatcher
 // =============================================================================
 class Population_ABC : public Sendable< kernel::Population_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

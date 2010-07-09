@@ -35,7 +35,6 @@ namespace actions {
 // =============================================================================
 class AutomatList : public Parameter< QString >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

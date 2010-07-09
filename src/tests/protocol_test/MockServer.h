@@ -30,7 +30,6 @@ namespace google
 class MockServer : public mockpp::ChainableMockObject
                  , public tools::ServerNetworker
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

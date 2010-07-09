@@ -28,7 +28,6 @@ class StaticModel;
 // =============================================================================
 class LogisticConsignFactory : public LogisticConsignFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

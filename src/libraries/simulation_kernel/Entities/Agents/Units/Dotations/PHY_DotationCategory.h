@@ -35,7 +35,6 @@ class PHY_FireResults_ABC;
 // =============================================================================
 class PHY_DotationCategory : private boost::noncopyable
 {
-
 public:
      PHY_DotationCategory( const PHY_DotationType& type, const std::string& strName, xml::xistream& xis );
     virtual ~PHY_DotationCategory();

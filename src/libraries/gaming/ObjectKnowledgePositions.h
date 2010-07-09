@@ -27,7 +27,6 @@ namespace kernel
 class ObjectKnowledgePositions : public LocationPositions
                                , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectKnowledgeUpdate >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

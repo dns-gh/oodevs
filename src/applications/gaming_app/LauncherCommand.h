@@ -32,7 +32,6 @@ class CommandHandler;
 // =============================================================================
 class LauncherCommand : public CommandHandler_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

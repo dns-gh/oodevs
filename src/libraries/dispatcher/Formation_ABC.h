@@ -27,7 +27,6 @@ namespace dispatcher
 // =============================================================================
 class Formation_ABC : public Sendable< kernel::Formation_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

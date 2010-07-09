@@ -32,7 +32,6 @@ namespace dispatcher
 // =============================================================================
 class MessageHandler_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

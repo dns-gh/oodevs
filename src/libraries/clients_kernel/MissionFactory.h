@@ -27,7 +27,6 @@ namespace kernel
 // =============================================================================
 class MissionFactory
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

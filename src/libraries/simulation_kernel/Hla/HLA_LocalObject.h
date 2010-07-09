@@ -32,7 +32,6 @@ class MIL_Object_ABC;
 // =============================================================================
 class HLA_LocalObject : public HLA_Object_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

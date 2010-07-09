@@ -24,7 +24,6 @@ namespace indicators
 // =============================================================================
 class Function : public Element_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

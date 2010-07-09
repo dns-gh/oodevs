@@ -23,7 +23,6 @@ namespace detection
 // =============================================================================
 class DetectionComputerFactory : public DetectionComputerFactory_ABC
 {
-
 public:
     //! @name ConstructorsDestructor
     //@{

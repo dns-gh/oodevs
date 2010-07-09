@@ -24,7 +24,6 @@ namespace dispatcher
 // =============================================================================
 class MedicalTreatmentAttribute : public ObjectAttribute_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

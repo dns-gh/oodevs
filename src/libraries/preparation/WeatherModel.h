@@ -36,7 +36,6 @@ class LocalWeather;
 // =============================================================================
 class WeatherModel : public tools::Resolver< LocalWeather >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

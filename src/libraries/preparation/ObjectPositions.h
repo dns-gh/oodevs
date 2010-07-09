@@ -38,7 +38,6 @@ class ObjectPositions : public kernel::Positions
                       , public kernel::Drawable_ABC
                       , public kernel::LocationVisitor_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

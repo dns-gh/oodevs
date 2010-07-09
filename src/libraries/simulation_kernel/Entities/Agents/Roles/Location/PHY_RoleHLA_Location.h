@@ -28,7 +28,6 @@ class MIL_AgentHLA;
 // =============================================================================
 class PHY_RoleHLA_Location : public PHY_RoleInterface_Location
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

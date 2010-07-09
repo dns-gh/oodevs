@@ -37,7 +37,6 @@ namespace dis
 // =============================================================================
 class DisTypeResolver
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

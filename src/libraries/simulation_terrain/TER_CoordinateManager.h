@@ -32,7 +32,6 @@
 // =============================================================================
 class TER_CoordinateManager
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -29,7 +29,6 @@ namespace TEST {
 // =============================================================================
 class Testable_Entity
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

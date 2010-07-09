@@ -23,7 +23,6 @@ namespace MsgsSimToClient
 // =============================================================================
 class PHY_PerceptionLevel : private boost::noncopyable
 {
-
 public:
     static const PHY_PerceptionLevel identified_;
     static const PHY_PerceptionLevel recognized_;

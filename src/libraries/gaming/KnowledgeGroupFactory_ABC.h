@@ -31,7 +31,6 @@ namespace MsgsSimToClient
 // =============================================================================
 class KnowledgeGroupFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

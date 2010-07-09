@@ -57,7 +57,6 @@ class AgentTypes : public tools::Resolver< AgentType >
                  , public tools::Resolver< FragOrderType, std::string >
                  , public tools::Resolver< MagicActionType, std::string >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

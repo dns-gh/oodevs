@@ -21,7 +21,6 @@ namespace gui
 // =============================================================================
 class MapWidget_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

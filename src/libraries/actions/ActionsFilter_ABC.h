@@ -22,7 +22,6 @@ namespace actions
 // =============================================================================
 class ActionsFilter_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -35,7 +35,6 @@ namespace actions
 class ParamAgentKnowledgeList : public EntityListParameter< kernel::AgentKnowledge_ABC >
                               , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

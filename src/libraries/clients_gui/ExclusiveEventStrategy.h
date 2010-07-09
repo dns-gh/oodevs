@@ -23,7 +23,6 @@ namespace gui
 // =============================================================================
 class ExclusiveEventStrategy : public EventStrategy_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

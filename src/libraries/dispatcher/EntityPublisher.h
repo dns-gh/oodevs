@@ -24,7 +24,6 @@ namespace dispatcher
 template< typename E >
 class EntityPublisher : public EntityPublisher_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

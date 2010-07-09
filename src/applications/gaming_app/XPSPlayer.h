@@ -30,7 +30,6 @@ class XPSPlayer : public QObject, public tools::Observer_ABC
                 , public tools::ElementObserver_ABC< Simulation >
                 , public tools::ElementObserver_ABC< Simulation::sStartTick >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

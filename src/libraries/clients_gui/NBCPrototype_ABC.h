@@ -31,7 +31,6 @@ namespace gui
 // =============================================================================
 class NBCPrototype_ABC : public ObjectAttributePrototype_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

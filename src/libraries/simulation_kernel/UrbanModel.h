@@ -37,7 +37,6 @@ class UrbanObjectWrapper;
 // =============================================================================
 class UrbanModel
 {
-
 public:
 
     //! @name Constructors/Destructor

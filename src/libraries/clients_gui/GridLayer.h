@@ -33,7 +33,6 @@ class GridLayer : public gui::Layer2d_ABC
                 , public tools::Observer_ABC
                 , public kernel::OptionsObserver_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

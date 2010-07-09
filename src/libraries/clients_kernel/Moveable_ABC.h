@@ -23,7 +23,6 @@ namespace kernel
 // =============================================================================
 class Moveable_ABC : public Positions
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

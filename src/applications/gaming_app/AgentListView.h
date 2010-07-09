@@ -43,7 +43,6 @@ class AgentListView : public gui::HierarchyListView< kernel::CommunicationHierar
                     , public tools::ElementObserver_ABC< AutomatDecisions >
                     , public tools::ElementObserver_ABC< kernel::KnowledgeGroup_ABC > // LTO
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

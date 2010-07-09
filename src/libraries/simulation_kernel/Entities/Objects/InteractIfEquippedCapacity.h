@@ -25,7 +25,6 @@ class MIL_Agent_ABC;
 class InteractIfEquippedCapacity : public ObjectCapacity_ABC
                                  , public MIL_InteractiveContainer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

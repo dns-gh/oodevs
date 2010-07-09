@@ -22,7 +22,6 @@ class MineAttribute;
 // =============================================================================
 class DEC_Knowledge_ObjectAttributeMine : public DEC_Knowledge_ObjectAttribute_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

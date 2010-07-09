@@ -38,7 +38,6 @@ class Model;
 // =============================================================================
 class KnowledgeGroupsModel : public tools::Resolver< kernel::KnowledgeGroup_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

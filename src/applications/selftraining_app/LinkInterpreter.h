@@ -29,7 +29,6 @@ class LinkInterpreter : public gui::LinkInterpreter_ABC
                       , public tools::Observer_ABC
                       , public tools::ElementObserver_ABC< kernel::Entity_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

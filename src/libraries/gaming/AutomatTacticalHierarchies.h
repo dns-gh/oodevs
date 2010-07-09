@@ -34,7 +34,6 @@ namespace kernel
 class AutomatTacticalHierarchies : public kernel::MergingTacticalHierarchies
                                  , public kernel::Updatable_ABC< Common::MsgAutomatChangeSuperior >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

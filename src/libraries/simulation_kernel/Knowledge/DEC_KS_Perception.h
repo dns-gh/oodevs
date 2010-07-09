@@ -40,7 +40,6 @@ namespace urban
 // =============================================================================
 class DEC_KS_Perception : public DEC_KnowledgeSource_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

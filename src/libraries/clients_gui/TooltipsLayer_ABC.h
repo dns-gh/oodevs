@@ -25,7 +25,6 @@ namespace gui
 // =============================================================================
 class TooltipsLayer_ABC : public Layer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

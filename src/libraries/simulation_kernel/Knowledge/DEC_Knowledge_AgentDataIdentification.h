@@ -30,7 +30,6 @@ class MIL_Agent_ABC;
 // =============================================================================
 class DEC_Knowledge_AgentDataIdentification : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

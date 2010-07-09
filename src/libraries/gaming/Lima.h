@@ -25,7 +25,6 @@ namespace kernel
 // =============================================================================
 class Lima : public TacticalLine_ABC
 {
-
 public:
     //! @name Constructor/Destructor
     //@{

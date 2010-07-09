@@ -43,7 +43,6 @@ class HLA_InteractionManager : public HLA_InteractionManager_ABC
                              , public hla::InteractionNotification_ABC< HLA_Construction >
                              , public hla::InteractionNotification_ABC< HLA_Mining >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

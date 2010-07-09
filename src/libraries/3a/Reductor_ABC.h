@@ -21,7 +21,6 @@
 template< typename K, typename T >
 class Reductor_ABC : public Function1_ABC< K, T >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

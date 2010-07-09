@@ -41,7 +41,6 @@ class PHY_RolePion_Reinforcement : public PHY_RoleInterface_Reinforcement
                                  , public network::NetworkUnitMessageNotificationHandler_ABC
                                  , public transport::TransportChangeNotificationHandler_ABC
 {
-
 public:
     //! @name Types
     //@{

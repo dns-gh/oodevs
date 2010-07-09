@@ -27,7 +27,6 @@ class DrawingPositions : public kernel::Positions
                        , public kernel::LocationProxy
                        , public kernel::LocationVisitor_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

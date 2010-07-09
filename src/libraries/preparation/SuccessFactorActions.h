@@ -30,7 +30,6 @@ class SuccessFactorActionTypes;
 // =============================================================================
 class SuccessFactorActions : public tools::Resolver< SuccessFactorAction >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

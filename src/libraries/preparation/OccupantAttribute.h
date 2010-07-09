@@ -34,7 +34,6 @@ namespace xml
 class OccupantAttribute : public kernel::OccupantAttribute_ABC
                       , public kernel::Serializable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

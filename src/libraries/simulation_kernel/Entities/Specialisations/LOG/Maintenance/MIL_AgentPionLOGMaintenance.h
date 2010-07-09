@@ -26,7 +26,6 @@ namespace xml
 // =============================================================================
 class MIL_AgentPionLOGMaintenance : public MIL_AgentPionLOG_ABC
 {
-
 public:
              MIL_AgentPionLOGMaintenance( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis );
              MIL_AgentPionLOGMaintenance( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories );

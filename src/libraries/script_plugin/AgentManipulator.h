@@ -38,7 +38,6 @@ namespace script
 // =============================================================================
 class AgentManipulator : public kernel::Extension_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

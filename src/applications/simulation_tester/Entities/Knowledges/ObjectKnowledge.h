@@ -39,7 +39,6 @@ namespace TEST {
 // =============================================================================
 class ObjectKnowledge
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

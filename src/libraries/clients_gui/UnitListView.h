@@ -40,7 +40,6 @@ class UnitListView : public ListView< UnitListView >
                    , public tools::ElementObserver_ABC< kernel::ModelLoaded >
                    , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

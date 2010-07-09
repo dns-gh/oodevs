@@ -20,7 +20,6 @@
 // =============================================================================
 class PHY_ConsumptionType : private boost::noncopyable
 {
-
 public:
     //! @name Types
     //@{

@@ -34,7 +34,6 @@ namespace frontend
 // =============================================================================
 class XmlNode
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -21,7 +21,6 @@
 // =============================================================================
 class Polygon : public Zone_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

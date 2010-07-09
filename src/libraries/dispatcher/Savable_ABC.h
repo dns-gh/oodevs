@@ -26,7 +26,6 @@ namespace dispatcher
 // =============================================================================
 class Savable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

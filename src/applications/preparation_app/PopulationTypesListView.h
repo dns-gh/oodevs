@@ -38,7 +38,6 @@ class PopulationTypesListView : public gui::ListView< PopulationTypesListView >
                               , public tools::ElementObserver_ABC< kernel::ModelLoaded >
                               , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

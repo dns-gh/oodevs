@@ -37,7 +37,6 @@ class TimelineView;
 // =============================================================================
 class TimelineWidget : public QHBox
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

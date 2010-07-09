@@ -26,7 +26,6 @@ namespace gui
 // =============================================================================
 class CrossingSitePrototype_ABC : public ObjectAttributePrototype_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -40,7 +40,6 @@ class Intelligence : public kernel::EntityImplementation< kernel::Intelligence_A
                    , public kernel::Drawable_ABC
                    , public kernel::Serializable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

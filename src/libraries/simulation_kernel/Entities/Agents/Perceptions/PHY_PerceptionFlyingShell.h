@@ -29,7 +29,6 @@ class MIL_Effect_IndirectFire;
 // =============================================================================
 class PHY_PerceptionFlyingShell : public PHY_Perception_ABC
 {
-
 public:
              PHY_PerceptionFlyingShell( PHY_RoleInterface_Perceiver& perceiver );
     virtual ~PHY_PerceptionFlyingShell();

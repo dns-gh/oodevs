@@ -30,7 +30,6 @@ class DEC_Agent_Path;
 // =============================================================================
 class PHY_ActionMove : public PHY_DecisionCallbackAction_ABC
 {
-
 public:
     typedef MIL_AgentPion ActorType;
 

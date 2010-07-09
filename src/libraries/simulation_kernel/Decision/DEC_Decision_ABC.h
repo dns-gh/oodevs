@@ -36,7 +36,6 @@ namespace directia
 // =============================================================================
 class DEC_Decision_ABC : public tools::Role_ABC
 {
-
 public:
     //! @name Types
     //@{

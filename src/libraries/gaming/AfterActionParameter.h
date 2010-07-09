@@ -23,7 +23,6 @@ namespace xml
 // =============================================================================
 class AfterActionParameter
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -35,7 +35,6 @@ class MIL_Agent_ABC;
 class PHY_RoleHLA_Posture : public PHY_RoleInterface_Posture
                           , public tools::AlgorithmModifier_ABC< detection::DetectionComputer_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

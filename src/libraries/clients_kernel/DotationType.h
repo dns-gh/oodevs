@@ -23,7 +23,6 @@ namespace kernel
 // =============================================================================
 class DotationType
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

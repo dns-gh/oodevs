@@ -43,7 +43,6 @@ namespace bml
 // =============================================================================
 class OrderReport
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

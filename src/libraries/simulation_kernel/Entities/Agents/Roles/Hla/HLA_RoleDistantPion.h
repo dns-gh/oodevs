@@ -23,7 +23,6 @@ class MIL_AgentHLA;
 // =============================================================================
 class HLA_RoleDistantPion : public HLA_RoleInterface
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

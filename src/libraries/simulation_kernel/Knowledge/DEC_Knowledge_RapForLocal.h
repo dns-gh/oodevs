@@ -23,7 +23,6 @@ class MIL_Agent_ABC;
 // =============================================================================
 class DEC_Knowledge_RapForLocal : public DEC_Knowledge_RapFor_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

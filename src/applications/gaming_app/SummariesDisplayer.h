@@ -20,7 +20,6 @@
 // =============================================================================
 class SummariesDisplayer : public gui::BaseDisplayer
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

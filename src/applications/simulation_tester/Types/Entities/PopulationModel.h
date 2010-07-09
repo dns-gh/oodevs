@@ -32,7 +32,6 @@ namespace TEST {
 // =============================================================================
 class PopulationModel
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

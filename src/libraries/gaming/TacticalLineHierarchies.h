@@ -36,7 +36,6 @@ class TacticalLineHierarchies : public kernel::SimpleHierarchies< kernel::Tactic
                               , public kernel::Updatable_ABC< MsgsMessengerToClient::MsgLimaUpdate >
                               , public kernel::Updatable_ABC< MsgsMessengerToClient::MsgLimitUpdate >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

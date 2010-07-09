@@ -22,7 +22,6 @@ namespace urbanLocation
 // =============================================================================
 class DefaultUrbanLocationComputer : public UrbanLocationComputer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

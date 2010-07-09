@@ -41,7 +41,6 @@ namespace bml
 // =============================================================================
 class OrderProcessor : public ResponseHandler_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -24,7 +24,6 @@ namespace indicators
 // =============================================================================
 class IconsGaugeType : public GaugeType
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

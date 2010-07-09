@@ -32,7 +32,6 @@ class Model;
 // =============================================================================
 class UserProfile
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

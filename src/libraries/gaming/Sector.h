@@ -22,7 +22,6 @@ namespace kernel
 // =============================================================================
 class Sector
 {
-
 public:
              Sector( const geometry::Point2f& origin, unsigned heading, float rAngle );
              Sector();

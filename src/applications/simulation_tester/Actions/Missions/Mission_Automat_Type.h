@@ -38,7 +38,6 @@ namespace TEST {
 // =============================================================================
 class Mission_Automat_Type
 {
-
 public:
     //! @name Operations
     //@{

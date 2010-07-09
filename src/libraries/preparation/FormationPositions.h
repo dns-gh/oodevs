@@ -25,7 +25,6 @@ namespace kernel
 // =============================================================================
 class FormationPositions : public kernel::Moveable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

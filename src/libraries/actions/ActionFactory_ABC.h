@@ -47,7 +47,6 @@ class Action_ABC;
 // =============================================================================
 class ActionFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

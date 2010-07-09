@@ -36,7 +36,6 @@ class PopulationPositions : public kernel::Positions
                           , public kernel::Drawable_ABC
                           , public kernel::Serializable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

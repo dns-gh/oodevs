@@ -23,7 +23,6 @@ namespace gui
 // =============================================================================
 class NoLinkDisplayer : public BaseDisplayer
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

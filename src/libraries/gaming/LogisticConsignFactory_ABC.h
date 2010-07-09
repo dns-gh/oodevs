@@ -29,7 +29,6 @@ class LogMedicalConsign;
 // =============================================================================
 class LogisticConsignFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

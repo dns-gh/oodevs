@@ -31,7 +31,6 @@ namespace actions
 // =============================================================================
 class ParamIntelligence : public EntityParameter< kernel::Intelligence_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -40,7 +40,6 @@ class PopulationPanel : public InfoPanel_ABC
                       , public tools::SelectionObserver< kernel::Population_ABC >
                       , public tools::ElementObserver_ABC< kernel::Population_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

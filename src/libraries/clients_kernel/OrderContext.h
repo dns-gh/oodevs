@@ -28,7 +28,6 @@ namespace kernel
 // =============================================================================
 class OrderContext
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -30,7 +30,6 @@ class AgentKnowledgeConverter : public kernel::AgentKnowledgeConverter_ABC
                               , public tools::ElementObserver_ABC< kernel::AgentKnowledge_ABC >
                               , public tools::ElementObserver_ABC< kernel::PopulationKnowledge_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

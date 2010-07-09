@@ -30,7 +30,6 @@ namespace actions
 template< typename T >
 class ParamComboBox : public Param_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

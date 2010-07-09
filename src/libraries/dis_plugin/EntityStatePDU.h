@@ -29,7 +29,6 @@ namespace dis
 // =============================================================================
 class EntityStatePDU
 {
-
 public:
     //! @name Constants
     //@{

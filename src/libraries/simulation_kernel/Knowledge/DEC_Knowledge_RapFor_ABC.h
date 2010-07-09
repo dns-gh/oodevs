@@ -24,7 +24,6 @@ namespace xml
 // =============================================================================
 class DEC_Knowledge_RapFor_ABC : public DEC_Knowledge_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

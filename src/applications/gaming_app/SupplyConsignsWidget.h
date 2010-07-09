@@ -23,7 +23,6 @@ class DotationRequest;
 // =============================================================================
 class SupplyConsignsWidget : public LogisticConsignsWidget_ABC< SupplyConsignsWidget, LogSupplyConsign, LogSupplyConsigns >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

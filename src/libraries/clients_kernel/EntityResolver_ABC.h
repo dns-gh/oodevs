@@ -28,7 +28,6 @@ namespace kernel
 // =============================================================================
 class EntityResolver_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

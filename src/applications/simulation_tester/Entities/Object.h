@@ -39,7 +39,6 @@ namespace TEST {
 // =============================================================================
 class Object
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

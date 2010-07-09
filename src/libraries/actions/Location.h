@@ -30,7 +30,6 @@ namespace actions {
 class Location : public Parameter< QString >
                , public LocationBase
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

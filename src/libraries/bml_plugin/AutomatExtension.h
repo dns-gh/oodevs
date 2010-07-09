@@ -39,7 +39,6 @@ namespace bml
 class AutomatExtension : public BmlExtension_ABC
                        , public kernel::Updatable_ABC< Common::MsgAutomatOrder >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

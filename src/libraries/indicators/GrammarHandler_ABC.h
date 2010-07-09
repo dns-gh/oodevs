@@ -21,7 +21,6 @@ namespace indicators
 // =============================================================================
 class GrammarHandler_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

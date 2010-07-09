@@ -28,7 +28,6 @@ namespace kernel
 // =============================================================================
 class Equipment
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

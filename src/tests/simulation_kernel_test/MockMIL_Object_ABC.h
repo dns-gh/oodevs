@@ -20,7 +20,6 @@
 // =============================================================================
 MOCK_BASE_CLASS( MockMIL_Object_ABC, MIL_Object_ABC )
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

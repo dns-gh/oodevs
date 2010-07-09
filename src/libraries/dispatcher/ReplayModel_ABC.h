@@ -21,7 +21,6 @@ namespace dispatcher
 // =============================================================================
 class ReplayModel_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

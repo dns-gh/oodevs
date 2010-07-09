@@ -40,7 +40,6 @@ namespace dispatcher
 // =============================================================================
 class FireEffect : public SimpleEntity< >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

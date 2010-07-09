@@ -105,7 +105,6 @@ class ReplaySynchronisations : public kernel::Extension_ABC
                              , public kernel::Updatable_ABC< MsgsSimToClient::MsgUrbanCreation >
                              , public kernel::Updatable_ABC< MsgsSimToClient::MsgUrbanKnowledgeCreation >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

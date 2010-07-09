@@ -28,7 +28,6 @@ namespace gui
 // =============================================================================
 class PopulationList : public QVBox
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

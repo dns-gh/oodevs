@@ -23,7 +23,6 @@ namespace kernel
 // =============================================================================
 class NullDisplayer : public Displayer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

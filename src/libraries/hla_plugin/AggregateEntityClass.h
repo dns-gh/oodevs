@@ -32,7 +32,6 @@ namespace hla
 // =============================================================================
 class AggregateEntityClass : public ObjectClass_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

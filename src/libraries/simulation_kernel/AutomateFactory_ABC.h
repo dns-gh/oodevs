@@ -29,7 +29,6 @@ namespace xml
 class AutomateFactory_ABC : public tools::Resolver< MIL_Automate >
                           , private boost::noncopyable
 {
-
 public:
     //! @name Constructor/Destructor
     //@{

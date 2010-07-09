@@ -25,7 +25,6 @@ class PHY_ComposantePion;
 // =============================================================================
 class PHY_RoleAction_Objects_DataComputer : public OnComponentFunctor_ABC
 {
-
 public:
              PHY_RoleAction_Objects_DataComputer( MIL_Agent_ABC& pion, PHY_RoleAction_Objects_DataComputerPionData::E_Operation nOperation, const MIL_Object_ABC& object );
     virtual ~PHY_RoleAction_Objects_DataComputer();

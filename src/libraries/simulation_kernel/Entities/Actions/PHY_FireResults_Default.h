@@ -20,7 +20,6 @@
 // =============================================================================
 class PHY_FireResults_Default : public PHY_FireResults_ABC
 {
-
 public:
              PHY_FireResults_Default();
     virtual ~PHY_FireResults_Default();

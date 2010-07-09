@@ -25,7 +25,6 @@ class PHY_ConsumptionType;
 // =============================================================================
 class PHY_Posture : private boost::noncopyable
 {
-
 public:
     //! @name Types
     //@{

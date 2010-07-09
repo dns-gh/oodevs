@@ -37,7 +37,6 @@ namespace bml
 // =============================================================================
 class PublisherActor : public Publisher_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

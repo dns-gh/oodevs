@@ -24,7 +24,6 @@ class MIL_Entity_ABC;
 // =============================================================================
 class PHY_DecisionCallbackAction_ABC : public PHY_Action_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -25,7 +25,6 @@ namespace kernel
 // =============================================================================
 class PopulationKnowledgePositions : public kernel::Positions
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

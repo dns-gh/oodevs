@@ -30,7 +30,6 @@ class QTimeEdit;
 // =============================================================================
 class GameConfigPanel : public QVBox
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -25,7 +25,6 @@ namespace TEST {
 // =============================================================================
 class Mission_Population_FaireMouvement : public Mission_Population_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -38,7 +38,6 @@ namespace script
 // =============================================================================
 class ClientConditions : public dispatcher::Registrable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

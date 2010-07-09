@@ -23,7 +23,6 @@ namespace firing
 // =============================================================================
 class WeaponReloadingComputerFactory : public WeaponReloadingComputerFactory_ABC
 {
-
 public:
     //! @name ConstructorsDestructor
     //@{

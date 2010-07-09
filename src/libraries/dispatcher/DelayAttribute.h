@@ -23,7 +23,6 @@ namespace dispatcher
 // =============================================================================
 class DelayAttribute : public ObjectAttribute_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

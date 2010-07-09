@@ -25,7 +25,6 @@ namespace kernel
 // =============================================================================
 class Knowledge_ABC : public Entity_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

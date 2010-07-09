@@ -24,7 +24,6 @@ namespace dispatcher
 // =============================================================================
 class CompositeRegistrable : public Registrable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

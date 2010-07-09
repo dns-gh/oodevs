@@ -42,7 +42,6 @@ class DEC_RolePion_Decision : public DEC_Decision< MIL_AgentPion >
                             , public network::NetworkUnitMessageNotificationHandler_ABC
                             , private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

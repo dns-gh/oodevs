@@ -22,7 +22,6 @@
 // =============================================================================
 class ADN_Model_Wizard_FirstPage : public ADN_Wizard_FirstPage_Default< ADN_Models_Data::ModelInfos >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

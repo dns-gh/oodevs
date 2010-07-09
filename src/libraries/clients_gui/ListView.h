@@ -25,7 +25,6 @@ namespace gui
 template< typename ConcreteList >
 class ListView : public QListView
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

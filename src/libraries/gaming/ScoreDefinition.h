@@ -34,7 +34,6 @@ namespace xml
 // =============================================================================
 class ScoreDefinition : public IndicatorDefinition_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

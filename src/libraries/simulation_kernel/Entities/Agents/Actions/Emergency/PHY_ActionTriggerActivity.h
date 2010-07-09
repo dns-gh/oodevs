@@ -29,7 +29,6 @@ namespace population
 // =============================================================================
 class PHY_ActionTriggerActivity : public PHY_DecisionCallbackAction_ABC
 {
-
 public:
     //! @name Types
     //@{

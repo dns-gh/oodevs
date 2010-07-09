@@ -22,7 +22,6 @@
 class AutomatHierarchies : public kernel::MergingTacticalHierarchies
                          , public kernel::Serializable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

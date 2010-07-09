@@ -39,7 +39,6 @@ namespace messenger
 // =============================================================================
 class Chat
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

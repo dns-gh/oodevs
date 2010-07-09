@@ -36,7 +36,6 @@ namespace xml
 class ConstructionAttribute : public kernel::ConstructionAttribute_ABC
                             , public kernel::Serializable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

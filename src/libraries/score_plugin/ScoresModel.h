@@ -58,7 +58,6 @@ namespace score
 // =============================================================================
 class ScoresModel : public dispatcher::Registrable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -22,7 +22,6 @@ namespace xml
 // =============================================================================
 class PHY_DotationNature : private boost::noncopyable
 {
-
 public:
     //! @name Manager
     //@{

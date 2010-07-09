@@ -32,7 +32,6 @@ class Fire_ABC : public kernel::Updatable_ABC< MsgsSimToClient::MsgStopUnitFire 
                , public kernel::Updatable_ABC< MsgsSimToClient::MsgStopPopulationFire >
                , public kernel::Drawable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

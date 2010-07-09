@@ -33,7 +33,6 @@ class Equipment;
 // =============================================================================
 class AgentFireResult : public tools::Resolver< Equipment >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

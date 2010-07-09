@@ -23,7 +23,6 @@ namespace detection
 // =============================================================================
 class DefaultDetectionComputer : public DetectionComputer_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
