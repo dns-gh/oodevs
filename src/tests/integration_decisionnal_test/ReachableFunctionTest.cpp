@@ -12,7 +12,6 @@
 #include <directia/Brain.h>
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
-using namespace mockpp;
 
 namespace
 {
@@ -28,21 +27,23 @@ namespace
     {
     public:
         BrainFixture()
-        : brain( BOOST_RESOLVE( "." ) )
+            : brain( BOOST_RESOLVE( "." ) )
         {
             brain.RegisterFunction< boost::function< void( double, double ) > >( "check", boost::bind( &Check, _1, _2 ) );
             brain.RegisterFunction< boost::function< void( double, double ) > >( "checkClose", boost::bind( &CheckClose, _1, _2 ) );
             brain.GetScriptFunction( "include" )( std::string("Integration.lua") );
         }
-        void MagnitudeTest( directia::ScriptRef var1, directia::ScriptRef var2, double expected )
+        void MagnitudeTest( directia::ScriptRef /*var1*/, directia::ScriptRef /*var2*/, double /*expected*/ )
         {
+            BOOST_TODO;
             //@TODO MGD replace test with mock on MT_Vector2D
             //directia::ScriptRef magnitude = *brain.GetScriptFunction( "integration.magnitude" );
             //BOOST_CHECK( magnitude( var1, var2 ) );
             //brain.GetScriptFunction( "check" )( magnitude, expected );
         }
-        void NormalizedInversedDistanceTest( directia::ScriptRef var1, directia::ScriptRef var2, double expected )
+        void NormalizedInversedDistanceTest( directia::ScriptRef /*var1*/, directia::ScriptRef /*var2*/, double /*expected*/ )
         {
+            BOOST_TODO;
             //@TODO MGD replace test with mock on MT_Vector2D
             //directia::ScriptRef normalizedInversedDistance = *brain.GetScriptFunction( "integration.normalizedInversedDistance" );
             //BOOST_CHECK( normalizedInversedDistance( var1, var2 ) );

@@ -8,11 +8,9 @@
 // *****************************************************************************
 
 #include "integration_decisionnal_test_pch.h"
-
 #include <directia/Brain.h>
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
-using namespace mockpp;
 
 namespace
 {
@@ -28,18 +26,18 @@ namespace
     {
     public:
         BrainFixture()
-        : brain( BOOST_RESOLVE( "." ) )
+            : brain( BOOST_RESOLVE( "." ) )
         {
             brain.RegisterFunction< boost::function< void( double, double ) > >( "check", boost::bind( &Check, _1, _2 ) );
             brain.RegisterFunction< boost::function< void( double, double ) > >( "checkClose", boost::bind( &CheckClose, _1, _2 ) );
-            brain.GetScriptFunction( "include" )( std::string("Integration.lua") );
-            brain.RegisterFunction( "DEC_ConnaissanceAgent_EstUnEnnemi", boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_IsEnemy, boost::cref(this), _1  ) ) );
-            brain.RegisterFunction( "DEC_ConnaissanceAgent_EstUnAllie", boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_IsAllie, boost::cref(this), _1  ) ) );
-            brain.RegisterFunction( "DEC_ConnaissanceObject_EstUnEnnemi", boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_IsEnemy, boost::cref(this), _1  ) ) );
-            brain.RegisterFunction( "DEC_ConnaissanceObject_EstUnAllie", boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_IsAllie, boost::cref(this), _1  ) ) );
-            brain.RegisterFunction( "DEC_ConnaissanceObjet_NiveauDePerceptionCourant", boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_GetPerceptionLevel, boost::cref(this), _1  ) ) );
-            brain.RegisterFunction( "DEC_ConnaissanceAgent_NiveauDePerceptionCourant", boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_GetPerceptionLevel, boost::cref(this), _1  ) ) );
-            brain.RegisterFunction( "DEC_ConnaissanceUrbanBlock_NiveauDePerceptionCourant", boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_GetPerceptionLevel, boost::cref(this), _1  ) ) );
+            brain.GetScriptFunction( "include" )( std::string( "Integration.lua" ) );
+            brain.RegisterFunction( "DEC_ConnaissanceAgent_EstUnEnnemi", boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_IsEnemy, boost::cref( this ), _1  ) ) );
+            brain.RegisterFunction( "DEC_ConnaissanceAgent_EstUnAllie", boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_IsAllie, boost::cref( this ), _1  ) ) );
+            brain.RegisterFunction( "DEC_ConnaissanceObject_EstUnEnnemi", boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_IsEnemy, boost::cref( this ), _1  ) ) );
+            brain.RegisterFunction( "DEC_ConnaissanceObject_EstUnAllie", boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_IsAllie, boost::cref( this ), _1  ) ) );
+            brain.RegisterFunction( "DEC_ConnaissanceObjet_NiveauDePerceptionCourant", boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_GetPerceptionLevel, boost::cref( this ), _1  ) ) );
+            brain.RegisterFunction( "DEC_ConnaissanceAgent_NiveauDePerceptionCourant", boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_GetPerceptionLevel, boost::cref( this ), _1  ) ) );
+            brain.RegisterFunction( "DEC_ConnaissanceUrbanBlock_NiveauDePerceptionCourant", boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_GetPerceptionLevel, boost::cref( this ), _1  ) ) );
         }
         int Mock_IsEnemy( const std::string& name )
         {
@@ -57,7 +55,6 @@ namespace
                 return 1;
             return 2;
         }
-
         int Mock_GetPerceptionLevel( const std::string& name )
         {
             if( name == "enemyDetected" )
@@ -68,7 +65,6 @@ namespace
                 return 3;
             return 0;
         }
-
         void ComputeRelationAgentTest( directia::ScriptRef unit, double expected )
         {
             directia::ScriptRef computeRelation = *brain.GetScriptFunction( "integration.computeRelationAgent" );
@@ -101,9 +97,9 @@ namespace
         }
         directia::ScriptRef CreateAgent( const std::string& name )
         {
-            directia::ScriptRef enemy = brain.RegisterObject();
-            enemy.RegisterObject( "source", name );
-            return enemy;
+            directia::ScriptRef agent = brain.RegisterObject();
+            agent.RegisterObject( "source", name );
+            return agent;
         }
     public:
         directia::Brain brain;
@@ -115,9 +111,9 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( ComputeRelationAgent, BrainFixture )
 {
-    ComputeRelationAgentTest( CreateAgent( "allie" ), 100. );
     ComputeRelationAgentTest( CreateAgent( "enemy" ), 0. );
     ComputeRelationAgentTest( CreateAgent( "neutre" ), 50. );
+    ComputeRelationAgentTest( CreateAgent( "allie" ), 100. );
 }
 // -----------------------------------------------------------------------------
 // Name: ComputeRelationObject
@@ -125,9 +121,9 @@ BOOST_FIXTURE_TEST_CASE( ComputeRelationAgent, BrainFixture )
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( ComputeRelationObject, BrainFixture )
 {
-    ComputeRelationObjectTest( CreateAgent( "allie" ), 100. );
     ComputeRelationObjectTest( CreateAgent( "enemy" ), 0. );
     ComputeRelationObjectTest( CreateAgent( "neutre" ), 50. );
+    ComputeRelationObjectTest( CreateAgent( "allie" ), 100. );
 }
 
 // -----------------------------------------------------------------------------
@@ -136,10 +132,10 @@ BOOST_FIXTURE_TEST_CASE( ComputeRelationObject, BrainFixture )
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( GetAgentPerceptionLevel, BrainFixture )
 {
+    GetAgentPerceptionLevelTest( CreateAgent( "enemyNotSeen"    ), 0. );
     GetAgentPerceptionLevelTest( CreateAgent( "enemyDetected"   ), 30. );
     GetAgentPerceptionLevelTest( CreateAgent( "enemyRecognized" ), 60. );
     GetAgentPerceptionLevelTest( CreateAgent( "enemyIdentified" ), 100. );
-    GetAgentPerceptionLevelTest( CreateAgent( "enemyNotSeen"    ), 0. );
 }
 
 // -----------------------------------------------------------------------------

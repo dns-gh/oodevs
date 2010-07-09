@@ -8,11 +8,9 @@
 // *****************************************************************************
 
 #include "integration_decisionnal_test_pch.h"
-
 #include <directia/Brain.h>
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
-using namespace mockpp;
 
 namespace
 {
@@ -28,11 +26,11 @@ namespace
     {
     public:
         BrainFixture()
-        : brain( BOOST_RESOLVE( "." ) )
+            : brain( BOOST_RESOLVE( "." ) )
         {
             brain.RegisterFunction< boost::function< void( double, double ) > >( "check", boost::bind( &Check, _1, _2 ) );
             brain.RegisterFunction< boost::function< void( double, double ) > >( "checkClose", boost::bind( &CheckClose, _1, _2 ) );
-            brain.GetScriptFunction( "include" )( std::string("integration/ToolsFunctions.lua") );
+            brain.GetScriptFunction( "include" )( std::string( "integration/ToolsFunctions.lua" ) );
         }
         void LinearInterpolationTest( double min, double max, double start, double stop, bool upslop, double value, double expected )
         {
@@ -44,6 +42,7 @@ namespace
         directia::Brain brain;
     };
 }
+
 // -----------------------------------------------------------------------------
 // Name: LinearInterpolation
 // Created: MGD 2010-01-22
