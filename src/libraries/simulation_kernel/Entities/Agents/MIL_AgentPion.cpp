@@ -410,8 +410,7 @@ void MIL_AgentPion::UpdatePhysicalState()
     GetRole< firing::PHY_RoleAction_DirectFiring  >().Update( bIsDead );
     GetRole< firing::PHY_RoleAction_IndirectFiring>().Update( bIsDead );
     GetRole< PHY_RoleAction_FolkInfluence         >().Update( bIsDead );
-
-    PHY_RoleInterface_Maintenance* role = RetrieveRole< PHY_RoleInterface_Maintenance >();//@TODO add update to new role interface
+    PHY_RoleInterface_Maintenance* role = RetrieveRole< PHY_RoleInterface_Maintenance >(); //@TODO add update to new role interface
     if( role )
         role->Update( bIsDead );
     PHY_RoleInterface_Medical* role2 = RetrieveRole< PHY_RoleInterface_Medical >();
