@@ -35,26 +35,26 @@
 		<ns3:topography/>
 		<ns3:altimetry/>
 		<ns3:planimetry>
-            <ns3:content>
-                <ns3:reference>String</ns3:reference>
-                <ns3:format>DTED1</ns3:format>
-                <ns3:path>String</ns3:path>
-                <ns3:comment>String</ns3:comment>
-                <ns3:minScale>3.14159265358979E0</ns3:minScale>
-                <ns3:maxScale>3.14159265358979E0</ns3:maxScale>
-                <ns3:bounding-box>
-                    <ns3:top-left>
-                        <gdc latitude="49.0" longitude="2.0" elevation-agl="-999999.0"/>
-                    </ns3:top-left>
-                    <ns3:bottom-right>
-                        <gdc latitude="48.0" longitude="3.0" elevation-agl="-999999.0"/>
-                    </ns3:bottom-right>
-                </ns3:bounding-box>
-                <ns3:FACC>
-                    <ns3:content>String</ns3:content>
-                </ns3:FACC>
-            </ns3:content>
-        </ns3:planimetry>
+			<ns3:content>
+				<ns3:reference>String</ns3:reference>
+				<ns3:format>DTED1</ns3:format>
+				<ns3:path>String</ns3:path>
+				<ns3:comment>String</ns3:comment>
+				<ns3:minScale>3.14159265358979E0</ns3:minScale>
+				<ns3:maxScale>3.14159265358979E0</ns3:maxScale>
+				<ns3:bounding-box>
+					<ns3:top-left>
+						<gdc latitude="50.0" longitude="-1.0" elevation-agl="-999999.0"/>
+					</ns3:top-left>
+					<ns3:bottom-right>
+						<gdc latitude="48.0" longitude="2.0" elevation-agl="-999999.0"/>
+					</ns3:bottom-right>
+				</ns3:bounding-box>
+				<ns3:FACC>
+					<ns3:content>String</ns3:content>
+				</ns3:FACC>
+			</ns3:content>
+		</ns3:planimetry>
 	</terrain>
 	<sides id="51ec6e3b-9e14-48cc-ac58-907c42877f86">
 		<ns2:name></ns2:name>
@@ -67,7 +67,7 @@
 			<ns5:relations>
 				<ns5:owningSide>
 					<ns2:id>be3ab9e0-39e9-46e1-80fc-a7a208c30511</ns2:id>
-                    <ns2:referencer-id>c92e4efe-9014-452c-97b0-7286e387f5f5</ns2:referencer-id>
+					<ns2:referencer-id>c92e4efe-9014-452c-97b0-7286e387f5f5</ns2:referencer-id>
 				</ns5:owningSide>
 				<ns5:source-side-ref>
 					<ns2:id>c92e4efe-9014-452c-97b0-7286e387f5f5</ns2:id>
@@ -154,6 +154,14 @@
 						<ns2:id>0e5858c0-e670-4205-9ccb-685fe0bd3187</ns2:id>
 						<ns2:referencer-id>52a363e7-b11c-4ab6-b09f-8ece8abed7dd</ns2:referencer-id>
 					</ns2:meta-entity-ref>
+					<ns5:echelon>
+						<ns2:value xsi:type="ns2:property-value-string-enumeration-constant" id="d8abfdbc-acbc-42d8-9b25-8cce9bbce344">
+							<ns2:name>Constante énumérée</ns2:name>
+							<ns2:comment></ns2:comment>
+							<ns2:is-deprecated>false</ns2:is-deprecated>
+							<ns2:enumeration-value>Niveau 3 (BIA)</ns2:enumeration-value>
+						</ns2:value>
+					</ns5:echelon>
 					<ns5:owningSide>
 						<ns2:id>c92e4efe-9014-452c-97b0-7286e387f5f5</ns2:id>
 						<ns2:referencer-id>52a363e7-b11c-4ab6-b09f-8ece8abed7dd</ns2:referencer-id>
@@ -166,7 +174,7 @@
 						<ns5:content id="8247c544-e02b-4a55-b122-6e67050549a8">
 							<ns2:name>Unité BIA #01</ns2:name>
 							<ns2:meta-entity-ref>
-								<ns2:id>be8ef188-ef84-4335-ab00-72003802a14b</ns2:id>
+								<ns2:id>be8ef188-ef84-4335-ab00-72003802a14c</ns2:id>
 								<ns2:referencer-id>8247c544-e02b-4a55-b122-6e67050549a8</ns2:referencer-id>
 							</ns2:meta-entity-ref>
 							<ns5:owningSide>
@@ -186,7 +194,7 @@
 						<ns5:content id="21523a2a-f758-498f-9f47-26133aa44dd5">
 							<ns2:name>Unité GTIA #02</ns2:name>
 							<ns2:meta-entity-ref>
-								<ns2:id>be8ef188-ef84-4335-ab00-72003802a14b</ns2:id>
+								<ns2:id>be8ef188-ef84-4335-ab00-72003802a14d</ns2:id>
 								<ns2:referencer-id>21523a2a-f758-498f-9f47-26133aa44dd5</ns2:referencer-id>
 							</ns2:meta-entity-ref>
 							<ns5:echelon id="f99356b2-c304-4bfd-84b2-c8fa151a2ef7">
@@ -223,48 +231,50 @@
 			</ns5:order-of-battle>
 			<ns5:data>
 				<ns5:missions>
-                    <ns5:content id="Mission ID">
-                        <ns2:name>String</ns2:name>
-                        <ns2:meta-entity-ref>
-                            <ns2:id>MetaMission ID (Attaquer?)</ns2:id>
-                            <ns2:referencer-id>Mission ID</ns2:referencer-id>
-                        </ns2:meta-entity-ref>
-                    </ns5:content>
-                </ns5:missions>
+					<ns5:content id="Mission ID">
+						<ns2:name>String</ns2:name>
+						<ns2:meta-entity-ref>
+							<ns2:id>MetaMission ID (Attaquer?)</ns2:id>
+							<ns2:referencer-id>Mission ID</ns2:referencer-id>
+						</ns2:meta-entity-ref>
+					</ns5:content>
+				</ns5:missions>
 				<ns5:installations/>
-                <ns5:obstacles>
-                    <ns5:content id="Obstacle 1">
-                        <ns2:name>Obstacle name 1</ns2:name>
-                        <ns2:owningLibrary>
-                            <ns2:id>String</ns2:id>
-                            <ns2:referencer-id>Obstacle 1</ns2:referencer-id>
-                        </ns2:owningLibrary>
-                        <ns2:meta-entity-ref>
-                            <ns2:id>Meta Obstacle id</ns2:id>
-                            <ns2:referencer-id>Obstacle 1</ns2:referencer-id>
-                        </ns2:meta-entity-ref>
-                        <ns2:is-mobile>true</ns2:is-mobile>
-                        <ns5:owningSide>
-                            <ns2:id>String</ns2:id>
-                            <ns2:referencer-id>String</ns2:referencer-id>
-                        </ns5:owningSide>
-                        <ns5:shape>
-                            <center>
-                                <gdc latitude="48.9" longitude="2.4" elevation-agl="-999999.0"/>
-                            </center>
-                            <relative-geometry>
-                                <content>
-                                    <points>
-                                        <content>
-                                            <gdc latitude="48.91" longitude="2.41" elevation-agl="-999999.0"/>
-                                        </content>
-                                    </points>
-                                </content>
-                            </relative-geometry>
-                            <rotation unit="degree" value="3.14159265358979E0"/>
-                        </ns5:shape>
-                    </ns5:content>
-                </ns5:obstacles>
+				<ns5:obstacles>
+					<ns5:content id="Obstacle 1">
+						<ns2:name>Obstacle name 1</ns2:name>
+						<ns2:owningLibrary>
+							<ns2:id>String</ns2:id>
+							<ns2:referencer-id>Obstacle 1</ns2:referencer-id>
+						</ns2:owningLibrary>
+						<ns2:meta-entity-ref>
+							<ns2:id>Meta Obstacle id</ns2:id>
+							<ns2:referencer-id>Obstacle 1</ns2:referencer-id>
+						</ns2:meta-entity-ref>
+						<ns2:is-mobile>true</ns2:is-mobile>
+						<ns5:owningSide>
+							<ns2:id>String</ns2:id>
+							<ns2:referencer-id>String</ns2:referencer-id>
+						</ns5:owningSide>
+						<ns5:shape>
+							<ns4:center>
+								<ns4:gdc latitude="48.9" longitude="0.4" elevation-agl="-999999.0"/>
+							</ns4:center>
+							<ns4:relative-geometry>
+								<content>
+									<points>
+										<content>
+											<ns4:gdc latitude="48.91" longitude="0.41" elevation-agl="-999999.0"/>
+											<ns4:gdc latitude="48.91" longitude="0.40" elevation-agl="-999999.0"/>
+											<ns4:gdc latitude="48.90" longitude="0.40" elevation-agl="-999999.0"/>
+										</content>
+									</points>
+								</content>
+							</ns4:relative-geometry>
+							<rotation unit="degree" value="3.14159265358979E0"/>
+						</ns5:shape>
+					</ns5:content>
+				</ns5:obstacles>
 				<ns5:zones/>
 			</ns5:data>
 		</ns5:content>
@@ -293,73 +303,73 @@
 					<ns5:owningOrderOfBattle>
 						<ns2:id>ef4ea36f-23e2-499f-8ab3-0e3e771fc6a9</ns2:id>
 						<ns2:referencer-id>4a29b222-cce7-4a16-a1c5-6fd8a3c35d0e</ns2:referencer-id>
-                    </ns5:owningOrderOfBattle>
-                    <ns5:members>
-                        <ns5:content id="73f2126a-bcfd-4701-ab36-9ef78c5d913d">
-                            <ns2:name>Formation intermediaire #07</ns2:name>
-                            <ns2:meta-entity-ref>
-                                <ns2:id>be8ef188-ef84-4335-ab00-72003802a14b</ns2:id>
-                                <ns2:referencer-id>73f2126a-bcfd-4701-ab36-9ef78c5d913d</ns2:referencer-id>
-                            </ns2:meta-entity-ref>
-                            <ns5:owningSide>
-                                <ns2:id>be3ab9e0-39e9-46e1-80fc-a7a208c30511</ns2:id>
-                                <ns2:referencer-id>73f2126a-bcfd-4701-ab36-9ef78c5d913d</ns2:referencer-id>
-                            </ns5:owningSide>
-                            <ns5:owningOrderOfBattle>
-                                <ns2:id>ef4ea36f-23e2-499f-8ab3-0e3e771fc6a9</ns2:id>
-                                <ns2:referencer-id>73f2126a-bcfd-4701-ab36-9ef78c5d913d</ns2:referencer-id>
-                            </ns5:owningOrderOfBattle>
-                            <ns5:owningFormation>
-                                <ns2:id>4a29b222-cce7-4a16-a1c5-6fd8a3c35d0e</ns2:id>
-                                <ns2:referencer-id>73f2126a-bcfd-4701-ab36-9ef78c5d913d</ns2:referencer-id>
-                            </ns5:owningFormation>
-                            <ns5:members>
-                                <ns5:content id="9c36ab31-194a-4d1d-9faa-fac722055929">
-                                    <ns2:name>Automate</ns2:name>
-                                    <ns2:comment></ns2:comment>
-                                    <ns2:is-deprecated>false</ns2:is-deprecated>
-                                    <ns2:meta-entity-ref>
-                                        <ns2:id>be8ef188-ef84-4335-ab00-72003802a14b</ns2:id>
-                                        <ns2:referencer-id>9c36ab31-194a-4d1d-9faa-fac722055929</ns2:referencer-id>
-                                    </ns2:meta-entity-ref>
-                                    <ns5:owningSide>
-                                        <ns2:id>be3ab9e0-39e9-46e1-80fc-a7a208c30511</ns2:id>
-                                        <ns2:referencer-id>9c36ab31-194a-4d1d-9faa-fac722055929</ns2:referencer-id>
-                                    </ns5:owningSide>
-                                    <ns5:owningOrderOfBattle>
-                                        <ns2:id>ef4ea36f-23e2-499f-8ab3-0e3e771fc6a9</ns2:id>
-                                        <ns2:referencer-id>9c36ab31-194a-4d1d-9faa-fac722055929</ns2:referencer-id>
-                                    </ns5:owningOrderOfBattle>
-                                    <ns5:owningFormation>
-                                        <ns2:id>73f2126a-bcfd-4701-ab36-9ef78c5d913d</ns2:id>
-                                        <ns2:referencer-id>9c36ab31-194a-4d1d-9faa-fac722055929</ns2:referencer-id>
-                                    </ns5:owningFormation>
-                                    <ns5:members>
-                                        <ns5:content id="id unit">
-                                            <ns2:name>Unit</ns2:name>
-                                            <ns2:comment></ns2:comment>
-                                            <ns2:is-deprecated>false</ns2:is-deprecated>
-                                            <ns2:meta-entity-ref>
-                                                <ns2:id>unit_reference</ns2:id>
-                                                <ns2:referencer-id>id unit</ns2:referencer-id>
-                                            </ns2:meta-entity-ref>
-                                            <ns5:owningSide>
-                                                <ns2:id>be3ab9e0-39e9-46e1-80fc-a7a208c30511</ns2:id>
-                                                <ns2:referencer-id>id unit</ns2:referencer-id>
-                                            </ns5:owningSide>
-                                            <ns5:owningOrderOfBattle>
-                                                <ns2:id>ef4ea36f-23e2-499f-8ab3-0e3e771fc6a9</ns2:id>
-                                                <ns2:referencer-id>id unit</ns2:referencer-id>
-                                            </ns5:owningOrderOfBattle>
-                                            <ns5:owningFormation>
-                                                <ns2:id>9c36ab31-194a-4d1d-9faa-fac722055929</ns2:id>
-                                                <ns2:referencer-id>id unit</ns2:referencer-id>
-                                            </ns5:owningFormation>
-                                        </ns5:content>
-                                    </ns5:members>
-                                </ns5:content>
-                            </ns5:members>
-                        </ns5:content>
+					</ns5:owningOrderOfBattle>
+					<ns5:members>
+						<ns5:content id="73f2126a-bcfd-4701-ab36-9ef78c5d913d">
+							<ns2:name>Formation intermediaire #07</ns2:name>
+							<ns2:meta-entity-ref>
+								<ns2:id>be8ef188-ef84-4335-ab00-72003802a17b</ns2:id>
+								<ns2:referencer-id>73f2126a-bcfd-4701-ab36-9ef78c5d913d</ns2:referencer-id>
+							</ns2:meta-entity-ref>
+							<ns5:owningSide>
+								<ns2:id>be3ab9e0-39e9-46e1-80fc-a7a208c30511</ns2:id>
+								<ns2:referencer-id>73f2126a-bcfd-4701-ab36-9ef78c5d913d</ns2:referencer-id>
+							</ns5:owningSide>
+							<ns5:owningOrderOfBattle>
+								<ns2:id>ef4ea36f-23e2-499f-8ab3-0e3e771fc6a9</ns2:id>
+								<ns2:referencer-id>73f2126a-bcfd-4701-ab36-9ef78c5d913d</ns2:referencer-id>
+							</ns5:owningOrderOfBattle>
+							<ns5:owningFormation>
+								<ns2:id>4a29b222-cce7-4a16-a1c5-6fd8a3c35d0e</ns2:id>
+								<ns2:referencer-id>73f2126a-bcfd-4701-ab36-9ef78c5d913d</ns2:referencer-id>
+							</ns5:owningFormation>
+							<ns5:members>
+								<ns5:content id="9c36ab31-194a-4d1d-9faa-fac722055929">
+									<ns2:name>Automate</ns2:name>
+									<ns2:comment></ns2:comment>
+									<ns2:is-deprecated>false</ns2:is-deprecated>
+									<ns2:meta-entity-ref>
+										<ns2:id>be8ef188-ef84-4335-ab00-72003802a14b</ns2:id>
+										<ns2:referencer-id>9c36ab31-194a-4d1d-9faa-fac722055929</ns2:referencer-id>
+									</ns2:meta-entity-ref>
+									<ns5:owningSide>
+										<ns2:id>be3ab9e0-39e9-46e1-80fc-a7a208c30511</ns2:id>
+										<ns2:referencer-id>9c36ab31-194a-4d1d-9faa-fac722055929</ns2:referencer-id>
+									</ns5:owningSide>
+									<ns5:owningOrderOfBattle>
+										<ns2:id>ef4ea36f-23e2-499f-8ab3-0e3e771fc6a9</ns2:id>
+										<ns2:referencer-id>9c36ab31-194a-4d1d-9faa-fac722055929</ns2:referencer-id>
+									</ns5:owningOrderOfBattle>
+									<ns5:owningFormation>
+										<ns2:id>73f2126a-bcfd-4701-ab36-9ef78c5d913d</ns2:id>
+										<ns2:referencer-id>9c36ab31-194a-4d1d-9faa-fac722055929</ns2:referencer-id>
+									</ns5:owningFormation>
+									<ns5:members>
+										<ns5:content id="id unit">
+											<ns2:name>Unit</ns2:name>
+											<ns2:comment></ns2:comment>
+											<ns2:is-deprecated>false</ns2:is-deprecated>
+											<ns2:meta-entity-ref>
+												<ns2:id>unit_reference</ns2:id>
+												<ns2:referencer-id>id unit</ns2:referencer-id>
+											</ns2:meta-entity-ref>
+											<ns5:owningSide>
+												<ns2:id>be3ab9e0-39e9-46e1-80fc-a7a208c30511</ns2:id>
+												<ns2:referencer-id>id unit</ns2:referencer-id>
+											</ns5:owningSide>
+											<ns5:owningOrderOfBattle>
+												<ns2:id>ef4ea36f-23e2-499f-8ab3-0e3e771fc6a9</ns2:id>
+												<ns2:referencer-id>id unit</ns2:referencer-id>
+											</ns5:owningOrderOfBattle>
+											<ns5:owningFormation>
+												<ns2:id>9c36ab31-194a-4d1d-9faa-fac722055929</ns2:id>
+												<ns2:referencer-id>id unit</ns2:referencer-id>
+											</ns5:owningFormation>
+										</ns5:content>
+									</ns5:members>
+								</ns5:content>
+							</ns5:members>
+						</ns5:content>
 					</ns5:members>
 				</ns5:content>
 			</ns5:order-of-battle>
@@ -459,7 +469,7 @@
 								<ns2:referencer-id>429f9440-2f9f-44be-807d-16123da35f4d</ns2:referencer-id>
 							</ns6:entity-ref>
 							<ns6:location>
-								<ns4:gdc elevation-agl="0.0" longitude="49.1017578125" latitude="2.38217430114746"/>
+								<ns4:gdc elevation-agl="0.0" latitude="49.1017578125" longitude="0.38217430114746"/>
 							</ns6:location>
 							<ns6:disposition xsi:type="ns6:tac-formation-disposition">
 								<ns6:direction-of-movement/>
@@ -490,7 +500,7 @@
 										<ns2:referencer-id>523bf7d9-b018-4929-86ac-daed43deaa67</ns2:referencer-id>
 									</ns6:entity-ref>
 									<ns6:location>
-										<ns4:gdc elevation-agl="0.0" longitude="49.2460174560547" latitude="2.372189559936523"/>
+										<ns4:gdc elevation-agl="0.0" longitude="0.2460174560547" latitude="49.147189559936523"/>
 									</ns6:location>
 									<ns6:owningSide>
 										<ns2:id>88f10b2b-400b-4e1d-aae8-7febde6bee7c</ns2:id>
@@ -516,7 +526,7 @@
 										<ns2:referencer-id>fe12b649-edc2-4b2d-b496-59db0a77a00e</ns2:referencer-id>
 									</ns6:entity-ref>
 									<ns6:location>
-										<ns4:gdc elevation-agl="0.0" longitude="49.11773681640625" latitude="2.2992431640625"/>
+										<ns4:gdc elevation-agl="0.0" latitude="49.11773681640625" longitude="0.2992431640625"/>
 									</ns6:location>
 									<ns6:owningSide>
 										<ns2:id>88f10b2b-400b-4e1d-aae8-7febde6bee7c</ns2:id>
@@ -544,10 +554,10 @@
 								<ns2:name></ns2:name>
 								<ns2:comment></ns2:comment>
 								<ns2:is-deprecated>false</ns2:is-deprecated>
-                                <ns2:meta-entity-ref>
-                                    <ns2:id>Mission ID</ns2:id>
-                                    <ns2:referencer-id>a3e45b43-76d4-4b60-b0d3-e25c7c7a12d8</ns2:referencer-id>
-                                </ns2:meta-entity-ref>
+								<ns2:meta-entity-ref>
+									<ns2:id>Mission ID</ns2:id>
+									<ns2:referencer-id>a3e45b43-76d4-4b60-b0d3-e25c7c7a12d8</ns2:referencer-id>
+								</ns2:meta-entity-ref>
 								<ns6:entity-ref>
 									<ns2:id>0666bdda-aac5-4b0d-ba03-a41dad3b6ebc</ns2:id>
 									<ns2:referencer-id>a3e45b43-76d4-4b60-b0d3-e25c7c7a12d8</ns2:referencer-id>
@@ -704,7 +714,7 @@
 								<ns2:referencer-id>429f9440-2f9f-44be-807d-16123da35f4d</ns2:referencer-id>
 							</ns6:entity-ref>
 							<ns6:location>
-								<ns4:gdc elevation-agl="0.0" longitude="49.1017578125" latitude="2.38217430114746"/>
+								<ns4:gdc elevation-agl="0.0" latitude="49.1017578125" longitude="0.38217430114746"/>
 							</ns6:location>
 							<ns6:disposition xsi:type="ns6:tac-formation-disposition">
 								<ns6:direction-of-movement/>
@@ -735,7 +745,7 @@
 										<ns2:referencer-id>523bf7d9-b018-4929-86ac-daed43deaa67</ns2:referencer-id>
 									</ns6:entity-ref>
 									<ns6:location>
-										<ns4:gdc elevation-agl="0.0" longitude="49.4460174560547" latitude="2.372189559936523"/>
+										<ns4:gdc elevation-agl="0.0" latitude="49.4460174560547" longitude="0.372189559936523"/>
 									</ns6:location>
 									<ns6:owningSide>
 										<ns2:id>88f10b2b-400b-4e1d-aae8-7febde6bee7c</ns2:id>
@@ -761,7 +771,7 @@
 										<ns2:referencer-id>fe12b649-edc2-4b2d-b496-59db0a77a00e</ns2:referencer-id>
 									</ns6:entity-ref>
 									<ns6:location>
-										<ns4:gdc elevation-agl="0.0" longitude="49.15773681640625" latitude="2.2992431640625"/>
+										<ns4:gdc elevation-agl="0.0" latitude="49.15773681640625" longitude="0.2992431640625"/>
 									</ns6:location>
 									<ns6:owningSide>
 										<ns2:id>88f10b2b-400b-4e1d-aae8-7febde6bee7c</ns2:id>

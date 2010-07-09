@@ -3,27 +3,27 @@
     <name>Application</name>
     <message>
         <source>Close Simulations</source>
-        <translation type="obsolete">Arréter les exercices en cours</translation>
+        <translation type="unfinished">Arréter les exercices en cours</translation>
     </message>
     <message>
         <source>Running Simulation(s) detected. Close ?</source>
-        <translation type="obsolete">Une ou plusieurs simulation(s) déjà lancées. Voulez-vous les fermer ? </translation>
+        <translation type="unfinished">Une ou plusieurs simulation(s) déjà lancées. Voulez-vous les fermer ? </translation>
     </message>
     <message>
         <source>Close GUI</source>
-        <translation type="obsolete">Fermer les interfaces</translation>
+        <translation type="unfinished">Fermer les interfaces</translation>
     </message>
     <message>
         <source>Running GUI(s) detected. Close ?</source>
-        <translation type="obsolete">Fermer les interfaces en cours d&apos;exécution?</translation>
+        <translation type="unfinished">Fermer les interfaces en cours d&apos;exécution?</translation>
     </message>
     <message>
         <source>Already running</source>
-        <translation type="obsolete">Application en cours d&apos;exécution</translation>
+        <translation type="unfinished">Application en cours d&apos;exécution</translation>
     </message>
     <message>
         <source>The FrontEnd is already running. Close ?</source>
-        <translation type="obsolete">L&apos;application est déjà lancée. Fermer ? </translation>
+        <translation type="unfinished">L&apos;application est déjà lancée. Fermer ? </translation>
     </message>
     <message>
         <source>SWORD</source>

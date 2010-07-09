@@ -2,15 +2,30 @@
 <orbat>
   <dotations infinite="false"/>
   <sides>
+    <side id="3" name="Camp #02" type="friend">
+      <objects/>
+      <tactical>
+        <formation id="9" level="ii" name="Formation BIA #02">
+          <formation id="10" level="i" name="Formation intermediaire #07">
+          <automat engaged="true" id="11" knowledge-group="8" name="Automate" type="Compagnie INF AMX 10 P">
+            <unit command-post="true" id="12" name="Unit" position="31UEQ0860817602" type="Section CDT CIE INF AMX10P"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="8" name="Groupe de connaissance de Camp #02" type="Standard"/>
+      </communication>
+      <populations/>
+      <logistic/>
+    </side>
     <side id="1" name="Camp #01" type="friend">
      <objects>
         <object id="36" name="Obstacle name 1" type="mined area (linear)">
-            <shape type="polygone"> <!-- toutes les coordonnees sont a revoir apres une premiere generation -->
+            <shape type="polygone">
             <points>
-              <point>31UEQ0689522931</point>
-              <point>31UEQ0982922588</point>
-              <point>31UEQ0914922097</point>
-              <point>31UEQ0680222438</point>
+              <point>31UDQ5676817619</point>
+              <point>31UDQ5603617625</point>
+              <point>31UDQ5602716513</point>
             </points>
           </shape>
           <attributes>
@@ -33,29 +48,13 @@
       <populations/>
       <logistic/>
     </side>
-    <side id="3" name="Camp #02" type="friend">
-      <objects/>
-      <tactical>
-        <formation id="20" level="ii" name="Formation BIA #02">
-          <formation id="24" level="i" name="Formation intermediaire #07">
-          <automat engaged="true" id="21" knowledge-group="4" name="Automate" type="Compagnie INF AMX 10 P">
-            <unit command-post="true" id="22" name="Unit" position="31UEQ0860817602" type="Section CDT CIE INF AMX10P"/>
-          </automat>
-        </formation>
-      </tactical>
-      <communication>
-        <knowledge-group id="4" name="Groupe de connaissance [2]" type="Standard"/>
-      </communication>
-      <populations/>
-      <logistic/>
-    </side>
   </sides>
   <diplomacies>
-    <side id="1">
-      <relationship diplomacy="neutral" side="3"/>
-    </side>
-    <side id="3">
+    <side id="7">
       <relationship diplomacy="enemy" side="1"/>
+    </side>
+    <side id="1">
+      <relationship diplomacy="neutral" side="7"/>
     </side>
   </diplomacies>
 </orbat>

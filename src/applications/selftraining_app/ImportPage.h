@@ -46,7 +46,8 @@ private:
     void AddScenarioOutput( QGroupBox* box );
     void AddScenarioInput( QGroupBox* box );
     void AddTerrainChoice( QGroupBox* box );
-    void ShowErrors();
+    void LaunchImport();
+    void LaunchPreparation();
 
 private slots:
     void OnModelChanged( const QString & );

@@ -17,6 +17,7 @@
 #include "frontend/commands.h"
 #include "frontend/CreateExercise.h"
 #include "frontend/EditExercise.h"
+#include "frontend/ImportExercise.h"
 #include "tools/GeneralConfig.h"
 #include <qcombobox.h>
 #include <QFileDialog.h>
@@ -160,28 +161,37 @@ void ImportPage::OnChangeScenario()
 // -----------------------------------------------------------------------------
 void ImportPage::OnEdit()
 {
-    // Either spawn a single process that will spawn Preparation afterwards or handle the steps here:
-    // Spawn translation of scenario_ with model_ and if successful ask for a terrain:
-    // Show errors
-    ShowErrors();
-    // Launch prepa
     if( !terrain_.isEmpty() && !outputScenario_.isEmpty() )
     {
         const QStringList model = QStringList::split( "/", model_ );
         frontend::CreateExercise( config_, outputScenario_.ascii(), terrain_.ascii(), model.front().ascii(), model.back().ascii() );
-        boost::shared_ptr< frontend::SpawnCommand > command( new frontend::EditExercise( config_, outputScenario_, true ) );
-        boost::shared_ptr< frontend::Process_ABC >  process( new ProcessWrapper( controllers_.controller_, command ) );
-        progressPage_->Attach( process );
-        progressPage_->show();
+        LaunchImport();
+        // $$$$ Wait for import to complete, and then launch prepa or have import app launch prepa itself.
+        //LaunchPreparation();
     }
 }
-
+    
 // -----------------------------------------------------------------------------
-// Name: ImportPage::ShowErrors
-// Created: LDC 2010-06-21
+// Name: ImportPage::LaunchImport
+// Created: LDC 2010-07-06
 // -----------------------------------------------------------------------------
-void ImportPage::ShowErrors()
+void ImportPage::LaunchImport()
 {
-
+    boost::shared_ptr< frontend::SpawnCommand > command( new frontend::ImportExercise( config_, inputScenario_, outputScenario_, true ) );
+    boost::shared_ptr< frontend::Process_ABC >  process( new ProcessWrapper( controllers_.controller_, command ) );
+    progressPage_->Attach( process );
+    progressPage_->show();        
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ImportPage::LaunchPreparation
+// Created: LDC 2010-07-06
+// -----------------------------------------------------------------------------
+void ImportPage::LaunchPreparation()
+{
+    boost::shared_ptr< frontend::SpawnCommand > command( new frontend::EditExercise( config_, outputScenario_, true ) );
+    boost::shared_ptr< frontend::Process_ABC >  process( new ProcessWrapper( controllers_.controller_, command ) );
+    progressPage_->Attach( process );
+    progressPage_->show();
 }
 
