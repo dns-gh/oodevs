@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2005-01-31 $
-// $Archive: /MVW_v10/Build/SDK/TER/src/TER_ObjectManager.h $
-// $Author: Age $
-// $Modtime: 4/03/05 14:45 $
-// $Revision: 2 $
-// $Workfile: TER_ObjectManager.h $
-//
-// *****************************************************************************
 
 #ifndef __TER_ObjectManager_h_
 #define __TER_ObjectManager_h_
@@ -31,7 +22,7 @@ class MT_Rect;
 
 // =============================================================================
 /** @class  TER_ObjectManager
-    @brief  TER_ObjectManager
+    @brief  TER Object manager
 */
 // Created: AGE 2005-01-31
 // =============================================================================
@@ -46,7 +37,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             TER_ObjectManager( const MT_Rect& extent );
+    explicit TER_ObjectManager( const MT_Rect& extent );
     virtual ~TER_ObjectManager();
     //@}
 
@@ -62,7 +53,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     TER_ObjectManager( const TER_ObjectManager& );            //!< Copy constructor
     TER_ObjectManager& operator=( const TER_ObjectManager& ); //!< Assignment operator

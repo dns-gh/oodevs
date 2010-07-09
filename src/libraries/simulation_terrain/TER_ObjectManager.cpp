@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2005-01-31 $
-// $Archive: /MVW_v10/Build/SDK/TER/src/TER_ObjectManager.cpp $
-// $Author: Age $
-// $Modtime: 4/03/05 14:46 $
-// $Revision: 2 $
-// $Workfile: TER_ObjectManager.cpp $
-//
-// *****************************************************************************
 
 #include "simulation_terrain_pch.h"
 #include "TER_ObjectManager.h"
@@ -54,7 +45,7 @@ void TER_ObjectManager::GetListAt( const MT_Vector2D& vPos, T_ObjectVector& obje
         TER_Object_ABC* pObject = view.NextElement();
         if( pObject && pObject->IsInside( vPos ) )
             objects.push_back( pObject );
-    };
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -71,7 +62,7 @@ void TER_ObjectManager::GetListWithinCircle( const MT_Vector2D& vCenter, MT_Floa
         TER_Object_ABC* pObject = view.NextElement();
         if( pObject && pObject->GetLocalisation().GetArea() && pObject->Intersect2DWithCircle( vCenter, rRadius ) )
             objects.push_back( pObject );
-    };
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -88,7 +79,7 @@ void TER_ObjectManager::GetListWithinCircle2( const MT_Vector2D& vCenter, MT_Flo
         TER_Object_ABC* pObject = view.NextElement();
         if( pObject && pObject->GetLocalisation().GetArea() && pObject->Intersect2DWithCircle( vCenter, rRadius ) )
             objects.push_back( pObject );
-    };
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -107,7 +98,7 @@ void TER_ObjectManager::GetListWithinLocalisation( const TER_Localisation& local
         TER_Object_ABC* pObject = view.NextElement();
         if( pObject && pObject->Intersect2DWithLocalisation( localisation ) )
             objects.push_back( pObject );
-    };
+    }
 }
 
 // -----------------------------------------------------------------------------
