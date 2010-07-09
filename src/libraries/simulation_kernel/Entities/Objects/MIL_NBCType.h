@@ -71,7 +71,6 @@ public:
     static unsigned int GetPropagationAngle();
     static MT_Float GetConcentrationIncreaseRate();
     static MT_Float GetConcentrationDecreaseRate();
-    static unsigned int GetEdgeEffects();
     //@}
 
     //! @name Operations
