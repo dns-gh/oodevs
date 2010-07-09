@@ -20,11 +20,11 @@
 
 MIL_Tools::converter< PHY_RawVisionData::E_VisionObject > MIL_Tools::environnementConverter_[] =
 {
-    converter< PHY_RawVisionData::E_VisionObject >( "Vide",   PHY_RawVisionData::eVisionEmpty       ),
-    converter< PHY_RawVisionData::E_VisionObject >( "Foret",  PHY_RawVisionData::eVisionForest      ),
-    converter< PHY_RawVisionData::E_VisionObject >( "Urbain", PHY_RawVisionData::eVisionUrban       ),
-    converter< PHY_RawVisionData::E_VisionObject >( "Sol"   , PHY_RawVisionData::eVisionGround      ),
-    converter< PHY_RawVisionData::E_VisionObject >( "",       (PHY_RawVisionData::E_VisionObject)-1 )
+    converter< PHY_RawVisionData::E_VisionObject >( "Vide",   PHY_RawVisionData::eVisionEmpty ),
+    converter< PHY_RawVisionData::E_VisionObject >( "Foret",  PHY_RawVisionData::eVisionForest ),
+    converter< PHY_RawVisionData::E_VisionObject >( "Urbain", PHY_RawVisionData::eVisionUrban ),
+    converter< PHY_RawVisionData::E_VisionObject >( "Sol",    PHY_RawVisionData::eVisionGround ),
+    converter< PHY_RawVisionData::E_VisionObject >( "",      (PHY_RawVisionData::E_VisionObject)-1 )
 };
 
 //-----------------------------------------------------------------------------
@@ -53,7 +53,7 @@ boost::crc_32_type::value_type MIL_Tools::ComputeCRC( const std::string& fileNam
 {
     static const unsigned int nBufferSize = 4096;
 
-    char               buffer[ nBufferSize ];
+    char buffer[ nBufferSize ];
     boost::crc_32_type CRC;
 
     std::ifstream file( fileName.c_str(), std::ios::in | std::ios::binary );

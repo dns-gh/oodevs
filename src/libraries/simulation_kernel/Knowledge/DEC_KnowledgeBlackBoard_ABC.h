@@ -46,22 +46,22 @@ public:
 
     //! @name Knowledge sources management
     //@{
-    void AddToScheduler     ( DEC_KnowledgeSource_ABC& ks );
+    void AddToScheduler( DEC_KnowledgeSource_ABC& ks );
     void RemoveFromScheduler( DEC_KnowledgeSource_ABC& ks );
     //@}
 
     //! @name Network
     //@{
-    virtual void SendFullState   () const = 0;
+    virtual void SendFullState() const = 0;
     virtual void SendChangedState() const = 0;
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::list< DEC_KnowledgeSource_ABC* >     T_KnowledgeSourceList;
-    typedef T_KnowledgeSourceList::iterator           IT_KnowledgeSourceList;
-    typedef T_KnowledgeSourceList::const_iterator     CIT_KnowledgeSourceList;
+    typedef std::list< DEC_KnowledgeSource_ABC* >   T_KnowledgeSourceList;
+    typedef T_KnowledgeSourceList::iterator        IT_KnowledgeSourceList;
+    typedef T_KnowledgeSourceList::const_iterator CIT_KnowledgeSourceList;
     //@}
 
 private:

@@ -41,17 +41,17 @@ public:
 
     //! @name Constructors/Destructor
     //@{
-    UrbanModel();
+             UrbanModel();
     virtual ~UrbanModel();
     //@}
 
     //! @name Operations
     //@{
-    void                        ReadUrbanModel          ( const MIL_Config& config );
-    void                        SendCreation            ( urban::TerrainObject_ABC& UrbanBlock ) const;
-    urban::TerrainObject_ABC*   FindUrbanBlock          ( unsigned id ) const;
-    MT_Float                    GetUrbanBlockCost       ( MT_Float weight, const MT_Vector2D& from, const MT_Vector2D& to ) const;
-    void                        CreateObjectWrapper     ( urban::TerrainObject_ABC& object );
+    void ReadUrbanModel( const MIL_Config& config );
+    void SendCreation( urban::TerrainObject_ABC& UrbanBlock ) const;
+    urban::TerrainObject_ABC* FindUrbanBlock( unsigned id ) const;
+    MT_Float GetUrbanBlockCost( MT_Float weight, const MT_Vector2D& from, const MT_Vector2D& to ) const;
+    void CreateObjectWrapper( urban::TerrainObject_ABC& object );
     //@}
 
     //! @name Operations
@@ -73,7 +73,7 @@ public:
     //@}
 
 private:
-    std::auto_ptr< urban::Model                 > model_;
+    std::auto_ptr< urban::Model > model_;
 };
 
 BOOST_CLASS_EXPORT_KEY( UrbanModel )

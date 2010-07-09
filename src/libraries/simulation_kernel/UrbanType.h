@@ -47,12 +47,8 @@ private:
 
     //! @name Constructors/Destructor
     //@{
-    UrbanType( xml::xistream& xis );
+             UrbanType( xml::xistream& xis );
     virtual ~UrbanType();
-    //@}
-
-    //! @name Helpers
-    //@{
     //@}
 
 private:

@@ -29,7 +29,7 @@ class DEC_KnowledgeSource_ABC : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DEC_KnowledgeSource_ABC( DEC_KnowledgeBlackBoard_ABC& blackBoard, unsigned int nPriority );
+             DEC_KnowledgeSource_ABC( DEC_KnowledgeBlackBoard_ABC& blackBoard, unsigned int nPriority );
              DEC_KnowledgeSource_ABC();
     virtual ~DEC_KnowledgeSource_ABC();
     //@}

@@ -35,7 +35,6 @@ public:
     static void Initialize( xml::xistream& xis, double timeFactor );
     static void Initialize( xml::xistream& xis );
     static void Terminate ();
-
     static const MIL_KnowledgeGroupType* FindType( const std::string& strName );
     static const MIL_KnowledgeGroupType* FindType( unsigned int nID );
     //@}
@@ -47,22 +46,22 @@ public:
 
     //! @name Accessors
     //@{
-          double       GetKnowledgeAgentMaxLifeTime                   () const;
-          double       GetKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit() const;
-          double       GetKnowledgeAgentExtrapolationTime             () const;
-          double       GetKnowledgePopulationMaxLifeTime              () const;
-          double       GetKnowledgeCommunicationDelay                 () const;
-    const std::string& GetName                                        () const;
-          unsigned int         GetID                                          () const;
+    double GetKnowledgeAgentMaxLifeTime() const;
+    double GetKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit() const;
+    double GetKnowledgeAgentExtrapolationTime() const;
+    double GetKnowledgePopulationMaxLifeTime() const;
+    double GetKnowledgeCommunicationDelay() const;
+    const std::string& GetName() const;
+    unsigned int GetID() const;
     //@}
 
 private:
-    MIL_KnowledgeGroupType( const std::string& strName, xml::xistream& xis, double   timeFactor );
+    MIL_KnowledgeGroupType( const std::string& strName, xml::xistream& xis, double timeFactor );
 
     //! @name Types
     //@{
     typedef std::map< std::string, const MIL_KnowledgeGroupType*, sCaseInsensitiveLess > T_KnowledgeGroupTypeMap;
-    typedef T_KnowledgeGroupTypeMap::const_iterator                                      CIT_KnowledgeGroupTypeMap;
+    typedef T_KnowledgeGroupTypeMap::const_iterator                                    CIT_KnowledgeGroupTypeMap;
     //@}
 
     //! @name Helper
@@ -76,17 +75,16 @@ private:
     //@{
     const std::string  strName_;
     const unsigned int nID_;
-          double       rKnowledgeAgentMaxLifeTime_;
-          double       rKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit_;
-          double       rKnowledgeAgentExtrapolationTime_;
-
-          double       rKnowledgePopulationMaxLifeTime_;
-          double       rCommunicationDelay_;
+    double rKnowledgeAgentMaxLifeTime_;
+    double rKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit_;
+    double rKnowledgeAgentExtrapolationTime_;
+    double rKnowledgePopulationMaxLifeTime_;
+    double rCommunicationDelay_;
     //@}
 
 private:
     static T_KnowledgeGroupTypeMap knowledgeGroupTypes_;
-    static unsigned int                    nNextID_;
+    static unsigned int nNextID_;
 };
 
 #endif // __MIL_KnowledgeGroupType_h_

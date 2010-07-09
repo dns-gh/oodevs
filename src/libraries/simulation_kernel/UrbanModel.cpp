@@ -25,11 +25,9 @@
 #include <Urban/Architecture.h>
 #include <Urban/TerrainObjectVisitor_ABC.h>
 #include "Tools/MIL_Config.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( UrbanModel )
-
-using namespace xml;
 
 namespace
 {
@@ -101,7 +99,7 @@ void UrbanModel::save( MIL_CheckPointOutArchive& /*file*/, const unsigned int ) 
 // Name: UrbanModel::WriteUrbanModel
 // Created: SLG 2009-10-29
 // -----------------------------------------------------------------------------
-void UrbanModel::WriteUrbanModel( xostream& /*xos*/ ) const
+void UrbanModel::WriteUrbanModel( xml::xostream& /*xos*/ ) const
 {
     //TODO
 }
@@ -111,7 +109,9 @@ namespace
     class FindUrbanBlockVisitor : public urban::TerrainObjectVisitor_ABC
     {
     public:
-        FindUrbanBlockVisitor( unsigned id ) : id_( id ), foundObject_( 0 )
+        FindUrbanBlockVisitor( unsigned id )
+            : id_         ( id )
+            , foundObject_( 0 )
         {}
         ~FindUrbanBlockVisitor()
         {}
