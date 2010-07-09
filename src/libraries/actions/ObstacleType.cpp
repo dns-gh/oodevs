@@ -21,7 +21,7 @@ using namespace parameters;
 // -----------------------------------------------------------------------------
 ObstacleType::ObstacleType( const kernel::OrderParameter& parameter, unsigned int value )
     : Parameter< QString >( parameter )
-    , value_ ( Common::ObstacleType_DemolitionTargetType( value ) )
+    , value_( Common::ObstacleType_DemolitionTargetType( value ) )
 {
     SetValue( tools::ToString( E_DemolitionTargetType( value_ ) ) );
 }

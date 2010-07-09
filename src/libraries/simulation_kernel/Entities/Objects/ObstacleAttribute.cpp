@@ -15,9 +15,7 @@
 #include "CheckPoints/MIL_CheckPointInArchive.h"
 #include "CheckPoints/MIL_CheckPointOutArchive.h"
 #include "protocol/protocol.h"
-#include <xeumeuleu/xml.h>
-
-using namespace xml;
+#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( ObstacleAttribute )
 
@@ -26,8 +24,8 @@ BOOST_CLASS_EXPORT_IMPLEMENT( ObstacleAttribute )
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
 ObstacleAttribute::ObstacleAttribute()
-    : obstacle_ ( Common::ObstacleType_DemolitionTargetType_preliminary )
-    , bActivated_ ( true )
+    : obstacle_      ( Common::ObstacleType_DemolitionTargetType_preliminary )
+    , bActivated_    ( true )
     , activationTime_( 0 )
 {
     // NOTHING
@@ -38,8 +36,8 @@ ObstacleAttribute::ObstacleAttribute()
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
 ObstacleAttribute::ObstacleAttribute( bool reserved )
-    : obstacle_( reserved ? Common::ObstacleType_DemolitionTargetType_reserved : Common::ObstacleType_DemolitionTargetType_preliminary )
-    , bActivated_( !reserved )
+    : obstacle_      ( reserved ? Common::ObstacleType_DemolitionTargetType_reserved : Common::ObstacleType_DemolitionTargetType_preliminary )
+    , bActivated_    ( !reserved )
     , activationTime_( 0 )
 {
     // NOTHING
@@ -71,13 +69,14 @@ namespace
 // Created: JCR 2008-06-05
 // -----------------------------------------------------------------------------
 ObstacleAttribute::ObstacleAttribute( xml::xistream& xis )
-    : obstacle_ ( ExtractObstacle( xml::attribute( xis, "type", std::string() ) ) )
-    , bActivated_ ( xml::attribute( xis, "activated", false ) )
+    : obstacle_      ( ExtractObstacle( xml::attribute( xis, "type", std::string() ) ) )
+    , bActivated_    ( xml::attribute( xis, "activated", false ) )
     , activationTime_( 0 )
 {
-    xis >> optional() >> start( "activation-time" )
-        >> attribute( "value", activationTime_ )
-        >> end();
+    xis >> xml::optional()
+        >> xml::start( "activation-time" )
+            >> xml::attribute( "value", activationTime_ )
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -85,9 +84,9 @@ ObstacleAttribute::ObstacleAttribute( xml::xistream& xis )
 // Created: JCR 2008-07-21
 // -----------------------------------------------------------------------------
 ObstacleAttribute::ObstacleAttribute( const Common::MsgMissionParameter_Value& attributes )
-    : obstacle_  ( ( Common::ObstacleType_DemolitionTargetType ) attributes.list( 1 ).identifier() )
-    , bActivated_ ( attributes.list( 2 ).abool() )
-    , activationTime_ ( attributes.list( 3 ).quantity() )
+    : obstacle_      ( ( Common::ObstacleType_DemolitionTargetType ) attributes.list( 1 ).identifier() )
+    , bActivated_    ( attributes.list( 2 ).abool() )
+    , activationTime_( attributes.list( 3 ).quantity() )
 {
     // NOTHING
 }

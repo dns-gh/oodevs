@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_AgentFunctions.h"
-
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Actions/Objects/PHY_RoleAction_Objects.h"
@@ -35,19 +34,13 @@
 #include "Entities/Agents/Units/HumanFactors/PHY_Experience.h"
 #include "Entities/Agents/Units/HumanFactors/PHY_Tiredness.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
-
-
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Effects/MIL_Effect_Suicide.h"
-
 #include "Entities/Objects/ActivableCapacity.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
-
 #include "Entities/Orders/MIL_Mission_ABC.h"
-
 #include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityManager.h"
-
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
@@ -205,9 +198,6 @@ MT_Float DEC_AgentFunctions::GetOperationalState( const MIL_Agent_ABC& callerAge
     return callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetOperationalState();
 }
 
-
-
-
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::GetMajorOperationalState
 // Created: NLD 2005-11-25
@@ -341,9 +331,9 @@ void DEC_AgentFunctions::DisableDiscreteMode( MIL_Agent_ABC& callerAgent )
 void DEC_AgentFunctions::DecisionalState( const MIL_Agent_ABC& callerAgent, const std::string& key, const std::string& value )
 {
     client::DecisionalState msg;
-    msg().set_oid   ( callerAgent.GetID() );
-    msg().set_key   ( key.c_str() );
-    msg().set_value ( value.c_str() );
+    msg().set_oid( callerAgent.GetID() );
+    msg().set_key( key.c_str() );
+    msg().set_value( value.c_str() );
     msg.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -391,7 +381,6 @@ void DEC_AgentFunctions::RecoverHumanTransportersNow( MIL_Agent_ABC& callerAgent
 {
     callerAgent.GetRole< transport::PHY_RoleInterface_Transported >().RecoverHumanTransporters();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::AreHumanTransportersReady
@@ -576,7 +565,6 @@ bool DEC_AgentFunctions::ChangeAutomate( MIL_Agent_ABC& callerAgent, DEC_Decisio
 int DEC_AgentFunctions::GetPosture( const MIL_Agent_ABC& callerAgent )
 {
     const PHY_RoleInterface_Posture& rolePosture = callerAgent.GetRole< PHY_RoleInterface_Posture >();
-
     return (int)( rolePosture.GetPostureCompletionPercentage() >= 1. ? rolePosture.GetCurrentPosture().GetID() : rolePosture.GetLastPosture().GetID() );
 }
 
@@ -596,7 +584,7 @@ bool DEC_AgentFunctions::IsInCity( const MIL_Agent_ABC& callerAgent )
 float DEC_AgentFunctions::TimeLeftForMoving( const MIL_Agent_ABC& callerAgent )
 {
     const MT_Float rTime = callerAgent.GetRole< dotation::PHY_RoleInterface_Dotations >().GetMaxTimeForConsumption( PHY_ConsumptionType::moving_ );
-    return float( MIL_Tools::ConvertSimToMinutes( rTime ) );
+    return static_cast< float >( MIL_Tools::ConvertSimToMinutes( rTime ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -608,7 +596,7 @@ float DEC_AgentFunctions::TimeToMoveDistance( const MIL_Agent_ABC& callerAgent, 
    const MT_Float rMaxSpeed = callerAgent.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSpeedWithReinforcement();
    if( rMaxSpeed == 0 )
        return std::numeric_limits< float >::max();
-    return float( MIL_Tools::ConvertSimToMinutes( MIL_Tools::ConvertMeterToSim( distance ) / rMaxSpeed ) );
+    return static_cast< float >( MIL_Tools::ConvertSimToMinutes( MIL_Tools::ConvertMeterToSim( distance ) / rMaxSpeed ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -747,11 +735,9 @@ void DEC_AgentFunctions::Suicide( MIL_Agent_ABC& callerAgent )
 bool DEC_AgentFunctions::CanIlluminate( DEC_Decision_ABC* pAgent )
 {
     const dotation::PHY_RoleInterface_Dotations& roleDotations = pAgent->GetPion().GetRole< dotation::PHY_RoleInterface_Dotations >();
-
     if( roleDotations.GetIlluminationDotations( 0.0, true ) || roleDotations.GetIlluminationDotations( 0.0, false ) )
         return true;
-    else
-        return false;
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -761,6 +747,5 @@ bool DEC_AgentFunctions::CanIlluminate( DEC_Decision_ABC* pAgent )
 float DEC_AgentFunctions::GetIlluminatingRange( const MIL_Agent_ABC& callerAgent )
 {
     const dotation::PHY_RoleInterface_Dotations& roleDotations = callerAgent.GetRole< dotation::PHY_RoleInterface_Dotations >();
-
     return roleDotations.GetIlluminatingRange( );
 }

@@ -28,28 +28,28 @@ public:
     //! @name DIA Functions
     //@{
     // Debug
-    static std::string PointToString    ( MT_Vector2D* p1 );
+    static std::string PointToString( MT_Vector2D* p1 );
     static std::string DirectionToString( MT_Vector2D* p1 );
-    static std::string PathToString     ( DEC_Path_ABC* pPath );
-    static void BreakForDebug           ( unsigned int id, const std::string& message );
+    static std::string PathToString( DEC_Path_ABC* pPath );
+    static void BreakForDebug( unsigned int id, const std::string& message );
 
     // DIA user types list manipulation
     static boost::shared_ptr< MT_Vector2D > ListPoint_GetAt( std::vector< MT_Vector2D* > list, int nId );
-    static int  ListPoint_Size       ( std::vector< MT_Vector2D* > list );
+    static int  ListPoint_Size( std::vector< MT_Vector2D* > list );
 
     // Time management
-    static float GetSimTime ();
+    static float GetSimTime();
     static float GetRealTime();
-    static bool  IsNight    ();
+    static bool  IsNight();
 
     // Parameters copy
-    static void CopyPoint                     ( MT_Vector2D* pPosSource, boost::shared_ptr< MT_Vector2D > pPosDest );
-    static void CopyPointMission              ( MT_Vector2D* pPosSource, boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter );
-    static void CopyPathMission               ( std::vector< boost::shared_ptr< MT_Vector2D > > pointList, boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter );
-    static void CopyPointToListPointMission   ( boost::shared_ptr< MT_Vector2D > pPosSource, boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter );
-    static void CopyLocalisation              ( const TER_Localisation* pLocSource, TER_Localisation* pLocDest );
-    static void CopyLocalisationMission       ( boost::shared_ptr< TER_Localisation > pLocation, boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter );
-    static void CopyLocalisationListMission   ( const std::vector< boost::shared_ptr< TER_Localisation > >& locSource, boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter );
+    static void CopyPoint( MT_Vector2D* pPosSource, boost::shared_ptr< MT_Vector2D > pPosDest );
+    static void CopyPointMission( MT_Vector2D* pPosSource, boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter );
+    static void CopyPathMission( std::vector< boost::shared_ptr< MT_Vector2D > > pointList, boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter );
+    static void CopyPointToListPointMission( boost::shared_ptr< MT_Vector2D > pPosSource, boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter );
+    static void CopyLocalisation( const TER_Localisation* pLocSource, TER_Localisation* pLocDest );
+    static void CopyLocalisationMission( boost::shared_ptr< TER_Localisation > pLocation, boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter );
+    static void CopyLocalisationListMission( const std::vector< boost::shared_ptr< TER_Localisation > >& locSource, boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter );
     static void CopyLocalisationToLocationListMission( boost::shared_ptr< TER_Localisation > pLocSource, boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter );
     static void CopyKnowledgeObjectToKnowledgeObjectListMission( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, boost::shared_ptr< DEC_Knowledge_Object > pKnowledgeObjectSource );
     static void CopyGenObjectToGenObjectListMission( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, boost::shared_ptr< DEC_Gen_Object > pGenObjectSource );

@@ -24,28 +24,21 @@
 #include "SpawnCapacity.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
-
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-
-// HLA
 #include "HLA/HLA_Object_ABC.h"
 #include "HLA/HLA_UpdateFunctor.h"
-
 #include <hla/Deserializer.h>
 #include <hla/AttributeIdentifier.h>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
-
 #include "protocol/clientsenders.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( Object )
 
-
 using namespace hla;
-
 using namespace Common;
 using namespace MsgsClientToSim;
 
@@ -76,10 +69,10 @@ Object::Object( xml::xistream& xis, const MIL_ObjectBuilder_ABC& builder, MIL_Ar
 // -----------------------------------------------------------------------------
 Object::Object( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army, const TER_Localisation* pLocation, const std::string& name /*= std::string()*/, bool reserved /*= true*/ )
     : MIL_Object_ABC( &army, builder.GetType() )
-    , id_       ( idManager_.GetFreeId() )
-    , name_     ( name )
-    , pView_    ( 0 )
-    , manipulator_ ( new MIL_ObjectManipulator( *this ) )
+    , id_         ( idManager_.GetFreeId() )
+    , name_       ( name )
+    , pView_      ( 0 )
+    , manipulator_( new MIL_ObjectManipulator( *this ) )
 {
     if( GetType().GetCapacity< SpawnCapacity >() )
         idManager_.GetFreeId(); // we need to skip one ID for dynamic created object.
@@ -99,9 +92,9 @@ Object::Object( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army, const 
 // -----------------------------------------------------------------------------
 Object::Object()
     : MIL_Object_ABC()
-    , id_       ( 0 )
-    , name_     ( )
-    , pView_    ( 0 )
+    , id_          ( 0 )
+    , name_        ()
+    , pView_       ( 0 )
     , manipulator_ ( new MIL_ObjectManipulator( *this ) )
 {
     // NOTHING
@@ -134,15 +127,12 @@ void Object::load( MIL_CheckPointInArchive& file, const unsigned int )
     file >> boost::serialization::base_object< MIL_Object_ABC >( *this );
     file >> name_
          >> id_;
-
     T_Capacities capacities;
     file >> capacities;
     std::for_each( capacities.begin(), capacities.end(), boost::bind( &ObjectCapacity_ABC::Register, _1, boost::ref( *this ) ) );
-
     T_Attributes attributes;
     file >> attributes;
     std::for_each( attributes.begin(), attributes.end(), boost::bind( &ObjectAttribute_ABC::Register, _1, boost::ref( *this ) ) );
-
     idManager_.Lock( id_ );
     //MIL_Object_ABC::Register();
 }
@@ -170,9 +160,7 @@ void Object::WriteODB( xml::xostream& xos ) const
             << xml::attribute( "id"  , id_ )
             << xml::attribute( "name", name_ )
             << xml::attribute( "type", GetType().GetName() );
-
     GetLocalisation().Write( xos );
-
     xos << xml::start( "attributes" );
     {
         std::for_each( attributes_.begin(), attributes_.end(),
@@ -355,9 +343,7 @@ MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode Object::OnUpdate( const MsgMi
         const MsgMissionParameter_Value& attribute = attributes.list( i );
         if( attribute.list_size() == 0 ) // it should be a list of lists
             return MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode_error_invalid_specific_attributes;
-
-        unsigned int actionId = attribute.list( 0 ).identifier(); // first element is the type
-
+        const unsigned int actionId = attribute.list( 0 ).identifier(); // first element is the type
         switch( actionId )
         {
         case MsgObjectMagicAction_Attribute_mine:
@@ -394,14 +380,11 @@ void Object::SendCreation() const
 {
     if( pView_ && pView_->HideObject() )
         return;
-
     client::ObjectCreation asn;
-
     asn().set_oid( GetID() );
     asn().set_name( name_ );
     asn().set_type( GetType().GetName() );
     asn().set_team( GetArmy()->GetID() );
-
     NET_ASN_Tools::WriteLocation( GetLocalisation(), *asn().mutable_location() );
     std::for_each( attributes_.begin(), attributes_.end(),
                     boost::bind( &ObjectAttribute_ABC::SendFullState, _1, boost::ref( *asn().mutable_attributes() ) ) );
@@ -416,7 +399,6 @@ void Object::SendDestruction() const
 {
     if( pView_ && pView_->HideObject() )
         return;
-
     client::ObjectDestruction asn;
     asn().set_oid( GetID() );
     asn.Send( NET_Publisher_ABC::Publisher() );
@@ -451,18 +433,13 @@ void Object::SendMsgUpdate() const
 {
     if( pView_ && pView_->HideObject() )
         return;
-
     client::ObjectUpdate asn;
     asn().set_oid( id_ );
-
     std::for_each( attributes_.begin(), attributes_.end(),
                    boost::bind( &ObjectAttribute_ABC::SendUpdate, _1, boost::ref( *asn().mutable_attributes() ) ) );
-
     if( xAttrToUpdate_ & eAttrUpdate_Localisation )
         NET_ASN_Tools::WriteLocation( GetLocalisation(), *asn().mutable_location() );
-
     Common::MsgObjectAttributes& attr = *asn().mutable_attributes();
-
     if( asn().has_location() || attr.has_construction() || attr.has_obstacle()
         || attr.has_mine() || attr.has_activity_time() || attr.has_bypass()
         || attr.has_logistic() || attr.has_nbc() || attr.has_crossing_site()
@@ -470,9 +447,7 @@ void Object::SendMsgUpdate() const
         || attr.has_medical_treatment() || attr.has_interaction_height() || attr.has_stock()
         || attr.has_nbc_agent() || attr.has_effect_delay() )
         asn.Send( NET_Publisher_ABC::Publisher() );
-
     xAttrToUpdate_ = 0;
-
     if( asn().has_location() )
         asn().mutable_location()->Clear();
     asn().mutable_attributes()->Clear();
@@ -521,11 +496,9 @@ void Object::Serialize( HLA_UpdateFunctor& functor ) const
 {
     functor.Serialize( "armee", false, GetArmy()->GetName() );
     functor.Serialize( "type",  false, GetType().GetName() );
-    functor.Serialize( "coordonnees",   ( xAttrToUpdateForHLA_ & eAttrUpdate_Localisation ) != 0,           GetLocalisation() );
-
+    functor.Serialize( "coordonnees", ( xAttrToUpdateForHLA_ & eAttrUpdate_Localisation ) != 0, GetLocalisation() );
     std::for_each( attributes_.begin(), attributes_.end(),
                    boost::bind( &ObjectAttribute_ABC::Serialize, _1, boost::ref( functor ) ) );
-
     xAttrToUpdateForHLA_ = 0;
 }
 

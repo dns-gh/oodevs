@@ -14,7 +14,6 @@
 #include "actions/ParameterList.h"
 
 using namespace Common;
-
 using namespace kernel;
 using namespace gui;
 
@@ -23,7 +22,7 @@ using namespace gui;
 // Created: JSR 2010-07-06
 // -----------------------------------------------------------------------------
 DelayPrototype::DelayPrototype( QWidget* parent, actions::parameters::ParameterList*& attributesList )
-    : DelayPrototype_ABC ( parent )
+    : DelayPrototype_ABC( parent )
     , attributesList_( attributesList )
 {
     // NOTHING

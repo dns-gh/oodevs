@@ -22,9 +22,9 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeObstacle )
 // Created: JVT 2005-03-25
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectAttributeObstacle::DEC_Knowledge_ObjectAttributeObstacle()
-    : attr_ ( 0 )
-    , obstacle_ ( Common::ObstacleType_DemolitionTargetType_preliminary )
-    , bActivated_( true )
+    : attr_          ( 0 )
+    , obstacle_      ( Common::ObstacleType_DemolitionTargetType_preliminary )
+    , bActivated_    ( true )
     , activationTime_( 0 )
 {
     // NOTHING
@@ -35,9 +35,9 @@ DEC_Knowledge_ObjectAttributeObstacle::DEC_Knowledge_ObjectAttributeObstacle()
 // Created: JVT 2005-03-25
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectAttributeObstacle::DEC_Knowledge_ObjectAttributeObstacle( const ObstacleAttribute& attr )
-    : attr_ ( &attr )
-    , obstacle_ ( ( attr.IsActivable() ) ? Common::ObstacleType_DemolitionTargetType_reserved : Common::ObstacleType_DemolitionTargetType_preliminary )
-    , bActivated_( attr.IsActivable() ? false : true )
+    : attr_          ( &attr )
+    , obstacle_      ( ( attr.IsActivable() ) ? Common::ObstacleType_DemolitionTargetType_reserved : Common::ObstacleType_DemolitionTargetType_preliminary )
+    , bActivated_    ( attr.IsActivable() ? false : true )
     , activationTime_( attr.GetActivationTime() )
 {
     // NOTHING

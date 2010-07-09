@@ -96,28 +96,28 @@ public:
     //@{
     virtual bool CanInteractWith( const MIL_Agent_ABC& agent ) const;
 
-    virtual void PreprocessAgent         ( MIL_Agent_ABC& agent );
-    virtual void ProcessAgentEntering    ( MIL_Agent_ABC& agent );
-    virtual void ProcessAgentExiting     ( MIL_Agent_ABC& agent );
+    virtual void PreprocessAgent( MIL_Agent_ABC& agent );
+    virtual void ProcessAgentEntering( MIL_Agent_ABC& agent );
+    virtual void ProcessAgentExiting( MIL_Agent_ABC& agent );
     virtual void ProcessAgentMovingInside( MIL_Agent_ABC& agent );
-    virtual void ProcessAgentInside      ( MIL_Agent_ABC& agent );
-    virtual void PreprocessPopulation         ( MIL_PopulationElement_ABC& population );
-    virtual void ProcessPopulationInside ( MIL_PopulationElement_ABC& population );
+    virtual void ProcessAgentInside( MIL_Agent_ABC& agent );
+    virtual void PreprocessPopulation( MIL_PopulationElement_ABC& population );
+    virtual void ProcessPopulationInside( MIL_PopulationElement_ABC& population );
     //@}
 
     //! @name Network
     //@{
-    virtual   void    UpdateState();
-    MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode  OnUpdate( const Common::MsgMissionParameter_Value& list );
-    void                                                SendCreation() const;
-    void                                                SendDestruction() const;
-    void                                                SendFullState() const;
+    virtual void UpdateState();
+    MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode OnUpdate( const Common::MsgMissionParameter_Value& list );
+    void SendCreation() const;
+    void SendDestruction() const;
+    void SendFullState() const;
     //@}
 
     //! @name HLA
     //@{
     HLA_Object_ABC* GetHLAView() const;
-    void            SetHLAView( HLA_Object_ABC& view );
+    void SetHLAView( HLA_Object_ABC& view );
     void Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer );
     void Serialize( HLA_UpdateFunctor& functor ) const;
     //@}
@@ -126,7 +126,6 @@ public:
     //@{
     unsigned int  GetID() const;
     virtual unsigned int  GetMaterial() const{ return std::numeric_limits< unsigned int >::max(); };   // $$$$ _TODO_ SLG 2010-06-24: mettre en place un système de material pour les objets
-
     //@}
 
 private:
@@ -139,21 +138,16 @@ private:
     //! @name
     //@{
     void SendMsgUpdate() const;
-    //@}
-
-    //! @name
-    //@{
     virtual void Register( ObjectAttribute_ABC* attribute );
     //@}
 
 private:
     //! @name Types containers
     //@{
-    typedef std::vector< ObjectAttribute_ABC* >     T_Attributes;
-    typedef T_Attributes::const_iterator            CIT_Attributes;
-
-    typedef std::vector< ObjectCapacity_ABC* >              T_Capacities;
-    typedef std::vector< MIL_InteractiveContainer_ABC* >    T_InteractiveCapacities;
+    typedef std::vector< ObjectAttribute_ABC* > T_Attributes;
+    typedef T_Attributes::const_iterator      CIT_Attributes;
+    typedef std::vector< ObjectCapacity_ABC* > T_Capacities;
+    typedef std::vector< MIL_InteractiveContainer_ABC* > T_InteractiveCapacities;
     //@}
 
     //! @name Types
@@ -173,11 +167,11 @@ private:
 private:
     //! @name Member data
     //@{
-    std::string             name_;
-    unsigned int                    id_;
-    T_Capacities            capacities_;
+    std::string name_;
+    unsigned int id_;
+    T_Capacities capacities_;
     T_InteractiveCapacities interactives_;
-    T_Attributes            attributes_;
+    T_Attributes attributes_;
     std::auto_ptr< Object > pChildObject_;
     //@}
 

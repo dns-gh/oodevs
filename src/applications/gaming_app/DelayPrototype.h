@@ -28,7 +28,6 @@ namespace actions
 // =============================================================================
 class DelayPrototype : public gui::DelayPrototype_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

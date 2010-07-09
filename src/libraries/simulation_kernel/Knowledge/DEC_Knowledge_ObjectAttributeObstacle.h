@@ -27,7 +27,6 @@ class ObstacleAttribute;
 // =============================================================================
 class DEC_Knowledge_ObjectAttributeObstacle : public DEC_Knowledge_ObjectAttribute_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -66,8 +65,8 @@ private:
     //@{
     const ObstacleAttribute* attr_;
     Common::ObstacleType_DemolitionTargetType obstacle_;
-    bool            bActivated_;
-    int             activationTime_;
+    bool bActivated_;
+    int activationTime_;
     //@}
 };
 

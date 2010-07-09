@@ -12,7 +12,7 @@
 #include "Object.h"
 #include "Tools/MIL_Tools.h"
 #include "protocol/protocol.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DelayAttribute )
 
@@ -21,7 +21,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DelayAttribute )
 // Created: JSR 2010-07-06
 // -----------------------------------------------------------------------------
 DelayAttribute::DelayAttribute()
-    : nDelay_ ( 0 )
+    : nDelay_( 0 )
 {
     // NOTHING
 }
@@ -31,7 +31,7 @@ DelayAttribute::DelayAttribute()
 // Created: JSR 2010-07-06
 // -----------------------------------------------------------------------------
 DelayAttribute::DelayAttribute( xml::xistream& xis )
-    : nDelay_ ( 0 )
+    : nDelay_( 0 )
 {
     xis >> xml::attribute( "value", nDelay_ );
     if( nDelay_ < 0 )
@@ -43,7 +43,7 @@ DelayAttribute::DelayAttribute( xml::xistream& xis )
 // Created: JSR 2010-07-06
 // -----------------------------------------------------------------------------
 DelayAttribute::DelayAttribute( unsigned int nDelay )
-    : nDelay_ ( nDelay )
+    : nDelay_( nDelay )
 {
     // NOTHING
 }
@@ -53,7 +53,7 @@ DelayAttribute::DelayAttribute( unsigned int nDelay )
 // Created: JSR 2010-07-06
 // -----------------------------------------------------------------------------
 DelayAttribute::DelayAttribute( const Common::MsgMissionParameter_Value& attributes )
-    : nDelay_ ( attributes.list( 1 ).quantity() )
+    : nDelay_( attributes.list( 1 ).quantity() )
 {
     // NOTHING
 }
@@ -114,7 +114,7 @@ void DelayAttribute::Register( Object& object ) const
 void DelayAttribute::WriteODB( xml::xostream& xos ) const
 {
     xos << xml::start( "delay" )
-        << xml::attribute( "value", nDelay_ );
+            << xml::attribute( "value", nDelay_ );
     xos << xml::end();}
 
 // -----------------------------------------------------------------------------
