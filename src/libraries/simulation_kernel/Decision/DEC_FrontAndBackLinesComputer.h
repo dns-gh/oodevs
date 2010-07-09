@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: NLD 2003-08-20 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Functions/DEC_FrontAndBackLinesComputer.h $
-// $Author: Nld $
-// $Modtime: 19/10/04 13:54 $
-// $Revision: 1 $
-// $Workfile: DEC_FrontAndBackLinesComputer.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2003 MASA Group
 //
 // *****************************************************************************
 
@@ -23,8 +21,8 @@ class MIL_Automate;
 class DEC_FrontAndBackLinesComputer : private boost::noncopyable
 {
 public:
-     DEC_FrontAndBackLinesComputer( const MIL_Automate& caller, const std::vector< MIL_AgentPion*>& pions );
-     DEC_FrontAndBackLinesComputer( const MIL_Automate& caller, const std::vector< MIL_Automate*>& automats );
+             DEC_FrontAndBackLinesComputer( const MIL_Automate& caller, const std::vector< MIL_AgentPion*>& pions );
+             DEC_FrontAndBackLinesComputer( const MIL_Automate& caller, const std::vector< MIL_Automate*>& automats );
     virtual ~DEC_FrontAndBackLinesComputer();
 
     //! @name Operations
@@ -38,10 +36,10 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::vector< MIL_AgentPion*>  T_PionVector;
+    typedef std::vector< MIL_AgentPion* >   T_PionVector;
     typedef T_PionVector::const_iterator  CIT_PionVector;
 
-    typedef std::vector< MIL_Automate*>      T_AutomateVector;
+    typedef std::vector< MIL_Automate* >       T_AutomateVector;
     typedef T_AutomateVector::const_iterator CIT_AutomateVector;
     //@}
 
@@ -52,15 +50,15 @@ private:
     //@}
 
 private:
-    const MIL_Automate&     refAutomate_; // reference
-          T_PionVector      pions_;           //$$$ Factoriser
-          T_AutomateVector  automates_;
-          unsigned int              nLastTimeComputed_;
-
+    //! @name Member data
+    //@{
+    const MIL_Automate& refAutomate_; // reference
+    T_PionVector pions_; //$$$ Factoriser
+    T_AutomateVector  automates_;
+    unsigned int nLastTimeComputed_;
     MT_Droite backLineDroite_;
     MT_Droite frontLineDroite_;
+    //@}
 };
-
-#include "DEC_FrontAndBackLinesComputer.inl"
 
 #endif // __DEC_FrontAndBackLinesComputer_h_

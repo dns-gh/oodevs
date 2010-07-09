@@ -1,16 +1,13 @@
 // *****************************************************************************
 //
-// $Created: NLD 2003-08-20 $
-// $Archive: /MVW_v10/Build/SDK/MIL/Src/Decision/Functions/DEC_FrontAndBackLinesComputer.cpp $
-// $Author: Nld $
-// $Modtime: 21/10/04 13:41 $
-// $Revision: 2 $
-// $Workfile: DEC_FrontAndBackLinesComputer.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2003 MASA Group
 //
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "DEC_FrontAndBackLinesComputer.h"
 #include "MIL_AgentServer.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -26,9 +23,6 @@ DEC_FrontAndBackLinesComputer::DEC_FrontAndBackLinesComputer( const MIL_Automate
     : refAutomate_      ( caller )
     , nLastTimeComputed_( 0 )
     , pions_            ( pions )
-    , automates_        ()
-    , backLineDroite_   ()
-    , frontLineDroite_  ()
 {
     // NOTHING
 }
@@ -40,10 +34,7 @@ DEC_FrontAndBackLinesComputer::DEC_FrontAndBackLinesComputer( const MIL_Automate
 DEC_FrontAndBackLinesComputer::DEC_FrontAndBackLinesComputer( const MIL_Automate& caller, const std::vector< MIL_Automate*>& automats )
     : refAutomate_      ( caller )
     , nLastTimeComputed_( 0 )
-    , pions_            ()
     , automates_        ( automats )
-    , backLineDroite_   ()
-    , frontLineDroite_  ()
 {
     // NOTHING
 }
@@ -63,28 +54,22 @@ DEC_FrontAndBackLinesComputer::~DEC_FrontAndBackLinesComputer()
 // -----------------------------------------------------------------------------
 void DEC_FrontAndBackLinesComputer::Compute()
 {
-    unsigned int nCurrentTime = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    const unsigned int nCurrentTime = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     assert( nLastTimeComputed_ <=  nCurrentTime );
     if( nLastTimeComputed_ == nCurrentTime )
         return;
-
     nLastTimeComputed_ = nCurrentTime;
-
     if( refAutomate_.GetOrderManager().GetFuseau().IsNull() || ( pions_.empty() && automates_.empty() ) )
         return;
-
     const MT_Line& fuseauGlobalDirLine = refAutomate_.GetOrderManager().GetFuseau().GetGlobalDirection();
-
     // Vecteur perpendiculaire direction globale du fuseau
     MT_Vector2D vDirPerpendicularFuseau( fuseauGlobalDirLine.GetPosEnd() - fuseauGlobalDirLine.GetPosStart() );
     vDirPerpendicularFuseau.Normalize();
     MT_Float rTmp                 = vDirPerpendicularFuseau.rX_;
     vDirPerpendicularFuseau.rX_   = vDirPerpendicularFuseau.rY_;
     vDirPerpendicularFuseau.rY_   = -rTmp;
-
     TER_DistanceLess cmp ( fuseauGlobalDirLine.GetPosStart() );
     T_PointSet projectedPointSet( cmp );
-
     // Project all the positions on the fuseau global direction
     for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
     {
@@ -97,7 +82,6 @@ void DEC_FrontAndBackLinesComputer::Compute()
         if( (**it).GetAlivePionsBarycenter( barycenter ) )
             projectedPointSet.insert( barycenter );
     }
-
     if( projectedPointSet.empty() )
     {
         backLineDroite_  = MT_Droite();
@@ -107,7 +91,6 @@ void DEC_FrontAndBackLinesComputer::Compute()
     {
         const MT_Vector2D& vBackLinePoint_  = *projectedPointSet.begin ();
         const MT_Vector2D& vFrontLinePoint_ = *projectedPointSet.rbegin();
-
         backLineDroite_  = MT_Droite( vBackLinePoint_ , vBackLinePoint_  + vDirPerpendicularFuseau );
         frontLineDroite_ = MT_Droite( vFrontLinePoint_, vFrontLinePoint_ + vDirPerpendicularFuseau );
     }
@@ -120,17 +103,13 @@ void DEC_FrontAndBackLinesComputer::Compute()
 MT_Float DEC_FrontAndBackLinesComputer::ComputeDistanceFromFrontLine( const MT_Vector2D& vPoint )
 {
     Compute();
-
     const MT_Float          rDistFromFrontLine = frontLineDroite_.GetDistanceToPoint( vPoint );
     const MT_Droite::E_Side nFrontLineSide     = frontLineDroite_.GetSide( vPoint );
-
     // Front line behind
     if( nFrontLineSide == MT_Droite::eOnNegativeSide )
         return -rDistFromFrontLine;
-
     // Front line ahead
-    else // MT_Droite::eOnPositiveSide || MT_Droite::eOnBoundary
-        return rDistFromFrontLine;
+    return rDistFromFrontLine; // MT_Droite::eOnPositiveSide || MT_Droite::eOnBoundary
 }
 
 // -----------------------------------------------------------------------------
@@ -140,17 +119,13 @@ MT_Float DEC_FrontAndBackLinesComputer::ComputeDistanceFromFrontLine( const MT_V
 MT_Float DEC_FrontAndBackLinesComputer::ComputeDistanceFromBackLine( const MT_Vector2D& vPoint )
 {
     Compute();
-
     const MT_Float          rDistFromBackLine  = backLineDroite_ .GetDistanceToPoint( vPoint );
     const MT_Droite::E_Side nBackLineSide      = backLineDroite_ .GetSide( vPoint );
-
     // Back line behind
     if( nBackLineSide == MT_Droite::eOnNegativeSide )
         return -rDistFromBackLine;
-
     // Back line ahead
-    else // MT_Droite::eOnPositiveSide || MT_Droite::eOnBoundary
-        return rDistFromBackLine;
+    return rDistFromBackLine; // MT_Droite::eOnPositiveSide || MT_Droite::eOnBoundary
 }
 
 // -----------------------------------------------------------------------------
@@ -159,6 +134,7 @@ MT_Float DEC_FrontAndBackLinesComputer::ComputeDistanceFromBackLine( const MT_Ve
 // -----------------------------------------------------------------------------
 void DEC_FrontAndBackLinesComputer::UsedByDIA()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

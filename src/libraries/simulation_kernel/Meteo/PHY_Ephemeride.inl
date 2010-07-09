@@ -18,4 +18,3 @@ bool PHY_Ephemeride::IsNight() const
 {
     return bIsNight_;
 }
-

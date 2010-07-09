@@ -22,6 +22,7 @@ namespace xml
 {
     class xistream;
 }
+
 // =============================================================================
 /** @class  KnowledgeGroupFactory_ABC
     @brief  Knowledge group factory declaration
