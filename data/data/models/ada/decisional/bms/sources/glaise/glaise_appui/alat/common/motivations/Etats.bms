@@ -4,10 +4,10 @@ includedFiles["sources/glaise/glaise_appui/alat/common/motivations/Etats.bms"] =
 --[[//------------------------------------------------------------------------------
 ]]--[[//  VE_NiveauROE INTERFACE AVEC EXTERIEUR 
 ]]--[[//
-]]--[[//	Commentaires:gestion des ordres Automate en embrayé ou
-]]--[[//								    anibas en debrayé
+]]--[[//    Commentaires:gestion des ordres Automate en embrayé ou
+]]--[[//                                    anibas en debrayé
 ]]--[[//
-]]--[[//	POUR L'INSTANT ON TRAITE QUE LES ALERTE DE NIV 0 (pas d'alerte) OU DE NIV 4 
+]]--[[//    POUR L'INSTANT ON TRAITE QUE LES ALERTE DE NIV 0 (pas d'alerte) OU DE NIV 4 
 ]]--[[//
 ]]--[[//------------------------------------------------------------------------------
 ]]motivation_plugin = motivation_plugin or {}
@@ -33,7 +33,7 @@ motivation_plugin.statevariables[ "VE_TirRestreint" ] =
 --[[//------------------------------------------------------------------------------
 ]]--[[//  VE_Courage
 ]]--[[//
-]]--[[//	Commentaires:
+]]--[[//    Commentaires:
 ]]--[[//
 ]]--[[//------------------------------------------------------------------------------
 ]]motivation_plugin.statevariables[ "VE_Courage" ] =
@@ -56,10 +56,10 @@ motivation_plugin.statevariables[ "VE_TirRestreint" ] =
 --[[// -----------------------------------------------------------------------------
 ]]--[[//  VE_NiveauROE INTERFACE AVEC EXTERIEUR 
 ]]--[[//
-]]--[[//	Commentaires:gestion des ordres Automate en embrayé ou
-]]--[[//								    anibas en debrayé
+]]--[[//    Commentaires:gestion des ordres Automate en embrayé ou
+]]--[[//                                    anibas en debrayé
 ]]--[[//
-]]--[[//	POUR L'INSTANT ON TRAITE QUE LES ALERTE DE NIV 0 (pas d'alerte) OU DE NIV 4 
+]]--[[//    POUR L'INSTANT ON TRAITE QUE LES ALERTE DE NIV 0 (pas d'alerte) OU DE NIV 4 
 ]]--[[//
 ]]--[[// -----------------------------------------------------------------------------
 ]]motivation_plugin.statevariables[ "VE_TirLibre" ] =
@@ -79,10 +79,10 @@ motivation_plugin.statevariables[ "VE_TirRestreint" ] =
 --[[//------------------------------------------------------------------------------
 ]]--[[//  VE_NiveauROE INTERFACE AVEC EXTERIEUR 
 ]]--[[//
-]]--[[//	Commentaires:gestion des ordres Automate en embrayé ou
-]]--[[//								    anibas en debrayé
+]]--[[//    Commentaires:gestion des ordres Automate en embrayé ou
+]]--[[//                                    anibas en debrayé
 ]]--[[//
-]]--[[//	POUR L'INSTANT ON TRAITE QUE LES ALERTE DE NIV 0 (pas d'alerte) OU DE NIV 4 
+]]--[[//    POUR L'INSTANT ON TRAITE QUE LES ALERTE DE NIV 0 (pas d'alerte) OU DE NIV 4 
 ]]--[[//------------------------------------------------------------------------------
 ]]motivation_plugin.statevariables[ "VE_TirInterdit" ] =
 {
@@ -101,7 +101,7 @@ motivation_plugin.statevariables[ "VE_TirRestreint" ] =
 --[[//------------------------------------------------------------------------------
 ]]--[[//  VE_RapFor
 ]]--[[//
-]]--[[//	Commentaires:
+]]--[[//    Commentaires:
 ]]--[[//  reglages basics
 ]]--[[//  la variable d'état est comprise entre [0, 10] est vaut 3.5 quand l'inverse 
 ]]--[[//  du rapport de force = 2.6 (rapport de force neutre)
@@ -135,7 +135,7 @@ motivation_plugin.statevariables[ "VE_TirRestreint" ] =
 ]]--[[//------------------------------------------------------------------------------
 ]]--[[//  VE_RapForPrudence
 ]]--[[//
-]]--[[//	Commentaires: idem VE_RapFor mais pas MAJ dans les mêmes condition Cf. MAJ VE 
+]]--[[//    Commentaires: idem VE_RapFor mais pas MAJ dans les mêmes condition Cf. MAJ VE 
 ]]--[[//                dans chaque armes  
 ]]--[[//
 ]]--[[//------------------------------------------------------------------------------
@@ -168,7 +168,7 @@ motivation_plugin.statevariables[ "VE_TirRestreint" ] =
 ]]--[[//------------------------------------------------------------------------------
 ]]--[[//  VE_Agressivite_Tir
 ]]--[[//
-]]--[[//	Commentaires:PH [0;1]
+]]--[[//    Commentaires:PH [0;1]
 ]]--[[//------------------------------------------------------------------------------
 ]]motivation_plugin.statevariables[ "VE_Agressivite_Tir" ] =
 {
@@ -208,8 +208,8 @@ motivation_plugin.statevariables[ "VE_TirRestreint" ] =
 ]]--[[//------------------------------------------------------------------------------
 ]]--[[//  VE SE POSTER INTERFACE AVEC EXTERIEUR 
 ]]--[[//
-]]--[[//	Commentaires:gestion des ordres Automate ne embrayé ou
-]]--[[//								    anibas en debrayé
+]]--[[//    Commentaires:gestion des ordres Automate ne embrayé ou
+]]--[[//                                    anibas en debrayé
 ]]--[[//
 ]]--[[//------------------------------------------------------------------------------
 ]]motivation_plugin.statevariables[ "VE_SePoster" ] =
@@ -229,8 +229,8 @@ motivation_plugin.statevariables[ "VE_TirRestreint" ] =
 --[[//------------------------------------------------------------------------------
 ]]--[[//  VE SE TIR INTERFACE AVEC EXTERIEUR 
 ]]--[[//
-]]--[[//	Commentaires:gestion des ordres Automate ne embrayé ou
-]]--[[//								    anibas en debrayé
+]]--[[//    Commentaires:gestion des ordres Automate ne embrayé ou
+]]--[[//                                    anibas en debrayé
 ]]--[[//
 ]]--[[//------------------------------------------------------------------------------
 ]]motivation_plugin.statevariables[ "VE_Ralentir" ] =
@@ -253,8 +253,8 @@ motivation_plugin.statevariables[ "VE_TirRestreint" ] =
 ]]--[[//------------------------------------------------------------------------------
 ]]--[[//  VE 
 ]]--[[//
-]]--[[//	Commentaires:gestion des ordres Automate ne embrayé ou
-]]--[[//								    anibas en debrayé
+]]--[[//    Commentaires:gestion des ordres Automate ne embrayé ou
+]]--[[//                                    anibas en debrayé
 ]]--[[//
 ]]--[[//------------------------------------------------------------------------------
 ]]motivation_plugin.statevariables[ "VE_Faim" ] =
@@ -274,10 +274,10 @@ motivation_plugin.statevariables[ "VE_TirRestreint" ] =
 --[[//------------------------------------------------------------------------------
 ]]--[[//  VE SE POSTER INTERFACE AVEC EXTERIEUR 
 ]]--[[//
-]]--[[//	Commentaires:gestion des ordres Automate en embrayé ou
-]]--[[//								    anibas en debrayé
+]]--[[//    Commentaires:gestion des ordres Automate en embrayé ou
+]]--[[//                                    anibas en debrayé
 ]]--[[//
-]]--[[//	POUR L'INSTANT ON TRAITE QUE LES ALERTE DE NIV 0 (pas d'alerte) OU DE NIV 4 
+]]--[[//    POUR L'INSTANT ON TRAITE QUE LES ALERTE DE NIV 0 (pas d'alerte) OU DE NIV 4 
 ]]--[[//
 ]]--[[//------------------------------------------------------------------------------
 ]]motivation_plugin.statevariables[ "VE_NiveauNBC" ] =
@@ -297,8 +297,8 @@ motivation_plugin.statevariables[ "VE_TirRestreint" ] =
 --[[//------------------------------------------------------------------------------
 ]]--[[//  VE SilenceRadio INTERFACE AVEC EXTERIEUR 
 ]]--[[//
-]]--[[//	Commentaires:gestion des ordres Automate en embrayé ou
-]]--[[//								    anibas en debrayé
+]]--[[//    Commentaires:gestion des ordres Automate en embrayé ou
+]]--[[//                                    anibas en debrayé
 ]]--[[//
 ]]--[[//------------------------------------------------------------------------------
 ]]motivation_plugin.statevariables[ "VE_SilenceRadio" ] =
@@ -318,8 +318,8 @@ motivation_plugin.statevariables[ "VE_TirRestreint" ] =
 --[[//------------------------------------------------------------------------------
 ]]--[[//  VE_SilenceRadar INTERFACE AVEC EXTERIEUR 
 ]]--[[//
-]]--[[//	Commentaires: gestion des ordres Automate en embrayé ou
-]]--[[//								     anibas en debrayé
+]]--[[//    Commentaires: gestion des ordres Automate en embrayé ou
+]]--[[//                                     anibas en debrayé
 ]]--[[//
 ]]--[[//------------------------------------------------------------------------------
 ]]motivation_plugin.statevariables[ "VE_SilenceRadar" ] =
@@ -339,7 +339,7 @@ motivation_plugin.statevariables[ "VE_TirRestreint" ] =
 --[[//------------------------------------------------------------------------------
 ]]--[[//  VE_Coordination_Tir
 ]]--[[//
-]]--[[//	Commentaires: cette variable d'etat est utilisée dans la coordination des 
+]]--[[//    Commentaires: cette variable d'etat est utilisée dans la coordination des 
 ]]--[[//  feux par l'automate
 ]]--[[//
 ]]--[[// cette VE est un simple interupteur
@@ -361,7 +361,7 @@ motivation_plugin.statevariables[ "VE_TirRestreint" ] =
 --[[//------------------------------------------------------------------------------
 ]]--[[//  VE_TempsDeVol
 ]]--[[//
-]]--[[//	Commentaires:
+]]--[[//    Commentaires:
 ]]--[[//                  Cette variable d'état permet de prendre en compte la
 ]]--[[//                  quantite de carburant dans l'algorithme de survie des
 ]]--[[//                  helicoptères.

@@ -18,7 +18,7 @@ include "bit.lua"
 
 --[[//=============================================================================
 ]]--[[// S’emparer de : s’assurer de la possession d’un point ou d'une zone en détruisant, 
-]]--[[//		en capturant ou en chassant l’ennemi qui peut l’occuper.
+]]--[[//        en capturant ou en chassant l’ennemi qui peut l’occuper.
 ]]--[[//=============================================================================
 ]]
 node "MIS_Pion_INF_Semparer"
@@ -93,7 +93,7 @@ elseif switch_1 == eFinMission then
                                 do
                                     self.eAction = eActionEnCours
                                                                         do
-                                        --[[// RendreCompte								
+                                        --[[// RendreCompte                                
 ]]DEC_Trace( "Mission 'S'emparer De' : fin" )
                                         DEC_FinMission()
                                                                                 self:SendFeedback( eActionEffectuee )
@@ -127,7 +127,7 @@ do
     end,
 
 --[[//=============================================================================
-]]--[[//			Gestion de l'ennemi
+]]--[[//            Gestion de l'ennemi
 ]]--[[//=============================================================================
 ]]}
 
@@ -156,7 +156,7 @@ node "BEH_Eni_Pion_VAB_Semparer"
 
         --[[//-----------------------------------------------------------------------------
 ]]--[[//  Rencontre d'un eni lorsque l'on est pas dans la phase d'assaut
-]]--[[//-----------------------------------------------------------------------------		
+]]--[[//-----------------------------------------------------------------------------        
 ]]local lstEnisDansFuseau = DEC_Connaissances_UnitesEnnemiesVivantesDansFuseau()
         for _,ksEni in pairs( lstEnisDansFuseau or {} ) do
         local _continue = true
@@ -197,7 +197,7 @@ do
 
 --[[//=============================================================================
 ]]--[[// Objectif : On cherche à tenir la position. Si l'ennemi est en position, on
-]]--[[//			  veut au minimum le faire partir
+]]--[[//              veut au minimum le faire partir
 ]]--[[//=============================================================================
 ]]}
 
@@ -272,7 +272,7 @@ elseif switch_1 == eObserver then
 
                         end
 --[[// Si la reconnaissance renvoie eActionEffectuee, on n'a pas rencontre d'enis, 
-]]--[[//	 sinon eActionHalt
+]]--[[//     sinon eActionHalt
 ]]                    end
 
                     if( self.eAction == eActionHalt ) then
@@ -391,7 +391,7 @@ self.done_ACT_Dep_Pion_INF_Arret = function( self, _, v ) self.eAction = v[1] en
     end,
 
 --[[//=============================================================================
-]]--[[//	On a besoin d'un ordre de conduite de la part de la hiérarchie sur une 
+]]--[[//    On a besoin d'un ordre de conduite de la part de la hiérarchie sur une 
 ]]--[[//  situation particulière.
 ]]--[[//=============================================================================
 ]]}

@@ -35,7 +35,7 @@ node "BEH_Pion_ASS_GererOrdre_AppliquerFeux"
 
     activate = function( self )
         --[[// Prise en charge de l'ordre d'application des feux
-]]--[[//---------------------------------------------------------------------	
+]]--[[//---------------------------------------------------------------------    
 ]]local selOrder = DEC_GetCategory( "ordres_recus" )
         for _,x in pairs( selOrder or {} ) do
         local _continue = true
@@ -134,7 +134,7 @@ elseif switch_1 == "T_Mission_Pion_ASS_AssurerMiseEnOeuvre" then
                 if switch_1 == ePreparerMission then
                     --[[//-----------------------------------------------------------------------------
 ]]--[[// Preparation de la mission
-]]--[[//-----------------------------------------------------------------------------		        
+]]--[[//-----------------------------------------------------------------------------                
 ]]if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
@@ -481,7 +481,7 @@ node "BEH_Tir_Pion_ASS_AppliquerFeux"
 
                 DEC_Trace( "Appliquer les feux" )
             end
---[[// Se poste pour pouvoir appliquer les feux		
+--[[// Se poste pour pouvoir appliquer les feux        
 ]]        end
 
         Activate( self.activations.BEH_Tir_Pion_ASS_PreparerTirSur, 1.1, { self._namedParams.ptCible, M_DELAI_PREPARATION_TIR(), } )
@@ -503,7 +503,7 @@ self.done_ACT_Tir_Pion_ASS_SurPosition = function( self, _, v ) self.eAction = v
 
 --[[// ============================================================================
 ]]--[[// BEH_Tir_Pion_ASS_PreparerTirSur:
-]]--[[//		Prepare un tir sur la position @ptCible pendant @rDelai
+]]--[[//        Prepare un tir sur la position @ptCible pendant @rDelai
 ]]--[[// ============================================================================
 ]]}
 

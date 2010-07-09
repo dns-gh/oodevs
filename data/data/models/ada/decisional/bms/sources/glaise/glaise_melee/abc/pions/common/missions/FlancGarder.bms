@@ -168,10 +168,10 @@ node "BEH_Dep_Pion_ABC_SeCoordonnerAvecAmis"
     if( DIA_ModuleBegins() )
         DEC_Trace(  "<== Coordinnation active avec amis ==>"  );
 
-	// -----------------------------------------------------------------------------
-	// Cas ou aucun ami en paramètre (ex:si tous détruits)
-	// -----------------------------------------------------------------------------
-	if( DIA_IsListEmpty( listePions ) )
+    // -----------------------------------------------------------------------------
+    // Cas ou aucun ami en paramètre (ex:si tous détruits)
+    // -----------------------------------------------------------------------------
+    if( DIA_IsListEmpty( listePions ) )
     {
         action ACT_Dep_SePoster();
         action ACT_Info_Trace( "<== Pas d'amis avec lesquels se coordonner ==>" );

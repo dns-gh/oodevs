@@ -143,7 +143,7 @@ elseif switch_1 == eTestConvoyerStep_DeplacementRetour then
 ]]--[[// BEH_Dep_LOG_Suivre
 ]]--[[//
 ]]--[[// Commentaires: suivre une unite ami
-]]--[[// 		- S'arrete a distanceMin du pion suivit
+]]--[[//         - S'arrete a distanceMin du pion suivit
 ]]--[[// *****************************************************************************
 ]]}
 

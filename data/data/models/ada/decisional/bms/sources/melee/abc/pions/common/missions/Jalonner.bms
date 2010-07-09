@@ -11,7 +11,7 @@ include "bit.lua"
 ]]--[[//               un eni sans se laisser accrocher NI identifier. Au niveau de
 ]]--[[//               de la patrouille, pas d'opportunité d'ouverture du feu.
 ]]--[[//
-]]--[[//				 // MODIF ADA 
+]]--[[//                 // MODIF ADA 
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]node "BEH_Mission_Pion_ABC_Jalonner"

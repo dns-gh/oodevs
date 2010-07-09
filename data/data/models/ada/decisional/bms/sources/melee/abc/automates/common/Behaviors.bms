@@ -178,7 +178,7 @@ node "BEH_Conduite_Automate_ABC_GererAppui_Mortier"
         --[[// DEC_Automate_PionsSansPC();
 ]]local selPions = S_ObtenirPionsOperationnels()
         local selAppuis_Mortier = S_Cherche_Automate_Filtre_TypePion( selPions, "GroupeInfanterie_Mortier" )
-        --[[// Ajout ADA gestion mortier		
+        --[[// Ajout ADA gestion mortier        
 ]]Activate( self.activations.BEH_Conduite_Automate_ABC_GererOrdre_Mortier, 1, { selAppuis_Mortier, } )
     end,
 

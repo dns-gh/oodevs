@@ -17,7 +17,7 @@ include "bit.lua"
 ]]
 
 --[[//=============================================================================
-]]--[[//							Squelette de la mission
+]]--[[//                            Squelette de la mission
 ]]--[[//=============================================================================
 ]]node "BEH_Mission_Pion_INF_DetruireParCoupDeMain"
 {
@@ -220,7 +220,7 @@ node "BEH_Pion_INF_Detruire_DetruireParCoupDeMain"
         --[[// bHeureDepassee = bHeureDepassee || rHeureDestruction == DEC_TempsReel();
 ]]local bNuit = DEC_Nuit() or ( self._namedParams.rHeureDestruction <= DEC_TempsReel() )
         --[[// On intervient a l'heure prevue si elle est definie sinon on intervient
-]]--[[// de nuit.		
+]]--[[// de nuit.        
 ]]--[[// if ( ( rHeureDestruction == 0 && bNuit ) || ( rHeureDestruction == DEC_TempsReel() ) )
 ]]if( bNuit and self.eAction == eActionEnCours ) then
             do
@@ -264,8 +264,8 @@ do
 ]]--[[// Detruit tout d'abord les ponts puis les carrefours s'il y en a.
 ]]--[[//
 ]]--[[// Utilise dans les missions: 
-]]--[[//				- DetruireParCoup de main
-]]--[[//				- Harceler
+]]--[[//                - DetruireParCoup de main
+]]--[[//                - Harceler
 ]]--[[//-----------------------------------------------------------------------------
 ]]}
 
@@ -355,7 +355,7 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eActionDeplaceme
             end,
 
 --[[//=============================================================================
-]]--[[//	BEH_Pion_VAB_Detruire_CoupDeMain
+]]--[[//    BEH_Pion_VAB_Detruire_CoupDeMain
 ]]--[[//
 ]]--[[//=============================================================================
 ]]}
@@ -402,7 +402,7 @@ elseif switch_1 == eNatureObjectif_ElementMobile then
     end,
 
 --[[//=============================================================================
-]]--[[//	BEH_Pion_VAB_Detruire_Objets
+]]--[[//    BEH_Pion_VAB_Detruire_Objets
 ]]--[[// 
 ]]--[[//=============================================================================
 ]]}
@@ -432,10 +432,10 @@ node "BEH_Obj_Pion_INF_Detruire_Objets"
                 for _,x_obj in pairs( lstObjets or {} ) do
                 local _continue = true
                     do
-                        --[[/*	MIA OPT : attention on ne détruit que les objets dans la zone
-	    	if ( S_Obj_EstDansLocalisation( x_obj, zone ) || 
-	    		 S_Obj_EstObjetADistanceDe( ptZone, x_obj, 600 ) )
-	    	{    */]]--[[//	}	    		    	
+                        --[[/*    MIA OPT : attention on ne détruit que les objets dans la zone
+            if ( S_Obj_EstDansLocalisation( x_obj, zone ) || 
+                 S_Obj_EstObjetADistanceDe( ptZone, x_obj, 600 ) )
+            {    */]]--[[//    }                        
 ]]local rForceObj = S_Obj_ForceDistance( x_obj )
                         --[[// On ne fait qu'une seule manoeuvre par nuit
 ]]StartActivateOverride( self, self.activations.BEH_Dep_Pion_INF_IntervenirSurObjectif, rForceObj, { DEC_ConnaissanceObjet_Localisation( x_obj ), } )
@@ -448,7 +448,7 @@ node "BEH_Obj_Pion_INF_Detruire_Objets"
                 end
 
             end
---[[//	BEH_Dep_Pion_VAB_IntervenirSurObjectif
+--[[//    BEH_Dep_Pion_VAB_IntervenirSurObjectif
 ]]        end
 
     end,
@@ -479,7 +479,7 @@ node "BEH_Obj_Pion_INF_Detruire_ElementsTerrain"
     end,
 
 --[[//=============================================================================
-]]--[[//	BEH_Dep_Pion_VAB_IntervenirSurObjectif
+]]--[[//    BEH_Dep_Pion_VAB_IntervenirSurObjectif
 ]]--[[// 
 ]]--[[//=============================================================================
 ]]}
@@ -548,7 +548,7 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] e
 ]]
     end,
 
---[[//	Detruit un objet si on est proche de lui
+--[[//    Detruit un objet si on est proche de lui
 ]]--[[// ============================================================================
 ]]}
 

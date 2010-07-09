@@ -4,7 +4,7 @@ includedFiles["sources/humus/humus_rens/pions/common/motivations/Motivations.bms
 --[[// *****************************************************************************
 ]]--[[//  MOTIVATION MISSION --> ordre de mission strength = 1
 ]]--[[//
-]]--[[//	Commentaires: PAS EN COMPETITON, SPE RENS donc f = 1
+]]--[[//    Commentaires: PAS EN COMPETITON, SPE RENS donc f = 1
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]motivation_plugin = motivation_plugin or {}

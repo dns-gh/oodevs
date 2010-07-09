@@ -161,7 +161,7 @@ elseif switch_1 == eFinMission then
     end,
 
 --[[//=============================================================================
-]]--[[//							Squelette de la mission
+]]--[[//                            Squelette de la mission
 ]]--[[//=============================================================================
 ]]}
 
@@ -189,7 +189,7 @@ node "BEH_Mission_Pion_Milice_DetruireEmbuscade"
                 self.mission = self.mission or DEC_GetMission( myself )
         self.ePhase = self.ePhase or eRejoindre
         self.eAction = self.eAction or eActionEnCours
-        --[[// Positions liees a la mission		
+        --[[// Positions liees a la mission        
 ]]self.ptEmbuscade = self.ptEmbuscade or self.mission.positionEmbuscade_
         if( ModuleBegins() ) then
             do
@@ -296,7 +296,7 @@ elseif switch_1 == eSurveiller then
     end,
 
 --[[//=============================================================================
-]]--[[//							Gestion des ennemis 
+]]--[[//                            Gestion des ennemis 
 ]]--[[//=============================================================================
 ]]}
 

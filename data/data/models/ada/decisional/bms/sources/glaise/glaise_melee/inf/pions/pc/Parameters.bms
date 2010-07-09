@@ -15,7 +15,7 @@ includedFiles["sources/glaise/glaise_melee/inf/pions/pc/Parameters.bms"] = true
 
 
 --[[// -----------------------------------------------------------------------------
-]]--[[//			Distances Appui/Soutien
+]]--[[//            Distances Appui/Soutien
 ]]--[[// -----------------------------------------------------------------------------
 ]]--[[// Distances appuis
 ]]function M_DISTANCE_APPUIS()

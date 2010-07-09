@@ -7,7 +7,7 @@ include "bit.lua"
 --[[//------------------------------------------------------------------------------
 ]]--[[//  STIMULUS ORDRE MISSION
 ]]--[[//
-]]--[[//	Commentaires:
+]]--[[//    Commentaires:
 ]]--[[//
 ]]--[[//------------------------------------------------------------------------------
 ]]motivation_plugin = motivation_plugin or {}
@@ -26,7 +26,7 @@ motivation_plugin.stimuli["STIM_Mission"] = function()
     --[[//------------------------------------------------------------------------------
 ]]--[[//  STIMULUS STIM_PriseAPartieTirDirect
 ]]--[[//
-]]--[[//	Commentaires:
+]]--[[//    Commentaires:
 ]]--[[//------------------------------------------------------------------------------
 ]]    end
 
@@ -41,7 +41,7 @@ motivation_plugin.stimuli["STIM_PriseAPartieTirDirect"] = function()
     --[[//------------------------------------------------------------------------------
 ]]--[[//  STIMULUS STIM_PriseAPartieTirInDirect
 ]]--[[//
-]]--[[//	Commentaires: Les hélicoptères ne subissent pas les tirs indirects
+]]--[[//    Commentaires: Les hélicoptères ne subissent pas les tirs indirects
 ]]--[[//------------------------------------------------------------------------------
 ]]    end
 

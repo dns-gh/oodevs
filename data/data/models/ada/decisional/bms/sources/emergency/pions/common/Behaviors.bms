@@ -46,7 +46,7 @@ node "BEH_Defaut"
 ]]--[[//-------------------------------------------------------------------------
 ]]
         Activate( self.activations.BEH_Mot_AffecterVariablesDEtat, 1, {} )--[[// MAJ de l'etat du pion en fonction de son agressivite
-]]--[[// ------------------------------------------------------------------------	
+]]--[[// ------------------------------------------------------------------------    
 ]]
         --[[// Si totalement detruit...
 ]]if( S_Misc_EstDetruitPhysique() ) then

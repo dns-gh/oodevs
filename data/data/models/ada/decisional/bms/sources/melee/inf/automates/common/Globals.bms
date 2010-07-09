@@ -129,13 +129,13 @@ end
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Recherche parmi une selection de pions, recherche le PE de l'autre fuseau
 ]]--[[//-----------------------------------------------------------------------------
-]]--[[//	l'unite de tete dans l'autre fuseau garde sa mission
+]]--[[//    l'unite de tete dans l'autre fuseau garde sa mission
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Recherche un pion qui serait le plus susceptible de recevoir un appui
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// S'il n'y a pas suffisamment de pion en premier echelon
-]]--[[//	On cherche l'unite qui a le moins d'appuis
-]]--[[// ----------------------------------------------------------------------------	
+]]--[[//    On cherche l'unite qui a le moins d'appuis
+]]--[[// ----------------------------------------------------------------------------    
 ]]--[[// Renvoie l'appui d'un pion appuye
 ]]--[[// ----------------------------------------------------------------------------
 ]]--[[// Mission Soutenir pour l'ABC
@@ -175,7 +175,7 @@ end
 ]]--[[// ----------------------------------------------------------------------------
 ]]--[[// Cherche un ennemi valide autours dans la zone d'action d'un pion
 ]]--[[// ----------------------------------------------------------------------------
-]]--[[// ----------------------------------------------------------------------------	
+]]--[[// ----------------------------------------------------------------------------    
 ]]--[[// Calcule le nombre de pion possedant la mission @typeMission, et @bEnTete
 ]]--[[// ----------------------------------------------------------------------------
 ]]--[[// ------------------------------------------------------------------------
@@ -183,7 +183,7 @@ end
 ]]--[[// ------------------------------------------------------------------------
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Renvoie vrai si au moins un des pions est en attente en bord du fuseau
-]]--[[//-----------------------------------------------------------------------------	
+]]--[[//-----------------------------------------------------------------------------    
 ]]--[[// case eEtatLima_LC:
 ]]--[[// case eEtatLima_LD:
 ]]--[[// ----------------------------------------------------------------------------    
@@ -621,7 +621,7 @@ do
                             local rForceEtat = 1
                             local rForce = rForceEtat * S_Pion_ForceActionContre( pionAppui, ksEni_EnCours )
                             rForceAppui = rForce + rForceZone * rForceAppui
-                            DEC_Debug( "		- IntervenirSur: " .. DEC_GetSzName( pion ) .. FloatToString( rForce ) )
+                            DEC_Debug( "        - IntervenirSur: " .. DEC_GetSzName( pion ) .. FloatToString( rForce ) )
                         end
                     end
 

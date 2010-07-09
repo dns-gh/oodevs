@@ -156,7 +156,7 @@ elseif switch_1 == eRelever then
 ]]--[[// 
 ]]--[[// Commentaires: MIA OPT:pour l'instant seul l'ABC se sert de cette action
 ]]--[[//               ATTENTION le test DEC_PeutRelever doit être fait avant d'appeler
-]]--[[//				 cette action sinon ASSERT possible
+]]--[[//                 cette action sinon ASSERT possible
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]}

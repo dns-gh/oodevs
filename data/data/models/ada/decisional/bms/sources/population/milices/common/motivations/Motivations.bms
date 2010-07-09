@@ -15,7 +15,7 @@ includedFiles["sources/population/milices/common/motivations/Motivations.bms"] =
 --[[// *****************************************************************************
 ]]--[[//  MOTIVATION MISSION --> ordre de mission strength = 1
 ]]--[[//
-]]--[[//	Commentaires: 
+]]--[[//    Commentaires: 
 ]]--[[//
 ]]--[[//  GGR : quand on a de la motivation Mission, on en profite pour
 ]]--[[//  MAJ la variable d'état VE_ManoeuvreSurEnis, ce qui evite d'avoir à le faire
@@ -78,7 +78,7 @@ node "ActivatedByMOT_Mission"
 ]]--[[// *****************************************************************************
 ]]--[[//  MOT_GarderSesDistances
 ]]--[[//
-]]--[[//	Commentaires: 
+]]--[[//    Commentaires: 
 ]]--[[//
 ]]--[[//  GGR : peut permettre de réaliser facilement les missions rétrogrades
 ]]--[[//  (freiner, jalonner)
@@ -151,7 +151,7 @@ node "ActivatedByMOT_GarderSesDistances"
 --[[// *****************************************************************************
 ]]--[[//  MOT_GarderSesDistanceFaceATirsIndirects
 ]]--[[//
-]]--[[//	Commentaires: 
+]]--[[//    Commentaires: 
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]motivation_plugin.motivations[ "MOT_GarderSesDistanceFaceATirsIndirects" ] =
@@ -218,7 +218,7 @@ node "ActivatedByMOT_GarderSesDistanceFaceATirsIndirects"
 --[[// *****************************************************************************
 ]]--[[//  MOT_Tenir
 ]]--[[//
-]]--[[//	Commentaires: MOT_GarderSesDistances < MOT_Tenir dans certaine mission
+]]--[[//    Commentaires: MOT_GarderSesDistances < MOT_Tenir dans certaine mission
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]motivation_plugin.motivations[ "MOT_Tenir" ] =
@@ -278,7 +278,7 @@ node "ActivatedByMOT_Tenir"
 --[[// *****************************************************************************
 ]]--[[//  MOT_ManoeuvrerSurEnis
 ]]--[[//
-]]--[[//	Commentaires:
+]]--[[//    Commentaires:
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]motivation_plugin.motivations[ "MOT_ManoeuvrerSurEnis" ] =
@@ -338,7 +338,7 @@ node "ActivatedByMOT_ManoeuvrerSurEnis"
 ]]--[[// *****************************************************************************
 ]]--[[//  MOT_TirerSurEnis
 ]]--[[//
-]]--[[//	Commentaires:
+]]--[[//    Commentaires:
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]motivation_plugin.motivations[ "MOT_TirerSurEnis" ] =
@@ -402,7 +402,7 @@ node "ActivatedByMOT_TirerSurEnis"
 --[[// *****************************************************************************
 ]]--[[//  MOT_RiposterSurEnis
 ]]--[[//
-]]--[[//	Commentaires:
+]]--[[//    Commentaires:
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]motivation_plugin.motivations[ "MOT_RiposterSurEnis" ] =
@@ -470,7 +470,7 @@ node "ActivatedByMOT_RiposterSurEnis"
 ]]--[[// *****************************************************************************
 ]]--[[//  MOT_SePoster
 ]]--[[//
-]]--[[//	Commentaires: INTERFACE AVEC AUTOMATES pour coordination
+]]--[[//    Commentaires: INTERFACE AVEC AUTOMATES pour coordination
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]motivation_plugin.motivations[ "MOT_SePoster" ] =
@@ -532,7 +532,7 @@ node "ActivatedByMOT_SePoster"
 --[[// *****************************************************************************
 ]]--[[//  MOT_Ralentir
 ]]--[[//
-]]--[[//	Commentaires: INTERFACE AVEC AUTOMATES
+]]--[[//    Commentaires: INTERFACE AVEC AUTOMATES
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]motivation_plugin.motivations[ "MOT_Ralentir" ] =
@@ -594,7 +594,7 @@ node "ActivatedByMOT_Ralentir"
 --[[// *****************************************************************************
 ]]--[[//  MOT_PasserEnAlerteDeNiveau4
 ]]--[[//
-]]--[[//	Commentaires: INTERFACE AVEC AUTOMATES
+]]--[[//    Commentaires: INTERFACE AVEC AUTOMATES
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]motivation_plugin.motivations[ "MOT_PasserEnAlerteDeNiveau4" ] =
@@ -656,7 +656,7 @@ node "ActivatedByMOT_PasserEnAlerteDeNiveau4"
 --[[// *****************************************************************************
 ]]--[[//  MOT_PasserEnSilenceRadio
 ]]--[[//
-]]--[[//	Commentaires: INTERFACE AVEC AUTOMATES
+]]--[[//    Commentaires: INTERFACE AVEC AUTOMATES
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]motivation_plugin.motivations[ "MOT_PasserEnSilenceRadio" ] =
@@ -718,7 +718,7 @@ node "ActivatedByMOT_PasserEnSilenceRadio"
 --[[// *****************************************************************************
 ]]--[[//  MOT_PasserEnSilenceRadio
 ]]--[[//
-]]--[[//	Commentaires: INTERFACE AVEC AUTOMATES
+]]--[[//    Commentaires: INTERFACE AVEC AUTOMATES
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]motivation_plugin.motivations[ "MOT_PasserEnSilenceRadioPartiel" ] =
@@ -780,7 +780,7 @@ node "ActivatedByMOT_PasserEnSilenceRadioPartiel"
 --[[// *****************************************************************************
 ]]--[[// MOT_PasserEnTirRestreint
 ]]--[[//
-]]--[[//	Commentaires: INTERFACE AVEC AUTOMATES
+]]--[[//    Commentaires: INTERFACE AVEC AUTOMATES
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]motivation_plugin.motivations[ "MOT_PasserEnTirRestreint" ] =
@@ -842,7 +842,7 @@ node "ActivatedByMOT_PasserEnTirRestreint"
 --[[// *****************************************************************************
 ]]--[[// MOT_PasserEnTirInterdit
 ]]--[[//
-]]--[[//	Commentaires: INTERFACE AVEC AUTOMATES
+]]--[[//    Commentaires: INTERFACE AVEC AUTOMATES
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]motivation_plugin.motivations[ "MOT_PasserEnTirInterdit" ] =
@@ -904,7 +904,7 @@ node "ActivatedByMOT_PasserEnTirInterdit"
 --[[// *****************************************************************************
 ]]--[[// MOT_PasserEnTirLibre
 ]]--[[//
-]]--[[//	Commentaires: INTERFACE AVEC AUTOMATES
+]]--[[//    Commentaires: INTERFACE AVEC AUTOMATES
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]motivation_plugin.motivations[ "MOT_PasserEnTirLibre" ] =
@@ -1154,7 +1154,7 @@ node "ActivatedByMOT_PasserEnDispersionParMoyensDeDefenseActifs"
 --[[// *****************************************************************************
 ]]--[[// MOT_PasserEnArmesLetalesAutorisees
 ]]--[[//
-]]--[[//	Commentaires:
+]]--[[//    Commentaires:
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]motivation_plugin.motivations[ "MOT_PasserEnArmesLetalesAutorisees" ] =
@@ -1216,7 +1216,7 @@ node "ActivatedByMOT_PasserEnArmesLetalesAutorisees"
 --[[// *****************************************************************************
 ]]--[[//  MOT_RiposteSurPopulations
 ]]--[[//
-]]--[[//	Commentaires:
+]]--[[//    Commentaires:
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]motivation_plugin.motivations[ "MOT_RiposteSurPopulations" ] =

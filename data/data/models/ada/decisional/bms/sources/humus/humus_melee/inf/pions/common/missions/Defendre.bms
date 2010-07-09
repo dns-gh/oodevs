@@ -15,7 +15,7 @@ includedFiles["sources/humus/humus_melee/inf/pions/common/missions/Defendre.bms"
 
 
 --[[//=============================================================================
-]]--[[//							Squelette de mission
+]]--[[//                            Squelette de mission
 ]]--[[//=============================================================================
 ]]
 node "BEH_Mission_Pion_INF_Defendre"
@@ -77,7 +77,7 @@ elseif switch_1 == eInstallerDispositif then
                             Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_InstallationDispositif, } )
                             --[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_ArriveSurLocalisation );
 ]]--[[// On surveille la zone en meme temps que l'on prepare
-]]--[[// On fait d'abord debarquer				
+]]--[[// On fait d'abord debarquer                
 ]]StartActivateOverride( self, self.activations.BEH_Dispositif_Pion_VAB_InstallationDefensive, 1, { self.mission.pointADefendre_, self.mission.preparerTerrain_, } )
                             --[[// preparation 5min
 ]]if( self.eAction == eActionEffectuee ) then
@@ -101,8 +101,8 @@ self.done_ACT_Misc_Pion_DelaiInstallation = function( self, _, v ) self.eAction 
 ]]                        cases_switch_1[2] = true
 elseif switch_1 == eSurveiller then
                             --[[//            action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_DispositifInstalle );
-]]--[[//			behavior BEH_Eni_Pion_INF_Tenir( 1 );
-]]--[[//			break;
+]]--[[//            behavior BEH_Eni_Pion_INF_Tenir( 1 );
+]]--[[//            break;
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DispositifInstalle, } )
                             if( S_RapForLocal() == eEtatRapportDeForce_Favorable ) then
                                 do

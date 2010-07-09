@@ -155,7 +155,7 @@ node "BEH_Defaut"
 
         Activate( self.activations.BEH_MAJ_EtatDefaut, 1, {} )
         Activate( self.activations.BEH_Mot_AffecterVariablesDEtat, 1, {} )--[[// MAJ de l'etat du pion en fonction de son agressivite
-]]--[[// ------------------------------------------------------------------------	
+]]--[[// ------------------------------------------------------------------------    
 ]]
         --[[// action ACT_Mot_MAJ_AgressivitePion();
 ]]--[[// Si totalement detruit...
@@ -163,7 +163,7 @@ node "BEH_Defaut"
             do return end
         end
 
-        Activate( self.activations.BEH_Ambiance, 1, {} )--[[// -------------------------------------------------------------------------	
+        Activate( self.activations.BEH_Ambiance, 1, {} )--[[// -------------------------------------------------------------------------    
 ]]--[[// Ambiance
 ]]--[[// ------------------------------------------------------------------------
 ]]

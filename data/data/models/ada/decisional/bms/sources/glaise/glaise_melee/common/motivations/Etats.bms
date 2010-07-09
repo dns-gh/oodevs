@@ -15,7 +15,7 @@ includedFiles["sources/glaise/glaise_melee/common/motivations/Etats.bms"] = true
 --[[// *****************************************************************************
 ]]--[[//  VE_Tenir
 ]]--[[//
-]]--[[//	Commentaires:
+]]--[[//    Commentaires:
 ]]--[[//
 ]]--[[// Tir libre => 0
 ]]--[[// Tir Restreint, tir interdit => 1

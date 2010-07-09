@@ -68,14 +68,14 @@ node "BEH_Defaut"
 ]]--[[// Silence radio
 ]]--[[//--------------------------------------------------------------------------
 ]]
-        --[[// Lorsque l'automate a une mission	
+        --[[// Lorsque l'automate a une mission    
 ]]--[[// =========================================================================
 ]]if( ( DEC_GetMission( myself ) == 0 or DEC_GetMission( myself ) == nil ) ) then
             do return end
         end
 
         Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )--[[// Gestion des Ordres venant du GTIA
-]]--[[//-------------------------------------------------------------------------- 	 	
+]]--[[//--------------------------------------------------------------------------          
 ]]
     end,
 

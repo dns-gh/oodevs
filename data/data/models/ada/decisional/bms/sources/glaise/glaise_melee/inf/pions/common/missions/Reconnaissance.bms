@@ -4,8 +4,8 @@ includedFiles["sources/glaise/glaise_melee/inf/pions/common/missions/Reconnaissa
 
 --[[//=============================================================================
 ]]--[[//=============================================================================
-]]--[[//						Squelette de la mission
-]]--[[//	
+]]--[[//                        Squelette de la mission
+]]--[[//    
 ]]--[[//=============================================================================
 ]]node "BEH_Mission_Pion_INF_RecoAxe"
 {
@@ -61,7 +61,7 @@ includedFiles["sources/glaise/glaise_melee/inf/pions/common/missions/Reconnaissa
                     self.ePhase = eProgresser
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// Progression sur l'itineraire
-]]--[[//-----------------------------------------------------------------------------								
+]]--[[//-----------------------------------------------------------------------------                                
 ]]                cases_switch_1[1] = true
                 end
                 if cases_switch_1[1] or switch_1 == eProgresser then

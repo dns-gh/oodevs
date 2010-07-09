@@ -14,7 +14,7 @@ includedFiles["sources/melee/inf/pions/common/missions/Freiner.bms"] = true
 ]]
 
 --[[//=============================================================================
-]]--[[//							Squelette de la mission
+]]--[[//                            Squelette de la mission
 ]]--[[//=============================================================================
 ]]
 node "BEH_Mission_Pion_INF_Freiner"
@@ -86,7 +86,7 @@ node "BEH_Mission_Pion_INF_Freiner"
 elseif switch_1 == eSurveiller then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1.1, { eEtatPhaseMission_EnSurveillance, } )
                     --[[// eEtatPhaseMission_EnPosition
-]]--[[// Attendre de se degager ...								
+]]--[[// Attendre de se degager ...                                
 ]]if( F_Pion_GeteEtatLima( myself ) ~= eEtatLima_LCAR ) then
                         StartActivateOverride( self, self.activations.BEH_Dep_Pion_INF_Freiner_Decrocher, 1.1, {} )
                     end
@@ -107,7 +107,7 @@ elseif switch_1 == eSurveiller then
                     end
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnFreinage, } )
-                    --[[// Sur LCAR				
+                    --[[// Sur LCAR                
 ]]if( F_Pion_GeteEtatLima( myself ) == eEtatLima_LCAR ) then
                         do
                             --[[// Arrete de decrocher ( si 2 LCAR sont proches )
@@ -123,7 +123,7 @@ elseif switch_1 == eSurveiller then
                     end
 
                     --[[// Rmque : Ce comportement ne se trouve pas dans Progresser, 
-]]--[[// 		   car sinon il induit une boucle dans le graphe DIA				
+]]--[[//            car sinon il induit une boucle dans le graphe DIA                
 ]]Activate( self.activations.BEH_Lima_GererLCAR, 2, { not DEC_Agent_AutomateEstEmbraye(), myself.bFreiner_EnTete_, } )
                     Activate( self.activations.BEH_Lima_GererLR, 2, {} )
                     Activate( self.activations.BEH_Lima_Pion_INF_GererLIA, 2, {} )
@@ -166,7 +166,7 @@ node "BEH_Dep_Pion_INF_Freiner_Decrocher"
     activate = function( self )
                 self.ptDepart = self.ptDepart or DEC_Geometrie_CreerPoint()
         self.rDist_Decroche = self.rDist_Decroche or 0
-        --[[// Tire les fumigenes		
+        --[[// Tire les fumigenes        
 ]]--[[// $$$$ JCR: Peut etre a faire ailleurs et autrement
 ]]local eniEnCours = F_Pion_GeteniEnCours( myself )
         if( ( eniEnCours ~= 0 and eniEnCours ~= nil ) ) then
