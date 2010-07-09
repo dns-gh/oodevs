@@ -61,17 +61,13 @@ void DEC_Decision< T >::InitBrain( const std::string& brainFile, const std::stri
     brainFile_ = brainFile;
     modelName_ = type;
     includePath_ = includePath;
-    
-    pRefs_.reset( 0 );//Must delete ScriptRef before call Brain destructor and destroy vm
+    pRefs_.reset();//Must delete ScriptRef before call Brain destructor and destroy vm
     pBrain_.reset( new directia::Brain( includePath ) );
-    
     RegisterUserFunctions( *pBrain_ );
     DEC_DecisionImpl::RegisterCommonUserFunctions( *pBrain_, pEntity_->GetID() );
-    
     database_.InitKnowledges( *pBrain_ );//@TODO MGD Find a better way to merge dia4/dia5
     RegisterSelf( *pBrain_ );
     pBrain_->GetScriptFunction( "include" )( brainFile ,includePath, type, groupName );
-    
     pRefs_.reset( new ScriptRefs( *pBrain_) );
 }
 
