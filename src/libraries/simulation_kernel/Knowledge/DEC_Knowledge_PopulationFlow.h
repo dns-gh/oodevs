@@ -48,33 +48,33 @@ public:
 
     //! @name Operations
     //@{
-    void Prepare        ();
-    void Update         ( const DEC_Knowledge_PopulationFlowPerception& perception );
-    void Update         ( const DEC_Knowledge_PopulationCollision&      collision  );
+    void Prepare();
+    void Update( const DEC_Knowledge_PopulationFlowPerception& perception );
+    void Update( const DEC_Knowledge_PopulationCollision& collision  );
     void UpdateRelevance();
-    bool Clean          ();
+    bool Clean();
     //@}
 
     //! @name Network operations
     //@{
-    void UpdateOnNetwork     () const;
+    void UpdateOnNetwork() const;
     void SendStateToNewClient() const;
     //@}
 
 private:
     //! @name Network
     //@{
-    void SendFullState     () const;
-    void SendMsgCreation   () const;
+    void SendFullState() const;
+    void SendMsgCreation() const;
     void SendMsgDestruction() const;
     //@}
 
 public:
     //! @name Types
     //@{
-    typedef std::map< const MIL_Agent_ABC*, DEC_Knowledge_PopulationFlowPart* >   T_FlowPartMap;
-    typedef T_FlowPartMap::iterator                                              IT_FlowPartMap;
-    typedef T_FlowPartMap::const_iterator                                       CIT_FlowPartMap;
+    typedef std::map< const MIL_Agent_ABC*, DEC_Knowledge_PopulationFlowPart* > T_FlowPartMap;
+    typedef T_FlowPartMap::iterator                                            IT_FlowPartMap;
+    typedef T_FlowPartMap::const_iterator                                     CIT_FlowPartMap;
     //@}
 
 private:

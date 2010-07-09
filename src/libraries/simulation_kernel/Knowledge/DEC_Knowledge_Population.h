@@ -56,88 +56,78 @@ public:
     //! @name Operations
     //@{
     void Prepare();
-
-    void Update ( const DEC_Knowledge_PopulationPerception& perception );
-    void Update ( const DEC_Knowledge_PopulationConcentrationPerception& perception ); // Called by DEC_Knowledge_PopulationPerception
-    void Update ( const DEC_Knowledge_PopulationFlowPerception&          perception ); // Called by DEC_Knowledge_PopulationPerception
-
-    void Update ( const DEC_Knowledge_PopulationCollision&  collision  );
-    void Update ( const DEC_Knowledge_PopulationCollision&  collision, const MIL_PopulationFlow&          flow          ); // Called by DEC_Knowledge_PopulationCollision
-    void Update ( const DEC_Knowledge_PopulationCollision&  collision, const MIL_PopulationConcentration& concentration ); // Called by DEC_Knowledge_PopulationCollision
-
+    void Update( const DEC_Knowledge_PopulationPerception& perception );
+    void Update( const DEC_Knowledge_PopulationConcentrationPerception& perception ); // Called by DEC_Knowledge_PopulationPerception
+    void Update( const DEC_Knowledge_PopulationFlowPerception& perception ); // Called by DEC_Knowledge_PopulationPerception
+    void Update( const DEC_Knowledge_PopulationCollision& collision );
+    void Update( const DEC_Knowledge_PopulationCollision& collision, const MIL_PopulationFlow& flow ); // Called by DEC_Knowledge_PopulationCollision
+    void Update( const DEC_Knowledge_PopulationCollision& collision, const MIL_PopulationConcentration& concentration ); // Called by DEC_Knowledge_PopulationCollision
     void UpdateRelevance();
-
-    bool Clean  ();
-
-    void Recon      ();
-    void Secure     ( const MIL_AgentPion& pionSecuring );
+    bool Clean();
+    void Recon();
+    void Secure( const MIL_AgentPion& pionSecuring );
     void Exterminate( const MIL_AgentPion& exterminator, MT_Float rSurface );
-
     void CopyFrom( const DEC_Knowledge_Population& knowledge );
     //@}
 
     //! @name Accessors
     //@{
-          unsigned int                    GetID             () const;
-    const MIL_Army_ABC&           GetArmy           () const;
-    const MIL_KnowledgeGroup&     GetKnowledgeGroup () const;
-          MIL_Population&         GetPopulationKnown() const;
-          MT_Float                GetDangerosity    ( const MIL_AgentPion&    target        ) const;
-          bool                    IsRecon           () const;
-          bool                    IsInZone          ( const TER_Localisation& loc           ) const;
-          MT_Float                GetDominationState() const;
-    const MIL_PopulationAttitude& GetAttitude       () const;
-
-          MT_Vector2D             GetClosestPoint   ( const MT_Vector2D&      refPos        ) const;
-          MT_Vector2D             GetSecuringPoint  ( const MIL_Agent_ABC&    securingAgent ) const;
-          MT_Vector2D             GetSafetyPosition ( const MIL_AgentPion&    agent        , MT_Float rMinDistance ) const;
-
+    unsigned int GetID() const;
+    const MIL_Army_ABC& GetArmy() const;
+    const MIL_KnowledgeGroup& GetKnowledgeGroup () const;
+    MIL_Population& GetPopulationKnown() const;
+    MT_Float GetDangerosity( const MIL_AgentPion& target ) const;
+    bool IsRecon() const;
+    bool IsInZone( const TER_Localisation& loc ) const;
+    MT_Float GetDominationState() const;
+    const MIL_PopulationAttitude& GetAttitude() const;
+    MT_Vector2D GetClosestPoint( const MT_Vector2D& refPos ) const;
+    MT_Vector2D GetSecuringPoint( const MIL_Agent_ABC& securingAgent ) const;
+    MT_Vector2D GetSafetyPosition( const MIL_AgentPion& agent, MT_Float rMinDistance ) const;
     //@}
 
     //! @name Network operations
     //@{
-    void UpdateOnNetwork     () const;
+    void UpdateOnNetwork() const;
     void SendStateToNewClient() const;
     //@}
 
 private:
     //! @name Network
     //@{
-    void SendMsgCreation   () const;
+    void SendMsgCreation() const;
     void SendMsgDestruction() const;
     //@}
 
     //! @name Tools
     //@{
-    DEC_Knowledge_PopulationConcentration& GetKnowledge         ( const MIL_PopulationConcentration& concentration );
-    DEC_Knowledge_PopulationFlow&          GetKnowledge         ( const MIL_PopulationFlow&          flow          );
-    void                                   UpdateReconAttributes();
+    DEC_Knowledge_PopulationConcentration& GetKnowledge( const MIL_PopulationConcentration& concentration );
+    DEC_Knowledge_PopulationFlow& GetKnowledge( const MIL_PopulationFlow& flow );
+    void UpdateReconAttributes();
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::map< unsigned int /*ID*/, DEC_Knowledge_PopulationConcentration* > T_ConcentrationMap;
+    typedef std::map< unsigned int, DEC_Knowledge_PopulationConcentration* > T_ConcentrationMap;
     typedef T_ConcentrationMap::iterator                                    IT_ConcentrationMap;
-    typedef T_ConcentrationMap::const_iterator                              CIT_ConcentrationMap;
+    typedef T_ConcentrationMap::const_iterator                             CIT_ConcentrationMap;
 
-    typedef std::map< unsigned int /*ID*/, DEC_Knowledge_PopulationFlow* > T_FlowMap;
+    typedef std::map< unsigned int, DEC_Knowledge_PopulationFlow* > T_FlowMap;
     typedef T_FlowMap::iterator                                    IT_FlowMap;
-    typedef T_FlowMap::const_iterator                              CIT_FlowMap;
+    typedef T_FlowMap::const_iterator                             CIT_FlowMap;
     //@}
 
 private:
     const MIL_KnowledgeGroup* pKnowledgeGroup_;
-          MIL_Population*     pPopulationKnown_;
-    const unsigned int                nID_;
-          T_ConcentrationMap  concentrations_;
-          T_FlowMap           flows_;
-          bool                bIsRecon_;
-
-          bool                bReconAttributesValid_;
-          MT_Float            rDominationState_;
-          bool                bDecStateUpdated_;
-
+    MIL_Population* pPopulationKnown_;
+    const unsigned int nID_;
+    T_ConcentrationMap concentrations_;
+    T_FlowMap flows_;
+    bool bIsRecon_;
+    bool bReconAttributesValid_;
+    MT_Float rDominationState_;
+    bool bDecStateUpdated_;
     static MIL_IDManager idManager_;
 };
 

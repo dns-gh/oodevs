@@ -47,7 +47,7 @@ DEC_Knowledge_Urban::DEC_Knowledge_Urban( const MIL_Army_ABC& army, const urban:
     , bMaxPerceptionLevelUpdated_    ( false )
     , bLastPerceived_                ( false )
     , rLastRelevanceSent_            ( 0. )
-    , rLastProgressSent_              ( 0. )
+    , rLastProgressSent_             ( 0. )
 {
     if( bCreatedOnNetwork_ )
         SendMsgCreation();
@@ -152,9 +152,7 @@ void DEC_Knowledge_Urban::Update( const DEC_Knowledge_UrbanPerception& perceptio
             rProgressPercent_ -= 1.0;
         }
         else
-        {
             rProgressPercent_ = 1.0;
-        }
     }
     else if( pCurrentPerceptionLevel_ == &PHY_PerceptionLevel::notSeen_ )
     {

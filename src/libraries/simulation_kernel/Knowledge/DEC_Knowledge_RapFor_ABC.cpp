@@ -39,7 +39,7 @@ void DEC_Knowledge_RapFor_ABC::Initialize( xml::xistream& xis )
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
 DEC_Knowledge_RapFor_ABC::DEC_Knowledge_RapFor_ABC()
-    : DEC_Knowledge_ABC    ()
+    : DEC_Knowledge_ABC()
     , nLastCacheUpdateTick_( 0 )
     , rRapForValue_        ( rRapForBoundMax_ )
 {
@@ -106,6 +106,5 @@ MT_Float DEC_Knowledge_RapFor_ABC::ComputeRapForIncreasePerTimeStepValue( MT_Flo
 {
     if( rBaseTimeValue <= 0. )
         return rRapForBoundMax_ - rRapForBoundMin_;
-    else
-        return ( rRapForBoundMax_ - rRapForBoundMin_ ) / rBaseTimeValue;
+    return ( rRapForBoundMax_ - rRapForBoundMin_ ) / rBaseTimeValue;
 }

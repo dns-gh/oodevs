@@ -25,12 +25,12 @@ MIL_IDManager DEC_Knowledge_UrbanPerception::idManager_;
 // Created: MGD 2009-12-07
 // -----------------------------------------------------------------------------
 DEC_Knowledge_UrbanPerception::DEC_Knowledge_UrbanPerception( const MIL_Agent_ABC& agentPerceiving, const urban::TerrainObject_ABC& object )
-    : DEC_Knowledge_ABC              ()
-    , perceiver_                     ( agentPerceiving )
-    , object_                        ( object )
-    , nID_                           ( idManager_.GetFreeId() )
-    , pCurrentPerceptionLevel_       ( &PHY_PerceptionLevel::notSeen_ )
-    , pPreviousPerceptionLevel_      ( &PHY_PerceptionLevel::notSeen_ )
+    : DEC_Knowledge_ABC()
+    , perceiver_               ( agentPerceiving )
+    , object_                  ( object )
+    , nID_                     ( idManager_.GetFreeId() )
+    , pCurrentPerceptionLevel_ ( &PHY_PerceptionLevel::notSeen_ )
+    , pPreviousPerceptionLevel_( &PHY_PerceptionLevel::notSeen_ )
 {
 }
 
@@ -40,6 +40,7 @@ DEC_Knowledge_UrbanPerception::DEC_Knowledge_UrbanPerception( const MIL_Agent_AB
 // -----------------------------------------------------------------------------
 DEC_Knowledge_UrbanPerception::~DEC_Knowledge_UrbanPerception()
 {
+    // NOTHING
 }
 
 // =============================================================================

@@ -39,8 +39,6 @@ DEC_Knowledge_Population::DEC_Knowledge_Population( const MIL_KnowledgeGroup& kn
     , nID_                  ( idManager_.GetFreeId() )
     , pKnowledgeGroup_      ( &knowledgeGroup )
     , pPopulationKnown_     ( &populationKnown )
-    , concentrations_       ()
-    , flows_                ()
     , bIsRecon_             ( false )
     , bReconAttributesValid_( false )
     , bDecStateUpdated_     ( false )
@@ -58,13 +56,12 @@ DEC_Knowledge_Population::DEC_Knowledge_Population()
     , nID_                  ( 0 )
     , pKnowledgeGroup_      ( 0 )
     , pPopulationKnown_     ( 0 )
-    , concentrations_       ()
-    , flows_                ()
     , bIsRecon_             ( false )
     , bReconAttributesValid_( false )
     , bDecStateUpdated_     ( false )
     , rDominationState_     ( 0. )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

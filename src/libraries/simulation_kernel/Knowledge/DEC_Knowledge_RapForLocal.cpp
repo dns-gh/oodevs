@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_RapForLocal.h"
-
 #include "DEC_Knowledge_Agent.h"
 #include "DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "MIL_KnowledgeGroup.h"
@@ -26,10 +25,9 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_RapForLocal )
 // -----------------------------------------------------------------------------
 DEC_Knowledge_RapForLocal::DEC_Knowledge_RapForLocal( const MIL_Agent_ABC& pion )
     : DEC_Knowledge_RapFor_ABC()
-    , pPion_                  ( &pion )
-    , dangerousEnemies_       ()
+    , pPion_( &pion )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -38,10 +36,9 @@ DEC_Knowledge_RapForLocal::DEC_Knowledge_RapForLocal( const MIL_Agent_ABC& pion 
 // -----------------------------------------------------------------------------
 DEC_Knowledge_RapForLocal::DEC_Knowledge_RapForLocal()
     : DEC_Knowledge_RapFor_ABC()
-    , pPion_                  ( 0 )
-    , dangerousEnemies_       ()
+    , pPion_( 0 )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -50,7 +47,7 @@ DEC_Knowledge_RapForLocal::DEC_Knowledge_RapForLocal()
 // -----------------------------------------------------------------------------
 DEC_Knowledge_RapForLocal::~DEC_Knowledge_RapForLocal()
 {
-
+    // NOTHING
 }
 
 // =============================================================================
@@ -66,7 +63,6 @@ void DEC_Knowledge_RapForLocal::serialize( Archive& archive, const unsigned int 
 {
     archive & boost::serialization::base_object< DEC_Knowledge_RapFor_ABC >( *this )
             & const_cast< MIL_Agent_ABC*& >( pPion_ );
-
     assert( pPion_ );
 }
 
@@ -130,4 +126,3 @@ const T_ConstKnowledgeAgentVector& DEC_Knowledge_RapForLocal::GetDangerousEnemie
     Update();
     return dangerousEnemies_;
 }
-

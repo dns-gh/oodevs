@@ -43,8 +43,8 @@ public:
     //! @name Operations
     //@{
     void Prepare();
-    void Update ( const PHY_PerceptionLevel& level );
-    bool Clean  ();
+    void Update( const PHY_PerceptionLevel& level );
+    bool Clean();
 
     bool IsIdentified();
     bool IsPerceived () const; // Perception au tick courant
@@ -52,26 +52,25 @@ public:
 
     //! @name Accessors
     //@{
-    const PHY_PerceptionLevel&         GetCurrentPerceptionLevel() const;
+    const PHY_PerceptionLevel& GetCurrentPerceptionLevel() const;
     const MIL_PopulationConcentration& GetConcentrationPerceived() const;
-          unsigned int                 GetNbrAliveHumans        () const;
-          unsigned int                 GetNbrDeadHumans         () const;
-    const MIL_PopulationAttitude&      GetAttitude              () const;
+    unsigned int GetNbrAliveHumans() const;
+    unsigned int GetNbrDeadHumans() const;
+    const MIL_PopulationAttitude& GetAttitude() const;
 
     //@}
 
     //! @name Network operations
     //@{
-    void UpdateOnNetwork     () const;
+    void UpdateOnNetwork() const;
     void SendStateToNewClient() const;
     //@}
 
 private:
-    const DEC_Knowledge_PopulationPerception*  pPopulationKnowledge_;
-          MIL_PopulationConcentration*         pPopulationConcentrationPerceived_;
-
-    const PHY_PerceptionLevel*                 pCurrentPerceptionLevel_;
-    const PHY_PerceptionLevel*                 pPreviousPerceptionLevel_;
+    const DEC_Knowledge_PopulationPerception* pPopulationKnowledge_;
+    MIL_PopulationConcentration* pPopulationConcentrationPerceived_;
+    const PHY_PerceptionLevel* pCurrentPerceptionLevel_;
+    const PHY_PerceptionLevel* pPreviousPerceptionLevel_;
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_PopulationConcentrationPerception )

@@ -36,17 +36,17 @@ public:
 
     //! @name Accessors
     //@{
-    const weather::PHY_Lighting&      GetLighting     ( const weather::PHY_Lighting&      mainLighting      ) const;
+    const weather::PHY_Lighting& GetLighting( const weather::PHY_Lighting& mainLighting ) const;
     const weather::PHY_Precipitation& GetPrecipitation( const weather::PHY_Precipitation& mainPrecipitation ) const;
 
-    bool            HandleAmmo      ( const PHY_IndirectFireDotationClass& ammoClass ) const;
-    PHY_AmmoEffect* GetNextEffect   () const;
-    void            SetNextEffect   ( PHY_AmmoEffect* pNextEffect );
+    bool HandleAmmo( const PHY_IndirectFireDotationClass& ammoClass ) const;
+    PHY_AmmoEffect* GetNextEffect() const;
+    void SetNextEffect( PHY_AmmoEffect* pNextEffect );
     //@}
 
 private:
     const PHY_IndirectFireDotationClass& ammoClass_;
-          PHY_AmmoEffect*                pNextEffect_;
+    PHY_AmmoEffect* pNextEffect_;
 };
 
 #include "PHY_AmmoEffect.inl"

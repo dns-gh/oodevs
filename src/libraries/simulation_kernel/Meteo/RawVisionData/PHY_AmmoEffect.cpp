@@ -25,7 +25,6 @@ PHY_AmmoEffect::PHY_AmmoEffect( const PHY_IndirectFireDotationClass& ammoClass, 
     assert( ammoClass_ == PHY_IndirectFireDotationClass::eclairant_ || ammoClass_ == PHY_IndirectFireDotationClass::fumigene_ );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: PHY_AmmoEffect destructor
 // Created: JVT 04-03-24

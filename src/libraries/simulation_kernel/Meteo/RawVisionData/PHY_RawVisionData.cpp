@@ -18,11 +18,11 @@
 #include "MIL_AgentServer.h"
 #include "MT_Tools/MT_Rect.h"
 #include "MT_Tools/MT_Ellipse.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #include "tools/InputBinaryStream.h"
 
-      PHY_RawVisionData::sCell PHY_RawVisionData::emptyCell_;
-const weather::PHY_Meteo*      PHY_RawVisionData::sCell::pGlobalMeteo_;
+PHY_RawVisionData::sCell PHY_RawVisionData::emptyCell_;
+const weather::PHY_Meteo* PHY_RawVisionData::sCell::pGlobalMeteo_;
 
 
 //-----------------------------------------------------------------------------

@@ -42,8 +42,8 @@ public:
     //! @name Operations
     //@{
     virtual void Prepare() = 0;
-    virtual void Talk   ( int currentTimeStep ) = 0;
-    virtual void Clean  () = 0;
+    virtual void Talk( int currentTimeStep ) = 0;
+    virtual void Clean() = 0;
     //@}
 
     //! @name Accessors

@@ -29,7 +29,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_PopulationConcentrationPerception )
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
 DEC_Knowledge_PopulationConcentrationPerception::DEC_Knowledge_PopulationConcentrationPerception( DEC_Knowledge_PopulationPerception& populationKnowledge, MIL_PopulationConcentration& concentrationPerceived )
-    : pPopulationKnowledge_             ( &populationKnowledge    )
+    : pPopulationKnowledge_             ( &populationKnowledge )
     , pPopulationConcentrationPerceived_( &concentrationPerceived )
     , pCurrentPerceptionLevel_          ( &PHY_PerceptionLevel::notSeen_ )
     , pPreviousPerceptionLevel_         ( &PHY_PerceptionLevel::notSeen_ )

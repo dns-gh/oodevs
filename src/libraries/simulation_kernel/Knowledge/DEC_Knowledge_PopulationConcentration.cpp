@@ -122,9 +122,9 @@ DEC_Knowledge_PopulationConcentration::~DEC_Knowledge_PopulationConcentration()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationConcentration::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> const_cast< DEC_Knowledge_Population*&    >( pPopulationKnowledge_ )
+    file >> const_cast< DEC_Knowledge_Population*& >( pPopulationKnowledge_ )
          >> const_cast< MIL_PopulationConcentration*& >( pConcentrationKnown_  )
-         >> const_cast< unsigned int&                         >( nID_                  )
+         >> const_cast< unsigned int& >( nID_ )
          >> nTimeLastUpdate_
          >> position_
          >> nNbrAliveHumans_
@@ -170,7 +170,6 @@ void DEC_Knowledge_PopulationConcentration::save( MIL_CheckPointOutArchive& file
          << nNbrDeadHumans_
          << bReconAttributesValid_
          << attitude;
-
 
     if( pAttitude_ )
     {
