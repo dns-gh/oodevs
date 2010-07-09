@@ -28,6 +28,10 @@ class TER_Object_ABC
 public:
     //! @name Types
     //@{
+    typedef std::vector< TER_Object_ABC* >   T_ObjectVector;
+    typedef T_ObjectVector::iterator        IT_ObjectVector;
+    typedef T_ObjectVector::const_iterator CIT_ObjectVector;
+
     typedef pathfind::SpatialContainerNode< TER_Object_ABC*, TER_ObjectTraits, MT_Float >* T_Hint;
     //@}
 
