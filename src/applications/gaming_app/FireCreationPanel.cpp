@@ -35,7 +35,7 @@ using namespace actions;
 // -----------------------------------------------------------------------------
 FireCreationPanel::FireCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers
                                     , actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const StaticModel& staticModel )
-    : gui::InfoPanel_ABC( parent, panel, tr( "Fire" ), "FireCreationPanel" )
+    : gui::InfoPanel_ABC( parent, panel, tools::translate( "FireCreationPanel", "Fire" ), "FireCreationPanel" )
     , staticModel_( staticModel )
     , controllers_( controllers )
     , actionsModel_( actionsModel )
@@ -50,9 +50,9 @@ FireCreationPanel::FireCreationPanel( QWidget* parent, gui::PanelStack_ABC& pane
     , interventionType_( 0 )
 {
     layout()->setAlignment( Qt::AlignTop );
-    QGroupBox* group = new QGroupBox( 2, Qt::Horizontal, tr( "FireOrder description" ), this );
+    QGroupBox* group = new QGroupBox( 2, Qt::Horizontal, tools::translate( "FireCreationPanel", "FireOrder description" ), this );
     {
-        new QLabel( tr( "Target:" ), group );
+        new QLabel( tools::translate( "FireCreationPanel", "Target:" ), group );
         QHBox* box = new QHBox( group );
         box->setSpacing( 5 );
         targetLabel_ = new QLabel( "---", box );
@@ -60,7 +60,7 @@ FireCreationPanel::FireCreationPanel( QWidget* parent, gui::PanelStack_ABC& pane
         targetLabel_->setAlignment( Qt::AlignCenter );
         targetLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
 
-        new QLabel( tr( "Reporter:" ), group );
+        new QLabel( tools::translate( "FireCreationPanel", "Reporter:" ), group );
         QHBox* box2 = new QHBox( group );
         box2->setSpacing( 5 );
         reporterLabel_ = new QLabel( "---", box2 );
@@ -68,14 +68,14 @@ FireCreationPanel::FireCreationPanel( QWidget* parent, gui::PanelStack_ABC& pane
         reporterLabel_->setAlignment( Qt::AlignCenter );
         reporterLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
 
-        new QLabel( tr( "Munitions:" ), group );
+        new QLabel( tools::translate( "FireCreationPanel", "Munitions:" ), group );
         ammunitionsBox_ = new gui::ValuedComboBox< int >( group );
 
-        new QLabel( tr( "IT:" ), group );
+        new QLabel( tools::translate( "FireCreationPanel", "IT:" ), group );
         interventionType_ = new QLineEdit( "0", group );
     }
 
-    QPushButton* ok = new QPushButton( tr( "ApplyFire" ), this );
+    QPushButton* ok = new QPushButton( tools::translate( "FireCreationPanel", "ApplyFire" ), this );
     connect( ok, SIGNAL( clicked() ), this, SLOT( Commit() ) );
     controllers_.Register( *this );
 }

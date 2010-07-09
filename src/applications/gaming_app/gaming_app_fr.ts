@@ -9,6 +9,10 @@
         <source>Cancel</source>
         <translation type="obsolete">Annuler</translation>
     </message>
+    <message>
+        <source>Weather parameters</source>
+        <translation type="obsolete">Paramètres de météo</translation>
+    </message>
 </context>
 <context>
     <name>@default</name>
@@ -780,6 +784,37 @@ Reason: %3
     <message>
         <source>Handler:</source>
         <translation type="obsolete">Gestionnaire:</translation>
+    </message>
+</context>
+<context>
+    <name>FireCreationPanel</name>
+    <message>
+        <source>Fire</source>
+        <translation>Tir</translation>
+    </message>
+    <message>
+        <source>FireOrder description</source>
+        <translation>Description de l&apos;Ordre de Tir</translation>
+    </message>
+    <message>
+        <source>Target:</source>
+        <translation>Cible:</translation>
+    </message>
+    <message>
+        <source>Reporter:</source>
+        <translation>Reporter:</translation>
+    </message>
+    <message>
+        <source>Munitions:</source>
+        <translation>Munitions:</translation>
+    </message>
+    <message>
+        <source>IT:</source>
+        <translation>IT:</translation>
+    </message>
+    <message>
+        <source>ApplyFire</source>
+        <translation>AppliquerFeux</translation>
     </message>
 </context>
 <context>
@@ -3388,22 +3423,64 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
+    <name>WeatherCreationPanel</name>
+    <message>
+        <source>Weathers</source>
+        <translation>Météos</translation>
+    </message>
+    <message>
+        <source>Weather</source>
+        <translation>Météo</translation>
+    </message>
+    <message>
+        <source>Time and Position Parameters</source>
+        <translation>Paramètres de temps et de position</translation>
+    </message>
+    <message>
+        <source>Start time:</source>
+        <translation>Heure de début:</translation>
+    </message>
+    <message>
+        <source>End time:</source>
+        <translation>Heure de fin:</translation>
+    </message>
+    <message>
+        <source>Set as global weather</source>
+        <translation>Définir en météo globale</translation>
+    </message>
+    <message>
+        <source>Set location</source>
+        <translation>Définir la localisation</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Sauvegarder</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+</context>
+<context>
+    <name>WeatherWidget</name>
+    <message>
+        <source>Wind direction/speed:</source>
+        <translation>Vitesse/direction du vent:</translation>
+    </message>
+    <message>
+        <source>Clouds floor/ceiling/density:</source>
+        <translation>Plancher/plafond/densité nuages:</translation>
+    </message>
+    <message>
+        <source>Weather type:</source>
+        <translation>Type de temps:</translation>
+    </message>
+</context>
+<context>
     <name>gui</name>
     <message>
-        <source>Objects</source>
-        <translation type="obsolete">Objets</translation>
-    </message>
-    <message>
-        <source>Create</source>
-        <translation type="obsolete">Créer</translation>
-    </message>
-    <message>
-        <source>Parameter</source>
-        <translation type="obsolete">Paramètre</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="obsolete">Valeur</translation>
+        <source>Weather parameters</source>
+        <translation type="unfinished">Paramètres de météo</translation>
     </message>
 </context>
 <context>

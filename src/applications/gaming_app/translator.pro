@@ -27,6 +27,7 @@ DotationsListView.cpp \
 EfficientRangeDialog.cpp \
 EquipmentsListView.cpp \
 EventToolbar.cpp \
+FireCreationPanel.cpp\
 FireResultListView.cpp \
 FolkToolbar.cpp \
 HumansListView.cpp \
@@ -94,6 +95,8 @@ UserProfileDialog.cpp \
 UserProfileList.cpp \
 UserProfileRights_ABC.cpp \
 UserProfileWidget.cpp \
+WeatherCreationPanel.cpp\
+WeatherWidget.cpp\
 main.cpp \
 
 TRANSLATIONS = gaming_app_fr.ts

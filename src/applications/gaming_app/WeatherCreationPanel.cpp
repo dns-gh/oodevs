@@ -33,7 +33,7 @@ using namespace parameters;
 // Created: SLG 2010-03-24
 // -----------------------------------------------------------------------------
 WeatherCreationPanel::WeatherCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& model, const kernel::Time_ABC& simulation, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools )
-    : gui::InfoPanel_ABC( parent, panel, tr( "Weathers" ), "WeatherCreationPanel" )
+    : gui::InfoPanel_ABC( parent, panel, tools::translate( "WeatherCreationPanel", "Weathers" ), "WeatherCreationPanel" )
     , controllers_      ( controllers )
     , layer_            ( layer )
     , actionsModel_     ( actionsModel )
@@ -45,25 +45,25 @@ WeatherCreationPanel::WeatherCreationPanel( QWidget* parent, gui::PanelStack_ABC
     , isGlobal_         ( false )
 {
 
-    QGroupBox* localGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Weather" ), this );
+    QGroupBox* localGroup = new QGroupBox( 1, Qt::Horizontal, tools::translate( "WeatherCreationPanel", "Weather" ), this );
     QVBox* localWeatherBox = new QVBox( localGroup );
     weather_ = new WeatherWidget( localWeatherBox, tr( "Weather parameters" ) );
 
-    QGroupBox* parametersGroup = new QGroupBox( 2, Qt::Horizontal, tr( "Time and Position Parameters" ), localWeatherBox );
-    startTimeLabel_ = new QLabel( tr( "Start time:" ), parametersGroup );
+    QGroupBox* parametersGroup = new QGroupBox( 2, Qt::Horizontal, tools::translate( "WeatherCreationPanel", "Time and Position Parameters" ), localWeatherBox );
+    startTimeLabel_ = new QLabel( tools::translate( "WeatherCreationPanel", "Start time:" ), parametersGroup );
     startTime_ = new QDateTimeEdit( parametersGroup );
-    endTimeLabel_ = new QLabel( tr( "End time:" ), parametersGroup );
+    endTimeLabel_ = new QLabel( tools::translate( "WeatherCreationPanel", "End time:" ), parametersGroup );
     endTime_ = new QDateTimeEdit( parametersGroup );
 
-    QCheckBox* weatherType = new QCheckBox( tr( "Set as global weather" ), parametersGroup );
+    QCheckBox* weatherType = new QCheckBox( tools::translate( "WeatherCreationPanel", "Set as global weather" ), parametersGroup );
     weatherType->setChecked( isGlobal_ );
 
-    positionBtn_ = new QPushButton( tr( "Set location" ), parametersGroup );
+    positionBtn_ = new QPushButton( tools::translate( "WeatherCreationPanel", "Set location" ), parametersGroup );
 
     QHBox* box = new QHBox( this );
     box->setMaximumHeight( 30 );
-    QButton* okBtn     = new QPushButton( tr( "Save" )  , box );
-    QButton* cancelBtn = new QPushButton( tr( "Cancel" ), box );
+    QButton* okBtn     = new QPushButton( tools::translate( "WeatherCreationPanel", "Save" )  , box );
+    QButton* cancelBtn = new QPushButton( tools::translate( "WeatherCreationPanel", "Cancel" ), box );
 
     connect( positionBtn_, SIGNAL( clicked() ), this, SLOT( StartEditingLocation() ) );
     connect( okBtn, SIGNAL( clicked() ), this, SLOT( Commit() ) );
