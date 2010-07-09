@@ -73,6 +73,7 @@ public:
     void CreateAgent( xml::xistream& xis, kernel::Automat_ABC& parent );
     kernel::Agent_ABC& GetAgent( unsigned long id ) const;
     kernel::Agent_ABC* FindAgent( unsigned long id ) const;
+    std::string GetLoadingErrors() const;
 
     kernel::Entity_ABC* FindAllAgent( unsigned long id ) const;
 
@@ -115,6 +116,7 @@ private:
     kernel::Controllers& controllers_;
     AgentFactory_ABC& agentFactory_;
     kernel::WorldParameters parameters_;
+    std::string errors_;
     //@}
 };
 

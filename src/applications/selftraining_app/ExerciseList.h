@@ -47,6 +47,8 @@ public:
     //! @name Operations
     //@{
     bool Exists( const QString& exercise ) const;
+    void ChangeExerciceParameters( const std::string& exercice );
+
     //@}
 
 signals:
@@ -60,6 +62,7 @@ public slots:
     //@{
     void Update();
     void Clear();
+    void ComboChanged( int index );
     //@}
 
 private slots:
@@ -97,6 +100,10 @@ private:
     bool                         showBrief_;
     const ExerciseLister_ABC&    lister_;
     const QString                language_;
+    bool                         parametersChanged_;
+    
+    QComboBox* editTerrainList_;
+    QComboBox* editModelList_;
  //@}
 };
 

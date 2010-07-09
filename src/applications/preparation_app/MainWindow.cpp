@@ -94,6 +94,7 @@
 
 #include "graphics/DragMovementLayer.h"
 
+#include "preparation/AgentsModel.h"
 #include "preparation/FormationModel.h"
 #include "preparation/IntelligencesModel.h"
 #include "preparation/Model.h"
@@ -419,6 +420,10 @@ void MainWindow::LoadExercise()
         model_.Load( config_ );
         loading_ = false;
         SetWindowTitle( false );
+        std::string loadingErrors = model_.agents_.GetLoadingErrors();
+        if( !loadingErrors.empty() )
+            QMessageBox::critical( this, tools::translate( "Application", "SWORD" )
+                                   , ( tr( "Error loading exercise: " ) + "\n" + loadingErrors.c_str() ).ascii() );
     }
     catch( std::exception& e )
     {

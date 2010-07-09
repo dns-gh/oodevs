@@ -118,8 +118,11 @@ void ScenarioEditPage::CreateExercise()
 // -----------------------------------------------------------------------------
 void ScenarioEditPage::OnEdit()
 {
-    if( !exercise_.isEmpty() )
+    if( !exercises_->Exists( editName_->text() ) && !exercise_.isEmpty() )
+    {
+        exercises_->ChangeExerciceParameters( exercise_.ascii() );
         Edit( exercise_ );
+    }
 }
 
 // -----------------------------------------------------------------------------

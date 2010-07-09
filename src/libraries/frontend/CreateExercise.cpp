@@ -48,4 +48,9 @@ namespace frontend
 
         CreateExerciseXml( ( bfs::path( dir, bfs::native ) / "exercise.xml" ).native_file_string(), terrain, model, physical );
     }
+    void EditExerciseParameters( const tools::GeneralConfig& config, const std::string& name, const std::string& terrain, const std::string& model, const std::string& physical )
+    {
+        const std::string dir = config.GetExerciseDir( name );
+        CreateExerciseXml( ( bfs::path( dir, bfs::native ) / "exercise.xml" ).native_file_string(), terrain, model, physical );
+    }
 }

@@ -25,6 +25,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/AutomatComposition.h"
 #include <xeumeuleu/xml.h>
+#include <qmessagebox.h>
 
 using namespace kernel;
 using namespace xml;
@@ -60,6 +61,7 @@ void AgentsModel::Purge()
     tools::Resolver< Agent_ABC >::DeleteAll();
     tools::Resolver< Automat_ABC >::DeleteAll();
     tools::Resolver< Population_ABC >::DeleteAll();
+    errors_ = "";
 }
 
 // -----------------------------------------------------------------------------
@@ -102,12 +104,19 @@ void AgentsModel::CreateAutomat( kernel::Entity_ABC& parent, const kernel::Autom
 // -----------------------------------------------------------------------------
 void AgentsModel::CreateAutomat( xml::xistream& xis, kernel::Entity_ABC& parent, LimitsModel& limits )
 {
-    Automat_ABC* agent = agentFactory_.Create( xis, parent );
-    tools::Resolver< Automat_ABC >::Register( agent->GetId(), *agent );
-    xis >> list( "automat", *this , &AgentsModel::CreateAutomat, *agent, limits )
-        >> list( "unit"   , *this , &AgentsModel::CreateAgent, *agent )
-        >> list( "lima"   , limits, &LimitsModel::CreateLima , *(Entity_ABC*)agent )
-        >> list( "limit"  , limits, &LimitsModel::CreateLimit, *(Entity_ABC*)agent );
+    try
+    {
+        Automat_ABC* agent = agentFactory_.Create( xis, parent );
+        tools::Resolver< Automat_ABC >::Register( agent->GetId(), *agent );
+        xis >> list( "automat", *this , &AgentsModel::CreateAutomat, *agent, limits )
+            >> list( "unit"   , *this , &AgentsModel::CreateAgent, *agent )
+            >> list( "lima"   , limits, &LimitsModel::CreateLima , *(Entity_ABC*)agent )
+            >> list( "limit"  , limits, &LimitsModel::CreateLimit, *(Entity_ABC*)agent );
+    }
+    catch( std::exception& e )
+    {
+        errors_ += std::string( e.what() ) + "\n";
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -145,8 +154,15 @@ kernel::Agent_ABC& AgentsModel::CreateAgent( Automat_ABC& parent, const AgentTyp
 // -----------------------------------------------------------------------------
 void AgentsModel::CreateAgent( xml::xistream& xis, Automat_ABC& parent )
 {
-    Agent_ABC* agent = agentFactory_.Create( xis, parent );
-    tools::Resolver< Agent_ABC >::Register( agent->GetId(), *agent );
+    try
+    {
+        Agent_ABC* agent = agentFactory_.Create( xis, parent );
+        tools::Resolver< Agent_ABC >::Register( agent->GetId(), *agent );
+    }
+    catch( std::exception& e )
+    {
+        errors_ += std::string( e.what() ) + "\n";
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -307,4 +323,13 @@ bool AgentsModel::CheckValidity( ModelChecker_ABC& checker ) const
 void AgentsModel::NotifyUpdated( const kernel::ModelLoaded& model )
 {
     parameters_.Load( model.config_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsModel::GetLoadingError
+// Created: SBO 2010-07-08
+// -----------------------------------------------------------------------------
+std::string AgentsModel::GetLoadingErrors() const
+{
+    return errors_;
 }

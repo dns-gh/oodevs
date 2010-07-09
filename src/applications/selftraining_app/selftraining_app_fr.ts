@@ -3,27 +3,27 @@
     <name>Application</name>
     <message>
         <source>Close Simulations</source>
-        <translation>Arréter les exercices en cours</translation>
+        <translation type="obsolete">Arréter les exercices en cours</translation>
     </message>
     <message>
         <source>Running Simulation(s) detected. Close ?</source>
-        <translation>Une ou plusieurs simulation(s) déjà lancées. Voulez-vous les fermer ? </translation>
+        <translation type="obsolete">Une ou plusieurs simulation(s) déjà lancées. Voulez-vous les fermer ? </translation>
     </message>
     <message>
         <source>Close GUI</source>
-        <translation>Fermer les interfaces</translation>
+        <translation type="obsolete">Fermer les interfaces</translation>
     </message>
     <message>
         <source>Running GUI(s) detected. Close ?</source>
-        <translation>Fermer les interfaces en cours d&apos;exécution?</translation>
+        <translation type="obsolete">Fermer les interfaces en cours d&apos;exécution?</translation>
     </message>
     <message>
         <source>Already running</source>
-        <translation>Application en cours d&apos;exécution</translation>
+        <translation type="obsolete">Application en cours d&apos;exécution</translation>
     </message>
     <message>
         <source>The FrontEnd is already running. Close ?</source>
-        <translation>L&apos;application est déjà lancée. Fermer ? </translation>
+        <translation type="obsolete">L&apos;application est déjà lancée. Fermer ? </translation>
     </message>
     <message>
         <source>SWORD</source>
@@ -334,11 +334,11 @@
     <name>ProcessDialogs</name>
     <message>
         <source>Running training sessions</source>
-        <translation>Sessions d&apos;entraînement en cours</translation>
+        <translation type="unfinished">Sessions d&apos;entraînement en cours</translation>
     </message>
     <message>
         <source>Running training session detected. Close ?</source>
-        <translation>Des sessions d&apos;entraînement sont en cours. Voulez-vous les arrêter ?</translation>
+        <translation type="unfinished">Des sessions d&apos;entraînement sont en cours. Voulez-vous les arrêter ?</translation>
     </message>
 </context>
 <context>
@@ -403,6 +403,10 @@
     <message>
         <source>Model:</source>
         <translation>Modèle:</translation>
+    </message>
+    <message>
+        <source>Exercise parameters:</source>
+        <translation>Parametres d&apos;exercice:</translation>
     </message>
 </context>
 <context>
