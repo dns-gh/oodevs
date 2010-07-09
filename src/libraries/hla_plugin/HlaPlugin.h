@@ -42,7 +42,6 @@ namespace hla
 // =============================================================================
 class HlaPlugin : public dispatcher::Plugin_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -52,9 +51,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Receive                  ( const MsgSimToClient& message );
+    virtual void Receive( const MsgSimToClient& message );
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
-    virtual void NotifyClientLeft         ( dispatcher::ClientPublisher_ABC& client );
+    virtual void NotifyClientLeft( dispatcher::ClientPublisher_ABC& client );
     //@}
 
 private:
@@ -73,8 +72,8 @@ private:
     //@{
     dispatcher::Model& model_;
     std::auto_ptr< AggregateEntityClass > agentClass_;
-    std::auto_ptr< ExtensionFactory >     factory_;
-    std::auto_ptr< FederateFacade >       federate_;
+    std::auto_ptr< ExtensionFactory > factory_;
+    std::auto_ptr< FederateFacade > federate_;
     //@}
 };
 

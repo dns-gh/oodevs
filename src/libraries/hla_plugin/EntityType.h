@@ -23,13 +23,12 @@ namespace hla
 // =============================================================================
 class EntityType
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
              EntityType();
     explicit EntityType( const std::string& value);
-            virtual ~EntityType();
+    virtual ~EntityType();
     //@}
 
     //! @name Operations

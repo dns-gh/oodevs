@@ -25,7 +25,6 @@ namespace hla
 // =============================================================================
 class SilentEntity
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

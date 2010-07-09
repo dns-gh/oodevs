@@ -34,7 +34,6 @@ namespace hla
 // =============================================================================
 class Formation
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

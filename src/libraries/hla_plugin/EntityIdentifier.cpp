@@ -18,7 +18,7 @@ using namespace plugins::hla;
 // -----------------------------------------------------------------------------
 EntityIdentifier::EntityIdentifier()
     : federateIdentifier_( 0, 0 )
-    , entityNumber_( 0 )
+    , entityNumber_      ( 0 )
 {
     // NOTHING
 }
@@ -29,7 +29,7 @@ EntityIdentifier::EntityIdentifier()
 // -----------------------------------------------------------------------------
 EntityIdentifier::EntityIdentifier( unsigned short site, unsigned short application, unsigned short number )
     : federateIdentifier_( site, application )
-    , entityNumber_( number )
+    , entityNumber_      ( number )
 {
     // NOTHING
 }

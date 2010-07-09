@@ -18,7 +18,7 @@ using namespace plugins::hla;
 // -----------------------------------------------------------------------------
 Spatial::Spatial( double latitude, double longitude, float altitude, float speed, float heading )
     : deadReckoningAlgorithm_( 2 ) // FPW
-    , fpw_( latitude, longitude, altitude, speed, heading )
+    , fpw_                   ( latitude, longitude, altitude, speed, heading )
 {
     // NOTHING
 }

@@ -13,7 +13,6 @@
 #include "HlaExtension_ABC.h"
 #include "Formation.h"
 #include "EntityIdentifier.h"
-
 #include "clients_kernel/Updatable_ABC.h"
 #include "protocol/protocol.h"
 
@@ -32,7 +31,7 @@ namespace hla
 
 // =============================================================================
 /** @class  AgentExtension
-    @brief  AgentExtension
+    @brief  Agent extension
 */
 // Created: SBO 2008-02-18
 // =============================================================================
@@ -40,7 +39,6 @@ class AgentExtension : public HlaExtension_ABC
                      , public kernel::Updatable_ABC< MsgUnitAttributes >
                      , public kernel::Updatable_ABC< MsgUnitEnvironmentType >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -64,13 +62,13 @@ private:
 
     //! @name Helpers
     //@{
-    void UpdateEntityType      ( ::hla::UpdateFunctor_ABC& functor ) const;
+    void UpdateEntityType( ::hla::UpdateFunctor_ABC& functor ) const;
     void UpdateEntityIdentifier( ::hla::UpdateFunctor_ABC& functor ) const;
-    void UpdateSpatial         ( ::hla::UpdateFunctor_ABC& functor ) const;
+    void UpdateSpatial( ::hla::UpdateFunctor_ABC& functor ) const;
     void UpdateAggregateMarking( ::hla::UpdateFunctor_ABC& functor ) const;
-    void UpdateAggregateState  ( ::hla::UpdateFunctor_ABC& functor ) const;
-    void UpdateForceIdentifier ( ::hla::UpdateFunctor_ABC& functor ) const;
-    void UpdateComposition     ( ::hla::UpdateFunctor_ABC& functor ) const;
+    void UpdateAggregateState( ::hla::UpdateFunctor_ABC& functor ) const;
+    void UpdateForceIdentifier( ::hla::UpdateFunctor_ABC& functor ) const;
+    void UpdateComposition( ::hla::UpdateFunctor_ABC& functor ) const;
     //@}
 
 private:
@@ -78,7 +76,7 @@ private:
     //@{
     dispatcher::Agent_ABC& holder_;
     EntityIdentifier id_;
-    Formation    formation_;
+    Formation formation_;
     mutable bool spatialChanged_;
     mutable bool compositionChanged_;
 

@@ -31,7 +31,6 @@ namespace hla
 // =============================================================================
 class ExtensionFactory : public dispatcher::ExtensionFactory_ABC< dispatcher::Agent >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

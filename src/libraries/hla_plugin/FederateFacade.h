@@ -32,7 +32,6 @@ namespace hla
 // =============================================================================
 class FederateFacade
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -64,10 +63,10 @@ private:
     //! @name Member data
     //@{
     bool joined_;
-    std::auto_ptr< ::hla::TimeFactory_ABC >         timeFactory_;
+    std::auto_ptr< ::hla::TimeFactory_ABC > timeFactory_;
     std::auto_ptr< ::hla::TimeIntervalFactory_ABC > intervalFactory_;
-    std::auto_ptr< ::hla::RtiAmbassador_ABC >       ambassador_;
-    std::auto_ptr< ::hla::Federate >                federate_;
+    std::auto_ptr< ::hla::RtiAmbassador_ABC > ambassador_;
+    std::auto_ptr< ::hla::Federate > federate_;
     T_Classes classes_;
     //@}
 };

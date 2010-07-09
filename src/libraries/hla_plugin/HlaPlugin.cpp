@@ -14,7 +14,7 @@
 #include "AggregateEntityClass.h"
 #include "dispatcher/Config.h"
 #include "dispatcher/Model.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace plugins::hla;
 

@@ -19,7 +19,6 @@ namespace plugins
 {
 namespace hla
 {
-
 // =============================================================================
 /** @class  ObjectClass_ABC
     @brief  Class definition
@@ -28,7 +27,6 @@ namespace hla
 // =============================================================================
 class ObjectClass_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

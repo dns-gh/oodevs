@@ -26,7 +26,6 @@
 
 using namespace plugins::hla;
 using namespace hla;
-
 using namespace Common;
 using namespace MsgsSimToClient;
 
@@ -81,10 +80,10 @@ void AgentExtension::Serialize( UpdateFunctor_ABC& functor, bool bUpdateAll ) co
 // -----------------------------------------------------------------------------
 void AgentExtension::DoUpdate( const MsgUnitAttributes& attributes )
 {
-    spatialChanged_     = spatialChanged_     || attributes.has_position()
-                                              || attributes.has_hauteur()
-                                              || attributes.has_vitesse()
-                                              || attributes.has_direction();
+    spatialChanged_ = spatialChanged_ || attributes.has_position()
+                                      || attributes.has_hauteur()
+                                      || attributes.has_vitesse()
+                                      || attributes.has_direction();
     compositionChanged_ = compositionChanged_ || attributes.has_dotation_eff_materiel();
 }
 
@@ -104,7 +103,6 @@ void AgentExtension::DoUpdate( const MsgUnitEnvironmentType& attributes )
 void AgentExtension::UpdateEntityType( UpdateFunctor_ABC& functor ) const
 {
     EntityType type( "1 1 225 1" );
-
     Serializer serializer;
     type.Serialize( serializer );
     functor.Visit( AttributeIdentifier( "EntityType" ), serializer );
@@ -172,7 +170,6 @@ void AgentExtension::UpdateForceIdentifier( UpdateFunctor_ABC& functor ) const
         force = 2;
     else if( karma == kernel::Karma::neutral_ )
         force = 3;
-
     Serializer archive;
     archive << force;
     functor.Visit( AttributeIdentifier( "ForceIdentifier" ), archive );
@@ -182,12 +179,13 @@ namespace
 {
     struct SilentEntitiesSerializer
     {
-        SilentEntitiesSerializer() : count_( 0 ) {}
+        SilentEntitiesSerializer()
+            : count_( 0 )
+        {}
         void SerializeEquipment( const dispatcher::Equipment& e )
         {
             ++count_;
             EntityType type( "1 1 225 1" );
-
             SilentEntity entity( type, (unsigned short)e.nNbrAvailable_ );
             entity.Serialize( serializer_ );
         }

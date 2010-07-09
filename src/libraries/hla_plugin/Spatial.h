@@ -25,7 +25,6 @@ namespace hla
 // =============================================================================
 class Spatial
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -59,10 +58,10 @@ private:
             orientation_.Serialize( archive );
             velocityVector_.Serialize( archive );
         }
-        WorldLocation  worldLocation_;
-        bool           isFrozen_;
+        WorldLocation worldLocation_;
+        bool isFrozen_;
         VelocityVector velocityVector_;
-        Orientation    orientation_;
+        Orientation orientation_;
     };
     //@}
 

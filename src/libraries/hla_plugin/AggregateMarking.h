@@ -23,7 +23,6 @@ namespace hla
 // =============================================================================
 class AggregateMarking
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

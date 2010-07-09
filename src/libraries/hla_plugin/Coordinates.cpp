@@ -86,31 +86,24 @@ VelocityVector::VelocityVector( const WorldLocation& location, float rSpeed, flo
 {
     static const double pi = std::acos( -1. );
     geometry::Vector3d base( location.X(), location.Y(), location.Z() );
-
     geometry::Vector3d yaxis( base.Y(), -base.X(), 0 );
     if( yaxis.SquareLength() < 1 )
         yaxis = geometry::Vector3d( 0, 1, 0 );
     yaxis.Normalize();
-
     geometry::Vector3d speed( base );
     speed.Rotate( yaxis, pi / 2 );
-
     geometry::Vector3d zaxis( base );
     zaxis.Normalize();
-    const double angle = - double( heading ) * pi / 180.;
+    const double angle = - static_cast< double >( heading ) * pi / 180.;
     speed.Rotate( zaxis, angle );
-
     speed.Normalize();
-
-    xn_ = float( speed.X() );
-    yn_ = float( speed.Y() );
-    zn_ = float( speed.Z() );
-
+    xn_ = static_cast< float >( speed.X() );
+    yn_ = static_cast< float >( speed.Y() );
+    zn_ = static_cast< float >( speed.Z() );
     speed *= rSpeed; // * 3.6f; // km/h => m/s // $$$$ AGE 2008-04-02: marche mieux....
-
-    xv_ = float( speed.X() );
-    yv_ = float( speed.Y() );
-    zv_ = float( speed.Z() );
+    xv_ = static_cast< float >( speed.X() );
+    yv_ = static_cast< float >( speed.Y() );
+    zv_ = static_cast< float >( speed.Z() );
 }
 
 // -----------------------------------------------------------------------------
@@ -175,9 +168,9 @@ namespace
 // Created: AGE 2008-04-01
 // -----------------------------------------------------------------------------
 Orientation::Orientation()
-    : psi_( 0 )
+    : psi_  ( 0 )
     , theta_( 0 )
-    , phi_( 0 )
+    , phi_  ( 0 )
 {
     // NOTHING
 }
@@ -193,16 +186,13 @@ Orientation::Orientation( const WorldLocation& location, const VelocityVector& v
     geometry::Vector3d forward( velocity.X(), velocity.Y(), velocity.Z() );
     forward.Normalize();
     geometry::Vector3d left = up.CrossProduct( forward );
-
     const geometry::Vector3d x = -up;
     const geometry::Vector3d y = forward;
     const geometry::Vector3d z = -left;
-
     geometry::Vector3d euler = ComputeEulerAngles( x, y, z );
-
-    psi_   = float( euler.X() );
-    theta_ = float( euler.Y() );
-    phi_   = float( euler.Z() );
+    psi_   = static_cast< float >( euler.X() );
+    theta_ = static_cast< float >( euler.Y() );
+    phi_   = static_cast< float >( euler.Z() );
 }
 
 // -----------------------------------------------------------------------------

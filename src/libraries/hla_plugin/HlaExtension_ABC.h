@@ -33,7 +33,6 @@ namespace hla
 // =============================================================================
 class HlaExtension_ABC : public kernel::Extension_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

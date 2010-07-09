@@ -23,12 +23,11 @@ namespace hla
 // =============================================================================
 class EntityIdentifier
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
-     EntityIdentifier();
-     EntityIdentifier( unsigned short site, unsigned short application, unsigned short number );
+             EntityIdentifier();
+             EntityIdentifier( unsigned short site, unsigned short application, unsigned short number );
     virtual ~EntityIdentifier();
     //@}
 

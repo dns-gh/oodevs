@@ -59,7 +59,6 @@ EntityType::EntityType( const std::string& value )
     {
         std::vector< std::string > split;
         boost::algorithm::split( split, value, boost::algorithm::is_any_of( " " ) );
-
         // Impressive for/switch pattern
         for( unsigned i = 0; i < split.size(); ++i )
         {

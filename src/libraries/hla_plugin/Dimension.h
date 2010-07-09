@@ -50,7 +50,9 @@ private:
 private:
     //! @name Member data
     //@{
-    float xAxisLength_, yAxisLength_, zAxisLength_;
+    float xAxisLength_;
+    float yAxisLength_;
+    float zAxisLength_;
     //@}
 };
 

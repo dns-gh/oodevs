@@ -23,13 +23,12 @@ namespace hla
 // =============================================================================
 class WorldLocation
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
-     WorldLocation();
-     WorldLocation( const std::string mgrs, float altitude );
-     WorldLocation( double latitude, double longitude, float altitude );
+             WorldLocation();
+             WorldLocation( const std::string mgrs, float altitude );
+             WorldLocation( double latitude, double longitude, float altitude );
     virtual ~WorldLocation();
     //@}
 
@@ -64,12 +63,11 @@ private:
 // =============================================================================
 class VelocityVector
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
-     VelocityVector();
-     VelocityVector( const WorldLocation& location, float speed, float heading );
+             VelocityVector();
+             VelocityVector( const WorldLocation& location, float speed, float heading );
     virtual ~VelocityVector();
     //@}
 
@@ -87,7 +85,6 @@ public:
     double X() const { return xn_; };
     double Y() const { return yn_; };
     double Z() const { return zn_; };
-
     double VX() const { return xv_; };
     double VY() const { return yv_; };
     double VZ() const { return zv_; };
@@ -109,12 +106,11 @@ private:
 // =============================================================================
 class Orientation
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
-     Orientation();
-     Orientation( const WorldLocation& location, const VelocityVector& velocity );
+             Orientation();
+             Orientation( const WorldLocation& location, const VelocityVector& velocity );
     virtual ~Orientation();
     //@}
 
