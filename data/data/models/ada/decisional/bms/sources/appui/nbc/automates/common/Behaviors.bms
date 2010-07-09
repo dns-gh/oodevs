@@ -101,7 +101,7 @@ include "Appui/Nbc/Automates/Common/Gestion pions detruits.bms"
 ]]--[[// BEH_Ordre_Automate_NBC_FairePosterLePremierEchelon_()
 ]]--[[//
 ]]--[[// Commentaires: comportement starté si ordre inopinné de l'anibas
-]]--[[//                 stopé si ordre poursuivre
+]]--[[//				 stopé si ordre poursuivre
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]}

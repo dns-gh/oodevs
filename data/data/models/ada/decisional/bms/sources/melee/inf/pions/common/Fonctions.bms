@@ -6,7 +6,7 @@ include "bit.lua"
 --[[// ------------------------------------------------------------------------
 ]]--[[// $Created : JCR : 21/04/2004 10:02
 ]]--[[// S_CalculDelai_RecoDebarque:
-]]--[[//         Calcul le temps approximatif pour rejoindre un point debarque
+]]--[[// 		Calcul le temps approximatif pour rejoindre un point debarque
 ]]--[[// ------------------------------------------------------------------------
 ]]--[[// 3km/h -> 8.3m / 10s
 ]]--[[// Au moins 1min d'observation + surete + Alle simple

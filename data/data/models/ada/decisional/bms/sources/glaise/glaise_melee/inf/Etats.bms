@@ -16,7 +16,7 @@ includedFiles["sources/glaise/glaise_melee/inf/Etats.bms"] = true
 --[[// *****************************************************************************
 ]]--[[//  VE_Agressivite_Tir
 ]]--[[//
-]]--[[//    Commentaires:PH [0;1]
+]]--[[//	Commentaires:PH [0;1]
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]motivation_plugin = motivation_plugin or {}

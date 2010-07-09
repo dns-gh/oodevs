@@ -79,12 +79,12 @@ elseif switch_1 == eProgresser then
 ]]--[[//                                                          07/04/2008 16:14:50
 ]]--[[// ****************************************************************************
 ]]--[[/*
-            if( ! DEC_Nuit() )
-            {
-                action ACT_Info_Trace( "Il fait ne pas nuit, l'unité reste cachée" );
+    	    if( ! DEC_Nuit() )
+    	    {
+    		    action ACT_Info_Trace( "Il fait ne pas nuit, l'unité reste cachée" );
                 action ACT_RC( eRC_AttenteConditionFavorablePourInfiltration );
-                behavior BEH_Dep_SePoster() : strength = 1.5;
-            }
+    		    behavior BEH_Dep_SePoster() : strength = 1.5;
+    	    }
 */]]--[[// Fin de la mission --> SUR ORDRE
 ]]if( self.eEtat == eActionEffectuee ) then
                         do

@@ -55,14 +55,14 @@ node "MIS_Pion_MILICE_Provoquer"
                 --[[// Fin de mission
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[/*
-                if(     eAction == eActionEffectuee )    {            eAction=eActionEnCours;                                            {                                        
-                                        DEC_Trace(  "Fin mission de mission reconnaitre un axe"  );                                        
-                                        DEC_RC( eRC_MissionTerminee );
-                                        halt(eActionEffectuee);
-                                    }
-                                  
+				if( 	eAction == eActionEffectuee )    {        	eAction=eActionEnCours;        									{										
+										DEC_Trace(  "Fin mission de mission reconnaitre un axe"  );										
+										DEC_RC( eRC_MissionTerminee );
+										halt(eActionEffectuee);
+									}
+								  
     }
-                */]]                cases_switch_1[1] = true
+				*/]]                cases_switch_1[1] = true
 elseif switch_1 == eFinMission then
                     --[[// Prendre Preciser contact
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eRC_FinMission, } )

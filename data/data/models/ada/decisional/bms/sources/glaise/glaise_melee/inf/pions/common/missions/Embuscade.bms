@@ -104,7 +104,7 @@ include "bit.lua"
                         do
                              do
                                 local _continue = true
-                                local switch_2 = --[[// Realiser abatti        
+                                local switch_2 = --[[// Realiser abatti		
 ]]self._namedParams.eTypeObjet
                                 local cases_switch_2 = {}
                                     if switch_2 == eTypeObjectBouchonMines then
@@ -149,7 +149,7 @@ elseif switch_1 == eActiverObstacle then
                     if( ( F_Pion_GeteniEnCours( myself ) ~= 0 and F_Pion_GeteniEnCours( myself ) ~= nil ) ) then
                         do
                             Activate( self.activations.ACT_Info_Trace, 1, { "unite eni se presente bien", } )
-                            --[[// Si il est a porte de tir, on lance l'assaut                                        
+                            --[[// Si il est a porte de tir, on lance l'assaut    				    				
 ]]if( S_Geometrie_EstProcheLocalisation( S_Eni_Position( F_Pion_GeteniEnCours( myself ) ), S_Obj_Localisation( self.repObj ), 200 ) ) then
                                 do
                                     StartActivateOverride( self, self.activations.ACT_Obj_Pion_INF_Activer, 1, { self.repObj, } )
@@ -177,7 +177,7 @@ elseif switch_1 == ePrendreContact
 --[[// ============================================================================
 ]]--[[// BEH_Pion_Milice_RejoindrePositionTir_Embusc( T_Point ptPos )
 ]]--[[//
-]]--[[//        ptPos : Point sur lequel la section eni est censee arriver
+]]--[[//		ptPos : Point sur lequel la section eni est censee arriver
 ]]--[[//
 ]]--[[// Description: rejoins une position sur laquel on va pouvoir ouvrir le feu
 ]]--[[// ============================================================================
@@ -200,7 +200,7 @@ node "BEH_Dep_Pion_INF_RejoindrePositionTir_Embusc"
 
     activate = function( self )
         self.eAction = self.eAction or eActionEnCours
-        --[[// Cree la position d'observation        
+        --[[// Cree la position d'observation		
 ]]self.ptEmbuscade = self.ptEmbuscade or nil
         if( ModuleBegins() ) then
             do
@@ -219,7 +219,7 @@ node "BEH_Dep_Pion_INF_RejoindrePositionTir_Embusc"
                 do return end
 
             end
---[[// Puis on la rejoint                                
+--[[// Puis on la rejoint								
 ]]        end
 
         if( self.eAction == eActionEffectuee ) then
@@ -274,7 +274,7 @@ node "BEH_Eni_Pion_INF_DetruireEmbuscade"
                 do return end
 
             end
---[[// Si pas d'objet, on active ici la gestion des ROE        
+--[[// Si pas d'objet, on active ici la gestion des ROE		
 ]]        end
 
         if( self.eActionObst == eActionEffectuee ) then

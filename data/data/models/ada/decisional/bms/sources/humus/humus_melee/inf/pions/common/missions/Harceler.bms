@@ -118,7 +118,7 @@ elseif switch_1 == eAttendre then
                                     F_Pion_SeteEtatPhaseMission( myself, eEtatPhaseMission_ProgressionVersLocalisation )
                                 end
 --[[//Le pion est en attente de l'ordre de conduite Poursuivre qui provoque le changement de mission et la fin de l'attente :
-]]--[[//    - F_Pion_GeteEtatPhaseMission( myself ) devient eEtatPhaseMission_ProgressionVersLocalisation
+]]--[[//	- F_Pion_GeteEtatPhaseMission( myself ) devient eEtatPhaseMission_ProgressionVersLocalisation
 ]]--[[//  - DIA_GetInternalState( VE_SePoster) passe de 2 à 0
 ]]                            end
 
@@ -217,7 +217,7 @@ node "BEH_Eni_Pion_VAB_Semparer"
 
         --[[//-----------------------------------------------------------------------------
 ]]--[[//  Rencontre d'un eni lorsque l'on est pas dans la phase d'assaut
-]]--[[//-----------------------------------------------------------------------------        
+]]--[[//-----------------------------------------------------------------------------		
 ]]local lstEnisDansFuseau = DEC_Connaissances_UnitesEnnemiesVivantesDansFuseau()
         for _,ksEni in pairs( lstEnisDansFuseau or {} ) do
         local _continue = true
@@ -435,7 +435,7 @@ elseif switch_1 == eRejoindreAssaut then
 
                     _continue = false
                 --[[//-----------------------------------------------------------------------------
-]]--[[// L'objectif est libre, on peut le rejoindre ..        
+]]--[[// L'objectif est libre, on peut le rejoindre ..		
 ]]--[[//-----------------------------------------------------------------------------
 ]]                cases_switch_1[3] = true
 elseif switch_1 == eRejoindre then
@@ -470,7 +470,7 @@ elseif switch_1 == eRejoindre then
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                 --[[//-----------------------------------------------------------------------------
-]]--[[// Une fois sur place, on fouille les lieux        
+]]--[[// Une fois sur place, on fouille les lieux		
 ]]--[[//-----------------------------------------------------------------------------
 ]]                cases_switch_1[4] = true
 elseif switch_1 == eFouiller then

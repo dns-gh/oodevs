@@ -80,22 +80,22 @@ include "Melee/Inf/Pions/Common/Behaviors - Eni.bms"
 ]]--[[//
 ]]--[[//=============================================================================
 ]]--[[//
-]]--[[//    behavior BEH_Pion_INF_PriseAParti()
-]]--[[//    behavior BEH_Pion_INF_PriseAParti_Message()
+]]--[[//	behavior BEH_Pion_INF_PriseAParti()
+]]--[[//	behavior BEH_Pion_INF_PriseAParti_Message()
 ]]--[[//
 ]]--[[//
-]]--[[//    behavior BEH_Pion_INF_CreerItinerairePosition( T_Position pos )    
+]]--[[//	behavior BEH_Pion_INF_CreerItinerairePosition( T_Position pos )	
 ]]--[[//
-]]--[[//    behavior BEH_Pion_INF_BloquerDeplacement()
+]]--[[//	behavior BEH_Pion_INF_BloquerDeplacement()
 ]]--[[//
-]]--[[//    behavior BEH_Poste_Pion_INF_TomberEnGarde()
-]]--[[//    
-]]--[[//    behavior BEH_Pion_INF_CoupDeSonde( Rep_Point pt,float delai_max )
+]]--[[//	behavior BEH_Poste_Pion_INF_TomberEnGarde()
+]]--[[//	
+]]--[[//	behavior BEH_Pion_INF_CoupDeSonde( Rep_Point pt,float delai_max )
 ]]--[[//
-]]--[[//    behavior BEH_Pion_INF_RejoindreFuseau_EnAttente()
+]]--[[//	behavior BEH_Pion_INF_RejoindreFuseau_EnAttente()
 ]]--[[//
-]]--[[//    behavior BEH_Pion_INF_Detruire( T_ConnaissanceAgent pPion )
-]]--[[//    
+]]--[[//	behavior BEH_Pion_INF_Detruire( T_ConnaissanceAgent pPion )
+]]--[[//	
 ]]--[[//
 ]]--[[//=============================================================================
 ]]
@@ -147,7 +147,7 @@ node "BEH_Defaut"
 
         Activate( self.activations.BEH_MAJ_EtatDefaut, 1, {} )
         Activate( self.activations.BEH_Mot_Pion_INF_AffecterVariablesDEtat, 1, {} )--[[// MAJ de l'etat du pion en fonction de son agressivite
-]]--[[// ------------------------------------------------------------------------    
+]]--[[// ------------------------------------------------------------------------	
 ]]--[[// behavior BEH_Mot_AffecterVariablesDEtat();
 ]]
         --[[// Si totalement detruit...
@@ -290,7 +290,7 @@ node "BEH_Misc_Pion_INF_ModulationVitesse"
     end,
 
     activate = function( self )
-        --[[// Notification de l'ambiance au sein de la compagnie    
+        --[[// Notification de l'ambiance au sein de la compagnie	
 ]]if( F_Pion_GeteEtatAmbiance( myself ) == eEtatAmbiance_Vitesse ) then
             do
                 Activate( self.activations.ACT_Dep_ModulationVitesse, 1, { 0.7, } )

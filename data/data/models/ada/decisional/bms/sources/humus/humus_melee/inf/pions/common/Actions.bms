@@ -556,7 +556,7 @@ elseif switch_1 == eActionObjetTerminee then
         if( ModuleBegins() ) then
             do
                 --[[// if ( !DEC_Agent_PeutDetruireObjet( ? ) )
-]]--[[//         halt( eActionImpossible );
+]]--[[// 		halt( eActionImpossible );
 ]]DEC_Trace( "destruction : debut" )
                 self.actionID = DEC_StartDetruireObjet( self._namedParams.repObj )
                 actionCallbacks[ self.actionID ] = function( arg ) self.eEtatObjet = arg end

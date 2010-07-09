@@ -4,8 +4,8 @@ includedFiles["sources/humus/humus_melee/inf/pions/common/missions/Reconnaissanc
 
 --[[//=============================================================================
 ]]--[[//=============================================================================
-]]--[[//                        Squelette de la mission
-]]--[[//    
+]]--[[//						Squelette de la mission
+]]--[[//	
 ]]--[[//=============================================================================
 ]]node "BEH_Mission_Pion_INF_RecoAxe"
 {

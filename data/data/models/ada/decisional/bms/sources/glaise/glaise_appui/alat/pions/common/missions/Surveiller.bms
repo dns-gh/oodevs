@@ -20,8 +20,8 @@ include "bit.lua"
 ]]--[[//
 ]]--[[// une fois que l'on a fini toutes les zones, on recommence
 ]]--[[//
-]]--[[// Feu :     sur riposte
-]]--[[//          ordre suite a un compte rendu
+]]--[[// Feu : 	sur riposte
+]]--[[//  		ordre suite a un compte rendu
 ]]--[[//
 ]]--[[//------------------------------------------------------------------------------
 ]]node "MIS_Pion_ALAT_Surveiller"

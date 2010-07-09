@@ -46,7 +46,7 @@ etat_Destruction = 1,
 controlePopulation = 1,
 etat_ROE = 1,
 }
---[[// plastron            
+--[[// plastron			
 ]]
 
 --[[// Comportements de la section d infanterie

@@ -266,7 +266,7 @@ node "ACT_Tir_Pion_ASS_SurPosition"
                         end
 
                     end
---[[// {    if( ! DEC_Agent_AutomateEstEmbraye() )        DEC_RC(  eRC_TirAnnule  );    else        DEC_Message(  eRC_TirAnnule  );}
+--[[// {	if( ! DEC_Agent_AutomateEstEmbraye() )	    DEC_RC(  eRC_TirAnnule  );    else        DEC_Message(  eRC_TirAnnule  );}
 ]]
                     self.actionID = DEC_StopAction( self.actionID )
                                         self:SendFeedback( eActionImpossible )

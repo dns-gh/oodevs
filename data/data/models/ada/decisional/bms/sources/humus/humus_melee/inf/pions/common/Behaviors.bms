@@ -72,23 +72,23 @@ include "Humus/Humus_Melee/Inf/Pions/Common/Behaviors - Eni.bms"
 ]]--[[//
 ]]--[[//      behavior BEH_Defaut( id nDummy )
 ]]--[[//
-]]--[[//    behavior BEH_Poste_Pion_INF_TomberEnGarde(bool bDemandeDebarquement)
-]]--[[//    
+]]--[[//	behavior BEH_Poste_Pion_INF_TomberEnGarde(bool bDemandeDebarquement)
+]]--[[//	
 ]]--[[//      behavior BEH_Misc_Pion_INF_MAJ_Mission( T_Mission_Pion typeMission )
 ]]--[[//
-]]--[[//    behavior BEH_Misc_Pion_INF_ModulationVitesse()
+]]--[[//	behavior BEH_Misc_Pion_INF_ModulationVitesse()
 ]]--[[//
-]]--[[//    behavior BEH_Eni_Pion_INF_Tenir( float rTenir )
+]]--[[//	behavior BEH_Eni_Pion_INF_Tenir( float rTenir )
 ]]--[[//
-]]--[[//    behavior BEH_Mot_Pion_INF_AffecterVariablesDEtat()
+]]--[[//	behavior BEH_Mot_Pion_INF_AffecterVariablesDEtat()
 ]]--[[//
-]]--[[//    behavior BEH_MAJ_Pion_INF_AgressiviteTir( float rPH )
+]]--[[//	behavior BEH_MAJ_Pion_INF_AgressiviteTir( float rPH )
 ]]--[[//
 ]]--[[//      behavior BEH_Dep_Pion_INF_RejoindrePositionAppui( T_PionModeleDEC tAmi, T_ConnaissanceAgent repEni, E_TypeProgression typeProg )
 ]]--[[//
 ]]--[[//      behavior BEH_Feu_Pion_INF_TirAppui( T_ConnaissanceAgent ksEni )
-]]--[[//:    selected_boost( 1.1 ),
-]]--[[//    max_instances( 1 )
+]]--[[//:	selected_boost( 1.1 ),
+]]--[[//	max_instances( 1 )
 ]]--[[//
 ]]--[[//      behavior BEH_Dep_Virtuel_ProgressionVers( T_Point point , E_TypeProgression eTypeProgression,  E_TypeItineraire  eTypeIti )
 ]]--[[//
@@ -285,7 +285,7 @@ node "BEH_Misc_Pion_INF_ModulationVitesse"
     end,
 
     activate = function( self )
-        --[[// Notification de l'ambiance au sein de la compagnie    
+        --[[// Notification de l'ambiance au sein de la compagnie	
 ]]if( F_Pion_GeteEtatAmbiance( myself ) == eEtatAmbiance_Vitesse ) then
             do
                 Activate( self.activations.ACT_Dep_ModulationVitesse, 1, { 0.7, } )

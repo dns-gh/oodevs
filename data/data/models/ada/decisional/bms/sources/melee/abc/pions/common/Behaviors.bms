@@ -179,7 +179,7 @@ node "BEH_Dep_Pion_ABC_SeCoordonnerAvec"
 ]]--[[// 
 ]]--[[// Commentaires: se poster sur une ligne de changement d'attitude pendant un 
 ]]--[[//               deplacement.
-]]--[[//                 Toujours face à une direction dangereuse: celle de la mission
+]]--[[//				 Toujours face à une direction dangereuse: celle de la mission
 ]]--[[//               inclus un changement de dispositif --> vers dispositif de surete
 ]]--[[// ******************************************************************************
 ]]}
@@ -337,7 +337,7 @@ self.done_ACT_Obs_ReconnaitrePoint = function( self, _, v ) self.eEtat = v[1] en
 ]]--[[// BEH_Obs_Pion_ABC_SePosterSurBond
 ]]--[[// 
 ]]--[[// Commentaires: se poster sur une limite de bond pendant un deplacement.
-]]--[[//                 Toujours face à une direction dangereuse: celle de la mission. 
+]]--[[//				 Toujours face à une direction dangereuse: celle de la mission. 
 ]]--[[//
 ]]--[[// ******************************************************************************
 ]]}
@@ -794,7 +794,7 @@ node "BEH_Ordre_SePosterPourDeboucher"
     activate = function( self )
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
-]]--[[//-----------------------------------------------------------------------------        
+]]--[[//-----------------------------------------------------------------------------		
 ]]if( ModuleBegins() ) then
             do
                 SetStateVariable( "VE_SePoster", 2 )
@@ -907,7 +907,7 @@ node "BEH_Ordre_LivrerLigneDeboucher"
     activate = function( self )
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
-]]--[[//-----------------------------------------------------------------------------        
+]]--[[//-----------------------------------------------------------------------------		
 ]]if( ModuleBegins() ) then
             do
                 SetStateVariable( "VE_SePoster", 2 )

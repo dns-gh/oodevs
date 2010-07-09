@@ -77,17 +77,17 @@ include "Melee/Inf/Automates/Common/Missions/Behaviors.bms"
 ]]--[[// Silence radio
 ]]--[[//--------------------------------------------------------------------------
 ]]
-        --[[// Lorsque l'automate a une mission    
+        --[[// Lorsque l'automate a une mission	
 ]]--[[// =========================================================================
 ]]if( ( DEC_GetMission( myself ) == 0 or DEC_GetMission( myself ) == nil ) ) then
             do return end
         end
 
         Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )--[[// Gestion des Ordres venant du GTIA
-]]--[[//--------------------------------------------------------------------------          
+]]--[[//-------------------------------------------------------------------------- 	 	
 ]]
         Activate( self.activations.BEH_Ordre_Automate_INF_GererTransporteur, 1, {} )--[[// Gestion de l'ordre de conduite permettant de recuperer les transporteurs
-]]--[[//--------------------------------------------------------------------------          
+]]--[[//-------------------------------------------------------------------------- 	 	
 ]]
     end,
 
@@ -128,9 +128,9 @@ node "BEH_Situation_Automate_INF_FinDeMission"
     end,
 
     activate = function( self )
-        --[[// Revoir     
+        --[[// Revoir	 
 ]]self.lst_Pions_EnTete = self.lst_Pions_EnTete or S_ObtenirTousPionsDe( eEtatEchelon_Premier )
-        --[[// On laisse un pas de temps pour la MAJ de S_PionsEnTete()    
+        --[[// On laisse un pas de temps pour la MAJ de S_PionsEnTete()	
 ]]if( ( #( self.lst_Pions_EnTete ) == 0 or #( self.lst_Pions_EnTete ) == nil ) ) then
             do
                                 do

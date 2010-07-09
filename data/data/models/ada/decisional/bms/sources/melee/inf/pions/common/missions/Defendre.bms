@@ -15,7 +15,7 @@ includedFiles["sources/melee/inf/pions/common/missions/Defendre.bms"] = true
 
 
 --[[//=============================================================================
-]]--[[//                            Squelette de mission
+]]--[[//							Squelette de mission
 ]]--[[//=============================================================================
 ]]
 node "BEH_Mission_Pion_INF_Defendre"
@@ -70,7 +70,7 @@ elseif switch_1 == eInstallerDispositif then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_InstallationDispositif, } )
                     --[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_ArriveSurLocalisation );
 ]]--[[// On surveille la zone en meme temps que l'on prepare
-]]--[[// On fait d'abord debarquer                
+]]--[[// On fait d'abord debarquer				
 ]]StartActivateOverride( self, self.activations.BEH_Dispositif_Pion_VAB_InstallationDefensive, 1, { self.mission.pointADefendre_, self.mission.preparerTerrain_, } )
                     --[[// preparation 5min
 ]]if( self.eAction == eActionEffectuee ) then

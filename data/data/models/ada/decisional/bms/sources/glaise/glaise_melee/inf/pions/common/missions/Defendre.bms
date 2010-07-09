@@ -15,7 +15,7 @@ includedFiles["sources/glaise/glaise_melee/inf/pions/common/missions/Defendre.bm
 
 
 --[[//=============================================================================
-]]--[[//                            Squelette de mission
+]]--[[//							Squelette de mission
 ]]--[[//=============================================================================
 ]]
 node "BEH_Mission_Pion_INF_Defendre"
@@ -44,7 +44,7 @@ node "BEH_Mission_Pion_INF_Defendre"
         self.locADefendre = self.locADefendre or DEC_Geometrie_ConvertirPointEnLocalisation( self.mission.pointADefendre_ )
         if( ModuleBegins() ) then
             do
-                --[[// Verifie que l'on est bien dans son fuseau                            
+                --[[// Verifie que l'on est bien dans son fuseau							
 ]]StartActivateOverride( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, {} )
             end
         end
@@ -81,7 +81,7 @@ elseif switch_1 == eInstallerDispositif then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_InstallationDispositif, } )
                     --[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_ArriveSurLocalisation );
 ]]--[[// On surveille la zone en meme temps que l'on prepare
-]]--[[// On fait d'abord debarquer                
+]]--[[// On fait d'abord debarquer				
 ]]StartActivateOverride( self, self.activations.BEH_Dispositif_Pion_VAB_InstallationDefensive, 1, { self.mission.pointADefendre_, self.mission.preparerTerrain_, } )
                     --[[// preparation 5min
 ]]if( self.eAction == eActionEffectuee ) then

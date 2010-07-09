@@ -4,7 +4,7 @@ includedFiles["sources/appui/rens/pions/rohum/urb/common/missions/Guider.bms"] =
 --[[// *****************************************************************************
 ]]--[[// BEH_Mission_Pion_RENS_OrienterGuider
 ]]--[[//
-]]--[[// Commentaires:    
+]]--[[// Commentaires:	
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]node "BEH_Mission_Pion_RENS_OrienterGuider"

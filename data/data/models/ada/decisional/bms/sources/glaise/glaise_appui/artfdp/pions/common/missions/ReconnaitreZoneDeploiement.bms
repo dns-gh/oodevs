@@ -58,7 +58,7 @@ node "BEH_Pion_ASS_ReconnaitreZoneDeploiement_Mission"
                 if switch_1 == ePreparerMission then
                     --[[//-----------------------------------------------------------------------------
 ]]--[[// Preparation de la mission
-]]--[[//-----------------------------------------------------------------------------            
+]]--[[//-----------------------------------------------------------------------------	        
 ]]if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
@@ -168,8 +168,8 @@ elseif switch_1 == eFinMission then
 --[[// ============================================================================
 ]]--[[// $Created : JCR : 17/03/2005 18:23
 ]]--[[// Installe les zone de deploiement 
-]]--[[//        - Mortier
-]]--[[//        - COBRA
+]]--[[//		- Mortier
+]]--[[//		- COBRA
 ]]--[[// ============================================================================
 ]]}
 

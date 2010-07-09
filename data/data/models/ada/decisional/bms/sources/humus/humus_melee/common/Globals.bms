@@ -35,8 +35,8 @@ include "Humus/Humus_Melee/Abc/Automates/Common/Globals.bms"
 ]]--[[// $$$$ JCR: A mettre dans common ?
 ]]--[[// -------------------------------------------------------------------------
 ]]--[[// S_ChercherPosition_Mine :
-]]--[[//        Cherche une position sur laquelle on peut miner et non genante pour
-]]--[[//        le pion
+]]--[[//		Cherche une position sur laquelle on peut miner et non genante pour
+]]--[[//		le pion
 ]]--[[// -------------------------------------------------------------------------
 ]]--[[//=============================================================================
 ]]--[[// Fonctions
@@ -67,7 +67,7 @@ end
 
 
 --[[// Retourne un ennemi traite par la compagnie
-]]--[[// ------------------------------------------------------------------------    
+]]--[[// ------------------------------------------------------------------------	
 ]]--[[// ------------------------------------------------------------------------
 ]]--[[// rNombrePions_Actifs
 ]]--[[// ------------------------------------------------------------------------
@@ -77,18 +77,18 @@ end
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Recherche parmi une selection de pions, recherche le PE de l'autre fuseau 
 ]]--[[//-----------------------------------------------------------------------------
-]]--[[//    l'unite de tete dans l'autre fuseau garde sa mission
+]]--[[//	l'unite de tete dans l'autre fuseau garde sa mission
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Recherche un pion qui serait le plus susceptible de recevoir un appui
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// S'il n'y a pas suffisamment de pion en premier echelon
-]]--[[//    On cherche l'unite qui a le moins d'appuis
-]]--[[// ----------------------------------------------------------------------------    
+]]--[[//	On cherche l'unite qui a le moins d'appuis
+]]--[[// ----------------------------------------------------------------------------	
 ]]--[[// Renvoie l'appui d'un pion appuye
 ]]--[[// ----------------------------------------------------------------------------
-]]--[[// Mission Soutenir pour l'ABC                        
-]]--[[// Mission Soutenir pour l'ABC                        
-]]--[[// Mission Soutenir pour l'INF                        
+]]--[[// Mission Soutenir pour l'ABC						
+]]--[[// Mission Soutenir pour l'ABC						
+]]--[[// Mission Soutenir pour l'INF						
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// On regarde dans les pions en appuis s'il yen a un qui appuis pPion
 ]]--[[//-----------------------------------------------------------------------------
@@ -101,7 +101,7 @@ end
 ]]--[[// Cherche le 'meilleur' Ennemi a reduire dans la zone 
 ]]--[[// ------------------------------------------------------------------------
 ]]--[[// DEC_Connaissances_UnitesEnnemiesDangereusesPourPion( pionAppui );
-]]--[[// selection selEnis_DansZone = S_PionsDansZone    
+]]--[[// selection selEnis_DansZone = S_PionsDansZone	
 ]]--[[// On traite uniquement les pions dans la zone
 ]]--[[// Au Max 2 intervenants sur un meme ennemi -> 0.5 + ( 1 - S_ )
 ]]--[[//-----------------------------------------------------------------------------
@@ -120,10 +120,10 @@ end
 ]]--[[// Plus le pion est en difficulte, plus on veut l'aider
 ]]--[[// S_Force_Etat( pion.eEtat_ );
 ]]--[[// Force final d'intervention
-]]--[[// ----------------------------------------------------------------------------    
+]]--[[// ----------------------------------------------------------------------------	
 ]]--[[// Cherche un ennemi valide autours dans la zone d'action d'un pion
 ]]--[[// ----------------------------------------------------------------------------
-]]--[[// ----------------------------------------------------------------------------    
+]]--[[// ----------------------------------------------------------------------------	
 ]]--[[// Calcule le nombre de pion possedant la mission @typeMission, et @bEnTete
 ]]--[[// ----------------------------------------------------------------------------
 ]]--[[// ------------------------------------------------------------------------
@@ -131,7 +131,7 @@ end
 ]]--[[// ------------------------------------------------------------------------
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Renvoie vrai si au moins un des pions est en attente en bord du fuseau
-]]--[[//-----------------------------------------------------------------------------    
+]]--[[//-----------------------------------------------------------------------------	
 ]]--[[// case eEtatLima_LC:
 ]]--[[// case eEtatLima_LD:
 ]]--[[// ----------------------------------------------------------------------------    
@@ -143,7 +143,7 @@ end
 ]]--[[// Renvoie vrai si au moins un pion amis est en difficulte
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// ----------------------------------------------------------------------------
-]]--[[// Renvoie point le plus proche de la zone parmis les pooints passés en paramètre     
+]]--[[// Renvoie point le plus proche de la zone parmis les pooints passés en paramètre 	
 ]]--[[// ----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[/*    
@@ -167,7 +167,7 @@ end
 
     //-----------------------------------------------------------------------------
     // Renvoie la liste des pions de premier echelon en mode "Fixe" ou"esquive" 
-    // sur ennemi
+	// sur ennemi
     //-----------------------------------------------------------------------------
     selection S_Dispositif_Automate_ABC_ObtenirPionsPE_EnDifficultes()
     {
@@ -186,7 +186,7 @@ end
     //-----------------------------------------------------------------------------
     // Renvoie la liste des pions succeptibles de soutenir une unite de premier 
     // echelon 
-    // LES 2 CONDITIONS pour etre en mesure de soutenir:
+	// LES 2 CONDITIONS pour etre en mesure de soutenir:
     // 1) Ne pas être détruit
     // 2) Etre un pion de deuxieme echelon
     //-----------------------------------------------------------------------------
@@ -195,9 +195,9 @@ end
         selection listePion = DEC_Automate_PionsSansPC();
         selection listePionDeSoutien;
 
-        with ( x in listePion )
-        {
-            T_PionModeleDEC pion = x;
+	    with ( x in listePion )
+	    {
+		    T_PionModeleDEC pion = x;
 
             if( F_Pion_GeteEtatEchelon( pion ) == eEtatEchelon_Second && F_Pion_GeteEtatDestruction( pion ) == eEtatDestruction_None )
             {
@@ -211,7 +211,7 @@ end
                     }
                 }
             }
-        }
+	    }
         S_Dispositif_Automate_ABC_ObtenirPionsSoutien = listePionDeSoutien;
     }
 
@@ -225,20 +225,20 @@ end
     //-----------------------------------------------------------------------------
     T_PionModeleDEC S_Dispositif_Automate_ABC_ObtenirPionEnSoutienDe( T_Pion pionSoutenu )
     {
-        T_PionModeleDEC pionEnSoutien = nil;
+	    T_PionModeleDEC pionEnSoutien = nil;
 
-        selection listePions = DEC_Automate_PionsSansPC();
-        with( x in listePions )
-        {
-            T_PionModeleDEC pion = x;
-            if( DEC_GetMission(pion) != 0 && DEC_GetMission( pion ).__type_ == T_Mission_Pion_ABC_Soutenir )
+	    selection listePions = DEC_Automate_PionsSansPC();
+	    with( x in listePions )
+	    {
+		    T_PionModeleDEC pion = x;
+		    if( DEC_GetMission(pion) != 0 && DEC_GetMission( pion ).__type_ == T_Mission_Pion_ABC_Soutenir )
             {
                 T_Mission_Pion_ABC_Soutenir mis = DEC_GetMission(pion);
                 if( mis.uniteASoutenir_ == pionSoutenu )
                     pionEnSoutien = pion;
             }   
-        }
-        S_Dispositif_Automate_ABC_ObtenirPionEnSoutienDe = pionEnSoutien;
+	    }
+	    S_Dispositif_Automate_ABC_ObtenirPionEnSoutienDe = pionEnSoutien;
     }
 
 
@@ -247,10 +247,10 @@ end
     //-----------------------------------------------------------------------------
     bool S_Misc_Automate_ABC_PionsEnPosition( selection listePions )
     {
-        S_Misc_Automate_ABC_PionsEnPosition = false; // TEMP
-        
+    	S_Misc_Automate_ABC_PionsEnPosition = false; // TEMP
+    	
         float rNbrePionsPrets = 0;
-        with( x in listePions )
+		with( x in listePions )
         {
             T_PionModeleDEC pion = x;
             if( F_Pion_GeteEtatPhaseMission( pion ) == eEtatPhaseMission_EnPosition )
@@ -272,84 +272,84 @@ end
         {
             T_PionModeleDEC pionEcl = x;
             if( F_Pion_GeteEtatDec( pionEcl ) == eEtatDec_Sauvegarde )
-            {
+			{
                 S_Dispositif_Automate_ABC_EstPEclEnDanger = true;
-                return;
-            }
+				return;
+			}
         }
     }
 
-    //-----------------------------------------------------------------------------
-    // Renvoie vrai si le pion passé en paramètre est un pion INF
-    //-----------------------------------------------------------------------------
-    bool S_Dispositif_Automate_ABC_EstPionInfanterie( T_PionModeleDEC pion )
-    {
-        S_Dispositif_Automate_ABC_EstPionInfanterie = false;
+	//-----------------------------------------------------------------------------
+	// Renvoie vrai si le pion passé en paramètre est un pion INF
+	//-----------------------------------------------------------------------------
+	bool S_Dispositif_Automate_ABC_EstPionInfanterie( T_PionModeleDEC pion )
+	{
+		S_Dispositif_Automate_ABC_EstPionInfanterie = false;
 
-        if( pion.__type_ == SectionInfanterie_HOT  || 
-            pion.__type_ == SectionInfanterie_MILAN ||
-            pion.__type_ == SectionInfanterie )
-            S_Dispositif_Automate_ABC_EstPionInfanterie = true;
-    }
-    
-    //-----------------------------------------------------------------------------
-    // Renvoie vrai si au moins un pion de premier echelon  ou Ecl est detruit
-    //-----------------------------------------------------------------------------
-    bool S_Dispositif_Automate_ABC_EvtPionDetruit()
-    {
-        S_Dispositif_Automate_ABC_EvtPionDetruit = false;
-        
-        selection listePionsPE   = S_ObtenirTousPionsDe( eEtatEchelon_Premier );
-        selection listePionsPEcl = S_ObtenirTousPionsDe( eEtatEchelon_Eclairage );
-        
-        with( x in listePionsPE )
-        {
+		if( pion.__type_ == SectionInfanterie_HOT  || 
+		    pion.__type_ == SectionInfanterie_MILAN ||
+			pion.__type_ == SectionInfanterie )
+			S_Dispositif_Automate_ABC_EstPionInfanterie = true;
+	}
+	
+	//-----------------------------------------------------------------------------
+	// Renvoie vrai si au moins un pion de premier echelon  ou Ecl est detruit
+	//-----------------------------------------------------------------------------
+	bool S_Dispositif_Automate_ABC_EvtPionDetruit()
+	{
+		S_Dispositif_Automate_ABC_EvtPionDetruit = false;
+		
+		selection listePionsPE   = S_ObtenirTousPionsDe( eEtatEchelon_Premier );
+		selection listePionsPEcl = S_ObtenirTousPionsDe( eEtatEchelon_Eclairage );
+		
+		with( x in listePionsPE )
+		{
             T_PionModeleDEC pion = x;
             if( F_Pion_GeteEtatDestruction( pion ) != eEtatDestruction_None )
             {
                 S_Dispositif_Automate_ABC_EvtPionDetruit = true;
                 return;
             }
-        }
-        
-        with( x in listePionsPEcl )
-        {
-             T_PionModeleDEC pion = x;
-             if( F_Pion_GeteEtatDestruction( pion ) != eEtatDestruction_None )
-                 S_Dispositif_Automate_ABC_EvtPionDetruit = true;
-        }
-    }
-    //-----------------------------------------------------------------------------
-    // Renvoie la liste des pions sans mission 
-    // Pour missions rétrogrades
-    //-----------------------------------------------------------------------------
-    selection S_Dispositif_Automate_ABC_PionsSansMission()
-    {
-        selection selTemp;
-        with( x in DEC_Automate_PionsAvecPC() )
-        {
-             T_PionModeleDEC pion = x;
-             if( DEC_GetMission(pion) == 0 )
-                 DIA_PushFront( selTemp, pion );
-        }
-        S_Dispositif_Automate_ABC_PionsSansMission = selTemp;
-    }
-    
-    //-----------------------------------------------------------------------------
+		}
+		
+		with( x in listePionsPEcl )
+		{
+			 T_PionModeleDEC pion = x;
+			 if( F_Pion_GeteEtatDestruction( pion ) != eEtatDestruction_None )
+			 	S_Dispositif_Automate_ABC_EvtPionDetruit = true;
+		}
+	}
+	//-----------------------------------------------------------------------------
+	// Renvoie la liste des pions sans mission 
+	// Pour missions rétrogrades
+	//-----------------------------------------------------------------------------
+	selection S_Dispositif_Automate_ABC_PionsSansMission()
+	{
+		selection selTemp;
+		with( x in DEC_Automate_PionsAvecPC() )
+		{
+			 T_PionModeleDEC pion = x;
+			 if( DEC_GetMission(pion) == 0 )
+			 	DIA_PushFront( selTemp, pion );
+		}
+		S_Dispositif_Automate_ABC_PionsSansMission = selTemp;
+	}
+	
+	//-----------------------------------------------------------------------------
     // Renvoie la liste des pions qui freinent
     //-----------------------------------------------------------------------------
     selection S_Dispositif_Automate_ABC_ObtenirListePionsFreinantDe( E_EtatPion_Echelon eEtatEchelon )
     {
-        selection listeFiltre;
+    	selection listeFiltre;
         selection listePionFreinant 
         = S_Cherche_Automate_Filtre_TypeMission( DEC_Automate_PionsAvecPC(), T_Mission_Pion_ABC_Freiner );
 
-        with ( x in listePionFreinant )
-        {
-            T_PionModeleDEC pion = x;
+	    with ( x in listePionFreinant )
+	    {
+		    T_PionModeleDEC pion = x;
             if( F_Pion_GeteEtatEchelon( pion ) == eEtatEchelon )
                  DIA_PushFront( listeFiltre, pion );
-        }
+	    }
         S_Dispositif_Automate_ABC_ObtenirListePionsFreinantDe = listeFiltre;
     }
     
@@ -357,85 +357,85 @@ end
     // Renvoie le pion ami (meme escadron) le plus proche
     //-----------------------------------------------------------------------------
     T_PionModeleDEC S_Dispositif_ObtenirPionSoutienProcheDe( T_PionModeleDEC pion )
-      {
-          S_Dispositif_ObtenirPionSoutienProcheDe = 0;
-          
-        float rDistanceMax = 1105199104; // M_FLOATMAX()
-        selection listePionsSecondEchelonNonDetruits = S_ObtenirPionsDe( eEtatEchelon_Second, eEtatDestruction_None );
-        with( x in listePionsSecondEchelonNonDetruits )
-        {
-            T_PionModeleDEC pionProche = x;
-            if( pionProche.__type_ == Peloton_XL || pionProche.__type_ == Peloton_AMX )
-            {
-                float rDistanceCourante = DEC_Geometrie_Distance( DEC_Automate_PionPosition( pion ), DEC_Automate_PionPosition( pionProche ) );
-                if( rDistanceCourante < rDistanceMax )
-                {
-                     rDistanceCourante = rDistanceMax;
-                     S_Dispositif_ObtenirPionSoutienProcheDe = pionProche;
-                 }
-             }
-        }
-      }
-      
-      //-----------------------------------------------------------------------------
+  	{
+  	    S_Dispositif_ObtenirPionSoutienProcheDe = 0;
+  	    
+		float rDistanceMax = 1105199104; // M_FLOATMAX()
+		selection listePionsSecondEchelonNonDetruits = S_ObtenirPionsDe( eEtatEchelon_Second, eEtatDestruction_None );
+		with( x in listePionsSecondEchelonNonDetruits )
+		{
+		    T_PionModeleDEC pionProche = x;
+		    if( pionProche.__type_ == Peloton_XL || pionProche.__type_ == Peloton_AMX )
+		    {
+    		    float rDistanceCourante = DEC_Geometrie_Distance( DEC_Automate_PionPosition( pion ), DEC_Automate_PionPosition( pionProche ) );
+    			if( rDistanceCourante < rDistanceMax )
+    			{
+     				rDistanceCourante = rDistanceMax;
+     				S_Dispositif_ObtenirPionSoutienProcheDe = pionProche;
+     			}
+     		}
+		}
+  	}
+  	
+  	//-----------------------------------------------------------------------------
     // Renvoie le pion ami (meme escadron) le plus proche
     //-----------------------------------------------------------------------------
-      selection S_Dispositif_Automate_ABC_PionsPourArmerPointControle()
-      {
-          selection listePionPatrouille      = S_ObtenirPionsOperationnelsFiltre ( Patrouille_EI );
-        selection listePionPatrouilleMilan = S_ObtenirPionsOperationnelsFiltre ( Patrouille_EI_Milan );
-        selection listePionPAD             = S_ObtenirPionsOperationnelsFiltre ( Peloton_AD );
-        
-        selection selTemp;
-        
-        with( pion in listePionPatrouille )
-            DIA_PushFront( selTemp, pion );
-            
-        with( pion in listePionPatrouilleMilan )
-            DIA_PushFront( selTemp, pion );
-            
-        with( pion in listePionPAD )
-            DIA_PushFront( selTemp, pion );
-            
-        S_Dispositif_Automate_ABC_PionsPourArmerPointControle = selTemp;
-    }
-    
-    
-    //-----------------------------------------------------------------------------
+  	selection S_Dispositif_Automate_ABC_PionsPourArmerPointControle()
+  	{
+  	    selection listePionPatrouille      = S_ObtenirPionsOperationnelsFiltre ( Patrouille_EI );
+		selection listePionPatrouilleMilan = S_ObtenirPionsOperationnelsFiltre ( Patrouille_EI_Milan );
+		selection listePionPAD             = S_ObtenirPionsOperationnelsFiltre ( Peloton_AD );
+		
+		selection selTemp;
+		
+		with( pion in listePionPatrouille )
+		    DIA_PushFront( selTemp, pion );
+		    
+		with( pion in listePionPatrouilleMilan )
+		    DIA_PushFront( selTemp, pion );
+		    
+		with( pion in listePionPAD )
+		    DIA_PushFront( selTemp, pion );
+		    
+		S_Dispositif_Automate_ABC_PionsPourArmerPointControle = selTemp;
+	}
+	
+	
+	//-----------------------------------------------------------------------------
     // Renvoie la liste des pions détruits (tactiquement OU totalement) de l'échelon
     // passé en paramètre
     //-----------------------------------------------------------------------------
-    selection S_Dispositif_Automate_ABC_ObtenirPionDetruitsDe( E_EtatPion_Echelon eEtatEchelon )
-    {
-        selection selTemp;
-        selection listePions = S_ObtenirTousPionsDe( eEtatEchelon );
-        with( x in listePions )
-        {
-            T_PionModeleDEC pion = x;
-            if( F_Pion_GeteEtatDestruction( pion ) != eEtatDestruction_None )
-                DIA_PushFront( selTemp, pion );
-        }
-        S_Dispositif_Automate_ABC_ObtenirPionDetruitsDe = selTemp;
-    }
-    
-    //-----------------------------------------------------------------------------
+	selection S_Dispositif_Automate_ABC_ObtenirPionDetruitsDe( E_EtatPion_Echelon eEtatEchelon )
+	{
+	    selection selTemp;
+	    selection listePions = S_ObtenirTousPionsDe( eEtatEchelon );
+	    with( x in listePions )
+	    {
+	        T_PionModeleDEC pion = x;
+	        if( F_Pion_GeteEtatDestruction( pion ) != eEtatDestruction_None )
+	            DIA_PushFront( selTemp, pion );
+	    }
+	    S_Dispositif_Automate_ABC_ObtenirPionDetruitsDe = selTemp;
+	}
+	
+	//-----------------------------------------------------------------------------
     // Renvoie la liste des pions détruits (tactiquement OU totalement) de l'échelon
     // passé en paramètre
     //-----------------------------------------------------------------------------
-    bool S_Dispositif_Automate_ABC_Freiner_PionsDevant( T_CalculLignesAvantArriere resultatCalcul, 
-                                                        E_EtatPion_Echelon         eEtatEchelon )
-    {
-        S_Dispositif_Automate_ABC_Freiner_PionsDevant = false;
-        selection listePions = S_ObtenirTousPionsDe( eEtatEchelon );
-        with( x in listePions )
-        {
-            T_PionModeleDEC pion = x;
-            // ATTENTION le dispositif est inversé, Devant = derriere...
-            if( DEC_Geometrie_CalculerDistanceLigneArriere( resultatCalcul, pion ) > 200 ) // Le pion est devant
-                S_Dispositif_Automate_ABC_Freiner_PionsDevant = true;
-        }
-    }
-    
+	bool S_Dispositif_Automate_ABC_Freiner_PionsDevant( T_CalculLignesAvantArriere resultatCalcul, 
+	                                                    E_EtatPion_Echelon         eEtatEchelon )
+	{
+	    S_Dispositif_Automate_ABC_Freiner_PionsDevant = false;
+	    selection listePions = S_ObtenirTousPionsDe( eEtatEchelon );
+	    with( x in listePions )
+	    {
+	        T_PionModeleDEC pion = x;
+	        // ATTENTION le dispositif est inversé, Devant = derriere...
+	        if( DEC_Geometrie_CalculerDistanceLigneArriere( resultatCalcul, pion ) > 200 ) // Le pion est devant
+	            S_Dispositif_Automate_ABC_Freiner_PionsDevant = true;
+	    }
+	}
+	
     //-----------------------------------------------------------------------------
     // Renvoie vrai si au moins un pion amis est en difficulte
     //-----------------------------------------------------------------------------
@@ -861,7 +861,7 @@ do
                             local rForceEtat = 1
                             local rForce = rForceEtat * S_Pion_ForceActionContre( pionAppui, ksEni_EnCours )
                             rForceAppui = rForce + rForceZone * rForceAppui
-                            DEC_Debug( "        - IntervenirSur: " .. DEC_GetSzName( pion ) .. FloatToString( rForce ) )
+                            DEC_Debug( "		- IntervenirSur: " .. DEC_GetSzName( pion ) .. FloatToString( rForce ) )
                         end
                     end
 

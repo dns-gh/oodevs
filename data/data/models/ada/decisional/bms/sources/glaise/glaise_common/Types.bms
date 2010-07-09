@@ -342,7 +342,7 @@ eEtatPhaseMission_SuitUnite = 39
 eEtatPhaseMission_TransportEnCours = 40
 eEtatPhaseMission_TransportEmbarquement = 41
 eEtatPhaseMission_TransportDebarquement = 42
---[[// le pion va avoir une mission au tic suivant    
+--[[// le pion va avoir une mission au tic suivant	
 ]]
 
 eEtatSituationEnnemi_None = 0

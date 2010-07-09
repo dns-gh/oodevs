@@ -57,14 +57,14 @@ node "MIS_Pion_MILICE_PrendreEtTenir"
                 --[[// Fin de mission
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[/*
-                if(     eAction == eActionEffectuee )    {            eAction=eActionEnCours;                                            {                                        
-                                        DEC_Trace(  "Fin mission de mission reconnaitre un axe"  );                                        
-                                        DEC_RC( eRC_MissionTerminee );
-                                        halt(eActionEffectuee);
-                                    }
-                                  
+				if( 	eAction == eActionEffectuee )    {        	eAction=eActionEnCours;        									{										
+										DEC_Trace(  "Fin mission de mission reconnaitre un axe"  );										
+										DEC_RC( eRC_MissionTerminee );
+										halt(eActionEffectuee);
+									}
+								  
     }
-                */]]                cases_switch_1[1] = true
+				*/]]                cases_switch_1[1] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
@@ -193,7 +193,7 @@ node "BEH_Dep_Pion_Milice_PrendreEtTenir"
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eActionRejoindre = v[1] end
         do
         end
---[[// S'il ya du monde, intimider ...                
+--[[// S'il ya du monde, intimider ...				
 ]]
          do
             local _continue = true

@@ -5,7 +5,7 @@ includedFiles["sources/appui/rens/pions/common/motivations/Etats.bms"] = true
 --[[// *****************************************************************************
 ]]--[[//  VE_Furtivite
 ]]--[[//
-]]--[[//    Commentaires:
+]]--[[//	Commentaires:
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]motivation_plugin = motivation_plugin or {}

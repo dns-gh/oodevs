@@ -119,9 +119,9 @@ self.done_BEH_Mission_Pion_INF_DetruireParCoupDeMain = function( self, _, v ) se
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eSeReplier then
                     --[[/*
-        if(                              eAction == eActionEffectuee)    {                                     eAction=eActionEnCours;         { ePhase = eFinMission; }     }    else    {         behavior BEH_Manoeuvre_RompreContact() return in                              eAction;        return;
+		if(  							eAction == eActionEffectuee)    {         							eAction=eActionEnCours;         { ePhase = eFinMission; }     }    else    {         behavior BEH_Manoeuvre_RompreContact() return in  							eAction;        return;
     }
-        */]]--[[// Fin de mission
+		*/]]--[[// Fin de mission
 ]]self.ePhase = eFinMission
                     _continue = false
                                 cases_switch_1[2] = true

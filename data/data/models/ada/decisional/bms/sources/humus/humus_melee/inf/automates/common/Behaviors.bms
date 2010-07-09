@@ -86,17 +86,17 @@ include "Humus/Humus_Melee/Inf/Automates/Common/Missions/Behaviors.bms"
 ]]--[[// Silence radio
 ]]--[[//--------------------------------------------------------------------------
 ]]
-        --[[// Lorsque l'automate a une mission    
+        --[[// Lorsque l'automate a une mission	
 ]]--[[// =========================================================================
 ]]if( ( DEC_GetMission( myself ) == 0 or DEC_GetMission( myself ) == nil ) ) then
             do return end
         end
 
         Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )--[[// Gestion des Ordres venant du GTIA
-]]--[[//--------------------------------------------------------------------------          
+]]--[[//-------------------------------------------------------------------------- 	 	
 ]]
         Activate( self.activations.BEH_Ordre_Automate_INF_GererTransporteur, 1, {} )--[[// Gestion de l'ordre de conduite permettant de recuperer les transporteurs
-]]--[[//--------------------------------------------------------------------------          
+]]--[[//-------------------------------------------------------------------------- 	 	
 ]]
     end,
 
@@ -137,9 +137,9 @@ node "BEH_Situation_Automate_INF_FinDeMission"
     end,
 
     activate = function( self )
-        --[[// Revoir     
+        --[[// Revoir	 
 ]]self.lst_Pions_EnTete = self.lst_Pions_EnTete or S_ObtenirTousPionsDe( eEtatEchelon_Premier )
-        --[[// On laisse un pas de temps pour la MAJ de S_PionsEnTete()    
+        --[[// On laisse un pas de temps pour la MAJ de S_PionsEnTete()	
 ]]if( ( #( self.lst_Pions_EnTete ) == 0 or #( self.lst_Pions_EnTete ) == nil ) ) then
             do
                                 do
@@ -196,8 +196,8 @@ do
                     do
                     end
 --[[//$$$$GGR : WARNING JCR
-]]--[[//with ( x_pion in DEC_Automate_PionsAvecPC() )                
-]]--[[//    DEC_CDT_DonneOrderConduiteAPion( x_pion, Rep_OrderConduite_RecupererTransporteurs );
+]]--[[//with ( x_pion in DEC_Automate_PionsAvecPC() )				
+]]--[[//	DEC_CDT_DonneOrderConduiteAPion( x_pion, Rep_OrderConduite_RecupererTransporteurs );
 ]]                end
 
                 Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
@@ -226,17 +226,17 @@ node "BEH_Conduite_Automate_HOT_Defaut"
     end,
 
     activate = function( self )
-        --[[// Gestion des pions detruits        
+        --[[// Gestion des pions detruits		
 ]]Activate( self.activations.BEH_Dispositif_Automate_INF_GererLesPionsDetruits, 1, { true, } )
         Activate( self.activations.BEH_Dispositif_Automate_INF_GererReleve, 1, {} )
         Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_INF, 1, {} )--[[//-------------------------------------------------------------------------
 ]]--[[// Coordination du front
-]]--[[//-------------------------------------------------------------------------        
+]]--[[//-------------------------------------------------------------------------		
 ]]
         Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_ABC, 1, {} )
     end,
 
---[[// behavior BEH_Conduite_Automate_Gerer_UniteInconnues();    
+--[[// behavior BEH_Conduite_Automate_Gerer_UniteInconnues();	
 ]]--[[// *****************************************************************************
 ]]--[[// BEH_RC_Automate_GererConditionOperationnelle
 ]]--[[//

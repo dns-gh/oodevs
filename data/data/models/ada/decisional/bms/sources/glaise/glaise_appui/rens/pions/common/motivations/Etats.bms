@@ -5,7 +5,7 @@ includedFiles["sources/glaise/glaise_appui/rens/pions/common/motivations/Etats.b
 --[[// *****************************************************************************
 ]]--[[//  VE_Furtivite
 ]]--[[//
-]]--[[//    Commentaires:
+]]--[[//	Commentaires:
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]motivation_plugin = motivation_plugin or {}

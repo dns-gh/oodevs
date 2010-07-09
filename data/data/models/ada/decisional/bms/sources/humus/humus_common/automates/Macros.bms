@@ -6,10 +6,10 @@ includedFiles["sources/humus/humus_common/automates/Macros.bms"] = true
 ]]--[[// pion au niveau de la MRT.
 ]]--[[// 
 ]]--[[// Cette macro n'est pas censee etre appelee dans les comportements .
-]]--[[//        Il faut appeler 
-]]--[[//            M_ControleCreation_Action
-]]--[[//            M_ControleCreation_Behavior
-]]--[[//         Suivant que le processus de creation se fait dans une action ou dans
+]]--[[//		Il faut appeler 
+]]--[[//			M_ControleCreation_Action
+]]--[[//			M_ControleCreation_Behavior
+]]--[[// 		Suivant que le processus de creation se fait dans une action ou dans
 ]]--[[//      un comportement
 ]]--[[//-----------------------------------------------------------------------------
 ]]

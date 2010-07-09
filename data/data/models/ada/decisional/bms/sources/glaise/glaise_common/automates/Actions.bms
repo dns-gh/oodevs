@@ -130,8 +130,8 @@ include "Glaise/glaise_Common/Automates/Actions/Actions - RC.bms"
 ]]--[[// ACT_Ordre_Suppression
 ]]--[[//
 ]]--[[// Commentaires: Supprime une representation d'un ordre de conduite
-]]--[[//                 Permet de detruire l'ordre apres l'evaluation des 
-]]--[[//                 comportements et non pas au moment ou il est traite
+]]--[[//				 Permet de detruire l'ordre apres l'evaluation des 
+]]--[[//				 comportements et non pas au moment ou il est traite
 ]]--[[// *****************************************************************************
 ]]node "ACT_Ordre_Suppression"
 {

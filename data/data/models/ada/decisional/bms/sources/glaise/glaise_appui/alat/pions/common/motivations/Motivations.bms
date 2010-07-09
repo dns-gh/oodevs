@@ -80,7 +80,7 @@ node "ActivatedByMOT_GarderSesDistances"
 --[[//------------------------------------------------------------------------------
 ]]--[[//  MOT_EtrePrudent
 ]]--[[//
-]]--[[//    Commentaires: 
+]]--[[//	Commentaires: 
 ]]--[[//
 ]]--[[//------------------------------------------------------------------------------
 ]]motivation_plugin.motivations[ "MOT_EtrePrudent" ] =
@@ -208,7 +208,7 @@ node "ActivatedByMOT_ManoeuvrerSurEnis"
 ]]--[[//------------------------------------------------------------------------------
 ]]--[[//  MOT_Manoeuvrer
 ]]--[[//
-]]--[[//    Commentaires:
+]]--[[//	Commentaires:
 ]]--[[//
 ]]--[[// L'intervale pour les manoeuvres de mission est [10, 100]
 ]]--[[//
@@ -266,13 +266,13 @@ node "ActivatedByMOT_Manoeuvrer"
 ]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
 ]]--[[// -----------------------------------------------------------------------------
 ]]--[[//pas de manoeuvre sur les ennemis quand pas de mission
-]]--[[//le DIA_GetMotivation se fait sur le GererEni de la mission lancée        
+]]--[[//le DIA_GetMotivation se fait sur le GererEni de la mission lancée		
 ]]--[[//sinon, utilisation abusive de M_POLY
 ]]--[[//behavior BEH_MOT_ManoeuvrerSurEnis() : strength = DIA_GetMotivation( MOT_ManoeuvrerSurEnis );
 ]]--[[//------------------------------------------------------------------------------
 ]]--[[//  MOT_TirerSurEnis
 ]]--[[//
-]]--[[//    Commentaires: Cette motivation est utilisée pour que l'automate puisse
+]]--[[//	Commentaires: Cette motivation est utilisée pour que l'automate puisse
 ]]--[[//  communiquer avec le pion pour synchroniser les feux
 ]]--[[//------------------------------------------------------------------------------
 ]]motivation_plugin.motivations[ "MOT_TirerSurEnis" ] =
@@ -330,7 +330,7 @@ node "ActivatedByMOT_TirerSurEnis"
 ]]--[[//------------------------------------------------------------------------------
 ]]--[[//  MOT_RiposterSurEnis
 ]]--[[//
-]]--[[//    Commentaires:
+]]--[[//	Commentaires:
 ]]--[[//
 ]]--[[//------------------------------------------------------------------------------
 ]]motivation_plugin.motivations[ "MOT_RiposterSurEnis" ] =
@@ -395,7 +395,7 @@ node "ActivatedByMOT_RiposterSurEnis"
 ]]--[[//------------------------------------------------------------------------------
 ]]--[[//  MOT_SePoster    0 U 3000
 ]]--[[//
-]]--[[//    Commentaires: INTERFACE AVEC AUTOMATES pour coordination
+]]--[[//	Commentaires: INTERFACE AVEC AUTOMATES pour coordination
 ]]--[[//                doit toujours etre comrpis entre valeur mission et cb rencontre
 ]]--[[//------------------------------------------------------------------------------
 ]]motivation_plugin.motivations[ "MOT_SePoster" ] =
@@ -458,7 +458,7 @@ node "ActivatedByMOT_SePoster"
 --[[//------------------------------------------------------------------------------
 ]]--[[//  MOT_SeRecompleter : appartient à 0 U [10000, 100000]
 ]]--[[//
-]]--[[//    Commentaires: Cette motivation doit permettre aux pions ALAT de gerer leur
+]]--[[//	Commentaires: Cette motivation doit permettre aux pions ALAT de gerer leur
 ]]--[[//                carburant afin de survivre.
 ]]--[[//
 ]]--[[//                Cette motivation doit etre comprise entre les motivations de 
@@ -524,7 +524,7 @@ node "ActivatedByMOT_SeRecompleter"
 --[[//------------------------------------------------------------------------------
 ]]--[[//  MOT_PasserEnSilenceRadio
 ]]--[[//
-]]--[[//    Commentaires: INTERFACE AVEC AUTOMATES
+]]--[[//	Commentaires: INTERFACE AVEC AUTOMATES
 ]]--[[//
 ]]--[[//------------------------------------------------------------------------------
 ]]motivation_plugin.motivations[ "MOT_PasserEnSilenceRadio" ] =
@@ -586,7 +586,7 @@ node "ActivatedByMOT_PasserEnSilenceRadio"
 --[[//------------------------------------------------------------------------------
 ]]--[[//  MOT_PasserEnAlerteDeNiveau4
 ]]--[[//
-]]--[[//    Commentaires: INTERFACE AVEC AUTOMATES
+]]--[[//	Commentaires: INTERFACE AVEC AUTOMATES
 ]]--[[//
 ]]--[[//------------------------------------------------------------------------------
 ]]motivation_plugin.motivations[ "MOT_PasserEnAlerteDeNiveau4" ] =
@@ -648,7 +648,7 @@ node "ActivatedByMOT_PasserEnAlerteDeNiveau4"
 --[[//------------------------------------------------------------------------------
 ]]--[[// MOT_PasserEnTirRestreint
 ]]--[[//
-]]--[[//    Commentaires: INTERFACE AVEC AUTOMATES
+]]--[[//	Commentaires: INTERFACE AVEC AUTOMATES
 ]]--[[//
 ]]--[[//------------------------------------------------------------------------------
 ]]motivation_plugin.motivations[ "MOT_PasserEnTirRestreint" ] =
@@ -710,7 +710,7 @@ node "ActivatedByMOT_PasserEnTirRestreint"
 --[[//------------------------------------------------------------------------------
 ]]--[[// MOT_PasserEnTirInterdit
 ]]--[[//
-]]--[[//    Commentaires: INTERFACE AVEC AUTOMATES
+]]--[[//	Commentaires: INTERFACE AVEC AUTOMATES
 ]]--[[//
 ]]--[[//------------------------------------------------------------------------------
 ]]motivation_plugin.motivations[ "MOT_PasserEnTirInterdit" ] =
@@ -772,7 +772,7 @@ node "ActivatedByMOT_PasserEnTirInterdit"
 --[[//------------------------------------------------------------------------------
 ]]--[[// MOT_PasserEnTirLibre
 ]]--[[//
-]]--[[//    Commentaires: INTERFACE AVEC AUTOMATES
+]]--[[//	Commentaires: INTERFACE AVEC AUTOMATES
 ]]--[[//
 ]]--[[//------------------------------------------------------------------------------
 ]]motivation_plugin.motivations[ "MOT_PasserEnTirLibre" ] =

@@ -19,7 +19,7 @@ includedFiles["sources/glaise/glaise_melee/abc/pions/seccharmoyen/Motivations.bm
 --[[// *****************************************************************************
 ]]--[[//  STIM_TirEffectue
 ]]--[[//
-]]--[[//    Commentaires: utilisé dans l'ABC
+]]--[[//	Commentaires: utilisé dans l'ABC
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]motivation_plugin = motivation_plugin or {}
@@ -39,7 +39,7 @@ motivation_plugin.stimuli["STIM_TirEffectue"] = function()
     --[[// *****************************************************************************
 ]]--[[//  MOT_AcquerirEnis
 ]]--[[//
-]]--[[//    Commentaires:
+]]--[[//	Commentaires:
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]    end

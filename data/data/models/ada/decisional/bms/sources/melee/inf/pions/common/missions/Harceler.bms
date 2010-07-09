@@ -18,7 +18,7 @@ include "bit.lua"
 
 
 --[[//=============================================================================
-]]--[[//                            Squelette de la mission
+]]--[[//							Squelette de la mission
 ]]--[[//=============================================================================
 ]]
 node "BEH_Mission_Pion_INF_Harceler"
@@ -53,7 +53,7 @@ node "BEH_Mission_Pion_INF_Harceler"
         self.ptMission = self.ptMission or nil
         if( ModuleBegins() ) then
             do
-                --[[// Determine la position dans le secteur d'arrive            
+                --[[// Determine la position dans le secteur d'arrive			
 ]]self.ptMission = S_Geometrie_BarycentreZone( self.mission.zone_ )
                 --[[// Verifie que l'on est bien dans son fuseau
 ]]StartActivateOverride( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, {} )
@@ -158,10 +158,10 @@ self.done_ACT_Misc_Pion_DelaiInstallation = function( self, _, v ) self.eAction 
                 --[[// L'ensemble du dispositif est installe, on surveiller la zone
 ]]                end
                 if cases_switch_1[3] or switch_1 == eSurveiller then
-                    --[[// Surveille secteur            
+                    --[[// Surveille secteur			
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnControleZone, } )
                     Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )
-                    --[[// action ACT_Pion_VAB_ControleZone( mission.zone_, M_CAPACITE_SURVEILLANCE(), false );                
+                    --[[// action ACT_Pion_VAB_ControleZone( mission.zone_, M_CAPACITE_SURVEILLANCE(), false );				
 ]]Activate( self.activations.BEH_Pion_INF_Detruire_Harceler, 2, { self.mission.zone_, self.mission.natureObjectif_, } )
                     _continue = false
                                 cases_switch_1[4] = true
@@ -204,7 +204,7 @@ node "BEH_Pion_INF_Detruire_Harceler"
         self.nPos = self.nPos or 0
         if( ModuleBegins() ) then
             do
-                --[[// Determine la position dans le secteur d'arrive            
+                --[[// Determine la position dans le secteur d'arrive			
 ]]local eCodeLocRgpt = eNoError
                 self.selPointsAttente = DEC_Geometrie_DecoupeLocalisation( self._namedParams.zone, 3, eCodeLocRgpt )
                 eCodeLocRgpt = self.selPointsAttente.second
@@ -263,7 +263,7 @@ elseif switch_1 == eNoError then
             do return end
         end
 
-        --[[// Met a jour la position de regroupement toute les nuits.                                
+        --[[// Met a jour la position de regroupement toute les nuits.								
 ]]self.bActionNuit = true
                 self.nPos = self.nPos + 1
         if( self.nPos >= 3 ) then

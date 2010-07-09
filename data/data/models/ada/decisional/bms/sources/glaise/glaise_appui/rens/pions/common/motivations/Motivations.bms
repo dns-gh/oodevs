@@ -4,7 +4,7 @@ includedFiles["sources/glaise/glaise_appui/rens/pions/common/motivations/Motivat
 --[[// *****************************************************************************
 ]]--[[//  MOTIVATION MISSION --> ordre de mission strength = 1
 ]]--[[//
-]]--[[//    Commentaires: PAS EN COMPETITON, SPE RENS donc f = 1
+]]--[[//	Commentaires: PAS EN COMPETITON, SPE RENS donc f = 1
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]motivation_plugin = motivation_plugin or {}

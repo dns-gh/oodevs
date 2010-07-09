@@ -115,7 +115,7 @@ include "glaise/glaise_Appui/Alat/Pions/Common/Behaviors/Behaviors - Ambiance.bm
 
         Activate( self.activations.BEH_Lima_GererLimas, 1, {} )--[[// Gestion automatique du vol furtif
 ]]
-        --[[// coordination du feu        
+        --[[// coordination du feu    	
 ]]if( not DEC_Agent_AutomateEstEmbraye() ) then
             SetStateVariable( "VE_Coordination_Tir", 1 )
         else

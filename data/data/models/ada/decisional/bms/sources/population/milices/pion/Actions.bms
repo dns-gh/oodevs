@@ -388,7 +388,7 @@ do
                 self.actionID = self.actionID or 0
         --[[// if ( !DEC_Agent_PeutDetruireObjet( ? ) )
 ]]self.eEtatObjet = self.eEtatObjet or eActionObjetEnCours
-        --[[//         halt( eActionImpossible );
+        --[[// 		halt( eActionImpossible );
 ]]self.bSuspendu = self.bSuspendu or false
         self.bReprise = self.bReprise or false
         if( ModuleBegins() ) then
