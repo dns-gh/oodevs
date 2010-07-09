@@ -598,7 +598,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_PlannedWorkParameter_ToASN )
     CompareLocationToRlyeh( *asnOut.mutable_position() );
     BOOST_CHECK_EQUAL( ObstacleType_DemolitionTargetType_reserved, asnOut.type_obstacle() );
     BOOST_CHECK_EQUAL( 1, asnOut.densite() );
-    BOOST_CHECK_EQUAL( 0, asnOut.tc2() );
+    BOOST_CHECK_EQUAL( 0u, asnOut.tc2() );
     BOOST_CHECK_EQUAL( 2, asnOut.activity_time() );
     TER_World::DestroyWorld();
 }
@@ -613,32 +613,32 @@ BOOST_AUTO_TEST_CASE( TestMIL_PlannedWorkListParameter_ToASN )
 
     try
     {
-    const std::string typeName( "type" );
-    MsgPlannedWorkList asnIn;
-    asnIn.add_elem()->set_type( typeName.c_str() );
-    FillRlyehLocation( *asnIn.mutable_elem(0)->mutable_position());
-    asnIn.mutable_elem(0)->set_type_obstacle( ObstacleType_DemolitionTargetType_reserved );
-    asnIn.mutable_elem(0)->set_densite( 1 );
-    asnIn.mutable_elem(0)->set_tc2( 0 );
-    asnIn.mutable_elem(0)->set_activity_time( 2 );
-    MockMIL_EntityManager_ABC entityManager;
-    MockMIL_ObjectType_ABC objectType;
-    MOCK_EXPECT( entityManager, FindObjectType ).once().returns( boost::cref( objectType ) );
-    // $$$$ _RC_ SBO 2010-04-27: was not verify'ed
-//    FixtureAutomate fixture;
-//    MOCK_EXPECT( entityManager, FindAutomate ).once().returns( fixture.pAutomat_.get() );
-    MIL_PlannedWorkListParameter param( asnIn, entityManager );
-    asnIn.mutable_elem(0)->mutable_position()->mutable_coordinates()->Clear();
-    asnIn.clear_elem();
-    MsgPlannedWorkList asnOut;
-    BOOST_CHECK_EQUAL( true, param.ToGenObjectList( asnOut ) );
-    BOOST_CHECK_EQUAL( 1, asnOut.elem_size() );
-    BOOST_CHECK_EQUAL( typeName, asnOut.elem(0).type() );
-    CompareLocationToRlyeh( *asnOut.mutable_elem(0)->mutable_position() );
-    BOOST_CHECK_EQUAL( ObstacleType_DemolitionTargetType_reserved, asnOut.elem(0).type_obstacle() );
-    BOOST_CHECK_EQUAL( 1, asnOut.elem(0).densite() );
-    BOOST_CHECK_EQUAL( 0, asnOut.elem(0).tc2() );
-    BOOST_CHECK_EQUAL( 2, asnOut.elem(0).activity_time() );
+        const std::string typeName( "type" );
+        MsgPlannedWorkList asnIn;
+        asnIn.add_elem()->set_type( typeName.c_str() );
+        FillRlyehLocation( *asnIn.mutable_elem(0)->mutable_position());
+        asnIn.mutable_elem(0)->set_type_obstacle( ObstacleType_DemolitionTargetType_reserved );
+        asnIn.mutable_elem(0)->set_densite( 1 );
+        asnIn.mutable_elem(0)->set_tc2( 0 );
+        asnIn.mutable_elem(0)->set_activity_time( 2 );
+        MockMIL_EntityManager_ABC entityManager;
+        MockMIL_ObjectType_ABC objectType;
+        MOCK_EXPECT( entityManager, FindObjectType ).once().returns( boost::cref( objectType ) );
+        // $$$$ _RC_ SBO 2010-04-27: was not verify'ed
+    //    FixtureAutomate fixture;
+    //    MOCK_EXPECT( entityManager, FindAutomate ).once().returns( fixture.pAutomat_.get() );
+        MIL_PlannedWorkListParameter param( asnIn, entityManager );
+        asnIn.mutable_elem(0)->mutable_position()->mutable_coordinates()->Clear();
+        asnIn.clear_elem();
+        MsgPlannedWorkList asnOut;
+        BOOST_CHECK_EQUAL( true, param.ToGenObjectList( asnOut ) );
+        BOOST_CHECK_EQUAL( 1, asnOut.elem_size() );
+        BOOST_CHECK_EQUAL( typeName, asnOut.elem(0).type() );
+        CompareLocationToRlyeh( *asnOut.mutable_elem(0)->mutable_position() );
+        BOOST_CHECK_EQUAL( ObstacleType_DemolitionTargetType_reserved, asnOut.elem(0).type_obstacle() );
+        BOOST_CHECK_EQUAL( 1, asnOut.elem(0).densite() );
+        BOOST_CHECK_EQUAL( 0u, asnOut.elem(0).tc2() );
+        BOOST_CHECK_EQUAL( 2, asnOut.elem(0).activity_time() );
     }
     catch( ... )
     {
@@ -740,11 +740,10 @@ BOOST_AUTO_TEST_CASE( TestMIL_PopulationKnowledgeParameter_ToASN )
     MOCK_EXPECT( time, GetCurrentTick ).returns( 1u );
     DEC_Knowledge_Population knowledge; // $$$$ LDC: id == 0... :(
     MOCK_EXPECT( resolver, ResolveKnowledgePopulationFromMessage ).once().returns( &knowledge );
-
     MIL_PopulationKnowledgeParameter param( asnIn, resolver );
     MsgPopulationKnowledge asnOut;
     BOOST_CHECK_EQUAL( true, param.ToPopulationKnowledge( asnOut ) );
-    BOOST_CHECK_EQUAL( 0, asnOut.oid() ); // $$$$ LDC: = knowledge's id
+    BOOST_CHECK_EQUAL( 0u, asnOut.oid() ); // $$$$ LDC: = knowledge's id
 }
 
 // -----------------------------------------------------------------------------
@@ -835,6 +834,4 @@ BOOST_AUTO_TEST_CASE( TestMIL_MissionWithNullParameters )
      //    const MIL_MissionType_ABC& type;
     //FixturePion pion; //MIL_AgentPion pion;
     //MIL_MissionPion missionpion( MIL_PionMissionType::Find( id ), pion, order );
-
 }
-
