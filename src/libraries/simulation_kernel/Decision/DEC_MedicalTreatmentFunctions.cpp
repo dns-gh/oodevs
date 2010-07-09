@@ -11,13 +11,10 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_MedicalTreatmentFunctions.h"
-
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
-#include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
-
 #include "Entities/Objects/MedicalTreatmentAttribute.h"
-
+#include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KS_ObjectInteraction.h"
 
 // -----------------------------------------------------------------------------
@@ -46,15 +43,10 @@ int DEC_MedicalTreatmentFunctions::GetMedicalTreatmentTypes( MIL_AgentPion& call
 {
     assert( knowledge );
     MIL_Object_ABC* pObject = knowledge->GetObjectKnown();
-
     if( !pObject || pObject->IsMarkedForDestruction() )
-    {
         return 0;
-    }
-
     callerAgent.GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( *pObject );
-
-    int id ( 0 );
+    int id = 0;
     //ICI donner la liste des ID des services medicaux que l on peut traiter
     //call.GetResult().SetValue( ( int ) object.GetAttribute< MedicalTreatmentAttribute >().GetMap.GetID() );
     return id;
