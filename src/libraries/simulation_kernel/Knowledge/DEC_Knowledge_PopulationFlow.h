@@ -72,37 +72,35 @@ private:
 public:
     //! @name Types
     //@{
-    typedef std::map< const MIL_Agent_ABC*, DEC_Knowledge_PopulationFlowPart* > T_FlowPartMap;
-    typedef T_FlowPartMap::iterator                                             IT_FlowPartMap;
+    typedef std::map< const MIL_Agent_ABC*, DEC_Knowledge_PopulationFlowPart* >   T_FlowPartMap;
+    typedef T_FlowPartMap::iterator                                              IT_FlowPartMap;
     typedef T_FlowPartMap::const_iterator                                       CIT_FlowPartMap;
     //@}
 
 private:
-    const DEC_Knowledge_Population*  pPopulationKnowledge_;
-    const MIL_PopulationFlow*        pFlowKnown_;
-    const unsigned int                       nID_;
-
-          MT_Vector2D                direction_;
-          MT_Float                   rSpeed_;
-          T_FlowPartMap              flowParts_;
-
-          unsigned int               nNbrAliveHumans_;
-          unsigned int               nNbrDeadHumans_;
-    const MIL_PopulationAttitude*    pAttitude_;
-          bool                       bReconAttributesValid_;
-
-          // Network update
-          bool                       bHumansUpdated_;
-          bool                       bAttitudeUpdated_;
-          bool                       bRealFlowUpdated_;
-          bool                       bFlowPartsUpdated_;
-          bool                       bSpeedUpdated_;
-          bool                       bDirectionUpdated_;
-
-    const PHY_PerceptionLevel*       pPreviousPerceptionLevel_;
-    const PHY_PerceptionLevel*       pCurrentPerceptionLevel_;
-
+    //! @name Member data
+    //@{
+    const DEC_Knowledge_Population* pPopulationKnowledge_;
+    const MIL_PopulationFlow* pFlowKnown_;
+    const unsigned int nID_;
+    MT_Vector2D direction_;
+    MT_Float rSpeed_;
+    T_FlowPartMap flowParts_;
+    unsigned int nNbrAliveHumans_;
+    unsigned int nNbrDeadHumans_;
+    const MIL_PopulationAttitude* pAttitude_;
+    bool bReconAttributesValid_;
+    // Network update
+    bool bHumansUpdated_;
+    bool bAttitudeUpdated_;
+    bool bRealFlowUpdated_;
+    bool bFlowPartsUpdated_;
+    bool bSpeedUpdated_;
+    bool bDirectionUpdated_;
+    const PHY_PerceptionLevel* pPreviousPerceptionLevel_;
+    const PHY_PerceptionLevel* pCurrentPerceptionLevel_;
     static MIL_IDManager idManager_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_PopulationFlow )
