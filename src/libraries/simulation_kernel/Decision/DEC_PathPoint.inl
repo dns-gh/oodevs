@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JVT 02-12-04 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Path/DEC_PathPoint.inl $
-// $Author: Age $
-// $Modtime: 15/02/05 10:57 $
-// $Revision: 4 $
-// $Workfile: DEC_PathPoint.inl $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2002 MASA Group
+//
+// *****************************************************************************
 
 //-----------------------------------------------------------------------------
 // Name: DEC_PathPoint::GetPos
@@ -18,7 +16,6 @@ const MT_Vector2D& DEC_PathPoint::GetPos() const
 {
     return vPos_;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: DEC_PathPoint::GetType
@@ -49,5 +46,3 @@ const TerrainData& DEC_PathPoint::GetObjectTypesToNextPoint() const
 {
     return nObjectTypesToNextPoint_;
 }
-
-

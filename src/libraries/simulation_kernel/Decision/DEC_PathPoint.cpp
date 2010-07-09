@@ -1,27 +1,24 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JVT 02-12-04 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Path/DEC_PathPoint.cpp $
-// $Author: Nld $
-// $Modtime: 1/04/05 9:45 $
-// $Revision: 5 $
-// $Workfile: DEC_PathPoint.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2002 MASA Group
+//
+// *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 #include "DEC_PathPoint.h"
-
 
 //-----------------------------------------------------------------------------
 // Name: DEC_PathPoint constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
 DEC_PathPoint::DEC_PathPoint( const MT_Vector2D& vPos, E_Type type, E_TypePoint nPointType, const char* szDIARepType )
-    : vPos_                   ( vPos )
-    , nType_                  ( type )
-    , nPointType_             ( nPointType )
-    , diaType_                ( szDIARepType )
+    : vPos_      ( vPos )
+    , nType_     ( type )
+    , nPointType_( nPointType )
+    , diaType_   ( szDIARepType )
 {
     // NOTHING
 }
@@ -58,7 +55,6 @@ bool DEC_PathPoint::IsInObject( const TerrainData& data ) const
 {
     return nObjectTypes_.ContainsAll( data );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: DEC_PathPoint::WillBeInObject

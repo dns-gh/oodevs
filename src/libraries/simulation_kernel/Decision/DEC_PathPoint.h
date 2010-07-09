@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JVT 02-12-04 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Path/DEC_PathPoint.h $
-// $Author: Age $
-// $Modtime: 24/02/05 17:24 $
-// $Revision: 4 $
-// $Workfile: DEC_PathPoint.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2002 MASA Group
+//
+// *****************************************************************************
 
 #ifndef __DEC_PathPoint_h_
 #define __DEC_PathPoint_h_
@@ -22,7 +20,6 @@ class DEC_Representations;
 //*****************************************************************************
 class DEC_PathPoint : private boost::noncopyable
 {
-
 public:
     //-------------------------------------------------------------------------
     /** @name Types */
@@ -56,7 +53,6 @@ protected:
     //@}
 
 public:
-
     //! @name Accessors
     //@{
     const MT_Vector2D& GetPos                   () const;
@@ -89,14 +85,15 @@ public:
     //@}
 
 protected:
+    //! @name Member data
+    //@{
     MT_Vector2D vPos_;
     E_Type      nType_;
     E_TypePoint nPointType_;
     TerrainData nObjectTypes_;
     TerrainData nObjectTypesToNextPoint_;
-
-private:
     std::string diaType_;
+    //@}
 };
 
 #include "DEC_PathPoint.inl"
