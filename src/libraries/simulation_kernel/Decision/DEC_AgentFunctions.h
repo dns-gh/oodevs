@@ -19,6 +19,7 @@ class DEC_Knowledge_Agent;
 class DEC_Knowledge_Object;
 class MIL_Agent_ABC;
 class MIL_Mission_ABC;
+class MIL_Object_ABC;
 
 // =============================================================================
 // Created: NLD 2004-03-31
@@ -48,12 +49,12 @@ public:
     static int  GetPosture( const MIL_Agent_ABC& callerAgent );
     static bool IsInCity( const MIL_Agent_ABC& callerAgent );
 
-    static bool CanConstructObject( const MIL_Agent_ABC& callerAgent, const std::string& type );
-    static bool CanBypassObject( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );
-    static bool CanDestroyObject( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );
-    static bool CanMineObject( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );
-    static bool CanActivateObject( boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );
-
+    static bool CanConstructObject          ( const MIL_Agent_ABC& callerAgent, const std::string& type );
+    static bool HasDotationForBuilding      ( MIL_Agent_ABC& callerAgent, const std::string& type );
+    static bool CanBypassObject             ( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );
+    static bool CanDestroyObject            ( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );
+    static bool CanMineObject               ( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );
+    static bool CanActivateObject           ( boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );
     static void EnableDiscreteMode( MIL_Agent_ABC& callerAgent );
     static void DisableDiscreteMode( MIL_Agent_ABC& callerAgent );
 

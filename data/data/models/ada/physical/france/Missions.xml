@@ -903,8 +903,9 @@
     <mission dia-behavior="net.masagroup.testSword.military.tasks.Animate" dia-type="T_Mission_Pion_Animate" id="2048" name="Animate">
       <parameter dia-name="entities" name="entities" optional="false" type="ObjectKnowledgeListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.testSword.military.tasks.Deny" dia-type="T_Mission_Pion_Deny" id="2049" name="Deny Position">
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Interdire" dia-type="T_Mission_Pion_Interdire" id="2049" name="MELEE Interdire Position">
       <parameter dia-name="objectives" name="objectifs" optional="false" type="PointListBM"/>
+      <parameter dia-name="positions" name="positions d'interdiction" optional="false" type="PointListBM"/>
       <parameter dia-name="obstacles" name="obstacles" optional="true" type="GenObjectListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.ObserveDirection" dia-type="T_Mission_Pion_ObserveDirection" id="2050" name="ObserveDirection">
@@ -957,8 +958,9 @@
       <parameter dia-name="entities" name="cible" optional="false" type="AgentKnowledgeListBM"/>
       <parameter dia-name="allies" name="tireur allie" optional="false" type="AgentListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.testSword.military.tasks.Deny" dia-type="T_Mission_Pion_DenyUB" id="2066" name="Deny Urban Block">
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Interdire" dia-type="T_Mission_Pion_InterdireBu" id="2066" name="MELEE Interdire Bloc Urbain">
       <parameter dia-name="objectives" name="objectifs" optional="false" type="UrbanBlockBM"/>
+      <parameter dia-name="positions" name="positions d'interdiction" optional="false" type="PointListBM"/>
       <parameter dia-name="obstacles" name="obstacles" optional="true" type="GenObjectListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.military.platoon.terrorism.tasks.Ambush" dia-type="T_Mission_Pion_Embuscade" id="2067" name="Embuscade">

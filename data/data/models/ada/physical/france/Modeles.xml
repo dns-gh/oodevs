@@ -20,6 +20,7 @@
         <mission name="COMMUNES Suivre"/>
         <mission name="MELEE Illuminer"/>
         <mission name="MELEE S'emparer d'un Bloc Urbain"/>
+        <mission name="MELEE Interdire Bloc Urbain"/>
       </missions>
     </unit>
     <unit dia-type="net.masagroup.sword.military.roles.Platoon" file="BMPion.bms" name="test pion">
@@ -28,8 +29,8 @@
         <mission name="Animate"/>
         <mission name="MELEE Appuyer"/>
         <mission name="COMMUNES Decrocher"/>
-        <mission name="Deny Position"/>
-        <mission name="Deny Urban Block"/>
+        <mission name="MELEE Interdire Position"/>
+        <mission name="MELEE Interdire Bloc Urbain"/>
         <mission name="DestroyAgents"/>
         <mission name="EngageAgents"/>
         <mission name="Flee"/>

@@ -24,6 +24,7 @@ class DEC_Knowledge_Population;
 class MIL_Object_ABC;
 class MIL_ObjectType_ABC;
 class MIL_AgentPion;
+class MIL_Agent_ABC;
 
 // =============================================================================
 // @class  PHY_RoleAction_Objects
@@ -89,6 +90,7 @@ public:
     bool CanBypassWithReinforcement   ( const MIL_ObjectType_ABC& object ) const;
     bool CanDestroyWithReinforcement  ( const MIL_ObjectType_ABC& object ) const;
     bool CanMineWithReinforcement     ( const MIL_ObjectType_ABC& object ) const;
+    bool EnoughtDotationForBuilding   ( const std::string& objectType, MIL_Agent_ABC& pion ) const;
     //@}
 
 private:

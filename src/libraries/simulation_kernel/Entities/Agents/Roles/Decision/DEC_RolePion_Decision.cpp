@@ -447,6 +447,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_Agent_EtatOpsMajeur", &DEC_Decision_ABC::GetMajorOperationalState );
     brain.RegisterFunction( "DEC_Agent_PeutConstruireObjet",
         boost::function< bool ( const std::string& ) >( boost::bind( &DEC_AgentFunctions::CanConstructObject, boost::cref( GetPion() ), _1 ) ) );
+    brain.RegisterFunction( "DEC_Agent_ADotationPourConstruireObjet",
+        boost::function< bool ( const std::string& ) >( boost::bind( &DEC_AgentFunctions::HasDotationForBuilding, boost::ref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Agent_PeutConstruireContournementObjet",
         boost::function< bool ( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_AgentFunctions::CanBypassObject, boost::cref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Agent_PeutDetruireObjet",

@@ -18,6 +18,7 @@
 #include "Entities/Agents/Roles/Reinforcement/PHY_RoleInterface_Reinforcement.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/ConstructionAttribute.h"
 #include "Entities/Objects/MineAttribute.h"
 #include "Entities/Objects/BuildableCapacity.h"
@@ -37,11 +38,13 @@
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "PHY_RoleAction_Objects_DataComputer.h"
 #include "PHY_RoleAction_Objects_CapabilityComputer.h"
-
+#include "simulation_kernel/AlgorithmsFactories.h"
+#include "simulation_kernel/DotationComputer_ABC.h"
+#include "simulation_kernel/DotationComputerFactory_ABC.h"
 #include "simulation_kernel/OnComponentFunctor_ABC.h"
 #include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
 #include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
-#include "simulation_kernel/AlgorithmsFactories.h"
+
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RoleAction_Objects )
 
@@ -603,6 +606,19 @@ bool PHY_RoleAction_Objects::CanMineWithReinforcement( const MIL_ObjectType_ABC&
     return capabilityComputer.HasCapability();
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Objects::EnoughtDotationForBuilding
+// Created: LMT 2010-07-07
+// -----------------------------------------------------------------------------
+bool PHY_RoleAction_Objects::EnoughtDotationForBuilding( const std::string& objectType, MIL_Agent_ABC& pion ) const
+{
+    const MIL_ObjectType_ABC& type = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObjectType( objectType );
+    const PHY_DotationCategory* pDotationCategory = type.GetCapacity< BuildableCapacity >()->GetDotationCategory();
+    
+    std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( pion.GetAlgorithms().dotationComputerFactory_->Create() );
+    pion.Execute( *dotationComputer );
+    return dotationComputer->GetDotationValue( *pDotationCategory ) > 0;
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Objects::GetInitialReturnCode
