@@ -31,7 +31,6 @@
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "protocol/protocol.h"
 #include "geometry/Point2.h"
-
 #include <boost/bind.hpp>
 #include <directia/Brain.h>
 
@@ -50,23 +49,22 @@ ScriptRefs::ScriptRefs( directia::Brain& brain  )
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: DEC_Decision::RegisterCommonUserFunctions
-// Created: LDC 2009-04-22
-// -----------------------------------------------------------------------------
 namespace DEC_DecisionImpl
 {
 
-void RegisterCommonUserFunctions( directia::Brain& brain, unsigned int id )
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::RegisterGeometryFunctions
+// Created: SLI 2010-07-09
+// -----------------------------------------------------------------------------
+void RegisterGeometryFunctions( directia::Brain& brain )
 {
-    // Geometry
     brain.RegisterFunction( "DEC_Geometrie_DecouperListePoints",                &DEC_GeometryFunctions::SplitListPoints );
     brain.RegisterFunction( "DEC_Geometrie_CalculerPositionCouverture",         &DEC_GeometryFunctions::ComputeCoverPosition );
     brain.RegisterFunction( "DEC_Geometrie_CalculerBarycentreAgents",           &DEC_GeometryFunctions::ComputeAgentsBarycenter );
     brain.RegisterFunction( "DEC_Geometrie_PositionTranslate",                  &DEC_GeometryFunctions::TranslatePosition );
     brain.RegisterFunction( "DEC_Geometrie_PositionTranslateDir",               &DEC_GeometryFunctions::TranslatePositionInDirection );
     brain.RegisterFunction( "DEC_Geometrie_PositionsEgales",                    &DEC_GeometryFunctions::ComparePositions );
-    brain.RegisterFunction( "DEC_Geometrie_Distance",                           &DEC_GeometryFunctions::Distance );//@TODO MGD Replace by ComputeDistance on shared_ptr
+    brain.RegisterFunction( "DEC_Geometrie_Distance",                           &DEC_GeometryFunctions::Distance ); //@TODO MGD Replace by ComputeDistance on shared_ptr
     brain.RegisterFunction( "DEC_Geometrie_ConvertirPointEnLocalisation",       &DEC_GeometryFunctions::ConvertPointToLocalisation );
     brain.RegisterFunction( "DEC_Geometrie_EstPointDansLocalisation",           &DEC_GeometryFunctions::IsPointInsideLocalisation );
     brain.RegisterFunction( "DEC_Geometrie_CreerLocalisation",                  &DEC_GeometryFunctions::CreateLocalisation );
@@ -95,17 +93,35 @@ void RegisterCommonUserFunctions( directia::Brain& brain, unsigned int id )
     brain.RegisterFunction( "DEC_Geometrie_ProchainObjectifDansFuseau",         &DEC_GeometryFunctions::GetNextObjectiveInFuseau );
     brain.RegisterFunction( "DEC_Geometrie_DistanceBetweenPoints",              &DEC_GeometryFunctions::ComputeDistance );
     brain.RegisterFunction( "DEC_Geometrie_AreaSize",                           &DEC_GeometryFunctions::ComputeAreaSize );
+}
 
-    //BMArea
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::RegisterAreaFunctions
+// Created: SLI 2010-07-09
+// -----------------------------------------------------------------------------
+void RegisterAreaFunctions( directia::Brain& brain )
+{
     brain.RegisterFunction( "DEC_BMArea_Barycenter", &DEC_GeometryFunctions::ComputeBarycenter );
+}
 
-    // Time management
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::RegisterTimeManagementFunctions
+// Created: SLI 2010-07-09
+// -----------------------------------------------------------------------------
+void RegisterTimeManagementFunctions( directia::Brain& brain )
+{
     // $$$$ AGE 2007-10-11: Un seul temps
-    brain.RegisterFunction( "DEC_TempsSim",        &DEC_DIAFunctions::GetSimTime );
-    brain.RegisterFunction( "DEC_TempsReel",       &DEC_DIAFunctions::GetRealTime );
-    brain.RegisterFunction( "DEC_Nuit",            &DEC_DIAFunctions::IsNight );
+    brain.RegisterFunction( "DEC_TempsSim",  &DEC_DIAFunctions::GetSimTime );
+    brain.RegisterFunction( "DEC_TempsReel", &DEC_DIAFunctions::GetRealTime );
+    brain.RegisterFunction( "DEC_Nuit",      &DEC_DIAFunctions::IsNight );
+}
 
-    // Parameters copy
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::RegisterParametersCopyFunctions
+// Created: SLI 2010-07-09
+// -----------------------------------------------------------------------------
+void RegisterParametersCopyFunctions( directia::Brain& brain )
+{
     brain.RegisterFunction( "DEC_Copie_Point",                                      &DEC_DIAFunctions::CopyPoint );
     brain.RegisterFunction( "DEC_Copie_Point_Mission",                              &DEC_DIAFunctions::CopyPointMission );
     brain.RegisterFunction( "DEC_Copie_ListePoints_Mission",                        &DEC_DIAFunctions::CopyPathMission );
@@ -116,49 +132,97 @@ void RegisterCommonUserFunctions( directia::Brain& brain, unsigned int id )
     brain.RegisterFunction( "DEC_Copie_LocalisationDansListeLocalisations_Mission", &DEC_DIAFunctions::CopyLocalisationToLocationListMission );
     brain.RegisterFunction( "DEC_UserTypeList_PushBack_Mission",                    &DEC_DIAFunctions::CopyKnowledgeObjectToKnowledgeObjectListMission );
     brain.RegisterFunction( "DEC_GenObjectList_PushBack_Mission",                   &DEC_DIAFunctions::CopyGenObjectToGenObjectListMission );
+}
 
-    // User type lists manipulation
-    brain.RegisterFunction( "DEC_ListePoints_GetAt",     &DEC_DIAFunctions::ListPoint_GetAt );
-    brain.RegisterFunction( "DEC_ListePoints_Size",      &DEC_DIAFunctions::ListPoint_Size );
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::RegisterListsManipulationFunctions
+// Created: SLI 2010-07-09
+// -----------------------------------------------------------------------------
+void RegisterListsManipulationFunctions( directia::Brain& brain )
+{
+    brain.RegisterFunction( "DEC_ListePoints_GetAt", &DEC_DIAFunctions::ListPoint_GetAt );
+    brain.RegisterFunction( "DEC_ListePoints_Size",  &DEC_DIAFunctions::ListPoint_Size );
+}
 
-    // Logistic
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::RegisterLogisticFunctions
+// Created: SLI 2010-07-09
+// -----------------------------------------------------------------------------
+void RegisterLogisticFunctions( directia::Brain& brain )
+{
     brain.RegisterFunction( "DEC_NecessiteEvacuationBlesses",            &DEC_LogisticFunctions::HasWoundedHumansToEvacuate );
     brain.RegisterFunction( "DEC_EvacuerBlessesVersTC2",                 &DEC_LogisticFunctions::EvacuateWoundedHumansToTC2 );
     brain.RegisterFunction( "DEC_InterdireEvacuationAutomatiqueBlesses", &DEC_LogisticFunctions::ForbidWoundedHumansAutoEvacuation );
     brain.RegisterFunction( "DEC_AutoriserEvacuationAutomatiqueBlesses", &DEC_LogisticFunctions::AllowWoundedHumansAutoEvacuation );
+}
 
-    // Gen objects
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::RegisterEngineerObjectsFunctions
+// Created: SLI 2010-07-09
+// -----------------------------------------------------------------------------
+void RegisterEngineerObjectsFunctions( directia::Brain& brain )
+{
     brain.RegisterFunction( "DEC_GenObject_Type",                  &DEC_ObjectFunctions::GetGenObjectType );
     brain.RegisterFunction( "DEC_GenObject_Localisation",          &DEC_ObjectFunctions::GetGenObjectLocalisation );
     brain.RegisterFunction( "DEC_GenObject_Densite",               &DEC_Gen_Object::GetDensity );
     brain.RegisterFunction( "DEC_GenObject_TypeObstacleManoeuvre", &DEC_ObjectFunctions::GetGenObjectReservedObstacle );
     brain.RegisterFunction( "DEC_GenObject_TC2",                   &DEC_ObjectFunctions::GetGenObjectTC2 );
     brain.RegisterFunction( "DEC_GenObject_DelaiActiviteMines",    &DEC_Gen_Object::GetMinesActivityTime );
+}
 
-    // Objects
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::RegisterObjectsFunctions
+// Created: SLI 2010-07-09
+// -----------------------------------------------------------------------------
+void RegisterObjectsFunctions( directia::Brain& brain )
+{
     brain.RegisterFunction( "S_TypeObject_ToString", &DEC_ObjectFunctions::ConvertTypeObjectToString );
+}
 
-    // Objectives
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::RegisterObjectivesFunctions
+// Created: SLI 2010-07-09
+// -----------------------------------------------------------------------------
+void RegisterObjectivesFunctions( directia::Brain& brain )
+{
     brain.RegisterFunction( "DEC_Objectif_Localisation", &DEC_Objective::GetLocalisation );
     brain.RegisterFunction( "DEC_Objectif_Flag",         &DEC_Objective::Flag );
+}
 
-    //Rep_Points
-    brain.RegisterFunction( "DEC_GetRepPoint",       &DEC_PathFunctions::GetRepPoint );
-    brain.RegisterFunction( "DEC_IsAvantPoint",      &DEC_PathFunctions::IsAvantPoint );
-    brain.RegisterFunction( "DEC_IsPoint",           &DEC_PathFunctions::IsPoint );
-    brain.RegisterFunction( "DEC_GetTypePoint",      &DEC_PathFunctions::GetTypePoint );
-    brain.RegisterFunction( "DEC_GetDestPoint",      &DEC_PathFunctions::GetDestPoint );
-    brain.RegisterFunction( "DEC_GetTypeLimaPoint",  &DEC_PathFunctions::GetTypeLimaPoint );
-    brain.RegisterFunction( "DEC_GetLimaPoint",      &DEC_PathFunctions::GetLimaPoint );
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::RegisterSpecificPointsFunctions
+// Created: SLI 2010-07-09
+// -----------------------------------------------------------------------------
+void RegisterSpecificPointsFunctions( directia::Brain& brain )
+{
+    brain.RegisterFunction( "DEC_GetRepPoint",      &DEC_PathFunctions::GetRepPoint );
+    brain.RegisterFunction( "DEC_IsAvantPoint",     &DEC_PathFunctions::IsAvantPoint );
+    brain.RegisterFunction( "DEC_IsPoint",          &DEC_PathFunctions::IsPoint );
+    brain.RegisterFunction( "DEC_GetTypePoint",     &DEC_PathFunctions::GetTypePoint );
+    brain.RegisterFunction( "DEC_GetDestPoint",     &DEC_PathFunctions::GetDestPoint );
+    brain.RegisterFunction( "DEC_GetTypeLimaPoint", &DEC_PathFunctions::GetTypeLimaPoint );
+    brain.RegisterFunction( "DEC_GetLimaPoint",     &DEC_PathFunctions::GetLimaPoint );
+}
 
-    // __type_
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::RegisterTypeFunctions
+// Created: SLI 2010-07-09
+// -----------------------------------------------------------------------------
+void RegisterTypeFunctions( directia::Brain& brain )
+{
     brain.RegisterFunction( "GetType", &MIL_Mission_ABC::GetDIAType );
     brain.RegisterFunction( "GetType", &DEC_Decision_ABC::GetDIAType );
     brain.RegisterFunction( "GetType", &DEC_RolePion_Decision::GetDIAType );
     brain.RegisterFunction( "GetType", &DEC_AutomateDecision::GetDIAType );
     brain.RegisterFunction( "GetType", &DEC_PathPoint::GetDIAType );
+}
 
-    // Mission parameters
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::RegisterMissionParametersFunctions
+// Created: SLI 2010-07-09
+// -----------------------------------------------------------------------------
+void RegisterMissionParametersFunctions( directia::Brain& brain )
+{
     brain.RegisterFunction( "DEC_AssignMissionPionParameter",                &MIL_MissionParameterFactory::SetPawnParameter );
     brain.RegisterFunction( "DEC_AssignMissionAutomatParameter",             &MIL_MissionParameterFactory::SetAutomatParameter );
     brain.RegisterFunction( "DEC_AssignMissionBoolParameter",                &MIL_MissionParameterFactory::SetBoolParameter );
@@ -181,17 +245,29 @@ void RegisterCommonUserFunctions( directia::Brain& brain, unsigned int id )
 
     directia::ScriptRef initParameterFunction = brain.GetScriptFunction( "InitTaskParameter" );
     brain.RegisterFunction( "DEC_FillMissionParameters",
-        boost::function< void( const directia::ScriptRef&, boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_MiscFunctions::FillMissionParameters, boost::ref(brain), initParameterFunction, _1 , _2 ) ) );
+        boost::function< void( const directia::ScriptRef&, boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_MiscFunctions::FillMissionParameters, boost::ref( brain ), initParameterFunction, _1 , _2 ) ) );
+}
 
-    // Debug
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::RegisterDebugFunctions
+// Created: SLI 2010-07-09
+// -----------------------------------------------------------------------------
+void RegisterDebugFunctions( directia::Brain& brain, unsigned int id )
+{
     brain.RegisterFunction( "DEC_PointToString",      &DEC_DIAFunctions::PointToString );
     brain.RegisterFunction( "DEC_DirectionToString",  &DEC_DIAFunctions::DirectionToString );
     brain.RegisterFunction( "DEC_ItineraireToString", &DEC_DIAFunctions::PathToString );
     brain.RegisterFunction( "BreakForDebug",
         boost::function< void( const std::string& ) >( boost::bind( &DEC_DIAFunctions::BreakForDebug, id ,_1 ) ) );
+}
 
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::RegisterTelepathyFunctions
+// Created: SLI 2010-07-09
+// -----------------------------------------------------------------------------
+void RegisterTelepathyFunctions( directia::Brain& brain )
+{
     brain.RegisterFunction( "SetStateVariable", &DEC_Decision_ABC::SetStateVariable );
-
     brain.RegisterFunction( "SetambianceMission_", &DEC_Decision_ABC::SetAmbianceMission );
     brain.RegisterFunction( "SetbAppuieFreinage_", &DEC_Decision_ABC::SetAppuieFreinage );
     brain.RegisterFunction( "GetbDemandeOrdreConduitePoursuivre_", &DEC_Decision_ABC::GetDemandeOrdreConduitePoursuivre );
@@ -217,20 +293,46 @@ void RegisterCommonUserFunctions( directia::Brain& brain, unsigned int id )
     brain.RegisterFunction( "GetporteeAction_", &DEC_Decision_ABC::GetPorteeAction );
     brain.RegisterFunction( "SetporteeAction_", &DEC_Decision_ABC::SetPorteeAction );
     brain.RegisterFunction( "GetrNiveauAlerteRavitaillement_", &DEC_Decision_ABC::GetNiveauAlerteRavitaillement );
+    brain.RegisterFunction( "Getpoint_", &DEC_PathPoint::GetPos );
+}
 
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::RegisterItineraryFunctions
+// Created: SLI 2010-07-09
+// -----------------------------------------------------------------------------
+void RegisterItineraryFunctions( directia::Brain& brain )
+{
     brain.RegisterFunction( "DEC_Itineraire_DernierPoint", &DEC_Decision_ABC::GetLastPointOfPath );
     brain.RegisterFunction( "DEC_Itineraire_ExtrapolerPosition" , &DEC_Decision_ABC::ExtrapolatePosition );
+}
 
-    //Representations
-    brain.RegisterFunction( "Getpoint_", &DEC_PathPoint::GetPos );
-
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::RegisterCommonUserFunctions
+// Created: LDC 2009-04-22
+// -----------------------------------------------------------------------------
+void RegisterCommonUserFunctions( directia::Brain& brain, unsigned int id )
+{
+    RegisterGeometryFunctions( brain );
+    RegisterAreaFunctions( brain );
+    RegisterTimeManagementFunctions( brain );
+    RegisterParametersCopyFunctions( brain );
+    RegisterListsManipulationFunctions( brain );
+    RegisterLogisticFunctions( brain );
+    RegisterEngineerObjectsFunctions( brain );
+    RegisterObjectsFunctions( brain );
+    RegisterObjectivesFunctions( brain );
+    RegisterSpecificPointsFunctions( brain );
+    RegisterTypeFunctions( brain );
+    RegisterMissionParametersFunctions( brain );
+    RegisterDebugFunctions( brain, id );
+    RegisterTelepathyFunctions( brain );
+    RegisterItineraryFunctions( brain );
     DEC_TelepathyFunctions::Register( brain );
-
     MIL_FragOrder::Register( brain );
 }
 
-typedef void (*T_Function)( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element );
-typedef void (*T_FunctionBM)( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element );
+typedef void ( *T_Function )( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element );
+typedef void ( *T_FunctionBM )( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element );
 
 void BoolFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -603,9 +705,13 @@ public:
         : brain_                  ( brain )
         , refMission_             ( refMission )
         , knowledgeCreateFunction_( knowledgeCreateFunction )
-    {}
+    {
+        // NOTHING
+    }
     virtual ~RegisterMissionParameterVisitor()
-    {}
+    {
+        // NOTHING
+    }
 
     virtual void Accept( const std::string& dianame, const MIL_ParameterType_ABC& type, MIL_MissionParameter_ABC& element )
     {
