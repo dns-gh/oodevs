@@ -160,7 +160,7 @@ std::string Mapping::GetSuperiorId( const std::string& type ) const
         unknownKeys_.insert( type );
         return type;
     }
-    return operator[]( it->second );
+    return it->second;
 }
 
 // -----------------------------------------------------------------------------
@@ -170,4 +170,31 @@ std::string Mapping::GetSuperiorId( const std::string& type ) const
 bool Mapping::IsCommandPost( const std::string& type ) const
 {
     return ( commandPosts_.find( type ) != commandPosts_.end() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Mapping::GetMissionParameterName
+// Created: LDC 2010-07-09
+// -----------------------------------------------------------------------------
+std::string Mapping::GetMissionParameterName( int index ) const
+{
+    return "Location";
+}
+
+// -----------------------------------------------------------------------------
+// Name: Mapping::GetMissionParameterType
+// Created: LDC 2010-07-09
+// -----------------------------------------------------------------------------
+std::string Mapping::GetMissionParameterType( int index ) const
+{
+    return "point";
+}
+
+// -----------------------------------------------------------------------------
+// Name: Mapping::GetMissionParameterLocationType
+// Created: LDC 2010-07-09
+// -----------------------------------------------------------------------------
+std::string Mapping::GetMissionParameterLocationType( int index ) const
+{
+    return "point";
 }

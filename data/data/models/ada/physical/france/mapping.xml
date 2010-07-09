@@ -16,4 +16,8 @@
   <unit key="unit_reference" value="Section CDT CIE INF AMX10P" superior="Un automate INF"/>
   <unit key="08fd83a1-da9b-4cd1-ad36-f4963d3dafcb" value="Section CDT CIE INF AMX10P" superior="Compagnie INF AMX 10 P" command-post="true"/>
   <unit key="af04076c-2c5f-490e-a17b-a4fa99a4765a" value="Peloton LECLERC CDP OFF" superior="Escadron de Chars LECLERC" command-post="true"/>
+
+  <association key="ce73c4d2-8afb-4fb4-b5ac-b7f904702db0" value="Marcher a l'ennemi">
+    <param name="Location" type="polygon" location="polygon"/>
+  </association>
 </mapping>

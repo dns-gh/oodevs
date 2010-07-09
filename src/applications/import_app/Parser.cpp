@@ -10,7 +10,7 @@
 #include "Parser.h"
 
 #include "Position.h"
-#include <iostream>
+#include <fstream>
 #include <boost/lexical_cast.hpp>
 
 namespace
@@ -75,7 +75,8 @@ void Parser::Generate()
     xis_ >> xml::end();
     WriteWeather();
     WriteOrbat();
-    mapping_.LogWarnings( std::cerr );
+    std::ofstream log( ( outDir_ + "/traduction.log" ).c_str() );
+    mapping_.LogWarnings( log );
 }
 
 // -----------------------------------------------------------------------------
@@ -170,33 +171,137 @@ void Parser::ReadPlan()
 // -----------------------------------------------------------------------------
 void Parser::ReadNextPlan( xml::xistream& xis )
 {
-    if( plan_ )
-    {
-        std::string name;
-        std::string date( "2000-01-01T12:00:00" );
-        xis >> xml::content( "ns2:name", name );
-        if( name.empty() )
-            name = std::string( "Temps de manoeuvre " ) + boost::lexical_cast< std::string >( plan_ );
-        xis >> xml::optional() >> xml::start( "ns6:beginTrigger" )
-                >> xml::optional() >> xml::content( "ns6:date-trigger", date )
-            >> xml::end();
-        date = date.substr( 0, 19 );
-        xml::xofstream xos( outDir_ + "/" + name + ".ord" );
-        xos << xml::start( "actions" );
-        xis >> xml::start( "ns6:sides" )
-                >> xml::start( "ns6:content" )
-                    >> xml::start( "ns6:order-of-battle" )
-                        >> xml::start( "ns6:content" )
-                            >> xml::start( "ns6:members" )
-                                >> xml::list( "ns6:content", *this, &Parser::WriteUnitInOrd, xos, name, date )
-                            >> xml::end()
-                        >> xml::end()
+    std::string name;
+    std::string date( "2000-01-01T12:00:00" );
+    xis >> xml::content( "ns2:name", name );
+    if( name.empty() )
+        name = std::string( "Temps de manoeuvre " ) + boost::lexical_cast< std::string >( plan_ );
+    xis >> xml::optional() >> xml::start( "ns6:beginTrigger" )
+            >> xml::optional() >> xml::content( "ns6:date-trigger", date )
+        >> xml::end();
+    date = date.substr( 0, 19 );
+    ReadPlanData( xis );
+    xml::xofstream xos( outDir_ + "/" + name + ".ord" );
+    xos << xml::start( "actions" );
+    xis >> xml::start( "ns6:sides" )
+            >> xml::start( "ns6:content" )
+                >> xml::start( "ns6:order-of-battle" )
+                    >> xml::start( "ns6:content" )
+                        >> xml::start( "ns6:members" )
+                            >> xml::list( "ns6:content", *this, &Parser::WriteMissionInOrd, xos, name, date );
+    if( plan_ ) // don't teleport units when they are already placed
+        xis                >> xml::list( "ns6:content", *this, &Parser::WriteUnitInOrd, xos, name, date );
+    xis                 >> xml::end()
                     >> xml::end()
                 >> xml::end()
-            >> xml::end();
-        xos << xml::end();
-    }
+            >> xml::end()
+        >> xml::end();
+    xos << xml::end();
     ++plan_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Parser::ReadTacticals
+// Created: LDC 2010-07-09
+// -----------------------------------------------------------------------------
+void Parser::ReadTacticals( xml::xistream& xis )
+{
+    xis >> xml::optional() >> xml::start( "ns6:tacticals" )
+            >> xml::list( "ns6:content", *this, &Parser::ReadTactical )
+        >> xml::end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Parser::ReadTacticalContent
+// Created: LDC 2010-07-09
+// -----------------------------------------------------------------------------
+void Parser::ReadPlanData( xml::xistream& xis )
+{    
+    xis >> xml::start( "ns6:sides" )
+            >> xml::list( "ns6:content", *this, &Parser::ReadPlanDatum )
+        >> xml::end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Parser::ReadPlanDatum
+// Created: LDC 2010-07-09
+// -----------------------------------------------------------------------------
+void Parser::ReadPlanDatum( xml::xistream& xis )
+{
+    xis >> xml::start( "ns6:data" );
+    ReadTacticals( xis );
+    ReadMissions( xis );
+    xis >> xml::end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Parser::ReadTactical
+// Created: LDC 2010-07-09
+// -----------------------------------------------------------------------------
+void Parser::ReadTactical( xml::xistream& xis )
+{
+    std::string id;
+    std::string type;
+    std::vector< std::vector< Position > > positionsList;
+    xis >> xml::attribute( "id", id )
+        >> xml::list( "ns6:content", *this, &Parser::ReadTacticalPointList, positionsList );
+    tacticals_[id] = positionsList;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Parser::ReadTacticalPointList
+// Created: LDC 2010-07-09
+// -----------------------------------------------------------------------------
+void Parser::ReadTacticalPointList( xml::xistream& xis, std::vector< std::vector< Position > >& positionsList )
+{
+    std::vector< Position > positions;
+    xis >> xml::list( "ns6:points", *this, &Parser::ReadTacticalPoint, positions );
+    positionsList.push_back( positions );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Parser::ReadTacticalPoint
+// Created: LDC 2010-07-09
+// -----------------------------------------------------------------------------
+void Parser::ReadTacticalPoint( xml::xistream& xis, std::vector< Position >& positions )
+{
+    xis >> xml::start( "ns4:gdc" );
+    Position position( xis );
+    xis >> xml::end();
+    positions.push_back( position );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Parser::ReadMissions
+// Created: LDC 2010-07-09
+// -----------------------------------------------------------------------------
+void Parser::ReadMissions( xml::xistream& xis )
+{
+    xis >> xml::optional() >> xml::start( "ns6:missions" )
+            >> xml::list( "ns6:content", *this, &Parser::ReadMission )
+        >> xml::end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Parser::ReadMission
+// Created: LDC 2010-07-09
+// -----------------------------------------------------------------------------
+void Parser::ReadMission( xml::xistream& xis )
+{
+    std::string id;
+    std::string name;
+    std::string tacId;
+    std::string missionId;
+    xis >> xml::attribute( "id", id )
+        >> xml::start( "ns6:entity-ref" )
+            >> xml::content( "ns2:id", missionId )
+        >> xml::end()
+        >> xml::optional() >> xml::start( "ns6:tacticals" )
+            >> xml::start( "ns6:tac-data-ref" ) // xml::list... there may be several args.
+                >> xml::content( "ns2:id", tacId )
+            >> xml::end()
+        >> xml::end();
+    missions_[id].Set( missionId, tacticals_[tacId] );
 }
 
 // -----------------------------------------------------------------------------
@@ -234,6 +339,35 @@ void Parser::WriteUnitInOrd( xml::xistream& xis, xml::xostream& xos, const std::
                 << xml::end()
             << xml::end()
         << xml::end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Parser::WriteMissionInOrd
+// Created: LDC 2010-07-09
+// -----------------------------------------------------------------------------
+void Parser::WriteMissionInOrd( xml::xistream& xis, xml::xostream& xos, const std::string& timeName, const std::string& date )
+{
+    xis >> xml::optional() >> xml::start( "ns6:members" )
+        >> xml::list( "ns6:content", *this, &Parser::WriteMissionInOrd, xos, timeName, date )
+    >> xml::end();
+    std::string id;
+    std::string missionId;
+    xis >> xml::start( "ns6:entity-ref" )
+            >> xml::content( "ns2:id", id )
+        >> xml::end()
+        >> xml::optional() >> xml::start( "ns6:missionId"  )
+            >> xml::content( "ns2:id", missionId )
+        >> xml::end();
+    if( !missionId.empty() && missions_.find( missionId ) != missions_.end() )
+    {
+        Mission& mission = missions_[missionId];
+        xos << xml::start( "action" )
+            << xml::attribute( "target", mapping_[ id ] )
+            << xml::attribute( "time", date )
+            << xml::attribute( "type", "mission" );
+        mission.Write( xos, mapping_ );
+        xos << xml::end();
+    }
 }
 
 // -----------------------------------------------------------------------------

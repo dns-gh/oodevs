@@ -42,6 +42,9 @@ public:
     bool IsAutomat( const std::string& type ) const;
     bool IsCommandPost( const std::string& type ) const;
     std::string GetSuperiorId( const std::string& type ) const;
+    std::string GetMissionParameterName( int index ) const;
+    std::string GetMissionParameterType( int index ) const;
+    std::string GetMissionParameterLocationType( int index ) const;
     //@}
 
 private:
