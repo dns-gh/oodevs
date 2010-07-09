@@ -22,8 +22,6 @@
 #include "TER_Localisation.h"
 #include "TER_Polygon.h"
 #include "MT_Tools/MT_Ellipse.h"
-#include "pathfind/SpatialContainerTraits.h"
-#include "geometry/Point2.h"
 
 // -----------------------------------------------------------------------------
 // Name: TER_AgentManager constructor
@@ -50,7 +48,10 @@ namespace
     class AgentFinder
     {
     public:
-        AgentFinder( const Where& where, TER_AgentManager::T_AgentVector& agents ) : where_( where ), agents_( agents ) {};
+        AgentFinder( const Where& where, TER_AgentManager::T_AgentVector& agents )
+            : where_ ( where )
+            , agents_( agents )
+        {};
         bool operator()( TER_Agent_ABC* pAgent )
         {
             if( pAgent && where_.IsInside( pAgent->GetPosition() ) )
@@ -67,7 +68,11 @@ namespace
     class AgentFinderPrecision
     {
     public:
-        AgentFinderPrecision( const Where& where, MT_Float rPrecision, TER_AgentManager::T_AgentVector& agents ) : where_( where ), rPrecision_( rPrecision ), agents_( agents ) {};
+        AgentFinderPrecision( const Where& where, MT_Float rPrecision, TER_AgentManager::T_AgentVector& agents )
+            : where_     ( where )
+            , rPrecision_( rPrecision )
+            , agents_    ( agents )
+        {};
         bool operator()( TER_Agent_ABC* pAgent )
         {
             if( pAgent && where_.IsInside( pAgent->GetPosition(), rPrecision_ ) )
@@ -85,8 +90,9 @@ namespace
     {
     public:
         Circle( const MT_Vector2D& center, MT_Float rRadius )
-            : center_( center )
-            , rSquareRadius_( rRadius * rRadius ) {}
+            : center_       ( center )
+            , rSquareRadius_( rRadius * rRadius )
+        {}
         bool IsInside( const MT_Vector2D& pos ) const
         {
             return center_.SquareDistance( pos ) < rSquareRadius_;

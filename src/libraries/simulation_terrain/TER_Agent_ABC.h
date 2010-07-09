@@ -20,7 +20,6 @@
 #define __TER_Agent_ABC_h_
 
 #include "TER.h"
-
 #include "TER_AgentTraits.h"
 
 class TER_AgentManager;
@@ -38,9 +37,9 @@ class TER_Agent_ABC
 public:
     //! @name Types
     //@{
-    typedef std::vector< TER_Agent_ABC* >       T_AgentPtrVector;
-    typedef T_AgentPtrVector::iterator         IT_AgentPtrVector;
-    typedef T_AgentPtrVector::const_iterator  CIT_AgentPtrVector;
+    typedef std::vector< TER_Agent_ABC* >      T_AgentPtrVector;
+    typedef T_AgentPtrVector::iterator        IT_AgentPtrVector;
+    typedef T_AgentPtrVector::const_iterator CIT_AgentPtrVector;
 
     typedef pathfind::SpatialContainerNode< TER_Agent_ABC*, TER_AgentTraits, MT_Float >* T_Hint;
     //@}
@@ -56,8 +55,7 @@ public:
     //@{
     virtual    const MT_Vector2D& GetPosition() const = 0;
 
-    void UpdatePatch    ();
-
+    void UpdatePatch();
     void SetListener( TER_AgentManager& agentManager );
     //@}
 

@@ -53,17 +53,15 @@ private:
     //! @name Types
     //@{
     typedef std::map< TER_PathFinderThread*, TerrainRetractationHandle* > T_HandleMap;
-    typedef T_HandleMap::iterator                                         IT_HandleMap;
-    typedef T_HandleMap::const_iterator                                   CIT_HandleMap;
+    typedef T_HandleMap::iterator                                        IT_HandleMap;
+    typedef T_HandleMap::const_iterator                                 CIT_HandleMap;
     //@}
 
 private:
-    T_HandleMap     handles_;
-    unsigned int            nNbrRefs_;
-
+    T_HandleMap handles_;
+    unsigned int nNbrRefs_;
     const T_PointVector points_;
-    const TerrainData   terrainData_;
-
+    const TerrainData terrainData_;
     boost::mutex mutex_;
 };
 

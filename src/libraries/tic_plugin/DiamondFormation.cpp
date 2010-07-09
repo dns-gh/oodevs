@@ -68,10 +68,8 @@ void DiamondFormation::AddPlatform( const geometry::Point2f& center, float baseA
     const float radius = level ? std::pow( 1.414f, static_cast< int >( level ) ) : 0;
     const float angle = level ? baseAngle + 2 * std::acos( -1.f ) * static_cast< float >( platformCount ) / static_cast< float >( 4 * level ) : 0;
     const float distanceBetweenPlatforms = 20.f;
-
     const geometry::Vector2f direction( std::cos( angle ), std::sin( angle ) );
     points_.push_back( center + distanceBetweenPlatforms * radius * direction );
-
     NextPlatform( level, platformCount );
 }
 
@@ -91,5 +89,3 @@ void DiamondFormation::Apply( Movable_ABC* movable )
     else
         movable->Stop();
 }
-
-

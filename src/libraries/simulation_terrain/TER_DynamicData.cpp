@@ -27,8 +27,7 @@
 // Created: NLD 2005-10-10
 // -----------------------------------------------------------------------------
 TER_DynamicData::TER_DynamicData( const T_PointVector& points, const TerrainData& terrainData )
-    : handles_    ()
-    , nNbrRefs_   ( 0 )
+    : nNbrRefs_   ( 0 )
     , points_     ( points )
     , terrainData_( terrainData )
 {

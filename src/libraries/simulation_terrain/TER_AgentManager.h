@@ -20,10 +20,8 @@
 #define __TER_AgentManager_h_
 
 #include "TER.h"
-
 #include "TER_AgentTraits.h"
 #include "TER_Agent_ABC.h"
-
 #include "pathfind/SpatialContainer.h"
 
 class TER_Localisation;
@@ -43,27 +41,26 @@ class TER_AgentManager
 public:
     //! @name Types
     //@{
-    typedef std::vector< TER_Agent_ABC* >                                           T_AgentVector;
-    typedef pathfind::SpatialContainer< TER_Agent_ABC*, TER_AgentTraits, MT_Float > T_Agents;
+    typedef std::vector< TER_Agent_ABC* > T_AgentVector;
     //@}
 
 public:
     //! @name Constructors/Destructor
     //@{
-     TER_AgentManager( const MT_Rect& extent );
+             TER_AgentManager( const MT_Rect& extent );
     virtual ~TER_AgentManager();
     //@}
 
     //! @name Operations
     //@{
-    void GetListWithinEllipse     ( const MT_Ellipse& ellipse, T_AgentVector& agents ) const;
-    void GetListWithinCircle      ( const MT_Vector2D& vCenter, MT_Float rRadius, T_AgentVector& agents ) const;
+    void GetListWithinEllipse( const MT_Ellipse& ellipse, T_AgentVector& agents ) const;
+    void GetListWithinCircle( const MT_Vector2D& vCenter, MT_Float rRadius, T_AgentVector& agents ) const;
     void GetListWithinLocalisation( const TER_Localisation& localisation, T_AgentVector& agents ) const;
     void GetListWithinLocalisation( const TER_Localisation& localisation, T_AgentVector& agents, MT_Float rPrecision ) const;
-    void GetListWithinPolygon     ( const TER_Polygon& polygon, T_AgentVector& agents ) const;
+    void GetListWithinPolygon( const TER_Polygon& polygon, T_AgentVector& agents ) const;
 
     TER_Agent_ABC::T_Hint UpdatePosition( TER_Agent_ABC& agent, const TER_Agent_ABC::T_Hint& pHint );
-    bool                  Remove        ( TER_Agent_ABC& agent, const TER_Agent_ABC::T_Hint& pHint );
+    bool  Remove( TER_Agent_ABC& agent, const TER_Agent_ABC::T_Hint& pHint );
     //@}
 
 private:
@@ -71,6 +68,12 @@ private:
     //@{
     TER_AgentManager( const TER_AgentManager& );            //!< Copy constructor
     TER_AgentManager& operator=( const TER_AgentManager& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    typedef pathfind::SpatialContainer< TER_Agent_ABC*, TER_AgentTraits, MT_Float > T_Agents;
     //@}
 
 private:

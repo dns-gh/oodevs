@@ -28,10 +28,6 @@ class TER_Object_ABC
 public:
     //! @name Types
     //@{
-    typedef std::vector< TER_Object_ABC* >   T_ObjectVector;
-    typedef T_ObjectVector::iterator        IT_ObjectVector;
-    typedef T_ObjectVector::const_iterator CIT_ObjectVector;
-
     typedef pathfind::SpatialContainerNode< TER_Object_ABC*, TER_ObjectTraits, MT_Float >* T_Hint;
     //@}
 
@@ -56,9 +52,9 @@ public:
     void Initialize( const TER_Localisation& localisation );
     void Terminate();
 
-    bool IsInside                   ( const MT_Vector2D& vPos ) const;
-    bool Intersect2D                ( const MT_Line& orientedLine, T_PointSet& collisions ) const;
-    bool Intersect2DWithCircle      ( const MT_Vector2D& vCircleCenter, MT_Float rRadius ) const; // NB : return true if the circle is inside
+    bool IsInside( const MT_Vector2D& vPos ) const;
+    bool Intersect2D( const MT_Line& orientedLine, T_PointSet& collisions ) const;
+    bool Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, MT_Float rRadius ) const; // NB : return true if the circle is inside
     bool Intersect2DWithLocalisation( const TER_Localisation& localisation ) const;
     //@}
 
@@ -90,7 +86,7 @@ private:
     //! @name Member data
     //@{
     TER_Localisation location_;
-    T_Hint           hint_;
+    T_Hint hint_;
     //@}
 };
 

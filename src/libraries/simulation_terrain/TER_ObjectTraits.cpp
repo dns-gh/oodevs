@@ -19,9 +19,7 @@
 #include "simulation_terrain_pch.h"
 #include "TER_ObjectTraits.h"
 #include "pathfind/SpatialContainerTraits.h"
-#include "MT_Tools/MT_Rect.h"
 #include "TER_Object_ABC.h"
-#include "TER_Localisation.h"
 
 namespace
 {

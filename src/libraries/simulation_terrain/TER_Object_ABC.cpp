@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_terrain_pch.h"
-
 #include "TER_Object_ABC.h"
-
 #include "TER_World.h"
 #include "TER_ObjectManager.h"
 
@@ -34,8 +32,6 @@ TER_Object_ABC::~TER_Object_ABC()
 {
     RemoveFromWorld();
 }
-
-
 
 // -----------------------------------------------------------------------------
 // Name: TER_Object_ABC::Initialize
@@ -140,4 +136,3 @@ void TER_Object_ABC::InsertInWorld()
 {
     hint_ = TER_World::GetWorld().GetObjectManager().UpdatePosition( *this, hint_ );
 }
-
