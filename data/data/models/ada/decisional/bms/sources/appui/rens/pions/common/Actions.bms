@@ -127,7 +127,7 @@ includedFiles["sources/appui/rens/pions/common/Actions.bms"] = true
                 self.actionID = self.actionID or nil
         --[[//---------------------------------------------------------------------
 ]]--[[// Init
-]]--[[//---------------------------------------------------------------------		        		
+]]--[[//---------------------------------------------------------------------                        
 ]]if( ModuleBegins() ) then
             do
                                 do
@@ -190,7 +190,7 @@ includedFiles["sources/appui/rens/pions/common/Actions.bms"] = true
                 self.actionID = self.actionID or nil
         --[[//---------------------------------------------------------------------
 ]]--[[// Init
-]]--[[//---------------------------------------------------------------------		        		
+]]--[[//---------------------------------------------------------------------                        
 ]]if( ModuleBegins() ) then
             do
                 DEC_Trace( "Activation écoute dans zone" )
@@ -253,7 +253,7 @@ includedFiles["sources/appui/rens/pions/common/Actions.bms"] = true
                 self.actionID = self.actionID or nil
         --[[//---------------------------------------------------------------------
 ]]--[[// Init
-]]--[[//---------------------------------------------------------------------		        		
+]]--[[//---------------------------------------------------------------------                        
 ]]if( ModuleBegins() ) then
             do
                                 do
@@ -311,7 +311,7 @@ includedFiles["sources/appui/rens/pions/common/Actions.bms"] = true
                 self.localisation = self.localisation or DEC_Geometrie_CreerLocalisationCercle( DEC_Agent_Position(), 25000 )
         --[[//---------------------------------------------------------------------
 ]]--[[// Init
-]]--[[//---------------------------------------------------------------------		        		
+]]--[[//---------------------------------------------------------------------                        
 ]]if( ModuleBegins() ) then
             do
                                 do
@@ -373,7 +373,7 @@ includedFiles["sources/appui/rens/pions/common/Actions.bms"] = true
                 self.bInterrompue = self.bInterrompue or false
         --[[//---------------------------------------------------------------------
 ]]--[[// Init
-]]--[[//---------------------------------------------------------------------	
+]]--[[//---------------------------------------------------------------------    
 ]]if( ModuleBegins() ) then
             do
                 DEC_Trace( "**** Decollage ****" )

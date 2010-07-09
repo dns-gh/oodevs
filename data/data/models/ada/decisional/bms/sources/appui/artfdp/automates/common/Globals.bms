@@ -19,17 +19,17 @@ include "Appui/ArtFdp/Automates/Common/Globals Poly.bms"
 --[[// ----------------------------------------------------------------------------
 ]]--[[// S_Misc_Automate_ASS_ExtraitPoint_ProchePosition
 ]]--[[//
-]]--[[// 	Renvoie la position (appartenant a une liste de points) la plus proche
+]]--[[//     Renvoie la position (appartenant a une liste de points) la plus proche
 ]]--[[//  d'une autre position
-]]--[[// ----------------------------------------------------------------------------		
-]]--[[// 1105199104		
+]]--[[// ----------------------------------------------------------------------------        
+]]--[[// 1105199104        
 ]]--[[// ----------------------------------------------------------------------------
 ]]--[[// S_Misc_Automate_ASS_ExtraitPoint_ProchePosition
 ]]--[[//
-]]--[[// 	Renvoie la position (appartenant a une liste de points) la plus proche
+]]--[[//     Renvoie la position (appartenant a une liste de points) la plus proche
 ]]--[[//  d'une autre position
-]]--[[// ----------------------------------------------------------------------------		
-]]--[[// 1105199104		
+]]--[[// ----------------------------------------------------------------------------        
+]]--[[// 1105199104        
 ]]function S_Geometrie_Automate_ASS_CopiePointDansFuseau( lstPos_Mission, lstPos_Reco )
     local rIt = 0
     local rTailleListe = DEC_ListePoints_Size( lstPos_Mission )

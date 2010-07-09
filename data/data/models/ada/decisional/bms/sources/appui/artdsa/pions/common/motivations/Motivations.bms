@@ -4,7 +4,7 @@ includedFiles["sources/appui/artdsa/pions/common/motivations/Motivations.bms"] =
 --[[//------------------------------------------------------------------------------
 ]]--[[//  MOT_TirerSurEnis
 ]]--[[//
-]]--[[//	Commentaires: Cette motivation est utilisée pour que l'automate puisse
+]]--[[//    Commentaires: Cette motivation est utilisée pour que l'automate puisse
 ]]--[[//  communiquer avec le pion pour synchroniser les feux
 ]]--[[//------------------------------------------------------------------------------
 ]]motivation_plugin = motivation_plugin or {}

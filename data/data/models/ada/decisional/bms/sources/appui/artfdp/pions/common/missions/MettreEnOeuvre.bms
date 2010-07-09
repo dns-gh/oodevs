@@ -34,7 +34,7 @@ node "BEH_Pion_ASS_GererOrdre_AppliquerFeux"
 
     activate = function( self )
         --[[// Prise en charge de l'ordre d'application des feux
-]]--[[//---------------------------------------------------------------------	
+]]--[[//---------------------------------------------------------------------    
 ]]local selOrder = DEC_GetCategory( "ordres_recus" )
         for _,x in pairs( selOrder or {} ) do
         local _continue = true
@@ -86,7 +86,7 @@ node "BEH_Pion_ASS_GererOrdre_AppliquerFeux_SIC"
 
     activate = function( self )
         --[[// Prise en charge de l'ordre d'application des feux
-]]--[[//---------------------------------------------------------------------	
+]]--[[//---------------------------------------------------------------------    
 ]]local selOrder = DEC_GetCategory( "ordres_recus" )
         self.ptZoneCanon = self.ptZoneCanon or nil--[[//Variable représentant le point de barycentre d'une zone d'implantation canon parmi la liste des zones
 ]]
@@ -190,7 +190,7 @@ elseif switch_1 == "T_Mission_Pion_ASS_AssurerMiseEnOeuvre" then
                 if switch_1 == ePreparerMission then
                     --[[//-----------------------------------------------------------------------------
 ]]--[[// Preparation de la mission
-]]--[[//-----------------------------------------------------------------------------		        
+]]--[[//-----------------------------------------------------------------------------                
 ]]if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
@@ -532,7 +532,7 @@ self.done_ACT_Misc_Delai = function( self, _, v ) self.eAction = v[1] end
                 self.ptTir = DEC_Geometrie_PositionAleatoireSurCercle( self._namedParams.ptCentre, 2000 )
                 Activate( self.activations.ACT_RC, 1, { eRC_ChangementDePosition, } )
                 Activate( self.activations.ACT_Info_Trace, 1, { "Changement position : ART SIC", } )
-                --[[//start behavior BEH_Dep_ProgressionVers( ptTir, eProgressionDirect, eTypeItiMouvement );			
+                --[[//start behavior BEH_Dep_ProgressionVers( ptTir, eProgressionDirect, eTypeItiMouvement );            
 ]]StartActivateOverride( self, self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.ptCentre, eProgressionDirect, eTypeItiMouvement, } )
                 self.eAction = eActionEnCours
             end
@@ -611,7 +611,7 @@ node "BEH_Tir_Pion_ASS_AppliquerFeux"
 
                 DEC_Trace( "To deliver indirect fire" )
             end
---[[// Se poste pour pouvoir appliquer les feux		
+--[[// Se poste pour pouvoir appliquer les feux        
 ]]        end
 
         Activate( self.activations.BEH_Tir_Pion_ASS_PreparerTirSur, 1.1, { self._namedParams.ptCible, M_DELAI_PREPARATION_TIR(), } )
@@ -633,7 +633,7 @@ self.done_ACT_Tir_Pion_ASS_SurPosition = function( self, _, v ) self.eAction = v
 
 --[[// ============================================================================
 ]]--[[// BEH_Tir_Pion_ASS_PreparerTirSur:
-]]--[[//		Prepare un tir sur la position @ptCible pendant @rDelai
+]]--[[//        Prepare un tir sur la position @ptCible pendant @rDelai
 ]]--[[// ============================================================================
 ]]}
 

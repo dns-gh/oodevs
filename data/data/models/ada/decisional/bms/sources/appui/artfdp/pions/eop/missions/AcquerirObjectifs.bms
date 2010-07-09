@@ -178,7 +178,7 @@ elseif switch_1 == eSurveiller then
                     Activate( self.activations.ACT_Dep_Pion_EOP_ActiverFurtivite, 1.1, { 0.1, } )
                     Activate( self.activations.BEH_Obs_Pion_ASS_ReconnaissanceZone, 1, { self.mission.zoneAObserver_, } )
                     _continue = false
-                --[[// persistent E_EtatAction		eActionDebarquement = eActionEnCours;
+                --[[// persistent E_EtatAction        eActionDebarquement = eActionEnCours;
 ]]                cases_switch_1[3] = true
                 end
             end
@@ -240,7 +240,7 @@ node "BEH_Dep_Pion_EOP_AcquerirObjectifs_Mission"
 
     activate = function( self )
         --[[// On cree un itineraire qui passe par la position de debarquement
-]]--[[// vers la position d'installation			
+]]--[[// vers la position d'installation            
 ]]        self.itineraire_Pt = self.itineraire_Pt or S_Misc_CreerItineraire_Points( self._namedParams.ptDest, self._namedParams.ptPassage )
         self.eAction = self.eAction or eActionEnCours
         self.it = self.it or DEC_CreerItineraireListe( self.itineraire_Pt, eTypeItiInfiltration )
