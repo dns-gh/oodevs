@@ -43,8 +43,8 @@ public:
     //! @name Operations
     //@{
     void Prepare();
-    void Update ( const PHY_PerceptionLevel& level, const T_PointVector& shape );
-    bool Clean  ();
+    void Update( const PHY_PerceptionLevel& level, const T_PointVector& shape );
+    bool Clean();
 
     bool IsIdentified();
     bool IsPerceived () const; // Perception au tick courant
@@ -52,15 +52,15 @@ public:
 
     //! @name Accessors
     //@{
-    const PHY_PerceptionLevel&                GetCurrentPerceptionLevel() const;
-    const MIL_PopulationFlow&                 GetFlowPerceived         () const;
-    const DEC_Knowledge_PopulationPerception& GetKnowledge             () const;
-          unsigned int                        GetNbrAliveHumans        () const;
-          unsigned int                        GetNbrDeadHumans         () const;
-    const MIL_PopulationAttitude&             GetAttitude              () const;
-    const T_PointVector&                      GetShape                 () const;
-    const MT_Vector2D&                        GetDirection             () const;
-          MT_Float                            GetSpeed                 () const;
+    const PHY_PerceptionLevel& GetCurrentPerceptionLevel() const;
+    const MIL_PopulationFlow& GetFlowPerceived() const;
+    const DEC_Knowledge_PopulationPerception& GetKnowledge() const;
+    unsigned int GetNbrAliveHumans() const;
+    unsigned int GetNbrDeadHumans() const;
+    const MIL_PopulationAttitude& GetAttitude() const;
+    const T_PointVector& GetShape() const;
+    const MT_Vector2D& GetDirection() const;
+    MT_Float GetSpeed() const;
     //@}
 
     //! @name Network operations
@@ -70,13 +70,12 @@ public:
     //@}
 
 private:
-    const DEC_Knowledge_PopulationPerception*  pPopulationKnowledge_;
-          MIL_PopulationFlow*                  pPopulationFlowPerceived_;
-          T_PointVector                        shape_;
-          T_PointVector                        previousShape_;
-
-    const PHY_PerceptionLevel*                 pCurrentPerceptionLevel_;
-    const PHY_PerceptionLevel*                 pPreviousPerceptionLevel_;
+    const DEC_Knowledge_PopulationPerception* pPopulationKnowledge_;
+    MIL_PopulationFlow* pPopulationFlowPerceived_;
+    T_PointVector shape_;
+    T_PointVector previousShape_;
+    const PHY_PerceptionLevel* pCurrentPerceptionLevel_;
+    const PHY_PerceptionLevel* pPreviousPerceptionLevel_;
 
 };
 

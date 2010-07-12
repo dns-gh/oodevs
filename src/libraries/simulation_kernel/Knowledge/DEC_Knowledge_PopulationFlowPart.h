@@ -46,11 +46,11 @@ public:
 
     //! @name Operations
     //@{
-    void Prepare        ();
-    bool Update         ( const DEC_Knowledge_PopulationFlowPerception& perception );
-    bool Update         ( const DEC_Knowledge_PopulationCollision&      collision  );
+    void Prepare();
+    bool Update( const DEC_Knowledge_PopulationFlowPerception& perception );
+    bool Update( const DEC_Knowledge_PopulationCollision& collision );
     bool UpdateRelevance( const MT_Float rMaxLifeTime );
-    bool Clean          ();
+    bool Clean();
     //@}
 
     //! @name Network operations
@@ -65,11 +65,11 @@ private:
     //@}
 
 private:
-    T_PointVector   shape_;
-    MT_Float        rRelevance_;
-    MT_Float        rLastRelevanceSent_;
-    bool            bPerceived_;
-    unsigned int    nTimeLastUpdate_;
+    T_PointVector shape_;
+    MT_Float rRelevance_;
+    MT_Float rLastRelevanceSent_;
+    bool bPerceived_;
+    unsigned int nTimeLastUpdate_;
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_PopulationFlowPart )

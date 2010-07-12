@@ -57,7 +57,6 @@ public:
     unsigned int GetNbrAliveHumans() const;
     unsigned int GetNbrDeadHumans() const;
     const MIL_PopulationAttitude& GetAttitude() const;
-
     //@}
 
     //! @name Network operations

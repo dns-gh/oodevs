@@ -25,16 +25,13 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_PopulationFlowPerception )
 
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationFlowPerception constructor
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
 DEC_Knowledge_PopulationFlowPerception::DEC_Knowledge_PopulationFlowPerception( DEC_Knowledge_PopulationPerception& populationKnowledge, MIL_PopulationFlow& flowPerceived )
-    : pPopulationKnowledge_    ( &populationKnowledge    )
+    : pPopulationKnowledge_    ( &populationKnowledge )
     , pPopulationFlowPerceived_( &flowPerceived )
-    , shape_                   ()
-    , previousShape_           ()
     , pCurrentPerceptionLevel_ ( &PHY_PerceptionLevel::notSeen_ )
     , pPreviousPerceptionLevel_( &PHY_PerceptionLevel::notSeen_ )
 {
@@ -48,8 +45,6 @@ DEC_Knowledge_PopulationFlowPerception::DEC_Knowledge_PopulationFlowPerception( 
 DEC_Knowledge_PopulationFlowPerception::DEC_Knowledge_PopulationFlowPerception()
     : pPopulationKnowledge_    ( 0 )
     , pPopulationFlowPerceived_( 0 )
-    , shape_                   ()
-    , previousShape_           ()
     , pCurrentPerceptionLevel_ ( &PHY_PerceptionLevel::notSeen_ )
     , pPreviousPerceptionLevel_( &PHY_PerceptionLevel::notSeen_ )
 {

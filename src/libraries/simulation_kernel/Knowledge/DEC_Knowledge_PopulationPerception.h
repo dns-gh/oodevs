@@ -33,12 +33,12 @@ public:
     //! @name Types
     //@{
     typedef std::map< const MIL_PopulationConcentration*, DEC_Knowledge_PopulationConcentrationPerception* > T_ConcentrationMap;
-    typedef T_ConcentrationMap::iterator                                                                     IT_ConcentrationMap;
-    typedef T_ConcentrationMap::const_iterator                                                               CIT_ConcentrationMap;
+    typedef T_ConcentrationMap::iterator                                                                    IT_ConcentrationMap;
+    typedef T_ConcentrationMap::const_iterator                                                             CIT_ConcentrationMap;
 
     typedef std::map< const MIL_PopulationFlow*, DEC_Knowledge_PopulationFlowPerception* > T_FlowMap;
-    typedef T_FlowMap::iterator                                                            IT_FlowMap;
-    typedef T_FlowMap::const_iterator                                                      CIT_FlowMap;
+    typedef T_FlowMap::iterator                                                           IT_FlowMap;
+    typedef T_FlowMap::const_iterator                                                    CIT_FlowMap;
     //@}
 
 public:
@@ -60,40 +60,39 @@ public:
     //! @name Operations
     //@{
     void Prepare();
-    void Update ( MIL_PopulationConcentration& concentrationPerceived, const PHY_PerceptionLevel& level );
-    void Update ( MIL_PopulationFlow&          flowPerceived         , const PHY_PerceptionLevel& level, const T_PointVector& shape );
-    bool Clean  ();
+    void Update( MIL_PopulationConcentration& concentrationPerceived, const PHY_PerceptionLevel& level );
+    void Update( MIL_PopulationFlow& flowPerceived, const PHY_PerceptionLevel& level, const T_PointVector& shape );
+    bool Clean();
 
     void PublishKnowledges( DEC_Knowledge_Population& knowledge ) const;
-    bool IsIdentified     ( const MIL_PopulationConcentration& concentration );
-    bool IsPerceived      () const; // Perception au tick courant
+    bool IsIdentified( const MIL_PopulationConcentration& concentration );
+    bool IsPerceived() const; // Perception au tick courant
     //@}
 
     //! @name Attacker
     //@{
     void NotifyAttacker();
-    bool IsAttacker    () const;
+    bool IsAttacker() const;
     //@}
 
     //! @name Network operations
     //@{
-    void UpdateOnNetwork     () const;
+    void UpdateOnNetwork() const;
     void SendStateToNewClient() const;
     //@}
 
     //! @name Accessors
     //@{
-          MIL_Population& GetPopulationPerceived() const;
-    const MIL_Agent_ABC&  GetAgentPerceiving    () const;
+    MIL_Population& GetPopulationPerceived() const;
+    const MIL_Agent_ABC& GetAgentPerceiving() const;
     //@}
 
 private:
-    const MIL_Agent_ABC*   pAgentPerceiving_;
-          MIL_Population*  pPopulationPerceived_;
-
-    T_ConcentrationMap     concentrations_;
-    T_FlowMap              flows_;
-    bool                   bAttacker_;
+    const MIL_Agent_ABC*  pAgentPerceiving_;
+    MIL_Population* pPopulationPerceived_;
+    T_ConcentrationMap concentrations_;
+    T_FlowMap flows_;
+    bool bAttacker_;
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_PopulationPerception )

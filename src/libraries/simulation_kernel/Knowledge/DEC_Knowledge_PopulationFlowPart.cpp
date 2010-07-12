@@ -27,8 +27,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_PopulationFlowPart )
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
 DEC_Knowledge_PopulationFlowPart::DEC_Knowledge_PopulationFlowPart()
-    : shape_             ()
-    , rRelevance_        ( 1. )
+    : rRelevance_        ( 1. )
     , rLastRelevanceSent_( 1. )
     , bPerceived_        ( true )
     , nTimeLastUpdate_   ( 0 )

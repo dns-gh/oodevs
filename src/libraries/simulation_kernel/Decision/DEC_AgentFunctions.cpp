@@ -265,7 +265,7 @@ float DEC_AgentFunctions::GetDetectionDistance( MIL_Agent_ABC& callerAgent )
 // Name: DEC_AgentFunctions::CanConstructObject
 // Created: NLD 2004-05-07
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::CanConstructObject( const MIL_Agent_ABC& callerAgent, const std::string& type  )
+bool DEC_AgentFunctions::CanConstructObject( const MIL_Agent_ABC& callerAgent, const std::string& type )
 {
     return callerAgent.GetRole< PHY_RoleAction_Objects >().CanConstructWithReinforcement( type );
 }
@@ -274,7 +274,7 @@ bool DEC_AgentFunctions::CanConstructObject( const MIL_Agent_ABC& callerAgent, c
 // Name: DEC_AgentFunctions::HasDotationForBuilding
 // Created: LMT 2010-07-07
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::HasDotationForBuilding( MIL_Agent_ABC& callerAgent, const std::string& type)
+bool DEC_AgentFunctions::HasDotationForBuilding( MIL_Agent_ABC& callerAgent, const std::string& type )
 {
     return callerAgent.GetRole< PHY_RoleAction_Objects >().EnoughtDotationForBuilding( type, callerAgent );
 }

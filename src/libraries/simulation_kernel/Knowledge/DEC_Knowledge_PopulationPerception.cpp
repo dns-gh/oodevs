@@ -28,12 +28,10 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_PopulationPerception )
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
 DEC_Knowledge_PopulationPerception::DEC_Knowledge_PopulationPerception( const MIL_Agent_ABC& agentPerceiving, MIL_Population& populationPerceived )
-    : DEC_Knowledge_ABC    ()
+    : DEC_Knowledge_ABC()
     , pAgentPerceiving_    ( &agentPerceiving )
     , pPopulationPerceived_( &populationPerceived )
-    , concentrations_      ()
-    , flows_               ()
-    , bAttacker_           ()
+
 {
     // NOTHING
 }
@@ -43,12 +41,9 @@ DEC_Knowledge_PopulationPerception::DEC_Knowledge_PopulationPerception( const MI
 // Created: JVT 2005-03-17
 // -----------------------------------------------------------------------------
 DEC_Knowledge_PopulationPerception::DEC_Knowledge_PopulationPerception()
-    : DEC_Knowledge_ABC    ()
+    : DEC_Knowledge_ABC()
     , pAgentPerceiving_    ( 0 )
     , pPopulationPerceived_( 0 )
-    , concentrations_      ()
-    , flows_               ()
-    , bAttacker_           ()
 {
     // NOTHING
 }

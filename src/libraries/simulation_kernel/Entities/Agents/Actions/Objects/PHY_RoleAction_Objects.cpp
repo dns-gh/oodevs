@@ -45,7 +45,6 @@
 #include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
 #include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
 
-
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RoleAction_Objects )
 
 template< typename Archive >
@@ -68,8 +67,9 @@ void load_construct_data( Archive& archive, PHY_RoleAction_Objects* role, const 
 // Created: NLD 2004-09-13
 // -----------------------------------------------------------------------------
 PHY_RoleAction_Objects::PHY_RoleAction_Objects( MIL_AgentPion& pion )
-    : pion_     ( pion )
+    : pion_( pion )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -78,7 +78,7 @@ PHY_RoleAction_Objects::PHY_RoleAction_Objects( MIL_AgentPion& pion )
 // -----------------------------------------------------------------------------
 PHY_RoleAction_Objects::~PHY_RoleAction_Objects()
 {
-
+    // NOTHING
 }
 
 // =============================================================================
@@ -662,6 +662,7 @@ void PHY_RoleAction_Objects::Clean()
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Objects::ResumeWorkSuspended()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -670,6 +671,7 @@ void PHY_RoleAction_Objects::ResumeWorkSuspended()
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Objects::ConstructSuspended()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -678,6 +680,7 @@ void PHY_RoleAction_Objects::ConstructSuspended()
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Objects::DestroySuspended()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -686,6 +689,7 @@ void PHY_RoleAction_Objects::DestroySuspended()
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Objects::MineSuspended()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -694,6 +698,7 @@ void PHY_RoleAction_Objects::MineSuspended()
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Objects::DemineSuspended()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -702,6 +707,7 @@ void PHY_RoleAction_Objects::DemineSuspended()
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Objects::BypassSuspended()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -710,4 +716,5 @@ void PHY_RoleAction_Objects::BypassSuspended()
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Objects::ExtinguishSuspended()
 {
+    // NOTHING
 }
