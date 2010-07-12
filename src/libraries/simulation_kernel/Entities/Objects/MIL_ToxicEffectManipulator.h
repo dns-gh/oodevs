@@ -15,7 +15,7 @@ class PHY_HumanWound;
 
 // =============================================================================
 /** @class  MIL_ToxicEffectManipulator
-    @brief  MIL_ToxicEffectManipulator
+    @brief  MIL Toxic effect manipulator
 */
 // Created: JCR 2008-06-06
 // =============================================================================
@@ -25,7 +25,7 @@ public:
     //! @name Types
     //@{
     typedef std::vector< const MIL_NbcAgentType* >  T_NBCAgents;
-    typedef T_NBCAgents::const_iterator             CIT_NBCAgents;
+    typedef T_NBCAgents::const_iterator           CIT_NBCAgents;
     //@}
 
 public:
@@ -57,7 +57,7 @@ private:
     //! @name Data Members
     //@{
     T_NBCAgents types_;
-    MT_Float    quantity_;
+    MT_Float quantity_;
     //@}
 };
 

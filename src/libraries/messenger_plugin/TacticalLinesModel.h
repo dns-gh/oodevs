@@ -58,7 +58,6 @@ public:
     virtual ~TacticalLinesModel();
     //@}
 
-
     //! @name Network
     //@{
     void HandleLimitRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgsClientToMessenger::MsgLimitCreationRequest&    message );
@@ -91,7 +90,6 @@ public:
     //@}
 
 private:
-
     //! @name Copy/Assignment
     //@{
     TacticalLinesModel( const TacticalLinesModel& );            //!< Copy constructor
@@ -107,7 +105,6 @@ private:
     tools::Resolver< Limit > limits_;
     tools::Resolver< Lima  > limas_;
     //@}
-
 };
 
 }

@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Posture/PHY_RolePion_Posture.h $
-// $Author: Jvt $
-// $Modtime: 11/05/05 15:20 $
-// $Revision: 11 $
-// $Workfile: PHY_RolePion_Posture.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
@@ -13,7 +11,6 @@
 #define __PHY_RolePion_Posture_h_
 
 #include "MIL.h"
-
 #include "PHY_RoleInterface_Posture.h"
 #include "MIL_Random.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
@@ -52,7 +49,7 @@ class PHY_RolePion_Posture : public PHY_RoleInterface_Posture
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit  PHY_RolePion_Posture( MIL_Agent_ABC& pion );
+    explicit PHY_RolePion_Posture( MIL_Agent_ABC& pion );
     virtual ~PHY_RolePion_Posture();
     //@}
 

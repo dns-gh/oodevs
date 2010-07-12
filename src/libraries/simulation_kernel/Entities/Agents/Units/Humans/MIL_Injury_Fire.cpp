@@ -70,10 +70,6 @@ MIL_Injury_Fire::~MIL_Injury_Fire()
     // NOTHING
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_Human::load
 // Created: JVT 2005-03-31
@@ -241,7 +237,7 @@ bool MIL_Injury_Fire::IsInjured( const PHY_ComposantePion& pComposante )
 
     protection( pComposante );
     //The injury which will be caused is computed by the multiplication of the heat by the protection value and a random factor
-    unsigned int injuryThreshold = ( unsigned int )( ( 1 + 0.2 * MIL_Random::rand_ii( 0 , 1, MIL_Random::eWounds ) ) * heat_ * ( 1 - protection.GetProtectionValue() ) );
+    unsigned int injuryThreshold = static_cast< unsigned int >( ( 1 + 0.2 * MIL_Random::rand_ii( 0 , 1, MIL_Random::eWounds ) ) * heat_ * ( 1 - protection.GetProtectionValue() ) );
     if( injuryThreshold > MIL_MedicalTreatmentType::Find( injuryID_ )->GetDeathThreshold() )
     {
         PHY_InjuredHuman::InitializeInjuredHuman( *this , pComposante );
@@ -271,12 +267,12 @@ void MIL_Injury_Fire::SetInjury( unsigned int nNbrAliveHumans , MT_Float rDensit
 {
     //Population doesn't have any protection
     //First we compute the number of persons caught in the fire
-    const unsigned int nNbrOfPossibleCasualties = std::min( nNbrAliveHumans, unsigned int( std::max( 1., rDensity * MIL_FireClass::GetLength() * MIL_FireClass::GetWidth() ) ) );
+    const unsigned int nNbrOfPossibleCasualties = std::min( nNbrAliveHumans, static_cast< unsigned int >( std::max( 1., rDensity * MIL_FireClass::GetLength() * MIL_FireClass::GetWidth() ) ) );
 
     //For, each of them, we will compute if they're going to be injured, and how
     for( unsigned int i = 0; i < nNbrOfPossibleCasualties; ++i )
     {
-        const unsigned int injuryThreshold = ( unsigned int )( ( 1 + 0.2 * MIL_Random::rand_ii( 0 , 1, MIL_Random::eWounds ) ) * heat_ );
+        const unsigned int injuryThreshold = static_cast< unsigned int >( ( 1 + 0.2 * MIL_Random::rand_ii( 0 , 1, MIL_Random::eWounds ) ) * heat_ );
         if( injuryThreshold > MIL_MedicalTreatmentType::Find( injuryID_ )->GetDeathThreshold() )
         {
             PHY_InjuredHuman::InitializeInjuredHuman( *this );

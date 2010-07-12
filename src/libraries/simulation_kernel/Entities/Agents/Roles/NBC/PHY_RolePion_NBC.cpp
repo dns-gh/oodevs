@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Nbc/PHY_RolePion_NBC.cpp $
-// $Author: Jvt $
-// $Modtime: 14/04/05 18:15 $
-// $Revision: 9 $
-// $Workfile: PHY_RolePion_NBC.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
@@ -41,11 +39,11 @@ namespace boost
         template< typename Archive >
         void save( Archive& file, const nbc::PHY_RolePion_NBC::T_NbcAgentTypeSet& set, const unsigned int )
         {
-            unsigned size = set.size();
+            const unsigned size = set.size();
             file << size;
             for ( nbc::PHY_RolePion_NBC::CIT_NbcAgentTypeSet it = set.begin(); it != set.end(); ++it )
             {
-                unsigned id = (*it)->GetID();
+                const unsigned id = (*it)->GetID();
                 file << id;
             }
         }
@@ -88,11 +86,11 @@ void load_construct_data( Archive& archive, PHY_RolePion_NBC* role, const unsign
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RolePion_NBC::PHY_RolePion_NBC( MIL_AgentPion& pion )
-    : pion_                       ( pion )
-    , bNbcProtectionSuitWorn_     ( false )
-    , rContaminationState_        ( 0. )
-    , rContaminationQuantity_     ( 0. )
-    , bHasChanged_                ( true )
+    : pion_                  ( pion )
+    , bNbcProtectionSuitWorn_( false )
+    , rContaminationState_   ( 0. )
+    , rContaminationQuantity_( 0. )
+    , bHasChanged_           ( true )
 {
     // NOTHING
 }
@@ -138,15 +136,11 @@ void PHY_RolePion_NBC::Contaminate( const MIL_ToxicEffectManipulator& contaminat
 {
     if( contamination.GetQuantity() < 1e-15 ) // TODO
         return;
-
     if( ! bNbcProtectionSuitWorn_ )
         pion_.Apply(& nbc::ToxicEffectHandler_ABC::ApplyContamination, contamination);
-
     nbcAgentTypesContaminating_.insert( &contamination.GetType() );
-
     rContaminationQuantity_ += contamination.GetQuantity();
     rContaminationState_ = 1.;
-
     bHasChanged_ = true;
 }
 
@@ -161,7 +155,6 @@ void PHY_RolePion_NBC::Decontaminate()
         assert( nbcAgentTypesContaminating_.empty() );
         return;
     }
-
     rContaminationState_ = 0.;
     rContaminationQuantity_ = 0.;
     bHasChanged_ = true;
@@ -179,13 +172,10 @@ void PHY_RolePion_NBC::Decontaminate( MT_Float rRatioAgentsWorking )
         assert( nbcAgentTypesContaminating_.empty() );
         return;
     }
-
     MT_Float rNewContaminationState = rContaminationState_ - ( pion_.GetType().GetUnitType().GetCoefDecontaminationPerTimeStep() * rRatioAgentsWorking );
     rNewContaminationState = std::max( rNewContaminationState, 0. );
-
     if( static_cast< unsigned int >( rNewContaminationState * 100. ) != ( rContaminationState_ * 100. ) )
         bHasChanged_ = true;
-
     rContaminationState_ = rNewContaminationState;
     rContaminationQuantity_ = std::max( 0., rContaminationQuantity_ * rContaminationState_ );
     if( rContaminationState_ == 0. )
@@ -225,7 +215,6 @@ void PHY_RolePion_NBC::SendFullState( client::UnitAttributes& msg ) const
     if( !nbcAgentTypesContaminating_.empty() )
         for( CIT_NbcAgentTypeSet itNbcAgent = nbcAgentTypesContaminating_.begin(); itNbcAgent != nbcAgentTypesContaminating_.end(); ++itNbcAgent )
             msg().mutable_contamine_par_agents_nbc()->add_elem( (**itNbcAgent).GetID() );
-
     msg().set_en_tenue_de_protection_nbc( bNbcProtectionSuitWorn_ );
     msg().mutable_etat_contamination()->set_percentage( static_cast< unsigned int >( rContaminationState_ * 100. ) );
     msg().mutable_etat_contamination()->set_quantity( static_cast< float >( rContaminationQuantity_ ) );
@@ -312,7 +301,6 @@ void PHY_RolePion_NBC::ContaminateOtherUnits()
     std::vector<const MIL_NbcAgentType*> typeNbcContaminating = GetContaminating();
     if( typeNbcContaminating.empty() || rContaminationState_ != 1. || rContaminationQuantity_ < 5 )
         return;
-
     TER_Agent_ABC::T_AgentPtrVector perceivableAgents;
     TER_World::GetWorld().GetAgentManager().GetListWithinCircle( pion_.Get<PHY_RoleInterface_Location>().GetPosition() ,
          MIL_NbcAgentType::GetContaminationDistance() , perceivableAgents );

@@ -17,8 +17,8 @@
 // Created: JCR 2008-06-06
 // -----------------------------------------------------------------------------
 MIL_ToxicEffectManipulator::MIL_ToxicEffectManipulator( const T_NBCAgents& types, MT_Float quantity )
-    : types_ ( types )
-    , quantity_ ( quantity )
+    : types_   ( types )
+    , quantity_( quantity )
 {
     // NOTHING
 }
@@ -28,8 +28,8 @@ MIL_ToxicEffectManipulator::MIL_ToxicEffectManipulator( const T_NBCAgents& types
 // Created: JCR 2008-06-06
 // -----------------------------------------------------------------------------
 MIL_ToxicEffectManipulator::MIL_ToxicEffectManipulator( const MIL_ToxicEffectManipulator& rhs )
-    : types_ ( rhs.types_ )
-    , quantity_ ( rhs.quantity_ )
+    : types_   ( rhs.types_ )
+    , quantity_( rhs.quantity_ )
 {
     // NOTHING
 }
@@ -68,6 +68,6 @@ const MIL_NbcAgentType& MIL_ToxicEffectManipulator::GetType() const
 const PHY_HumanWound& MIL_ToxicEffectManipulator::GetRandomWound( const MIL_NbcAgentType& type ) const
 {
     return ( type.IsLiquidContaminating() ) ?
-                type.GetLiquidRandomWound() :
-                type.GetGasRandomWound(); // GetGasRandomWound
+             type.GetLiquidRandomWound() :
+             type.GetGasRandomWound(); // GetGasRandomWound
 }

@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Posture/PHY_RolePion_Posture.cpp $
-// $Author: Jvt $
-// $Modtime: 11/05/05 15:26 $
-// $Revision: 12 $
-// $Workfile: PHY_RolePion_Posture.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
@@ -93,10 +91,8 @@ void PHY_RolePion_Posture::load( MIL_CheckPointInArchive& file, const unsigned i
     file >> boost::serialization::base_object< PHY_RoleInterface_Posture >( *this );
     file >> nID;
     pCurrentPosture_ = PHY_Posture::FindPosture( nID );
-
     file >> nID;
     pLastPosture_ = PHY_Posture::FindPosture( nID );
-
     file >> rPostureCompletionPercentage_
          >> rElongationFactor_
          >> bDiscreteModeEnabled_
@@ -116,8 +112,7 @@ void PHY_RolePion_Posture::load( MIL_CheckPointInArchive& file, const unsigned i
 void PHY_RolePion_Posture::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << boost::serialization::base_object< PHY_RoleInterface_Posture >( *this );
-
-    unsigned current = pCurrentPosture_->GetID(),
+    const unsigned current = pCurrentPosture_->GetID(),
              last    = pLastPosture_->GetID();
     file << current
          << last
@@ -141,13 +136,10 @@ void PHY_RolePion_Posture::ChangePostureCompletionPercentage( const MT_Float rNe
 {
     if( rPostureCompletionPercentage_ == rNewPercentage )
         return;
-
     // Network
     bPercentageCrossed50_ = ( 0.5 - rPostureCompletionPercentage_ ) * ( 0.5 - rNewPercentage ) <= 0;
-
     if( fabs( rLastPostureCompletionPercentageSent_ - rNewPercentage ) > rDeltaPercentageForNetwork || rNewPercentage == 0. || rNewPercentage == 1. )
         bPercentageHasChanged_ = true;
-
     rPostureCompletionPercentage_ = rNewPercentage;
 }
 
@@ -159,7 +151,6 @@ void PHY_RolePion_Posture::ChangePosture( const PHY_Posture& newPosture )
 {
     if( pCurrentPosture_ == &newPosture )
         return;
-
     pLastPosture_    = pCurrentPosture_;
     pCurrentPosture_ = &newPosture;
 
@@ -167,7 +158,6 @@ void PHY_RolePion_Posture::ChangePosture( const PHY_Posture& newPosture )
         ChangePostureCompletionPercentage( 1. );
     else
         ChangePostureCompletionPercentage( 0. );
-
     bPostureHasChanged_    = true;
     bPercentageHasChanged_ = true;
 }
@@ -186,7 +176,6 @@ void PHY_RolePion_Posture::Update( bool bIsDead )
     params.bDiscreteModeEnabled_ = bDiscreteModeEnabled_;
     params.rStealthFactor_ = rStealthFactor_;
     params.rTimingFactor_ = rTimingFactor_;
-
     std::auto_ptr< PostureComputer_ABC > computer( pion_.GetAlgorithms().postureComputerFactory_->Create( params ) );
     pion_.Execute( *computer );
     PostureComputer_ABC::Results& result = computer->Result();
@@ -195,7 +184,6 @@ void PHY_RolePion_Posture::Update( bool bIsDead )
     else
         ChangePostureCompletionPercentage( result.postureCompletionPercentage_ );
     bIsStealth_ = result.bIsStealth_;
-
     if( HasChanged() )
         pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
 }
@@ -228,7 +216,6 @@ void PHY_RolePion_Posture::Install()
     bInstallationSetUpInProgress_ = true;
     if( rInstallationState_ >= 1. )
         return;
-
     const MT_Float rTime = pion_.GetType().GetUnitType().GetInstallationTime();
     if( rTime == 0 )
         rInstallationState_ = 1.;
@@ -237,7 +224,6 @@ void PHY_RolePion_Posture::Install()
         rInstallationState_ += 1. / rTime;
         rInstallationState_ = std::min( 1., rInstallationState_ );
     }
-
     if( fabs( rLastInstallationStateSent_ - rInstallationState_ ) > rDeltaPercentageForNetwork || rInstallationState_ == 0. || rInstallationState_ == 1. )
         bInstallationStateHasChanged_ = true;
 }
@@ -250,7 +236,6 @@ void PHY_RolePion_Posture::Uninstall()
 {
     if( rInstallationState_ <= 0. || bInstallationSetUpInProgress_ )
         return;
-
     const MT_Float rTime = pion_.GetType().GetUnitType().GetUninstallationTime();
     if( rTime == 0 )
         rInstallationState_ = 0.;
@@ -259,7 +244,6 @@ void PHY_RolePion_Posture::Uninstall()
         rInstallationState_ -= 1. / rTime;
         rInstallationState_ = std::max( 0., rInstallationState_ );
     }
-
     if( fabs( rLastInstallationStateSent_ - rInstallationState_ ) > rDeltaPercentageForNetwork || rInstallationState_ == 0. || rInstallationState_ == 1. )
         bInstallationStateHasChanged_ = true;
 }
@@ -275,22 +259,17 @@ void PHY_RolePion_Posture::SendChangedState( client::UnitAttributes& msg ) const
         msg().set_posture_old( pLastPosture_   ->GetAsnID() );
         msg().set_posture_new( pCurrentPosture_->GetAsnID() );
     }
-
     if( bPercentageHasChanged_ )
     {
-        msg().set_posture_pourcentage( (unsigned int)( rPostureCompletionPercentage_ * 100. ) );
-        rLastPostureCompletionPercentageSent_        = rPostureCompletionPercentage_ ;
+        msg().set_posture_pourcentage( static_cast< unsigned int >( rPostureCompletionPercentage_ * 100. ) );
+        rLastPostureCompletionPercentageSent_ = rPostureCompletionPercentage_ ;
     }
-
     if( bStealthFactorHasChanged_ )
-    {
         msg().set_mode_furtif_actif( ( rStealthFactor_ < 1. ) );
-    }
-
     if( bInstallationStateHasChanged_ )
     {
-        msg().set_etat_installation( (unsigned int)( rInstallationState_ * 100. ) );
-        rLastInstallationStateSent_                = rInstallationState_;
+        msg().set_etat_installation( static_cast< unsigned int >( rInstallationState_ * 100. ) );
+        rLastInstallationStateSent_ = rInstallationState_;
     }
 }
 
@@ -302,13 +281,10 @@ void PHY_RolePion_Posture::SendFullState( client::UnitAttributes& msg ) const
 {
     msg().set_posture_old( pLastPosture_   ->GetAsnID() );
     msg().set_posture_new( pCurrentPosture_->GetAsnID() );
-
-
-    msg().set_posture_pourcentage( (unsigned int)( rPostureCompletionPercentage_ * 100. ) );
+    msg().set_posture_pourcentage( static_cast< unsigned int >( rPostureCompletionPercentage_ * 100. ) );
     rLastPostureCompletionPercentageSent_        = rPostureCompletionPercentage_;
-
     msg().set_mode_furtif_actif( ( rStealthFactor_ < 1. ) );
-    msg().set_etat_installation( (unsigned int)( rInstallationState_ * 100. ) );
+    msg().set_etat_installation( static_cast< unsigned int >( rInstallationState_ * 100. ) );
     rLastInstallationStateSent_                = rInstallationState_;
 }
 
