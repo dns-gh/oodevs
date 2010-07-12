@@ -81,12 +81,3 @@ void PointList::Serialize( MsgCoordLatLongList& asn ) const
     for( T_Points::const_iterator it = points_.begin(); it != points_.end(); ++it, ++i )
         it->Serialize( *asn.mutable_elem( i ) );
 }
-
-// -----------------------------------------------------------------------------
-// Name: PointList::Clean
-// Created: SBO 2008-05-22
-// -----------------------------------------------------------------------------
-void PointList::Clean( MsgCoordLatLongList& asn ) const
-{
-    asn.mutable_elem()->Clear();
-}

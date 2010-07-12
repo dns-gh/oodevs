@@ -46,18 +46,6 @@ MissionParameterPolygon::~MissionParameterPolygon()
 void MissionParameterPolygon::Serialize( MsgMissionParameter& parameter ) const
 {
     parameter.set_null_value( 0 );
-
-//    parameter.mutable_value()->mutable_polygon() = new MsgPolygon();
     parameter.mutable_value()->mutable_polygon()->mutable_location()->set_type ( MsgLocation_Geometry_polygon );
     points_->Serialize( *parameter.mutable_value()->mutable_polygon()->mutable_location()->mutable_coordinates() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionParameterPolygon::Clean
-// Created: SBO 2008-05-22
-// -----------------------------------------------------------------------------
-void MissionParameterPolygon::Clean( MsgMissionParameter& parameter ) const
-{
-    points_->Clean( *parameter.mutable_value()->mutable_polygon()->mutable_location()->mutable_coordinates() );
-    delete parameter.mutable_value()->mutable_polygon();
 }

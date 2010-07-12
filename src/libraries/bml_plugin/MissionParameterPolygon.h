@@ -41,7 +41,6 @@ public:
     //! @name Operations
     //@{
     virtual void Serialize( MsgMissionParameter& parameter ) const;
-    virtual void Clean( MsgMissionParameter& parameter ) const;
     //@}
 
 private:
@@ -49,10 +48,6 @@ private:
     //@{
     MissionParameterPolygon( const MissionParameterPolygon& );            //!< Copy constructor
     MissionParameterPolygon& operator=( const MissionParameterPolygon& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
     //@}
 
 private:

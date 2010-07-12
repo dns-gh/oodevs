@@ -204,7 +204,6 @@ void Mission::SendAutomatMission( dispatcher::SimulationPublisher_ABC& publisher
             asn().mutable_parametres()->add_elem();
     Serialize( *asn().mutable_parametres() );
     asn.Send( publisher );
-    Clean( *asn().mutable_parametres() );
 }
 
 // -----------------------------------------------------------------------------
@@ -221,7 +220,6 @@ void Mission::SendAgentMission( dispatcher::SimulationPublisher_ABC& publisher )
             asn().mutable_parametres()->add_elem();
     Serialize( *asn().mutable_parametres() );
     asn.Send( publisher );
-    Clean( *asn().mutable_parametres() );
 }
 
 namespace
@@ -243,7 +241,7 @@ namespace
         for( int i = 0; i < asn.elem_size(); ++i )
         {
             asn.mutable_elem(i)->set_null_value ( 1 );
-            asn.mutable_elem(i)->mutable_value()->set_abool ( 0 );
+            asn.mutable_elem(i)->mutable_value()->set_abool( 0 );
         }
     }
 }
@@ -255,15 +253,13 @@ namespace
 void Mission::Serialize( MsgMissionParameters& asn ) const
 {
     MarkParameters( asn );
-
     SerializeDummyParameters( asn );
     for( T_Parameters::const_iterator it = parameters_.begin(); it != parameters_.end(); ++it )
     {
         const unsigned int index = GetParameterIndex( type_, (*it)->GetType() );
         if( index >= 0 )
-            (*it)->Serialize( *asn.mutable_elem(index) );
+            (*it)->Serialize( *asn.mutable_elem( index ) );
     }
-
     FillEmptyParameters( asn );
 }
 
@@ -284,7 +280,7 @@ void Mission::FillEmptyParameters( MsgMissionParameters& asn ) const
             if( type == "phaselinelist" )
             {
                 static MsgLimasOrder limas;
-                asnParam.set_null_value( 0 );
+                asnParam.set_null_value( 0 ); 
                 *asnParam.mutable_value()->mutable_limasorder() = limas ;
             }
             else
@@ -327,39 +323,6 @@ void Mission::SerializeDummyParameters( MsgMissionParameters& asn ) const
         {
             asnParam.mutable_value()->mutable_heading()->set_heading ( 0 );
         }
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: Mission::Clean
-// Created: SBO 2008-05-22
-// -----------------------------------------------------------------------------
-void Mission::Clean( MsgMissionParameters& asn ) const
-{
-    for( T_Parameters::const_iterator it = parameters_.begin(); it != parameters_.end(); ++it )
-    {
-        const unsigned int index = GetParameterIndex( type_, (*it)->GetType() );
-        if( index >= 0 )
-            (*it)->Clean( *asn.mutable_elem( index ) );
-    }
-    CleanDummyParameters( asn );
-    asn.mutable_elem()->Clear();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Mission::CleanDummyParameters
-// Created: SBO 2008-05-22
-// -----------------------------------------------------------------------------
-void Mission::CleanDummyParameters( MsgMissionParameters& asn ) const
-{
-    for( int i = 0; i < asn.elem_size(); ++i )
-    {
-        if( asn.elem().Get(i).value().has_intelligencelist() )
-            asn.mutable_elem(i)->mutable_value()->clear_intelligencelist();
-        if( asn.elem().Get(i).value().has_missionobjectivelist() )
-            asn.mutable_elem(i)->mutable_value()->clear_missionobjectivelist();
-        if( asn.elem().Get(i).value().has_plannedworklist() )
-            asn.mutable_elem(i)->mutable_value()->clear_plannedworklist();
     }
 }
 

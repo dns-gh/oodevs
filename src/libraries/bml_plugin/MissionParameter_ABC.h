@@ -48,7 +48,6 @@ public:
     //! @name Operations
     //@{
     virtual void Serialize( MsgMissionParameter& parameter ) const = 0;
-    virtual void Clean( MsgMissionParameter& parameter ) const = 0;
     //@}
 
 private:

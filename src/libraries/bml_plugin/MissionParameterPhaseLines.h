@@ -41,7 +41,6 @@ public:
     //! @name Operations
     //@{
     virtual void Serialize( MsgMissionParameter& parameter ) const;
-    virtual void Clean( MsgMissionParameter& parameter ) const;
     void AddLine( MissionParameterPhaseLine& line );
     //@}
 

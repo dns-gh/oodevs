@@ -81,10 +81,8 @@ private:
     void SendAgentMission( dispatcher::SimulationPublisher_ABC& publisher ) const;
 
     void Serialize( MsgMissionParameters& asn ) const;
-    void Clean( MsgMissionParameters& asn ) const;
     void SerializeDummyParameters( MsgMissionParameters& asn ) const;
     void FillEmptyParameters( MsgMissionParameters& asn ) const;
-    void CleanDummyParameters( MsgMissionParameters& asn ) const;
 
     const kernel::MissionType& ResolveMission( xml::xistream& xis );
     void AddParameter( MissionParameter_ABC& parameter );

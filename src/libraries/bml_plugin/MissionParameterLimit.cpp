@@ -44,18 +44,6 @@ MissionParameterLimit::~MissionParameterLimit()
 void MissionParameterLimit::Serialize( MsgMissionParameter& parameter ) const
 {
     parameter.set_null_value( 0 );
-
-//    parameter.mutable_value()->mutable_line() = new MsgLine();
     parameter.mutable_value()->mutable_line()->mutable_location()->set_type( MsgLocation::line );
     points_->Serialize( *parameter.mutable_value()->mutable_line()->mutable_location()->mutable_coordinates() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionParameterLimit::Clean
-// Created: SBO 2008-05-22
-// -----------------------------------------------------------------------------
-void MissionParameterLimit::Clean( MsgMissionParameter& parameter ) const
-{
-    points_->Clean( *parameter.mutable_value()->mutable_line()->mutable_location()->mutable_coordinates() );
-    delete parameter.mutable_value()->mutable_line();
 }

@@ -42,12 +42,3 @@ void MissionParameterAutomat::Serialize( MsgMissionParameter& parameter ) const
     parameter.set_null_value( 0 );
     parameter.mutable_value()->mutable_automat()->set_oid( automat_.GetId() );
 }
-
-// -----------------------------------------------------------------------------
-// Name: MissionParameterAutomat::Clean
-// Created: SBO 2008-06-02
-// -----------------------------------------------------------------------------
-void MissionParameterAutomat::Clean( MsgMissionParameter& ) const
-{
-    // NOTHING
-}

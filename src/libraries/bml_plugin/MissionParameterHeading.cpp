@@ -89,12 +89,3 @@ void MissionParameterHeading::Serialize( MsgMissionParameter& parameter ) const
     parameter.set_null_value( 0 );
     parameter.mutable_value()->mutable_heading()->set_heading( angle_ );
 }
-
-// -----------------------------------------------------------------------------
-// Name: MissionParameterHeading::Clean
-// Created: SBO 2008-05-22
-// -----------------------------------------------------------------------------
-void MissionParameterHeading::Clean( MsgMissionParameter& ) const
-{
-    // NOTHING
-}

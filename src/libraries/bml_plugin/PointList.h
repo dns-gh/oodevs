@@ -46,7 +46,6 @@ public:
     //@{
     void Serialize( xml::xostream& xos ) const;
     void Serialize( MsgCoordLatLongList& asn ) const;
-    void Clean( MsgCoordLatLongList& asn ) const;
     //@}
 
 private:

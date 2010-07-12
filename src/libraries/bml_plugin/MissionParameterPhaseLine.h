@@ -44,10 +44,7 @@ public:
     //! @name Operations
     //@{
     virtual void Serialize( MsgMissionParameter& parameter ) const;
-    virtual void Clean( MsgMissionParameter& parameter ) const;
-
     void Serialize( MsgLimaOrder& asn ) const;
-    void Clean( MsgLimaOrder& asn ) const;
     //@}
 
 private:

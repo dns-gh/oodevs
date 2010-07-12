@@ -42,12 +42,3 @@ void MissionParameterAgent::Serialize( MsgMissionParameter& parameter ) const
     parameter.set_null_value( 0 );
     parameter.mutable_value()->mutable_unit()->set_oid( agent_.GetId() );
 }
-
-// -----------------------------------------------------------------------------
-// Name: MissionParameterAgent::Clean
-// Created: SBO 2008-06-02
-// -----------------------------------------------------------------------------
-void MissionParameterAgent::Clean( MsgMissionParameter& ) const
-{
-    // NOTHING
-}

@@ -42,18 +42,7 @@ MissionParameterPoint::~MissionParameterPoint()
 void MissionParameterPoint::Serialize( MsgMissionParameter& parameter ) const
 {
     parameter.set_null_value( 0 );
-
     parameter.mutable_value()->mutable_point()->mutable_location()->set_type( MsgLocation_Geometry_point );
     parameter.mutable_value()->mutable_point()->mutable_location()->mutable_coordinates()->add_elem();
     point_->Serialize( *parameter.mutable_value()->mutable_point()->mutable_location()->mutable_coordinates()->mutable_elem(0) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionParameterPoint::Clean
-// Created: SBO 2008-06-02
-// -----------------------------------------------------------------------------
-void MissionParameterPoint::Clean( MsgMissionParameter& parameter ) const
-{
-    parameter.mutable_value()->mutable_point()->mutable_location()->mutable_coordinates()->mutable_elem()->Clear();
-    parameter.mutable_value()->mutable_point()->mutable_location()->Clear();
 }

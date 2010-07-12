@@ -46,19 +46,6 @@ void MissionParameterPhaseLines::Serialize( MsgMissionParameter& parameter ) con
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionParameterPhaseLines::Clean
-// Created: SBO 2008-05-22
-// -----------------------------------------------------------------------------
-void MissionParameterPhaseLines::Clean( MsgMissionParameter& parameter ) const
-{
-    unsigned int i = 0;
-    for( T_PhaseLines::const_iterator it = phaseLines_.begin(); it != phaseLines_.end(); ++it, ++i )
-        (*it)->Clean( *parameter.mutable_value()->mutable_limasorder()->mutable_elem( i ) );
-    parameter.mutable_value()->mutable_limasorder()->mutable_elem()->Clear();
-    parameter.mutable_value()->mutable_limasorder()->Clear();
-}
-
-// -----------------------------------------------------------------------------
 // Name: MissionParameterPhaseLines::AddLine
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------

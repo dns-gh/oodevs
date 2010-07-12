@@ -54,15 +54,6 @@ void MissionParameterPhaseLine::Serialize( MsgMissionParameter& ) const
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: MissionParameterPhaseLine::Clean
-// Created: SBO 2008-05-22
-// -----------------------------------------------------------------------------
-void MissionParameterPhaseLine::Clean( MsgMissionParameter& ) const
-{
-    // NOTHING
-}
-
 namespace
 {
     MsgLimaOrder_Function ToPhaseLineType( const std::string& function )
@@ -104,13 +95,4 @@ void MissionParameterPhaseLine::Serialize( MsgLimaOrder& message ) const
     message.mutable_lima()->mutable_location()->set_type( MsgLocation_Geometry_line );
     points_->Serialize( *message.mutable_lima()->mutable_location()->mutable_coordinates() );
     message.mutable_horaire()->set_data( bpt::to_iso_string( bpt::from_time_t( 0 ) ).c_str() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionParameterPhaseLine::Clean
-// Created: SBO 2008-05-22
-// -----------------------------------------------------------------------------
-void MissionParameterPhaseLine::Clean( MsgLimaOrder& /*asn*/ ) const
-{
-    // $$$$ SBO 2010-02-22: To be removed
 }
