@@ -46,3 +46,6 @@ The following components have been directly or indirectly used :
 15/ Proj4
  . http://trac.osgeo.org/proj/
  . proj4.txt
+16/ LuaBit
+ . http://luaforge.net/projects/bit/
+ . luabit.txt
