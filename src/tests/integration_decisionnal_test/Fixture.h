@@ -23,8 +23,8 @@ class Fixture
 public:
     //! @name Constructors/Destructor
     //@{
-             Fixture() {}
-    virtual ~Fixture() {}
+             Fixture();
+    virtual ~Fixture();
     //@}
 
     //! @name Member data
