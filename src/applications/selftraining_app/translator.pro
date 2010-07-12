@@ -21,7 +21,6 @@ SelfTrainingPage.cpp \
 SessionList.cpp \
 SessionTray.cpp \
 TrayMenu.cpp \
-TutorialPage.cpp \
 main.cpp \
 
 TRANSLATIONS = selftraining_app_fr.ts

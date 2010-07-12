@@ -14,7 +14,6 @@
 #include "ProcessDialogs.h"
 #include "ProgressPage.h"
 #include "CompositeProcessWrapper.h"
-#include "MessageDialog.h"
 #include "frontend/CheckpointConfigPanel.h"
 #include "frontend/CreateSession.h"
 #include "frontend/CrossbowPluginConfigPanel.h"
