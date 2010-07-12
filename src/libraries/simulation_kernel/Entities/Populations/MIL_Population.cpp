@@ -232,7 +232,7 @@ void MIL_Population::WriteODB( xml::xostream& xos ) const
     else
         xos << xml::attribute( "position", MIL_Tools::ConvertCoordSimToMos( flows_.front()->GetPosition() ) );
 
-    xos << xml::end(); // population
+    xos << xml::end; // population
 }
 
 // =============================================================================

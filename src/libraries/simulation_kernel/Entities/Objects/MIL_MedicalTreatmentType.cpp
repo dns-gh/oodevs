@@ -41,7 +41,7 @@ void MIL_MedicalTreatmentType::Initialize( xml::xistream& xis )
     MT_LOG_INFO_MSG( "Initializing Medical Treatment Types" );
     xis >> xml::start( "medical-treatments" )
             >> xml::list( "medical-treatment", &ReadMedicalTreatment )
-        >> xml::end();
+        >> xml::end;
     for( CIT_MedicalTreatmentTypeMap it = types_.begin(); it != types_.end(); ++it )
         if( ! ids.insert( it->second->GetID() ).second )
             throw std::runtime_error( "Medical treatment type id of " + it->second->GetName() + " already exists" );
@@ -61,7 +61,7 @@ MIL_MedicalTreatmentType::MIL_MedicalTreatmentType( const std::string& strName, 
         >> xml::attribute( "death-threshold", deathThreshold_ )
         >> xml::start( "injuries" )
             >> xml::list( "injury", *this, &MIL_MedicalTreatmentType::ReadMedicalTreatmentEffect )
-        >> xml::end();
+        >> xml::end;
 }
 
 namespace

@@ -35,7 +35,7 @@ void MIL_KnowledgeGroupType::Initialize( xml::xistream& xis, double timeFactor )
     LoadingWrapper loader;
     xis >> xml::start( "knowledge-groups" )
             >> xml::list( "knowledge-group", loader, &LoadingWrapper::ReadKnowledgeGroup, timeFactor )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -106,14 +106,14 @@ MIL_KnowledgeGroupType::MIL_KnowledgeGroupType( const std::string& strName, xml:
             xis.error( "unit-knowledge: interpolation-time <= 0" );
     rKnowledgeAgentExtrapolationTime_ = std::max( 1., timeFactor * rKnowledgeAgentExtrapolationTime_ );
     // JVT : 1 car lorsque l'on perd de vue une unité, on veux au moins que l'emplacement de la connaissance soit celle au pas de temps suivant le non vu
-    xis >> xml::end();
+    xis >> xml::end;
     // Connaissances population
     xis >> xml::start( "population-knowledge" );
     tools::ReadTimeAttribute( xis, "max-lifetime", rKnowledgePopulationMaxLifeTime_ );
     if( rKnowledgePopulationMaxLifeTime_ <= 0 )
         xis.error( "population-knowledge: max-lifetime <= 0" );
     rKnowledgePopulationMaxLifeTime_ = timeFactor * rKnowledgePopulationMaxLifeTime_;
-    xis >> xml::end();
+    xis >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

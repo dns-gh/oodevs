@@ -51,12 +51,12 @@ void MIL_NbcAgentType::Initialize( xml::xistream& xis )
             >> xml::start( "nbc-suit" )
                 >> xml::attribute( "max-speed-modifier", rCoefMaxSpeedModificator_ )
                 >> xml::attribute( "reloading-time-modifier", rCoefReloadingTimeModificator_ )
-            >> xml::end()
+            >> xml::end
             >> xml::start( "propagation" )
                 >> xml::attribute( "wind-speed-limit", rMinPropagationSpeed_ )
                 >> xml::attribute( "contamination-distance", rContaminationDistance_ )
                 >> xml::attribute( "contamination-quantity-given", rContaminationQuantityGiven_ )
-            >> xml::end();
+            >> xml::end;
 
     if( rCoefMaxSpeedModificator_ < 0 )
         xis.error( "nbc-suit: max-speed-modifier < 0" );
@@ -75,8 +75,8 @@ void MIL_NbcAgentType::Initialize( xml::xistream& xis )
 
     xis >> xml::start( "agents" )
             >> xml::list( "agent", loader, &LoadingWrapper::ReadAgent )
-        >> xml::end()
-    >> xml::end();
+        >> xml::end
+    >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

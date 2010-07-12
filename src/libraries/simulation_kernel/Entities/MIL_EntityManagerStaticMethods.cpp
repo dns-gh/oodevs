@@ -158,7 +158,7 @@ void MIL_EntityManagerStaticMethods::Initialize( MIL_Config& config, const MIL_T
     InitializeType< MIL_PopulationType             >( xis, config, "populations"        );
     InitializeMedical( xis, config );
 
-    xis >> xml::end(); // physical
+    xis >> xml::end; // physical
 }
 
 // -----------------------------------------------------------------------------
@@ -172,7 +172,7 @@ void MIL_EntityManagerStaticMethods::InitializeSensors( xml::xistream& xis, MIL_
     std::string strFile;
     xis >> xml::start( "sensors" )
             >> xml::attribute( "file", strFile )
-        >> xml::end();
+        >> xml::end;
     strFile = config.BuildPhysicalChildFile( strFile );
 
 
@@ -184,7 +184,7 @@ void MIL_EntityManagerStaticMethods::InitializeSensors( xml::xistream& xis, MIL_
     PHY_PerceptionFlyingShell     ::Initialize( xisSensors );
     PHY_SensorType                ::Initialize( xisSensors );
     PHY_RadarType                 ::Initialize( xisSensors, time );
-    xisSensors >> xml::end();
+    xisSensors >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -198,7 +198,7 @@ void MIL_EntityManagerStaticMethods::InitializeMedical( xml::xistream& xis, MIL_
     std::string strFile;
     xis >> xml::start( "health" )
             >> xml::attribute( "file", strFile )
-        >> xml::end();
+        >> xml::end;
     strFile = config.BuildPhysicalChildFile( strFile );
 
     xml::xifstream xisHealth( strFile );
@@ -208,7 +208,7 @@ void MIL_EntityManagerStaticMethods::InitializeMedical( xml::xistream& xis, MIL_
 
     PHY_HumanWound::InitializeMedicalData( xisHealth );
 
-    xisHealth >> xml::end();
+    xisHealth >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -220,7 +220,7 @@ void MIL_EntityManagerStaticMethods::InitializeComposantes( xml::xistream& xis, 
     std::string strFile;
     xis >> xml::start( "components" )
             >> xml::attribute( "file", strFile )
-        >> xml::end();
+        >> xml::end;
     strFile = config.BuildPhysicalChildFile( strFile );
 
     xml::xifstream xisComponents( strFile );
@@ -238,7 +238,7 @@ void MIL_EntityManagerStaticMethods::InitializeWeapons( xml::xistream& xis, MIL_
     std::string strFile;
     xis >> xml::start( "weapon-systems" )
             >> xml::attribute( "file", strFile )
-        >> xml::end();
+        >> xml::end;
     strFile = config.BuildPhysicalChildFile( strFile );
 
     xml::xifstream xisWeapons( strFile );

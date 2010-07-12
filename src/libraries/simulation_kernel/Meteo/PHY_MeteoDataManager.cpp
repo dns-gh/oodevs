@@ -42,7 +42,7 @@ PHY_MeteoDataManager::PHY_MeteoDataManager( MIL_Config& config )
     InitializeGlobalMeteo( xisWeather );
     pRawData_ = new PHY_RawVisionData( *pGlobalMeteo_, config );
     InitializeLocalMeteos( xisWeather );
-    xisWeather >> xml::end();
+    xisWeather >> xml::end;
 }
 
 //-----------------------------------------------------------------------------
@@ -69,7 +69,7 @@ void PHY_MeteoDataManager::InitializeGlobalMeteo( xml::xistream& xis )
     pGlobalMeteo_->IncRef();
     pGlobalMeteo_->SetListener( this );
     RegisterMeteo( *pGlobalMeteo_ );
-    xis >> xml::end();
+    xis >> xml::end;
 }
 
 //-----------------------------------------------------------------------------
@@ -81,7 +81,7 @@ void PHY_MeteoDataManager::InitializeLocalMeteos( xml::xistream& xis )
     xis >> xml::optional()
         >> xml::start( "local-weather" )
             >> xml::list( "local", *this, &PHY_MeteoDataManager::ReadPatchLocal )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

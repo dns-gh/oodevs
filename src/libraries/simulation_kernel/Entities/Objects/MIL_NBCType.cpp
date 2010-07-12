@@ -36,17 +36,17 @@ void MIL_NBCType::Initialize( xml::xistream& xis )
             >> xml::start( "nbc-cell" )
                 >> xml::attribute( "length", length_ )
                 >> xml::attribute( "width", width_ )
-            >> xml::end()
+            >> xml::end
             >> xml::start( "propagation" )
                 >> xml::attribute( "propagation-angle", propagationAngle_ )
                 >> xml::attribute( "concentration-increase-rate" , concentrationIncreaseRate_ )
                 >> xml::attribute( "concentration-decrease-rate" , concentrationDecreaseRate_ )
                 >> xml::attribute( "edge-effects", edgeEffects_ )
-            >> xml::end()
+            >> xml::end
             >> xml::start( "agents" )
                 >> xml::list( "agent", &ReadAgent )
-            >> xml::end()
-        >> xml::end();
+            >> xml::end
+        >> xml::end;
     //We set the propagation angle in radian
     propagationAngle_ *= static_cast< unsigned int >( MT_PI / 180. );
     for( CIT_NBCTypeMap it = nbcAgentTypes_.begin(); it != nbcAgentTypes_.end(); ++it )

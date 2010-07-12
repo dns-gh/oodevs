@@ -87,7 +87,7 @@ void MIL_ObjectLoader::Initialize( xml::xistream& xis )
 {
     xis >> xml::start( "objects" )
             >> xml::list( "object", *this, &MIL_ObjectLoader::ReadObjectPrototype )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -144,7 +144,7 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateObject( xml::xistream& xis, MIL_Army_ABC
     Object* object = new Object( xis, *it->second, army, &location );
     xis >> xml::optional() >> xml::start( "attributes" )
             >> xml::list( *this, &MIL_ObjectLoader::ReadAttributes, *object )
-        >> xml::end();
+        >> xml::end;
     object->Finalize();
     return object;
 }

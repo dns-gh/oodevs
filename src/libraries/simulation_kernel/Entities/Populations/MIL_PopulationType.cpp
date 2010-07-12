@@ -45,7 +45,7 @@ void MIL_PopulationType::Initialize( xml::xistream& xis )
             >> xml::start( "reloading-time-effect" )
                 >> xml::attribute( "population-density", rEffectReloadingTimeDensity_ )
                 >> xml::attribute( "modifier", rEffectReloadingTimeFactor_ )
-            >> xml::end();
+            >> xml::end;
 
     if( rEffectReloadingTimeDensity_ < 0 )
         xis.error( "reloading-time-effet: population-density < 0" );
@@ -55,7 +55,7 @@ void MIL_PopulationType::Initialize( xml::xistream& xis )
     LoadingWrapper loader;
 
     xis     >> xml::list( "population", loader, &LoadingWrapper::ReadPopulation )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -152,7 +152,7 @@ void MIL_PopulationType::InitializeSlowDownData( xml::xistream& xis )
 {
     xis >> xml::start( "slowing-effects" )
             >> xml::list( "slowing-effect", *this, &MIL_PopulationType::ReadSlowingEffect )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -211,11 +211,11 @@ void MIL_PopulationType::InitializeFireData( xml::xistream& xis )
 {
     xis >> xml::start( "attrition-effects" );
     attritionData_.Initialize( xis );
-    xis >> xml::end();
+    xis >> xml::end;
 
     xis >> xml::start( "unit-fire-effects" )
             >> xml::list( "unit", *this, &MIL_PopulationType::ReadUnitFireEffect )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

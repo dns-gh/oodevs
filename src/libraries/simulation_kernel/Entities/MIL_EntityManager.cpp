@@ -229,7 +229,7 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
     MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , agentFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d populations", populationFactory_->Count() ) );
 
-    xis >> xml::end();
+    xis >> xml::end;
 
     // Check automate composition
     if( config.CheckAutomateComposition() )
@@ -302,8 +302,8 @@ void MIL_EntityManager::LoadUrbanStates( const MIL_Config& config )
     xis >> xml::start( "urban-state" )
             >> xml::start( "blocks" )
                 >> xml::list( "block", boost::bind( &MIL_ObjectManager::ReadUrbanState, boost::ref( *pObjectManager_ ), _1 ) )
-            >> xml::end()
-        >> xml::end();
+            >> xml::end
+        >> xml::end;
 }
 
 namespace
@@ -333,7 +333,7 @@ void MIL_EntityManager::InitializeDiplomacy( xml::xistream& xis )
 
     xis >> xml::start( "diplomacies" )
             >> xml::list( "side", *this, &MIL_EntityManager::ReadDiplomacy )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -346,7 +346,7 @@ void MIL_EntityManager::InitializeDotations( xml::xistream& xis )
 
     xis >> xml::optional() >> xml::start( "dotations" )
             >> xml::attribute( "infinite", infiniteDotations_ )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -376,7 +376,7 @@ void MIL_EntityManager::InitializeArmies( xml::xistream& xis )
 
     xis >> xml::start( "sides" )
         >> xml::list( "side", boost::bind( &ArmyFactory_ABC::Create, boost::ref( *armyFactory_ ), _1 ) )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -1414,16 +1414,14 @@ void MIL_EntityManager::WriteODB( xml::xostream& xos ) const
     xos << xml::start( "orbat" )
             << xml::start( "dotations" )
                 << xml::attribute( "infinite", infiniteDotations_ )
-            << xml::end();
-
-    xos     << xml::start( "sides" );
+            << xml::end
+            << xml::start( "sides" );
                 armyFactory_->Apply( boost::bind( &MIL_Army_ABC::WriteODB, _1, boost::ref( xos ) ) );
-    xos     << xml::end();
-
-    xos     << xml::start( "diplomacies" );
+    xos     << xml::end
+            << xml::start( "diplomacies" )
                 armyFactory_->Apply( boost::bind( &MIL_Army_ABC::WriteDiplomacyODB, _1, boost::ref( xos ) ) );
-    xos     << xml::end();
-    xos << xml::end();
+    xos     << xml::end
+        << xml::end;
 }
 
 // -----------------------------------------------------------------------------

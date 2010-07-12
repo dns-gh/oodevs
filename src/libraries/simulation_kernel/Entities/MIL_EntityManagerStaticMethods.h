@@ -64,7 +64,7 @@ void MIL_EntityManagerStaticMethods::InitializeType( xml::xistream& xis, MIL_Con
     std::string strFile;
     xis >> xml::start( strSection )
             >> xml::attribute( "file", strFile )
-        >> xml::end();
+        >> xml::end;
 
     strFile = config.BuildPhysicalChildFile( strFile );
 

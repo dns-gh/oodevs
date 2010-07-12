@@ -31,7 +31,7 @@ void DEC_Knowledge_RapFor_ABC::Initialize( xml::xistream& xis )
     tools::ReadTimeAttribute( xis, "default-feedback-time", rTmp );
     rTmp                                    = MIL_Tools::ConvertSecondsToSim       ( rTmp );
     rRapForIncreasePerTimeStepDefaultValue_ = ComputeRapForIncreasePerTimeStepValue( rTmp );
-    xis >> xml::end();
+    xis >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

@@ -60,7 +60,7 @@ void AGR_Workspace::Read( xml::xistream& xis )
 {
     xis >> xml::start( "xsd:schema" )
             >> xml::list( *this, &AGR_Workspace::ReadElement )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

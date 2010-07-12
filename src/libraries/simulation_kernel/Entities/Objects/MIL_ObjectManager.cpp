@@ -214,7 +214,7 @@ void MIL_ObjectManager::ReadUrbanState( xml::xistream& xis )
     {
         xis >> xml::optional() >> xml::start( "capacities" )
             >> xml::list( *wrapper, &UrbanObjectWrapper::UpdateCapacities )
-            >> xml::end();
+            >> xml::end;
     }
 }
 

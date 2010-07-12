@@ -166,8 +166,8 @@ void Object::WriteODB( xml::xostream& xos ) const
         std::for_each( attributes_.begin(), attributes_.end(),
             boost::bind( &ObjectAttribute_ABC::WriteODB, _1, boost::ref( xos ) ) );
     }
-    xos << xml::end();
-    xos << xml::end(); // object
+    xos << xml::end;
+    xos << xml::end; // object
 }
 
 // -----------------------------------------------------------------------------

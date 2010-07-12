@@ -216,7 +216,7 @@ void MIL_AutomateLOG::ReadLogisticLink( MIL_AutomateLOG& superior, xml::xistream
         pSupplySuperior_ = &superior;
         xis >> xml::start( "quotas" )
                 >> xml::list( "dotation", *this, &MIL_AutomateLOG::ReadDotation )
-            >> xml::end();
+            >> xml::end;
     }
 
 }
@@ -263,8 +263,8 @@ void MIL_AutomateLOG::WriteLogisticLinksODB( xml::xostream& xos ) const
                 << xml::start ( "subordinate" )
                     << xml::attribute( "id", GetID() )
                     << xml::attribute( "link"   , "maintenance" )
-                << xml::end()
-            << xml::end();
+                << xml::end
+            << xml::end;
     }
 
     if( pMedicalSuperior_ )
@@ -274,8 +274,8 @@ void MIL_AutomateLOG::WriteLogisticLinksODB( xml::xostream& xos ) const
                 << xml::start ( "subordinate" )
                     << xml::attribute( "id", GetID() )
                     << xml::attribute( "link"   , "medical" )
-                << xml::end()
-            << xml::end();
+                << xml::end
+            << xml::end;
     }
 
     if( pSupplySuperior_ )
@@ -293,12 +293,12 @@ void MIL_AutomateLOG::WriteLogisticLinksODB( xml::xostream& xos ) const
             xos << xml::start( "dotation" )
                     << xml::attribute( "name", dotation.GetName()  )
                     << xml::attribute( "quantity", it->second.rQuota_ )
-                << xml::end(); // dotation
+                << xml::end; // dotation
         }
-        xos         << xml::end(); // quotas
+        xos         << xml::end; // quotas
 
-        xos     << xml::end() // subordinate
-            << xml::end(); // automat
+        xos     << xml::end // subordinate
+            << xml::end; // automat
     }
 }
 

@@ -36,8 +36,8 @@ void MIL_AutomateMissionType::Initialize( xml::xistream& xis )
     xis >> xml::start( "missions" )
             >> xml::start( "automats" )
                 >> xml::list( "mission", loader, &LoadingWrapper::ReadMission )
-            >> xml::end()
-        >> xml::end();
+            >> xml::end
+        >> xml::end;
 }
 
 //-----------------------------------------------------------------------------

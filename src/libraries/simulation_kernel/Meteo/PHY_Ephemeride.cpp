@@ -44,10 +44,10 @@ PHY_Ephemeride::PHY_Ephemeride( xml::xistream& xis )
         xis.error( "Unknown lighting" );
 
     std::string date;
-    xis >> xml::end()
+    xis >> xml::end
         >> xml::start( "exercise-date" )
             >> xml::attribute( "value", date )
-        >> xml::end();
+        >> xml::end;
     const unsigned int time = ( bpt::from_iso_string( date ) - bpt::from_time_t( 0 ) ).total_seconds();
     MIL_AgentServer::GetWorkspace().SetInitialRealTime( time );
     {

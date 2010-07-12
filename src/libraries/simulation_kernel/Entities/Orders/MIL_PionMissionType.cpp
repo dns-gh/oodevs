@@ -40,8 +40,8 @@ void MIL_PionMissionType::Initialize( xml::xistream& xis )
     xis >> xml::start( "missions" )
             >> xml::start( "units" )
                 >> xml::list( "mission", loader, &LoadingWrapper::ReadMission )
-            >> xml::end()
-        >> xml::end();
+            >> xml::end
+        >> xml::end;
 }
 
 //-----------------------------------------------------------------------------

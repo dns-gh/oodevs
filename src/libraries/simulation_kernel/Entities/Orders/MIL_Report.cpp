@@ -48,7 +48,7 @@ void MIL_Report::Initialize( xml::xistream& xis )
     LoadingWrapper loader;
     xis >> xml::start( "reports" )
             >> xml::list( "report", loader, &LoadingWrapper::ReadReport )
-        >> xml::end();
+        >> xml::end;
 
     diaEvents_[ eReport_ReAvailableAfterRepairation                 ] = eRC_ANouveauDisponibleApresReparation;
     diaEvents_[ eReport_EquipementRepairedInPlace                   ] = eRC_MaterielRepareSurPlace;

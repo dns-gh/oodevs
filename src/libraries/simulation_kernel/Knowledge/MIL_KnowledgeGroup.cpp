@@ -266,7 +266,7 @@ void MIL_KnowledgeGroup::WriteODB( xml::xostream& xos ) const
     xos << xml::start( "knowledge-group" )
             << xml::attribute( "id", id_ )
             << xml::attribute( "type", type_->GetName() )
-        << xml::end();
+        << xml::end;
     for( CIT_KnowledgeGroupVector it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it ) // LTO
         (**it).WriteODB( boost::ref(xos) );     // LTO
 }

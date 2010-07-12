@@ -35,8 +35,8 @@ void MIL_PopulationMissionType::Initialize( xml::xistream& xis )
     xis >> xml::start( "missions" )
             >> xml::start( "populations" )
                 >> xml::list( "mission", loader, &LoadingWrapper::ReadMission )
-            >> xml::end()
-        >> xml::end();
+            >> xml::end
+        >> xml::end;
 }
 
 //-----------------------------------------------------------------------------
