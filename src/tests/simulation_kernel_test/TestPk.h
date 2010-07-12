@@ -17,7 +17,7 @@
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "UrbanType.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 class TestPK : private boost::noncopyable
 {

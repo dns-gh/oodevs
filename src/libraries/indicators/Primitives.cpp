@@ -11,7 +11,7 @@
 #include "Primitives.h"
 #include "DataTypeFactory.h"
 #include "Primitive.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace indicators;
 

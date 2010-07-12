@@ -14,7 +14,7 @@
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "protocol/protocol.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteType_ABC constructor

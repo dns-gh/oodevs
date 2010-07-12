@@ -22,7 +22,7 @@
 #include "UrbanType.h"
 #include <urban/StaticModel.h>
 #include <urban/MaterialCompositionType.h>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 PHY_DotationCategory::T_UrbanMaterialAttritionMap PHY_DotationCategory::urbanBestValue_;
 

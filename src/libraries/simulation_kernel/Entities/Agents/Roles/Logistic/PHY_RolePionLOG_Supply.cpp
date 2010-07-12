@@ -27,7 +27,7 @@
 #include "simulation_kernel/OnComponentLendedFunctorComputer_ABC.h"
 #include "simulation_kernel/OnComponentLendedFunctorComputerFactory.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePionLOG_Supply )
 

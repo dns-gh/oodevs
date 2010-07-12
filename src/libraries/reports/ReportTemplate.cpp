@@ -10,7 +10,7 @@
 #include "ReportTemplate.h"
 #include "ReportFactory.h"
 #include "protocol/Protocol.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace xml;
 
@@ -55,10 +55,10 @@ QString ReportTemplate::RenderMessage( const Common::MsgMissionParameters& messa
     QString messageStr = message_;
     unsigned int enums = 0;
     for( int i = 0; i < message.elem_size(); ++i )
-        if( message.elem(i).value().has_enumeration() )
-            messageStr = messageStr.arg( enumerations_[enums++][message.elem(i).value().enumeration()] );
+        if( message.elem( i ).value().has_enumeration() )
+            messageStr = messageStr.arg( enumerations_[ enums++ ][ message.elem( i ).value().enumeration() ] );
         else
-            messageStr = messageStr.arg( factory_.RenderParameter( message.elem(i) ) );
+            messageStr = messageStr.arg( factory_.RenderParameter( message.elem( i ) ) );
     return messageStr;
 }
 

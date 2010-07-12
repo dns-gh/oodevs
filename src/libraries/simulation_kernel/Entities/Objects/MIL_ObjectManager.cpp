@@ -26,7 +26,7 @@
 #include "Network/NET_Publisher_ABC.h"
 #include <protocol/ClientSenders.h>
 #include <urban/TerrainObject_ABC.h>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #include <boost/serialization/export.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_ObjectManager )

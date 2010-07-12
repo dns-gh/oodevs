@@ -13,7 +13,7 @@
 #include "ElementTypeResolver.h"
 #include "SimpleDataType.h"
 #include <boost/algorithm/string.hpp>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace indicators;
 

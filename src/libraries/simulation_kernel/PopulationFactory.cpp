@@ -14,7 +14,7 @@
 #include "simulation_kernel/Entities/Populations/MIL_PopulationType.h"
 #include "simulation_kernel/FormationFactory_ABC.h"
 
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PopulationFactory )
 

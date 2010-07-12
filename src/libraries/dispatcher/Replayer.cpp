@@ -24,7 +24,7 @@
 #include "StaticModel.h"
 #include "score_plugin/ScorePlugin.h"
 #include "messenger_plugin/MessengerPlugin.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace dispatcher;
 

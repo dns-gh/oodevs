@@ -9,7 +9,7 @@
 
 #include "clients_kernel_pch.h"
 #include "PopulationType.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
 using namespace xml;

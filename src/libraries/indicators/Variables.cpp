@@ -15,7 +15,7 @@
 #include "tools/Iterator.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/foreach.hpp>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace indicators;
 

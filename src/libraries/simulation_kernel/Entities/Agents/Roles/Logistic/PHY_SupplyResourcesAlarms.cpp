@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_SupplyResourcesAlarms.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 PHY_SupplyResourcesAlarms::T_LevelSet PHY_SupplyResourcesAlarms::convoyTransporterResourcesLevels_;
 

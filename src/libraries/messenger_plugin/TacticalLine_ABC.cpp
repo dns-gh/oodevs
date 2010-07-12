@@ -13,7 +13,7 @@
 #include "protocol/ClientPublisher_ABC.h"
 #include "clients_kernel/CoordinateConverter.h"
 
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace plugins::messenger;
 

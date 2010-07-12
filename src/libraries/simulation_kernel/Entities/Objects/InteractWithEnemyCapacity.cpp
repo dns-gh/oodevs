@@ -11,7 +11,7 @@
 #include "InteractWithEnemyCapacity.h"
 #include "MIL_Object_ABC.h"
 #include "simulation_kernel/Entities/Agents/MIL_Agent_ABC.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( InteractWithEnemyCapacity )
 

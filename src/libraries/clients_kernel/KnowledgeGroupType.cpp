@@ -15,7 +15,7 @@
 #include "tools/xmlcodecs.h"
 
 #include <boost/lexical_cast.hpp>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
 

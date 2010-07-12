@@ -20,7 +20,7 @@
 #include "VolumeType.h"
 #include "WeaponSystemType.h"
 #include <boost/bind.hpp>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
 using namespace xml;

@@ -15,7 +15,7 @@
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Decision/DEC_Gen_Object.h"
 #include "protocol/protocol.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 // =============================================================================
 // GEN OBJECT

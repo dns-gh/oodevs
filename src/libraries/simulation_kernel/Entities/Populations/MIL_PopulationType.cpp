@@ -19,7 +19,7 @@
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Tools/MIL_Tools.h"
 #include "MIL_AgentServer.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 MIL_PopulationType::T_PopulationMap MIL_PopulationType::populations_;
 MT_Float                            MIL_PopulationType::rEffectReloadingTimeDensity_ = 0.;

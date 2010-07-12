@@ -17,7 +17,7 @@
 #include "3a/Maximum.h"
 #include "3a/Functions.h"
 #include "3a/Threshold.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace mockpp;
 

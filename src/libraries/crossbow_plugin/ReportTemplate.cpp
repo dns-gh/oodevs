@@ -12,7 +12,7 @@
 #include "ReportTemplate.h"
 #include "ReportFactory.h"
 
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace Common;
 

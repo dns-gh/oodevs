@@ -12,7 +12,7 @@
 
 #include "Functions.h"
 #include "TypeChecks.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #include <boost/function.hpp>
 #include <boost/lambda/lambda.hpp>
 

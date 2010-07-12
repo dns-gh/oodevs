@@ -16,7 +16,7 @@
 #include "MockPopulationFactory.h"
 #include "simulation_kernel/ArmyFactory.h"
 #include "simulation_kernel/UrbanModel.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: FactoriesTest_ArmyFactory

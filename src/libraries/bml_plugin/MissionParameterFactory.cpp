@@ -25,7 +25,7 @@
 #include "dispatcher/Automat_ABC.h"
 #include "dispatcher/Agent_ABC.h"
 #include "dispatcher/Model.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #pragma warning( disable : 4512 )
 #include <boost/algorithm/string.hpp>
 

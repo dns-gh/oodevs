@@ -17,7 +17,7 @@
 #include "HLA/HLA_UpdateFunctor.h"
 #include <hla/AttributeIdentifier.h>
 #include "protocol/protocol.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( StockAttribute )
 

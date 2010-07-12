@@ -11,7 +11,7 @@
 #define __Selector_h_
 
 #include "Reductor_ABC.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 // =============================================================================
 /** @class  Selector

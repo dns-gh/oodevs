@@ -15,7 +15,7 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "protocol/simulationsenders.h"
 #include "protocol/ServerPublisher_ABC.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace Common;
 using namespace kernel;

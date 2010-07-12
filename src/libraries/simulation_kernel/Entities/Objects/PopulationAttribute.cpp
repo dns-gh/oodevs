@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "PopulationAttribute.h"
 #include "Object.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: PopulationAttribute::PopulationAttribute

@@ -17,7 +17,7 @@
 #include "protocol/ClientPublisher_ABC.h"
 #include "Services.h"
 #include <boost/algorithm/string.hpp>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #include "protocol/aarsenders.h"
 
 using namespace dispatcher;

@@ -17,7 +17,7 @@
 #include "MIL_Random.h"
 #include "MIL_MedicalTreatmentType.h"
 #include "protocol/protocol.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MedicalTreatmentAttribute )
 

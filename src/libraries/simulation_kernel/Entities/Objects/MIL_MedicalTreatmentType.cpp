@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_MedicalTreatmentType.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #include "Tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
 

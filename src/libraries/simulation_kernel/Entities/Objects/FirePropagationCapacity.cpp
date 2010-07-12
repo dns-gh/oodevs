@@ -19,7 +19,7 @@
 #include "MIL_ObjectBuilder_ABC.h"
 #include "BurnCapacity.h"
 
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( FirePropagationCapacity )
 

@@ -59,7 +59,7 @@
 #include "clients_kernel/Tools.h"
 #include "protocol/Protocol.h"
 #include <urban/model.h>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #pragma warning( push, 1 )
 #pragma warning( disable : 4512 )
 #include <boost/algorithm/string.hpp>

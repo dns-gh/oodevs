@@ -27,7 +27,7 @@
 #include "SensorType.h"
 #include "SymbolFactory.h"
 #include <boost/bind.hpp>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
 using namespace xml;

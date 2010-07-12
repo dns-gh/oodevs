@@ -16,7 +16,7 @@
 #include "PHY_DotationCategory.h"
 #include "PHY_DotationLogisticType.h"
 #include "protocol/protocol.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 PHY_DotationType* PHY_DotationType::munition_ = 0;
 PHY_DotationType* PHY_DotationType::carburant_ = 0;

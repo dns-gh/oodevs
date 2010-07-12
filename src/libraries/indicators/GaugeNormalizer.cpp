@@ -12,7 +12,7 @@
 #include "GaugeType.h"
 #include <boost/foreach.hpp>
 #include <limits>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace indicators;
 

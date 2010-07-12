@@ -15,7 +15,7 @@
 #include "clients_kernel/EntityResolver_ABC.h"
 #include "protocol/Protocol.h"
 #include <boost/bind.hpp>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace xml;
 using namespace kernel;

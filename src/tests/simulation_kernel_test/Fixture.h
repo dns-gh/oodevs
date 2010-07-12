@@ -19,7 +19,7 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "AlgorithmsFactories.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 struct FixturePion
 {

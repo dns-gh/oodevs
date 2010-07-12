@@ -12,7 +12,7 @@
 //#include "MockPHY_RawVisionData_ABC.h"
 #include "simulation_kernel/Meteo/PHY_LocalMeteo.h"
 #include "meteo/PHY_Lighting.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: BOOST_AUTO_TEST_CASE

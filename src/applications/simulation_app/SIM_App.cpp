@@ -23,7 +23,7 @@
 #include "MT_Tools/MT_Version.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_Profiler.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 #include <boost/bind.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>

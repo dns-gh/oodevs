@@ -12,7 +12,7 @@
 #include "Publisher_ABC.h"
 #include "Who.h"
 #include "Where.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace plugins::bml;
 

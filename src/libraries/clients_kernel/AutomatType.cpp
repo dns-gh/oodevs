@@ -11,7 +11,7 @@
 #include "tools/Iterator.h"
 #include "AutomatComposition.h"
 #include "AgentType.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
 using namespace xml;

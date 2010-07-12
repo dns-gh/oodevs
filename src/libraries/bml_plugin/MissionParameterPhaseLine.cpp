@@ -11,7 +11,7 @@
 #include "MissionParameterPhaseLine.h"
 #include "PointList.h"
 #include "SerializationTools.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #pragma warning( push, 1 )
 #include <boost/algorithm/string.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>

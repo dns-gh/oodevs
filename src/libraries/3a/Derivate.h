@@ -14,7 +14,7 @@
 #include "TypeChecks.h"
 #include <map>
 #include <deque>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 #pragma warning( push )
 #pragma warning( disable : 4800 4804 )

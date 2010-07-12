@@ -10,7 +10,7 @@
 #include "Task.h"
 #include "Connectors.h"
 #include "Result_ABC.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #include "protocol/ClientPublisher_ABC.h"
 #include "dispatcher/MessageLoader_ABC.h"
 #pragma warning( push )

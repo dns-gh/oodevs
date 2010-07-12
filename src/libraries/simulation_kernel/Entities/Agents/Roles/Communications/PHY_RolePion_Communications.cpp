@@ -29,7 +29,7 @@
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "simulation_kernel/SpeedComputer_ABC.h"
 #include "simulation_kernel/WeaponReloadingComputer_ABC.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 MT_Float PHY_RolePion_Communications::rCoefSpeedModificator_         = 0.;
 MT_Float PHY_RolePion_Communications::rCoefReloadingTimeModificator_ = 0.;

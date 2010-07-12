@@ -18,7 +18,7 @@
 #include "PHY_DotationCategory.h"
 #include "PHY_AmmoDotationClass.h"
 #include "Entities/Agents/Roles/Logistic/PHY_SupplyDotationRequestContainer.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_DotationGroup )
 

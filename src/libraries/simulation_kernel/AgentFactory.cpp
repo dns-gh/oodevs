@@ -22,7 +22,7 @@
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/Decision/DEC_DataBase.h"
 
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( AgentFactory )
 

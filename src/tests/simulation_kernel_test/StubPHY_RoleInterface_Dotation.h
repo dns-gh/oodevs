@@ -11,7 +11,7 @@
 #define __StubPHY_RoleInterface_Dotation_h_
 
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 class PHY_AmmoDotationClass;
 class PHY_ConsumptionType;

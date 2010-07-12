@@ -11,7 +11,7 @@
 #define __CrossbowPublisher_h_
 
 #include "dispatcher/MessageHandler_ABC.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 namespace dispatcher
 {

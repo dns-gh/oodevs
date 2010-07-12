@@ -15,7 +15,7 @@
 #include "clients_kernel/Tools.h"
 #include <boost/foreach.hpp>
 #include <boost/algorithm/string.hpp>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace indicators;
 

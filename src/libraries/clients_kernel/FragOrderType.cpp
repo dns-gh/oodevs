@@ -12,7 +12,7 @@
 #include "Entity_ABC.h"
 #include "OrderParameter.h"
 #include <boost/algorithm/string.hpp>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace xml;
 using namespace kernel;

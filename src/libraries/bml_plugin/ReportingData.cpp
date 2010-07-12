@@ -12,7 +12,7 @@
 #include "dispatcher/Agent_ABC.h"
 #include "dispatcher/Automat_ABC.h"
 #include "dispatcher/Team_ABC.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #pragma warning( push, 1 )
 #include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )

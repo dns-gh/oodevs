@@ -11,7 +11,7 @@
 #include "ExtinguishableCapacity.h"
 #include "FireAttribute.h"
 #include "MIL_Object_ABC.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( ExtinguishableCapacity )
 

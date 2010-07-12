@@ -10,7 +10,7 @@
 #include "clients_kernel_pch.h"
 #include "WorldParameters.h"
 #include "tools/ExerciseConfig.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #pragma warning( push )
 #pragma warning( disable : 4702 )
 #include <boost/lexical_cast.hpp>

@@ -11,7 +11,7 @@
 #include "Lima.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/MessengerSenders.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace plugins::messenger;
 

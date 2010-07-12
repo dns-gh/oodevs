@@ -21,7 +21,7 @@
 #include "StubMIL_Mission_ABC.h"
 #include "StubMIL_PopulationType.h"
 #include "StubMIL_Population.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace mockpp;
 

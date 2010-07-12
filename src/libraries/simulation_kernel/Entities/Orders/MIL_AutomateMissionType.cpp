@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AutomateMissionType.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 MIL_MissionType_ABC::T_MissionIDMap   MIL_AutomateMissionType::missionIDs_;
 MIL_MissionType_ABC::T_MissionNameMap MIL_AutomateMissionType::missionDiaIDs_;

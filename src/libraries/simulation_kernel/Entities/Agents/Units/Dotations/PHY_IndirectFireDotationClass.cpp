@@ -15,7 +15,7 @@
 #include "PHY_DotationCategory_IndirectMineFire.h"
 #include "PHY_DotationCategory_IndirectObjectCreationFire.h"
 #include "PHY_DotationCategory_IndirectWeatherFire.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::explosif_  ( "Explosif"  , eExplosif  , /*NeedPH*/true , &PHY_DotationCategory_IndirectFire              ::Create );
 const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::grenade_   ( "Grenade"   , eGrenade   , /*NeedPH*/true , &PHY_DotationCategory_IndirectFire              ::Create );

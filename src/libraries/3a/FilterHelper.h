@@ -11,7 +11,7 @@
 #define __FilterHelper_h_
 
 #pragma warning( push, 0 )
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
 #include <set>

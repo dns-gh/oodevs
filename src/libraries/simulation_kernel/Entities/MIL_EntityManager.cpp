@@ -92,7 +92,7 @@
 #include "Tools/MIL_ProfilerMgr.h"
 #include "Tools/MIL_Tools.h"
 #include <urban/ObjectVisitor_ABC.h>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 #include "protocol/ClientSenders.h"
 

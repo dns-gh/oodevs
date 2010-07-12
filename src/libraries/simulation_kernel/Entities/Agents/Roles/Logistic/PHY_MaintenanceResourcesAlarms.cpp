@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_MaintenanceResourcesAlarms.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 PHY_MaintenanceResourcesAlarms::T_LevelSet PHY_MaintenanceResourcesAlarms::repairerResourcesLevels_;
 PHY_MaintenanceResourcesAlarms::T_LevelSet PHY_MaintenanceResourcesAlarms::haulerResourcesLevels_;

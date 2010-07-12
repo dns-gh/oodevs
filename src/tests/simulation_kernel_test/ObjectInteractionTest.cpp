@@ -57,7 +57,7 @@
 #include "MockRoleInterface_Posture.h"
 #include "MockRolePerceiver.h"
 #include "MockRoleUrbanLocation.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 #include "protocol/protocol.h"
 

@@ -10,7 +10,7 @@
 #include <urban/Architecture.h>
 #include <urban/Model.h>
 #include <urban/TerrainObject_ABC.h>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
 using namespace xml;

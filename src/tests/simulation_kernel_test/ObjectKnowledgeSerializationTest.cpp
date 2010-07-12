@@ -17,7 +17,7 @@
 #include "simulation_kernel/Entities/Objects/Object.h"
 #include "simulation_kernel/Knowledge/DEC_Knowledge_Object.h"
 #include "simulation_terrain/TER_World.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 /**
  * StubArmy is used instead of MockArmy because it is deserialised,

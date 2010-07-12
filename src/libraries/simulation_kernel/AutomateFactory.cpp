@@ -17,7 +17,7 @@
 #include "simulation_kernel/Decision/DEC_DataBase.h"
 #include "Tools/MIL_IDManager.h"
 #include <boost/serialization/export.hpp>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( AutomateFactory )
 

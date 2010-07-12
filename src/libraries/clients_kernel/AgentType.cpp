@@ -12,7 +12,7 @@
 #include "AgentComposition.h"
 #include "AgentNature.h"
 #include "SymbolFactory.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
 using namespace xml;

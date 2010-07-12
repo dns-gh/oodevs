@@ -21,7 +21,7 @@
 #include "messenger_plugin/MessengerPlugin.h"
 #include "script_plugin/ScriptPlugin.h"
 #include "score_plugin/ScorePlugin.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace dispatcher;
 using namespace plugins;

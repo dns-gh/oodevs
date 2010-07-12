@@ -11,7 +11,7 @@
 #include "OrderProcessor.h"
 #include "Mission.h"
 #include "SerializationTools.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #include "MT/MT_Logger/MT_Logger_lib.h"
 
 using namespace plugins::bml;

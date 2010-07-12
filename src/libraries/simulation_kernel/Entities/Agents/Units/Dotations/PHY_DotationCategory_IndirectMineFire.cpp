@@ -11,7 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_DotationCategory_IndirectMineFire.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory_IndirectFire::Create

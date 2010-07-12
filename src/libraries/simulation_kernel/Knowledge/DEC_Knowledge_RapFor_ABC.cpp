@@ -13,7 +13,7 @@
 #include "DEC_Knowledge_RapFor_ABC.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 const MT_Float DEC_Knowledge_RapFor_ABC::rRapForBoundMin_                        = 0.2;
 const MT_Float DEC_Knowledge_RapFor_ABC::rRapForBoundMax_                        = 5.0;

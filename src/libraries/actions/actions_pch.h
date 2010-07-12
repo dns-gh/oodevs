@@ -21,7 +21,7 @@
 #include <set>
 
 #include <geometry/types.h>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 
 #endif // __actions_pch_h_

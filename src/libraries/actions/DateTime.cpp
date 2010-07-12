@@ -11,7 +11,7 @@
 #include "DateTime.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "protocol/Protocol.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 )
 #include <boost/date_time/posix_time/posix_time.hpp>

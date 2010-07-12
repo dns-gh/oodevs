@@ -29,7 +29,7 @@
 #include "simulation_terrain/TER_Localisation.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DetectionCapacity )
 

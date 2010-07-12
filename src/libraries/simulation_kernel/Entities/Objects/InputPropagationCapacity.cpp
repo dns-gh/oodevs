@@ -13,7 +13,7 @@
 #include "ToxicAttribute_ABC.h"
 #include "InputToxicCloudAttribute.h"
 #include "simulation_terrain/TER_Localisation.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( InputPropagationCapacity )
 

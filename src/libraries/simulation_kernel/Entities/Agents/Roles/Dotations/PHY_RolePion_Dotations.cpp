@@ -23,7 +23,7 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 #include "simulation_kernel/AlgorithmsFactories.h"
 

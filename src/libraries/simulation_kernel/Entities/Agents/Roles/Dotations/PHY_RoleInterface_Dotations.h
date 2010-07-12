@@ -13,7 +13,7 @@
 #define __PHY_RoleInterface_Dotations_h_
 
 #include "MT_Tools/Role_ABC.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #include <boost/serialization/serialization.hpp>
 
 namespace client

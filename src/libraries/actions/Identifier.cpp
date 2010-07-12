@@ -12,7 +12,7 @@
 
 #include "ParameterVisitor_ABC.h"
 #include "protocol/Protocol.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace xml;
 using namespace actions;

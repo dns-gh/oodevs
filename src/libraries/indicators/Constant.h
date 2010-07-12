@@ -17,7 +17,7 @@
 #include <boost/lexical_cast.hpp>
 #pragma warning( pop )
 #include <boost/shared_ptr.hpp>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 namespace indicators
 {

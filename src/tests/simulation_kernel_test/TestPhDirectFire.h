@@ -20,7 +20,7 @@
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
 #include "Entities/Agents/Units/Weapons/PHY_WeaponType.h"
 
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 class TestPhDirectFire : public tools::Role_ABC
                        , private boost::noncopyable

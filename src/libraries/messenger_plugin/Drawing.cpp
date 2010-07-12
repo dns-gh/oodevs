@@ -12,7 +12,7 @@
 #include "protocol/ClientPublisher_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include <boost/bind.hpp>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 #include <protocol/messengersenders.h>
 

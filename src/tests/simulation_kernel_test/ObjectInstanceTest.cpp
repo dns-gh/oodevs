@@ -18,7 +18,7 @@
 #include "simulation_kernel/Entities/Objects/BuildableCapacity.h"
 #include "simulation_kernel/Entities/Objects/ConstructionAttribute.h"
 #include "simulation_terrain/TER_World.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace mockpp;
 

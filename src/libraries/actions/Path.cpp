@@ -14,7 +14,7 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Point.h"
 #include "protocol/Protocol.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
 using namespace xml;

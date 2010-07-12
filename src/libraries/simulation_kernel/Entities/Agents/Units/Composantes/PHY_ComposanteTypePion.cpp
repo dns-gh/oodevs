@@ -36,7 +36,7 @@
 #include "protocol/protocol.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 PHY_ComposanteTypePion::T_ComposanteTypeMap PHY_ComposanteTypePion::composantesTypes_;
 

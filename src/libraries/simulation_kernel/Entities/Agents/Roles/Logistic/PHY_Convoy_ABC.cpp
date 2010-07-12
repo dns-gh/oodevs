@@ -21,7 +21,7 @@
 #include "Tools/MIL_Tools.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 #include "tools/xmlcodecs.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 struct PHY_Convoy_ABC::LoadingWrapper
 {

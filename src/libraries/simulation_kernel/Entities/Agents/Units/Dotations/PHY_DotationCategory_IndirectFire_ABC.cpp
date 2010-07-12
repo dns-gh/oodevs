@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_DotationCategory_IndirectFire_ABC.h"
 #include "Tools/MIL_Tools.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory_IndirectFire_ABC::PHY_DotationCategory_IndirectFire_ABC

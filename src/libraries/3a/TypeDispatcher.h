@@ -10,7 +10,7 @@
 #ifndef __TypeDispatcher_h_
 #define __TypeDispatcher_h_
 
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #include "Position.h"
 #include "Zone.h"
 #include "Types.h"

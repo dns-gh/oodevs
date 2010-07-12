@@ -14,7 +14,7 @@
 #include "Entities/Agents/Roles/Logistic/PHY_RolePionLOGConvoy_Supply.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
 
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AgentPionLOGConvoy )
 

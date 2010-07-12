@@ -20,7 +20,7 @@
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/clientsenders.h"
 #include "protocol/simulationsenders.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #include "MT_Tools/MT_Scipio_enum.h"
 
 using namespace dispatcher;

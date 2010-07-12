@@ -10,7 +10,7 @@
 #include "indicators_pch.h"
 #include "GaugeTypeFactory.h"
 #include "IconsGaugeType.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace indicators;
 

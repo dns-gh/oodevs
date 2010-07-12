@@ -15,7 +15,7 @@
 #include "clients_kernel/Tools.h"
 #include <boost/bind.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
 using namespace actions;

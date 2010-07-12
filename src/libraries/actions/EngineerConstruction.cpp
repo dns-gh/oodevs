@@ -20,7 +20,7 @@
 #include "clients_kernel/Tools.h"
 #include "protocol/Protocol.h"
 #include <boost/bind.hpp>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
 using namespace xml;

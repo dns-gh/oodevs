@@ -12,7 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_Experience.h"
 #include "protocol/protocol.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 PHY_Experience::T_ExperienceMap PHY_Experience::experiences_;
 

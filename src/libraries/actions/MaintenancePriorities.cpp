@@ -15,7 +15,7 @@
 #pragma warning( disable : 4702 )
 #include <boost/lexical_cast.hpp>
 #pragma warning( pop )
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
 using namespace xml;

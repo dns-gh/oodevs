@@ -9,7 +9,7 @@
 
 #include "bml_plugin_pch.h"
 #include "SerializationTools.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 namespace plugins
 {

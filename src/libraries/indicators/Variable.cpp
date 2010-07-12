@@ -12,7 +12,7 @@
 #include "DataType_ABC.h"
 #include "DataTypeFactory.h"
 #include <boost/algorithm/string.hpp>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace indicators;
 

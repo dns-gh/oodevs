@@ -18,7 +18,7 @@
 #include "tools/Resolver.h"
 
 #include <boost/ptr_container/serialize_ptr_vector.hpp>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( SupplyCapacity )
 

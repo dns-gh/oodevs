@@ -10,7 +10,7 @@
 #include "actions_pch.h"
 #include "MedicalPriorities.h"
 #include "protocol/Protocol.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
 using namespace xml;

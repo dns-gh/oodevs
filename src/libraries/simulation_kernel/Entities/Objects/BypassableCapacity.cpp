@@ -12,7 +12,7 @@
 #include "BypassAttribute.h"
 #include "MIL_Object_ABC.h"
 #include "HLA/Deserializer.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( BypassableCapacity )
 

@@ -14,7 +14,7 @@
 #include "dispatcher/Model.h"
 #include "dispatcher/Agent.h"
 #include "clients_kernel/CoordinateConverter.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace plugins::tic;
 

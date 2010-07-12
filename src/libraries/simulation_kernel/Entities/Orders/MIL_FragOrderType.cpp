@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_FragOrderType.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 MIL_FragOrderType::T_MissionIDMap   MIL_FragOrderType::missionIDs_;
 MIL_FragOrderType::T_MissionNameMap MIL_FragOrderType::missionNames_;

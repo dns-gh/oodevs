@@ -56,9 +56,9 @@ public:
 
     //! @name 'Real' convoy operations
     //@{
-    const MIL_AgentPion* GetPionConvoy           () const;
-          void           ActivateConvoyMission   ();
-          void           DesactivateConvoyMission();
+    const MIL_AgentPion* GetPionConvoy() const;
+    void ActivateConvoyMission();
+    void DesactivateConvoyMission();
     //@}
 
     //! @name Script operations
@@ -71,9 +71,12 @@ public:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     PHY_SupplyStockConsign* pConsign_;
     MIL_AgentPion*          pPionConvoy_;
     bool                    bMissionActivated_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_StockConvoy )

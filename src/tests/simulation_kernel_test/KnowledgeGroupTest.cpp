@@ -18,7 +18,7 @@
 #include "protocol/SimulationSenders.h"
 #include "protocol/ClientSenders.h"
 #include "tools/resolver.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace mockpp;
 

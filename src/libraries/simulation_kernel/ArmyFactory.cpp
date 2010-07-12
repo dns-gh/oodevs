@@ -18,7 +18,7 @@
 #include "simulation_kernel/knowledge/KnowledgeGroupFactory_ABC.h" // LTO
 
 
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( ArmyFactory )
 

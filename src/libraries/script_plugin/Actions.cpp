@@ -24,7 +24,7 @@
 #include "protocol/protocol.h"
 #include "protocol/ServerPublisher_ABC.h"
 #include "tools/ExerciseConfig.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace plugins::script;
 

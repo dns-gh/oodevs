@@ -12,7 +12,7 @@
 #include "MedicalTreatmentAttribute.h"
 #include "Entities/Agents/Units/Humans/PHY_InjuredHuman.h"
 #include "MIL_Object_ABC.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( HealableCapacity )
 

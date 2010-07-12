@@ -19,7 +19,7 @@
 #include "MIL_Singletons.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "Tools/xmlcodecs.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory_IndirectObjectCreationFire::Create

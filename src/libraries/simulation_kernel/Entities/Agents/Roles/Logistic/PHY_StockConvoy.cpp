@@ -17,7 +17,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_StockConvoy )
 
@@ -56,10 +56,8 @@ PHY_StockConvoy::~PHY_StockConvoy()
     if( pPionConvoy_ )
     {
         pPionConvoy_->GetOrderManager().CancelMission();
-
         for( CIT_ConveyorMap it = conveyors_.begin(); it != conveyors_.end(); ++it )
             it->second->UndoLend();
-
         pPionConvoy_->GetRole< PHY_RoleInterface_Supply >().UnassignConvoy( *this );
         pPionConvoy_->GetAutomate().DestroyPion( *pPionConvoy_ );
     }

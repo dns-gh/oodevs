@@ -12,7 +12,7 @@
 
 #include "ModelFunction.h"
 #include "Values.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #include <boost/lexical_cast.hpp>
 
 // =============================================================================

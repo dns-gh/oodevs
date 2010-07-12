@@ -32,7 +32,7 @@
 #include "Network/NET_AsnException.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AutomateLOG )

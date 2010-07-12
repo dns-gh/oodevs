@@ -28,7 +28,7 @@
 #include "Knowledge/MIL_KnowledgeGroupType.h"
 #include "UrbanModel.h"
 #include <boost/lexical_cast.hpp>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 namespace
 {

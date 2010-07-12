@@ -12,7 +12,7 @@
 #include "Publisher_ABC.h"
 #include "SerializationTools.h"
 #include "OrderProcessor.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #pragma warning( push, 1 )
 #include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )

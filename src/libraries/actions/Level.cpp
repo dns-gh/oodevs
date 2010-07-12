@@ -12,7 +12,7 @@
 #include "clients_kernel/HierarchyLevel_ABC.h"
 #include "clients_kernel/FormationLevels.h"
 #include "protocol/Protocol.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace xml;
 using namespace actions;

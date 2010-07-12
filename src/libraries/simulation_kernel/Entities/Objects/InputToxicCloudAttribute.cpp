@@ -22,7 +22,7 @@
 #include <geodata/FeatureHandler_ABC.h>
 #include <geodata/Primitive_ABC.h>
 #include <gdal_ogr/gdal_ogr_lib.h>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 #pragma warning( push, 1 )
 #include <boost/date_time/posix_time/posix_time.hpp>

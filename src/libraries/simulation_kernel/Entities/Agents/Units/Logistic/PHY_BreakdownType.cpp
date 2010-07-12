@@ -15,7 +15,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Tools/MIL_Tools.h"
 #include "Tools/xmlcodecs.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 PHY_BreakdownType::T_BreakdownMap PHY_BreakdownType::breakdowns_;
 unsigned int                              PHY_BreakdownType::nDiagnosticTime_ = 0;

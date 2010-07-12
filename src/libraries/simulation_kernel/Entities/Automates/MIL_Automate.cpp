@@ -39,7 +39,7 @@
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Automate.h"
 #include "Tools/MIL_Tools.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 #include "protocol/ClientSenders.h"
 #include "protocol/SimulationSenders.h"

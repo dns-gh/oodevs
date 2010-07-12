@@ -20,7 +20,7 @@
 #include "Entities/MIL_Army.h"
 #include "Tools/MIL_Tools.h"
 #include "simulation_terrain/TER_Localisation.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( ControlZoneCapacity )

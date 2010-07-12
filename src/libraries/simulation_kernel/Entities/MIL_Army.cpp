@@ -32,7 +32,7 @@
 #include "simulation_kernel/PopulationFactory_ABC.h"
 #include "simulation_kernel/Knowledge/KnowledgeGroupFactory_ABC.h" // LTO
 #include <boost/bind.hpp>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Army )
 

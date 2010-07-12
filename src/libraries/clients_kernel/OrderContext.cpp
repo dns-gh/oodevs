@@ -11,7 +11,7 @@
 #include "OrderContext.h"
 #include "OrderType.h"
 #include "OrderParameter.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
 

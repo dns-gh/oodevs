@@ -10,7 +10,7 @@
 #include "dis_plugin_pch.h"
 #include "DisTypeResolver.h"
 #include "clients_kernel/ComponentType.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace plugins::dis;
 using namespace plugins::hla;

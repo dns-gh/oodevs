@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Population_PathClass.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 
 

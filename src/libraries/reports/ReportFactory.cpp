@@ -20,7 +20,7 @@
 #include "clients_kernel/EquipmentType.h"
 #include "protocol/Protocol.h"
 #include "tools/ExerciseConfig.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #include <google/protobuf/Descriptor.h>
 
 using namespace xml;

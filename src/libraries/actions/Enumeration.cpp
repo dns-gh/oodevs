@@ -12,7 +12,7 @@
 #include "clients_kernel/OrderParameter.h"
 #include "clients_kernel/OrderParameterValue.h"
 #include "protocol/Protocol.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
 using namespace xml;

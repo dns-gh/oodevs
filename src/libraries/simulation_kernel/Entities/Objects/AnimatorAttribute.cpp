@@ -11,7 +11,7 @@
 #include "AnimatorAttribute.h"
 #include "Object.h"
 #include "MIL.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( AnimatorAttribute )
 

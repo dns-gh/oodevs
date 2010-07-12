@@ -12,7 +12,7 @@
 #include "MIL_KnowledgeGroup.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 MIL_KnowledgeGroupType::T_KnowledgeGroupTypeMap MIL_KnowledgeGroupType::knowledgeGroupTypes_;
 unsigned int MIL_KnowledgeGroupType::nNextID_ = 0;

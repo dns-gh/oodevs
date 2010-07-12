@@ -22,7 +22,7 @@
 #include "simulation_kernel/SpeedComputer_ABC.h"
 #include "simulation_kernel/PerceptionDistanceComputer_ABC.h"
 
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #include "protocol/clientsenders.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_HumanFactors )

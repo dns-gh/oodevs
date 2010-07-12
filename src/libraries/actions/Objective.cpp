@@ -13,7 +13,7 @@
 #include "DateTime.h"
 #include "ParameterVisitor_ABC.h"
 #include "protocol/Protocol.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
 using namespace xml;

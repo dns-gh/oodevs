@@ -11,7 +11,7 @@
 #include "Where.h"
 #include "Point.h"
 #include "dispatcher/Agent_ABC.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace plugins::bml;
 

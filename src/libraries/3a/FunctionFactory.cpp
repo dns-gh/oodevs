@@ -11,7 +11,7 @@
 #include "ElementFactory_ABC.h"
 #include "Task.h"
 
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
 
 // -----------------------------------------------------------------------------

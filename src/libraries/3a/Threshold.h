@@ -14,7 +14,7 @@
 #include "TypeChecks.h"
 #include <set>
 #include <map>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #pragma warning( push )
 #pragma warning( disable : 4800 4804 4996 )
 #include <boost/algorithm/string.hpp>

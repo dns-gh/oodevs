@@ -53,7 +53,7 @@
 #include "OnComponentFunctor_ABC.h"
 #include "UrbanModel.h"
 #include "Tools/MIL_Tools.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: PHY_WeaponDataType_DirectFire constructor

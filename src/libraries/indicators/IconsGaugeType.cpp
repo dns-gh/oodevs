@@ -13,7 +13,7 @@
 #include "clients_kernel/Displayer_ABC.h"
 #include "tools/GeneralConfig.h"
 #include <boost/filesystem/operations.hpp>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 namespace bfs = boost::filesystem;
 

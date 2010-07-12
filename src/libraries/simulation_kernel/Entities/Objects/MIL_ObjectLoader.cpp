@@ -17,7 +17,7 @@
 #include "Entities/MIL_Army_ABC.h"
 #include "Network/NET_ASN_Tools.h"
 #include "protocol/protocol.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 namespace
 {

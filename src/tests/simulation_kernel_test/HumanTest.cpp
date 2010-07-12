@@ -13,7 +13,7 @@
 #include "MockHumansComposante.h"
 #include "StubMIL_Time_ABC.h"
 
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: HumanTest

@@ -14,7 +14,7 @@
 #include "simulation_kernel/Entities/Objects/MIL_ObjectLoader.h"
 #include "simulation_kernel/Entities/Objects/MIL_ObjectType_ABC.h"
 #include "simulation_kernel/Entities/Objects/SpawnCapacity.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: BOOST_AUTO_TEST_CASE

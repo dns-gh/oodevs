@@ -12,7 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_Tiredness.h"
 #include "protocol/protocol.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 PHY_Tiredness::T_TirednessMap PHY_Tiredness::tirednesses_;
 

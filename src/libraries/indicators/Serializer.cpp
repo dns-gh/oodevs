@@ -13,7 +13,7 @@
 #include "ElementDeclarator_ABC.h"
 #include "ElementFactory_ABC.h"
 #include "Variables.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace indicators;
 

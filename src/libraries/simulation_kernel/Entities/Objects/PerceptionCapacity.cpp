@@ -16,7 +16,7 @@
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PerceptionCapacity )
 

@@ -10,7 +10,7 @@
 #include "actions_pch.h"
 #include "ObstacleType.h"
 #include "protocol/Protocol.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace actions;
 using namespace parameters;

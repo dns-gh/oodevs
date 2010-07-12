@@ -26,7 +26,7 @@
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Hla/HLA_UpdateFunctor.h"
 #include "protocol/ClientSenders.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 #include "simulation_kernel/TransportCapacityComputer_ABC.h"
 #include "simulation_kernel/TransportWeightComputer_ABC.h"

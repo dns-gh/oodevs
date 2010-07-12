@@ -16,7 +16,7 @@
 #include "MT/MT_Logger/MT_Logger_lib.h"
 #include "MT/MT_Time/MT_Time_lib.h"
 
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>

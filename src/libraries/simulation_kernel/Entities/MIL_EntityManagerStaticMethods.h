@@ -10,7 +10,7 @@
 #ifndef __MIL_EntityManagerStaticMethods_h_
 #define __MIL_EntityManagerStaticMethods_h_
 
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #include "Tools/MIL_Config.h"
 
 class MIL_Time_ABC;

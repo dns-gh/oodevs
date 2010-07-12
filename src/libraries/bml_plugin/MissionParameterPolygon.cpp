@@ -11,7 +11,7 @@
 #include "MissionParameterPolygon.h"
 #include "PointList.h"
 #include "SerializationTools.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace plugins::bml;
 

@@ -16,7 +16,7 @@
 #include "dispatcher/Humans.h"
 #include "clients_kernel/Karma.h"
 #include "protocol/protocol.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
 
 using namespace plugins::bml;

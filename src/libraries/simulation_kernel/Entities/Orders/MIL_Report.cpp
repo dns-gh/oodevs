@@ -19,7 +19,7 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "simulation_orders/MIL_ParameterType_ABC.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 // =============================================================================
 // FACTORY

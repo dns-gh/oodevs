@@ -20,7 +20,7 @@
 #include "dispatcher/CompositeRegistrable.h"
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #include <direct.h>
 
 namespace bfs = boost::filesystem;

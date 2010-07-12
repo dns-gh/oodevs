@@ -18,7 +18,7 @@
 #include <boost/lexical_cast.hpp>
 #pragma warning( pop )
 #include <boost/function.hpp>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 namespace actions {
     namespace parameters {

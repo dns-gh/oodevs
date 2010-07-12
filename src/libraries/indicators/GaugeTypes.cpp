@@ -12,7 +12,7 @@
 #include "Gauge.h"
 #include "GaugeType.h"
 #include "GaugeTypeFactory.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace indicators;
 

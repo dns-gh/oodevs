@@ -24,7 +24,7 @@
 #include "UrbanType.h"
 #include "StubPHY_RoleInterface_Dotation.h"
 #include "WeaponAvailabilityComputer_ABC.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 class TestIndirectFireModifier : public tools::Role_ABC
     , public tools::AlgorithmModifier_ABC< firing::WeaponAvailabilityComputer_ABC >

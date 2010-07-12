@@ -15,7 +15,7 @@
 #include "clients_kernel/CoordinateConverter.h"
 #include "dispatcher/Config.h"
 #include "dispatcher/Model.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #include "UdpNetwork.h"
 #pragma warning( disable: 4355 ) // 'this' : used in base member initializer list
 

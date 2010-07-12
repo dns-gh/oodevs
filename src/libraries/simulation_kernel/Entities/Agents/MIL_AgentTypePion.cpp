@@ -70,7 +70,7 @@
 #include "MIL_AgentServer.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 MIL_AgentTypePion::T_PionTypeAllocatorMap  MIL_AgentTypePion::pionTypeAllocators_;
 MIL_AgentTypePion::T_PionTypeMap           MIL_AgentTypePion::pionTypes_;

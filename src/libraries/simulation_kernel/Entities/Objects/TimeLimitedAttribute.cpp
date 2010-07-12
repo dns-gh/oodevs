@@ -12,7 +12,7 @@
 #include "Object.h"
 #include "Tools/MIL_Tools.h"
 #include "protocol/protocol.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( TimeLimitedAttribute )
 

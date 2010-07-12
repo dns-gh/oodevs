@@ -13,7 +13,7 @@
 #include "PHY_Protection.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteState.h"
 #include "tools/xmlcodecs.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 PHY_Protection::T_ProtectionMap PHY_Protection::protections_;
 unsigned int                    PHY_Protection::nNextID_ = 0;

@@ -80,7 +80,7 @@
 #include "Tools/MIL_IDManager.h"
 #include "Tools/MIL_ProfilerMgr.h"
 #include "Tools/MIL_Tools.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManagerStaticMethods constructor

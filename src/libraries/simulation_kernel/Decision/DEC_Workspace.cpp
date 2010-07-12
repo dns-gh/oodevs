@@ -33,7 +33,7 @@
 #include "Decision/DEC_Tools.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_RapFor_ABC.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #include "tools/InputBinaryStream.h"
 #include <boost/filesystem/operations.hpp>
 #include <boost/algorithm/string.hpp>

@@ -12,7 +12,7 @@
 #include "OrderReport.h"
 #include "ReportFactory.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #include <iostream>
 
 using namespace plugins::bml;

@@ -14,7 +14,7 @@
 #include "Knowledge/DEC_Knowledge_ObjectAttributeFire.h"
 #include "MIL_AgentServer.h"
 #include "protocol/protocol.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( FireAttribute )
 

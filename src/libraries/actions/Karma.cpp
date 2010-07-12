@@ -14,7 +14,7 @@
 #include "clients_kernel/IntelligenceHierarchies.h"
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "protocol/Protocol.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace actions;
 using namespace parameters;

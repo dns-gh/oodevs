@@ -36,7 +36,7 @@
 #include "clients_kernel/StaticModel.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/protocol.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace actions;
 

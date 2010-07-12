@@ -10,7 +10,7 @@
 #include "bml_plugin_pch.h"
 #include "Point.h"
 #include "SerializationTools.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #include <cmath>
 
 using namespace plugins::bml;

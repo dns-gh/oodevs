@@ -13,7 +13,7 @@
 #include "MIL_Config.h"
 #include "MIL_Tools.h"
 #include "tools/xmlcodecs.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 #pragma warning( push )
 #pragma warning( disable: 4127 )

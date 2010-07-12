@@ -25,7 +25,7 @@
 #include "DetectionComputerFactory_ABC.h"
 #include "PerceptionDistanceComputer_ABC.h"
 
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 struct PHY_SensorTypeObjectData::LoadingWrapper
 {

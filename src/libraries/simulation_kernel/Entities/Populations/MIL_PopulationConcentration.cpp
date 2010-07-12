@@ -27,7 +27,7 @@
 #include "simulation_kernel/PopulationCollisionNotificationHandler_ABC.h"
 #include "Tools/MIL_Tools.h"
 #include "Tools/MIL_IDManager.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PopulationConcentration )
 

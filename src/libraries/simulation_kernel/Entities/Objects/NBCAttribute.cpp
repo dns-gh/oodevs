@@ -18,7 +18,7 @@
 #include "protocol/protocol.h"
 #include <hla/Deserializer.h>
 #include <boost/lexical_cast.hpp>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( NBCAttribute )
 

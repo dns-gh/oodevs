@@ -13,7 +13,7 @@
 #include "PHY_LauncherType.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 PHY_LauncherType::T_LauncherTypeMap PHY_LauncherType::launcherTypes_;
 

@@ -18,7 +18,7 @@
 #include <direct.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Model_ABC constructor

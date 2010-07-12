@@ -11,7 +11,7 @@
 #include "MissionParameterPoint.h"
 #include "Point.h"
 #include "SerializationTools.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace plugins::bml;
 

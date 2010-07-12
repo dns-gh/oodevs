@@ -12,7 +12,7 @@
 #include "MT/MT_Logger/MT_FileLogger.h"
 #include "tools/win32/FlexLm.h"
 #include <google/protobuf/message.h>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 #include <commctrl.h>
 #include <new.h>

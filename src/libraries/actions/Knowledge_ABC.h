@@ -13,7 +13,7 @@
 #include "Entity.h"
 #include "clients_kernel/KnowledgeListener_ABC.h"
 #include "ParameterVisitor_ABC.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 namespace actions {
     namespace parameters {

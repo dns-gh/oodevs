@@ -13,7 +13,7 @@
 #include "ParameterVisitor_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/Protocol.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace xml;
 using namespace kernel;

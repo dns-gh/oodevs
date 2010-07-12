@@ -16,7 +16,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationNature.h"
 
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #include "tools/xmlcodecs.h"
 
 MIL_FireClass::T_FireClassMap MIL_FireClass::classes_;

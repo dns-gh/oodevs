@@ -18,7 +18,7 @@
 #include "dispatcher/FormationSymbols.h"
 #include "dispatcher/Side.h"
 #include "dispatcher/SideSymbols.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace plugins::dis;
 using namespace plugins::hla;

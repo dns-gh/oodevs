@@ -16,7 +16,7 @@
 #include "clients_kernel/GlTooltip_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
 using namespace actions;

@@ -12,7 +12,7 @@
 #include "DataTypeFactory.h"
 #include "Function.h"
 #include "FunctionParameter.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace indicators;
 

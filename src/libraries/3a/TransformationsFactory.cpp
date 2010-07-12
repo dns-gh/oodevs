@@ -20,7 +20,7 @@
 #include "Connectors.h"
 #include "Task.h"
 #include "Composer.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: TransformationsFactory constructor

@@ -17,7 +17,7 @@
 #include "simulation_orders/MIL_MissionParameter_ABC.h"
 #include "MIL_MissionParameterFactory.h"
 #include <boost/shared_ptr.hpp>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderType_ABC constructor

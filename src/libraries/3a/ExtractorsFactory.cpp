@@ -15,7 +15,7 @@
 #include "DispatchedFunctionHelper.h"
 #include "Connectors.h"
 #include "Task.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: ExtractorsFactory constructor
