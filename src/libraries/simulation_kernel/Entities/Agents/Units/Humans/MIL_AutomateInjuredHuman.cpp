@@ -20,7 +20,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Network/NET_AsnException.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AutomateInjuredHuman )
 

@@ -15,10 +15,7 @@
 #include "MIL_AgentInjuredHumanPion.h"
 #include "AlgorithmsFactories.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
-
-#include "xeumeuleu/xml.h"
-
-
+#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypeInjuredHumanPion constructor
@@ -27,6 +24,7 @@
 MIL_AgentTypeInjuredHumanPion::MIL_AgentTypeInjuredHumanPion( const std::string& strName, xml::xistream& xis )
     : MIL_AgentTypePion( strName, xis )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

@@ -10,15 +10,13 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_HumanProtection.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteState.h"
 #include "Entities/Objects/MIL_MedicalTreatmentType.h"
+#include "Entities/Objects/MIL_MedicalTreatmentType.h"
 #include "tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
-#include "xeumeuleu/xml.h"
-
-#include "Entities/Objects/MIL_MedicalTreatmentType.h"
+#include <xeumeuleu/xml.hpp>
 
 PHY_HumanProtection::T_HumanProtectionMap   PHY_HumanProtection::protections_;
 uint                                        PHY_HumanProtection::nNextID_;
