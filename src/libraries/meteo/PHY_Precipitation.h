@@ -14,6 +14,7 @@
 
 #include <boost/noncopyable.hpp>
 #include <map>
+#include "ENT/ENT_Enums_Gen.h"
 #include "protocol/ClientSenders.h"
 #include "MT_tools/MT_Tools_Types.h"
 
@@ -47,7 +48,7 @@ public:
     //! @name Accessors
     //@{
     const std::string&            GetName () const;
-    unsigned int                  GetID   () const;
+    E_WeatherType                 GetID   () const;
     Common::EnumPrecipitationType GetAsnID() const;
     //@}
 
@@ -61,32 +62,17 @@ public:
     static PHY_Precipitation smoke_;
 
 private:
-    //! @name Types
-    //@{
-    enum E_Precipitation
-    {
-        eNone     ,
-        eSandStorm,
-        eFog      ,
-        eDrizzle  ,
-        eRain     ,
-        eSnow     ,
-        eSmoke
-    };
-    //@}
-
-private:
     //! @name Constructors/Destructor
     //@{
-     PHY_Precipitation( const std::string& strName, E_Precipitation nType, Common::EnumPrecipitationType nAsnID );
+     PHY_Precipitation( const std::string& strName, E_WeatherType nType, Common::EnumPrecipitationType nAsnID );
     ~PHY_Precipitation();
     //@}
 
 private:
     //! @name Member data
     //@{
-    const std::string                 strName_;
-    const E_Precipitation             nType_;
+    const std::string strName_;
+    const E_WeatherType nType_;
     const Common::EnumPrecipitationType nAsnID_;
     //@}
 

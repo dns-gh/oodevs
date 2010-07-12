@@ -53,7 +53,7 @@ public:
     int cloudFloor_;
     int cloudCeiling_;
     int cloudDensity_;
-    kernel::E_WeatherType type_;
+    E_WeatherType type_;
     //@}
 };
 

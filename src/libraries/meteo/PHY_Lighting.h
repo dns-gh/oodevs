@@ -12,10 +12,11 @@
 #ifndef __PHY_Lighting_h_
 #define __PHY_Lighting_h_
 
-#include <boost/noncopyable.hpp>
-#include <map>
-#include "protocol/Protocol.h"
+#include "ENT/ENT_Enums_Gen.h"
 #include "MT_tools/MT_Tools_Types.h"
+#include "protocol/Protocol.h"
+#include <map>
+#include <boost/noncopyable.hpp>
 
 namespace weather
 {
@@ -47,7 +48,7 @@ public:
     //! @name Accessors
     //@{
     const std::string& GetName() const;
-          unsigned int GetID  () const;
+    E_LightingType GetID() const;
     Common::EnumLightingType GetAsnID() const;
     //@}
 
@@ -70,33 +71,12 @@ public:
     static PHY_Lighting eclairant_;
 
 private:
-    //! @name Types
-    //@{
-    enum E_Lighting
-    {
-        eJourSansNuage,
-        eJourPeuNuageux,
-        eJourMoyennementNuageux,
-        eJourAssezNuageux,
-        eJourTresNuageux,
-
-        eNuitPleineLune,
-        eNuitTroisQuartDeLune,
-        eNuitDemiLune,
-        eNuitQuartDeLune,
-        eNuitNouvelleLune,
-
-        eEclairant
-    };
-    //@}
-
-private:
-     PHY_Lighting( const std::string& strName, E_Lighting nType, const PHY_Lighting* pNextDegradedLighting, Common::EnumLightingType nAsnID );
+     PHY_Lighting( const std::string& strName, E_LightingType nType, const PHY_Lighting* pNextDegradedLighting, Common::EnumLightingType nAsnID );
     ~PHY_Lighting();
 
 private:
     const std::string    strName_;
-    const E_Lighting     nType_;
+    const E_LightingType     nType_;
     const PHY_Lighting* pNextDegradedLighting_;
     const Common::EnumLightingType nAsnID_;
 

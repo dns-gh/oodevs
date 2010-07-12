@@ -11,6 +11,8 @@
 
 #include "DEC_RolePion_Decision.h"
 
+#include "ENT/ENT_Enums_Gen.h"
+
 #include "Entities/Agents/MIL_AgentTypePion.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
@@ -88,7 +90,7 @@ DEC_RolePion_Decision::DEC_RolePion_Decision( MIL_AgentPion& pion, DEC_DataBase&
     , nRulesOfEngagementState_  ( eRoeStateFreeFire )
     , nCloseCombatState_        ( eCloseCombatStateNone )
     , nOperationalState_        ( eOpStateOperational )
-    , nIndirectFireAvailability_( eFireAvailabilityNone )
+    , nIndirectFireAvailability_( eFireAvailability_None )
     , pRoePopulation_           ( &PHY_RoePopulation::none_ )
     , bStateHasChanged_         ( true )
     , eEtatDec_                 ( 0 )

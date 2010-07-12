@@ -27,16 +27,28 @@ namespace bpt = boost::posix_time;
 PHY_Ephemeride::PHY_Ephemeride( xml::xistream& xis )
     : bIsNight_( false )
 {
-    std::string sunRise, sunSet, moon, date;
-    xis >> xml::start( "ephemerides" )
-            >> xml::attribute( "sunrise", sunRise )
-            >> xml::attribute( "sunset", sunSet )
-            >> xml::attribute( "moon", moon )
-        >> xml::end()
+    xis >> xml::start( "ephemerides" );
+    std::string sunRise = xis.attribute< std::string >( "sunrise" );
+    std::string sunSet = xis.attribute< std::string >( "sunset" );
+    if( xis.has_attribute( "moon" ) )
+    {
+        pDayBase_ = &weather::PHY_Lighting::jourSansNuage_;
+        pNightBase_ = weather::PHY_Lighting::FindLighting( xis.attribute< std::string >( "moon" ) );
+    }
+    else
+    {
+        pDayBase_ = weather::PHY_Lighting::FindLighting( xis.attribute< std::string >( "day-lighting" ) );
+        pNightBase_ = weather::PHY_Lighting::FindLighting( xis.attribute< std::string >( "night-lighting" ) );
+    }
+    if( !pDayBase_ || !pNightBase_ )
+        xis.error( "Unknown lighting" );
+
+    std::string date;
+    xis >> xml::end()
         >> xml::start( "exercise-date" )
             >> xml::attribute( "value", date )
         >> xml::end();
-    unsigned int time = ( bpt::from_iso_string( date ) - bpt::from_time_t( 0 ) ).total_seconds();
+    const unsigned int time = ( bpt::from_iso_string( date ) - bpt::from_time_t( 0 ) ).total_seconds();
     MIL_AgentServer::GetWorkspace().SetInitialRealTime( time );
     {
         char tmp = 0;
@@ -53,10 +65,6 @@ PHY_Ephemeride::PHY_Ephemeride( xml::xistream& xis )
         if( tmp != 'h' || sunsetTime_.first < 0 || sunsetTime_.first > 23 || sunsetTime_.second < 0 || sunsetTime_.second > 59 )
             xis.error( "Bad time format (use 00h00)" );
     }
-
-    pNightBase_ = weather::PHY_Lighting::FindLighting( moon );
-    if( !pNightBase_ )
-        xis.error( "Unknown lighting '" + moon + "'" );
 
     if( sunriseTime_ >= sunsetTime_  )
         xis.error( "Sunrise time should be before sunset time" );
@@ -78,9 +86,9 @@ PHY_Ephemeride::~PHY_Ephemeride()
 //-----------------------------------------------------------------------------
 bool PHY_Ephemeride::UpdateNight( unsigned int date )
 {
-    bpt::ptime         pdate( bpt::from_time_t( date ) );
+    bpt::ptime pdate( bpt::from_time_t( date ) );
     bpt::time_duration time = pdate.time_of_day();
-    std::pair<int,int> currentTime( time.hours(), time.minutes() );
+    std::pair< int, int > currentTime( time.hours(), time.minutes() );
 
     bool wasNight = bIsNight_;
     bIsNight_ = currentTime < sunriseTime_ || !( currentTime < sunsetTime_ );
@@ -93,5 +101,5 @@ bool PHY_Ephemeride::UpdateNight( unsigned int date )
 //-----------------------------------------------------------------------------
 const weather::PHY_Lighting& PHY_Ephemeride::GetLightingBase() const
 {
-    return bIsNight_ ? *pNightBase_ : weather::PHY_Lighting::jourSansNuage_;
+    return bIsNight_ ? *pNightBase_ : *pDayBase_;
 }

@@ -53,7 +53,7 @@ private:
     QSpinBox* cloudFloor_;
     QSpinBox* cloudCeiling_;
     QSpinBox* cloudDensity_;
-    gui::ValuedComboBox< kernel::E_WeatherType >* type_;
+    gui::ValuedComboBox< E_WeatherType >* type_;
     QLabel* startTimeLabel_;
     QLabel* endTimeLabel_;
     //@}

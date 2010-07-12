@@ -23,7 +23,7 @@ SensorType::SensorType( const std::string& name, xml::xistream& xis )
     : strName_             ( name )
     , postureSourceFactors_( eNbrUnitPosture, 0. )
     , weatherFactors_      ( eNbrWeatherType, 0. )
-    , lightingFactors_     ( eNbrLightingType, 0. )
+    , lightingFactors_     ( eNbrDayLightingType + eNbrNightLightingType, 0. )
 {
     InitializeAngle    ( xis );
     InitializeDistances( xis );

@@ -39,16 +39,20 @@ public:
 
     //! @name Operations
     //@{
-    bool                UpdateNight    ( unsigned int date );
+    bool UpdateNight( unsigned int date );
     const weather::PHY_Lighting& GetLightingBase() const;
-    bool                IsNight        () const;
+    bool IsNight() const;
     //@}
 
 private:
-    bool                  bIsNight_;
+    //! @name Member data
+    //@{
+    bool bIsNight_;
     std::pair< int, int > sunriseTime_;
     std::pair< int, int > sunsetTime_;
-    const weather::PHY_Lighting*   pNightBase_;
+    const weather::PHY_Lighting* pDayBase_;
+    const weather::PHY_Lighting* pNightBase_;
+    //@}
 };
 
 #include "PHY_Ephemeride.inl"

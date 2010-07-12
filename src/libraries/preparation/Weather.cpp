@@ -18,7 +18,7 @@ using namespace kernel;
 namespace
 {
     // $$$$ SBO 2006-12-19: !!
-    kernel::E_WeatherType ConvertToWeatherType( const QString& type )
+    E_WeatherType ConvertToWeatherType( const QString& type )
     {
         for( unsigned int i = 0; i < (int)eNbrWeatherType; ++i )
             if( QString( tools::GetXmlSection( (E_WeatherType)i ) ) == type )
@@ -37,7 +37,7 @@ Weather::Weather()
     , cloudFloor_( 1000 )
     , cloudCeiling_( 10000 )
     , cloudDensity_( 0 )
-    , type_( eWeatherTypeNone )
+    , type_( eWeatherType_None )
 {
     // NOTHING
 }

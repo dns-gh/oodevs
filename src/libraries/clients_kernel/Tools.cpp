@@ -78,25 +78,40 @@ QString tools::ToString( E_PerceptionResult nResult )
 
 // -----------------------------------------------------------------------------
 // Name: tools::ToString
-// Created: SBO 2006-12-19
+// Created: JSR 2010-07-09
 // -----------------------------------------------------------------------------
-QString tools::ToString( kernel::E_LightingType lighting )
+QString tools::ToString( E_DayLightingType lighting )
 {
     static const QString lightings[] =
     {
-        tools::translate( "E_PerceptionResult", "JourSansNuage" ),
-        tools::translate( "E_PerceptionResult", "JourPeuNuageux" ),
-        tools::translate( "E_PerceptionResult", "JourMoyennementNuageux" ),
-        tools::translate( "E_PerceptionResult", "JourAssezNuageux" ),
-        tools::translate( "E_PerceptionResult", "JourTresNuageux" ),
-        tools::translate( "E_PerceptionResult", "NuitPleineLune" ),
-        tools::translate( "E_PerceptionResult", "NuitTroisQuartDeLune" ),
-        tools::translate( "E_PerceptionResult", "NuitDemiLune" ),
-        tools::translate( "E_PerceptionResult", "NuitQuartDeLune" ),
-        tools::translate( "E_PerceptionResult", "NuitNouvelleLune" ),
-        tools::translate( "E_PerceptionResult", "Eclairant" )
+        tools::translate( "E_DayLightingType", "JourSansNuage" ),
+        tools::translate( "E_DayLightingType", "JourPeuNuageux" ),
+        tools::translate( "E_DayLightingType", "JourMoyennementNuageux" ),
+        tools::translate( "E_DayLightingType", "JourAssezNuageux" ),
+        tools::translate( "E_DayLightingType", "JourTresNuageux" ),
+        tools::translate( "E_DayLightingType", "Eclairant" )
     };
-    if( lighting >= 0 && lighting < eNbrLightingType )
+    if( lighting >= 0 && lighting < eNbrDayLightingType )
+        return lightings[ lighting ];
+    return Unknown();
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::ToString
+// Created: JSR 2010-07-09
+// -----------------------------------------------------------------------------
+QString tools::ToString( E_NightLightingType lighting )
+{
+    static const QString lightings[] =
+    {
+        tools::translate( "E_NightLightingType", "NuitPleineLune" ),
+        tools::translate( "E_NightLightingType", "NuitTroisQuartDeLune" ),
+        tools::translate( "E_NightLightingType", "NuitDemiLune" ),
+        tools::translate( "E_NightLightingType", "NuitQuartDeLune" ),
+        tools::translate( "E_NightLightingType", "NuitNouvelleLune" ),
+        tools::translate( "E_NightLightingType", "Eclairant" )
+    };
+    if( lighting >= 0 && lighting < eNbrNightLightingType )
         return lightings[ lighting ];
     return Unknown();
 }
@@ -105,21 +120,87 @@ QString tools::ToString( kernel::E_LightingType lighting )
 // Name: tools::ToString
 // Created: SBO 2006-12-20
 // -----------------------------------------------------------------------------
-QString tools::ToString( kernel::E_WeatherType weather )
+QString tools::ToString( E_WeatherType weather )
 {
     static const QString weathers[] =
     {
-        tools::translate( "E_PerceptionResult", "PasDePrecipitation" ),
-        tools::translate( "E_PerceptionResult", "TempeteDeSable" ),
-        tools::translate( "E_PerceptionResult", "Brouillard" ),
-        tools::translate( "E_PerceptionResult", "Crachin" ),
-        tools::translate( "E_PerceptionResult", "Pluie" ),
-        tools::translate( "E_PerceptionResult", "Neige" ),
-        tools::translate( "E_PerceptionResult", "Fumigene" )
+        tools::translate( "E_WeatherType", "PasDePrecipitation" ),
+        tools::translate( "E_WeatherType", "TempeteDeSable" ),
+        tools::translate( "E_WeatherType", "Brouillard" ),
+        tools::translate( "E_WeatherType", "Crachin" ),
+        tools::translate( "E_WeatherType", "Pluie" ),
+        tools::translate( "E_WeatherType", "Neige" ),
+        tools::translate( "E_WeatherType", "Fumigene" )
     };
     if( weather >= 0 && weather < eNbrWeatherType )
         return weathers[ weather ];
     return Unknown();
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::ToDisplayedString
+// Created: JSR 2010-07-12
+// -----------------------------------------------------------------------------
+QString tools::ToDisplayedString( E_LightingType lighting )
+{
+    return ENT_Tr::ConvertFromLightingType( lighting, ENT_Tr::eToTr ).c_str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::ToDisplayedString
+// Created: JSR 2010-07-09
+// -----------------------------------------------------------------------------
+QString tools::ToDisplayedString( E_WeatherType weather )
+{
+    return ENT_Tr::ConvertFromWeatherType( weather, ENT_Tr::eToTr ).c_str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::ToDisplayedString
+// Created: JSR 2010-07-09
+// -----------------------------------------------------------------------------
+QString tools::ToDisplayedString( E_DayLightingType lighting )
+{
+    switch( lighting )
+    {
+    case eDayLightingJourSansNuage:
+    default:
+        return tools::translate( "tools", "No clouds" );
+    case eDayLightingJourPeuNuageux:
+        return tools::translate( "tools", "Slightly cloudy" );
+    case eDayLightingJourMoyennementNuageux:
+        return tools::translate( "tools", "Moderately cloudy" );
+    case eDayLightingJourAssezNuageux:
+        return tools::translate( "tools", "Quite cloudy" );
+    case eDayLightingJourTresNuageux:
+        return tools::translate( "tools", "Very cloudy" );
+    case eDayLightingEclairant:
+        return tools::translate( "tools", "Illuminating" );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::ToDisplayedString
+// Created: JSR 2010-07-09
+// -----------------------------------------------------------------------------
+QString tools::ToDisplayedString( E_NightLightingType lighting )
+{
+    switch( lighting )
+    {
+    case eNightLightingNuitPleineLune:
+    default:
+        return tools::translate( "tools", "Full moon" );
+    case eNightLightingNuitTroisQuartDeLune:
+        return tools::translate( "tools", "Three quarter moon" );
+    case eNightLightingNuitDemiLune:
+        return tools::translate( "tools", "Half moon" );
+    case eNightLightingNuitQuartDeLune:
+        return tools::translate( "tools", "Quarter moon" );
+    case eNightLightingNuitNouvelleLune:
+        return tools::translate( "tools", "New moon" );
+    case eNightLightingEclairant:
+        return tools::translate( "tools", "Illuminating" );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -150,13 +231,13 @@ const char* tools::GetXmlSection( E_WeatherType weather )
 {
     switch( weather  )
     {
-        case eWeatherTypeNone:            return "PasDePrecipitation";
-        case eWeatherTypeRainOrSnowStorm: return "TempeteDeSable";
-        case eWeatherTypeFog:             return "Brouillard";
-        case eWeatherTypeDrizzle:         return "Crachin";
-        case eWeatherTypeRain:            return "Pluie";
-        case eWeatherTypeSnow:            return "Neige";
-        case eWeatherTypeSmoke:           return "Fumigene";
+        case eWeatherType_None:      return "PasDePrecipitation";
+        case eWeatherType_SandStorm: return "TempeteDeSable";
+        case eWeatherType_Fog:       return "Brouillard";
+        case eWeatherType_Drizzle:   return "Crachin";
+        case eWeatherType_Rain:      return "Pluie";
+        case eWeatherType_Snow:      return "Neige";
+        case eWeatherType_Smoke:     return "Fumigene";
         default:
             return "Unknown";
     }
@@ -164,28 +245,41 @@ const char* tools::GetXmlSection( E_WeatherType weather )
 
 // -----------------------------------------------------------------------------
 // Name: tools::GetXmlSection
-// Created: APE 2004-05-03
+// Created: JSR 2010-07-09
 // -----------------------------------------------------------------------------
-const char* tools::GetXmlSection( E_LightingType weather )
+const char* tools::GetXmlSection( E_DayLightingType nLightingType )
 {
-    switch( weather  )
+    switch( nLightingType )
     {
-        case eLightingJourSansNuage:            return "JourSansNuage";
-        case eLightingJourPeuNuageux:           return "JourPeuNuageux";
-        case eLightingJourMoyennementNuageux:   return "JourMoyennementNuageux";
-        case eLightingJourAssezNuageux:         return "JourAssezNuageux";
-        case eLightingJourTresNuageux:          return "JourTresNuageux";
-        case eLightingNuitPleineLune:           return "NuitPleineLune";
-        case eLightingNuitTroisQuartDeLune:     return "NuitTroisQuartDeLune";
-        case eLightingNuitDemiLune:             return "NuitDemiLune";
-        case eLightingNuitQuartDeLune:          return "NuitQuartDeLune";
-        case eLightingNuitNouvelleLune:         return "NuitNouvelleLune";
-        case eLightingEclairant:                return "Eclairant";
+        case eDayLightingJourSansNuage:            return "JourSansNuage";
+        case eDayLightingJourPeuNuageux:           return "JourPeuNuageux";
+        case eDayLightingJourMoyennementNuageux:   return "JourMoyennementNuageux";
+        case eDayLightingJourAssezNuageux:         return "JourAssezNuageux";
+        case eDayLightingJourTresNuageux:          return "JourTresNuageux";
+        case eDayLightingEclairant:                return "Eclairant";
         default:
             return "Unknown";
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: tools::GetXmlSection
+// Created: JSR 2010-07-09
+// -----------------------------------------------------------------------------
+const char* tools::GetXmlSection( E_NightLightingType nLightingType )
+{
+    switch( nLightingType )
+    {
+        case eNightLightingNuitPleineLune:           return "NuitPleineLune";
+        case eNightLightingNuitTroisQuartDeLune:     return "NuitTroisQuartDeLune";
+        case eNightLightingNuitDemiLune:             return "NuitDemiLune";
+        case eNightLightingNuitQuartDeLune:          return "NuitQuartDeLune";
+        case eNightLightingNuitNouvelleLune:         return "NuitNouvelleLune";
+        case eNightLightingEclairant:                return "Eclairant";
+        default:
+            return "Unknown";
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: tools::ToString
@@ -390,13 +484,13 @@ namespace
     // $$$$ SBO 2008-08-11: create a phase line type into static model
     struct PhaseLineType
     {
-        PhaseLineType( kernel::E_FuncLimaType type, const QString& fullName, const QString& shortName, const QString& xmlName )
+        PhaseLineType( E_FuncLimaType type, const QString& fullName, const QString& shortName, const QString& xmlName )
             : type_( type )
             , fullName_( fullName )
             , shortName_( shortName )
             , xmlName_( xmlName )
         {}
-        kernel::E_FuncLimaType type_;
+        E_FuncLimaType type_;
         QString fullName_;
         QString shortName_;
         QString xmlName_;
@@ -451,7 +545,7 @@ QString tools::ToString( E_FuncLimaType nType )
 // Name: tools::ToShortString
 // Created: SBO 2008-08-11
 // -----------------------------------------------------------------------------
-QString tools::ToShortString( kernel::E_FuncLimaType nType )
+QString tools::ToShortString( E_FuncLimaType nType )
 {
     if( nType >= 0 && nType < eLimaFuncNbr )
         return PhaseLines()[ nType ].shortName_;
@@ -474,7 +568,7 @@ E_FuncLimaType tools::LimaTypeFromShortString( const QString& type )
 // Name: tools::LimaTypeFromXmlString
 // Created: SBO 2008-08-11
 // -----------------------------------------------------------------------------
-kernel::E_FuncLimaType tools::LimaTypeFromXmlString( const QString& type )
+E_FuncLimaType tools::LimaTypeFromXmlString( const QString& type )
 {
     for( int i = 0; i < int( eLimaFuncNbr ); ++i )
         if( PhaseLines()[i].xmlName_ == type )

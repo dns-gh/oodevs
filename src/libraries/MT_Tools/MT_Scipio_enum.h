@@ -14,12 +14,6 @@
 
 //$$$$ DEGUEU - A DEPLACER
 
-enum E_FireAvailability
-{
-    eFireAvailabilityNone,
-    eFireAvailabilityReady,
-    eFireAvailabilityNotReady
-};
 enum E_ForceRatioState
 {
     eForceRatioStateNone,

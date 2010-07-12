@@ -2766,30 +2766,6 @@
         <translation>débrayé</translation>
     </message>
     <message>
-        <source>no rainfall</source>
-        <translation>sec</translation>
-    </message>
-    <message>
-        <source>sand storm</source>
-        <translation>tempête de sable</translation>
-    </message>
-    <message>
-        <source>fog</source>
-        <translation>brouillard</translation>
-    </message>
-    <message>
-        <source>drizzle</source>
-        <translation>bruine</translation>
-    </message>
-    <message>
-        <source>rain</source>
-        <translation>pluie</translation>
-    </message>
-    <message>
-        <source>snow</source>
-        <translation>neige</translation>
-    </message>
-    <message>
         <source>smoke</source>
         <translation>fumée</translation>
     </message>
@@ -3192,6 +3168,78 @@
     <message>
         <source>rectangle</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No rainfall</source>
+        <translation>Pas de precipitation</translation>
+    </message>
+    <message>
+        <source>Sand storm</source>
+        <translation>Tempete de sable</translation>
+    </message>
+    <message>
+        <source>Fog</source>
+        <translation>Brouillard</translation>
+    </message>
+    <message>
+        <source>Drizzle</source>
+        <translation>Crachin</translation>
+    </message>
+    <message>
+        <source>Rain</source>
+        <translation>Pluie</translation>
+    </message>
+    <message>
+        <source>Snow</source>
+        <translation>Neige</translation>
+    </message>
+    <message>
+        <source>Smoke</source>
+        <translation>Fumigène</translation>
+    </message>
+    <message>
+        <source>Day without cloud</source>
+        <translation>Jour sans nuage</translation>
+    </message>
+    <message>
+        <source>Slightly cloudy day</source>
+        <translation>Jour peu nuageux</translation>
+    </message>
+    <message>
+        <source>Moderately cloudy day</source>
+        <translation>Jour moyennement nuageux</translation>
+    </message>
+    <message>
+        <source>Quite cloudy day</source>
+        <translation>Jour assez nuageux</translation>
+    </message>
+    <message>
+        <source>Very cloudy day</source>
+        <translation>Jour très nuageux</translation>
+    </message>
+    <message>
+        <source>Full moon night</source>
+        <translation>Nuit de pleine lune</translation>
+    </message>
+    <message>
+        <source>Three quarter moon night</source>
+        <translation>Nuit de trois quarts de lune</translation>
+    </message>
+    <message>
+        <source>Half moon night</source>
+        <translation>Nuit de demi-lune</translation>
+    </message>
+    <message>
+        <source>Quarter moon night</source>
+        <translation>Nuit de quart de lune</translation>
+    </message>
+    <message>
+        <source>New moon night</source>
+        <translation>Nuit de nouvelle lune</translation>
+    </message>
+    <message>
+        <source>Illuminating</source>
+        <translation>Eclairant</translation>
     </message>
 </context>
 </TS>

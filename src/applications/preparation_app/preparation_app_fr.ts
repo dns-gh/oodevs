@@ -1293,10 +1293,6 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <translation>Coucher du soleil:</translation>
     </message>
     <message>
-        <source>Lighting:</source>
-        <translation>Eclairage:</translation>
-    </message>
-    <message>
         <source>Global weather</source>
         <translation>Météo du théatre</translation>
     </message>
@@ -1331,6 +1327,14 @@ Voulez-vous sauvegarder malgré tout?</translation>
     <message>
         <source>End time:</source>
         <translation>Date de fin:</translation>
+    </message>
+    <message>
+        <source>Day lighting:</source>
+        <translation>Eclairage de jour:</translation>
+    </message>
+    <message>
+        <source>Night lighting:</source>
+        <translation>Eclairage de nuit:</translation>
     </message>
 </context>
 <context>

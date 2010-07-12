@@ -63,9 +63,9 @@ const std::string& PHY_Precipitation::GetName() const
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
 inline
-unsigned int PHY_Precipitation::GetID() const
+E_WeatherType PHY_Precipitation::GetID() const
 {
-    return (unsigned int)nType_;
+    return nType_;
 }
 
 // -----------------------------------------------------------------------------

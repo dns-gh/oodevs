@@ -46,36 +46,28 @@ enum E_PerceptionResult
     eIdentification = 3,
 };
 
-enum E_WeatherType
+enum E_DayLightingType
 {
-    eWeatherTypeNone,
-    eWeatherTypeRainOrSnowStorm,
-    eWeatherTypeFog,
-    eWeatherTypeDrizzle,
-    eWeatherTypeRain,
-    eWeatherTypeSnow,
-    eWeatherTypeSmoke,
+    eDayLightingJourSansNuage,
+    eDayLightingJourPeuNuageux,
+    eDayLightingJourMoyennementNuageux,
+    eDayLightingJourAssezNuageux,
+    eDayLightingJourTresNuageux,
+    eDayLightingEclairant,
 
-    eNbrWeatherType
+    eNbrDayLightingType
 };
 
-enum E_LightingType
+enum E_NightLightingType
 {
-    eLightingJourSansNuage,
-    eLightingJourPeuNuageux,
-    eLightingJourMoyennementNuageux,
-    eLightingJourAssezNuageux,
-    eLightingJourTresNuageux,
+    eNightLightingNuitPleineLune,
+    eNightLightingNuitTroisQuartDeLune,
+    eNightLightingNuitDemiLune,
+    eNightLightingNuitQuartDeLune,
+    eNightLightingNuitNouvelleLune,
+    eNightLightingEclairant,
 
-    eLightingNuitPleineLune,
-    eLightingNuitTroisQuartDeLune,
-    eLightingNuitDemiLune,
-    eLightingNuitQuartDeLune,
-    eLightingNuitNouvelleLune,
-
-    eLightingEclairant,
-
-    eNbrLightingType
+    eNbrNightLightingType
 };
 
 enum E_FuncLimaType

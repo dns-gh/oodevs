@@ -12,6 +12,7 @@
 #include "moc_TerrainPicker.cpp"
 #include "TerrainLayer.h"
 #include "WeatherLayer_ABC.h"
+#include "clients_kernel/tools.h"
 #include "meteo/PHY_Meteo.h"
 #include "meteo/PHY_Lighting.h"
 #include "meteo/PHY_Precipitation.h"
@@ -75,7 +76,7 @@ void TerrainPicker::OnTimeOut()
     }
     if( weather_ )
         if( const weather::PHY_Meteo* weather = weather_->Pick( terrainCoordinates_ ) )
-            emit WeatherPicked( weather->GetLighting().GetName().c_str(), weather->GetPrecipitation().GetName().c_str() );
+            emit WeatherPicked( tools::ToDisplayedString( weather->GetLighting().GetID() ), tools::ToDisplayedString( weather->GetPrecipitation().GetID() ) );
 }
 
 // -----------------------------------------------------------------------------

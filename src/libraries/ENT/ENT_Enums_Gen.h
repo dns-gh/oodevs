@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __ENT_Emuns_Gen_h_
-#define __ENT_Emuns_Gen_h_
+#ifndef __ENT_Enums_Gen_h_
+#define __ENT_Enums_Gen_h_
 
 
 enum E_ChangeHierarchyErrorCode
@@ -280,15 +280,33 @@ enum E_SimulationState
 };
 
 
-enum E_PrecipitationType
+enum E_LightingType
 {
-    ePrecipitationType_PasDePrecipitation,
-    ePrecipitationType_TempeteSable,
-    ePrecipitationType_Brouillard,
-    ePrecipitationType_Crachin,
-    ePrecipitationType_Pluie,
-    ePrecipitationType_Neige,
-    eNbrPrecipitationType
+    eLightingType_JourSansNuage,
+    eLightingType_JourPeuNuageux,
+    eLightingType_JourMoyennementNuageux,
+    eLightingType_JourAssezNuageux,
+    eLightingType_JourTresNuageux,
+    eLightingType_NuitPleineLune,
+    eLightingType_NuitTroisQuartDeLune,
+    eLightingType_NuitDemiLune,
+    eLightingType_NuitQuartDeLune,
+    eLightingType_NuitNouvelleLune,
+    eLightingType_Eclairant,
+    eNbrLightingType
+};
+
+
+enum E_WeatherType
+{
+    eWeatherType_None,
+    eWeatherType_SandStorm,
+    eWeatherType_Fog,
+    eWeatherType_Drizzle,
+    eWeatherType_Rain,
+    eWeatherType_Snow,
+    eWeatherType_Smoke,
+    eNbrWeatherType
 };
 
 
@@ -494,4 +512,4 @@ enum E_PopulationAttitude
 
 
 
-#endif // __ENT_Emuns_Gen_h_
+#endif // __ENT_Enums_Gen_h_

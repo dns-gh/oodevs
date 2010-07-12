@@ -83,7 +83,8 @@ private:
     QDateTimeEdit* time_;
     QTimeEdit* sunrise_;
     QTimeEdit* sunset_;
-    gui::ValuedComboBox< kernel::E_LightingType >* lighting_;
+    gui::ValuedComboBox< kernel::E_DayLightingType >* dayLighting_;
+    gui::ValuedComboBox< kernel::E_NightLightingType >* nightLighting_;
     WeatherWidget* globalWeather_;
     QVBox* localWeatherBox_;
     LocalWeathersList* localWeathers_;

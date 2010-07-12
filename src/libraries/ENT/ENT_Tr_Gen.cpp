@@ -254,15 +254,32 @@ ENT_Tr::T_ConverterSimulationState ENT_Tr::SimulationStateConverter_[] =
     T_ConverterSimulationState( "", "", (E_SimulationState)-1 )
 };
 
-ENT_Tr::T_ConverterPrecipitationType ENT_Tr::PrecipitationTypeConverter_[] =
+ENT_Tr::T_ConverterLightingType ENT_Tr::LightingTypeConverter_[] =
 {
-    T_ConverterPrecipitationType( "pas de precipitation", QT_TRANSLATE_NOOP( "ENT_Tr", "no rainfall" ), ePrecipitationType_PasDePrecipitation ),
-    T_ConverterPrecipitationType( "tempete sable", QT_TRANSLATE_NOOP( "ENT_Tr", "sand storm" ), ePrecipitationType_TempeteSable ),
-    T_ConverterPrecipitationType( "brouillard", QT_TRANSLATE_NOOP( "ENT_Tr", "fog" ), ePrecipitationType_Brouillard ),
-    T_ConverterPrecipitationType( "crachin", QT_TRANSLATE_NOOP( "ENT_Tr", "drizzle" ), ePrecipitationType_Crachin ),
-    T_ConverterPrecipitationType( "pluie", QT_TRANSLATE_NOOP( "ENT_Tr", "rain" ), ePrecipitationType_Pluie ),
-    T_ConverterPrecipitationType( "neige", QT_TRANSLATE_NOOP( "ENT_Tr", "snow" ), ePrecipitationType_Neige ),
-    T_ConverterPrecipitationType( "", "", (E_PrecipitationType)-1 )
+    T_ConverterLightingType( "jour sans nuage", QT_TRANSLATE_NOOP( "ENT_Tr", "Day without cloud" ), eLightingType_JourSansNuage ),
+    T_ConverterLightingType( "jour peu nuageux", QT_TRANSLATE_NOOP( "ENT_Tr", "Slightly cloudy day" ), eLightingType_JourPeuNuageux ),
+    T_ConverterLightingType( "jour moyennement nuageux", QT_TRANSLATE_NOOP( "ENT_Tr", "Moderately cloudy day" ), eLightingType_JourMoyennementNuageux ),
+    T_ConverterLightingType( "jour assez nuageux", QT_TRANSLATE_NOOP( "ENT_Tr", "Quite cloudy day" ), eLightingType_JourAssezNuageux ),
+    T_ConverterLightingType( "jour tres nuageux", QT_TRANSLATE_NOOP( "ENT_Tr", "Very cloudy day" ), eLightingType_JourTresNuageux ),
+    T_ConverterLightingType( "nuit pleine lune", QT_TRANSLATE_NOOP( "ENT_Tr", "Full moon night" ), eLightingType_NuitPleineLune ),
+    T_ConverterLightingType( "nuit trois quart de lune", QT_TRANSLATE_NOOP( "ENT_Tr", "Three quarter moon night" ), eLightingType_NuitTroisQuartDeLune ),
+    T_ConverterLightingType( "nuit demi lune", QT_TRANSLATE_NOOP( "ENT_Tr", "Half moon night" ), eLightingType_NuitDemiLune ),
+    T_ConverterLightingType( "nuit quart de lune", QT_TRANSLATE_NOOP( "ENT_Tr", "Quarter moon night" ), eLightingType_NuitQuartDeLune ),
+    T_ConverterLightingType( "nuit nouvelle lune", QT_TRANSLATE_NOOP( "ENT_Tr", "New moon night" ), eLightingType_NuitNouvelleLune ),
+    T_ConverterLightingType( "eclairant", QT_TRANSLATE_NOOP( "ENT_Tr", "Illuminating" ), eLightingType_Eclairant ),
+    T_ConverterLightingType( "", "", (E_LightingType)-1 )
+};
+
+ENT_Tr::T_ConverterWeatherType ENT_Tr::WeatherTypeConverter_[] =
+{
+    T_ConverterWeatherType( "pas de precipitation", QT_TRANSLATE_NOOP( "ENT_Tr", "No rainfall" ), eWeatherType_None ),
+    T_ConverterWeatherType( "tempete sable", QT_TRANSLATE_NOOP( "ENT_Tr", "Sand storm" ), eWeatherType_SandStorm ),
+    T_ConverterWeatherType( "brouillard", QT_TRANSLATE_NOOP( "ENT_Tr", "Fog" ), eWeatherType_Fog ),
+    T_ConverterWeatherType( "crachin", QT_TRANSLATE_NOOP( "ENT_Tr", "Drizzle" ), eWeatherType_Drizzle ),
+    T_ConverterWeatherType( "pluie", QT_TRANSLATE_NOOP( "ENT_Tr", "Rain" ), eWeatherType_Rain ),
+    T_ConverterWeatherType( "neige", QT_TRANSLATE_NOOP( "ENT_Tr", "Snow" ), eWeatherType_Snow ),
+    T_ConverterWeatherType( "fumigene", QT_TRANSLATE_NOOP( "ENT_Tr", "Smoke" ), eWeatherType_Smoke ),
+    T_ConverterWeatherType( "", "", (E_WeatherType)-1 )
 };
 
 ENT_Tr::T_ConverterFireEffectType ENT_Tr::FireEffectTypeConverter_[] =
@@ -483,7 +500,8 @@ void ENT_Tr::InitTranslations()
     InitTr( SetAutomatModeErrorCodeConverter_, "ENT_Tr" );
     InitTr( ControlErrorCodeConverter_, "ENT_Tr" );
     InitTr( SimulationStateConverter_, "ENT_Tr" );
-    InitTr( PrecipitationTypeConverter_, "ENT_Tr" );
+    InitTr( LightingTypeConverter_, "ENT_Tr" );
+    InitTr( WeatherTypeConverter_, "ENT_Tr" );
     InitTr( FireEffectTypeConverter_, "ENT_Tr" );
     InitTr( InfoContextErrorCodeConverter_, "ENT_Tr" );
     InitTr( LimaTypeConverter_, "ENT_Tr" );
@@ -729,13 +747,22 @@ const std::string& ENT_Tr::ConvertFromSimulationState( E_SimulationState nValue,
     return ENT_Tr::InverseFindInConverter( SimulationStateConverter_, nValue, nConverterType );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromLightingType
+// Created: JSR 2010-07-12
+// -----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromLightingType( E_LightingType nValue, E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( LightingTypeConverter_, nValue, nConverterType );
+}
+
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromPrecipitationType
+// Name: ENT_Tr::ConvertFromWeatherType
 // Created: AGR
 //-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromPrecipitationType( E_PrecipitationType nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+const std::string& ENT_Tr::ConvertFromWeatherType( E_WeatherType nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( PrecipitationTypeConverter_, nValue, nConverterType );
+    return ENT_Tr::InverseFindInConverter( WeatherTypeConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
@@ -1112,12 +1139,12 @@ E_SimulationState ENT_Tr::ConvertToSimulationState( const std::string& strName )
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToPrecipitationType
+// Name: ENT_Tr::ConvertToWeatherType
 // Created: AGR
 //-----------------------------------------------------------------------------
-E_PrecipitationType ENT_Tr::ConvertToPrecipitationType( const std::string& strName )
+E_WeatherType ENT_Tr::ConvertToWeatherType( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( PrecipitationTypeConverter_, strName );
+    return ENT_Tr::FindInConverter( WeatherTypeConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------

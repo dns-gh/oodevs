@@ -22,11 +22,13 @@
 #include <qhgroupbox.h>
 #include <qgrid.h>
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: WeatherPanel constructor
 // Created: SBO 2006-12-19
 // -----------------------------------------------------------------------------
-WeatherPanel::WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, WeatherLayer& layer )
+WeatherPanel::WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, Controllers& controllers, const CoordinateConverter_ABC& converter, WeatherLayer& layer )
     : InfoPanel_ABC( parent, panel, tr( "Weather" ), "WeatherPanel" )
     , controllers_( controllers )
     , layer_( layer )
@@ -43,10 +45,14 @@ WeatherPanel::WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel:
     sunrise_ = new QTimeEdit( group );
     new QLabel( tr( "Sunset:" ), group );
     sunset_ = new QTimeEdit( group );
-    new QLabel( tr( "Lighting:" ), group );
-    lighting_ = new gui::ValuedComboBox< kernel::E_LightingType >( group );
-    for( int i = 0; i < (int)kernel::eNbrLightingType; ++i )
-        lighting_->AddItem( tools::ToString( (kernel::E_LightingType)i ), (kernel::E_LightingType)i );
+    new QLabel( tr( "Day lighting:" ), group );
+    dayLighting_ = new gui::ValuedComboBox< E_DayLightingType >( group );
+    for( int i = 0; i < static_cast< int >( eNbrDayLightingType ); ++i )
+        dayLighting_->AddItem( tools::ToDisplayedString( static_cast< E_DayLightingType>( i ) ), static_cast< E_DayLightingType>( i ) );
+    new QLabel( tr( "Night lighting:" ), group );
+    nightLighting_ = new gui::ValuedComboBox< E_NightLightingType >( group );
+    for( int i = 0; i < static_cast< int >( eNbrNightLightingType ); ++i )
+        nightLighting_->AddItem( tools::ToDisplayedString( static_cast< E_NightLightingType>( i ) ), static_cast< E_NightLightingType>( i ) );
 
     globalWeather_ = new WeatherWidget( this, tr( "Global weather" ) );
     QGroupBox* localGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Local weather" ), this );
@@ -96,7 +102,8 @@ void WeatherPanel::NotifyUpdated( const WeatherModel& model )
     time_->setDateTime( currentModel_->time_ );
     sunrise_->setTime( currentModel_->sunrise_ );
     sunset_ ->setTime( currentModel_->sunset_  );
-    lighting_->SetCurrentItem( currentModel_->lighting_ );
+    dayLighting_->SetCurrentItem( currentModel_->dayLighting_ );
+    nightLighting_->SetCurrentItem( currentModel_->nightLighting_ );
     globalWeather_->Update( *currentModel_->globalWeather_ );
     localWeathers_->Update( *currentModel_ );
     Show();
@@ -124,7 +131,8 @@ void WeatherPanel::Commit()
     currentModel_->time_     = time_->dateTime();
     currentModel_->sunrise_  = sunrise_->time();
     currentModel_->sunset_   = sunset_ ->time();
-    currentModel_->lighting_ = lighting_->GetValue();
+    currentModel_->dayLighting_ = dayLighting_->GetValue();
+    currentModel_->nightLighting_ = nightLighting_->GetValue();
     globalWeather_->CommitTo( *currentModel_->globalWeather_ );
     localWeathers_->CommitTo( *currentModel_ );
     controllers_.controller_.Create( this );

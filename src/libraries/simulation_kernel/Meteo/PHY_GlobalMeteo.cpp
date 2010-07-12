@@ -23,7 +23,6 @@
 // -----------------------------------------------------------------------------
 PHY_GlobalMeteo::PHY_GlobalMeteo( unsigned int id, xml::xistream& xis, const weather::PHY_Lighting& light, int conversionFactor )
     : PHY_Meteo( id, xis, light, conversionFactor )
-    , isChanged_( false )
 {
     // NOTHING
 }
@@ -45,29 +44,6 @@ PHY_GlobalMeteo::PHY_GlobalMeteo( unsigned int id, const Common::MsgMeteoAttribu
 PHY_GlobalMeteo::~PHY_GlobalMeteo()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_GlobalMeteo::Update
-// Created: JSR 2010-04-09
-// -----------------------------------------------------------------------------
-void PHY_GlobalMeteo::Update( const Common::MsgMissionParameters& asn )
-{
-    isChanged_ = true;
-    PHY_Meteo::Update( asn );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_GlobalMeteo::UpdateMeteoPatch
-// Created: JSR 2010-04-09
-// -----------------------------------------------------------------------------
-void PHY_GlobalMeteo::UpdateMeteoPatch( int /*date*/, weather::PHY_RawVisionData_ABC& /*dataVision*/ )
-{
-    if( isChanged_ )
-    {
-        isChanged_ = false;
-        SendCreation();
-    }
 }
 
 // -----------------------------------------------------------------------------

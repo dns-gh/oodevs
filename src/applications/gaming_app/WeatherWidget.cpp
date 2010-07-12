@@ -45,9 +45,9 @@ WeatherWidget::WeatherWidget( QWidget* parent, const QString& title )
     cloudCeiling_->setSuffix( Units::meters.AsString() );
     cloudDensity_ = new QSpinBox( 0, 10, 1, box );
     new QLabel(  tools::translate( "WeatherWidget", "Weather type:" ), this );
-    type_ = new gui::ValuedComboBox< kernel::E_WeatherType >( this );
-    for( int i = 0; i < (int)kernel::eNbrWeatherType; ++i )
-        type_->AddItem( tools::ToString( (kernel::E_WeatherType)i ), (kernel::E_WeatherType)i );
+    type_ = new gui::ValuedComboBox< E_WeatherType >( this );
+    for( int i = 0; i < eNbrWeatherType; ++i )
+        type_->AddItem( tools::ToDisplayedString( static_cast< E_WeatherType >( i ) ), static_cast< E_WeatherType >( i ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -24,13 +24,14 @@ using namespace kernel;
 // Name: WeatherModel constructor
 // Created: SBO 2006-12-19
 // -----------------------------------------------------------------------------
-WeatherModel::WeatherModel( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter )
+WeatherModel::WeatherModel( Controller& controller, const CoordinateConverter_ABC& converter )
     : controller_   ( controller )
     , converter_    ( converter )
     , time_         ( QDateTime::currentDateTime() )
     , sunrise_      (  7, 30 )
     , sunset_       ( 21, 30 )
-    , lighting_     ( eLightingJourSansNuage )
+    , dayLighting_  ( eDayLightingJourSansNuage )
+    , nightLighting_( eNightLightingNuitPleineLune )
     , globalWeather_( new Weather() )
 {
     controller_.Create( *this );
@@ -94,7 +95,8 @@ void WeatherModel::Serialize( const std::string& filename ) const
             << start( "ephemerides" )
                 << attribute( "sunrise", QString( "%1h%2m%3s" ).arg( sunrise_.hour() ).arg( sunrise_.minute() ).arg( sunrise_.second() ).ascii() )
                 << attribute( "sunset", QString( "%1h%2m%3s" ).arg( sunset_.hour() ).arg( sunset_.minute() ).arg( sunset_.second() ).ascii() )
-                << attribute( "moon", tools::GetXmlSection( lighting_ ) ) // $$$$ SBO 2006-12-20: !!
+                << attribute( "day-lighting", tools::GetXmlSection( dayLighting_ ) )
+                << attribute( "night-lighting", tools::GetXmlSection( nightLighting_ ) )
             << end()
             << start( "theater" );
     globalWeather_->Serialize( xos );
@@ -121,13 +123,20 @@ namespace
                     , list.count() > 2 ? list[2].toInt() : 0 );
     }
 
-    // $$$$ SBO 2006-12-19: !!
-    kernel::E_LightingType ConvertToLighting( const QString& lighting )
+    E_DayLightingType ConvertToDayLighting( const QString& lighting )
     {
-        for( unsigned int i = 0; i < (int)eNbrLightingType; ++i )
-            if( QString( tools::GetXmlSection( (E_LightingType)i ) ) == lighting )
-                return (E_LightingType)i;
-        return (E_LightingType)-1;
+        for( unsigned int i = 0; i < static_cast< int >( eNbrDayLightingType ); ++i )
+            if( QString( tools::GetXmlSection( static_cast< E_DayLightingType >( i ) ) ) == lighting )
+                return static_cast< E_DayLightingType >( i );
+        return static_cast< E_DayLightingType >( -1 );
+    }
+
+    E_NightLightingType ConvertToNightLighting( const QString& lighting )
+    {
+        for( unsigned int i = 0; i < static_cast< int >( eNbrNightLightingType ); ++i )
+            if( QString( tools::GetXmlSection( static_cast< E_NightLightingType >( i ) ) ) == lighting )
+                return static_cast< E_NightLightingType >( i );
+        return static_cast< E_NightLightingType >( -1 );
     }
 }
 
@@ -151,13 +160,25 @@ void WeatherModel::ReadExerciseDate( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void WeatherModel::ReadEphemerides( xml::xistream& xis )
 {
-    std::string sunrise, sunset, lighting;
-    xis >> attribute( "sunrise", sunrise )
-        >> attribute( "sunset", sunset )
-        >> attribute( "moon", lighting );
-    sunrise_ = MakeTime( sunrise.c_str() );
-    sunset_ = MakeTime( sunset.c_str() );
-    lighting_ = ConvertToLighting( lighting.c_str() );
+    sunrise_ = MakeTime( xis.attribute< std::string >( "sunrise" ).c_str() );
+    sunset_ = MakeTime( xis.attribute< std::string >( "sunset" ).c_str() );
+    if( xis.has_attribute( "moon" ) )
+    {
+        // $$$$ JSR 2010-07-09: Keep compatibility with old model (one lighting )
+        std::string lighting = xis.attribute< std::string >( "moon" );
+        E_DayLightingType dayType = ConvertToDayLighting( lighting.c_str() );
+        E_NightLightingType nightType = ConvertToNightLighting( lighting.c_str() );
+        if( dayType != static_cast< E_DayLightingType >( -1 ) )
+            dayLighting_ = dayType;
+        if( nightType != static_cast< E_NightLightingType >( -1 ) )
+            nightLighting_ = nightType;
+    }
+    else
+    {
+        // $$$$ JSR 2010-07-09: New model (day and night lightings)
+        dayLighting_ = ConvertToDayLighting( xis.attribute< std::string >( "day-lighting" ).c_str() );
+        nightLighting_ = ConvertToNightLighting( xis.attribute< std::string >( "night-lighting" ).c_str() );
+    }
 }
 
 // -----------------------------------------------------------------------------

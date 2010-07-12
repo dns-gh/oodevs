@@ -119,6 +119,7 @@ protected:
     unsigned int nRefCount_;
     int conversionFactor_;
     unsigned int id_;
+    bool isChanged_;
     //@}
 
 private:

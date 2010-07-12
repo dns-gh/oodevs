@@ -74,11 +74,12 @@ private:
 
 public:
     //! @name Member data
-    QDateTime                time_;
-    QTime                    sunrise_;
-    QTime                    sunset_;
-    kernel::E_LightingType   lighting_;
-    std::auto_ptr< Weather > globalWeather_;
+    QDateTime                   time_;
+    QTime                       sunrise_;
+    QTime                       sunset_;
+    kernel::E_DayLightingType   dayLighting_;
+    kernel::E_NightLightingType nightLighting_;
+    std::auto_ptr< Weather >    globalWeather_;
     //@}
 };
 

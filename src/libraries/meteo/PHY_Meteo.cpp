@@ -35,6 +35,7 @@ PHY_Meteo::PHY_Meteo( unsigned int id, xml::xistream& xis, const PHY_Lighting& l
     , nRefCount_       ( 0 )
     , conversionFactor_( conversionFactor )
     , id_              ( id )
+    , isChanged_       ( false )
 {
     unsigned int nVal;
     xis >> xml::start( "cloud-cover" )
@@ -78,6 +79,7 @@ PHY_Meteo::PHY_Meteo( unsigned int id, const Common::MsgMeteoAttributes& asnMsg,
     , nRefCount_     ( 0 )
     , listener_      ( listener )
     , id_            ( id )
+    , isChanged_     ( false )
 {
     Update( asnMsg );
 }
@@ -92,6 +94,7 @@ PHY_Meteo::PHY_Meteo( unsigned int id, const Common::MsgMissionParameters& asnMs
     , nRefCount_     ( 0 )
     , listener_      ( listener )
     , id_            ( id )
+    , isChanged_     ( false )
 {
     Update( asnMsg );
 }
@@ -106,6 +109,7 @@ PHY_Meteo::PHY_Meteo( const PHY_Lighting& light, PHY_Precipitation& precipitatio
     , nRefCount_     ( 0 )
     , listener_      ( 0 )
     , id_            ( 0 )
+    , isChanged_     ( false )
 {
     // NOTHING
 }
@@ -165,6 +169,8 @@ void PHY_Meteo::Update( const Common::MsgMeteoAttributes& msg )
 // -----------------------------------------------------------------------------
 void PHY_Meteo::Update( const Common::MsgMissionParameters& msg )
 {
+    isChanged_ = true;
+
     // Temperature
     const Common::MsgMissionParameter& temperature = msg.elem( 0 );
     if( !temperature.has_value() || !temperature.value().has_areal() )
@@ -224,6 +230,7 @@ void PHY_Meteo::Update( const Common::MsgMissionParameters& msg )
 void PHY_Meteo::Update( const PHY_Lighting& light )
 {
     pLighting_ = &light.GetDegradedLighting( (unsigned int)( rDensiteCouvertureNuageuse_ * ( nPlafondCouvertureNuageuse_ - nPlancherCouvertureNuageuse_ ) / 2000 ) );
+    isChanged_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -233,6 +240,7 @@ void PHY_Meteo::Update( const PHY_Lighting& light )
 void PHY_Meteo::Update( const PHY_Precipitation& precipitation)
 {
     pPrecipitation_ = &precipitation;
+    isChanged_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -248,9 +256,13 @@ void PHY_Meteo::SetListener( MeteoManager_ABC* listener )
 // Name: PHY_Meteo::UpdateMeteoPatch
 // Created: SLG 2010-03-18
 // -----------------------------------------------------------------------------
-void PHY_Meteo::UpdateMeteoPatch( int /*date*/, PHY_RawVisionData_ABC& /*dataVision_ */)
+void PHY_Meteo::UpdateMeteoPatch( int /*date*/, PHY_RawVisionData_ABC& /*dataVision_*/ )
 {
-    // NOTHING
+    if( isChanged_ )
+    {
+        isChanged_ = false;
+        SendCreation();
+    }
 }
 
 // -----------------------------------------------------------------------------

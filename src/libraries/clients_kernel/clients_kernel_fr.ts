@@ -70,6 +70,33 @@
     </message>
 </context>
 <context>
+    <name>E_DayLightingType</name>
+    <message>
+        <source>JourSansNuage</source>
+        <translation>JourSansNuage</translation>
+    </message>
+    <message>
+        <source>JourPeuNuageux</source>
+        <translation>JourPeuNuageux</translation>
+    </message>
+    <message>
+        <source>JourMoyennementNuageux</source>
+        <translation>JourMoyennementNuageux</translation>
+    </message>
+    <message>
+        <source>JourAssezNuageux</source>
+        <translation>JourAssezNuageux</translation>
+    </message>
+    <message>
+        <source>JourTresNuageux</source>
+        <translation>JourTresNuageux</translation>
+    </message>
+    <message>
+        <source>Eclairant</source>
+        <translation>Eclairant</translation>
+    </message>
+</context>
+<context>
     <name>E_FuncLimaType</name>
     <message>
         <source>LD</source>
@@ -189,43 +216,7 @@
     </message>
 </context>
 <context>
-    <name>E_PerceptionResult</name>
-    <message>
-        <source>Identification</source>
-        <translation>Identification</translation>
-    </message>
-    <message>
-        <source>Detection</source>
-        <translation>Détection</translation>
-    </message>
-    <message>
-        <source>Not seen</source>
-        <translation>Non vu</translation>
-    </message>
-    <message>
-        <source>Recognition</source>
-        <translation>Reconnu</translation>
-    </message>
-    <message>
-        <source>JourSansNuage</source>
-        <translation>JourSansNuage</translation>
-    </message>
-    <message>
-        <source>JourPeuNuageux</source>
-        <translation>JourPeuNuageux</translation>
-    </message>
-    <message>
-        <source>JourMoyennementNuageux</source>
-        <translation>JourMoyennementNuageux</translation>
-    </message>
-    <message>
-        <source>JourAssezNuageux</source>
-        <translation>JourAssezNuageux</translation>
-    </message>
-    <message>
-        <source>JourTresNuageux</source>
-        <translation>JourTresNuageux</translation>
-    </message>
+    <name>E_NightLightingType</name>
     <message>
         <source>NuitPleineLune</source>
         <translation>NuitPleineLune</translation>
@@ -250,33 +241,24 @@
         <source>Eclairant</source>
         <translation>Eclairant</translation>
     </message>
+</context>
+<context>
+    <name>E_PerceptionResult</name>
     <message>
-        <source>PasDePrecipitation</source>
-        <translation>PasDePrecipitation</translation>
+        <source>Identification</source>
+        <translation>Identification</translation>
     </message>
     <message>
-        <source>TempeteDeSable</source>
-        <translation>TempeteDeSable</translation>
+        <source>Detection</source>
+        <translation>Détection</translation>
     </message>
     <message>
-        <source>Brouillard</source>
-        <translation>Brouillard</translation>
+        <source>Not seen</source>
+        <translation>Non vu</translation>
     </message>
     <message>
-        <source>Crachin</source>
-        <translation>Crachin</translation>
-    </message>
-    <message>
-        <source>Pluie</source>
-        <translation>Pluie</translation>
-    </message>
-    <message>
-        <source>Neige</source>
-        <translation>Neige</translation>
-    </message>
-    <message>
-        <source>Fumigene</source>
-        <translation>Fumigene</translation>
+        <source>Recognition</source>
+        <translation>Reconnu</translation>
     </message>
 </context>
 <context>
@@ -312,6 +294,37 @@
     <message>
         <source>Assigned to maintenance</source>
         <translation>Assigné à la maintenance</translation>
+    </message>
+</context>
+<context>
+    <name>E_WeatherType</name>
+    <message>
+        <source>PasDePrecipitation</source>
+        <translation>PasDePrecipitation</translation>
+    </message>
+    <message>
+        <source>TempeteDeSable</source>
+        <translation>TempeteDeSable</translation>
+    </message>
+    <message>
+        <source>Brouillard</source>
+        <translation>Brouillard</translation>
+    </message>
+    <message>
+        <source>Crachin</source>
+        <translation>Crachin</translation>
+    </message>
+    <message>
+        <source>Pluie</source>
+        <translation>Pluie</translation>
+    </message>
+    <message>
+        <source>Neige</source>
+        <translation>Neige</translation>
+    </message>
+    <message>
+        <source>Fumigene</source>
+        <translation>Fumigene</translation>
     </message>
 </context>
 <context>
@@ -475,6 +488,50 @@
     <message>
         <source>Unknown</source>
         <translation>Inconnu</translation>
+    </message>
+    <message>
+        <source>No clouds</source>
+        <translation>Sans nuage</translation>
+    </message>
+    <message>
+        <source>Slightly cloudy</source>
+        <translation>Peu nuageux</translation>
+    </message>
+    <message>
+        <source>Moderately cloudy</source>
+        <translation>Moyennement nuageux</translation>
+    </message>
+    <message>
+        <source>Quite cloudy</source>
+        <translation>Assez nuageux</translation>
+    </message>
+    <message>
+        <source>Very cloudy</source>
+        <translation>Très nuageux</translation>
+    </message>
+    <message>
+        <source>Illuminating</source>
+        <translation>Eclairant</translation>
+    </message>
+    <message>
+        <source>Full moon</source>
+        <translation>Pleine lune</translation>
+    </message>
+    <message>
+        <source>Three quarter moon</source>
+        <translation>Trois quarts de lune</translation>
+    </message>
+    <message>
+        <source>Half moon</source>
+        <translation>Demi lune</translation>
+    </message>
+    <message>
+        <source>Quarter moon</source>
+        <translation>Quart de lune</translation>
+    </message>
+    <message>
+        <source>New moon</source>
+        <translation>Nouvelle lune</translation>
     </message>
 </context>
 </TS>

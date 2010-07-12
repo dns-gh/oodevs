@@ -2013,30 +2013,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>no rainfall</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>sand storm</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>fog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>drizzle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>rain</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>snow</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>smoke</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2286,6 +2262,78 @@
     </message>
     <message>
         <source>rectangle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No rainfall</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sand storm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drizzle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Smoke</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Day without cloud</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Slightly cloudy day</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Moderately cloudy day</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quite cloudy day</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Very cloudy day</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Full moon night</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Three quarter moon night</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Half moon night</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quarter moon night</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New moon night</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Illuminating</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

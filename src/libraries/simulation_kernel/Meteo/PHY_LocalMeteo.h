@@ -40,7 +40,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void UpdateMeteoPatch( int date, weather::PHY_RawVisionData_ABC& dataVision_ );
+    virtual void UpdateMeteoPatch( int date, weather::PHY_RawVisionData_ABC& dataVision );
     //@}
 
 private:

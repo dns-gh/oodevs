@@ -61,7 +61,8 @@ public:
     static const std::string& ConvertFromSetAutomatModeErrorCode( E_SetAutomatModeErrorCode, E_Conversion = eToSim );
     static const std::string& ConvertFromControlErrorCode( E_ControlErrorCode, E_Conversion = eToSim );
     static const std::string& ConvertFromSimulationState( E_SimulationState, E_Conversion = eToSim );
-    static const std::string& ConvertFromPrecipitationType( E_PrecipitationType, E_Conversion = eToSim );
+    static const std::string& ConvertFromLightingType( E_LightingType, E_Conversion = eToSim );
+    static const std::string& ConvertFromWeatherType( E_WeatherType, E_Conversion = eToSim );
     static const std::string& ConvertFromFireEffectType( E_FireEffectType, E_Conversion = eToSim );
     static const std::string& ConvertFromInfoContextErrorCode( E_InfoContextErrorCode, E_Conversion = eToSim );
     static const std::string& ConvertFromLimaType( E_LimaType, E_Conversion = eToSim );
@@ -107,7 +108,7 @@ public:
     static E_SetAutomatModeErrorCode ConvertToSetAutomatModeErrorCode( const std::string& );
     static E_ControlErrorCode ConvertToControlErrorCode( const std::string& );
     static E_SimulationState ConvertToSimulationState( const std::string& );
-    static E_PrecipitationType ConvertToPrecipitationType( const std::string& );
+    static E_WeatherType ConvertToWeatherType( const std::string& );
     static E_FireEffectType ConvertToFireEffectType( const std::string& );
     static E_InfoContextErrorCode ConvertToInfoContextErrorCode( const std::string& );
     static E_LimaType ConvertToLimaType( const std::string& );
@@ -153,7 +154,8 @@ private:
     typedef ENT_Tr::converter<E_SetAutomatModeErrorCode> T_ConverterSetAutomatModeErrorCode;
     typedef ENT_Tr::converter<E_ControlErrorCode> T_ConverterControlErrorCode;
     typedef ENT_Tr::converter<E_SimulationState> T_ConverterSimulationState;
-    typedef ENT_Tr::converter<E_PrecipitationType> T_ConverterPrecipitationType;
+    typedef ENT_Tr::converter<E_LightingType> T_ConverterLightingType;
+    typedef ENT_Tr::converter<E_WeatherType> T_ConverterWeatherType;
     typedef ENT_Tr::converter<E_FireEffectType> T_ConverterFireEffectType;
     typedef ENT_Tr::converter<E_InfoContextErrorCode> T_ConverterInfoContextErrorCode;
     typedef ENT_Tr::converter<E_LimaType> T_ConverterLimaType;
@@ -198,7 +200,8 @@ private:
     static T_ConverterSetAutomatModeErrorCode SetAutomatModeErrorCodeConverter_ [];
     static T_ConverterControlErrorCode ControlErrorCodeConverter_ [];
     static T_ConverterSimulationState SimulationStateConverter_ [];
-    static T_ConverterPrecipitationType PrecipitationTypeConverter_ [];
+    static T_ConverterLightingType LightingTypeConverter_ [];
+    static T_ConverterWeatherType WeatherTypeConverter_ [];
     static T_ConverterFireEffectType FireEffectTypeConverter_ [];
     static T_ConverterInfoContextErrorCode InfoContextErrorCodeConverter_ [];
     static T_ConverterLimaType LimaTypeConverter_ [];

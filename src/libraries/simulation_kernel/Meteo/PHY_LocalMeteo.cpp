@@ -86,21 +86,23 @@ PHY_LocalMeteo::~PHY_LocalMeteo()
 // Name: PHY_LocalMeteo::UpdateMeteoPatch
 // Created: SLG 2010-03-18
 // -----------------------------------------------------------------------------
-void PHY_LocalMeteo::UpdateMeteoPatch( int date, weather::PHY_RawVisionData_ABC& dataVision_ )
+void PHY_LocalMeteo::UpdateMeteoPatch( int date, weather::PHY_RawVisionData_ABC& dataVision )
 {
     bool bNeedToBePatched = ( date > startTime_ &&  date < endTime_ );
     if( !bIsPatched_ && bNeedToBePatched )
     {
-        dataVision_.RegisterMeteoPatch( geometry::Point2d( upLeft_.rX_, upLeft_.rY_) , geometry::Point2d( downRight_.rX_, downRight_.rY_), this );
+        dataVision.RegisterMeteoPatch( geometry::Point2d( upLeft_.rX_, upLeft_.rY_) , geometry::Point2d( downRight_.rX_, downRight_.rY_), this );
         bIsPatched_ = true;
-        SendCreation();
+        isChanged_ = true;
     }
     else if( bIsPatched_ && !bNeedToBePatched )
     {
-        dataVision_.UnregisterMeteoPatch( geometry::Point2d( upLeft_.rX_, upLeft_.rY_) , geometry::Point2d( downRight_.rX_, downRight_.rY_), this );
+        dataVision.UnregisterMeteoPatch( geometry::Point2d( upLeft_.rX_, upLeft_.rY_) , geometry::Point2d( downRight_.rX_, downRight_.rY_), this );
         bIsPatched_ = false;
+        isChanged_ = false;
         SendDestruction();
     }
+    PHY_Meteo::UpdateMeteoPatch( date, dataVision );
 }
 
 // -----------------------------------------------------------------------------
