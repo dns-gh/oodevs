@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: AGN 02-11-25 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Path/DEC_PathResult.cpp $
-// $Author: Age $
-// $Modtime: 16/06/05 15:23 $
-// $Revision: 28 $
-// $Workfile: DEC_PathResult.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2002 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 #include "DEC_PathResult.h"
@@ -21,7 +19,7 @@
 // Created: NLD 2005-09-30
 // -----------------------------------------------------------------------------
 DEC_PathResult::DEC_PathResult()
-    : DEC_Path_ABC      ()
+    : DEC_Path_ABC()
     , bSectionJustEnded_( false )
 {
     // NOTHING
@@ -37,10 +35,6 @@ DEC_PathResult::~DEC_PathResult()
     resultList_.clear();
 }
 
-//=============================================================================
-// TOOLS
-//=============================================================================
-
 //-----------------------------------------------------------------------------
 // Name: DEC_PathResult::GetClosestPointOnPath
 // Created: AGN 03-01-13
@@ -51,16 +45,13 @@ MT_Vector2D DEC_PathResult::GetPointOnPathCloseTo( const MT_Vector2D& posToTest 
     CIT_PathPointList itStart = resultList_.begin();
     CIT_PathPointList itEnd   = resultList_.begin();
     ++itEnd;
-
     MT_Vector2D result( (*itStart)->GetPos() );
     MT_Float rDistance = std::numeric_limits< MT_Float >::max();
     for( itStart = resultList_.begin(); itEnd != resultList_.end(); ++itStart, ++itEnd )
     {
         MT_Line vLine( (*itStart)->GetPos(), (*itEnd)->GetPos() );
         MT_Vector2D vClosest = vLine.ClosestPointOnLine( posToTest );
-
         MT_Float rCurrentDistance = vClosest.SquareDistance( posToTest );
-
         if( rCurrentDistance < rDistance )
         {
             rDistance = rCurrentDistance;
@@ -80,23 +71,18 @@ DEC_PathResult::CIT_PathPointList DEC_PathResult::GetCurrentKeyOnPath( const MT_
 {
     if( resultList_.empty() )
         return resultList_.end();
-
     static const MT_Float rWeldValue = TER_World::GetWorld().GetWeldValue();
-
     if( resultList_.size() == 1 )
     {
         if( vPos.Distance( resultList_.front()->GetPos() ) <= rWeldValue )
             return resultList_.begin();
         return resultList_.end();
     }
-
     CIT_PathPointList itEnd = resultList_.begin();
     ++itEnd;
-
     for( CIT_PathPointList itStart = resultList_.begin(); itEnd != resultList_.end(); ++itStart, ++itEnd )
     {
         MT_Line vLine( (*itStart)->GetPos(), (*itEnd)->GetPos() );
-
         if( vLine.IsInside( vPos, rWeldValue ) ) //$$$ DE LA MERDE EN BOITE
             return itStart;
     }
@@ -116,23 +102,18 @@ MT_Vector2D DEC_PathResult::InternalGetFuturePosition( const CIT_PathPointList& 
     CIT_PathPointList itNextPos = itCurrentPos;
     while ( ++itNextPos != resultList_.end() && (*itNextPos)->GetType() != DEC_PathPoint::eTypePointPath )
         ;
-
     const MT_Vector2D& vCurrentPos = (*itCurrentPos)->GetPos();
     if( itNextPos == resultList_.end() )
     {
         const MT_Vector2D& vStartPos = resultList_.front()->GetPos();
         const MT_Vector2D& vEndPos   = resultList_.back ()->GetPos();
-
         if( bBoundOnPath )
             return vEndPos;
-        else
-            return vEndPos + ( vEndPos - vStartPos ).Normalize() * rDist; // on suit la direction générale du déplacement
+        return vEndPos + ( vEndPos - vStartPos ).Normalize() * rDist; // on suit la direction générale du déplacement
     }
-
     MT_Float rLength = vCurrentPos.Distance( (*itNextPos)->GetPos() );
     if( rLength >= rDist )
         return vCurrentPos + ( (*itNextPos)->GetPos() - vCurrentPos ).Normalize() * rDist;
-
     // parcours sur le segment suivant
     return InternalGetFuturePosition( itNextPos, rDist - rLength, bBoundOnPath );
 }
@@ -146,21 +127,17 @@ MT_Vector2D DEC_PathResult::GetFuturePosition( const MT_Vector2D& vStartPos, MT_
     CIT_PathPointList itCurrentPathPoint = GetCurrentKeyOnPath( vStartPos );
     if( itCurrentPathPoint == resultList_.end() )
         return vStartPos;
-
     CIT_PathPointList itNextPathPoint = itCurrentPathPoint;
     ++itNextPathPoint;
-
     // Recherche du premier pathpoint
     if( itNextPathPoint == resultList_.end() )
     {
         const MT_Vector2D& vEndPos   = resultList_.back ()->GetPos();
         return vEndPos == vStartPos ? vEndPos : vStartPos + ( vEndPos - vStartPos ).Normalize() * rDist;
     }
-
     MT_Float rLength = vStartPos.Distance( (*itNextPathPoint)->GetPos() );
     if( rLength >= rDist )
         return vStartPos + ( (*itNextPathPoint)->GetPos() - vStartPos ).Normalize() * rDist;
-
     // parcours sur les points
     return InternalGetFuturePosition( itNextPathPoint, rDist - rLength, bBoundOnPath );
 }
@@ -173,35 +150,26 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos,
 {
     rDistance = std::numeric_limits< MT_Float >::max();
     pObject.reset();
-
     E_State nPathState = GetState();
     if( nPathState != eValid && nPathState != ePartial )
         return false;
-
     assert( !resultList_.empty() );
     CIT_PathPointList itCurrentPathPoint = GetCurrentKeyOnPath( vStartPos );
     if( itCurrentPathPoint == resultList_.end() )
         return false;
-
     CIT_PathPointList itNextPathPoint = itCurrentPathPoint;
     ++itNextPathPoint;
-
     std::multimap< MT_Float, boost::shared_ptr< DEC_Knowledge_Object > > objectsOnPathMap;
-
     // Determination de tous les objets connus avec lesquels il va y avoir collision dans le déplacement en cours
     for( CIT_KnowledgeObjectVector itKnowledge = objectsToTest.begin(); itKnowledge != objectsToTest.end(); ++itKnowledge )
     {
         boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = *itKnowledge;
-
         const MT_Vector2D* pPrevPos = &vStartPos;
-
         for( CIT_PathPointList itPathPoint = itNextPathPoint; itPathPoint != resultList_.end(); ++itPathPoint )
         {
             MT_Line lineTmp( *pPrevPos, (*itPathPoint)->GetPos() );
-
             TER_DistanceLess colCmp( *pPrevPos );
             T_PointSet collisions( colCmp );
-
             if( pKnowledge->GetLocalisation().Intersect2D( lineTmp, collisions ) )
             {
                 assert( !collisions.empty() );
@@ -213,18 +181,12 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos,
             pPrevPos = &(*itPathPoint)->GetPos();
         }
     }
-
     if( objectsOnPathMap.empty() )
         return false;
-
     rDistance = objectsOnPathMap.begin()->first;
     pObject   = objectsOnPathMap.begin()->second;
     return true;
 }
-
-// =============================================================================
-// NETWORK
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathResult::Serialize
@@ -237,10 +199,6 @@ void DEC_PathResult::Serialize( Common::MsgPath& asn ) const
     for( CIT_PathPointList it = resultList_.begin(); it != resultList_.end(); ++it )
         NET_ASN_Tools::WritePoint( (*it)->GetPos(), *asn.mutable_location()->mutable_coordinates()->add_elem() );
 }
-
-// =============================================================================
-// RESULT
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathResult::AddResultPoint

@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-02-11 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Path/DEC_PathResult.h $
-// $Author: Age $
-// $Modtime: 16/06/05 15:09 $
-// $Revision: 10 $
-// $Workfile: DEC_PathResult.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2003 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #ifndef __DEC_PathResult_h_
 #define __DEC_PathResult_h_
