@@ -101,6 +101,7 @@ BOOST_FIXTURE_TEST_CASE( ComputeRelationAgent, BrainFixture )
     ComputeRelationAgentTest( CreateAgent( "neutre" ), 50. );
     ComputeRelationAgentTest( CreateAgent( "allie" ), 100. );
 }
+
 // -----------------------------------------------------------------------------
 // Name: ComputeRelationObject
 // Created: MGD 2010-01-22
