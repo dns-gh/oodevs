@@ -133,7 +133,7 @@ void DEC_Knowledge_ObjectAttributeCrossingSite::Send( Common::MsgObjectAttribute
 {
     asn.mutable_crossing_site()->set_width( static_cast< int >( rWidth_ ) );
     asn.mutable_crossing_site()->set_depth( static_cast< int >( rDepth_ ) );
-    asn.mutable_crossing_site()->set_flow_rate( (static_cast< int >( rCurrentSpeed_ ) );
+    asn.mutable_crossing_site()->set_flow_rate( static_cast< int >( rCurrentSpeed_ ) );
     asn.mutable_crossing_site()->set_banks_require_fitting( bBanksToFitOut_ );
 }
 
