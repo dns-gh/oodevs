@@ -50,9 +50,6 @@ AuthoringPage::~AuthoringPage()
 // -----------------------------------------------------------------------------
 void AuthoringPage::OnAuthoring()
 {
-    if( !dialogs::KillRunningProcesses( this ) )
-        return;
-
     boost::shared_ptr< frontend::SpawnCommand > command( new frontend::StartAuthoring( config_, true ) );
     boost::shared_ptr< frontend::Process_ABC >  process( new ProcessWrapper( controllers_.controller_, command ) );
     progressPage_->Attach( process );
