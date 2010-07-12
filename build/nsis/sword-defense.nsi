@@ -281,10 +281,13 @@ SectionGroup "Exercises" s_exo
         !insertmacro OT.AddExercise "tests\embrayerAuto" "Paris_Est" "s_exo33"
 
         ;Test import scenario
+        Section "SCENARIO"
+        SectionIn RO
         SetOutPath "${INSTDATADIR}\data\import_lto"
-        !insertmacro UNINSTALL.LOG_OPEN_INSTALL 
+        !insertmacro UNINSTALL.LOG_OPEN_INSTALL
         File "${DATADIR}\tests\import_lto\*.xml"
-        !insertmacro UNINSTALL.LOG_OPEN_INSTALL 
+        !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+        SectionEnd
     !endif
 
 SectionGroupEnd
