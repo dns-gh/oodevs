@@ -1015,7 +1015,7 @@
   <automat decisional-model="GTIA" id="655" name="GTIA" type="Automate ABC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="Peloton LECLERC CDT ESC"/>
   </automat>
-  <automat decisional-model="net.masagroup.sword.military.roles.Company" id="656" name="SGTIA" type="Automate SGTIA">
+  <automat decisional-model="net.masagroup.sword.military.company.roles.Company" id="656" name="SGTIA" type="Automate SGTIA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="Section . CBT INF VAB CDS OFF"/>
     <unit max-occurs="2" min-occurs="2" type="Section . CDT CIE INF VAB"/>
     <unit max-occurs="2" min-occurs="2" type="Peloton . LECLERC CDP OFF"/>

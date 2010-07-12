@@ -954,7 +954,7 @@
       <parameter dia-name="objectives" name="objectifs" optional="false" type="AreaBM"/>
       <parameter dia-name="obstacles" name="obstacles" optional="true" type="GenObjectListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.military.platoon.tasks.Illuminate" dia-type="T_Mission_Pion_Illuminer" id="2065" name="MELEE Illuminate">
+    <mission dia-behavior="net.masagroup.sword.military.platoon.tasks.Illuminate" dia-type="T_Mission_Pion_Illuminer" id="2065" name="MELEE Illuminer">
       <parameter dia-name="entities" name="cible" optional="false" type="AgentKnowledgeListBM"/>
       <parameter dia-name="allies" name="tireur allie" optional="false" type="AgentListBM"/>
     </mission>
@@ -986,7 +986,7 @@
       <parameter dia-name="siteDeFranchissements" name="site de franchissement" optional="false" type="ObjectKnowledgeListBM"/>
       <parameter dia-name="destinations" name="point de destination" optional="false" type="PointListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.testSword.military.platoon.tasks.Seize" dia-type="T_Mission_Pion_Emparer_BU" id="2072" name="MELEE SemparerDUnBlocUrbain">
+    <mission dia-behavior="net.masagroup.testSword.military.platoon.tasks.Seize" dia-type="T_Mission_Pion_Emparer_BU" id="2072" name="MELEE S'emparer d'un Bloc Urbain">
       <parameter dia-name="objectives" name="bloc urbain" optional="false" type="UrbanBlockBM"/>
     </mission>
   </units>
@@ -1795,7 +1795,7 @@
         <value id="3" name="tir_interdit"/>
       </parameter>
     </fragorder>
-    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="net.masagroup.sword.military.platoon.tasks.Illuminate" id="382" name="Illuminate">
+    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="net.masagroup.sword.military.platoon.tasks.Illuminate" id="382" name="Illuminer">
       <parameter dia-name="agentKnowledge_" name="target" optional="false" type="AgentKnowledgeBM"/>
       <parameter dia-name="agent_" name="allie" optional="false" type="AgentBM"/>
     </fragorder>
