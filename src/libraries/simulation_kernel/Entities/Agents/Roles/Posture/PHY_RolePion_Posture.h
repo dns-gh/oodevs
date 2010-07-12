@@ -50,8 +50,11 @@ class PHY_RolePion_Posture : public PHY_RoleInterface_Posture
                            , public network::NetworkUnitMessageNotificationHandler_ABC
 {
 public:
+    //! @name Constructors/Destructor
+    //@{
     explicit  PHY_RolePion_Posture( MIL_Agent_ABC& pion );
     virtual ~PHY_RolePion_Posture();
+    //@}
 
     //! @name CheckPoints
     //@{
@@ -63,28 +66,26 @@ public:
 
     //! @name Operations
     //@{
-    void Update    ( bool bIsDead );
-    void Clean     ();
+    void Update( bool bIsDead );
+    void Clean();
     virtual void Execute( dotation::ConsumptionComputer_ABC& algorithm ) const;
     virtual void Execute( detection::DetectionComputer_ABC& algorithm ) const;
     void Execute( detection::PerceptionDistanceComputer_ABC& algorithm ) const;
     void Execute( urbanLocation::UrbanLocationComputer_ABC& algorithm ) const;
 
     // Override automatic postures
-    virtual void SetPosturePostePrepareGenie  ();
+    virtual void SetPosturePostePrepareGenie();
     virtual void UnsetPosturePostePrepareGenie();
-
-    void EnableDiscreteMode ();
+    void EnableDiscreteMode();
     void DisableDiscreteMode();
-
     void SetTimingFactor( MT_Float rFactor ); //$$$ A GICLER
     //@}
 
     //! @name Installation
     //@{
-    bool IsInstalled  () const;
+    bool IsInstalled() const;
     bool IsUninstalled() const;
-    void Install      ();
+    void Install();
     //@}
 
     //! @name Perception
@@ -94,23 +95,22 @@ public:
 
     //! @name Elongation
     //@{
-    void     SetElongationFactor( MT_Float );
+    void SetElongationFactor( MT_Float );
     MT_Float GetElongationFactor() const;
     //@}
 
     //! @name Accessors
     //@{
-    virtual const PHY_Posture& GetLastPosture                () const;
-    virtual const PHY_Posture& GetCurrentPosture             () const;
-    virtual       MT_Float     GetPostureCompletionPercentage() const;
-
+    virtual const PHY_Posture& GetLastPosture() const;
+    virtual const PHY_Posture& GetCurrentPosture() const;
+    virtual MT_Float GetPostureCompletionPercentage() const;
     bool IsStealth() const;
     //@}
 
     //! @name Network
     //@{
     void SendChangedState( client::UnitAttributes& asnMsg ) const;
-    void SendFullState   ( client::UnitAttributes& asnMsg ) const;
+    void SendFullState( client::UnitAttributes& asnMsg ) const;
     //@}
 
     //! @name HLA
@@ -123,40 +123,42 @@ private:
     //! @name Tools
     //@{
     bool HasChanged() const;
-    void     ChangePosture                    ( const PHY_Posture& newPosture );
-    void     ChangePostureCompletionPercentage( const MT_Float rNewPercentage );
-    void     Uninstall                        ();
+    void ChangePosture( const PHY_Posture& newPosture );
+    void ChangePostureCompletionPercentage( const MT_Float rNewPercentage );
+    void Uninstall();
     //@}
 
 private:
-          MIL_Agent_ABC& pion_;
-    const PHY_Posture*   pCurrentPosture_;
-    const PHY_Posture*   pLastPosture_;
-          MT_Float       rPostureCompletionPercentage_;
-          MT_Float       rElongationFactor_;
-          MT_Float       rTimingFactor_;
-          bool           bDiscreteModeEnabled_;
-          MT_Float       rStealthFactor_;
-          bool           bIsStealth_;
-
-          // Installation
-          MT_Float       rInstallationState_;
-          bool           bInstallationSetUpInProgress_;
-
-          // Network
-          bool           bInstallationStateHasChanged_;
-          bool           bPostureHasChanged_;
-          bool           bPercentageCrossed50_;
-          bool           bStealthFactorHasChanged_;
-          bool           bPercentageHasChanged_;
-
-    mutable MT_Float     rLastPostureCompletionPercentageSent_;
-    mutable MT_Float     rLastInstallationStateSent_;
+    //! @name Data Members
+    //@{
+    MIL_Agent_ABC& pion_;
+    const PHY_Posture* pCurrentPosture_;
+    const PHY_Posture* pLastPosture_;
+    MT_Float rPostureCompletionPercentage_;
+    MT_Float rElongationFactor_;
+    MT_Float rTimingFactor_;
+    bool bDiscreteModeEnabled_;
+    MT_Float rStealthFactor_;
+    bool bIsStealth_;
+    // Installation
+    MT_Float rInstallationState_;
+    bool bInstallationSetUpInProgress_;
+    // Network
+    bool bInstallationStateHasChanged_;
+    bool bPostureHasChanged_;
+    bool bPercentageCrossed50_;
+    bool bStealthFactorHasChanged_;
+    bool bPercentageHasChanged_;
+    mutable MT_Float rLastPostureCompletionPercentageSent_;
+    mutable MT_Float rLastInstallationStateSent_;
+    //@}
 
 private:
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Posture* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Posture* role, const unsigned int /*version*/ );
-
+    //! @name Serialization
+    //@{
+    template< typename Archive > friend void save_construct_data( Archive& archive, const PHY_RolePion_Posture* role, const unsigned int /*version*/ );
+    template< typename Archive > friend void load_construct_data( Archive& archive, PHY_RolePion_Posture* role, const unsigned int /*version*/ );
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_RolePion_Posture )

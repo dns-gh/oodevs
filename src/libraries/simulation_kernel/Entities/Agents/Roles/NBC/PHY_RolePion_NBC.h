@@ -64,15 +64,10 @@ public:
     virtual void Contaminate( const MIL_ToxicEffectManipulator& nbcAgent );
     virtual void Decontaminate();
     virtual void Decontaminate( MT_Float rRatioAgentsWorking );
-
-
     void WearNbcProtectionSuit  ();
     void RemoveNbcProtectionSuit();
-
     virtual MT_Float GetContaminationQuantity() const;
-
     virtual void Execute( firing::WeaponReloadingComputer_ABC& algorithm ) const;
-
     void Execute(moving::SpeedComputer_ABC& algorithm) const;
     //@}
 
@@ -90,8 +85,8 @@ public:
 public:
     //! @name Types
     //@{
-    typedef std::set< const MIL_NbcAgentType* >   T_NbcAgentTypeSet;
-    typedef T_NbcAgentTypeSet::const_iterator   CIT_NbcAgentTypeSet;
+    typedef std::set< const MIL_NbcAgentType* > T_NbcAgentTypeSet;
+    typedef T_NbcAgentTypeSet::const_iterator CIT_NbcAgentTypeSet;
     //@}
 
 private:
@@ -102,7 +97,7 @@ private:
     std::vector<const MIL_NbcAgentType*> GetContaminating() const;
     //@}
 
-    //! @name  Data Member
+    //! @name Data Members
     //@{
     MIL_AgentPion& pion_;
     T_NbcAgentTypeSet nbcAgentTypesContaminating_;
@@ -110,8 +105,12 @@ private:
     MT_Float rContaminationState_;
     MT_Float rContaminationQuantity_;
     bool bHasChanged_;
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_NBC* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_NBC* role, const unsigned int /*version*/ );
+    //@}
+
+    //! @name Serialization
+    //@{
+    template< typename Archive > friend void save_construct_data( Archive& archive, const PHY_RolePion_NBC* role, const unsigned int /*version*/ );
+    template< typename Archive > friend void load_construct_data( Archive& archive, PHY_RolePion_NBC* role, const unsigned int /*version*/ );
     //@}
 };
 

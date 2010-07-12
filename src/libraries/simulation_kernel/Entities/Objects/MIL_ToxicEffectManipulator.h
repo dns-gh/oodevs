@@ -31,8 +31,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-            MIL_ToxicEffectManipulator( const T_NBCAgents& type, MT_Float quantity );
-            MIL_ToxicEffectManipulator( const MIL_ToxicEffectManipulator& rhs );
+             MIL_ToxicEffectManipulator( const T_NBCAgents& type, MT_Float quantity );
+             MIL_ToxicEffectManipulator( const MIL_ToxicEffectManipulator& rhs );
     virtual ~MIL_ToxicEffectManipulator();
     //@}
 
