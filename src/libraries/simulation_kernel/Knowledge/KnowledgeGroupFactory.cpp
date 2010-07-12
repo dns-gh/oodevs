@@ -10,9 +10,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "KnowledgeGroupFactory.h"
-#include "MIL_KnowledgeGroup.h"
-#include "simulation_kernel/AutomateFactory_ABC.h"
-#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( KnowledgeGroupFactory )
 

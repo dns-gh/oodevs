@@ -10,7 +10,6 @@
 #ifndef __DEC_KnowledgeResolver_Empty_h_
 #define __DEC_KnowledgeResolver_Empty_h_
 
-#include "MIL.h"
 #include "DEC_KnowledgeResolver_ABC.h"
 
 namespace Common
@@ -38,8 +37,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent ( const Common::MsgUnitKnowledge& asn ) const;
-    virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent ( unsigned int nID ) const;
+    virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent( const Common::MsgUnitKnowledge& asn ) const;
+    virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent( unsigned int nID ) const;
     virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( const Common::MsgObjectKnowledge& asn ) const;
     virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( unsigned int nID ) const;
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const Common::MsgPopulationKnowledge& asn ) const;

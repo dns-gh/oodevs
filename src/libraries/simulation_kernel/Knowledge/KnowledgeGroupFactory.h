@@ -35,15 +35,15 @@ public:
     //! @name CheckPoint
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
 private:
     //! @name CheckPoint
     //@{
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const KnowledgeGroupFactory* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, KnowledgeGroupFactory* role, const unsigned int /*version*/ );
+    template< typename Archive > friend void save_construct_data( Archive& archive, const KnowledgeGroupFactory* role, const unsigned int /*version*/ );
+    template< typename Archive > friend void load_construct_data( Archive& archive, KnowledgeGroupFactory* role, const unsigned int /*version*/ );
     //@}
 };
 
