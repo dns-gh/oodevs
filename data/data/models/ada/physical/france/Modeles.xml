@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <models xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Models.xsd">
   <units>
-    <unit dia-type="net.masagroup.sword.military.roles.Platoon" file="BMPion.bms" name="net.masagroup.sword.military.roles.Platoon">
+    <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" name="net.masagroup.sword.military.platoon.roles.Platoon">
       <missions>
         <mission name="MELEE Appuyer"/>
         <mission name="MELEE Reconnaitre Itineraire"/>
@@ -23,7 +23,7 @@
         <mission name="MELEE Interdire Bloc Urbain"/>
       </missions>
     </unit>
-    <unit dia-type="net.masagroup.sword.military.roles.Platoon" file="BMPion.bms" name="test pion">
+    <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" name="test pion">
       <missions>
         <mission name="Advance"/>
         <mission name="Animate"/>
@@ -2979,7 +2979,7 @@
     </unit>
   </units>
   <automats>
-    <automat dia-type="net.masagroup.sword.military.roles.Company" file="BMAutomat.bms" name="net.masagroup.sword.military.roles.Company">
+    <automat dia-type="net.masagroup.sword.military.company.roles.Company" file="BMAutomat.bms" name="net.masagroup.sword.military.company.roles.Company">
       <missions>
         <mission name="FaireMouvementVersPosition"/>
         <mission name="FaireMouvementVersBU"/>
