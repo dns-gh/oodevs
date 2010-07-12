@@ -90,7 +90,6 @@ void load_construct_data( Archive& archive, PHY_RolePion_NBC* role, const unsign
 PHY_RolePion_NBC::PHY_RolePion_NBC( MIL_AgentPion& pion )
     : pion_                       ( pion )
     , bNbcProtectionSuitWorn_     ( false )
-    , nbcAgentTypesContaminating_ ()
     , rContaminationState_        ( 0. )
     , rContaminationQuantity_     ( 0. )
     , bHasChanged_                ( true )
@@ -128,7 +127,6 @@ void PHY_RolePion_NBC::Poison( const MIL_ToxicEffectManipulator& contamination )
 {
     if( bNbcProtectionSuitWorn_ )
         return;
-
     pion_.Apply(& nbc::ToxicEffectHandler_ABC::ApplyPoisonous, contamination);
 }
 
@@ -166,7 +164,7 @@ void PHY_RolePion_NBC::Decontaminate()
 
     rContaminationState_ = 0.;
     rContaminationQuantity_ = 0.;
-    bHasChanged_         = true;
+    bHasChanged_ = true;
     nbcAgentTypesContaminating_.clear();
 }
 
@@ -182,11 +180,10 @@ void PHY_RolePion_NBC::Decontaminate( MT_Float rRatioAgentsWorking )
         return;
     }
 
-
     MT_Float rNewContaminationState = rContaminationState_ - ( pion_.GetType().GetUnitType().GetCoefDecontaminationPerTimeStep() * rRatioAgentsWorking );
     rNewContaminationState = std::max( rNewContaminationState, 0. );
 
-    if( (unsigned int)( rNewContaminationState * 100. ) != ( rContaminationState_ * 100. ) )
+    if( static_cast< unsigned int >( rNewContaminationState * 100. ) != ( rContaminationState_ * 100. ) )
         bHasChanged_ = true;
 
     rContaminationState_ = rNewContaminationState;
@@ -230,8 +227,8 @@ void PHY_RolePion_NBC::SendFullState( client::UnitAttributes& msg ) const
             msg().mutable_contamine_par_agents_nbc()->add_elem( (**itNbcAgent).GetID() );
 
     msg().set_en_tenue_de_protection_nbc( bNbcProtectionSuitWorn_ );
-    msg().mutable_etat_contamination()->set_percentage( (unsigned int)( rContaminationState_ * 100. ) );
-    msg().mutable_etat_contamination()->set_quantity( rContaminationQuantity_ );
+    msg().mutable_etat_contamination()->set_percentage( static_cast< unsigned int >( rContaminationState_ * 100. ) );
+    msg().mutable_etat_contamination()->set_quantity( static_cast< float >( rContaminationQuantity_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -262,7 +259,7 @@ void PHY_RolePion_NBC::WearNbcProtectionSuit()
     if( bNbcProtectionSuitWorn_ )
         return;
     bNbcProtectionSuitWorn_ = true;
-    bHasChanged_            = true;
+    bHasChanged_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -274,7 +271,7 @@ void PHY_RolePion_NBC::RemoveNbcProtectionSuit()
     if( !bNbcProtectionSuitWorn_ )
         return;
     bNbcProtectionSuitWorn_ = false;
-    bHasChanged_            = true;
+    bHasChanged_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -283,7 +280,6 @@ void PHY_RolePion_NBC::RemoveNbcProtectionSuit()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_NBC::Update( bool /*bIsDead*/ )
 {
-
     if( HasChanged() )
         pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
     if( IsContaminated() )
@@ -356,8 +352,4 @@ MT_Float PHY_RolePion_NBC::GetContaminationQuantity() const
 {
     return rContaminationQuantity_;
 }
-
-
 }
-
-

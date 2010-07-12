@@ -54,14 +54,14 @@ public:
 
     //! @name Operations
     //@{
-    void Update    ( bool bIsDead );
-    void Clean     ();
+    void Update( bool bIsDead );
+    void Clean();
     //@}
 
     //! @name Main
     //@{
-    virtual void Poison       ( const MIL_ToxicEffectManipulator& nbcAgent );
-    virtual void Contaminate  ( const MIL_ToxicEffectManipulator& nbcAgent );
+    virtual void Poison( const MIL_ToxicEffectManipulator& nbcAgent );
+    virtual void Contaminate( const MIL_ToxicEffectManipulator& nbcAgent );
     virtual void Decontaminate();
     virtual void Decontaminate( MT_Float rRatioAgentsWorking );
 
@@ -78,19 +78,19 @@ public:
 
     //! @name Accessors
     //@{
-    virtual bool IsContaminated            () const;
+    virtual bool IsContaminated() const;
     //@}
 
     //! @name Network
     //@{
     virtual void SendChangedState( client::UnitAttributes& msg ) const;
-    virtual void SendFullState   ( client::UnitAttributes& msg ) const;
+    virtual void SendFullState( client::UnitAttributes& msg ) const;
     //@}
 
 public:
     //! @name Types
     //@{
-    typedef std::set< const MIL_NbcAgentType* > T_NbcAgentTypeSet;
+    typedef std::set< const MIL_NbcAgentType* >   T_NbcAgentTypeSet;
     typedef T_NbcAgentTypeSet::const_iterator   CIT_NbcAgentTypeSet;
     //@}
 
@@ -102,15 +102,17 @@ private:
     std::vector<const MIL_NbcAgentType*> GetContaminating() const;
     //@}
 
-    MIL_AgentPion&      pion_;
-    T_NbcAgentTypeSet   nbcAgentTypesContaminating_;
-    bool                bNbcProtectionSuitWorn_;
-    MT_Float            rContaminationState_;
-    MT_Float            rContaminationQuantity_;
-    bool                bHasChanged_;
+    //! @name  Data Member
+    //@{
+    MIL_AgentPion& pion_;
+    T_NbcAgentTypeSet nbcAgentTypesContaminating_;
+    bool bNbcProtectionSuitWorn_;
+    MT_Float rContaminationState_;
+    MT_Float rContaminationQuantity_;
+    bool bHasChanged_;
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_NBC* role, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_NBC* role, const unsigned int /*version*/ );
-
+    //@}
 };
 
 }
