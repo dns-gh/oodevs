@@ -42,7 +42,6 @@ PHY_Ephemeride::PHY_Ephemeride( xml::xistream& xis )
     }
     if( !pDayBase_ || !pNightBase_ )
         xis.error( "Unknown lighting" );
-
     std::string date;
     xis >> xml::end
         >> xml::start( "exercise-date" )
@@ -57,7 +56,6 @@ PHY_Ephemeride::PHY_Ephemeride( xml::xistream& xis )
         if( tmp != 'h' || sunriseTime_.first < 0 || sunriseTime_.first > 23 || sunriseTime_.second < 0 || sunriseTime_.second > 59 )
             xis.error( "Bad time format (use 00h00)" );
     }
-
     {
         char tmp = 0;
         std::istringstream strTmp( sunSet );
@@ -65,7 +63,6 @@ PHY_Ephemeride::PHY_Ephemeride( xml::xistream& xis )
         if( tmp != 'h' || sunsetTime_.first < 0 || sunsetTime_.first > 23 || sunsetTime_.second < 0 || sunsetTime_.second > 59 )
             xis.error( "Bad time format (use 00h00)" );
     }
-
     if( sunriseTime_ >= sunsetTime_  )
         xis.error( "Sunrise time should be before sunset time" );
     UpdateNight( MIL_AgentServer::GetWorkspace().GetRealTime() );
@@ -89,7 +86,6 @@ bool PHY_Ephemeride::UpdateNight( unsigned int date )
     bpt::ptime pdate( bpt::from_time_t( date ) );
     bpt::time_duration time = pdate.time_of_day();
     std::pair< int, int > currentTime( time.hours(), time.minutes() );
-
     bool wasNight = bIsNight_;
     bIsNight_ = currentTime < sunriseTime_ || !( currentTime < sunsetTime_ );
     return bIsNight_ != wasNight;

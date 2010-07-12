@@ -48,13 +48,13 @@ public:
     //! @name Operations
     //@{
     void Prepare();
-    void Update     ( const PHY_PerceptionLevel& perceptionLevel );
+    void Update( const PHY_PerceptionLevel& perceptionLevel );
     void SetPerceptionLevel( const PHY_PerceptionLevel& perceptionLevel );
-    bool Clean      () const;
+    bool Clean() const;
     //@}
 
     //! @name Accessor
-    unsigned GetId  () const;
+    unsigned GetId() const;
     const PHY_PerceptionLevel& GetCurrentPerceptionLevel() const;
     const urban::TerrainObject_ABC& GetUrbanPerceived() const;
     const MIL_Agent_ABC& GetPerceiver() const;
@@ -63,7 +63,7 @@ public:
 
     //! @name Network operations
     //@{
-    void UpdateOnNetwork     ();
+    void UpdateOnNetwork();
     void SendStateToNewClient();
     //@}
 
@@ -74,14 +74,15 @@ private:
     //@}
 
 private:
-    const unsigned       nID_;
+    //! @name Member data
+    //@{
+    const unsigned nID_;
     const MIL_Agent_ABC& perceiver_;
     const urban::TerrainObject_ABC& object_;
-
     const PHY_PerceptionLevel* pCurrentPerceptionLevel_;
     const PHY_PerceptionLevel* pPreviousPerceptionLevel_;
-
     static MIL_IDManager idManager_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_UrbanPerception )

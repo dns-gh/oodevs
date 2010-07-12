@@ -9,19 +9,11 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_LocalMeteo.h"
-#include "meteo/PHY_Meteo.h"
-#include "meteo/PHY_Lighting.h"
-#include "meteo/MeteoManager_ABC.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "Tools/MIL_Tools.h"
-#include "Meteo/PHY_RawVisionData_ABC.h"
 #include "meteo/PHY_Precipitation.h"
-#include "Network/NET_ASN_Tools.h"
-#include "protocol/Protocol.h"
-#include "protocol/ClientSenders.h"
 #include <xeumeuleu/xml.hpp>
-
 #pragma warning( push, 1 )
 #include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )
@@ -59,12 +51,10 @@ PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, const Common::MsgMissionParamet
     if( !startTime.has_value() || !startTime.value().has_datetime() )
         throw std::exception( "Meteo : bad attribute for StartTime" );
     startTime_ = ( bpt::from_iso_string( startTime.value().datetime().data() ) - bpt::from_time_t( 0 ) ).total_seconds();
-
     const Common::MsgMissionParameter& endTime = msg.elem( 8 );
     if( !endTime.has_value() || !endTime.value().has_datetime() )
         throw std::exception( "Meteo : bad attribute for EndTime" );
     endTime_ = ( bpt::from_iso_string( endTime.value().datetime().data() ) - bpt::from_time_t( 0 ) ).total_seconds();
-
     const Common::MsgMissionParameter& location = msg.elem( 9 );
     if( !location.has_value() || !location.value().has_location() )
         throw std::exception( "Meteo : bad attribute for Location" );
@@ -114,7 +104,6 @@ void PHY_LocalMeteo::SendCreation() const
     client::ControlLocalMeteoCreation msg;
     Common::MsgMeteoAttributes* att = msg().mutable_attributes();
     msg().set_oid( id_ );
-
     att->set_wind_speed( static_cast< int >( wind_.rWindSpeed_ / conversionFactor_ ) );
     NET_ASN_Tools::WriteDirection(wind_.vWindDirection_, *(att->mutable_wind_direction()) );
     att->set_cloud_floor (nPlancherCouvertureNuageuse_ );
@@ -123,18 +112,20 @@ void PHY_LocalMeteo::SendCreation() const
     att->set_precipitation( pPrecipitation_->GetAsnID() );
     att->set_temperature( 0 );
     att->set_lighting(Common::globalMeteoType_ );
-
     Common::MsgCoordLatLong longlat;
     MIL_Tools::ConvertCoordSimToMos( downRight_, longlat);
     msg().mutable_bottom_right_coordinate()->set_latitude( longlat.latitude()  );
     msg().mutable_bottom_right_coordinate()->set_longitude( longlat.longitude()  );
-
     MIL_Tools::ConvertCoordSimToMos( upLeft_, longlat);
     msg().mutable_top_left_coordinate()->set_latitude( longlat.latitude()  );
     msg().mutable_top_left_coordinate()->set_longitude( longlat.longitude()  );
     msg.Send( NET_Publisher_ABC::Publisher() );
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_LocalMeteo::SendDestruction
+// Created: HBD 2010-03-26
+// -----------------------------------------------------------------------------
 void PHY_LocalMeteo::SendDestruction()
 {
     client::ControlLocalMeteoDestruction msg;

@@ -13,7 +13,6 @@ const PHY_RawVisionData& PHY_MeteoDataManager::GetRawVisionData() const
     return *pRawData_;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: PHY_Meteo::sEphemeride
 // Created: JVT 03-08-07

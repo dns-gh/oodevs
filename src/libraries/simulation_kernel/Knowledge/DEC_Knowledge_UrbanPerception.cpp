@@ -12,9 +12,6 @@
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
-#include "simulation_kernel/Knowledge/MIL_KnowledgeGroup.h"
-#include "simulation_kernel/Knowledge/MIL_KnowledgeGroup.h"
-#include "urban/TerrainObject_ABC.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_UrbanPerception )
 
@@ -43,10 +40,6 @@ DEC_Knowledge_UrbanPerception::~DEC_Knowledge_UrbanPerception()
     // NOTHING
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_UrbanPerception::load
 // Created: MGD 2009-12-07
@@ -55,11 +48,9 @@ void DEC_Knowledge_UrbanPerception::load( MIL_CheckPointInArchive& file, const u
 {
     file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
          >> const_cast< uint& >( nID_ );
-
     uint nID;
     file >> nID;
     pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
-
     file >> nID;
     pPreviousPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
 }
@@ -78,10 +69,6 @@ void DEC_Knowledge_UrbanPerception::save( MIL_CheckPointOutArchive& file, const 
          << previous;
 }
 
-// =============================================================================
-// INTERNAL UPDATERS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_UrbanPerception::Prepare
 // Created: MGD 2009-12-07
@@ -90,6 +77,7 @@ void DEC_Knowledge_UrbanPerception::Prepare()
 {
     //@TODO MGD
 }
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_UrbanPerception::Update
 // Created: MGD 2009-12-07
@@ -110,10 +98,6 @@ void DEC_Knowledge_UrbanPerception::SetPerceptionLevel( const PHY_PerceptionLeve
     pPreviousPerceptionLevel_ = pCurrentPerceptionLevel_;
     pCurrentPerceptionLevel_ = &perceptionLevel;
 }
-
-// =============================================================================
-// NETWORK UPDATERS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_UrbanPerception::UpdateOnNetwork
@@ -146,10 +130,6 @@ bool DEC_Knowledge_UrbanPerception::Clean() const
 {
     return !IsPerceived();
 }
-
-// =============================================================================
-// ACCESSORS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_UrbanPerception::IsValid

@@ -41,11 +41,10 @@ public:
     // environnement visuel statique
     enum E_VisionObject
     {
-        eVisionEmpty    = 0x0,
-        eVisionForest   = 0x1,
-        eVisionUrban    = 0x2,
-        eVisionGround   = 0x4,
-
+        eVisionEmpty      = 0x0,
+        eVisionForest     = 0x1,
+        eVisionUrban      = 0x2,
+        eVisionGround     = 0x4,
         eNbrVisionObjects = 4
     };
 

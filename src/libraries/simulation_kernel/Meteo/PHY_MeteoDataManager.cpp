@@ -9,15 +9,10 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_MeteoDataManager.h"
-#include "PHY_Ephemeride.h"
 #include "meteo/PHY_GlobalMeteo.h"
 #include "meteo/PHY_LocalMeteo.h"
 #include "meteo/PHY_Lighting.h"
-#include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
-#include "protocol/ClientSenders.h"
-#include "protocol/SimulationSenders.h"
-#include "RawVisionData/PHY_RawVisionData.h"
 #include "Tools/MIL_Tools.h"
 #include <xeumeuleu/xml.hpp>
 

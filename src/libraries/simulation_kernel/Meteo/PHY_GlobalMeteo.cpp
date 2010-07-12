@@ -11,9 +11,7 @@
 #include "PHY_GlobalMeteo.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
-#include "protocol/Protocol.h"
 #include "protocol/ClientSenders.h"
-#include "protocol/ServerPublisher_ABC.h"
 #include "meteo/PHY_Precipitation.h"
 #include "meteo/PHY_Lighting.h"
 

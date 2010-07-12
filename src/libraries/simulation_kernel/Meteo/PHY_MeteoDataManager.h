@@ -52,15 +52,15 @@ public:
     //! @name Raw Data management
     //@{
     virtual const PHY_RawVisionData& GetRawVisionData() const;
-    virtual const PHY_Ephemeride&    GetEphemeride   () const;
+    virtual const PHY_Ephemeride& GetEphemeride() const;
     virtual const weather::PHY_Lighting& GetLighting () const;
-    virtual      void                Update          ( unsigned int date );
+    virtual void Update( unsigned int date );
     void SendStateToNewClient();
     //@}
 
     //! @name Weather effects
     //@{
-    void RegisterWeatherEffect  ( const MT_Ellipse& surface, const PHY_IndirectFireDotationClass& ammoCategory );
+    void RegisterWeatherEffect( const MT_Ellipse& surface, const PHY_IndirectFireDotationClass& ammoCategory );
     void UnregisterWeatherEffect( const MT_Ellipse& surface, const PHY_IndirectFireDotationClass& ammoCategory );
     //@}
 
@@ -72,7 +72,7 @@ public:
 private:
     //! @name Registration
     //@{
-    virtual void RegisterMeteo  ( weather::PHY_Meteo& meteo );
+    virtual void RegisterMeteo( weather::PHY_Meteo& meteo );
     virtual void UnregisterMeteo( weather::PHY_Meteo& meteo );
     //@}
 
@@ -86,8 +86,8 @@ private:
     //! @name Types
     //@{
     typedef std::set< weather::PHY_Meteo* > T_MeteoSet;
-    typedef T_MeteoSet::const_iterator    CIT_MeteoSet;
     typedef T_MeteoSet::iterator           IT_MeteoSet;
+    typedef T_MeteoSet::const_iterator    CIT_MeteoSet;
     //@}
 
 private:
@@ -100,10 +100,10 @@ private:
 private:
     //! @name Member data
     //@{
-    PHY_Ephemeride*          pEphemeride_;
-    PHY_GlobalMeteo*         pGlobalMeteo_;
-    T_MeteoSet               meteos_;
-    PHY_RawVisionData*       pRawData_;
+    PHY_Ephemeride* pEphemeride_;
+    PHY_GlobalMeteo* pGlobalMeteo_;
+    T_MeteoSet meteos_;
+    PHY_RawVisionData* pRawData_;
     static MIL_IDManager idManager_;
     //@}
 };
