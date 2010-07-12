@@ -12,7 +12,6 @@
 
 #include "MIL.h"
 #include "MIL_Injury_ABC.h"
-
 #include "Entities/Objects/MIL_MedicalTreatmentType.h"
 
 class PHY_ComposantePion;
@@ -40,23 +39,23 @@ public:
 
     //! @name Get
     //@{
-    int                                          GetInjuryID() const;
+    int GetInjuryID() const;
     MIL_MedicalTreatmentType::E_InjuryCategories GetInjuryCategory() const;
-    float                                        GetLifeExpectancy() const;
-    float                                        GetAgentDose() const;
+    float GetLifeExpectancy() const;
+    float GetAgentDose() const;
     //@}
 
     //! @name Helpers
     //@{
     float SetLifeExpectancy() const;
     //This function is used by pion and their composantes to set the injury
-    bool  IsInjured( const PHY_ComposantePion& pComposante );
+    bool IsInjured( const PHY_ComposantePion& pComposante );
     //This function is used only by the population to set the injury
-    void  SetInjury( unsigned int nNbrAliveHumans , MT_Float rDensity );
+    void SetInjury( unsigned int nNbrAliveHumans , MT_Float rDensity );
     //This function is used to injure humans that are already injured
-    void  Injure( PHY_InjuredHuman& injuredHuman );
-    void  SetInjuryCategory( MIL_MedicalTreatmentType::E_InjuryCategories injuryCategory );
-    bool  CanInjuryBeDeadly();
+    void Injure( PHY_InjuredHuman& injuredHuman );
+    void SetInjuryCategory( MIL_MedicalTreatmentType::E_InjuryCategories injuryCategory );
+    bool CanInjuryBeDeadly();
     //@}
 
     //! @name Update
@@ -68,11 +67,11 @@ public:
 private:
     //! @name Member data
     //@{
-    int                                          heat_;
-    const std::string                            fireClass_;
-    int                                          injuryID_;
+    int heat_;
+    const std::string fireClass_;
+    int injuryID_;
     MIL_MedicalTreatmentType::E_InjuryCategories injuryCategory_;
-    float                                        lifeExpectancy_;
+    float lifeExpectancy_;
     //@}
 };
 

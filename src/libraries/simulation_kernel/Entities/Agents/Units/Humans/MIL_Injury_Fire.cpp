@@ -24,7 +24,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Injury_Fire )
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
 MIL_Injury_Fire::MIL_Injury_Fire()
-    : MIL_Injury_ABC ()
+    : MIL_Injury_ABC()
     , heat_          ( 0 )
     , fireClass_     ( 0 )
     , injuryID_      ( 0 )
@@ -38,11 +38,11 @@ MIL_Injury_Fire::MIL_Injury_Fire()
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
 MIL_Injury_Fire::MIL_Injury_Fire( int heat , const std::string fireClass_ , int injuryID )
-    : MIL_Injury_ABC   ()
-    , heat_            ( heat )
-    , fireClass_       ( fireClass_ )
-    , injuryID_        ( injuryID )
-    , injuryCategory_  ( MIL_MedicalTreatmentType::eNone )
+    : MIL_Injury_ABC()
+    , heat_          ( heat )
+    , fireClass_     ( fireClass_ )
+    , injuryID_      ( injuryID )
+    , injuryCategory_( MIL_MedicalTreatmentType::eNone )
 {
     // NOTHING
 }
@@ -52,11 +52,11 @@ MIL_Injury_Fire::MIL_Injury_Fire( int heat , const std::string fireClass_ , int 
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
 MIL_Injury_Fire::MIL_Injury_Fire( const MIL_Injury_Fire& rhs )
-    : MIL_Injury_ABC   ()
-    , heat_            ( rhs.heat_ )
-    , fireClass_       ( rhs.fireClass_ )
-    , injuryID_        ( rhs.injuryID_ )
-    , injuryCategory_  ( rhs.injuryCategory_ )
+    : MIL_Injury_ABC()
+    , heat_          ( rhs.heat_ )
+    , fireClass_     ( rhs.fireClass_ )
+    , injuryID_      ( rhs.injuryID_ )
+    , injuryCategory_( rhs.injuryCategory_ )
 {
     // NOTHING
 }
@@ -172,7 +172,7 @@ void MIL_Injury_Fire::UpdateInjuryCategory()
 // -----------------------------------------------------------------------------
 float MIL_Injury_Fire::SetLifeExpectancy() const
 {
-    return MIL_MedicalTreatmentType::Find( injuryID_ )->GetLifeExpectancy( injuryCategory_ )*( 1 + 0.1*MIL_Random::rand_ii( -1 , 1 ) );
+    return static_cast< float >( MIL_MedicalTreatmentType::Find( injuryID_ )->GetLifeExpectancy( injuryCategory_ ) * ( 1 + 0.1 * MIL_Random::rand_ii( -1 , 1 ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -216,10 +216,10 @@ namespace
             return protectionValue_;
         }
 
-        int                 heat_;
-        int                 injuryID_;
-        const std::string   fireClass_;
-        float               protectionValue_;
+        int heat_;
+        int injuryID_;
+        const std::string fireClass_;
+        float protectionValue_;
     };
 }
 
@@ -276,7 +276,7 @@ void MIL_Injury_Fire::SetInjury( unsigned int nNbrAliveHumans , MT_Float rDensit
     //For, each of them, we will compute if they're going to be injured, and how
     for( unsigned int i = 0; i < nNbrOfPossibleCasualties; ++i )
     {
-        unsigned int injuryThreshold = ( unsigned int )( ( 1 + 0.2 * MIL_Random::rand_ii( 0 , 1, MIL_Random::eWounds ) ) * heat_ );
+        const unsigned int injuryThreshold = ( unsigned int )( ( 1 + 0.2 * MIL_Random::rand_ii( 0 , 1, MIL_Random::eWounds ) ) * heat_ );
         if( injuryThreshold > MIL_MedicalTreatmentType::Find( injuryID_ )->GetDeathThreshold() )
         {
             PHY_InjuredHuman::InitializeInjuredHuman( *this );
@@ -301,13 +301,13 @@ void MIL_Injury_Fire::SetInjury( unsigned int nNbrAliveHumans , MT_Float rDensit
 // -----------------------------------------------------------------------------
 void MIL_Injury_Fire::Injure( PHY_InjuredHuman& injuredHuman )
 {
-    unsigned int injuryThreshold = ( unsigned int )( ( 1 + 0.2 * MIL_Random::rand_ii( 0 , 1, MIL_Random::eWounds ) ) * heat_ );
+    unsigned int injuryThreshold = static_cast< unsigned int >( ( 1 + 0.2 * MIL_Random::rand_ii( 0 , 1, MIL_Random::eWounds ) ) * heat_ );
     //If injuredHuman has a protection, we compute its protection effect
     if( injuredHuman.GetComposantePion() != 0 )
     {
         PHY_FireProtectionFunctor protection( heat_ , fireClass_ , injuryID_ );
         protection( *injuredHuman.GetComposantePion() );
-        injuryThreshold *= ( 1 - protection.GetProtectionValue() );
+        injuryThreshold *= static_cast< unsigned int >( 1 - protection.GetProtectionValue() );
     }
 
     //If injuredHuman isn't already injured by this kind of injury, add possibly an injury of this kind
