@@ -47,8 +47,11 @@ public:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     const MIL_Agent_ABC* pPion_;
     T_ConstKnowledgeAgentVector dangerousEnemies_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_RapForLocal )

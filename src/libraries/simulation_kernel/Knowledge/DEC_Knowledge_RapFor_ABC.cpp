@@ -13,7 +13,6 @@
 #include "DEC_Knowledge_RapFor_ABC.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
-#include <xeumeuleu/xml.hpp>
 
 const MT_Float DEC_Knowledge_RapFor_ABC::rRapForBoundMin_                        = 0.2;
 const MT_Float DEC_Knowledge_RapFor_ABC::rRapForBoundMax_                        = 5.0;
@@ -29,7 +28,7 @@ void DEC_Knowledge_RapFor_ABC::Initialize( xml::xistream& xis )
     xis >> xml::start( "force-ratio" );
     MT_Float rTmp;
     tools::ReadTimeAttribute( xis, "default-feedback-time", rTmp );
-    rTmp                                    = MIL_Tools::ConvertSecondsToSim       ( rTmp );
+    rTmp = MIL_Tools::ConvertSecondsToSim( rTmp );
     rRapForIncreasePerTimeStepDefaultValue_ = ComputeRapForIncreasePerTimeStepValue( rTmp );
     xis >> xml::end;
 }
@@ -65,7 +64,6 @@ void DEC_Knowledge_RapFor_ABC::ApplyValue( MT_Float rTotalFightScoreFriend, MT_F
     MT_Float rNewRapForValue = std::numeric_limits< MT_Float >::max();
     if( rTotalFightScoreEnemy != 0. )
         rNewRapForValue = rTotalFightScoreFriend / rTotalFightScoreEnemy;
-
     // Bound the value between 0.2 and 5.0
     static MT_Float rRapForMidValue_ = ( rRapForBoundMax_ - rRapForBoundMin_ ) / 2;
     if( rNewRapForValue < 1. )

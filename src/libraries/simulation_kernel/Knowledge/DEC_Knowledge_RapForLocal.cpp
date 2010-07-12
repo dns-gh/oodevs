@@ -50,10 +50,6 @@ DEC_Knowledge_RapForLocal::~DEC_Knowledge_RapForLocal()
     // NOTHING
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: template< typename Archive > void DEC_Knowledge_RapForLocal::serialize
 // Created: NLD 2006-04-12
@@ -66,10 +62,6 @@ void DEC_Knowledge_RapForLocal::serialize( Archive& archive, const unsigned int 
     assert( pPion_ );
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_RapForLocal::Update
 // Created: NLD 2004-04-07
@@ -79,13 +71,10 @@ void DEC_Knowledge_RapForLocal::Update()
     if( nLastCacheUpdateTick_ >= MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
         return;
     nLastCacheUpdateTick_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
-
     assert( pPion_ );
     const T_KnowledgeAgentVector& enemies = pPion_->GetKnowledgeGroup().GetKnowledge().GetEnemies();
     const T_KnowledgeAgentVector& friends = pPion_->GetKnowledgeGroup().GetKnowledge().GetFriends();
-
     dangerousEnemies_.clear();
-
     MT_Float rTotalFightScoreEnemy  = 0;
     MT_Float rTotalFightScoreFriend = 0;
 

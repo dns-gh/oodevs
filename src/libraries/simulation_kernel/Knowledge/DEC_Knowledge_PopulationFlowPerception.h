@@ -36,7 +36,7 @@ public:
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
 
-    void load( MIL_CheckPointInArchive& , const unsigned int );
+    void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
@@ -45,7 +45,6 @@ public:
     void Prepare();
     void Update( const PHY_PerceptionLevel& level, const T_PointVector& shape );
     bool Clean();
-
     bool IsIdentified();
     bool IsPerceived () const; // Perception au tick courant
     //@}
@@ -65,18 +64,20 @@ public:
 
     //! @name Network operations
     //@{
-    void UpdateOnNetwork     () const;
+    void UpdateOnNetwork() const;
     void SendStateToNewClient() const;
     //@}
 
 private:
+    //! @name Member data
+    //@{
     const DEC_Knowledge_PopulationPerception* pPopulationKnowledge_;
     MIL_PopulationFlow* pPopulationFlowPerceived_;
     T_PointVector shape_;
     T_PointVector previousShape_;
     const PHY_PerceptionLevel* pCurrentPerceptionLevel_;
     const PHY_PerceptionLevel* pPreviousPerceptionLevel_;
-
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_PopulationFlowPerception )

@@ -16,7 +16,6 @@
 #include "Tools/MIL_IDManager.h"
 #include "geometry/Types.h"
 
-
 class DEC_Knowledge_UrbanPerception;
 class MIL_Army_ABC;
 class MIL_Agent_ABC;
@@ -58,10 +57,10 @@ public:
     //@{
     bool IsValid() const;
     void Prepare();
-    void Update     ( const DEC_Knowledge_UrbanPerception& perception );
+    void Update( const DEC_Knowledge_UrbanPerception& perception );
     void SetPerceptionLevel( const PHY_PerceptionLevel& level );
-    bool Clean      () const;
-    unsigned GetId  () const;
+    bool Clean() const;
+    unsigned GetId() const;
     const PHY_PerceptionLevel& GetCurrentPerceptionLevel() const;
     const PHY_PerceptionLevel& GetCurrentPerceptionLevel( const MIL_Agent_ABC& pion ) const;
     const float GetPathfindCost( float weight ) const;
@@ -72,13 +71,13 @@ public:
 
     //! @name Relevance management
     //@{
-    void     UpdateRelevance();
-    MT_Float GetRelevance   () const;
+    void UpdateRelevance();
+    MT_Float GetRelevance() const;
     //@}
 
     //! @name Network operations
     //@{
-    void UpdateOnNetwork     ();
+    void UpdateOnNetwork();
     void SendStateToNewClient();
     //@}
 
@@ -86,28 +85,28 @@ public:
     //! @name Types
     //@{
     typedef std::map< const MIL_Automate*, const PHY_PerceptionLevel* > T_PerceptionSourceMap;
-    typedef T_PerceptionSourceMap::iterator                             IT_PerceptionSourceMap;
-    typedef T_PerceptionSourceMap::const_iterator                       CIT_PerceptionSourceMap;
+    typedef T_PerceptionSourceMap::iterator                            IT_PerceptionSourceMap;
+    typedef T_PerceptionSourceMap::const_iterator                     CIT_PerceptionSourceMap;
 
     typedef std::map< const MIL_Agent_ABC*, const PHY_PerceptionLevel* > T_PerceptionAgentSourceMap;
-    typedef T_PerceptionAgentSourceMap::iterator                         IT_PerceptionAgentSourceMap;
-    typedef T_PerceptionAgentSourceMap::const_iterator                   CIT_PerceptionAgentSourceMap;
+    typedef T_PerceptionAgentSourceMap::iterator                        IT_PerceptionAgentSourceMap;
+    typedef T_PerceptionAgentSourceMap::const_iterator                 CIT_PerceptionAgentSourceMap;
     //@}
 
 private:
     //! @name Tools
     //@{
-    void ChangeRelevance   ( MT_Float rNewRelevance );
+    void ChangeRelevance( MT_Float rNewRelevance );
     void UpdatePerceptionSources( const DEC_Knowledge_UrbanPerception& perception );
     //@}
 
     //! @name Network operations
     //@{
     void WriteMsgPerceptionSources( MsgsSimToClient::MsgUrbanKnowledgeUpdate& asnMsg ) const;
-    void SendMsgCreation   () const;
+    void SendMsgCreation() const;
     void SendMsgDestruction() const;
-    void SendChangedState  ();
-    void SendFullState     ();
+    void SendChangedState();
+    void SendFullState();
     //@}
 
     //! @name CheckPoints
@@ -116,30 +115,30 @@ private:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     const unsigned nID_;
     const MIL_Army_ABC& army_;
     const urban::TerrainObject_ABC& object_;
-
     // Internal attributes
-    const PHY_PerceptionLevel*          pCurrentPerceptionLevel_;
-    const PHY_PerceptionLevel*          pPreviousPerceptionLevel_;
-    const PHY_PerceptionLevel*          pMaxPerceptionLevel_;
-          double                        rProgressPercent_;
-          double                        rRelevance_;
-          T_PerceptionSourceMap         perceptionLevelPerAutomateMap_;
-          T_PerceptionAgentSourceMap    perceptionLevelPerAgentMap_;
-
+    const PHY_PerceptionLevel* pCurrentPerceptionLevel_;
+    const PHY_PerceptionLevel* pPreviousPerceptionLevel_;
+    const PHY_PerceptionLevel* pMaxPerceptionLevel_;
+    double rProgressPercent_;
+    double rRelevance_;
+    T_PerceptionSourceMap perceptionLevelPerAutomateMap_;
+    T_PerceptionAgentSourceMap perceptionLevelPerAgentMap_;
     // Network
-    bool     bCreatedOnNetwork_;
+    bool bCreatedOnNetwork_;
     unsigned int nTimeLastUpdate_;
-    bool     bLastPerceived_;
-    bool     bRelevanceUpdated_;
-    bool     bCurrentPerceptionLevelUpdated_;
-    bool     bMaxPerceptionLevelUpdated_;
-    double   rLastRelevanceSent_;
-    double   rLastProgressSent_;
-
+    bool bLastPerceived_;
+    bool bRelevanceUpdated_;
+    bool bCurrentPerceptionLevelUpdated_;
+    bool bMaxPerceptionLevelUpdated_;
+    double rLastRelevanceSent_;
+    double rLastProgressSent_;
     static MIL_IDManager idManager_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_Urban )

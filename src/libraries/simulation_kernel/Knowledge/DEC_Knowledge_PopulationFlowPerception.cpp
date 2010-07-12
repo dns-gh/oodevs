@@ -12,11 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_PopulationFlowPerception.h"
 #include "DEC_Knowledge_PopulationPerception.h"
-#include "MIL_AgentServer.h"
-#include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
-#include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Network/NET_AgentServer.h"
 #include "Network/NET_ASN_Tools.h"
@@ -70,11 +66,9 @@ void DEC_Knowledge_PopulationFlowPerception::load( MIL_CheckPointInArchive& file
          >> pPopulationFlowPerceived_
          >> shape_
          >> previousShape_;
-
     unsigned int nID;
     file >> nID;
     pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
-
     file >> nID;
     pPreviousPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
 }
@@ -85,7 +79,7 @@ void DEC_Knowledge_PopulationFlowPerception::load( MIL_CheckPointInArchive& file
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationFlowPerception::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    unsigned current  = pCurrentPerceptionLevel_->GetID(),
+    unsigned current = pCurrentPerceptionLevel_->GetID(),
              previous = pPreviousPerceptionLevel_->GetID();
     file << pPopulationKnowledge_
          << pPopulationFlowPerceived_
@@ -102,8 +96,7 @@ void DEC_Knowledge_PopulationFlowPerception::save( MIL_CheckPointOutArchive& fil
 void DEC_Knowledge_PopulationFlowPerception::Prepare()
 {
     pPreviousPerceptionLevel_ = pCurrentPerceptionLevel_;
-    pCurrentPerceptionLevel_  = &PHY_PerceptionLevel::notSeen_;
-
+    pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::notSeen_;
     previousShape_.clear();
     shape_.swap( previousShape_ );
 }
@@ -117,8 +110,7 @@ void DEC_Knowledge_PopulationFlowPerception::Update( const PHY_PerceptionLevel& 
     assert( perceptionLevel != PHY_PerceptionLevel::notSeen_ );
     if( perceptionLevel > *pCurrentPerceptionLevel_ )
         pCurrentPerceptionLevel_ = &perceptionLevel;
-
-    shape_                   = shape;
+    shape_ = shape;
     pCurrentPerceptionLevel_ = &perceptionLevel;
 }
 
@@ -218,7 +210,6 @@ void DEC_Knowledge_PopulationFlowPerception::SendStateToNewClient() const
 {
     assert( pPopulationKnowledge_ );
     assert( pPopulationFlowPerceived_ );
-
     client::PopulationFlowDetection asn;
     asn().set_oid( pPopulationKnowledge_->GetAgentPerceiving().GetID() );
     asn().set_population_oid( pPopulationKnowledge_->GetPopulationPerceived().GetID() );

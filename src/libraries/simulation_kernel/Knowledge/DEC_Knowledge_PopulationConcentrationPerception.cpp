@@ -13,12 +13,8 @@
 #include "DEC_Knowledge_PopulationConcentrationPerception.h"
 #include "DEC_Knowledge_PopulationPerception.h"
 #include "MIL_AgentServer.h"
-#include "Network/NET_AgentServer.h"
-#include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
-#include "Entities/Populations/MIL_PopulationAttitude.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 
@@ -67,11 +63,9 @@ void DEC_Knowledge_PopulationConcentrationPerception::load( MIL_CheckPointInArch
 {
     file >> const_cast< DEC_Knowledge_PopulationPerception*& >( pPopulationKnowledge_ )
          >> pPopulationConcentrationPerceived_;
-
     unsigned int nID;
     file >> nID;
     pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
-
     file >> nID;
     pPreviousPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
 }

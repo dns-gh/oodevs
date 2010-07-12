@@ -88,11 +88,14 @@ public:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     const MIL_Agent_ABC*  pAgentPerceiving_;
     MIL_Population* pPopulationPerceived_;
     T_ConcentrationMap concentrations_;
     T_FlowMap flows_;
     bool bAttacker_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_PopulationPerception )

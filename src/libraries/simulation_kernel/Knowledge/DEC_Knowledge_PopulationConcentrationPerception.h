@@ -66,10 +66,13 @@ public:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     const DEC_Knowledge_PopulationPerception* pPopulationKnowledge_;
     MIL_PopulationConcentration* pPopulationConcentrationPerceived_;
     const PHY_PerceptionLevel* pCurrentPerceptionLevel_;
     const PHY_PerceptionLevel* pPreviousPerceptionLevel_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_PopulationConcentrationPerception )

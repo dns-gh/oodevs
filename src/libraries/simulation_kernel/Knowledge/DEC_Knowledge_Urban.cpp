@@ -31,7 +31,7 @@ MIL_IDManager DEC_Knowledge_Urban::idManager_;
 // Created: MGD 2009-11-26
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Urban::DEC_Knowledge_Urban( const MIL_Army_ABC& army, const urban::TerrainObject_ABC& object )
-    : DEC_Knowledge_ABC              ()
+    : DEC_Knowledge_ABC()
     , army_                          ( army )
     , object_                        ( object )
     , nID_                           ( idManager_.GetFreeId() )

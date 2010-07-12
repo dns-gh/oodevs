@@ -14,10 +14,7 @@
 #include "DEC_Knowledge_PopulationConcentrationPerception.h"
 #include "DEC_Knowledge_PopulationFlowPerception.h"
 #include "DEC_Knowledge_Population.h"
-#include "Network/NET_Publisher_ABC.h"
-#include "Network/NET_AgentServer.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
-#include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 
@@ -134,7 +131,6 @@ namespace boost
 void DEC_Knowledge_PopulationPerception::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this );
-
     file >> const_cast< MIL_Agent_ABC*& >( pAgentPerceiving_ )
          >> pPopulationPerceived_
          >> concentrations_
@@ -163,10 +159,8 @@ void DEC_Knowledge_PopulationPerception::save( MIL_CheckPointOutArchive& file, c
 void DEC_Knowledge_PopulationPerception::Prepare()
 {
     bAttacker_ = false;
-
     for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )
         it->second->Prepare();
-
     for( CIT_FlowMap it = flows_.begin(); it != flows_.end(); ++it )
         it->second->Prepare();
 }
@@ -212,7 +206,6 @@ bool DEC_Knowledge_PopulationPerception::Clean()
         else
             ++ it;
     }
-
     for( IT_FlowMap it = flows_.begin(); it != flows_.end(); )
     {
         DEC_Knowledge_PopulationFlowPerception* pKnowledge = it->second;
@@ -224,7 +217,6 @@ bool DEC_Knowledge_PopulationPerception::Clean()
         else
             ++ it;
     }
-
     return concentrations_.empty() && flows_.empty();
 }
 
@@ -249,7 +241,6 @@ bool DEC_Knowledge_PopulationPerception::IsPerceived() const
     for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )
         if( it->second->IsPerceived() )
             return true;
-
     for( CIT_FlowMap it = flows_.begin(); it != flows_.end(); ++it )
         if( it->second->IsPerceived() )
             return true;
@@ -264,7 +255,6 @@ void DEC_Knowledge_PopulationPerception::PublishKnowledges( DEC_Knowledge_Popula
 {
     for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )
         knowledge.Update( *it->second );
-
     for( CIT_FlowMap it = flows_.begin(); it != flows_.end(); ++it )
         knowledge.Update( *it->second );
 }
@@ -277,7 +267,6 @@ void DEC_Knowledge_PopulationPerception::UpdateOnNetwork() const
 {
     for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )
         it->second->UpdateOnNetwork();
-
     for( CIT_FlowMap it = flows_.begin(); it != flows_.end(); ++it )
         it->second->UpdateOnNetwork();
 }
@@ -290,7 +279,6 @@ void DEC_Knowledge_PopulationPerception::SendStateToNewClient() const
 {
     for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )
         it->second->SendStateToNewClient();
-
     for( CIT_FlowMap it = flows_.begin(); it != flows_.end(); ++it )
         it->second->SendStateToNewClient();
 }
@@ -314,7 +302,6 @@ const MIL_Agent_ABC& DEC_Knowledge_PopulationPerception::GetAgentPerceiving() co
     assert( pAgentPerceiving_ );
     return *pAgentPerceiving_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationPerception::NotifyAttacker
