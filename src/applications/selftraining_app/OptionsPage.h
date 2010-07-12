@@ -17,9 +17,7 @@ namespace tools
     class GeneralConfig;
 }
 
-class QCheckBox;
 class QLineEdit;
-class QSpinBox;
 
 // =============================================================================
 /** @class  OptionsPage
@@ -30,16 +28,6 @@ class QSpinBox;
 class OptionsPage : public ContentPage
 {
     Q_OBJECT;
-
-public:
-    enum ERandomContexts
-    {
-        eFire,
-        eWounds,
-        ePerception,
-        eBreakdowns,
-        eContextsNbr
-    };
 
 public:
     //! @name Constructors/Destructor
@@ -53,11 +41,6 @@ private slots:
     //@{
     void OnChangeLanguage( const QString& lang );
     void OnChangeDataDirectory();
-    void OnContextChanged( int index );
-    void OnDistributionChanged( int index );
-    void OnDeviationChanged( const QString& );
-    void OnMeanChanged( const QString& );
-    void OnSeedToggled();
     //@}
 
 private:
@@ -70,7 +53,6 @@ private:
     //! @name Helpers
     //@{
     void Commit();
-    void ReadRandomValues();
     //@}
 
     //! @name Types
@@ -84,15 +66,6 @@ private:
     T_Languages languages_;
     std::string selectedLanguage_;
     QLineEdit* dataDirectory_;
-    QComboBox* contextList_;
-    QComboBox* distributionList_;
-    QLineEdit* deviation_;
-    QLineEdit* mean_;
-    QCheckBox* hasSeed_;
-    QSpinBox* seed_;
-    bool bDistributions_[ eContextsNbr ];
-    double rDeviations_[ eContextsNbr ];
-    double rMeans_[ eContextsNbr ];
     //@}
 };
 

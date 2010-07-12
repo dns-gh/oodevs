@@ -20,6 +20,7 @@
 #include "frontend/DisPluginConfigPanel.h"
 #include "frontend/HlaPluginConfigPanel.h"
 #include "frontend/JoinExercise.h"
+#include "frontend/RandomPluginConfigPanel.h"
 #include "frontend/StartExercise.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/Tools.h"
@@ -63,6 +64,7 @@ ScenarioLauncherPage::ScenarioLauncherPage( QWidgetStack* pages, Page_ABC& previ
         AddPlugin< frontend::DisPluginConfigPanel >( tabs, tools::translate( "ScenarioLauncherPage", "DIS" ) );
         AddPlugin< frontend::HlaPluginConfigPanel >( tabs, tools::translate( "ScenarioLauncherPage", "HLA" ) );
         AddPlugin< frontend::CrossbowPluginConfigPanel >( tabs, tools::translate( "ScenarioLauncherPage", "Crossbow" ) );
+        AddPlugin< frontend::RandomPluginConfigPanel >( tabs, tools::translate( "ScenarioLauncherPage", "Random" ) );
     }
     EnableButton( eButtonStart, false );
     AddContent( box );

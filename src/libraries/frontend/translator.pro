@@ -8,6 +8,7 @@ CrossbowPluginConfigPanel.cpp \
 DisPluginConfigPanel.cpp \
 HlaPluginConfigPanel.cpp \
 JoinExercise.cpp \
+RandomPluginConfigPanel.cpp \
 SpawnCommand.cpp \
 StartExercise.cpp \
 

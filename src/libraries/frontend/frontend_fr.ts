@@ -135,6 +135,61 @@ Connexion SDE: sde://user:password@host:port/db_name.sword</translation>
     </message>
 </context>
 <context>
+    <name>RandomPluginConfigPanel</name>
+    <message>
+        <source>Random Generator</source>
+        <translation>Générateur Aléatoire</translation>
+    </message>
+    <message>
+        <source>Seed:</source>
+        <translation>Graine:</translation>
+    </message>
+    <message>
+        <source>Context:</source>
+        <translation>Contexte:</translation>
+    </message>
+    <message>
+        <source>Fire</source>
+        <translation>Tir</translation>
+    </message>
+    <message>
+        <source>Wounds</source>
+        <translation>Blessures</translation>
+    </message>
+    <message>
+        <source>Perception</source>
+        <translation>Perception</translation>
+    </message>
+    <message>
+        <source>Breakdowns</source>
+        <translation>Pannes</translation>
+    </message>
+    <message>
+        <source>Distribution:</source>
+        <translation>Distribution:</translation>
+    </message>
+    <message>
+        <source>Linear</source>
+        <translation>Linéaire</translation>
+    </message>
+    <message>
+        <source>Gaussian</source>
+        <translation>Gaussienne</translation>
+    </message>
+    <message>
+        <source>Standard deviation:</source>
+        <translation>Ecart-type:</translation>
+    </message>
+    <message>
+        <source>Mean:</source>
+        <translation>Moyenne:</translation>
+    </message>
+    <message>
+        <source>Set as default</source>
+        <translation>Définir par défaut</translation>
+    </message>
+</context>
+<context>
     <name>SpawnCommand</name>
     <message>
         <source>Starting...</source>
