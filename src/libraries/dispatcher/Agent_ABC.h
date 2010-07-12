@@ -51,6 +51,7 @@ public:
     virtual unsigned short GetDirection() const = 0;
     virtual MsgsSimToClient::ForceRatio_Value GetForceRatio() const = 0;
     virtual const Order_ABC* GetOrder() const = 0;
+    virtual bool IsMounted() const = 0;
     //@}
 
     //! @name Operations

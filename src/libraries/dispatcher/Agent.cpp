@@ -50,7 +50,7 @@ Agent::Agent( Model_ABC& model, const MsgsSimToClient::MsgUnitCreation& msg, con
     , bDead_                        ( false )
     , bNeutralized_                 ( false )
     , bStealthModeEnabled_          ( false )
-    , bLoaded_                      ( false )
+    , isMounted_                    ( false )
     , bHumanTransportersAvailable_  ( false )
     , nLastPosture_                 ( MsgsSimToClient   ::MsgUnitAttributes_Posture_arret )
     , nCurrentPosture_              ( MsgsSimToClient   ::MsgUnitAttributes_Posture_arret )
@@ -165,7 +165,7 @@ void Agent::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& asnMsg )
     UPDATE_ASN_ATTRIBUTE( mort, bDead_ );
     UPDATE_ASN_ATTRIBUTE( neutralise,  bNeutralized_ );
     UPDATE_ASN_ATTRIBUTE( mode_furtif_actif, bStealthModeEnabled_ );
-    UPDATE_ASN_ATTRIBUTE( embarque, bLoaded_ );
+    UPDATE_ASN_ATTRIBUTE( embarque, isMounted_ );
     UPDATE_ASN_ATTRIBUTE( transporteurs_disponibles, bHumanTransportersAvailable_ );
     UPDATE_ASN_ATTRIBUTE( posture_old, nLastPosture_ );
     UPDATE_ASN_ATTRIBUTE( posture_new, nCurrentPosture_ );
@@ -403,7 +403,7 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         asn().set_mort( bDead_ );
         asn().set_neutralise( bNeutralized_ );
         asn().set_mode_furtif_actif( bStealthModeEnabled_ );
-        asn().set_embarque( bLoaded_ );
+        asn().set_embarque( isMounted_ );
         asn().set_transporteurs_disponibles( bHumanTransportersAvailable_ );
         asn().set_posture_old( nLastPosture_ );
         asn().set_posture_new( nCurrentPosture_ );
@@ -631,4 +631,13 @@ MsgsSimToClient::ForceRatio_Value Agent::GetForceRatio() const
 const Order_ABC* Agent::GetOrder() const
 {
     return order_.get();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::IsMounted
+// Created: SBO 2010-06-25
+// -----------------------------------------------------------------------------
+bool Agent::IsMounted() const
+{
+    return isMounted_;
 }

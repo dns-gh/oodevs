@@ -10,11 +10,11 @@
 #ifndef __Attributes_h_
 #define __Attributes_h_
 
-#include "Values.h"
-#include "Extractors.h"
-#include "Resources.h"
 #include "Equipments.h"
+#include "Extractors.h"
 #include "Humans.h"
+#include "Resources.h"
+#include "Values.h"
 
 // =============================================================================
 /** @namespace  Attributes
@@ -58,6 +58,7 @@ typedef UnitAttribute< extractors::Position >         Position;
 typedef UnitAttribute< extractors::Resources >        Resources;
 typedef UnitAttribute< extractors::Equipments >       Equipments;
 typedef UnitAttribute< extractors::Humans >           Humans;
+typedef UnitAttribute< extractors::Mounted >          Mounted;
 
 } // namespace attributes
 

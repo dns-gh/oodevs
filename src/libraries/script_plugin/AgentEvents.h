@@ -46,6 +46,7 @@ namespace script
         DECLARE_AGENT_EVENT( OperationalStateChanged );
         DECLARE_AGENT_EVENT( ForceRatioChanged );
         DECLARE_AGENT_EVENT( MissionStarted );
+        DECLARE_AGENT_EVENT( MountedStateChanged );
 
         DECLARE_KNOWLEDGE_EVENT( KnowledgeCreated );
         DECLARE_KNOWLEDGE_EVENT( KnowledgeMoved );

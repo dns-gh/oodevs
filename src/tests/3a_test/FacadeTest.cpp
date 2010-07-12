@@ -245,6 +245,50 @@ BOOST_AUTO_TEST_CASE( Facade_TestDistanceBetweenTwoUnits )
     publisher.verify();
 }
 
+namespace
+{
+    MsgSimToClient MakeMounted( bool mounted, unsigned long id )
+    {
+        MsgSimToClient result;
+        MsgUnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
+        attributes.set_oid( id );
+        attributes.set_embarque( mounted );
+        return result;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestMountedUnit
+// Created: SBO 2010-07-12
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( Facade_TestMountedUnit )
+{
+    xml::xistringstream xis( "<indicator>"
+                             "    <extract function='mounted' id='m'/>"
+                             "    <reduce type='int' function='select' input='m' key='1' id='m1'/>"
+                             "    <result function='plot' input='m1' type='float'/>"
+                             "</indicator>" ) ;
+    MockPublisher publisher;
+    AarFacade facade( publisher, 42 );
+    boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
+
+    task->Receive( BeginTick() );
+    task->Receive( MakeMounted( true, 1 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( MakeMounted( false, 1 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( MakeMounted( true, 1 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( EndTick() );
+
+    double expectedResult[] = { 0., 1., 0., 0. };
+    MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
+    task->Commit();
+    publisher.verify();
+}
 
 // -----------------------------------------------------------------------------
 // Name: Facade_TestTypeInstanciationIsVerifiedAtRuntime

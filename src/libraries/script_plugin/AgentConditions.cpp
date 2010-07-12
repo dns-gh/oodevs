@@ -52,6 +52,7 @@ void AgentConditions::RegisterIn( directia::Brain& brain )
     brain.RegisterFunction( "AgentEnters",             &AgentConditions::AgentEnters );
     brain.RegisterFunction( "KnowledgeEnters",         &AgentConditions::KnowledgeEnters );
     brain.RegisterFunction( "OperationalStateChanged", &AgentConditions::OperationalStateChanged );
+    brain.RegisterFunction( "MountedStateChanged",     &AgentConditions::MountedStateChanged );
     brain.RegisterFunction( "ForceRatioChanged",       &AgentConditions::ForceRatioChanged );
     brain.RegisterFunction( "MissionStarted",          &AgentConditions::MissionStarted );
     brain.RegisterFunction( "KnowledgeCreated",        &AgentConditions::KnowledgeCreated );
@@ -151,6 +152,15 @@ boost::shared_ptr< Condition_ABC > AgentConditions::MissionStarted()
 boost::shared_ptr< Condition_ABC > AgentConditions::OperationalStateChanged()
 {
     return boost::shared_ptr< Condition_ABC >( new SimpleEntityCondition< events::OperationalStateChanged >( controller_ ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< Condition_ABC > AgentConditions::MountedStateChanged
+// Created: SBO 2010-06-25
+// -----------------------------------------------------------------------------
+boost::shared_ptr< Condition_ABC > AgentConditions::MountedStateChanged()
+{
+    return boost::shared_ptr< Condition_ABC >( new SimpleEntityCondition< events::MountedStateChanged >( controller_ ) );
 }
 
 // -----------------------------------------------------------------------------

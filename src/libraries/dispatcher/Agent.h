@@ -109,6 +109,7 @@ public:
     virtual unsigned short GetDirection() const;
     virtual MsgsSimToClient::ForceRatio_Value GetForceRatio() const;
     virtual const Order_ABC* GetOrder() const;
+    virtual bool IsMounted() const;
     //@}
 
 private:
@@ -136,7 +137,7 @@ private:
     bool                                                    bDead_;
     bool                                                    bNeutralized_;
     bool                                                    bStealthModeEnabled_;
-    bool                                                    bLoaded_;
+    bool                                                    isMounted_;
     bool                                                    bHumanTransportersAvailable_;
     MsgsSimToClient::MsgUnitAttributes_Posture              nLastPosture_;
     MsgsSimToClient::MsgUnitAttributes_Posture              nCurrentPosture_;

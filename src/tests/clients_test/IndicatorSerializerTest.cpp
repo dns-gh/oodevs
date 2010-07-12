@@ -18,7 +18,7 @@
 #include "indicators/Variable.h"
 #include "indicators/Variables.h"
 #include "tools/GeneralConfig.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace mockpp;
 
@@ -463,6 +463,22 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestUnitDetection )
     RegisterVariable( "unit", "unit", "69" );
     RegisterVariable( "visibility", "perception levels", "detected,recognized,identified" );
     ParseAndCheck( "Sum( Domain( Detecting-unit( $unit, $visibility), $units ) )", expected );
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorSerializer_TestUnitMounting
+// Created: SBO 2010-07-12
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestUnitMounting )
+{
+    const std::string expected =
+        "<indicator>"
+            "<extract function='mounted' id='1'/>"
+            "<reduce function='select' id='2' input='1' key='42' type='float'/>"
+        "</indicator>";
+
+    RegisterVariable( "unit", "unit", "42" );
+    ParseAndCheck( "Select( mounted(), $unit )", expected );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

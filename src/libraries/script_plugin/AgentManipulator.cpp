@@ -53,9 +53,10 @@ void AgentManipulator::Registrar::RegisterIn( directia::Brain& brain )
     brain.RegisterFunction( "GetTeam",             &AgentManipulator::GetTeam       );
     brain.RegisterFunction( "GetPosition",         &AgentManipulator::GetPosition   );
     brain.RegisterFunction( "GetOperationalState", &AgentManipulator::GetOperationalState );
+    brain.RegisterFunction( "IsMounted",           &AgentManipulator::IsMounted );
     brain.RegisterFunction( "GetForceRatio",       &AgentManipulator::GetForceRatio );
     brain.RegisterFunction( "GetMission",          &AgentManipulator::GetMission );
-
+    
     brain.RegisterFunction( "Teleport",   &AgentManipulator::Teleport );
     brain.RegisterFunction( "RecoverAll", &AgentManipulator::RecoverAll );
 }
@@ -105,6 +106,15 @@ Position AgentManipulator::GetPosition() const
 unsigned int AgentManipulator::GetOperationalState() const
 {
     return agent_.GetOperationalStateValue();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentManipulator::IsMounted
+// Created: SBO 2010-06-25
+// -----------------------------------------------------------------------------
+bool AgentManipulator::IsMounted() const
+{
+    return agent_.IsMounted();
 }
 
 namespace

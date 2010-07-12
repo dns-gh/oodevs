@@ -69,6 +69,7 @@ private:
     std::string GetTeam() const;
     dispatcher::Position GetPosition() const;
     unsigned int GetOperationalState() const;
+    bool IsMounted() const;
     std::string GetForceRatio() const;
     unsigned int GetMission() const;
     void Teleport( const dispatcher::Position& position );

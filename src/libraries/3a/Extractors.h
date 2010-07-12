@@ -34,7 +34,7 @@ namespace extractors
     // Attributes
     struct OperationalState : public Extractor< NumericValue >
     {
-        bool  HasFlag( const MsgUnitAttributes& attributes ) const
+        bool HasFlag( const MsgUnitAttributes& attributes ) const
         {
             return attributes.has_etat_operationnel_brut();
         }
@@ -46,13 +46,25 @@ namespace extractors
 
     struct Position : public Extractor< ::Position >
     {
-        bool  HasFlag( const MsgUnitAttributes& attributes ) const
+        bool HasFlag( const MsgUnitAttributes& attributes ) const
         {
             return attributes.has_position();
         }
         ::Position Extract( const MsgUnitAttributes& attributes ) const
         {
             return ::Position( attributes.position() );
+        }
+    };
+
+    struct Mounted : public Extractor< NumericValue >
+    {
+        bool HasFlag( const MsgUnitAttributes& attributes ) const
+        {
+            return attributes.has_embarque();
+        }
+        NumericValue Extract( const MsgUnitAttributes& attributes ) const
+        {
+            return NumericValue( attributes.embarque() ? 0.f : 1.f );
         }
     };
 
