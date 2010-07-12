@@ -1418,7 +1418,7 @@ void MIL_EntityManager::WriteODB( xml::xostream& xos ) const
             << xml::start( "sides" );
                 armyFactory_->Apply( boost::bind( &MIL_Army_ABC::WriteODB, _1, boost::ref( xos ) ) );
     xos     << xml::end
-            << xml::start( "diplomacies" )
+            << xml::start( "diplomacies" );
                 armyFactory_->Apply( boost::bind( &MIL_Army_ABC::WriteDiplomacyODB, _1, boost::ref( xos ) ) );
     xos     << xml::end
         << xml::end;
