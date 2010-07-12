@@ -12,7 +12,7 @@
 
 // =============================================================================
 /** @class  MIL_IDManager
-    @brief  MIL_IDManager
+    @brief  MIL id manager definition
 */
 // Created: SBO 2009-05-26
 // =============================================================================
@@ -21,7 +21,7 @@ class MIL_IDManager
 public:
     //! @name Constructors/Destructor
     //@{
-     MIL_IDManager();
+             MIL_IDManager();
     virtual ~MIL_IDManager();
     //@}
 

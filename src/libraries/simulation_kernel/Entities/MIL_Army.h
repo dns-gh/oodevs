@@ -114,15 +114,15 @@ public:
     //@{
     bool       IsPerceived( const DEC_Knowledge_Object& knowledge )      const;
     E_Tristate IsAFriend  ( const DEC_Knowledge_Agent & knowledge )      const;
-    E_Tristate IsAFriend  ( const MIL_Army_ABC& army )                   const;
+    virtual E_Tristate IsAFriend  ( const MIL_Army_ABC& army )                   const;
     E_Tristate IsAnEnemy  ( const DEC_Knowledge_Population & knowledge ) const;
-    E_Tristate IsAnEnemy  ( const MIL_Army_ABC& army )                   const;
-    E_Tristate IsNeutral ( const MIL_Army_ABC& army )                   const;
+    virtual E_Tristate IsAnEnemy  ( const MIL_Army_ABC& army )                   const;
+    virtual E_Tristate IsNeutral ( const MIL_Army_ABC& army )                   const;
     //@}
 
     //! @name Accessors
     //@{
-          unsigned int                          GetID             () const;
+          unsigned int                  GetID             () const;
     const std::string&                  GetName           () const;
     const T_KnowledgeGroupMap&          GetKnowledgeGroups() const;
           DEC_KnowledgeBlackBoard_Army& GetKnowledge      () const;
@@ -141,13 +141,13 @@ private:
     //! @name Tools
     //@{
     E_Diplomacy GetDiplomacy( const MIL_Army_ABC& army ) const;
-    void ReadFormation          ( xml::xistream& xis, FormationFactory_ABC& formationFactory );
-    void ReadObject             ( xml::xistream& xis, MIL_ObjectManager& objectFactory );
-    void ReadPopulation         ( xml::xistream& xis, PopulationFactory_ABC& populationFactory );
-    void ReadLogistic           ( xml::xistream& xis, KnowledgeGroupFactory_ABC& knowledgegroupFactory );
-    void ReadAutomat            ( xml::xistream& xis, AutomateFactory_ABC& automateFactory ); // LTO
-    void ReadSubordinate        ( xml::xistream& xis, AutomateFactory_ABC& automateFactory, MIL_Automate* pSuperior );
-    void ReadDiplomacy          ( xml::xistream& xis );
+    void ReadFormation  ( xml::xistream& xis, FormationFactory_ABC& formationFactory );
+    void ReadObject     ( xml::xistream& xis, MIL_ObjectManager& objectFactory );
+    void ReadPopulation ( xml::xistream& xis, PopulationFactory_ABC& populationFactory );
+    void ReadLogistic   ( xml::xistream& xis, KnowledgeGroupFactory_ABC& knowledgegroupFactory );
+    void ReadAutomat    ( xml::xistream& xis, AutomateFactory_ABC& automateFactory ); // LTO
+    void ReadSubordinate( xml::xistream& xis, AutomateFactory_ABC& automateFactory, MIL_Automate* pSuperior );
+    void ReadDiplomacy  ( xml::xistream& xis );
     //@}
 
     //! @name CheckPoint
@@ -158,17 +158,17 @@ private:
     //@}
 
 private:
-    const unsigned int          nID_;
-          std::string   strName_;
-          E_Diplomacy   nType_;
-    T_DiplomacyMap      diplomacies_;
+    //! @name Member data
+    //@{
+    const unsigned int nID_;
+    std::string strName_;
+    E_Diplomacy nType_;
+    T_DiplomacyMap diplomacies_;
     T_KnowledgeGroupMap knowledgeGroups_;
-
     ArmyFactory_ABC& armyFactory_;
-
     DEC_KnowledgeBlackBoard_Army* pKnowledgeBlackBoard_;
-
     const MT_Converter< std::string, E_Diplomacy >& diplomacyConverter_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( MIL_Army )

@@ -135,13 +135,13 @@ void MIL_Config::ReadSessionFile( const std::string& file )
         std::stringstream stream;
         stream << "random";
         stream << i;
-            xis >> xml::optional() >> xml::start( stream.str() )
-                    >> xml::attribute( "distribution", randomGaussian_[ i ] )
-                    >> xml::attribute( "deviation", randomDeviation_[ i ] )
-                    >> xml::attribute( "mean", randomMean_[ i ] )
-                >> xml::end();
+        xis >> xml::optional
+            >> xml::start( stream.str() )
+                >> xml::attribute( "distribution", randomGaussian_[ i ] )
+                >> xml::attribute( "deviation", randomDeviation_[ i ] )
+                >> xml::attribute( "mean", randomMean_[ i ] )
+            >> xml::end;
     }
-
     ReadCheckPointConfiguration( xis );
     ReadDebugConfiguration     ( xis );
 }
@@ -157,7 +157,7 @@ void MIL_Config::ReadCheckPointConfiguration( xml::xistream& xis )
             >> xml::attribute( "frequency", frequency )
             >> xml::attribute( "keep", checkPointsKept_ )
             >> xml::attribute( "usecrc", bUseCheckPointCRC_ )
-        >> xml::end();
+        >> xml::end;
     if( !tools::DecodeTime( frequency, checkPointsFrequency_ ) )
         xis.error( "Invalid time specified for checkpoint frequency" );
 }
@@ -172,10 +172,10 @@ void MIL_Config::ReadDebugConfiguration( xml::xistream& xis )
             >> xml::attribute( "decisional", bUseDecDebug_ )
             >> xml::attribute( "pathfind", bUsePathDebug_ )
             >> xml::attribute( "diadebugger", bUseDiaDebugger_ )
-            >> xml::optional() >> xml::attribute( "diadebuggerport", diaDebuggerPort_ )
+            >> xml::optional >> xml::attribute( "diadebuggerport", diaDebuggerPort_ )
             >> xml::attribute( "networklogger", bUseNetworkLogger_ )
-            >> xml::optional() >> xml::attribute( "networkloggerport", networkLoggerPort_ )
-        >> xml::end();
+            >> xml::optional >> xml::attribute( "networkloggerport", networkLoggerPort_ )
+        >> xml::end;
     if( bUseDiaDebugger_ && !diaDebuggerPort_ )
         throw std::exception( "DIA debug server activated but no debugger port specified!" );
     if( bUseNetworkLogger_ && !networkLoggerPort_ )
@@ -201,14 +201,13 @@ boost::crc_32_type::value_type MIL_Config::serialize( const std::string& strFile
     try
     {
         xml::xofstream xos( strFileName );
-
         xos << xml::start( "files" );
         for( CIT_CRCMap it = CRCMap_.begin(); it != CRCMap_.end(); ++it )
             xos << xml::start( "file" )
                     << xml::attribute( "name", it->first )
                     << xml::attribute( "crc", it->second )
-                << xml::end();
-        xos << xml::end();
+                << xml::end;
+        xos << xml::end;
     }
     catch( xml::exception& e )
     {
@@ -234,8 +233,6 @@ std::string MIL_Config::GetOrbatFile() const
 // -----------------------------------------------------------------------------
 std::string MIL_Config::GetUrbanFile() const
 {
-    //if( bCheckPointOrbat_ )
-    //    return BuildCheckpointChildFile( "orbat.xml" );
     return tools::SessionConfig::GetUrbanFile();
 }
 

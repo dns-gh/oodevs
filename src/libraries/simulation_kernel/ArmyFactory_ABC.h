@@ -19,7 +19,7 @@ namespace xml
 }
 // =============================================================================
 /** @class  ArmyFactory_ABC
-    @brief  ArmyFactory_ABC
+    @brief  Army factory declaration
 */
 // Created: MGD 2009-10-24 @TODO MGD add serialization for resolver and divide factory-resolver, pass resolver by ref in constructor
 // =============================================================================
@@ -29,7 +29,7 @@ class ArmyFactory_ABC : public tools::Resolver< MIL_Army_ABC >
 public:
     //! @name Destructor
     //@{
-    virtual ~ArmyFactory_ABC() { DeleteAll(); };
+    virtual ~ArmyFactory_ABC(){ DeleteAll(); };
     //@}
 
     //! @name Operations
@@ -45,12 +45,12 @@ public:
 protected:
     //! @name Constructor
     //@{
-    ArmyFactory_ABC() {};
+    ArmyFactory_ABC(){};
     //@}
 };
 
 // -----------------------------------------------------------------------------
-// Name: template< typename Archive > void ArmyFactory_ABC::serialize
+// Name: ArmyFactory_ABC::serialize
 // Created: MGD 2009-10-24
 // -----------------------------------------------------------------------------
 template< typename Archive >

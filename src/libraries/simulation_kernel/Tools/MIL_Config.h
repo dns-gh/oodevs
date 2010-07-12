@@ -33,8 +33,11 @@ namespace xml
 class MIL_Config : public virtual tools::SessionConfig
 {
 public:
-     MIL_Config();
+    //! @name Constructors/Destructor
+    //@{
+             MIL_Config();
     virtual ~MIL_Config();
+    //@}
 
     //! @name Accessors
     //@{
@@ -109,46 +112,46 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< const std::string, boost::crc_32_type::value_type > T_CRCMap;
+    typedef std::map< const std::string, boost::crc_32_type::value_type >   T_CRCMap;
     typedef T_CRCMap::const_iterator                                      CIT_CRCMap;
     //@}
 
 private:
     //! @name Member data
     //@{
-    unsigned int               checkPointsKept_;
-    unsigned int               checkPointsFrequency_;
-    unsigned int               timeStep_;
-    unsigned int               timeFactor_;
-    unsigned int               endTick_;
-    unsigned int               pathFinderThreads_;
-    unsigned short             diaDebuggerPort_;
-    unsigned short             networkLoggerPort_;
-    unsigned short             networkPort_;
-    bool                       bCheckPointOrbat_;
-    bool                       bUseCheckPointCRC_;
-    bool                       bUseOnlyDIAArchive_;
-    bool                       bCheckAutomateComposition_;
-    bool                       bUseDecDebug_;
-    bool                       bUsePathDebug_;
-    bool                       bUseDiaDebugger_;
-    bool                       bUseNetworkLogger_;
-    bool                       bProfilingEnabled_;
-    bool                       bDataTestMode_;
-    bool                       bTestMode_;
-    bool                       bSaveCheckpointTestMode_;
-    bool                       bDeleteCheckpointTestMode_;
-    bool                       bFrozenMode_;
-    bool                       bEmbeddedDispatcher_;
-    bool                       bHLAEnabled_;
-    std::string                hlaFederation_;
-    std::string                hlaFederate_;
-    std::string                strCheckPointNameTestMode_;
-    T_CRCMap                   CRCMap_;
-    int                        randomSeed_;
-    bool                       randomGaussian_[ MIL_Random::eContextsNbr ];
-    double                     randomDeviation_[ MIL_Random::eContextsNbr ];
-    double                     randomMean_[ MIL_Random::eContextsNbr ];
+    unsigned int   checkPointsKept_;
+    unsigned int   checkPointsFrequency_;
+    unsigned int   timeStep_;
+    unsigned int   timeFactor_;
+    unsigned int   endTick_;
+    unsigned int   pathFinderThreads_;
+    unsigned short diaDebuggerPort_;
+    unsigned short networkLoggerPort_;
+    unsigned short networkPort_;
+    bool           bCheckPointOrbat_;
+    bool           bUseCheckPointCRC_;
+    bool           bUseOnlyDIAArchive_;
+    bool           bCheckAutomateComposition_;
+    bool           bUseDecDebug_;
+    bool           bUsePathDebug_;
+    bool           bUseDiaDebugger_;
+    bool           bUseNetworkLogger_;
+    bool           bProfilingEnabled_;
+    bool           bDataTestMode_;
+    bool           bTestMode_;
+    bool           bSaveCheckpointTestMode_;
+    bool           bDeleteCheckpointTestMode_;
+    bool           bFrozenMode_;
+    bool           bEmbeddedDispatcher_;
+    bool           bHLAEnabled_;
+    std::string    hlaFederation_;
+    std::string    hlaFederate_;
+    std::string    strCheckPointNameTestMode_;
+    T_CRCMap       CRCMap_;
+    int            randomSeed_;
+    bool           randomGaussian_[ MIL_Random::eContextsNbr ];
+    double         randomDeviation_[ MIL_Random::eContextsNbr ];
+    double         randomMean_[ MIL_Random::eContextsNbr ];
     //@}
 };
 

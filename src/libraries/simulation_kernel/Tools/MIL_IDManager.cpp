@@ -25,7 +25,10 @@ MIL_IDManager::MIL_IDManager()
 // Name: MIL_IDManager::Destructor
 // Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
-MIL_IDManager::~MIL_IDManager(){}
+MIL_IDManager::~MIL_IDManager()
+{
+    // NOTHING
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_IDManager::GetFreeId

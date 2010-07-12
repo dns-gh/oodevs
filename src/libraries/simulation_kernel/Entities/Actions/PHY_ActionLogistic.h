@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/Src/Entities/Agents/Actions/ConvoySupply/PHY_ActionLogistic.h $
-// $Author: Nld $
-// $Modtime: 10/02/05 10:50 $
-// $Revision: 1 $
-// $Workfile: PHY_ActionLogistic.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2004 MASA Group
 //
 // *****************************************************************************
 
@@ -24,11 +22,17 @@ template< typename T >
 class PHY_ActionLogistic : public PHY_Action_ABC
 {
 public:
+    //! @name Typedef
+    //@{
     typedef MIL_AgentPion ActorType;
+    //@}
 
 public:
+    //! @name Constructors/Destructor
+    //@{
     explicit PHY_ActionLogistic( T& entity );
     virtual ~PHY_ActionLogistic();
+    //@}
 
     //! @name Operations
     //@{

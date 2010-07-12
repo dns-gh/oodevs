@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/Src/Entities/Agents/Actions/ConvoySupply/PHY_ActionConvoySupply.inl $
-// $Author: Nld $
-// $Modtime: 19/11/04 12:02 $
-// $Revision: 1 $
-// $Workfile: PHY_ActionConvoySupply.inl $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2004 MASA Group
 //
 // *****************************************************************************
 
@@ -16,7 +14,7 @@
 template< typename T >
 PHY_ActionLogistic< T >::PHY_ActionLogistic( T& entity )
     : PHY_Action_ABC()
-    , entity_       ( entity )
+    , entity_( entity )
 {
     // NOTHING
 }
@@ -58,6 +56,5 @@ void PHY_ActionLogistic< T >::ExecuteSuspended()
 template< typename T >
 void PHY_ActionLogistic< T >::Stop()
 {
-
+    // NOTHING
 }
-

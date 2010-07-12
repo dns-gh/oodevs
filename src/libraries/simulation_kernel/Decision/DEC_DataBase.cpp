@@ -8,14 +8,10 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "DEC_DataBase.h"
-
 #include "Tools/MIL_Config.h"
-
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
-
 
 namespace
 {
@@ -30,7 +26,7 @@ namespace
     {
         directia5::Library::T_LibPaths repositories;
         xis >> xml::start( "RepertoiresBM" )
-            >> xml::list( "Repertoire", boost::bind( &ReadRepository, _1, boost::ref( strPath ), boost::ref( repositories ) ) )
+                >> xml::list( "Repertoire", boost::bind( &ReadRepository, _1, boost::ref( strPath ), boost::ref( repositories ) ) )
             >> xml::end();
         return repositories;
     }

@@ -26,7 +26,6 @@
 #include "Network/NET_AsnException.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
-
 #include "simulation_kernel/ArmyFactory_ABC.h"
 #include "simulation_kernel/AutomateFactory_ABC.h"
 #include "simulation_kernel/FormationFactory_ABC.h"
@@ -49,6 +48,7 @@ void save_construct_data( Archive& archive, const MIL_Army* army, const unsigned
     archive << armyFactory
             << diplomacyConverter;
 }
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Army::load_construct_data
 // Created: MGD 2009-10-24
@@ -70,7 +70,7 @@ void load_construct_data( Archive& archive, MIL_Army* army, const unsigned int /
 MIL_Army::MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationFactory_ABC& formationFactory, AutomateFactory_ABC& automateFactory, MIL_ObjectManager& objectFactory
                   , PopulationFactory_ABC& populationFactory, KnowledgeGroupFactory_ABC& knowledgegroupFactory, const MT_Converter< std::string, E_Diplomacy >& diplomacyConverter )
     : nID_                 ( xml::attribute< unsigned int >( xis, "id" ) )
-    , strName_             ( xml::attribute< std::string>( xis, "name") )
+    , strName_             ( xml::attribute< std::string >( xis, "name") )
     , nType_               ( eUnknown )
     , armyFactory_         ( armyFactory )
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_Army( *this ) )
@@ -78,9 +78,7 @@ MIL_Army::MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationF
 {
     std::string strType;
     xis >> xml::attribute( "type", strType );
-
     nType_ = diplomacyConverter_.Convert( strType );
-
     xis >> xml::start( "communication" )
             >> xml::list( "knowledge-group", *this, &MIL_Army::ReadLogistic, knowledgegroupFactory ) // LTO
         >> xml::end()
@@ -103,8 +101,8 @@ MIL_Army::MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationF
 // Created: MGD 2009-10-24
 // -----------------------------------------------------------------------------
 MIL_Army::MIL_Army( ArmyFactory_ABC& armyFactory, const MT_Converter< std::string, E_Diplomacy >& diplomacyConverter )
-    : nID_( 0 )
-    , armyFactory_( armyFactory )
+    : nID_               ( 0 )
+    , armyFactory_       ( armyFactory )
     , diplomacyConverter_( diplomacyConverter )
 {
     // NOTHING
@@ -119,13 +117,9 @@ MIL_Army::~MIL_Army()
     for( CIT_KnowledgeGroupMap it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
         delete it->second;
     knowledgeGroups_.clear();
-
     delete pKnowledgeBlackBoard_;
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 namespace boost
 {
     namespace serialization
@@ -137,25 +131,23 @@ namespace boost
         {
             split_free( file, map, nVersion );
         }
-
         template< typename Archive >
         void save( Archive& file, const MIL_Army::T_DiplomacyMap& map, const unsigned int )
         {
             unsigned size = map.size();
             file << size;
-            for ( MIL_Army::CIT_DiplomacyMap it = map.begin(); it != map.end(); ++it )
+            for( MIL_Army::CIT_DiplomacyMap it = map.begin(); it != map.end(); ++it )
             {
                 file << it->first
                      << it->second;
             }
         }
-
         template< typename Archive >
         void load( Archive& file, MIL_Army::T_DiplomacyMap& map, const unsigned int )
         {
             unsigned int nNbr;
             file >> nNbr;
-            while ( nNbr-- )
+            while( nNbr-- )
             {
                 MIL_Army* pArmy;
                 file >> pArmy;
@@ -376,25 +368,20 @@ void MIL_Army::ReadPopulation( xml::xistream& xis, PopulationFactory_ABC& popula
 // -----------------------------------------------------------------------------
 void MIL_Army::ReadDiplomacy( xml::xistream& xis )
 {
-    unsigned int        nTeam;
+    unsigned int nTeam;
     std::string strDiplomacy;
-
     xis >> xml::attribute( "side", nTeam )
         >> xml::attribute( "diplomacy", strDiplomacy );
-
     E_Diplomacy nDiplomacy = diplomacyConverter_.Convert( strDiplomacy );
     if( nDiplomacy == eUnknown )
         xis.error( "Unknown diplomacy relation between armies" );
-
     MIL_Army_ABC* pArmy = armyFactory_.Find( nTeam );
     if( !pArmy )
         xis.error( "Unknown army" );
-
     if( diplomacies_.find( pArmy ) != diplomacies_.end() )
         xis.error( "Diplomacy between armies already exist" );
     if( pArmy == this )
         xis.error( "Self diplomacy not allowed" );
-
     diplomacies_[ pArmy ] = nDiplomacy;
 }
 
@@ -416,7 +403,6 @@ void MIL_Army::ReadAutomat( xml::xistream& xis, AutomateFactory_ABC& automateFac
 {
     unsigned int id;
     xis >> xml::attribute( "id", id );
-
     MIL_Automate* pSuperior = automateFactory.Find( id );
     if( !pSuperior )
         xis.error( "Unknown automat" );
@@ -424,7 +410,6 @@ void MIL_Army::ReadAutomat( xml::xistream& xis, AutomateFactory_ABC& automateFac
         xis.error( "Invalid automat (not in specified side)" );
     if( !pSuperior->GetType().IsLogistic() )
         xis.error( "Automat isn't a logistic automat" );
-
     xis >> xml::list( "subordinate" , *this, &MIL_Army::ReadSubordinate, automateFactory, pSuperior );
 }
 
@@ -563,7 +548,6 @@ E_Tristate MIL_Army::IsAFriend( const DEC_Knowledge_Agent& knowledge ) const
     const MIL_Army_ABC* pArmy = knowledge.GetArmy();
     if( !pArmy )
         return eTristate_DontKnow;
-
     return IsAFriend( *pArmy );
 }
 
@@ -672,7 +656,6 @@ void MIL_Army::OnReceiveMsgChangeDiplomacy( const Common::MsgMissionParameters& 
     }
     diplomacies_[ pArmy2 ] = nDiplomacy;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Army::RegisterObject
