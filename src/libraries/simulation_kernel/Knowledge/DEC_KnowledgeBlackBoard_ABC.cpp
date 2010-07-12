@@ -36,9 +36,9 @@ DEC_KnowledgeBlackBoard_ABC::~DEC_KnowledgeBlackBoard_ABC()
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeBlackBoard_ABC::Update( int currentTimeStep )
 {
-    for( itKS = talkingKnowledgeSources_.begin(); itKS != talkingKnowledgeSources_.end(); ++itKS )
+    for( IT_KnowledgeSourceList itKS = talkingKnowledgeSources_.begin(); itKS != talkingKnowledgeSources_.end(); ++itKS )
         (**itKS).Prepare();
-    for( itKS = talkingKnowledgeSources_.begin(); itKS != talkingKnowledgeSources_.end(); ++itKS )
+    for( IT_KnowledgeSourceList itKS = talkingKnowledgeSources_.begin(); itKS != talkingKnowledgeSources_.end(); ++itKS )
         (**itKS).Talk( currentTimeStep );
     SendChangedState();
 }
