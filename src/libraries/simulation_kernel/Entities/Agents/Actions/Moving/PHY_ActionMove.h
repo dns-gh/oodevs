@@ -31,15 +31,21 @@ class DEC_Agent_Path;
 class PHY_ActionMove : public PHY_DecisionCallbackAction_ABC
 {
 public:
+    //! @name Types
+    //@{
     typedef MIL_AgentPion ActorType;
+    //@}
 
 public:
+    //! @name Constructors/Destructor
+    //@{
              PHY_ActionMove( MIL_AgentPion& pion, boost::shared_ptr< DEC_Path_ABC > pPath );
     virtual ~PHY_ActionMove();
+    //@}
 
     //! @name Operations
     //@{
-    virtual void Execute         ();
+    virtual void Execute();
     virtual void ExecuteSuspended();
     virtual void StopAction();
     //@}
@@ -47,9 +53,9 @@ public:
 private:
     //! @name Tools
     //@{
-    void CreateJoiningPath   ();
-    void DestroyJoiningPath  ();
-    void AvoidObstacles      ();
+    void CreateJoiningPath();
+    void DestroyJoiningPath();
+    void AvoidObstacles();
     bool UpdateObjectsToAvoid();
     //@}
 
@@ -60,12 +66,12 @@ private:
     //@}
 
 private:
-    MIL_AgentPion&                      pion_;
-    moving::PHY_RoleAction_Moving&      role_;
+    MIL_AgentPion& pion_;
+    moving::PHY_RoleAction_Moving& role_;
     boost::shared_ptr< DEC_Agent_Path > pMainPath_;
     boost::shared_ptr< DEC_Agent_Path > pJoiningPath_;
-    T_ObjectKnowledgeSet                objectAvoidAttempts_;
-    T_KnowledgeObjectVector             objectsToAvoid_;
+    T_ObjectKnowledgeSet objectAvoidAttempts_;
+    T_KnowledgeObjectVector objectsToAvoid_;
 };
 
 #endif // __PHY_ActionMove_h_

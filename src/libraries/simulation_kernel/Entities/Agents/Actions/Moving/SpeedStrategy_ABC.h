@@ -32,7 +32,7 @@ public:
     virtual ~SpeedStrategy_ABC() {}
     //@}
 
-    //! @name Constructors/Destructor
+    //! @name Operations
     //@{
     virtual double ApplyOnComponent( const PHY_ComposantePion& ) const = 0;
     virtual double ApplyOnReinforcement( MIL_Agent_ABC& ) const = 0;

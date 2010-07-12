@@ -17,10 +17,11 @@ namespace transport
 // Name: DefaultLoadedStateConsistencyComputer constructor
 // Created: AHC 2009-10-01
 // -----------------------------------------------------------------------------
-DefaultLoadedStateConsistencyComputer::DefaultLoadedStateConsistencyComputer() :
-    hasValidCarrier_(false),
-    hasValidLoadable_(false)
+DefaultLoadedStateConsistencyComputer::DefaultLoadedStateConsistencyComputer()
+    : hasValidCarrier_ ( false )
+    , hasValidLoadable_( false )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -29,6 +30,7 @@ DefaultLoadedStateConsistencyComputer::DefaultLoadedStateConsistencyComputer() :
 // -----------------------------------------------------------------------------
 DefaultLoadedStateConsistencyComputer::~DefaultLoadedStateConsistencyComputer()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -44,7 +46,7 @@ void DefaultLoadedStateConsistencyComputer::Reset()
 // Name: DefaultLoadedStateConsistencyComputer::EnableCarrier
 // Created: AHC 2009-10-01
 // -----------------------------------------------------------------------------
-void DefaultLoadedStateConsistencyComputer::EnableCarrier(bool value)
+void DefaultLoadedStateConsistencyComputer::EnableCarrier( bool value)
 {
     hasValidCarrier_ |= value;
 }

@@ -45,15 +45,6 @@ private:
     UrbanBlockCollisionNotificationHandler_ABC( const UrbanBlockCollisionNotificationHandler_ABC& );            //!< Copy constructor
     UrbanBlockCollisionNotificationHandler_ABC& operator=( const UrbanBlockCollisionNotificationHandler_ABC& ); //!< Assignment operator
     //@}
-
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    //@}
 };
 
 }

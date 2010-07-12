@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "simulation_kernel/MoveComputerFactory.h"
 #include "simulation_kernel/DefaultMoveComputer.h"
 #include "simulation_kernel/DefaultSpeedComputer.h"

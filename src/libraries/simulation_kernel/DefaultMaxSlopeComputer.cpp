@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "DefaultMaxSlopeComputer.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 
@@ -19,10 +18,11 @@ namespace moving
 // Name: DefaultMaxSlopeComputer constructor
 // Created: AHC 2009-10-01
 // -----------------------------------------------------------------------------
-DefaultMaxSlopeComputer::DefaultMaxSlopeComputer() :
-        maxSlope_          ( std::numeric_limits<double>::max() ),
-        hasUsableComponent_( false )
+DefaultMaxSlopeComputer::DefaultMaxSlopeComputer()
+    : maxSlope_          ( std::numeric_limits< double >::max() )
+    , hasUsableComponent_( false )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -31,6 +31,7 @@ DefaultMaxSlopeComputer::DefaultMaxSlopeComputer() :
 // -----------------------------------------------------------------------------
 DefaultMaxSlopeComputer::~DefaultMaxSlopeComputer()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

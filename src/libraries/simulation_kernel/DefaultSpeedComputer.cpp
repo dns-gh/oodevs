@@ -8,24 +8,23 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "DefaultSpeedComputer.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Actions/Moving/SpeedStrategy_ABC.h"
 
 namespace moving
 {
-
 // -----------------------------------------------------------------------------
 // Name: DefaultSpeedComputer constructor
 // Created: AHC 2009-10-01
 // -----------------------------------------------------------------------------
-BaseSpeedComputer::BaseSpeedComputer( const SpeedStrategy_ABC& strategy ) :
-        strategy_          ( strategy ),
-        speed_             ( std::numeric_limits<double>::max() ),
-        hasUsableComponent_( false ),
-        speedRatio_        ( 1. )
+BaseSpeedComputer::BaseSpeedComputer( const SpeedStrategy_ABC& strategy )
+    : strategy_          ( strategy )
+    , speed_             ( std::numeric_limits<double>::max() )
+    , hasUsableComponent_( false )
+    , speedRatio_        ( 1. )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -34,13 +33,14 @@ BaseSpeedComputer::BaseSpeedComputer( const SpeedStrategy_ABC& strategy ) :
 // -----------------------------------------------------------------------------
 BaseSpeedComputer::~BaseSpeedComputer()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: BaseSpeedComputer::ApplyOnReinforcement
 // Created: AHC 2009-10-01
 // -----------------------------------------------------------------------------
-void BaseSpeedComputer::ApplyOnReinforcement( MIL_Agent_ABC& reinforcement)
+void BaseSpeedComputer::ApplyOnReinforcement( MIL_Agent_ABC& reinforcement )
 {
     speed_ = std::min( speed_, strategy_.ApplyOnReinforcement( reinforcement ) );
 }
@@ -49,7 +49,7 @@ void BaseSpeedComputer::ApplyOnReinforcement( MIL_Agent_ABC& reinforcement)
 // Name: BaseSpeedComputer::ApplyOnPopulation
 // Created: AHC 2009-10-01
 // -----------------------------------------------------------------------------
-void BaseSpeedComputer::ApplyOnPopulation( const DEC_Knowledge_PopulationCollision& population)
+void BaseSpeedComputer::ApplyOnPopulation( const DEC_Knowledge_PopulationCollision& population )
 {
     speed_ = std::min( speed_, strategy_.ApplyOnPopulation( population ) );
 }
@@ -77,7 +77,7 @@ void BaseSpeedComputer::AddModifier( double ratio, bool isMax )
 // Created: LMT 2010-05-04
 // -----------------------------------------------------------------------------
 DefaultSpeedComputer::DefaultSpeedComputer( const SpeedStrategy_ABC& strategy )
-: BaseSpeedComputer( strategy )
+    : BaseSpeedComputer( strategy )
 {
     // NOTHING
 }
@@ -109,7 +109,7 @@ void DefaultSpeedComputer::ApplyOnComponent( const PHY_ComposantePion& component
 // Created: LMT 2010-05-04
 // -----------------------------------------------------------------------------
 LoadedSpeedComputer::LoadedSpeedComputer( const SpeedStrategy_ABC& strategy )
-: BaseSpeedComputer( strategy )
+    : BaseSpeedComputer( strategy )
 {
     // NOTHING
 }
@@ -141,7 +141,7 @@ void LoadedSpeedComputer::ApplyOnComponent( const PHY_ComposantePion& component 
 // Created: LMT 2010-05-04
 // -----------------------------------------------------------------------------
 UnloadedSpeedComputer::UnloadedSpeedComputer( const SpeedStrategy_ABC& strategy )
-: BaseSpeedComputer( strategy )
+    : BaseSpeedComputer( strategy )
 {
     // NOTHING
 }

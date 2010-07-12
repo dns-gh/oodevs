@@ -10,23 +10,18 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RoleAction_Moving.h"
-
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
-
 #include "Entities/Orders/MIL_Report.h"
 #include "Decision/DEC_Representations.h"
 #include "Decision/DEC_PathPoint.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/clientsenders.h"
-
 #include "simulation_kernel/PostureComputer_ABC.h"
 #include "simulation_kernel/SpeedComputer_ABC.h"
 #include "simulation_kernel/MaxSlopeComputer_ABC.h"
@@ -37,7 +32,6 @@
 #include "simulation_kernel/ConsumptionChangeRequestHandler_ABC.h"
 #include "simulation_kernel/ObjectCollisionNotificationHandler_ABC.h"
 #include "simulation_kernel/UrbanBlockCollisionNotificationHandler_ABC.h"
-
 #include "AlgorithmsFactories.h"
 #include "SpeedComputerStrategy.h"
 
@@ -66,7 +60,7 @@ void load_construct_data( Archive& archive, PHY_RoleAction_Moving* role, const u
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
 PHY_RoleAction_Moving::PHY_RoleAction_Moving( MIL_AgentPion& pion )
-    : pion_                 ( pion )
+    : pion_                  ( pion )
     , pRoleLocation_         ( &pion_.GetRole< PHY_RoleInterface_Location >() )
     , rSpeed_                ( 0.)
     , rSpeedModificator_     ( 1. )
@@ -500,9 +494,7 @@ void PHY_RoleAction_Moving::Execute( posture::PostureComputer_ABC& algorithm ) c
     if( rSpeed_ == 0. )
         algorithm.UnsetPostureMovement();
     else
-    {
         algorithm.SetPostureMovement();
-    }
 }
 
 } // namespace moving

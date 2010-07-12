@@ -58,8 +58,11 @@ public:
     //@}
 
 public:
+    //! @name Constructors/Destructor
+    //@{
     explicit PHY_RoleAction_Moving( MIL_AgentPion& pion );
     virtual ~PHY_RoleAction_Moving();
+    //@}
 
     //! @name CheckPoints
     //@{
@@ -68,8 +71,8 @@ public:
 
     //! @name Operations
     //@{
-    void Update    ( bool bIsDead );
-    void Clean     ();
+    void Update( bool bIsDead );
+    void Clean();
     bool HasChanged() const;
     virtual void Execute( posture::PostureComputer_ABC& algorithm ) const;
     virtual void Execute( moving::SpeedComputer_ABC& algorithm ) const;
@@ -77,13 +80,13 @@ public:
 
     //! @name Operations
     //@{
-            double GetMaxSlope                 () const;
-            double GetMaxSpeedWithReinforcement() const;
-            double GetTheoricMaxSpeed( bool loaded ) const;
-    virtual double GetSpeedWithReinforcement   ( const TerrainData& environment ) const;
-    virtual double GetMaxSpeed                 () const;
-            void     SetSpeedModificator         ( double rFactor );
-            void     SetMaxSpeedModificator      ( double rFactor );
+    virtual double GetSpeedWithReinforcement( const TerrainData& environment ) const;
+    virtual double GetMaxSpeed() const;
+    double GetMaxSlope() const;
+    double GetMaxSpeedWithReinforcement() const;
+    double GetTheoricMaxSpeed( bool loaded ) const;
+    void SetSpeedModificator( double rFactor );
+    void SetMaxSpeedModificator( double rFactor );
     //@}
 
     //! @name Network
@@ -102,41 +105,40 @@ private:
     //@{
     virtual const MT_Vector2D& GetPosition () const;
     virtual const MT_Vector2D& GetDirection() const;
-
     virtual void ApplyMove( const MT_Vector2D& position, const MT_Vector2D& direction, double rSpeed, double rWalkedDistance );
     //@}
 
     //! @name Notifications
     //@{
-    virtual void NotifyMovingOnPathPoint        ( const DEC_PathPoint& point );
-    virtual void NotifyMovingOnSpecialPoint     ( boost::shared_ptr< DEC_PathPoint > point );
-    virtual void NotifyMovingInsideObject       ( MIL_Object_ABC& object );
-    virtual void NotifyMovingOutsideObject      ( MIL_Object_ABC& object );
-    virtual void NotifyEnvironmentChanged       ();
-    virtual void NotifyCurrentPathChanged       ();
+    virtual void NotifyMovingOnPathPoint( const DEC_PathPoint& point );
+    virtual void NotifyMovingOnSpecialPoint( boost::shared_ptr< DEC_PathPoint > point );
+    virtual void NotifyMovingInsideObject( MIL_Object_ABC& object );
+    virtual void NotifyMovingOutsideObject( MIL_Object_ABC& object );
+    virtual void NotifyEnvironmentChanged();
+    virtual void NotifyCurrentPathChanged();
     //@}
 
     //! @name
     //@{
-    virtual bool CanMove              () const;
+    virtual bool CanMove() const;
     virtual bool CanObjectInteractWith( const MIL_Object_ABC& object ) const;
-    virtual bool HasResources         ();
-    virtual void SendRC               ( int nReportID ) const;
+    virtual bool HasResources();
+    virtual void SendRC( int nReportID ) const;
     //@}
 
     //! @name Speed management
     //@{
-            double GetMaxSpeed              ( const TerrainData& environment ) const;
-            double GetMaxSpeed              ( const MIL_Object_ABC& object ) const;
-            double ApplyMaxSpeedModificators( double rSpeed ) const;
-            double ApplySpeedModificators   ( double rSpeed ) const;
+    double GetMaxSpeed( const TerrainData& environment ) const;
+    double GetMaxSpeed( const MIL_Object_ABC& object ) const;
+    double ApplyMaxSpeedModificators( double rSpeed ) const;
+    double ApplySpeedModificators( double rSpeed ) const;
 
     virtual double GetSpeedWithReinforcement( const TerrainData& environment, const MIL_Object_ABC& object ) const;
     //@}
 
     //! @name Network
     //@{
-    void SendCurrentPath    () const;
+    void SendCurrentPath() const;
     void SendEnvironmentType() const;
     //@}
 
@@ -147,16 +149,18 @@ private:
     //@}
 
 private:
-    MIL_AgentPion&              pion_;
+    //! @name Member data
+    //@{
+    MIL_AgentPion& pion_;
     PHY_RoleInterface_Location* pRoleLocation_;
-    double                      rSpeed_;
-    double                    rSpeedModificator_;
-    double                    rMaxSpeedModificator_;
-
+    double rSpeed_;
+    double rSpeedModificator_;
+    double rMaxSpeedModificator_;
     // Network
     bool bCurrentPathHasChanged_;
     bool bEnvironmentHasChanged_;
     bool bHasMove_;
+    //@}
 };
 
 } // namespace moving

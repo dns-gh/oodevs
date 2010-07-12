@@ -8,9 +8,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "SpeedComputerStrategy.h"
-
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Knowledge/DEC_Knowledge_PopulationCollision.h"
@@ -32,9 +30,10 @@ double MaxSpeedEnvObj(const PHY_ComposantePion& comp, const TerrainData& environ
 // Created: LDC 2009-12-16
 // -----------------------------------------------------------------------------
 SpeedComputerStrategy::SpeedComputerStrategy( bool isMaxSpeed, bool withReinforcement, const MIL_Object_ABC& obj, const TerrainData* env /* =0*/ )
-    : withReinforcement_( withReinforcement ), isMax_( isMaxSpeed )
+    : withReinforcement_( withReinforcement )
+    , isMax_            ( isMaxSpeed )
 {
-    if(env)
+    if( env )
     {
         compFunctor_ = boost::bind( ::MaxSpeedEnvObj, _1, boost::cref( *env ), boost::cref( obj ) );
         pionFunctor_ = isMaxSpeed ?
@@ -53,9 +52,10 @@ SpeedComputerStrategy::SpeedComputerStrategy( bool isMaxSpeed, bool withReinforc
 // Created: LDC 2009-12-16
 // -----------------------------------------------------------------------------
 SpeedComputerStrategy::SpeedComputerStrategy( bool isMaxSpeed, bool withReinforcement, const TerrainData* env /* =0*/ )
-    : withReinforcement_( withReinforcement ), isMax_( isMaxSpeed )
+    : withReinforcement_( withReinforcement )
+    , isMax_            ( isMaxSpeed )
 {
-    if(env)
+    if( env )
     {
         compFunctor_ = boost::bind( boost::mem_fn<double,PHY_ComposantePion,const TerrainData&>( &PHY_ComposantePion::GetMaxSpeed ), _1, boost::cref( *env ) );
         pionFunctor_ = isMaxSpeed ?
@@ -84,7 +84,7 @@ SpeedComputerStrategy::~SpeedComputerStrategy()
 // -----------------------------------------------------------------------------
 double SpeedComputerStrategy::ApplyOnComponent( const PHY_ComposantePion& comp ) const
 {
-    return compFunctor_(comp);
+    return compFunctor_( comp );
 }
 
 // -----------------------------------------------------------------------------

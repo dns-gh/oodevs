@@ -26,7 +26,7 @@ class LoadingComputerFactory: public transport::LoadingComputerFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    LoadingComputerFactory();
+             LoadingComputerFactory();
     virtual ~LoadingComputerFactory();
     //@}
 

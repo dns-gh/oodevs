@@ -15,20 +15,36 @@
 namespace transport
 {
 
+// =============================================================================
+/** @class  DefaultLoadedStateConsistencyComputer
+    @brief  DefaultLoadedStateConsistencyComputer
+*/
+// Created: AHC 2009-30-09
+// =============================================================================
 class DefaultLoadedStateConsistencyComputer: public transport::LoadedStateConsistencyComputer_ABC
 {
 public:
-    DefaultLoadedStateConsistencyComputer();
+    //! @name Constructors/Destructor
+    //@{
+             DefaultLoadedStateConsistencyComputer();
     virtual ~DefaultLoadedStateConsistencyComputer();
+    //@}
 
+    //! @name Operations
+    //@{
     void Reset();
     void EnableCarrier(bool value);
     void EnableLoadable(bool value);
     bool HasValidCarrier() const;
     bool HasValidLoadable() const;
+    //@}
+
 private:
+    //! @name Attributes
+    //@{
     bool hasValidCarrier_;
     bool hasValidLoadable_;
+    //@}
 };
 
 }

@@ -26,7 +26,7 @@ class DefaultMaxSlopeComputer : public MaxSlopeComputer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    DefaultMaxSlopeComputer();
+             DefaultMaxSlopeComputer();
     virtual ~DefaultMaxSlopeComputer();
     //@}
 

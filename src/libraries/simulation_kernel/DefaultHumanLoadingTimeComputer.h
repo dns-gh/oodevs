@@ -26,7 +26,7 @@ class DefaultHumanLoadingTimeComputer: public transport::HumanLoadingTimeCompute
 public:
     //! @name Constructors/Destructor
     //@{
-    DefaultHumanLoadingTimeComputer();
+             DefaultHumanLoadingTimeComputer();
     virtual ~DefaultHumanLoadingTimeComputer();
     //@}
 
@@ -39,6 +39,7 @@ public:
     double GetHumansLoadedPerTimeStep() const;
     double GetHumansUnloadedPerTimeStep() const;
     //@}
+
 private:
     //! @name Attributes
     //@{

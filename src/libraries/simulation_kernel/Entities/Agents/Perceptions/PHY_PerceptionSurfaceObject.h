@@ -22,8 +22,8 @@ class PHY_PerceptionSurfaceObject
 public:
     //! @name Constructors/Destructor
     //@{
-     PHY_PerceptionSurfaceObject();
-     PHY_PerceptionSurfaceObject( const PHY_SensorTypeObject& sensorType, const MT_Vector2D& vOrigin, MT_Float rHeight );
+             PHY_PerceptionSurfaceObject();
+             PHY_PerceptionSurfaceObject( const PHY_SensorTypeObject& sensorType, const MT_Vector2D& vOrigin, MT_Float rHeight );
     virtual ~PHY_PerceptionSurfaceObject();
     //@}
 

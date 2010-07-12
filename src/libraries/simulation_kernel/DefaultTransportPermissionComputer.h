@@ -26,7 +26,7 @@ class DefaultTransportPermissionComputer: public transport::TransportPermissionC
 public:
     //! @name Constructors/Destructor
     //@{
-    DefaultTransportPermissionComputer();
+             DefaultTransportPermissionComputer();
     virtual ~DefaultTransportPermissionComputer();
     //@}
 

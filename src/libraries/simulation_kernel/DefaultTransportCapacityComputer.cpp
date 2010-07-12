@@ -36,6 +36,7 @@ DefaultTransportCapacityComputer::DefaultTransportCapacityComputer()
 // -----------------------------------------------------------------------------
 DefaultTransportCapacityComputer::~DefaultTransportCapacityComputer()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

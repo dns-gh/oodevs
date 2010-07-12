@@ -26,7 +26,7 @@ class DefaultTransportCapacityComputer : public TransportCapacityComputer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    DefaultTransportCapacityComputer();
+             DefaultTransportCapacityComputer();
     virtual ~DefaultTransportCapacityComputer();
     //@}
 

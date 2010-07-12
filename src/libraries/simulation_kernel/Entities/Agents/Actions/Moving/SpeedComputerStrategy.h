@@ -30,20 +30,29 @@ class PHY_RoleAction_Moving;
 class SpeedComputerStrategy : public SpeedStrategy_ABC
 {
 public:
-    SpeedComputerStrategy( bool isMaxSpeed, bool withReinforcement, const MIL_Object_ABC& obj, const TerrainData* env=0 );
-    SpeedComputerStrategy( bool isMaxSpeed, bool withReinforcement, const TerrainData* env=0 );
+    //! @name Constructors/Destructor
+    //@{
+             SpeedComputerStrategy( bool isMaxSpeed, bool withReinforcement, const MIL_Object_ABC& obj, const TerrainData* env=0 );
+             SpeedComputerStrategy( bool isMaxSpeed, bool withReinforcement, const TerrainData* env=0 );
     virtual ~SpeedComputerStrategy();
+    //@}
 
+    //! @name Operations
+    //@{
     virtual double ApplyOnComponent( const PHY_ComposantePion& comp ) const;
     virtual double ApplyOnReinforcement( MIL_Agent_ABC& pion ) const;
     virtual double ApplyOnPopulation( const DEC_Knowledge_PopulationCollision& population ) const;
     virtual double AddModifier( double ratio, bool isMax=true ) const;
+    //@}
 
 private:
+    //! @name Member data
+    //@{
     bool withReinforcement_;
     bool isMax_;
     boost::function< double( const PHY_ComposantePion& ) > compFunctor_;
     boost::function< double( PHY_RoleAction_Moving& ) > pionFunctor_;
+    //@}
 };
 
 }

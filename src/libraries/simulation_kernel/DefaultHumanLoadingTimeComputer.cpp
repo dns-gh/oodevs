@@ -17,12 +17,12 @@ namespace transport
 // Name: DefaultHumanLoadingTimeComputer constructor
 // Created: AHC 2009-10-01
 // -----------------------------------------------------------------------------
-DefaultHumanLoadingTimeComputer::DefaultHumanLoadingTimeComputer() :
-    humansCount_(0),
-    humansLoadedPerTimeStep_(0.),
-    humansUnloadedPerTimeStep_(0.)
+DefaultHumanLoadingTimeComputer::DefaultHumanLoadingTimeComputer()
+    : humansCount_              ( 0 )
+    , humansLoadedPerTimeStep_  ( 0. )
+    , humansUnloadedPerTimeStep_( 0. )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -31,7 +31,7 @@ DefaultHumanLoadingTimeComputer::DefaultHumanLoadingTimeComputer() :
 // -----------------------------------------------------------------------------
 DefaultHumanLoadingTimeComputer::~DefaultHumanLoadingTimeComputer()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
