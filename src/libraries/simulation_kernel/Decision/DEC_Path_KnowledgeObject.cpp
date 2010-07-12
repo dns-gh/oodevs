@@ -1,17 +1,14 @@
 // *****************************************************************************
 //
-// $Created: NLD 2004-04-06 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Path/DEC_Path_KnowledgeObject.cpp $
-// $Author: Age $
-// $Modtime: 10/06/05 14:40 $
-// $Revision: 10 $
-// $Workfile: DEC_Path_KnowledgeObject.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Path_KnowledgeObject.h"
-
 #include "DEC_Agent_PathClass.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 
@@ -20,13 +17,12 @@
 // Created: NLD 2004-04-06
 // -----------------------------------------------------------------------------
 DEC_Path_KnowledgeObject::DEC_Path_KnowledgeObject( const DEC_Agent_PathClass& pathClass, const DEC_Knowledge_Object& knowledge )
-    : localisation_             ( knowledge.GetLocalisation() )
-    , rCostIn_                  ( 0 )
-    , rCostOut_                 ( 0 )
-    , rObstructionThreshold_    ( pathClass.GetThreshold() )
+    : localisation_         ( knowledge.GetLocalisation() )
+    , rCostIn_              ( 0 )
+    , rCostOut_             ( 0 )
+    , rObstructionThreshold_( pathClass.GetThreshold() )
 {
     const MT_Float rCost = pathClass.GetObjectCost( knowledge.GetType() );
-
     if( rCost > 0 )
         rCostIn_  = rCost;
     else
@@ -47,10 +43,10 @@ DEC_Path_KnowledgeObject::~DEC_Path_KnowledgeObject()
 // Created: NLD 2004-04-06
 // -----------------------------------------------------------------------------
 DEC_Path_KnowledgeObject::DEC_Path_KnowledgeObject( const DEC_Path_KnowledgeObject& copy )
-    : localisation_             ( copy.localisation_ )
-    , rCostOut_                 ( copy.rCostOut_     )
-    , rCostIn_                  ( copy.rCostIn_      )
-    , rObstructionThreshold_    ( copy.rObstructionThreshold_ )
+    : localisation_         ( copy.localisation_ )
+    , rCostOut_             ( copy.rCostOut_ )
+    , rCostIn_              ( copy.rCostIn_ )
+    , rObstructionThreshold_( copy.rObstructionThreshold_ )
 {
     // NOTHING
 }
@@ -62,15 +58,11 @@ DEC_Path_KnowledgeObject::DEC_Path_KnowledgeObject( const DEC_Path_KnowledgeObje
 DEC_Path_KnowledgeObject& DEC_Path_KnowledgeObject::operator=( const DEC_Path_KnowledgeObject& copy )
 {
     localisation_.Reset( copy.localisation_ );
-    rCostIn_                = copy.rCostIn_;
-    rCostOut_               = copy.rCostOut_;
-    rObstructionThreshold_  = copy.rObstructionThreshold_;
+    rCostIn_ = copy.rCostIn_;
+    rCostOut_ = copy.rCostOut_;
+    rObstructionThreshold_ = copy.rObstructionThreshold_;
     return *this;
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Path_KnowledgeObject::ComputeCost
@@ -82,9 +74,7 @@ MT_Float DEC_Path_KnowledgeObject::ComputeCost( const MT_Vector2D& from, const M
     if( localisation_.Intersect2D( line ) || localisation_.IsInside( to ) )
     {
         if( rCostIn_ >= rObstructionThreshold_ ) //$$$$ SLG put the value in pathfind xml
-        {
             return -1;  //$$$$ SLG in order to block the unit if there is an object
-        }
         return rCostIn_;
     }
     return std::numeric_limits< MT_Float >::min();

@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: NLD 2004-04-06 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Path/DEC_Path_KnowledgeObject.h $
-// $Author: Age $
-// $Modtime: 10/06/05 14:40 $
-// $Revision: 7 $
-// $Workfile: DEC_Path_KnowledgeObject.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
@@ -13,7 +11,6 @@
 #define __DEC_Path_KnowledgeObject_h_
 
 #include "MIL.h"
-
 #include "simulation_terrain/TER_Localisation.h"
 
 class DEC_Knowledge_Object;
@@ -27,11 +24,11 @@ class DEC_Path_KnowledgeObject
 public:
     //! @name Constructors/Destructor
     //@{
-    DEC_Path_KnowledgeObject( const DEC_Agent_PathClass& pathClass, const DEC_Knowledge_Object& knowledge );
+             DEC_Path_KnowledgeObject( const DEC_Agent_PathClass& pathClass, const DEC_Knowledge_Object& knowledge );
     virtual ~DEC_Path_KnowledgeObject();
     //@}
 
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     DEC_Path_KnowledgeObject( const DEC_Path_KnowledgeObject& );            //!< Copy constructor
     DEC_Path_KnowledgeObject& operator=( const DEC_Path_KnowledgeObject& ); //!< Assignment operator
@@ -46,10 +43,10 @@ public:
 private:
     //! @name Member data
     //@{
-    TER_Localisation            localisation_;
-    MT_Float                    rCostIn_;
-    MT_Float                    rCostOut_;
-    MT_Float                    rObstructionThreshold_;
+    TER_Localisation localisation_;
+    MT_Float rCostIn_;
+    MT_Float rCostOut_;
+    MT_Float rObstructionThreshold_;
     //@}
 };
 
