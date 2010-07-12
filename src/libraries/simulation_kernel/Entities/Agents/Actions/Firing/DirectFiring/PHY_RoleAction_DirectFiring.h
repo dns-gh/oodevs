@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Actions/Firing/DirectFiring/PHY_RoleAction_DirectFiring.h $
-// $Author: Jvt $
-// $Modtime: 30/03/05 15:37 $
-// $Revision: 4 $
-// $Workfile: PHY_RoleAction_DirectFiring.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
@@ -43,7 +41,7 @@ public:
     //@}
 
 public:
-             PHY_RoleAction_DirectFiring( MIL_AgentPion& pion );
+    explicit PHY_RoleAction_DirectFiring( MIL_AgentPion& pion );
     virtual ~PHY_RoleAction_DirectFiring();
 
     //! @name Checkpoints
@@ -100,8 +98,10 @@ private:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     MIL_AgentPion& pion_;
-
+    //@}
 };
 
 } //namespace firing
