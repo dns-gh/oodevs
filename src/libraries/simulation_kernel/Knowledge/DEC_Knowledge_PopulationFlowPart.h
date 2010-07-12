@@ -40,7 +40,7 @@ public:
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
 
-    void load( MIL_CheckPointInArchive& , const unsigned int );
+    void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
@@ -65,11 +65,14 @@ private:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     T_PointVector shape_;
     MT_Float rRelevance_;
     MT_Float rLastRelevanceSent_;
     bool bPerceived_;
     unsigned int nTimeLastUpdate_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_PopulationFlowPart )

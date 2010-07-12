@@ -20,13 +20,9 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Populations/MIL_PopulationAttitude.h"
-#include "Entities/Populations/MIL_Population.h"
-#include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "Tools/MIL_Tools.h"
-#include "Tools/MIL_IDManager.h"
 #include "Network/NET_ASN_Tools.h"
-#include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 #include "protocol/ClientSenders.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_PopulationFlow )
@@ -45,7 +41,7 @@ DEC_Knowledge_PopulationFlow::DEC_Knowledge_PopulationFlow( DEC_Knowledge_Popula
     , rSpeed_                  ( 0. )
     , nNbrAliveHumans_         ( 0 )
     , nNbrDeadHumans_          ( 0 )
-    , pAttitude_               ( 0 ) // $$$
+    , pAttitude_               ( 0 )
     , bHumansUpdated_          ( true )
     , bAttitudeUpdated_        ( true )
     , bRealFlowUpdated_        ( true )
@@ -99,7 +95,7 @@ DEC_Knowledge_PopulationFlow::DEC_Knowledge_PopulationFlow()
     , rSpeed_                  ( 0. )
     , nNbrAliveHumans_         ( 0 )
     , nNbrDeadHumans_          ( 0 )
-    , pAttitude_               ( 0 ) // $$$
+    , pAttitude_               ( 0 )
     , bHumansUpdated_          ( true )
     , bAttitudeUpdated_        ( true )
     , bRealFlowUpdated_        ( true )
@@ -132,7 +128,6 @@ namespace boost
         {
             split_free( file, map, nVersion );
         }
-
         template< typename Archive >
         void save( Archive& file, const DEC_Knowledge_PopulationFlow::T_FlowPartMap& map, const unsigned int )
         {
@@ -144,7 +139,6 @@ namespace boost
                      << it->second;
             }
         }
-
         template< typename Archive >
         void load( Archive& file, DEC_Knowledge_PopulationFlow::T_FlowPartMap& map, const unsigned int )
         {
@@ -313,11 +307,11 @@ void DEC_Knowledge_PopulationFlow::UpdateRelevance()
 // -----------------------------------------------------------------------------
 bool DEC_Knowledge_PopulationFlow::Clean()
 {
-    bHumansUpdated_    = false;
-    bAttitudeUpdated_  = false;
-    bRealFlowUpdated_  = false;
+    bHumansUpdated_ = false;
+    bAttitudeUpdated_ = false;
+    bRealFlowUpdated_ = false;
     bFlowPartsUpdated_ = false;
-    bSpeedUpdated_     = false;
+    bSpeedUpdated_ = false;
     bDirectionUpdated_ = false;
     for( IT_FlowPartMap it = flowParts_.begin(); it != flowParts_.end(); )
     {
@@ -343,9 +337,9 @@ void DEC_Knowledge_PopulationFlow::SendFullState() const
     asnMsg().set_oid_connaissance_flux( nID_ );
     asnMsg().set_oid_connaissance_population( pPopulationKnowledge_->GetID() );
     asnMsg().set_oid_groupe_possesseur( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
-    asnMsg().set_est_percu    (  ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );
-    asnMsg().set_oid_flux_reel(  pFlowKnown_ ? pFlowKnown_->GetID() : 0 );
-    asnMsg().set_vitesse      (  (int)MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) );
+    asnMsg().set_est_percu( ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );
+    asnMsg().set_oid_flux_reel( pFlowKnown_ ? pFlowKnown_->GetID() : 0 );
+    asnMsg().set_vitesse( static_cast< int >( MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) ) );
     NET_ASN_Tools::WriteDirection( direction_, *asnMsg().mutable_direction() );
     if( !flowParts_.empty() )
     {
@@ -356,12 +350,12 @@ void DEC_Knowledge_PopulationFlow::SendFullState() const
     if( bReconAttributesValid_ )
     {
         assert( pAttitude_ );
-        asnMsg().set_nb_humains_morts  ( nNbrDeadHumans_ );
+        asnMsg().set_nb_humains_morts( nNbrDeadHumans_ );
         asnMsg().set_nb_humains_vivants( nNbrAliveHumans_ );
-        asnMsg().set_attitude          ( pAttitude_->GetAsnID() );
+        asnMsg().set_attitude( pAttitude_->GetAsnID() );
     }
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
-    if( asnMsg().has_portions_flux()  )
+    if( asnMsg().has_portions_flux() )
     {
         asnMsg().mutable_portions_flux()->Clear();
         asnMsg().Clear();
@@ -375,13 +369,13 @@ void DEC_Knowledge_PopulationFlow::SendFullState() const
 void DEC_Knowledge_PopulationFlow::UpdateOnNetwork() const
 {
     assert( pPreviousPerceptionLevel_ );
-    assert( pCurrentPerceptionLevel_  );
+    assert( pCurrentPerceptionLevel_ );
     if( *pPreviousPerceptionLevel_ == *pCurrentPerceptionLevel_ && !bHumansUpdated_ && !bAttitudeUpdated_ && !bRealFlowUpdated_ && !bFlowPartsUpdated_ && !bDirectionUpdated_ && !bSpeedUpdated_ )
         return;
     client::PopulationFlowKnowledgeUpdate asnMsg;
-    asnMsg().set_oid_connaissance_flux       ( nID_ );
-    asnMsg().set_oid_connaissance_population ( pPopulationKnowledge_->GetID() );
-    asnMsg().set_oid_groupe_possesseur       ( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
+    asnMsg().set_oid_connaissance_flux( nID_ );
+    asnMsg().set_oid_connaissance_population( pPopulationKnowledge_->GetID() );
+    asnMsg().set_oid_groupe_possesseur( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
     if( *pPreviousPerceptionLevel_ != *pCurrentPerceptionLevel_ )
         asnMsg().set_est_percu( ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );
     if( bRealFlowUpdated_ )
@@ -389,7 +383,7 @@ void DEC_Knowledge_PopulationFlow::UpdateOnNetwork() const
     if( bDirectionUpdated_ )
         NET_ASN_Tools::WriteDirection( direction_, *asnMsg().mutable_direction() );
     if( bSpeedUpdated_ )
-        asnMsg().set_vitesse( (int)MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) );
+        asnMsg().set_vitesse( static_cast< int >( MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) ) );
     if( bFlowPartsUpdated_ )
     {
         if( !flowParts_.empty() )
@@ -404,14 +398,14 @@ void DEC_Knowledge_PopulationFlow::UpdateOnNetwork() const
         assert( pAttitude_ );
         if( bHumansUpdated_ )
         {
-            asnMsg().set_nb_humains_morts  ( nNbrDeadHumans_  );
+            asnMsg().set_nb_humains_morts( nNbrDeadHumans_  );
             asnMsg().set_nb_humains_vivants( nNbrAliveHumans_ );
         }
         if( bAttitudeUpdated_ )
             asnMsg().set_attitude( pAttitude_->GetAsnID() );
     }
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
-    if( asnMsg().has_portions_flux()  )
+    if( asnMsg().has_portions_flux() )
     {
         asnMsg().mutable_portions_flux()->clear_elem();
         asnMsg().clear_portions_flux();
@@ -430,10 +424,10 @@ void DEC_Knowledge_PopulationFlow::SendMsgCreation() const
 {
     assert( pPopulationKnowledge_ );
     client::PopulationFlowKnowledgeCreation asnMsg;
-    asnMsg().set_oid_connaissance_flux       ( nID_ );
+    asnMsg().set_oid_connaissance_flux( nID_ );
     asnMsg().set_oid_connaissance_population ( pPopulationKnowledge_->GetID() );
-    asnMsg().set_oid_groupe_possesseur       ( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
-    asnMsg().set_oid_flux_reel               ( pFlowKnown_ ? pFlowKnown_->GetID() : 0 );
+    asnMsg().set_oid_groupe_possesseur( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
+    asnMsg().set_oid_flux_reel( pFlowKnown_ ? pFlowKnown_->GetID() : 0 );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -447,7 +441,7 @@ void DEC_Knowledge_PopulationFlow::SendMsgDestruction() const
     client::PopulationFlowKnowledgeDestruction asnMsg;
     asnMsg().set_oid_connaissance_flux( nID_ );
     asnMsg().set_oid_connaissance_population( pPopulationKnowledge_->GetID() );
-    asnMsg().set_oid_groupe_possesseur      ( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
+    asnMsg().set_oid_groupe_possesseur( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -458,5 +452,5 @@ void DEC_Knowledge_PopulationFlow::SendMsgDestruction() const
 void DEC_Knowledge_PopulationFlow::SendStateToNewClient() const
 {
     SendMsgCreation();
-    SendFullState  ();
+    SendFullState();
 }

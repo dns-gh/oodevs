@@ -46,24 +46,24 @@ public:
 
     //! @name Operations
     //@{
-    void Prepare        ();
-    void Update         ( const DEC_Knowledge_PopulationConcentrationPerception& perception );
-    void Update         ( const DEC_Knowledge_PopulationCollision&               collision  );
+    void Prepare();
+    void Update( const DEC_Knowledge_PopulationConcentrationPerception& perception );
+    void Update( const DEC_Knowledge_PopulationCollision& collision  );
     void UpdateRelevance();
-    bool Clean          ();
+    bool Clean();
     //@}
 
     //! @name Network operations
     //@{
-    void UpdateOnNetwork     ();
+    void UpdateOnNetwork();
     void SendStateToNewClient();
     //@}
 
 private:
     //! @name Network
     //@{
-    void SendFullState     ();
-    void SendMsgCreation   () const;
+    void SendFullState();
+    void SendMsgCreation() const;
     void SendMsgDestruction() const;
     //@}
 
@@ -73,30 +73,28 @@ private:
     //@}
 
 private:
-    const DEC_Knowledge_Population*     pPopulationKnowledge_;
-    const MIL_PopulationConcentration*  pConcentrationKnown_;
-    const unsigned int                          nID_;
-
-          unsigned int                          nTimeLastUpdate_;
-          MT_Vector2D                   position_;
-          MT_Float                      rRelevance_;
-
-          bool                          bReconAttributesValid_;
-    const MIL_PopulationAttitude*       pAttitude_;
-          unsigned int                  nNbrAliveHumans_;
-          unsigned int                  nNbrDeadHumans_;
-
-    const PHY_PerceptionLevel*          pCurrentPerceptionLevel_;
-    const PHY_PerceptionLevel*          pPreviousPerceptionLevel_;
-
+    //! @name  Member data
+    //@{
+    const DEC_Knowledge_Population*pPopulationKnowledge_;
+    const MIL_PopulationConcentration* pConcentrationKnown_;
+    const unsigned int nID_;
+    unsigned int nTimeLastUpdate_;
+    MT_Vector2D position_;
+    MT_Float rRelevance_;
+    bool bReconAttributesValid_;
+    const MIL_PopulationAttitude* pAttitude_;
+    unsigned int nNbrAliveHumans_;
+    unsigned int nNbrDeadHumans_;
+    const PHY_PerceptionLevel*  pCurrentPerceptionLevel_;
+    const PHY_PerceptionLevel* pPreviousPerceptionLevel_;
     // Network
-    bool     bHumansUpdated_;
-    bool     bAttitudeUpdated_;
-    bool     bRealConcentrationUpdated_;
-    bool     bRelevanceUpdated_;
+    bool bHumansUpdated_;
+    bool bAttitudeUpdated_;
+    bool bRealConcentrationUpdated_;
+    bool bRelevanceUpdated_;
     MT_Float rLastRelevanceSent_;
-
     static MIL_IDManager idManager_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_PopulationConcentration )

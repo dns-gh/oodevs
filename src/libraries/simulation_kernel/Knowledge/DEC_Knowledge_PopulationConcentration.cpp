@@ -15,9 +15,7 @@
 #include "DEC_Knowledge_PopulationConcentrationPerception.h"
 #include "MIL_AgentServer.h"
 #include "MIL_KnowledgeGroup.h"
-#include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
-#include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationAttitude.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Network/NET_ASN_Tools.h"
@@ -33,7 +31,7 @@ MIL_IDManager DEC_Knowledge_PopulationConcentration::idManager_;
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
 DEC_Knowledge_PopulationConcentration::DEC_Knowledge_PopulationConcentration( DEC_Knowledge_Population& populationKnowledge, const MIL_PopulationConcentration& concentrationKnown )
-    : pPopulationKnowledge_     ( &populationKnowledge    )
+    : pPopulationKnowledge_     ( &populationKnowledge )
     , pConcentrationKnown_      ( &concentrationKnown )
     , nID_                      ( idManager_.GetFreeId() )
     , nTimeLastUpdate_          ( 0 )
@@ -65,7 +63,7 @@ DEC_Knowledge_PopulationConcentration::DEC_Knowledge_PopulationConcentration()
     , position_                 ( 0., 0. )
     , nNbrAliveHumans_          ( 0 )
     , nNbrDeadHumans_           ( 0 )
-    , pAttitude_                ( 0 ) //$$
+    , pAttitude_                ( 0 )
     , bHumansUpdated_           ( true )
     , bAttitudeUpdated_         ( true )
     , bRealConcentrationUpdated_( true )
@@ -112,10 +110,6 @@ DEC_Knowledge_PopulationConcentration::~DEC_Knowledge_PopulationConcentration()
     SendMsgDestruction();
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationConcentration::load
 // Created: SBO 2005-10-19
@@ -130,9 +124,7 @@ void DEC_Knowledge_PopulationConcentration::load( MIL_CheckPointInArchive& file,
          >> nNbrAliveHumans_
          >> nNbrDeadHumans_
          >> bReconAttributesValid_;
-
     idManager_.Lock( nID_ );
-
     unsigned int nTmpID;
     bool bAttitudeValid;
     file >> bAttitudeValid;
@@ -142,13 +134,10 @@ void DEC_Knowledge_PopulationConcentration::load( MIL_CheckPointInArchive& file,
         pAttitude_ = MIL_PopulationAttitude::Find( nTmpID );
         assert( pAttitude_ );
     }
-
     file >> rRelevance_;
-
     file >> nTmpID;
     pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nTmpID );
     assert( pCurrentPerceptionLevel_ );
-
     file >> nTmpID;
     pPreviousPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nTmpID );
     assert( pPreviousPerceptionLevel_ );
@@ -170,7 +159,6 @@ void DEC_Knowledge_PopulationConcentration::save( MIL_CheckPointOutArchive& file
          << nNbrDeadHumans_
          << bReconAttributesValid_
          << attitude;
-
     if( pAttitude_ )
     {
         unsigned attitude = pAttitude_->GetID();
@@ -182,10 +170,6 @@ void DEC_Knowledge_PopulationConcentration::save( MIL_CheckPointOutArchive& file
          << current
          << previous;
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationConcentration::Prepare
@@ -204,9 +188,7 @@ void DEC_Knowledge_PopulationConcentration::Prepare()
 void DEC_Knowledge_PopulationConcentration::Update( const DEC_Knowledge_PopulationConcentrationPerception& perception )
 {
     nTimeLastUpdate_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
-
     pCurrentPerceptionLevel_ = &perception.GetCurrentPerceptionLevel();
-
     assert( pPopulationKnowledge_ );
     if( pPopulationKnowledge_->IsRecon() )
     {
@@ -214,17 +196,16 @@ void DEC_Knowledge_PopulationConcentration::Update( const DEC_Knowledge_Populati
         if( nNbrAliveHumans_ != perception.GetNbrAliveHumans() )
         {
             nNbrAliveHumans_ = perception.GetNbrAliveHumans();
-            bHumansUpdated_  = true;
+            bHumansUpdated_ = true;
         }
         if( nNbrDeadHumans_ != perception.GetNbrDeadHumans() )
         {
-            nNbrDeadHumans_  = perception.GetNbrDeadHumans();
-            bHumansUpdated_  = true;
+            nNbrDeadHumans_ = perception.GetNbrDeadHumans();
+            bHumansUpdated_ = true;
         }
-
         if( !pAttitude_ || *pAttitude_ != perception.GetAttitude() )
         {
-            pAttitude_        = &perception.GetAttitude();
+            pAttitude_ = &perception.GetAttitude();
             bAttitudeUpdated_ = true;
         }
     }
@@ -246,37 +227,28 @@ void DEC_Knowledge_PopulationConcentration::Update( const DEC_Knowledge_Populati
 void DEC_Knowledge_PopulationConcentration::UpdateRelevance()
 {
     assert( rRelevance_ > 0. );
-
     if( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ )
     {
         assert( pConcentrationKnown_ && pConcentrationKnown_->IsValid() );
         ChangeRelevance( 1. );
         return;
     }
-
     assert( rRelevance_ >= 0. && rRelevance_ <= 1. );
-
     // Magic move de la population percue
     if( pConcentrationKnown_ && pConcentrationKnown_->GetPopulation().HasDoneMagicMove() )
         ChangeRelevance( 0. );
-
     // Degradation : effacement au bout de X minutes
     const MT_Float rTimeRelevanceDegradation = ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() - nTimeLastUpdate_ ) / pPopulationKnowledge_->GetKnowledgeGroup().GetType().GetKnowledgePopulationMaxLifeTime();
     const MT_Float rRelevance                = std::max( 0., rRelevance_ - rTimeRelevanceDegradation );
     ChangeRelevance( rRelevance );
     nTimeLastUpdate_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
-
     // L'objet réel va être détruit
     if( pConcentrationKnown_ && !pConcentrationKnown_->IsValid() )
     {
-        pConcentrationKnown_       = 0;
+        pConcentrationKnown_ = 0;
         bRealConcentrationUpdated_ = true;
     }
 }
-
-// =============================================================================
-// NETWORK
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationConcentration::SendMsgCreation
@@ -285,16 +257,12 @@ void DEC_Knowledge_PopulationConcentration::UpdateRelevance()
 void DEC_Knowledge_PopulationConcentration::SendMsgCreation() const
 {
     assert( pPopulationKnowledge_ );
-
     client::PopulationConcentrationKnowledgeCreation asnMsg;
-
     asnMsg().set_oid_connaissance_concentration( nID_ );
-    asnMsg().set_oid_connaissance_population   ( pPopulationKnowledge_->GetID() );
-    asnMsg().set_oid_groupe_possesseur         ( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
-    asnMsg().set_oid_concentration_reelle      ( pConcentrationKnown_ ? pConcentrationKnown_->GetID() : 0 );
-
+    asnMsg().set_oid_connaissance_population( pPopulationKnowledge_->GetID() );
+    asnMsg().set_oid_groupe_possesseur( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
+    asnMsg().set_oid_concentration_reelle( pConcentrationKnown_ ? pConcentrationKnown_->GetID() : 0 );
     NET_ASN_Tools::WritePoint( position_, *asnMsg().mutable_position() );
-
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -305,12 +273,10 @@ void DEC_Knowledge_PopulationConcentration::SendMsgCreation() const
 void DEC_Knowledge_PopulationConcentration::SendMsgDestruction() const
 {
     assert( pPopulationKnowledge_ );
-
     client::PopulationConcentrationKnowledgeDestruction asnMsg;
-
     asnMsg().set_oid_connaissance_concentration( nID_ );
-    asnMsg().set_oid_connaissance_population   ( pPopulationKnowledge_->GetID() );
-    asnMsg().set_oid_groupe_possesseur         ( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
+    asnMsg().set_oid_connaissance_population( pPopulationKnowledge_->GetID() );
+    asnMsg().set_oid_groupe_possesseur( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -321,27 +287,21 @@ void DEC_Knowledge_PopulationConcentration::SendMsgDestruction() const
 void DEC_Knowledge_PopulationConcentration::SendFullState()
 {
     assert( pPopulationKnowledge_ );
-
     client::PopulationConcentrationKnowledgeUpdate asnMsg;
-
     asnMsg().set_oid_connaissance_concentration( nID_ );
-    asnMsg().set_oid_connaissance_population   ( pPopulationKnowledge_->GetID() );
-    asnMsg().set_oid_groupe_possesseur         ( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
-
-    asnMsg().set_est_percu                ( ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );
-    asnMsg().set_oid_concentration_reelle ( pConcentrationKnown_ ? pConcentrationKnown_->GetID() : 0 );
-    asnMsg().set_pertinence               ( (unsigned int)( rRelevance_ * 100. ) );
+    asnMsg().set_oid_connaissance_population ( pPopulationKnowledge_->GetID() );
+    asnMsg().set_oid_groupe_possesseur( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
+    asnMsg().set_est_percu( ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );
+    asnMsg().set_oid_concentration_reelle( pConcentrationKnown_ ? pConcentrationKnown_->GetID() : 0 );
+    asnMsg().set_pertinence( static_cast< unsigned int >( rRelevance_ * 100. ) );
     rLastRelevanceSent_ = rRelevance_;
-
     if( bReconAttributesValid_ )
     {
         assert( pAttitude_ );
-
-        asnMsg().set_nb_humains_morts  ( nNbrDeadHumans_ );
+        asnMsg().set_nb_humains_morts( nNbrDeadHumans_ );
         asnMsg().set_nb_humains_vivants( nNbrAliveHumans_ );
-        asnMsg().set_attitude          ( pAttitude_->GetAsnID() );
+        asnMsg().set_attitude( pAttitude_->GetAsnID() );
     }
-
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -353,32 +313,21 @@ void DEC_Knowledge_PopulationConcentration::UpdateOnNetwork()
 {
     assert( pPreviousPerceptionLevel_ );
     assert( pCurrentPerceptionLevel_  );
-
     if( *pPreviousPerceptionLevel_ == *pCurrentPerceptionLevel_ && !bHumansUpdated_ && !bAttitudeUpdated_ && !bRealConcentrationUpdated_ && !bRelevanceUpdated_ )
         return;
-
     client::PopulationConcentrationKnowledgeUpdate asnMsg;
-
     asnMsg().set_oid_connaissance_concentration( nID_ );
-    asnMsg().set_oid_connaissance_population   ( pPopulationKnowledge_->GetID() );
-    asnMsg().set_oid_groupe_possesseur         ( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
-
+    asnMsg().set_oid_connaissance_population( pPopulationKnowledge_->GetID() );
+    asnMsg().set_oid_groupe_possesseur( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
     if( *pPreviousPerceptionLevel_ != *pCurrentPerceptionLevel_ )
-    {
         asnMsg().set_est_percu( ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );
-    }
-
     if( bRealConcentrationUpdated_ )
-    {
         asnMsg().set_oid_concentration_reelle( pConcentrationKnown_ ? pConcentrationKnown_->GetID() : 0 );
-    }
-
     if( bRelevanceUpdated_ )
     {
-        asnMsg().set_pertinence( (unsigned int)( rRelevance_ * 100. ) );
-        rLastRelevanceSent_                    = rRelevance_;
+        asnMsg().set_pertinence( static_cast< unsigned int >( rRelevance_ * 100. ) );
+        rLastRelevanceSent_ = rRelevance_;
     }
-
     if( bReconAttributesValid_ )
     {
         assert( pAttitude_ );
@@ -387,13 +336,9 @@ void DEC_Knowledge_PopulationConcentration::UpdateOnNetwork()
             asnMsg().set_nb_humains_morts  ( nNbrDeadHumans_ );
             asnMsg().set_nb_humains_vivants( nNbrAliveHumans_ );
         }
-
         if( bAttitudeUpdated_ )
-        {
             asnMsg().set_attitude( pAttitude_->GetAsnID() );
-        }
     }
-
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -404,7 +349,7 @@ void DEC_Knowledge_PopulationConcentration::UpdateOnNetwork()
 void DEC_Knowledge_PopulationConcentration::SendStateToNewClient()
 {
     SendMsgCreation();
-    SendFullState  ();
+    SendFullState();
 }
 
 // -----------------------------------------------------------------------------
@@ -413,10 +358,10 @@ void DEC_Knowledge_PopulationConcentration::SendStateToNewClient()
 // -----------------------------------------------------------------------------
 bool DEC_Knowledge_PopulationConcentration::Clean()
 {
-    bHumansUpdated_            = false;
-    bAttitudeUpdated_          = false;
+    bHumansUpdated_ = false;
+    bAttitudeUpdated_  = false;
     bRealConcentrationUpdated_ = false;
-    bRelevanceUpdated_         = false;
+    bRelevanceUpdated_ = false;
     return rRelevance_ <= 0.;
 }
 
@@ -428,10 +373,8 @@ void DEC_Knowledge_PopulationConcentration::ChangeRelevance( MT_Float rNewReleva
 {
     if( rRelevance_ == rNewRelevance )
         return;
-
     static const MT_Float rDeltaForNetwork = 0.05;
     if( fabs( rLastRelevanceSent_ - rNewRelevance ) > rDeltaForNetwork || rNewRelevance == 0. || rNewRelevance == 1. )
         bRelevanceUpdated_ = true;
-
     rRelevance_ = rNewRelevance;
 }

@@ -11,13 +11,11 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_PopulationFlowPart.h"
-#include "DEC_Knowledge_Population.h"
 #include "DEC_Knowledge_PopulationFlowPerception.h"
 #include "DEC_Knowledge_PopulationCollision.h"
 #include "MIL_AgentServer.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Network/NET_ASN_Tools.h"
-#include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 #include "protocol/protocol.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_PopulationFlowPart )
@@ -120,7 +118,6 @@ bool DEC_Knowledge_PopulationFlowPart::Update( const DEC_Knowledge_PopulationCol
     nTimeLastUpdate_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     if( bPerceived_ )
         return false;
-
     T_PointVector shape( 1, collision.GetPosition() );
     if( shape_ != shape )
     {
@@ -138,15 +135,11 @@ bool DEC_Knowledge_PopulationFlowPart::Update( const DEC_Knowledge_PopulationCol
 bool DEC_Knowledge_PopulationFlowPart::UpdateRelevance( const MT_Float rMaxLifeTime )
 {
     assert( rRelevance_ > 0. );
-
     if( bPerceived_ )
         return ChangeRelevance( 1. );
-
     if( shape_.empty() )
         return ChangeRelevance( 0. );
-
     assert( rRelevance_ >= 0. && rRelevance_ <= 1. );
-
     if( rMaxLifeTime == 0. )
     {
         nTimeLastUpdate_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
@@ -190,7 +183,6 @@ bool DEC_Knowledge_PopulationFlowPart::ChangeRelevance( MT_Float rNewRelevance )
 {
     if( rRelevance_ == rNewRelevance )
         return false;
-
     static const MT_Float rDeltaForNetwork = 0.05;
     if( fabs( rLastRelevanceSent_ - rNewRelevance ) > rDeltaForNetwork || rNewRelevance == 0. || rNewRelevance == 1. )
     {

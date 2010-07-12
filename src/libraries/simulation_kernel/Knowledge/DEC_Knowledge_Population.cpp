@@ -35,7 +35,7 @@ MIL_IDManager DEC_Knowledge_Population::idManager_;
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Population::DEC_Knowledge_Population( const MIL_KnowledgeGroup& knowledgeGroup, MIL_Population& populationKnown )
-    : DEC_Knowledge_ABC     ()
+    : DEC_Knowledge_ABC()
     , nID_                  ( idManager_.GetFreeId() )
     , pKnowledgeGroup_      ( &knowledgeGroup )
     , pPopulationKnown_     ( &populationKnown )
@@ -52,7 +52,7 @@ DEC_Knowledge_Population::DEC_Knowledge_Population( const MIL_KnowledgeGroup& kn
 // Created: JVT 2005-03-17
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Population::DEC_Knowledge_Population()
-    : DEC_Knowledge_ABC     ()
+    : DEC_Knowledge_ABC()
     , nID_                  ( 0 )
     , pKnowledgeGroup_      ( 0 )
     , pPopulationKnown_     ( 0 )
@@ -73,10 +73,6 @@ DEC_Knowledge_Population::~DEC_Knowledge_Population()
     SendMsgDestruction();
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Population::load
 // Created: SBO 2005-10-19
@@ -92,9 +88,7 @@ void DEC_Knowledge_Population::load( MIL_CheckPointInArchive& file, const unsign
          >> bIsRecon_
          >> bReconAttributesValid_
          >> rDominationState_;
-
     idManager_.Lock( nID_ );
-
     assert( pPopulationKnown_ );
 }
 
@@ -115,10 +109,6 @@ void DEC_Knowledge_Population::save( MIL_CheckPointOutArchive& file, const unsig
          << rDominationState_;
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Population::Prepare
 // Created: NLD 2004-03-18
@@ -127,7 +117,6 @@ void DEC_Knowledge_Population::Prepare()
 {
     for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )
         it->second->Prepare();
-
     for( CIT_FlowMap it = flows_.begin(); it != flows_.end(); ++it )
         it->second->Prepare();
 }
@@ -140,9 +129,7 @@ void DEC_Knowledge_Population::UpdateReconAttributes()
 {
     if( !IsRecon() )
         return;
-
     assert( pPopulationKnown_ );
-
     bReconAttributesValid_ = true;
     if( rDominationState_ != pPopulationKnown_->GetDecision().GetDominationState() )
     {
@@ -215,7 +202,6 @@ void DEC_Knowledge_Population::UpdateRelevance()
 {
     for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )
         it->second->UpdateRelevance();
-
     for( CIT_FlowMap it = flows_.begin(); it != flows_.end(); ++it )
         it->second->UpdateRelevance();
 }
@@ -227,7 +213,6 @@ void DEC_Knowledge_Population::UpdateRelevance()
 bool DEC_Knowledge_Population::Clean()
 {
     bDecStateUpdated_ = false;
-
     for( IT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); )
     {
         DEC_Knowledge_PopulationConcentration* pKnowledge = it->second;
@@ -239,7 +224,6 @@ bool DEC_Knowledge_Population::Clean()
         else
             ++ it;
     }
-
     for( IT_FlowMap it = flows_.begin(); it != flows_.end(); )
     {
         DEC_Knowledge_PopulationFlow* pKnowledge = it->second;
@@ -274,10 +258,6 @@ void DEC_Knowledge_Population::Exterminate( const MIL_AgentPion& exterminator, M
     assert( pPopulationKnown_ );
     pPopulationKnown_->Exterminate( exterminator, rSurface );
 }
-
-// =============================================================================
-// TOOLS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Population::GetKnowledge
@@ -386,13 +366,11 @@ void DEC_Knowledge_Population::SendMsgCreation() const
 {
     assert( pKnowledgeGroup_ );
     assert( pPopulationKnown_ );
-
     client::PopulationKnowledgeCreation asnMsg;
-
-    asnMsg().set_oid_connaissance     ( nID_ );
-    asnMsg().set_oid_groupe_possesseur( pKnowledgeGroup_ ->GetId() );
+    asnMsg().set_oid_connaissance( nID_ );
+    asnMsg().set_oid_groupe_possesseur( pKnowledgeGroup_->GetId() );
     asnMsg().set_oid_population_reelle( pPopulationKnown_->GetID() );
-    asnMsg().set_camp                 ( GetArmy()         .GetID() );
+    asnMsg().set_camp( GetArmy().GetID() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -405,7 +383,6 @@ void DEC_Knowledge_Population::SendMsgDestruction() const
     if( pKnowledgeGroup_ )
     {
         client::PopulationKnowledgeDestruction asnMsg;
-
         asnMsg().set_oid_connaissance     ( nID_ );
         asnMsg().set_oid_groupe_possesseur( pKnowledgeGroup_ ->GetId() );
         asnMsg.Send( NET_Publisher_ABC::Publisher() );
@@ -426,10 +403,8 @@ void DEC_Knowledge_Population::UpdateOnNetwork() const
         asnMsg().set_etat_domination       ( (unsigned int)( rDominationState_ * 100. ) );
         asnMsg.Send( NET_Publisher_ABC::Publisher() );
     }
-
     for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )
         it->second->UpdateOnNetwork();
-
     for( CIT_FlowMap it = flows_.begin(); it != flows_.end(); ++it )
         it->second->UpdateOnNetwork();
 }
@@ -441,19 +416,16 @@ void DEC_Knowledge_Population::UpdateOnNetwork() const
 void DEC_Knowledge_Population::SendStateToNewClient() const
 {
     SendMsgCreation();
-
     if( bReconAttributesValid_ )
     {
         client::PopulationKnowledgeUpdate asnMsg;
-        asnMsg().set_oid_connaissance     ( nID_ );
+        asnMsg().set_oid_connaissance( nID_ );
         asnMsg().set_oid_groupe_possesseur( pKnowledgeGroup_ ->GetId() );
-        asnMsg().set_etat_domination      ( (unsigned int)( rDominationState_ * 100. ) );
+        asnMsg().set_etat_domination( (unsigned int)( rDominationState_ * 100. ) );
         asnMsg.Send( NET_Publisher_ABC::Publisher() );
     }
-
     for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )
         it->second->SendStateToNewClient();
-
     for( CIT_FlowMap it = flows_.begin(); it != flows_.end(); ++it )
         it->second->SendStateToNewClient();
 }

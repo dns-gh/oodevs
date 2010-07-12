@@ -74,7 +74,7 @@ public:
     //@{
     unsigned int GetID() const;
     const MIL_Army_ABC& GetArmy() const;
-    const MIL_KnowledgeGroup& GetKnowledgeGroup () const;
+    const MIL_KnowledgeGroup& GetKnowledgeGroup() const;
     MIL_Population& GetPopulationKnown() const;
     MT_Float GetDangerosity( const MIL_AgentPion& target ) const;
     bool IsRecon() const;
@@ -119,6 +119,8 @@ private:
     //@}
 
 private:
+    //! @name Data Members
+    //@{
     const MIL_KnowledgeGroup* pKnowledgeGroup_;
     MIL_Population* pPopulationKnown_;
     const unsigned int nID_;
@@ -129,6 +131,7 @@ private:
     MT_Float rDominationState_;
     bool bDecStateUpdated_;
     static MIL_IDManager idManager_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_Population )
