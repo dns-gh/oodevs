@@ -75,13 +75,13 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     CrossbowPlugin( const CrossbowPlugin& );            //!< Copy constructor
     CrossbowPlugin& operator=( const CrossbowPlugin& ); //!< Assignment operator
     //@}
 
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     void OnReceiveMessengerToClient( const std::string& /*link*/, const MsgsMessengerToClient::MsgMessengerToClient& message );
     //@}

@@ -73,7 +73,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     MIL_Formation( const MIL_Formation& );            //!< Copy constructor
     MIL_Formation& operator=( const MIL_Formation& ); //!< Assignment operator

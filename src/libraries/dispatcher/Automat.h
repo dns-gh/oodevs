@@ -102,7 +102,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Automat( const Automat& );            //!< Copy constructor
     Automat& operator=( const Automat& ); //!< Assignment operator

@@ -45,7 +45,7 @@ namespace messenger
 
 // =============================================================================
 /** @class  TacticalLinesModel
-    @brief  TacticalLinesModel
+    @brief  Tactical lines model
 */
 // Created: NLD 2006-11-10
 // =============================================================================
@@ -92,7 +92,7 @@ public:
 
 private:
 
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     TacticalLinesModel( const TacticalLinesModel& );            //!< Copy constructor
     TacticalLinesModel& operator=( const TacticalLinesModel& ); //!< Assignment operator

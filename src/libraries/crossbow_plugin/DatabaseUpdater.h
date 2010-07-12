@@ -97,7 +97,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     DatabaseUpdater( const DatabaseUpdater& );            //!< Copy constructor
     DatabaseUpdater& operator=( const DatabaseUpdater& ); //!< Assignment operator

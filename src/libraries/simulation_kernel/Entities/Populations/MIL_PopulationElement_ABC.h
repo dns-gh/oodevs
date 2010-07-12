@@ -107,7 +107,7 @@ public:
     //@}
 
 protected:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     MIL_PopulationElement_ABC( const MIL_PopulationElement_ABC& );            //!< Copy constructor
     MIL_PopulationElement_ABC& operator=( const MIL_PopulationElement_ABC& ); //!< Assignment operator

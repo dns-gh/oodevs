@@ -62,7 +62,7 @@ private:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     AgentLogMaintenance( const AgentLogMaintenance& );            //!< Copy constructor
     AgentLogMaintenance& operator=( const AgentLogMaintenance& ); //!< Assignment operator

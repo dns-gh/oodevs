@@ -52,7 +52,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     AgentLogSupply( const AgentLogSupply& );            //!< Copy constructor
     AgentLogSupply& operator=( const AgentLogSupply& ); //!< Assignment operator

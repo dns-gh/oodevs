@@ -49,7 +49,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ReportTemplate( const ReportTemplate& );            //!< Copy constructor
     ReportTemplate& operator=( const ReportTemplate& ); //!< Assignment operator

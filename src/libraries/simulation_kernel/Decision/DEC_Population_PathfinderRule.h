@@ -36,7 +36,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     DEC_Population_PathfinderRule( const DEC_Population_PathfinderRule& );            //!< Copy constructor
     DEC_Population_PathfinderRule& operator=( const DEC_Population_PathfinderRule& ); //!< Assignment operator

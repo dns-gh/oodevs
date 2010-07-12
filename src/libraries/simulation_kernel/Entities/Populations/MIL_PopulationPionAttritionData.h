@@ -44,7 +44,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     MIL_PopulationPionAttritionData( const MIL_PopulationPionAttritionData& );            //!< Copy constructor
     MIL_PopulationPionAttritionData& operator=( const MIL_PopulationPionAttritionData& ); //!< Assignment operator

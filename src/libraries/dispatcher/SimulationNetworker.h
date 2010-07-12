@@ -54,7 +54,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     SimulationNetworker( const SimulationNetworker& );            //!< Copy constructor
     SimulationNetworker& operator=( const SimulationNetworker& ); //!< Assignment operator

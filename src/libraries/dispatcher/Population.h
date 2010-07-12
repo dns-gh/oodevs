@@ -91,7 +91,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Population( const Population& );            //!< Copy constructor
     Population& operator=( const Population& ); //!< Assignment operator

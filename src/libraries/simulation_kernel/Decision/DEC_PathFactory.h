@@ -37,7 +37,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     DEC_PathFactory( const DEC_PathFactory& );            //!< Copy constructor
     DEC_PathFactory& operator=( const DEC_PathFactory& ); //!< Assignment operator

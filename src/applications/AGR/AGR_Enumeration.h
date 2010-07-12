@@ -42,7 +42,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     AGR_Enumeration( const AGR_Enumeration& );            //!< Copy constructor
     AGR_Enumeration& operator=( const AGR_Enumeration& ); //!< Assignment operator

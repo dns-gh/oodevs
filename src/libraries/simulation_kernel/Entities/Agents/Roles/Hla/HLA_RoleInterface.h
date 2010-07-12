@@ -56,7 +56,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     HLA_RoleInterface( const HLA_RoleInterface& );            //!< Copy constructor
     HLA_RoleInterface& operator=( const HLA_RoleInterface& ); //!< Assignment operator

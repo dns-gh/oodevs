@@ -79,7 +79,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ProfileManager( const ProfileManager& );            //!< Copy constructor
     ProfileManager& operator=( const ProfileManager& ); //!< Assignment operator

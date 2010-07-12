@@ -54,7 +54,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Dispatcher( const Dispatcher& );            //!< Copy constructor
     Dispatcher& operator=( const Dispatcher& ); //!< Assignment operator

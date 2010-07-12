@@ -46,7 +46,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     StatusListener( const StatusListener& );            //!< Copy constructor
     StatusListener& operator=( const StatusListener& ); //!< Assignment operator

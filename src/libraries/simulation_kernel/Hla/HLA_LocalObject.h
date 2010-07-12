@@ -60,7 +60,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     HLA_LocalObject( const HLA_LocalObject& );            //!< Copy constructor
     HLA_LocalObject& operator=( const HLA_LocalObject& ); //!< Assignment operator

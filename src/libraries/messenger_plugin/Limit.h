@@ -66,7 +66,7 @@ public:
 
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Limit( const Limit& );            //!< Copy constructor
     Limit& operator=( const Limit& ); //!< Assignment operator

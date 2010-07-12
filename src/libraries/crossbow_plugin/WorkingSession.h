@@ -43,7 +43,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     WorkingSession( const WorkingSession& );            //!< Copy constructor
     WorkingSession& operator=( const WorkingSession& ); //!< Assignment operator

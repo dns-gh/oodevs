@@ -52,7 +52,7 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     PHY_ActionLendComposantes( const PHY_ActionLendComposantes& );              //!< Copy constructor
     PHY_ActionLendComposantes& operator = ( const PHY_ActionLendComposantes& ); //!< Assignment operator

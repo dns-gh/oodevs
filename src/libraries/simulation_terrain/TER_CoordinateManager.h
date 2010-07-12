@@ -56,7 +56,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     TER_CoordinateManager( const TER_CoordinateManager& );            //!< Copy constructor
     TER_CoordinateManager& operator=( const TER_CoordinateManager& ); //!< Assignment operator

@@ -49,7 +49,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     DEC_KnowledgeResolver_Empty( const DEC_KnowledgeResolver_Empty& );            //!< Copy constructor
     DEC_KnowledgeResolver_Empty& operator=( const DEC_KnowledgeResolver_Empty& ); //!< Assignment operator

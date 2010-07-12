@@ -62,7 +62,7 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     PointCollection( const PointCollection& );            //!< Copy constructor
     PointCollection& operator=( const PointCollection& ); //!< Assignment operator

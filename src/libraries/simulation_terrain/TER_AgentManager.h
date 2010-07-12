@@ -64,7 +64,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     TER_AgentManager( const TER_AgentManager& );            //!< Copy constructor
     TER_AgentManager& operator=( const TER_AgentManager& ); //!< Assignment operator

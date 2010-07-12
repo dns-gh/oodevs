@@ -182,7 +182,7 @@ protected:
     MIL_Population( const MIL_PopulationType& type );
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     MIL_Population( const MIL_Population& );            //!< Copy constructor
     MIL_Population& operator=( const MIL_Population& ); //!< Assignment operator

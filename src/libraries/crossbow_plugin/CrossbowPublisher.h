@@ -66,7 +66,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     CrossbowPublisher( const CrossbowPublisher& );            //!< Copy constructor
     CrossbowPublisher& operator=( const CrossbowPublisher& ); //!< Assignment operator

@@ -82,7 +82,7 @@ protected:
 
 private:
 
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     TacticalLine_ABC( const TacticalLine_ABC& );            //!< Copy constructor
     TacticalLine_ABC& operator=( const TacticalLine_ABC& ); //!< Assignment operator

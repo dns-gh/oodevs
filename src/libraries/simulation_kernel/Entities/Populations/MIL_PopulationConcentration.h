@@ -98,7 +98,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     MIL_PopulationConcentration( const MIL_PopulationConcentration& );            //!< Copy constructor
     MIL_PopulationConcentration& operator=( const MIL_PopulationConcentration& ); //!< Assignment operator

@@ -50,7 +50,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     AGR_Workspace( const AGR_Workspace& );            //!< Copy constructor
     AGR_Workspace& operator=( const AGR_Workspace& ); //!< Assignment operator

@@ -63,7 +63,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     LogConsignMedical( const LogConsignMedical& );            //!< Copy constructor
     LogConsignMedical& operator=( const LogConsignMedical& ); //!< Assignment operator

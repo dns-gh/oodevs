@@ -69,7 +69,7 @@ private:
     void InitializeClasses();
     //@}
 
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     HLA_Federate( const HLA_Federate& );            //!< Copy constructor
     HLA_Federate& operator=( const HLA_Federate& ); //!< Assignment operator

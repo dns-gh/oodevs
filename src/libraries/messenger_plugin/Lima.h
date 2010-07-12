@@ -66,7 +66,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Lima( const Lima& );            //!< Copy constructor
     Lima& operator=( const Lima& ); //!< Assignment operator

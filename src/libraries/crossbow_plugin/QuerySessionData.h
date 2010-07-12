@@ -41,7 +41,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     QuerySessionData( const QuerySessionData& );            //!< Copy constructor
     QuerySessionData& operator=( const QuerySessionData& ); //!< Assignment operator

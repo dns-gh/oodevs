@@ -60,7 +60,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     MIL_OrderContext& operator=( const MIL_OrderContext& ); //!< Assignment operator
     //@}

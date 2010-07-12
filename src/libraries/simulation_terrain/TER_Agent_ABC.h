@@ -66,7 +66,7 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     TER_Agent_ABC( const TER_Agent_ABC& );            //!< Copy constructor
     TER_Agent_ABC& operator=( const TER_Agent_ABC& ); //!< Assignment operator

@@ -34,7 +34,7 @@ public:
 
 private:
 
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     MIL_CheckPointOutArchive( const MIL_CheckPointOutArchive& );            //!< Copy constructor
     MIL_CheckPointOutArchive& operator=( const MIL_CheckPointOutArchive& ); //!< Assignment operator

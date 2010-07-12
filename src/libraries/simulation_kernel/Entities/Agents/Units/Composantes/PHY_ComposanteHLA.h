@@ -57,7 +57,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     PHY_ComposanteHLA( const PHY_ComposanteHLA& );            //!< Copy constructor
     PHY_ComposanteHLA& operator=( const PHY_ComposanteHLA& ); //!< Assignment operator

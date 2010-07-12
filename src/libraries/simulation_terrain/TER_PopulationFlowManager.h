@@ -46,7 +46,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     TER_PopulationFlowManager( const TER_PopulationFlowManager& );            //!< Copy constructor
     TER_PopulationFlowManager& operator=( const TER_PopulationFlowManager& ); //!< Assignment operator

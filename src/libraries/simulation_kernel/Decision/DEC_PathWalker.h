@@ -123,7 +123,7 @@ private:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     DEC_PathWalker( const DEC_PathWalker& );            //!< Copy constructor
     DEC_PathWalker& operator=( const DEC_PathWalker& ); //!< Assignment operator

@@ -89,7 +89,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     MIL_AgentHLA( const MIL_AgentHLA& );            //!< Copy constructor
     MIL_AgentHLA& operator=( const MIL_AgentHLA& ); //!< Assignment operator

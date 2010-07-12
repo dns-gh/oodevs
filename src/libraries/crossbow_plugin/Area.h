@@ -51,7 +51,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Area( const Area& );            //!< Copy constructor
     Area& operator=( const Area& ); //!< Assignment operator

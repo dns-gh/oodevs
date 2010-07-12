@@ -70,7 +70,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Side( const Side& );            //!< Copy constructor
     Side& operator=( const Side& ); //!< Assignment operator

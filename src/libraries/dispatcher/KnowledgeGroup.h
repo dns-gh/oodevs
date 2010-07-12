@@ -62,7 +62,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     KnowledgeGroup( const KnowledgeGroup& );            //!< Copy constructor
     KnowledgeGroup& operator=( const KnowledgeGroup& ); //!< Assignment operator

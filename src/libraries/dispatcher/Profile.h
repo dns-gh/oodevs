@@ -97,7 +97,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Profile( const Profile& );            //!< Copy constructor
     Profile& operator=( const Profile& ); //!< Assignment operator

@@ -58,7 +58,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     UrbanObject( const UrbanObject& );            //!< Copy constructor
     UrbanObject& operator=( const UrbanObject& ); //!< Assignment operator

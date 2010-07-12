@@ -104,7 +104,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     Model( const Model& );            //!< Copy constructor
     Model& operator=( const Model& ); //!< Assignment operator

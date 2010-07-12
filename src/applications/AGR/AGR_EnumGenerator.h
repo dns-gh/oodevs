@@ -33,7 +33,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     AGR_EnumGenerator( const AGR_EnumGenerator& );            //!< Copy constructor
     AGR_EnumGenerator& operator=( const AGR_EnumGenerator& ); //!< Assignment operator

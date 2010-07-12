@@ -63,7 +63,7 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     ClientsNetworker( const ClientsNetworker& );            //!< Copy constructor
     ClientsNetworker& operator=( const ClientsNetworker& ); //!< Assignment operator

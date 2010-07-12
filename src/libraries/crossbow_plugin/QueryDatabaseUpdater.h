@@ -98,7 +98,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     QueryDatabaseUpdater( const QueryDatabaseUpdater& );            //!< Copy constructor
     QueryDatabaseUpdater& operator=( const QueryDatabaseUpdater& ); //!< Assignment operator
