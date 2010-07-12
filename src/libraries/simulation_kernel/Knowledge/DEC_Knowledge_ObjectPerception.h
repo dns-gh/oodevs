@@ -49,30 +49,32 @@ public:
     //! @name Operations
     //@{
     void Prepare();
-    void Update ( const PHY_PerceptionLevel& perceptionLevel );
-    bool Clean  ();
+    void Update( const PHY_PerceptionLevel& perceptionLevel );
+    bool Clean();
     //@}
 
     //! @name Network operations
     //@{
-    void UpdateOnNetwork     () const;
+    void UpdateOnNetwork() const;
     void SendStateToNewClient() const;
     //@}
 
     //! @name Accessors
     //@{
-          MIL_Object_ABC&      GetObjectPerceived       () const;
-    const MIL_Agent_ABC&       GetAgentPerceiving       () const;
+    MIL_Object_ABC& GetObjectPerceived() const;
+    const MIL_Agent_ABC& GetAgentPerceiving() const;
     const PHY_PerceptionLevel& GetCurrentPerceptionLevel() const;
-          bool                 IsPerceived              () const;
+    bool IsPerceived() const;
     //@}
 
 private:
-    const MIL_Agent_ABC*       pAgentPerceiving_;
-          MIL_Object_ABC*      pObjectPerceived_;
-
+    //! @name Data Members
+    //@{
+    const MIL_Agent_ABC* pAgentPerceiving_;
+    MIL_Object_ABC* pObjectPerceived_;
     const PHY_PerceptionLevel* pCurrentPerceptionLevel_;
     const PHY_PerceptionLevel* pPreviousPerceptionLevel_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectPerception )

@@ -44,23 +44,26 @@ public:
     //! @name Operations
     //@{
     void Prepare();
-    void Update ( const MT_Vector2D& vPosition );
-    bool Clean  ();
+    void Update( const MT_Vector2D& vPosition );
+    bool Clean();
     //@}
 
     //! @name Accessors
     //@{
-          MIL_Object_ABC&      GetObject        () const;
-    const MIL_Agent_ABC&       GetAgentColliding() const;
-    const MT_Vector2D&         GetPosition      () const;
-          bool                 IsValid          () const;
+    MIL_Object_ABC& GetObject() const;
+    const MIL_Agent_ABC& GetAgentColliding() const;
+    const MT_Vector2D& GetPosition() const;
+    bool IsValid() const;
     //@}
 
 private:
-    const MIL_Agent_ABC*       pAgentColliding_;
-          MIL_Object_ABC*      pObject_;
-          MT_Vector2D          vPosition_;
-          bool                 bIsValid_;
+    //! @name Data Members
+    //@{
+    const MIL_Agent_ABC* pAgentColliding_;
+    MIL_Object_ABC* pObject_;
+    MT_Vector2D vPosition_;
+    bool bIsValid_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectCollision )

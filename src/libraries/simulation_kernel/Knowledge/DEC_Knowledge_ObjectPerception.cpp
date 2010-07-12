@@ -24,7 +24,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectPerception )
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectPerception::DEC_Knowledge_ObjectPerception( const MIL_Agent_ABC& agentPerceiving, MIL_Object_ABC& objectPerceived )
-    : DEC_Knowledge_ABC        ()
+    : DEC_Knowledge_ABC()
     , pAgentPerceiving_        ( &agentPerceiving )
     , pObjectPerceived_        ( &objectPerceived )
     , pCurrentPerceptionLevel_ ( &PHY_PerceptionLevel::notSeen_ )
@@ -38,7 +38,7 @@ DEC_Knowledge_ObjectPerception::DEC_Knowledge_ObjectPerception( const MIL_Agent_
 // Created: JVT 2005-03-17
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectPerception::DEC_Knowledge_ObjectPerception()
-    : DEC_Knowledge_ABC        ()
+    : DEC_Knowledge_ABC()
     , pAgentPerceiving_        ( 0 )
     , pObjectPerceived_        ( 0 )
     , pCurrentPerceptionLevel_ ( 0 )
@@ -63,14 +63,11 @@ DEC_Knowledge_ObjectPerception::~DEC_Knowledge_ObjectPerception()
 void DEC_Knowledge_ObjectPerception::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this );
-
     file >> const_cast< MIL_Agent_ABC*& >( pAgentPerceiving_ )
          >> pObjectPerceived_;
-
     unsigned int nTmp;
     file >> nTmp;
     pCurrentPerceptionLevel_  = &PHY_PerceptionLevel::FindPerceptionLevel( nTmp );
-
     file >> nTmp;
     pPreviousPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nTmp );
 }
@@ -98,7 +95,7 @@ void DEC_Knowledge_ObjectPerception::save( MIL_CheckPointOutArchive& file, const
 void DEC_Knowledge_ObjectPerception::Prepare()
 {
     pPreviousPerceptionLevel_ = pCurrentPerceptionLevel_;
-    pCurrentPerceptionLevel_  = &PHY_PerceptionLevel::notSeen_;
+    pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::notSeen_;
 }
 
 // -----------------------------------------------------------------------------

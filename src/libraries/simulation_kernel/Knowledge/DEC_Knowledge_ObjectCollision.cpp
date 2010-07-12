@@ -13,7 +13,6 @@
 #include "DEC_Knowledge_ObjectCollision.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
-#include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectCollision )
 
@@ -25,7 +24,6 @@ DEC_Knowledge_ObjectCollision::DEC_Knowledge_ObjectCollision( const MIL_Agent_AB
     : DEC_Knowledge_ABC()
     , pAgentColliding_ ( &agentColliding )
     , pObject_         ( &object )
-    , vPosition_       ()
     , bIsValid_        ( false )
 {
     // NOTHING
@@ -37,10 +35,9 @@ DEC_Knowledge_ObjectCollision::DEC_Knowledge_ObjectCollision( const MIL_Agent_AB
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectCollision::DEC_Knowledge_ObjectCollision()
     : DEC_Knowledge_ABC()
-    , pAgentColliding_ ( 0 )
-    , pObject_         ( 0 )
-    , vPosition_       ()
-    , bIsValid_        ( false )
+    , pAgentColliding_( 0 )
+    , pObject_        ( 0 )
+    , bIsValid_       ( false )
 {
     // NOTHING
 }

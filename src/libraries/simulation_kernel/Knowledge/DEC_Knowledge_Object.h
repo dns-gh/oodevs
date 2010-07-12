@@ -69,56 +69,52 @@ public:
 
     //! @name Operations
     //@{
-    void Recon  ( const MIL_Agent_ABC& agent );
+    void Recon( const MIL_Agent_ABC& agent );
     void Prepare();
-
     void Update( const PHY_PerceptionLevel& currentPerceptionLevel );
     void Update( const DEC_Knowledge_ObjectPerception& perception );
-    void Update( const DEC_Knowledge_ObjectCollision& collision  );
-
+    void Update( const DEC_Knowledge_ObjectCollision& collision );
     bool Clean() const;
-
     bool IsValid() const;
     void Invalidate();
-
     const PHY_PerceptionLevel& GetCurrentPerceptionLevel( const MIL_Agent_ABC& pion ) const;
     //@}
 
     //! @name Relevance management
     //@{
-    void     UpdateRelevance();
-    MT_Float GetRelevance   () const;
+    void UpdateRelevance();
+    MT_Float GetRelevance() const;
     //@}
 
     //! @name Network operations
     //@{
-    void UpdateOnNetwork     ();
+    void UpdateOnNetwork();
     void SendStateToNewClient();
     //@}
 
     //! @name Accessors
     //@{
-          bool                IsRecon                    () const;
-          bool                IsBypassed                 () const;
-          bool                IsConstructed              () const;
-          bool                IsReservedObstacle         () const;
-          bool                IsReservedObstacleActivated() const;
-          unsigned int                GetID                      () const;
-          MIL_Object_ABC*     GetObjectKnown             () const;
-    const MIL_ObjectType_ABC& GetType                    () const;
-    const TER_Localisation&   GetLocalisation            () const;
-    const TER_Localisation&   GetAvoidanceLocalisation   () const;
-    const MIL_Army_ABC&       GetArmy                    () const;
-          MT_Float            GetMaxInteractionHeight    () const;
-    E_Tristate                IsAnEnemy                  ( const MIL_Army_ABC& army ) const;
-    E_Tristate                IsAFriend                  ( const MIL_Army_ABC& army ) const;
+    bool IsRecon() const;
+    bool IsBypassed() const;
+    bool IsConstructed() const;
+    bool IsReservedObstacle() const;
+    bool IsReservedObstacleActivated() const;
+    unsigned int GetID() const;
+    MIL_Object_ABC* GetObjectKnown() const;
+    const MIL_ObjectType_ABC& GetType() const;
+    const TER_Localisation& GetLocalisation() const;
+    const TER_Localisation& GetAvoidanceLocalisation() const;
+    const MIL_Army_ABC& GetArmy() const;
+    MT_Float GetMaxInteractionHeight() const;
+    E_Tristate IsAnEnemy ( const MIL_Army_ABC& army ) const;
+    E_Tristate IsAFriend ( const MIL_Army_ABC& army ) const;
     //@}
 
     //! @name Extension
     //@{
-    template< typename Extension >  void              Attach( Extension& extension );
-    template< typename Extension >  void              AttachExtension( Extension& extension );
-    template< typename Extension >  const Extension*  Retrieve() const;
+    template< typename Extension > void Attach( Extension& extension );
+    template< typename Extension > void AttachExtension( Extension& extension );
+    template< typename Extension > const Extension* Retrieve() const;
     //@}
 
 protected:
@@ -126,53 +122,52 @@ protected:
     //@{
     enum E_Attributes
     {
-        eAttr_Nothing                        = 0x00000000,
-        eAttr_Localisation                   = 0x00000001,
-        eAttr_EtatOps                        = 0x00000002,
-        eAttr_ConstructionPercentage         = 0x00000004,
-        eAttr_MiningPercentage               = 0x00000008,
-        eAttr_BypassPercentage               = 0x00000010,
-        eAttr_ReservedObstacleActivated      = 0x00000020,
-        eAttr_RealObject                     = 0x00000040,
-        eAttr_PerceptionSources              = 0x00000080,
-        eAttr_Relevance                      = 0x00000100,
-        eAttr_CurrentPerceptionLevel         = 0x00000200,
-        eAttr_MaxPerceptionLevel             = 0x00000400,
-        eAttr_Specific                       = 0x00000800,
-        eAttr_Dotations                      = 0x00001000,
-        eAttr_AllAttributes                  = 0xFFFFFFFF
+        eAttr_Nothing                   = 0x00000000,
+        eAttr_Localisation              = 0x00000001,
+        eAttr_EtatOps                   = 0x00000002,
+        eAttr_ConstructionPercentage    = 0x00000004,
+        eAttr_MiningPercentage          = 0x00000008,
+        eAttr_BypassPercentage          = 0x00000010,
+        eAttr_ReservedObstacleActivated = 0x00000020,
+        eAttr_RealObject                = 0x00000040,
+        eAttr_PerceptionSources         = 0x00000080,
+        eAttr_Relevance                 = 0x00000100,
+        eAttr_CurrentPerceptionLevel    = 0x00000200,
+        eAttr_MaxPerceptionLevel        = 0x00000400,
+        eAttr_Specific                  = 0x00000800,
+        eAttr_Dotations                 = 0x00001000,
+        eAttr_AllAttributes             = 0xFFFFFFFF
     };
     //@}
 
 protected:
     //! @name Tools
     //@{
-          void      NotifyAttributeUpdated( E_Attributes nAttribute );
-          bool      IsAttributeUpdated    ( E_Attributes nAttribute ) const;
-          bool      IsReconBy             ( const MIL_AgentType_ABC& agentType ) const;
-    const MIL_Army_ABC& GetArmyKnowing    () const;
+    void NotifyAttributeUpdated( E_Attributes nAttribute );
+    bool IsAttributeUpdated( E_Attributes nAttribute ) const;
+    bool IsReconBy( const MIL_AgentType_ABC& agentType ) const;
+    const MIL_Army_ABC& GetArmyKnowing() const;
     //@}
 
 private:
     //! @name Internal updaters
     //@{
-    void UpdateLocalisations         ();
+    void UpdateLocalisations();
     void UpdateLocalisationPartially ( const DEC_Knowledge_ObjectCollision& collision );
-    void UpdatePerceptionSources     ( const DEC_Knowledge_ObjectPerception& perception );
+    void UpdatePerceptionSources( const DEC_Knowledge_ObjectPerception& perception );
     void UpdateCurrentPerceptionLevel( const PHY_PerceptionLevel& perceptionLevel );
-    bool UpdateMaxPerceptionLevel    ( const PHY_PerceptionLevel& perceptionLevel );
+    bool UpdateMaxPerceptionLevel( const PHY_PerceptionLevel& perceptionLevel );
     //@}
 
     //! @name Internal network senders
     //@{
-    void BuildMsgRealObject            ( MsgsSimToClient::MsgObjectKnowledgeUpdate& asnMsg ) const;
-    void BuildMsgPerceptionSources     ( MsgsSimToClient::MsgObjectKnowledgeUpdate& asnMsg ) const;
-    void BuildMsgRelevance             ( MsgsSimToClient::MsgObjectKnowledgeUpdate& asnMsg ) const;
-    void BuildMsgLocalisations         ( MsgsSimToClient::MsgObjectKnowledgeUpdate& asnMsg ) const;
+    void BuildMsgRealObject( MsgsSimToClient::MsgObjectKnowledgeUpdate& asnMsg ) const;
+    void BuildMsgPerceptionSources( MsgsSimToClient::MsgObjectKnowledgeUpdate& asnMsg ) const;
+    void BuildMsgRelevance( MsgsSimToClient::MsgObjectKnowledgeUpdate& asnMsg ) const;
+    void BuildMsgLocalisations( MsgsSimToClient::MsgObjectKnowledgeUpdate& asnMsg ) const;
     void BuildMsgCurrentPerceptionLevel( MsgsSimToClient::MsgObjectKnowledgeUpdate& asnMsg ) const;
-    void BuildMsgAttributes            ( MsgsSimToClient::MsgObjectKnowledgeUpdate& asnMsg ) const;
-
-    void SendMsgCreation   () const;
+    void BuildMsgAttributes( MsgsSimToClient::MsgObjectKnowledgeUpdate& asnMsg ) const;
+    void SendMsgCreation() const;
     void SendMsgDestruction() const;
     //@}
 
@@ -180,53 +175,47 @@ private:
     //! @name Types
     //@{
     typedef std::set< MIL_Automate* >               T_PerceptionSourceSet;
-    typedef T_PerceptionSourceSet::iterator         IT_PerceptionSourceSet;
-    typedef T_PerceptionSourceSet::const_iterator   CIT_PerceptionSourceSet;
+    typedef T_PerceptionSourceSet::iterator        IT_PerceptionSourceSet;
+    typedef T_PerceptionSourceSet::const_iterator CIT_PerceptionSourceSet;
 
     typedef std::map< const MIL_Agent_ABC*, const PHY_PerceptionLevel* > T_PerceptionAgentSourceMap;
-    typedef T_PerceptionAgentSourceMap::iterator         IT_PerceptionAgentSourceMap;
-    typedef T_PerceptionAgentSourceMap::const_iterator   CIT_PerceptionAgentSourceMap;
+    typedef T_PerceptionAgentSourceMap::iterator                        IT_PerceptionAgentSourceMap;
+    typedef T_PerceptionAgentSourceMap::const_iterator                 CIT_PerceptionAgentSourceMap;
 
-    typedef std::set< const MIL_AgentType_ABC* >    T_AgentTypeSet;
-    typedef T_AgentTypeSet::const_iterator          CIT_AgentTypeSet;
+    typedef std::set< const MIL_AgentType_ABC* > T_AgentTypeSet;
+    typedef T_AgentTypeSet::const_iterator     CIT_AgentTypeSet;
 
-    typedef std::vector< DEC_Knowledge_ObjectAttribute_ABC* >   T_ObjectAttributeVector;
-    typedef T_ObjectAttributeVector::iterator                   IT_ObjectAttributeVector;
-    typedef T_ObjectAttributeVector::const_iterator             CIT_ObjectAttributeVector;
+    typedef std::vector< DEC_Knowledge_ObjectAttribute_ABC* > T_ObjectAttributeVector;
+    typedef T_ObjectAttributeVector::iterator                IT_ObjectAttributeVector;
+    typedef T_ObjectAttributeVector::const_iterator         CIT_ObjectAttributeVector;
     //@}
 
 private:
-    const MIL_Army_ABC*       pArmyKnowing_;
+    //! @name Data Members
+    //@{
+    const MIL_Army_ABC* pArmyKnowing_;
     const MIL_KnowledgeGroup* pGroupKnowing_;
-          MIL_Object_ABC*     pObjectKnown_; // Objet réel (peut ne plus exister...)
+    MIL_Object_ABC* pObjectKnown_; // Objet réel (peut ne plus exister...)
     const MIL_ObjectType_ABC* pObjectType_;
-    const unsigned int                nID_;
-
-    T_ObjectAttributeVector   attributes_;
-
+    const unsigned int  nID_;
+    T_ObjectAttributeVector attributes_;
     int nAttributesUpdated_;
-
     // Attributes
     const MIL_Army_ABC* pOwnerArmy_;
-    TER_Localisation  localisation_;
-    TER_Localisation  avoidanceLocalisation_;
-
+    TER_Localisation localisation_;
+    TER_Localisation avoidanceLocalisation_;
     const PHY_PerceptionLevel* pCurrentPerceptionLevel_;
     const PHY_PerceptionLevel* pPreviousPerceptionLevel_;
     const PHY_PerceptionLevel* pMaxPerceptionLevel_;
-
-    T_PerceptionSourceSet  perceptionPerAutomateSet_;
-    T_PerceptionSourceSet  previousPerceptionPerAutomateSet_;
-
-    T_PerceptionAgentSourceMap  perceptionLevelPerAgentMap_;
-
-    unsigned int     nTimeLastUpdate_;
+    T_PerceptionSourceSet perceptionPerAutomateSet_;
+    T_PerceptionSourceSet previousPerceptionPerAutomateSet_;
+    T_PerceptionAgentSourceMap perceptionLevelPerAgentMap_;
+    unsigned int nTimeLastUpdate_;
     MT_Float rRelevance_;
-    bool     bValid_;
-
+    bool bValid_;
     T_AgentTypeSet reconByAgentTypes_;
-
     static MIL_IDManager idManager_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_Object )

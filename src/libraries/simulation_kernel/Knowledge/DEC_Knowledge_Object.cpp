@@ -13,34 +13,23 @@
 #include "DEC_Knowledge_Object.h"
 #include "DEC_Knowledge_ObjectPerception.h"
 #include "DEC_Knowledge_ObjectCollision.h"
-#include "DEC_Knowledge_ObjectAttribute_ABC.h"
-
 #include "Entities/Objects/MIL_ObjectFactory.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/AvoidanceCapacity.h"
 #include "Entities/Objects/ActivableCapacity.h"
 #include "Entities/Objects/ContaminationCapacity.h"
-
 #include "Entities/Automates/MIL_Automate.h"
-
-#include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-
 #include "Entities/MIL_Army.h"
-
 #include "Knowledge/MIL_KnowledgeGroup.h"
-
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
-#include "Tools/MIL_IDManager.h"
-
 #include "DEC_Knowledge_ObjectAttributeConstruction.h"
 #include "DEC_Knowledge_ObjectAttributeBypass.h"
 #include "DEC_Knowledge_ObjectAttributeObstacle.h"
 #include "DEC_Knowledge_ObjectAttributeInteractionHeight.h"
-
 #include "protocol/clientsenders.h"
 #include <boost/bind.hpp>
 
@@ -53,24 +42,20 @@ MIL_IDManager DEC_Knowledge_Object::idManager_;
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Object::DEC_Knowledge_Object( const MIL_Army_ABC& armyKnowing, MIL_Object_ABC& objectKnown )
-    : DEC_Knowledge_ABC                 ()
-    , pArmyKnowing_                     ( &armyKnowing )
-    , pGroupKnowing_                    ( 0 )
-    , pObjectKnown_                     ( &objectKnown )
-    , pObjectType_                      ( &objectKnown.GetType() )
-    , nID_                              ( idManager_.GetFreeId() )
-    , nAttributesUpdated_               ( eAttr_AllAttributes )
-    , pOwnerArmy_                       ( objectKnown.GetArmy() )
-    , localisation_                     ( )
-    , avoidanceLocalisation_            ( )
-    , pCurrentPerceptionLevel_          ( &PHY_PerceptionLevel::notSeen_ )
-    , pPreviousPerceptionLevel_         ( &PHY_PerceptionLevel::notSeen_ )
-    , pMaxPerceptionLevel_              ( &PHY_PerceptionLevel::notSeen_ )
-    , perceptionPerAutomateSet_         ()
-    , previousPerceptionPerAutomateSet_ ()
-    , nTimeLastUpdate_                  ( 0 )
-    , rRelevance_                       ( 1. )
-    , bValid_                           ( true )
+    : DEC_Knowledge_ABC()
+    , pArmyKnowing_            ( &armyKnowing )
+    , pGroupKnowing_           ( 0 )
+    , pObjectKnown_            ( &objectKnown )
+    , pObjectType_             ( &objectKnown.GetType() )
+    , nID_                     ( idManager_.GetFreeId() )
+    , nAttributesUpdated_      ( eAttr_AllAttributes )
+    , pOwnerArmy_              ( objectKnown.GetArmy() )
+    , pCurrentPerceptionLevel_ ( &PHY_PerceptionLevel::notSeen_ )
+    , pPreviousPerceptionLevel_( &PHY_PerceptionLevel::notSeen_ )
+    , pMaxPerceptionLevel_     ( &PHY_PerceptionLevel::notSeen_ )
+    , nTimeLastUpdate_         ( 0 )
+    , rRelevance_              ( 1. )
+    , bValid_                  ( true )
 {
     SendMsgCreation();
 }
@@ -80,24 +65,20 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const MIL_Army_ABC& armyKnowing, MIL
 // Created: LDC 2010-04-15
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Object::DEC_Knowledge_Object( const MIL_KnowledgeGroup& groupKnowing, MIL_Object_ABC& objectKnown )
-    : DEC_Knowledge_ABC                 ()
-    , pArmyKnowing_                     ( &groupKnowing.GetArmy() )
-    , pGroupKnowing_                    ( &groupKnowing )
-    , pObjectKnown_                     ( &objectKnown )
-    , pObjectType_                      ( &objectKnown.GetType() )
-    , nID_                              ( idManager_.GetFreeId() )
-    , nAttributesUpdated_               ( eAttr_AllAttributes )
-    , pOwnerArmy_                       ( objectKnown.GetArmy() )
-    , localisation_                     ( )
-    , avoidanceLocalisation_            ( )
-    , pCurrentPerceptionLevel_          ( &PHY_PerceptionLevel::notSeen_ )
-    , pPreviousPerceptionLevel_         ( &PHY_PerceptionLevel::notSeen_ )
-    , pMaxPerceptionLevel_              ( &PHY_PerceptionLevel::notSeen_ )
-    , perceptionPerAutomateSet_         ()
-    , previousPerceptionPerAutomateSet_ ()
-    , nTimeLastUpdate_                  ( 0 )
-    , rRelevance_                       ( 1. )
-    , bValid_                           ( true )
+    : DEC_Knowledge_ABC()
+    , pArmyKnowing_            ( &groupKnowing.GetArmy() )
+    , pGroupKnowing_           ( &groupKnowing )
+    , pObjectKnown_            ( &objectKnown )
+    , pObjectType_             ( &objectKnown.GetType() )
+    , nID_                     ( idManager_.GetFreeId() )
+    , nAttributesUpdated_      ( eAttr_AllAttributes )
+    , pOwnerArmy_              ( objectKnown.GetArmy() )
+    , pCurrentPerceptionLevel_ ( &PHY_PerceptionLevel::notSeen_ )
+    , pPreviousPerceptionLevel_( &PHY_PerceptionLevel::notSeen_ )
+    , pMaxPerceptionLevel_     ( &PHY_PerceptionLevel::notSeen_ )
+    , nTimeLastUpdate_         ( 0 )
+    , rRelevance_              ( 1. )
+    , bValid_                  ( true )
 {
     SendMsgCreation();
 }
@@ -107,25 +88,20 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const MIL_KnowledgeGroup& groupKnowi
 // Created: JVT 2005-03-16
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Object::DEC_Knowledge_Object()
-    : DEC_Knowledge_ABC                ()
-    , pArmyKnowing_                    ( 0 )
-    , pGroupKnowing_                    ( 0 )
-    , pObjectKnown_                    ( 0 )
-    , pObjectType_                     ( 0 )
-    , nID_                             ( 0 )
-    , nAttributesUpdated_              ( 0 )
-    , pOwnerArmy_                      ( 0 )
-    , localisation_                    ()
-    , avoidanceLocalisation_           ()
-    , pCurrentPerceptionLevel_         ( 0 )
-    , pPreviousPerceptionLevel_        ( 0 )
-    , pMaxPerceptionLevel_             ( 0 )
-    , perceptionPerAutomateSet_        ()
-    , perceptionLevelPerAgentMap_      ()
-    , previousPerceptionPerAutomateSet_()
-    , nTimeLastUpdate_                 ( 0 )
-    , rRelevance_                      ( 0. )
-    , bValid_                          ( true )
+    : DEC_Knowledge_ABC()
+    , pArmyKnowing_            ( 0 )
+    , pGroupKnowing_           ( 0 )
+    , pObjectKnown_            ( 0 )
+    , pObjectType_             ( 0 )
+    , nID_                     ( 0 )
+    , nAttributesUpdated_      ( 0 )
+    , pOwnerArmy_              ( 0 )
+    , pCurrentPerceptionLevel_ ( 0 )
+    , pPreviousPerceptionLevel_( 0 )
+    , pMaxPerceptionLevel_     ( 0 )
+    , nTimeLastUpdate_         ( 0 )
+    , rRelevance_              ( 0. )
+    , bValid_                  ( true )
 {
     // NOTHING
 }
@@ -135,24 +111,24 @@ DEC_Knowledge_Object::DEC_Knowledge_Object()
 // Created: LDC 2010-04-07
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Object::DEC_Knowledge_Object( const DEC_Knowledge_Object& copy, const MIL_KnowledgeGroup* pGroupKnowing )
-    : DEC_Knowledge_ABC                 ()
-    , pArmyKnowing_                     ( copy.pArmyKnowing_ )
-    , pGroupKnowing_                    ( pGroupKnowing )
-    , pObjectKnown_                     ( copy.pObjectKnown_ )
-    , pObjectType_                      ( copy.pObjectType_ )
-    , nID_                              ( copy.idManager_.GetFreeId() )
-    , nAttributesUpdated_               ( copy.nAttributesUpdated_ )
-    , pOwnerArmy_                       ( copy.pOwnerArmy_ )
-    , localisation_                     ( copy.localisation_ )
-    , avoidanceLocalisation_            ( copy.avoidanceLocalisation_ )
-    , pCurrentPerceptionLevel_          ( copy.pCurrentPerceptionLevel_ )
-    , pPreviousPerceptionLevel_         ( copy.pPreviousPerceptionLevel_ )
-    , pMaxPerceptionLevel_              ( copy.pMaxPerceptionLevel_ )
-    , perceptionPerAutomateSet_         ( copy.perceptionPerAutomateSet_ )
-    , previousPerceptionPerAutomateSet_ ( copy.previousPerceptionPerAutomateSet_ )
-    , nTimeLastUpdate_                  ( copy.nTimeLastUpdate_ )
-    , rRelevance_                       ( copy.rRelevance_ )
-    , bValid_                           ( copy.bValid_ )
+    : DEC_Knowledge_ABC()
+    , pArmyKnowing_                    ( copy.pArmyKnowing_ )
+    , pGroupKnowing_                   ( pGroupKnowing )
+    , pObjectKnown_                    ( copy.pObjectKnown_ )
+    , pObjectType_                     ( copy.pObjectType_ )
+    , nID_                             ( copy.idManager_.GetFreeId() )
+    , nAttributesUpdated_              ( copy.nAttributesUpdated_ )
+    , pOwnerArmy_                      ( copy.pOwnerArmy_ )
+    , localisation_                    ( copy.localisation_ )
+    , avoidanceLocalisation_           ( copy.avoidanceLocalisation_ )
+    , pCurrentPerceptionLevel_         ( copy.pCurrentPerceptionLevel_ )
+    , pPreviousPerceptionLevel_        ( copy.pPreviousPerceptionLevel_ )
+    , pMaxPerceptionLevel_             ( copy.pMaxPerceptionLevel_ )
+    , perceptionPerAutomateSet_        ( copy.perceptionPerAutomateSet_ )
+    , previousPerceptionPerAutomateSet_( copy.previousPerceptionPerAutomateSet_ )
+    , nTimeLastUpdate_                 ( copy.nTimeLastUpdate_ )
+    , rRelevance_                      ( copy.rRelevance_ )
+    , bValid_                          ( copy.bValid_ )
 {
     SendMsgCreation();
 }
@@ -166,10 +142,6 @@ DEC_Knowledge_Object::~DEC_Knowledge_Object()
     Invalidate();
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Object::load
 // Created: JVT 2005-03-23
@@ -177,13 +149,10 @@ DEC_Knowledge_Object::~DEC_Knowledge_Object()
 void DEC_Knowledge_Object::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this );
-
     std::string name;
     file >> name;
     pObjectType_ = &MIL_ObjectFactory::FindType( name );
-
     T_ObjectAttributeVector attributes;
-
     file >> const_cast< MIL_Army_ABC*& >( pArmyKnowing_ )
          >> pObjectKnown_
          >> const_cast< unsigned int& >( nID_ )
@@ -192,16 +161,12 @@ void DEC_Knowledge_Object::load( MIL_CheckPointInArchive& file, const unsigned i
          >> const_cast< MIL_Army_ABC*& >( pOwnerArmy_ )
          >> localisation_
          >> avoidanceLocalisation_;
-
     idManager_.Lock( nID_ );
-
     unsigned int nPerceptionID;
     file >> nPerceptionID;
     pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nPerceptionID );
-
     file >> nPerceptionID;
     pPreviousPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nPerceptionID );
-
     file >> nPerceptionID;
     pMaxPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nPerceptionID );
 
@@ -209,7 +174,6 @@ void DEC_Knowledge_Object::load( MIL_CheckPointInArchive& file, const unsigned i
          >> previousPerceptionPerAutomateSet_
          >> nTimeLastUpdate_
          >> rRelevance_;
-
     for ( IT_ObjectAttributeVector it = attributes.begin(); it != attributes.end(); ++it )
         (*it)->Register( *this );
 
@@ -231,10 +195,9 @@ void DEC_Knowledge_Object::load( MIL_CheckPointInArchive& file, const unsigned i
 void DEC_Knowledge_Object::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     assert( pObjectType_ );
-    unsigned current      = pCurrentPerceptionLevel_->GetID(),
-             previous     = pPreviousPerceptionLevel_->GetID(),
-             max          = pMaxPerceptionLevel_->GetID();
-
+    unsigned current = pCurrentPerceptionLevel_->GetID(),
+             previous = pPreviousPerceptionLevel_->GetID(),
+             max = pMaxPerceptionLevel_->GetID();
     file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this );
     file << pObjectType_->GetName();
     file << pArmyKnowing_;
@@ -252,7 +215,6 @@ void DEC_Knowledge_Object::save( MIL_CheckPointOutArchive& file, const unsigned 
     file << previousPerceptionPerAutomateSet_;
     file << nTimeLastUpdate_;
     file << rRelevance_;
-
     // On stocke les types selon leur nom
     unsigned int size = reconByAgentTypes_.size();
     file << size;
@@ -263,21 +225,15 @@ void DEC_Knowledge_Object::save( MIL_CheckPointOutArchive& file, const unsigned 
     }
 }
 
-
-// =============================================================================
-// INTERNAL UPDATERS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Object::Prepare
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Object::Prepare()
 {
-    nAttributesUpdated_          = eAttr_Nothing;
-    pPreviousPerceptionLevel_    = pCurrentPerceptionLevel_;
-    pCurrentPerceptionLevel_     = &PHY_PerceptionLevel::notSeen_;
-
+    nAttributesUpdated_ = eAttr_Nothing;
+    pPreviousPerceptionLevel_ = pCurrentPerceptionLevel_;
+    pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::notSeen_;
     previousPerceptionPerAutomateSet_.clear();
     perceptionPerAutomateSet_.swap( previousPerceptionPerAutomateSet_ );
 }
@@ -291,22 +247,18 @@ void DEC_Knowledge_Object::UpdateLocalisations()
 {
     if( !pObjectKnown_ )
         return;
-
-    const TER_Localisation& localisation          = pObjectKnown_->GetLocalisation();
+    const TER_Localisation& localisation = pObjectKnown_->GetLocalisation();
     if( !(localisation_ == localisation) )
     {
         localisation_.Reset( localisation );
         NotifyAttributeUpdated( eAttr_Localisation );
     }
-
     const AvoidanceCapacity* capacity = pObjectKnown_->Retrieve< AvoidanceCapacity >();
     if( capacity )
     {
         const TER_Localisation& avoidanceLocalisation = capacity->GetLocalisation();
         if( !(avoidanceLocalisation_ == avoidanceLocalisation) )
-        {
             avoidanceLocalisation_.Reset( avoidanceLocalisation );
-        }
     }
 }
 
@@ -319,15 +271,12 @@ void DEC_Knowledge_Object::UpdatePerceptionSources( const DEC_Knowledge_ObjectPe
 {
     if( perception.GetCurrentPerceptionLevel() == PHY_PerceptionLevel::notSeen_ )
         return;
-
     const MIL_Agent_ABC& pionSource = perception.GetAgentPerceiving();
     MIL_Automate* pAutomateSource = const_cast< MIL_Automate* >( &perception.GetAgentPerceiving().GetAutomate() );
-
     // On ne garde que les sources provenant d'autres GTIAs
     IT_PerceptionSourceSet it = perceptionPerAutomateSet_.find( pAutomateSource );
     if( it == perceptionPerAutomateSet_.end() )
         perceptionPerAutomateSet_.insert( pAutomateSource );
-
     IT_PerceptionAgentSourceMap it2 = perceptionLevelPerAgentMap_.find( &pionSource );
     if( it2 == perceptionLevelPerAgentMap_.end() )
         perceptionLevelPerAgentMap_.insert( std::make_pair( &pionSource, &perception.GetCurrentPerceptionLevel() ) );
@@ -376,15 +325,11 @@ namespace
 void DEC_Knowledge_Object::Update( const PHY_PerceptionLevel& currentPerceptionLevel )
 {
     assert( currentPerceptionLevel > PHY_PerceptionLevel::notSeen_ );
-
     nTimeLastUpdate_ = GetCurrentTimeStep();
-
     UpdateCurrentPerceptionLevel( currentPerceptionLevel );
-    UpdateMaxPerceptionLevel    ( currentPerceptionLevel );
-
+    UpdateMaxPerceptionLevel( currentPerceptionLevel );
     // $$$$ NLD 2007-02-07: currentPerceptionLevel peut valoir notSeen_ ?
-    UpdateLocalisations     ();  // Updaté même quand 'NotPerceived', pour les objets pouvant bouger
-
+    UpdateLocalisations();  // Updaté même quand 'NotPerceived', pour les objets pouvant bouger
     if( currentPerceptionLevel > PHY_PerceptionLevel::notSeen_ )
         UpdateAttributes( attributes_, boost::bind( &DEC_Knowledge_ObjectAttribute_ABC::UpdateOnPerceptionLevel, _1, boost::ref( currentPerceptionLevel ) ) );
 }
@@ -396,17 +341,13 @@ void DEC_Knowledge_Object::Update( const PHY_PerceptionLevel& currentPerceptionL
 void DEC_Knowledge_Object::Update( const DEC_Knowledge_ObjectPerception& perception )
 {
     nTimeLastUpdate_ = GetCurrentTimeStep();
-
     const PHY_PerceptionLevel&  currentPerceptionLevel = perception.GetCurrentPerceptionLevel();
-
     UpdateCurrentPerceptionLevel( currentPerceptionLevel );
-    UpdateMaxPerceptionLevel    ( currentPerceptionLevel );
-
+    UpdateMaxPerceptionLevel( currentPerceptionLevel );
     // NB - Quand nPerceptionLevel vaut eNotPerceived => l'agent associé vient juste d'être perdu de vue
     //      => Pas de eNotPerceived aux ticks suivant la perte de contact
-    UpdateLocalisations     ();  // Updaté même quand 'NotPerceived', pour les objets pouvant bouger
-    UpdatePerceptionSources ( perception );
-
+    UpdateLocalisations();// Updaté même quand 'NotPerceived', pour les objets pouvant bouger
+    UpdatePerceptionSources( perception );
     if( pObjectKnown_ && currentPerceptionLevel > PHY_PerceptionLevel::notSeen_ )
         UpdateAttributes( attributes_, boost::bind( &DEC_Knowledge_ObjectAttribute_ABC::UpdateOnPerception, _1, boost::ref( perception ) ) );
 }
@@ -427,7 +368,6 @@ void DEC_Knowledge_Object::UpdateLocalisationPartially( const DEC_Knowledge_Obje
             points.push_back( points.front() );
         localisation_.Reset( points );
         localisation_.Convexify();
-
         NotifyAttributeUpdated( eAttr_Localisation );
     }
 }
@@ -440,13 +380,10 @@ void DEC_Knowledge_Object::Update( const DEC_Knowledge_ObjectCollision& collisio
 {
     if( !collision.IsValid() )
         return;
-
     assert( pObjectKnown_ );
     nTimeLastUpdate_ = GetCurrentTimeStep();
-
     UpdateCurrentPerceptionLevel( PHY_PerceptionLevel::identified_ );
-    UpdateMaxPerceptionLevel    ( PHY_PerceptionLevel::identified_ );
-
+    UpdateMaxPerceptionLevel( PHY_PerceptionLevel::identified_ );
     //$$$ TMP BULLSHIT
     if( !(localisation_ == pObjectKnown_->GetLocalisation() ) )
     {
@@ -459,10 +396,6 @@ void DEC_Knowledge_Object::Update( const DEC_Knowledge_ObjectCollision& collisio
     UpdateAttributes( attributes_, boost::bind( &DEC_Knowledge_ObjectAttribute_ABC::UpdateOnCollision, _1, boost::ref( collision ) ) );
 }
 
-// =============================================================================
-// RELEVANCE
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Object::UpdateRelevance
 // Created: NLD 2004-03-22
@@ -470,20 +403,15 @@ void DEC_Knowledge_Object::Update( const DEC_Knowledge_ObjectCollision& collisio
 void DEC_Knowledge_Object::UpdateRelevance()
 {
     assert( rRelevance_ > 0. );
-
-    if( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ )
-    {
-        if( pObjectKnown_ && !pObjectKnown_->IsMarkedForDestruction() )
+    if( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ && pObjectKnown_ && !pObjectKnown_->IsMarkedForDestruction() )
+     {
+        if( rRelevance_ != 1. )
         {
-            if( rRelevance_ != 1. )
-            {
-                rRelevance_ = 1.;
-                NotifyAttributeUpdated( eAttr_Relevance );
-            }
-            return;
+            rRelevance_ = 1.;
+            NotifyAttributeUpdated( eAttr_Relevance );
         }
+        return;
     }
-
     // L'objet réel va être détruit
     if( pObjectKnown_ && pObjectKnown_->IsMarkedForDestruction() )
     {
@@ -491,7 +419,6 @@ void DEC_Knowledge_Object::UpdateRelevance()
         attributes_.clear();
         NotifyAttributeUpdated( eAttr_RealObject );
     }
-
     // Si plus d'objet réel associé est si l'emplacement de l'objet est vu
     assert( pArmyKnowing_ );
     if( !pObjectKnown_ && pArmyKnowing_->IsPerceived( *this ) )
@@ -502,10 +429,6 @@ void DEC_Knowledge_Object::UpdateRelevance()
     }
     nTimeLastUpdate_ = GetCurrentTimeStep();
 }
-
-// =============================================================================
-// NETWORK UPDATERS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Object::BuildMsgPerceptionSources
@@ -562,7 +485,6 @@ void DEC_Knowledge_Object::BuildMsgAttributes( MsgsSimToClient::MsgObjectKnowled
     if( *pMaxPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ )
         UpdateAttributes( attributes_,
                       boost::bind( &DEC_Knowledge_ObjectAttribute_ABC::Send, _1, boost::ref( *asn.mutable_attributes() ) ) );
-
     if( pObjectType_ && pObjectType_->GetCapacity< ContaminationCapacity >() && !IsRecon() && asn.attributes().has_nbc() )
         asn.mutable_attributes()->mutable_nbc()->set_danger_level( -1 );
 }
@@ -585,28 +507,24 @@ void DEC_Knowledge_Object::UpdateOnNetwork()
 {
     if( *pPreviousPerceptionLevel_ != *pCurrentPerceptionLevel_ )
         NotifyAttributeUpdated( eAttr_CurrentPerceptionLevel );
-
     if( previousPerceptionPerAutomateSet_ != perceptionPerAutomateSet_ )
         NotifyAttributeUpdated( eAttr_PerceptionSources );
-
     if( nAttributesUpdated_ == eAttr_Nothing )
         return;
 
     client::ObjectKnowledgeUpdate asn;
     asn().set_oid( nID_ );
-
     assert( pArmyKnowing_ );
     asn().set_team( pArmyKnowing_->GetID() );
     if( pGroupKnowing_ )
         asn().set_group( pGroupKnowing_->GetId() );
 
-    BuildMsgRealObject            ( asn() );
-    BuildMsgPerceptionSources     ( asn() );
-    BuildMsgRelevance             ( asn() );
-    BuildMsgLocalisations         ( asn() );
+    BuildMsgRealObject( asn() );
+    BuildMsgPerceptionSources( asn() );
+    BuildMsgRelevance( asn() );
+    BuildMsgLocalisations( asn() );
     BuildMsgCurrentPerceptionLevel( asn() );
-    BuildMsgAttributes            ( asn() );
-
+    BuildMsgAttributes( asn() );
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -618,21 +536,17 @@ void DEC_Knowledge_Object::SendMsgCreation() const
 {
     client::ObjectKnowledgeCreation asn;
     asn().set_oid( nID_ );
-
     asn().set_real_object( pObjectKnown_ ? pObjectKnown_->GetID() : 0 );
-
     assert( pArmyKnowing_ );
     asn().set_team( pArmyKnowing_->GetID() );
     if( pGroupKnowing_ )
         asn().set_group( pGroupKnowing_->GetId() );
     asn().set_type( pObjectType_->GetName().c_str() );
-
     std::for_each( attributes_.begin(), attributes_.end(),
         boost::bind( &DEC_Knowledge_ObjectAttribute_ABC::Send, _1, boost::ref( *asn().mutable_attributes() ) ) );
 
     if( pObjectType_ && pObjectType_->GetCapacity< ContaminationCapacity >() && !IsRecon() && asn().mutable_attributes()->has_nbc() )
         asn().mutable_attributes()->mutable_nbc()->set_danger_level( -1 );
-
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -644,7 +558,6 @@ void DEC_Knowledge_Object::SendMsgDestruction() const
 {
     client::ObjectKnowledgeDestruction asn;
     asn().set_oid( nID_ );
-
     assert( pArmyKnowing_ );
     asn().set_team( pArmyKnowing_->GetID() );
     asn.Send( NET_Publisher_ABC::Publisher() );
@@ -914,6 +827,5 @@ const PHY_PerceptionLevel& DEC_Knowledge_Object::GetCurrentPerceptionLevel( cons
     CIT_PerceptionAgentSourceMap  itPerceptionLevel = perceptionLevelPerAgentMap_.find( &pion );
     if( itPerceptionLevel != perceptionLevelPerAgentMap_.end() )
         return *( itPerceptionLevel->second );
-    else
-        return PHY_PerceptionLevel::notSeen_;
+    return PHY_PerceptionLevel::notSeen_;
 }
