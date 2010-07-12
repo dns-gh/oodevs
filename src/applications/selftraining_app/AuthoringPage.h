@@ -18,6 +18,7 @@ namespace kernel
 }
 
 class Config;
+class MenuButton;
 class ProgressPage;
 
 // =============================================================================
@@ -37,6 +38,12 @@ public:
     virtual ~AuthoringPage();
     //@}
 
+public:
+    //! @name Helpers
+    //@{
+    virtual void show();
+    //@}
+
 private slots:
     //! @name Slots
     //@{
@@ -50,6 +57,9 @@ private:
     const Config& config_;
     kernel::Controllers& controllers_;
     ProgressPage* progressPage_;
+    MenuButton* authoring_;
+    MenuButton* terrainGen_;
+    MenuButton* terrainWorkshop_;
     //@}
 };
 

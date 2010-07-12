@@ -12,6 +12,7 @@
 #include "moc_AuthoringPage.cpp"
 #include "Config.h"
 #include "CreateTerrainPage.h"
+#include "MenuButton.h"
 #include "ProcessDialogs.h"
 #include "ProgressPage.h"
 #include "ProcessWrapper.h"
@@ -30,9 +31,9 @@ AuthoringPage::AuthoringPage( QWidgetStack* pages, Page_ABC& previous, const Con
     , controllers_( controllers )
     , progressPage_( new ProgressPage( pages, *this, tools::translate( "AuthoringPage", "Starting Application" ), controllers ) )
 {
-    AddLink( tools::translate( "AuthoringPage", "Authoring" ), *this, tools::translate( "AuthoringPage", "Launch Authoring application" ), SLOT( OnAuthoring() ) );
-    AddLink( tools::translate( "AuthoringPage", "Terrain Gen" ), *new CreateTerrainPage( pages, *this, controllers, config ), tools::translate( "AuthoringPage", "Launch Terrain Generation application" ) );
-    AddLink( tools::translate( "AuthoringPage", "Terrain Workshop" ), *this, tools::translate( "AuthoringPage", "Launch Terrain Workshop application" ), SLOT( OnTerrainWorkshop() ) );
+    authoring_ = AddLink( tools::translate( "AuthoringPage", "Authoring" ), *this, tools::translate( "AuthoringPage", "Launch Authoring application" ), SLOT( OnAuthoring() ) );
+    terrainGen_ = AddLink( tools::translate( "AuthoringPage", "Terrain Gen" ), *new CreateTerrainPage( pages, *this, controllers, config ), tools::translate( "AuthoringPage", "Launch Terrain Generation application" ) );
+    terrainWorkshop_ = AddLink( tools::translate( "AuthoringPage", "Terrain Workshop" ), *this, tools::translate( "AuthoringPage", "Launch Terrain Workshop application" ), SLOT( OnTerrainWorkshop() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,6 +43,36 @@ AuthoringPage::AuthoringPage( QWidgetStack* pages, Page_ABC& previous, const Con
 AuthoringPage::~AuthoringPage()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: AuthoringPage::show
+// Created: JSR 2010-07-12
+// -----------------------------------------------------------------------------
+void AuthoringPage::show()
+{
+    switch( config_.GetProfile() )
+    {
+    case Config::eTerrain:
+        authoring_->setEnabled( false );
+        terrainGen_->setEnabled( true );
+        terrainWorkshop_->setEnabled( true );
+        break;
+    case Config::eUser:
+    case Config::eAdvancedUser:
+        authoring_->setEnabled( true );
+        terrainGen_->setEnabled( false );
+        terrainWorkshop_->setEnabled( false );
+        break;
+    case Config::eAdministrator:
+        authoring_->setEnabled( true );
+        terrainGen_->setEnabled( true );
+        terrainWorkshop_->setEnabled( true );
+        break;
+    default:
+        throw std::exception( "Unknown profile" );
+    }
+    MenuPage::show();
 }
 
 // -----------------------------------------------------------------------------

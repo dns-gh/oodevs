@@ -12,7 +12,7 @@
 #include "moc_MainWindow.cpp"
 #include "Config.h"
 #include "ExerciseService.h"
-#include "HomePage.h"
+#include "ProfilesPage.h"
 #include "LinkInterpreter.h"
 #include "NetworkExerciseLister.h"
 #include "clients_gui/Tools.h"
@@ -49,7 +49,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers )
     setFixedSize( 800, 600 );
     SetStyle();
     pages_ = new QWidgetStack( this );
-    new HomePage( pages_, *config_, controllers, *exerciseLister_ );
+    new ProfilesPage( pages_, *config_, controllers, *exerciseLister_ );
     setCentralWidget( pages_ );
     CenterWindow();
 }

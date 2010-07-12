@@ -18,8 +18,8 @@ namespace kernel
 }
 
 class Config;
+class MenuButton;
 class NetworkExerciseLister;
-class OptionsPage;
 class QuitPage;
 
 // =============================================================================
@@ -33,15 +33,26 @@ class HomePage : public MenuPage
 public:
     //! @name Constructors/Destructor
     //@{
-             HomePage( QWidgetStack* pages, const Config& config, kernel::Controllers& controllers, NetworkExerciseLister& lister );
+             HomePage( QWidgetStack* pages, Page_ABC& previous, const Config& config, kernel::Controllers& controllers, NetworkExerciseLister& lister );
     virtual ~HomePage();
     //@}
 
-private:
-    virtual void OnOptions();
+public:
+    //! @name Helpers
+    //@{
+    virtual void show();
+    //@}
 
 private:
-    OptionsPage* optionsPage_;
+    //! @name Member data
+    //@{
+    const Config& config_;
+    MenuButton* adapt_;
+    MenuButton* import_;
+    MenuButton* prepare_;
+    MenuButton* play_;
+    MenuButton* replay_;
+    //@}
 };
 
 #endif // __HomePage_h_

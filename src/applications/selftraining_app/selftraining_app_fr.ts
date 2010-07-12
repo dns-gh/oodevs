@@ -3,27 +3,27 @@
     <name>Application</name>
     <message>
         <source>Close Simulations</source>
-        <translation type="unfinished">Arréter les exercices en cours</translation>
+        <translation>Arréter les exercices en cours</translation>
     </message>
     <message>
         <source>Running Simulation(s) detected. Close ?</source>
-        <translation type="unfinished">Une ou plusieurs simulation(s) déjà lancées. Voulez-vous les fermer ? </translation>
+        <translation>Une ou plusieurs simulation(s) déjà lancées. Voulez-vous les fermer ? </translation>
     </message>
     <message>
         <source>Close GUI</source>
-        <translation type="unfinished">Fermer les interfaces</translation>
+        <translation>Fermer les interfaces</translation>
     </message>
     <message>
         <source>Running GUI(s) detected. Close ?</source>
-        <translation type="unfinished">Fermer les interfaces en cours d&apos;exécution?</translation>
+        <translation>Fermer les interfaces en cours d&apos;exécution?</translation>
     </message>
     <message>
         <source>Already running</source>
-        <translation type="unfinished">Application en cours d&apos;exécution</translation>
+        <translation>Application en cours d&apos;exécution</translation>
     </message>
     <message>
         <source>The FrontEnd is already running. Close ?</source>
-        <translation type="unfinished">L&apos;application est déjà lancée. Fermer ? </translation>
+        <translation>L&apos;application est déjà lancée. Fermer ? </translation>
     </message>
     <message>
         <source>SWORD</source>
@@ -162,10 +162,6 @@
 <context>
     <name>HomePage</name>
     <message>
-        <source>Options</source>
-        <translation>Options</translation>
-    </message>
-    <message>
         <source>Prepare</source>
         <translation>Préparation</translation>
     </message>
@@ -199,11 +195,11 @@
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished">Importer</translation>
+        <translation>Importer</translation>
     </message>
     <message>
         <source>Importer depuis l&apos;editeur de scenario</source>
-        <translation type="unfinished">Importer depuis l&apos;editeur de scenario</translation>
+        <translation>Importer depuis l&apos;editeur de scenario</translation>
     </message>
 </context>
 <context>
@@ -334,11 +330,46 @@
     <name>ProcessDialogs</name>
     <message>
         <source>Running training sessions</source>
-        <translation type="unfinished">Sessions d&apos;entraînement en cours</translation>
+        <translation>Sessions d&apos;entraînement en cours</translation>
     </message>
     <message>
         <source>Running training session detected. Close ?</source>
-        <translation type="unfinished">Des sessions d&apos;entraînement sont en cours. Voulez-vous les arrêter ?</translation>
+        <translation>Des sessions d&apos;entraînement sont en cours. Voulez-vous les arrêter ?</translation>
+    </message>
+</context>
+<context>
+    <name>ProfilesPage</name>
+    <message>
+        <source>Terrain</source>
+        <translation>Terrain</translation>
+    </message>
+    <message>
+        <source>Select Terrain as profile</source>
+        <translation>Sélectionner le profil Terrain</translation>
+    </message>
+    <message>
+        <source>User</source>
+        <translation>Utilisation</translation>
+    </message>
+    <message>
+        <source>Select User as profile</source>
+        <translation>Sélectionner le profil Utilisation</translation>
+    </message>
+    <message>
+        <source>Advanced User</source>
+        <translation>Validation</translation>
+    </message>
+    <message>
+        <source>Select Advanced User as profile</source>
+        <translation>Sélectionner le profil Validation</translation>
+    </message>
+    <message>
+        <source>Administrator</source>
+        <translation>Administration</translation>
+    </message>
+    <message>
+        <source>Select Administrator as profile</source>
+        <translation>Sélectionner le profil Administration</translation>
     </message>
 </context>
 <context>
@@ -354,13 +385,6 @@
     <message>
         <source>Please confirm</source>
         <translation>Etes vous sûr ?</translation>
-    </message>
-</context>
-<context>
-    <name>ReadProfile</name>
-    <message>
-        <source>anonymous</source>
-        <translation type="obsolete">anonyme</translation>
     </message>
 </context>
 <context>

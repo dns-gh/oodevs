@@ -21,6 +21,18 @@
 class Config : public frontend::Config
 {
 public:
+    //! @name Profiles
+    //@{
+    enum EProfile
+    {
+        eTerrain,
+        eUser,
+        eAdvancedUser,
+        eAdministrator
+    };
+    //@}
+
+public:
     //! @name Constructors/Destructor
     //@{
              Config();
@@ -31,6 +43,8 @@ public:
     //@{
     unsigned short GetListServerPort() const;
     unsigned short GetListClientPort() const;
+    void SetProfile( EProfile profile );
+    EProfile GetProfile() const;
     //@}
 
 private:
@@ -49,6 +63,7 @@ private:
     //@{
     unsigned short listServerPort_;
     unsigned short listClientPort_;
+    EProfile profile_;
     //@}
 };
 

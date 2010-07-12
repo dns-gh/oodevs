@@ -85,13 +85,14 @@ MenuPage::~MenuPage()
 // Name: MenuPage::AddLink
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-void MenuPage::AddLink( const QString& title, Page_ABC& page, const QString& subTitle, const char* slot /*= 0*/ )
+MenuButton* MenuPage::AddLink( const QString& title, Page_ABC& page, const QString& subTitle, const char* slot /*= 0*/ )
 {
     MenuButton* button = new MenuButton( title, container_ );
     subTitles_[ button ] = subTitle ;
     connect( button, SIGNAL( clicked() ), &page, slot ? slot : SLOT( show() ) );
     connect( button, SIGNAL( Selected( MenuButton* ) ), this, SLOT( OnSelectedItem( MenuButton* ) ) );
     connect( button, SIGNAL( UnSelected( MenuButton* ) ), this, SLOT( OnUnSelectedItem( MenuButton* ) ) );
+    return button;
 }
 
 // -----------------------------------------------------------------------------

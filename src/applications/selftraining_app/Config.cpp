@@ -24,6 +24,7 @@ namespace po = boost::program_options;
 Config::Config()
     : listServerPort_( 31000 )
     , listClientPort_( 31001 )
+    , profile_( eAdministrator )
 {
     po::options_description desc( "Self training options" );
     desc.add_options()
@@ -58,4 +59,22 @@ unsigned short Config::GetListServerPort() const
 unsigned short Config::GetListClientPort() const
 {
     return listClientPort_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Config::SetProfile
+// Created: JSR 2010-07-12
+// -----------------------------------------------------------------------------
+void Config::SetProfile( EProfile profile )
+{
+    profile_ = profile;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Config::GetProfile
+// Created: JSR 2010-07-12
+// -----------------------------------------------------------------------------
+Config::EProfile Config::GetProfile() const
+{
+    return profile_;
 }

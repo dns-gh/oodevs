@@ -13,7 +13,7 @@
 #include "Page_ABC.h"
 #include <map>
 
-class MenuButton ;
+class MenuButton;
 
 // =============================================================================
 /** @class  MenuPage
@@ -37,7 +37,7 @@ protected:
 
     //! @name Operations
     //@{
-    void AddLink( const QString& title, Page_ABC& page, const QString& subtitle="", const char* slot = 0 );
+    MenuButton* AddLink( const QString& title, Page_ABC& page, const QString& subtitle="", const char* slot = 0 );
     //@}
 
 protected slots:

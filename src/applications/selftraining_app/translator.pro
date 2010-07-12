@@ -14,6 +14,7 @@ OptionsPage.cpp \
 Page_ABC.cpp \
 ProcessDialogs.cpp \
 QuitPage.cpp \
+ProfilesPage.cpp \
 ReplayPage.cpp \
 ScenarioEditPage.cpp \
 ScenarioLauncherPage.cpp \
