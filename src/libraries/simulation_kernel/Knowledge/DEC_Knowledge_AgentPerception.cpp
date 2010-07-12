@@ -25,7 +25,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_AgentPerception )
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
 DEC_Knowledge_AgentPerception::DEC_Knowledge_AgentPerception( const MIL_Agent_ABC& agentPerceiving, MIL_Agent_ABC& agentPerceived )
-    : DEC_Knowledge_ABC          ()
+    : DEC_Knowledge_ABC()
     , pAgentPerceiving_          ( &agentPerceiving )
     , pAgentPerceived_           ( &agentPerceived )
     , pCurrentPerceptionLevel_   ( &PHY_PerceptionLevel::notSeen_ )
@@ -48,7 +48,7 @@ DEC_Knowledge_AgentPerception::DEC_Knowledge_AgentPerception( const MIL_Agent_AB
 // Created: JVT 2005-03-17
 // -----------------------------------------------------------------------------
 DEC_Knowledge_AgentPerception::DEC_Knowledge_AgentPerception()
-    : DEC_Knowledge_ABC          ()
+    : DEC_Knowledge_ABC()
     , nCreationTimeStep_         ( 0 )
     , dataDetection_             ()
     , dataRecognition_           ()
@@ -81,9 +81,9 @@ DEC_Knowledge_AgentPerception::~DEC_Knowledge_AgentPerception()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_AgentPerception::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    unsigned current  = pCurrentPerceptionLevel_->GetID(),
+    unsigned current = pCurrentPerceptionLevel_->GetID(),
              previous = pPreviousPerceptionLevel_->GetID(),
-             max      = pMaxPerceptionLevel_->GetID();
+             max = pMaxPerceptionLevel_->GetID();
     file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
          << nCreationTimeStep_
          << dataDetection_
@@ -117,16 +117,13 @@ void DEC_Knowledge_AgentPerception::load( MIL_CheckPointInArchive& file, const u
          >> bPreviousRecordModeEnabled_
          >> nRecordModeDisablingDelay_
          >> bAttacker_;
-
     unsigned int nID;
     file >> nID;
-    pCurrentPerceptionLevel_  = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
-
+    pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
     file >> nID;
     pPreviousPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
-
     file >> nID;
-    pMaxPerceptionLevel_      = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
+    pMaxPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
 }
 
 // -----------------------------------------------------------------------------
@@ -139,13 +136,10 @@ void DEC_Knowledge_AgentPerception::Prepare()
     if( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ )
     {
         pCurrentPerceptionLevel_  = &PHY_PerceptionLevel::notSeen_;
-
         assert( pAgentPerceived_ );
         dataDetection_.Prepare( *pAgentPerceived_ );
     }
-
     bAttacker_ = false;
-
     bPreviousRecordModeEnabled_ = bRecordModeEnabled_;
     if( nRecordModeDisablingDelay_ > 0 && --nRecordModeDisablingDelay_ == 0 )
         bRecordModeEnabled_ = false;
@@ -159,23 +153,18 @@ void DEC_Knowledge_AgentPerception::Update( const PHY_PerceptionLevel& perceptio
 {
     assert( perceptionLevel != PHY_PerceptionLevel::notSeen_ );
     assert( pCurrentPerceptionLevel_ );
-
     bRecordModeEnabled_ = bRecordModeEnabled;
-
     // On garde le niveau le plus haut
     if( perceptionLevel > *pCurrentPerceptionLevel_ )
         pCurrentPerceptionLevel_ = &perceptionLevel;
-
     // $$$ bDummy demandé par DSRO : quand un pion voit une unité détruite, il la reconnait afin de ne pas en avoir peur ...
     if( *pCurrentPerceptionLevel_ < PHY_PerceptionLevel::recognized_ && pAgentPerceived_->IsDead() )
         pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::recognized_;
-
     if( *pCurrentPerceptionLevel_ > *pMaxPerceptionLevel_ )
         pMaxPerceptionLevel_ = pCurrentPerceptionLevel_;
-
     assert( pAgentPerceived_ );
-    dataDetection_     .Update( *pAgentPerceived_, *pCurrentPerceptionLevel_ );
-    dataRecognition_   .Update( *pAgentPerceived_, *pCurrentPerceptionLevel_ );
+    dataDetection_.Update( *pAgentPerceived_, *pCurrentPerceptionLevel_ );
+    dataRecognition_.Update( *pAgentPerceived_, *pCurrentPerceptionLevel_ );
     dataIdentification_.Update( *pAgentPerceived_, *pCurrentPerceptionLevel_ );
 }
 
@@ -186,10 +175,10 @@ void DEC_Knowledge_AgentPerception::Update( const PHY_PerceptionLevel& perceptio
 void DEC_Knowledge_AgentPerception::SendStateToNewClient() const
 {
     client::UnitDetection asn;
-    asn().set_oid               ( pAgentPerceiving_   ->GetID() );
-    asn().set_detected_unit_oid ( pAgentPerceived_    ->GetID() );
+    asn().set_oid( pAgentPerceiving_->GetID() );
+    asn().set_detected_unit_oid( pAgentPerceived_->GetID() );
     asn().set_current_visibility( bRecordModeEnabled_ ? Common::recorded : Common::EnumUnitVisibility( pCurrentPerceptionLevel_->GetID() ) );
-    asn().set_max_visibility    ( Common::EnumUnitVisibility( pMaxPerceptionLevel_->GetID() ) );
+    asn().set_max_visibility( Common::EnumUnitVisibility( pMaxPerceptionLevel_->GetID() ) );
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -201,7 +190,6 @@ void DEC_Knowledge_AgentPerception::UpdateOnNetwork() const
 {
     if( *pCurrentPerceptionLevel_ == *pPreviousPerceptionLevel_ && bPreviousRecordModeEnabled_ == bRecordModeEnabled_ )
         return;
-
     SendStateToNewClient();
 }
 

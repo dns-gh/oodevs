@@ -12,7 +12,6 @@
 #ifndef __DEC_Knowledge_AgentPerception_h_
 #define __DEC_Knowledge_AgentPerception_h_
 
-#include "MIL.h"
 #include "DEC_Knowledge_ABC.h"
 #include "DEC_Knowledge_AgentPerceptionDataDetection.h"
 #include "DEC_Knowledge_AgentPerceptionDataRecognition.h"
@@ -48,58 +47,55 @@ public:
     //! @name Operations
     //@{
     void Prepare();
-    void Update ( const PHY_PerceptionLevel& perceptionLevel, bool bRecordModeEnabled );
-    bool Clean  ();
+    void Update( const PHY_PerceptionLevel& perceptionLevel, bool bRecordModeEnabled );
+    bool Clean();
     //@}
 
     //! @name Attacker
     //@{
     void NotifyAttacker();
-    bool IsAttacker    () const;
+    bool IsAttacker() const;
     //@}
 
     //! @name Network operations
     //@{
-    void UpdateOnNetwork     () const;
+    void UpdateOnNetwork() const;
     void SendStateToNewClient() const;
     //@}
 
     //! @name Accessors
     //@{
-          unsigned int                 GetCreationTimeStep       () const;
-          MIL_Agent_ABC&       GetAgentPerceived         () const;
-    const MIL_Agent_ABC&       GetAgentPerceiving        () const;
-    const PHY_PerceptionLevel& GetCurrentPerceptionLevel () const;
+    unsigned int GetCreationTimeStep() const;
+    MIL_Agent_ABC& GetAgentPerceived() const;
+    const MIL_Agent_ABC&  GetAgentPerceiving() const;
+    const PHY_PerceptionLevel& GetCurrentPerceptionLevel() const;
     const PHY_PerceptionLevel& GetPreviousPerceptionLevel() const;
-    const PHY_PerceptionLevel& GetMaxPerceptionLevel     () const;
-          bool                 IsPerceived               () const; // Perception au tick courant
-
-          bool                 IsAvailable               () const;
-          void                 MakeAvailable             ( unsigned int nDelay );
-
-    const DEC_Knowledge_AgentPerceptionDataDetection&      GetDetectionData     () const;
-    const DEC_Knowledge_AgentPerceptionDataRecognition&    GetRecognitionData   () const;
+    const PHY_PerceptionLevel& GetMaxPerceptionLevel() const;
+    bool IsPerceived() const; // Perception au tick courant
+    bool IsAvailable() const;
+    void MakeAvailable( unsigned int nDelay );
+    const DEC_Knowledge_AgentPerceptionDataDetection& GetDetectionData() const;
+    const DEC_Knowledge_AgentPerceptionDataRecognition& GetRecognitionData() const;
     const DEC_Knowledge_AgentPerceptionDataIdentification& GetIdentificationData() const;
     //@}
 
 private:
-          unsigned int                                            nCreationTimeStep_;
-
-          DEC_Knowledge_AgentPerceptionDataDetection      dataDetection_;
-          DEC_Knowledge_AgentPerceptionDataRecognition    dataRecognition_;
-          DEC_Knowledge_AgentPerceptionDataIdentification dataIdentification_;
-
-    const MIL_Agent_ABC*                                  pAgentPerceiving_;
-          MIL_Agent_ABC*                                  pAgentPerceived_;
-    const PHY_PerceptionLevel*                            pCurrentPerceptionLevel_;
-    const PHY_PerceptionLevel*                            pPreviousPerceptionLevel_;
-    const PHY_PerceptionLevel*                            pMaxPerceptionLevel_;
-
-          bool                                            bRecordModeEnabled_;
-          bool                                            bPreviousRecordModeEnabled_;
-          unsigned int                                            nRecordModeDisablingDelay_;
-
-          bool                                            bAttacker_;
+    //! @name Member data
+    //@{
+    unsigned int nCreationTimeStep_;
+    DEC_Knowledge_AgentPerceptionDataDetection dataDetection_;
+    DEC_Knowledge_AgentPerceptionDataRecognition dataRecognition_;
+    DEC_Knowledge_AgentPerceptionDataIdentification dataIdentification_;
+    const MIL_Agent_ABC* pAgentPerceiving_;
+    MIL_Agent_ABC* pAgentPerceived_;
+    const PHY_PerceptionLevel* pCurrentPerceptionLevel_;
+    const PHY_PerceptionLevel* pPreviousPerceptionLevel_;
+    const PHY_PerceptionLevel* pMaxPerceptionLevel_;
+    bool bRecordModeEnabled_;
+    bool bPreviousRecordModeEnabled_;
+    unsigned int nRecordModeDisablingDelay_;
+    bool bAttacker_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_AgentPerception )

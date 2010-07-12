@@ -12,7 +12,6 @@
 #ifndef __DEC_Knowledge_AgentPerceptionDataRecognition_h_
 #define __DEC_Knowledge_AgentPerceptionDataRecognition_h_
 
-#include "MIL.h"
 #include "DEC_Knowledge_Def.h"
 #include <boost/serialization/export.hpp>
 
@@ -30,7 +29,7 @@ class DEC_Knowledge_AgentPerceptionDataRecognition : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-     DEC_Knowledge_AgentPerceptionDataRecognition();
+             DEC_Knowledge_AgentPerceptionDataRecognition();
     virtual ~DEC_Knowledge_AgentPerceptionDataRecognition();
     //@}
 
@@ -49,13 +48,13 @@ public:
 
     //! @name Accessors
     //@{
-          unsigned int                         GetTimeLastUpdate       () const;
-          MT_Float                     GetOperationalState     () const;
-          MT_Float                     GetMajorOperationalState() const;
-    const T_KnowledgeComposanteVector& GetComposantes          () const;
-    const MIL_Army_ABC*                GetArmy                 () const;
-          bool                         IsPC                    () const;
-    const MIL_AgentType_ABC*           GetAgentType            () const;
+    unsigned int GetTimeLastUpdate() const;
+    MT_Float GetOperationalState() const;
+    MT_Float GetMajorOperationalState() const;
+    const T_KnowledgeComposanteVector& GetComposantes() const;
+    const MIL_Army_ABC* GetArmy() const;
+    bool  IsPC() const;
+    const MIL_AgentType_ABC* GetAgentType() const;
     //@}
 
 private:
@@ -65,7 +64,7 @@ private:
     MT_Float rOperationalState_;
     MT_Float rMajorOperationalState_;
     T_KnowledgeComposanteVector composantes_;
-    const MIL_Army* pArmy_ ;
+    const MIL_Army* pArmy_;
     bool bIsPC_;
     const MIL_AgentType_ABC* pAgentType_; // For 'natures'
     //@}

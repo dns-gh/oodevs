@@ -12,7 +12,6 @@
 #ifndef __DEC_Knowledge_AgentPerceptionDataDetection_h_
 #define __DEC_Knowledge_AgentPerceptionDataDetection_h_
 
-#include "MIL.h"
 #include "DEC_Knowledge_Def.h"
 #include <boost/serialization/export.hpp>
 
@@ -29,7 +28,7 @@ class DEC_Knowledge_AgentPerceptionDataDetection : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-     DEC_Knowledge_AgentPerceptionDataDetection();
+             DEC_Knowledge_AgentPerceptionDataDetection();
     virtual ~DEC_Knowledge_AgentPerceptionDataDetection();
     //@}
 
@@ -43,45 +42,45 @@ public:
 
     //! @name Operations
     //@{
-    void Prepare( const MIL_Agent_ABC& agentPerceived ); //
+    void Prepare( const MIL_Agent_ABC& agentPerceived );
     void Update ( const MIL_Agent_ABC& agentPerceived, const PHY_PerceptionLevel& perceptionLevel );
     //@}
 
     //! @name Accessors
     //@{
-          unsigned int                   GetTimeLastUpdate             () const;
-    const MT_Vector2D&           GetPosition                   () const;
-    const MT_Vector2D&           GetDirection                  () const;
-          MT_Float               GetSpeed                      () const;
-          MT_Float               GetAltitude                   () const;
-    const T_ComposanteVolumeSet& GetVisionVolumes              () const;
-    const PHY_Posture&           GetLastPosture                () const;
-    const PHY_Posture&           GetCurrentPosture             () const;
-          MT_Float               GetPostureCompletionPercentage() const;
-    const MIL_Army_ABC*          GetArmySurrenderedTo          () const;
-          bool                   IsPrisoner                    () const;
-          bool                   IsRefugeeManaged              () const;
-          bool                   IsDead                        () const;
+    unsigned int GetTimeLastUpdate() const;
+    const MT_Vector2D& GetPosition () const;
+    const MT_Vector2D& GetDirection() const;
+    MT_Float GetSpeed() const;
+    MT_Float GetAltitude() const;
+    const T_ComposanteVolumeSet& GetVisionVolumes() const;
+    const PHY_Posture& GetLastPosture() const;
+    const PHY_Posture& GetCurrentPosture() const;
+    MT_Float GetPostureCompletionPercentage() const;
+    const MIL_Army_ABC* GetArmySurrenderedTo() const;
+    bool IsPrisoner() const;
+    bool IsRefugeeManaged() const;
+    bool IsDead() const;
     //@}
 
 private:
+    //! @name Member data
+    //@{
     unsigned int nTimeLastUpdate_;
-
     MT_Vector2D vPosition_;
     MT_Vector2D vDirection_;
-    MT_Float    rAltitude_;
-    MT_Float    rSpeed_;
-    bool        bDead_;
-
+    MT_Float rAltitude_;
+    MT_Float rSpeed_;
+    bool bDead_;
     const MIL_Army_ABC* pArmySurrenderedTo_;
-          bool      bPrisoner_;
-          bool      bRefugeeManaged_;
-
+    bool bPrisoner_;
+    bool bRefugeeManaged_;
     // Attributes used by the vision, to see if we see a knowledge which doesn't exist anymore
     T_ComposanteVolumeSet visionVolumes_;
-    const PHY_Posture*    pLastPosture_;
-    const PHY_Posture*    pCurrentPosture_;
-    MT_Float              rPostureCompletionPercentage_;
+    const PHY_Posture* pLastPosture_;
+    const PHY_Posture* pCurrentPosture_;
+    MT_Float rPostureCompletionPercentage_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_AgentPerceptionDataDetection )

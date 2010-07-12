@@ -22,8 +22,6 @@
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "MIL_AgentServer.h"
-#include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
-#include <boost/serialization/export.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_AgentPerceptionDataDetection )
 
@@ -71,21 +69,18 @@ void DEC_Knowledge_AgentPerceptionDataDetection::load( MIL_CheckPointInArchive& 
          >> bRefugeeManaged_
          >> bDead_
          >> rPostureCompletionPercentage_;
-
     // Desérialisation des volumes par nom ( données "statiques" )
     unsigned int nNbr;
     unsigned int nID;
-
     file >> nNbr;
     while ( nNbr-- )
     {
         file >> nID;
         visionVolumes_.insert( PHY_Volume::FindVolume( nID ) );
     }
-
     // Déserialisation des postures ( données statiques )
     file >> nID;
-    pLastPosture_    = PHY_Posture::FindPosture( nID );
+    pLastPosture_ = PHY_Posture::FindPosture( nID );
     file >> nID;
     pCurrentPosture_ = PHY_Posture::FindPosture( nID );
 }
@@ -106,7 +101,6 @@ void DEC_Knowledge_AgentPerceptionDataDetection::save( MIL_CheckPointOutArchive&
          << bRefugeeManaged_
          << bDead_
          << rPostureCompletionPercentage_;
-
     // Serialisation des volumes par nom ( données "statiques" )
     unsigned size = visionVolumes_.size();
     file << size;
@@ -115,7 +109,6 @@ void DEC_Knowledge_AgentPerceptionDataDetection::save( MIL_CheckPointOutArchive&
         unsigned id = (*it)->GetID();
         file << id;
     }
-
     // Serialisation des postures ( données statiques )
     unsigned last    = ( pLastPosture_    ? pLastPosture_->GetID()    : (unsigned int)-1 ),
              current = ( pCurrentPosture_ ? pCurrentPosture_->GetID() : (unsigned int)-1 );
@@ -129,15 +122,12 @@ void DEC_Knowledge_AgentPerceptionDataDetection::save( MIL_CheckPointOutArchive&
 void DEC_Knowledge_AgentPerceptionDataDetection::Prepare( const MIL_Agent_ABC& agentPerceived )
 {
     const PHY_RoleInterface_Location& roleLocation = agentPerceived.GetRole< PHY_RoleInterface_Location >();
-
-    vPosition_  = roleLocation.GetPosition();
-    rAltitude_  = roleLocation.GetAltitude();
-
+    vPosition_ = roleLocation.GetPosition();
+    rAltitude_ = roleLocation.GetAltitude();
     agentPerceived.GetRole< PHY_RoleInterface_Composantes >().GetVisibleVolumes( visionVolumes_ );
-
     const PHY_RoleInterface_Posture& rolePosture = agentPerceived.GetRole< PHY_RoleInterface_Posture >();
-    pLastPosture_                 = &rolePosture.GetLastPosture   ();
-    pCurrentPosture_              = &rolePosture.GetCurrentPosture();
+    pLastPosture_ = &rolePosture.GetLastPosture   ();
+    pCurrentPosture_ = &rolePosture.GetCurrentPosture();
     rPostureCompletionPercentage_ =  rolePosture.GetPostureCompletionPercentage();
 }
 
@@ -149,24 +139,19 @@ void DEC_Knowledge_AgentPerceptionDataDetection::Update( const MIL_Agent_ABC& ag
 {
     if( perceptionLevel < PHY_PerceptionLevel::detected_ )
         return;
-
     const unsigned int nCurrentTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     if( nTimeLastUpdate_ >= nCurrentTimeStep )
         return;
     nTimeLastUpdate_ = nCurrentTimeStep;
-
     Prepare( agentPerceived );
-
     const PHY_RoleInterface_Location& roleLocation = agentPerceived.GetRole< PHY_RoleInterface_Location >();
     vDirection_ = roleLocation.GetDirection   ();
-    rSpeed_     = roleLocation.GetCurrentSpeed();
-
+    rSpeed_ = roleLocation.GetCurrentSpeed();
     const surrender::PHY_RoleInterface_Surrender& roleSurrender = agentPerceived.GetRole< surrender::PHY_RoleInterface_Surrender >();
     pArmySurrenderedTo_ = roleSurrender.GetArmySurrenderedTo();
-    bPrisoner_          = roleSurrender.IsPrisoner          ();
-
+    bPrisoner_ = roleSurrender.IsPrisoner();
     bRefugeeManaged_ = agentPerceived.GetRole< PHY_RoleInterface_Refugee >().IsManaged();
-    bDead_           = agentPerceived.IsDead();
+    bDead_ = agentPerceived.IsDead();
 }
 
 // -----------------------------------------------------------------------------

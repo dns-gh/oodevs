@@ -15,7 +15,6 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
 #include "MIL_AgentServer.h"
-#include <boost/serialization/export.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_AgentPerceptionDataIdentification )
 
@@ -46,7 +45,6 @@ DEC_Knowledge_AgentPerceptionDataIdentification::~DEC_Knowledge_AgentPerceptionD
 void DEC_Knowledge_AgentPerceptionDataIdentification::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     unsigned int nID;
-
     file >> nTimeLastUpdate_
          >> nID;
     pAgentType_ = MIL_AgentTypePion::Find( nID );
@@ -71,7 +69,6 @@ void DEC_Knowledge_AgentPerceptionDataIdentification::Update( const MIL_Agent_AB
 {
     if( perceptionLevel < PHY_PerceptionLevel::identified_ )
         return;
-
     const unsigned int nCurrentTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     if( nTimeLastUpdate_ >= nCurrentTimeStep )
         return;

@@ -12,7 +12,6 @@
 #ifndef __DEC_Knowledge_AgentPerceptionDataIdentification_h_
 #define __DEC_Knowledge_AgentPerceptionDataIdentification_h_
 
-#include "MIL.h"
 #include "DEC_Knowledge_Def.h"
 #include <boost/serialization/export.hpp>
 
@@ -28,7 +27,7 @@ class DEC_Knowledge_AgentPerceptionDataIdentification : private boost::noncopyab
 public:
     //! @name Constructors/Destructor
     //@{
-     DEC_Knowledge_AgentPerceptionDataIdentification();
+             DEC_Knowledge_AgentPerceptionDataIdentification();
     virtual ~DEC_Knowledge_AgentPerceptionDataIdentification();
     //@}
 

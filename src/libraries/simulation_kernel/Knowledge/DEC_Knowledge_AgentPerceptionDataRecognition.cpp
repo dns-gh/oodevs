@@ -17,7 +17,6 @@
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "MIL_AgentServer.h"
-#include <boost/serialization/export.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_AgentPerceptionDataRecognition )
 
@@ -57,7 +56,6 @@ void DEC_Knowledge_AgentPerceptionDataRecognition::load( MIL_CheckPointInArchive
          >> const_cast< MIL_Army*& >( pArmy_ )
          >> bIsPC_
          >> composantes_;
-
     unsigned int nID;
     file >> nID;
     pAgentType_ = MIL_AgentTypePion::Find( nID );
@@ -87,21 +85,18 @@ void DEC_Knowledge_AgentPerceptionDataRecognition::Update( const MIL_Agent_ABC& 
 {
     if( perceptionLevel < PHY_PerceptionLevel::recognized_ )
         return;
-
     const unsigned int nCurrentTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     if( nTimeLastUpdate_ >= nCurrentTimeStep )
         return;
     nTimeLastUpdate_ = nCurrentTimeStep;
-
     composantes_.clear();
     agentPerceived.GetRole< PHY_RoleInterface_Composantes >().BuildKnowledgeComposantes( composantes_ );
-
     const PHY_RoleInterface_Composantes& roleComposantes = agentPerceived.GetRole< PHY_RoleInterface_Composantes >();
-    rOperationalState_      =  roleComposantes.GetOperationalState     ();
-    rMajorOperationalState_ =  roleComposantes.GetMajorOperationalState();
-    pArmy_                  = dynamic_cast< const MIL_Army* >( &agentPerceived.GetArmy() );
-    bIsPC_                  =  agentPerceived.IsPC();
-    pAgentType_             = &agentPerceived.GetType();
+    rOperationalState_ = roleComposantes.GetOperationalState();
+    rMajorOperationalState_ = roleComposantes.GetMajorOperationalState();
+    pArmy_ = dynamic_cast< const MIL_Army* >( &agentPerceived.GetArmy() );
+    bIsPC_ = agentPerceived.IsPC();
+    pAgentType_= &agentPerceived.GetType();
 }
 
 // -----------------------------------------------------------------------------
