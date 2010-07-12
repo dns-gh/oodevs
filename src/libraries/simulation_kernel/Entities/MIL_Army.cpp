@@ -308,16 +308,12 @@ void MIL_Army::WriteDiplomacyODB( xml::xostream& xos ) const
     for( CIT_DiplomacyMap it = diplomacies_.begin(); it != diplomacies_.end(); ++it )
     {
         xos << xml::start( "relationship" )
-            << xml::attribute( "side", it->first->GetID() )
-            << xml::attribute( "diplomacy", diplomacyConverter_.RevertConvert(it->second) )
-        << xml::end();
+                << xml::attribute( "side", it->first->GetID() )
+                << xml::attribute( "diplomacy", diplomacyConverter_.RevertConvert(it->second) )
+            << xml::end;
     }
-    xos << xml::end();
+    xos << xml::end;
 }
-
-// =============================================================================
-// INITIALIZATION
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Army::InitializeDiplomacy
@@ -419,22 +415,16 @@ void MIL_Army::ReadAutomat( xml::xistream& xis, AutomateFactory_ABC& automateFac
 // -----------------------------------------------------------------------------
 void MIL_Army::ReadSubordinate( xml::xistream& xis, AutomateFactory_ABC& automateFactory, MIL_Automate* pSuperior )
 {
-    unsigned int        nSubordinateID;
+    unsigned int nSubordinateID;
     std::string strLink;
     xis >> xml::attribute( "id", nSubordinateID );
-
     MIL_Automate* pSubordinate = automateFactory.Find( nSubordinateID );
     if( !pSubordinate )
         xis.error( "Unknown automat" );
     if( pSubordinate->GetArmy() != *this )
         xis.error( "Invalid automat (not in specified side)" );
-
     pSubordinate->ReadLogisticLink( static_cast< MIL_AutomateLOG& >( *pSuperior ), xis );
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Army::RegisterKnowledgeGroup
@@ -570,10 +560,6 @@ E_Tristate MIL_Army::IsNeutral( const MIL_Army_ABC& army ) const
     return eTristate_DontKnow;
 }
 
-// =============================================================================
-// NETWORK
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MIL_Army::SendCreation
 // Created: NLD 2004-09-06
@@ -585,10 +571,8 @@ void MIL_Army::SendCreation() const
     asn().set_nom( strName_.c_str() );
     asn().set_type( Common::EnumDiplomacy( nType_ ) );
     asn.Send( NET_Publisher_ABC::Publisher() );
-
     for( CIT_KnowledgeGroupMap it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
         it->second->SendCreation();
-
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::SendCreation, _1 ) );
     tools::Resolver< MIL_Population >::Apply( boost::bind( &MIL_Population::SendCreation, _1 ) );
 }
@@ -607,10 +591,8 @@ void MIL_Army::SendFullState() const
         asn().set_diplomatie( Common::EnumDiplomacy( it->second ) );
         asn.Send( NET_Publisher_ABC::Publisher() );
     }
-
     for( CIT_KnowledgeGroupMap it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
         it->second->SendFullState();
-
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::SendFullState, _1 ) );
     tools::Resolver< MIL_Population >::Apply( boost::bind( &MIL_Population::SendFullState, _1 ) );
 }
@@ -769,7 +751,6 @@ MIL_Army_ABC::E_Diplomacy MIL_Army::GetDiplomacy( const MIL_Army_ABC& otherArmy 
 {
     if( &otherArmy == this )
         return eFriend;
-
     CIT_DiplomacyMap it = diplomacies_.find( &otherArmy );
     if( it == diplomacies_.end() )
         return eUnknown;
@@ -793,7 +774,5 @@ const std::string& MIL_Army::GetName() const
 void MIL_Army::ApplyOnKnowledgeGroup( KnowledgeVisitor_ABC& fct )
 {
     for( CIT_KnowledgeGroupMap it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
-    {
         fct.visit( *(it->second ) );
-    }
 }

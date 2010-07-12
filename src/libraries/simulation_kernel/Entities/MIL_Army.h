@@ -55,12 +55,12 @@ class MIL_Army : public MIL_Army_ABC
 public:
     //! @name Types
     //@{
-    typedef std::map< unsigned int, MIL_KnowledgeGroup* > T_KnowledgeGroupMap;
-    typedef T_KnowledgeGroupMap::const_iterator   CIT_KnowledgeGroupMap;
-    typedef T_KnowledgeGroupMap::iterator         IT_KnowledgeGroupMap;
+    typedef std::map< unsigned int, MIL_KnowledgeGroup* >   T_KnowledgeGroupMap;
+    typedef T_KnowledgeGroupMap::iterator                  IT_KnowledgeGroupMap;
+    typedef T_KnowledgeGroupMap::const_iterator           CIT_KnowledgeGroupMap;
 
-    typedef std::map< const MIL_Army_ABC*, E_Diplomacy > T_DiplomacyMap;
-    typedef T_DiplomacyMap::const_iterator           CIT_DiplomacyMap;
+    typedef std::map< const MIL_Army_ABC*, E_Diplomacy >   T_DiplomacyMap;
+    typedef T_DiplomacyMap::const_iterator               CIT_DiplomacyMap;
     //@}
 
 public:
@@ -78,7 +78,7 @@ public:
     void load( MIL_CheckPointInArchive&, const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;
 
-    virtual void WriteODB         ( xml::xostream& xos ) const;
+    virtual void WriteODB( xml::xostream& xos ) const;
     virtual void WriteDiplomacyODB( xml::xostream& xos ) const;
     //@}
 
@@ -89,51 +89,49 @@ public:
 
     //! @name Knowledge
     //@{
-    virtual void UpdateKnowledges(int currentTimeStep);
-    virtual void CleanKnowledges ();
+    virtual void UpdateKnowledges( int currentTimeStep );
+    virtual void CleanKnowledges();
     virtual void ApplyOnKnowledgeGroup( KnowledgeVisitor_ABC& );
-
     //@}
 
     //! @name Hierarchy
     //@{
-    virtual void RegisterFormation  ( MIL_Formation& formation );
+    virtual void RegisterFormation( MIL_Formation& formation );
     virtual void UnregisterFormation( MIL_Formation& formation );
-    void RegisterObject  ( MIL_Object_ABC& object );
+    void RegisterObject( MIL_Object_ABC& object );
     void UnregisterObject( MIL_Object_ABC& object );
 
-    void RegisterPopulation  ( MIL_Population& population );
+    void RegisterPopulation( MIL_Population& population );
     void UnregisterPopulation( MIL_Population& population );
 
-    MIL_KnowledgeGroup* FindKnowledgeGroup      ( unsigned int nID ) const;
-    void                RegisterKnowledgeGroup  ( MIL_KnowledgeGroup& knowledgeGroup );
-    void                UnregisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup );
+    MIL_KnowledgeGroup* FindKnowledgeGroup( unsigned int nID ) const;
+    void RegisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup );
+    void UnregisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup );
     //@}
 
     //! @name Operations
     //@{
-    bool       IsPerceived( const DEC_Knowledge_Object& knowledge )      const;
-    E_Tristate IsAFriend  ( const DEC_Knowledge_Agent & knowledge )      const;
-    virtual E_Tristate IsAFriend  ( const MIL_Army_ABC& army )                   const;
-    E_Tristate IsAnEnemy  ( const DEC_Knowledge_Population & knowledge ) const;
-    virtual E_Tristate IsAnEnemy  ( const MIL_Army_ABC& army )                   const;
-    virtual E_Tristate IsNeutral ( const MIL_Army_ABC& army )                   const;
+    bool IsPerceived( const DEC_Knowledge_Object& knowledge ) const;
+    E_Tristate IsAFriend( const DEC_Knowledge_Agent & knowledge ) const;
+    virtual E_Tristate IsAFriend( const MIL_Army_ABC& army ) const;
+    E_Tristate IsAnEnemy( const DEC_Knowledge_Population & knowledge ) const;
+    virtual E_Tristate IsAnEnemy( const MIL_Army_ABC& army ) const;
+    virtual E_Tristate IsNeutral( const MIL_Army_ABC& army ) const;
     //@}
 
     //! @name Accessors
     //@{
-          unsigned int                  GetID             () const;
-    const std::string&                  GetName           () const;
-    const T_KnowledgeGroupMap&          GetKnowledgeGroups() const;
-          DEC_KnowledgeBlackBoard_Army& GetKnowledge      () const;
+    unsigned int GetID() const;
+    const std::string& GetName() const;
+    const T_KnowledgeGroupMap& GetKnowledgeGroups() const;
+    DEC_KnowledgeBlackBoard_Army& GetKnowledge() const;
     //@}
 
     //! @name Network
     //@{
-    virtual void SendCreation               () const;
-    virtual void SendFullState              () const;
-    virtual void SendKnowledge              () const;
-
+    virtual void SendCreation() const;
+    virtual void SendFullState() const;
+    virtual void SendKnowledge() const;
     virtual void OnReceiveMsgChangeDiplomacy( const Common::MsgMissionParameters& msg );
     //@}
 
@@ -141,13 +139,13 @@ private:
     //! @name Tools
     //@{
     E_Diplomacy GetDiplomacy( const MIL_Army_ABC& army ) const;
-    void ReadFormation  ( xml::xistream& xis, FormationFactory_ABC& formationFactory );
-    void ReadObject     ( xml::xistream& xis, MIL_ObjectManager& objectFactory );
-    void ReadPopulation ( xml::xistream& xis, PopulationFactory_ABC& populationFactory );
-    void ReadLogistic   ( xml::xistream& xis, KnowledgeGroupFactory_ABC& knowledgegroupFactory );
-    void ReadAutomat    ( xml::xistream& xis, AutomateFactory_ABC& automateFactory ); // LTO
+    void ReadFormation( xml::xistream& xis, FormationFactory_ABC& formationFactory );
+    void ReadObject( xml::xistream& xis, MIL_ObjectManager& objectFactory );
+    void ReadPopulation( xml::xistream& xis, PopulationFactory_ABC& populationFactory );
+    void ReadLogistic( xml::xistream& xis, KnowledgeGroupFactory_ABC& knowledgegroupFactory );
+    void ReadAutomat( xml::xistream& xis, AutomateFactory_ABC& automateFactory ); // LTO
     void ReadSubordinate( xml::xistream& xis, AutomateFactory_ABC& automateFactory, MIL_Automate* pSuperior );
-    void ReadDiplomacy  ( xml::xistream& xis );
+    void ReadDiplomacy( xml::xistream& xis );
     //@}
 
     //! @name CheckPoint
