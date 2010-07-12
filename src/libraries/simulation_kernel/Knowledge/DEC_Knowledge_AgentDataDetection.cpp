@@ -145,11 +145,11 @@ void DEC_Knowledge_AgentDataDetection::save( MIL_CheckPointOutArchive& file, con
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_AgentDataDetection::Prepare()
 {
-    bDirectionUpdated_      = false;
-    bSpeedUpdated_          = false;
-    bPositionUpdated_       = false;
-    bPrisonerUpdated_       = false;
-    bSurrenderedUpdated_    = false;
+    bDirectionUpdated_ = false;
+    bSpeedUpdated_ = false;
+    bPositionUpdated_ = false;
+    bPrisonerUpdated_ = false;
+    bSurrenderedUpdated_ = false;
     bRefugeeManagedUpdated_ = false;
     bDeadUpdated_           = false;
 }

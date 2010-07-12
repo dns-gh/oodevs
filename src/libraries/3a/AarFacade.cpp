@@ -19,7 +19,7 @@
 // Name: AarFacade constructor
 // Created: AGE 2008-08-04
 // -----------------------------------------------------------------------------
-AarFacade::AarFacade(  dispatcher::ClientPublisher_ABC& publisher, int context )
+AarFacade::AarFacade( dispatcher::ClientPublisher_ABC& publisher, int context )
     : factory_( new FunctionFactory() )
 {
     factory_->Add( std::auto_ptr< ElementFactory_ABC >( new ConstantsFactory() ) );

@@ -9,20 +9,10 @@
 
 #include "simulation_kernel_pch.h"
 #include "UrbanModel.h"
-#include "Entities/Objects/StructuralCapacity.h"
-#include "Entities/Objects/UrbanObjectWrapper.h"
-#include "Network/NET_ASN_Tools.h"
-#include "Network/NET_Publisher_ABC.h"
-#include "protocol/ClientSenders.h"
-#include <boost/bind.hpp>
-#include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/path.hpp>
 #include <Urban/Model.h>
 #include <Urban/TerrainObject_ABC.h>
-#include <Urban/ColorRGBA.h>
-#include <Urban/PhysicalFeature_ABC.h>
 #include <Urban/WorldParameters.h>
-#include <Urban/Architecture.h>
 #include <Urban/TerrainObjectVisitor_ABC.h>
 #include "Tools/MIL_Config.h"
 #include <xeumeuleu/xml.hpp>

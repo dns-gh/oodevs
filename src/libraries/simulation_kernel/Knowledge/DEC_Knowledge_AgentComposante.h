@@ -52,9 +52,9 @@ public:
 
     //! @name Operations
     //@{
-    MT_Float GetDangerosity     ( const MIL_Agent_ABC& firer, const PHY_ComposantePion&            compTarget, MT_Float rDistBtwSourceAndTarget ) const;
-    MT_Float GetDangerosity     ( const MIL_Agent_ABC& firer, const DEC_Knowledge_AgentComposante& compTarget, MT_Float rDistBtwSourceAndTarget ) const;
-    MT_Float GetMaxRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposantePion&            compTarget, MT_Float rWantedPH               ) const;
+    MT_Float GetDangerosity( const MIL_Agent_ABC& firer, const PHY_ComposantePion& compTarget, MT_Float rDistBtwSourceAndTarget ) const;
+    MT_Float GetDangerosity( const MIL_Agent_ABC& firer, const DEC_Knowledge_AgentComposante& compTarget, MT_Float rDistBtwSourceAndTarget ) const;
+    MT_Float GetMaxRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposantePion& compTarget, MT_Float rWantedPH ) const;
     //@}
 
 private:

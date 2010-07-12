@@ -10,9 +10,10 @@
 #include "simulation_kernel_pch.h"
 #include "UrbanType.h"
 #include <urban/StaticModel.h>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 UrbanType* UrbanType::urbanType_ = 0;
+
 // -----------------------------------------------------------------------------
 // Name: PHY_Volume::Initialize
 // Created: SLG 2010-03-08
