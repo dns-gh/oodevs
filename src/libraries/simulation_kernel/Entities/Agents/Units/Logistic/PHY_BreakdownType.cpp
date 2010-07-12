@@ -60,12 +60,12 @@ void PHY_BreakdownType::Initialize( xml::xistream& xis )
     xis >> xml::start( "breakdowns" )
             >> xml::start( "diagnosis" )
                 >> xml::attribute( "time", timeVal )
-            >> xml::end();
+            >> xml::end;
     if( ! tools::DecodeTime( timeVal, rTimeVal ) || rTimeVal < 0 )
         xis.error( "diagnosis: time < 0" );
     nDiagnosticTime_ = (unsigned int)MIL_Tools::ConvertSecondsToSim( rTimeVal );
     xis >> xml::list( "category", loader, &LoadingWrapper::ReadCategory )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

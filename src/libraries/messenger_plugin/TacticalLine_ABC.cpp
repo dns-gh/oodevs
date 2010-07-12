@@ -137,5 +137,5 @@ void TacticalLine_ABC::WritePoint( xml::xostream& xos, const kernel::CoordinateC
     geometry::Point2d pos( point.longitude(), point.latitude() );
     xos << xml::start( "point" )
             << converter.ConvertToMgrs( converter.ConvertFromGeo( pos ) )
-        << xml::end();
+        << xml::end;
 }

@@ -95,38 +95,38 @@ void MIL_Config::ReadSessionFile( const std::string& file )
             >> xml::start( "simulation" )
                 >> xml::start( "decisional" )
                     >> xml::attribute( "useonlybinaries", bUseOnlyDIAArchive_ )
-                >> xml::end()
+                >> xml::end
                 >> xml::optional() >> xml::start( "experimental" )
                     >> xml::attribute( "frozenmode", bFrozenMode_ )
-                >> xml::end()
+                >> xml::end
                 >> xml::start( "orbat" )
                     >> xml::attribute( "checkcomposition", bCheckAutomateComposition_ )
-                >> xml::end()
+                >> xml::end
                 >> xml::start( "profiling" )
                     >> xml::attribute( "enabled", bProfilingEnabled_ )
-                >> xml::end()
+                >> xml::end
                 >> xml::start( "dispatcher" )
                     >> xml::attribute( "embedded", bEmbeddedDispatcher_ )
-                >> xml::end()
+                >> xml::end
                 >> xml::start( "network" )
                     >> xml::attribute( "port", networkPort_ )
-                >> xml::end()
+                >> xml::end
                 >> xml::start( "time" )
                     >> xml::attribute( "step", timeStep_ )
                     >> xml::attribute( "factor", timeFactor_ )
                     >> xml::optional() >> xml::attribute( "end-tick", endTick_ )
-                >> xml::end()
+                >> xml::end
                 >> xml::start( "pathfinder" )
                     >> xml::attribute( "threads", pathFinderThreads_ )
-                >> xml::end()
+                >> xml::end
                 >> xml::start( "hla" )
                     >> xml::attribute( "enabled"   , bHLAEnabled_ )
                     >> xml::attribute( "federation", hlaFederation_ )
                     >> xml::attribute( "federate"  , hlaFederate_ )
-                >> xml::end()
+                >> xml::end
                 >> xml::optional() >> xml::start( "random" )
                     >> xml::attribute( "seed", randomSeed_ )
-                >> xml::end();
+                >> xml::end;
     for( int i = 0; i < MIL_Random::eContextsNbr; ++i )
     {
         randomGaussian_[ i ] = false;

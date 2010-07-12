@@ -87,7 +87,7 @@ void PHY_UnitType::InitializeStockLogisticThresholdRatios( xml::xistream& xis )
     xis >> xml::optional()
             >> xml::start( "stocks" )
                 >> xml::list( "stock", *this, &PHY_UnitType::ReadStock )
-            >> xml::end();
+            >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -127,7 +127,7 @@ void PHY_UnitType::InitializeNBC( xml::xistream& xis )
     if( rTmp <= 0 )
         xis.error( "nbc: decontamination-delay <= 0" );
     rCoefDecontaminationPerTimeStep_ = 1. / MIL_Tools::ConvertSecondsToSim( rTmp );
-    xis >> xml::end();
+    xis >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -138,7 +138,7 @@ void PHY_UnitType::InitializeComposantes( xml::xistream& xis )
 {
     xis >> xml::start( "equipments" )
             >> xml::list( "equipment", *this, &PHY_UnitType::ReadEquipment )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -188,7 +188,7 @@ void PHY_UnitType::InitializeCommanderRepartition( xml::xistream& xis )
 {
     xis >> xml::start( "crew-ranks" )
             >> xml::list( "crew-rank", *this, &PHY_UnitType::ReadCrewRank )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -224,7 +224,7 @@ void PHY_UnitType::InitializePostureTimes( xml::xistream& xis )
 {
     xis >> xml::start( "postures" )
             >> xml::list( "posture", *this, &PHY_UnitType::ReadPosture )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

@@ -109,6 +109,6 @@ void GaugeNormalizer::Serialize( xml::xostream& xos ) const
         if( interval.first.second != std::numeric_limits< double >::max() )
             xos << xml::attribute( "max", interval.first.second );
         xos     << xml::attribute( "key", interval.second )
-            << xml::end();
+            << xml::end;
     }
 }

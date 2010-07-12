@@ -128,7 +128,7 @@ void TimeLimitedAttribute::WriteODB( xml::xostream& xos ) const
         << xml::attribute( "value", nActivityTime_ );
     if( nDeathTimeStep_ > 0 )
         xos << xml::attribute( "initial", nDeathTimeStep_ );
-    xos << xml::end();
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------

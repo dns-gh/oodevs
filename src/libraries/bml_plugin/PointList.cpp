@@ -23,7 +23,7 @@ PointList::PointList( xml::xistream& xis )
 {
     xis >> xml::start( NS( "PointList", "jc3iedm" ) )
             >> xml::list( NS( "Point", "jc3iedm" ), *this, &PointList::ReadPoint )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -63,7 +63,7 @@ void PointList::Serialize( xml::xostream& xos ) const
         xos << xml::content( "jc3iedm:SequenceOrdinal", i );
         it->Serialize( xos, "jc3iedm:Point" );
     }
-    xos << xml::end();
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------

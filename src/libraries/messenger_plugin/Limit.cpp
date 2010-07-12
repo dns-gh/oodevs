@@ -109,5 +109,5 @@ void Limit::Write( xml::xostream& xos, const kernel::CoordinateConverter_ABC& co
 {
     xos << xml::start( "limit" ) ;
         TacticalLine_ABC::Write( xos, converter );
-    xos << xml::end();
+    xos << xml::end;
 }

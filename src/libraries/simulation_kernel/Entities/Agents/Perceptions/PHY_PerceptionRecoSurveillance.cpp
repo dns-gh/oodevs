@@ -73,7 +73,7 @@ void PHY_PerceptionRecoSurveillance::Initialize( xml::xistream& xis )
 
     xis >> xml::start( "alat-monitoring-times" )
             >> xml::list( "alat-monitoring-time", loader, &LoadingWrapper::ReadAlatTime )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

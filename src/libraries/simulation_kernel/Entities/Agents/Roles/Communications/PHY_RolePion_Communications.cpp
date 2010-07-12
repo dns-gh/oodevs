@@ -65,8 +65,8 @@ void PHY_RolePion_Communications::Initialize( xml::xistream& xis )
             >> xml::start( "communication-breakdown" )
                 >> xml::attribute( "speed-modifier", rCoefSpeedModificator_ )
                 >> xml::attribute( "reloading-time-modifier", rCoefReloadingTimeModificator_ )
-            >> xml::end()
-        >> xml::end();
+            >> xml::end
+        >> xml::end;
 
     if( rCoefSpeedModificator_ < 0 )
         xis.error( "communication-breakdown: speed-modifier < 0" );

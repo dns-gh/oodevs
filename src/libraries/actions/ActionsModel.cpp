@@ -106,7 +106,7 @@ void ActionsModel::Load( const std::string& filename, bool readonly /*= false*/ 
     xml::xifstream xis( filename );
     xis >> xml::start( "actions" )
             >> xml::list( "action", *this, &ActionsModel::ReadAction, readonly, errors )
-        >> xml::end();
+        >> xml::end;
     if( !errors.empty() )
         throw std::exception( tools::translate( "ActionsModel", "The order file contains error(s), some actions could not be loaded:\n%1" ).arg( errors.c_str() ) );
 }
@@ -142,9 +142,9 @@ void ActionsModel::Save( const std::string& filename, const ActionsFilter_ABC* f
         {
             xos << xml::start( "action" );
             it->second->Serialize( xos );
-            xos << xml::end();
+            xos << xml::end;
         }
-    xos << xml::end();
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------

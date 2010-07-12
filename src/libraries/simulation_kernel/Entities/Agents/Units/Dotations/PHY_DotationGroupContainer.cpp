@@ -178,7 +178,7 @@ void PHY_DotationGroupContainer::WriteODB( xml::xostream& xos ) const
     xos << xml::start( "dotations" );
     for( CIT_DotationGroupMap it = dotationGroups_.begin(); it != dotationGroups_.end(); ++it )
         it->second->WriteODB( xos );
-    xos << xml::end(); // dotations
+    xos << xml::end; // dotations
 }
 
 // -----------------------------------------------------------------------------

@@ -93,7 +93,7 @@ std::string Publisher::GetReports()
     std::string result;
     if( reports_.get() != 0 )
     {
-        *reports_ << xml::end();
+        *reports_ << xml::end;
         result = reports_->str();
         reports_.release();
     }

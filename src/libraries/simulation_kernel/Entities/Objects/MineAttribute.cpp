@@ -148,7 +148,7 @@ void MineAttribute::WriteODB( xml::xostream& xos ) const
 {
     xos << xml::start( "mine" )
             << xml::attribute( "completion", rMiningPercentage_ )
-        << xml::end();
+        << xml::end;
 }
 
 // -----------------------------------------------------------------------------

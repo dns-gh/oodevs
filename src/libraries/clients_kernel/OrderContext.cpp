@@ -24,7 +24,7 @@ OrderContext::OrderContext( xml::xistream& xis )
     xis >> xml::optional()
             >> xml::start( "context" )
                 >> xml::list( "parameter", *this, &OrderContext::ReadParameter )
-            >> xml::end();
+            >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

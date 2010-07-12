@@ -62,7 +62,7 @@ void MIL_AgentType_ABC::InitializeNature( xml::xistream& xis )
     pNatureAtlas_ = PHY_NatureAtlas::Find( strBuf );
     if( !pNatureAtlas_ )
         xis.error( "Unknown atlas qualificatif" );
-    xis >> xml::end();
+    xis >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

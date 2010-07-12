@@ -181,12 +181,12 @@ void MIL_CheckPointManager::CreateMetaData( const std::string& strFileName, cons
                 << xml::start( "crc" )
                     << xml::start( "configuration" )
                         << xml::attribute( "crc", nCRCCRC )
-                    << xml::end()
+                    << xml::end
                     << xml::start( "save" )
                         << xml::attribute( "crc", nDataCRC )
-                    << xml::end()
-                << xml::end()
-            << xml::end();
+                    << xml::end
+                << xml::end
+            << xml::end;
     }
     catch( ... )
     {
@@ -258,7 +258,7 @@ void MIL_CheckPointManager::CheckCRC( const MIL_Config& config )
         >> xml::start( "crc" )
         >> xml::start( "configuration" )
             >> xml::attribute( "crc", nCRC )
-        >> xml::end();
+        >> xml::end;
 
     if( MIL_Tools::ComputeCRC( config.BuildCheckpointChildFile( "CRCs.xml" ) ) != nCRC )
         throw MT_ScipioException( __FILE__, __FUNCTION__, __LINE__ , "Cannot load checkpoint - File 'CRCs.xml' has changed since the checkpoint creation" );

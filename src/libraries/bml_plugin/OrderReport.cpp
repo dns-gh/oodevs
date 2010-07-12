@@ -59,8 +59,8 @@ void OrderReport::Send( Publisher_ABC& publisher ) const
 {
     xml::xostream& xos = publisher.CreateReport();
     xos << xml::start( "ReportPush" )
-            << xml::start( "ReportedByWho" ) << *who_ << xml::end()
-            << xml::start( "ReportedWho" )   << *who_ << xml::end()
+            << xml::start( "ReportedByWho" ) << *who_ << xml::end
+            << xml::start( "ReportedWho" )   << *who_ << xml::end
             << xml::start( "NewWhatWhen" )
                 << xml::start( "C_BML_WhatWhen" )
                     << xml::start( "WhatWhenInstance" )
@@ -72,12 +72,12 @@ void OrderReport::Send( Publisher_ABC& publisher ) const
                                     << xml::attribute( "xsi:type", "jc3iedm:ActionTaskStatus" )
                                     << xml::content( "jc3iedm:CategoryCode", "ORD" ) //!< task is beeing executed
                                     << xml::content("jc3iedm:ReportingDataRef", "" )
-                                << xml::end()
-                            << xml::end()
+                                << xml::end
+                            << xml::end
                             << xml::content( "jc3iedm:CategoryCode", "ORD" ) //!< task is beeing executed
-                        << xml::end()
-                    << xml::end()
-                << xml::end()
-            << xml::end()
-        << xml::end();
+                        << xml::end
+                    << xml::end
+                << xml::end
+            << xml::end
+        << xml::end;
 }

@@ -33,7 +33,7 @@ void PHY_HumanProtection::Initialize( xml::xistream& xis )
 
     xis >> xml::start( "protections" )
             >> xml::list( "protection" , &ReadProtection )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -67,10 +67,10 @@ void PHY_HumanProtection::ReadHumanProtection( xml::xistream& xis )
 
     xis >> xml::start( "types" )
             >> xml::list( "type", *this, &PHY_HumanProtection::ReadType )
-        >> xml::end()
+        >> xml::end
         >> xml:: start( "effects" )
             >> xml::list( "effect", *this, &PHY_HumanProtection::ReadEffect )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -127,7 +127,7 @@ PHY_HumanProtection::PHY_HumanProtection( const std::string& strName, xml::xistr
 
     xis >> xml::start( "injuries" )
             >> xml::list( "injury", *this, &PHY_HumanProtection::ReadHumanProtection )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

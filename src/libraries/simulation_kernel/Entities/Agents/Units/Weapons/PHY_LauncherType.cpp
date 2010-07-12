@@ -37,7 +37,7 @@ void PHY_LauncherType::Initialize( xml::xistream& xis )
 
     xis >> xml::start( "launchers" )
             >> xml::list( "launcher", loader, &LoadingWrapper::ReadLauncher )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

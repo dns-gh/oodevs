@@ -53,7 +53,7 @@ void PHY_WeaponType::Initialize( const MIL_Time_ABC& time, xml::xistream& xis, d
     // Initialisation des composantes
     xis >> xml::start( "weapons" )
             >> xml::list( "weapon-system", loader, &LoadingWrapper::ReadWeapon, time, timeFactor )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -109,11 +109,11 @@ PHY_WeaponType::PHY_WeaponType( const MIL_Time_ABC& time, const std::string& str
     xis >> xml::start( "burst" )
             >> xml::attribute( "munition", nNbrAmmoPerBurst_ )
             >> xml::attribute( "duration", burstTime )
-        >> xml::end()
+        >> xml::end
         >> xml::start( "reloading" )
             >> xml::attribute( "munition", nNbrAmmoPerLoader_ )
             >> xml::attribute( "duration", reloadingTime )
-        >> xml::end();
+        >> xml::end;
     if( ! tools::DecodeTime( burstTime,     rBurstDuration_ )
      || ! tools::DecodeTime( reloadingTime, rReloadingDuration_ ) )
         xis.error( "Invalid burst or reloading durations" );

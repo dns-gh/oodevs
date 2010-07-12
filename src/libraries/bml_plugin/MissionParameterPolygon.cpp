@@ -26,8 +26,8 @@ MissionParameterPolygon::MissionParameterPolygon( xml::xistream& xis, const kern
     xis >> xml::start( NS( "PolygonArea", "cbml" ) )
             >> xml::start( NS( "BoundingLine", "jc3iedm" ) );
     points_.reset( new PointList( xis ) );
-    xis     >> xml::end()
-        >> xml::end();
+    xis     >> xml::end
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

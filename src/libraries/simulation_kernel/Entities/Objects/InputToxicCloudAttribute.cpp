@@ -136,9 +136,9 @@ void InputToxicCloudAttribute::LoadConfig()
                     >> xml::content( dataField_, field_ )
                     >> xml::start( "échéances" )
                         >> xml::list( "heure", *this, &InputToxicCloudAttribute::ReadFiles )
-                    >> xml::end()
-                >> xml::end()
-            >> xml::end();
+                    >> xml::end
+                >> xml::end
+            >> xml::end;
     }
 }
 
@@ -252,7 +252,7 @@ void InputToxicCloudAttribute::WriteODB( xml::xostream& xos ) const
             << xml::attribute( "source", filename_ )
             << xml::attribute( "data-field", dataField_ )
             << xml::attribute( "export", bExport_ )
-        << xml::end();
+        << xml::end;
 }
 
 namespace

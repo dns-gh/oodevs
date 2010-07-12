@@ -42,6 +42,6 @@ BOOST_AUTO_TEST_CASE( FactoriesTest_ArmyFactory )
                               "</side>");
      xis >> xml::start( "side" );
      armyFactory.Create( xis );
-     xis >> xml::end();
+     xis >> xml::end;
      BOOST_TODO;
 }

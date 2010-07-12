@@ -285,7 +285,7 @@ void MIL_AgentPion::WriteODB( xml::xostream& xos ) const
     if( role )
         role->WriteODB( xos ); // Stocks
 
-    xos << xml::end();// unit
+    xos << xml::end;// unit
 }
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::ReadOverloading

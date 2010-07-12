@@ -48,7 +48,7 @@ void PHY_Protection::Initialize( xml::xistream& xis )
     LoadingWrapper loader;
     xis >> xml::start( "protections" )
             >> xml::list( "protection", loader, &LoadingWrapper::ReadProtection )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -99,7 +99,7 @@ PHY_Protection::PHY_Protection( const std::string& strName, xml::xistream& xis )
     xis >> xml::start( "neutralization" )
             >> xml::attribute( "average-time", timeString )
             >> xml::attribute( "variance", varianceString )
-        >> xml::end();
+        >> xml::end;
 
     MT_Float timeVal, variance;
     if( ! tools::DecodeTime( timeString, timeVal ) || timeVal < 0 )
@@ -125,7 +125,7 @@ PHY_Protection::PHY_Protection( const std::string& strName, xml::xistream& xis )
         xis >> xml::start( "random-breakdown-probability" )
                 >> xml::attribute( "eva", rBreakdownProbabilityEva_ )
                 >> xml::attribute( "neva", rBreakdownProbabilityNeva_ )
-            >> xml::end();
+            >> xml::end;
 
         if( rBreakdownProbabilityEva_ < 0 || rBreakdownProbabilityEva_ > 100 )
             xis.error( "random-breakdown-probability eva not in [0..100]" );
@@ -136,7 +136,7 @@ PHY_Protection::PHY_Protection( const std::string& strName, xml::xistream& xis )
 
         xis >> xml::start( "attrition-effects" )
                 >> xml::list( "attrition-effect", *this, &PHY_Protection::ReadAttrition )
-            >> xml::end();
+            >> xml::end;
     }
 }
 

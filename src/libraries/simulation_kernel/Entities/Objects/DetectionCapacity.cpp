@@ -63,7 +63,7 @@ DetectionCapacity::DetectionCapacity( xml::xistream& xis )
     xis >> xml::optional()
         >> xml::start( "acquisition-times" )
             >> xml::list( "acquisition-time", *this, &DetectionCapacity::ReadAcquisitionTime )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

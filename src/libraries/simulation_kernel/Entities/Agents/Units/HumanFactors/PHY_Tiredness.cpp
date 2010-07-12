@@ -41,8 +41,8 @@ void PHY_Tiredness::Initialize( xml::xistream& xis )
     xis >> xml::start( "humans-factors" )
             >> xml::start( "tiredness-factor" )
                 >> xml::list( "modifier", loader, &LoadingWrapper::ReadTiredness )
-            >> xml::end()
-        >> xml::end();
+            >> xml::end
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

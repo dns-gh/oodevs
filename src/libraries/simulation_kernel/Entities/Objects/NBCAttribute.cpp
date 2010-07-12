@@ -199,8 +199,8 @@ void NBCAttribute::WriteODB( xml::xostream& xos ) const
     xos << xml::attribute( "danger", danger_ );
     for ( CIT_NBCAgents it = agents_.begin(); it != agents_.end(); ++it )
         xos << xml::start( "nbc-agent" ) << xml::attribute( "type", (*it)->GetName() )
-            << xml::end();
-    xos << xml::end();
+            << xml::end;
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------

@@ -233,7 +233,7 @@ void Intelligence::Write( xml::xostream& xos, const kernel::CoordinateConverter_
 
     WritePosition( xos, converter );
 
-    xos << xml::end();
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------

@@ -44,7 +44,7 @@ void GaugeTypes::Load( const std::string& filename )
     xml::xifstream xis( filename );
     xis >> xml::start( "templates" )
             >> xml::list( "template", *this, &GaugeTypes::ReadTemplate )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

@@ -119,7 +119,7 @@ namespace
         T_Loader loader( container );
         xis >> xml::start( strTagName )
                 >> xml::list( "distance-modifier", loader, &T_Loader::ReadFactor, factors )
-            >> xml::end();
+            >> xml::end;
     }
 
     std::map< std::string, PHY_RawVisionData::E_VisionObject > environmentAssociation;
@@ -165,7 +165,7 @@ PHY_SensorTypeAgent::PHY_SensorTypeAgent( const PHY_SensorType& type, xml::xistr
     InitializePopulationFactors ( xis );
     InitializeUrbanBlockFactors( xis );
 
-    xis >> xml::end();
+    xis >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -199,7 +199,7 @@ void PHY_SensorTypeAgent::InitializeLimitedToSensors( xml::xistream& xis )
 {
     xis >> xml::optional() >> xml::start( "limited-to-sensors" )
             >> xml::list( "sensor", *this, &PHY_SensorTypeAgent::ReadLimitedToSensorsList )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -215,7 +215,7 @@ void PHY_SensorTypeAgent::InitializeDistances( xml::xistream& xis )
     rSquareProximityDist_ *= rSquareProximityDist_;
 
     xis     >> xml::list( "base-distance", *this, &PHY_SensorTypeAgent::ReadDistance )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -274,7 +274,7 @@ void PHY_SensorTypeAgent::InitializeEnvironmentFactors( xml::xistream& xis )
 {
     xis >> xml::start( "terrain-modifiers" )
             >> xml::list( "distance-modifier", *this, &PHY_SensorTypeAgent::ReadTerrainModifier )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -301,7 +301,7 @@ void PHY_SensorTypeAgent::InitializePopulationFactors( xml::xistream& xis )
     xis >> xml::start( "population-modifier" )
             >> xml::attribute( "density", rPopulationDensity_ )
             >> xml::attribute( "modifier", rPopulationFactor_ )
-        >> xml::end();
+        >> xml::end;
 
     if( rPopulationDensity_ < 0 )
         xis.error( "population-modifier: density < 0" );
@@ -318,7 +318,7 @@ void PHY_SensorTypeAgent::InitializeUrbanBlockFactors( xml::xistream& xis )
     unsigned int visionUrbanBlockMaterial = 0;
     xis >> xml::start( "urbanBlock-material-modifiers" )
         >> xml::list( "distance-modifier", *this, &PHY_SensorTypeAgent::ReadUrbanBlockModifier, visionUrbanBlockMaterial )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

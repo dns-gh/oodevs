@@ -109,5 +109,5 @@ void Lima::Write( xml::xostream& xos, const kernel::CoordinateConverter_ABC& con
 {
     xos << xml::start( "lima" ) ;
         TacticalLine_ABC::Write( xos, converter );
-    xos << xml::end();
+    xos << xml::end;
 }

@@ -47,8 +47,8 @@ void PHY_MaintenanceWorkRate::Initialize( xml::xistream& xis )
     xis >> xml::start( "maintenance" )
             >> xml::start( "working-schemes" )
                 >> xml::list( "working-scheme", loader, &LoadingWrapper::ReadWorkRate )
-            >> xml::end()
-        >> xml::end();
+            >> xml::end
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

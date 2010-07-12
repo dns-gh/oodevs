@@ -43,7 +43,7 @@ void Primitives::Load( const std::string& file )
     xml::xifstream xis( file );
     xis >> xml::start( "primitives" )
             >> xml::list( "primitive", *this, &Primitives::ReadPrimitive )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

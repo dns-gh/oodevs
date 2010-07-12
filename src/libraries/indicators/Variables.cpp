@@ -45,7 +45,7 @@ Variables::Variables( xml::xistream& xis )
     DataTypeFactory types;
     xis >> xml::start( "constants" )
             >> xml::list( "constant", *this, &Variables::ReadVariable, types )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -111,7 +111,7 @@ void Variables::Serialize( xml::xostream& xos ) const
     xos << xml::start( "constants" );
     BOOST_FOREACH( const T_Elements::value_type& variable, elements_ )
         variable.second->SerializeDeclaration( xos );
-    xos << xml::end();
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------

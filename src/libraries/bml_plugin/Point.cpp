@@ -33,7 +33,7 @@ Point::Point( xml::xistream& xis, const std::string& fieldname )
     xis >> xml::start( fieldname )
             >> xml::content( NS( "LatitudeCoordinate" , "jc3iedm" ), latitude_ )
             >> xml::content( NS( "LongitudeCoordinate", "jc3iedm" ), longitude_ )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -67,7 +67,7 @@ void Point::Serialize( xml::xostream& xos, const std::string& fieldname ) const
             << xml::attribute( "xsi:type", "jc3iedm:GeographicPoint" )
             << xml::content( "jc3iedm:LatitudeCoordinate" , latitude_ )
             << xml::content( "jc3iedm:LongitudeCoordinate", longitude_ )
-        << xml::end();
+        << xml::end;
 }
 
 // -----------------------------------------------------------------------------

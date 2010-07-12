@@ -32,7 +32,7 @@ PHY_ActiveProtection::PHY_ActiveProtection( xml::xistream& xis )
         >> xml::optional() >> xml::start( "dotation" )
             >> xml::attribute( "name", strDotationName )
             >> xml::attribute( "usage", usage_ )
-        >> xml::end()
+        >> xml::end
         >> xml::optional() >> xml::attribute( "hard-kill", hardKill_ )
         >> xml::list( "weapon", *this, &PHY_ActiveProtection::ReadWeapon );
     if( !strDotationName.empty() )
@@ -69,7 +69,7 @@ void PHY_ActiveProtection::Initialize( xml::xistream& xis )
 {
     xis >> xml::start( "protections" )
             >> xml::list( "protection", &PHY_ActiveProtection::Create )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

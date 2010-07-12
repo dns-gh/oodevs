@@ -81,19 +81,19 @@ MIL_Army::MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationF
     nType_ = diplomacyConverter_.Convert( strType );
     xis >> xml::start( "communication" )
             >> xml::list( "knowledge-group", *this, &MIL_Army::ReadLogistic, knowledgegroupFactory ) // LTO
-        >> xml::end()
+        >> xml::end
         >> xml::start( "tactical" )
             >> xml::list( "formation", *this, &MIL_Army::ReadFormation, formationFactory )
-        >> xml::end()
+        >> xml::end
         >> xml::start( "objects" )
             >> xml::list( "object", *this, &MIL_Army::ReadObject, objectFactory )
-        >> xml::end()
+        >> xml::end
         >> xml::start( "logistic" )
             >> xml::list( "automat", *this, &MIL_Army::ReadAutomat, automateFactory  )
-        >> xml::end()
+        >> xml::end
         >> xml::start( "populations" )
             >> xml::list( "population", *this, &MIL_Army::ReadPopulation, populationFactory )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -276,25 +276,25 @@ void MIL_Army::WriteODB( xml::xostream& xos ) const
     for( CIT_KnowledgeGroupMap it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
         if( !it->second->IsJammed() )
             it->second->WriteODB( xos );
-    xos     << xml::end();
+    xos     << xml::end;
 
     xos     << xml::start( "tactical" );
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::WriteODB, _1, boost::ref(xos) ) );
-    xos     << xml::end();
+    xos     << xml::end;
 
     xos     << xml::start( "logistic" );
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::WriteLogisticLinksODB, _1, boost::ref(xos) ) );
-    xos     << xml::end();
+    xos     << xml::end;
 
     xos     << xml::start( "objects" );
     tools::Resolver< MIL_Object_ABC >::Apply( boost::bind( &MIL_Object_ABC::WriteODB, _1, boost::ref(xos) ) );
-    xos     << xml::end();
+    xos     << xml::end;
 
     xos     << xml::start( "populations" );
     tools::Resolver< MIL_Population >::Apply( boost::bind( &MIL_Population::WriteODB, _1, boost::ref(xos) ) );
-    xos     << xml::end();
+    xos     << xml::end;
 
-    xos << xml::end();
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------

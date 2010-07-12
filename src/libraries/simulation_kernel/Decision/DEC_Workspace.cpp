@@ -94,8 +94,8 @@ void DEC_Workspace::InitializeConfig( MIL_Config& config )
     xis >> xml::start( "physical" )
             >> xml::start( "decisional" )
                 >> xml::attribute( "file", strDecFile )
-            >> xml::end()
-        >> xml::end();
+            >> xml::end
+        >> xml::end;
 
     strDecFile = config.BuildPhysicalChildFile( strDecFile );
 
@@ -123,12 +123,12 @@ void DEC_Workspace::InitializeConfig( MIL_Config& config )
     DEC_Knowledge_Agent     ::rMaxDangerosityDegradationByNeutralizedState_ = nTmp / 100.;
     PHY_RoleInterface_Composantes::rMaxDangerosityDegradationByNeutralizedState_ = nTmp / 100.;
 
-    xisDecisional     >> xml::end()
+    xisDecisional     >> xml::end
                           >> xml::start( "operational-state-weights" )
                               >> xml::attribute( "component", PHY_RoleInterface_Composantes::rOpStateWeightNonMajorComposante_ )
                               >> xml::attribute( "major-component", PHY_RoleInterface_Composantes::rOpStateWeightMajorComposante_ )
                               >> xml::attribute( "crew", PHY_ComposantePion::rOpStateWeightHumans_ )
-                          >> xml::end();
+                          >> xml::end;
 
     if( PHY_RoleInterface_Composantes::rOpStateWeightNonMajorComposante_ < 0 || PHY_RoleInterface_Composantes::rOpStateWeightNonMajorComposante_ > 1 )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "operational-state-weights: component not in [0..1]" );
@@ -142,7 +142,7 @@ void DEC_Workspace::InitializeConfig( MIL_Config& config )
 
     DEC_Knowledge_RapFor_ABC::Initialize( xisDecisional );
 
-    xisDecisional >> xml::end();
+    xisDecisional >> xml::end;
 }
 
 //-----------------------------------------------------------------------------
@@ -161,7 +161,7 @@ void DEC_Workspace::InitializeDIA( MIL_Config& config )
     std::map< std::string, std::string > strSourcePaths;
     xis >> xml::start( "RepertoiresSources" )
             >> xml::list( "RepertoireSources" , *this, &DEC_Workspace::RegisterSourcePath, config, strSourcePaths )
-        >> xml::end();
+        >> xml::end;
 
     MIL_ParameterType_ABC    ::Initialize   ();
 
@@ -179,7 +179,7 @@ void DEC_Workspace::InitializeDIA( MIL_Config& config )
     {
         xis >> xml::start( "BMDatabase" );
         dataBase_.reset( new DEC_DataBase( xis, strSourcePaths["net.masagroup"] ) );
-        xis >> xml::end();
+        xis >> xml::end;
     }
     else
     {
@@ -212,7 +212,7 @@ void DEC_Workspace::InitializeMissions( MIL_Config& config )
     xis >> xml::start( "physical" )
             >> xml::start( "missions" )
                >> xml::attribute( "file", strMissionsFile )
-            >> xml::end();
+            >> xml::end;
 
     strMissionsFile = config.BuildPhysicalChildFile( strMissionsFile );
 
@@ -238,8 +238,8 @@ void DEC_Workspace::InitializeModels( MIL_Config& config, const std::map< std::s
     xis >> xml::start( "physical" )
             >> xml::start( "models" )
                 >> xml::attribute( "file", strModelsFile )
-            >> xml::end()
-        >> xml::end();
+            >> xml::end
+        >> xml::end;
 
     strModelsFile = config.BuildPhysicalChildFile( strModelsFile );
 
@@ -253,21 +253,21 @@ void DEC_Workspace::InitializeModels( MIL_Config& config, const std::map< std::s
     MT_LOG_INFO_MSG( "Initializing unit DIA models" );
     xisModels >> xml::start( "units" )
                 >> xml::list( "unit", *this, &DEC_Workspace::ReadModel, strSourcePaths, strUnits, MIL_PionMissionType::MissionNames() )
-              >> xml::end();
+              >> xml::end;
 
     // Automates
     MT_LOG_INFO_MSG( "Initializing automat DIA models" );
     xisModels >> xml::start( "automats" )
                   >> xml::list( "automat", *this, &DEC_Workspace::ReadModel, strSourcePaths, strAutomats, MIL_AutomateMissionType::MissionNames() )
-              >> xml::end();
+              >> xml::end;
 
     // Populations
     MT_LOG_INFO_MSG( "Initializing population DIA models" );
     xisModels >> xml::start( "populations" )
                   >> xml::list( "population", *this, &DEC_Workspace::ReadModel, strSourcePaths, strPopulation, MIL_PopulationMissionType::MissionNames() )
-              >> xml::end();
+              >> xml::end;
 
-    xisModels >> xml::end(); // models
+    xisModels >> xml::end; // models
 }
 
 // -----------------------------------------------------------------------------
@@ -323,8 +323,8 @@ void DEC_Workspace::InitializeObjectNames( MIL_Config& config )
     xis >> xml::start( "physical" )
             >> xml::start( "object-names" )
                 >> xml::attribute( "file", strFile )
-            >> xml::end()
-        >> xml::end();
+            >> xml::end
+        >> xml::end;
 
     strFile = config.BuildPhysicalChildFile( strFile );
 

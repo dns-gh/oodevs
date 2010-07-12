@@ -76,7 +76,7 @@ ObstacleAttribute::ObstacleAttribute( xml::xistream& xis )
     xis >> xml::optional()
         >> xml::start( "activation-time" )
             >> xml::attribute( "value", activationTime_ )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -216,7 +216,7 @@ void ObstacleAttribute::WriteODB( xml::xostream& xos ) const
 {
     xos << xml::start( "obstacle" )
             << xml::attribute( "type", ExtractObstacle( obstacle_ ) )
-        << xml::end();
+        << xml::end;
 }
 
 // -----------------------------------------------------------------------------

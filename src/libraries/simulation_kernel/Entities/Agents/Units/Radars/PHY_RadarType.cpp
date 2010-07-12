@@ -61,7 +61,7 @@ void PHY_RadarType::Initialize( xml::xistream& xis, const MIL_Time_ABC& time )
 
     xis >> xml::start( "radars" )
             >> xml::list( "radar", loader, &LoadingWrapper::ReadRadar, time )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

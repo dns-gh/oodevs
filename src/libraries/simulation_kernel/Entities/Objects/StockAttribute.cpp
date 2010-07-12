@@ -154,9 +154,9 @@ void StockAttribute::WriteODB( xml::xostream& xos ) const
             << xml::attribute( "type", it->first->GetName() )
             << xml::attribute( "current", it->second.first )
             << xml::attribute( "max", it->second.second )
-            << xml::end();
+            << xml::end;
     }
-    xos << xml::end();
+    xos << xml::end;
 }
 
 

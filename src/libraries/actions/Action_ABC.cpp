@@ -187,7 +187,7 @@ void Action_ABC::Serialize( xml::xostream& xos ) const
     {
         xos << xml::start( "parameter" );
         it->second->Serialize( xos );
-        xos << xml::end();
+        xos << xml::end;
     }
     Interface().Apply( &kernel::Serializable_ABC::SerializeAttributes, xos );
 }

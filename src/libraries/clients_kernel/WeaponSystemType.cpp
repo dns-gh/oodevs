@@ -49,7 +49,7 @@ void WeaponSystemType::ReadDirectFire( xml::xistream& xis )
     xis >> xml::optional()
         >> xml::start( "direct-fire" )
             >> xml::list( "hit-probabilities", *this, &WeaponSystemType::ReadDirectFireHitProbabilities )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -103,7 +103,7 @@ void WeaponSystemType::ReadIndirectFire( xml::xistream& xis )
         >> xml::start( "indirect-fire" )
             >> xml::attribute( "max-range", maxIndirectRange_ )
             >> xml::attribute( "min-range", minIndirectRange_ )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

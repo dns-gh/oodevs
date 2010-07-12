@@ -101,7 +101,7 @@ void Model::Save( const std::string& name ) const
             << xml::attribute( "id", it->first );
         for( std::set< const Entity_ABC*>::iterator eit = it->second.begin(); eit != it->second.end(); ++eit)
             (*eit)->Write( xos, *converter_ );
-        xos << xml::end();
+        xos << xml::end;
     }
     for( std::map< unsigned int, std::set< const Entity_ABC* > >::iterator it = automats.begin(); it!=automats.end(); ++it )
     {
@@ -109,9 +109,9 @@ void Model::Save( const std::string& name ) const
             << xml::attribute( "id", it->first );
         for( std::set< const Entity_ABC* >::iterator eit = it->second.begin(); eit != it->second.end(); ++eit )
             (*eit)->Write( xos, *converter_ );
-        xos << xml::end();
+        xos << xml::end;
     }
-    xos << xml::end();
+    xos << xml::end;
 
     drawings_.Save( directory );
     notes_.SaveNotes( config_.BuildSessionChildFile("notes.csv" ) );
@@ -129,7 +129,7 @@ void Model::Load()
         xis >> xml::start( "messenger" )
                 >> xml::list( "automat"  , *this, &Model::ReadAutomat )
                 >> xml::list( "formation", *this, &Model::ReadFormation )
-            >> xml::end();
+            >> xml::end;
     }
     else
     {
@@ -137,8 +137,8 @@ void Model::Load()
         xis >> xml::start( "orbat" )
                 >> xml::start( "sides" )
                     >> xml::list( "side", *this, &Model::ReadSide )
-                >> xml::end()
-            >> xml::end();
+                >> xml::end
+            >> xml::end;
     }
 }
 
@@ -152,7 +152,7 @@ void Model::ReadSide( xml::xistream& xis )
     xis >> xml::attribute( "id", id )
         >> xml::start( "tactical" )
             >> xml::list( "formation", *this, &Model::ReadFormation )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

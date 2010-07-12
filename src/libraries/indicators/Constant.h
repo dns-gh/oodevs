@@ -118,7 +118,7 @@ void Constant< T >::SerializeDeclaration( xml::xostream& xos ) const
             << xml::attribute( "id", GetInput() )
             << xml::attribute< T >( "value", value_ )
             << xml::attribute( "type", type_->ToString() )
-        << xml::end();
+        << xml::end;
 }
 
 }

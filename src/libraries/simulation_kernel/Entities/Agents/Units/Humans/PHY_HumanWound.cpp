@@ -75,13 +75,13 @@ void PHY_HumanWound::InitializeMedicalData( xml::xistream& xis )
     if( rTimeVal < 0 )
         xis.error( "times: sorting-time < 0" );
     nSortingTime_ = (unsigned int)MIL_Tools::ConvertSecondsToSim( rTimeVal );
-    xis >> xml::end();
+    xis >> xml::end;
 
     MT_Float rFactorSum = 0.;
     LoadingWrapper loader;
     xis >> xml::start( "injuries" )
             >> xml::list( "injury", loader, &LoadingWrapper::ReadInjury, rFactorSum )
-        >> xml::end();
+        >> xml::end;
 
     if( std::fabs( 1. - rFactorSum ) > 0.01 )
         xis.error( "Total pourcentage is not 100%" );

@@ -41,7 +41,7 @@ DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_Config& config )
     std::string strPathFindFile;
     xis >> xml::start( "pathfinder" )
             >> xml::attribute( "file", strPathFindFile )
-        >> xml::end();
+        >> xml::end;
     strPathFindFile = config.BuildPhysicalChildFile( strPathFindFile );
 
     xml::xifstream xisPathfind( strPathFindFile );
@@ -53,12 +53,12 @@ DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_Config& config )
     if( tools::ReadTimeAttribute( xis, "max-calculation-time", nMaxComputationDuration_ ) && nMaxComputationDuration_ <= 0 )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Pathfind configuration : max-calculation-time w<= 0" );
 
-    xisPathfind     >> xml::end();
+    xisPathfind     >> xml::end;
 
     DEC_PathType   ::Initialize();
     DEC_PathFactory::Initialize( xisPathfind );
 
-    xisPathfind >> xml::end();
+    xisPathfind >> xml::end;
 
     bUseInSameThread_ = config.GetPathFinderThreads() == 0;
     MT_LOG_INFO_MSG( MT_FormatString( "Starting %d pathfind thread(s)", config.GetPathFinderThreads() ) );

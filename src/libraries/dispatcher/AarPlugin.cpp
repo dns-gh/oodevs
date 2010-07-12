@@ -113,7 +113,7 @@ void AarPlugin::OnReceiveIndicatorRequest( const std::string& client, const Msgs
         AarFacade factory( resolver_.GetPublisher( client ), request.identifier() );
         xis >> xml::start( "indicator" );
         boost::shared_ptr< Task > task( factory.CreateTask( xis ) );
-        xis >> xml::end();
+        xis >> xml::end;
         task->Process( *messages_ ); // $$$$ AGE 2007-09-17: deconnexion en route=>crash
     }
     catch( std::exception& e )

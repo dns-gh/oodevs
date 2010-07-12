@@ -26,7 +26,7 @@ DisTypeResolver::DisTypeResolver( const std::string& mappingFile )
     xis >> xml::start( "dis-mapping" )
             >> xml::attribute( "default", defaultType )
             >> xml::list( "entry", *this, &DisTypeResolver::ReadEntry )
-        >> xml::end();
+        >> xml::end;
     default_ = EntityType( defaultType );
 }
 

@@ -71,7 +71,7 @@ xml::xostream& plugins::bml::operator<<( xml::xostream& xos, const ReportingData
             << xml::content( "jc3iedm:ReportingDatetime", data.reportDatetime_ ) //!< time of report, compact ISO8601
             << xml::start( "jc3iedm:ReportingOrganisationRef" )
                 << xml::content( "jc3iedm:OID", data.organisation_ ) //!< reported by army
-            << xml::end()
-        << xml::end();
+            << xml::end
+        << xml::end;
     return xos;
 }

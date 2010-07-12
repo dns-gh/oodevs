@@ -115,7 +115,7 @@ void DelayAttribute::WriteODB( xml::xostream& xos ) const
 {
     xos << xml::start( "delay" )
             << xml::attribute( "value", nDelay_ );
-    xos << xml::end();}
+    xos << xml::end;}
 
 // -----------------------------------------------------------------------------
 // Name: DelayAttribute::SendFullState

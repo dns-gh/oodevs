@@ -46,7 +46,7 @@ void OrderProcessor::Handle( const std::string& response )
     xml::xistringstream xis( response );
     xis >> xml::start( NS( "OrderPush", "cbml" ) )
             >> xml::list( NS( "OrderPush", "cbml" ), *this, &OrderProcessor::ReadOrder )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

@@ -114,5 +114,5 @@ void Serializer::Serialize( xml::xostream& xos ) const
         ElementDeclarator declarator( xos );
         stack_.front()->Serialize( xos, declarator );
     }
-    xos << xml::end();
+    xos << xml::end;
 }

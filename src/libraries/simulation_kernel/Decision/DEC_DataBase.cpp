@@ -27,7 +27,7 @@ namespace
         directia5::Library::T_LibPaths repositories;
         xis >> xml::start( "RepertoiresBM" )
                 >> xml::list( "Repertoire", boost::bind( &ReadRepository, _1, boost::ref( strPath ), boost::ref( repositories ) ) )
-            >> xml::end();
+            >> xml::end;
         return repositories;
     }
 
@@ -50,7 +50,7 @@ DEC_DataBase::DEC_DataBase( xml::xistream& xis, const std::string& strPath )
     libPaths_ = GetLibPaths( xis, strPath );
     xis >> xml::start( "Knowledges" )
             >> xml::list( "Knowledge", boost::bind( &ReadKnowledge, _1, boost::ref( knowledges_ ) ) )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

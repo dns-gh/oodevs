@@ -60,9 +60,9 @@ void MIL_FireClass::Initialize( xml::xistream& xis )
             >> xml::start( "fire-surface" )
                 >> xml::attribute( "length", length_ )
                 >> xml::attribute( "width", width_ )
-            >> xml::end()
+            >> xml::end
             >> xml::list( "class", &ReadClass )
-        >> xml::end();
+        >> xml::end;
 
     for( CIT_FireClassMap it = classes_.begin(); it != classes_.end(); ++it )
         if( ! ids.insert( it->second->GetID() ).second )
@@ -95,7 +95,7 @@ MIL_FireClass::MIL_FireClass( const std::string& strName, xml::xistream& xis )
         >> xml::attribute( "propagation-threshold"  , propagationThreshold_ )
         >> xml::start( "extinguisher-agents" )
             >> xml::list( "agent", *this, &MIL_FireClass::ReadExtinguisherAgentEffect )
-        >> xml::end();
+        >> xml::end;
 }
 
 namespace

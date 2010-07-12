@@ -179,7 +179,7 @@ void Drawing::Serialize( xml::xostream& xos ) const
             << xml::attribute( "color", color_ )
             << xml::attribute( "template", template_ );
     std::for_each( points_.begin(), points_.end(), boost::bind( &Drawing::SerializePoint, this, _1, boost::ref( xos ) ) );
-    xos << xml::end();
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -193,5 +193,5 @@ void Drawing::SerializePoint( const MsgCoordLatLong& asn, xml::xostream& xos ) c
     xos << xml::start( "point" )
             << xml::attribute( "x", point.X() )
             << xml::attribute( "y", point.Y() )
-        << xml::end();
+        << xml::end;
 }

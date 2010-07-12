@@ -47,8 +47,8 @@ void DetectionReport::Send( Publisher_ABC& publisher ) const
     Who who( detected_, level_ );
     xml::xostream& xos = publisher.CreateReport();
     xos << xml::start( "ReportPush" )
-            << xml::start( "ReportedByWho" ) << byWho << xml::end()
-            << xml::start( "NewWhere" )      << who << Where( detected_ ) << xml::end()
-            << xml::start( "ReportedWho" )   << who << xml::end();
-    xos << xml::end();
+            << xml::start( "ReportedByWho" ) << byWho << xml::end
+            << xml::start( "NewWhere" )      << who << Where( detected_ ) << xml::end
+            << xml::start( "ReportedWho" )   << who << xml::end;
+    xos << xml::end;
 }

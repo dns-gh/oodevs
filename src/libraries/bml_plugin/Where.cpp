@@ -44,7 +44,7 @@ xml::xostream& plugins::bml::operator<<( xml::xostream& xos, const Where& data )
             << xml::start( "WhereInstance" );
     Point point( data.agent_.GetPosition().X(), data.agent_.GetPosition().Y() );
     point.Serialize( xos, "AbstractAbsolutePoint" );
-    xos     << xml::end()
-        << xml::end();
+    xos     << xml::end
+        << xml::end;
     return xos;
 }

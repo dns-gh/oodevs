@@ -39,7 +39,7 @@ void PHY_SensorType::Initialize( xml::xistream& xis )
 
     xis >> xml::start( "sensors" )
             >> xml::list( "sensor", loader, &LoadingWrapper::ReadSensor )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

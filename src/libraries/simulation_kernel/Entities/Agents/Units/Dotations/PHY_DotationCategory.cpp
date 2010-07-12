@@ -246,7 +246,7 @@ void PHY_DotationCategory::InitializeIllumination( xml::xistream& xis )
         xis >> xml::start("illuminating")
                 >> xml::attribute( "range", fRange_ )
                 >> xml::attribute( "maintain", bMaintainIllumination_ )
-            >> xml::end();
+            >> xml::end;
     }
 }
 
@@ -262,7 +262,7 @@ void PHY_DotationCategory::InitializeGuidance( xml::xistream& xis )
         xis >> xml::start("guided")
                 >> xml::attribute( "maintain", bMaintainGuidance_ )
                 >> xml::attribute( "range", rGuidanceRange_ )
-            >> xml::end();
+            >> xml::end;
     }
 }
 

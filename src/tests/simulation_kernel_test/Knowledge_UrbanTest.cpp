@@ -47,7 +47,7 @@ BOOST_AUTO_TEST_CASE( Knowledge_UrbanTest_Update )
     urban::CoordinateConverter_ABC* converter = new urban::CoordinateConverter();
     flux >> xml::start( "urbanObject" );
     const urban::TerrainObject_ABC* object = new urban::UrbanObject( flux, 0, *converter );
-    flux >> xml::end();
+    flux >> xml::end;
     {
         MockMIL_Time_ABC time;
         MOCK_EXPECT( time, GetCurrentTick ).returns( 1u );

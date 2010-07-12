@@ -455,8 +455,8 @@ void TER_Localisation::Read( xml::xistream& xis )
     // Points
     xis     >> xml::start( "points" )
                 >> xml::list( "point", *this, &TER_Localisation::ReadPoint )
-            >> xml::end()// points
-        >> xml::end(); // shape
+            >> xml::end// points
+        >> xml::end; // shape
     if( !Initialize() )
         throw MT_ScipioException( "TER_Localisation::Read", __FILE__, __LINE__, "Invalid location" ); // $$$$ ABL 2007-07-09: error context
 }
@@ -492,7 +492,7 @@ void TER_Localisation::Write( xml::xostream& xos ) const
         MT_Vector2D vDir( 0., 1. );
         TER_World::GetWorld().SimToMosMgrsCoord( vCircleCenter_ + vDir * rCircleRadius_, strPoint );
         xos << xml::content( "point", strPoint )
-            << xml::end(); // points
+            << xml::end; // points
     }
     else
     {
@@ -505,9 +505,9 @@ void TER_Localisation::Write( xml::xostream& xos ) const
             TER_World::GetWorld().SimToMosMgrsCoord( *it, strPoint );
             xos << xml::content( "point", strPoint );
         }
-        xos << xml::end(); // points
+        xos << xml::end; // points
     }
-    xos << xml::end(); // shape
+    xos << xml::end; // shape
 }
 
 

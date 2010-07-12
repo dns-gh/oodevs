@@ -105,7 +105,7 @@ void CrossingSiteAttribute::WriteODB( xml::xostream& xos ) const
             << xml::content( "depth", rDepth_ )
             << xml::content( "speed", rCurrentSpeed_ )
             << xml::content( "construction-needed", bBanksToFitOut_ )
-        << xml::end(); // specific-attributes
+        << xml::end; // specific-attributes
 }
 
 

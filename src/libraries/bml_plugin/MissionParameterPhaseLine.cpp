@@ -33,7 +33,7 @@ MissionParameterPhaseLine::MissionParameterPhaseLine( xml::xistream& xis, const 
 {
     xis >> xml::start( NS( "Line", "cbml" ) );
     points_.reset( new PointList( xis ) );
-    xis >> xml::end();
+    xis >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

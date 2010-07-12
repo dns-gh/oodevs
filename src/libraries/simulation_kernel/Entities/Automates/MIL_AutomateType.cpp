@@ -88,7 +88,7 @@ void MIL_AutomateType::Initialize( xml::xistream& xis )
 
     xis >> xml::start( "automats" )
             >> xml::list( "automat", loader, &LoadingWrapper::ReadAutomat )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

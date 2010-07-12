@@ -26,7 +26,7 @@ namespace
     QString ReadComment( xml::xistream& xis )
     {
         std::string comment;
-        xis >> xml::start( "comments" ) >> comment >> xml::end();
+        xis >> xml::start( "comments" ) >> comment >> xml::end;
         return comment.c_str();
     }
 }
@@ -44,7 +44,7 @@ Primitive::Primitive( xml::xistream& xis, const DataTypeFactory& types )
 {
     xis >> xml::optional() >> xml::start( "parameters" )
             >> xml::list( "parameter", *this, &Primitive::ReadParameter )
-        >> xml::end();
+        >> xml::end;
     prototype_ = QString( "%1(%2)" ).arg( name_ ).arg( BuildParameterList() );
 }
 

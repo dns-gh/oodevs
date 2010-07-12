@@ -187,7 +187,7 @@ void MIL_Formation::WriteODB( xml::xostream& xos ) const
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::WriteODB, _1, boost::ref(xos) ) );
     tools::Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::WriteODB, _1, boost::ref(xos) ) );
 
-    xos << xml::end(); // formation
+    xos << xml::end; // formation
 }
 
 // -----------------------------------------------------------------------------

@@ -125,7 +125,7 @@ void MIL_AgentTypePion::Initialize( xml::xistream& xis )
     LoadingWrapper loader;
     xis >> xml::start( "units" )
             >> xml::list( "unit", loader, &LoadingWrapper::ReadUnit )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -210,7 +210,7 @@ void MIL_AgentTypePion::InitializeDistancesAvantPoints( xml::xistream& xis )
     xis >> xml::optional()
         >> xml::start( "distance-before-points" )
             >> xml::list( "distance-before-point", *this, &MIL_AgentTypePion::ReadPoint )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

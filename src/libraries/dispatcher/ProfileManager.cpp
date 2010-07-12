@@ -92,7 +92,7 @@ void ProfileManager::Reset()
         xml::xifstream xis( config_.GetProfilesFile() );
         xis >> xml::start( "profiles" )
                 >> xml::list( "profile", *this, & ProfileManager::ReadProfile )
-            >> xml::end();
+            >> xml::end;
     }
     catch( xml::exception& exception )
     {

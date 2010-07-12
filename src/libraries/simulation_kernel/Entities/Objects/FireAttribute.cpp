@@ -191,7 +191,7 @@ void FireAttribute::WriteODB( xml::xostream& xos ) const
     xos << xml::start( "fire" )
             << xml::attribute( "heat", heat_ )
             << xml::attribute( "class", pClass_->GetName() )
-        << xml::end();
+        << xml::end;
 }
 
 // -----------------------------------------------------------------------------

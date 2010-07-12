@@ -79,7 +79,7 @@ void DrawingsModel::Load( const dispatcher::Config& config )
             xml::xifstream xis( filename );
             xis >> xml::start( "shapes" )
                     >> xml::list( "shape", *this, &DrawingsModel::ReadShape )
-                >> xml::end();
+                >> xml::end;
         }
     }
     catch( std::exception& )
@@ -110,7 +110,7 @@ void DrawingsModel::Save( const std::string& directory ) const
     xos << xml::start( "shapes" );
     std::for_each( elements_.begin(), elements_.end(), boost::bind( &Drawing::Serialize
                  , boost::bind( &T_Elements::value_type::second, _1 ), boost::ref( xos ) ) );
-    xos << xml::end();
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -214,7 +214,7 @@ boost::shared_ptr< DrawingProxy > DrawingsModel::CreateDrawing( const std::strin
     std::auto_ptr< Drawing > p;
     xis >> xml::start( "shapes" )
             >> xml::list( "shape", *this, &DrawingsModel::ReadNamedShape, p, name )
-        >> xml::end();
+        >> xml::end;
     if( !p.get() )
         throw std::runtime_error( "Could not find drawing '" + name + "'" );
     return boost::shared_ptr< DrawingProxy >( new DrawingProxy( *this, p ) );

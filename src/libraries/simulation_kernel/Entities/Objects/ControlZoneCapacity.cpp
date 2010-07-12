@@ -58,7 +58,7 @@ namespace
             xml::xistringstream xis( volumes );
             xis >> xml::start( "shot-percentages" )
                     >> xml::list( "per-human-per-hectare", *this, &StaticLoader::ReadPercentage )
-                >> xml::end();
+                >> xml::end;
         }
 
     private:

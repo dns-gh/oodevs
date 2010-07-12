@@ -106,7 +106,7 @@ void Function::Serialize( xml::xostream& xos, ElementDeclarator_ABC& declarator 
         xos << xml::attribute( "id", GetInput() );
     SerializeType( xos );
     SerializeParameters( xos );
-    xos << xml::end();
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------

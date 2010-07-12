@@ -86,7 +86,7 @@ void PHY_ComposanteTypePion::Initialize( const MIL_Time_ABC& time, xml::xistream
 
     xis >> xml::start( "elements" )
             >> xml::list( "element", loader, &LoadingWrapper::ReadElement, time )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -216,7 +216,7 @@ void PHY_ComposanteTypePion::InitializeBreakdownTypes( xml::xistream& xis )
     randomBreakdownTypeProbabilities_.clear();
     xis >> xml::start( "breakdowns" )
             >> xml::list( "breakdown", *this, &PHY_ComposanteTypePion::InitializeBreakdown );
-    xis >> xml::end();
+    xis >> xml::end;
 
     if( randomBreakdownTypeProbabilities_.empty()
         || std::fabs( 1. - randomBreakdownTypeProbabilities_.back().rProbabilityBound_ ) > 0.01 )
@@ -294,7 +294,7 @@ void PHY_ComposanteTypePion::InitializeWeapons( xml::xistream& xis )
 {
     xis >> xml::start( "weapon-systems" )
             >> xml::list( "weapon-system", *this, &PHY_ComposanteTypePion::ReadWeaponSystem )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -330,7 +330,7 @@ void PHY_ComposanteTypePion::InitializeProtections( xml::xistream& xis )
 {
     xis >> xml::optional() >> xml::start( "active-protections" )
             >> xml::list( "protection", *this, &PHY_ComposanteTypePion::ReadActiveProtection )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -356,7 +356,7 @@ void PHY_ComposanteTypePion::InitializeHumanProtections( xml::xistream& xis )
 {
     xis >> xml::optional() >> xml::start( "human-protections" )
             >> xml::list( "human-protection", *this, &PHY_ComposanteTypePion::ReadHumanProtection )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -385,7 +385,7 @@ void PHY_ComposanteTypePion::InitializeSensors( xml::xistream& xis )
 
     xis >> xml::start( "sensors" )
             >> xml::list( "sensor", *this, &PHY_ComposanteTypePion::ReadSensor )
-        >> xml::end();
+        >> xml::end;
 
     if( rSensorRotationAngle_ == std::numeric_limits< MT_Float >::max() )
         rSensorRotationAngle_ = 0.;
@@ -424,7 +424,7 @@ void PHY_ComposanteTypePion::InitializeRadars( xml::xistream& xis )
     xis >> xml::optional()
             >> xml::start( "radars" )
                 >> xml::list( "radar", *this, &PHY_ComposanteTypePion::ReadRadar )
-            >> xml::end();
+            >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -454,7 +454,7 @@ void PHY_ComposanteTypePion::InitializeTransport( xml::xistream& xis )
     xis >> xml::start( "transports" )
             >> xml::list( "crew", *this, &PHY_ComposanteTypePion::ReadTransportCrew )
             >> xml::list( "unit", *this, &PHY_ComposanteTypePion::ReadTransportUnit )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -500,7 +500,7 @@ void PHY_ComposanteTypePion::InitializeObjects( xml::xistream& xis )
 {
     xis >> xml::start( "objects" )
             >> xml::list( "object", *this, &PHY_ComposanteTypePion::ReadObject )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -536,7 +536,7 @@ void PHY_ComposanteTypePion::InitializeConsumptions( xml::xistream& xis )
 {
     xis >> xml::start( "consumptions" )
             >> xml::list( "consumption", *this, &PHY_ComposanteTypePion::ReadConsumption )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -675,7 +675,7 @@ void PHY_ComposanteTypePion::InitializeLogisticMedical( xml::xistream& xis )
                 >> xml::list( "caring", *this, &PHY_ComposanteTypePion::ReadCaring )
                 >> xml::list( "collecting", *this, &PHY_ComposanteTypePion::ReadCollecting )
                 >> xml::list( "relieving", *this, &PHY_ComposanteTypePion::ReadRelieving )
-            >> xml::end();
+            >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -759,7 +759,7 @@ void PHY_ComposanteTypePion::InitializeLogisticSupply( xml::xistream& xis )
     xis >> xml::optional()
             >> xml::start( "supply-functions" )
                 >> xml::list( "carrying", *this, &PHY_ComposanteTypePion::ReadSupply )
-            >> xml::end();
+            >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

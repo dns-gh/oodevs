@@ -75,7 +75,7 @@ namespace
 FileLoader& FileLoader::Load( const std::string& rootTag, T_Loader loader )
 {
     std::string file;
-    *xis_ >> xml::start( rootTag ) >> xml::attribute( "file", file ) >> xml::end();
+    *xis_ >> xml::start( rootTag ) >> xml::attribute( "file", file ) >> xml::end;
     CheckedLoader( file, config_, loader );
     return *this;
 }

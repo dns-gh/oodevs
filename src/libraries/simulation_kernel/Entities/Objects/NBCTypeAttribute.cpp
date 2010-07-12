@@ -189,7 +189,7 @@ void NBCTypeAttribute::WriteODB( xml::xostream& xos ) const
     xos << xml::start( "nbc" )
             << xml::attribute( "concentration"  , concentration_ )
             << xml::attribute( "agent"          , pAgent_->GetName() )
-        << xml::end();
+        << xml::end;
 }
 
 bool NBCTypeAttribute::IsSource() const

@@ -46,7 +46,7 @@ void PHY_SensorTypeObjectData::InitializeFactors( const PHY_Posture::T_PostureMa
 
     xis >> xml::start( strTagName )
             >> xml::list( "distance-modifier", loader, &LoadingWrapper::ReadPosture, container, factors )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -110,7 +110,7 @@ void PHY_SensorTypeObjectData::InitializePopulationFactors( xml::xistream& xis )
     xis >> xml::start( "population-modifier" )
             >> xml::attribute( "density", rPopulationDensity_ )
             >> xml::attribute( "modifier", rPopulationFactor_ )
-        >> xml::end();
+        >> xml::end;
 
     if( rPopulationDensity_ < 0 )
         xis.error( "population-modifier: density < 0" );

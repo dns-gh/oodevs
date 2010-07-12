@@ -30,7 +30,7 @@ void PHY_PerceptionFlyingShell::Initialize( xml::xistream& xis )
 {
     xis >> xml::start( "cobra-radar" )
             >> xml::attribute( "action-range", rRadius_ )
-        >> xml::end();
+        >> xml::end;
 
     if( rRadius_ < 0 )
         xis.error( "cobra-radar: action-range < 0" );

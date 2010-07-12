@@ -34,8 +34,8 @@ void PHY_MaintenanceResourcesAlarms::Initialize( xml::xistream& xis )
     xis >> xml::start( "maintenance" )
             >> xml::start( "resource-availability-alerts" )
                 >> xml::list( "resource-availability-alert", loader, &LoadingWrapper::ReadResource )
-            >> xml::end()
-        >> xml::end();
+            >> xml::end
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

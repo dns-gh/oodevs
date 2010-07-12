@@ -425,7 +425,7 @@ void MIL_Automate::WriteODB( xml::xostream& xos ) const
     for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
         (**it).WriteODB( xos );
 
-    xos << xml::end(); // automat
+    xos << xml::end; // automat
 }
 
 // -----------------------------------------------------------------------------
@@ -466,8 +466,8 @@ void MIL_Automate::WriteLogisticLinksODB( xml::xostream& xos ) const
                 << xml::start( "subordinate" )
                     << xml::attribute( "id", GetID() )
                     << xml::attribute( "link", "tc2" )
-                << xml::end()
-            << xml::end();
+                << xml::end
+            << xml::end;
     }
 }
 

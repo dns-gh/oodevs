@@ -60,7 +60,7 @@ void DEC_Agent_PathClass::Initialize( xml::xistream& xis )
     LoadingWrapper loader;
     xis >> xml::start( "unit-rules" )
             >> xml::list( "rule", loader, &LoadingWrapper::ReadUnitRule )
-        >> xml::end();
+        >> xml::end;
     CheckRulesExistence();
 }
 
@@ -137,24 +137,24 @@ DEC_Agent_PathClass::DEC_Agent_PathClass( xml::xistream& xis, const DEC_Agent_Pa
     xis >> xml::optional()
         >> xml::start( "optimisation" )
             >> xml::attribute( "shortest", bShort_ )
-        >> xml::end()
+        >> xml::end
 
         >> xml::optional()
         >> xml::start( "preferred-terrains" )
             >> xml::optional() >> xml::attribute( "strength", rPreferedTerrainCost_ )
             >> xml::list( "preferred-terrain", *this, &DEC_Agent_PathClass::ReadPrefferedTerrains, preferedTerrain_ )
-        >> xml::end()
+        >> xml::end
 
         >> xml::optional()
         >> xml::start( "avoided-terrains" )
             >> xml::optional() >> xml::attribute( "strength", rAvoidedTerrainCost_ )
             >> xml::list( "avoided-terrain", *this, &DEC_Agent_PathClass::ReadAvoidedTerrain, avoidedTerrain_ )
-        >> xml::end()
+        >> xml::end
 
         >> xml::optional()
         >> xml::start( "preferred-altitude" )
             >> xml::attribute( "value", rAltitudePreference_ )
-        >> xml::end()
+        >> xml::end
         >> xml::list( "zone", *this, &DEC_Agent_PathClass::ReadFuseau )
         >> xml::list( "automat-zone", *this, &DEC_Agent_PathClass::ReadAutomataFuseau )
         >> xml::list( "danger-direction", *this, &DEC_Agent_PathClass::ReadDangerDirection )
@@ -254,12 +254,12 @@ void DEC_Agent_PathClass::ReadFuseau( xml::xistream& xis )
             >> xml::optional() >> xml::attribute( "cost-per-meter", rFuseauCostPerMeterOut_ )
             >> xml::optional() >> xml::attribute( "without-automat", rMaximumFuseauDistance_ )
             >> xml::optional() >> xml::attribute( "with-automat", rMaximumFuseauDistanceWithAutomata_ )
-        >> xml::end()
+        >> xml::end
         >> xml::optional()
         >> xml::start( "inner-comfort" )
             >> xml::optional() >> xml::attribute( "cost-per-meter", rFuseauCostPerMeterIn_ )
             >> xml::attribute( "distance", rComfortFuseauDistance_ )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -272,7 +272,7 @@ void DEC_Agent_PathClass::ReadAutomataFuseau( xml::xistream& xis )
         >> xml::start( "outter-tolerance " )
             >> xml::optional() >> xml::attribute( "cost-per-meter" ,rAutomataFuseauCostPerMeterOut_ )
             >> xml::attribute( "distance", rMaximumAutomataFuseauDistance_ )
-        >> xml::end();
+        >> xml::end;
     rMaximumAutomataFuseauDistance_ = std::max( 10., rMaximumAutomataFuseauDistance_ );
 }
 

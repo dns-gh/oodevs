@@ -77,7 +77,7 @@ void DEC_Model_ABC::InitializeMissions( xml::xistream& xis, const std::map< std:
 
     xis >> xml::optional() >> xml::start( "missions" )
                            >> xml::list( "mission", *this, &DEC_Model_ABC::ReadMission, missionTypes )
-                      >> xml::end();
+                      >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

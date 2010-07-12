@@ -71,10 +71,10 @@ const kernel::MissionType& Mission::ResolveMission( xml::xistream& xis )
                 >> xml::start( NS( "WhatWhenInstance", "cbml" ) )
                     >> xml::start( NS( "ActionTask", "cbml" ) )
                         >> xml::content( NS( "ActivityCode", "jc3iedm" ), code )
-                    >> xml::end()
-                >> xml::end()
-            >> xml::end()
-        >> xml::end();
+                    >> xml::end
+                >> xml::end
+            >> xml::end
+        >> xml::end;
     const tools::Resolver< kernel::MissionType >& missions = staticModel_.types_;
     return missions.Get( GetMissionIdFromCode( missions, code ) );
 }
@@ -118,10 +118,10 @@ void Mission::ReadTaskeeWho( xml::xistream& xis )
                 >> xml::start( NS( "WhoRef", "cbml" ) )
                     >> xml::start( NS( "UnitRef", "cbml" ) )
                         >> xml::content( NS( "OID", "jc3iedm" ), name )
-                    >> xml::end()
-                >> xml::end()
-            >> xml::end()
-        >> xml::end();
+                    >> xml::end
+                >> xml::end
+            >> xml::end
+        >> xml::end;
     automatTaskee_ = FindAutomat( model_, name );
     if( automatTaskee_ )
         return;
@@ -138,7 +138,7 @@ void Mission::ReadParameters( xml::xistream& xis )
 {
     xis >> xml::start( NS( "TaskControlMeasures", "cbml" ) )
             >> xml::list( NS( "TaskControlMeasure", "cbml" ), *this, &Mission::ReadParameter )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

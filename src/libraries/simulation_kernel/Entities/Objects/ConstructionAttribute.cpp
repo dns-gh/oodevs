@@ -157,7 +157,7 @@ void ConstructionAttribute::WriteODB( xml::xostream& xos ) const
 {
     xos << xml::start( "construction" )
             << xml::attribute( "completion", rConstructionPercentage_ )
-        << xml::end();
+        << xml::end;
 }
 
 // -----------------------------------------------------------------------------

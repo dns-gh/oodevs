@@ -108,9 +108,9 @@ xml::xostream& plugins::bml::operator<<( xml::xostream& xos, const Who& who )
         who.SendEquipmentStatus( xos );
     if( who.level_ != -1 )
         who.SendStatus( xos );
-    xos         << xml::end()
-            << xml::end()
-        << xml::end();
+    xos         << xml::end
+            << xml::end
+        << xml::end;
     return xos;
 }
 
@@ -123,12 +123,12 @@ namespace
                     << xml::attribute( "xsi:type", "jc3iedm:MissionCapability" )
                     << xml::content( "jc3iedm:UnitOfMeasureCode", "PRCNTG" )
                     << xml::content( "jc3iedm:CategoryCode", category )
-                << xml::end()
+                << xml::end
                 << xml::start( "jc3iedm:ObjectItemCapability" )
                     << xml::content( "jc3iedm:Quantity", quantity )
                     << xml::content( "jc3iedm:ReportingDataRef", "" )
-                << xml::end()
-            << xml::end();
+                << xml::end
+            << xml::end;
     }
 
     struct AvailabilityComputer
@@ -176,7 +176,7 @@ void Who::SendEquipmentStatus( xml::xostream& xos ) const
         agent_->Troops().Apply( boost::bind( &AvailabilityComputer::AddHuman, boost::ref( computer ), _1 ) );
         SerializeAvailability( "PERSVC", xos, computer.Percentage() );
     }
-    xos << xml::end();
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -191,8 +191,8 @@ void Who::SendStatus( xml::xostream& xos ) const
                 << xml::content( "jc3iedm:HostilityCode", GetFilterHostility() )
                 << xml::content( "jc3iedm:ReportingDataRef", "" )
                 << xml::content( "jc3iedm:OperationalStatusCode", GetFilterOperationalState() )
-            << xml::end()
-        << xml::end();
+            << xml::end
+        << xml::end;
 }
 
 namespace

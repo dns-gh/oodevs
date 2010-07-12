@@ -47,8 +47,8 @@ void PositionReport::Send( Publisher_ABC& publisher ) const
     Who who( entity_, attributes_ );
     xml::xostream& xos = publisher.CreateReport();
     xos << xml::start( "ReportPush" )
-            << xml::start( "ReportedByWho" ) << byWho << xml::end()
-            << xml::start( "NewWhere" )      << byWho << Where( entity_ ) << xml::end() // $$$$ SBO 2008-07-22: economy byWho = who with less info
-            << xml::start( "ReportedWho" )   << who   << xml::end()
-        << xml::end();
+            << xml::start( "ReportedByWho" ) << byWho << xml::end
+            << xml::start( "NewWhere" )      << byWho << Where( entity_ ) << xml::end // $$$$ SBO 2008-07-22: economy byWho = who with less info
+            << xml::start( "ReportedWho" )   << who   << xml::end
+        << xml::end;
 }

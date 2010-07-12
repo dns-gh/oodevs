@@ -73,7 +73,7 @@ void UpdateListener::PullOrders( const std::string& time )
     xml::xostringstream xos;
     xos << xml::start( "OrderPull" ) << Namespaces()
             << xml::content( "PostedTimeCutoff", time )
-        << xml::end();
+        << xml::end;
     publisher_.PullOrder( xos.str(), *this );
 }
 
@@ -97,7 +97,7 @@ void UpdateListener::FindLastDate( const std::string& response )
     xml::xistringstream xis( response );
     xis >> xml::start( NS( "OrderPush", "cbml" ) )
             >> xml::list( NS( "OrderPush", "cbml" ), *this, &UpdateListener::ReadOrder )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

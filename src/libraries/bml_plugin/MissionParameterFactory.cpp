@@ -122,15 +122,15 @@ MissionParameter_ABC* MissionParameterFactory::CreateParameter( xml::xistream& x
                     >> xml::start( NS( "ControlFeatureType", "cbml" ) )
                         >> xml::content( NS( "NameText", "jc3iedm" ), name )
                         >> xml::content( NS( "CategoryCode", "jc3iedm" ), code )
-                    >> xml::end()
-                >> xml::end()
+                    >> xml::end
+                >> xml::end
             >> xml::optional()
                 >> xml::start( NS( "WhoRef", "cbml" ) )
                     >> xml::start( NS( "UnitRef", "cbml" ) )
                         >> xml::content( NS( "OID", "jc3iedm" ), oid )
-                    >> xml::end()
-                >> xml::end()
-        >> xml::end();
+                    >> xml::end
+                >> xml::end
+        >> xml::end;
 
     const dispatcher::Agent_ABC* agent = 0;
     const dispatcher::Automat_ABC* automat = 0;
@@ -174,7 +174,7 @@ MissionParameter_ABC* MissionParameterFactory::CreateParameter( xml::xistream& x
         param = new MissionParameterAgent( *definition, *agent );
     if( !param )
         throw std::runtime_error( std::string( __FUNCTION__ ": Unsupported mission parameter: " ) + definition->GetType() );
-    xis     >> xml::end()
-        >> xml::end();
+    xis     >> xml::end
+        >> xml::end;
     return param;
 }

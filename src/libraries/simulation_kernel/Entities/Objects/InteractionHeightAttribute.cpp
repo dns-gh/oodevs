@@ -102,7 +102,7 @@ void InteractionHeightAttribute::WriteODB( xml::xostream& xos ) const
 {
     xos << xml::start( "max-interaction-height" )
             << xml::attribute( "height", height_ )
-        << xml::end();
+        << xml::end;
 }
 
 // -----------------------------------------------------------------------------

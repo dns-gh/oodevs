@@ -42,7 +42,7 @@ PHY_Meteo::PHY_Meteo( unsigned int id, xml::xistream& xis, const PHY_Lighting& l
             >> xml::attribute( "floor", nPlancherCouvertureNuageuse_ )
             >> xml::attribute( "ceiling", nPlafondCouvertureNuageuse_ )
             >> xml::attribute( "density", nVal )
-        >> xml::end();
+        >> xml::end;
     rDensiteCouvertureNuageuse_ = std::min( nVal, 100u ) / 100.;
 
     unsigned int nAngle;
@@ -50,7 +50,7 @@ PHY_Meteo::PHY_Meteo( unsigned int id, xml::xistream& xis, const PHY_Lighting& l
     xis >> xml::start( "wind" )
             >> xml::attribute( "speed", wind_.rWindSpeed_ )
             >> xml::attribute( "speed", nAngle )
-        >> xml::end();
+        >> xml::end;
     if( wind_.rWindSpeed_ < 0 )
         xis.error( "meteo: VitesseVent < 0" );
 
@@ -62,7 +62,7 @@ PHY_Meteo::PHY_Meteo( unsigned int id, xml::xistream& xis, const PHY_Lighting& l
     std::string strVal;
     xis >> xml::start( "precipitation" )
             >> xml::attribute( "value", strVal )
-        >> xml::end();
+        >> xml::end;
     pPrecipitation_ = PHY_Precipitation::FindPrecipitation( strVal );
     if( !pPrecipitation_ )
         xis.error( "Unknown Precipitation type '" + strVal + "'" );

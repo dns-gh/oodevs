@@ -126,7 +126,7 @@ void SupplyRouteAttribute::WriteODB( xml::xostream& xos ) const
             << xml::content( "length"    , rLength_ )
             << xml::content( "flow"      , rFlow_ )
             << xml::content( "equipped"  , bEquipped_ )
-        << xml::end();
+        << xml::end;
 }
 
 // -----------------------------------------------------------------------------

@@ -235,7 +235,7 @@ void MedicalTreatmentAttribute::WriteODB( xml::xostream& xos ) const
             xos << xml::content( "type" , it->first );
             xos << xml::attribute( "patients-data" , it->second );
         }
-    xos << xml::end();
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------

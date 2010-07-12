@@ -86,7 +86,7 @@ void TacticalLinesModel::Write( xml::xostream& xos ) const
         while( it.HasMoreElements() )
             it.NextElement().Write( xos, converter_ );
     }
-    xos << xml::end();
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------

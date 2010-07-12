@@ -63,7 +63,7 @@ BOOST_AUTO_TEST_CASE( PkComputerUrbanProtectionTest )
     }
     MIL_Object_ABC* pObject = loader.CreateUrbanObject( *urbanBlock );
 
-    xisModel >> xml::end();
+    xisModel >> xml::end;
     PHY_RolePion_UrbanLocation* urbanRole = new PHY_RolePion_UrbanLocation( firer );
 
     urbanRole->NotifyMovingInsideObject( *pObject );
