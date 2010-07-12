@@ -44,10 +44,10 @@ public:
     void Register( DEC_Knowledge_Object& knObject );
     //@}
 
-    //! @name
+    //! @name Helpers
     //@{
-    bool    IsBanksToFitOut() const;
-    MT_Float   GetWidth() const;
+    bool IsBanksToFitOut() const;
+    MT_Float GetWidth() const;
     //@}
 
 private:

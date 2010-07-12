@@ -19,7 +19,7 @@
 class DEC_Knowledge_ObjectAttributeUpdatable_ABC
 {
 public:
-    //! @name Type
+    //! @name Types
     //@{
     enum E_UpdateType {
         eOnCreation  = 0x01,
@@ -30,7 +30,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-            DEC_Knowledge_ObjectAttributeUpdatable_ABC() : xToUpdate_ ( 0 ) {}
+             DEC_Knowledge_ObjectAttributeUpdatable_ABC() : xToUpdate_ ( 0 ) {}
     virtual ~DEC_Knowledge_ObjectAttributeUpdatable_ABC() {}
     //@}
 

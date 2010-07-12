@@ -44,7 +44,7 @@ public:
     void Register( DEC_Knowledge_Object& knObject );
     //@}
 
-    //! @name
+    //! @name Helpers
     //@{
     bool IsEquipped() const;
     //@}
@@ -59,7 +59,7 @@ private:
     //! @name Data Members
     //@{
     const SupplyRouteAttribute* attr_;
-    bool     bEquipped_;
+    bool bEquipped_;
     MT_Float rWeightSupported_;
     MT_Float rWidth_;
     MT_Float rLength_;

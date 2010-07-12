@@ -13,7 +13,6 @@
 #include "CheckPoints/MIL_CheckPointOutArchive.h"
 #include "Entities/Objects/InteractionHeightAttribute.h"
 #include "protocol/protocol.h"
-#include <boost/serialization/void_cast.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeInteractionHeight )
 
@@ -108,5 +107,5 @@ void DEC_Knowledge_ObjectAttributeInteractionHeight::serialize( Archive& archive
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeInteractionHeight::Register( DEC_Knowledge_Object& /*knObject*/ )
 {
-
+    // NOTHING
 }

@@ -54,10 +54,10 @@ private:
     //! @name Data members
     //@{
     const MineAttribute* attr_;
-    unsigned int    nNbrDotationForMining_;
-    unsigned int    nMinesActivityTime_;
-    MT_Float   rMiningPercentage_;
-    float   rMinesDensity_;
+    unsigned int nNbrDotationForMining_;
+    unsigned int nMinesActivityTime_;
+    MT_Float rMiningPercentage_;
+    float rMinesDensity_;
     unsigned int nDotationType_;
     //@}
 };

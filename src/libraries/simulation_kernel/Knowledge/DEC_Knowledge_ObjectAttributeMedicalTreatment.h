@@ -25,12 +25,6 @@ class MIL_CheckPointOutArchive;
 // =============================================================================
 class DEC_Knowledge_ObjectAttributeMedicalTreatment : public DEC_Knowledge_ObjectAttribute_ABC
 {
-
-private:
-    typedef std::list< int >                           T_MedicalTreatmentTypeList;
-    typedef T_MedicalTreatmentTypeList::const_iterator CIT_MedicalTreatmentTypeList;
-    typedef T_MedicalTreatmentTypeList::iterator       IT_MedicalTreatmentTypeList;
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -57,6 +51,14 @@ public:
     //@}
 
 private:
+    //! @name Types
+    //@{
+    typedef std::list< int >                             T_MedicalTreatmentTypeList;
+    typedef T_MedicalTreatmentTypeList::iterator        IT_MedicalTreatmentTypeList;
+    typedef T_MedicalTreatmentTypeList::const_iterator CIT_MedicalTreatmentTypeList;
+    //@}
+
+private:
     //! @name Update
     //@{
     void UpdateAttributes();
@@ -66,11 +68,11 @@ private:
     //! @name Data Members
     //@{
     const MedicalTreatmentAttribute* attr_;
-    T_MedicalTreatmentTypeList       medicalTreatmentList_;
-    int                              availableBeds_;
-    int                              availableDoctors_;
-    int                              beds_;
-    int                              doctors_;
+    T_MedicalTreatmentTypeList medicalTreatmentList_;
+    int availableBeds_;
+    int availableDoctors_;
+    int beds_;
+    int doctors_;
     //@}
 };
 

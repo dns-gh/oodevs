@@ -59,7 +59,7 @@ private:
     //! @name Data Members
     //@{
     const BypassAttribute* attr_;
-    unsigned int  nBypassPercentage_;
+    unsigned int nBypassPercentage_;
     //@}
 };
 

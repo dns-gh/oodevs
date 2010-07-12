@@ -66,9 +66,9 @@ private:
     //! @name Data Members
     //@{
     const NBCTypeAttribute* attr_;
-    const MIL_NBCType*      pAgent_;
-          int               concentration_;
-          int               sourceLifeDuration_;
+    const MIL_NBCType* pAgent_;
+    int concentration_;
+    int sourceLifeDuration_;
     //@}
 };
 

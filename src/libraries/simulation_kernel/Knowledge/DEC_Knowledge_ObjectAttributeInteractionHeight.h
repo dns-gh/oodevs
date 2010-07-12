@@ -57,10 +57,6 @@ private:
     DEC_Knowledge_ObjectAttributeInteractionHeight& operator=( const DEC_Knowledge_ObjectAttributeInteractionHeight& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

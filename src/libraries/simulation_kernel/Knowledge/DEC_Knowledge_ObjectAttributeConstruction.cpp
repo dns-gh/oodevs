@@ -22,10 +22,10 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeConstruction )
 // Created: JCR 2008-06-18
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectAttributeConstruction::DEC_Knowledge_ObjectAttributeConstruction()
-    : attr_ ( 0 )
-    , rConstructionPercentage_ ( 0. )
-    , nNbrDotation_ ( 0 )
-    , nDotationType_ ( 0 )
+    : attr_                   ( 0 )
+    , rConstructionPercentage_( 0. )
+    , nNbrDotation_           ( 0 )
+    , nDotationType_          ( 0 )
 {
     // NOTHING
 }
@@ -35,10 +35,10 @@ DEC_Knowledge_ObjectAttributeConstruction::DEC_Knowledge_ObjectAttributeConstruc
 // Created: JVT 2005-03-25
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectAttributeConstruction::DEC_Knowledge_ObjectAttributeConstruction( const ConstructionAttribute& attr )
-    : attr_ ( &attr )
-    , rConstructionPercentage_ ( 0. )
-    , nNbrDotation_ ( 0 )
-    , nDotationType_ ( 0 )
+    : attr_                   ( &attr )
+    , rConstructionPercentage_( 0. )
+    , nNbrDotation_           ( 0 )
+    , nDotationType_          ( 0 )
 {
     // NOTHING
 }
@@ -52,10 +52,6 @@ DEC_Knowledge_ObjectAttributeConstruction::~DEC_Knowledge_ObjectAttributeConstru
     // NOTHING
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectAttributeConstruction::serialize
 // Created: JVT 2005-03-25
@@ -68,7 +64,6 @@ void DEC_Knowledge_ObjectAttributeConstruction::serialize( Archive& file, const 
          & rConstructionPercentage_
          & nNbrDotation_
          & nDotationType_;
-
 }
 
 // -----------------------------------------------------------------------------
@@ -139,7 +134,6 @@ void DEC_Knowledge_ObjectAttributeConstruction::UpdateAttributes( /*const MIL_Kn
 {
     if( ! attr_ )
         return;
-
     nNbrDotation_ = attr_->GetCurrentDotation();
     rConstructionPercentage_ = attr_->GetState();
     nDotationType_ = attr_->GetDotationType();

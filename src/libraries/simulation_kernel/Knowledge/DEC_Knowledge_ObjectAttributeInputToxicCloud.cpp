@@ -19,7 +19,7 @@ DEC_Knowledge_ObjectAttributeInputToxicCloud::DEC_Knowledge_ObjectAttributeInput
 // Created: JCR 2008-08-18
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectAttributeInputToxicCloud::DEC_Knowledge_ObjectAttributeInputToxicCloud( const InputToxicCloudAttribute& attr )
-    : attr_(&attr)
+    : attr_( &attr )
 {
     // NOTHING
 }
@@ -41,7 +41,6 @@ template< typename Archive >
 void DEC_Knowledge_ObjectAttributeInputToxicCloud::serialize( Archive&, const unsigned int )
 {
     file & boost::serialization::base_object< DEC_Knowledge_ObjectAttribute_ABC >( *this );
-    //
 }
 
 // -----------------------------------------------------------------------------

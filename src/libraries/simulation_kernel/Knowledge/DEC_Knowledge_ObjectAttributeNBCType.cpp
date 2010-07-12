@@ -13,7 +13,6 @@
 #include "DEC_Knowledge_Object.h"
 #include "Entities/Objects/MIL_NBCType.h"
 #include "Entities/Objects/NBCTypeAttribute.h"
-#include "MIL.h"
 #include "protocol/protocol.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeNBCType )
@@ -23,9 +22,9 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeNBCType )
 // Created: RFT 2005-03-25
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectAttributeNBCType::DEC_Knowledge_ObjectAttributeNBCType()
-    : attr_         ( 0 )
-    , pAgent_       ( 0 )
-    , concentration_( 0 )
+    : attr_              ( 0 )
+    , pAgent_            ( 0 )
+    , concentration_     ( 0 )
     , sourceLifeDuration_( 0 )
 {
     // NOTHING
@@ -36,9 +35,9 @@ DEC_Knowledge_ObjectAttributeNBCType::DEC_Knowledge_ObjectAttributeNBCType()
 // Created: RFT 2005-03-25
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectAttributeNBCType::DEC_Knowledge_ObjectAttributeNBCType( const NBCTypeAttribute& attr )
-    : attr_         ( &attr )
-    , pAgent_       ( &attr.GetAgentType() )
-    , concentration_( attr.GetConcentration() )
+    : attr_              ( &attr )
+    , pAgent_            ( &attr.GetAgentType() )
+    , concentration_     ( attr.GetConcentration() )
     , sourceLifeDuration_( attr.GetSourceLifeDuration() )
 {
     // NOTHING
@@ -53,10 +52,6 @@ DEC_Knowledge_ObjectAttributeNBCType::~DEC_Knowledge_ObjectAttributeNBCType()
     // NOTHING
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectZoneNBC::load
 // Created: RFT 2005-03-25
@@ -69,7 +64,6 @@ void DEC_Knowledge_ObjectAttributeNBCType::load( MIL_CheckPointInArchive& file, 
     file >> nID
          >> concentration_
          >> sourceLifeDuration_;
-
     pAgent_ = MIL_NBCType::Find( nID );
 }
 
@@ -108,8 +102,7 @@ void DEC_Knowledge_ObjectAttributeNBCType::UpdateAttributes()
 {
     if( !attr_ )
         return;
-
-    pAgent_ = & attr_->GetAgentType();
+    pAgent_ = &attr_->GetAgentType();
     concentration_ = attr_->GetConcentration();
     sourceLifeDuration_ = attr_->GetSourceLifeDuration();
 }

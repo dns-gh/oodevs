@@ -18,7 +18,6 @@
 class LogisticAttribute;
 class MIL_AutomateLOG;
 
-
 // =============================================================================
 // Created: NLD 2004-05-04
 // =============================================================================
@@ -56,7 +55,7 @@ private:
     //! @name Data Members
     //@{
     const LogisticAttribute* attr_;
-    MIL_AutomateLOG*         pTC2_;
+    MIL_AutomateLOG* pTC2_;
     //@}
 };
 

@@ -23,8 +23,8 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeLogistic )
 // Created: JVT 2005-03-25
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectAttributeLogistic::DEC_Knowledge_ObjectAttributeLogistic()
-    : attr_ ( 0 )
-    , pTC2_ ( 0 )
+    : attr_( 0 )
+    , pTC2_( 0 )
 {
     // NOTHING
 }
@@ -34,8 +34,8 @@ DEC_Knowledge_ObjectAttributeLogistic::DEC_Knowledge_ObjectAttributeLogistic()
 // Created: JCR 2008-06-19
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectAttributeLogistic::DEC_Knowledge_ObjectAttributeLogistic( const LogisticAttribute& attr )
-    : attr_ ( &attr )
-    , pTC2_ ( 0 )
+    : attr_( &attr )
+    , pTC2_( 0 )
 {
     // NOTHING
 }

@@ -23,9 +23,9 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeFire )
 // Created: JVT 2005-03-25
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectAttributeFire::DEC_Knowledge_ObjectAttributeFire()
-    : attr_       ( 0 )
-    , pFireClass_ ( 0 )
-    , heat_       ( 0 )
+    : attr_      ( 0 )
+    , pFireClass_( 0 )
+    , heat_      ( 0 )
 {
     // NOTHING
 }
@@ -35,9 +35,9 @@ DEC_Knowledge_ObjectAttributeFire::DEC_Knowledge_ObjectAttributeFire()
 // Created: JVT 2005-03-25
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectAttributeFire::DEC_Knowledge_ObjectAttributeFire( const FireAttribute& attr )
-    : attr_       ( &attr )
-    , pFireClass_ ( 0 )
-    , heat_       ( 0 )
+    : attr_      ( &attr )
+    , pFireClass_( 0 )
+    , heat_      ( 0 )
 {
     // NOTHING
 }
@@ -62,7 +62,6 @@ DEC_Knowledge_ObjectAttributeFire::~DEC_Knowledge_ObjectAttributeFire()
 void DEC_Knowledge_ObjectAttributeFire::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     unsigned int nID;
-
     file >> boost::serialization::base_object< DEC_Knowledge_ObjectAttribute_ABC >( *this );
     file >> const_cast< FireAttribute*& >( attr_ );
     file >> nID;
@@ -104,7 +103,6 @@ void DEC_Knowledge_ObjectAttributeFire::UpdateAttributes()
 {
     if( !attr_ )
         return;
-
     pFireClass_ = & attr_->GetClass();
     heat_ = attr_->GetHeat();
 }

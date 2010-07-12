@@ -23,12 +23,12 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeMine )
 // Created: JVT 2005-03-25
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectAttributeMine::DEC_Knowledge_ObjectAttributeMine()
-    : attr_ ( 0 )
-    , nNbrDotationForMining_ ( 0 )
-    , rMiningPercentage_ ( 0. )
-    , nMinesActivityTime_ ( 0 )
-    , rMinesDensity_ ( 0. )
-    , nDotationType_( 0 )
+    : attr_                 ( 0 )
+    , nNbrDotationForMining_( 0 )
+    , rMiningPercentage_    ( 0. )
+    , nMinesActivityTime_   ( 0 )
+    , rMinesDensity_        ( 0. )
+    , nDotationType_        ( 0 )
 {
     // NOTHING
 }
@@ -38,12 +38,12 @@ DEC_Knowledge_ObjectAttributeMine::DEC_Knowledge_ObjectAttributeMine()
 // Created: JCR 2008-06-19
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectAttributeMine::DEC_Knowledge_ObjectAttributeMine( const MineAttribute& attr )
-    : attr_ ( &attr )
-    , nNbrDotationForMining_ ( 0 )
-    , rMiningPercentage_ ( 0. )
-    , nMinesActivityTime_ ( 0 )
-    , rMinesDensity_ ( 0. )
-    , nDotationType_( 0 )
+    : attr_                 ( &attr )
+    , nNbrDotationForMining_( 0 )
+    , rMiningPercentage_    ( 0. )
+    , nMinesActivityTime_   ( 0 )
+    , rMinesDensity_        ( 0. )
+    , nDotationType_        ( 0 )
 {
     // NOTHING
 }
@@ -56,10 +56,6 @@ DEC_Knowledge_ObjectAttributeMine::~DEC_Knowledge_ObjectAttributeMine()
 {
     // NOTHING
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectAttributeMine::serialize
@@ -136,7 +132,6 @@ void DEC_Knowledge_ObjectAttributeMine::UpdateAttributes()
 {
     if( !attr_ )
         return;
-
     nNbrDotationForMining_ = attr_->GetCurrentDotations();
     rMiningPercentage_ = attr_->GetState();
     nDotationType_ = attr_->GetDotationType();

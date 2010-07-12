@@ -54,7 +54,7 @@ private:
 private:
     //! @name Data Members
     //@{
-    const InputToxicCloudAttribute*     attr_;
+    const InputToxicCloudAttribute* attr_;
     TER_Polygon polygon_;
     //const MIL_NbcAgentType* pNbcAgentType_;
     //@}

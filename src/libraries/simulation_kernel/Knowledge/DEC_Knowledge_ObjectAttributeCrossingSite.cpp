@@ -24,11 +24,11 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeCrossingSite )
 // Created: JVT 2005-03-25
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectAttributeCrossingSite::DEC_Knowledge_ObjectAttributeCrossingSite()
-    : attr_ ( 0 )
-    , rWidth_ ( 0. )
-    , rDepth_ ( 0. )
+    : attr_          ( 0 )
+    , rWidth_        ( 0. )
+    , rDepth_        ( 0. )
     , rCurrentSpeed_ ( 0. )
-    , bBanksToFitOut_ ( false )
+    , bBanksToFitOut_( false )
 {
     // NOTHING
 }
@@ -38,11 +38,11 @@ DEC_Knowledge_ObjectAttributeCrossingSite::DEC_Knowledge_ObjectAttributeCrossing
 // Created: JCR 2008-06-19
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectAttributeCrossingSite::DEC_Knowledge_ObjectAttributeCrossingSite( const CrossingSiteAttribute& attr )
-    : attr_ ( &attr )
-    , rWidth_ ( 0. )
-    , rDepth_ ( 0. )
+    : attr_          ( &attr )
+    , rWidth_        ( 0. )
+    , rDepth_        ( 0. )
     , rCurrentSpeed_ ( 0. )
-    , bBanksToFitOut_ ( false )
+    , bBanksToFitOut_( false )
 {
     // NOTHING
 }
@@ -53,11 +53,8 @@ DEC_Knowledge_ObjectAttributeCrossingSite::DEC_Knowledge_ObjectAttributeCrossing
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectAttributeCrossingSite::~DEC_Knowledge_ObjectAttributeCrossingSite()
 {
+    // NOTHING
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectAttributeCrossingSite::serialize
@@ -83,10 +80,6 @@ void DEC_Knowledge_ObjectAttributeCrossingSite::Register( DEC_Knowledge_Object& 
     knObject.AttachExtension( *this );
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectAttributeCrossingSite::UpdateSpecificAttributes
 // Created: NLD 2004-10-29
@@ -95,10 +88,9 @@ void DEC_Knowledge_ObjectAttributeCrossingSite::UpdateAttributes()
 {
     if( ! attr_ )
         return;
-
-    rWidth_         = attr_->GetWidth();
-    rDepth_         = attr_->GetDepth();
-    rCurrentSpeed_  = attr_->GetSpeed();
+    rWidth_ = attr_->GetWidth();
+    rDepth_ = attr_->GetDepth();
+    rCurrentSpeed_ = attr_->GetSpeed();
     bBanksToFitOut_ = attr_->IsBanksToFitOut();
 }
 
@@ -139,9 +131,9 @@ void DEC_Knowledge_ObjectAttributeCrossingSite::UpdateOnCollision( const DEC_Kno
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeCrossingSite::Send( Common::MsgObjectAttributes& asn ) const
 {
-    asn.mutable_crossing_site()->set_width                ( (int)rWidth_ );
-    asn.mutable_crossing_site()->set_depth                ( (int)rDepth_ );
-    asn.mutable_crossing_site()->set_flow_rate            ( (int)rCurrentSpeed_ );
+    asn.mutable_crossing_site()->set_width( static_cast< int >( rWidth_ ) );
+    asn.mutable_crossing_site()->set_depth( static_cast< int >( rDepth_ ) );
+    asn.mutable_crossing_site()->set_flow_rate( (static_cast< int >( rCurrentSpeed_ ) );
     asn.mutable_crossing_site()->set_banks_require_fitting( bBanksToFitOut_ );
 }
 

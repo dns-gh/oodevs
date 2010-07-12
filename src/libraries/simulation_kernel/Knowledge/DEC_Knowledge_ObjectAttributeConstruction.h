@@ -59,9 +59,9 @@ private:
     //! @name Data members
     //@{
     const ConstructionAttribute* attr_;
-    MT_Float    rConstructionPercentage_;
-    unsigned int        nNbrDotation_;
-    unsigned int        nDotationType_;
+    MT_Float rConstructionPercentage_;
+    unsigned int nNbrDotation_;
+    unsigned int nDotationType_;
     //@}
 };
 

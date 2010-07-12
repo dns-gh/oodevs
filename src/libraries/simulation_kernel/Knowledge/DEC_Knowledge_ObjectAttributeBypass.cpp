@@ -21,9 +21,9 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeBypass )
 // Name: DEC_Knowledge_ObjectAttributeBypass constructor
 // Created: JVT 2005-03-25
 // -----------------------------------------------------------------------------
-DEC_Knowledge_ObjectAttributeBypass::DEC_Knowledge_ObjectAttributeBypass(  )
-    : attr_ ( 0 )
-    , nBypassPercentage_ ( 0 )
+DEC_Knowledge_ObjectAttributeBypass::DEC_Knowledge_ObjectAttributeBypass()
+    : attr_             ( 0 )
+    , nBypassPercentage_( 0 )
 {
     // NOTHING
 }
@@ -33,8 +33,8 @@ DEC_Knowledge_ObjectAttributeBypass::DEC_Knowledge_ObjectAttributeBypass(  )
 // Created: JCR 2008-06-19
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectAttributeBypass::DEC_Knowledge_ObjectAttributeBypass( const BypassAttribute& attr )
-    : attr_ ( &attr )
-    , nBypassPercentage_ ( 0 )
+    : attr_             ( &attr )
+    , nBypassPercentage_( 0 )
 {
     // NOTHING
 }
@@ -47,10 +47,6 @@ DEC_Knowledge_ObjectAttributeBypass::~DEC_Knowledge_ObjectAttributeBypass()
 {
     // NOTHING
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectAttributeBypass::serialize
@@ -82,10 +78,6 @@ bool DEC_Knowledge_ObjectAttributeBypass::IsBypassed() const
     return nBypassPercentage_ >= 100;
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectAttributeBypass::UpdateAttributes
 // Created: JCR 2008-08-18
@@ -94,7 +86,6 @@ void DEC_Knowledge_ObjectAttributeBypass::UpdateAttributes()
 {
     if( ! attr_ )
         return;
-
     nBypassPercentage_ = (unsigned int)( attr_->GetState() * 100. );
 }
 

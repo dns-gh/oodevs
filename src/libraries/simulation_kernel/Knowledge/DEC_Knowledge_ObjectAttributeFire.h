@@ -61,7 +61,7 @@ private:
     //@{
     const FireAttribute* attr_;
     const MIL_FireClass* pFireClass_;
-          int            heat_;
+    int heat_;
     //@}
 };
 

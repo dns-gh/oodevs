@@ -23,7 +23,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeNBC )
 // Created: JVT 2005-03-25
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectAttributeNBC::DEC_Knowledge_ObjectAttributeNBC()
-    : attr_ ( 0 )
+    : attr_       ( 0 )
     , dangerLevel_( 0 )
 {
     // NOTHING
@@ -34,7 +34,7 @@ DEC_Knowledge_ObjectAttributeNBC::DEC_Knowledge_ObjectAttributeNBC()
 // Created: JVT 2005-03-25
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectAttributeNBC::DEC_Knowledge_ObjectAttributeNBC( const NBCAttribute& attr )
-    : attr_ ( &attr )
+    : attr_       ( &attr )
     , dangerLevel_( 0 )
 {
     // NOTHING
@@ -49,10 +49,6 @@ DEC_Knowledge_ObjectAttributeNBC::~DEC_Knowledge_ObjectAttributeNBC()
     // NOTHING
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectZoneNBC::load
 // Created: JVT 2005-03-25
@@ -64,10 +60,8 @@ void DEC_Knowledge_ObjectAttributeNBC::load( MIL_CheckPointInArchive& file, cons
     file >> dangerLevel_;
     unsigned int size;
     file >> size;
-
     for( IT_NBCAgentsList it = agents_.begin() ; it != agents_.end() ; )
         it = agents_.erase( it );
-
     int nID;
     for( unsigned int i = 0 ; i < size ; i++ )
     {
@@ -87,7 +81,6 @@ void DEC_Knowledge_ObjectAttributeNBC::save( MIL_CheckPointOutArchive& file, con
     file << dangerLevel_;
     unsigned int size = agents_.size();
     file << size;
-
     unsigned int nID;
     for( CIT_NBCAgentsList iter = agents_.begin() ; iter != agents_.end() ; ++iter )
     {
@@ -117,11 +110,9 @@ void DEC_Knowledge_ObjectAttributeNBC::UpdateAttributes()
 {
     if( !attr_ )
         return;
-
     dangerLevel_ = attr_->GetDangerLevel();
     for( IT_NBCAgentsList it = agents_.begin() ; it != agents_.end() ; )
         it = agents_.erase( it );
-
     for( NBCAttribute::CIT_NBCAgents iter = attr_->GetNBCAgents().begin() ; iter != attr_->GetNBCAgents().end() ; ++iter )
         agents_.push_back( ( *iter )->GetID() );
 }

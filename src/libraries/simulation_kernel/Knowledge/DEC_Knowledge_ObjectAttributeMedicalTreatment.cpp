@@ -23,12 +23,11 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeMedicalTreatment )
 // Created: JVT 2005-03-25
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectAttributeMedicalTreatment::DEC_Knowledge_ObjectAttributeMedicalTreatment()
-    : attr_                ( 0 )
-    , medicalTreatmentList_()
-    , availableBeds_       ( 0 )
-    , availableDoctors_    ( 0 )
-    , beds_                ( 0 )
-    , doctors_             ( 0 )
+    : attr_            ( 0 )
+    , availableBeds_   ( 0 )
+    , availableDoctors_( 0 )
+    , beds_            ( 0 )
+    , doctors_         ( 0 )
 {
     // NOTHING
 }
@@ -38,12 +37,11 @@ DEC_Knowledge_ObjectAttributeMedicalTreatment::DEC_Knowledge_ObjectAttributeMedi
 // Created: JVT 2005-03-25
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectAttributeMedicalTreatment::DEC_Knowledge_ObjectAttributeMedicalTreatment( const MedicalTreatmentAttribute& attr )
-    : attr_                ( &attr )
-    , medicalTreatmentList_()
-    , availableBeds_       ( 0 )
-    , availableDoctors_    ( 0 )
-    , beds_                ( 0 )
-    , doctors_             ( 0 )
+    : attr_            ( &attr )
+    , availableBeds_   ( 0 )
+    , availableDoctors_( 0 )
+    , beds_            ( 0 )
+    , doctors_         ( 0 )
 {
     // NOTHING
 }
@@ -75,16 +73,13 @@ void DEC_Knowledge_ObjectAttributeMedicalTreatment::load( MIL_CheckPointInArchiv
          >> beds
          >> doctors
          >> listSize;
-
-    availableBeds_         = availableBeds;
-    availableDoctors_      = availableDoctors;
-    beds_                  = beds;
-    doctors_               = doctors;
-
+    availableBeds_ = availableBeds;
+    availableDoctors_ = availableDoctors;
+    beds_ = beds;
+    doctors_ = doctors;
     //First we make sure the list containing all the medical treatment ids is empty
     for( IT_MedicalTreatmentTypeList it = medicalTreatmentList_.begin() ; it != medicalTreatmentList_.end() ; )
         it = medicalTreatmentList_.erase( it );
-
     //Then we fill it
     for( int i = 0 ; i < listSize ; i++ )
     {
@@ -108,7 +103,6 @@ void DEC_Knowledge_ObjectAttributeMedicalTreatment::save( MIL_CheckPointOutArchi
          << beds_
          << doctors_
          << listSize;
-
     for( CIT_MedicalTreatmentTypeList iter = medicalTreatmentList_.begin() ; iter != medicalTreatmentList_.end() ; ++iter )
     {
         nID = *iter;
@@ -125,11 +119,6 @@ void DEC_Knowledge_ObjectAttributeMedicalTreatment::Register( DEC_Knowledge_Obje
     knObject.AttachExtension( *this );
 }
 
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectAttributeMedicalTreatment::UpdateSpecificAttributes
 // Created: NLD 2004-10-29
@@ -138,16 +127,13 @@ void DEC_Knowledge_ObjectAttributeMedicalTreatment::UpdateAttributes()
 {
     if( !attr_ )
         return;
-
-    availableBeds_    = attr_->GetAvailableBeds();
+    availableBeds_ = attr_->GetAvailableBeds();
     availableDoctors_ = attr_->GetAvailableDoctors();
-    beds_             = attr_->GetBeds();
-    doctors_          = attr_->GetDoctors();
-
+    beds_ = attr_->GetBeds();
+    doctors_ = attr_->GetDoctors();
     //First we empty the list containing all the medical treatment ids
     for( IT_MedicalTreatmentTypeList it = medicalTreatmentList_.begin() ; it != medicalTreatmentList_.end() ; )
         it = medicalTreatmentList_.erase( it );
-
     //Then we fill it by recovering the ids from the attribute
     for( MedicalTreatmentAttribute::CIT_MedicalTreatmentMap iter = attr_->GetMap().begin() ; iter != attr_->GetMap().end() ; ++iter )
         medicalTreatmentList_.push_back( MIL_MedicalTreatmentType::Find( iter->first )->GetID() );
@@ -186,11 +172,11 @@ void DEC_Knowledge_ObjectAttributeMedicalTreatment::UpdateOnCollision( const DEC
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeMedicalTreatment::Send( Common::MsgObjectAttributes& asn ) const
 {
-    asn.mutable_medical_treatment()->set_available_beds   ( availableBeds_ );
+    asn.mutable_medical_treatment()->set_available_beds( availableBeds_ );
     asn.mutable_medical_treatment()->set_available_doctors( availableDoctors_ );
-    asn.mutable_medical_treatment()->set_beds             ( beds_ );
-    asn.mutable_medical_treatment()->set_doctors          ( doctors_ );
-        //Get the list of the ID of each medical treatment
+    asn.mutable_medical_treatment()->set_beds( beds_ );
+    asn.mutable_medical_treatment()->set_doctors( doctors_ );
+    // Get the list of the ID of each medical treatment
     if( attr_ )
         for( MedicalTreatmentAttribute::CIT_MedicalTreatmentMap iter = attr_->GetMap().begin() ; iter != attr_->GetMap().end() ; ++iter )
             asn.mutable_medical_treatment()->mutable_type_id()->add_elem( MIL_MedicalTreatmentType::Find( iter->first )->GetID() );

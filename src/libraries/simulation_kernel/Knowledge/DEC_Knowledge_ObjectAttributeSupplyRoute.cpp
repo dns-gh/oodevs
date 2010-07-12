@@ -25,12 +25,12 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeSupplyRoute )
 // Created: JVT 2005-03-25
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectAttributeSupplyRoute::DEC_Knowledge_ObjectAttributeSupplyRoute()
-    : attr_               ( 0 )
-    , bEquipped_          ( false )
-    , rWeightSupported_   ( 0. )
-    , rWidth_             ( 0. )
-    , rLength_            ( 0. )
-    , rFlow_              ( 0. )
+    : attr_            ( 0 )
+    , bEquipped_       ( false )
+    , rWeightSupported_( 0. )
+    , rWidth_          ( 0. )
+    , rLength_         ( 0. )
+    , rFlow_           ( 0. )
 {
     // NOTHING
 }
@@ -40,12 +40,12 @@ DEC_Knowledge_ObjectAttributeSupplyRoute::DEC_Knowledge_ObjectAttributeSupplyRou
 // Created: JVT 2005-03-25
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectAttributeSupplyRoute::DEC_Knowledge_ObjectAttributeSupplyRoute( const SupplyRouteAttribute& attr )
-    : attr_               ( &attr )
-    , bEquipped_          ( false )
-    , rWeightSupported_   ( 0. )
-    , rWidth_             ( 0. )
-    , rLength_            ( 0. )
-    , rFlow_              ( 0. )
+    : attr_            ( &attr )
+    , bEquipped_       ( false )
+    , rWeightSupported_( 0. )
+    , rWidth_          ( 0. )
+    , rLength_         ( 0. )
+    , rFlow_           ( 0. )
 {
     // NOTHING
 }
@@ -58,10 +58,6 @@ DEC_Knowledge_ObjectAttributeSupplyRoute::~DEC_Knowledge_ObjectAttributeSupplyRo
 {
     // NOTHING
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectAttributeSupplyRoute::serialize
@@ -88,10 +84,6 @@ void DEC_Knowledge_ObjectAttributeSupplyRoute::Register( DEC_Knowledge_Object& k
     knObject.AttachExtension( *this );
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectAttributeSupplyRoute::UpdateAttributes
 // Created: NLD 2004-10-29
@@ -100,9 +92,7 @@ void DEC_Knowledge_ObjectAttributeSupplyRoute::UpdateAttributes( bool bRecognize
 {
     if( !attr_ )
         return;
-
     bEquipped_ = attr_->IsEquipped();
-
     if( bRecognized )
     {
         rWeightSupported_ = attr_->GetMaxWeight();
@@ -145,11 +135,11 @@ void DEC_Knowledge_ObjectAttributeSupplyRoute::UpdateOnCollision( const DEC_Know
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeSupplyRoute::Send( Common::MsgObjectAttributes& asn ) const
 {
-    asn.mutable_supply_route()->set_equipped  ( bEquipped_ );
-    asn.mutable_supply_route()->set_max_weight( (int)rWeightSupported_ );
-    asn.mutable_supply_route()->set_width     ( (int)rWidth_ );
-    asn.mutable_supply_route()->set_length    ( (int)rLength_ );
-    asn.mutable_supply_route()->set_flow_rate ( (int)rFlow_ );
+    asn.mutable_supply_route()->set_equipped( bEquipped_ );
+    asn.mutable_supply_route()->set_max_weight( static_cast< int >( rWeightSupported_ ) );
+    asn.mutable_supply_route()->set_width( static_cast< int >( rWidth_ ) );
+    asn.mutable_supply_route()->set_length( static_cast< int >( rLength_ ) );
+    asn.mutable_supply_route()->set_flow_rate( static_cast< int >( rFlow_ ) );
 }
 
 // -----------------------------------------------------------------------------
