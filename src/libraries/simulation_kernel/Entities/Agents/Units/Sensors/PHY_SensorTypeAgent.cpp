@@ -197,7 +197,7 @@ void PHY_SensorTypeAgent::InitializeAngle( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_SensorTypeAgent::InitializeLimitedToSensors( xml::xistream& xis )
 {
-    xis >> xml::optional() >> xml::start( "limited-to-sensors" )
+    xis >> xml::optional >> xml::start( "limited-to-sensors" )
             >> xml::list( "sensor", *this, &PHY_SensorTypeAgent::ReadLimitedToSensorsList )
         >> xml::end;
 }

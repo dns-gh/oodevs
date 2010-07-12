@@ -34,7 +34,7 @@ PHY_Speeds::PHY_Speeds( xml::xistream& xis, unsigned int timeStepDuration )
     std::fill( rBorderSpeeds_, rBorderSpeeds_ + 8, -1. );
     std::fill( rLinearSpeeds_, rLinearSpeeds_ + 11, -1. );
 
-    xis >> xml::optional()
+    xis >> xml::optional
         >> xml::list( "speeds", *this, &PHY_Speeds::ReadSpeed, timeStepDuration );
 
     CheckInitialization( xis, timeStepDuration );

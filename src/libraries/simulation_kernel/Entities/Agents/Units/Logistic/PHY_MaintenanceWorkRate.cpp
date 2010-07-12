@@ -103,7 +103,7 @@ void PHY_MaintenanceWorkRate::ReadWorkRate( xml::xistream& xis )
     workRate.rWorkerRatio_ = workRate.rWorkTime_ / 24.;
 
     std::string time;
-    xis >> xml::optional() >> xml::attribute( "time-before-warning", time );
+    xis >> xml::optional >> xml::attribute( "time-before-warning", time );
     if( tools::DecodeTime( time, workRate.nDelayBeforeWarningRC_ ) && workRate.nDelayBeforeWarningRC_ == 0 )
         xis.error( "Time before warning is null" );
 }

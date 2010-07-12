@@ -52,7 +52,7 @@ PHY_ComposanteTypeObjectData::PHY_ComposanteTypeObjectData( xml::xistream& xis )
     if( rSpeedWithinWhenBypassed_ < 0 )
         rSpeedWithinWhenBypassed_ = std::numeric_limits< MT_Float >::max();
 
-    xis >> xml::optional() >> xml::attribute( "consumption-mode", strConsumptionMode );
+    xis >> xml::optional >> xml::attribute( "consumption-mode", strConsumptionMode );
 
     if( strConsumptionMode != "" )
     {

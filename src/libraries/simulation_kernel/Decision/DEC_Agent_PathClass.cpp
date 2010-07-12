@@ -27,10 +27,6 @@ struct DEC_Agent_PathClass::LoadingWrapper
     }
 };
 
-// =============================================================================
-// MANAGER
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Agent_PathClass::CheckRulesExistence
 // Created: NLD 2006-01-30
@@ -73,13 +69,13 @@ void DEC_Agent_PathClass::ReadUnitRule( xml::xistream& xis )
     std::string strType;
     bool        bFlying;
     bool        bAutonomous;
-    xis >> xml::attribute( "type"      , strType     )
-        >> xml::attribute( "flying"    , bFlying     )
+    xis >> xml::attribute( "type" , strType )
+        >> xml::attribute( "flying" , bFlying )
         >> xml::attribute( "autonomous", bAutonomous );
     std::string strBase;
     const DEC_Agent_PathClass* pBase = 0;
     strBase = "nothing";
-    xis >> xml::optional() >> xml::attribute( "inherits", strBase );
+    xis >> xml::optional >> xml::attribute( "inherits", strBase );
     if( strBase != "nothing" )
     {
         pBase  = rules_[ T_RuleType( strBase, T_BooleanPair( bFlying, bAutonomous ) ) ];
@@ -100,10 +96,6 @@ void DEC_Agent_PathClass::Terminate()
 {
     // NOTHING
 }
-
-// =============================================================================
-// INSTANCE
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Agent_PathClass constructor
@@ -134,24 +126,24 @@ DEC_Agent_PathClass::DEC_Agent_PathClass( xml::xistream& xis, const DEC_Agent_Pa
 {
     if( pCopyFrom )
         *this = *pCopyFrom;
-    xis >> xml::optional()
+    xis >> xml::optional
         >> xml::start( "optimisation" )
             >> xml::attribute( "shortest", bShort_ )
         >> xml::end
 
-        >> xml::optional()
+        >> xml::optional
         >> xml::start( "preferred-terrains" )
-            >> xml::optional() >> xml::attribute( "strength", rPreferedTerrainCost_ )
+            >> xml::optional >> xml::attribute( "strength", rPreferedTerrainCost_ )
             >> xml::list( "preferred-terrain", *this, &DEC_Agent_PathClass::ReadPrefferedTerrains, preferedTerrain_ )
         >> xml::end
 
-        >> xml::optional()
+        >> xml::optional
         >> xml::start( "avoided-terrains" )
-            >> xml::optional() >> xml::attribute( "strength", rAvoidedTerrainCost_ )
+            >> xml::optional >> xml::attribute( "strength", rAvoidedTerrainCost_ )
             >> xml::list( "avoided-terrain", *this, &DEC_Agent_PathClass::ReadAvoidedTerrain, avoidedTerrain_ )
         >> xml::end
 
-        >> xml::optional()
+        >> xml::optional
         >> xml::start( "preferred-altitude" )
             >> xml::attribute( "value", rAltitudePreference_ )
         >> xml::end
@@ -171,10 +163,6 @@ DEC_Agent_PathClass::~DEC_Agent_PathClass()
 {
     // NOTHING
 }
-
-// =============================================================================
-// INITIALIZATION
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Agent_PathClass::ReadObjectsCost
@@ -249,15 +237,15 @@ void DEC_Agent_PathClass::ReadTerrain( xml::xistream& xis, TerrainData& destinat
 // -----------------------------------------------------------------------------
 void DEC_Agent_PathClass::ReadFuseau( xml::xistream& xis )
 {
-    xis >> xml::optional()
+    xis >> xml::optional
         >> xml::start( "outter-tolerance" )
-            >> xml::optional() >> xml::attribute( "cost-per-meter", rFuseauCostPerMeterOut_ )
-            >> xml::optional() >> xml::attribute( "without-automat", rMaximumFuseauDistance_ )
-            >> xml::optional() >> xml::attribute( "with-automat", rMaximumFuseauDistanceWithAutomata_ )
+            >> xml::optional >> xml::attribute( "cost-per-meter", rFuseauCostPerMeterOut_ )
+            >> xml::optional >> xml::attribute( "without-automat", rMaximumFuseauDistance_ )
+            >> xml::optional >> xml::attribute( "with-automat", rMaximumFuseauDistanceWithAutomata_ )
         >> xml::end
-        >> xml::optional()
+        >> xml::optional
         >> xml::start( "inner-comfort" )
-            >> xml::optional() >> xml::attribute( "cost-per-meter", rFuseauCostPerMeterIn_ )
+            >> xml::optional >> xml::attribute( "cost-per-meter", rFuseauCostPerMeterIn_ )
             >> xml::attribute( "distance", rComfortFuseauDistance_ )
         >> xml::end;
 }
@@ -268,9 +256,9 @@ void DEC_Agent_PathClass::ReadFuseau( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void DEC_Agent_PathClass::ReadAutomataFuseau( xml::xistream& xis )
 {
-    xis >> xml::optional()
+    xis >> xml::optional
         >> xml::start( "outter-tolerance " )
-            >> xml::optional() >> xml::attribute( "cost-per-meter" ,rAutomataFuseauCostPerMeterOut_ )
+            >> xml::optional >> xml::attribute( "cost-per-meter" ,rAutomataFuseauCostPerMeterOut_ )
             >> xml::attribute( "distance", rMaximumAutomataFuseauDistance_ )
         >> xml::end;
     rMaximumAutomataFuseauDistance_ = std::max( 10., rMaximumAutomataFuseauDistance_ );
@@ -282,8 +270,8 @@ void DEC_Agent_PathClass::ReadAutomataFuseau( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void DEC_Agent_PathClass::ReadDangerDirection( xml::xistream& xis )
 {
-    xis >> xml::optional() >> xml::attribute( "base-cost-beyond", rDangerDirectionBaseCost_ )
-        >> xml::optional() >> xml::attribute( "cost-per-meter", rDangerDirectionLinearCost_ );
+    xis >> xml::optional >> xml::attribute( "base-cost-beyond", rDangerDirectionBaseCost_ )
+        >> xml::optional >> xml::attribute( "cost-per-meter", rDangerDirectionLinearCost_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -292,9 +280,9 @@ void DEC_Agent_PathClass::ReadDangerDirection( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void DEC_Agent_PathClass::ReadEnemiesCost( xml::xistream& xis )
 {
-    xis >> xml::optional() >> xml::attribute( "cost-on-contact", rEnemyCostOnContact_ )
-        >> xml::optional() >> xml::attribute( "cost-at-security-range", rEnemyCostAtSecurityRange_ )
-        >> xml::optional() >> xml::attribute( "maximum-cost", rEnemyMaximumCost_ );
+    xis >> xml::optional >> xml::attribute( "cost-on-contact", rEnemyCostOnContact_ )
+        >> xml::optional >> xml::attribute( "cost-at-security-range", rEnemyCostAtSecurityRange_ )
+        >> xml::optional >> xml::attribute( "maximum-cost", rEnemyMaximumCost_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -304,9 +292,9 @@ void DEC_Agent_PathClass::ReadEnemiesCost( xml::xistream& xis )
 void DEC_Agent_PathClass::ReadPopulationsCost( xml::xistream& xis )
 {
     std::string strAttitude;
-    xis >> xml::optional() >> xml::attribute( "security-range", rPopulationSecurityRange_ )
-        >> xml::optional() >> xml::attribute( "maximum", rPopulationMaximumCost_ )
-        >> xml::optional() >> xml::attribute( "outside-of-population", rCostOutsideOfPopulation_ )
+    xis >> xml::optional >> xml::attribute( "security-range", rPopulationSecurityRange_ )
+        >> xml::optional >> xml::attribute( "maximum", rPopulationMaximumCost_ )
+        >> xml::optional >> xml::attribute( "outside-of-population", rCostOutsideOfPopulation_ )
         >> xml::list( "population-cost", *this, &DEC_Agent_PathClass::ReadPopulation );
 }
 
@@ -326,10 +314,6 @@ void DEC_Agent_PathClass::ReadPopulation( xml::xistream& xis )
         populationAttitudeCosts_[ pAttitude ] = rCost;
     }
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Agent_PathClass::GetPathClass

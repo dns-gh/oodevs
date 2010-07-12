@@ -176,7 +176,7 @@ void PHY_DotationStockContainer::WriteODB( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void PHY_DotationStockContainer::ReadValues( xml::xistream& xis )
 {
-    xis >> xml::optional() >> xml::start( "stocks" )
+    xis >> xml::optional >> xml::start( "stocks" )
                           >> xml::list( "dotation", *this, &PHY_DotationStockContainer::ReadStock )
                       >> xml::end;
 }

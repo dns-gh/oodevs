@@ -21,7 +21,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 OrderContext::OrderContext( xml::xistream& xis )
 {
-    xis >> xml::optional()
+    xis >> xml::optional
             >> xml::start( "context" )
                 >> xml::list( "parameter", *this, &OrderContext::ReadParameter )
             >> xml::end;

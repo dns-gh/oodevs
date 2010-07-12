@@ -97,7 +97,7 @@ MIL_KnowledgeGroupType::MIL_KnowledgeGroupType( const std::string& strName, xml:
         xis.error( "unit-knowledge: max-lifetime <= 0" );
     rKnowledgeAgentMaxLifeTime_ = timeFactor * rKnowledgeAgentMaxLifeTime_; // LTO
     unsigned int nTmp = std::numeric_limits< unsigned int >::max();
-    xis >> xml::optional() >> xml::attribute( "max-unit-to-knowledge-distance", nTmp );
+    xis >> xml::optional >> xml::attribute( "max-unit-to-knowledge-distance", nTmp );
     if( nTmp <= 0 )
         xis.error( "unit-knowledge: max-unit-to-knowledge-distance <= 0" );
     rKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit_ = MIL_Tools::ConvertMeterToSim( nTmp );

@@ -41,7 +41,7 @@ namespace
     {
         int seconds = 0;
         std::string timeString;
-        xis >> xml::optional() >> xml::attribute( name, timeString );
+        xis >> xml::optional >> xml::attribute( name, timeString );
         if( tools::DecodeTime( timeString, seconds ) )
         {
             time = seconds;
@@ -137,8 +137,8 @@ PHY_RadarType::~PHY_RadarType()
 void PHY_RadarType::InitializeRange( xml::xistream& xis )
 {
     xis >> xml::attribute( "action-range", rRadius_ )
-        >> xml::optional() >> xml::attribute( "min-height", rMinHeight_ )
-        >> xml::optional() >> xml::attribute( "max-height", rMaxHeight_ );
+        >> xml::optional >> xml::attribute( "min-height", rMinHeight_ )
+        >> xml::optional >> xml::attribute( "max-height", rMaxHeight_ );
 
     if( rRadius_ < 0 )
         xis.error( "radar: action-range < 0" );
@@ -193,7 +193,7 @@ void PHY_RadarType::ReadActivity( xml::xistream& xis )
     {
         const PHY_ConsumptionType& conso = *it->second;
         bool bValue = false;
-        xis >> xml::optional() >> xml::attribute( "value", bValue );
+        xis >> xml::optional >> xml::attribute( "value", bValue );
         detectableActivities_[ conso.GetID() ] = bValue;
     }
 }

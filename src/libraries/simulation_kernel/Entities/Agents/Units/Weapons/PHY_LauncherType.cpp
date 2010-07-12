@@ -97,7 +97,7 @@ PHY_LauncherType::~PHY_LauncherType()
 void PHY_LauncherType::InitializeForIndirectFire( xml::xistream& xis )
 {
     bIndirectFire_ = false;
-    xis >> xml::optional()
+    xis >> xml::optional
         >> xml::attribute( "indirect-fire", bIndirectFire_ );
 }
 

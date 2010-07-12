@@ -344,7 +344,7 @@ void MIL_EntityManager::InitializeDotations( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing dotations" );
 
-    xis >> xml::optional() >> xml::start( "dotations" )
+    xis >> xml::optional >> xml::start( "dotations" )
             >> xml::attribute( "infinite", infiniteDotations_ )
         >> xml::end;
 }

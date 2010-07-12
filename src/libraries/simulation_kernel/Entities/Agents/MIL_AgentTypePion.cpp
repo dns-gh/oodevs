@@ -207,7 +207,7 @@ MIL_AgentTypePion::~MIL_AgentTypePion()
 //-----------------------------------------------------------------------------
 void MIL_AgentTypePion::InitializeDistancesAvantPoints( xml::xistream& xis )
 {
-    xis >> xml::optional()
+    xis >> xml::optional
         >> xml::start( "distance-before-points" )
             >> xml::list( "distance-before-point", *this, &MIL_AgentTypePion::ReadPoint )
         >> xml::end;

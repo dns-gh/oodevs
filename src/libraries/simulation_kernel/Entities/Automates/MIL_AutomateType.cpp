@@ -191,11 +191,11 @@ void MIL_AutomateType::ReadUnit( xml::xistream& xis )
     composition_[ pType ].nMax_ = std::numeric_limits< unsigned int >::max();
     composition_[ pType ].nMin_ = 0;
 
-    xis >> xml::optional() >> xml::attribute( "min-occurs", composition_[ pType ].nMin_ )
-        >> xml::optional() >> xml::attribute( "max-occurs", composition_[ pType ].nMax_ );
+    xis >> xml::optional >> xml::attribute( "min-occurs", composition_[ pType ].nMin_ )
+        >> xml::optional >> xml::attribute( "max-occurs", composition_[ pType ].nMax_ );
 
     bool isCommandPost = false;
-    xis >> xml::optional() >> xml::attribute( "command-post", isCommandPost );
+    xis >> xml::optional >> xml::attribute( "command-post", isCommandPost );
     if( isCommandPost )
         if( !pTypePC_ )
             pTypePC_ = pType;

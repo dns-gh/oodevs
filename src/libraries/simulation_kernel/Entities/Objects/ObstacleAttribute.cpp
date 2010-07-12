@@ -73,7 +73,7 @@ ObstacleAttribute::ObstacleAttribute( xml::xistream& xis )
     , bActivated_    ( xml::attribute( xis, "activated", false ) )
     , activationTime_( 0 )
 {
-    xis >> xml::optional()
+    xis >> xml::optional
         >> xml::start( "activation-time" )
             >> xml::attribute( "value", activationTime_ )
         >> xml::end;

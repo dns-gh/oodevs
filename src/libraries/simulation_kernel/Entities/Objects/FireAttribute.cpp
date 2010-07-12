@@ -48,7 +48,7 @@ FireAttribute::FireAttribute( xml::xistream& xis )
     if( !pClass_ )
         xis.error( "Unknown 'Fire class' '" + className + "' for fire object attribute" );
     heat_ = pClass_->GetDefaultHeat();
-    xis >> xml::optional()
+    xis >> xml::optional
         >> xml::attribute( "heat", heat_ );
 }
 

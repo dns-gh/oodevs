@@ -39,7 +39,7 @@ Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const std::s
     std::string role;
     xis >> xml::attribute( "password", strPassword_ )
         >> xml::attribute( "supervision", bSupervision_ )
-        >> xml::optional() >> xml::attribute( "scipio-role", role )
+        >> xml::optional >> xml::attribute( "scipio-role", role )
         >> xml::start( "rights" )
             >> xml::start( "readonly" )
                 >> xml::list( "automat"   , *this, &Profile::ReadAutomatRights   , readOnlyAutomats_    )

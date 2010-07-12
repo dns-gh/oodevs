@@ -41,7 +41,7 @@ namespace
     {
         int seconds = 0;
         std::string timeString;
-        xis >> xml::optional() >> xml::attribute( name, timeString );
+        xis >> xml::optional >> xml::attribute( name, timeString );
         if( tools::DecodeTime( timeString, seconds ) )
         {
             time = seconds;
@@ -60,7 +60,7 @@ DetectionCapacity::DetectionCapacity( xml::xistream& xis )
     , rRecognitionTime_( 0 )
     , rIdentificationTime_( 0 )
 {
-    xis >> xml::optional()
+    xis >> xml::optional
         >> xml::start( "acquisition-times" )
             >> xml::list( "acquisition-time", *this, &DetectionCapacity::ReadAcquisitionTime )
         >> xml::end;

@@ -27,7 +27,7 @@ TimeLimitedAttribute::TimeLimitedAttribute( xml::xistream& xis )
     , nDeathTimeStep_ ( 0 )
 {
     xis >> xml::attribute( "value", nActivityTime_ ) // s
-        >> xml::optional() >> xml::attribute( "initial", nDeathTimeStep_ );
+        >> xml::optional >> xml::attribute( "initial", nDeathTimeStep_ );
     if( nActivityTime_ < 0 )
         xis.error( "nMinesActivityTime_ is not greater than or equal to 0" );
 }

@@ -55,9 +55,9 @@ PHY_UnitType::PHY_UnitType( xml::xistream& xis )
     , bCanFly_                        ( false )
     , bIsAutonomous_                  ( false )
 {
-    xis >> xml::optional()
+    xis >> xml::optional
             >> xml::attribute( "can-fly", bCanFly_ )
-        >> xml::optional()
+        >> xml::optional
             >> xml::attribute( "is-autonomous", bIsAutonomous_ );
 
     InitializeComposantes                 ( xis );
@@ -84,7 +84,7 @@ PHY_UnitType::~PHY_UnitType()
 // -----------------------------------------------------------------------------
 void PHY_UnitType::InitializeStockLogisticThresholdRatios( xml::xistream& xis )
 {
-    xis >> xml::optional()
+    xis >> xml::optional
             >> xml::start( "stocks" )
                 >> xml::list( "stock", *this, &PHY_UnitType::ReadStock )
             >> xml::end;
@@ -163,11 +163,11 @@ void PHY_UnitType::ReadEquipment( xml::xistream& xis )
     compData.bCanBePartOfConvoy_ = false;
     compData.nNbrHumanInCrew_ = 0;
 
-    xis >> xml::optional()
+    xis >> xml::optional
             >> xml::attribute( "major", compData.bMajor_ )
-        >> xml::optional()
+        >> xml::optional
             >> xml::attribute( "loadable", compData.bLoadable_ )
-        >> xml::optional()
+        >> xml::optional
             >> xml::attribute( "convoyer", compData.bCanBePartOfConvoy_ )
         >> xml::attribute( "crew", compData.nNbrHumanInCrew_ );
 

@@ -315,7 +315,7 @@ void MIL_Automate::save( MIL_CheckPointOutArchive& file, const unsigned int ) co
 // -----------------------------------------------------------------------------
 void MIL_Automate::Initialize( xml::xistream& xis, DEC_DataBase& database )
 {
-    xis >> xml::optional() >> xml::attribute( "engaged", bEngaged_ );
+    xis >> xml::optional >> xml::attribute( "engaged", bEngaged_ );
 
     unsigned int nKnowledgeGroup;
     xis >> xml::attribute( "knowledge-group", nKnowledgeGroup );
@@ -343,7 +343,7 @@ void MIL_Automate::ReadUnitSubordinate( xml::xistream& xis )
     std::string strType;
     bool isPc = false;
     xis >> xml::attribute( "type", strType )
-        >> xml::optional() >> xml::attribute( "command-post", isPc );
+        >> xml::optional >> xml::attribute( "command-post", isPc );
 
     if( isPc && pPionPC_ )
         xis.error( "Automat's command post already defined" );

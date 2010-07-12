@@ -28,7 +28,7 @@ ImprovableCapacity::ImprovableCapacity( const PHY_ConsumptionType& consumption, 
     , dotation_( 0 )
     , nFullNbrDotation_( 0 )
 {
-    xis >> xml::optional()
+    xis >> xml::optional
         >> xml::start( "resources" )
             // $$$$ _RC_ SBO 2009-06-10: Not a real list, only allows one dotation
             >> xml::list( "dotation", *this, &ImprovableCapacity::ReadDotation )

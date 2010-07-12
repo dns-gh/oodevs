@@ -117,14 +117,14 @@ MissionParameter_ABC* MissionParameterFactory::CreateParameter( xml::xistream& x
 {
     std::string name, code, oid;
     xis >> xml::start( NS( "C_BML_Who", "cbml" ) )
-            >> xml::optional()
+            >> xml::optional
                 >> xml::start( NS( "WhoInstance", "cbml" ) )
                     >> xml::start( NS( "ControlFeatureType", "cbml" ) )
                         >> xml::content( NS( "NameText", "jc3iedm" ), name )
                         >> xml::content( NS( "CategoryCode", "jc3iedm" ), code )
                     >> xml::end
                 >> xml::end
-            >> xml::optional()
+            >> xml::optional
                 >> xml::start( NS( "WhoRef", "cbml" ) )
                     >> xml::start( NS( "UnitRef", "cbml" ) )
                         >> xml::content( NS( "OID", "jc3iedm" ), oid )
@@ -146,7 +146,7 @@ MissionParameter_ABC* MissionParameterFactory::CreateParameter( xml::xistream& x
     if( definition == 0 )
         throw std::runtime_error( __FUNCTION__ ": Unknown parameter" );
 
-    xis >> xml::optional()
+    xis >> xml::optional
             >> xml::start( NS( "C_BML_Where", "cbml" ) )
                 >> xml::start( NS( "WhereInstance", "cbml" ) );
     MissionParameter_ABC* param = 0;

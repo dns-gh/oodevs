@@ -167,7 +167,7 @@ PHY_ComposanteTypePion::PHY_ComposanteTypePion( const MIL_Time_ABC& time, const 
     , rStockTransporterWeightCapacity_           ( 0. )
     , rStockTransporterVolumeCapacity_           ( 0. )
 {
-    xis >> xml::optional()
+    xis >> xml::optional
             >> xml::attribute( "max-slope", rMaxSlope_ )
         >> xml::attribute( "weight", rWeight_ );
 
@@ -309,7 +309,7 @@ void PHY_ComposanteTypePion::ReadWeaponSystem( xml::xistream& xis )
 
         xis >> xml::attribute( "launcher", strLauncher )
             >> xml::attribute( "munition", strAmmunition )
-            >> xml::optional()
+            >> xml::optional
                 >> xml::attribute( "major", bMajor );
 
         const PHY_WeaponType* pWeaponType = PHY_WeaponType::FindWeaponType( strLauncher, strAmmunition );
@@ -328,7 +328,7 @@ void PHY_ComposanteTypePion::ReadWeaponSystem( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_ComposanteTypePion::InitializeProtections( xml::xistream& xis )
 {
-    xis >> xml::optional() >> xml::start( "active-protections" )
+    xis >> xml::optional >> xml::start( "active-protections" )
             >> xml::list( "protection", *this, &PHY_ComposanteTypePion::ReadActiveProtection )
         >> xml::end;
 }
@@ -354,7 +354,7 @@ void PHY_ComposanteTypePion::ReadActiveProtection( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_ComposanteTypePion::InitializeHumanProtections( xml::xistream& xis )
 {
-    xis >> xml::optional() >> xml::start( "human-protections" )
+    xis >> xml::optional >> xml::start( "human-protections" )
             >> xml::list( "human-protection", *this, &PHY_ComposanteTypePion::ReadHumanProtection )
         >> xml::end;
 }
@@ -421,7 +421,7 @@ void PHY_ComposanteTypePion::ReadSensor( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_ComposanteTypePion::InitializeRadars( xml::xistream& xis )
 {
-    xis >> xml::optional()
+    xis >> xml::optional
             >> xml::start( "radars" )
                 >> xml::list( "radar", *this, &PHY_ComposanteTypePion::ReadRadar )
             >> xml::end;
@@ -651,7 +651,7 @@ bool PHY_ComposanteTypePion::ReadWoundCapabilities( xml::xistream& xis, T_WoundC
     bool bHasCapability = false;
 
     std::string strWounds;
-    xis >> xml::optional() >> xml::attribute( attributeName, strWounds );
+    xis >> xml::optional >> xml::attribute( attributeName, strWounds );
     std::stringstream stream( strWounds );
     std::string wound;
     while( std::getline( stream, wound, ',' ) )
@@ -670,7 +670,7 @@ bool PHY_ComposanteTypePion::ReadWoundCapabilities( xml::xistream& xis, T_WoundC
 //$$$ A splitter
 void PHY_ComposanteTypePion::InitializeLogisticMedical( xml::xistream& xis )
 {
-    xis >> xml::optional()
+    xis >> xml::optional
             >> xml::start( "health-functions" )
                 >> xml::list( "caring", *this, &PHY_ComposanteTypePion::ReadCaring )
                 >> xml::list( "collecting", *this, &PHY_ComposanteTypePion::ReadCollecting )
@@ -686,9 +686,9 @@ void PHY_ComposanteTypePion::ReadRelieving( xml::xistream& xis )
 {
     ReadWoundCapabilities( xis, woundEvacuationCapabilities_, "wounded-transport" );
 
-    xis >> xml::optional()
+    xis >> xml::optional
             >> xml::attribute( "nbc-transport", bCanEvacuateContaminated_ )
-        >> xml::optional()
+        >> xml::optional
             >> xml::attribute( "reac-mental-transport", bCanEvacuateMentalDiseases_ )
         >> xml::attribute( "capacity", nAmbulanceEvacuationCapacity_ );
 
@@ -714,9 +714,9 @@ void PHY_ComposanteTypePion::ReadCollecting( xml::xistream& xis )
 {
     ReadWoundCapabilities( xis, woundCollectionCapabilities_, "wounded-transport" );
 
-    xis >> xml::optional()
+    xis >> xml::optional
             >> xml::attribute( "nbc-transport", bCanCollectContaminated_ )
-        >> xml::optional()
+        >> xml::optional
             >> xml::attribute( "reac-mental-transport", bCanCollectMentalDiseases_ )
         >> xml::attribute( "capacity", nAmbulanceCollectionCapacity_ );
 
@@ -741,11 +741,11 @@ void PHY_ComposanteTypePion::ReadCollecting( xml::xistream& xis )
 void PHY_ComposanteTypePion::ReadCaring( xml::xistream& xis )
 {
     bCanDiagnoseHumans_ = true;
-    xis >> xml::optional()
+    xis >> xml::optional
             >> xml::attribute( "sorting", bCanSortHumans_ )
-        >> xml::optional()
+        >> xml::optional
             >> xml::attribute( "nbc", bCanHealContaminated_ )
-        >> xml::optional()
+        >> xml::optional
             >> xml::attribute( "psychiatry", bCanHealMentalDiseases_ );
     bCanHealWounds_ = ReadWoundCapabilities( xis, woundHealingCapabilities_, "caring" );
 }
@@ -756,7 +756,7 @@ void PHY_ComposanteTypePion::ReadCaring( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_ComposanteTypePion::InitializeLogisticSupply( xml::xistream& xis )
 {
-    xis >> xml::optional()
+    xis >> xml::optional
             >> xml::start( "supply-functions" )
                 >> xml::list( "carrying", *this, &PHY_ComposanteTypePion::ReadSupply )
             >> xml::end;

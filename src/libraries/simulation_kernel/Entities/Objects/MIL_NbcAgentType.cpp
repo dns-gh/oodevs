@@ -160,7 +160,7 @@ void MIL_NbcAgentType::ReadLiquid( xml::xistream& xis )
     if( ReadPoisonousData( xis, liquidPoisonous_ ) )
         bLiquidPoisonous_ = true;
 
-    xis >> xml::optional() >> xml::attribute( "contamination", bLiquidContaminating_ );
+    xis >> xml::optional >> xml::attribute( "contamination", bLiquidContaminating_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -172,7 +172,7 @@ void MIL_NbcAgentType::ReadGaz( xml::xistream& xis )
     bCanBeVaporized_ = true;
     if( ReadPoisonousData( xis, gasPoisonous_ ) )
         bGasPoisonous_ = true;
-    xis >> xml::optional() >> xml::attribute( "contamination", bGasContaminating_ );
+    xis >> xml::optional >> xml::attribute( "contamination", bGasContaminating_ );
 
     tools::ReadTimeAttribute( xis, "life-time", nGasLifeTime_ );
     if( nGasLifeTime_ <= 0 )
@@ -201,7 +201,7 @@ MIL_NbcAgentType::~MIL_NbcAgentType()
 bool MIL_NbcAgentType::ReadPoisonousData( xml::xistream& xis, T_HumanPoisonousVector& data )
 {
     bool intoxication = false;
-    xis >> xml::optional() >> xml::attribute( "intoxication", intoxication );
+    xis >> xml::optional >> xml::attribute( "intoxication", intoxication );
     if( !intoxication )
         return false;
     xis >> xml::list( "effect", *this, &MIL_NbcAgentType::ReadEffect, data );

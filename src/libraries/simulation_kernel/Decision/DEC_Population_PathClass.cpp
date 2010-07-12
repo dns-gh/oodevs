@@ -49,7 +49,7 @@ void DEC_Population_PathClass::ReadPopulationRule( xml::xistream& xis )
     std::string strBase;
     const DEC_Population_PathClass* pBase = 0;
     strBase = "nothing";
-    xis >> xml::optional() >> xml::attribute( "inherits", strBase );
+    xis >> xml::optional >> xml::attribute( "inherits", strBase );
     if( strBase != "nothing" )
     {
         pBase  = rules_[ strBase ];
@@ -94,8 +94,8 @@ DEC_Population_PathClass::DEC_Population_PathClass( xml::xistream& xis, const DE
     if( pCopyFrom )
         *this = *pCopyFrom;
 
-    xis >> xml::optional() >> xml::attribute( "cost-out-of-channeling", rCostOutsideOfChanneling_ )
-        >> xml::optional() >> xml::attribute( "channeling-range", rChannelingRange_ );
+    xis >> xml::optional >> xml::attribute( "cost-out-of-channeling", rCostOutsideOfChanneling_ )
+        >> xml::optional >> xml::attribute( "channeling-range", rChannelingRange_ );
 }
 
 // -----------------------------------------------------------------------------

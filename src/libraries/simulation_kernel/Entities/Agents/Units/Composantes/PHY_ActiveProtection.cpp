@@ -29,11 +29,11 @@ PHY_ActiveProtection::PHY_ActiveProtection( xml::xistream& xis )
     std::string strDotationName;
     xis >> xml::attribute( "name", name_ )
         >> xml::attribute( "coefficient", coefficient_ )
-        >> xml::optional() >> xml::start( "dotation" )
+        >> xml::optional >> xml::start( "dotation" )
             >> xml::attribute( "name", strDotationName )
             >> xml::attribute( "usage", usage_ )
         >> xml::end
-        >> xml::optional() >> xml::attribute( "hard-kill", hardKill_ )
+        >> xml::optional >> xml::attribute( "hard-kill", hardKill_ )
         >> xml::list( "weapon", *this, &PHY_ActiveProtection::ReadWeapon );
     if( !strDotationName.empty() )
         pDotation_ = PHY_DotationType::FindDotationCategory( strDotationName );

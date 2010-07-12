@@ -68,8 +68,8 @@ MIL_FragOrderType::MIL_FragOrderType( unsigned int nID, xml::xistream& xis )
     , bAvailableWithoutMission_( false )
     , bAvailableForAllMissions_( false )
 {
-    xis >> xml::optional() >> xml::attribute( "available-without-mission", bAvailableWithoutMission_ )
-        >> xml::optional() >> xml::attribute( "available-for-all-mission", bAvailableForAllMissions_ );
+    xis >> xml::optional >> xml::attribute( "available-without-mission", bAvailableWithoutMission_ )
+        >> xml::optional >> xml::attribute( "available-for-all-mission", bAvailableForAllMissions_ );
 }
 
 //-----------------------------------------------------------------------------

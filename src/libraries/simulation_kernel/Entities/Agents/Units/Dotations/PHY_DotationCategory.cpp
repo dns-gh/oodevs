@@ -69,7 +69,7 @@ PHY_DotationCategory::PHY_DotationCategory( const PHY_DotationType& type, const 
     if( !attritions_.empty() || pIndirectFireData_ )
     {
         std::string strTmp; // $$$$ Check validity
-        xis >> xml::optional() >> xml::attribute( "type", strTmp );
+        xis >> xml::optional >> xml::attribute( "type", strTmp );
         if( strTmp != "" )
         {
             pAmmoDotationClass_ = PHY_AmmoDotationClass::Find( strTmp );
@@ -229,7 +229,7 @@ void PHY_DotationCategory::InitializeLogisticType( xml::xistream& xis )
     pLogisticType_ = &type_.GetDefaultLogisticType();
     bool dTranche = false;
 
-    xis >> xml::optional() >> xml::attribute( "d-type", dTranche );
+    xis >> xml::optional >> xml::attribute( "d-type", dTranche );
     if( dTranche )
         pLogisticType_ = &PHY_DotationLogisticType::uniteFeuTD_;
 }

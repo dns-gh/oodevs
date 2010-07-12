@@ -33,7 +33,7 @@ NBCAttribute::NBCAttribute( xml::xistream& xis )
     , danger_( xml::attribute( xis, "danger", 0 ) )
 {
     std::string state( "gaseous" );
-    xis >> xml::optional()
+    xis >> xml::optional
         >> xml::attribute( "state", state );
     if( state == "liquid" )
         nForm_ = eLiquid;

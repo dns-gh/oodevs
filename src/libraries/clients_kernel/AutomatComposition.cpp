@@ -23,8 +23,8 @@ AutomatComposition::AutomatComposition( xml::xistream& input, const tools::Resol
     , min_( 0 )
     , max_( std::numeric_limits< unsigned >::max() )
 {
-    input >> xml::optional() >> xml::attribute( "min-occurs", min_ )
-          >> xml::optional() >> xml::attribute( "max-occurs", max_ );
+    input >> xml::optional >> xml::attribute( "min-occurs", min_ )
+          >> xml::optional >> xml::attribute( "max-occurs", max_ );
 }
 
 // -----------------------------------------------------------------------------

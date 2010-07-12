@@ -96,7 +96,7 @@ void MIL_Config::ReadSessionFile( const std::string& file )
                 >> xml::start( "decisional" )
                     >> xml::attribute( "useonlybinaries", bUseOnlyDIAArchive_ )
                 >> xml::end
-                >> xml::optional() >> xml::start( "experimental" )
+                >> xml::optional >> xml::start( "experimental" )
                     >> xml::attribute( "frozenmode", bFrozenMode_ )
                 >> xml::end
                 >> xml::start( "orbat" )
@@ -114,7 +114,7 @@ void MIL_Config::ReadSessionFile( const std::string& file )
                 >> xml::start( "time" )
                     >> xml::attribute( "step", timeStep_ )
                     >> xml::attribute( "factor", timeFactor_ )
-                    >> xml::optional() >> xml::attribute( "end-tick", endTick_ )
+                    >> xml::optional >> xml::attribute( "end-tick", endTick_ )
                 >> xml::end
                 >> xml::start( "pathfinder" )
                     >> xml::attribute( "threads", pathFinderThreads_ )
@@ -124,7 +124,7 @@ void MIL_Config::ReadSessionFile( const std::string& file )
                     >> xml::attribute( "federation", hlaFederation_ )
                     >> xml::attribute( "federate"  , hlaFederate_ )
                 >> xml::end
-                >> xml::optional() >> xml::start( "random" )
+                >> xml::optional >> xml::start( "random" )
                     >> xml::attribute( "seed", randomSeed_ )
                 >> xml::end;
     for( int i = 0; i < MIL_Random::eContextsNbr; ++i )

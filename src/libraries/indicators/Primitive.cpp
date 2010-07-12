@@ -42,7 +42,7 @@ Primitive::Primitive( xml::xistream& xis, const DataTypeFactory& types )
     , type_( xml::attribute< std::string >( xis, "type" ) )
     , types_( types )
 {
-    xis >> xml::optional() >> xml::start( "parameters" )
+    xis >> xml::optional >> xml::start( "parameters" )
             >> xml::list( "parameter", *this, &Primitive::ReadParameter )
         >> xml::end;
     prototype_ = QString( "%1(%2)" ).arg( name_ ).arg( BuildParameterList() );

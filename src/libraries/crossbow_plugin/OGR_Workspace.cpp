@@ -64,7 +64,7 @@ void crossbow::OGR_Workspace::Initialize( xml::xistream& xis, const dispatcher::
 {   
     std::string reference;
     
-    xis >> xml::optional() 
+    xis >> xml::optional 
         >> xml::attribute( "default", reference );
 
     if( reference.empty() ) 
