@@ -41,46 +41,46 @@ public:
     //! @name Operations
     //@{
     void Prepare();
-    void Update ( MIL_PopulationFlow&          flow          );
-    void Update ( MIL_PopulationConcentration& concentration );
-    bool Clean  ();
-
+    void Update( MIL_PopulationFlow& flow );
+    void Update( MIL_PopulationConcentration& concentration );
+    bool Clean();
     void PublishKnowledges( DEC_Knowledge_Population& knowledge ) const;
     //@}
 
     //! @name Operations
     //@{
-          MT_Float     GetMaxPopulationDensity   () const;
-          MT_Float     GetPionMaxSpeed           () const;
-          MT_Float     GetPionReloadingTimeFactor() const;
-    const MT_Vector2D& GetPosition               () const;
+    MT_Float GetMaxPopulationDensity() const;
+    MT_Float GetPionMaxSpeed() const;
+    MT_Float GetPionReloadingTimeFactor() const;
+    const MT_Vector2D& GetPosition() const;
     //@}
 
     //! @name Accessors
     //@{
-          MIL_Population&  GetPopulation    () const;
-    const MIL_Agent_ABC&   GetAgentColliding() const;
+    MIL_Population& GetPopulation() const;
+    const MIL_Agent_ABC& GetAgentColliding() const;
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::set< MIL_PopulationFlow* >     T_PopulationFlowSet;
+    typedef std::set< MIL_PopulationFlow* >       T_PopulationFlowSet;
     typedef T_PopulationFlowSet::const_iterator CIT_PopulationFlowSet;
 
-    typedef std::set< MIL_PopulationConcentration* >     T_PopulationConcentrationSet;
+    typedef std::set< MIL_PopulationConcentration* >       T_PopulationConcentrationSet;
     typedef T_PopulationConcentrationSet::const_iterator CIT_PopulationConcentrationSet;
     //@}
 
 private:
-    const MIL_Agent_ABC*                pAgentColliding_;
-          MIL_Population*               pPopulation_;
-
-          T_PopulationFlowSet           flows_;
-          T_PopulationConcentrationSet  concentrations_;
-
-          T_PopulationFlowSet           previousFlows_;
-          T_PopulationConcentrationSet  previousConcentrations_;
+    //! @name Data Members
+    //@{
+    const MIL_Agent_ABC* pAgentColliding_;
+    MIL_Population* pPopulation_;
+    T_PopulationFlowSet flows_;
+    T_PopulationConcentrationSet concentrations_;
+    T_PopulationFlowSet previousFlows_;
+    T_PopulationConcentrationSet previousConcentrations_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_PopulationCollision )

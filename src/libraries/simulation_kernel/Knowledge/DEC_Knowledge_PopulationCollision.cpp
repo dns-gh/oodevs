@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_PopulationCollision.h"
-
 #include "DEC_Knowledge_Population.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
@@ -27,13 +26,9 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_PopulationCollision )
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
 DEC_Knowledge_PopulationCollision::DEC_Knowledge_PopulationCollision( const MIL_Agent_ABC& agentColliding, MIL_Population& population )
-    : DEC_Knowledge_ABC      ()
-    , pAgentColliding_       ( &agentColliding )
-    , pPopulation_           ( &population )
-    , flows_                 ()
-    , concentrations_        ()
-    , previousFlows_         ()
-    , previousConcentrations_()
+    : DEC_Knowledge_ABC()
+    , pAgentColliding_( &agentColliding )
+    , pPopulation_    ( &population )
 {
 }
 
@@ -42,14 +37,11 @@ DEC_Knowledge_PopulationCollision::DEC_Knowledge_PopulationCollision( const MIL_
 // Created: JVT 2005-03-16
 // -----------------------------------------------------------------------------
 DEC_Knowledge_PopulationCollision::DEC_Knowledge_PopulationCollision()
-    : DEC_Knowledge_ABC      ()
-    , pAgentColliding_       ( 0 )
-    , pPopulation_           ( 0 )
-    , flows_                 ()
-    , concentrations_        ()
-    , previousFlows_         ()
-    , previousConcentrations_()
+    : DEC_Knowledge_ABC()
+    , pAgentColliding_( 0 )
+    , pPopulation_    ( 0 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -58,11 +50,8 @@ DEC_Knowledge_PopulationCollision::DEC_Knowledge_PopulationCollision()
 // -----------------------------------------------------------------------------
 DEC_Knowledge_PopulationCollision::~DEC_Knowledge_PopulationCollision()
 {
+    // NOTHING
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationCollision::serialize
@@ -79,10 +68,6 @@ void DEC_Knowledge_PopulationCollision::serialize( Archive& file, const unsigned
          & previousFlows_;
          & previousConcentrations_;
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationCollision::Update
@@ -110,7 +95,6 @@ void DEC_Knowledge_PopulationCollision::PublishKnowledges( DEC_Knowledge_Populat
 {
     for( CIT_PopulationConcentrationSet it = concentrations_.begin(); it != concentrations_.end(); ++it )
         knowledge.Update( *this, **it  );
-
     for( CIT_PopulationFlowSet it = flows_.begin(); it != flows_.end(); ++it )
         knowledge.Update( *this, **it );
 }
@@ -122,10 +106,8 @@ void DEC_Knowledge_PopulationCollision::PublishKnowledges( DEC_Knowledge_Populat
 MT_Float DEC_Knowledge_PopulationCollision::GetPionMaxSpeed() const
 {
     assert( pAgentColliding_ );
-
     T_ComposanteVolumeSet volumes_;
-    pAgentColliding_->GetRole< PHY_RolePion_Composantes >().GetVisibleVolumes( volumes_ ); /// $$$ BOF
-
+    pAgentColliding_->GetRole< PHY_RolePion_Composantes >().GetVisibleVolumes( volumes_ );
     MT_Float rMaxSpeed = std::numeric_limits< MT_Float >::max();
     for( CIT_PopulationFlowSet it = flows_.begin(); it != flows_.end(); ++it )
     {
@@ -133,7 +115,6 @@ MT_Float DEC_Knowledge_PopulationCollision::GetPionMaxSpeed() const
         for( CIT_ComposanteVolumeSet itVolume = volumes_.begin(); itVolume != volumes_.end(); ++itVolume )
             rMaxSpeed = std::min( rMaxSpeed, flow.GetPionMaxSpeed( **itVolume ) );
     }
-
     for( CIT_PopulationConcentrationSet it = concentrations_.begin(); it != concentrations_.end(); ++it )
     {
         const MIL_PopulationConcentration& concentration = **it;
@@ -150,16 +131,12 @@ MT_Float DEC_Knowledge_PopulationCollision::GetPionMaxSpeed() const
 MT_Float DEC_Knowledge_PopulationCollision::GetPionReloadingTimeFactor() const
 {
     assert( pAgentColliding_ );
-
     T_ComposanteVolumeSet volumes_;
-
     MT_Float rFactor = 1.;
     for( CIT_PopulationFlowSet it = flows_.begin(); it != flows_.end(); ++it )
         rFactor = std::max( rFactor, (**it).GetPionReloadingTimeFactor() );
-
     for( CIT_PopulationConcentrationSet it = concentrations_.begin(); it != concentrations_.end(); ++it )
         rFactor = std::max( rFactor, (**it).GetPionReloadingTimeFactor() );
-
     return rFactor;
 }
 
@@ -172,7 +149,6 @@ MT_Float DEC_Knowledge_PopulationCollision::GetMaxPopulationDensity() const
     MT_Float rMaxDensity = 0.;
     for( CIT_PopulationFlowSet it = flows_.begin(); it != flows_.end(); ++it )
         rMaxDensity = std::max( rMaxDensity, (**it).GetDensity() );
-
     for( CIT_PopulationConcentrationSet it = concentrations_.begin(); it != concentrations_.end(); ++it )
         rMaxDensity = std::max( rMaxDensity, (**it).GetDensity() );
     return rMaxDensity;
@@ -185,7 +161,7 @@ MT_Float DEC_Knowledge_PopulationCollision::GetMaxPopulationDensity() const
 const MT_Vector2D& DEC_Knowledge_PopulationCollision::GetPosition() const
 {
     assert( pAgentColliding_ );
-    return pAgentColliding_->GetRole< PHY_RoleInterface_Location >().GetPosition(); //$$$
+    return pAgentColliding_->GetRole< PHY_RoleInterface_Location >().GetPosition();
 }
 
 // -----------------------------------------------------------------------------
@@ -214,10 +190,9 @@ const MIL_Agent_ABC& DEC_Knowledge_PopulationCollision::GetAgentColliding() cons
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationCollision::Prepare()
 {
-    previousFlows_         .clear();
+    previousFlows_.clear();
     previousConcentrations_.clear();
-
-    std::swap( previousFlows_         , flows_          );
+    std::swap( previousFlows_, flows_ );
     std::swap( previousConcentrations_, concentrations_ );
 }
 
