@@ -12,7 +12,6 @@
 #ifndef __DEC_Knowledge_AgentDataIdentification_h_
 #define __DEC_Knowledge_AgentDataIdentification_h_
 
-#include "MIL.h"
 #include "DEC_Knowledge_Def.h"
 
 namespace MsgsSimToClient
@@ -33,7 +32,7 @@ class DEC_Knowledge_AgentDataIdentification : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-     DEC_Knowledge_AgentDataIdentification();
+             DEC_Knowledge_AgentDataIdentification();
     virtual ~DEC_Knowledge_AgentDataIdentification();
     //@}
 
@@ -47,9 +46,9 @@ public:
 
     //! @name Operations
     //@{
-    void Prepare    ();
-    void Update     ( const DEC_Knowledge_AgentPerceptionDataIdentification& data );
-    void Update     ( const DEC_Knowledge_AgentDataIdentification&           data );
+    void Prepare();
+    void Update( const DEC_Knowledge_AgentPerceptionDataIdentification& data );
+    void Update( const DEC_Knowledge_AgentDataIdentification& data );
     void Extrapolate( const MIL_Agent_ABC& agentKnown );
     //@}
 
@@ -59,12 +58,11 @@ public:
     const MIL_AgentType_ABC* GetAgentType() const;
     //@}
 
-
     //! @name Network
     //@{
-    bool HasChanged      () const;
+    bool HasChanged() const;
     void SendChangedState( MsgsSimToClient::MsgUnitKnowledgeUpdate& asnMsg ) const;
-    void SendFullState   ( MsgsSimToClient::MsgUnitKnowledgeUpdate& asnMsg ) const;
+    void SendFullState( MsgsSimToClient::MsgUnitKnowledgeUpdate& asnMsg ) const;
     //@}
 
 private:

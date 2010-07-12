@@ -46,11 +46,9 @@ DEC_Knowledge_AgentDataIdentification::~DEC_Knowledge_AgentDataIdentification()
 void DEC_Knowledge_AgentDataIdentification::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> nTimeLastUpdate_;
-
     unsigned int nID;
     file >> nID;
     pAgentType_ = MIL_AgentTypePion::Find( nID );
-
     file >> bAgentTypeUpdated_;
 }
 
@@ -84,14 +82,12 @@ void DEC_Knowledge_AgentDataIdentification::DoUpdate( const T& data )
 {
     if( data.GetTimeLastUpdate() <= nTimeLastUpdate_ )
         return;
-
     if( !pAgentType_ )
     {
         pAgentType_ = data.GetAgentType();
         assert( pAgentType_ );
         bAgentTypeUpdated_ = true;
     }
-
     nTimeLastUpdate_ = data.GetTimeLastUpdate();
 }
 
@@ -119,10 +115,7 @@ void DEC_Knowledge_AgentDataIdentification::Update( const DEC_Knowledge_AgentDat
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_AgentDataIdentification::SendChangedState( MsgsSimToClient::MsgUnitKnowledgeUpdate& /*asnMsg*/ ) const
 {
-    if( bAgentTypeUpdated_ )
-    {
-        // NOTHING for now ...
-    }
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -131,9 +124,7 @@ void DEC_Knowledge_AgentDataIdentification::SendChangedState( MsgsSimToClient::M
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_AgentDataIdentification::SendFullState( MsgsSimToClient::MsgUnitKnowledgeUpdate& /*asnMsg*/ ) const
 {
-    if( nTimeLastUpdate_ == 0 )
-        return;
-    // NOTHING for now ...
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

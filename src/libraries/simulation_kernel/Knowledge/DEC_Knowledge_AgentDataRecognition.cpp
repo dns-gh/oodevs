@@ -28,14 +28,14 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_AgentDataRecognition )
 // Created: NLD 2004-11-09
 // -----------------------------------------------------------------------------
 DEC_Knowledge_AgentDataRecognition::DEC_Knowledge_AgentDataRecognition()
-    : nTimeLastUpdate_          ( 0 )
-    , pArmy_                    ( 0 )
-    , bIsPC_                    ( false )
-    , rOperationalState_        ( std::numeric_limits< MT_Float >::max() )
-    , rMajorOperationalState_   ( std::numeric_limits< MT_Float >::max() )
-    , pAgentType_               ( 0 )
-    , bOperationalStateChanged_ ( false )
-    , bAgentTypeUpdated_        ( false )
+    : nTimeLastUpdate_         ( 0 )
+    , pArmy_                   ( 0 )
+    , bIsPC_                   ( false )
+    , rOperationalState_       ( std::numeric_limits< MT_Float >::max() )
+    , rMajorOperationalState_  ( std::numeric_limits< MT_Float >::max() )
+    , pAgentType_              ( 0 )
+    , bOperationalStateChanged_( false )
+    , bAgentTypeUpdated_       ( false )
 {
     // NOTHING
 }
@@ -61,11 +61,9 @@ void DEC_Knowledge_AgentDataRecognition::load( MIL_CheckPointInArchive& file, co
          >> composantes_
          >> const_cast< MIL_Army_ABC*& >( pArmy_ )
          >> bIsPC_;
-
     unsigned int nID;
     file >> nID;
     pAgentType_ = MIL_AgentTypePion::Find( nID );
-
     file >> bOperationalStateChanged_
          >> bAgentTypeUpdated_;
 }
@@ -95,7 +93,7 @@ void DEC_Knowledge_AgentDataRecognition::save( MIL_CheckPointOutArchive& file, c
 void DEC_Knowledge_AgentDataRecognition::Prepare()
 {
     bOperationalStateChanged_ = false;
-    bAgentTypeUpdated_        = false;
+    bAgentTypeUpdated_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -107,28 +105,23 @@ void DEC_Knowledge_AgentDataRecognition::DoUpdate( const T& data )
 {
     if( data.GetTimeLastUpdate() <= nTimeLastUpdate_ )
         return;
-
     MT_Float rNewOpState = data.GetOperationalState();
     if( rOperationalState_ != rNewOpState )
     {
-        rOperationalState_        = rNewOpState;
+        rOperationalState_ = rNewOpState;
         bOperationalStateChanged_ = true;
     }
-
     rMajorOperationalState_ = data.GetMajorOperationalState();
-
     composantes_ = data.GetComposantes();
-
     if( !pAgentType_ )
     {
         bAgentTypeUpdated_ = true;
-        pArmy_      = data.GetArmy     ();
-        bIsPC_      = data.IsPC        ();
+        pArmy_= data.GetArmy();
+        bIsPC_ = data.IsPC();
         pAgentType_ = data.GetAgentType();
         assert( pAgentType_ );
-        assert( pArmy_      );
+        assert( pArmy_ );
     }
-
     nTimeLastUpdate_ = data.GetTimeLastUpdate();
 }
 
@@ -157,15 +150,11 @@ void DEC_Knowledge_AgentDataRecognition::Update( const DEC_Knowledge_AgentDataRe
 void DEC_Knowledge_AgentDataRecognition::SendChangedState( MsgsSimToClient::MsgUnitKnowledgeUpdate& asnMsg ) const
 {
     if( bOperationalStateChanged_ )
-    {
         asnMsg.set_etat_op( std::max( 0, std::min( 100, (int)( rOperationalState_ * 100. ) ) ));
-    }
-
     if( bAgentTypeUpdated_ )
     {
         assert( pArmy_ );
         assert( pAgentType_ );
-
         asnMsg.set_camp( pArmy_->GetID() );
         asnMsg.set_nature_pc( bIsPC_ );
     }
@@ -179,13 +168,10 @@ void DEC_Knowledge_AgentDataRecognition::SendFullState( MsgsSimToClient::MsgUnit
 {
     if( nTimeLastUpdate_ == 0 )
         return;
-
     asnMsg.set_etat_op( std::max( 0, std::min( 100, (int)( rOperationalState_ * 100. ) ) ) );
-
     assert( pArmy_ );
     assert( pAgentType_ );
-
-    asnMsg.set_camp      ( pArmy_->GetID() );
+    asnMsg.set_camp( pArmy_->GetID() );
     asnMsg.set_nature_pc ( bIsPC_ );
 }
 

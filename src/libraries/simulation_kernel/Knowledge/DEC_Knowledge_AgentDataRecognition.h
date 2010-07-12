@@ -12,7 +12,6 @@
 #ifndef __DEC_Knowledge_AgentDataRecognition_h_
 #define __DEC_Knowledge_AgentDataRecognition_h_
 
-#include "MIL.h"
 #include "DEC_Knowledge_Def.h"
 
 namespace MsgsSimToClient
@@ -35,7 +34,7 @@ class DEC_Knowledge_AgentDataRecognition : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-     DEC_Knowledge_AgentDataRecognition();
+             DEC_Knowledge_AgentDataRecognition();
     virtual ~DEC_Knowledge_AgentDataRecognition();
     //@}
 
@@ -49,30 +48,30 @@ public:
 
     //! @name Operations
     //@{
-    void Prepare    ();
-    void Update     ( const DEC_Knowledge_AgentPerceptionDataRecognition& data );
-    void Update     ( const DEC_Knowledge_AgentDataRecognition&           data );
+    void Prepare();
+    void Update( const DEC_Knowledge_AgentPerceptionDataRecognition& data );
+    void Update( const DEC_Knowledge_AgentDataRecognition& data );
     void Extrapolate( const MIL_Agent_ABC& agentKnown );
     //@}
 
     //! @name Network
     //@{
-    bool HasChanged      () const;
+    bool HasChanged() const;
     void SendChangedState( MsgsSimToClient::MsgUnitKnowledgeUpdate& asnMsg ) const;
-    void SendFullState   ( MsgsSimToClient::MsgUnitKnowledgeUpdate& asnMsg ) const;
+    void SendFullState( MsgsSimToClient::MsgUnitKnowledgeUpdate& asnMsg ) const;
     //@}
 
     //! @name Accessors
     //@{
-          unsigned int                         GetTimeLastUpdate       () const;
-          MT_Float                     GetOperationalState     () const;
-          MT_Float                     GetMajorOperationalState() const;
-    const T_KnowledgeComposanteVector& GetComposantes          () const;
-    const MIL_Army_ABC*                GetArmy                 () const;
-    const PHY_NatureAtlas&             GetNatureAtlas          () const;
-    const MIL_AgentType_ABC*           GetAgentType            () const;
-          bool                         IsPC                    () const;
-          bool                         IsHuman                 () const; // $$$$ NLD 2007-04-19: A CHIER
+    unsigned int GetTimeLastUpdate() const;
+    MT_Float GetOperationalState() const;
+    MT_Float GetMajorOperationalState() const;
+    const T_KnowledgeComposanteVector& GetComposantes() const;
+    const MIL_Army_ABC* GetArmy() const;
+    const PHY_NatureAtlas& GetNatureAtlas() const;
+    const MIL_AgentType_ABC* GetAgentType() const;
+    bool IsPC() const;
+    bool IsHuman() const; // $$$$ NLD 2007-04-19: A CHIER
     //@}
 
 private:
@@ -82,17 +81,19 @@ private:
     //@}
 
 private:
-          unsigned int                         nTimeLastUpdate_;
-          MT_Float                     rOperationalState_;
-          MT_Float                     rMajorOperationalState_;
-          T_KnowledgeComposanteVector  composantes_;
-    const MIL_Army_ABC*                pArmy_;
-          bool                         bIsPC_;
-    const MIL_AgentType_ABC*           pAgentType_; // For 'natures'
-
+    //! @name Member data
+    //@{
+    unsigned int nTimeLastUpdate_;
+    MT_Float rOperationalState_;
+    MT_Float rMajorOperationalState_;
+    T_KnowledgeComposanteVector composantes_;
+    const MIL_Army_ABC* pArmy_;
+    bool bIsPC_;
+    const MIL_AgentType_ABC* pAgentType_; // For 'natures'
     // Network
     bool bOperationalStateChanged_;
     bool bAgentTypeUpdated_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_AgentDataRecognition )

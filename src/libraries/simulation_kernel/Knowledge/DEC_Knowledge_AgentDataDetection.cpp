@@ -20,7 +20,6 @@
 #include "DEC_Knowledge_AgentPerceptionDataDetection.h"
 #include "Tools/MIL_Tools.h"
 #include "Network/NET_ASN_Tools.h"
-#include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 #include "protocol/ClientSenders.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_AgentDataDetection )
@@ -75,7 +74,6 @@ void DEC_Knowledge_AgentDataDetection::load( MIL_CheckPointInArchive& file, cons
          >> bPrisoner_
          >> bRefugeeManaged_
          >> bDead_;
-
     unsigned int nID;
     unsigned int nNbr;
     file >> nNbr;
@@ -84,13 +82,10 @@ void DEC_Knowledge_AgentDataDetection::load( MIL_CheckPointInArchive& file, cons
         file >> nID;
         visionVolumes_.insert( PHY_Volume::FindVolume( nID ) );
     }
-
     file >> nID;
     pLastPosture_ = PHY_Posture::FindPosture( nID );
-
     file >> nID;
     pCurrentPosture_ = PHY_Posture::FindPosture( nID );
-
     file >> rPostureCompletionPercentage_
          >> bDirectionUpdated_
          >> bSpeedUpdated_
@@ -116,7 +111,6 @@ void DEC_Knowledge_AgentDataDetection::save( MIL_CheckPointOutArchive& file, con
          << bPrisoner_
          << bRefugeeManaged_
          << bDead_;
-
     unsigned size = visionVolumes_.size();
     file << size;
     for ( CIT_ComposanteVolumeSet it = visionVolumes_.begin(); it != visionVolumes_.end(); ++it )
@@ -124,8 +118,7 @@ void DEC_Knowledge_AgentDataDetection::save( MIL_CheckPointOutArchive& file, con
         unsigned id = (*it)->GetID();
         file << id;
     }
-
-    unsigned last    = pLastPosture_->GetID(),
+    unsigned last = pLastPosture_->GetID(),
              current = pCurrentPosture_->GetID();
     file << last
          << current
@@ -151,7 +144,7 @@ void DEC_Knowledge_AgentDataDetection::Prepare()
     bPrisonerUpdated_ = false;
     bSurrenderedUpdated_ = false;
     bRefugeeManagedUpdated_ = false;
-    bDeadUpdated_           = false;
+    bDeadUpdated_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -163,62 +156,54 @@ void DEC_Knowledge_AgentDataDetection::DoUpdate( const T& data )
 {
     if( data.GetTimeLastUpdate() <= nTimeLastUpdate_ )
         return;
-
     const MT_Vector2D& vNewPosition = data.GetPosition();
     if( vPosition_ != vNewPosition )
     {
-        vPosition_        = vNewPosition;
+        vPosition_ = vNewPosition;
         bPositionUpdated_ = true;
     }
-
     const MT_Vector2D& vNewDirection = data.GetDirection();
     if( vDirection_ != vNewDirection )
     {
-        vDirection_        = vNewDirection;
+        vDirection_ = vNewDirection;
         bDirectionUpdated_ = true;
     }
-
     const MT_Float rNewSpeed = data.GetSpeed();
     if( rSpeed_ != rNewSpeed )
     {
-        rSpeed_        = rNewSpeed;
+        rSpeed_ = rNewSpeed;
         bSpeedUpdated_ = true;
     }
-
     const MIL_Army_ABC* pNewArmySurrenderedTo = data.GetArmySurrenderedTo();
     if( pArmySurrenderedTo_ != pNewArmySurrenderedTo )
     {
-        pArmySurrenderedTo_  = pNewArmySurrenderedTo;
+        pArmySurrenderedTo_ = pNewArmySurrenderedTo;
         bSurrenderedUpdated_ = true;
     }
-
     const bool bNewPrisoner = data.IsPrisoner();
     if( bPrisoner_ != bNewPrisoner )
     {
-        bPrisoner_        = bNewPrisoner;
+        bPrisoner_ = bNewPrisoner;
         bPrisonerUpdated_ = true;
     }
-
     const bool bNewRefugeeManaged = data.IsRefugeeManaged();
     if( bRefugeeManaged_ != bNewRefugeeManaged )
     {
-        bRefugeeManaged_        = bNewRefugeeManaged;
+        bRefugeeManaged_ = bNewRefugeeManaged;
         bRefugeeManagedUpdated_ = true;
     }
-
     const bool bNewDead = data.IsDead();
     if( bDead_ != bNewDead )
     {
-        bDead_        = bNewDead;
+        bDead_ = bNewDead;
         bDeadUpdated_ = true;
     }
-
-    rAltitude_                    =  data.GetAltitude();
-    pLastPosture_                 = &data.GetLastPosture();
-    pCurrentPosture_              = &data.GetCurrentPosture();
-    rPostureCompletionPercentage_ =  data.GetPostureCompletionPercentage();
-    visionVolumes_                =  data.GetVisionVolumes();
-    nTimeLastUpdate_              =  data.GetTimeLastUpdate();
+    rAltitude_ = data.GetAltitude();
+    pLastPosture_ = &data.GetLastPosture();
+    pCurrentPosture_ = &data.GetCurrentPosture();
+    rPostureCompletionPercentage_ = data.GetPostureCompletionPercentage();
+    visionVolumes_ = data.GetVisionVolumes();
+    nTimeLastUpdate_ =  data.GetTimeLastUpdate();
 }
 
 // -----------------------------------------------------------------------------
@@ -247,10 +232,9 @@ void DEC_Knowledge_AgentDataDetection::Extrapolate( const MIL_Agent_ABC& agentKn
 {
     // Pas vraiment d'extrapolation : on prend la position réelle du pion
     const MT_Vector2D& vRealPos = agentKnown.GetRole< PHY_RoleInterface_Location >().GetPosition();
-
     if( vRealPos != vPosition_ )
     {
-        vPosition_        = vRealPos;
+        vPosition_ = vRealPos;
         bPositionUpdated_ = true;
     }
 }
@@ -262,23 +246,11 @@ void DEC_Knowledge_AgentDataDetection::Extrapolate( const MIL_Agent_ABC& agentKn
 void DEC_Knowledge_AgentDataDetection::SendFullState( MsgsSimToClient::MsgUnitKnowledgeUpdate& asnMsg ) const
 {
     NET_ASN_Tools::WritePoint( vPosition_, *asnMsg.mutable_position() );
-
-
     NET_ASN_Tools::WriteDirection( vDirection_, *asnMsg.mutable_direction() );
-
-
-    asnMsg.set_speed( (int)MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) );
-
-
+    asnMsg.set_speed( static_cast< int >( MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) ) );
     asnMsg.set_rendu( pArmySurrenderedTo_ ? pArmySurrenderedTo_->GetID() : 0 );
-
-
     asnMsg.set_prisonnier( bPrisoner_ );
-
-
     asnMsg.set_refugie_pris_en_compte( bRefugeeManaged_ );
-
-
     asnMsg.set_mort( bDead_ );
 }
 
@@ -289,43 +261,19 @@ void DEC_Knowledge_AgentDataDetection::SendFullState( MsgsSimToClient::MsgUnitKn
 void DEC_Knowledge_AgentDataDetection::SendChangedState( MsgsSimToClient::MsgUnitKnowledgeUpdate& asnMsg ) const
 {
     if( bPositionUpdated_ )
-    {
         NET_ASN_Tools::WritePoint( vPosition_, *asnMsg.mutable_position() );
-    }
-
     if( bDirectionUpdated_ )
-    {
         NET_ASN_Tools::WriteDirection( vDirection_, *asnMsg.mutable_direction() );
-    }
-
     if( bSpeedUpdated_ )
-    {
-
-        asnMsg.set_speed( (int)MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) );
-    }
-
+        asnMsg.set_speed( static_cast< int >( MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) ) );
     if( bSurrenderedUpdated_ )
-    {
-
         asnMsg.set_rendu( pArmySurrenderedTo_ ? pArmySurrenderedTo_->GetID() : 0 );
-    }
-
     if( bPrisonerUpdated_ )
-    {
-
         asnMsg.set_prisonnier( bPrisoner_ );
-    }
-
     if( bRefugeeManagedUpdated_ )
-    {
-
         asnMsg.set_refugie_pris_en_compte( bRefugeeManaged_ );
-    }
-
     if( bDeadUpdated_ )
-    {
         asnMsg.set_mort( bDead_ );
-    }
 }
 
 // -----------------------------------------------------------------------------

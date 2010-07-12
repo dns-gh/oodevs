@@ -12,7 +12,6 @@
 #ifndef __DEC_Knowledge_AgentDataDetection_h_
 #define __DEC_Knowledge_AgentDataDetection_h_
 
-#include "MIL.h"
 #include "DEC_Knowledge_Def.h"
 
 namespace MsgsSimToClient
@@ -34,49 +33,48 @@ class DEC_Knowledge_AgentDataDetection : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-     DEC_Knowledge_AgentDataDetection();
+             DEC_Knowledge_AgentDataDetection();
     virtual ~DEC_Knowledge_AgentDataDetection();
     //@}
 
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
     //! @name Operations
     //@{
-    void Prepare    ();
-    void Update     ( const DEC_Knowledge_AgentPerceptionDataDetection& data );
-    void Update     ( const DEC_Knowledge_AgentDataDetection&           data );
+    void Prepare();
+    void Update( const DEC_Knowledge_AgentPerceptionDataDetection& data );
+    void Update( const DEC_Knowledge_AgentDataDetection& data );
     void Extrapolate( const MIL_Agent_ABC& agentKnown );
     //@}
 
     //! @name Accessors
     //@{
-    const MT_Vector2D&           GetPosition                   () const;
-    const MT_Vector2D&           GetDirection                  () const;
-          MT_Float               GetSpeed                      () const;
-          MT_Float               GetAltitude                   () const;
-    const T_ComposanteVolumeSet& GetVisionVolumes              () const;
-    const PHY_Posture&           GetLastPosture                () const;
-    const PHY_Posture&           GetCurrentPosture             () const;
-          MT_Float               GetPostureCompletionPercentage() const;
-          unsigned int                   GetTimeLastUpdate             () const;
-    const MIL_Army_ABC*              GetArmySurrenderedTo          () const;
-          bool                   IsSurrendered                 () const;
-          bool                   IsPrisoner                    () const;
-          bool                   IsRefugeeManaged              () const;
-          bool                   IsDead                        () const;
+    const MT_Vector2D& GetPosition() const;
+    const MT_Vector2D& GetDirection() const;
+    MT_Float GetSpeed() const;
+    MT_Float GetAltitude() const;
+    const T_ComposanteVolumeSet& GetVisionVolumes() const;
+    const PHY_Posture& GetLastPosture() const;
+    const PHY_Posture& GetCurrentPosture() const;
+    MT_Float GetPostureCompletionPercentage() const;
+    unsigned int GetTimeLastUpdate() const;
+    const MIL_Army_ABC* GetArmySurrenderedTo() const;
+    bool IsSurrendered() const;
+    bool IsPrisoner() const;
+    bool IsRefugeeManaged() const;
+    bool IsDead() const;
     //@}
 
     //! @name Network
     //@{
-    bool HasChanged      () const;
+    bool HasChanged() const;
     void SendChangedState( MsgsSimToClient::MsgUnitKnowledgeUpdate& asnMsg ) const;
-    void SendFullState   ( MsgsSimToClient::MsgUnitKnowledgeUpdate& asnMsg ) const;
+    void SendFullState( MsgsSimToClient::MsgUnitKnowledgeUpdate& asnMsg ) const;
     //@}
 
 private:
@@ -89,23 +87,19 @@ private:
     //! @name Member data
     //@{
     unsigned int nTimeLastUpdate_;
-
     MT_Vector2D vPosition_;
     MT_Vector2D vDirection_;
-    MT_Float    rSpeed_;
-    MT_Float    rAltitude_;
-    bool        bDead_;
-
-    const MIL_Army_ABC*   pArmySurrenderedTo_;
-          bool        bPrisoner_;
-          bool        bRefugeeManaged_;
-
+    MT_Float rSpeed_;
+    MT_Float rAltitude_;
+    bool bDead_;
+    const MIL_Army_ABC* pArmySurrenderedTo_;
+    bool bPrisoner_;
+    bool bRefugeeManaged_;
     // Attributes used by the vision, to see if we see a knowledge which doesn't exist anymore
     T_ComposanteVolumeSet visionVolumes_;
-    const PHY_Posture*    pLastPosture_;
-    const PHY_Posture*    pCurrentPosture_;
-    MT_Float              rPostureCompletionPercentage_;
-
+    const PHY_Posture* pLastPosture_;
+    const PHY_Posture* pCurrentPosture_;
+    MT_Float rPostureCompletionPercentage_;
     // Network
     bool bDirectionUpdated_;
     bool bSpeedUpdated_;
