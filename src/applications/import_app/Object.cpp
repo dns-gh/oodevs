@@ -61,21 +61,21 @@ Object::~Object()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Object::Write
-// Created: LDC 2010-07-08
+// Name: operator<<
+// Created: MCO 2010-07-13
 // -----------------------------------------------------------------------------
-void Object::Write( xml::xostream& xos ) const
+xml::xostream& operator<<( xml::xostream& xos, const Object& object )
 {
     xos << xml::start( "object" )
-            << xml::attribute( "id", objectId_ )
-            << xml::attribute( "name", name_ )
-            << xml::attribute( "type", type_ )
+            << xml::attribute( "id", object.objectId_ )
+            << xml::attribute( "name", object.name_ )
+            << xml::attribute( "type", object.type_ )
             << xml::start( "shape" )
-                << xml::attribute( "type", positions_.size() == 1 ? "point" : "polygone" )
+                << xml::attribute( "type", object.positions_.size() == 1 ? "point" : "polygone" )
                 << xml::start( "points" );
-    for( std::vector< Position >::const_iterator it = positions_.begin(); it != positions_.end(); ++it )
-        it->Write( xos );
-    xos         << xml::end
+    for( std::vector< Position >::const_iterator it = object.positions_.begin(); it != object.positions_.end(); ++it )
+        xml::content( "point", *it );
+    return xos << xml::end
             << xml::end
             << xml::start( "attributes" )
                 << xml::start( "obstacle" )

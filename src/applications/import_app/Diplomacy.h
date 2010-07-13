@@ -25,13 +25,13 @@ class Diplomacy
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Diplomacy( xml::xisubstream xis );
+    explicit Diplomacy( xml::xisubstream xis, const Mapping& mapping );
     virtual ~Diplomacy();
     //@}
 
-    //! @name Operations
+    //! @name Operators
     //@{
-    void Write( xml::xostream& xos, const Mapping& mapping ) const;
+    friend xml::xostream& operator<<( xml::xostream& xos, const Diplomacy& diplomacy );
     //@}
 
 private:
@@ -39,6 +39,7 @@ private:
     //@{
     std::string target_;
     std::string type_;
+    const Mapping* mapping_;
     //@}
 };
 

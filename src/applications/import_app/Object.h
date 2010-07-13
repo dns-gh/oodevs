@@ -34,7 +34,7 @@ public:
 
     //! @name Operations
     //@{
-    void Write( xml::xostream& xos ) const;
+    friend xml::xostream& operator<<( xml::xostream& xos, const Object& object );
     //@}
 
 private:

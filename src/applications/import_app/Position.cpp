@@ -47,27 +47,13 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: Position::Write
-// Created: LDC 2010-07-08
+// Name: operator<<
+// Created: MCO 2010-07-13
 // -----------------------------------------------------------------------------
-void Position::Write( xml::xostream& xos ) const
+xml::xostream& operator<<( xml::xostream& xos, const Position& position )
 {
-    const double latitude = latitude_ * factor;
-    const double longitude = longitude_ * factor;
+    const double latitude = position.latitude_ * factor;
+    const double longitude = position.longitude_ * factor;
     const geocoord::Geodetic geo( latitude, longitude );
-    const geocoord::MGRS mgrs( geo );
-    xos << xml::content( "point", mgrs.GetString() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Position::WriteAttribute
-// Created: LDC 2010-07-09
-// -----------------------------------------------------------------------------
-void Position::WriteAttribute( const std::string& name, xml::xostream& xos ) const
-{
-    const double latitude = latitude_ * factor;
-    const double longitude = longitude_ * factor;
-    const geocoord::Geodetic geo( latitude, longitude );
-    const geocoord::MGRS mgrs( geo );
-    xos << xml::attribute( name, mgrs.GetString() );
+    return xos << geocoord::MGRS( geo ).GetString();
 }

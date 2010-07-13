@@ -53,6 +53,16 @@ void Entity::ReadChild( xml::xistream& xis, unsigned int knowledgeGroup )
 }
 
 // -----------------------------------------------------------------------------
+// Name: operator<<
+// Created: MCO 2010-07-13
+// -----------------------------------------------------------------------------
+xml::xostream& operator<<( xml::xostream& xos, const Entity& entity )
+{
+    entity.Write( xos );
+    return xos;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Entity::Write
 // Created: LDC 2010-07-08
 // -----------------------------------------------------------------------------
@@ -135,9 +145,9 @@ void Entity::WriteUnit( xml::xostream& xos ) const
 {
     xos << xml::start( "unit" )
             << xml::attribute( "id", id_ )
-            << xml::attribute( "command-post", mapping_.IsCommandPost( type_ ) );
-    position_.WriteAttribute( "position", xos );
-    xos     << xml::attribute( "type", mapping_[ type_ ] )
+            << xml::attribute( "command-post", mapping_.IsCommandPost( type_ ) )
+            << xml::attribute( "position", position_ )
+            << xml::attribute( "type", mapping_[ type_ ] )
             << xml::attribute( "name", name_ );
     xos << xml::end;
 }

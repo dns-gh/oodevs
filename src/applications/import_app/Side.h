@@ -31,36 +31,31 @@ public:
     //! @name Constructors/Destructor
     //@{
              Side();
-             Side( const xml::xistream& xis, Mapping& mapping );
+             Side( xml::xisubstream xis, Mapping& mapping );
     virtual ~Side();
     //@}
 
     //! @name Operations
     //@{
-    void Write( xml::xostream& xos ) const;
+    friend xml::xostream& operator<<( xml::xostream& xos, const Side& side );
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void ReadObjects( xml::xisubstream xis );
-    void ReadTactical( xml::xisubstream xis );
-    void WriteObjects( xml::xostream& xos ) const;
-    void WriteTactical( xml::xostream& xos ) const;
-    void WriteCommunications( xml::xostream& xos ) const;
+    void ReadObjects( xml::xistream& xis );
     void ReadObject( xml::xistream& xis );
-    void ReadObjectList( xml::xistream& xis );
     //@}
 
 private:
     //! @name Member data
     //@{
+    Mapping* mapping_;
     unsigned int id_;
     unsigned int knowledgeGroupId_;
     std::string name_;
-    Mapping* mapping_;
-    std::map< std::string, Object > objects_;
     boost::shared_ptr< Entity > root_;
+    std::map< std::string, Object > objects_;
     //@}
 };
 

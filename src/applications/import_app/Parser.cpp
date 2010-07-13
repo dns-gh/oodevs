@@ -32,10 +32,10 @@ namespace
 // Created: LDC 2010-07-06
 // -----------------------------------------------------------------------------
 Parser::Parser( const std::string& inputFile, const std::string& rootDir, const std::string& outputFile )
-    : outDir_    ( rootDir + outputFile )
-    , xis_       ( inputFile )
-    , mapping_   ( GetMappingFile( rootDir, outputFile + "/exercise.xml" ) )
-    , plan_      ( 0 )
+    : outDir_ ( rootDir + outputFile )
+    , xis_    ( inputFile )
+    , mapping_( GetMappingFile( rootDir, outputFile + "/exercise.xml" ) )
+    , plan_   ( 0 )
 {
     // NOTHING
 }
@@ -104,12 +104,10 @@ void Parser::Generate()
 void Parser::ReadRelation( xml::xistream& xis )
 {
     std::string source;
-    std::string target;
-    std::string type;
     xis >> xml::start( "ns5:source-side-ref" )
             >> xml::content( "ns2:id", source )
          >> xml::end;
-    diplomacies_[ source ].push_back( Diplomacy( xis ) );
+    diplomacies_[ source ].push_back( Diplomacy( xis, mapping_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -181,11 +179,10 @@ void Parser::ReadPlanDatum( xml::xistream& xis )
 void Parser::ReadTactical( xml::xistream& xis )
 {
     std::string id;
-    std::string type;
     std::vector< std::vector< Position > > positionsList;
     xis >> xml::attribute( "id", id )
         >> xml::list( "ns6:content", *this, &Parser::ReadTacticalPointList, positionsList );
-    tacticals_[id] = positionsList;
+    tacticals_[ id ] = positionsList;
 }
 
 // -----------------------------------------------------------------------------
@@ -206,9 +203,7 @@ void Parser::ReadTacticalPointList( xml::xistream& xis, std::vector< std::vector
 void Parser::ReadTacticalPoint( xml::xistream& xis, std::vector< Position >& positions )
 {
     xis >> xml::start( "ns4:gdc" );
-    Position position( xis );
-    xis >> xml::end;
-    positions.push_back( position );
+    positions.push_back( Position( xis ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -218,7 +213,6 @@ void Parser::ReadTacticalPoint( xml::xistream& xis, std::vector< Position >& pos
 void Parser::ReadMission( xml::xistream& xis )
 {
     std::string id;
-    std::string name;
     std::string tacId;
     std::string missionId;
     xis >> xml::attribute( "id", id )
@@ -228,7 +222,7 @@ void Parser::ReadMission( xml::xistream& xis )
         >> xml::optional >> xml::start( "ns6:tacticals" )
             >> xml::start( "ns6:tac-data-ref" ) // xml::list... there may be several args.
                 >> xml::content( "ns2:id", tacId );
-    missions_[ id ] = Mission( missionId, tacticals_[ tacId ] );
+    missions_[ id ] = Mission( missionId, tacticals_[ tacId ], mapping_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -245,8 +239,8 @@ void Parser::WriteUnitInOrd( xml::xistream& xis, xml::xostream& xos, const std::
             >> xml::content( "ns2:id", id )
         >> xml::end
         >> xml::start( "ns6:location" )
-            >> xml::start( "ns4:gdc"  );
-    Position position( xis );
+            >> xml::start( "ns4:gdc" );
+    const Position position( xis );
     xis     >> xml::end
         >> xml::end;
     xos << xml::start( "action" )
@@ -260,9 +254,9 @@ void Parser::WriteUnitInOrd( xml::xistream& xis, xml::xostream& xos, const std::
                 << xml::attribute( "type", "point" )
                 << xml::start( "location" )
                     << xml::attribute( "type", "point" )
-                    << xml::start( "point" );
-    position.WriteAttribute( "coordinates", xos );
-    xos             << xml::end
+                    << xml::start( "point" )
+                        << xml::attribute( "coordinates", position )
+                    << xml::end
                 << xml::end
             << xml::end
         << xml::end;
@@ -288,11 +282,11 @@ void Parser::WriteMissionInOrd( xml::xistream& xis, xml::xostream& xos, const st
     if( !missionId.empty() && missions_.find( missionId ) != missions_.end() )
     {
         xos << xml::start( "action" )
-            << xml::attribute( "target", mapping_[ id ] )
-            << xml::attribute( "time", date )
-            << xml::attribute( "type", "mission" );
-        missions_[ missionId ].Write( xos, mapping_ );
-        xos << xml::end;
+                << xml::attribute( "target", mapping_[ id ] )
+                << xml::attribute( "time", date )
+                << xml::attribute( "type", "mission" )
+                << missions_[ missionId ]
+            << xml::end;
     }
 }
 
@@ -379,7 +373,7 @@ void Parser::WriteOrbat()
             << xml::end
             << xml::start( "sides" );
     for( std::map< std::string, Side >::const_iterator it = sides_.begin(); it != sides_.end(); ++it )
-        it->second.Write( xos );
+        xos << it->second;
     xos    << xml::end
             << xml::start( "diplomacies" );
     for( std::map< std::string, std::vector< Diplomacy > >::const_iterator it = diplomacies_.begin(); it != diplomacies_.end(); ++it )
@@ -387,7 +381,7 @@ void Parser::WriteOrbat()
         xos << xml::start( "side" )
                 << xml::attribute( "id", mapping_[ it->first ] );
         for( std::vector< Diplomacy >::const_iterator itDiplomacy = it->second.begin(); itDiplomacy != it->second.end(); ++itDiplomacy )
-            itDiplomacy->Write( xos, mapping_ );
+            xos << *itDiplomacy;
         xos << xml::end;
     }
 }

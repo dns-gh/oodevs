@@ -14,7 +14,8 @@
 // Name: Diplomacy constructor
 // Created: LDC 2010-07-07
 // -----------------------------------------------------------------------------
-Diplomacy::Diplomacy( xml::xisubstream xis )
+Diplomacy::Diplomacy( xml::xisubstream xis, const Mapping& mapping )
+    : mapping_( &mapping )
 {
     xis >> xml::start( "ns5:target-side-ref" )
             >> xml::content( "ns2:id", target_ )
@@ -34,13 +35,13 @@ Diplomacy::~Diplomacy()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Diplomacy::Write
-// Created: LDC 2010-07-07
+// Name: operator<<
+// Created: MCO 2010-07-13
 // -----------------------------------------------------------------------------
-void Diplomacy::Write( xml::xostream& xos, const Mapping& mapping ) const
+xml::xostream& operator<<( xml::xostream& xos, const Diplomacy& diplomacy )
 {
-    xos << xml::start( "relationship" )
-            << xml::attribute( "diplomacy", mapping[ type_ ] )
-            << xml::attribute( "side", mapping[ target_ ] )
-        << xml::end;
+    return xos << xml::start( "relationship" )
+                   << xml::attribute( "diplomacy", (*diplomacy.mapping_)[ diplomacy.type_ ] )
+                   << xml::attribute( "side", (*diplomacy.mapping_)[ diplomacy.target_ ] )
+               << xml::end;
 }

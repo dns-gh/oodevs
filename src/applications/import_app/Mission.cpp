@@ -15,6 +15,7 @@
 // Created: LDC 2010-07-09
 // -----------------------------------------------------------------------------
 Mission::Mission()
+    : mapping_( 0 ) // $$$$ MCO : hmm !
 {
     // NOTHING
 }
@@ -23,9 +24,10 @@ Mission::Mission()
 // Name: Mission constructor
 // Created: LDC 2010-07-09
 // -----------------------------------------------------------------------------
-Mission::Mission( const std::string& id, const std::vector< std::vector< Position > >& tacticals )
+Mission::Mission( const std::string& id, const std::vector< std::vector< Position > >& tacticals, Mapping& mapping )
     : id_       ( id )
     , tacticals_( tacticals )
+    , mapping_  ( &mapping )
 {
     // NOTHING
 }
@@ -40,28 +42,27 @@ Mission::~Mission()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Mission::Write
-// Created: LDC 2010-07-09
+// Name: operator<<
+// Created: MCO 2010-07-13
 // -----------------------------------------------------------------------------
-void Mission::Write( xml::xostream& xos, Mapping& mapping ) const
+xml::xostream& operator<<( xml::xostream& xos, const Mission& mission )
 {
-    xos << xml::attribute( "id", mapping[ id_ ] )
+    xos << xml::attribute( "id", (*mission.mapping_)[ mission.id_ ] )
         << xml::attribute( "name", "" );
     int i = 0;
-    for( std::vector< std::vector< Position > >::const_iterator it = tacticals_.begin(); it != tacticals_.end(); ++it, ++i )
+    for( std::vector< std::vector< Position > >::const_iterator it = mission.tacticals_.begin(); it != mission.tacticals_.end(); ++it, ++i )
     {
         xos << xml::start( "parameter" )
-                << xml::attribute( "name", mapping.GetMissionParameterName( i ) )
-                << xml::attribute( "type", mapping.GetMissionParameterType( i ) )
+                << xml::attribute( "name", mission.mapping_->GetMissionParameterName( i ) )
+                << xml::attribute( "type", mission.mapping_->GetMissionParameterType( i ) )
                 << xml::start( "location" )
-                    << xml::attribute( "type", mapping.GetMissionParameterLocationType( i ) );
+                    << xml::attribute( "type", mission.mapping_->GetMissionParameterLocationType( i ) );
         for( std::vector< Position >::const_iterator itPos = it->begin(); itPos != it->end(); ++itPos )
-        {
-            xos << xml::start( "point" );
-            itPos->WriteAttribute( "coordinates", xos );
-            xos << xml::end;
-        }
+            xos << xml::start( "point" )
+                    << xml::attribute( "coordinates", *itPos )
+                << xml::end;
         xos     << xml::end
             << xml::end;
     }
+    return xos;
 }

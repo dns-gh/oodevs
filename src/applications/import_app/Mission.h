@@ -29,13 +29,13 @@ public:
     //! @name Constructors/Destructor
     //@{
              Mission();
-             Mission( const std::string& id, const std::vector< std::vector< Position > >& tacticals );
+             Mission( const std::string& id, const std::vector< std::vector< Position > >& tacticals, Mapping& mapping );
     virtual ~Mission();
     //@}
 
     //! @name Operations
     //@{
-    void Write( xml::xostream& xos, Mapping& mapping ) const;
+    friend xml::xostream& operator<<( xml::xostream& xos, const Mission& mission );
     //@}
 
 private:
@@ -43,6 +43,7 @@ private:
     //@{
     std::string id_;
     std::vector< std::vector< Position > > tacticals_;
+    Mapping* mapping_;
     //@}
 };
 

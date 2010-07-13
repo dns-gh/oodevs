@@ -35,9 +35,16 @@ public:
     //! @name Operations
     //@{
     static Entity* Find( const std::string& id );
+    //@}
 
-    void Write( xml::xostream& xos ) const;
+    //! @name Modifiers
+    //@{
     void SetPosition( const Position& position );
+    //@}
+
+    //! @name Operators
+    //@{
+    friend xml::xostream& operator<<( xml::xostream& xos, const Entity& entity );
     //@}
 
 private:
@@ -49,6 +56,7 @@ private:
 
     //! @name Helpers
     //@{
+    void Write( xml::xostream& xos ) const;
     bool IsAutomat() const;
     bool IsUnit() const;
     const Entity* HasUnitChild() const;

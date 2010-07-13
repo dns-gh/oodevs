@@ -14,15 +14,17 @@
 // Name: Side constructor
 // Created: LDC 2010-07-07
 // -----------------------------------------------------------------------------
-Side::Side( const xml::xistream& xis, Mapping& mapping )
-    : id_     ( mapping.AddId( xis.attribute< std::string >( "id" ) ) )
-    , name_   ( xis.content< std::string >( "ns2:name" ) )
-    , mapping_( &mapping )
+Side::Side( xml::xisubstream xis, Mapping& mapping )
+    : mapping_         ( &mapping )
+    , id_              ( mapping.AddId( xis.attribute< std::string >( "id" ) ) )
+    , name_            ( xis.content< std::string >( "ns2:name" ) )
+    , knowledgeGroupId_( mapping.AddId( "Groupe de connaissance de " + name_ ) )
+    , root_            ( new Entity( xis, mapping, knowledgeGroupId_ ) )
 {
-    std::string knowledgeGroup = std::string( "Groupe de connaissance de " ) + name_;
-    knowledgeGroupId_ = mapping_->AddId( knowledgeGroup );
-    ReadObjects( xis );
-    ReadTactical( xis );
+    xis >> xml::start( "ns5:data" )
+            >> xml::list( "ns5:installations", *this, &Side::ReadObjects )
+            >> xml::list( "ns5:obstacles", *this, &Side::ReadObjects )
+            >> xml::list( "ns5:zones", *this, &Side::ReadObjects );
 }
 
 // -----------------------------------------------------------------------------
@@ -32,7 +34,7 @@ Side::Side( const xml::xistream& xis, Mapping& mapping )
 Side::Side()
     : id_              ( 0 )
     , knowledgeGroupId_( 0 )
-    , mapping_         ( 0 )
+    , mapping_         ( 0 ) // $$$$ MCO : hmm !
 {
     // NOTHING
 }
@@ -47,59 +49,30 @@ Side::~Side()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Side::WriteSide
-// Created: LDC 2010-07-07
+// Name: operator<<
+// Created: MCO 2010-07-13
 // -----------------------------------------------------------------------------
-void Side::Write( xml::xostream& xos ) const
+xml::xostream& operator<<( xml::xostream& xos, const Side& side )
 {
     xos << xml::start( "side" )
-            << xml::attribute( "id", id_ )
-            << xml::attribute( "name", name_ )
+            << xml::attribute( "id", side.id_ )
+            << xml::attribute( "name", side.name_ )
             << xml::attribute( "type", "friend" );
-    WriteObjects( xos );
-    WriteTactical( xos );
-    WriteCommunications( xos );
-    xos    << xml::start( "populations" )
+    xos << xml::start( "objects" );
+    for( std::map< std::string, Object >::const_iterator it = side.objects_.begin(); it != side.objects_.end(); ++it )
+        xos << it->second;
+    return xos << xml::end
+        << xml::content( "tactical", *side.root_ )
+        << xml::start( "communication" )
+            << xml::start( "knowledge-group" )
+                << xml::attribute( "id", side.knowledgeGroupId_ )
+                << xml::attribute( "name", std::string( "Groupe de connaissance de " ) + side.name_ )
+                << xml::attribute( "type", "Standard" )
+            << xml::end
+        << xml::end
+        << xml::start( "populations" )
             << xml::end
             << xml::start( "logistic" )
-            << xml::end
-        << xml::end;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Side::WriteObjects
-// Created: LDC 2010-07-07
-// -----------------------------------------------------------------------------
-void Side::WriteObjects( xml::xostream& xos ) const
-{
-    xos << xml::start( "objects" );
-    for( std::map< std::string, Object >::const_iterator it = objects_.begin(); it != objects_.end(); ++it )
-        it->second.Write( xos );
-    xos << xml::end;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Side::WriteTactical
-// Created: LDC 2010-07-07
-// -----------------------------------------------------------------------------
-void Side::WriteTactical( xml::xostream& xos ) const
-{
-    xos << xml::start( "tactical" );
-    root_->Write( xos );
-    xos << xml::end;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Side::WriteCommunications
-// Created: LDC 2010-07-07
-// -----------------------------------------------------------------------------
-void Side::WriteCommunications( xml::xostream& xos ) const
-{
-    xos << xml::start( "communication" )
-            << xml::start( "knowledge-group" )
-                << xml::attribute( "id", knowledgeGroupId_ )
-                << xml::attribute( "name", std::string( "Groupe de connaissance de " ) + name_ )
-                << xml::attribute( "type", "Standard" )
             << xml::end
         << xml::end;
 }
@@ -108,19 +81,7 @@ void Side::WriteCommunications( xml::xostream& xos ) const
 // Name: Side::ReadObjects
 // Created: LDC 2010-07-07
 // -----------------------------------------------------------------------------
-void Side::ReadObjects( xml::xisubstream xis )
-{
-    xis >> xml::start( "ns5:data" )
-            >> xml::list( "ns5:installations", *this, &Side::ReadObjectList )
-            >> xml::list( "ns5:obstacles", *this, &Side::ReadObjectList )
-            >> xml::list( "ns5:zones", *this, &Side::ReadObjectList );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Side::ReadObjectList
-// Created: LDC 2010-07-07
-// -----------------------------------------------------------------------------
-void Side::ReadObjectList( xml::xistream& xis )
+void Side::ReadObjects( xml::xistream& xis )
 {
     xis >> xml::list( "ns5:content", *this, &Side::ReadObject );
 }
@@ -134,13 +95,4 @@ void Side::ReadObject( xml::xistream& xis )
     std::string id;
     xis >> xml::attribute( "id", id );
     objects_[ id ] = Object( xis, id, *mapping_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Side::ReadTactical
-// Created: LDC 2010-07-08
-// -----------------------------------------------------------------------------
-void Side::ReadTactical( xml::xisubstream xis )
-{
-    root_.reset( new Entity( xis, *mapping_, knowledgeGroupId_ ) );
 }
