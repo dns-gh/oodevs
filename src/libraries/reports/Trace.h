@@ -25,7 +25,7 @@ namespace MsgsSimToClient
 
 // =============================================================================
 /** @class  ReportFactory
-    @brief  ReportFactory
+    @brief  Report factory
 */
 // Created: SBO 2006-12-07
 // =============================================================================

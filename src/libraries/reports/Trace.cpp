@@ -28,4 +28,3 @@ Trace::~Trace()
 {
     // NOTHING
 }
-

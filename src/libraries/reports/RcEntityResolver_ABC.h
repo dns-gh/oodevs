@@ -16,7 +16,7 @@
 
 // =============================================================================
 /** @class  RcEntityResolver_ABC
-    @brief  RcEntityResolver_ABC
+    @brief  Rc entity resolver declaration
 */
 // Created: SBO 2006-09-18
 // =============================================================================
@@ -25,8 +25,8 @@ class RcEntityResolver_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             RcEntityResolver_ABC() {};
-    virtual ~RcEntityResolver_ABC() {};
+             RcEntityResolver_ABC() {}
+    virtual ~RcEntityResolver_ABC() {}
     //@}
 
     //! @name Operations

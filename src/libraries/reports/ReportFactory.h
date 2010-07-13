@@ -48,7 +48,7 @@ class ReportTemplate;
 
 // =============================================================================
 /** @class  ReportFactory
-    @brief  ReportFactory
+    @brief  Report factory
 */
 // Created: SBO 2006-12-07
 // =============================================================================
@@ -92,10 +92,10 @@ private:
 private:
     //! @name Member data
     //@{
-    const RcEntityResolver_ABC&                          rcResolver_;
-    const tools::Resolver_ABC< kernel::DotationType >&  dotationResolver_;
+    const RcEntityResolver_ABC& rcResolver_;
+    const tools::Resolver_ABC< kernel::DotationType >& dotationResolver_;
     const tools::Resolver_ABC< kernel::EquipmentType >& equipmentResolver_;
-    const kernel::Time_ABC*                              time_;
+    const kernel::Time_ABC* time_;
     //@}
 };
 

@@ -60,7 +60,7 @@ void ReportFactory::Load( const tools::ExerciseConfig& config  )
     std::string reports;
     scipio >> xml::start( "physical" )
                 >> xml::start( "reports" )
-                >> xml::attribute( "file", reports );
+                    >> xml::attribute( "file", reports );
     xml::xifstream xis( config.BuildPhysicalChildFile( reports ) );
     xis >> xml::start( "reports" )
             >> xml::list( "report", *this, &ReportFactory::ReadReport )
@@ -171,4 +171,3 @@ QString ReportFactory::RenderParameter( const Common::MsgMissionParameter& value
     }
     throw std::runtime_error( tools::translate( "ReportFactory", "Unhandled report parameter type: '%1'." ).arg( value.GetDescriptor()->full_name().c_str() ).ascii() );
 }
-
