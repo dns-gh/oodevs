@@ -12,7 +12,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: VolumeType constructor
@@ -21,7 +20,7 @@ using namespace xml;
 VolumeType::VolumeType( xml::xistream& input, unsigned int id )
     : id_( id )
 {
-    input >> attribute( "name", name_ );
+    input >> xml::attribute( "name", name_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -17,7 +17,6 @@
 #include <xeumeuleu/xml.hpp>
 #include <qregexp.h>
 
-using namespace xml;
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
@@ -65,19 +64,19 @@ void WeatherModel::Load( const std::string& filename )
 {
     Purge();
     xml::xifstream xis( filename );
-    xis >> start( "weather" )
-        >> start( "exercise-date" );
+    xis >> xml::start( "weather" )
+        >> xml::start( "exercise-date" );
     ReadExerciseDate( xis );
-    xis >> end()
-        >> start( "ephemerides" );
+    xis >> xml::end()
+        >> xml::start( "ephemerides" );
     ReadEphemerides( xis );
-    xis >> end()
-        >> start( "theater" );
+    xis >> xml::end()
+        >> xml::start( "theater" );
     ReadGlobalWeather( xis );
-    xis >> end()
-        >> start( "local-weather" )
-            >> list( "local", *this, &WeatherModel::ReadLocalWeather )
-        >> end();
+    xis >> xml::end()
+        >> xml::start( "local-weather" )
+            >> xml::list( "local", *this, &WeatherModel::ReadLocalWeather )
+        >> xml::end();
     controller_.Update( *this );
 }
 
@@ -88,29 +87,29 @@ void WeatherModel::Load( const std::string& filename )
 void WeatherModel::Serialize( const std::string& filename ) const
 {
     xml::xofstream xos( filename, xml::encoding( "ISO-8859-1" ) );
-    xos << start( "weather" )
-            << start( "exercise-date" )
-                << attribute( "value", time_.toString( "yyyyMMddThhmmss" ).ascii() )
-            << end()
-            << start( "ephemerides" )
-                << attribute( "sunrise", QString( "%1h%2m%3s" ).arg( sunrise_.hour() ).arg( sunrise_.minute() ).arg( sunrise_.second() ).ascii() )
-                << attribute( "sunset", QString( "%1h%2m%3s" ).arg( sunset_.hour() ).arg( sunset_.minute() ).arg( sunset_.second() ).ascii() )
-                << attribute( "day-lighting", tools::GetXmlSection( dayLighting_ ) )
-                << attribute( "night-lighting", tools::GetXmlSection( nightLighting_ ) )
-            << end()
-            << start( "theater" );
+    xos << xml::start( "weather" )
+            << xml::start( "exercise-date" )
+                << xml::attribute( "value", time_.toString( "yyyyMMddThhmmss" ).ascii() )
+            << xml::end()
+            << xml::start( "ephemerides" )
+                << xml::attribute( "sunrise", QString( "%1h%2m%3s" ).arg( sunrise_.hour() ).arg( sunrise_.minute() ).arg( sunrise_.second() ).ascii() )
+                << xml::attribute( "sunset", QString( "%1h%2m%3s" ).arg( sunset_.hour() ).arg( sunset_.minute() ).arg( sunset_.second() ).ascii() )
+                << xml::attribute( "day-lighting", tools::GetXmlSection( dayLighting_ ) )
+                << xml::attribute( "night-lighting", tools::GetXmlSection( nightLighting_ ) )
+            << xml::end()
+            << xml::start( "theater" );
     globalWeather_->Serialize( xos );
-    xos     << end()
-            << start( "local-weather" );
+    xos     << xml::end()
+            << xml::start( "local-weather" );
     tools::Iterator< const LocalWeather& > it( CreateIterator() );
     while( it.HasMoreElements() )
     {
-        xos << start( "local" );
+        xos << xml::start( "local" );
         it.NextElement().Serialize( xos );
-        xos << end();
+        xos << xml::end();
     }
-    xos     << end()
-        << end();
+    xos     << xml::end()
+        << xml::end();
 }
 
 namespace
@@ -147,7 +146,7 @@ namespace
 void WeatherModel::ReadExerciseDate( xml::xistream& xis )
 {
     // $$$$ AGE 2007-10-12:
-    const std::string isoDate = attribute< std::string >( xis, "value" );
+    const std::string isoDate = xis.attribute< std::string >( "value" );
     QString extended( isoDate.c_str() );
     extended.insert( 13, ':' ); extended.insert( 11, ':' );
     extended.insert(  6, '-' ); extended.insert(  4, '-' );

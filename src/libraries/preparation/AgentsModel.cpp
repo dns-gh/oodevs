@@ -28,7 +28,6 @@
 #include <qmessagebox.h>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: AgentsModel constructor
@@ -108,10 +107,10 @@ void AgentsModel::CreateAutomat( xml::xistream& xis, kernel::Entity_ABC& parent,
     {
         Automat_ABC* agent = agentFactory_.Create( xis, parent );
         tools::Resolver< Automat_ABC >::Register( agent->GetId(), *agent );
-        xis >> list( "automat", *this , &AgentsModel::CreateAutomat, *agent, limits )
-            >> list( "unit"   , *this , &AgentsModel::CreateAgent, *agent )
-            >> list( "lima"   , limits, &LimitsModel::CreateLima , *(Entity_ABC*)agent )
-            >> list( "limit"  , limits, &LimitsModel::CreateLimit, *(Entity_ABC*)agent );
+        xis >> xml::list( "automat", *this , &AgentsModel::CreateAutomat, *agent, limits )
+            >> xml::list( "unit"   , *this , &AgentsModel::CreateAgent, *agent )
+            >> xml::list( "lima"   , limits, &LimitsModel::CreateLima , *(Entity_ABC*)agent )
+            >> xml::list( "limit"  , limits, &LimitsModel::CreateLimit, *(Entity_ABC*)agent );
     }
     catch( std::exception& e )
     {
@@ -270,9 +269,9 @@ void AgentsModel::NotifyDeleted( const kernel::Population_ABC& agent )
 void AgentsModel::ReadLogistic( xml::xistream& xis )
 {
     int id;
-    xis >> attribute( "id", id );
+    xis >> xml::attribute( "id", id );
     if( Automat_ABC* entity = tools::Resolver< Automat_ABC >::Find( id ) )
-        xis >> list( "subordinate", *this, &AgentsModel::ReadLogisticLink, *entity );
+        xis >> xml::list( "subordinate", *this, &AgentsModel::ReadLogisticLink, *entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -283,8 +282,8 @@ void AgentsModel::ReadLogisticLink( xml::xistream& xis, kernel::Automat_ABC& aut
 {
     int id;
     std::string linkType;
-    xis >> attribute( "id", id )
-        >> attribute( "link", linkType );
+    xis >> xml::attribute( "id", id )
+        >> xml::attribute( "link", linkType );
     if( Entity_ABC* entity = tools::Resolver< Automat_ABC >::Find( id ) )
     {
         ReadLogisticLink< TC2Hierarchies >        ( xis, linkType, automat, *entity );

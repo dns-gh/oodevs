@@ -14,7 +14,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: SymbolFactory constructor
@@ -24,11 +23,11 @@ SymbolFactory::SymbolFactory()
 {
     xml::xifstream xis( tools::GeneralConfig::BuildResourceChildFile( "symbols.xml" ) );
 
-    xis >> start( "app6" );
+    xis >> xml::start( "app6" );
         symbolRule_.reset( ReadRule( xis, "symbols", symbolBase_ ) );
         levelRule_ .reset( ReadRule( xis, "levels", levelBase_ ) );
                            ReadRule( xis, "automats", automatSymbol_ );
-    xis >> end();
+    xis >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -47,10 +46,10 @@ SymbolFactory::~SymbolFactory()
 SymbolRule* SymbolFactory::ReadRule( xml::xistream& xis, const std::string& ruleName, std::string& base ) const
 {
     SymbolRule* result = 0;
-    xis >> start( ruleName )
-            >> attribute( "base", base )
-            >> list( "choice", *this, &SymbolFactory::ReadRule, result )
-        >> end();
+    xis >> xml::start( ruleName )
+            >> xml::attribute( "base", base )
+            >> xml::list( "choice", *this, &SymbolFactory::ReadRule, result )
+        >> xml::end();
     return result;
 }
 

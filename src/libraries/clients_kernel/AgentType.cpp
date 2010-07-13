@@ -15,7 +15,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: AgentType constructor
@@ -25,16 +24,16 @@ AgentType::AgentType( xml::xistream& xis, const tools::Resolver_ABC< ComponentTy
     : nature_( 0 )
 {
     std::string modelName;
-    xis >> attribute( "name", name_ )
-        >> attribute( "type", type_ )
-        >> attribute( "id", id_ )
-        >> attribute( "decisional-model", modelName );
+    xis >> xml::attribute( "name", name_ )
+        >> xml::attribute( "type", type_ )
+        >> xml::attribute( "id", id_ )
+        >> xml::attribute( "decisional-model", modelName );
     model_ = & modelResolver.Get( modelName );
 
     std::auto_ptr< AgentNature > nature( new AgentNature( xis ) );
-    xis >> start( "equipments" )
-        >> list( "equipment", *this, &AgentType::ReadEquipment, componentResolver )
-        >> end();
+    xis >> xml::start( "equipments" )
+        >> xml::list( "equipment", *this, &AgentType::ReadEquipment, componentResolver )
+        >> xml::end();
     symbol_      = symbolFactory.CreateSymbol( nature->GetNature() );
     levelSymbol_ = symbolFactory.CreateLevelSymbol( nature->GetLevel() );
     hqSymbol_    = symbolFactory.CreateAutomatSymbol();

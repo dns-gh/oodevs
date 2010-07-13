@@ -16,7 +16,6 @@
 #include "clients_kernel/Viewport_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace xml;
 using namespace kernel;
 using namespace actions;
 
@@ -108,14 +107,14 @@ void Parameter_ABC::DrawToolTip( const Viewport_ABC& viewport, const GlTools_ABC
 // -----------------------------------------------------------------------------
 void Parameter_ABC::Serialize( xml::xostream& xos ) const
 {
-    xos << attribute( "name", name_ );
+    xos << xml::attribute( "name", name_ );
     if( !isSet_ )
-        xos << attribute( "set", false );
+        xos << xml::attribute( "set", false );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
-        xos << start( "parameter" );
+        xos << xml::start( "parameter" );
         it->second->Serialize( xos );
-        xos << end();
+        xos << xml::end();
     }
 }
 

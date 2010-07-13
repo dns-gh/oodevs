@@ -15,7 +15,6 @@
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace xml;
 using namespace kernel;
 using namespace actions;
 using namespace parameters;
@@ -48,7 +47,7 @@ PathList::PathList( const OrderParameter& parameter, const CoordinateConverter_A
 PathList::PathList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, xml::xistream& xis )
     : Parameter< QString >( parameter )
 {
-    xis >> list( "parameter", *this, &PathList::ReadPath, converter );
+    xis >> xml::list( "parameter", *this, &PathList::ReadPath, converter );
 }
 
 // -----------------------------------------------------------------------------

@@ -30,7 +30,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: AgentTypes constructor
@@ -115,8 +114,8 @@ AgentTypes::~AgentTypes()
 // -----------------------------------------------------------------------------
 void AgentTypes::ReadComponents( xml::xistream& xis )
 {
-    xis >> start( "elements" )
-            >> list( "element", *this, &AgentTypes::ReadComponent );
+    xis >> xml::start( "elements" )
+            >> xml::list( "element", *this, &AgentTypes::ReadComponent );
 }
 
 // -----------------------------------------------------------------------------
@@ -136,13 +135,13 @@ void AgentTypes::ReadComponent( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void AgentTypes::ReadOrderTypes( xml::xistream& xis )
 {
-    xis >> start( "missions" );
+    xis >> xml::start( "missions" );
     ReadMissions( xis, "units"      , unitMissions_ );
     ReadMissions( xis, "automats"   , automatMissions_ );
     ReadMissions( xis, "populations", populationMissions_ );
-    xis     >> start( "fragorders" )
-                >> list( "fragorder", *this, &AgentTypes::ReadFragOrderType )
-            >> end();
+    xis     >> xml::start( "fragorders" )
+                >> xml::list( "fragorder", *this, &AgentTypes::ReadFragOrderType )
+            >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -151,10 +150,10 @@ void AgentTypes::ReadOrderTypes( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void AgentTypes::ReadMissions( xml::xistream& xis, const std::string& name, T_MissionResolver& missions )
 {
-    xis >> start( name );
+    xis >> xml::start( name );
     OrderContext context( xis );
-    xis     >> list( "mission", *this, &AgentTypes::ReadMissionType, missions, context )
-        >> end();
+    xis     >> xml::list( "mission", *this, &AgentTypes::ReadMissionType, missions, context )
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -189,16 +188,16 @@ void AgentTypes::ReadModels( xml::xistream& xis )
     T_Resolver automatResolver    = &MissionFactory::CreateAutomatMission;
     T_Resolver populationResolver = &MissionFactory::CreatePopulationMission;
 
-    xis >> start( "models" )
-            >> start( "units" )
-                >> list( "unit", *this, &AgentTypes::ReadModel, unitResolver, unitModels_ )
-            >> end()
-            >> start( "automats" )
-                >> list( "automat", *this, &AgentTypes::ReadModel, automatResolver, automatModels_ )
-            >> end()
-            >> start( "populations" )
-                >> list( "population", *this, &AgentTypes::ReadModel, populationResolver, populationModels_ )
-            >> end();
+    xis >> xml::start( "models" )
+            >> xml::start( "units" )
+                >> xml::list( "unit", *this, &AgentTypes::ReadModel, unitResolver, unitModels_ )
+            >> xml::end()
+            >> xml::start( "automats" )
+                >> xml::list( "automat", *this, &AgentTypes::ReadModel, automatResolver, automatModels_ )
+            >> xml::end()
+            >> xml::start( "populations" )
+                >> xml::list( "population", *this, &AgentTypes::ReadModel, populationResolver, populationModels_ )
+            >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -218,9 +217,9 @@ void AgentTypes::ReadModel( xml::xistream& xis, const T_Resolver& missionResolve
 // -----------------------------------------------------------------------------
 void AgentTypes::ReadSensors( xml::xistream& xis )
 {
-    xis >> start( "sensors" )
-            >> start( "sensors" )
-                >> list( "sensor", *this, &AgentTypes::ReadSensor );
+    xis >> xml::start( "sensors" )
+            >> xml::start( "sensors" )
+                >> xml::list( "sensor", *this, &AgentTypes::ReadSensor );
 }
 
 // -----------------------------------------------------------------------------
@@ -230,8 +229,8 @@ void AgentTypes::ReadSensors( xml::xistream& xis )
 void AgentTypes::ReadSensor( xml::xistream& xis )
 {
     std::string name;
-    xis >> attribute( "name", name )
-        >> list( "unit-detection", *this, &AgentTypes::ReallyReadSensor, name );
+    xis >> xml::attribute( "name", name )
+        >> xml::list( "unit-detection", *this, &AgentTypes::ReallyReadSensor, name );
 }
 
 // -----------------------------------------------------------------------------
@@ -250,8 +249,8 @@ void AgentTypes::ReallyReadSensor( xml::xistream& xis, const std::string& sensor
 // -----------------------------------------------------------------------------
 void AgentTypes::ReadAgents( xml::xistream& xis )
 {
-    xis >> start( "units" )
-            >> list( "unit", *this, &AgentTypes::ReadAgentType );
+    xis >> xml::start( "units" )
+            >> xml::list( "unit", *this, &AgentTypes::ReadAgentType );
 }
 
 // -----------------------------------------------------------------------------
@@ -271,8 +270,8 @@ void AgentTypes::ReadAgentType( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void AgentTypes::ReadAutomats( xml::xistream& xis )
 {
-    xis >> start( "automats" )
-            >> list( "automat", *this, &AgentTypes::ReadAutomatType );
+    xis >> xml::start( "automats" )
+            >> xml::list( "automat", *this, &AgentTypes::ReadAutomatType );
 }
 
 // -----------------------------------------------------------------------------
@@ -292,8 +291,8 @@ void AgentTypes::ReadAutomatType( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void AgentTypes::ReadPopulations( xml::xistream& xis )
 {
-    xis >> start( "populations" )
-            >> list( "population", *this, &AgentTypes::ReadPopulationType );
+    xis >> xml::start( "populations" )
+            >> xml::list( "population", *this, &AgentTypes::ReadPopulationType );
 }
 
 // -----------------------------------------------------------------------------
@@ -313,8 +312,8 @@ void AgentTypes::ReadPopulationType( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void AgentTypes::ReadKnowledgeGroups( xml::xistream& xis )
 {
-    xis >> start( "knowledge-groups" )
-            >> list( "knowledge-group", *this, &AgentTypes::ReadKnowledgeGroupType );
+    xis >> xml::start( "knowledge-groups" )
+            >> xml::list( "knowledge-group", *this, &AgentTypes::ReadKnowledgeGroupType );
 }
 
 // -----------------------------------------------------------------------------

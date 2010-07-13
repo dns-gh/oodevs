@@ -23,7 +23,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 using namespace actions;
 using namespace parameters;
 
@@ -77,7 +76,7 @@ EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, con
     : Parameter< std::string >( parameter )
     , type_( types.Get( xis.attribute< std::string >( "value" ) ) )
 {
-    xis >> list( "parameter", *this, &EngineerConstruction::ReadParameter, converter, entities, controller );
+    xis >> xml::list( "parameter", *this, &EngineerConstruction::ReadParameter, converter, entities, controller );
     SetValue( type_.GetName() );
 }
 
@@ -89,7 +88,7 @@ EngineerConstruction::EngineerConstruction( const CoordinateConverter_ABC& conve
     : Parameter< std::string >( OrderParameter( xis.attribute< std::string >( "name" ).c_str(), "obstacle", false ) )
     , type_ ( types.Get( xis.attribute< std::string >( "value" ) ) )
 {
-    xis >> list( "parameter", *this, &EngineerConstruction::ReadParameter, converter, entities, controller );
+    xis >> xml::list( "parameter", *this, &EngineerConstruction::ReadParameter, converter, entities, controller );
     SetValue( type_.GetName() );
 }
 
@@ -109,7 +108,7 @@ EngineerConstruction::~EngineerConstruction()
 void EngineerConstruction::ReadParameter( xml::xistream& xis, const CoordinateConverter_ABC& converter, const kernel::EntityResolver_ABC& entities, Controller& controller )
 {
     std::string type;
-    xis >> attribute( "type", type );
+    xis >> xml::attribute( "type", type );
     if( type == "obstacletype" )
         AddParameter( *new ObstacleType( xis ) );
     else if( type == "location" )
@@ -136,7 +135,7 @@ void EngineerConstruction::Draw( const geometry::Point2f& where, const Viewport_
 void EngineerConstruction::Serialize( xml::xostream& xos ) const
 {
     Parameter< std::string >::Serialize( xos );
-    xos << attribute( "value", type_.GetType() );
+    xos << xml::attribute( "value", type_.GetType() );
 }
 
 // -----------------------------------------------------------------------------

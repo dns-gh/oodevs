@@ -15,7 +15,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: ObstacleAttribute constructor
@@ -92,13 +91,13 @@ void ObstacleAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void ObstacleAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << start( "obstacle" )
-            << attribute( "type", type_.ToXml() )
-            << attribute( "activated", bActivated_ )
-            << start( "activation-time" )
-                << attribute( "value", activationTime_ )
-            << end()
-        << end();
+    xos << xml::start( "obstacle" )
+            << xml::attribute( "type", type_.ToXml() )
+            << xml::attribute( "activated", bActivated_ )
+            << xml::start( "activation-time" )
+                << xml::attribute( "value", activationTime_ )
+            << xml::end()
+        << xml::end();
 }
 
 // -----------------------------------------------------------------------------

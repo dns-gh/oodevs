@@ -12,7 +12,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: AgentNature constructor
@@ -20,11 +19,11 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 AgentNature::AgentNature( xml::xistream& xis )
 {
-    xis >> start( "nature" )
-            >> attribute( "level", level_ )
-            >> attribute( "nature", nature_ )
-            >> attribute( "atlas-nature", atlas_ )
-        >> end();
+    xis >> xml::start( "nature" )
+            >> xml::attribute( "level", level_ )
+            >> xml::attribute( "nature", nature_ )
+            >> xml::attribute( "atlas-nature", atlas_ )
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------

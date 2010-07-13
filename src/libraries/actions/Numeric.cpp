@@ -13,7 +13,6 @@
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace xml;
 using namespace actions;
 using namespace parameters;
 
@@ -53,7 +52,7 @@ Numeric::~Numeric()
 void Numeric::Serialize( xml::xostream& xos ) const
 {
     Parameter< float >::Serialize( xos );
-    xos << attribute( "value", GetValue() );
+    xos << xml::attribute( "value", GetValue() );
 }
 
 // -----------------------------------------------------------------------------

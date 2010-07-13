@@ -16,7 +16,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: NBCAttribute constructor
@@ -35,7 +34,7 @@ NBCAttribute::NBCAttribute( xml::xistream& xis, const tools::Resolver_ABC< kerne
     : state_ ( "gaseous" )
 {
     xis >> xml::optional() >> xml::attribute( "state", state_ );
-    xis >> list( "nbc-agent", *this, &NBCAttribute::ReadNbcAgent, nbcAgents );
+    xis >> xml::list( "nbc-agent", *this, &NBCAttribute::ReadNbcAgent, nbcAgents );
     CreateDictionary( dico );
 }
 
@@ -55,7 +54,7 @@ NBCAttribute::~NBCAttribute()
 void NBCAttribute::ReadNbcAgent( xml::xistream& xis, const tools::Resolver_ABC< kernel::NBCAgent, std::string >& nbcAgents )
 {
     std::string type;
-    xis >> attribute( "type", type );
+    xis >> xml::attribute( "type", type );
     AddAgent( nbcAgents.Get( type ) );
 }
 
@@ -105,16 +104,16 @@ void NBCAttribute::SetDanger( const unsigned int value )
 // -----------------------------------------------------------------------------
 void NBCAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << start( "nbc-agents" );
+    xos << xml::start( "nbc-agents" );
     if( state_ != "" )
         xos << xml::attribute( "state", state_ );
     for( T_NBCAgents::const_iterator it = agents_.begin(); it != agents_.end(); ++it )
     {
-        xos << start( "nbc-agent" )
-                << attribute( "type", (*it)->GetName() )
-            << end();
+        xos << xml::start( "nbc-agent" )
+                << xml::attribute( "type", (*it)->GetName() )
+            << xml::end();
     }
-    xos << end();
+    xos << xml::end();
 }
 
 // -----------------------------------------------------------------------------

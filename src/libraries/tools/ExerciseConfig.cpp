@@ -21,7 +21,6 @@
 namespace po = boost::program_options;
 namespace bfs = boost::filesystem;
 using namespace tools;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: ExerciseConfig constructor
@@ -64,38 +63,38 @@ void ExerciseConfig::LoadExercise( const std::string& file )
     try
     {
         xml::xifstream xis( file );
-        xis >> start( "exercise" )
-                >> start( "terrain" )
-                    >> attribute( "name", terrain_ )
-                >> end()
-                >> start( "model" )
-                    >> attribute( "dataset", dataset_ )
-                    >> attribute( "physical", physical_ )
-                >> end()
-                >> start( "weather" )
-                    >> attribute( "file", weather_ )
-                >> end()
-                >> start( "orbat" )
-                    >> attribute( "file", orbat_ )
-                >> end()
-                >> start( "profiles" )
-                    >> attribute( "file", profiles_ )
-                >> end()
-                >> optional() >> start( "urban" )
-                    >> attribute( "file", urban_ )
-                >> end()
-                >> optional() >> start( "urbanstate" )
-                    >> attribute( "file", urbanState_ )
-                >> end()
-                >> optional() >> start( "population" )
-                    >> attribute( "name", population_ )
-                >> end()
-                >> optional() >> start( "scores" );
-        scores_ = attribute< std::string >( xis, "file", "scores.xml" );
-        xis     >> end()
-                >> optional() >> start( "success-factors" );
-        successFactors_ = attribute< std::string >( xis, "file", "success-factors.xml" );
-        xis     >> end();
+        xis >> xml::start( "exercise" )
+                >> xml::start( "terrain" )
+                    >> xml::attribute( "name", terrain_ )
+                >> xml::end()
+                >> xml::start( "model" )
+                    >> xml::attribute( "dataset", dataset_ )
+                    >> xml::attribute( "physical", physical_ )
+                >> xml::end()
+                >> xml::start( "weather" )
+                    >> xml::attribute( "file", weather_ )
+                >> xml::end()
+                >> xml::start( "orbat" )
+                    >> xml::attribute( "file", orbat_ )
+                >> xml::end()
+                >> xml::start( "profiles" )
+                    >> xml::attribute( "file", profiles_ )
+                >> xml::end()
+                >> xml::optional() >> xml::start( "urban" )
+                    >> xml::attribute( "file", urban_ )
+                >> xml::end()
+                >> xml::optional() >> xml::start( "urbanstate" )
+                    >> xml::attribute( "file", urbanState_ )
+                >> xml::end()
+                >> xml::optional() >> xml::start( "population" )
+                    >> xml::attribute( "name", population_ )
+                >> xml::end()
+                >> xml::optional() >> xml::start( "scores" );
+        scores_ = xis.attribute< std::string >( "file", "scores.xml" );
+        xis     >> xml::end()
+                >> xml::optional() >> xml::start( "success-factors" );
+        successFactors_ = xis.attribute< std::string >( "file", "success-factors.xml" );
+        xis     >> xml::end();
         if( GetExerciseFile() != file )
             SetExerciseName( file );
     }

@@ -16,7 +16,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: DecisionalModel constructor
@@ -24,11 +23,11 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 DecisionalModel::DecisionalModel( xml::xistream& xis, MissionFactory& factory, const T_Resolver& missionResolver, const tools::Resolver_ABC< FragOrderType >& fragOrders )
 {
-    xis >> attribute( "name", name_ )
-        >> optional()
-            >> start( "missions" )
-                >> list( "mission", *this, &DecisionalModel::ReadMission, factory, missionResolver )
-            >> end();
+    xis >> xml::attribute( "name", name_ )
+        >> xml::optional()
+            >> xml::start( "missions" )
+                >> xml::list( "mission", *this, &DecisionalModel::ReadMission, factory, missionResolver )
+            >> xml::end();
     RegisterDefaultFragOrders( factory, fragOrders );
 }
 
@@ -49,10 +48,10 @@ DecisionalModel::~DecisionalModel()
 void DecisionalModel::ReadMission( xml::xistream& xis, MissionFactory& factory, const T_Resolver& missionResolver )
 {
     std::string name;
-    xis >> attribute( "name", name );
+    xis >> xml::attribute( "name", name );
     Mission* mission = (factory.*missionResolver)( name );
     tools::Resolver< Mission >::Register( mission->GetId(), *mission );
-    xis >> list( "fragorder", *this, &DecisionalModel::ReadFragOrder, *mission, factory );
+    xis >> xml::list( "fragorder", *this, &DecisionalModel::ReadFragOrder, *mission, factory );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,7 +61,7 @@ void DecisionalModel::ReadMission( xml::xistream& xis, MissionFactory& factory, 
 void DecisionalModel::ReadFragOrder( xml::xistream& xis, Mission& mission, MissionFactory& factory )
 {
     std::string name;
-    xis >> attribute( "name", name );
+    xis >> xml::attribute( "name", name );
     FragOrder* order = factory.CreateFragOrder( name );
     if( ! mission.Find( order->GetId() ) )
         mission.Register( order->GetId(), *order );

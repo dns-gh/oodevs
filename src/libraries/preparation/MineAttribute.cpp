@@ -15,7 +15,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: MineAttribute constructor
@@ -41,7 +40,7 @@ MineAttribute::MineAttribute( xml::xistream& xis, kernel::PropertiesDictionary& 
     , density_     ( 1, Units::minesPerMeter )
 {
     std::string density;
-    xis >> optional() >> content( "density", density );
+    xis >> xml::optional() >> xml::content( "density", density );
     density_.value_ = QString( density.c_str() ).toDouble();
     CreateDictionary( dico );
 }
@@ -88,9 +87,9 @@ void MineAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void MineAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << start( "mine" )
-            << content( "density", density_.value_ )
-        << end();
+    xos << xml::start( "mine" )
+            << xml::content( "density", density_.value_ )
+        << xml::end();
 }
 
 // -----------------------------------------------------------------------------

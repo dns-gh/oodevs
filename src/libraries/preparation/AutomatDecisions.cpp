@@ -15,7 +15,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: AutomatDecisions constructor
@@ -38,7 +37,7 @@ AutomatDecisions::AutomatDecisions( xml::xistream& xis, kernel::Controller& cont
     , agent_( agent )
 {
     std::string engaged;
-    xis >> optional() >> attribute( "engaged", engaged );
+    xis >> xml::optional() >> xml::attribute( "engaged", engaged );
     bEmbraye_ = engaged.empty() || engaged == "true";
 }
 
@@ -135,5 +134,5 @@ void AutomatDecisions::ForwardEngageStatus()
 // -----------------------------------------------------------------------------
 void AutomatDecisions::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << attribute( "engaged", bEmbraye_ ? "true" : "false" );
+    xos << xml::attribute( "engaged", bEmbraye_ ? "true" : "false" );
 }

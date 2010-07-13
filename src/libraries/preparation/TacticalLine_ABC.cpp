@@ -16,8 +16,6 @@
 #include "Tools.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace xml;
-
 // -----------------------------------------------------------------------------
 // Name: TacticalLine_ABC constructor
 // Created: APE 2004-04-14
@@ -39,7 +37,7 @@ TacticalLine_ABC::TacticalLine_ABC( kernel::Controller& controller, xml::xistrea
 {
     RegisterSelf( *this );
     std::string name;
-    xis >> attribute( "name", name );
+    xis >> xml::attribute( "name", name );
     name_ = name.c_str();
     CreateDictionary( controller );
 }
@@ -72,7 +70,7 @@ void TacticalLine_ABC::Draw( const geometry::Point2f&, const kernel::Viewport_AB
 // -----------------------------------------------------------------------------
 void TacticalLine_ABC::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << attribute( "name", name_.ascii() );
+    xos << xml::attribute( "name", name_.ascii() );
 }
 
 // -----------------------------------------------------------------------------

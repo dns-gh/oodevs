@@ -20,7 +20,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: FormationModel constructor
@@ -67,11 +66,11 @@ void FormationModel::Create( xml::xistream& xis, kernel::Entity_ABC& parent, Mod
 {
     Formation_ABC* formation = factory_.Create( xis, parent, levels_ );
     Register( formation->GetId(), *formation );
-    xis >> list( "formation"   , *this               , &FormationModel::Create    , *(Entity_ABC*)formation, model )
-        >> list( "automat"     , model.agents_       , &AgentsModel::CreateAutomat, *formation, model.limits_ )
-        >> list( "lima"        , model.limits_       , &LimitsModel::CreateLima   , *(Entity_ABC*)formation )
-        >> list( "limit"       , model.limits_       , &LimitsModel::CreateLimit  , *(Entity_ABC*)formation )
-        >> list( "intelligence", model.intelligences_, &IntelligencesModel::Create, *(Entity_ABC*)formation );
+    xis >> xml::list( "formation"   , *this               , &FormationModel::Create    , *(Entity_ABC*)formation, model )
+        >> xml::list( "automat"     , model.agents_       , &AgentsModel::CreateAutomat, *formation, model.limits_ )
+        >> xml::list( "lima"        , model.limits_       , &LimitsModel::CreateLima   , *(Entity_ABC*)formation )
+        >> xml::list( "limit"       , model.limits_       , &LimitsModel::CreateLimit  , *(Entity_ABC*)formation )
+        >> xml::list( "intelligence", model.intelligences_, &IntelligencesModel::Create, *(Entity_ABC*)formation );
 }
 
 // -----------------------------------------------------------------------------

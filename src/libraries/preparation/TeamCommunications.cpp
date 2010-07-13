@@ -13,7 +13,6 @@
 #include <xeumeuleu/xml.hpp>
 #include "KnowledgeGroup.h"
 
-using namespace xml;
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
@@ -41,7 +40,7 @@ TeamCommunications::~TeamCommunications()
 // -----------------------------------------------------------------------------
 void TeamCommunications::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << start( "communication" );
+    xos << xml::start( "communication" );
     tools::Iterator< const Entity_ABC& > it = CreateSubordinateIterator();
     while( it.HasMoreElements() )
     {
@@ -49,5 +48,5 @@ void TeamCommunications::SerializeAttributes( xml::xostream& xos ) const
         it.NextElement().Interface().Apply( & Serializable_ABC::SerializeAttributes, xos );
         xos << xml::end();
     }
-    xos << end();
+    xos << xml::end();
 }

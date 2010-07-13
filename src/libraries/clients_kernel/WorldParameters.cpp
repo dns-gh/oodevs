@@ -17,7 +17,6 @@
 #pragma warning( pop )
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: WorldParameters constructor
@@ -56,12 +55,12 @@ WorldParameters::~WorldParameters()
 // -----------------------------------------------------------------------------
 void WorldParameters::Load( const tools::ExerciseConfig& config )
 {
-    xifstream xis( config.GetTerrainFile() );
+    xml::xifstream xis( config.GetTerrainFile() );
     std::string world, graphics, detection;
-    xis >> start( "Terrain" )
-            >> content( "World", world )
-            >> content( "RawVision", detection )
-            >> content( "Graphics", graphics );
+    xis >> xml::start( "Terrain" )
+            >> xml::content( "World", world )
+            >> xml::content( "RawVision", detection )
+            >> xml::content( "Graphics", graphics );
     detection_ = config.BuildTerrainChildFile( detection + "/detection.dat" );
     graphicsDirectory_ = config.BuildTerrainChildFile( graphics );
     ReadWorld( config.BuildTerrainChildFile( world ) );
@@ -69,10 +68,10 @@ void WorldParameters::Load( const tools::ExerciseConfig& config )
 
     if( ! config.GetPopulationFile().empty() )
     {
-        xifstream popxis( config.GetPopulationFile() );
-        popxis >> start( "configuration" )
-                    >> start( "graph" )
-                        >> attribute( "file", populationGraph_ );
+        xml::xifstream popxis( config.GetPopulationFile() );
+        popxis >> xml::start( "configuration" )
+                    >> xml::start( "graph" )
+                        >> xml::attribute( "file", populationGraph_ );
         populationGraph_ = config.BuildChildPath( config.GetPopulationFile(), populationGraph_ );
     }
 }
@@ -83,12 +82,12 @@ void WorldParameters::Load( const tools::ExerciseConfig& config )
 // -----------------------------------------------------------------------------
 void WorldParameters::ReadWorld( const std::string& world )
 {
-    xifstream xis( world );
-    xis >> start( "World" )
-            >> content( "Latitude", latitude_ )
-            >> content( "Longitude", longitude_ )
-            >> content( "Width", width_ )
-            >> content( "Height", height_ );
+    xml::xifstream xis( world );
+    xis >> xml::start( "World" )
+            >> xml::content( "Latitude", latitude_ )
+            >> xml::content( "Longitude", longitude_ )
+            >> xml::content( "Width", width_ )
+            >> xml::content( "Height", height_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -111,13 +110,13 @@ void WorldParameters::ReadExtent( const std::string& extent )
     {
         unsigned char min = 255;
         unsigned char max = 0;
-        xifstream xis( extent );
-        xis >> start( "Extent" );
+        xml::xifstream xis( extent );
+        xis >> xml::start( "Extent" );
         char* toRead[4] = {"HautGauche", "HautDroit", "BasDroit", "BasGauche" };
         for( unsigned i = 0; i < 4; ++i )
         {
             std::string mgrs;
-            xis >> content( toRead[i], mgrs );
+            xis >> xml::content( toRead[i], mgrs );
             const unsigned char zone = (unsigned char)boost::lexical_cast< unsigned int >( mgrs.substr( 0, 2 ) );
             min = std::min( min, zone );
             max = std::max( max, zone );

@@ -20,8 +20,6 @@
 #include "clients_kernel/Population_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace xml;
-
 // -----------------------------------------------------------------------------
 // Name: UserProfile constructor
 // Created: SBO 2007-01-16
@@ -38,24 +36,24 @@ UserProfile::UserProfile( xml::xistream& xis, kernel::Controller& controller, co
     const ExistenceChecker< tools::Resolver< kernel::Population_ABC > > populationChecker( model_.agents_ );
 
     std::string login, pass, role;
-    xis >> attribute( "name", login )
-        >> attribute( "password", pass )
-        >> attribute( "supervision", supervisor_ )
-        >> optional() >> attribute( "scipio-role", role )
-        >> start( "rights" )
-            >> start( "readonly" )
-                >> list( "side"      , *this, &UserProfile::ReadRights, readSides_, teamChecker )
-                >> list( "formation" , *this, &UserProfile::ReadRights, readFormations_, formationChecker )
-                >> list( "automat"   , *this, &UserProfile::ReadRights, readAutomats_, automatChecker )
-                >> list( "population", *this, &UserProfile::ReadRights, readPopulations_, populationChecker )
-            >> end()
-            >> start( "readwrite" )
-                >> list( "side"      , *this, &UserProfile::ReadRights, writeSides_, teamChecker )
-                >> list( "formation" , *this, &UserProfile::ReadRights, writeFormations_, formationChecker )
-                >> list( "automat"   , *this, &UserProfile::ReadRights, writeAutomats_, automatChecker )
-                >> list( "population", *this, &UserProfile::ReadRights, writePopulations_, populationChecker )
-            >> end()
-        >> end();
+    xis >> xml::attribute( "name", login )
+        >> xml::attribute( "password", pass )
+        >> xml::attribute( "supervision", supervisor_ )
+        >> xml::optional() >> xml::attribute( "scipio-role", role )
+        >> xml::start( "rights" )
+            >> xml::start( "readonly" )
+                >> xml::list( "side"      , *this, &UserProfile::ReadRights, readSides_, teamChecker )
+                >> xml::list( "formation" , *this, &UserProfile::ReadRights, readFormations_, formationChecker )
+                >> xml::list( "automat"   , *this, &UserProfile::ReadRights, readAutomats_, automatChecker )
+                >> xml::list( "population", *this, &UserProfile::ReadRights, readPopulations_, populationChecker )
+            >> xml::end()
+            >> xml::start( "readwrite" )
+                >> xml::list( "side"      , *this, &UserProfile::ReadRights, writeSides_, teamChecker )
+                >> xml::list( "formation" , *this, &UserProfile::ReadRights, writeFormations_, formationChecker )
+                >> xml::list( "automat"   , *this, &UserProfile::ReadRights, writeAutomats_, automatChecker )
+                >> xml::list( "population", *this, &UserProfile::ReadRights, writePopulations_, populationChecker )
+            >> xml::end()
+        >> xml::end();
     login_ = login.c_str();
     password_ = pass.c_str();
     role_ = role.c_str();
@@ -116,27 +114,27 @@ UserProfile::~UserProfile()
 // -----------------------------------------------------------------------------
 void UserProfile::Serialize( xml::xostream& xos ) const
 {
-    xos << start( "profile" );
+    xos << xml::start( "profile" );
     if( role_.length() )
-        xos << attribute( "scipio-role", role_.ascii() );
-    xos     << attribute( "name", login_.ascii() )
-            << attribute( "password", password_.ascii() )
-            << attribute( "supervision", supervisor_ )
-            << start( "rights" )
-                << start( "readonly" );
+        xos << xml::attribute( "scipio-role", role_.ascii() );
+    xos     << xml::attribute( "name", login_.ascii() )
+            << xml::attribute( "password", password_.ascii() )
+            << xml::attribute( "supervision", supervisor_ )
+            << xml::start( "rights" )
+                << xml::start( "readonly" );
     SerializeRights( xos, "side", readSides_ );
     SerializeRights( xos, "formation", readFormations_ );
     SerializeRights( xos, "automat", readAutomats_ );
     SerializeRights( xos, "population", readPopulations_ );
-    xos         << end()
-                << start( "readwrite" );
+    xos         << xml::end()
+                << xml::start( "readwrite" );
     SerializeRights( xos, "side", writeSides_ );
     SerializeRights( xos, "formation", writeFormations_ );
     SerializeRights( xos, "automat", writeAutomats_ );
     SerializeRights( xos, "population", writePopulations_ );
-    xos         << end()
-            << end()
-        << end();
+    xos         << xml::end()
+            << xml::end()
+        << xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -146,7 +144,7 @@ void UserProfile::Serialize( xml::xostream& xos ) const
 void UserProfile::ReadRights( xml::xistream& xis, T_Ids& list, const ExistenceChecker_ABC& checker )
 {
     unsigned long id;
-    xis >> attribute( "id", id );
+    xis >> xml::attribute( "id", id );
     if( checker( id ) )
         list.push_back( id );
     else
@@ -160,9 +158,9 @@ void UserProfile::ReadRights( xml::xistream& xis, T_Ids& list, const ExistenceCh
 void UserProfile::SerializeRights( xml::xostream& xos, const std::string& tag, const T_Ids& list ) const
 {
     for( T_Ids::const_iterator it = list.begin(); it != list.end(); ++it )
-        xos << start( tag )
-                << attribute( "id", *it )
-            << end();
+        xos << xml::start( tag )
+                << xml::attribute( "id", *it )
+            << xml::end();
 }
 
 // -----------------------------------------------------------------------------

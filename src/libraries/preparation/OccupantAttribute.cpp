@@ -15,7 +15,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: OccupantAttribute constructor
@@ -71,9 +70,9 @@ void OccupantAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void OccupantAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << start( "max-size" )
-            << attribute( "max-size", iMaxSize_ )
-        << end();
+    xos << xml::start( "max-size" )
+            << xml::attribute( "max-size", iMaxSize_ )
+        << xml::end();
 }
 
 // -----------------------------------------------------------------------------

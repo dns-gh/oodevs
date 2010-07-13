@@ -21,7 +21,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroup constructor
@@ -47,7 +46,7 @@ KnowledgeGroup::KnowledgeGroup( xml::xistream& xis, kernel::Controller& controll
     , type_( &types.Get( xis.attribute< std::string >( "type" ) ) )
 {
     std::string name;
-    xis >> optional() >> attribute( "name", name );
+    xis >> xml::optional() >> xml::attribute( "name", name );
     UpdateCommunicationDelay(); // LTO
     name_ = name.empty() ? tools::translate( "KnowledgeGroup", "Knowledge group [%1]" ).arg( id_ ) : name.c_str();
     idManager.Lock( id_ );
@@ -121,9 +120,9 @@ void KnowledgeGroup::SetType( kernel::KnowledgeGroupType* const& type )
 // -----------------------------------------------------------------------------
 void KnowledgeGroup::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << attribute( "id", id_ )
-        << attribute( "type", type_->GetName() )
-        << attribute( "name", name_ );
+    xos << xml::attribute( "id", id_ )
+        << xml::attribute( "type", type_->GetName() )
+        << xml::attribute( "name", name_ );
 }
 
 // -----------------------------------------------------------------------------

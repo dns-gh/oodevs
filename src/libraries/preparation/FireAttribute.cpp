@@ -16,7 +16,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: FireAttribute constructor
@@ -35,7 +34,7 @@ FireAttribute::FireAttribute( kernel::PropertiesDictionary& dico )
 FireAttribute::FireAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::FireClass, std::string >& FireClasses, kernel::PropertiesDictionary& dico )
 {
     std::string type;
-    xis >> attribute( "class", type );
+    xis >> xml::attribute( "class", type );
     fireClass_ = FireClasses.Find( type );
     CreateDictionary( dico );
 }
@@ -75,9 +74,9 @@ void FireAttribute::SetClass( const kernel::FireClass& fireClass )
 // -----------------------------------------------------------------------------
 void FireAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << start( "fire" )
-            << attribute( "class", fireClass_->GetName() )
-        << end();
+    xos << xml::start( "fire" )
+            << xml::attribute( "class", fireClass_->GetName() )
+        << xml::end();
 }
 
 // -----------------------------------------------------------------------------

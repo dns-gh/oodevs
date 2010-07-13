@@ -14,7 +14,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: SymbolCase constructor
@@ -22,9 +21,9 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 SymbolCase::SymbolCase( xml::xistream& xis )
 {
-    xis >> attribute( "symbol", value_ )
-        >> attribute( "name", name_ )
-        >> list( "choice", *this, &SymbolCase::ReadRule );
+    xis >> xml::attribute( "symbol", value_ )
+        >> xml::attribute( "name", name_ )
+        >> xml::list( "choice", *this, &SymbolCase::ReadRule );
 }
 
 // -----------------------------------------------------------------------------

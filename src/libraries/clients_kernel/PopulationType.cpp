@@ -12,7 +12,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: PopulationType constructor
@@ -21,10 +20,10 @@ using namespace xml;
 PopulationType::PopulationType( xml::xistream& xis, const tools::Resolver_ABC< DecisionalModel, std::string >& modelResolver )
 {
     std::string model;
-    xis >> attribute( "name", name_ )
-        >> attribute( "id", id_ )
-        >> attribute( "decisional-model", model )
-        >> attribute( "concentration-density", density_ );
+    xis >> xml::attribute( "name", name_ )
+        >> xml::attribute( "id", id_ )
+        >> xml::attribute( "decisional-model", model )
+        >> xml::attribute( "concentration-density", density_ );
     model_ = & modelResolver.Get( model );
 }
 

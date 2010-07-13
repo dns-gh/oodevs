@@ -26,7 +26,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: TeamsModel constructor
@@ -105,28 +104,28 @@ void TeamsModel::NotifyDeleted( const Team_ABC& team )
 // -----------------------------------------------------------------------------
 void TeamsModel::Serialize( xml::xostream& xos ) const
 {
-    xos << start( "dotations" )
-            << attribute( "infinite", infiniteDotations_ )
-        << end();
+    xos << xml::start( "dotations" )
+            << xml::attribute( "infinite", infiniteDotations_ )
+        << xml::end();
 
-    xos << start( "sides" );
+    xos << xml::start( "sides" );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
-        xos << start( "side" );
+        xos << xml::start( "side" );
         it->second->Interface().Apply( & Serializable_ABC::SerializeAttributes, xos );
         it->second->Interface().Apply( & Serializable_ABC::SerializeLogistics, xos );
-        xos << end();
+        xos << xml::end();
     }
-    xos << end();
+    xos << xml::end();
 
-    xos << start( "diplomacies" );
+    xos << xml::start( "diplomacies" );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
-        xos << start( "side" );
+        xos << xml::start( "side" );
         static_cast< const Diplomacies& >( it->second->Get< kernel::Diplomacies_ABC >() ).Serialize( xos ); // $$$$ SBO 2008-12-09: !
-        xos << end();
+        xos << xml::end();
     }
-    xos << end();
+    xos << xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -144,17 +143,17 @@ tools::Iterator< const Entity_ABC& > TeamsModel::CreateEntityIterator() const
 // -----------------------------------------------------------------------------
 void TeamsModel::Load( xml::xistream& xis, Model& model )
 {
-    xis >> start( "orbat" )
-            >> optional() >> start( "dotations" )
-                >> attribute( "infinite", infiniteDotations_ )
-            >> end()
-            >> start( "sides" )
-                >> list( "side", *this, &TeamsModel::ReadTeam, model )
-            >> end()
-            >> start( "diplomacies" )
-                >> list( "side", *this, &TeamsModel::ReadDiplomacy )
-            >> end()
-        >> end();
+    xis >> xml::start( "orbat" )
+            >> xml::optional() >> xml::start( "dotations" )
+                >> xml::attribute( "infinite", infiniteDotations_ )
+            >> xml::end()
+            >> xml::start( "sides" )
+                >> xml::list( "side", *this, &TeamsModel::ReadTeam, model )
+            >> xml::end()
+            >> xml::start( "diplomacies" )
+                >> xml::list( "side", *this, &TeamsModel::ReadDiplomacy )
+            >> xml::end()
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -167,21 +166,21 @@ void TeamsModel::ReadTeam( xml::xistream& xis, Model& model )
     Register( team->GetId(), *team );
 
     // $$$$ SBO 2006-10-05: forward to communications extension?
-    xis >> start( "communication" )
-            >> list( "knowledge-group", model.knowledgeGroups_, &KnowledgeGroupsModel::Create, *team, model )
-        >> end();
-    xis >> start( "tactical" )
-            >> list( "formation", model.formations_, &FormationModel::Create, *team, model )
-        >> end();
-    xis >> start( "logistic" )
-            >> list( "automat", model.agents_, &AgentsModel::ReadLogistic )
-        >> end();
-    xis >> start( "objects" )
-            >> list( "object", static_cast< Team& >( *team ), &Team::CreateObject )
-        >> end();
-    xis >> start( "populations" )
-            >> list( "population", model.agents_, &AgentsModel::CreatePopulation, *team )
-        >> end();
+    xis >> xml::start( "communication" )
+            >> xml::list( "knowledge-group", model.knowledgeGroups_, &KnowledgeGroupsModel::Create, *team, model )
+        >> xml::end();
+    xis >> xml::start( "tactical" )
+            >> xml::list( "formation", model.formations_, &FormationModel::Create, *team, model )
+        >> xml::end();
+    xis >> xml::start( "logistic" )
+            >> xml::list( "automat", model.agents_, &AgentsModel::ReadLogistic )
+        >> xml::end();
+    xis >> xml::start( "objects" )
+            >> xml::list( "object", static_cast< Team& >( *team ), &Team::CreateObject )
+        >> xml::end();
+    xis >> xml::start( "populations" )
+            >> xml::list( "population", model.agents_, &AgentsModel::CreatePopulation, *team )
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -191,7 +190,7 @@ void TeamsModel::ReadTeam( xml::xistream& xis, Model& model )
 void TeamsModel::ReadDiplomacy( xml::xistream& xis )
 {
     int id;
-    xis >> attribute( "id", id );
+    xis >> xml::attribute( "id", id );
     static_cast< Diplomacies& >( Get( id ).Get< Diplomacies_ABC >() ).Load( xis ); // $$$$ SBO 2008-12-09: !
 }
 

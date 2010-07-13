@@ -13,7 +13,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: OrderParameter constructor
@@ -23,10 +22,10 @@ OrderParameter::OrderParameter( xml::xistream& xis )
     : optional_( false )
 {
     std::string name;
-    xis >> attribute( "name", name_ )
-        >> attribute( "type", type_ )
-        >> optional() >> attribute( "optional", optional_ )
-        >> list( "value", *this, &OrderParameter::ReadValue );
+    xis >> xml::attribute( "name", name_ )
+        >> xml::attribute( "type", type_ )
+        >> xml::optional() >> xml::attribute( "optional", optional_ )
+        >> xml::list( "value", *this, &OrderParameter::ReadValue );
 }
 
 // -----------------------------------------------------------------------------

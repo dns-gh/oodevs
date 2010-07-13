@@ -18,7 +18,6 @@
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace xml;
 using namespace geometry;
 using namespace kernel;
 

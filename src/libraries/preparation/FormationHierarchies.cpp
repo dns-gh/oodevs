@@ -17,8 +17,6 @@
 #include "clients_kernel/HierarchyLevel_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace xml;
-
 // -----------------------------------------------------------------------------
 // Name: FormationHierarchies constructor
 // Created: SBO 2006-09-21
@@ -66,10 +64,10 @@ void FormationHierarchies::SerializeAttributes( xml::xostream& xos ) const
 {
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
-        xos << start( it->second->Retrieve< AutomatDecisions >() ? "automat" : "formation" ); // $$$$ SBO 2006-09-22: bof bof
+        xos << xml::start( it->second->Retrieve< AutomatDecisions >() ? "automat" : "formation" ); // $$$$ SBO 2006-09-22: bof bof
         it->second->Interface().Apply( & Serializable_ABC::SerializeAttributes, xos );
         it->second->Interface().Apply( & Serializable_ABC::SerializeIntelligences, xos );
-        xos << end();
+        xos << xml::end();
     }
 }
 
@@ -82,9 +80,9 @@ namespace
             const kernel::Automat_ABC& automat = static_cast< const kernel::Automat_ABC& >( entity );
             if( automat.GetType().HasLogistics() )
             {
-                xos << start( "automat" );
+                xos << xml::start( "automat" );
                 automat.Interface().Apply( & kernel::Serializable_ABC::SerializeLogistics, xos );
-                xos << end();
+                xos << xml::end();
             }
             return true;
         }

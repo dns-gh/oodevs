@@ -16,7 +16,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 using namespace actions;
 using namespace parameters;
 
@@ -35,9 +34,9 @@ Objective::Objective( const OrderParameter& parameter )
 // Created: SBO 2007-06-25
 // -----------------------------------------------------------------------------
 Objective::Objective( xml::xistream& xis, const CoordinateConverter_ABC& converter )
-    : Parameter< QString >( OrderParameter( attribute< std::string >( xis, "name" ).c_str(), "objective", false ) )
+    : Parameter< QString >( OrderParameter( xis.attribute< std::string >( "name" ).c_str(), "objective", false ) )
 {
-    xis >> list( "parameter", *this, &Objective::ReadParameter, converter );
+    xis >> xml::list( "parameter", *this, &Objective::ReadParameter, converter );
 }
 
 // -----------------------------------------------------------------------------
@@ -47,7 +46,7 @@ Objective::Objective( xml::xistream& xis, const CoordinateConverter_ABC& convert
 Objective::Objective( const OrderParameter& parameter, xml::xistream& xis, const CoordinateConverter_ABC& converter )
     : Parameter< QString >( parameter )
 {
-    xis >> list( "parameter", *this, &Objective::ReadParameter, converter );
+    xis >> xml::list( "parameter", *this, &Objective::ReadParameter, converter );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,7 +76,7 @@ Objective::~Objective()
 void Objective::ReadParameter( xml::xistream& xis, const CoordinateConverter_ABC& converter )
 {
     std::string type;
-    xis >> attribute( "type", type );
+    xis >> xml::attribute( "type", type );
     if( type == "location" )
         AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Location" ).ascii(), "location", false ), converter, xis ) );
     else if( type == "datetime" )

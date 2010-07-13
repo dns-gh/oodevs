@@ -47,7 +47,7 @@ LimaList::LimaList( const OrderParameter& parameter, const CoordinateConverter_A
 LimaList::LimaList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, xml::xistream& xis )
     : Parameter< QString >( parameter )
 {
-    xis >> list( "parameter", *this, &LimaList::ReadLima, converter );
+    xis >> xml::list( "parameter", *this, &LimaList::ReadLima, converter );
 }
 
 // -----------------------------------------------------------------------------

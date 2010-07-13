@@ -14,7 +14,6 @@
 #include <boost/algorithm/string.hpp>
 #include <xeumeuleu/xml.hpp>
 
-using namespace xml;
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
@@ -26,10 +25,10 @@ FragOrderType::FragOrderType( xml::xistream& xis )
     , isDefaultOrder_  ( false )
     , isWithoutMission_( false )
 {
-    xis >> optional() >> attribute( "available-for-all-mission", isDefaultOrder_ )
-        >> optional() >> attribute( "available-without-mission", isWithoutMission_ )
-        >> optional() >> attribute( "dia-type", diaType_ )
-        >> list( "parameter", *this, &FragOrderType::ReadParameter );
+    xis >> xml::optional() >> xml::attribute( "available-for-all-mission", isDefaultOrder_ )
+        >> xml::optional() >> xml::attribute( "available-without-mission", isWithoutMission_ )
+        >> xml::optional() >> xml::attribute( "dia-type", diaType_ )
+        >> xml::list( "parameter", *this, &FragOrderType::ReadParameter );
     ReadDescriptions( xis );
 }
 

@@ -15,8 +15,6 @@
 #include <qpixmap.h>
 #include <qpainter.h>
 
-using namespace xml;
-
 // -----------------------------------------------------------------------------
 // Name: SideList constructor
 // Created: SBO 2008-02-22
@@ -48,11 +46,11 @@ void SideList::Update( const QString& exercise )
     {
         if( !exercise.isEmpty() )
         {
-            xifstream xis( config_.GetExerciseFile( exercise.ascii() ) );
+            xml::xifstream xis( config_.GetExerciseFile( exercise.ascii() ) );
             std::string orbatFile;
-            xis >> start( "exercise" )
-                    >> start( "orbat" )
-                        >> attribute( "file", orbatFile );
+            xis >> xml::start( "exercise" )
+                    >> xml::start( "orbat" )
+                        >> xml::attribute( "file", orbatFile );
             UpdateSides( config_.BuildChildPath( config_.GetExerciseFile( exercise.ascii() ), orbatFile ) );
         }
     }
@@ -69,10 +67,10 @@ void SideList::Update( const QString& exercise )
 // -----------------------------------------------------------------------------
 void SideList::UpdateSides( const std::string& orbat )
 {
-    xifstream xis( orbat );
-     xis >> start( "orbat" )
-            >> start( "sides" )
-                >> list( "side", *this, &SideList::ReadSide );
+    xml::xifstream xis( orbat );
+     xis >> xml::start( "orbat" )
+            >> xml::start( "sides" )
+                >> xml::list( "side", *this, &SideList::ReadSide );
 }
 
 namespace
@@ -102,7 +100,7 @@ namespace
 void SideList::ReadSide( xml::xistream& xis )
 {
     std::string name, type;
-    xis >> attribute( "name", name )
-        >> attribute( "type", type );
+    xis >> xml::attribute( "name", name )
+        >> xml::attribute( "type", type );
     insertItem( MakeKarmaPixmap( type ), name.c_str() );
 }

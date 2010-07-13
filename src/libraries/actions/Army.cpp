@@ -14,7 +14,6 @@
 #include "protocol/Protocol.h"
 
 using namespace kernel;
-using namespace xml;
 using namespace actions;
 using namespace parameters;
 
@@ -33,7 +32,7 @@ Army::Army( const kernel::OrderParameter& parameter, kernel::Controller& control
 // Created: JSR 2010-04-14
 // -----------------------------------------------------------------------------
 Army::Army( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
-    : Entity< Team_ABC >( parameter, &resolver.GetTeam( attribute< unsigned long >( xis, "value" ) ), controller )
+    : Entity< Team_ABC >( parameter, &resolver.GetTeam( xis.attribute< unsigned long >( "value" ) ), controller )
 {
     // NOTHING
 }
@@ -53,7 +52,7 @@ Army::Army( const kernel::OrderParameter& parameter, unsigned int id, const kern
 // Created: JSR 2010-04-14
 // -----------------------------------------------------------------------------
 Army::Army( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
-    : Entity< Team_ABC >( OrderParameter( attribute< std::string >( xis, "name" ), "army", false ), &resolver.GetTeam( attribute< unsigned long >( xis, "value" ) ), controller )
+    : Entity< Team_ABC >( OrderParameter( xis.attribute< std::string >( "name" ), "army", false ), &resolver.GetTeam( xis.attribute< unsigned long >( "value" ) ), controller )
 {
     // NOTHING
 }

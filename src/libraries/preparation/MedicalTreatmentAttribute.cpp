@@ -16,7 +16,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: MedicalTreatmentAttribute constructor
@@ -41,9 +40,9 @@ MedicalTreatmentAttribute::MedicalTreatmentAttribute( xml::xistream& xis, const 
     , doctors_              ( 0 )
     , availableDoctors_     ( 0 )
 {
-    xis >> attribute( "beds", beds_ ) >> attribute( "availableBeds", availableBeds_ )
-        >> attribute( "doctors", doctors_ ) >> attribute( "availableDoctors", availableDoctors_ );
-    xis >> list( "type", *this, &MedicalTreatmentAttribute::ReadTreatment, treatmentTypes );
+    xis >> xml::attribute( "beds", beds_ ) >> xml::attribute( "availableBeds", availableBeds_ )
+        >> xml::attribute( "doctors", doctors_ ) >> xml::attribute( "availableDoctors", availableDoctors_ );
+    xis >> xml::list( "type", *this, &MedicalTreatmentAttribute::ReadTreatment, treatmentTypes );
     CreateDictionary( dictionary );
 }
 
@@ -110,14 +109,14 @@ void MedicalTreatmentAttribute::AddMedicalTreatment( const kernel::MedicalTreatm
 // -----------------------------------------------------------------------------
 void MedicalTreatmentAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << start( "medical-treatment" );
-    xos << attribute( "beds", beds_ )
-        << attribute( "availableBeds", availableBeds_ )
-        << attribute( "doctors", doctors_ )
-        << attribute( "availableDoctors", availableDoctors_ );
+    xos << xml::start( "medical-treatment" );
+    xos << xml::attribute( "beds", beds_ )
+        << xml::attribute( "availableBeds", availableBeds_ )
+        << xml::attribute( "doctors", doctors_ )
+        << xml::attribute( "availableDoctors", availableDoctors_ );
     for( T_MedicalTreatments::const_iterator it = treatmentTypes_.begin(); it != treatmentTypes_.end(); ++it )
-        xos << content( "type", (*it)->GetName() );
-    xos << end();
+        xos << xml::content( "type", (*it)->GetName() );
+    xos << xml::end();
 }
 
 // -----------------------------------------------------------------------------

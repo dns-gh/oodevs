@@ -14,7 +14,6 @@
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace xml;
 using namespace actions;
 using namespace parameters;
 
@@ -46,7 +45,7 @@ Level::Level( const kernel::OrderParameter& parameter, const Common::EnumNatureL
 // -----------------------------------------------------------------------------
 Level::Level( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::FormationLevels& levels )
     : Parameter< QString >( parameter )
-    , level_( *levels.Resolve( attribute< std::string >( xis, "value" ).c_str() ) )
+    , level_( *levels.Resolve( xis.attribute< std::string >( "value" ).c_str() ) )
 {
     SetValue( level_.GetName() );
 }
@@ -76,5 +75,5 @@ void Level::CommitTo( T_Setter setter ) const
 void Level::Serialize( xml::xostream& xos ) const
 {
     Parameter< QString >::Serialize( xos );
-    xos << attribute( "value", level_.GetName().ascii() );
+    xos << xml::attribute( "value", level_.GetName().ascii() );
 }

@@ -15,7 +15,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: BypassAttribute constructor
@@ -35,7 +34,7 @@ BypassAttribute::BypassAttribute( xml::xistream& xis, kernel::PropertiesDictiona
     : rBypassConstructionPercentage_ ( 0., Units::percentage )
 {
     std::string density;
-    xis >> attribute( "value", rBypassConstructionPercentage_.value_ );
+    xis >> xml::attribute( "value", rBypassConstructionPercentage_.value_ );
     CreateDictionary( dico );
 }
 
@@ -73,9 +72,9 @@ void BypassAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void BypassAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << start( "bypass" )
-            << attribute( "value", rBypassConstructionPercentage_.value_ )
-        << end();
+    xos << xml::start( "bypass" )
+            << xml::attribute( "value", rBypassConstructionPercentage_.value_ )
+        << xml::end();
 }
 
 // -----------------------------------------------------------------------------

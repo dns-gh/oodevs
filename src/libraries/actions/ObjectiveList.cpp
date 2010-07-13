@@ -15,7 +15,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 using namespace actions;
 using namespace parameters;
 
@@ -36,7 +35,7 @@ ObjectiveList::ObjectiveList( const OrderParameter& parameter )
 ObjectiveList::ObjectiveList( const OrderParameter& parameter, xml::xistream& xis, const CoordinateConverter_ABC& converter )
     : Parameter< QString >( parameter )
 {
-    xis >> list( "parameter", *this, &ObjectiveList::ReadParameter, converter );
+    xis >> xml::list( "parameter", *this, &ObjectiveList::ReadParameter, converter );
 }
 
 // -----------------------------------------------------------------------------
@@ -66,7 +65,7 @@ ObjectiveList::~ObjectiveList()
 void ObjectiveList::ReadParameter( xml::xistream& xis, const CoordinateConverter_ABC& converter )
 {
     std::string type;
-    xis >> attribute( "type", type );
+    xis >> xml::attribute( "type", type );
     if( type == "objective" )
         AddParameter( *new Objective( xis, converter ) );
 }

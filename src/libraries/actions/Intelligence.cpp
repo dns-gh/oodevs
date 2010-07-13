@@ -26,7 +26,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 using namespace actions;
 using namespace parameters;
 
@@ -46,10 +45,10 @@ Intelligence::Intelligence( const OrderParameter& parameter, const CoordinateCon
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
 Intelligence::Intelligence( const CoordinateConverter_ABC& converter, xml::xistream& xis, const kernel::EntityResolver_ABC& formations, const FormationLevels& levels, kernel::Controller& controller )
-    : Entity< Intelligence_ABC >( OrderParameter( attribute< std::string >( xis, "name" ).c_str(), "intelligence", false ), 0, controller )
+    : Entity< Intelligence_ABC >( OrderParameter( xis.attribute< std::string >( "name" ).c_str(), "intelligence", false ), 0, controller )
     , converter_( converter )
 {
-    xis >> list( "parameter", *this, &Intelligence::ReadParameter, formations, levels );
+    xis >> xml::list( "parameter", *this, &Intelligence::ReadParameter, formations, levels );
 }
 
 namespace
@@ -95,8 +94,8 @@ Intelligence::~Intelligence()
 // -----------------------------------------------------------------------------
 void Intelligence::ReadParameter( xml::xistream& xis, const kernel::EntityResolver_ABC& formations, const FormationLevels& levels )
 {
-    const QString name = attribute< std::string >( xis, "name" ).c_str();
-    const std::string type = attribute< std::string >( xis, "type" );
+    const QString name = xis.attribute< std::string >( "name" ).c_str();
+    const std::string type = xis.attribute< std::string >( "type" );
 
     if( type == "name" || type == "nature" )
         AddParameter( *new String( OrderParameter( name.ascii(), type, false ), xis ) );

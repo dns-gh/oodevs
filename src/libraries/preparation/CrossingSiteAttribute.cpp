@@ -15,7 +15,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: CrossingSiteAttribute constructor
@@ -40,10 +39,10 @@ CrossingSiteAttribute::CrossingSiteAttribute( xml::xistream& xis, kernel::Proper
     , speed_( 0, Units::metersPerSecond )
     , needsConstruction_( false )
 {
-    xis >> content( "width", (int&)(width_.value_) )
-        >> content( "depth", (int&)(depth_.value_) )
-        >> content( "speed", (int&)(speed_.value_) )
-        >> content( "construction-needed", needsConstruction_ );
+    xis >> xml::content( "width", (int&)(width_.value_) )
+        >> xml::content( "depth", (int&)(depth_.value_) )
+        >> xml::content( "speed", (int&)(speed_.value_) )
+        >> xml::content( "construction-needed", needsConstruction_ );
     CreateDictionary( dico );
 }
 
@@ -111,12 +110,12 @@ void CrossingSiteAttribute::SetConstruction( bool need )
 // -----------------------------------------------------------------------------
 void CrossingSiteAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << start( "crossing-site" )
-            << content( "width", int( width_.value_ ) )
-            << content( "depth", int( depth_.value_ ) )
-            << content( "speed", int( speed_.value_ ) )
-            << content( "construction-needed", needsConstruction_ )
-        << end();
+    xos << xml::start( "crossing-site" )
+            << xml::content( "width", int( width_.value_ ) )
+            << xml::content( "depth", int( depth_.value_ ) )
+            << xml::content( "speed", int( speed_.value_ ) )
+            << xml::content( "construction-needed", needsConstruction_ )
+        << xml::end();
 }
 
 // -----------------------------------------------------------------------------

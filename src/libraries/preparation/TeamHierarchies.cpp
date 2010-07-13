@@ -12,8 +12,6 @@
 #include "clients_kernel/Entity_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace xml;
-
 // -----------------------------------------------------------------------------
 // Name: TeamHierarchies constructor
 // Created: SBO 2006-09-21
@@ -39,15 +37,15 @@ TeamHierarchies::~TeamHierarchies()
 // -----------------------------------------------------------------------------
 void TeamHierarchies::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << start( "tactical" );
+    xos << xml::start( "tactical" );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
-        xos << start( "formation" );
+        xos << xml::start( "formation" );
         it->second->Interface().Apply( & Serializable_ABC::SerializeAttributes, xos );
         it->second->Interface().Apply( & Serializable_ABC::SerializeIntelligences, xos );
-        xos << end();
+        xos << xml::end();
     }
-    xos << end();
+    xos << xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -56,10 +54,10 @@ void TeamHierarchies::SerializeAttributes( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void TeamHierarchies::SerializeLogistics( xml::xostream& xos ) const
 {
-    xos << start( "logistic" );
+    xos << xml::start( "logistic" );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
         it->second->Interface().Apply( & Serializable_ABC::SerializeLogistics, xos );
-    xos << end();
+    xos << xml::end();
 }
 
 // -----------------------------------------------------------------------------

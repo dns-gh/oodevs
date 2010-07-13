@@ -13,20 +13,19 @@
 #include "tools.h"
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: DotationType constructor
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-DotationType::DotationType( xistream& xis )
+DotationType::DotationType( xml::xistream& xis )
     : dType_( false )
 {
     std::string category, xmlName;
-    xis >> attribute( "id", id_ )
-        >> attribute( "name", xmlName )
-        >> attribute( "category", category_ )
-        >> optional() >> attribute( "d-type", dType_ );
+    xis >> xml::attribute( "id", id_ )
+        >> xml::attribute( "name", xmlName )
+        >> xml::attribute( "category", category_ )
+        >> xml::optional() >> xml::attribute( "d-type", dType_ );
     nameId_ = tools::DotationFamilyFromString( xmlName );
     name_ = tools::ToString( E_DotationFamily( nameId_ ) );
 

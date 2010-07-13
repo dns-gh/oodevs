@@ -26,7 +26,6 @@
 
 using namespace geometry;
 using namespace kernel;
-using namespace xml;
 
 namespace
 {
@@ -194,7 +193,7 @@ void AgentPositions::Aggregate( const bool& bDummy )
 // -----------------------------------------------------------------------------
 void AgentPositions::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << attribute( "position", converter_.ConvertToMgrs( position_ ) );
+    xos << xml::attribute( "position", converter_.ConvertToMgrs( position_ ) );
 }
 
 // -----------------------------------------------------------------------------

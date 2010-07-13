@@ -134,7 +134,6 @@
 #pragma warning( pop )
 
 namespace bfs = boost::filesystem;
-using namespace xml;
 using namespace kernel;
 using namespace gui;
 

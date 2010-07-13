@@ -12,16 +12,15 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: BreakdownType constructor
 // Created: AGE 2006-04-05
 // -----------------------------------------------------------------------------
-BreakdownType::BreakdownType( xistream& xis )
+BreakdownType::BreakdownType( xml::xistream& xis )
 {
-    xis >> attribute( "name", name_ )
-        >> attribute( "id", id_ );
+    xis >> xml::attribute( "name", name_ )
+        >> xml::attribute( "id", id_ );
 }
 
 // -----------------------------------------------------------------------------

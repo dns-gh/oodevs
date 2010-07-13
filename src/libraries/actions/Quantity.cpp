@@ -13,7 +13,6 @@
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace xml;
 using namespace actions;
 using namespace parameters;
 
@@ -82,5 +81,5 @@ void Quantity::Accept( ParameterVisitor_ABC& visitor ) const
 void Quantity::Serialize( xml::xostream& xos ) const
 {
     Parameter< int >::Serialize( xos );
-    xos << attribute( "value", GetValue() );
+    xos << xml::attribute( "value", GetValue() );
 }

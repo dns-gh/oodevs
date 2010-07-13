@@ -14,7 +14,6 @@
 #include "clients_kernel/Formation_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace xml;
 using namespace kernel;
 using namespace actions;
 using namespace parameters;
@@ -44,7 +43,7 @@ Formation::Formation( const OrderParameter& parameter, const int& message, const
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
 Formation::Formation( const OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
-    : Entity< Formation_ABC >( parameter, &resolver.GetFormation( attribute< unsigned long >( xis, "value" ) ), controller )
+    : Entity< Formation_ABC >( parameter, &resolver.GetFormation( xis.attribute< unsigned long >( "value" ) ), controller )
 {
     // NOTHING
 }

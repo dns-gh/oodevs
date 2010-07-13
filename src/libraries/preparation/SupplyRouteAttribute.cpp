@@ -15,7 +15,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: SupplyRouteAttribute constructor
@@ -42,11 +41,11 @@ SupplyRouteAttribute::SupplyRouteAttribute( xml::xistream& xis, kernel::Properti
     , maxWeight_( 0, Units::tons )
     , equipped_( false )
 {
-    xis >> content( "flow", (int&)(flow_.value_) )
-        >> content( "width", (int&)(width_.value_) )
-        >> content( "length", (int&)(length_.value_) )
-        >> content( "max-weight", (int&)(maxWeight_.value_) )
-        >> content( "equipped", equipped_ );
+    xis >> xml::content( "flow", (int&)(flow_.value_) )
+        >> xml::content( "width", (int&)(width_.value_) )
+        >> xml::content( "length", (int&)(length_.value_) )
+        >> xml::content( "max-weight", (int&)(maxWeight_.value_) )
+        >> xml::content( "equipped", equipped_ );
     CreateDictionary( dico );
 }
 
@@ -124,13 +123,13 @@ void SupplyRouteAttribute::SetEquipped( bool value )
 // -----------------------------------------------------------------------------
 void SupplyRouteAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << start( "supply-route" )
-            << content( "flow", int( flow_.value_ ) )
-            << content( "width", int( width_.value_ ) )
-            << content( "length", int( length_.value_ ) )
-            << content( "max-weight", int( maxWeight_.value_ ) )
-            << content( "equipped", equipped_ )
-        << end();
+    xos << xml::start( "supply-route" )
+            << xml::content( "flow", int( flow_.value_ ) )
+            << xml::content( "width", int( width_.value_ ) )
+            << xml::content( "length", int( length_.value_ ) )
+            << xml::content( "max-weight", int( maxWeight_.value_ ) )
+            << xml::content( "equipped", equipped_ )
+        << xml::end();
 }
 
 // -----------------------------------------------------------------------------

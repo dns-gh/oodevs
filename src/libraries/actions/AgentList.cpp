@@ -17,7 +17,6 @@
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 
-using namespace xml;
 using namespace kernel;
 using namespace actions;
 using namespace parameters;
@@ -50,7 +49,7 @@ AgentList::AgentList( const OrderParameter& parameter, const Common::MsgUnitList
 AgentList::AgentList( const OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
     : Parameter< QString >( parameter )
 {
-    xis >> list( "parameter", *this, &AgentList::ReadAgent, resolver, controller );
+    xis >> xml::list( "parameter", *this, &AgentList::ReadAgent, resolver, controller );
 }
 
 // -----------------------------------------------------------------------------

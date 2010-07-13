@@ -13,7 +13,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: Dotation constructor
@@ -34,8 +33,8 @@ Dotation::Dotation( xml::xistream& xis, const tools::Resolver_ABC< DotationType,
 {
     std::string name;
     double quantity;
-    xis >> attribute( "name", name )
-        >> attribute( "quantity", quantity );
+    xis >> xml::attribute( "name", name )
+        >> xml::attribute( "quantity", quantity );
     type_ = &resolver.Get( name );
     quantity_ = unsigned int( quantity );
 }
@@ -55,6 +54,6 @@ Dotation::~Dotation()
 // -----------------------------------------------------------------------------
 void Dotation::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << attribute( "name", type_->GetCategory() )
-        << attribute( "quantity", unsigned int( quantity_ ) );
+    xos << xml::attribute( "name", type_->GetCategory() )
+        << xml::attribute( "quantity", unsigned int( quantity_ ) );
 }

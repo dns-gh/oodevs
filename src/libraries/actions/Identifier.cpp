@@ -9,12 +9,10 @@
 
 #include "actions_pch.h"
 #include "Identifier.h"
-
 #include "ParameterVisitor_ABC.h"
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace xml;
 using namespace actions;
 using namespace parameters;
 
@@ -84,5 +82,5 @@ void Identifier::Accept( ParameterVisitor_ABC& visitor ) const
 void Identifier::Serialize( xml::xostream& xos ) const
 {
     Parameter< unsigned int >::Serialize( xos );
-    xos << attribute( "value", GetValue() );
+    xos << xml::attribute( "value", GetValue() );
 }

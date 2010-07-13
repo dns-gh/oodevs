@@ -12,16 +12,15 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: NBCAgent constructor
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-NBCAgent::NBCAgent( xistream& input )
+NBCAgent::NBCAgent( xml::xistream& input )
 {
-    input >> attribute( "name", name_ )
-          >> attribute( "id", id_ );
+    input >> xml::attribute( "name", name_ )
+          >> xml::attribute( "id", id_ );
 }
 
 // -----------------------------------------------------------------------------

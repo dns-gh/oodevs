@@ -14,7 +14,6 @@
 #include "protocol/Protocol.h"
 
 using namespace kernel;
-using namespace xml;
 using namespace actions;
 using namespace parameters;
 
@@ -33,7 +32,7 @@ KnowledgeGroup::KnowledgeGroup( const kernel::OrderParameter& parameter, unsigne
 // Created: JSR 2010-04-19
 // -----------------------------------------------------------------------------
 KnowledgeGroup::KnowledgeGroup( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
-    : Entity< KnowledgeGroup_ABC >( parameter, &resolver.GetKnowledgeGroup( attribute< unsigned long >( xis, "value" ) ), controller )
+    : Entity< KnowledgeGroup_ABC >( parameter, &resolver.GetKnowledgeGroup( xis.attribute< unsigned long >( "value" ) ), controller )
 {
     // NOTHING
 }

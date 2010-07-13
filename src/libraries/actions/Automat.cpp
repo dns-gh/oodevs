@@ -14,7 +14,6 @@
 #include "protocol/Protocol.h"
 
 using namespace kernel;
-using namespace xml;
 using namespace actions;
 using namespace parameters;
 
@@ -53,7 +52,7 @@ Automat::Automat( const kernel::OrderParameter& parameter, unsigned int id, cons
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
 Automat::Automat( const OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
-    : Entity< Automat_ABC >( parameter, &resolver.GetAutomat( attribute< unsigned long >( xis, "value" ) ), controller )
+    : Entity< Automat_ABC >( parameter, &resolver.GetAutomat( xis.attribute< unsigned long >( "value" ) ), controller )
 {
     // NOTHING
 }
@@ -63,7 +62,7 @@ Automat::Automat( const OrderParameter& parameter, xml::xistream& xis, const ker
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
 Automat::Automat( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
-    : Entity< Automat_ABC >( OrderParameter( attribute< std::string >( xis, "name" ), attribute< std::string >( xis, "type" ), false ), &resolver.GetAutomat( attribute< unsigned long >( xis, "value" ) ), controller )
+    : Entity< Automat_ABC >( OrderParameter( xis.attribute< std::string >("name" ), xis.attribute< std::string >( "type" ), false ), &resolver.GetAutomat( xis.attribute< unsigned long >( "value" ) ), controller )
 {
     // NOTHING
 }

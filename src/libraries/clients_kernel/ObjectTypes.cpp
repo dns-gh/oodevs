@@ -23,7 +23,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 
 unsigned int ObjectTypes::nVolumeId = 0;
 
@@ -97,7 +96,7 @@ ObjectTypes::~ObjectTypes()
 // -----------------------------------------------------------------------------
 void ObjectTypes::ReadObjectTypes( xml::xistream& xis )
 {
-    xis >> start( "objects" ) >> list ( "object", *this, &ObjectTypes::ReadObjectType );
+    xis >> xml::start( "objects" ) >> list ( "object", *this, &ObjectTypes::ReadObjectType );
 }
 
 // -----------------------------------------------------------------------------
@@ -116,7 +115,7 @@ void ObjectTypes::ReadObjectType( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ObjectTypes::ReadDotations( xml::xistream& xis )
 {
-    xis >> start( "dotations" ) >> list( "dotation", *this, &ObjectTypes::ReadDotation );
+    xis >> xml::start( "dotations" ) >> xml::list( "dotation", *this, &ObjectTypes::ReadDotation );
 }
 
 // -----------------------------------------------------------------------------
@@ -135,7 +134,7 @@ void ObjectTypes::ReadDotation( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ObjectTypes::ReadWeaponSystems( xml::xistream& xis )
 {
-    xis >> start( "weapons" ) >> list( "weapon-system", *this, &ObjectTypes::ReadWeaponSystem );
+    xis >> xml::start( "weapons" ) >> xml::list( "weapon-system", *this, &ObjectTypes::ReadWeaponSystem );
 }
 
 // -----------------------------------------------------------------------------
@@ -154,7 +153,7 @@ void ObjectTypes::ReadWeaponSystem( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ObjectTypes::ReadEquipments( xml::xistream& xis )
 {
-    xis >> start( "elements" ) >> list( "element", *this, &ObjectTypes::ReadEquipment );
+    xis >> xml::start( "elements" ) >> xml::list( "element", *this, &ObjectTypes::ReadEquipment );
 }
 
 // -----------------------------------------------------------------------------
@@ -173,7 +172,7 @@ void ObjectTypes::ReadEquipment( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ObjectTypes::ReadNBC( xml::xistream& xis )
 {
-    xis >> start( "nbc" ) >> start( "agents" ) >> list( "agent", *this, &ObjectTypes::ReadNBCAgent );
+    xis >> xml::start( "nbc" ) >> xml::start( "agents" ) >> xml::list( "agent", *this, &ObjectTypes::ReadNBCAgent );
 }
 
 // -----------------------------------------------------------------------------
@@ -192,7 +191,7 @@ void ObjectTypes::ReadNBCAgent( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ObjectTypes::ReadFire( xml::xistream& xis )
 {
-    xis >> start( "fire-classes" ) >> list( "class", *this, &ObjectTypes::ReadFireClass );
+    xis >> xml::start( "fire-classes" ) >> xml::list( "class", *this, &ObjectTypes::ReadFireClass );
 }
 
 // -----------------------------------------------------------------------------
@@ -211,7 +210,7 @@ void ObjectTypes::ReadFireClass( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ObjectTypes::ReadMedicalTreatment( xml::xistream& xis )
 {
-    xis >> start( "medical-treatments" ) >> list( "medical-treatment", *this, &ObjectTypes::ReadMedicalTreatmentType );
+    xis >> xml::start( "medical-treatments" ) >> xml::list( "medical-treatment", *this, &ObjectTypes::ReadMedicalTreatmentType );
 }
 
 // -----------------------------------------------------------------------------
@@ -229,7 +228,7 @@ void ObjectTypes::ReadMedicalTreatmentType( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ObjectTypes::ReadBreakdowns( xml::xistream& xis )
 {
-    xis >> start( "breakdowns" ) >> list( "category", *this, &ObjectTypes::ReadBreakdownCategory );
+    xis >> xml::start( "breakdowns" ) >> xml::list( "category", *this, &ObjectTypes::ReadBreakdownCategory );
 }
 
 // -----------------------------------------------------------------------------
@@ -238,7 +237,7 @@ void ObjectTypes::ReadBreakdowns( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ObjectTypes::ReadBreakdownCategory( xml::xistream& xis )
 {
-    xis >> list( "breakdown", *this, &ObjectTypes::ReadBreakdown );
+    xis >> xml::list( "breakdown", *this, &ObjectTypes::ReadBreakdown );
 }
 
 // -----------------------------------------------------------------------------
@@ -257,7 +256,7 @@ void ObjectTypes::ReadBreakdown( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ObjectTypes::ReadVolumes( xml::xistream& xis )
 {
-    xis >> start( "volumes" ) >> list( "volume", *this, &ObjectTypes::ReadVolume );
+    xis >> xml::start( "volumes" ) >> xml::list( "volume", *this, &ObjectTypes::ReadVolume );
 }
 
 // -----------------------------------------------------------------------------

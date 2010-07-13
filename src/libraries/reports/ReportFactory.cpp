@@ -23,7 +23,6 @@
 #include <xeumeuleu/xml.hpp>
 #include <google/protobuf/Descriptor.h>
 
-using namespace xml;
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
@@ -59,13 +58,13 @@ void ReportFactory::Load( const tools::ExerciseConfig& config  )
 {
     xml::xifstream scipio( config.GetPhysicalFile() );
     std::string reports;
-    scipio >> start( "physical" )
-                >> start( "reports" )
-                >> attribute( "file", reports );
-    xifstream xis( config.BuildPhysicalChildFile( reports ) );
-    xis >> start( "reports" )
-            >> list( "report", *this, &ReportFactory::ReadReport )
-        >> end();
+    scipio >> xml::start( "physical" )
+                >> xml::start( "reports" )
+                >> xml::attribute( "file", reports );
+    xml::xifstream xis( config.BuildPhysicalChildFile( reports ) );
+    xis >> xml::start( "reports" )
+            >> xml::list( "report", *this, &ReportFactory::ReadReport )
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------

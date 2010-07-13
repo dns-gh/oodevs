@@ -16,7 +16,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: ActivityTimeAttribute constructor
@@ -35,7 +34,7 @@ ActivityTimeAttribute::ActivityTimeAttribute( kernel::PropertiesDictionary& dico
 ActivityTimeAttribute::ActivityTimeAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dico )
     : activityTime_( 0, Units::hours )
 {
-    xis >> attribute( "value", activityTime_.value_ );
+    xis >> xml::attribute( "value", activityTime_.value_ );
     CreateDictionary( dico );
 }
 

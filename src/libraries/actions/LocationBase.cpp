@@ -16,11 +16,9 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
-
 #include <windows.h>
 #include <gl/gl.h>
 
-using namespace xml;
 using namespace actions;
 using namespace parameters;
 
@@ -61,11 +59,11 @@ LocationBase::LocationBase( const kernel::CoordinateConverter_ABC& converter, xm
     : converter_( converter )
 {
     std::string type;
-    xis >> optional()
-            >> start( "location" )
-                >> attribute( "type", type )
-                >> list( "point", *this, &LocationBase::ReadPoint )
-            >> end();
+    xis >> xml::optional()
+            >> xml::start( "location" )
+                >> xml::attribute( "type", type )
+                >> xml::list( "point", *this, &LocationBase::ReadPoint )
+            >> xml::end();
     type_ = tools::LocationFromString( type.c_str() );
     valid_ = CheckValidity();
 }
@@ -86,7 +84,7 @@ LocationBase::~LocationBase()
 void LocationBase::ReadPoint( xml::xistream& xis )
 {
     std::string mgrs;
-    xis >> attribute( "coordinates", mgrs );
+    xis >> xml::attribute( "coordinates", mgrs );
     PushBack( converter_.ConvertToXY( mgrs ) );
 }
 
@@ -181,11 +179,11 @@ void LocationBase::Serialize( xml::xostream& xos ) const
 {
     if( IsValid() )
     {
-        xos << start( "location" )
-            << attribute( "type", tools::ToString( type_ ) );
+        xos << xml::start( "location" )
+            << xml::attribute( "type", tools::ToString( type_ ) );
         for( CIT_PointVector it = points_.begin(); it != points_.end(); ++it )
-            xos << start( "point" ) << attribute( "coordinates", converter_.ConvertToMgrs( *it ) ) << end();
-        xos << end();
+            xos << xml::start( "point" ) << xml::attribute( "coordinates", converter_.ConvertToMgrs( *it ) ) << xml::end();
+        xos << xml::end();
     }
 }
 

@@ -11,7 +11,6 @@
 #include "OrderParameterValue.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace xml;
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
@@ -20,8 +19,8 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 OrderParameterValue::OrderParameterValue( xml::xistream& xis )
 {
-    xis >> attribute( "id", id_ )
-        >> attribute( "name", name_ );
+    xis >> xml::attribute( "id", id_ )
+        >> xml::attribute( "name", name_ );
 }
 
 // -----------------------------------------------------------------------------

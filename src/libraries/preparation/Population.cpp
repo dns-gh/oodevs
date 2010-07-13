@@ -16,8 +16,6 @@
 #include "Tools.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace xml;
-
 // -----------------------------------------------------------------------------
 // Name: Population constructor
 // Created: SBO 2006-11-08
@@ -106,9 +104,9 @@ void Population::CreateDictionary( kernel::Controller& controller )
 // -----------------------------------------------------------------------------
 void Population::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << attribute( "id", long( id_ ) )
-        << attribute( "name", name_.ascii() )
-        << attribute( "type", type_.GetName() )
-        << attribute( "humans", long( livingHumans_ ) )
-        << attribute( "attitude", attitude_.ToXml() );
+    xos << xml::attribute( "id", long( id_ ) )
+        << xml::attribute( "name", name_.ascii() )
+        << xml::attribute( "type", type_.GetName() )
+        << xml::attribute( "humans", long( livingHumans_ ) )
+        << xml::attribute( "attitude", attitude_.ToXml() );
 }

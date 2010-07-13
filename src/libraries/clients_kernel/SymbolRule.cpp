@@ -14,7 +14,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: SymbolRule constructor
@@ -22,8 +21,8 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 SymbolRule::SymbolRule( xml::xistream& xis )
 {
-    xis >> attribute( "name", name_ );
-    xis >> list( "case", *this, & SymbolRule::ReadCase );
+    xis >> xml::attribute( "name", name_ );
+    xis >> xml::list( "case", *this, & SymbolRule::ReadCase );
 }
 
 // -----------------------------------------------------------------------------
@@ -43,7 +42,7 @@ SymbolRule::~SymbolRule()
 void SymbolRule::ReadCase( xml::xistream& xis )
 {
     std::string name;
-    xis >> attribute( "name", name );
+    xis >> xml::attribute( "name", name );
     SymbolCase*& sCase = cases_[ name ];
     if( sCase )
         throw std::runtime_error( "Case '" + name + "' already regsitered" );

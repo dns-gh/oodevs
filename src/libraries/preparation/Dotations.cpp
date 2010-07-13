@@ -18,7 +18,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: Dotations constructor
@@ -38,9 +37,9 @@ Dotations::Dotations( xml::xistream& xis, Controller& controller, Entity_ABC& en
     : controller_( controller )
 {
     CreateDictionary( entity, dico );
-    xis >> optional() >> start( "dotations" )
-            >> list( "dotation", *this, &Dotations::ReadDotation, resolver )
-        >> end();
+    xis >> xml::optional() >> xml::start( "dotations" )
+            >> xml::list( "dotation", *this, &Dotations::ReadDotation, resolver )
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -72,14 +71,14 @@ void Dotations::SerializeAttributes( xml::xostream& xos ) const
 {
     if( elements_.empty() )
         return;
-    xos << start( "dotations" );
+    xos << xml::start( "dotations" );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
-        xos << start( "dotation" );
+        xos << xml::start( "dotation" );
         it->second->SerializeAttributes( xos );
-        xos << end();
+        xos << xml::end();
     }
-    xos << end();
+    xos << xml::end();
 }
 
 // -----------------------------------------------------------------------------

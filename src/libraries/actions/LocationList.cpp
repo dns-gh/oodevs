@@ -45,7 +45,7 @@ LocationList::LocationList( const kernel::OrderParameter& parameter, const kerne
 LocationList::LocationList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, xml::xistream& xis )
     : Parameter< QString >( parameter )
 {
-    xis >> list( "parameter", *this, &LocationList::ReadLocation, converter );
+    xis >> xml::list( "parameter", *this, &LocationList::ReadLocation, converter );
 }
 
 // -----------------------------------------------------------------------------

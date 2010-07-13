@@ -16,7 +16,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace gui;
-using namespace xml;
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
@@ -27,10 +26,10 @@ NatureEditionWidget::NatureEditionWidget( QWidget* parent, const std::string& sy
     : QVBox( parent )
     , root_( 0 )
 {
-    xifstream xis( symbolFile );
-    xis >> start( "app6" )
-        >> start( "symbols" )
-        >> start( "choice" );
+    xml::xifstream xis( symbolFile );
+    xis >> xml::start( "app6" )
+        >> xml::start( "symbols" )
+        >> xml::start( "choice" );
     root_    = new SymbolRule( xis );
     rootWidget_ = new NatureEditionCategory( this, root_ );
 

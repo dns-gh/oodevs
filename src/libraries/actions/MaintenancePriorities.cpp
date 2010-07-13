@@ -18,7 +18,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 using namespace actions;
 using namespace parameters;
 
@@ -51,7 +50,7 @@ MaintenancePriorities::MaintenancePriorities( const OrderParameter& parameter, c
     : Parameter< std::string >( parameter )
 {
     std::string value;
-    xis >> attribute( "value", value );
+    xis >> xml::attribute( "value", value );
     QStringList list = QStringList::split( ";", value.c_str() );
     for( unsigned int i = 0; i < list.count(); ++i )
         AddPriority( resolver.Get( list[i].toUInt() ) );
@@ -126,7 +125,7 @@ void MaintenancePriorities::Serialize( xml::xostream& xos ) const
     QString value( "" );
     for( T_Priorities::const_iterator it = priorities_.begin(); it != priorities_.end(); ++it )
         value += ( !value.isEmpty() ? ";" : "" ) + QString::number( (*it)->GetId() );
-    xos << attribute( "value", value.ascii() );
+    xos << xml::attribute( "value", value.ascii() );
 }
 
 // -----------------------------------------------------------------------------

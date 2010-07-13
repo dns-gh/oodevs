@@ -16,7 +16,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 using namespace actions;
 using namespace parameters;
 
@@ -38,7 +37,7 @@ IntelligenceList::IntelligenceList( const OrderParameter& parameter, const Coord
                                                                 , const kernel::EntityResolver_ABC& resolver, const FormationLevels& levels, kernel::Controller& controller )
     : Parameter< QString >( parameter )
 {
-    xis >> list( "parameter", *this, &IntelligenceList::ReadIntelligence, converter, resolver, levels, controller );
+    xis >> xml::list( "parameter", *this, &IntelligenceList::ReadIntelligence, converter, resolver, levels, controller );
 }
 
 // -----------------------------------------------------------------------------

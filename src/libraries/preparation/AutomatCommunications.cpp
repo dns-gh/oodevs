@@ -13,7 +13,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: AutomatCommunications constructor
@@ -51,7 +50,7 @@ AutomatCommunications::~AutomatCommunications()
 kernel::KnowledgeGroup_ABC* AutomatCommunications::ReadKnowledgeGroup( xml::xistream& xis, const tools::Resolver_ABC< kernel::KnowledgeGroup_ABC >& groups )
 {
     int group;
-    xis >> attribute( "knowledge-group", group );
+    xis >> xml::attribute( "knowledge-group", group );
     return &groups.Get( group );
 }
 
@@ -63,5 +62,5 @@ void AutomatCommunications::SerializeAttributes( xml::xostream& xos ) const
 {
     if( ! GetSuperior() ) // $$$$ SBO 2006-10-09: check that superior is a gtia
         throw std::runtime_error( QString( "Knowledge group not defined for automat '%1'." ).arg( GetEntity().GetId() ).ascii() );
-    xos << attribute( "knowledge-group", long( GetSuperior()->GetId() ) );
+    xos << xml::attribute( "knowledge-group", long( GetSuperior()->GetId() ) );
 }

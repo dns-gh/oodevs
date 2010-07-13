@@ -12,7 +12,6 @@
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace xml;
 using namespace kernel;
 
 namespace
@@ -49,18 +48,18 @@ Weather::Weather()
 Weather::Weather( xml::xistream& xis )
 {
     std::string precipitation;
-    xis >> start( "wind" )
-        >> attribute( "speed", windSpeed_ )
-        >> attribute( "direction", windDirection_ )
-        >> end()
-        >> start( "cloud-cover" )
-        >> attribute( "floor", cloudFloor_ )
-        >> attribute( "ceiling", cloudCeiling_ )
-        >> attribute( "density", cloudDensity_ )
-        >> end()
-        >> start( "precipitation" )
-        >> attribute( "value", precipitation )
-        >> end();
+    xis >> xml::start( "wind" )
+        >> xml::attribute( "speed", windSpeed_ )
+        >> xml::attribute( "direction", windDirection_ )
+        >> xml::end()
+        >> xml::start( "cloud-cover" )
+        >> xml::attribute( "floor", cloudFloor_ )
+        >> xml::attribute( "ceiling", cloudCeiling_ )
+        >> xml::attribute( "density", cloudDensity_ )
+        >> xml::end()
+        >> xml::start( "precipitation" )
+        >> xml::attribute( "value", precipitation )
+        >> xml::end();
     type_ = ConvertToWeatherType( precipitation.c_str() );
 }
 
@@ -79,16 +78,16 @@ Weather::~Weather()
 // -----------------------------------------------------------------------------
 void Weather::Serialize( xml::xostream& xos ) const
 {
-    xos << start( "wind" )
-        << attribute( "speed", windSpeed_ )
-        << attribute( "direction", windDirection_ )
-        << end()
-        << start( "cloud-cover" )
-        << attribute( "floor", cloudFloor_ )
-        << attribute( "ceiling", cloudCeiling_ )
-        << attribute( "density", cloudDensity_ )
-        << end()
-        << start( "precipitation" )
-        << attribute( "value", tools::GetXmlSection( type_ ) ) // $$$$ SBO 2006-12-20:
-        << end();
+    xos << xml::start( "wind" )
+        << xml::attribute( "speed", windSpeed_ )
+        << xml::attribute( "direction", windDirection_ )
+        << xml::end()
+        << xml::start( "cloud-cover" )
+        << xml::attribute( "floor", cloudFloor_ )
+        << xml::attribute( "ceiling", cloudCeiling_ )
+        << xml::attribute( "density", cloudDensity_ )
+        << xml::end()
+        << xml::start( "precipitation" )
+        << xml::attribute( "value", tools::GetXmlSection( type_ ) ) // $$$$ SBO 2006-12-20:
+        << xml::end();
 }

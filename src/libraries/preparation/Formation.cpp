@@ -20,7 +20,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: Formation constructor
@@ -43,9 +42,9 @@ Formation::Formation( xml::xistream& xis, Controller& controller, const Formatio
     : EntityImplementation< Formation_ABC >( controller, 0, "" )
 {
     std::string level, name;
-    xis >> attribute( "id", (int&)id_ )
-        >> attribute( "level", level )
-        >> attribute( "name", name );
+    xis >> xml::attribute( "id", (int&)id_ )
+        >> xml::attribute( "level", level )
+        >> xml::attribute( "name", name );
     level_ = levels.Resolve( level.c_str() );
     name_  = name.empty() ? tools::translate( "Formation", "Formation [%1]" ).arg( id_ ) : name.c_str();
     idManager.Lock( id_ );
@@ -97,9 +96,9 @@ void Formation::Rename( const QString& name )
 // -----------------------------------------------------------------------------
 void Formation::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << attribute( "id", long( id_ ) )
-        << attribute( "name", name_.ascii() )
-        << attribute( "level", level_->GetName().ascii() );
+    xos << xml::attribute( "id", long( id_ ) )
+        << xml::attribute( "name", name_.ascii() )
+        << xml::attribute( "level", level_->GetName().ascii() );
 }
 
 // -----------------------------------------------------------------------------

@@ -16,7 +16,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: InputToxicCloudAttribute constructor
@@ -36,9 +35,9 @@ InputToxicCloudAttribute::InputToxicCloudAttribute( xml::xistream& xis, kernel::
     : bExport_( true )
 {
     std::string source, dataField;
-    xis >> attribute( "source", source );
-    xis >> attribute( "data-field", dataField );
-    xis >> xml::optional() >> attribute( "export", bExport_ );
+    xis >> xml::attribute( "source", source );
+    xis >> xml::attribute( "data-field", dataField );
+    xis >> xml::optional() >> xml::attribute( "export", bExport_ );
 
     source_ = source.c_str();
     dataField_ = dataField.c_str();
@@ -80,12 +79,12 @@ void InputToxicCloudAttribute::SetSource( const std::string& source, const std::
 // -----------------------------------------------------------------------------
 void InputToxicCloudAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << start( "input-toxic-cloud" )
-            << attribute( "source", source_ )
-            << attribute( "data-field", dataField_ );
+    xos << xml::start( "input-toxic-cloud" )
+            << xml::attribute( "source", source_ )
+            << xml::attribute( "data-field", dataField_ );
     if( ! bExport_ )
-        xos << attribute( "export", bExport_ );
-    xos << end();
+        xos << xml::attribute( "export", bExport_ );
+    xos << xml::end();
 }
 
 namespace

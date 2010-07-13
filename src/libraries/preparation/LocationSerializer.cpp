@@ -14,7 +14,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: LocationSerializer constructor
@@ -52,7 +51,7 @@ void LocationSerializer::Serialize( const Location_ABC& location, xml::xostream&
 // -----------------------------------------------------------------------------
 void LocationSerializer::VisitLines( const T_PointVector& points )
 {
-    *xos_ << attribute( "type", "ligne" );
+    *xos_ << xml::attribute( "type", "ligne" );
     SetPoints( points );
 }
 
@@ -62,7 +61,7 @@ void LocationSerializer::VisitLines( const T_PointVector& points )
 // -----------------------------------------------------------------------------
 void LocationSerializer::VisitRectangle( const T_PointVector& /*points*/ )
 {
-    /**xos_ << attribute( "type", "ligne" );
+    /**xos_ << xml::attribute( "type", "ligne" );
     SetPoints( points );*///TODO
 }
 // -----------------------------------------------------------------------------
@@ -71,7 +70,7 @@ void LocationSerializer::VisitRectangle( const T_PointVector& /*points*/ )
 // -----------------------------------------------------------------------------
 void LocationSerializer::VisitPolygon( const T_PointVector& points )
 {
-    *xos_ << attribute( "type", "polygone" );
+    *xos_ << xml::attribute( "type", "polygone" );
     T_PointVector copy( points );
     copy.pop_back();
     SetPoints( copy );
@@ -92,7 +91,7 @@ void LocationSerializer::VisitPath( const geometry::Point2f& , const T_PointVect
 // -----------------------------------------------------------------------------
 void LocationSerializer::VisitCircle( const geometry::Point2f& center, float radius )
 {
-    *xos_ << attribute( "type", "cercle" );
+    *xos_ << xml::attribute( "type", "cercle" );
     T_PointVector points;
     points.push_back( center );
     points.push_back( geometry::Point2f( center.X(), center.Y() + radius ) ); // $$$$ AGE 2006-08-09: may go out of extent !
@@ -105,7 +104,7 @@ void LocationSerializer::VisitCircle( const geometry::Point2f& center, float rad
 // -----------------------------------------------------------------------------
 void LocationSerializer::VisitPoint( const geometry::Point2f& point )
 {
-    *xos_ << attribute( "type", "point" );
+    *xos_ << xml::attribute( "type", "point" );
     T_PointVector points( 1, point );
     SetPoints( points );
 }
@@ -116,11 +115,11 @@ void LocationSerializer::VisitPoint( const geometry::Point2f& point )
 // -----------------------------------------------------------------------------
 void LocationSerializer::SetPoints( const T_PointVector& points )
 {
-    *xos_ << start( "points" );
+    *xos_ << xml::start( "points" );
     for( unsigned i = 0; i < points.size(); ++i )
     {
         const std::string coord = converter_.ConvertToMgrs( points[i] );
-        *xos_ << content( "point", coord.c_str() );
+        *xos_ << xml::content( "point", coord.c_str() );
     }
-    *xos_ << end();
+    *xos_ << xml::end();
 }

@@ -16,7 +16,7 @@
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace xml;
+
 using namespace kernel;
 using namespace actions;
 using namespace parameters;
@@ -51,11 +51,11 @@ Lima::Lima( const OrderParameter& parameter, const CoordinateConverter_ABC& conv
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
 Lima::Lima( const CoordinateConverter_ABC& converter, xml::xistream& xis )
-    : Parameter< QString >( OrderParameter( attribute< std::string >( xis, "name" ), "lima", false ) )
+    : Parameter< QString >( OrderParameter( xis.attribute< std::string >( "name" ), "lima", false ) )
 {
     std::string value;
-    xis >> attribute( "value", value )
-        >> list( "parameter", *this, &Lima::ReadParameter, converter );
+    xis >> xml::attribute( "value", value )
+        >> xml::list( "parameter", *this, &Lima::ReadParameter, converter );
     QStringList functions = QStringList::split( ", ", value.c_str() );
     for( unsigned int i = 0; i < functions.size(); ++i )
         functions[i] = tools::ToShortString( tools::LimaTypeFromXmlString( functions[i] ) );
@@ -92,8 +92,8 @@ void Lima::Serialize( xml::xostream& xos ) const
     for( unsigned int i = 0; i < functions.size(); ++i )
         functions[i] = tools::LimaTypeShortToXmlString( functions[i] );
     Parameter< QString >::Serialize( xos );
-    xos << attribute( "type", "lima" )
-        << attribute( "value", functions.join( ", " ) );
+    xos << xml::attribute( "type", "lima" )
+        << xml::attribute( "value", functions.join( ", " ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -103,7 +103,7 @@ void Lima::Serialize( xml::xostream& xos ) const
 void Lima::ReadParameter( xml::xistream& xis, const CoordinateConverter_ABC& converter )
 {
     std::string type;
-    xis >> attribute( "type", type );
+    xis >> xml::attribute( "type", type );
     if( type == "location" )
         AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Location" ).ascii(), "location", false ), converter, xis ) );
     else if( type == "datetime" )

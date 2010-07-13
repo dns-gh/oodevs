@@ -17,7 +17,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 using namespace actions;
 using namespace parameters;
 
@@ -51,7 +50,7 @@ Path::Path( const kernel::OrderParameter& parameter, const kernel::CoordinateCon
     : Parameter< QString >( parameter )
     , converter_( converter )
 {
-    xis >> list( "parameter", *this, &Path::ReadPoint );
+    xis >> xml::list( "parameter", *this, &Path::ReadPoint );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,10 +58,10 @@ Path::Path( const kernel::OrderParameter& parameter, const kernel::CoordinateCon
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
 Path::Path( const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis )
-: Parameter< QString >( OrderParameter( attribute< std::string >( xis, "name" ), "path", false ) )
+: Parameter< QString >( OrderParameter( xis.attribute< std::string >( "name" ), "path", false ) )
     , converter_( converter )
 {
-    xis >> list( "parameter", *this, &Path::ReadPoint );
+    xis >> xml::list( "parameter", *this, &Path::ReadPoint );
 }
 
 // -----------------------------------------------------------------------------

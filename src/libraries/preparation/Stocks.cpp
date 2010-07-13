@@ -18,7 +18,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: Stocks constructor
@@ -38,9 +37,9 @@ Stocks::Stocks( xml::xistream& xis, Controller& controller, Entity_ABC& entity, 
     : controller_( controller )
 {
     CreateDictionary( entity, dico );
-    xis >> optional() >> start( "stocks" )
-            >> list( "dotation", *this, &Stocks::ReadDotation, resolver )
-        >> end();
+    xis >> xml::optional() >> xml::start( "stocks" )
+            >> xml::list( "dotation", *this, &Stocks::ReadDotation, resolver )
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -72,14 +71,14 @@ void Stocks::SerializeAttributes( xml::xostream& xos ) const
 {
     if( elements_.empty() )
         return;
-    xos << start( "stocks" );
+    xos << xml::start( "stocks" );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
-        xos << start( "dotation" );
+        xos << xml::start( "dotation" );
         it->second->SerializeAttributes( xos );
-        xos << end();
+        xos << xml::end();
     }
-    xos << end();
+    xos << xml::end();
 }
 
 // -----------------------------------------------------------------------------

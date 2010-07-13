@@ -15,7 +15,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 using namespace actions;
 using namespace parameters;
 
@@ -57,7 +56,7 @@ Enumeration::~Enumeration()
 void Enumeration::Serialize( xml::xostream& xos ) const
 {
     Parameter< std::string >::Serialize( xos );
-    xos << attribute( "value", value_.GetId() );
+    xos << xml::attribute( "value", value_.GetId() );
 }
 
 // -----------------------------------------------------------------------------

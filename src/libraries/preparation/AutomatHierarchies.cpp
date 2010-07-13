@@ -14,8 +14,6 @@
 #include "Tools.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace xml;
-
 // -----------------------------------------------------------------------------
 // Name: AutomatHierarchies constructor
 // Created: SBO 2006-10-26
@@ -56,11 +54,11 @@ void AutomatHierarchies::SerializeAttributes( xml::xostream& xos ) const
         // $$$$ AGE 2007-04-05: quick ada fix.
         const kernel::Entity_ABC* child = it->second;
         if( dynamic_cast< const kernel::Agent_ABC* >( child ) )
-            xos << start( "unit" );
+            xos << xml::start( "unit" );
         else
-            xos << start( "automat" );
+            xos << xml::start( "automat" );
         it->second->Interface().Apply( & Serializable_ABC::SerializeAttributes, xos );
-        xos << end();
+        xos << xml::end();
     }
 }
 

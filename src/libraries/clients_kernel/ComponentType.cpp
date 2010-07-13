@@ -12,7 +12,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: ComponentType constructor
@@ -23,14 +22,14 @@ ComponentType::ComponentType( xml::xistream& xis )
     , hasMedical_( false )
     , hasSupply_( false )
 {
-    xis >> attribute( "name", name_ )
-        >> attribute( "id", id_ );
+    xis >> xml::attribute( "name", name_ )
+        >> xml::attribute( "id", id_ );
 
-    xis >> optional()
-        >> start( "logistic-functions" )
-                >> list( "maintenance-functions", *this, &ComponentType::ReadPresence, hasMaintenance_ )
-                >> list( "health-functions",      *this, &ComponentType::ReadPresence, hasMedical_ )
-                >> list( "supply-functions",      *this, &ComponentType::ReadPresence, hasSupply_ );
+    xis >> xml::optional()
+        >> xml::start( "logistic-functions" )
+                >> xml::list( "maintenance-functions", *this, &ComponentType::ReadPresence, hasMaintenance_ )
+                >> xml::list( "health-functions",      *this, &ComponentType::ReadPresence, hasMedical_ )
+                >> xml::list( "supply-functions",      *this, &ComponentType::ReadPresence, hasSupply_ );
 }
 
 // -----------------------------------------------------------------------------

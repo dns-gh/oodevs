@@ -13,7 +13,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: OrderType constructor
@@ -21,8 +20,8 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 OrderType::OrderType( xml::xistream& xis )
 {
-    xis >> attribute( "name", name_ )
-        >> attribute( "id", id_ );
+    xis >> xml::attribute( "name", name_ )
+        >> xml::attribute( "id", id_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,8 +95,8 @@ void OrderType::AddParameter( const OrderParameter& parameter )
 // -----------------------------------------------------------------------------
 void OrderType::ReadDescriptions( xml::xistream& xis )
 {
-    xis >> optional() >> start( "descriptions" )
-            >> optional() >> start( "doctrine" ) >> doctrine_ >> end()
-            >> optional() >> start( "usage" ) >> usage_ >> end()
-        >> end();
+    xis >> xml::optional() >> xml::start( "descriptions" )
+            >> xml::optional() >> xml::start( "doctrine" ) >> doctrine_ >> xml::end()
+            >> xml::optional() >> xml::start( "usage" ) >> usage_ >> xml::end()
+        >> xml::end();
 }

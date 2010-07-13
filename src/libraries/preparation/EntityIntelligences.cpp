@@ -15,7 +15,6 @@
 #include "clients_kernel/HierarchyLevel_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace xml;
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
@@ -70,9 +69,9 @@ void EntityIntelligences::SerializeIntelligences( xml::xostream& xos ) const
         if( const kernel::IntelligenceHierarchies* hierarchies = it->second->Retrieve< kernel::IntelligenceHierarchies >() )
             if( static_cast< const EntityIntelligences* >( hierarchies )->holder_ )
             {
-                xos << start( "intelligence" );
+                xos << xml::start( "intelligence" );
                 it->second->Interface().Apply( &Serializable_ABC::SerializeIntelligences, xos );
-                xos << end();
+                xos << xml::end();
             }
 }
 

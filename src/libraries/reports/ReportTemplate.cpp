@@ -12,8 +12,6 @@
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace xml;
-
 // -----------------------------------------------------------------------------
 // Name: ReportTemplate constructor
 // Created: SBO 2006-12-07
@@ -22,9 +20,9 @@ ReportTemplate::ReportTemplate( xml::xistream& xis, const ReportFactory& factory
     : factory_( factory )
 {
     std::string message;
-    xis >> attribute( "id", (int&)id_ )
-        >> attribute( "message", message )
-        >> list( "parameter", *this, &ReportTemplate::ReadParameter );
+    xis >> xml::attribute( "id", (int&)id_ )
+        >> xml::attribute( "message", message )
+        >> xml::list( "parameter", *this, &ReportTemplate::ReadParameter );
     message_ = message.c_str();
 }
 
@@ -69,11 +67,11 @@ QString ReportTemplate::RenderMessage( const Common::MsgMissionParameters& messa
 void ReportTemplate::ReadParameter( xml::xistream& xis )
 {
     std::string type;
-    xis >> attribute( "type", type );
+    xis >> xml::attribute( "type", type );
     if( QString( type.c_str() ).lower() == "enumeration" )
     {
         enumerations_.push_back( T_EnumerationValues() );
-        xis >> list( "value", *this, &ReportTemplate::ReadEnumeration );
+        xis >> xml::list( "value", *this, &ReportTemplate::ReadEnumeration );
     }
 }
 
@@ -84,6 +82,6 @@ void ReportTemplate::ReadParameter( xml::xistream& xis )
 void ReportTemplate::ReadEnumeration( xml::xistream& xis )
 {
     std::string name;
-    xis >> attribute( "name", name );
+    xis >> xml::attribute( "name", name );
     enumerations_.back().push_back( name.c_str() );
 }

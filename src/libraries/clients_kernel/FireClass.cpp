@@ -12,17 +12,16 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: FireClass constructor
 // Created: RFT 2006-04-04
 // -----------------------------------------------------------------------------
-FireClass::FireClass( xistream& input )
+FireClass::FireClass( xml::xistream& input )
 {
-    input >> attribute( "name", name_ )
-          >> attribute( "id", id_ )
-          >> attribute( "defaultheat", defaultHeat_ );
+    input >> xml::attribute( "name", name_ )
+          >> xml::attribute( "id", id_ )
+          >> xml::attribute( "defaultheat", defaultHeat_ );
 }
 
 // -----------------------------------------------------------------------------

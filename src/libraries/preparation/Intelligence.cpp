@@ -21,7 +21,6 @@
 #include "Tools.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace xml;
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
@@ -46,12 +45,12 @@ Intelligence::Intelligence( Controller& controller, IdManager& idManager, const 
 // Created: SBO 2007-10-15
 // -----------------------------------------------------------------------------
 Intelligence::Intelligence( kernel::Controller& controller, IdManager& idManager, xml::xistream& xis, const tools::Resolver_ABC< HierarchyLevel_ABC, QString >& levels )
-    : EntityImplementation< Intelligence_ABC >( controller, idManager.GetNextId(), attribute< std::string >( xis, "name" ).c_str() )
+    : EntityImplementation< Intelligence_ABC >( controller, idManager.GetNextId(), xis.attribute< std::string >( "name" ).c_str() )
     , controller_( controller )
-    , symbol_    ( attribute< std::string >( xis, "nature" ) )
-    , level_     ( &levels.Get( attribute< std::string >( xis, "level" ).c_str() ) )
-    , mounted_   ( attribute< bool >( xis, "embarked" ) ) // $$$$ AGE 2008-01-16: odb : embarked => mounted
-    , karma_     ( &Karma::ResolveId( attribute< std::string >( xis, "karma" ) ) )
+    , symbol_    ( xis.attribute< std::string >( "nature" ) )
+    , level_     ( &levels.Get( xis.attribute< std::string >( "level" ).c_str() ) )
+    , mounted_   ( xis.attribute< bool >( "embarked" ) ) // $$$$ AGE 2008-01-16: odb : embarked => mounted
+    , karma_     ( &Karma::ResolveId( xis.attribute< std::string >( "karma" ) ) )
 {
     RegisterSelf( *this );
     CreateDictionary( controller );
@@ -146,11 +145,11 @@ bool Intelligence::IsMounted() const
 // -----------------------------------------------------------------------------
 void Intelligence::SerializeIntelligences( xml::xostream& xos ) const
 {
-    xos << attribute( "name", GetName().ascii() )
-        << attribute( "karma", karma_->GetId() )
-        << attribute( "level", level_->GetName() )
-        << attribute( "embarked", mounted_ ) // $$$$ AGE 2008-01-16: odb
-        << attribute( "nature" , symbol_ );
+    xos << xml::attribute( "name", GetName().ascii() )
+        << xml::attribute( "karma", karma_->GetId() )
+        << xml::attribute( "level", level_->GetName() )
+        << xml::attribute( "embarked", mounted_ ) // $$$$ AGE 2008-01-16: odb
+        << xml::attribute( "nature" , symbol_ );
 }
 
 // -----------------------------------------------------------------------------

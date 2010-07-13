@@ -14,22 +14,21 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: AutomatType constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-AutomatType::AutomatType( xistream& xis, const tools::Resolver_ABC< AgentType, std::string >& agentResolver
+AutomatType::AutomatType( xml::xistream& xis, const tools::Resolver_ABC< AgentType, std::string >& agentResolver
                                             , const tools::Resolver_ABC< DecisionalModel, std::string >& modelResolver )
     : pcType_( 0 )
 {
     std::string modelName, name;
-    xis >> attribute( "name", name_ )
-        >> attribute( "type", type_ )
-        >> attribute( "id", id_ )
-        >> attribute( "decisional-model", modelName )
-        >> list( "unit", *this, &AutomatType::ReadAgent, agentResolver );
+    xis >> xml::attribute( "name", name_ )
+        >> xml::attribute( "type", type_ )
+        >> xml::attribute( "id", id_ )
+        >> xml::attribute( "decisional-model", modelName )
+        >> xml::list( "unit", *this, &AutomatType::ReadAgent, agentResolver );
     model_ = & modelResolver.Get( modelName );
     if( ! pcType_ )
         throw std::runtime_error( "Automat '" + name + "' has no command-post" );
@@ -49,11 +48,11 @@ AutomatType::~AutomatType()
 // Name: AutomatType::ReadAgent
 // Created: SBO 2006-08-28
 // -----------------------------------------------------------------------------
-void AutomatType::ReadAgent( xistream& xis, const tools::Resolver_ABC< AgentType, std::string >& agentResolver )
+void AutomatType::ReadAgent( xml::xistream& xis, const tools::Resolver_ABC< AgentType, std::string >& agentResolver )
 {
     units_.push_back( new AutomatComposition( xis, agentResolver ) );
     bool commandPost = false;
-    xis >> optional() >> attribute( "command-post", commandPost );
+    xis >> xml::optional() >> xml::attribute( "command-post", commandPost );
     if( commandPost )
         pcType_ = & units_.back()->GetType();
 }

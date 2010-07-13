@@ -18,7 +18,6 @@
 #pragma warning( pop )
 #include <xeumeuleu/xml.hpp>
 
-using namespace xml;
 using namespace actions;
 using namespace parameters;
 
@@ -60,7 +59,7 @@ DotationType::~DotationType()
 void DotationType::Serialize( xml::xostream& xos ) const
 {
     Parameter< std::string >::Serialize( xos );
-    xos << attribute( "value", type_.GetId() );
+    xos << xml::attribute( "value", type_.GetId() );
 }
 
 // -----------------------------------------------------------------------------

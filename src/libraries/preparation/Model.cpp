@@ -50,7 +50,6 @@ namespace bfs = boost::filesystem;
 #pragma warning( disable : 4355 ) // $$$$ SBO 2008-05-14: 'this' : used in base member initializer list
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: Model constructor
@@ -222,9 +221,9 @@ bool Model::Save( const tools::ExerciseConfig& config, ModelChecker_ABC& checker
         exercise_.Serialize( config.GetExerciseFile() );
         {
             xml::xofstream xos( config.GetOrbatFile(), xml::encoding( "ISO-8859-1" ) );
-            xos << start( "orbat" );
+            xos << xml::start( "orbat" );
             teams_.Serialize( xos );
-            xos << end();
+            xos << xml::end();
         }
         urban_.Serialize( config.GetUrbanStateFile() );
         weather_.Serialize( config.GetWeatherFile() );

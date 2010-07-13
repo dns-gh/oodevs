@@ -9,15 +9,12 @@
 
 #include "preparation_pch.h"
 #include "DelayAttribute.h"
-
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "Tools.h"
-
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: DelayAttribute constructor
@@ -36,7 +33,7 @@ DelayAttribute::DelayAttribute( kernel::PropertiesDictionary& dico )
 DelayAttribute::DelayAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dico )
     : delay_( 0, Units::hours )
 {
-    xis >> attribute( "value", delay_.value_ );
+    xis >> xml::attribute( "value", delay_.value_ );
     CreateDictionary( dico );
 }
 

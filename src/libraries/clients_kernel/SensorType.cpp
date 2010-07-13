@@ -13,7 +13,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: SensorType constructor
@@ -28,10 +27,10 @@ SensorType::SensorType( const std::string& name, xml::xistream& xis )
     InitializeAngle    ( xis );
     InitializeDistances( xis );
 
-    xis >> start( "distance-modifiers" );
+    xis >> xml::start( "distance-modifiers" );
     InitializeEnvironnementFactors( xis );
     InitializeUrbanBlockMaterialFactors( xis );
-    xis >> end();
+    xis >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -49,9 +48,9 @@ SensorType::~SensorType()
 // -----------------------------------------------------------------------------
 void SensorType::InitializeEnvironnementFactors( xml::xistream& xis )
 {
-    xis >> start( "terrain-modifiers" )
-            >> list( "distance-modifier", *this, &SensorType::ReadEnvironnementFactor )
-        >> end();
+    xis >> xml::start( "terrain-modifiers" )
+            >> xml::list( "distance-modifier", *this, &SensorType::ReadEnvironnementFactor )
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -61,8 +60,8 @@ void SensorType::InitializeEnvironnementFactors( xml::xistream& xis )
 void SensorType::ReadEnvironnementFactor( xml::xistream& xis )
 {
     std::string type; float value;
-    xis >> attribute( "type", type )
-        >> attribute( "value", value );
+    xis >> xml::attribute( "type", type )
+        >> xml::attribute( "value", value );
     if( type == "Foret" )
         factorInForest_ = value;
     else if( type == "Urbain" )
@@ -77,9 +76,9 @@ void SensorType::ReadEnvironnementFactor( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void SensorType::InitializeUrbanBlockMaterialFactors( xml::xistream& xis )
 {
-    xis >> start( "urbanBlock-material-modifiers" )
-        >> list( "distance-modifier", *this, &SensorType::ReadUrbanBlockMaterialFactor )
-        >> end();
+    xis >> xml::start( "urbanBlock-material-modifiers" )
+        >> xml::list( "distance-modifier", *this, &SensorType::ReadUrbanBlockMaterialFactor )
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -89,8 +88,8 @@ void SensorType::InitializeUrbanBlockMaterialFactors( xml::xistream& xis )
 void SensorType::ReadUrbanBlockMaterialFactor( xml::xistream& xis )
 {
     std::string type; float value;
-    xis >> attribute( "type", type )
-        >> attribute( "value", value );
+    xis >> xml::attribute( "type", type )
+        >> xml::attribute( "value", value );
     urbanBlockFactors_.insert( make_pair( type, value ) );
 }
 
@@ -101,8 +100,8 @@ void SensorType::ReadUrbanBlockMaterialFactor( xml::xistream& xis )
 void SensorType::InitializeAngle( xml::xistream& xis )
 {
     std::string unit;
-    xis >> attribute( "angle", rAngle_ )
-        >> attribute( "scanning", bScanningAllowed_ );
+    xis >> xml::attribute( "angle", rAngle_ )
+        >> xml::attribute( "scanning", bScanningAllowed_ );
     rAngle_ *= ( std::acos( -1.f ) / 180.f );
 }
 
@@ -112,10 +111,10 @@ void SensorType::InitializeAngle( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void SensorType::InitializeDistances( xml::xistream& xis )
 {
-    xis >> start( "base-distances" )
-            >> attribute( "close-range", rSquareProximityDist_ )
-            >> list( "base-distance", *this, &SensorType::ReadDistance )
-        >> end();
+    xis >> xml::start( "base-distances" )
+            >> xml::attribute( "close-range", rSquareProximityDist_ )
+            >> xml::list( "base-distance", *this, &SensorType::ReadDistance )
+        >> xml::end();
     rSquareProximityDist_ *= rSquareProximityDist_;
 }
 
@@ -127,8 +126,8 @@ void SensorType::ReadDistance( xml::xistream& xis )
 {
     std::string level;
     float distance;
-    xis >> attribute( "level",    level )
-        >> attribute( "distance", distance );
+    xis >> xml::attribute( "level",    level )
+        >> xml::attribute( "distance", distance );
     if( level == "identification" )
         rIdentificationDist_ = distance;
     else if( level == "recognition" )

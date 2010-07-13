@@ -16,7 +16,6 @@
 #include "xeumeuleu/xml.h"
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: ActivityTimeAttribute constructor

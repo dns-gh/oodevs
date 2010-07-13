@@ -12,8 +12,6 @@
 #include "Population.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace xml;
-
 // -----------------------------------------------------------------------------
 // Name: Populations constructor
 // Created: SBO 2006-11-09
@@ -47,12 +45,12 @@ void Populations::AddPopulation( Population& population )
 // -----------------------------------------------------------------------------
 void Populations::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << start( "populations" );
+    xos << xml::start( "populations" );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
-        xos << start( "population" );
+        xos << xml::start( "population" );
         it->second->Interface().Apply( &Serializable_ABC::SerializeAttributes, xos );
-        xos << end();
+        xos << xml::end();
     }
-    xos << end();
+    xos << xml::end();
 }

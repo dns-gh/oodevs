@@ -16,7 +16,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-using namespace xml;
 using namespace actions;
 using namespace parameters;
 
@@ -48,7 +47,7 @@ EngineerConstructionList::EngineerConstructionList( const OrderParameter& parame
 EngineerConstructionList::EngineerConstructionList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< ObjectType, std::string >& resolver, const kernel::EntityResolver_ABC& entities, xml::xistream& xis, kernel::Controller& controller )
     : Parameter< std::string >( parameter )
 {
-    xis >> list( "parameter", *this, &EngineerConstructionList::ReadEngineerConstruction, converter, resolver, entities, controller );
+    xis >> xml::list( "parameter", *this, &EngineerConstructionList::ReadEngineerConstruction, converter, resolver, entities, controller );
 }
 
 // -----------------------------------------------------------------------------
