@@ -12,8 +12,6 @@
 #ifndef __PHY_ActionDistributeObject_h_
 #define __PHY_ActionDistributeObject_h_
 
-#include "MIL.h"
-
 #include "Entities/Actions/PHY_DecisionCallbackAction_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
@@ -30,27 +28,34 @@ class PHY_ActionDistributeObject : public PHY_DecisionCallbackAction_ABC
     MT_COPYNOTALLOWED( PHY_ActionDistributeObject )
 
 public:
+    //! @name Types
+    //@{
     typedef MIL_AgentPion ActorType;
+    //@}
 
 public:
-    PHY_ActionDistributeObject( MIL_AgentPion& pion
-                                , boost::shared_ptr< DEC_Knowledge_Object > pObject
-                                , boost::shared_ptr< DEC_Knowledge_Population > pPeople
-                                , int quantity );
+    //! @name Constructors/Destructor
+    //@{
+             PHY_ActionDistributeObject( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Object > pObject,
+                                         boost::shared_ptr< DEC_Knowledge_Population > pPeople, int quantity );
     virtual ~PHY_ActionDistributeObject();
+    //@}
 
     //! @name Operations
     //@{
-    virtual void Execute         ();
+    virtual void Execute();
     virtual void ExecuteSuspended();
     virtual void StopAction();
     //@}
 
 private:
-    PHY_RoleAction_Objects&                         role_;
-    boost::shared_ptr< DEC_Knowledge_Object >       pObject_;
-    boost::shared_ptr< DEC_Knowledge_Population >   pPeople_;
-    uint                                            quantity_;
+    //! @name Member data
+    //@{
+    PHY_RoleAction_Objects& role_;
+    boost::shared_ptr< DEC_Knowledge_Object > pObject_;
+    boost::shared_ptr< DEC_Knowledge_Population > pPeople_;
+    unsigned int quantity_;
+    //@}
 };
 
 #endif // __PHY_ActionDistributeObject_h_

@@ -26,7 +26,6 @@
 //#include "DEC_KS_PopulationKnowledgeSynthetizer.h"
 #include "DEC_KS_Sharing.h"
 #include "MIL_KnowledgeGroup.h"
-#include "Decision/DEC_Tools.h"
 #include "Entities/MIL_Army.h"
 #include "protocol/protocol.h"
 #include <boost/bind.hpp>
@@ -106,7 +105,7 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::serialize( Archive& archive, const 
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeBlackBoard_KnowledgeGroup::SendFullState() const
 {
-    pKnowledgeAgentContainer_     ->ApplyOnKnowledgesAgent     ( boost::bind( &DEC_Knowledge_Agent::SendStateToNewClient, _1 ) );
+    pKnowledgeAgentContainer_->ApplyOnKnowledgesAgent( boost::bind( &DEC_Knowledge_Agent::SendStateToNewClient, _1 ) );
     pKnowledgePopulationContainer_->ApplyOnKnowledgesPopulation( boost::bind( &DEC_Knowledge_Population::SendStateToNewClient, _1 ) );
     if( pKnowledgeObjectContainer_ )
         pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( boost::bind( &DEC_Knowledge_Object::SendStateToNewClient, _1 ) );
@@ -118,7 +117,7 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::SendFullState() const
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeBlackBoard_KnowledgeGroup::SendChangedState() const
 {
-    pKnowledgeAgentContainer_     ->ApplyOnKnowledgesAgent     ( boost::bind( &DEC_Knowledge_Agent::UpdateOnNetwork, _1 ) );
+    pKnowledgeAgentContainer_->ApplyOnKnowledgesAgent( boost::bind( &DEC_Knowledge_Agent::UpdateOnNetwork, _1 ) );
     pKnowledgePopulationContainer_->ApplyOnKnowledgesPopulation( boost::bind( &DEC_Knowledge_Population::UpdateOnNetwork, _1 ) );
     if( pKnowledgeObjectContainer_ )
         pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( boost::bind( &DEC_Knowledge_Object::UpdateOnNetwork, _1 ) );
@@ -387,7 +386,6 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetPopulations( T_KnowledgePopulati
     container.clear();
     assert( pKnowledgeGroup_ );
     sDIAInserter functor( container );
-
     assert( pKnowledgePopulationContainer_ );
     pKnowledgePopulationContainer_->ApplyOnKnowledgesPopulation( functor );
 }
@@ -401,7 +399,6 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetPopulations( T_KnowledgePopulati
     container.clear();
     assert( pKnowledgeGroup_ );
     sInserter functor( container );
-
     assert( pKnowledgePopulationContainer_ );
     pKnowledgePopulationContainer_->ApplyOnKnowledgesPopulation( functor );
 }
@@ -467,10 +464,10 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_KnowledgeGroup
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeObject
+// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeObject
 // Created: LDC 2010-04-07
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeObject( MIL_Object_ABC&        object ) const
+boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeObject( MIL_Object_ABC& object ) const
 {
     if( pKnowledgeObjectContainer_ )
         return pKnowledgeObjectContainer_->GetKnowledgeObject( object );
@@ -572,7 +569,7 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::Jam()
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledgeObject
+// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledgeObject
 // Created: LDC 2010-04-07
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledgeObject( const MIL_Army_ABC& teamKnowing, MIL_Object_ABC& objectKnown )

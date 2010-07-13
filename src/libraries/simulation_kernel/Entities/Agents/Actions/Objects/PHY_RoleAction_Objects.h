@@ -40,8 +40,11 @@ public:
     //@}
 
 public:
+    //! @name Constructors/Destructor
+    //@{
              PHY_RoleAction_Objects( MIL_AgentPion& pion );
     virtual ~PHY_RoleAction_Objects();
+    //@}
 
     //! @name CheckPoints
     //@{
@@ -50,47 +53,46 @@ public:
 
     //! @name Operations
     //@{
-    void Update    ( bool bIsDead );
-    void Clean     ();
+    void Update( bool bIsDead );
+    void Clean();
     bool HasChanged() const;
     //@}
 
     //! @name Operations
     //@{
     int GetInitialReturnCode() const;
-    int GetFinalReturnCode  () const;
-
-    int  Construct           ( MIL_Object_ABC* pObject, boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
-    int  ResumeWork          ( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
-    int  Destroy             ( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
-    int  Mine                ( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
-    int  Demine              ( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
-    int  Bypass              ( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
-    int  Extinguish          ( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
-    void StartAnimateObject  ( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
-    void StopAnimateObject   ( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
+    int GetFinalReturnCode() const;
+    int Construct( MIL_Object_ABC* pObject, boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
+    int ResumeWork( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
+    int Destroy( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
+    int Mine( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
+    int Demine( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
+    int Bypass( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
+    int Extinguish( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
+    void StartAnimateObject( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
+    void StopAnimateObject( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
     void StartOccupyingObject( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
-    void StopOccupyingObject ( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
-    int  Supply              ( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
-    int  Distribute          ( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge, boost::shared_ptr< DEC_Knowledge_Population >& populationKnowledge, uint quantity );
-    void SetCreator          ( MIL_Object_ABC& object );
+    void StopOccupyingObject( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
+    int Supply( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
+    int Distribute( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge, boost::shared_ptr< DEC_Knowledge_Population >& populationKnowledge, unsigned int quantity );
+    void SetCreator( MIL_Object_ABC& object );
 
     void ResumeWorkSuspended();
-    void ConstructSuspended ();
-    void DestroySuspended   ();
-    void MineSuspended      ();
-    void DemineSuspended    ();
-    void BypassSuspended    ();
+    void ConstructSuspended();
+    void DestroySuspended();
+    void MineSuspended();
+    void DemineSuspended();
+    void BypassSuspended();
     void ExtinguishSuspended();
     //@}
 
     //! @name Capabilities
     //@{
     bool CanConstructWithReinforcement( const std::string& objectType ) const;
-    bool CanBypassWithReinforcement   ( const MIL_ObjectType_ABC& object ) const;
-    bool CanDestroyWithReinforcement  ( const MIL_ObjectType_ABC& object ) const;
-    bool CanMineWithReinforcement     ( const MIL_ObjectType_ABC& object ) const;
-    bool EnoughtDotationForBuilding   ( const std::string& objectType, MIL_Agent_ABC& pion ) const;
+    bool CanBypassWithReinforcement( const MIL_ObjectType_ABC& object ) const;
+    bool CanDestroyWithReinforcement( const MIL_ObjectType_ABC& object ) const;
+    bool CanMineWithReinforcement( const MIL_ObjectType_ABC& object ) const;
+    bool EnoughtDotationForBuilding( const std::string& objectType, MIL_Agent_ABC& pion ) const;
     //@}
 
 private:
@@ -110,16 +112,18 @@ private:
     //! @name Tools
     //@{
     MIL_Object_ABC* GetObject( const boost::shared_ptr< DEC_Knowledge_Object >& object );
-
     int Construct( MIL_Object_ABC& object );
-    int Mine     ( MIL_Object_ABC& object );
-    int Demine   ( MIL_Object_ABC& object );
+    int Mine( MIL_Object_ABC& object );
+    int Demine( MIL_Object_ABC& object );
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RoleAction_Objects* role, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RoleAction_Objects* role, const unsigned int /*version*/ );
     //@}
 
 private:
+    //! @name Member data
+    //@{
     MIL_AgentPion& pion_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_RoleAction_Objects )

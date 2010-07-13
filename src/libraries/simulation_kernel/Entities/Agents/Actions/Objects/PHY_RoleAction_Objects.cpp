@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RoleAction_Objects.h"
 #include "MIL_AgentServer.h"
 #include "Entities/MIL_EntityManager.h"
@@ -35,13 +34,11 @@
 #include "Knowledge/DEC_KS_ObjectInteraction.h"
 #include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "Knowledge/DEC_Knowledge_Agent.h"
 #include "PHY_RoleAction_Objects_DataComputer.h"
 #include "PHY_RoleAction_Objects_CapabilityComputer.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/DotationComputer_ABC.h"
 #include "simulation_kernel/DotationComputerFactory_ABC.h"
-#include "simulation_kernel/OnComponentFunctor_ABC.h"
 #include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
 #include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
 
@@ -81,9 +78,6 @@ PHY_RoleAction_Objects::~PHY_RoleAction_Objects()
     // NOTHING
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Objects::serialize
 // Created: JVT 2005-03-30
@@ -94,10 +88,6 @@ void PHY_RoleAction_Objects::serialize( Archive& file, const unsigned int )
     file & boost::serialization::base_object< tools::Role_ABC >( *this );
 }
 
-// =============================================================================
-// TOOLS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Objects::GetObject
 // Created: NLD 2004-10-04
@@ -106,18 +96,12 @@ MIL_Object_ABC* PHY_RoleAction_Objects::GetObject( const boost::shared_ptr< DEC_
 {
     if( !pKnowledge || !pKnowledge->IsValid() )
         return 0;
-
     MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown();
     if( pObject )
         return pObject;
-
     pion_.GetArmy().GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( pKnowledge );
     return 0;
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Objects::Construct
@@ -127,32 +111,26 @@ int PHY_RoleAction_Objects::Construct( MIL_Object_ABC& object )
 {
     if( !object().CanBeConstructed() )
         return eImpossible;
-
     if( object().IsBuilt() )
         return eFinished;
-
     PHY_RoleAction_Objects_DataComputer dataComputer( pion_, PHY_RoleAction_Objects_DataComputerPionData::eConstruct, object );
-
     const MT_Float rDeltaPercentage = dataComputer.ComputeDeltaPercentage();
     if( rDeltaPercentage == std::numeric_limits< MT_Float >::max() )
         return eNoCapacity;
 
     // $$$$ TODO: refactor to handle more than a single resource
     const ConstructionAttribute& attribute = object.GetAttribute< ConstructionAttribute >();
-    const unsigned int                  nDotationNeeded   = attribute.GetDotationNeededForConstruction( rDeltaPercentage );
+    const unsigned int nDotationNeeded = attribute.GetDotationNeededForConstruction( rDeltaPercentage );
     const PHY_DotationCategory* pDotationCategory = object.Get< BuildableCapacity >().GetDotationCategory();
     if( pDotationCategory && !dataComputer.HasDotations( *pDotationCategory, nDotationNeeded ) )
         return eNoMoreDotation;
 
     pion_.GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
-
     object().Construct( rDeltaPercentage );
     if( pDotationCategory )
         dataComputer.ConsumeDotations( *pDotationCategory, nDotationNeeded );
-
     if( object().IsBuilt() )
         return eFinished;
-
     return eRunning;
 }
 
@@ -179,7 +157,6 @@ int PHY_RoleAction_Objects::Destroy( boost::shared_ptr< DEC_Knowledge_Object >& 
 {
     if( !pKnowledge || !pKnowledge->IsValid() )
         return 0;
-
     MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown();
     if( !pObject )
     {
@@ -190,7 +167,6 @@ int PHY_RoleAction_Objects::Destroy( boost::shared_ptr< DEC_Knowledge_Object >& 
     MIL_Object_ABC& object = *pObject;
     if( !object().CanBeDestroyed() )
         return eImpossible;
-
     if( object().IsMined() )
     {
         PHY_RoleAction_Objects_DataComputer dataComputer( pion_, PHY_RoleAction_Objects_DataComputerPionData::eDemine, object );
@@ -213,14 +189,13 @@ int PHY_RoleAction_Objects::Destroy( boost::shared_ptr< DEC_Knowledge_Object >& 
 
         // $$$$ TODO: refactor to handle more than a single resource
         const ConstructionAttribute& attribute = object.GetAttribute< ConstructionAttribute >();
-        const unsigned int                  nDotationRecovered = attribute.GetDotationRecoveredWhenDestroying( rDeltaPercentage );
+        const unsigned int nDotationRecovered = attribute.GetDotationRecoveredWhenDestroying( rDeltaPercentage );
         const PHY_DotationCategory* pDotationCategory  = object.Get< BuildableCapacity >().GetDotationCategory();
 
         object().Destroy( rDeltaPercentage );
 
         if( pDotationCategory && pion_.GetArmy() == *pObject->GetArmy() )
             dataComputer.RecoverDotations( *pDotationCategory, nDotationRecovered );
-
         if( attribute.GetState() == 0. )
         {
             pion_.GetArmy().GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( pKnowledge );
@@ -237,12 +212,9 @@ int PHY_RoleAction_Objects::Destroy( boost::shared_ptr< DEC_Knowledge_Object >& 
 // -----------------------------------------------------------------------------
 int PHY_RoleAction_Objects::Mine( MIL_Object_ABC& object )
 {
-
     if( !object().CanBeMined() )
         return eImpossible;
-
     PHY_RoleAction_Objects_DataComputer dataComputer( pion_, PHY_RoleAction_Objects_DataComputerPionData::eMine, object );
-
     const MT_Float rDeltaPercentage = dataComputer.ComputeDeltaPercentage();
     if( rDeltaPercentage == std::numeric_limits< MT_Float >::max() )
         return eNoCapacity;
@@ -263,7 +235,6 @@ int PHY_RoleAction_Objects::Mine( boost::shared_ptr< DEC_Knowledge_Object >& pKn
     MIL_Object_ABC* pObject = GetObject( pKnowledge );
     if( !pObject )
         return eImpossible;
-
     return Mine( *pObject );
 }
 
@@ -276,7 +247,6 @@ int PHY_RoleAction_Objects::Demine( boost::shared_ptr< DEC_Knowledge_Object >& p
     MIL_Object_ABC* pObject = GetObject( pKnowledge );
     if( !pObject )
         return eImpossible;
-
     return Demine( *pObject );
 }
 
@@ -290,11 +260,9 @@ int PHY_RoleAction_Objects::Demine( MIL_Object_ABC& object )
         return eImpossible;
 
     PHY_RoleAction_Objects_DataComputer dataComputer( pion_, PHY_RoleAction_Objects_DataComputerPionData::eDemine, object );
-
     const MT_Float rDeltaPercentage = dataComputer.ComputeDeltaPercentage();
     if( rDeltaPercentage == std::numeric_limits< MT_Float >::max() )
         return eNoCapacity;
-
     pion_.GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
     object().Demine( rDeltaPercentage );
     if( object.GetAttribute< MineAttribute >().GetState() == 0. )
@@ -311,11 +279,9 @@ int PHY_RoleAction_Objects::Bypass( boost::shared_ptr< DEC_Knowledge_Object >& p
     MIL_Object_ABC* pObject = GetObject( pKnowledge );
     if( !pObject )
         return eImpossible;
-
     MIL_Object_ABC& object = *pObject;
     if( !object().CanBeBypassed() )
         return eImpossible;
-
     if( object().IsBypassed() )
         return eFinished;
 
@@ -348,7 +314,6 @@ namespace
             std::auto_ptr< OnComponentComputer_ABC > componentComputer( (*itReinforcement)->GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
             (*itReinforcement)->Execute( *componentComputer );
         }
-
         return functor.GetNumberOfTheExtinguisherAgent();
     }
 }
@@ -369,7 +334,6 @@ int PHY_RoleAction_Objects::Extinguish( boost::shared_ptr< DEC_Knowledge_Object 
         return eImpossible;
 
     pion_.GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
-
     //selection numberOFireHoses, bestExtinguisherAgent
     MIL_FireFunctor functor( object.GetAttribute< FireAttribute >().GetClass() );
     int bestExtinguisherAgent = GetBestExtinguisher( &pion_, functor );
@@ -396,28 +360,19 @@ int PHY_RoleAction_Objects::Supply( boost::shared_ptr< DEC_Knowledge_Object >& o
         return eImpossible;
 
     pion_.GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
-
     if( attribute->IsFull() )
         return eFinished;
-
     PHY_RoleAction_Objects_DataComputer dataComputer( pion_, PHY_RoleAction_Objects_DataComputerPionData::eConstruct, object );
-
     const MT_Float rDeltaPercentage = dataComputer.ComputeDeltaPercentage();
     if( rDeltaPercentage == std::numeric_limits< MT_Float >::max() )
         return eNoCapacity;
-
-    typedef std::vector< std::pair< const PHY_DotationCategory*, uint > > T_SelectionVector;
+    typedef std::vector< std::pair< const PHY_DotationCategory*, unsigned int > > T_SelectionVector;
     typedef T_SelectionVector::iterator IT_SelectionVector;
-
     T_SelectionVector selection;
     attribute->SelectDotations( selection, false );
     for ( IT_SelectionVector it = selection.begin(); it != selection.end(); ++it )
-    {
         if( dataComputer.HasDotations( *it->first, 1 ) )
-        {
             dataComputer.ConsumeDotations( *it->first, attribute->Supply( *it->first, 1 ) );
-        }
-    }
     if( attribute->IsFull() )
         return eFinished;
     return eRunning;
@@ -427,12 +382,11 @@ int PHY_RoleAction_Objects::Supply( boost::shared_ptr< DEC_Knowledge_Object >& o
 // Name: PHY_RoleAction_Objects::Distribute
 // Created: JCR 2009-06-04
 // -----------------------------------------------------------------------------
-int PHY_RoleAction_Objects::Distribute( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge, boost::shared_ptr< DEC_Knowledge_Population >& /*populationKnowledge*/, uint quantity )
+int PHY_RoleAction_Objects::Distribute( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge, boost::shared_ptr< DEC_Knowledge_Population >& /*populationKnowledge*/, unsigned int quantity )
 {
     MIL_Object_ABC* pObject = GetObject( objectKnowledge );
     if( !pObject || pObject->IsMarkedForDestruction() )
         return eImpossible;
-
     MIL_Object_ABC& object = *pObject;
     StockAttribute* attribute = object.RetrieveAttribute< StockAttribute >();
     if( !attribute )
@@ -440,18 +394,14 @@ int PHY_RoleAction_Objects::Distribute( boost::shared_ptr< DEC_Knowledge_Object 
 
     pion_.GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
 
-    typedef std::vector< std::pair< const PHY_DotationCategory*, uint > > T_SelectionVector;
+    typedef std::vector< std::pair< const PHY_DotationCategory*, unsigned int > > T_SelectionVector;
     typedef T_SelectionVector::iterator IT_SelectionVector;
-
     T_SelectionVector selection;
     PHY_RoleAction_Objects_DataComputer dataComputer( pion_, PHY_RoleAction_Objects_DataComputerPionData::eConstruct, object );
-
     attribute->SelectDotations( selection, true );
     for ( IT_SelectionVector it = selection.begin(); it != selection.end(); ++it )
-    {
         if( dataComputer.HasDotations( *it->first, 0 ) )
             attribute->Distribute( *it->first, quantity );
-    }
     return eRunning;
 }
 
@@ -483,7 +433,6 @@ void PHY_RoleAction_Objects::StartAnimateObject( boost::shared_ptr< DEC_Knowledg
         return;
 
     MIL_Object_ABC& object = *pObject;
-
     WorkableCapacity* capacity = object.Retrieve< WorkableCapacity >();
     if( capacity )
     {
@@ -500,9 +449,7 @@ void PHY_RoleAction_Objects::SetCreator( MIL_Object_ABC& object )
 {
     SpawnCapacity* capacity = object.Retrieve< SpawnCapacity >();
     if( capacity )
-    {
         object().AddCreator( pion_ );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -561,10 +508,6 @@ void PHY_RoleAction_Objects::StopOccupyingObject( boost::shared_ptr< DEC_Knowled
     }
 }
 
-// =============================================================================
-// ACCESSORS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Objects::CanConstructWithReinforcement
 // Created: NLD 2004-10-14
@@ -614,7 +557,6 @@ bool PHY_RoleAction_Objects::EnoughtDotationForBuilding( const std::string& obje
 {
     const MIL_ObjectType_ABC& type = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObjectType( objectType );
     const PHY_DotationCategory* pDotationCategory = type.GetCapacity< BuildableCapacity >()->GetDotationCategory();
-    
     std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( pion.GetAlgorithms().dotationComputerFactory_->Create() );
     pion.Execute( *dotationComputer );
     return dotationComputer->GetDotationValue( *pDotationCategory ) > 0;

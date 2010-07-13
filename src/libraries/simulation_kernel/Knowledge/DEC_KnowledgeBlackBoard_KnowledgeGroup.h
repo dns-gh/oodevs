@@ -62,11 +62,11 @@ public:
 
     //! @name Accessors
     //@{
-    MIL_KnowledgeGroup&                           GetKnowledgeGroup              () const;
-    DEC_KS_Sharing&                               GetKsSharing                   () const;
-    DEC_BlackBoard_CanContainKnowledgeAgent&      GetKnowledgeAgentContainer     () const;
+    MIL_KnowledgeGroup& GetKnowledgeGroup() const;
+    DEC_KS_Sharing& GetKsSharing() const;
+    DEC_BlackBoard_CanContainKnowledgeAgent& GetKnowledgeAgentContainer() const;
     DEC_BlackBoard_CanContainKnowledgePopulation& GetKnowledgePopulationContainer() const;
-    DEC_BlackBoard_CanContainKnowledgeObject*     GetKnowledgeObjectContainer()     const;
+    DEC_BlackBoard_CanContainKnowledgeObject* GetKnowledgeObjectContainer() const;
     void UpdateKnowledgeObjectContainer();
     //@}
 
@@ -77,65 +77,60 @@ public:
 
     //! @name Network
     //@{
-    virtual void SendFullState   () const;
+    virtual void SendFullState() const;
     virtual void SendChangedState() const;
     //@}
 
-
     //! @name tools::Resolver
     //@{
-    virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent ( const Common::MsgUnitKnowledge&  asn ) const;
-    virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent (       uint                   nID ) const;
+    virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent( const Common::MsgUnitKnowledge& asn ) const;
+    virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent( unsigned int nID ) const;
 
     virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( const Common::MsgObjectKnowledge& asn ) const;
-    virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject(       uint                   nID ) const;
-    virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject(       MIL_Object_ABC&        object ) const;
+    virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( unsigned int nID ) const;
+    virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( MIL_Object_ABC& object ) const;
 
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const Common::MsgPopulationKnowledge& asn ) const;
-    virtual DEC_Knowledge_Population* ResolveKnowledgePopulation(       unsigned int                       nID ) const;
+    virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( unsigned int nID ) const;
 
     virtual boost::shared_ptr< DEC_Knowledge_Urban > ResolveKnowledgeUrban( const Common::MsgUrbanKnowledge& asn ) const;
-    virtual boost::shared_ptr< DEC_Knowledge_Urban > ResolveKnowledgeUrban(       uint                   nID ) const;
+    virtual boost::shared_ptr< DEC_Knowledge_Urban > ResolveKnowledgeUrban( unsigned int nID ) const;
     //@}
 
     //! @name Queries
     //@{
-
     // Knowledge agents
     DEC_Knowledge_Agent& CreateKnowledgeAgent( const MIL_KnowledgeGroup& knowledgeGroup, MIL_Agent_ABC& agentKnown );
     DEC_Knowledge_Population& CreateKnowledgePopulation( const MIL_KnowledgeGroup& knowledgeGroup, MIL_Population& perceived );
+    bool IsKnown( const MIL_Agent_ABC& agent ) const;
+    boost::shared_ptr< DEC_Knowledge_Agent > GetKnowledgeAgent( const DEC_Knowledge_AgentPerception& perception ) const;
+    boost::shared_ptr< DEC_Knowledge_Agent > GetKnowledgeAgentFromID( unsigned int nID ) const;
+    void GetDetectedAgentsInZone( T_ConstKnowledgeAgentVector& container, const TER_Polygon& zone ) const;
+    void GetDetectedAgentsInZone( T_ConstKnowledgeAgentVector& container, const TER_Localisation& zone ) const;
 
+    const T_KnowledgeAgentVector& GetFriends() const;
+    void GetFriendsInZone( T_ConstKnowledgeAgentVector& container, const TER_Localisation& zone ) const;
+    const T_KnowledgeAgentVector& GetEnemies() const;
+    void GetLivingEnemiesInZone( T_ConstKnowledgeAgentVector& container, const TER_Polygon& zone ) const;
+    void GetLivingEnemiesInZone( T_ConstKnowledgeAgentVector& container, const TER_Localisation& zone ) const;
+    void GetLivingEnemiesInCircle( T_ConstKnowledgeAgentVector& container, const MT_Vector2D& center, MT_Float rRadius ) const;
+    bool EnemyPresenceInCircle( const MT_Vector2D& center, MT_Float rRadius ) const;
 
-          bool                         IsKnown                     ( const MIL_Agent_ABC& agent ) const;
-          boost::shared_ptr< DEC_Knowledge_Agent > GetKnowledgeAgent           ( const DEC_Knowledge_AgentPerception& perception ) const;
-          boost::shared_ptr< DEC_Knowledge_Agent > GetKnowledgeAgentFromID     ( unsigned int nID ) const;
-          void                         GetDetectedAgentsInZone     ( T_ConstKnowledgeAgentVector& container, const TER_Polygon&      zone ) const;
-          void                         GetDetectedAgentsInZone     ( T_ConstKnowledgeAgentVector& container, const TER_Localisation& zone ) const;
-
-    const T_KnowledgeAgentVector&      GetFriends                  () const;
-          void                         GetFriendsInZone            ( T_ConstKnowledgeAgentVector& container, const TER_Localisation& zone ) const;
-    const T_KnowledgeAgentVector&      GetEnemies                  () const;
-          void                         GetLivingEnemiesInZone      ( T_ConstKnowledgeAgentVector& container, const TER_Polygon&      zone ) const;
-          void                         GetLivingEnemiesInZone      ( T_ConstKnowledgeAgentVector& container, const TER_Localisation& zone ) const;
-          void                         GetLivingEnemiesInCircle    ( T_ConstKnowledgeAgentVector& container, const MT_Vector2D& center, MT_Float rRadius ) const;
-          bool                         EnemyPresenceInCircle       ( const MT_Vector2D& center, MT_Float rRadius ) const;
-
-          void                         GetRefugeesInCircle         ( T_ConstKnowledgeAgentVector& container, const MT_Vector2D& center, MT_Float rRadius ) const;
-          void                         GetSurrenderedAgentsInCircle( T_ConstKnowledgeAgentVector& container, const MT_Vector2D& center, MT_Float rRadius ) const;
+    void GetRefugeesInCircle( T_ConstKnowledgeAgentVector& container, const MT_Vector2D& center, MT_Float rRadius ) const;
+    void GetSurrenderedAgentsInCircle( T_ConstKnowledgeAgentVector& container, const MT_Vector2D& center, MT_Float rRadius ) const;
 
     // Knowledge populations
-    DEC_Knowledge_Population*    GetKnowledgePopulation      ( const DEC_Knowledge_PopulationCollision&  collision  ) const;
-    DEC_Knowledge_Population*    GetKnowledgePopulation      ( const DEC_Knowledge_PopulationPerception& perception ) const;
-    DEC_Knowledge_Population*    GetKnowledgePopulationFromID( unsigned int nID ) const;
-    void                         GetPopulations              ( T_KnowledgePopulationDiaIDVector& container ) const;
-    void                         GetPopulations              ( T_KnowledgePopulationVector&      container ) const;
+    DEC_Knowledge_Population* GetKnowledgePopulation( const DEC_Knowledge_PopulationCollision& collision ) const;
+    DEC_Knowledge_Population* GetKnowledgePopulation( const DEC_Knowledge_PopulationPerception& perception ) const;
+    DEC_Knowledge_Population* GetKnowledgePopulationFromID( unsigned int nID ) const;
+    void GetPopulations( T_KnowledgePopulationDiaIDVector& container ) const;
+    void GetPopulations( T_KnowledgePopulationVector& container ) const;
      //@}
-
 
     //! @name Tools
     //@{
     void TranslateKnowledges( const T_ConstKnowledgeAgentVector& sourceKnowledges, const MIL_KnowledgeGroup& sourceKnowledgeGroup, T_ConstKnowledgeAgentVector& translatedKnowledges ) const;
-    boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledgeObject ( const MIL_Army_ABC& teamKnowing, MIL_Object_ABC& objectKnown );
+    boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledgeObject( const MIL_Army_ABC& teamKnowing, MIL_Object_ABC& objectKnown );
     void ApplyOnKnowledgesPerception( int currentTimeStep );
 
     template < class UnaryFunction >
@@ -149,21 +144,20 @@ public:
     {
         GetKnowledgePopulationContainer().ApplyOnKnowledgesPopulation( fct );
     }
-
     //@}
 
 private:
+    //! @name Member data
+    //@{
     MIL_KnowledgeGroup* pKnowledgeGroup_;
-
     // Containers
-    DEC_BlackBoard_CanContainKnowledgeAgent*       pKnowledgeAgentContainer_;
-    DEC_BlackBoard_CanContainKnowledgePopulation*  pKnowledgePopulationContainer_;
-    DEC_BlackBoard_CanContainKnowledgeObject*      pKnowledgeObjectContainer_;
-
+    DEC_BlackBoard_CanContainKnowledgeAgent* pKnowledgeAgentContainer_;
+    DEC_BlackBoard_CanContainKnowledgePopulation* pKnowledgePopulationContainer_;
+    DEC_BlackBoard_CanContainKnowledgeObject* pKnowledgeObjectContainer_;
     // Knowledge sources
-    DEC_KS_KnowledgeSynthetizer*                    pKsKnowledgeSynthetizer_;
-
-    DEC_KS_Sharing*                         pKsSharing_;
+    DEC_KS_KnowledgeSynthetizer* pKsKnowledgeSynthetizer_;
+    DEC_KS_Sharing* pKsSharing_;
+    //@}
 
     //! @name Queries caches
     //@{

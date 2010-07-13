@@ -23,25 +23,28 @@ class PHY_Composante_ABC : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    typedef std::vector< PHY_Composante_ABC* >  T_ComposanteVector;
+    typedef std::vector< PHY_Composante_ABC* >   T_ComposanteVector;
     typedef T_ComposanteVector::iterator        IT_ComposanteVector;
-    typedef T_ComposanteVector::const_iterator  CIT_ComposanteVector;
+    typedef T_ComposanteVector::const_iterator CIT_ComposanteVector;
 
 
     struct T_ComposanteUse
     {
-        uint nNbrAvailable_;
-        uint nNbrUsed_;
-        uint nNbrTotal_; // nNbrTotal_ >= nNbrAvailable_ >= nNbrUsed_
-        uint nNbrLent_;
+        unsigned int nNbrAvailable_;
+        unsigned int nNbrUsed_;
+        unsigned int nNbrTotal_; // nNbrTotal_ >= nNbrAvailable_ >= nNbrUsed_
+        unsigned int nNbrLent_;
     };
 
     typedef std::map< const PHY_ComposanteType_ABC*, T_ComposanteUse > T_ComposanteUseMap;
-    typedef T_ComposanteUseMap::const_iterator                         CIT_ComposanteUseMap;
+    typedef T_ComposanteUseMap::const_iterator                       CIT_ComposanteUseMap;
     //@}
 
+    //! @name Constructors/Destructor
+    //@{
              PHY_Composante_ABC() {}
     virtual ~PHY_Composante_ABC() {}
+    //@}
 
     //! @name Checkpoints
     //@{
@@ -50,12 +53,12 @@ public:
 
     //! @name Accessors
     //@{
-    virtual const PHY_ComposanteType_ABC& GetType            () const = 0;
-    virtual float                    GetIdentificationMaxRange() const = 0;
-    virtual float                    GetReconnoissanceMaxRange() const = 0;
-    virtual bool                          CanFire            () const = 0;
-    virtual bool                          CanFireWhenUnloaded() const = 0;
-    virtual unsigned int                          GetMajorScore      () const = 0;
+    virtual const PHY_ComposanteType_ABC& GetType() const = 0;
+    virtual float GetIdentificationMaxRange() const = 0;
+    virtual float GetReconnoissanceMaxRange() const = 0;
+    virtual bool CanFire() const = 0;
+    virtual bool CanFireWhenUnloaded() const = 0;
+    virtual unsigned int GetMajorScore() const = 0;
     //@}
 };
 
