@@ -19,7 +19,7 @@ namespace population
 
 // =============================================================================
 /** @class  PopulationCollisionNotificationHandler_ABC
-    @brief  PopulationCollisionNotificationHandler_ABC
+    @brief  Population collision notification handler declaration
 */
 // Created: AHC 2009-10-06
 // =============================================================================
@@ -28,14 +28,14 @@ class PopulationCollisionNotificationHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    PopulationCollisionNotificationHandler_ABC();
-    virtual ~PopulationCollisionNotificationHandler_ABC();
+             PopulationCollisionNotificationHandler_ABC() {}
+    virtual ~PopulationCollisionNotificationHandler_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void NotifyFlowCollision( MIL_PopulationFlow&          population ) =0;
-    virtual void NotifyConcentrationCollision( MIL_PopulationConcentration& population ) =0;
+    virtual void NotifyFlowCollision( MIL_PopulationFlow& population ) = 0;
+    virtual void NotifyConcentrationCollision( MIL_PopulationConcentration& population ) = 0;
     //@}
 };
 
