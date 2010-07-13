@@ -88,8 +88,7 @@ void ADN_NBC_Datas::NbcIntoxInfos::CopyFrom( NbcIntoxInfos& infos )
 // -----------------------------------------------------------------------------
 void ADN_NBC_Datas::NbcIntoxInfos::ReadEffect( xml::xistream& input )
 {
-    using namespace std;
-    const std::string wound = lower( xml::attribute< std::string >( input, "wound" ) );
+    const std::string wound = lower( input.attribute< std::string >( "wound" ) );
     ADN_Type_Double* pWound =
         wound == "nonblesse" ? &rNbAlivedHumans_ :
         wound == "u1"        ? &rNbHurtedHumans1_ :
@@ -100,7 +99,7 @@ void ADN_NBC_Datas::NbcIntoxInfos::ReadEffect( xml::xistream& input )
         0;
     if( pWound )
     {
-        *pWound = xml::attribute< double >( input, "percentage" ) * 100.;
+        *pWound = input.attribute< double >( "percentage" ) * 100.;
         if( pWound->GetData() < 0. || pWound->GetData() > 100. )
             throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "NBC - Wound '%1' data < 0 or > 1" ).arg( wound.c_str() ).ascii() );
     }
@@ -114,7 +113,7 @@ void ADN_NBC_Datas::NbcIntoxInfos::ReadEffect( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_NBC_Datas::NbcIntoxInfos::ReadArchive( xml::xistream& input )
 {
-    input >>  xml::attribute( "intoxication",bIntoxPresent_ );
+    input >>  xml::attribute( "intoxication", bIntoxPresent_ );
     if( bIntoxPresent_.GetData() )
     {
         input >> xml::list( "effect", *this, &ADN_NBC_Datas::NbcIntoxInfos::ReadEffect );
