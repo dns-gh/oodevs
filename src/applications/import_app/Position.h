@@ -10,7 +10,7 @@
 #ifndef __Position_h_
 #define __Position_h_
 
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 // =============================================================================
 /** @class  Position

@@ -18,7 +18,7 @@
 #include <boost/filesystem/operations.hpp>
 #pragma warning( pop )
 #include <qlabel.h>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 namespace bfs = boost::filesystem;
 

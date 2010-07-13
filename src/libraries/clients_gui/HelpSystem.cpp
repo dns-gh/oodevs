@@ -13,7 +13,7 @@
 #include "Tools.h"
 #include "tools/GeneralConfig.h"
 #include <qobjectlist.h>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #include <htmlhelp.h>
 
 using namespace gui;

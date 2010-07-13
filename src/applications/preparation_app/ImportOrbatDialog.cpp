@@ -13,7 +13,7 @@
 #include "preparation/Model.h"
 #include "preparation/OrbatImportFilter.h"
 #include "tools/ExerciseConfig.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #include <qlistview.h>
 
 // -----------------------------------------------------------------------------

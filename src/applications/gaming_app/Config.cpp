@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "Config.h"
 #include "gaming/Network.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 #pragma warning( push )
 #pragma warning( disable: 4127 4244 4511 4512 )

@@ -16,7 +16,7 @@
 #include "clients_kernel/Point.h"
 #include "clients_kernel/Polygon.h"
 #include <svgl/svgl.h>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace gui;
 

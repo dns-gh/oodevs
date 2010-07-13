@@ -17,7 +17,7 @@
 #include "clients_kernel/HierarchyLevel_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "Tools.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
 using namespace xml;

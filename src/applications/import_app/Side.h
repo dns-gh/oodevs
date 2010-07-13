@@ -16,7 +16,7 @@
 #include <string>
 #include <map>
 #include <boost/shared_ptr.hpp>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 class Mapping;
 

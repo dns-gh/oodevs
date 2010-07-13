@@ -11,7 +11,7 @@
 #include "DrawingCategory.h"
 #include "DrawingTemplate.h"
 #include "clients_kernel/Controller.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace gui;
 

@@ -38,7 +38,7 @@
 #include "indicators/GaugeTypes.h"
 #include "tools/ExerciseConfig.h"
 #include <urban/WorldParameters.h>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )

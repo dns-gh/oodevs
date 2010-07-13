@@ -15,7 +15,7 @@
 #include "indicators/GaugeFactory_ABC.h"
 #include "indicators/Serializer.h"
 #include "indicators/Variables.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 namespace
 {

@@ -19,7 +19,7 @@
 #include "clients_kernel/Point.h"
 #include "clients_kernel/Polygon.h"
 #include "clients_kernel/Viewport_ABC.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: ObjectPositions constructor

@@ -12,7 +12,7 @@
 #include "AfterActionFunction.h"
 #include "IndicatorRequests.h"
 #include "clients_kernel/Controller.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #include "protocol/AarSenders.h"
 
 using namespace kernel;

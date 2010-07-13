@@ -11,7 +11,7 @@
 #include "KnowledgeGroupsModel.h"
 #include "KnowledgeGroup.h"
 #include "clients_kernel/Controllers.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
 

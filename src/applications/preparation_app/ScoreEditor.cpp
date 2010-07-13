@@ -20,7 +20,7 @@
 #include "preparation/Score.h"
 #include "preparation/ScoresModel.h"
 #include "preparation/StaticModel.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 namespace
 {

@@ -15,7 +15,7 @@
 #include "tools/GeneralConfig.h"
 #include "tools/xmlcodecs.h"
 #include "clients_gui/Tools.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 #include <qcheckbox.h>
 #include <qdatetimeedit.h>

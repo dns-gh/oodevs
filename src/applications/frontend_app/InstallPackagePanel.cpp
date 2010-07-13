@@ -15,7 +15,7 @@
 #include "frontend/commands.h"
 #include "frontend/Config.h"
 #include "clients_gui/Tools.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #pragma warning( push, 0 )
 #pragma warning( disable: 4996 )
 #include <zipstream/zipstream.h>

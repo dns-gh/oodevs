@@ -14,7 +14,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: LogisticAttribute constructor

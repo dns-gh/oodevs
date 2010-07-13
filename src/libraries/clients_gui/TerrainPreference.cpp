@@ -14,7 +14,7 @@
 #include "Tools.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/Controllers.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace gui;
 

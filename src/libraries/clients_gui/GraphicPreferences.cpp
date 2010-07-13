@@ -12,7 +12,7 @@
 #include "TerrainPreference.h"
 #include "graphics/GraphicData.h"
 #include "clients_kernel/Tools.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
 
 using namespace gui;

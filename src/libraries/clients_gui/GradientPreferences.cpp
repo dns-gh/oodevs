@@ -12,7 +12,7 @@
 #include "Gradient.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/OptionVariant.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace gui;
 

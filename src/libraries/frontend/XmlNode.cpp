@@ -15,7 +15,7 @@
 #include <boost/filesystem/operations.hpp>
 #include <boost/lexical_cast.hpp>
 #pragma warning( pop )
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #include <cctype>
 
 using namespace frontend;

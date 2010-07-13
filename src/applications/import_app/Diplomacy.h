@@ -11,7 +11,7 @@
 #define __Diplomacy_h_
 
 #include "Mapping.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 // =============================================================================
 /** @class  Diplomacy

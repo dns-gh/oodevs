@@ -11,7 +11,7 @@
 #include "OrbatReIndexer.h"
 #include "IdManager.h"
 #include "OrbatImportFilter.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: OrbatReIndexer constructor

@@ -9,7 +9,7 @@
 
 #include "gaming_pch.h"
 #include "AfterActionParameter.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #pragma warning( disable : 4512 )
 #include <boost/algorithm/string.hpp>
 

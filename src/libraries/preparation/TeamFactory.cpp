@@ -47,7 +47,7 @@
 
 #include "clients_kernel/ObjectHierarchies.h"
 
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #include <boost/function.hpp>
 #include <boost/bind.hpp>
 

@@ -16,7 +16,7 @@
 #include "clients_kernel/Viewport_ABC.h"
 #include "protocol/MessengerSenders.h"
 #include "protocol/Protocol.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace xml;
 using namespace geometry;

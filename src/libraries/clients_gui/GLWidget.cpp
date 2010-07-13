@@ -19,7 +19,7 @@
 #include "urban/ColorRGBA.h"
 #include <qbitmap.h>
 #include <time.h>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace geometry;
 using namespace kernel;

@@ -15,7 +15,7 @@
 #include "frontend/commands.h"
 #include "clients_gui/Tools.h"
 #include "tools/GeneralConfig.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: ProfileList constructor

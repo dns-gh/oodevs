@@ -12,7 +12,7 @@
 
 #include "Position.h"
 #include <vector>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 class Mapping;
 

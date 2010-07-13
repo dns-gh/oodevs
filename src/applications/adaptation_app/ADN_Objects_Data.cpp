@@ -21,7 +21,7 @@
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_Composantes_Data.h"
 
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 #include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"

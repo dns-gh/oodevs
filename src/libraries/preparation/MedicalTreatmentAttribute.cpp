@@ -13,7 +13,7 @@
 #include "clients_kernel/MedicalTreatmentType.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "Tools.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
 using namespace xml;

@@ -12,7 +12,7 @@
 
 #include <string>
 #include <vector>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 #include "Diplomacy.h"
 #include "Mapping.h"

@@ -12,7 +12,7 @@
 #include "ObjectAttributesContainer.h"
 #include "clients_kernel/Displayer_ABC.h"
 
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
 

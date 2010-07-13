@@ -11,7 +11,7 @@
 #include "SideList.h"
 #include "moc_SideList.cpp"
 #include "tools/GeneralConfig.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #include <qpixmap.h>
 #include <qpainter.h>
 

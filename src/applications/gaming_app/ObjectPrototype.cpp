@@ -34,7 +34,7 @@
 #include "clients_gui/ObjectAttributePrototypeFactory.h"
 #include "gaming/StaticModel.h"
 #include "protocol/SimulationSenders.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
 
 using namespace actions;

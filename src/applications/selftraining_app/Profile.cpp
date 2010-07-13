@@ -9,7 +9,7 @@
 
 #include "selftraining_app_pch.h"
 #include "Profile.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 Profile Profile::Invalid;
 

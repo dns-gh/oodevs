@@ -13,7 +13,7 @@
 #include <map>
 #include <set>
 #include <string>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 // =============================================================================
 /** @class  Mapping

@@ -10,7 +10,7 @@
 #include "gaming_pch.h"
 #include "AfterActionFunction.h"
 #include "AfterActionParameter.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
 

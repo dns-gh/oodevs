@@ -18,7 +18,7 @@
 #include "clients_kernel/KnowledgeGroupType.h" // LTO
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Team_ABC.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
 using namespace xml;

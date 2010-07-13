@@ -11,7 +11,7 @@
 #include "ScoreDefinitions.h"
 #include "ScoreDefinition.h"
 #include "indicators/GaugeFactory_ABC.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: ScoreDefinitions constructor

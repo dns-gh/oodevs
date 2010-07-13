@@ -30,7 +30,7 @@
 #include "ActivityTimePrototype.h"
 #include "DelayPrototype.h"
 
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
 
 using namespace kernel;

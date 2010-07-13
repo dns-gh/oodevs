@@ -21,7 +21,7 @@
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/App6Symbol.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
 

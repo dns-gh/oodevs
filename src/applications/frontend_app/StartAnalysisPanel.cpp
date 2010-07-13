@@ -17,7 +17,7 @@
 #include "frontend/StartReplay.h"
 #include "frontend/CommandLineTools.h"
 #include "tools/GeneralConfig.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #include <qaction.h>
 #include <qlabel.h>
 #include <qlayout.h>

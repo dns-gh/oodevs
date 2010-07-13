@@ -15,7 +15,7 @@
 #include "Tools.h"
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: ScoresModel constructor

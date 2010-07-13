@@ -21,7 +21,7 @@
 #include "DrawingCategoryItem.h"
 #include "clients_kernel/Controllers.h"
 #include "resources.h"
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 #include <qtoolbox.h>
 
 #pragma warning( disable : 4355 )

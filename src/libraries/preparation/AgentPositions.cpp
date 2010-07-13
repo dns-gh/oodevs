@@ -22,7 +22,7 @@
 #include "clients_kernel/Viewport_ABC.h"
 #include "Tools.h"
 #include <boost/ref.hpp>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 using namespace geometry;
 using namespace kernel;
