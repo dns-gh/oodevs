@@ -18,7 +18,7 @@ namespace weather
 
 // =============================================================================
 /** @class  PHY_RawVisionData_ABC
-    @brief  PHY_RawVisionData_ABC
+    @brief  PHY Raw vision data declaration
 */
 // Created: SLG 2010-03-18
 // =============================================================================
@@ -27,8 +27,8 @@ class PHY_RawVisionData_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_RawVisionData_ABC(){}
-    virtual ~PHY_RawVisionData_ABC(){}
+             PHY_RawVisionData_ABC() {}
+    virtual ~PHY_RawVisionData_ABC() {}
     //@}
 
     //! @name Operations

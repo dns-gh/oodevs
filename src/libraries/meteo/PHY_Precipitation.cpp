@@ -14,11 +14,6 @@
 using namespace weather;
 
 PHY_Precipitation::T_PrecipitationMap PHY_Precipitation::precipitations_;
-
-// =============================================================================
-// STATIC INITIALIZATION (MANAGER)
-// =============================================================================
-
 PHY_Precipitation PHY_Precipitation::none_     ( "PasDePrecipitation", eWeatherType_None     , Common::pas_de_precipitation      );
 PHY_Precipitation PHY_Precipitation::sandStorm_( "TempeteDeSable"    , eWeatherType_SandStorm, Common::tempete_sable             );
 PHY_Precipitation PHY_Precipitation::fog_      ( "Brouillard"        , eWeatherType_Fog      , Common::brouillard                );

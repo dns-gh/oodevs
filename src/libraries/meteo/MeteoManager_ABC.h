@@ -17,7 +17,7 @@ namespace weather
 
 // =============================================================================
 /** @class  MeteoManager_ABC
-    @brief  MeteoManager_ABC
+    @brief  Meteo manager declaration
 */
 // Created: HBD 2010-03-10
 // =============================================================================
@@ -26,8 +26,8 @@ class MeteoManager_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MeteoManager_ABC() {};
-    virtual ~MeteoManager_ABC() {};
+             MeteoManager_ABC() {}
+    virtual ~MeteoManager_ABC() {}
     //@}
 
     //! @name Operations

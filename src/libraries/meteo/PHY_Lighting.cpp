@@ -9,7 +9,6 @@
 //
 // *****************************************************************************
 
-
 #include "PHY_Lighting.h"
 
 using namespace weather;
@@ -27,10 +26,6 @@ PHY_Lighting PHY_Lighting::nuitDemiLune_          ( "NuitDemiLune"          , eL
 PHY_Lighting PHY_Lighting::nuitQuartDeLune_       ( "NuitQuartDeLune"       , eLightingType_NuitQuartDeLune        , &nuitNouvelleLune_       , Common::nuit_quart_de_lune_ );
 PHY_Lighting PHY_Lighting::nuitNouvelleLune_      ( "NuitNouvelleLune"      , eLightingType_NuitNouvelleLune       , 0                        , Common::nuit_nouvelle_lune_ );
 PHY_Lighting PHY_Lighting::eclairant_             ( "Eclairant"             , eLightingType_Eclairant              , 0                        , Common::eclairant_ );
-
-// =============================================================================
-// STATIC INITIALIZATION (MANAGER)
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Lighting::Initialize
@@ -61,10 +56,6 @@ void PHY_Lighting::Terminate()
     lightings_.clear();
 }
 
-// =============================================================================
-// INITIALIZATION
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_Lighting constructor
 // Created: NLD 2004-08-05
@@ -86,10 +77,6 @@ PHY_Lighting::~PHY_Lighting()
 {
     // NOTHING
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Lighting::GetDegradedLighting
