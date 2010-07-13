@@ -10,9 +10,7 @@
 //*****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "DEC_LogisticFunctions.h"
-
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Units/Dotations/PHY_AmmoDotationClass.h"
 #include "Entities/Agents/Units/Logistic/PHY_MaintenanceWorkRate.h"
@@ -31,9 +29,6 @@
 #include "Entities/Orders/MIL_Report.h"
 
 using namespace human;
-// =============================================================================
-// MAINTENANCE
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::PionMaintenanceEnableSystem
@@ -139,10 +134,6 @@ void DEC_LogisticFunctions::AutomateMaintenanceChangeWorkRate( MIL_Automate& cal
     PionMaintenanceChangeWorkRate( callerAutomate.GetPionPC(), workRate );
 }
 
-// =============================================================================
-// MEDICAL
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::EvacuateWoundedHumansToTC2
 // Created: NLD 2005-08-01
@@ -153,7 +144,6 @@ void DEC_LogisticFunctions::EvacuateWoundedHumansToTC2( DEC_Decision_ABC* pPionW
     assert( pDecTC2 );
     if( !pDecTC2->GetAutomate().GetType().IsLogistic() )
         return;
-
     MIL_AutomateLOG& tc2 = static_cast< MIL_AutomateLOG& >( pDecTC2->GetAutomate() );
     pPionWounded->GetPion().GetRole< PHY_RoleInterface_Humans >().EvacuateWoundedHumans( tc2 );
 }
@@ -352,10 +342,6 @@ void DEC_LogisticFunctions::AutomateMedicalChangeTacticalPriorities( MIL_Automat
     PionMedicalChangeTacticalPriorities( callerAutomate.GetPionPC(), priorities );
 }
 
-// =============================================================================
-// SUPPLY
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::ChangeDotationsValueUsingTC2
 // Created: NLD 2005-03-17
@@ -426,10 +412,6 @@ void DEC_LogisticFunctions::PionRequestSupply( MIL_Agent_ABC& callerAgent )
 {
     AutomateRequestSupply( callerAgent.GetAutomate() );
 }
-
-// =============================================================================
-// SUPPLY - CONVOY
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::ConvoyIsLoadingDone

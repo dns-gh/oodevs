@@ -25,13 +25,12 @@
 // Created: NLD 2006-10-11
 // -----------------------------------------------------------------------------
 MIL_Formation::MIL_Formation( xml::xistream& xis, MIL_Army_ABC& army, MIL_Formation* pParent, FormationFactory_ABC& formationFactory, AutomateFactory_ABC& automateFactory )
-    : pArmy_     ( &army )
-    , pParent_   ( pParent )
-    , pLevel_    ( 0 )
-    , strName_   ()
+    : pArmy_  ( &army )
+    , pParent_( pParent )
+    , pLevel_ ( 0 )
+   
 {
     xis >> xml::attribute( "id", nID_ );
-
     std::string strLevel;
     xis >> xml::attribute( "name", strName_ )
         >> xml::attribute( "level", strLevel );
@@ -44,7 +43,6 @@ MIL_Formation::MIL_Formation( xml::xistream& xis, MIL_Army_ABC& army, MIL_Format
         pParent_->RegisterFormation( *this );
     else
         pArmy_->RegisterFormation( *this );
-
 
     xis >> xml::list( "formation", *this, &MIL_Formation::InitializeFormation, formationFactory )
         >> xml::list( "automat", *this, &MIL_Formation::InitializeAutomate, automateFactory );
@@ -59,7 +57,6 @@ MIL_Formation::MIL_Formation()
     , pArmy_     ( 0 )
     , pParent_   ( 0 )
     , pLevel_    ( 0 )
-    , strName_   ()
 {
     // NOTHING
 }
@@ -94,10 +91,6 @@ void MIL_Formation::InitializeAutomate( xml::xistream& xis, AutomateFactory_ABC&
 {
     automateFactory.Create( xis, *this );
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 namespace boost
 {
@@ -143,12 +136,10 @@ void MIL_Formation::load( MIL_CheckPointInArchive& file, const unsigned int )
    file >> const_cast< unsigned int& >( nID_ )
         >> pArmy_
         >> pParent_;
-
    unsigned int nLevel;
    file >> nLevel;
    pLevel_ = PHY_NatureLevel::Find( nLevel );
    assert( pLevel_ );
-
    file >> strName_
         >> tools::Resolver< MIL_Formation >::elements_
         >> tools::Resolver< MIL_Automate >::elements_;
@@ -178,15 +169,12 @@ void MIL_Formation::save( MIL_CheckPointOutArchive& file, const unsigned int ) c
 void MIL_Formation::WriteODB( xml::xostream& xos ) const
 {
     assert( pLevel_ );
-
     xos << xml::start( "formation" )
             << xml::attribute( "id", nID_ )
             << xml::attribute( "level", pLevel_->GetName() )
             << xml::attribute( "name", strName_ );
-
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::WriteODB, _1, boost::ref(xos) ) );
     tools::Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::WriteODB, _1, boost::ref(xos) ) );
-
     xos << xml::end; // formation
 }
 
@@ -200,10 +188,6 @@ void MIL_Formation::WriteLogisticLinksODB( xml::xostream& xos ) const
     tools::Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::WriteLogisticLinksODB, _1, boost::ref(xos) ) );
 }
 
-// =============================================================================
-// NETWORK
-// ============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MIL_Formation::SendCreation
 // Created: NLD 2006-10-13
@@ -212,7 +196,6 @@ void MIL_Formation::SendCreation() const
 {
     assert( pLevel_ );
     assert( pArmy_ );
-
     client::FormationCreation asn;
     asn().set_oid( nID_ );
     asn().set_oid_camp( pArmy_->GetID() );
@@ -221,7 +204,6 @@ void MIL_Formation::SendCreation() const
     if( pParent_ )
         asn().set_oid_formation_parente( pParent_->GetID() );
     asn.Send( NET_Publisher_ABC::Publisher() );
-
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::SendCreation, _1 ) );//@TODO MGD Move to factory
     tools::Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::SendCreation, _1 ) );
 }

@@ -23,7 +23,6 @@
 // -----------------------------------------------------------------------------
 DEC_Gen_Object::DEC_Gen_Object( const Common::MsgPlannedWork& asn, const MIL_EntityManager_ABC& entityManager )
     : type_              ( &entityManager.FindObjectType( asn.type() )? asn.type(): "" )
-    , localisation_      ()
     , pObstacleType_     ( asn.type_obstacle() )
     , rDensity_          ( asn.densite() )
     , nMinesActivityTime_( asn.activity_time() )
@@ -80,10 +79,6 @@ DEC_Gen_Object::~DEC_Gen_Object()
 {
     // NOTHING
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Gen_Object::operator=

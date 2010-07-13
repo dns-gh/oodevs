@@ -57,24 +57,19 @@ void load_construct_data( Archive& archive, PHY_RolePionLOG_Medical* role, const
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RolePionLOG_Medical::PHY_RolePionLOG_Medical( MIL_AgentPionLOG_ABC& pion )
-    : pion_                  ( pion )
-    , bHasChanged_            ( true )
-    , bExternalMustChangeState_ ( false )
-    , bSystemEnabled_         ( false )
-    , bSortingFunctionEnabled_( false )
-    , bHealingFunctionEnabled_( false )
-    , priorities_             ()
-    , tacticalPriorities_     ()
-    , consigns_               ()
-    , evacuationAmbulances_   ()
-    , collectionAmbulances_   ()
-    , reservations_           ()
+    : pion_                    ( pion )
+    , bHasChanged_             ( true )
+    , bExternalMustChangeState_( false )
+    , bSystemEnabled_          ( false )
+    , bSortingFunctionEnabled_ ( false )
+    , bHealingFunctionEnabled_ ( false )
+
 {
     priorities_.reserve( 5 );
-    priorities_.push_back( & PHY_HumanWound::woundedUE_  );
-    priorities_.push_back( & PHY_HumanWound::woundedU1_  );
-    priorities_.push_back( & PHY_HumanWound::woundedU2_  );
-    priorities_.push_back( & PHY_HumanWound::woundedU3_  );
+    priorities_.push_back( & PHY_HumanWound::woundedUE_ );
+    priorities_.push_back( & PHY_HumanWound::woundedU1_ );
+    priorities_.push_back( & PHY_HumanWound::woundedU2_ );
+    priorities_.push_back( & PHY_HumanWound::woundedU3_ );
     priorities_.push_back( & PHY_HumanWound::notWounded_ );
     consigns_.push_back( std::make_pair( (const MIL_Automate*)0, T_MedicalConsignList() ) );
 }
@@ -85,15 +80,16 @@ PHY_RolePionLOG_Medical::PHY_RolePionLOG_Medical( MIL_AgentPionLOG_ABC& pion )
 // -----------------------------------------------------------------------------
 PHY_RolePionLOG_Medical::~PHY_RolePionLOG_Medical()
 {
+    // NOTHING
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 namespace boost
 {
     namespace serialization
     {
+        typedef std::vector< const MIL_Automate* > T_AutomateVector;
+        typedef T_AutomateVector::const_iterator CIT_AutomateVector;
+
         // =============================================================================
         // T_MedicalPriorityVector
         // =============================================================================
@@ -260,13 +256,10 @@ void PHY_RolePionLOG_Medical::load( MIL_CheckPointInArchive& file, const unsigne
     {
         MIL_Automate* pAutomate;
         file >> pAutomate;
-
         consigns_.push_back( std::make_pair( pAutomate, T_MedicalConsignList() ) );
-
         file >> consigns_.back().second;
     }
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Medical::save
@@ -283,17 +276,11 @@ void PHY_RolePionLOG_Medical::save( MIL_CheckPointOutArchive& file, const unsign
          << evacuationAmbulances_
          << collectionAmbulances_
          << reservations_;
-
     unsigned size = consigns_.size();
     file << size;
     for ( CIT_MedicalConsigns it = consigns_.begin(); it != consigns_.end(); ++it )
         file << it->first << it->second;
 }
-
-
-// =============================================================================
-// TOOLS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Medical::CanCollectionAmbulanceGo
@@ -303,7 +290,6 @@ bool PHY_RolePionLOG_Medical::CanCollectionAmbulanceGo( const PHY_MedicalCollect
 {
     if( ambulance.IsAnEmergency() )
         return true;
-
     for ( CIT_MedicalConsigns it = consigns_.begin(); it != consigns_.end(); ++it )
         for ( CIT_MedicalConsignList it2 = it->second.begin(); it2 != it->second.end(); ++it2 )
             if( (*it2)->CouldNeedCollectionAmbulance() )
@@ -325,7 +311,6 @@ PHY_MedicalEvacuationAmbulance* PHY_RolePionLOG_Medical::GetAvailableEvacuationA
         if( ambulance.RegisterHuman( consign ) )
             return &ambulance;
     }
-
     PHY_ComposantePredicate1< Human_ABC > predicate( &PHY_ComposantePion::CanEvacuateCasualty, consign.GetHumanState().GetHuman() );
     GetComponentFunctor functor( predicate );
     std::auto_ptr< OnComponentComputer_ABC > computer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
@@ -333,7 +318,6 @@ PHY_MedicalEvacuationAmbulance* PHY_RolePionLOG_Medical::GetAvailableEvacuationA
     PHY_ComposantePion* pCompAmbulance = functor.result_;
     if( !pCompAmbulance )
         return 0;
-
     PHY_MedicalEvacuationAmbulance* pAmbulance = new PHY_MedicalEvacuationAmbulance( *this, *pCompAmbulance );
     if( ! pAmbulance->RegisterHuman( consign ) )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Register failed" );
@@ -353,7 +337,6 @@ PHY_MedicalCollectionAmbulance* PHY_RolePionLOG_Medical::GetAvailableCollectionA
         if( ambulance.RegisterHuman( consign ) )
             return &ambulance;
     }
-
     PHY_ComposantePredicate1< Human_ABC > predicate( &PHY_ComposantePion::CanCollectCasualty, consign.GetHumanState().GetHuman() );
     GetComponentFunctor functor( predicate );
     std::auto_ptr< OnComponentComputer_ABC > computer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
@@ -361,7 +344,6 @@ PHY_MedicalCollectionAmbulance* PHY_RolePionLOG_Medical::GetAvailableCollectionA
     PHY_ComposantePion* pCompAmbulance = functor.result_;
     if( !pCompAmbulance )
         return 0;
-
     PHY_MedicalCollectionAmbulance* pAmbulance = new PHY_MedicalCollectionAmbulance( *this, *pCompAmbulance );
     if( ! pAmbulance->RegisterHuman( consign ) )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Register failed" );
@@ -455,7 +437,6 @@ bool PHY_RolePionLOG_Medical::HasUsableDoctorForHealing( const Human_ABC& human,
 {
     if( !bBypassPriorities && human.IsWounded() && std::find( priorities_.begin(), priorities_.end(), &human.GetWound() ) == priorities_.end() )
         return false;
-
     PHY_ComposanteTypePredicate1< Human_ABC > predicate( &PHY_ComposanteTypePion::CanHealHuman, human );
     HasUsableComponentFunctor functor( predicate );
     std::auto_ptr< OnComponentComputer_ABC > computer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
@@ -471,10 +452,6 @@ MIL_AutomateLOG& PHY_RolePionLOG_Medical::GetAutomate() const
 {
     return pion_.GetLogAutomate();
 }
-
-// =============================================================================
-// CONSIGN MANAGEMENT
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Medical::InsertConsigns
@@ -495,15 +472,12 @@ void PHY_RolePionLOG_Medical::InsertConsigns( const T_MedicalConsigns& oldConsig
 void PHY_RolePionLOG_Medical::ChangePriorities( const T_AutomateVector& priorities )
 {
     T_MedicalConsigns oldConsigns = consigns_;
-
     consigns_.clear(); consigns_.reserve( priorities.size() + 1 );
     for ( CIT_AutomateVector it = priorities.begin(); it != priorities.end(); ++it )
         consigns_.push_back( std::make_pair( *it, T_MedicalConsignList() ) );
     consigns_.push_back( std::make_pair( (const MIL_Automate*)0, T_MedicalConsignList() ) );
-
     tacticalPriorities_ = priorities;
-    bHasChanged_        = true;
-
+    bHasChanged_ = true;
     InsertConsigns( oldConsigns );
 }
 
@@ -514,13 +488,10 @@ void PHY_RolePionLOG_Medical::ChangePriorities( const T_AutomateVector& prioriti
 void PHY_RolePionLOG_Medical::ChangePriorities( const T_MedicalPriorityVector& priorities )
 {
     T_MedicalConsigns oldConsigns = consigns_;
-
     for ( IT_MedicalConsigns it = consigns_.begin(); it != consigns_.end(); ++it )
         it->second.clear();
-
-    priorities_  = priorities;
+    priorities_ = priorities;
     bHasChanged_ = true;
-
     InsertConsigns( oldConsigns );
 }
 
@@ -530,7 +501,6 @@ struct sIsPriorityEqual
     {
         if( pConsign->IsFinished() )
             return false;
-
         return *pWound == pConsign->GetHumanState().GetHuman().GetWound();
     }
 };
@@ -546,16 +516,13 @@ void PHY_RolePionLOG_Medical::InsertConsign( PHY_MedicalConsign_ABC& consign )
     for ( const MIL_Automate* pAutomate = &consign.GetHumanState().GetAutomate(); itTact != consigns_.end(); ++itTact )
         if( pAutomate == itTact->first || ( pAutomate->GetTC2() && pAutomate->GetTC2() == itTact->first ) )
             break;
-
     if( itTact == consigns_.end() )
     {
         assert( !consigns_.empty() );
         itTact = consigns_.end() - 1;
         assert( itTact->first == 0 );
     }
-
     IT_MedicalPriorityVector itPriorityLowerBound = std::find( priorities_.begin(), priorities_.end(), &consign.GetHumanState().GetHuman().GetWound() );
-
     if( itPriorityLowerBound == priorities_.end() )
         itTact->second.push_back( &consign );
     else
@@ -566,10 +533,6 @@ void PHY_RolePionLOG_Medical::InsertConsign( PHY_MedicalConsign_ABC& consign )
     }
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Medical::HandleHumanEvacuatedByThirdParty
 // Created: NLD 2005-08-01
@@ -578,9 +541,8 @@ PHY_MedicalHumanState* PHY_RolePionLOG_Medical::HandleHumanEvacuatedByThirdParty
 {
     if( !bSystemEnabled_ )
         return 0;
-
-    PHY_MedicalHumanState*        pHumanState = new PHY_MedicalHumanState       ( pion, human, true ); // true is for 'evacuated by third party'
-    PHY_MedicalEvacuationConsign* pConsign    = new PHY_MedicalEvacuationConsign( *this, *pHumanState );
+    PHY_MedicalHumanState* pHumanState = new PHY_MedicalHumanState( pion, human, true ); // true is for 'evacuated by third party'
+    PHY_MedicalEvacuationConsign* pConsign = new PHY_MedicalEvacuationConsign( *this, *pHumanState );
     InsertConsign( *pConsign );
     return pHumanState;
 }
@@ -593,7 +555,6 @@ PHY_MedicalHumanState* PHY_RolePionLOG_Medical::HandleHumanForEvacuation( MIL_Ag
 {
     if( !bSystemEnabled_ || !HasUsableEvacuationAmbulance( human ) )
         return 0;
-
     PHY_MedicalHumanState* pHumanState = new PHY_MedicalHumanState( pion, human );
     PHY_MedicalEvacuationConsign* pConsign = new PHY_MedicalEvacuationConsign( *this, *pHumanState );
     InsertConsign( *pConsign );
@@ -622,15 +583,12 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForEvacuation( const Human_ABC&
 {
     if( !bSystemEnabled_ || !HasUsableEvacuationAmbulance( human ) )
         return std::numeric_limits< int >::min();
-
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
     PHY_ComposanteUsePredicate1< Human_ABC > predicate( &PHY_ComposantePion::CanEvacuateCasualty, &PHY_ComposanteTypePion::CanEvacuateCasualty, human );
     ExecuteOnComponentsAndLendedComponents( predicate, composanteUse );
-
     unsigned int nNbrAvailableAllowedToWork = 0;
     for( PHY_Composante_ABC::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
         nNbrAvailableAllowedToWork += ( it->second.nNbrAvailable_ - it->second.nNbrUsed_ );
-
     return nNbrAvailableAllowedToWork;
 }
 
@@ -642,7 +600,6 @@ bool PHY_RolePionLOG_Medical::HandleHumanForCollection( PHY_MedicalHumanState& h
 {
     if( !bSystemEnabled_ || !HasUsableCollectionAmbulance( humanState.GetHuman() ) )
         return false;
-
     PHY_MedicalCollectionConsign* pConsign = new PHY_MedicalCollectionConsign( *this, humanState );
     InsertConsign( *pConsign );
     return true;
@@ -656,15 +613,12 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForCollection( const PHY_Medica
 {
     if( !bSystemEnabled_ || !HasUsableCollectionAmbulance( humanState.GetHuman() ) )
         return std::numeric_limits< int >::min();
-
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
     PHY_ComposanteUsePredicate1< Human_ABC > predicate( &PHY_ComposantePion::CanCollectCasualty, &PHY_ComposanteTypePion::CanCollectCasualty, humanState.GetHuman() );
     ExecuteOnComponentsAndLendedComponents( predicate, composanteUse );
-
     unsigned int nNbrAvailableAllowedToWork = 0;
     for( PHY_Composante_ABC::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
         nNbrAvailableAllowedToWork += ( it->second.nNbrAvailable_ - it->second.nNbrUsed_ );
-
     return nNbrAvailableAllowedToWork;
 }
 
@@ -687,20 +641,15 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForSorting( const PHY_MedicalCo
 {
     if( !bSystemEnabled_ || !bSortingFunctionEnabled_ || !HasUsableDoctorForSorting() )
         return std::numeric_limits< int >::min();
-
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
-
     PHY_ComposanteUsePredicate predicate( &PHY_ComposantePion::CanSortHumans, &PHY_ComposanteTypePion::CanSortHumans );
     ExecuteOnComponentsAndLendedComponents( predicate, composanteUse );
-
     unsigned int nNbrDoctorsAvailable = 0;
     for( PHY_Composante_ABC::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
         nNbrDoctorsAvailable += ( it->second.nNbrAvailable_ - it->second.nNbrUsed_ );
-
     int nScore = nNbrDoctorsAvailable;
     for( CIT_CollectionAmbulancesSet itReservation = reservations_.begin(); itReservation != reservations_.end(); ++itReservation )
         nScore -= (**itReservation).GetNbrHumans();
-
     return nScore;
 }
 
@@ -712,7 +661,6 @@ bool PHY_RolePionLOG_Medical::HandleHumanForHealing( PHY_MedicalHumanState& huma
 {
     if( !bSystemEnabled_ || !bHealingFunctionEnabled_ || !HasUsableDoctorForHealing( humanState.GetHuman() ) )
         return false;
-
     PHY_MedicalHealingConsign* pConsign = new PHY_MedicalHealingConsign( *this, humanState );
     InsertConsign( *pConsign );
     return true;
@@ -726,20 +674,14 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForHealing( const PHY_MedicalHu
 {
     if( !bSystemEnabled_ || !bHealingFunctionEnabled_ || !HasUsableDoctorForHealing( humanState.GetHuman() ) )
         return std::numeric_limits< int >::min();
-
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
     PHY_ComposanteUsePredicate1< Human_ABC > predicate( &PHY_ComposantePion::CanHealHuman, &PHY_ComposanteTypePion::CanHealHuman, humanState.GetHuman() );
     ExecuteOnComponentsAndLendedComponents( predicate, composanteUse );
-
     unsigned int nNbrAllowedToWork = 0;
     for( PHY_Composante_ABC::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
         nNbrAllowedToWork += ( it->second.nNbrAvailable_  - it->second.nNbrUsed_ );
     return nNbrAllowedToWork;
 }
-
-// =============================================================================
-// UPDATE
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Medical::Update
@@ -768,7 +710,6 @@ void PHY_RolePionLOG_Medical::UpdateLogistic( bool /*bIsDead*/ )
         else
             ++itEvacuationAmbulance;
     }
-
     for( IT_CollectionAmbulancesList itCollectionAmbulance = collectionAmbulances_.begin(); itCollectionAmbulance != collectionAmbulances_.end(); )
     {
         PHY_MedicalCollectionAmbulance& ambulance = **itCollectionAmbulance;
@@ -780,7 +721,6 @@ void PHY_RolePionLOG_Medical::UpdateLogistic( bool /*bIsDead*/ )
         else
             ++itCollectionAmbulance;
     }
-
     for( IT_MedicalConsigns itConsigns = consigns_.begin(); itConsigns != consigns_.end(); ++itConsigns )
         for ( IT_MedicalConsignList itConsign = itConsigns->second.begin(); itConsign != itConsigns->second.end(); )
             if( (**itConsign).Update() )
@@ -802,10 +742,6 @@ void PHY_RolePionLOG_Medical::Clean()
     bExternalMustChangeState_ = false;
 }
 
-// =============================================================================
-// TOOLS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Medical::GetAvailabilityRatio
 // Created: NLD 2005-01-05
@@ -813,18 +749,16 @@ void PHY_RolePionLOG_Medical::Clean()
 MT_Float PHY_RolePionLOG_Medical::GetAvailabilityRatio( PHY_ComposanteUsePredicate& predicate ) const
 {
 
-    unsigned int nNbrTotal                  = 0;
+    unsigned int nNbrTotal = 0;
     unsigned int nNbrAvailableAllowedToWork = 0;
-
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
     ExecuteOnComponentsAndLendedComponents( predicate, composanteUse );
 
     for( PHY_Composante_ABC::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
     {
-        nNbrTotal                  += it->second.nNbrTotal_;
+        nNbrTotal += it->second.nNbrTotal_;
         nNbrAvailableAllowedToWork += ( it->second.nNbrAvailable_ - it->second.nNbrUsed_ );
     }
-
     if( nNbrTotal == 0 )
         return 1.;
     return (MT_Float)nNbrAvailableAllowedToWork / (MT_Float)nNbrTotal;
@@ -838,15 +772,12 @@ void PHY_RolePionLOG_Medical::StartUsingForLogistic( PHY_ComposantePion& composa
 {
     PHY_ComposanteUsePredicate evacuationUsePred( &PHY_ComposantePion::CanEvacuateCasualties, &PHY_ComposanteTypePion::CanEvacuateCasualties );
     PHY_ComposanteUsePredicate collectionUsePred( &PHY_ComposantePion::CanCollectCasualties , &PHY_ComposanteTypePion::CanCollectCasualties  );
-    PHY_ComposanteUsePredicate doctorUsePred    ( &PHY_ComposantePion::CanDiagnoseHumans    , &PHY_ComposanteTypePion::CanDiagnoseHumans     );
-
+    PHY_ComposanteUsePredicate doctorUsePred( &PHY_ComposantePion::CanDiagnoseHumans    , &PHY_ComposanteTypePion::CanDiagnoseHumans     );
     MT_Float rEvacuationRatio = GetAvailabilityRatio( evacuationUsePred );
     MT_Float rCollectionRatio = GetAvailabilityRatio( collectionUsePred );
-    MT_Float rDoctorsRatio    = GetAvailabilityRatio( doctorUsePred     );
-
+    MT_Float rDoctorsRatio = GetAvailabilityRatio( doctorUsePred );
     bHasChanged_ = true;
     composante.StartUsingForLogistic();
-
     if( PHY_MedicalResourcesAlarms::IsEvacuationResourcesLevelReached( rEvacuationRatio, GetAvailabilityRatio( evacuationUsePred ) ) )
         MIL_Report::PostEvent( pion_, MIL_Report::eReport_EvacuationResourcesLevelReached );
     if( PHY_MedicalResourcesAlarms::IsCollectionResourcesLevelReached( rCollectionRatio, GetAvailabilityRatio( collectionUsePred ) ) )
@@ -865,10 +796,6 @@ void PHY_RolePionLOG_Medical::StopUsingForLogistic( PHY_ComposantePion& composan
     composante.StopUsingForLogistic();
 }
 
-// =============================================================================
-// NETWORK
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: SendComposanteUse
 // Created: NLD 2005-01-05
@@ -878,17 +805,16 @@ void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, Msgs
 {
     if( data.empty() )
         return;
-
     for( PHY_Composante_ABC::CIT_ComposanteUseMap itData = data.begin(); itData != data.end(); ++itData )
     {
         MsgsSimToClient::MsgLogMedicalEquipmentAvailability& data = *asn.add_elem();
         data.set_type_equipement( itData->first->GetMosID().equipment() );
         assert( itData->second.nNbrTotal_ );
 
-        data.set_nbr_total       ( itData->second.nNbrTotal_ );
-        data.set_nbr_au_travail  ( itData->second.nNbrUsed_ );
-        data.set_nbr_disponibles ( itData->second.nNbrAvailable_ - itData->second.nNbrUsed_ ); // nNbrAvailableAllowedToWork
-        data.set_nbr_pretes      ( itData->second.nNbrLent_ );
+        data.set_nbr_total( itData->second.nNbrTotal_ );
+        data.set_nbr_au_travail( itData->second.nNbrUsed_ );
+        data.set_nbr_disponibles( itData->second.nNbrAvailable_ - itData->second.nNbrUsed_ ); // nNbrAvailableAllowedToWork
+        data.set_nbr_pretes( itData->second.nNbrLent_ );
     }
 }
 
@@ -901,35 +827,25 @@ void PHY_RolePionLOG_Medical::SendFullState( client::UnitAttributes& /*asnUnit*/
     client::LogMedicalState asn;
     asn().set_oid_pion( pion_.GetID() );
     asn().set_chaine_activee( bSystemEnabled_ );
-
     if( !priorities_.empty() )
         for( CIT_MedicalPriorityVector itPriority = priorities_.begin(); itPriority != priorities_.end(); ++itPriority )
             asn().mutable_priorites()->add_elem( (**itPriority).GetAsnID() );
-
     if( !tacticalPriorities_.empty() )
         for( CIT_AutomateVector itPriority = tacticalPriorities_.begin(); itPriority != tacticalPriorities_.end(); ++itPriority )
             asn().mutable_priorites_tactiques()->add_elem()->set_oid( (**itPriority).GetID() );
-
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
     PHY_ComposanteUsePredicate predicate1( &PHY_ComposantePion::CanEvacuateCasualties, &PHY_ComposanteTypePion::CanEvacuateCasualties );
         ExecuteOnComponentsAndLendedComponents( predicate1, composanteUse );
-
     SendComposanteUse( composanteUse, *asn().mutable_disponibilites_ambulances_releve() );
-
     composanteUse.clear();
     PHY_ComposanteUsePredicate predicate2( &PHY_ComposantePion::CanCollectCasualties, &PHY_ComposanteTypePion::CanCollectCasualties );
     ExecuteOnComponentsAndLendedComponents( predicate2, composanteUse );
-
     SendComposanteUse( composanteUse, *asn().mutable_disponibilites_ambulances_ramassage() );
-
     composanteUse.clear();
     PHY_ComposanteUsePredicate predicate3( &PHY_ComposantePion::CanDiagnoseHumans, &PHY_ComposanteTypePion::CanDiagnoseHumans );
     ExecuteOnComponentsAndLendedComponents( predicate3, composanteUse );
-
     SendComposanteUse( composanteUse, *asn().mutable_disponibilites_medecins() );
-
     asn.Send( NET_Publisher_ABC::Publisher() );
-
     if( asn().priorites().elem_size() > 0 )
         asn().mutable_priorites()->Clear();
     if( asn().priorites_tactiques().elem_size() > 0 )
@@ -1017,7 +933,7 @@ void PHY_RolePionLOG_Medical::DisableSortingFunction()
 void PHY_RolePionLOG_Medical::EnableSystem()
 {
     bSystemEnabled_ = true;
-    bHasChanged_    = true;
+    bHasChanged_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -1027,7 +943,7 @@ void PHY_RolePionLOG_Medical::EnableSystem()
 void PHY_RolePionLOG_Medical::DisableSystem()
 {
     bSystemEnabled_ = false;
-    bHasChanged_    = true;
+    bHasChanged_ = true;
 }
 
 // -----------------------------------------------------------------------------

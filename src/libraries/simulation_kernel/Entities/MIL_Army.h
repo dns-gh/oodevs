@@ -41,6 +41,7 @@ class MIL_Population;
 class MIL_Object_ABC;
 class MIL_ObjectManager;
 class PopulationFactory_ABC;
+class MIL_Automate;
 
 // =============================================================================
 // @class  MIL_Army

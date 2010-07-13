@@ -19,6 +19,7 @@ class PHY_ComposantePion;
 class PHY_MaintenanceConsign_ABC;
 class PHY_Breakdown;
 class MIL_Agent_ABC;
+class MIL_Automate;
 
 // =============================================================================
 // @class  PHY_MaintenanceComposanteState
@@ -29,8 +30,9 @@ class PHY_MaintenanceComposanteState : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-     PHY_MaintenanceComposanteState( MIL_Agent_ABC& pion, PHY_ComposantePion& composante );
-     PHY_MaintenanceComposanteState();    virtual ~PHY_MaintenanceComposanteState();
+              PHY_MaintenanceComposanteState( MIL_Agent_ABC& pion, PHY_ComposantePion& composante );
+              PHY_MaintenanceComposanteState();
+     virtual ~PHY_MaintenanceComposanteState();
     //@}
 
     //! @name CheckPoints
@@ -43,22 +45,22 @@ public:
 
     //! @name Accessors
     //@{
-    const MIL_Automate&       GetAutomate           () const;
-    const PHY_ComposantePion& GetComposante         () const;
-    const PHY_Breakdown&      GetComposanteBreakdown() const;
-    const MT_Vector2D&        GetComposantePosition () const;
-          void                SetComposantePosition ( const MT_Vector2D& vPosition );
-    const MT_Vector2D&        GetPionPosition       () const;
-          unsigned int                ApproximateTravelTime ( const MT_Vector2D& vSourcePos, const MT_Vector2D& vTargetPos ) const;
-          bool                NeedDiagnosis         () const;
-          void                NotifyDiagnosed       ();
+    const MIL_Automate& GetAutomate() const;
+    const PHY_ComposantePion& GetComposante() const;
+    const PHY_Breakdown& GetComposanteBreakdown() const;
+    const MT_Vector2D& GetComposantePosition() const;
+    void SetComposantePosition( const MT_Vector2D& vPosition );
+    const MT_Vector2D& GetPionPosition() const;
+    unsigned int ApproximateTravelTime ( const MT_Vector2D& vSourcePos, const MT_Vector2D& vTargetPos ) const;
+    bool NeedDiagnosis() const;
+    void NotifyDiagnosed();
     //@}
 
     //! @name Operations
     //@{
     void NotifyHandledByMaintenance();
-    void NotifyRepaired            ();
-    void Cancel                    ();
+    void NotifyRepaired();
+    void Cancel();
     //@}
 
     //! @name Consign
@@ -69,28 +71,28 @@ public:
     //! @name Network
     //@{
     void SendChangedState() const;
-    void SendFullState   () const;
-    void Clean           ();
+    void SendFullState() const;
+    void Clean();
     //@}
 
 private:
     //! @name Network tools
     //@{
-    void SendMsgCreation   () const;
+    void SendMsgCreation() const;
     void SendMsgDestruction() const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    const unsigned int                        nID_;
-    const unsigned int                        nCreationTick_;
-          MIL_Agent_ABC*              pPion_;
-          PHY_ComposantePion*         pComposante_;
-          PHY_MaintenanceConsign_ABC* pConsign_;
-          MT_Vector2D                 vComposantePosition_; // Position de la composante lors de son traitement dans la chaine maintenance
-          bool                        bHasChanged_;
-          bool                        bDiagnosed_;
+    const unsigned int nID_;
+    const unsigned int nCreationTick_;
+    MIL_Agent_ABC* pPion_;
+    PHY_ComposantePion* pComposante_;
+    PHY_MaintenanceConsign_ABC* pConsign_;
+    MT_Vector2D vComposantePosition_; // Position de la composante lors de son traitement dans la chaine maintenance
+    bool bHasChanged_;
+    bool bDiagnosed_;
     static MIL_IDManager idManager_;
     //@}
 };

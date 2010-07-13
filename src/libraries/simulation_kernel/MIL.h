@@ -20,11 +20,6 @@ typedef std::vector< const PHY_ComposanteTypePion* >   T_MaintenancePriorityVect
 typedef T_MaintenancePriorityVector::iterator         IT_MaintenancePriorityVector;
 typedef T_MaintenancePriorityVector::const_iterator  CIT_MaintenancePriorityVector;
 
-class MIL_Automate;
-typedef std::vector< const MIL_Automate* >   T_AutomateVector;
-typedef T_AutomateVector::iterator          IT_AutomateVector;
-typedef T_AutomateVector::const_iterator   CIT_AutomateVector;
-
 class PHY_HumanWound;
 typedef std::vector< const PHY_HumanWound* >       T_MedicalPriorityVector;
 typedef T_MedicalPriorityVector::iterator         IT_MedicalPriorityVector;

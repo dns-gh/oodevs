@@ -23,6 +23,7 @@ class PHY_ComposanteTypePion;
 class PHY_Breakdown;
 class MIL_AgentPionLOG_ABC;
 class MIL_AutomateLOG;
+class MIL_Automate;
 // =============================================================================
 // @class  PHY_RoleInterface_Maintenance
 // Created: JVT 2004-08-03
@@ -34,6 +35,8 @@ public:
     //! @name Types
     //@{
     typedef PHY_RoleInterface_Maintenance RoleInterface;
+
+    typedef std::vector< const MIL_Automate* > T_AutomateVector;
     //@}
 
 public:

@@ -20,9 +20,10 @@ namespace xml
 
 class MIL_Army_ABC;
 class PHY_NatureLevel;
-
 class FormationFactory_ABC;
 class AutomateFactory_ABC;
+class MIL_Automate;
+
 // =============================================================================
 /** @class  MIL_Formation
     @brief  MIL_Formation
@@ -46,16 +47,16 @@ public:
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
 
-    void WriteODB             ( xml::xostream& xos ) const;
+    void WriteODB( xml::xostream& xos ) const;
     void WriteLogisticLinksODB( xml::xostream& xos ) const;
     //@}
 
     //! @name Hierarchy
     //@{
-    void RegisterAutomate   ( MIL_Automate& automate );
-    void UnregisterAutomate ( MIL_Automate& automate );
+    void RegisterAutomate( MIL_Automate& automate );
+    void UnregisterAutomate( MIL_Automate& automate );
 
-    void RegisterFormation  ( MIL_Formation& formation );
+    void RegisterFormation( MIL_Formation& formation );
     void UnregisterFormation( MIL_Formation& formation );
 
     //@}
@@ -68,7 +69,7 @@ public:
 
     //! @name Network
     //@{
-    void SendCreation () const;
+    void SendCreation() const;
     void SendFullState() const;
     //@}
 
@@ -88,11 +89,11 @@ private:
 private:
     //! @name Attributes
     //@{
-          unsigned int      nID_;
-          MIL_Army_ABC*     pArmy_;
-          MIL_Formation*    pParent_;
-    const PHY_NatureLevel*  pLevel_;
-          std::string       strName_;
+    unsigned int nID_;
+    MIL_Army_ABC* pArmy_;
+    MIL_Formation* pParent_;
+    const PHY_NatureLevel* pLevel_;
+    std::string strName_;
     //@}
 };
 

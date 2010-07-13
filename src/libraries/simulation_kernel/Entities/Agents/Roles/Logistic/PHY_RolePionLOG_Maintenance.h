@@ -37,8 +37,11 @@ class PHY_RolePionLOG_Maintenance : public PHY_RoleInterface_Maintenance
                                   , public network::NetworkUnitMessageNotificationHandler_ABC
 {
 public:
+    //! @name Constructor/Destructor
+    //@{
     explicit PHY_RolePionLOG_Maintenance( MIL_AgentPionLOG_ABC& pion );
     virtual ~PHY_RolePionLOG_Maintenance();
+    //@}
 
     //! @name CheckPoints
     //@{
@@ -51,60 +54,63 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Update        ( bool bIsDead );
+    virtual void Update( bool bIsDead );
     virtual void UpdateLogistic( bool bIsDead );
-    virtual void Clean         ();
+    virtual void Clean();
 
     virtual void EnableSystem ();
     virtual void DisableSystem();
 
     virtual void ChangePriorities( const T_MaintenancePriorityVector& priorities );
-    virtual void ChangePriorities( const T_AutomateVector&            priorities );
-    virtual void ChangeWorkRate  ( const PHY_MaintenanceWorkRate&     workRate   );
+    virtual void ChangePriorities( const T_AutomateVector& priorities );
+    virtual void ChangeWorkRate( const PHY_MaintenanceWorkRate& workRate );
 
-    virtual PHY_MaintenanceComposanteState* HandleComposanteForTransport    ( MIL_Agent_ABC& pion, PHY_ComposantePion& composante );
-    virtual bool                            HandleComposanteForTransport    ( PHY_MaintenanceComposanteState& composanteState );
-    virtual int                             GetAvailabilityScoreForTransport( const PHY_ComposantePion& composante );
+    virtual PHY_MaintenanceComposanteState* HandleComposanteForTransport( MIL_Agent_ABC& pion, PHY_ComposantePion& composante );
+    virtual bool HandleComposanteForTransport( PHY_MaintenanceComposanteState& composanteState );
+    virtual int GetAvailabilityScoreForTransport( const PHY_ComposantePion& composante );
 
-    virtual bool                            HandleComposanteForRepair    ( PHY_MaintenanceComposanteState& composanteState );
-    virtual int                             GetAvailabilityScoreForRepair( PHY_MaintenanceComposanteState& composanteState );
+    virtual bool HandleComposanteForRepair( PHY_MaintenanceComposanteState& composanteState );
+    virtual int GetAvailabilityScoreForRepair( PHY_MaintenanceComposanteState& composanteState );
 
     virtual void NotifyComponentHasChanged();
     //@}
 
     //! @name Tools
     //@{
-    virtual PHY_ComposantePion* GetAvailableHauler      ( const PHY_ComposanteTypePion& composanteType ) const;
-    virtual PHY_ComposantePion* GetAvailableRepairer    ( const PHY_Breakdown& breakdown ) const;
-    virtual bool                HasUsableRepairer       ( const PHY_Breakdown& breakdown ) const;
-    virtual bool                ConsumePartsForBreakdown( const PHY_Breakdown& breakdown );
+    virtual PHY_ComposantePion* GetAvailableHauler( const PHY_ComposanteTypePion& composanteType ) const;
+    virtual PHY_ComposantePion* GetAvailableRepairer( const PHY_Breakdown& breakdown ) const;
+    virtual bool HasUsableRepairer( const PHY_Breakdown& breakdown ) const;
+    virtual bool ConsumePartsForBreakdown( const PHY_Breakdown& breakdown );
 
     virtual void StartUsingForLogistic( PHY_ComposantePion& composante );
-    virtual void StopUsingForLogistic ( PHY_ComposantePion& composante );
+    virtual void StopUsingForLogistic( PHY_ComposantePion& composante );
     //@}
 
     //! @name Accessors
     //@{
-    virtual MIL_AutomateLOG&      GetAutomate() const;
-    virtual const MIL_AgentPionLOG_ABC& GetPion    () const;
+    virtual MIL_AutomateLOG& GetAutomate() const;
+    virtual const MIL_AgentPionLOG_ABC& GetPion() const;
     //@}
 
     //! @name Network
     //@{
     virtual void SendChangedState( client::UnitAttributes& asnUnit ) const;
-    virtual void SendFullState   ( client::UnitAttributes& asnUnit ) const;
+    virtual void SendFullState( client::UnitAttributes& asnUnit ) const;
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::list< PHY_MaintenanceConsign_ABC* >  T_MaintenanceConsignList;
+    typedef std::list< PHY_MaintenanceConsign_ABC* >   T_MaintenanceConsignList;
     typedef T_MaintenanceConsignList::iterator        IT_MaintenanceConsignList;
-    typedef T_MaintenanceConsignList::const_iterator  CIT_MaintenanceConsignList;
+    typedef T_MaintenanceConsignList::const_iterator CIT_MaintenanceConsignList;
 
     typedef std::vector< std::pair< const MIL_Automate*, T_MaintenanceConsignList > > T_MaintenanceConsigns;
-    typedef T_MaintenanceConsigns::iterator                                           IT_MaintenanceConsigns;
-    typedef T_MaintenanceConsigns::const_iterator                                     CIT_MaintenanceConsigns;
+    typedef T_MaintenanceConsigns::iterator                                          IT_MaintenanceConsigns;
+    typedef T_MaintenanceConsigns::const_iterator                                   CIT_MaintenanceConsigns;
+
+    typedef std::vector< const MIL_Automate* > T_AutomateVector;
+    typedef T_AutomateVector::const_iterator CIT_AutomateVector;
     //@}
 
 private:
@@ -113,21 +119,24 @@ private:
     void InsertConsign ( PHY_MaintenanceConsign_ABC& consign );
     void InsertConsigns( const T_MaintenanceConsigns& );
 
-    bool     HasUsableHauler                      ( const PHY_ComposanteTypePion& composanteType ) const;
-    unsigned int     GetNbrAvailableRepairersAllowedToWork( const PHY_Breakdown& breakdown ) const;
-    MT_Float GetAvailabilityRatio                 ( PHY_ComposanteUsePredicate& predicate, const PHY_MaintenanceWorkRate* pWorkRate = 0 ) const;
+    bool HasUsableHauler( const PHY_ComposanteTypePion& composanteType ) const;
+    unsigned int GetNbrAvailableRepairersAllowedToWork( const PHY_Breakdown& breakdown ) const;
+    MT_Float GetAvailabilityRatio( PHY_ComposanteUsePredicate& predicate, const PHY_MaintenanceWorkRate* pWorkRate = 0 ) const;
     //@}
 
 private:
-          MIL_AgentPionLOG_ABC&       pion_;
-          bool                        bHasChanged_;
-          bool                        bExternalMustChangeState_;
-          bool                        bSystemEnabled_;
-    const PHY_MaintenanceWorkRate*    pWorkRate_;
-          unsigned int                        nWorkRateWarningRCTick_;
-          T_MaintenancePriorityVector priorities_;
-          T_AutomateVector            tacticalPriorities_;
-          T_MaintenanceConsigns       consigns_;
+    //! @name Member data
+    //@{
+    MIL_AgentPionLOG_ABC& pion_;
+    bool bHasChanged_;
+    bool bExternalMustChangeState_;
+    bool bSystemEnabled_;
+    const PHY_MaintenanceWorkRate* pWorkRate_;
+    unsigned int nWorkRateWarningRCTick_;
+    T_MaintenancePriorityVector priorities_;
+    T_AutomateVector tacticalPriorities_;
+    T_MaintenanceConsigns consigns_;
+    //@}
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePionLOG_Maintenance* role, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePionLOG_Maintenance* role, const unsigned int /*version*/ );

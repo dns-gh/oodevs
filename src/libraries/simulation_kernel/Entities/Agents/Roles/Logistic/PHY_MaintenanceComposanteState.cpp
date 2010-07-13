@@ -67,10 +67,6 @@ PHY_MaintenanceComposanteState::~PHY_MaintenanceComposanteState()
     SendMsgDestruction();
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceComposanteState::load
 // Created: JVT 2005-04-11
@@ -101,10 +97,6 @@ void PHY_MaintenanceComposanteState::save( MIL_CheckPointOutArchive& file, const
          << vComposantePosition_
          << bDiagnosed_;
 }
-
-// =============================================================================
-// ACCESSORS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceComposanteState::GetPionPosition
@@ -178,10 +170,6 @@ const MIL_Automate& PHY_MaintenanceComposanteState::GetAutomate() const
     assert( pPion_ );
     return pPion_->GetAutomate();
 }
-
-// =============================================================================
-// NETWORK
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceComposanteState::SendFullState

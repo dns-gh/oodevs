@@ -25,6 +25,7 @@ namespace Common
 class DEC_AutomateDecision;
 class MIL_ObjectType_ABC;
 class MIL_EntityManager_ABC;
+class MIL_Automate;
 
 // =============================================================================
 /** @class  DEC_Gen_Object
@@ -52,12 +53,12 @@ public:
 
     //! @name Accessors
     //@{
-    const std::string&        GetTypeName         () const;
-    const TER_Localisation&   GetLocalisation     () const;
-    E_DemolitionTargetType    GetObstacleType     () const;
-          MT_Float            GetDensity          () const;
-          unsigned int        GetMinesActivityTime() const;
-    const MIL_Automate*       GetTC2              () const;
+    const std::string& GetTypeName() const;
+    const TER_Localisation& GetLocalisation() const;
+    E_DemolitionTargetType GetObstacleType() const;
+    MT_Float GetDensity() const;
+    unsigned int GetMinesActivityTime() const;
+    const MIL_Automate* GetTC2() const;
     //@}
 
     //! @name Operations

@@ -58,15 +58,12 @@ void load_construct_data( Archive& archive, PHY_RolePionLOG_Maintenance* role, c
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RolePionLOG_Maintenance::PHY_RolePionLOG_Maintenance( MIL_AgentPionLOG_ABC& pion )
-    : pion_                   ( pion )
-    , bHasChanged_            ( true )
+    : pion_                    ( pion )
+    , bHasChanged_             ( true )
     , bExternalMustChangeState_( false )
-    , bSystemEnabled_         ( false )
-    , priorities_             ()
-    , tacticalPriorities_     ()
-    , consigns_               ()
-    , pWorkRate_              ( &PHY_MaintenanceWorkRate::r1_ )
-    , nWorkRateWarningRCTick_ ( 0 )
+    , bSystemEnabled_          ( false )
+    , pWorkRate_               ( &PHY_MaintenanceWorkRate::r1_ )
+    , nWorkRateWarningRCTick_  ( 0 )
 {
     consigns_.push_back( std::make_pair( (const MIL_Automate*)0, T_MaintenanceConsignList() ) );
 }
@@ -78,16 +75,16 @@ PHY_RolePionLOG_Maintenance::PHY_RolePionLOG_Maintenance( MIL_AgentPionLOG_ABC& 
 // -----------------------------------------------------------------------------
 PHY_RolePionLOG_Maintenance::~PHY_RolePionLOG_Maintenance()
 {
+    // NOTHING
 }
 
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 namespace boost
 {
     namespace serialization
     {
+        typedef std::vector< const MIL_Automate* > T_AutomateVector;
+        typedef T_AutomateVector::const_iterator CIT_AutomateVector;
+
         // =============================================================================
         // T_MaintenancePriorityVector
         // =============================================================================
@@ -172,12 +169,10 @@ void PHY_RolePionLOG_Maintenance::load( MIL_CheckPointInArchive& file, const uns
          >> bSystemEnabled_
          >> priorities_
          >> tacticalPriorities_;
-
     Common::EnumLogMaintenanceRegimeTravail nID;
     file >> nID;
     pWorkRate_ = PHY_MaintenanceWorkRate::Find( nID );
     file >> nWorkRateWarningRCTick_;
-
     unsigned int nNbr;
     file >> nNbr;
     consigns_.reserve( nNbr );
@@ -185,9 +180,7 @@ void PHY_RolePionLOG_Maintenance::load( MIL_CheckPointInArchive& file, const uns
     {
         MIL_Automate* pAutomate;
         file >> pAutomate;
-
         consigns_.push_back( std::make_pair( pAutomate, T_MaintenanceConsignList() ) );
-
         file >> consigns_.back().second;
     }
 }
@@ -199,14 +192,12 @@ void PHY_RolePionLOG_Maintenance::load( MIL_CheckPointInArchive& file, const uns
 void PHY_RolePionLOG_Maintenance::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     Common::EnumLogMaintenanceRegimeTravail workRate = pWorkRate_->GetAsnID();
-
     file << boost::serialization::base_object< PHY_RoleInterface_Maintenance >( *this )
          << bSystemEnabled_
          << priorities_
          << tacticalPriorities_
          << workRate
          << nWorkRateWarningRCTick_;
-
     unsigned size = consigns_.size();
     file << size;
     for ( CIT_MaintenanceConsigns it = consigns_.begin(); it != consigns_.end(); ++it )
@@ -214,9 +205,6 @@ void PHY_RolePionLOG_Maintenance::save( MIL_CheckPointOutArchive& file, const un
 
 }
 
-// =============================================================================
-// TOOLS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Maintenance::GetAvailabilityRatio
@@ -224,11 +212,8 @@ void PHY_RolePionLOG_Maintenance::save( MIL_CheckPointOutArchive& file, const un
 // -----------------------------------------------------------------------------
 MT_Float PHY_RolePionLOG_Maintenance::GetAvailabilityRatio( PHY_ComposanteUsePredicate& predicate, const PHY_MaintenanceWorkRate* pWorkRate ) const
 {
-
-
-    unsigned int nNbrTotal                  = 0;
+    unsigned int nNbrTotal = 0;
     unsigned int nNbrAvailableAllowedToWork = 0;
-
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
     GetComponentUseFunctor functorOnComponent( predicate, composanteUse );
     std::auto_ptr< OnComponentComputer_ABC > componentComputer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functorOnComponent ) );
@@ -236,10 +221,9 @@ MT_Float PHY_RolePionLOG_Maintenance::GetAvailabilityRatio( PHY_ComposanteUsePre
     GetComponentLendedUseFunctor functorOnLendedComponent( predicate, composanteUse );
     std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComponent( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functorOnLendedComponent ) );
     pion_.Execute( *lendedComponent );
-
     for( PHY_Composante_ABC::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
     {
-        nNbrTotal                  += it->second.nNbrTotal_;
+        nNbrTotal += it->second.nNbrTotal_;
         if( pWorkRate )
         {
             const unsigned int nNbrAllowedToWork = pWorkRate_->GetNbrWorkerAllowedToWork( it->second.nNbrAvailable_ );
@@ -249,7 +233,6 @@ MT_Float PHY_RolePionLOG_Maintenance::GetAvailabilityRatio( PHY_ComposanteUsePre
         else
             nNbrAvailableAllowedToWork += ( it->second.nNbrAvailable_ - it->second.nNbrUsed_ );
     }
-
     if( nNbrTotal == 0 )
         return 1.;
     return (MT_Float)nNbrAvailableAllowedToWork / (MT_Float)nNbrTotal;
@@ -262,14 +245,11 @@ MT_Float PHY_RolePionLOG_Maintenance::GetAvailabilityRatio( PHY_ComposanteUsePre
 void PHY_RolePionLOG_Maintenance::StartUsingForLogistic( PHY_ComposantePion& composante )
 {
     PHY_ComposanteUsePredicate repairerUsePred( &PHY_ComposantePion::CanRepair, &PHY_ComposanteTypePion::CanRepair );
-    PHY_ComposanteUsePredicate haulerUsePred  ( &PHY_ComposantePion::CanHaul  , &PHY_ComposanteTypePion::CanHaul   );
-
+    PHY_ComposanteUsePredicate haulerUsePred( &PHY_ComposantePion::CanHaul  , &PHY_ComposanteTypePion::CanHaul );
     MT_Float rRepairerRatio = GetAvailabilityRatio( repairerUsePred, pWorkRate_ );
-    MT_Float rHaulerRatio   = GetAvailabilityRatio( haulerUsePred   );
-
+    MT_Float rHaulerRatio = GetAvailabilityRatio( haulerUsePred   );
     bHasChanged_ = true;
     composante.StartUsingForLogistic();
-
     if( PHY_MaintenanceResourcesAlarms::IsRepairerResourcesLevelReached( rRepairerRatio, GetAvailabilityRatio( repairerUsePred, pWorkRate_ ) ) )
         MIL_Report::PostEvent( pion_, MIL_Report::eReport_RepairerResourcesLevelReached );
     if( PHY_MaintenanceResourcesAlarms::IsHaulerResourcesLevelReached( rHaulerRatio, GetAvailabilityRatio( haulerUsePred ) ) )
@@ -291,7 +271,6 @@ void PHY_RolePionLOG_Maintenance::StopUsingForLogistic( PHY_ComposantePion& comp
 // =============================================================================
 class AvailableHaulerComputer : public OnComponentFunctor_ABC
 {
-
 public:
     AvailableHaulerComputer( const PHY_ComposanteTypePion& composanteType )
         : rScore_( std::numeric_limits< MT_Float >::max() )
@@ -299,7 +278,6 @@ public:
         , pSelectedHauler_( 0 )
     {
     }
-
     void operator() ( PHY_ComposantePion& composante )
     {
         if( !composante.CanHaul( composanteType_ ) )
@@ -309,11 +287,10 @@ public:
         assert( rNewScore >= 0. );
         if( rNewScore < rScore_ )
         {
-            rScore_          = rNewScore;
+            rScore_ = rNewScore;
             pSelectedHauler_ = &composante;
         }
     }
-
     double rScore_;
     const PHY_ComposanteTypePion& composanteType_;
     PHY_ComposantePion* pSelectedHauler_;
@@ -348,7 +325,6 @@ bool PHY_RolePionLOG_Maintenance::HasUsableHauler( const PHY_ComposanteTypePion&
 // -----------------------------------------------------------------------------
 unsigned int PHY_RolePionLOG_Maintenance::GetNbrAvailableRepairersAllowedToWork( const PHY_Breakdown& breakdown ) const
 {
-
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
     PHY_ComposanteUsePredicate1< PHY_Breakdown > predicate( &PHY_ComposantePion::CanRepair, &PHY_ComposanteTypePion::CanRepair, breakdown );
     GetComponentUseFunctor functorOnComponent( predicate, composanteUse );
@@ -357,7 +333,6 @@ unsigned int PHY_RolePionLOG_Maintenance::GetNbrAvailableRepairersAllowedToWork(
     GetComponentLendedUseFunctor functorOnLendedComponent( predicate, composanteUse );
     std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functorOnLendedComponent ) );
     pion_.Execute( *lendedComputer );
-
     unsigned int nNbrAvailableAllowedToWork = 0;
     assert( pWorkRate_ );
     for( PHY_Composante_ABC::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
@@ -366,7 +341,6 @@ unsigned int PHY_RolePionLOG_Maintenance::GetNbrAvailableRepairersAllowedToWork(
         if( nNbrAllowedToWork > it->second.nNbrUsed_ )
             nNbrAvailableAllowedToWork += ( nNbrAllowedToWork - it->second.nNbrUsed_ );
     }
-
     return nNbrAvailableAllowedToWork;
 }
 
@@ -376,7 +350,6 @@ unsigned int PHY_RolePionLOG_Maintenance::GetNbrAvailableRepairersAllowedToWork(
 // -----------------------------------------------------------------------------
 PHY_ComposantePion* PHY_RolePionLOG_Maintenance::GetAvailableRepairer( const PHY_Breakdown& breakdown ) const
 {
-
     PHY_ComposantePredicate1< PHY_Breakdown > predicate( &PHY_ComposantePion::CanRepair, breakdown );
     GetComponentFunctor functor( predicate );
     std::auto_ptr< OnComponentComputer_ABC > computer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
@@ -408,14 +381,12 @@ bool PHY_RolePionLOG_Maintenance::ConsumePartsForBreakdown( const PHY_Breakdown&
 {
     std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( pion_.GetAlgorithms().dotationComputerFactory_->Create() );
     pion_.Execute( *dotationComputer );//@TODO MGD move execute for all computer in factories create
-
     const PHY_BreakdownType::T_PartMap& parts = breakdown.GetNeededParts();
     for( PHY_BreakdownType::CIT_PartMap it = parts.begin(); it != parts.end(); ++it )
     {
         if( dotationComputer->GetDotationValue( *it->first ) < it->second )
             return false;
     }
-
     for( PHY_BreakdownType::CIT_PartMap it = parts.begin(); it != parts.end(); ++it )
     {
 //        unsigned int nOut = (unsigned int)roleDotations.ConsumeDotation( *it->first, it->second );
@@ -431,13 +402,8 @@ bool PHY_RolePionLOG_Maintenance::ConsumePartsForBreakdown( const PHY_Breakdown&
 // -----------------------------------------------------------------------------
 MIL_AutomateLOG& PHY_RolePionLOG_Maintenance::GetAutomate() const
 {
-
     return pion_.GetLogAutomate();
 }
-
-// =============================================================================
-// CONSIGN MANAGEMENT
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Maintenance::ChangeWorkRate
@@ -445,9 +411,8 @@ MIL_AutomateLOG& PHY_RolePionLOG_Maintenance::GetAutomate() const
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Maintenance::ChangeWorkRate( const PHY_MaintenanceWorkRate& workRate )
 {
-    pWorkRate_   = &workRate;
+    pWorkRate_ = &workRate;
     bHasChanged_ = true;
-
     if( pWorkRate_->GetDelayBeforeWarningRC() == std::numeric_limits< unsigned int >::max() )
         nWorkRateWarningRCTick_ = 0;
     else
@@ -473,15 +438,12 @@ void PHY_RolePionLOG_Maintenance::InsertConsigns( const T_MaintenanceConsigns& o
 void PHY_RolePionLOG_Maintenance::ChangePriorities( const T_AutomateVector& priorities )
 {
     T_MaintenanceConsigns oldConsigns = consigns_;
-
     consigns_.clear(); consigns_.reserve( priorities.size() + 1 );
     for ( CIT_AutomateVector it = priorities.begin(); it != priorities.end(); ++it )
         consigns_.push_back( std::make_pair( *it, T_MaintenanceConsignList() ) );
     consigns_.push_back( std::make_pair( (const MIL_Automate*)0, T_MaintenanceConsignList() ) );
-
     tacticalPriorities_ = priorities;
-    bHasChanged_        = true;
-
+    bHasChanged_ = true;
     InsertConsigns( oldConsigns );
 }
 
@@ -492,13 +454,10 @@ void PHY_RolePionLOG_Maintenance::ChangePriorities( const T_AutomateVector& prio
 void PHY_RolePionLOG_Maintenance::ChangePriorities( const T_MaintenancePriorityVector& priorities )
 {
     T_MaintenanceConsigns oldConsigns = consigns_;
-
     for ( IT_MaintenanceConsigns it = consigns_.begin(); it != consigns_.end(); ++it )
         it->second.clear();
-
-    priorities_  = priorities;
+    priorities_ = priorities;
     bHasChanged_ = true;
-
     InsertConsigns( oldConsigns );
 }
 
@@ -523,14 +482,12 @@ void PHY_RolePionLOG_Maintenance::InsertConsign( PHY_MaintenanceConsign_ABC& con
     for( const MIL_Automate* pAutomate = &consign.GetComposanteState().GetAutomate(); itTact != consigns_.end(); ++itTact )
         if( pAutomate == itTact->first || ( pAutomate->GetTC2() && pAutomate->GetTC2() == itTact->first ) )
             break;
-
     if( itTact == consigns_.end() )
     {
         assert( !consigns_.empty() );
         itTact = consigns_.end() - 1;
         assert( itTact->first == 0 );
     }
-
     IT_MaintenancePriorityVector itPriorityLowerBound = std::find( priorities_.begin(), priorities_.end(), &consign.GetComposanteType() );
     if( itPriorityLowerBound == priorities_.end() )
         itTact->second.push_back( &consign );
@@ -542,10 +499,6 @@ void PHY_RolePionLOG_Maintenance::InsertConsign( PHY_MaintenanceConsign_ABC& con
     }
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Maintenance::HandleComposanteForTransport
 // Created: NLD 2004-12-28
@@ -553,10 +506,8 @@ void PHY_RolePionLOG_Maintenance::InsertConsign( PHY_MaintenanceConsign_ABC& con
 PHY_MaintenanceComposanteState* PHY_RolePionLOG_Maintenance::HandleComposanteForTransport( MIL_Agent_ABC& pion, PHY_ComposantePion& composante )
 {
     assert( composante.GetBreakdown() );
-
     if( !bSystemEnabled_ || ( composante.GetBreakdown()->AffectMobility() && !HasUsableHauler( composante.GetType() ) ) )
         return 0;
-
     PHY_MaintenanceComposanteState* pComposanteState = new PHY_MaintenanceComposanteState( pion, composante );
     PHY_MaintenanceTransportConsign* pConsign = new PHY_MaintenanceTransportConsign( pion_, *pComposanteState );
     InsertConsign( *pConsign );
@@ -571,7 +522,6 @@ bool PHY_RolePionLOG_Maintenance::HandleComposanteForTransport( PHY_MaintenanceC
 {
     if( !bSystemEnabled_ || ( composanteState.GetComposanteBreakdown().AffectMobility() && !HasUsableHauler( composanteState.GetComposante().GetType() ) ) )
         return false;
-
     PHY_MaintenanceTransportConsign* pConsign = new PHY_MaintenanceTransportConsign( pion_, composanteState );
     InsertConsign( *pConsign );
     return true;
@@ -585,8 +535,6 @@ int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForTransport( const PHY_Com
 {
     if( !bSystemEnabled_ || ( composante.GetBreakdown()->AffectMobility() && !HasUsableHauler( composante.GetType() ) ) )
         return std::numeric_limits< int >::min();
-
-
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
     PHY_ComposanteUsePredicate1< PHY_ComposanteTypePion > predicate( &PHY_ComposantePion::CanHaul, &PHY_ComposanteTypePion::CanHaul, composante.GetType() );
     GetComponentUseFunctor functorOnComponent( predicate, composanteUse );
@@ -595,11 +543,9 @@ int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForTransport( const PHY_Com
     GetComponentLendedUseFunctor functorOnLendedComponent( predicate, composanteUse );
     std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functorOnLendedComponent ) );
     pion_.Execute( *lendedComputer );
-
     unsigned int nNbrHaulersAvailable = 0;
     for( PHY_Composante_ABC::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
         nNbrHaulersAvailable += ( it->second.nNbrAvailable_ - it->second.nNbrUsed_ );
-
     return nNbrHaulersAvailable;
 }
 
@@ -611,7 +557,6 @@ bool PHY_RolePionLOG_Maintenance::HandleComposanteForRepair( PHY_MaintenanceComp
 {
     if( !bSystemEnabled_ || !HasUsableRepairer( composanteState.GetComposanteBreakdown() ) )
         return false;
-
     PHY_MaintenanceRepairConsign* pConsign = new PHY_MaintenanceRepairConsign( pion_, composanteState );
     InsertConsign( *pConsign );
     return true;
@@ -625,11 +570,8 @@ int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForRepair( PHY_MaintenanceC
 {
     if( !bSystemEnabled_ || !HasUsableRepairer( composanteState.GetComposanteBreakdown() ) )
         return std::numeric_limits< int >::min();
-
     // Parts score
     MT_Float rRatioPartsAvailable = 0.;
-
-
     std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( pion_.GetAlgorithms().dotationComputerFactory_->Create() );
     pion_.Execute( *dotationComputer );
 
@@ -646,7 +588,6 @@ int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForRepair( PHY_MaintenanceC
         rRatioPartsAvailable = 1.;
     else
         rRatioPartsAvailable /= parts.size();
-
     // Repairers score
     return (unsigned int)( GetNbrAvailableRepairersAllowedToWork( composanteState.GetComposanteBreakdown() ) * rRatioPartsAvailable );
 }
@@ -698,10 +639,6 @@ void PHY_RolePionLOG_Maintenance::Clean()
     bExternalMustChangeState_ = false;
 }
 
-// =============================================================================
-// NETWOKR
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: SendComposanteUse
 // Created: NLD 2005-01-05
@@ -717,17 +654,14 @@ void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, Msgs
         MsgsSimToClient::MsgLogMaintenanceEquipmentAvailability& data = *asn.add_elem();
         data.set_type_equipement( itData->first->GetMosID().equipment() );
         assert( itData->second.nNbrTotal_ );
-
-        data.set_nbr_total       ( itData->second.nNbrTotal_ );
-        data.set_nbr_au_travail  ( itData->second.nNbrUsed_ );
-        data.set_nbr_disponibles ( itData->second.nNbrAvailable_ - itData->second.nNbrUsed_ ); // nNbrAvailableAllowedToWork
-        data.set_nbr_pretes      ( itData->second.nNbrLent_ );
-
+        data.set_nbr_total( itData->second.nNbrTotal_ );
+        data.set_nbr_au_travail( itData->second.nNbrUsed_ );
+        data.set_nbr_disponibles( itData->second.nNbrAvailable_ - itData->second.nNbrUsed_ ); // nNbrAvailableAllowedToWork
+        data.set_nbr_pretes( itData->second.nNbrLent_ );
         if( pWorkRate )
         {
-            const unsigned int nNbrAllowedToWork          = pWorkRate->GetNbrWorkerAllowedToWork( itData->second.nNbrAvailable_ );
+            const unsigned int nNbrAllowedToWork = pWorkRate->GetNbrWorkerAllowedToWork( itData->second.nNbrAvailable_ );
             const unsigned int nNbrAvailableAllowedToWork = nNbrAllowedToWork > itData->second.nNbrUsed_ ? nNbrAllowedToWork - itData->second.nNbrUsed_ : 0;
-
             data.set_nbr_disponibles( nNbrAvailableAllowedToWork );
             data.set_nbr_au_repos( itData->second.nNbrAvailable_ - nNbrAvailableAllowedToWork - itData->second.nNbrUsed_ );
         }
@@ -744,15 +678,12 @@ void PHY_RolePionLOG_Maintenance::SendFullState( client::UnitAttributes& /*asnUn
     asn().set_oid_pion( pion_.GetID() );
     asn().set_chaine_activee( bSystemEnabled_ );
     asn().set_regime_travail( pWorkRate_->GetAsnID() );
-
     if( !priorities_.empty() )
         for( CIT_MaintenancePriorityVector itPriority = priorities_.begin(); itPriority != priorities_.end(); ++itPriority )
             asn().mutable_priorites()->add_elem()->set_equipment( (**itPriority).GetMosID().equipment() );
-
     if( !tacticalPriorities_.empty() )
         for( CIT_AutomateVector itPriority = tacticalPriorities_.begin(); itPriority != tacticalPriorities_.end(); ++itPriority )
             asn().mutable_priorites_tactiques()->add_elem()->set_oid( (**itPriority).GetID() );
-
     {
         PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
         PHY_ComposanteUsePredicate predicate( &PHY_ComposantePion::CanHaul, &PHY_ComposanteTypePion::CanHaul );
@@ -762,10 +693,8 @@ void PHY_RolePionLOG_Maintenance::SendFullState( client::UnitAttributes& /*asnUn
         GetComponentLendedUseFunctor functorOnLendedComponent( predicate, composanteUse );
         std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functorOnLendedComponent ) );
         pion_.Execute( *lendedComputer );
-
         SendComposanteUse( composanteUse, *asn().mutable_disponibilites_remorqueurs(), 0 );
     }
-
     {
         PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
         PHY_ComposanteUsePredicate predicate( &PHY_ComposantePion::CanRepair, &PHY_ComposanteTypePion::CanRepair );
@@ -778,7 +707,6 @@ void PHY_RolePionLOG_Maintenance::SendFullState( client::UnitAttributes& /*asnUn
 
         SendComposanteUse( composanteUse, *asn().mutable_disponibilites_reparateurs(), pWorkRate_ );
     }
-
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -809,7 +737,7 @@ const MIL_AgentPionLOG_ABC& PHY_RolePionLOG_Maintenance::GetPion() const
 void PHY_RolePionLOG_Maintenance::EnableSystem()
 {
     bSystemEnabled_ = true;
-    bHasChanged_    = true;
+    bHasChanged_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -819,7 +747,7 @@ void PHY_RolePionLOG_Maintenance::EnableSystem()
 void PHY_RolePionLOG_Maintenance::DisableSystem()
 {
     bSystemEnabled_ = false;
-    bHasChanged_    = true;
+    bHasChanged_ = true;
 }
 
 // -----------------------------------------------------------------------------

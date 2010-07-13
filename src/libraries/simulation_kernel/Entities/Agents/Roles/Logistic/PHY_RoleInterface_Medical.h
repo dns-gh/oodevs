@@ -26,6 +26,7 @@ class PHY_MedicalEvacuationConsign;
 class PHY_MedicalCollectionConsign;
 class PHY_MedicalEvacuationAmbulance;
 class PHY_MedicalCollectionAmbulance;
+class MIL_Automate;
 // =============================================================================
 // @class  PHY_RoleInterface_Medical
 // Created: JVT 2004-08-03
@@ -37,51 +38,56 @@ public:
     //! @name Types
     //@{
     typedef PHY_RoleInterface_Medical RoleInterface;
+
+    typedef std::vector< const MIL_Automate* > T_AutomateVector;
     //@}
 
 public:
+    //! @name Constructors/Destructor
+    //@{
              PHY_RoleInterface_Medical();
     virtual ~PHY_RoleInterface_Medical();
+    //@}
 
     //! @name Operations
     //@{
-    virtual void Update        ( bool bIsDead ) = 0;
+    virtual void Update( bool bIsDead ) = 0;
     virtual void UpdateLogistic( bool bIsDead ) = 0;
-    virtual void Clean         () = 0;
+    virtual void Clean() = 0;
     //@}
 
     //! @name Main
     //@{
-    virtual void EnableSystem          () = 0;
-    virtual void DisableSystem         () = 0;
-    virtual void EnableHealingFunction () = 0;
+    virtual void EnableSystem() = 0;
+    virtual void DisableSystem() = 0;
+    virtual void EnableHealingFunction() = 0;
     virtual void DisableHealingFunction() = 0;
-    virtual void EnableSortingFunction () = 0;
+    virtual void EnableSortingFunction() = 0;
     virtual void DisableSortingFunction() = 0;
 
     virtual void ChangePriorities( const T_MedicalPriorityVector& priorities ) = 0;
     virtual void ChangePriorities( const T_AutomateVector& priorities ) = 0;
 
-    virtual PHY_MedicalHumanState* HandleHumanEvacuatedByThirdParty ( MIL_AgentPion& pion, Human_ABC& human ) = 0; // Imex
-    virtual PHY_MedicalHumanState* HandleHumanForEvacuation         ( MIL_AgentPion& pion, Human_ABC& human ) = 0; // Releve
-    virtual int                    GetAvailabilityScoreForEvacuation( const Human_ABC& human ) const = 0;
-    virtual bool                   HandleHumanForCollection         ( PHY_MedicalHumanState& humanState ) = 0; // Ramassage
-    virtual int                    GetAvailabilityScoreForCollection( const PHY_MedicalHumanState& humanState ) const = 0;
+    virtual PHY_MedicalHumanState* HandleHumanEvacuatedByThirdParty( MIL_AgentPion& pion, Human_ABC& human ) = 0; // Imex
+    virtual PHY_MedicalHumanState* HandleHumanForEvacuation( MIL_AgentPion& pion, Human_ABC& human ) = 0; // Releve
+    virtual int GetAvailabilityScoreForEvacuation( const Human_ABC& human ) const = 0;
+    virtual bool HandleHumanForCollection( PHY_MedicalHumanState& humanState ) = 0; // Ramassage
+    virtual int GetAvailabilityScoreForCollection( const PHY_MedicalHumanState& humanState ) const = 0;
 
-    virtual void                   HandleHumanForSorting           ( const PHY_MedicalCollectionAmbulance& ambulance, PHY_MedicalHumanState& humanState         ) = 0;
-    virtual int                    GetAvailabilityScoreForSorting  ( const PHY_MedicalCollectionAmbulance& ambulance ) const = 0;
-    virtual void                   ReserveForSorting               ( const PHY_MedicalCollectionAmbulance& ambulance ) = 0;
-    virtual void                   CancelReservationForSorting     ( const PHY_MedicalCollectionAmbulance& ambulance ) = 0;
+    virtual void HandleHumanForSorting( const PHY_MedicalCollectionAmbulance& ambulance, PHY_MedicalHumanState& humanState ) = 0;
+    virtual int GetAvailabilityScoreForSorting( const PHY_MedicalCollectionAmbulance& ambulance ) const = 0;
+    virtual void ReserveForSorting( const PHY_MedicalCollectionAmbulance& ambulance ) = 0;
+    virtual void CancelReservationForSorting( const PHY_MedicalCollectionAmbulance& ambulance ) = 0;
 
-    virtual int                    GetAvailabilityScoreForHealing  ( const PHY_MedicalHumanState& humanState ) = 0;
-    virtual bool                   HandleHumanForHealing           ( PHY_MedicalHumanState& humanState ) = 0;
+    virtual int GetAvailabilityScoreForHealing( const PHY_MedicalHumanState& humanState ) = 0;
+    virtual bool HandleHumanForHealing( PHY_MedicalHumanState& humanState ) = 0;
 
     virtual PHY_MedicalEvacuationAmbulance* GetAvailableEvacuationAmbulance( PHY_MedicalEvacuationConsign& consign ) = 0;
     virtual PHY_MedicalCollectionAmbulance* GetAvailableCollectionAmbulance( PHY_MedicalCollectionConsign& consign ) = 0;
-    virtual PHY_ComposantePion*             GetAvailableDoctorForDiagnosing() const = 0;
-    virtual PHY_ComposantePion*             GetAvailableDoctorForSorting   () const = 0;
-    virtual PHY_ComposantePion*             GetAvailableDoctorForHealing   ( const Human_ABC& human ) const = 0;
-    virtual bool                            HasUsableDoctorForHealing      ( const Human_ABC& human, bool bBypassPriorities = false ) const = 0;
+    virtual PHY_ComposantePion* GetAvailableDoctorForDiagnosing() const = 0;
+    virtual PHY_ComposantePion* GetAvailableDoctorForSorting() const = 0;
+    virtual PHY_ComposantePion* GetAvailableDoctorForHealing( const Human_ABC& human ) const = 0;
+    virtual bool HasUsableDoctorForHealing( const Human_ABC& human, bool bBypassPriorities = false ) const = 0;
     //@}
 
     //! @name Tools
@@ -89,13 +95,13 @@ public:
     virtual bool CanCollectionAmbulanceGo( const PHY_MedicalCollectionAmbulance& ambulance ) const = 0;
     //@}
 
-    virtual void StartUsingForLogistic   ( PHY_ComposantePion& composante ) = 0;
-    virtual void StopUsingForLogistic    ( PHY_ComposantePion& composante ) = 0;
+    virtual void StartUsingForLogistic( PHY_ComposantePion& composante ) = 0;
+    virtual void StopUsingForLogistic( PHY_ComposantePion& composante ) = 0;
 
     //! @name Accessors
     //@{
-    virtual MIL_AutomateLOG&      GetAutomate() const = 0;
-    virtual const MIL_AgentPionLOG_ABC& GetPion    () const = 0;
+    virtual MIL_AutomateLOG& GetAutomate() const = 0;
+    virtual const MIL_AgentPionLOG_ABC& GetPion() const = 0;
     //@}
 private:
     //! @name Serialization

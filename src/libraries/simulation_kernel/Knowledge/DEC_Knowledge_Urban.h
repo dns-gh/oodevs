@@ -19,6 +19,7 @@
 class DEC_Knowledge_UrbanPerception;
 class MIL_Army_ABC;
 class MIL_Agent_ABC;
+class MIL_Automate;
 
 namespace urban
 {
