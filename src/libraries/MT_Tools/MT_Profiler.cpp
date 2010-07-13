@@ -10,9 +10,7 @@
 //*****************************************************************************
 
 #include "MT_Tools_pch.h"
-
 #include "MT_Profiler.h"
-
 #include <windows.h>
 
 int64 MT_Profiler::nFrequency_ = 0;
@@ -27,7 +25,6 @@ void MT_Profiler::Initialize()
     nFrequency_ /= 1000; // For ms instead of s
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: MT_Profiler constructor
 // Created: NLD 2002-10-14
@@ -41,16 +38,14 @@ MT_Profiler::MT_Profiler()
     assert( nFrequency_ != 0 ); // Call Initialize before instanciation
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: MT_Profiler destructor
 // Created: NLD 2002-10-14
 //-----------------------------------------------------------------------------
 MT_Profiler::~MT_Profiler()
 {
-
+    // NOTHING
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: MT_Profiler::Reset
@@ -63,8 +58,6 @@ void MT_Profiler::Reset()
     rTotalTime_     = 0.;
     nNbrCount_      = 0;
 }
-
-
 
 //-----------------------------------------------------------------------------
 // Name: MT_Profiler::Start
@@ -83,21 +76,13 @@ double MT_Profiler::Stop()
 {
     if( nFrequency_ == 0 )
         return 0.;
-
     int64 nCounterStop;
-
     QueryPerformanceCounter( (LARGE_INTEGER*)&nCounterStop );
-
     double rTime = ( nCounterStop - nCounterStart_ ) / (double)nFrequency_;
-
     rLastTime_   = rTime;
     rTotalTime_ += rTime;
     ++nNbrCount_;
-
     // stop the counter
     nCounterStart_ = 0;
-
     return rTime;
 }
-
-

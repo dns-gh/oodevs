@@ -41,14 +41,16 @@ namespace std
                 : uf1_( uf1 )
                 , uf2_( uf2 )
             {
+                // NOTHING
             }
-            virtual ~unary_compose() {}
-
+            virtual ~unary_compose()
+            {
+                // NOTHING
+            }
             typename UnaryFunction1::result_type operator() ( const typename UnaryFunction2::argument_type& x ) const
             {
                 return uf1_( uf2_( x ) );
             }
-
         protected:
             UnaryFunction1  uf1_;
             UnaryFunction2  uf2_;
@@ -77,14 +79,16 @@ namespace std
                 , uf1_( uf1 )
                 , uf2_( uf2 )
             {
+                // NOTHING
             }
-            virtual ~binary_compose() {}
-
+            virtual ~binary_compose()
+            {
+                // NOTHING
+            }
             typename BinaryFunction::result_type operator () ( const typename UnaryFunction1::argument_type& x ) const
             {
                 return bf_( uf1_( x ), uf2_( x ) );
             }
-
         private:
             BinaryFunction bf_;
             UnaryFunction1 uf1_;
@@ -122,14 +126,16 @@ class binary_compose2 : public std::binary_function< typename UnaryFunction1::ar
             , uf1_ ( uf1 )
             , uf2_ ( uf2 )
         {
+            // NOTHING
         }
-        virtual ~binary_compose2() {}
-
+        virtual ~binary_compose2()
+        {
+            // NOTHING
+        }
         typename BinaryFunction::result_type operator () ( const typename UnaryFunction1::argument_type& x, const typename UnaryFunction2::argument_type& y ) const
         {
             return bf_( uf1_( x ), uf2_( y ) );
         }
-
     private:
         BinaryFunction bf_;
         UnaryFunction1 uf1_;
@@ -156,7 +162,6 @@ inline binary_compose2< BinaryFunction, UnaryFunction > compose2_2( const Binary
     return binary_compose2< BinaryFunction, UnaryFunction >( bf, uf, uf );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: class_mem_fun_void_t
 // Created: NLD 2004-03-17
@@ -169,14 +174,16 @@ public:
         : fctPtr_   ( fctPtr )
         , pInstance_( &instance )
     {
+        // NOTHING
     }
-    virtual ~class_mem_fun_void_t() {}
-
+    virtual ~class_mem_fun_void_t()
+    {
+        // NOTHING
+    }
     void operator () ( Param& rhs ) const
     {
         (pInstance_->*fctPtr_)( rhs );
     }
-
 private:
     void ( Class::*fctPtr_ )( Param& );
     Class* pInstance_;
@@ -204,14 +211,16 @@ public:
         : fctPtr_   ( fctPtr )
         , pInstance_( &instance )
     {
+        // NOTHING
     }
-    virtual ~class_mem_fun_void_const_t() {}
-
-    void operator () ( const Param& rhs ) const
+    virtual ~class_mem_fun_void_const_t()
+    {
+        // NOTHING
+    }
+    void operator()( const Param& rhs ) const
     {
         (pInstance_->*fctPtr_)( rhs );
     }
-
 private:
     void ( Class::*fctPtr_ )( const Param& );
     Class* pInstance_;
@@ -226,7 +235,6 @@ inline class_mem_fun_void_const_t< Class, Param > class_mem_fun_void_const( void
 {
     return class_mem_fun_void_const_t< Class, Param >( fctPtr, instance );
 }
-
 //@}
 
 
@@ -300,11 +308,8 @@ namespace std
             return x.second;
         }
     };
-
 };
 //@}
-
-
 
 //-------------------------------------------------------------------------
 /** @name Comparaison de chaînes de caractère */

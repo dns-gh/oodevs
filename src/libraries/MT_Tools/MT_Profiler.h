@@ -22,7 +22,7 @@ class MT_Profiler
     MT_COPYNOTALLOWED( MT_Profiler );
 
 public:
-     MT_Profiler();
+             MT_Profiler();
     virtual ~MT_Profiler();
 
     void Reset();

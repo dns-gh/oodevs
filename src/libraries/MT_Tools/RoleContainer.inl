@@ -17,7 +17,7 @@ template< typename Role >
 typename Role::RoleInterface& RoleContainer::RegisterRole( Role& role )
 {
 	Attach( static_cast< Role::RoleInterface& >( role ) );
-	InterfaceContainer<Role_ABC>::Register( role ) ;
+	InterfaceContainer<Role_ABC>::Register( role );
 	return static_cast< Role::RoleInterface& >( role );
 }
 
@@ -28,6 +28,7 @@ typename Role::RoleInterface& RoleContainer::RegisterRole( Role& role )
 template< class Archive >
 void RoleContainer::load( Archive& /*archive*/, const unsigned int /*version*/ )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -37,6 +38,7 @@ void RoleContainer::load( Archive& /*archive*/, const unsigned int /*version*/ )
 template< class Archive >
 void RoleContainer::save( Archive& /*archive*/, const unsigned int /*version*/ ) const
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

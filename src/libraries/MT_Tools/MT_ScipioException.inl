@@ -9,8 +9,6 @@
 //
 //*****************************************************************************
 
-
-
 //-----------------------------------------------------------------------------
 // Name: std::string
 // Created: JVT 03-02-04
@@ -20,7 +18,6 @@ const std::string& MT_ScipioException::GetContext() const
 {
     return strContext_;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: std::string
@@ -32,7 +29,6 @@ const std::string& MT_ScipioException::GetFile() const
     return strFile_;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: std::string
 // Created: JVT 03-02-04
@@ -43,7 +39,6 @@ const std::string& MT_ScipioException::GetMsg() const
     return strMessage_;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: std::string
 // Created: JVT 03-02-04
@@ -53,7 +48,6 @@ const std::string& MT_ScipioException::GetDescription() const
 {
     return strDescription_;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: MT_ScipioException::GetLine

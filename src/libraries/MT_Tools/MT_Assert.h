@@ -28,12 +28,10 @@ bool MT_Assert( const char* strExpression, const char* strFile, int nLine )
     strMsg << "assert '"   << strExpression
            << "' - File '" << strFile
            << "' - Line "  << nLine;
-
     std::cerr << strMsg.str() << std::endl;
     _asm int 3;
     return true;
 }
-
 
 #undef assert
 

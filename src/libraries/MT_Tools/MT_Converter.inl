@@ -14,10 +14,11 @@
 // Created: NLD 2004-08-09
 // -----------------------------------------------------------------------------
 template< typename KEY, typename VALUE, typename CMP >
-MT_Converter<KEY, VALUE, CMP>::MT_Converter( const VALUE& nullValue )
-: nullValue_( nullValue )
-, nullKey_  ()
+MT_Converter< KEY, VALUE, CMP >::MT_Converter( const VALUE& nullValue )
+    : nullValue_( nullValue )
+    , nullKey_  ()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -25,8 +26,9 @@ MT_Converter<KEY, VALUE, CMP>::MT_Converter( const VALUE& nullValue )
 // Created: NLD 2004-08-09
 // -----------------------------------------------------------------------------
 template< typename KEY, typename VALUE, typename CMP >
-MT_Converter<KEY, VALUE, CMP>::~MT_Converter()
+MT_Converter< KEY, VALUE, CMP >::~MT_Converter()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -34,7 +36,7 @@ MT_Converter<KEY, VALUE, CMP>::~MT_Converter()
 // Created: NLD 2004-08-09
 // -----------------------------------------------------------------------------
 template< typename KEY, typename VALUE, typename CMP >
-bool MT_Converter<KEY, VALUE, CMP>::Register( const KEY& key, const VALUE& value )
+bool MT_Converter< KEY, VALUE, CMP >::Register( const KEY& key, const VALUE& value )
 {
     return map_.insert( std::make_pair( key, value ) ).second;
 }
@@ -44,7 +46,7 @@ bool MT_Converter<KEY, VALUE, CMP>::Register( const KEY& key, const VALUE& value
 // Created: NLD 2004-08-09
 // -----------------------------------------------------------------------------
 template< typename KEY, typename VALUE, typename CMP >
-const VALUE& MT_Converter<KEY, VALUE, CMP>::Convert( const KEY& key ) const
+const VALUE& MT_Converter< KEY, VALUE, CMP >::Convert( const KEY& key ) const
 {
     CIT_Map it = map_.find( key );
     if( it == map_.end() )
@@ -57,13 +59,11 @@ const VALUE& MT_Converter<KEY, VALUE, CMP>::Convert( const KEY& key ) const
 // Created: NLD 2006-05-29
 // -----------------------------------------------------------------------------
 template< typename KEY, typename VALUE, typename CMP >
-const KEY& MT_Converter<KEY, VALUE, CMP>::RevertConvert( const VALUE& value ) const
+const KEY& MT_Converter< KEY, VALUE, CMP >::RevertConvert( const VALUE& value ) const
 {
     for( CIT_Map it = map_.begin(); it != map_.end(); ++it )
-    {
         if( it->second == value )
             return it->first;
-    }
     return nullKey_;
 }
 
@@ -73,7 +73,7 @@ const KEY& MT_Converter<KEY, VALUE, CMP>::RevertConvert( const VALUE& value ) co
 // -----------------------------------------------------------------------------
 template< typename KEY, typename VALUE, typename CMP >
 template< class Archive >
-void MT_Converter<KEY, VALUE, CMP>::load( Archive& archive, const unsigned int /*version*/ )
+void MT_Converter< KEY, VALUE, CMP >::load( Archive& archive, const unsigned int /*version*/ )
 {
     unsigned int count;
     archive >> count;
@@ -91,7 +91,7 @@ void MT_Converter<KEY, VALUE, CMP>::load( Archive& archive, const unsigned int /
 // -----------------------------------------------------------------------------
 template< typename KEY, typename VALUE, typename CMP >
 template< class Archive >
-void MT_Converter<KEY, VALUE, CMP>::save( Archive& archive, const unsigned int /*version*/ ) const
+void MT_Converter< KEY, VALUE, CMP >::save( Archive& archive, const unsigned int /*version*/ ) const
 {
     unsigned int size = map_.size();
     archive << size;

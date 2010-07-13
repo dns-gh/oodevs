@@ -23,10 +23,11 @@ namespace
 // Created: JVT 04-03-04
 //-----------------------------------------------------------------------------
 MT_GaussianRandom::MT_GaussianRandom()
-    : rMean_            ( 0. )
-    , rVariance_        ( 1. )
-    , bAlreadyComputed_ ( false )
+    : rMean_           ( 0. )
+    , rVariance_       ( 1. )
+    , bAlreadyComputed_( false )
 {
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -34,33 +35,34 @@ MT_GaussianRandom::MT_GaussianRandom()
 // Created: JVT 04-03-04
 //-----------------------------------------------------------------------------
 MT_GaussianRandom::MT_GaussianRandom( double rMean, double rVariance )
-    : rMean_            ( rMean )
-    , rVariance_        ( rVariance )
-    , bAlreadyComputed_ ( false )
+    : rMean_           ( rMean )
+    , rVariance_       ( rVariance )
+    , bAlreadyComputed_( false )
 {
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
 // Name: MT_GaussianRandom constructor
 // Created: JVT 04-03-08
 //-----------------------------------------------------------------------------
-MT_GaussianRandom::MT_GaussianRandom( const MT_GaussianRandom& rand)
-    : rMean_            ( rand.rMean_ )
-    , rVariance_        ( rand.rVariance_ )
-    , bAlreadyComputed_ ( false )
+MT_GaussianRandom::MT_GaussianRandom( const MT_GaussianRandom& rand )
+    : rMean_           ( rand.rMean_ )
+    , rVariance_       ( rand.rVariance_ )
+    , bAlreadyComputed_( false )
 {
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
 // Name: MT_GaussianRandom copy operator
 // Created: JVT 04-03-08
 //-----------------------------------------------------------------------------
-MT_GaussianRandom& MT_GaussianRandom::operator = ( const MT_GaussianRandom& rhs )
+MT_GaussianRandom& MT_GaussianRandom::operator=( const MT_GaussianRandom& rhs )
 {
     rMean_            = rhs.rMean_;
     rVariance_        = rhs.rVariance_;
     bAlreadyComputed_ = false;
-
     return *this;
 }
 
@@ -76,22 +78,18 @@ double MT_GaussianRandom::rand()
         bAlreadyComputed_ = false;
         return rAlreadyComputed_ + rMean_;
     }
-
     double rX         = MT_Random::GetInstance().rand_ii( -1., 1. );
     rAlreadyComputed_ = MT_Random::GetInstance().rand_ii( -1., 1. );
     double rSqLength  = rX * rX + rAlreadyComputed_ * rAlreadyComputed_;
-
     while ( rSqLength >= 1. || rSqLength == 0. )
     {
         rX                = MT_Random::GetInstance().rand_ii( -1., 1. );
         rAlreadyComputed_ = MT_Random::GetInstance().rand_ii( -1., 1. );
         rSqLength         = rX * rX + rAlreadyComputed_ * rAlreadyComputed_;
     }
-
     rSqLength          = rVariance_ * sqrt( ( -2. * log( rSqLength ) ) / rSqLength );
     bAlreadyComputed_  = true;
     rAlreadyComputed_ *= rSqLength;
-
     return rX * rSqLength + rMean_;
 }
 
@@ -136,14 +134,12 @@ double MT_GaussianRandom::gaussian_ii()
 // -----------------------------------------------------------------------------
 double MT_GaussianRandom::gaussian_io()
 {
-    
     if( rVariance_ == 0. )
     {
         if( rMean_ == 1. )
             return maxRand;
         return rMean_;
     }
-
     double r = rand();
     if( r < 0. )
         r = 0.;
@@ -166,7 +162,6 @@ double MT_GaussianRandom::gaussian_oo()
             return maxRand;
         return rMean_;
     }
-
     double r = rand();
     if( r <= 0. )
         r = minRand;
@@ -187,7 +182,6 @@ double MT_GaussianRandom::gaussian_oi()
             return minRand;
         return rMean_;
     }
-
     double r = rand();
     if( r <= 0. )
         r = minRand;

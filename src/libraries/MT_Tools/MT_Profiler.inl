@@ -20,7 +20,6 @@ bool MT_Profiler::IsStarted() const
     return nCounterStart_ != 0;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: MT_Profiler::GetLastTime
 // Created: AML 03-05-21
@@ -31,7 +30,6 @@ double MT_Profiler::GetLastTime()
     return rLastTime_;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: MT_Profiler::GetAverageTime
 // Created: AML 03-05-21
@@ -39,6 +37,5 @@ double MT_Profiler::GetLastTime()
 inline
 double MT_Profiler::GetAverageTime()
 {
-    return nNbrCount_ ? rTotalTime_ / (double)nNbrCount_ : 0;
+    return nNbrCount_ ? rTotalTime_ / static_cast< double >( nNbrCount_ ) : 0;
 }
-

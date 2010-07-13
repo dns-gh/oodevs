@@ -24,7 +24,7 @@ class MT_Converter
     MT_COPYNOTALLOWED( MT_Converter )
 
 public:
-     MT_Converter( const VALUE& nullValue );
+             MT_Converter( const VALUE& nullValue );
     virtual ~MT_Converter();
 
     //! @name Operations

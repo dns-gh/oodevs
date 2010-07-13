@@ -20,13 +20,12 @@
 
 namespace tools
 {
-
 // =============================================================================
 // @class  RoleContainer
 // Created: JVT/NLD 2004-08-03
 // =============================================================================
 class RoleContainer : public tools::Extendable< Role_ABC >
-                    , public tools::InterfaceContainer<Role_ABC>
+                    , public tools::InterfaceContainer< Role_ABC >
 {
 public:
              RoleContainer() {}

@@ -11,7 +11,6 @@
 
 #include "MT_Tools_pch.h"
 #include "MT_Random.h"
-
 #include <ctime>
 
 using namespace MT_RandomConsts;
@@ -40,7 +39,7 @@ MT_Random::MT_Random( unsigned long nSeed )
 MT_Random::MT_Random()
     : left_ ( 1 )
 {
-    this->MT_Random::MT_Random( unsigned long( time(0) ) );
+    this->MT_Random::MT_Random( unsigned long( time( 0 ) ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -51,11 +50,9 @@ MT_Random::MT_Random( const std::vector< unsigned long >& init_key )
     : left_ ( 1 )
 {
     this->MT_Random::MT_Random( 19650218UL );
-
     unsigned int i = 1;
     unsigned int j = 0;
     unsigned int k = __max(  N, init_key.size() );
-
     for (; k; --k)
     {
         state_[i] = ( state_[i] ^ ( ( state_[i - 1] ^ ( state_[i - 1] >> 30 ) ) * 1664525UL ) ) + init_key[j] + j;
@@ -80,6 +77,5 @@ MT_Random::MT_Random( const std::vector< unsigned long >& init_key )
             i = 1;
         }
     }
-
     state_[0] = 0x80000000UL; /* MSB is 1; assuring non-zero initial array */
 }
