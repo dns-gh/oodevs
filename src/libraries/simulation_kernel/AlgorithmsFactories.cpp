@@ -33,21 +33,21 @@ BOOST_CLASS_EXPORT_IMPLEMENT( AlgorithmsFactories )
 // Created: MGD 2009-08-17
 // -----------------------------------------------------------------------------
 AlgorithmsFactories::AlgorithmsFactories()
-    : weaponAvailabilityComputerFactory_( new firing::WeaponAvailabilityComputerFactory() )
+    : weaponAvailabilityComputerFactory_      ( new firing::WeaponAvailabilityComputerFactory() )
     , composantesAbleToBeFiredComputerFactory_( new firing::ComposantesAbleToBeFiredComputerFactory() )
-    , locationComputerFactory_( new location::LocationComputerFactory() )
-    , postureComputerFactory_( new posture::PostureComputerFactory() )
-    , consumptionComputerFactory_( new dotation::ConsumptionComputerFactory() )
-    , moveComputerFactory_( new moving::MoveComputerFactory() )
-    , detectionComputerFactory_( new detection::DetectionComputerFactory() )
-    , transportComputerFactory_( new transport::TransportComputerFactory() )
-    , healComputerFactory_( new human::HealComputerFactory() )
-    , onComponentFunctorComputerFactory_( new OnComponentFunctorComputerFactory() )
+    , locationComputerFactory_                ( new location::LocationComputerFactory() )
+    , postureComputerFactory_                 ( new posture::PostureComputerFactory() )
+    , consumptionComputerFactory_             ( new dotation::ConsumptionComputerFactory() )
+    , moveComputerFactory_                    ( new moving::MoveComputerFactory() )
+    , detectionComputerFactory_               ( new detection::DetectionComputerFactory() )
+    , transportComputerFactory_               ( new transport::TransportComputerFactory() )
+    , healComputerFactory_                    ( new human::HealComputerFactory() )
+    , onComponentFunctorComputerFactory_      ( new OnComponentFunctorComputerFactory() )
     , onComponentLendedFunctorComputerFactory_( new OnComponentLendedFunctorComputerFactory() )
-    , dotationComputerFactory_( new dotation::DotationComputerFactory() )
-    , loadingComputerFactory_( new transport::LoadingComputerFactory() )
-    , weaponReloadingComputerFactory_( new firing::WeaponReloadingComputerFactory() )
-    , urbanLocationComputerFactory_( new urbanLocation::UrbanLocationComputerFactory() )
+    , dotationComputerFactory_                ( new dotation::DotationComputerFactory() )
+    , loadingComputerFactory_                 ( new transport::LoadingComputerFactory() )
+    , weaponReloadingComputerFactory_         ( new firing::WeaponReloadingComputerFactory() )
+    , urbanLocationComputerFactory_           ( new urbanLocation::UrbanLocationComputerFactory() )
 {
     // NOTHING
 }
@@ -60,4 +60,3 @@ AlgorithmsFactories::~AlgorithmsFactories()
 {
     // NOTHING
 }
-

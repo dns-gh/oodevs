@@ -682,7 +682,7 @@ void DEC_Decision< T >::SetListeEnisTirAutorise( const std::vector< boost::share
 template < class T >
 std::vector< DEC_Decision_ABC* > DEC_Decision< T >::GetListePionsCoordination()
 {
-    return GetVariable< std::vector<DEC_Decision_ABC*> >( "myself.listePionsCoordination_" );
+    return GetVariable< std::vector<DEC_Decision_ABC* > >( "myself.listePionsCoordination_" );
 }
 
 // -----------------------------------------------------------------------------

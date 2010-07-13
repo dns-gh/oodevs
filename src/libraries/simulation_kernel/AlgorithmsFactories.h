@@ -59,7 +59,7 @@ class OnComponentLendedFunctorComputerFactory_ABC;
 
 // =============================================================================
 /** @class  AlgorithmsFactories
-    @brief  AlgorithmsFactories
+    @brief  Algorithms factories
 */
 // Created: MGD 2009-08-13
 // =============================================================================

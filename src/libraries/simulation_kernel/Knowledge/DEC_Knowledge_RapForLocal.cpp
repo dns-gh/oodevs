@@ -51,7 +51,7 @@ DEC_Knowledge_RapForLocal::~DEC_Knowledge_RapForLocal()
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename Archive > void DEC_Knowledge_RapForLocal::serialize
+// Name: DEC_Knowledge_RapForLocal::serialize
 // Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
 template< typename Archive >

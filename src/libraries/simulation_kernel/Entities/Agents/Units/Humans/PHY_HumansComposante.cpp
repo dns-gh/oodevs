@@ -174,8 +174,8 @@ void PHY_HumansComposante::ApplyWounds( const PHY_ComposanteState& newComposante
 
     const PHY_Protection& protection = pComposante_->GetType().GetProtection();
 
-    unsigned int nNbrDead    = (unsigned int)round( humans_.size() * protection.GetHumanDeadRatio   ( newComposanteState ) );
-    unsigned int nNbrWounded = (unsigned int)round( humans_.size() * protection.GetHumanWoundedRatio( newComposanteState ) );
+    unsigned int nNbrDead    = static_cast< unsigned int >( round( humans_.size() * protection.GetHumanDeadRatio( newComposanteState ) ) );
+    unsigned int nNbrWounded = static_cast< unsigned int >( round( humans_.size() * protection.GetHumanWoundedRatio( newComposanteState ) ) );
 
     std::vector< Human_ABC* >::const_iterator itCur = humans_.begin();
     while( itCur != humans_.end() && nNbrDead != 0 )
