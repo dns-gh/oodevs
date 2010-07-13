@@ -43,8 +43,8 @@ std::string Entity::Read( xml::xistream& xis, Mapping& mapping, unsigned int kno
     xis >> xml::content( "ns2:name", name_ )
         >> xml::start( "ns2:meta-entity-ref" )
             >> xml::content( "ns2:id", type_ )
-        >> xml::end()
-        >> xml::optional() >> xml::start( "ns5:members" )
+        >> xml::end
+        >> xml::optional >> xml::start( "ns5:members" )
             >> xml::list( "ns5:content", *this, &Entity::ReadChild, mapping, knowledgeGroup );
     return editorId;
 }
@@ -56,7 +56,7 @@ std::string Entity::Read( xml::xistream& xis, Mapping& mapping, unsigned int kno
 void Entity::ReadChild( xml::xistream& xis, Mapping& mapping, unsigned int knowledgeGroup )
 {
     boost::shared_ptr< Entity > child( new Entity() );
-    std::string id = child->Read( xis, mapping, knowledgeGroup );
+    child->Read( xis, mapping, knowledgeGroup );
     children_.push_back( child );
 }
 
@@ -87,7 +87,7 @@ void Entity::WrapAutomat( xml::xostream& xos, Mapping& mapping, const Entity& un
             << xml::attribute( "level", "i" )
             << xml::attribute( "name", name_ );
     WriteAutomat( xos, mapping, mapping.GetSuperiorId( unit.type_ ) );
-    xos << xml::end();
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -125,7 +125,7 @@ void Entity::WriteAutomat( xml::xostream& xos, Mapping& mapping, const std::stri
         for( ++it; it != children_.end(); ++it )
             if( (*it)->IsUnit( mapping ) )
                 (*it)->WriteUnit( xos, mapping );
-        xos << xml::end();
+        xos << xml::end;
     }
 }
 
@@ -141,9 +141,9 @@ void Entity::WriteFormation( xml::xostream& xos, Mapping& mapping ) const
             << xml::attribute( "name", name_ );
     for( T_Entities::const_iterator it = children_.begin(); it != children_.end(); ++it )
         (*it)->Write( xos, mapping );
-    xos << xml::end();
+    xos << xml::end;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Entity::WriteUnit
 // Created: LDC 2010-07-08
@@ -156,7 +156,7 @@ void Entity::WriteUnit( xml::xostream& xos, const Mapping& mapping ) const
     position_.WriteAttribute( "position", xos );
     xos     << xml::attribute( "type", mapping[ type_ ] )
             << xml::attribute( "name", name_ );
-    xos << xml::end();
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------

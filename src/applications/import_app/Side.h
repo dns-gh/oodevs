@@ -12,11 +12,10 @@
 
 #include "Entity.h"
 #include "Object.h"
-
+#include <xeumeuleu/xml.hpp>
+#include <boost/shared_ptr.hpp>
 #include <string>
 #include <map>
-#include <boost/shared_ptr.hpp>
-#include <xeumeuleu/xml.hpp>
 
 class Mapping;
 
@@ -28,12 +27,11 @@ class Mapping;
 // =============================================================================
 class Side
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
-             Side( unsigned int id, const std::string& name, Mapping& mapping );
              Side();
+             Side( unsigned int id, const std::string& name, Mapping& mapping );
     virtual ~Side();
     //@}
 
@@ -42,13 +40,11 @@ public:
     void Write( xml::xostream& xos ) const;
     void ReadObjects( xml::xistream& xis );
     void ReadTactical( xml::xistream& xis );
-    Entity& Root();
     //@}
 
-    //! @name Copy/Assignment
+    //! @name Accessors
     //@{
-    Side( const Side& );            //!< Copy constructor
-    Side& operator=( const Side& ); //!< Assignment operator
+    Entity& Root();
     //@}
 
 private:
@@ -69,7 +65,7 @@ private:
     std::string name_;
     Mapping* mapping_;
     std::map< std::string, Object > objects_;
-    boost::shared_ptr<Entity> root_;
+    boost::shared_ptr< Entity > root_;
     //@}
 };
 

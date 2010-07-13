@@ -8,16 +8,16 @@
 // *****************************************************************************
 
 #include "Position.h"
-#include "geocoord/geodetic.h"
-#include "geocoord/MGRS.h"
+#include <geocoord/geodetic.h>
+#include <geocoord/MGRS.h>
 
 // -----------------------------------------------------------------------------
 // Name: Position constructor
 // Created: LDC 2010-07-09
 // -----------------------------------------------------------------------------
 Position::Position()
-: latitude_( -89. )
-, longitude_( 0. )
+    : latitude_ ( -89. )
+    , longitude_( 0. )
 {
     // NOTHING
 }
@@ -41,31 +41,9 @@ Position::~Position()
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: Position constructor
-// Created: LDC 2010-07-08
-// -----------------------------------------------------------------------------
-Position::Position( const Position& rhs )
-: latitude_( rhs.latitude_ )
-, longitude_( rhs.longitude_ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Position::operator=
-// Created: LDC 2010-07-08
-// -----------------------------------------------------------------------------
-Position& Position::operator=( const Position& rhs )
-{
-    latitude_ = rhs.latitude_;
-    longitude_ = rhs.longitude_;
-    return *this;
-}
-
 namespace
 {
-    double factor = std::acos( -1.f )/180.;
+    const double factor = std::acos( -1.f ) / 180.;
 }
 
 // -----------------------------------------------------------------------------
@@ -74,10 +52,10 @@ namespace
 // -----------------------------------------------------------------------------
 void Position::Write( xml::xostream& xos ) const
 {
-    double latitude = latitude_ * factor;
-    double longitude = longitude_ * factor;
-    geocoord::Geodetic geo( latitude, longitude );
-    geocoord::MGRS mgrs( geo );
+    const double latitude = latitude_ * factor;
+    const double longitude = longitude_ * factor;
+    const geocoord::Geodetic geo( latitude, longitude );
+    const geocoord::MGRS mgrs( geo );
     xos << xml::content( "point", mgrs.GetString() );
 }
 
@@ -87,9 +65,9 @@ void Position::Write( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void Position::WriteAttribute( const std::string& name, xml::xostream& xos ) const
 {
-    double latitude = latitude_ * factor;
-    double longitude = longitude_ * factor;
-    geocoord::Geodetic geo( latitude, longitude );
-    geocoord::MGRS mgrs( geo );
+    const double latitude = latitude_ * factor;
+    const double longitude = longitude_ * factor;
+    const geocoord::Geodetic geo( latitude, longitude );
+    const geocoord::MGRS mgrs( geo );
     xos << xml::attribute( name, mgrs.GetString() );
 }

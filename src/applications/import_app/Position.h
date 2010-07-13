@@ -20,7 +20,6 @@
 // =============================================================================
 class Position
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -33,17 +32,6 @@ public:
     //@{
     void Write( xml::xostream& xos ) const;
     void WriteAttribute( const std::string& name, xml::xostream& xos ) const;
-    //@}
-
-    //! @name Copy/Assignment
-    //@{
-    Position( const Position& );            //!< Copy constructor
-    Position& operator=( const Position& ); //!< Assignment operator
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
     //@}
 
 private:

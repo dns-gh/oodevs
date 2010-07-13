@@ -8,10 +8,9 @@
 // *****************************************************************************
 
 #include "Parser.h"
-
 #include "Position.h"
-#include <fstream>
 #include <boost/lexical_cast.hpp>
+#include <fstream>
 
 namespace
 {
@@ -21,9 +20,9 @@ namespace
         std::string data;
         std::string physical;
         xis >> xml::start( "exercise" )
-            >> xml::start( "model" )
-            >> xml::attribute( "dataset", data )
-            >> xml::attribute( "physical", physical );
+                >> xml::start( "model" )
+                    >> xml::attribute( "dataset", data )
+                    >> xml::attribute( "physical", physical );
         return rootDir + "/data/models/" + data + "/physical/" + physical + "/mapping.xml";
     }
 }
@@ -33,12 +32,12 @@ namespace
 // Created: LDC 2010-07-06
 // -----------------------------------------------------------------------------
 Parser::Parser( const std::string& inputFile, const std::string& rootDir, const std::string& outputFile )
-: outDir_( rootDir + outputFile )
-, xis_( inputFile )
-, xos_( outDir_ + "/orbat.xml" )
-, xosWeather_ ( outDir_ + "/weather.xml" )
-, mapping_( GetMappingFile( rootDir, outputFile + "/exercise.xml" ) )
-, plan_( 0 )
+    : outDir_    ( rootDir + outputFile )
+    , xis_       ( inputFile )
+    , xos_       ( outDir_ + "/orbat.xml" )
+    , xosWeather_( outDir_ + "/weather.xml" )
+    , mapping_   ( GetMappingFile( rootDir, outputFile + "/exercise.xml" ) )
+    , plan_      ( 0 )
 {
     // NOTHING
 }
@@ -62,17 +61,17 @@ void Parser::Generate()
     xis_ >> xml::start( "scenario" )
             >> xml::start( "identification" )
                 >> xml::start( "terrain" )
-                >> xml::end()
+                >> xml::end
                 >> xml::start( "weather" )
-                >> xml::end()
+                >> xml::end
                 >> xml::start( "mission" )
-                >> xml::end()
-            >> xml::end()
+                >> xml::end
+            >> xml::end
             >> xml::start( "terrain" )
-            >> xml::end();
+            >> xml::end;
     ReadSides();
     ReadPlan();
-    xis_ >> xml::end();
+    xis_ >> xml::end;
     WriteWeather();
     WriteOrbat();
     std::ofstream log( ( outDir_ + "/traduction.log" ).c_str() );
@@ -87,7 +86,7 @@ void Parser::ReadRelations()
 {
    xis_ >> xml::start( "ns5:diplomacy-relationships" )
             >> xml::list( "ns5:relations", *this, &Parser::ReadRelation )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -101,15 +100,15 @@ void Parser::ReadRelation( xml::xistream& xis )
     std::string type;
     xis >> xml::start( "ns5:source-side-ref" )
             >> xml::content( "ns2:id", source )
-         >> xml::end()
+         >> xml::end
          >> xml::start( "ns5:target-side-ref" )
             >> xml::content( "ns2:id", target )
-         >> xml::end()
+         >> xml::end
          >> xml::start( "ns5:relationship" )
             >> xml::start( "ns2:value" )
                 >> xml::content( "ns2:enumeration-value", type )
-            >> xml::end()
-         >> xml::end();
+            >> xml::end
+         >> xml::end;
     diplomacies_[ source ].push_back( Diplomacy( target, type ) );
 }
 
@@ -122,7 +121,7 @@ void Parser::ReadSides()
     xis_  >> xml::start( "sides" );
     ReadRelations();
     xis_ >> xml::list( "ns5:content", *this, &Parser::ReadSide );
-    xis_ >> xml::end();
+    xis_ >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -155,14 +154,14 @@ void Parser::ReadPlan()
                             >> xml::start( "ns6:content" )
                                 >> xml::start( "ns6:members" )
                                     >> xml::list( "ns6:content", *this, &Parser::PlaceEntity )
-                                >> xml::end()
-                            >> xml::end()
-                        >> xml::end()
-                    >> xml::end()
-                >> xml::end()
-            >> xml::end()
+                                >> xml::end
+                            >> xml::end
+                        >> xml::end
+                    >> xml::end
+                >> xml::end
+            >> xml::end
             >> xml::list( "content", *this, &Parser::ReadNextPlan )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -176,9 +175,9 @@ void Parser::ReadNextPlan( xml::xistream& xis )
     xis >> xml::content( "ns2:name", name );
     if( name.empty() )
         name = std::string( "Temps de manoeuvre " ) + boost::lexical_cast< std::string >( plan_ );
-    xis >> xml::optional() >> xml::start( "ns6:beginTrigger" )
-            >> xml::optional() >> xml::content( "ns6:date-trigger", date )
-        >> xml::end();
+    xis >> xml::optional >> xml::start( "ns6:beginTrigger" )
+            >> xml::optional >> xml::content( "ns6:date-trigger", date )
+        >> xml::end;
     date = date.substr( 0, 19 );
     ReadPlanData( xis );
     xml::xofstream xos( outDir_ + "/" + name + ".ord" );
@@ -191,12 +190,12 @@ void Parser::ReadNextPlan( xml::xistream& xis )
                             >> xml::list( "ns6:content", *this, &Parser::WriteMissionInOrd, xos, name, date );
     if( plan_ ) // don't teleport units when they are already placed
         xis                >> xml::list( "ns6:content", *this, &Parser::WriteUnitInOrd, xos, name, date );
-    xis                 >> xml::end()
-                    >> xml::end()
-                >> xml::end()
-            >> xml::end()
-        >> xml::end();
-    xos << xml::end();
+    xis                 >> xml::end
+                    >> xml::end
+                >> xml::end
+            >> xml::end
+        >> xml::end;
+    xos << xml::end;
     ++plan_;
 }
 
@@ -206,9 +205,9 @@ void Parser::ReadNextPlan( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void Parser::ReadTacticals( xml::xistream& xis )
 {
-    xis >> xml::optional() >> xml::start( "ns6:tacticals" )
+    xis >> xml::optional >> xml::start( "ns6:tacticals" )
             >> xml::list( "ns6:content", *this, &Parser::ReadTactical )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -219,7 +218,7 @@ void Parser::ReadPlanData( xml::xistream& xis )
 {    
     xis >> xml::start( "ns6:sides" )
             >> xml::list( "ns6:content", *this, &Parser::ReadPlanDatum )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -231,7 +230,7 @@ void Parser::ReadPlanDatum( xml::xistream& xis )
     xis >> xml::start( "ns6:data" );
     ReadTacticals( xis );
     ReadMissions( xis );
-    xis >> xml::end();
+    xis >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -267,7 +266,7 @@ void Parser::ReadTacticalPoint( xml::xistream& xis, std::vector< Position >& pos
 {
     xis >> xml::start( "ns4:gdc" );
     Position position( xis );
-    xis >> xml::end();
+    xis >> xml::end;
     positions.push_back( position );
 }
 
@@ -277,9 +276,9 @@ void Parser::ReadTacticalPoint( xml::xistream& xis, std::vector< Position >& pos
 // -----------------------------------------------------------------------------
 void Parser::ReadMissions( xml::xistream& xis )
 {
-    xis >> xml::optional() >> xml::start( "ns6:missions" )
+    xis >> xml::optional >> xml::start( "ns6:missions" )
             >> xml::list( "ns6:content", *this, &Parser::ReadMission )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -295,12 +294,12 @@ void Parser::ReadMission( xml::xistream& xis )
     xis >> xml::attribute( "id", id )
         >> xml::start( "ns6:entity-ref" )
             >> xml::content( "ns2:id", missionId )
-        >> xml::end()
-        >> xml::optional() >> xml::start( "ns6:tacticals" )
+        >> xml::end
+        >> xml::optional >> xml::start( "ns6:tacticals" )
             >> xml::start( "ns6:tac-data-ref" ) // xml::list... there may be several args.
                 >> xml::content( "ns2:id", tacId )
-            >> xml::end()
-        >> xml::end();
+            >> xml::end
+        >> xml::end;
     missions_[id].Set( missionId, tacticals_[tacId] );
 }
 
@@ -310,18 +309,18 @@ void Parser::ReadMission( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void Parser::WriteUnitInOrd( xml::xistream& xis, xml::xostream& xos, const std::string& timeName, const std::string& date )
 {
-    xis >> xml::optional() >> xml::start( "ns6:members" )
+    xis >> xml::optional >> xml::start( "ns6:members" )
             >> xml::list( "ns6:content", *this, &Parser::WriteUnitInOrd, xos, timeName, date )
-        >> xml::end();
+        >> xml::end;
     std::string id;
     xis >> xml::start( "ns6:entity-ref" )
             >> xml::content( "ns2:id", id )
-        >> xml::end()
+        >> xml::end
         >> xml::start( "ns6:location" )
             >> xml::start( "ns4:gdc"  );
     Position position( xis );
-    xis     >> xml::end()
-        >> xml::end();
+    xis     >> xml::end
+        >> xml::end;
     xos << xml::start( "action" )
             << xml::attribute( "id", "teleport" )
             << xml::attribute( "name", timeName )
@@ -335,10 +334,10 @@ void Parser::WriteUnitInOrd( xml::xistream& xis, xml::xostream& xos, const std::
                     << xml::attribute( "type", "point" )
                     << xml::start( "point" );
     position.WriteAttribute( "coordinates", xos );
-    xos             << xml::end()
-                << xml::end()
-            << xml::end()
-        << xml::end();
+    xos             << xml::end
+                << xml::end
+            << xml::end
+        << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -347,17 +346,17 @@ void Parser::WriteUnitInOrd( xml::xistream& xis, xml::xostream& xos, const std::
 // -----------------------------------------------------------------------------
 void Parser::WriteMissionInOrd( xml::xistream& xis, xml::xostream& xos, const std::string& timeName, const std::string& date )
 {
-    xis >> xml::optional() >> xml::start( "ns6:members" )
+    xis >> xml::optional >> xml::start( "ns6:members" )
         >> xml::list( "ns6:content", *this, &Parser::WriteMissionInOrd, xos, timeName, date )
-    >> xml::end();
+    >> xml::end;
     std::string id;
     std::string missionId;
     xis >> xml::start( "ns6:entity-ref" )
             >> xml::content( "ns2:id", id )
-        >> xml::end()
-        >> xml::optional() >> xml::start( "ns6:missionId"  )
+        >> xml::end
+        >> xml::optional >> xml::start( "ns6:missionId"  )
             >> xml::content( "ns2:id", missionId )
-        >> xml::end();
+        >> xml::end;
     if( !missionId.empty() && missions_.find( missionId ) != missions_.end() )
     {
         Mission& mission = missions_[missionId];
@@ -366,7 +365,7 @@ void Parser::WriteMissionInOrd( xml::xistream& xis, xml::xostream& xos, const st
             << xml::attribute( "time", date )
             << xml::attribute( "type", "mission" );
         mission.Write( xos, mapping_ );
-        xos << xml::end();
+        xos << xml::end;
     }
 }
 
@@ -379,19 +378,19 @@ void Parser::PlaceEntity( xml::xistream& xis )
     std::string id;
     xis  >> xml::start( "ns6:entity-ref" )
             >> xml::content( "ns2:id", id )
-         >> xml::end()
+         >> xml::end
          >> xml::start( "ns6:location" )
             >> xml::start( "ns4:gdc"  );
     Position position( xis );
-    xis  >> xml::end();
+    xis  >> xml::end;
     Entity* entity = Entity::Find( id );
     if( entity )
         entity->SetPosition( position );
     else
         mapping_.AddWarning( id );
-    xis >> xml::optional() >> xml::start( "ns6:members" )
+    xis >> xml::optional >> xml::start( "ns6:members" )
             >> xml::list( "ns6:content", *this, &Parser::PlaceEntity )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -404,38 +403,38 @@ void Parser::WriteWeather()
             >> xml::start( "plan" )
                 >> xml::start( "content" )
                     >> xml::start( "ns6:beginTrigger" )
-                        >> xml::optional()
+                        >> xml::optional
                         >> xml::content( "ns6:date-trigger", dateScenario_ )
-                    >> xml::end()
-                >> xml::end()
-            >> xml::end()
-        >> xml::end();
+                    >> xml::end
+                >> xml::end
+            >> xml::end
+        >> xml::end;
     std::string formattedDate = dateScenario_.substr( 0, 4 ) + dateScenario_.substr( 5, 2 ) + dateScenario_.substr( 8, 5 ) + dateScenario_.substr( 14, 2 ) + dateScenario_.substr( 17, 2 );
     xosWeather_ << xml::start( "weather" )
         << xml::start( "exercise-date" )
             << xml::attribute( "value", formattedDate ) 
-        << xml::end()
+        << xml::end
         << xml::start( "ephemerides" )
             << xml::attribute( "moon", "JourSansNuage")
             << xml::attribute( "sunrise", "7h30m0s" )
             << xml::attribute( "sunset", "21h30m0s" )
-        << xml::end()
+        << xml::end
         << xml::start( "theater" )
             << xml::start( "wind" )
                 << xml::attribute( "direction", 0 )
                 << xml::attribute( "speed", 0 )
-            << xml::end()
+            << xml::end
             << xml::start( "cloud-cover" )
                 << xml::attribute( "ceiling", 10000 )
                 << xml::attribute( "density", 0 )
                 << xml::attribute( "floor", 1000 )
-            << xml::end()
+            << xml::end
             << xml::start( "precipitation" )
                 << xml::attribute( "value", "PasDePrecipitation" )
-            << xml::end()
-        << xml::end()
+            << xml::end
+        << xml::end
         << xml::start( "local-weather" )
-        << xml::end();
+        << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -447,7 +446,7 @@ void Parser::WriteOrbat()
     xos_ << xml::start( "orbat" )
             << xml::start( "dotations" )
                 << xml::attribute( "infinite", false )
-            << xml::end();
+            << xml::end;
     WriteSides();
     WriteDiplomacies();  
 }
@@ -461,7 +460,7 @@ void Parser::WriteSides()
     xos_ << xml::start( "sides" );
     for( std::map< std::string, Side >::const_iterator it = sides_.begin(); it != sides_.end(); ++it )
         it->second.Write( xos_ );
-    xos_ << xml::end();  
+    xos_ << xml::end;  
 }
 
 // -----------------------------------------------------------------------------
@@ -477,7 +476,7 @@ void Parser::WriteDiplomacies()
             << xml::attribute( "id", mapping_[ it->first ] );
         for( std::vector< Diplomacy >::const_iterator itDiplomacy = it->second.begin(); itDiplomacy != it->second.end(); ++itDiplomacy )
             itDiplomacy->Write( xos_, mapping_ );
-        xos_ << xml::end();
+        xos_ << xml::end;
     }
-    xos_ << xml::end();
+    xos_ << xml::end;
 }

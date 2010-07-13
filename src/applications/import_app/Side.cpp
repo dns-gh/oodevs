@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "Side.h"
-
 #include "Mapping.h"
 
 // -----------------------------------------------------------------------------
@@ -16,9 +15,9 @@
 // Created: LDC 2010-07-07
 // -----------------------------------------------------------------------------
 Side::Side( unsigned int id, const std::string& name, Mapping& mapping )
-: id_( id )
-, name_( name )
-, mapping_( &mapping )
+    : id_     ( id )
+    , name_   ( name )
+    , mapping_( &mapping )
 {
     std::string knowledgeGroup = std::string( "Groupe de connaissance de " ) + name_;
     knowledgeGroupId_ = mapping_->AddId( knowledgeGroup );
@@ -29,9 +28,9 @@ Side::Side( unsigned int id, const std::string& name, Mapping& mapping )
 // Created: LDC 2010-07-07
 // -----------------------------------------------------------------------------
 Side::Side()
-: id_( 0 )
-, knowledgeGroupId_( 0 )
-, mapping_( 0 )
+    : id_              ( 0 )
+    , knowledgeGroupId_( 0 )
+    , mapping_         ( 0 )
 {
     // NOTHING
 }
@@ -43,32 +42,6 @@ Side::Side()
 Side::~Side()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Side constructor
-// Created: LDC 2010-07-07
-// -----------------------------------------------------------------------------
-Side::Side( const Side& rhs )
-: id_( rhs.id_ )
-, knowledgeGroupId_( rhs.knowledgeGroupId_ )
-, name_( rhs.name_ )
-, mapping_( rhs.mapping_ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Side::operator=
-// Created: LDC 2010-07-07
-// -----------------------------------------------------------------------------
-Side& Side::operator=( const Side& rhs )
-{
-    id_ = rhs.id_;
-    knowledgeGroupId_ = rhs.knowledgeGroupId_;
-    name_ = rhs.name_;
-    mapping_ = rhs.mapping_;
-    return *this;
 }
 
 // -----------------------------------------------------------------------------
@@ -85,10 +58,10 @@ void Side::Write( xml::xostream& xos ) const
     WriteTactical( xos );
     WriteCommunications( xos );
     xos    << xml::start( "populations" )
-            << xml::end()
+            << xml::end
             << xml::start( "logistic" )
-            << xml::end()
-        << xml::end();
+            << xml::end
+        << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -99,10 +72,8 @@ void Side::WriteObjects( xml::xostream& xos ) const
 {
     xos << xml::start( "objects" );
     for( std::map< std::string, Object >::const_iterator it = objects_.begin(); it != objects_.end(); ++it )
-    {
         it->second.Write( xos );
-    }
-    xos << xml::end();
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -113,7 +84,7 @@ void Side::WriteTactical( xml::xostream& xos ) const
 {
     xos << xml::start( "tactical" );
     root_->Write( xos, *mapping_ );
-    xos << xml::end();
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -127,8 +98,8 @@ void Side::WriteCommunications( xml::xostream& xos ) const
                 << xml::attribute( "id", knowledgeGroupId_ )
                 << xml::attribute( "name", std::string( "Groupe de connaissance de " ) + name_ )
                 << xml::attribute( "type", "Standard" )
-            << xml::end()
-        << xml::end();
+            << xml::end
+        << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -141,7 +112,7 @@ void Side::ReadObjects( xml::xistream& xis )
             >> xml::list( "ns5:installations", *this, &Side::ReadObjectList )
             >> xml::list( "ns5:obstacles", *this, &Side::ReadObjectList )
             >> xml::list( "ns5:zones", *this, &Side::ReadObjectList )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -160,8 +131,6 @@ void Side::ReadObjectList( xml::xistream& xis )
 void Side::ReadObject( xml::xistream& xis )
 {
     std::string id;
-    std::string name;
-    std::string metaId;
     xis >> xml::attribute( "id", id );
     objects_[ id ].Read( xis, id, *mapping_ );
 }

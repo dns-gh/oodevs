@@ -10,10 +10,10 @@
 #ifndef __Mapping_h_
 #define __Mapping_h_
 
+#include <xeumeuleu/xml.hpp>
+#include <string>
 #include <map>
 #include <set>
-#include <string>
-#include <xeumeuleu/xml.hpp>
 
 // =============================================================================
 /** @class  Mapping
@@ -23,7 +23,6 @@
 // =============================================================================
 class Mapping
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -54,9 +53,12 @@ private:
     Mapping& operator=( const Mapping& ); //!< Assignment operator
     //@}
 
+    //! @name Helpers
+    //@{
     void WriteAssociation( xml::xistream& xis );
     void WriteAutomat( xml::xistream& xis );
     void WriteUnit( xml::xistream& xis );
+    //@}
 
 private:
     //! @name Member data

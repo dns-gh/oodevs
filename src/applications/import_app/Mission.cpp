@@ -53,14 +53,14 @@ void Mission::Write( xml::xostream& xos, Mapping& mapping )
                 << xml::attribute( "name", mapping.GetMissionParameterName( i ) )
                 << xml::attribute( "type", mapping.GetMissionParameterType( i ) )
                 << xml::start( "location" )
-                << xml::attribute( "type", mapping.GetMissionParameterLocationType( i ) );
+                    << xml::attribute( "type", mapping.GetMissionParameterLocationType( i ) );
         for( std::vector< Position >::const_iterator itPos = it->begin(); itPos != it->end(); ++itPos )
         {
             xos << xml::start( "point" );
             itPos->WriteAttribute( "coordinates", xos );
-            xos << xml::end();
+            xos << xml::end;
         }
-        xos     << xml::end()
-            << xml::end();
+        xos     << xml::end
+            << xml::end;
     }
 }

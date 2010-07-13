@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "Mapping.h"
-
 #include <boost/lexical_cast.hpp>
 
 // -----------------------------------------------------------------------------
@@ -16,13 +15,13 @@
 // Created: LDC 2010-07-07
 // -----------------------------------------------------------------------------
 Mapping::Mapping( const std::string& file )
-: maxId_( 0 )
+    : maxId_( 0 )
 {
     xml::xifstream xis( file );
     xis >> xml::start( "mapping" )
-        >> xml::list( "association", *this, &Mapping::WriteAssociation )
-        >> xml::list( "automat", *this, &Mapping::WriteAutomat )
-        >> xml::list( "unit", *this, &Mapping::WriteUnit );
+            >> xml::list( "association", *this, &Mapping::WriteAssociation )
+            >> xml::list( "automat", *this, &Mapping::WriteAutomat )
+            >> xml::list( "unit", *this, &Mapping::WriteUnit );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,7 +69,7 @@ void Mapping::WriteUnit( xml::xistream& xis )
         >> xml::attribute( "superior", superior );
     units_[ key ] = superior;
     bool command = false;
-    xis >> xml::optional() >> xml::attribute( "command-post", command );
+    xis >> xml::optional >> xml::attribute( "command-post", command );
     if( command )
         commandPosts_.insert( key );
 }
@@ -84,11 +83,8 @@ std::string Mapping::operator[]( const std::string& key ) const
     std::map< std::string, std::string >::const_iterator it = mapping_.find( key );
     if( it != mapping_.end() )
         return it->second;
-    else
-    {
-        unknownKeys_.insert( key );     
-        return key;
-    }
+    unknownKeys_.insert( key );
+    return key;
 }
 
 // -----------------------------------------------------------------------------
@@ -136,7 +132,7 @@ unsigned int Mapping::AddId()
 // -----------------------------------------------------------------------------
 bool Mapping::IsUnit( const std::string& type ) const
 {
-    return ( units_.find( type ) != units_.end() );
+    return units_.find( type ) != units_.end();
 }
 
 // -----------------------------------------------------------------------------
@@ -145,7 +141,7 @@ bool Mapping::IsUnit( const std::string& type ) const
 // -----------------------------------------------------------------------------
 bool Mapping::IsAutomat( const std::string& type ) const
 {
-    return ( automats_.find( type ) != automats_.end() );
+    return automats_.find( type ) != automats_.end();
 }
 
 // -----------------------------------------------------------------------------
@@ -155,12 +151,10 @@ bool Mapping::IsAutomat( const std::string& type ) const
 std::string Mapping::GetSuperiorId( const std::string& type ) const
 {
     std::map< std::string, std::string >::const_iterator it = units_.find( type );
-    if( it == units_.end() )
-    {
-        unknownKeys_.insert( type );
-        return type;
-    }
-    return it->second;
+    if( it != units_.end() )
+        return it->second;
+    unknownKeys_.insert( type );
+    return type;
 }
 
 // -----------------------------------------------------------------------------
@@ -169,7 +163,7 @@ std::string Mapping::GetSuperiorId( const std::string& type ) const
 // -----------------------------------------------------------------------------
 bool Mapping::IsCommandPost( const std::string& type ) const
 {
-    return ( commandPosts_.find( type ) != commandPosts_.end() );
+    return commandPosts_.find( type ) != commandPosts_.end();
 }
 
 // -----------------------------------------------------------------------------

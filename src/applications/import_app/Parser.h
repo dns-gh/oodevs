@@ -10,14 +10,13 @@
 #ifndef __Parser_h_
 #define __Parser_h_
 
-#include <string>
-#include <vector>
-#include <xeumeuleu/xml.hpp>
-
 #include "Diplomacy.h"
 #include "Mapping.h"
 #include "Mission.h"
 #include "Side.h"
+#include <xeumeuleu/xml.hpp>
+#include <string>
+#include <vector>
 
 // =============================================================================
 /** @class  Parser
@@ -27,7 +26,6 @@
 // =============================================================================
 class Parser
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -74,19 +72,20 @@ private:
     //@}
 
 private:
+    //! @name Member data 
+    //@{
     std::string outDir_;
     xml::xifstream xis_;
     xml::xofstream xos_;
     xml::xofstream xosWeather_;
     std::string dateScenario_;
     unsigned int plan_;
-
     Mapping mapping_;
-
     std::map< std::string, std::vector< Diplomacy > > diplomacies_;
     std::map< std::string, Side > sides_;
     std::map< std::string, std::vector< std::vector< Position > > > tacticals_;
     std::map< std::string, Mission > missions_;
+    //@}
 };
 
 #endif // __Parser_h_

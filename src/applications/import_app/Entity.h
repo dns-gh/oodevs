@@ -12,10 +12,10 @@
 
 #include "Mapping.h"
 #include "Position.h"
+#include <xeumeuleu/xml.hpp>
+#include <boost/shared_ptr.hpp>
 #include <string>
 #include <vector>
-#include <boost/shared_ptr.hpp>
-#include <xeumeuleu/xml.hpp>
 
 // =============================================================================
 /** @class  Entity
@@ -25,7 +25,6 @@
 // =============================================================================
 class Entity
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -48,7 +47,6 @@ private:
     Entity& operator=( const Entity& ); //!< Assignment operator
     //@}
 
-private:
     //! @name Helpers
     //@{
     bool IsAutomat( const Mapping& mapping ) const;
@@ -63,7 +61,12 @@ private:
     //@}
 
 private:
+    //! @name Types
+    //@{
     typedef std::vector< boost::shared_ptr< Entity > > T_Entities;
+    //@}
+
+private:
     //! @name Member data
     //@{
     unsigned int id_;

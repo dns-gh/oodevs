@@ -11,8 +11,8 @@
 #define __Object_h_
 
 #include "Position.h"
-#include <vector>
 #include <xeumeuleu/xml.hpp>
+#include <vector>
 
 class Mapping;
 
@@ -24,7 +24,6 @@ class Mapping;
 // =============================================================================
 class Object
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -36,12 +35,6 @@ public:
     //@{
     void Read( xml::xistream& xis, const std::string& id, Mapping& mapping );
     void Write( xml::xostream& xos ) const;
-    //@}
-
-    //! @name Copy/Assignment
-    //@{
-    Object( const Object& );            //!< Copy constructor
-    Object& operator=( const Object& ); //!< Assignment operator
     //@}
 
 private:

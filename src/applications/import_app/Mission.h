@@ -11,9 +11,10 @@
 #define __Mission_h_
 
 #include "Position.h"
+#include <xeumeuleu/xml.hpp>
 #include <string>
 #include <vector>
-#include <xeumeuleu/xml.hpp>
+
 class Mapping;
 
 // =============================================================================
@@ -24,7 +25,6 @@ class Mapping;
 // =============================================================================
 class Mission
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -10,8 +10,9 @@
 #ifndef __Diplomacy_h_
 #define __Diplomacy_h_
 
-#include "Mapping.h"
 #include <xeumeuleu/xml.hpp>
+
+class Mapping;
 
 // =============================================================================
 /** @class  Diplomacy
@@ -21,7 +22,6 @@
 // =============================================================================
 class Diplomacy
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -32,12 +32,6 @@ public:
     //! @name Operations
     //@{
     void Write( xml::xostream& xos, const Mapping& mapping ) const;
-    //@}
-
-    //! @name Copy/Assignment
-    //@{
-    Diplomacy( const Diplomacy& );            //!< Copy constructor
-    Diplomacy& operator=( const Diplomacy& ); //!< Assignment operator
     //@}
 
 private:
