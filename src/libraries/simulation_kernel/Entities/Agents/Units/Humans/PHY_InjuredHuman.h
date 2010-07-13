@@ -20,11 +20,6 @@ class PHY_ComposantePion;
 
 class PHY_InjuredHuman
 {
-private:
-    typedef std::list< MIL_Injury_ABC *>    InjuriesList;
-    typedef InjuriesList::const_iterator    CIT_InjuriesList;
-    typedef InjuriesList::iterator          IT_InjuriesList;
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -78,15 +73,23 @@ public:
     //@}
 
 private:
+    //! @name Typedefs
+    //@{
+    typedef std::list< MIL_Injury_ABC* >     T_InjuriesList;
+    typedef T_InjuriesList::iterator        IT_InjuriesList;
+    typedef T_InjuriesList::const_iterator CIT_InjuriesList;
+    //@}
+
+private:
     //! @name Member data
     //@{
-    float                                           lifeExpectancy_;
-    MIL_MedicalTreatmentType::E_InjuryCategories    injuryCategory_;
-    int                                             injuryID_;
-    bool                                            isTreated_;
-    InjuriesList                                    injuriesList_;
-    const PHY_ComposantePion*                       pComposantePion_;
-    float                                           timeOfLastUpdate_;
+    float                                        lifeExpectancy_;
+    MIL_MedicalTreatmentType::E_InjuryCategories injuryCategory_;
+    int                                          injuryID_;
+    bool                                         isTreated_;
+    T_InjuriesList                               injuriesList_;
+    const PHY_ComposantePion*                    pComposantePion_;
+    float                                        timeOfLastUpdate_;
     //@}
 };
 
