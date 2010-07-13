@@ -20,6 +20,17 @@ Mission::Mission()
 }
 
 // -----------------------------------------------------------------------------
+// Name: Mission constructor
+// Created: LDC 2010-07-09
+// -----------------------------------------------------------------------------
+Mission::Mission( const std::string& id, const std::vector< std::vector< Position > >& tacticals )
+    : id_       ( id )
+    , tacticals_( tacticals )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: Mission destructor
 // Created: LDC 2010-07-09
 // -----------------------------------------------------------------------------
@@ -27,22 +38,12 @@ Mission::~Mission()
 {
     // NOTHING
 }
- 
-// -----------------------------------------------------------------------------
-// Name: Mission::Set
-// Created: LDC 2010-07-09
-// -----------------------------------------------------------------------------
-void Mission::Set( const std::string& missionId, const std::vector< std::vector< Position > >& tacticals )
-{
-    id_ = missionId;
-    tacticals_ = tacticals;
-}
 
 // -----------------------------------------------------------------------------
 // Name: Mission::Write
 // Created: LDC 2010-07-09
 // -----------------------------------------------------------------------------
-void Mission::Write( xml::xostream& xos, Mapping& mapping )
+void Mission::Write( xml::xostream& xos, Mapping& mapping ) const
 {
     xos << xml::attribute( "id", mapping[ id_ ] )
         << xml::attribute( "name", "" );

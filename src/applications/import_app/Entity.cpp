@@ -15,9 +15,22 @@ std::map< std::string, Entity* > Entity::map_;
 // Name: Entity constructor
 // Created: LDC 2010-07-08
 // -----------------------------------------------------------------------------
-Entity::Entity()
+Entity::Entity( xml::xistream& xis, Mapping& mapping, unsigned int knowledgeGroup )
+    : mapping_         ( mapping )
+    , knowledgeGroupId_( knowledgeGroup )
 {
-    // NOTHING
+    std::string editorId;
+    xis >> xml::attribute( "id", editorId );
+    map_[ editorId ] = this;
+    id_ = mapping.AddId( editorId );
+    xis >> xml::start( "ns5:order-of-battle" )
+            >> xml::start( "ns5:content" ) // Formation of highest level;
+                >> xml::content( "ns2:name", name_ )
+                >> xml::start( "ns2:meta-entity-ref" )
+                    >> xml::content( "ns2:id", type_ )
+                >> xml::end
+                >> xml::optional >> xml::start( "ns5:members" )
+                    >> xml::list( "ns5:content", *this, &Entity::ReadChild, knowledgeGroup );
 }
 
 // -----------------------------------------------------------------------------
@@ -30,33 +43,12 @@ Entity::~Entity()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Entity::Read
-// Created: LDC 2010-07-08
-// -----------------------------------------------------------------------------
-std::string Entity::Read( xml::xistream& xis, Mapping& mapping, unsigned int knowledgeGroup )
-{
-    std::string editorId;
-    xis >> xml::attribute( "id", editorId );
-    map_[ editorId ] = this;
-    id_ = mapping.AddId( editorId );
-    knowledgeGroupId_ = knowledgeGroup;
-    xis >> xml::content( "ns2:name", name_ )
-        >> xml::start( "ns2:meta-entity-ref" )
-            >> xml::content( "ns2:id", type_ )
-        >> xml::end
-        >> xml::optional >> xml::start( "ns5:members" )
-            >> xml::list( "ns5:content", *this, &Entity::ReadChild, mapping, knowledgeGroup );
-    return editorId;
-}
-
-// -----------------------------------------------------------------------------
 // Name: Entity::ReadChild
 // Created: LDC 2010-07-08
 // -----------------------------------------------------------------------------
-void Entity::ReadChild( xml::xistream& xis, Mapping& mapping, unsigned int knowledgeGroup )
+void Entity::ReadChild( xml::xistream& xis, unsigned int knowledgeGroup )
 {
-    boost::shared_ptr< Entity > child( new Entity() );
-    child->Read( xis, mapping, knowledgeGroup );
+    boost::shared_ptr< Entity > child( new Entity( xis, mapping_, knowledgeGroup ) );
     children_.push_back( child );
 }
 
@@ -64,29 +56,29 @@ void Entity::ReadChild( xml::xistream& xis, Mapping& mapping, unsigned int knowl
 // Name: Entity::Write
 // Created: LDC 2010-07-08
 // -----------------------------------------------------------------------------
-void Entity::Write( xml::xostream& xos, Mapping& mapping ) const
+void Entity::Write( xml::xostream& xos ) const
 {
-    if( IsUnit( mapping ) )
-        WriteUnit( xos, mapping );
-    else if( IsAutomat( mapping ) )
-        WriteAutomat( xos, mapping );
-    else if( const Entity* unit = HasUnitChild( mapping ) )
-        WrapAutomat( xos, mapping, *unit );
+    if( IsUnit() )
+        WriteUnit( xos );
+    else if( IsAutomat() )
+        WriteAutomat( xos, mapping_[ type_ ] );
+    else if( const Entity* unit = HasUnitChild() )
+        WrapAutomat( xos, *unit );
     else
-        WriteFormation( xos, mapping );
+        WriteFormation( xos );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Entity::WrapAutomat
 // Created: LDC 2010-07-08
 // -----------------------------------------------------------------------------
-void Entity::WrapAutomat( xml::xostream& xos, Mapping& mapping, const Entity& unit ) const
+void Entity::WrapAutomat( xml::xostream& xos, const Entity& unit ) const
 {
     xos << xml::start( "formation" )
-            << xml::attribute( "id", mapping.AddId() )
+            << xml::attribute( "id", mapping_.AddId() )
             << xml::attribute( "level", "i" )
             << xml::attribute( "name", name_ );
-    WriteAutomat( xos, mapping, mapping.GetSuperiorId( unit.type_ ) );
+    WriteAutomat( xos, mapping_.GetSuperiorId( unit.type_ ) );
     xos << xml::end;
 }
 
@@ -94,21 +86,12 @@ void Entity::WrapAutomat( xml::xostream& xos, Mapping& mapping, const Entity& un
 // Name: Entity::WriteAutomat
 // Created: LDC 2010-07-08
 // -----------------------------------------------------------------------------
-void Entity::WriteAutomat( xml::xostream& xos, Mapping& mapping ) const
-{
-    WriteAutomat( xos, mapping, mapping[ type_ ] );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Entity::WriteAutomat
-// Created: LDC 2010-07-08
-// -----------------------------------------------------------------------------
-void Entity::WriteAutomat( xml::xostream& xos, Mapping& mapping, const std::string& type ) const
+void Entity::WriteAutomat( xml::xostream& xos, const std::string& type ) const
 {
     const Entity* unit = 0;
     T_Entities::const_iterator it = children_.begin();
     for( ; it != children_.end(); ++it )
-        if( (*it)->IsUnit( mapping ) )
+        if( (*it)->IsUnit() )
         {
             unit = it->get();
             break;
@@ -121,10 +104,10 @@ void Entity::WriteAutomat( xml::xostream& xos, Mapping& mapping, const std::stri
                 << xml::attribute( "knowledge-group", knowledgeGroupId_ )
                 << xml::attribute( "type", type )
                 << xml::attribute( "name", name_ );
-        unit->WriteUnit( xos, mapping );
+        unit->WriteUnit( xos );
         for( ++it; it != children_.end(); ++it )
-            if( (*it)->IsUnit( mapping ) )
-                (*it)->WriteUnit( xos, mapping );
+            if( (*it)->IsUnit() )
+                (*it)->WriteUnit( xos );
         xos << xml::end;
     }
 }
@@ -133,14 +116,14 @@ void Entity::WriteAutomat( xml::xostream& xos, Mapping& mapping, const std::stri
 // Name: Entity::WriteFormation
 // Created: LDC 2010-07-08
 // -----------------------------------------------------------------------------
-void Entity::WriteFormation( xml::xostream& xos, Mapping& mapping ) const
+void Entity::WriteFormation( xml::xostream& xos ) const
 {
     xos << xml::start( "formation" )
             << xml::attribute( "id", id_ )
             << xml::attribute( "level", "i" )
             << xml::attribute( "name", name_ );
     for( T_Entities::const_iterator it = children_.begin(); it != children_.end(); ++it )
-        (*it)->Write( xos, mapping );
+        (*it)->Write( xos );
     xos << xml::end;
 }
 
@@ -148,13 +131,13 @@ void Entity::WriteFormation( xml::xostream& xos, Mapping& mapping ) const
 // Name: Entity::WriteUnit
 // Created: LDC 2010-07-08
 // -----------------------------------------------------------------------------
-void Entity::WriteUnit( xml::xostream& xos, const Mapping& mapping ) const
+void Entity::WriteUnit( xml::xostream& xos ) const
 {
     xos << xml::start( "unit" )
             << xml::attribute( "id", id_ )
-            << xml::attribute( "command-post", mapping.IsCommandPost( type_ ) );
+            << xml::attribute( "command-post", mapping_.IsCommandPost( type_ ) );
     position_.WriteAttribute( "position", xos );
-    xos     << xml::attribute( "type", mapping[ type_ ] )
+    xos     << xml::attribute( "type", mapping_[ type_ ] )
             << xml::attribute( "name", name_ );
     xos << xml::end;
 }
@@ -163,19 +146,19 @@ void Entity::WriteUnit( xml::xostream& xos, const Mapping& mapping ) const
 // Name: Entity::IsAutomat
 // Created: LDC 2010-07-08
 // -----------------------------------------------------------------------------
-bool Entity::IsAutomat( const Mapping& mapping ) const
+bool Entity::IsAutomat() const
 {
-    return mapping.IsAutomat( type_ );
+    return mapping_.IsAutomat( type_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Entity::HasUnitChild
 // Created: LDC 2010-07-08
 // -----------------------------------------------------------------------------
-const Entity* Entity::HasUnitChild( const Mapping& mapping ) const
+const Entity* Entity::HasUnitChild() const
 {
     for( T_Entities::const_iterator it = children_.begin(); it != children_.end(); ++it )
-        if( (*it)->IsUnit( mapping ) )
+        if( (*it)->IsUnit() )
             return it->get();
     return 0;
 }
@@ -184,9 +167,9 @@ const Entity* Entity::HasUnitChild( const Mapping& mapping ) const
 // Name: Entity::IsUnit
 // Created: LDC 2010-07-08
 // -----------------------------------------------------------------------------
-bool Entity::IsUnit( const Mapping& mapping ) const
+bool Entity::IsUnit() const
 {
-    return mapping.IsUnit( type_ );
+    return mapping_.IsUnit( type_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -31,25 +31,20 @@ public:
     //! @name Constructors/Destructor
     //@{
              Side();
-             Side( unsigned int id, const std::string& name, Mapping& mapping );
+             Side( const xml::xistream& xis, Mapping& mapping );
     virtual ~Side();
     //@}
 
     //! @name Operations
     //@{
     void Write( xml::xostream& xos ) const;
-    void ReadObjects( xml::xistream& xis );
-    void ReadTactical( xml::xistream& xis );
-    //@}
-
-    //! @name Accessors
-    //@{
-    Entity& Root();
     //@}
 
 private:
     //! @name Helpers
     //@{
+    void ReadObjects( xml::xisubstream xis );
+    void ReadTactical( xml::xisubstream xis );
     void WriteObjects( xml::xostream& xos ) const;
     void WriteTactical( xml::xostream& xos ) const;
     void WriteCommunications( xml::xostream& xos ) const;

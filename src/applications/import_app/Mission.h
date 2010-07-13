@@ -29,20 +29,20 @@ public:
     //! @name Constructors/Destructor
     //@{
              Mission();
+             Mission( const std::string& id, const std::vector< std::vector< Position > >& tacticals );
     virtual ~Mission();
     //@}
 
     //! @name Operations
     //@{
-    void Set( const std::string& missionId, const std::vector< std::vector< Position > >& tacticals );
-    void Write( xml::xostream& xos, Mapping& mapping );
+    void Write( xml::xostream& xos, Mapping& mapping ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::vector< std::vector< Position > > tacticals_;
     std::string id_;
+    std::vector< std::vector< Position > > tacticals_;
     //@}
 };
 

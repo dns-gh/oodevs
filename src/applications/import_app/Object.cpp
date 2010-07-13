@@ -20,19 +20,10 @@ Object::Object()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Object destructor
+// Name: Object constructor
 // Created: LDC 2010-07-07
 // -----------------------------------------------------------------------------
-Object::~Object()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::Read
-// Created: LDC 2010-07-07
-// -----------------------------------------------------------------------------
-void Object::Read( xml::xistream& xis, const std::string& id, Mapping& mapping )
+Object::Object( xml::xistream& xis, const std::string& id, Mapping& mapping )
 {
     objectId_ = mapping.AddId( id );
     std::string metaId;
@@ -58,6 +49,15 @@ void Object::Read( xml::xistream& xis, const std::string& id, Mapping& mapping )
         positions_.push_back( Position( xis ) );
     }
     type_ = mapping[ metaId ];
+}
+
+// -----------------------------------------------------------------------------
+// Name: Object destructor
+// Created: LDC 2010-07-07
+// -----------------------------------------------------------------------------
+Object::~Object()
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

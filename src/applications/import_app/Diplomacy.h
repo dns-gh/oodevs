@@ -25,7 +25,7 @@ class Diplomacy
 public:
     //! @name Constructors/Destructor
     //@{
-             Diplomacy( const std::string& target, const std::string& type );
+    explicit Diplomacy( xml::xisubstream xis );
     virtual ~Diplomacy();
     //@}
 

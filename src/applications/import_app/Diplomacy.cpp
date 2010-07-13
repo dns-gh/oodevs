@@ -14,11 +14,14 @@
 // Name: Diplomacy constructor
 // Created: LDC 2010-07-07
 // -----------------------------------------------------------------------------
-Diplomacy::Diplomacy( const std::string& target, const std::string& type )
-    : target_( target )
-    , type_  ( type )
+Diplomacy::Diplomacy( xml::xisubstream xis )
 {
-    // NOTHING
+    xis >> xml::start( "ns5:target-side-ref" )
+            >> xml::content( "ns2:id", target_ )
+        >> xml::end
+        >> xml::start( "ns5:relationship" )
+            >> xml::start( "ns2:value" )
+                >> xml::content( "ns2:enumeration-value", type_ );
 }
 
 // -----------------------------------------------------------------------------

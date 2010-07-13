@@ -55,9 +55,9 @@ private:
 
     //! @name Helpers
     //@{
-    void WriteAssociation( xml::xistream& xis );
-    void WriteAutomat( xml::xistream& xis );
-    void WriteUnit( xml::xistream& xis );
+    void ReadAssociation( xml::xistream& xis );
+    void ReadAutomat( xml::xistream& xis );
+    void ReadUnit( xml::xistream& xis );
     //@}
 
 private:

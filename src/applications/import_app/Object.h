@@ -28,12 +28,12 @@ public:
     //! @name Constructors/Destructor
     //@{
              Object();
+             Object( xml::xistream& xis, const std::string& id, Mapping& mapping );
     virtual ~Object();
     //@}
 
     //! @name Operations
     //@{
-    void Read( xml::xistream& xis, const std::string& id, Mapping& mapping );
     void Write( xml::xostream& xos ) const;
     //@}
 

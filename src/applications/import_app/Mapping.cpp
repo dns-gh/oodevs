@@ -19,9 +19,9 @@ Mapping::Mapping( const std::string& file )
 {
     xml::xifstream xis( file );
     xis >> xml::start( "mapping" )
-            >> xml::list( "association", *this, &Mapping::WriteAssociation )
-            >> xml::list( "automat", *this, &Mapping::WriteAutomat )
-            >> xml::list( "unit", *this, &Mapping::WriteUnit );
+            >> xml::list( "association", *this, &Mapping::ReadAssociation )
+            >> xml::list( "automat", *this, &Mapping::ReadAutomat )
+            >> xml::list( "unit", *this, &Mapping::ReadUnit );
 }
 
 // -----------------------------------------------------------------------------
@@ -34,10 +34,10 @@ Mapping::~Mapping()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Mapping::WriteAssociation
+// Name: Mapping::ReadAssociation
 // Created: LDC 2010-07-07
 // -----------------------------------------------------------------------------
-void Mapping::WriteAssociation( xml::xistream& xis )
+void Mapping::ReadAssociation( xml::xistream& xis )
 {
     std::string key, value;
     xis >> xml::attribute( "key", key )
@@ -46,24 +46,24 @@ void Mapping::WriteAssociation( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Mapping::WriteAutomat
+// Name: Mapping::ReadAutomat
 // Created: LDC 2010-07-08
 // -----------------------------------------------------------------------------
-void Mapping::WriteAutomat( xml::xistream& xis )
+void Mapping::ReadAutomat( xml::xistream& xis )
 {
-    WriteAssociation( xis );
+    ReadAssociation( xis );
     std::string key;
     xis >> xml::attribute( "key", key );
     automats_.insert( key );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Mapping::WriteUnit
+// Name: Mapping::ReadUnit
 // Created: LDC 2010-07-08
 // -----------------------------------------------------------------------------
-void Mapping::WriteUnit( xml::xistream& xis )
+void Mapping::ReadUnit( xml::xistream& xis )
 {
-    WriteAssociation( xis );
+    ReadAssociation( xis );
     std::string key, superior;
     xis >> xml::attribute( "key", key )
         >> xml::attribute( "superior", superior );

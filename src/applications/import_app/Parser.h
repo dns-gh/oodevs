@@ -47,7 +47,6 @@ private:
     void ReadSide( xml::xistream& xis );
     void ReadNextPlan( xml::xistream& xis );
     void PlaceEntity( xml::xistream& xis );
-    void ReadPlanData( xml::xistream& xis );
     void ReadPlanDatum( xml::xistream& xis );
     void ReadTactical( xml::xistream& xis );
     void ReadTacticalPointList( xml::xistream& xis, std::vector< std::vector< Position > >& positions );

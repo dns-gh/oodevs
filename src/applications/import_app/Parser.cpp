@@ -108,16 +108,8 @@ void Parser::ReadRelation( xml::xistream& xis )
     std::string type;
     xis >> xml::start( "ns5:source-side-ref" )
             >> xml::content( "ns2:id", source )
-         >> xml::end
-         >> xml::start( "ns5:target-side-ref" )
-            >> xml::content( "ns2:id", target )
-         >> xml::end
-         >> xml::start( "ns5:relationship" )
-            >> xml::start( "ns2:value" )
-                >> xml::content( "ns2:enumeration-value", type )
-            >> xml::end
          >> xml::end;
-    diplomacies_[ source ].push_back( Diplomacy( target, type ) );
+    diplomacies_[ source ].push_back( Diplomacy( xis ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -126,13 +118,9 @@ void Parser::ReadRelation( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void Parser::ReadSide( xml::xistream& xis )
 {
-    std::string id, name;
-    xis >> xml::attribute( "id", id )
-        >> xml::content( "ns2:name", name );
-    unsigned int sideID = mapping_.AddId( id );
-    sides_[ id ] = Side( sideID, name, mapping_ );
-    sides_[ id ].ReadObjects( xis );
-    sides_[ id ].ReadTactical( xis );
+    std::string id;
+    xis >> xml::attribute( "id", id );
+    sides_[ id ] = Side( xis, mapping_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -148,9 +136,11 @@ void Parser::ReadNextPlan( xml::xistream& xis )
         name = std::string( "Temps de manoeuvre " ) + boost::lexical_cast< std::string >( plan_ );
     xis >> xml::optional >> xml::start( "ns6:beginTrigger" )
             >> xml::optional >> xml::content( "ns6:date-trigger", date )
+        >> xml::end
+        >> xml::start( "ns6:sides" )
+            >> xml::list( "ns6:content", *this, &Parser::ReadPlanDatum )
         >> xml::end;
     date = date.substr( 0, 19 );
-    ReadPlanData( xis );
     xml::xofstream xos( outDir_ + "/" + name + ".ord" );
     xos << xml::start( "actions" );
     xis >> xml::start( "ns6:sides" )
@@ -171,17 +161,6 @@ void Parser::ReadNextPlan( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Parser::ReadTacticalContent
-// Created: LDC 2010-07-09
-// -----------------------------------------------------------------------------
-void Parser::ReadPlanData( xml::xistream& xis )
-{
-    xis >> xml::start( "ns6:sides" )
-            >> xml::list( "ns6:content", *this, &Parser::ReadPlanDatum )
-        >> xml::end;
-}
-
-// -----------------------------------------------------------------------------
 // Name: Parser::ReadPlanDatum
 // Created: LDC 2010-07-09
 // -----------------------------------------------------------------------------
@@ -192,9 +171,7 @@ void Parser::ReadPlanDatum( xml::xistream& xis )
                 >> xml::list( "ns6:content", *this, &Parser::ReadTactical )
             >> xml::end
             >> xml::optional >> xml::start( "ns6:missions" )
-                >> xml::list( "ns6:content", *this, &Parser::ReadMission )
-            >> xml::end
-        >> xml::end;
+                >> xml::list( "ns6:content", *this, &Parser::ReadMission );
 }
 
 // -----------------------------------------------------------------------------
@@ -250,10 +227,8 @@ void Parser::ReadMission( xml::xistream& xis )
         >> xml::end
         >> xml::optional >> xml::start( "ns6:tacticals" )
             >> xml::start( "ns6:tac-data-ref" ) // xml::list... there may be several args.
-                >> xml::content( "ns2:id", tacId )
-            >> xml::end
-        >> xml::end;
-    missions_[id].Set( missionId, tacticals_[tacId] );
+                >> xml::content( "ns2:id", tacId );
+    missions_[ id ] = Mission( missionId, tacticals_[ tacId ] );
 }
 
 // -----------------------------------------------------------------------------
@@ -312,12 +287,11 @@ void Parser::WriteMissionInOrd( xml::xistream& xis, xml::xostream& xos, const st
         >> xml::end;
     if( !missionId.empty() && missions_.find( missionId ) != missions_.end() )
     {
-        Mission& mission = missions_[missionId];
         xos << xml::start( "action" )
             << xml::attribute( "target", mapping_[ id ] )
             << xml::attribute( "time", date )
             << xml::attribute( "type", "mission" );
-        mission.Write( xos, mapping_ );
+        missions_[ missionId ].Write( xos, mapping_ );
         xos << xml::end;
     }
 }

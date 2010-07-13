@@ -14,13 +14,15 @@
 // Name: Side constructor
 // Created: LDC 2010-07-07
 // -----------------------------------------------------------------------------
-Side::Side( unsigned int id, const std::string& name, Mapping& mapping )
-    : id_     ( id )
-    , name_   ( name )
+Side::Side( const xml::xistream& xis, Mapping& mapping )
+    : id_     ( mapping.AddId( xis.attribute< std::string >( "id" ) ) )
+    , name_   ( xis.content< std::string >( "ns2:name" ) )
     , mapping_( &mapping )
 {
     std::string knowledgeGroup = std::string( "Groupe de connaissance de " ) + name_;
     knowledgeGroupId_ = mapping_->AddId( knowledgeGroup );
+    ReadObjects( xis );
+    ReadTactical( xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,7 +85,7 @@ void Side::WriteObjects( xml::xostream& xos ) const
 void Side::WriteTactical( xml::xostream& xos ) const
 {
     xos << xml::start( "tactical" );
-    root_->Write( xos, *mapping_ );
+    root_->Write( xos );
     xos << xml::end;
 }
 
@@ -106,13 +108,12 @@ void Side::WriteCommunications( xml::xostream& xos ) const
 // Name: Side::ReadObjects
 // Created: LDC 2010-07-07
 // -----------------------------------------------------------------------------
-void Side::ReadObjects( xml::xistream& xis )
+void Side::ReadObjects( xml::xisubstream xis )
 {
     xis >> xml::start( "ns5:data" )
             >> xml::list( "ns5:installations", *this, &Side::ReadObjectList )
             >> xml::list( "ns5:obstacles", *this, &Side::ReadObjectList )
-            >> xml::list( "ns5:zones", *this, &Side::ReadObjectList )
-        >> xml::end;
+            >> xml::list( "ns5:zones", *this, &Side::ReadObjectList );
 }
 
 // -----------------------------------------------------------------------------
@@ -132,26 +133,14 @@ void Side::ReadObject( xml::xistream& xis )
 {
     std::string id;
     xis >> xml::attribute( "id", id );
-    objects_[ id ].Read( xis, id, *mapping_ );
+    objects_[ id ] = Object( xis, id, *mapping_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Side::ReadTactical
 // Created: LDC 2010-07-08
 // -----------------------------------------------------------------------------
-void Side::ReadTactical( xml::xistream& xis )
+void Side::ReadTactical( xml::xisubstream xis )
 {
-    xis >> xml::start( "ns5:order-of-battle" )
-            >> xml::start( "ns5:content" ); // Formation of highest level;
-    root_.reset( new Entity() );
-    root_->Read( xis, *mapping_, knowledgeGroupId_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Side::Root
-// Created: LDC 2010-07-09
-// -----------------------------------------------------------------------------
-Entity& Side::Root()
-{
-    return *root_;
+    root_.reset( new Entity( xis, *mapping_, knowledgeGroupId_ ) );
 }

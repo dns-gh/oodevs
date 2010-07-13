@@ -28,15 +28,15 @@ class Entity
 public:
     //! @name Constructors/Destructor
     //@{
-             Entity();
+             Entity( xml::xistream& xis, Mapping& mapping, unsigned int knowledgeGroup );
     virtual ~Entity();
     //@}
 
     //! @name Operations
     //@{
     static Entity* Find( const std::string& id );
-    void Write( xml::xostream& xos, Mapping& mapping ) const;
-    std::string Read( xml::xistream& xis, Mapping& mapping, unsigned int knowledgeGroup );
+
+    void Write( xml::xostream& xos ) const;
     void SetPosition( const Position& position );
     //@}
 
@@ -49,15 +49,14 @@ private:
 
     //! @name Helpers
     //@{
-    bool IsAutomat( const Mapping& mapping ) const;
-    bool IsUnit( const Mapping& mapping ) const;
-    const Entity* HasUnitChild( const Mapping& mapping ) const;
-    void ReadChild( xml::xistream& xis, Mapping& mapping, unsigned int knowledgeGroup );
-    void WrapAutomat( xml::xostream& xos, Mapping& mapping, const Entity& unit ) const;
-    void WriteAutomat( xml::xostream& xos, Mapping& mapping ) const;
-    void WriteAutomat( xml::xostream& xos, Mapping& mapping, const std::string& type ) const;
-    void WriteFormation( xml::xostream& xos, Mapping& mapping ) const;
-    void WriteUnit( xml::xostream& xos, const Mapping& mapping ) const;
+    bool IsAutomat() const;
+    bool IsUnit() const;
+    const Entity* HasUnitChild() const;
+    void ReadChild( xml::xistream& xis, unsigned int knowledgeGroup );
+    void WrapAutomat( xml::xostream& xos, const Entity& unit ) const;
+    void WriteAutomat( xml::xostream& xos, const std::string& type ) const;
+    void WriteFormation( xml::xostream& xos ) const;
+    void WriteUnit( xml::xostream& xos ) const;
     //@}
 
 private:
@@ -69,6 +68,7 @@ private:
 private:
     //! @name Member data
     //@{
+    Mapping& mapping_;
     unsigned int id_;
     unsigned int knowledgeGroupId_;
     std::string name_;
