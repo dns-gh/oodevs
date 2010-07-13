@@ -58,10 +58,6 @@ private:
     Score& operator=( const Score& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

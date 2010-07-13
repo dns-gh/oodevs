@@ -26,10 +26,10 @@ using namespace plugins::score;
 // Created: SBO 2009-08-21
 // -----------------------------------------------------------------------------
 IndicatorBuilder::IndicatorBuilder()
-    : primitives_( new indicators::Primitives() )
+    : primitives_ ( new indicators::Primitives() )
     , typeFactory_( new indicators::DataTypeFactory() )
-    , variables_( 0 )
-    , factory_( 0 )
+    , variables_  ( 0 )
+    , factory_    ( 0 )
 {
     primitives_->Load( tools::GeneralConfig::BuildResourceChildFile( "IndicatorPrimitives.xml" ) );
 }

@@ -53,12 +53,10 @@ void Score::Send( dispatcher::ClientPublisher_ABC& publisher, int context ) cons
 {
     std::vector< double > values; values.reserve( values_.size() );
     std::copy( values_.begin(), values_.end(), std::back_inserter( values ) );
-
     aar::PlotResult result;
-    result().set_identifier ( context );
-    result().set_error    ( "" );
+    result().set_identifier( context );
+    result().set_error( "" );
     for( std::vector< double >::const_iterator it = values_.begin(); it != values_.end(); ++it )
         result().mutable_values()->Add( float( *it ) );
-
     result.Send( publisher );
 }

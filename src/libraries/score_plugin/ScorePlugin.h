@@ -35,12 +35,10 @@ namespace plugins
 namespace score
 {
     class ScoresModel;
-using namespace MsgsSimToClient;
-using namespace MsgsAarToClient;
-using namespace MsgsClientToAar;
+
 // =============================================================================
 /** @class  ScorePlugin
-    @brief  ScorePlugin
+    @brief  Score plugin
 */
 // Created: AGE 2008-08-04
 // =============================================================================
@@ -55,8 +53,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Receive                  ( const MsgSimToClient& message );
-    virtual void Receive                  ( const MsgAarToClient& message );
+    virtual void Receive                  ( const MsgsSimToClient::MsgSimToClient& message );
+    virtual void Receive                  ( const MsgsAarToClient::MsgAarToClient& message );
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
     virtual void NotifyClientLeft         ( dispatcher::ClientPublisher_ABC& client );
     virtual void Register                 ( dispatcher::Services& );
@@ -74,7 +72,7 @@ private:
     void LoadScores( const std::string& scores );
     void LoadIndicators( xml::xistream& xis );
     void LoadIndicator ( xml::xistream& xis );
-    void OnReceive( const std::string&, const MsgClientToAar& message );
+    void OnReceive( const std::string&, const MsgsClientToAar::MsgClientToAar& message );
     //@}
 
 private:

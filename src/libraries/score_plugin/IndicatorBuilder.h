@@ -27,12 +27,12 @@ namespace xml
 
 namespace plugins
 {
-    namespace score
-    {
+namespace score
+{
 
 // =============================================================================
 /** @class  IndicatorBuilder
-    @brief  IndicatorBuilder
+    @brief  Indicator builder
 */
 // Created: SBO 2009-08-21
 // =============================================================================
@@ -59,10 +59,6 @@ private:
     IndicatorBuilder& operator=( const IndicatorBuilder& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{
@@ -73,7 +69,7 @@ private:
     //@}
 };
 
-    }
+}
 }
 
 #endif // __IndicatorBuilder_h_

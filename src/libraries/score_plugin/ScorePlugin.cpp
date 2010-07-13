@@ -15,6 +15,7 @@
 #include "dispatcher/LinkResolver_ABC.h"
 #include "dispatcher/Services.h"
 #include "protocol/protocol.h"
+#include "protocol/aarsenders.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/MessageDispatcher_ABC.h"
@@ -24,9 +25,7 @@
 #include <fstream>
 #include <xeumeuleu/xml.hpp>
 
-#include "protocol/aarsenders.h"
 namespace bfs = boost::filesystem;
-
 using namespace plugins::score;
 
 // -----------------------------------------------------------------------------
@@ -35,8 +34,8 @@ using namespace plugins::score;
 // -----------------------------------------------------------------------------
 ScorePlugin::ScorePlugin( tools::MessageDispatcher_ABC& dispatcher, dispatcher::LinkResolver_ABC& resolver, dispatcher::ClientPublisher_ABC& clients, const tools::ExerciseConfig& config, dispatcher::CompositeRegistrable& registrables )
     : resolver_( resolver )
-    , config_( config )
-    , scores_( new ScoresModel( clients ) )
+    , config_  ( config )
+    , scores_  ( new ScoresModel( clients ) )
 {
     registrables.Add( new dispatcher::RegistrableProxy( *scores_ ) );
     scores_->Load( config_.GetScoresFile() );
