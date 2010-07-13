@@ -16,8 +16,6 @@
 #include "protocol/protocol.h"
 #include "simulation_kernel/Entities/MIL_Army_ABC.h"
 
-using namespace xml;
-
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectFactory constructor
 // Created: JCR 2008-04-21

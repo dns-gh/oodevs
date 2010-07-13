@@ -12,7 +12,6 @@
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controller.h"
 #include "Tools.h"
-#include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
 

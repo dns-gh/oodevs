@@ -13,7 +13,6 @@
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Controller.h"
 #include "Tools.h"
-#include "xeumeuleu/xml.h"
 
 using namespace kernel;
 
